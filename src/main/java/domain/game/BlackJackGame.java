@@ -62,12 +62,12 @@ public class BlackJackGame {
     }
 
     public GameStatistic statistic() {
-        final Map<Participant, PlayerResult> resultMap = participants.stream().collect(Collectors.toMap(
+        final Map<Participant, PlayerResult> resultPerParticipant = participants.stream().collect(Collectors.toMap(
                 Function.identity(),
                 (it) -> PlayerResult.judge(it, dealer))
         );
 
-        return new GameStatistic(dealer, resultMap);
+        return new GameStatistic(dealer, participants, resultPerParticipant);
     }
 
     public List<Participant> participants() {

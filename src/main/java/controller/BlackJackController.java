@@ -1,84 +1,41 @@
 package controller;
 
-import domain.area.CardArea;
 import domain.deck.CardDeck;
-import domain.game.PlayerResult;
-import domain.player.Dealer;
+import domain.game.BlackJackGame;
 import domain.player.Name;
 import domain.player.Participant;
 import domain.player.State;
+import org.jetbrains.annotations.NotNull;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
 
+    private static final Map<String, State> COMMAND_STATE_MAP = new HashMap<>();
+
+    static {
+        COMMAND_STATE_MAP.put("y", State.HIT);
+        COMMAND_STATE_MAP.put("n", State.STAY);
+    }
+
     public void run() {
+        final BlackJackGame blackJackGame = setUpGame();
+        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
+        hitOrStayForParticipants(blackJackGame);
+        hitOrStayForDealer(blackJackGame);
+        OutputView.showGameStatistic(blackJackGame.statistic());
+    }
 
+    @NotNull
+    private BlackJackGame setUpGame() {
         final List<Name> participantNames = createParticipantNames();
-
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-
-        final List<Participant> participants = dealParticipantsCards(cardDeck, participantNames);
-        final Dealer dealer = dealDealerCars(cardDeck);
-
-        OutputView.printAfterDeal(participants);
-        OutputView.showDealerState(dealer);
-        OutputView.showPlayersState(participants);
-
-        hitForParticipants(cardDeck, participants);
-        hitForDealer(cardDeck, dealer);
-
-        //최종 승패
-        gameStatistic(participants, dealer);
-    }
-
-    private void hitForDealer(final CardDeck cardDeck, final Dealer dealer) {
-        while (dealer.canHit()) {
-            OutputView.dealerOneMoreCard();
-            dealer.hit(cardDeck.draw());
-        }
-    }
-
-    private void hitForParticipants(final CardDeck cardDeck, final List<Participant> participants) {
-        for (final Participant participant : participants) {
-            hitForParticipant(cardDeck, participant);
-        }
-    }
-
-    private void hitForParticipant(final CardDeck cardDeck, final Participant participant) {
-        while (participant.canHit()) {
-            participant.changeState(inputHitOrStay(participant));
-            hitOrStayForParticipant(cardDeck, participant);
-        }
-    }
-
-    private void hitOrStayForParticipant(final CardDeck cardDeck, final Participant participant) {
-        if (participant.wantHit()) {
-            participant.hit(cardDeck.draw());
-        }
-        OutputView.showPlayerState(participant);
-    }
-
-    private State inputHitOrStay(final Participant participant) {
-        if (InputView.readMoreCard(participant).equals("y")) {
-            return State.HIT;
-        }
-        return State.STAY;
-    }
-
-    private Dealer dealDealerCars(final CardDeck cardDeck) {
-        return new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
-    }
-
-    private List<Participant> dealParticipantsCards(final CardDeck cardDeck, final List<Name> participantNames) {
-        return participantNames.stream()
-                .map(it -> new Participant(it, new CardArea(cardDeck.draw(), cardDeck.draw())))
-                .collect(Collectors.toList());
+        return BlackJackGame.defaultSetting(cardDeck, participantNames);
     }
 
     private List<Name> createParticipantNames() {
@@ -88,32 +45,33 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private void gameStatistic(final List<Participant> participants, final Dealer dealer) {
-        final Map<Participant, PlayerResult> collect1 = participants.stream().collect(Collectors.toMap(Function.identity(), it -> PlayerResult.judge(it, dealer)));
-        OutputView.showGameStatistic(new ResultDto(collect1, participants, dealer));
+    private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
+        while (blackJackGame.existCanHitParticipant()) {
+            final Participant canHitParticipant = blackJackGame.findCanHitParticipant();
+            final State state = inputHitOrStay(canHitParticipant);
+            canHitParticipant.changeState(state);
+            blackJackGame.hitOrStayForParticipant(canHitParticipant);
+            OutputView.showPlayerCardAreaState(canHitParticipant);
+        }
     }
 
-    public class ResultDto {
-        private final Map<Participant, PlayerResult> participantsResult;
-        private final List<Participant> participants;
-        private final Dealer dealer;
+    private State inputHitOrStay(final Participant participant) {
+        final String command = InputView.readMoreCard(participant);
+        return mapOrThrowCommand(command);
+    }
 
-        public ResultDto(final Map<Participant, PlayerResult> participantsResult, final List<Participant> participants, final Dealer dealer) {
-            this.participantsResult = participantsResult;
-            this.participants = participants;
-            this.dealer = dealer;
+    private State mapOrThrowCommand(final String command) {
+        final State state = COMMAND_STATE_MAP.getOrDefault(command, null);
+        if (state == null) {
+            throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
         }
+        return state;
+    }
 
-        public Map<Participant, PlayerResult> participantsResult() {
-            return participantsResult;
-        }
-
-        public List<Participant> participants() {
-            return participants;
-        }
-
-        public Dealer dealer() {
-            return dealer;
+    private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
+        while (blackJackGame.isDealerShouldMoreHit()) {
+            OutputView.printDealerOneMoreCard();
+            blackJackGame.hitForDealer();
         }
     }
 }

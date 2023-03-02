@@ -213,8 +213,8 @@ class BlackJackGameTest {
         final GameStatistic statistic = blackJackGame.statistic();
 
         // then
-        assertThat(statistic.resultMap().get(말랑)).isEqualTo(PlayerResult.DRAWER);
-        assertThat(statistic.resultMap().get(콩떡)).isEqualTo(PlayerResult.LOSER);
-        assertThat(statistic.resultMap().get(코다)).isEqualTo(PlayerResult.WINNER);
+        assertThat(statistic.resultPerParticipant().get(말랑)).isEqualTo(PlayerResult.DRAWER);
+        assertThat(statistic.resultPerParticipant().get(콩떡)).isEqualTo(PlayerResult.LOSER);
+        assertThat(statistic.resultPerParticipant().get(코다)).isEqualTo(PlayerResult.WINNER);
     }
 }

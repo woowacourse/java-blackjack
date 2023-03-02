@@ -3,23 +3,30 @@ package domain.game;
 import domain.player.Dealer;
 import domain.player.Participant;
 
+import java.util.List;
 import java.util.Map;
 
 public class GameStatistic {
 
     private final Dealer dealer;
-    private final Map<Participant, PlayerResult> resultMap;
+    private final List<Participant> participants;
+    private final Map<Participant, PlayerResult> resultPerParticipant;
 
-    public GameStatistic(final Dealer dealer, final Map<Participant, PlayerResult> resultMap) {
+    public GameStatistic(final Dealer dealer, final List<Participant> participants, final Map<Participant, PlayerResult> resultPerParticipant) {
         this.dealer = dealer;
-        this.resultMap = resultMap;
+        this.participants = participants;
+        this.resultPerParticipant = resultPerParticipant;
     }
 
     public Dealer dealer() {
         return dealer;
     }
 
-    public Map<Participant, PlayerResult> resultMap() {
-        return resultMap;
+    public List<Participant> participants() {
+        return participants;
+    }
+
+    public Map<Participant, PlayerResult> resultPerParticipant() {
+        return resultPerParticipant;
     }
 }

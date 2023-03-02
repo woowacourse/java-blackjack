@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public static String readMoreCard(final Participant participant) {
-        System.out.println(participant.name().value() + "는 한장의 카드를 더 받으시겠습니다?(예는 y, 아니오는 n)");
+        System.out.println("\n" + participant.name().value() + "는 한장의 카드를 더 받으시겠습니다?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
 }
