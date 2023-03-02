@@ -70,4 +70,17 @@ public class CardsTest {
         // then
         assertThat(totalScore).isEqualTo(21);
      }
+
+    @Test
+    @DisplayName("가지고 있는 카드가 블랙잭인지 확인")
+    void isBlackjack() {
+        // given
+        Cards cards = new Cards(List.of(
+                new Card(Number.ACE, Pattern.HEART),
+                new Card(Number.TEN, Pattern.DIAMOND)
+        ));
+
+        // expect
+        assertThat(cards.isBlackjack()).isTrue();
+    }
 }
