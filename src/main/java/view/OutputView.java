@@ -75,26 +75,38 @@ public class OutputView {
         showPlayersCardAreaState(players);
     }
 
+    // ex: 딜러카드: 2 다이아
     private static void showDealerCardAreaState(final Dealer dealer) {
-        System.out.println(dealer.name().value() + ": " + makeCardMessage(dealer.firstCard()));
+        System.out.printf("%s: %s\n",
+                dealer.name().value(),
+                makeCardMessage(dealer.firstCard()));
     }
 
+    /**
+     * 말랑카드: 2 다이아, 잭 클로버
+     * 코다카드: ACE 다이아, 잭 클로버
+     */
     private static void showPlayersCardAreaState(final List<Player> players) {
         players.stream()
                 .map(OutputView::makeCardAreaStateMessage)
                 .forEach(System.out::println);
     }
 
+    /**
+     * 출력 : 말랑카드: 2 다이아, 잭 클로버
+     */
     public static void showPlayerCardAreaState(final Participant participant) {
         System.out.println(makeCardAreaStateMessage(participant));
     }
 
+    /* 말랑카드: 2 다이아, 잭 클로버 */
     private static String makeCardAreaStateMessage(final Participant participant) {
         return participant.cardArea().cards().stream()
                 .map(OutputView::makeCardMessage)
                 .collect(Collectors.joining(DELIMITER, participant.name().value() + " 카드: ", EMPTY));
     }
 
+    /* ex: 2 다이아*/
     private static String makeCardMessage(final Card card) {
         return String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()), SHAPE_MESSAGE_MAP.get(card.cardShape()));
     }
@@ -103,21 +115,38 @@ public class OutputView {
         System.out.println("\n딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
+    /**
+     * 딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
+     * pobi 카드: 2하트, 8스페이드, A 클로버 - 결과: 21
+     * jason 카드: 7클로버, K 스페이드 - 결과: 17
+     * <br>
+     * ## 최종 승패
+     * 딜러: 1승 1패
+     * pobi: 승
+     * jason: 패
+     */
     public static void showGameStatistic(final GameStatistic statistic) {
         showFinalCards(statistic);
         showFinalWinLose(statistic);
     }
 
+    /**
+     * 딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
+     * pobi 카드: 2하트, 8스페이드, A 클로버 - 결과: 21
+     * jason 카드: 7클로버, K 스페이드 - 결과: 17
+     */
     private static void showFinalCards(final GameStatistic statistic) {
         System.out.println();
-        showPlayerCardAreaResultState(statistic.dealer());
-        showParticipantsResultState(new ArrayList<>(statistic.resultPerParticipant().keySet()));
+        final List<Participant> participant = new ArrayList<>(statistic.resultPerParticipant().keySet());
+        participant.add(statistic.dealer());
+        showParticipantsResultState(participant);
     }
 
     private static void showParticipantsResultState(final List<? extends Participant> participants) {
         participants.forEach(OutputView::showPlayerCardAreaResultState);
     }
 
+    /* jason 카드: 7클로버, K 스페이드 - 결과: 17 */
     private static void showPlayerCardAreaResultState(final Participant participant) {
         final String message = participant.cardArea().cards().stream()
                 .map(OutputView::makeCardMessage)
