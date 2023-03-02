@@ -51,6 +51,10 @@ public class Cards {
         return calculateTotalScore() == MAXIMUM_SCORE;
     }
 
+    public int count() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

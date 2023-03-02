@@ -106,6 +106,6 @@ class CardsTest {
         final Card card = new Card(ACE, DIAMOND);
         cards.addCard(card);
 
-        assertThat(cards.getCards()).hasSize(1);
+        assertThat(cards.count()).isEqualTo(1);
     }
 }
