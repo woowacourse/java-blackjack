@@ -22,12 +22,22 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printPlayersCards(Players players) {
+    public static void printGamblersCards(Players players, Dealer dealer) {
+        printDealerCards(dealer);
+        printPlayersCards(players);
+    }
+
+    private static void printPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
             printPlayerName(player);
             printPlayerCards(player);
             System.out.println();
         }
+    }
+
+    private static void printDealerCards(Dealer dealer) {
+        printPlayerName(dealer);
+        printPlayerCards(dealer);
     }
 
     public static void printPlayerName(Gambler gambler) {
