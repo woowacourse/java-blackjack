@@ -27,6 +27,10 @@ public class Player {
     }
 
     public void addCard(Card card) {
-        this.cardHand.add(card);
+        if (canAdd()) {
+            this.cardHand.add(card);
+            return;
+        }
+        throw new IllegalStateException("카드 추가가 불가능하여 실행되지 않았습니다.");
     }
 }
