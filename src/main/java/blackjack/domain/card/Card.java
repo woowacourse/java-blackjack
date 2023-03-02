@@ -17,4 +17,8 @@ public class Card {
     public CardSymbol getSymbol(){
         return this.symbol;
     }
+
+    public boolean isAce(){
+        return number.equals(CardNumber.ACE);
+    }
 }

@@ -6,23 +6,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCards {
-    private static final int INIT_TOTAL_SCORE = 0;
+    private static final int ACE_VALUE_GAP = 10;
+    private static final int LIMIT_SCORE = 21;
 
-    private int totalScore;
     private final List<Card> playerCards;
 
     public PlayerCards() {
-        this.totalScore = INIT_TOTAL_SCORE;
         this.playerCards = new ArrayList<>();
     }
 
     public void updateCardScore(Card card) {
         this.playerCards.add(card);
-        calculateTotalScore(card);
+        calculateTotalScore();
     }
 
-    private void calculateTotalScore(Card card) {
-        this.totalScore += card.getNumber().getValue();
+    private int calculateTotalScore() {
+        int totalScore = 0;
+        for (Card card : playerCards) {
+            totalScore += card.getNumber().getValue();
+        }
+        return updateAceScore(totalScore);
+    }
+
+    private int updateAceScore(int totalScore) {
+        int aceSize = getAceCardsSize();
+        while (aceSize > 0 && totalScore > LIMIT_SCORE) {
+            totalScore -= ACE_VALUE_GAP;
+        }
+        return totalScore;
+    }
+
+    private int getAceCardsSize() {
+        return (int) playerCards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public List<Card> getPlayerCards() {
@@ -30,6 +47,6 @@ public class PlayerCards {
     }
 
     public int getTotalScore() {
-        return this.totalScore;
+        return calculateTotalScore();
     }
 }

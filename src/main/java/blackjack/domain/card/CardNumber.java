@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Arrays;
 
 public enum CardNumber {
-    ACE("A", 1),
+    ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
