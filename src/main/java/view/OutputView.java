@@ -60,6 +60,18 @@ public class OutputView {
     }
 
     private static void printPlayersResult(Map.Entry<Gambler, Integer> resultEntry) {
+        if (resultEntry.getKey().getClass().isInstance(Player.class)) {
+            int winCount = resultEntry.getValue();
+            System.out.print(resultEntry.getKey().getName() + ": ");
+            System.out.println(resolveOutcome(winCount));
+        }
+    }
+
+    private static String resolveOutcome(int winCount) {
+        if (winCount == 1) {
+            return "승";
+        }
+        return "패";
     }
 
     private static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
