@@ -23,4 +23,11 @@ public class Players {
                 .map(Player::new)
                 .collect(collectingAndThen(toUnmodifiableList(), Players::new));
     }
+
+    public void receiveTwoCards(Deck deck) {
+        players.forEach(player -> {
+            player.receiveCard(deck.draw());
+            player.receiveCard(deck.draw());
+        });
+    }
 }
