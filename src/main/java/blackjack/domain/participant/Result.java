@@ -1,9 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Suit;
-
 public enum Result {
-    WIN("승"), DRAW("무"), LOSE("패"), EMPTY("Null");
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패"),
+    EMPTY("");
 
     private final String value;
 
@@ -12,6 +13,6 @@ public enum Result {
     }
 
     public String getValue() {
-        return this.value;
+        return this == EMPTY ? "" : this.value;
     }
 }

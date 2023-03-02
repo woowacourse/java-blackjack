@@ -25,8 +25,9 @@ public class BlackJackGameController {
             InputView.readOneCard(player.getName());
         }
         OutputView.printDealerReceiveOneMoreCard();
-        OutputView.printCardsWithSum(players.getPlayers(), dealer);
 
+        blackJackGame.findWinner();
+        OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
     }
 }

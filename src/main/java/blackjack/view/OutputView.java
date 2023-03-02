@@ -11,9 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
     public static void printInitCard(List<Player> players, Set<Card> dealerCards) {
         String playerNames = players.stream()
-                .map(String::valueOf)
+                .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.println("딜러와 " + playerNames + "에게 2장을 나누었습니다.");
         System.out.println("딜러 카드: " + printCards(dealerCards));
@@ -24,8 +25,12 @@ public class OutputView {
 
     private static String printCards(Set<Card> cards) {
         return cards.stream()
-                .map(String::valueOf)
+                .map(OutputView::printCard)
                 .collect(Collectors.joining(", "));
+    }
+
+    private static String printCard(Card card) {
+        return card.getRank().getValue() + card.getSuit().getValue();
     }
 
     public static void printDealerReceiveOneMoreCard() {
@@ -40,9 +45,11 @@ public class OutputView {
     }
 
     public static void printFinalResult(final List<Player> players, final Map<Result, Integer> dealerResult) {
-        String finalResult = "";
+        StringBuilder finalResult = new StringBuilder();
         for (Result result : dealerResult.keySet()) {
-            finalResult += dealerResult.get(result) + result.getValue();
+            if (dealerResult.get(result) != 0) {
+                finalResult.append(dealerResult.get(result)).append(result.getValue());
+            }
         }
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + finalResult);
