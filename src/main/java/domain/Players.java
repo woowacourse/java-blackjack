@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Players {
 
@@ -18,5 +19,9 @@ public class Players {
         if (players.size() < MIN_PLAYERS_SIZE || players.size() > MAX_PLAYERS_NUMBER) {
             throw new IllegalArgumentException("플레이어의 수는 최소 1명, 최대 4명입니다.");
         }
+    }
+
+    public Stream<Player> stream() {
+        return players.stream();
     }
 }
