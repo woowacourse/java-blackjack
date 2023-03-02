@@ -1,7 +1,7 @@
 package controller;
 
+import model.Dealer;
 import model.Deck;
-import model.Result;
 import model.User;
 import model.Users;
 import model.card.Card;
@@ -15,56 +15,42 @@ public class BlackJackController {
     private static final String RECEIVE_CARD_COMMAND = "y";
 
     private final Deck deck;
+    private final Dealer dealer;
 
     public BlackJackController(final Deck deck) {
         this.deck = deck;
+        this.dealer = Dealer.getInstance();
     }
 
     public void init() {
         Users users = new Users(Arrays.asList(InputView.getPlayersName().split(",")));
-        Result result = new Result(users);
 
-        divideInitialCard(users, result);
-        OutputView.printDivideInitialCards(result);
+        users.getUsers().forEach(this::receiveInitialCards);
+        OutputView.printDivideInitialCards(users);
 
         for (User user : users.getUsers()) {
-            while (canReceiveMoreCard(result, user)) {
-                receiveMoreCard(result, user);
-                OutputView.printPlayerCardsInfo(user, result);
+            while (canReceiveMoreCard(user)) {
+                final Card card = deck.pick();
+                user.receiveCard(card);
+                OutputView.printPlayerHand(user);
             }
         }
-        dealerReceiveCard(result);
-        for (User user : users.getUsers()) {
-            final int totalCardValue = result.calculateTotalCardValue(user);
-            OutputView.printTotalValue(result.getUserScoreBoards(user), user, totalCardValue);
-        }
-    }
 
-    private static boolean canReceiveMoreCard(final Result result, final User user) {
-        return !"딜러".equals(user.getName())
-                && result.canPlayerReceiveCard(user)
-                && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(user.getName()));
-    }
-
-    private void divideInitialCard(final Users users, final Result result) {
-        for (User user : users.getUsers()) {
-            divideInitialCard(result, user);
-        }
-    }
-
-    private void divideInitialCard(final Result result, final User user) {
-        receiveMoreCard(result, user);
-        receiveMoreCard(result, user);
-    }
-
-    private void receiveMoreCard(final Result result, final User user) {
-        final Card card = deck.pick();
-        result.addCard(user, card);
-    }
-
-    private void dealerReceiveCard(final Result result) {
-        if (result.canDealerReceiveCard()) {
+        if (dealer.canReceiveCard()) {
             OutputView.printDealerGetCard();
+            dealer.receiveCard(deck.pick());
         }
+
+        OutputView.printTotalValue(users);
+    }
+    private void receiveInitialCards(final User user) {
+        user.receiveCard(deck.pick());
+        user.receiveCard(deck.pick());
+    }
+
+    private static boolean canReceiveMoreCard(final User user) {
+        return !Dealer.getInstance().equals(user)
+                && user.canReceiveCard()
+                && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(user.getName()));
     }
 }

@@ -11,17 +11,18 @@ public class Users {
         this.users = createPlayers(playersName);
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
     private List<User> createPlayers(final List<String> playersName) {
         final List<User> players = playersName.stream()
-                .map(Player::new)
+                .map(playerName -> new Player(playerName, Hand.create()))
                 .collect(Collectors.toList());
 
         players.add(0, Dealer.getInstance());
 
         return players;
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
 }

@@ -12,6 +12,10 @@ public class Card {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return value == Value.ACE;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -32,9 +36,5 @@ public class Card {
 
     public int getValue() {
         return this.value.getValue();
-    }
-
-    public boolean isValueAce() {
-        return value == Value.ACE;
     }
 }
