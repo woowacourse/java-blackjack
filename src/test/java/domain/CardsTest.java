@@ -33,7 +33,7 @@ public class CardsTest {
 
     @DisplayName("ACE가 존재할 경우, 점수 합에 10을 더한 점수가 21 이하인 경우 ACE를 11점으로 계산한다")
     @Test
-    void aceIs11_IfSumOfScoresUnder21() {
+    void aceIs11_IfSumOfScores21OrLess() {
         Cards cards = new Cards();
         Card card1 = new Card(Denomination.FOUR, Suits.HEART);
         Card card2 = new Card(Denomination.SIX, Suits.DIAMOND);
