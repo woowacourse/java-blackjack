@@ -1,7 +1,6 @@
 package blackjack.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Deck {
 
@@ -31,5 +30,9 @@ public class Deck {
 
     public static Card from(final int index) {
         return deck.get(index);
+    }
+
+    public static List<Integer> getKeys() {
+        return new ArrayList<>(deck.keySet());
     }
 }
