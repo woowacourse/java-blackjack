@@ -57,7 +57,8 @@ public class OutputView {
     }
 
     public static void printAfterDeal(final List<? extends Player> participants) {
-        System.out.println("딜러와 " + participants.stream().map(it -> it.name().value()).collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다");
+        System.out.println("딜러와 " + participants.stream().map(it -> it.name().value())
+                                                .collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다");
     }
 
     public static void showPlayersState(final List<? extends Player> participants) {
@@ -70,8 +71,9 @@ public class OutputView {
 
     private static String makeStateMessage(final Player player) {
         return player.cardArea().cards().stream()
-                .map(card -> String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()), SHAPE_MESSAGE_MAP.get(card.cardShape())))
-                .collect(Collectors.joining(", ", player.name().value() + "카드: ", ""));
+                     .map(card -> String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()),
+                                                SHAPE_MESSAGE_MAP.get(card.cardShape())))
+                     .collect(Collectors.joining(", ", player.name().value() + "카드: ", ""));
     }
 
     public static void showParticipantsStateResult(final List<? extends Player> participants) {
@@ -80,8 +82,11 @@ public class OutputView {
 
     public static void showPlayerStateResult(final Player player) {
         final String message = player.cardArea().cards().stream()
-                .map(card -> String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()), SHAPE_MESSAGE_MAP.get(card.cardShape())))
-                .collect(Collectors.joining(", ", player.name().value() + "카드: ", String.format(" - 결과: %d", player.cardArea().calculate())));
+                                     .map(card -> String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()),
+                                                                SHAPE_MESSAGE_MAP.get(card.cardShape())))
+                                     .collect(Collectors.joining(", ", player.name().value() + "카드: ",
+                                                                 String.format(" - 결과: %d",
+                                                                               player.cardArea().calculate())));
         System.out.println(message);
     }
 
@@ -94,23 +99,26 @@ public class OutputView {
         showParticipantsStateResult(resultDto.participants());
         final Map<Participant, PlayerResult> result = resultDto.participantsResult();
 
-        final Map<PlayerResult, Long> winOrLose = result.keySet().stream().collect(Collectors.groupingBy(result::get, counting()));
+        final Map<PlayerResult, Long> winOrLose = result.keySet().stream()
+                                                        .collect(Collectors.groupingBy(result::get, counting()));
 
         final String collect = winOrLose.keySet()
-                .stream()
-                .map(PlayerResult::reverse)
-                .map(it -> winOrLose.get(it) + PLAYER_RESULT_MAP.get(it))
-                .collect(Collectors.joining(" ", "딜러: ", ""));
+                                        .stream()
+                                        .map(PlayerResult::reverse)
+                                        .map(it -> winOrLose.get(it) + PLAYER_RESULT_MAP.get(it))
+                                        .collect(Collectors.joining(" ", "딜러: ", ""));
 
         System.out.println(collect);
 
         resultDto.participants()
-                .stream()
-                .map(it -> it.name().value() + ": " + PLAYER_RESULT_MAP.get(result.get(it)))
-                .forEach(System.out::println);
+                 .stream()
+                 .map(it -> it.name().value() + ": " + PLAYER_RESULT_MAP.get(result.get(it)))
+                 .forEach(System.out::println);
     }
 
     public static void showDealerState(final Dealer dealer) {
-        System.out.println(dealer.name().value() + ": " + VALUE_MESSAGE_MAP.get(dealer.firstCard().cardValue()) + SHAPE_MESSAGE_MAP.get(dealer.firstCard().cardShape()));
+        System.out.println(dealer.name().value() + ": " + VALUE_MESSAGE_MAP.get(
+                dealer.cardArea().firstCard().cardValue()) + SHAPE_MESSAGE_MAP.get(
+                dealer.cardArea().firstCard().cardShape()));
     }
 }

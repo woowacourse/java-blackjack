@@ -8,8 +8,11 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static domain.card.CardValue.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static domain.card.CardValue.SEVEN;
+import static domain.card.CardValue.SIX;
+import static domain.card.CardValue.TEN;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -42,19 +45,5 @@ class DealerTest {
 
         // when & then
         assertFalse(dealer.canHit());
-    }
-
-    @Test
-    void 딜러는_첫_장만_보여줄_수_있다() {
-        // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN)
-        );
-
-        final Dealer dealer = new Dealer(new Name("player1"), cardArea);
-
-        // then
-        assertEquals(dealer.firstCard(), new Card(CardShape.CLOVER, TEN));
     }
 }

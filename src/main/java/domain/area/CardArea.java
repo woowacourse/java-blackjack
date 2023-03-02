@@ -22,15 +22,28 @@ public class CardArea {
     }
 
     public int calculate() {
-        int aceCount = (int) cards.stream().filter(it -> it.cardValue().isAce()).count();
-        int total = cards.stream().mapToInt(it -> it.cardValue().value()).sum();
+        int aceCount = countAceCard();
+        int totalValue = sumTotalCardValue();
+
         while (aceCount > 0) {
-            if (total <= 11) {
-                total += 10;
+            if (totalValue <= 11) {
+                totalValue += 10;
             }
             aceCount--;
         }
-        return total;
+        return totalValue;
+    }
+
+    private int sumTotalCardValue() {
+        return cards.stream()
+                    .mapToInt(card -> card.cardValue().value())
+                    .sum();
+    }
+
+    private int countAceCard() {
+        return (int) cards.stream()
+                          .filter(card -> card.cardValue().isAce())
+                          .count();
     }
 
     public boolean canMoreCard() {
@@ -39,5 +52,9 @@ public class CardArea {
 
     public boolean isBurst() {
         return calculate() > 21;
+    }
+
+    public Card firstCard() {
+        return cards.get(0);
     }
 }

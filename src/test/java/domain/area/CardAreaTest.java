@@ -13,9 +13,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.card.CardValue.*;
+import static domain.card.CardValue.ACE;
+import static domain.card.CardValue.FOUR;
+import static domain.card.CardValue.JACK;
+import static domain.card.CardValue.NINE;
+import static domain.card.CardValue.SEVEN;
+import static domain.card.CardValue.SIX;
+import static domain.card.CardValue.TEN;
+import static domain.card.CardValue.THREE;
+import static domain.card.CardValue.TWO;
+import static domain.card.CardValue.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -57,7 +69,8 @@ class CardAreaTest {
     void 자신이_가진_카드의_합을_구할_수_있다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, valueOf(split[0])), new Card(CardShape.CLOVER, valueOf(split[1])));
+        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, valueOf(split[0])),
+                                               new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
@@ -75,7 +88,8 @@ class CardAreaTest {
     void 킹_퀸_잭은_10으로_계산한다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, valueOf(split[0])), new Card(CardShape.CLOVER, valueOf(split[1])));
+        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, valueOf(split[0])),
+                                               new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
@@ -157,5 +171,17 @@ class CardAreaTest {
 
         // when & then
         assertFalse(cardArea.isBurst());
+    }
+
+    @Test
+    void 딜러는_첫_장만_보여줄_수_있다() {
+        // given
+        final CardArea cardArea = new CardArea(
+                new Card(CardShape.CLOVER, TEN),
+                new Card(CardShape.CLOVER, SEVEN)
+        );
+
+        // when & then
+        assertEquals(cardArea.firstCard(), new Card(CardShape.CLOVER, TEN));
     }
 }

@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.area.CardArea;
-import domain.card.Card;
 
 public class Dealer extends Player {
 
@@ -12,9 +11,5 @@ public class Dealer extends Player {
     @Override
     public boolean canHit() {
         return cardArea.calculate() <= 16;
-    }
-
-    public Card firstCard() {
-        return cardArea.cards().get(0);
     }
 }
