@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
@@ -21,4 +22,12 @@ public abstract class Participant {
     }
 
     public abstract List<Card> openDrawnCards();
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<Card> getDrawnCards() {
+        return Collections.unmodifiableList(drawnCards.getCards());
+    }
 }

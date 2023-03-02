@@ -36,4 +36,12 @@ public class Card {
     public boolean isAce() {
         return value.isAce();
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Value getValue() {
+        return value;
+    }
 }
