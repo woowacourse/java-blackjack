@@ -9,13 +9,15 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
 import static domain.card.CardValue.*;
+import static domain.fixture.CardAreaFixture.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -29,48 +31,36 @@ class PlayerTest {
 
     static Stream<Arguments> canNotMoreCard() {
 
-        final CardArea under21CardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
-
-        final CardArea over21CardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
-
-        over21CardArea.addCard(new Card(CardShape.SPADE, TWO));
 
         return Stream.of(
-                Arguments.of(under21CardArea, HitState.STAY),
-                Arguments.of(over21CardArea, null),
-                Arguments.of(over21CardArea, HitState.STAY),
-                Arguments.of(over21CardArea, HitState.HIT)
+                Arguments.of(under21CardArea(), HitState.STAY),
+                Arguments.of(over21CardArea(), HitState.INIT),
+                Arguments.of(over21CardArea(), HitState.STAY),
+                Arguments.of(over21CardArea(), HitState.HIT)
         );
     }
 
     @Test
     void 참가자는_상태를_바꿀_수_있다() {
         // given
-        final Player player = new Player(Name.of("player1"), cardArea);
+        final Player player = new Player(Name.of("player1"), equal16CardArea());
 
         // when
         assertDoesNotThrow(() -> player.changeState(HitState.HIT));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"HIT", "INIT"})
+    @ParameterizedTest(name = "참가자는 버스트되지 않았으면서, STAY 원하지 않을 때(ex: {0}) 카드를 더 받을 수 있다.")
+    @EnumSource(mode = EXCLUDE, names = {"STAY"})
     void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final HitState hitState) {
         // given
-        final Player player = new Player(Name.of("player1"), cardArea);
-
+        final Player player = new Player(Name.of("player1"), equal16CardArea());
         player.changeState(hitState);
 
         // when & then
         assertTrue(player.canHit());
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "참가자는 버스트되었거나, STAY 를 원한다면 카드를 더 받을 수 없다")
     @MethodSource("canNotMoreCard")
     void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final HitState hitState) {
         // given

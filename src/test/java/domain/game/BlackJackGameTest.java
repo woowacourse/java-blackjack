@@ -39,7 +39,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    void hitForDealer_시_딜러가_hit_한다() {
+    void hitForDealer_시_딜러에_hit_한다() {
         // given
         final Dealer dealer = new Dealer(under16CardArea());
         BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());

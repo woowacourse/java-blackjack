@@ -15,7 +15,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static domain.card.CardShape.DIAMOND;
-import static domain.card.CardValue.*;
+import static domain.card.CardValue.TEN;
+import static domain.card.CardValue.TWO;
+import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.PlayerFixture.말랑;
 import static domain.game.ParticipantResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,24 +28,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ParticipantResultTest {
 
     static Stream<Arguments> participantAndDealerAndResult() {
-        final CardArea cardArea16 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX));
-        final CardArea cardArea17 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN));
-        final CardArea cardArea19 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
-        final CardArea cardArea20 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
-        final CardArea cardArea21 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, ACE));
 
         final CardArea cardArea22 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
         cardArea22.addCard(new Card(DIAMOND, TWO));
 
         return Stream.of(
-                Arguments.of(Named.of("16", cardArea16), Named.of("17", cardArea17), LOSER),
-                Arguments.of(Named.of("16", cardArea16), Named.of("22", cardArea22), WINNER),
-                Arguments.of(Named.of("16", cardArea16), Named.of("21", cardArea21), LOSER),
-                Arguments.of(Named.of("22", cardArea22), Named.of("22", cardArea22), LOSER),
-                Arguments.of(Named.of("22", cardArea22), Named.of("19", cardArea19), LOSER),
-                Arguments.of(Named.of("21", cardArea21), Named.of("21", cardArea21), DRAWER),
-                Arguments.of(Named.of("21", cardArea21), Named.of("20", cardArea20), WINNER),
-                Arguments.of(Named.of("16", cardArea16), Named.of("16", cardArea16), DRAWER)
+                Arguments.of(Named.of("16", equal16CardArea()), Named.of("17", equal17CardArea()), LOSER),
+                Arguments.of(Named.of("16", equal16CardArea()), Named.of("22", equal22CardArea()), WINNER),
+                Arguments.of(Named.of("16", equal16CardArea()), Named.of("21", equal21CardArea()), LOSER),
+                Arguments.of(Named.of("22", equal22CardArea()), Named.of("22", equal22CardArea()), LOSER),
+                Arguments.of(Named.of("22", equal22CardArea()), Named.of("19", equal19CardArea()), LOSER),
+                Arguments.of(Named.of("21", equal21CardArea()), Named.of("21", equal21CardArea()), DRAWER),
+                Arguments.of(Named.of("21", equal21CardArea()), Named.of("20", equal20CardArea()), WINNER),
+                Arguments.of(Named.of("16", equal16CardArea()), Named.of("16", equal16CardArea()), DRAWER)
         );
     }
 
