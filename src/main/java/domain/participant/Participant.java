@@ -2,6 +2,8 @@ package domain.participant;
 
 import domain.area.CardArea;
 
+import java.util.Objects;
+
 public class Participant extends Player {
 
     private State state;
@@ -12,11 +14,12 @@ public class Participant extends Player {
 
     @Override
     public boolean canHit() {
-        return cardArea.canMoreCard() && state != State.STAY;
+        return cardArea.canMoreCard() &&
+                (Objects.isNull(state) || wantHit());
     }
 
     public boolean wantHit() {
-        return state == State.HIT;
+        return state.isHit();
     }
 
     public void changeState(final State state) {
