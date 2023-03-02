@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.Card.Card;
+import domain.Card.CloverCard;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -14,11 +16,11 @@ class ScoreCalculatorTest {
     @DisplayName("카드 숫자 값들이 주어지면 단순 합산으로 점수를 계산할 수 있다.")
     void calculateScoreTest() {
         //given
-        List<Integer> numbers = List.of(2, 3, 4, 5);
+        List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE);
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         //when
-        int score = scoreCalculator.calculate(numbers);
+        int score = scoreCalculator.calculate(cards);
 
         //then
         Assertions.assertThat(score).isEqualTo(14);
@@ -27,12 +29,12 @@ class ScoreCalculatorTest {
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase")
     @DisplayName("에이스를 포함한 합산 점수가 21 초과 시 에이스를 1점으로 계산한다.")
-    void calculateScoreWithAceTest(List<Integer> numbers, int expected) {
+    void calculateScoreWithAceTest(List<Card> cards, int expected) {
         //given
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         //when
-        int score = scoreCalculator.calculate(numbers);
+        int score = scoreCalculator.calculate(cards);
 
         //then
         Assertions.assertThat(score).isEqualTo(expected);
@@ -40,9 +42,13 @@ class ScoreCalculatorTest {
 
     static Stream<Arguments> calculateScoreWithAceCase() {
         return Stream.of(
-                Arguments.of(List.of(11, 7, 8), 16),
-                Arguments.of(List.of(11, 11, 8), 20),
-                Arguments.of(List.of(11, 11, 10, 9), 21)
+                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN,
+                        CloverCard.CLOVER_EIGHT), 16),
+                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE,
+                        CloverCard.CLOVER_EIGHT), 20),
+                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN,
+                        CloverCard.CLOVER_NINE), 21)
         );
     }
+
 }
