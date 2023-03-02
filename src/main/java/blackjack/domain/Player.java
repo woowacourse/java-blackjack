@@ -4,6 +4,7 @@ public class Player extends Participant{
 
     private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
+    private static final int BLACKJACK_MAX_NUMBER = 21;
 
 
     public Player(ParticipantName participantName) {
@@ -19,14 +20,8 @@ public class Player extends Participant{
         return totalSumAceCardValueOne;
     }
 
-    private int calculateCardNumberAceCardValueOne() {
-        return getReceivedCards().stream()
-            .mapToInt(card -> card.getCardNumber().value)
-            .sum();
-    }
-
-    private boolean playerHasAceCard() {
-        return getReceivedCards().stream()
-            .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+    @Override
+    boolean decideHit() {
+        return calculateCardNumber() < BLACKJACK_MAX_NUMBER;
     }
 }

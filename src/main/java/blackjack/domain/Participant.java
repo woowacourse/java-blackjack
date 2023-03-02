@@ -31,6 +31,8 @@ public abstract class Participant {
             .sum();
     }
 
+    abstract boolean decideHit();
+
     abstract int calculateCardNumber();
 
 }
