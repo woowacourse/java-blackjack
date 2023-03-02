@@ -1,5 +1,7 @@
-package domain;
+package domain.user;
 
+import domain.Card;
+import domain.Cards;
 import java.util.List;
 
 public abstract class User {
@@ -14,5 +16,9 @@ public abstract class User {
         return cards.getCards();
     }
 
-    abstract boolean isHittable();
+    abstract public boolean isHittable();
+
+    public int getScore() {
+        return cards.getSumOfScores();
+    }
 }

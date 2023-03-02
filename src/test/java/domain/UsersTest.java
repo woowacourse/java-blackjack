@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayersTest {
+public class UsersTest {
 
     @DisplayName("참여 인원은 1명 이상 4명 이하이다")
     @ParameterizedTest

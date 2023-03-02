@@ -1,5 +1,8 @@
 package domain;
 
+import domain.user.Dealer;
+import domain.user.Player;
+import domain.user.User;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +12,7 @@ public class Users {
 
     private static final int PLAYER_MIN_SIZE = 1;
     private static final int PLAYER_MAX_SIZE = 4;
-    
+
     private final List<User> users;
 
     private Users(final List<User> users) {
@@ -48,7 +51,7 @@ public class Users {
         return users.stream()
             .filter(user -> user instanceof Player)
             .map(user -> (Player) user)
-            .collect(Collectors.toList());
+            .collect(Collectors.toUnmodifiableList());
     }
 
     public Dealer getDealer() {
