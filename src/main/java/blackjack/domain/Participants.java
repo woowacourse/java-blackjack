@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -18,6 +19,12 @@ public class Participants {
             participants.add(new Player(new ParticipantName(playerName)));
         }
         return new Participants(participants);
+    }
+
+    public List<String> getParticipantsName() {
+        return participants.stream()
+            .map(participant -> participant.getParticipantName().getName())
+            .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Participant> getParticipants() {
