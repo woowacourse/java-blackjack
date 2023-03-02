@@ -32,10 +32,6 @@ public class ParticipantCard {
         return cards.get(FIRST_CARD_INDEX);
     }
 
-    List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     int calculateScore() {
         int score = sumCards();
         if (score <= ACE_HIGH_POINTS && hasAce()) {
@@ -60,5 +56,9 @@ public class ParticipantCard {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
+    }
+
+    List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
