@@ -9,10 +9,14 @@ public class Name {
 
     public Name(final String name) {
         validateLength(name);
+        validateFormat(name);
+        this.name = name;
+    }
+
+    private static void validateFormat(final String name) {
         if (!NAME_REGEX.matcher(name).matches()) {
             throw new IllegalArgumentException("이름에 숫자나 특수문자가 포함될 수 없습니다.");
         }
-        this.name = name;
     }
 
     private static void validateLength(final String name) {
