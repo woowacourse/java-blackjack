@@ -2,7 +2,9 @@ package blackjack.domain.model;
 
 import blackjack.domain.vo.Name;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
     private final Name name;
@@ -20,7 +22,17 @@ public class Player {
         return this.cards.calculateTotalScore();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public String getName() {
+        return name.get();
+    }
+
+    public List<String> getCards() {
+        return cards.getCards().stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getOneCard(){
+        return List.of(this.cards.getFirstCard().getCardName());
     }
 }
