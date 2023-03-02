@@ -9,7 +9,7 @@
 ```mermaid
 graph TD
 의존성그래프
-BlackJackGame --> Participant
+BlackJackGame --> Players
 BlackJackGame --> Deck
 BlackJackGame --> Dealer
 
@@ -49,16 +49,16 @@ Card --> Symbol
     - 딜러와 플레이어에게 카드를 2장씩 나눠준다.
       -- 카드를 나눠준다
 3. Participant
-    - 21 이상인지 확인하고
-        - 21 이상이라면,
-            - 블랙잭인지 확인한다 = 받을 수 없음
-            - BURST인지 확인한다 = 받을 수 없음4
-    - 현재 점수를 숫자 형태로 반환한다
-    - 현재 카드를 반한한다
+    - [x] 21 이상인지 확인하고
+        - [x] 21 이상이라면,
+            - [x] 블랙잭인지 확인한다 = 받을 수 없음
+            - [x] BURST인지 확인한다 = 받을 수 없음4
+    - [x] 현재 점수를 숫자 형태로 반환한다
+    - [x] 현재 카드를 반환한다
 4. Player
-    - 21 미만이면, 받을 수 있다는 boolean
+    - [x] 21 미만이면, 받을 수 있다는 boolean
 5. Dealer
-    - 16 이하이면, 받을 수 있따는 boolean
+    - [x] 16 이하이면, 받을 수 있따는 boolean
 6. CardPocket
     - [x]  카드의 Symbol 점수를 계산한다.(ScoreCalculator 역할)
     - 카드반환 한다
@@ -70,10 +70,10 @@ Card --> Symbol
     - [x] value는 int 형으로 저장한다
 9. Card
     - [x] Shape와 Symbol을 저장하는 자료구조
-    -
+
 10. Players
     - 플레이어 이름 중복
     - 플레이어 수 1명이상, 5명 이하
 11. Name
-    - isBlank 체크
-    - 100자 이하 체크
+    - [x] isBlank 체크
+    - [x] 100자 이하 체크
