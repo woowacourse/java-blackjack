@@ -20,4 +20,8 @@ public enum PlayerCommand {
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
+
+    public boolean isHit() {
+        return this.equals(HIT);
+    }
 }
