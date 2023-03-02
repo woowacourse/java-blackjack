@@ -15,7 +15,7 @@ public class Player {
     }
 
     public boolean hasSameNameWith(String name) {
-        return playerName.getValue().equals(name);
+        return playerName.isSameWith(name);
     }
 
     public int sumCardPool() {
@@ -24,5 +24,13 @@ public class Player {
 
     public int compareTo(Player otherPlayer) {
         return sumCardPool() - otherPlayer.sumCardPool();
+    }
+
+    public Name getPlayerName() {
+        return playerName;
+    }
+
+    public CardPool getCardPool() {
+        return cardPool;
     }
 }

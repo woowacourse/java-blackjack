@@ -82,4 +82,12 @@ public class People {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 플레이어가 존재하지 않습니다"));
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }
