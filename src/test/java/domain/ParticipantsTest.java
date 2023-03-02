@@ -73,15 +73,19 @@ class ParticipantsTest {
     @Test
     @DisplayName("딜러와 참가자가 버스트가 아니면, 더 높은 점수의 참가자가 승리한다.")
     void NoBustResultTest() {
+        //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
         }
+
+        //when
         participant.findDealer().receiveCard(new Card("A스페이드", 11));
 
         Map<String, Result> playerResults = participant.getPlayerResults();
         Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
 
+        //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
         assertThat(dealerResults.get(Result.WIN)).isEqualTo(1);
     }
@@ -89,6 +93,7 @@ class ParticipantsTest {
     @Test
     @DisplayName("딜러와 참가자가 둘 다 버스트인 경우 무승부를 반환한다.")
     void BothBustTest() {
+        //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
@@ -100,9 +105,11 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
 
+        //when
         Map<String, Result> playerResults = participant.getPlayerResults();
         Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
 
+        //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.TIE);
         assertThat(dealerResults.get(Result.TIE)).isEqualTo(1);
     }
@@ -110,6 +117,7 @@ class ParticipantsTest {
     @Test
     @DisplayName("딜러가 버스트이고 참가자가 버스트가 아닌 경우 참가자가 승리한다.")
     void playerWinWhenDealerBust() {
+        //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
@@ -120,9 +128,11 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
 
+        //when
         Map<String, Result> playerResults = participant.getPlayerResults();
         Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
 
+        //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
         assertThat(dealerResults.get(Result.LOSE)).isEqualTo(1);
     }
@@ -130,6 +140,7 @@ class ParticipantsTest {
     @Test
     @DisplayName("딜러가 버스트가 아니고 참가자가 버스트가 아닌 경우 딜러가 승리한다.")
     void dealerWinWhenPlayerBust() {
+        //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
@@ -140,9 +151,11 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
 
+        //when
         Map<String, Result> playerResults = participant.getPlayerResults();
         Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
 
+        //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
         assertThat(dealerResults.get(Result.WIN)).isEqualTo(1);
     }
@@ -150,6 +163,7 @@ class ParticipantsTest {
     @Test
     @DisplayName("딜러와 참가자가 버스트가 아니고, 동점인 경우 카드 개수가 적은 사람이 승리한다.")
     void sameHandValueBothNoBust() {
+        //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
@@ -160,9 +174,11 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("6스페이드", 6));
         dealer.receiveCard(new Card("K스페이드", 10));
 
+        //when
         Map<String, Result> playerResults = participant.getPlayerResults();
         Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
 
+        //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
         assertThat(dealerResults.get(Result.LOSE)).isEqualTo(1);
     }
