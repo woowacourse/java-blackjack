@@ -12,7 +12,8 @@ public class Player implements Gambler {
         initialPick();
     }
 
-    private void initialPick() {
+    @Override
+    public void initialPick() {
         pickCard();
         pickCard();
     }
