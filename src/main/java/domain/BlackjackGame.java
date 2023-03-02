@@ -28,15 +28,8 @@ public class BlackjackGame {
     public Map<Participant, GameResult> getResult() {
         Map<Participant, GameResult> result = new HashMap<>();
         for (Participant player : participants.getPlayers()) {
-            result.put(player, getGameResult(player.getScore()));
+            result.put(player, GameResult.of(player, participants.getDealer()));
         }
         return result;
-    }
-
-    private GameResult getGameResult(int score) {
-        if (score > participants.getDealerScore()) {
-            return GameResult.WIN;
-        }
-        return GameResult.LOSE;
     }
 }

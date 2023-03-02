@@ -32,13 +32,12 @@ public class Participants {
                            .collect(Collectors.toList());
     }
 
-    public int getDealerScore() {
-        Participant dealer = participants.stream()
-                                         .filter(participant -> participant instanceof Dealer)
-                                         .findAny()
-                                         .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
-                                                 "찾지 못했습니다."));
-        return dealer.getScore();
+    public Participant getDealer() {
+        return participants.stream()
+                           .filter(participant -> participant instanceof Dealer)
+                           .findAny()
+                           .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
+                                   "찾지 못했습니다."));
     }
 
     public List<Participant> toList() {

@@ -37,6 +37,7 @@ class BlackjackGameTest {
                 new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART,
                         CardNumber.THREE)));
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
+        blackjackGame.dealOutCard();
 
         assertThat(blackjackGame.getResult()).containsEntry(new Player("jamie"), GameResult.LOSE);
     }
