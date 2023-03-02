@@ -1,12 +1,12 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class BlackjackGame {
 
     private static final int BLACK_JACK_NUMBER = 21;
+    private static final int START_HIT_COUNT = 2;
 
     private final Deck deck;
     private final People people;
@@ -16,7 +16,17 @@ public class BlackjackGame {
         this.people = new People(playerNames, dealerName);
     }
 
+    public void startHit() {
+        for (int i = 0; i < START_HIT_COUNT; i++) {
+            people.letPlayersToHit(deck);
+        }
+    }
+
     public boolean isBurst(String playerName) {
         return people.isBurst(playerName, BLACK_JACK_NUMBER);
+    }
+
+    public Map<Player, GameResult> getGameResultForAllPlayer() {
+        return people.makeGameResultForAllPlayer();
     }
 }
