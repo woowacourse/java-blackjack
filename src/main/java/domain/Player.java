@@ -18,7 +18,10 @@ public class Player extends Participant {
         validateNotEmpty(name);
         validateNoDealer(name);
         validateDoesNotContainComma(name);
+        validateNameLength(name);
     }
+
+
 
     private void validateNotEmpty(String name) {
         if (name.isBlank()) {
@@ -41,6 +44,12 @@ public class Player extends Participant {
     private void validateDoesNotContainComma(String name) {
         if (name.contains(",")) {
             throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
+        }
+    }
+
+    private void validateNameLength(String name) {
+        if (name.length() > 10) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NAME_LENGTH.getMessage());
         }
     }
 }
