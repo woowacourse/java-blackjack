@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -96,5 +97,20 @@ class PersonTest {
         // then
         assertThat(gameResult)
                 .isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("점수가 21점을 넘을 때 카드를 뽑으면 예외가 발생해야 한다.")
+    void addCard_overScore() {
+        // given
+        Person person = new Person("encho");
+        person.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        person.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        person.addCard(new Card(Suit.DIAMOND, Rank.KING));
+
+        // expect
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            person.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+        }).withMessage("[ERROR] 점수가 21점을 넘으면 카드를 더 뽑을 수 없습니다.");
     }
 }

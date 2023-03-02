@@ -10,6 +10,9 @@ public class Person {
     }
 
     public void addCard(Card card) {
+        if (getScore() > 21) {
+            throw new IllegalArgumentException("[ERROR] 점수가 21점을 넘으면 카드를 더 뽑을 수 없습니다.");
+        }
         cards.addCard(card);
     }
 
