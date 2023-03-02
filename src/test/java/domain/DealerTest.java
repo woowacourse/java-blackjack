@@ -11,4 +11,16 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         assertThat(dealer.getName()).isEqualTo("딜러");
     }
+
+    @Test
+    @DisplayName("카드를 받는다.")
+    void addCard() {
+        Dealer dealer = new Dealer();
+
+        Card card = new Card(CardNumber.ACE,CardPattern.SPADE);
+        dealer.addCard(card);
+        assertThat(dealer.getCard(0)).isEqualTo(card);
+    }
+
+
 }
