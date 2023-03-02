@@ -15,16 +15,16 @@ public class Card {
         return type;
     }
 
-    public CardNumber getNumber() {
-        return number;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return type == card.type && number == card.number;
+    }
+
+    public CardNumber getNumber() {
+        return number;
     }
 
     @Override
