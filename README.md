@@ -12,8 +12,8 @@
 - [ ] `Players`와 `Dealer`를 가진다.
 
 ### Participant
-- [ ] `Cards`를 가진다.
-- [ ] `Card`를 받는다. 
+- [x] `Cards`를 가진다.
+- [x] `Card`를 받는다.
 
 ### Player (extends Participant)
 - [x] 이름을 가진다.
