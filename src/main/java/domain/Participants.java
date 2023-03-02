@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,46 +22,42 @@ public class Participants {
 
     private static void compareHandValue(Dealer dealer, Map<String, Result> playerResults,
         Player player) {
-        int dealerHandValue = dealer.getHandValue();
-        if (dealerHandValue > 21) {
-            dealerHandValue = 0;
-        }
+        int dealerHandValue = getParticapantHandValue(dealer);
+        int playerHandValue = getParticapantHandValue(player);
 
-        int playerHandValue = player.getHandValue();
-        if (playerHandValue > 21) {
-            playerHandValue = 0;
+        if (playerHandValue != dealerHandValue) {
+            playerResults.put(player.getName(), Result.compareHandValue(playerHandValue, dealerHandValue));
+            return;
         }
-        if (playerHandValue > dealerHandValue) {
-            playerResults.put(player.getName(), Result.WIN);
+        if (playerHandValue == 0) {
+            playerResults.put(player.getName(), Result.TIE);
+            return;
         }
-        if (playerHandValue < dealerHandValue) {
-            playerResults.put(player.getName(), Result.LOSE);
+        compareHandCount(dealer, playerResults, player);
+    }
+
+    private static int getParticapantHandValue(Participant participant) {
+        int participantHandValue = participant.getHandValue();
+        if (participantHandValue > 21) {
+            participantHandValue = 0;
         }
-        if (playerHandValue == dealerHandValue) {
-            compareHandCount(dealer, playerResults, player);
-        }
+        return participantHandValue;
     }
 
     private static void compareHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
-        if (player.getCardNames().size() > dealer.getCardNames().size()) {
-            playerResults.put(player.getName(), Result.LOSE);
+        int playerHandCount = player.getCardNames().size();
+        int dealerHandCount = dealer.getCardNames().size();
+        if (playerHandCount != dealerHandCount) {
+            playerResults.put(player.getName(), Result.compareHandCount(playerHandCount, dealerHandCount));
+            return;
         }
-        if (player.getCardNames().size() < dealer.getCardNames().size()) {
-            playerResults.put(player.getName(), Result.WIN);
-        }
-        if (player.getCardNames().size() == dealer.getCardNames().size()) {
-            playerResults.put(player.getName(), Result.TIE);
-        }
+        playerResults.put(player.getName(), Result.TIE);
     }
 
     public void deal(Deck deck) {
         for (Participant participant : participants) {
             participant.receiveCard(deck.draw());
         }
-    }
-
-    public List<Participant> getParticipants() {
-        return new ArrayList<>(participants);
     }
 
     public List<Player> findPlayers() {
@@ -89,14 +86,18 @@ public class Participants {
     public Map<Participant, String> getScores() {
         Map<Participant, String> scores = new LinkedHashMap<>();
         for (Participant participant : participants) {
-            if (participant.getHandValue() > 21) {
-                scores.put(participant, "버스트");
-                continue;
-            }
-            scores.put(participant, String.valueOf(participant.getHandValue()));
+            judgeBust(scores, participant);
         }
 
         return scores;
+    }
+
+    private void judgeBust(Map<Participant, String> scores, Participant participant) {
+        if (participant.getHandValue() > 21) {
+            scores.put(participant, "버스트");
+            return;
+        }
+        scores.put(participant, String.valueOf(participant.getHandValue()));
     }
 
     public Map<String, Result> getPlayerResults() {
@@ -110,25 +111,23 @@ public class Participants {
     }
 
     public Map<Result, Integer> getDealerResults(Map<String, Result> results) {
-        int dealerWinCount = 0;
-        int dealerTieCount = 0;
-        int dealerLoseCount = 0;
+        EnumMap<Result, Integer> result = new EnumMap<>(Result.class);
 
         for (Result playerResult : results.values()) {
-            if (playerResult.equals(Result.WIN)) {
-                dealerLoseCount += 1;
-            }
-            if (playerResult.equals(Result.TIE)) {
-                dealerTieCount += 1;
-            }
-            if (playerResult.equals(Result.LOSE)) {
-                dealerWinCount += 1;
-            }
+            judgeResult(result, playerResult);
         }
-        LinkedHashMap<Result, Integer> dealerResults = new LinkedHashMap<>();
-        dealerResults.put(Result.WIN, dealerWinCount);
-        dealerResults.put(Result.LOSE, dealerLoseCount);
-        dealerResults.put(Result.TIE, dealerTieCount);
-        return dealerResults;
+        return result;
+    }
+
+    private void judgeResult(EnumMap<Result, Integer> result, Result playerResult) {
+        if (playerResult.equals(Result.WIN)) {
+            result.put(Result.LOSE, result.getOrDefault(Result.LOSE, 0) + 1);
+        }
+        if (playerResult.equals(Result.TIE)) {
+            result.put(Result.TIE, result.getOrDefault(Result.TIE, 0) + 1);
+        }
+        if (playerResult.equals(Result.LOSE)) {
+            result.put(Result.WIN, result.getOrDefault(Result.WIN, 0) + 1);
+        }
     }
 }
