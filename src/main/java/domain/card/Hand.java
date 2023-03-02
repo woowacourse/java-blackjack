@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Hand {
     private static final int BLACKJACK = 21;
     private static final int ACE_OFFSET = 10;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 

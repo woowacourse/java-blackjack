@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,18 +10,18 @@ public abstract class Participant {
 
     private static final int BLACKJACK = 21;
 
-    private final Cards cards;
+    private final Hand hand;
 
     Participant() {
-        this.cards = new Cards();
+        this.hand = new Hand();
     }
 
     public void addCard(Card card) {
-        cards.addCard(card);
+        hand.addCard(card);
     }
 
     public int calculateScore() {
-        return cards.getScore();
+        return hand.getScore();
     }
 
     public boolean isBust() {
@@ -31,6 +31,6 @@ public abstract class Participant {
     public abstract boolean isStay();
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.toList());
+        return Collections.unmodifiableList(hand.toList());
     }
 }
