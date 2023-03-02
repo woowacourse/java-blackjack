@@ -2,6 +2,9 @@ package domain;
 
 public class Name {
 
+    private static final int MIN_LENGTH = 1;
+    private static final int MAX_LENGTH = 15;
+
     private final String name;
 
     public Name(String name) {
@@ -10,7 +13,7 @@ public class Name {
     }
 
     private static void validateLength(final String name) {
-        if (name.length() < 1 || name.length() > 15) {
+        if (name.length() < MIN_LENGTH || name.length() > MAX_LENGTH) {
             throw new IllegalArgumentException();
         }
     }
