@@ -1,16 +1,16 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ParticipantCards {
 
     private static final int INITIAL_SIZE = 2;
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
     public ParticipantCards(final List<Card> cards) {
         if (cards.size() != INITIAL_SIZE) {
@@ -20,7 +20,7 @@ public class ParticipantCards {
         if (new HashSet<>(cards).size() != INITIAL_SIZE) {
             throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
         }
-        this.cards = new LinkedHashSet<>(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
     public void receive(final Card card) {
@@ -35,5 +35,11 @@ public class ParticipantCards {
                 .map(Card::getNumber)
                 .collect(Collectors.toList());
         return CardNumber.getMaxValueNear21(cardNumbers);
+    }
+
+    public List<Card> open(int size) {
+        return IntStream.range(0, size)
+                .mapToObj(cards::get)
+                .collect(Collectors.toList());
     }
 }
