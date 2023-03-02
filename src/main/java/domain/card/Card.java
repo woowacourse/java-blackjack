@@ -16,12 +16,20 @@ public class Card {
         return new Card(pattern, number);
     }
 
+    public boolean isAce() {
+        return number.isAce();
+    }
+
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return pattern == card.pattern && number == card.number;
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Card)) {
+            return false;
+        }
+        Card targetCard = (Card) target;
+        return pattern == targetCard.pattern && number == targetCard.number;
     }
 
     @Override
