@@ -9,6 +9,11 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String NAME_FORMAT = "카드: ";
     private static final String INIT = "";
+    private static final String WIN = "승";
+    private static final String LOSE = "패";
+    private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패";
+    private static final String RESULT_GUIDE_MESSAGE = "## 최종 승패";
+    private static final String SCORE_GUIDE_MESSAGE = " - 결과: ";
 
     private OutputView() {
     }
@@ -42,21 +47,18 @@ public class OutputView {
     public static void printScore(Gambler gambler) {
         printPlayerName(gambler);
         printPlayerCards(gambler);
-        System.out.print(" - 결과: ");
+        System.out.print(SCORE_GUIDE_MESSAGE);
         System.out.println(gambler.getScore());
     }
 
     public static void printResult(Map<Gambler, Integer> result) {
-        System.out.println("## 최종 승패");
+        System.out.println(RESULT_GUIDE_MESSAGE);
 
 
         for (Map.Entry<Gambler, Integer> resultEntry : result.entrySet()) {
             printDealerResult(resultEntry, result.size());
             printPlayersResult(resultEntry);
         }
-        /*
-        Controller >> Map<Gambler,승리횟수>
-        * */
     }
 
     private static void printPlayersResult(Map.Entry<Gambler, Integer> resultEntry) {
@@ -69,16 +71,16 @@ public class OutputView {
 
     private static String resolveOutcome(int winCount) {
         if (winCount == 1) {
-            return "승";
+            return WIN;
         }
-        return "패";
+        return LOSE;
     }
 
     private static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
         if (gamblerEntry.getKey().getClass().isInstance(Dealer.class)) {
             int winCount = gamblerEntry.getValue();
             int loseCount = size - winCount - 1;
-            System.out.printf("딜러: %d승 %d패", winCount, loseCount);
+            System.out.printf(DEALER_RESULT_FORMAT, winCount, loseCount);
         }
     }
 }
