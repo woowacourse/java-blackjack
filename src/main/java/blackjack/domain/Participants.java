@@ -46,11 +46,18 @@ public class Participants {
         }
     }
 
-    public Map<String, List<Card>> openCards() {
+    public Map<String, List<Card>> openPlayerCards() {
         Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
-        cardsByParticipants.put("딜러", getDealerCards());
         players.forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
         return cardsByParticipants;
+    }
+
+    public Card openDealerFirstCard() {
+        return dealer.getCards().get(0);
+    }
+
+    public List<Card> openDealerCards() {
+        return dealer.getCards();
     }
 
     public List<Card> getDealerCards() {

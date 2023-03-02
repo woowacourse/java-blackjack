@@ -18,6 +18,6 @@ public class BlackJackGame {
     }
 
     public Map<String, List<Card>> openCards() {
-        return participants.openCards();
+        return participants.openPlayerCards();
     }
 }

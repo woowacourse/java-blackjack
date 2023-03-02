@@ -58,9 +58,9 @@ class ParticipantsTest {
         )));
         participants.handOut(mockGenerator.generate());
 
-        Map<String, List<Card>> cardsByParticipants = participants.openCards();
+        Map<String, List<Card>> cardsByParticipants = participants.openPlayerCards();
         assertThat(cardsByParticipants)
-                .containsAllEntriesOf(Map.of("딜러", List.of(new Card(SPADE, ACE), new Card(SPADE, TWO)),
+                .containsAllEntriesOf(Map.of(
                         "odo", List.of(new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR)),
                         "doy", List.of(new Card(HEART, THREE), new Card(HEART, FOUR))
                 ));
