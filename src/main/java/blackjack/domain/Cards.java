@@ -8,6 +8,8 @@ import java.util.List;
 class Cards {
     private static final int ACE_ADDITIONAL_SCORE = 10;
     private static final int BUST_LOWER_BOUND = 22;
+    private static final int BLACKJACK_COUNT = 2;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -45,5 +47,9 @@ class Cards {
         return cards.stream()
                 .map(Card::getLetter)
                 .collect(toUnmodifiableList());
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_COUNT && calculateTotalScore() == BLACKJACK_SCORE;
     }
 }

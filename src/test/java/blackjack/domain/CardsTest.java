@@ -15,6 +15,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class CardsTest {
 
+    @ParameterizedTest(name = "점수 산정에 들어갈 결과값을 반환한다. 입력: {0}, 점수: {1}")
+    @MethodSource("calculateTotalScoreSource")
+    void 점수_산정에_들어갈_결과값을_반환한다(final List<Rank> ranks, final int result) {
+        final Cards cards = new Cards();
+
+        for (Rank rank : ranks) {
+            cards.add(new Card(rank, Shape.SPADE));
+        }
+
+        assertThat(cards.calculateTotalScore()).isEqualTo(result);
+    }
+
     static Stream<Arguments> calculateTotalScoreSource() {
         return Stream.of(
                 Arguments.of(List.of(Rank.FIVE, Rank.ACE), 16),
@@ -27,18 +39,6 @@ public class CardsTest {
                 Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), 22),
                 Arguments.of(List.of(Rank.JACK, Rank.ACE, Rank.KING, Rank.NINE), 30)
         );
-    }
-
-    @ParameterizedTest(name = "점수 산정에 들어갈 결과값을 반환한다. 입력: {0}, 점수: {1}")
-    @MethodSource("calculateTotalScoreSource")
-    void 점수_산정에_들어갈_결과값을_반환한다(final List<Rank> ranks, final int result) {
-        final Cards cards = new Cards();
-
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, Shape.SPADE));
-        }
-
-        assertThat(cards.calculateTotalScore()).isEqualTo(result);
     }
 
     @Test
@@ -70,4 +70,25 @@ public class CardsTest {
         assertThat(result).containsExactly("5다이아몬드", "A클로버");
     }
 
+    @ParameterizedTest(name = "블랙잭인지 확인한다. 입력값: {0}, 결과값: {1}")
+    @MethodSource("isBlackjackSource")
+    void 블랙잭인지_확인한다(final List<Rank> ranks, final boolean result) {
+        final Cards cards = new Cards();
+
+        for (Rank rank : ranks) {
+            cards.add(new Card(rank, Shape.SPADE));
+        }
+
+        assertThat(cards.isBlackjack()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isBlackjackSource() {
+        return Stream.of(
+                Arguments.of(List.of(Rank.FIVE, Rank.ACE), false),
+                Arguments.of(List.of(Rank.ACE, Rank.ACE), false),
+                Arguments.of(List.of(Rank.ACE, Rank.KING), true),
+                Arguments.of(List.of(Rank.FIVE, Rank.KING, Rank.SIX), false),
+                Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), false)
+        );
+    }
 }
