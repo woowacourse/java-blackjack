@@ -16,7 +16,7 @@ public class Player {
 
     public Player(String name, List<Card> cards) {
         this.name = name;
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
         this.score = calculateScore();
     }
 
