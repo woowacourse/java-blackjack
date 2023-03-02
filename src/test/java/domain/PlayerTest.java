@@ -60,4 +60,18 @@ public class PlayerTest {
         player.hit(new Card(Denomination.SIX, Suits.HEART));
         assertThat(player.isHittable()).isFalse();
     }
+
+    @DisplayName("본인의 이름인지 확인한다")
+    @Test
+    void isRightName_true() {
+        Player player = new Player("hongo");
+        assertThat(player.isRightName("hongo")).isTrue();
+    }
+
+    @DisplayName("본인의 이름이 아닌지 확인한다")
+    @Test
+    void isRightName_false() {
+        Player player = new Player("hongo");
+        assertThat(player.isRightName("kiara")).isFalse();
+    }
 }

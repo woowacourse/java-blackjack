@@ -37,6 +37,10 @@ public class BlackJack {
         user.hit(deck.pickCard());
     }
 
+    public void giveCard(String playerName) {
+        users.hitCardByName(playerName, deck.pickCard());
+    }
+
     public Map<Player, GameResult> calculateGameResults() {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();

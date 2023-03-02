@@ -78,4 +78,18 @@ public class BlackJackTest {
         Map<Player, GameResult> gameResults = blackJack.calculateGameResults();
         assertThat(gameResults.get(player)).isEqualTo(GameResult.PUSH);
     }
+
+    @DisplayName("유저가 요청하면 카드를 하나 더 준다")
+    @Test
+    void giveCard_whenRequest() {
+        String playerName = "hongo";
+        Users users = Users.from(List.of(playerName));
+        BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        List<Player> players = users.getPlayers();
+
+        Player player = players.get(0);
+        int oldScore = player.getScore();
+        blackJack.giveCard(playerName);
+        assertThat(player.getScore()).isGreaterThan(oldScore);
+    }
 }

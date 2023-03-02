@@ -1,8 +1,10 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.user.Player;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -45,5 +47,15 @@ public class UsersTest {
     void validateDuplication() {
         assertThatThrownBy(() -> Users.from(List.of("hongo", "hongo", "ash", "kiara")))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
+    @Test
+    void hitCardByName() {
+        Users users = Users.from(List.of("hongo", "ash", "kiara"));
+
+        users.hitCardByName("hongo", new Card(Denomination.JACK, Suits.HEART));
+        Player player = users.getPlayers().get(0);
+        assertThat(player.getScore()).isEqualTo(10);
     }
 }

@@ -29,22 +29,33 @@ public class Users {
         return new Users(users);
     }
 
-    private static void validate(List<String> names) {
+    private static void validate(final List<String> names) {
         validateDuplication(names);
         validateSize(names);
     }
 
-    private static void validateDuplication(List<String> names) {
+    private static void validateDuplication(final List<String> names) {
         Set<String> distinctNames = new HashSet<>(names);
         if (distinctNames.size() != names.size()) {
             throw new IllegalArgumentException();
         }
     }
 
-    private static void validateSize(List<String> names) {
+    private static void validateSize(final List<String> names) {
         if (names.size() < PLAYER_MIN_SIZE || names.size() > PLAYER_MAX_SIZE) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public void hitCardByName(final String name, final Card card) {
+        findByName(name).hit(card);
+    }
+
+    private Player findByName(final String name) {
+        return getPlayers().stream()
+            .filter(player -> player.isRightName(name))
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public List<Player> getPlayers() {
