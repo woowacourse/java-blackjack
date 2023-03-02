@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
 
@@ -13,7 +12,7 @@ class DeckTest {
     void drawFirstTest() {
         Deck deck = new Deck((x) -> 0);
 
-        assertThat(deck.draw()).isEqualTo(new Card(CardType.HEART, CardNumber.ACE));
+        assertThat(deck.serve()).isEqualTo(new Card(CardType.HEART, CardNumber.ACE));
     }
 
     @Test
@@ -21,6 +20,6 @@ class DeckTest {
     void drawLastTest() {
         Deck deck = new Deck((x) -> 51);
 
-        assertThat(deck.draw()).isEqualTo(new Card(CardType.DIAMOND, CardNumber.KING));
+        assertThat(deck.serve()).isEqualTo(new Card(CardType.DIAMOND, CardNumber.KING));
     }
 }
