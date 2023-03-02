@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.Number.ACE;
 import static blackjack.domain.Number.QUEEN;
 import static blackjack.domain.Number.SEVEN;
 import static blackjack.domain.Number.SIX;
@@ -9,6 +10,7 @@ import static blackjack.domain.Suit.DIAMOND;
 import static blackjack.domain.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -53,6 +55,23 @@ class DealerTest {
     }
 
     @Test
+    void 카드를_받는다() {
+        //given
+        final List<Card> cardPack = new ArrayList<>(List.of(
+                new Card(QUEEN, CLOVER),
+                new Card(SIX, HEART)
+        ));
+        final Cards cards = new Cards(cardPack);
+        final Dealer dealer = new Dealer(cards);
+
+        //when
+        dealer.hit(new Card(ACE, DIAMOND));
+
+        //then
+        assertThat(dealer.isHittable()).isFalse();
+    }
+
+    @Test
     void 점수를_확인한다() {
         final Cards cards = new Cards(List.of(
                 new Card(TWO, CLOVER),
@@ -66,7 +85,7 @@ class DealerTest {
 }
 
 class Dealer {
-    
+
     private static final int MAXIMUM_CARD_COUNT = 2;
     private static final int MAXIMUM_SCORE = 16;
 
@@ -74,6 +93,10 @@ class Dealer {
 
     public Dealer(final Cards cards) {
         this.cards = cards;
+    }
+
+    public void hit(final Card card) {
+        cards.addCard(card);
     }
 
     public boolean isHittable() {

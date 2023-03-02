@@ -55,7 +55,7 @@ class PlayerTest {
     @Test
     void 카드를_받는다() {
         //given
-        List<Card> cardPack = new ArrayList<>(List.of(
+        final List<Card> cardPack = new ArrayList<>(List.of(
                 new Card(QUEEN, CLOVER),
                 new Card(KING, HEART)
         ));
@@ -71,7 +71,7 @@ class PlayerTest {
 
     @Test
     void 점수를_확인한다() {
-        List<Card> cardPack = new ArrayList<>(List.of(
+        final List<Card> cardPack = new ArrayList<>(List.of(
                 new Card(QUEEN, CLOVER),
                 new Card(KING, HEART)
         ));
