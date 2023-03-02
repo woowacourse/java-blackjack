@@ -40,11 +40,15 @@ public class OutputView {
 
     public void printCardsAndScores(List<Player> players) {
         for (Player player : players) {
-            String name = player.getName();
-            String cardDisplays = getCardDisplays(player.getCards());
-
-            System.out.println(name + "카드: " + cardDisplays + " - 결과: " + player.getScore());
+            printCardsAndScore(player);
         }
+    }
+
+    public void printCardsAndScore(Player player) {
+        String name = player.getName();
+        String cardDisplays = getCardDisplays(player.getCards());
+
+        System.out.println(name + "카드: " + cardDisplays + " - 결과: " + player.getScore());
     }
 
     public void printResult(String name, Result result) {
