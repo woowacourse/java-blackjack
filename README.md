@@ -14,13 +14,12 @@ flowchart
     Card --> Shape
 
     Cards --> Card
+
     Deck --> Card
 
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView
     BlackjackController --> OutputView
-
-    BlackjackGame --> Deck
 
     Players --> Player
     Player --> Gambler --> Hand
@@ -60,7 +59,7 @@ flowchart
             - [x] 딜러와 갬블러의 점수가 같으면 무승부가 된다.
 
           | Gambler\Dealer | BLACKJACK | STOP | BUST |
-                                                                                                              |----------------|-----------|------|-------|
+                                                                                                                        |----------------|-----------|------|-------|
           | BLACKJACK | 무승부 | 겜블러 승 | 겜블러 승 |
           | STOP | 딜러 승 | 값 비교 | 겜블러 승 |
           | BUST | 딜러 승 | 딜러 승 | 무승부 |

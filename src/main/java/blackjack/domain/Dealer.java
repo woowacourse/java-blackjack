@@ -15,4 +15,14 @@ class Dealer implements Player {
     public String getName() {
         return name.getValue();
     }
+
+    @Override
+    public void initialDraw(final Deck deck) {
+
+    }
+
+    @Override
+    public boolean canDraw() {
+        return false;
+    }
 }

@@ -6,6 +6,7 @@ import static blackjack.domain.Rank.JACK;
 import static blackjack.domain.Rank.KING;
 import static blackjack.domain.Rank.SEVEN;
 import static blackjack.domain.Rank.SIX;
+import static blackjack.domain.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class HandTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "승패를 구한다. 갬블러: {0}, 딜러: {1}, 결과값: {2}")
     @MethodSource("playBlackjackSource")
     void 승패를_구한다(final List<Rank> ranks, final List<Rank> dealerRanks, final Result expectedResult) {
         final Hand hand = generateHand(ranks);
@@ -63,5 +64,21 @@ public class HandTest {
         hand.add(new Card(ACE, Shape.SPADE));
 
         assertThat(hand.getCardLetters()).containsExactly("A스페이드");
+    }
+
+    @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력값: {0}, 결과값: {1}")
+    @MethodSource("isPlayableSource")
+    void 카드를_뽑을_수_있는지_확인한다(final List<Rank> ranks, final boolean result) {
+        final Hand hand = generateHand(ranks);
+
+        assertThat(hand.isPlayable()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isPlayableSource() {
+        return Stream.of(
+                Arguments.of(List.of(ACE, JACK), false),
+                Arguments.of(List.of(JACK, JACK, TWO), false),
+                Arguments.of(List.of(JACK, JACK), true)
+        );
     }
 }

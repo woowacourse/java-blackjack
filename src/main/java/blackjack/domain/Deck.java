@@ -1,5 +1,5 @@
 package blackjack.domain;
 
-interface Deck {
+public interface Deck {
     Card draw();
 }

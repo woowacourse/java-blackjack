@@ -55,6 +55,10 @@ class Hand {
         return Result.DRAW;
     }
 
+    public boolean isPlayable() {
+        return state.isPlayable();
+    }
+
     public List<String> getCardLetters() {
         return cards.getCardLetters();
     }
