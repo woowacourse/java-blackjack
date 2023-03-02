@@ -21,4 +21,18 @@ public class PlayerTest {
         player.addCard(card);
         assertThat(player.getCard(0)).isEqualTo(card);
     }
+
+    @Test
+    @DisplayName("카드값의 합이 21 초과 여부를 확인 할 수 있다.")
+    void checkOver21Test() {
+        Player player = new Player("pobi");
+        Card card1 = new Card(CardNumber.ACE,CardPattern.SPADE);
+        Card card2 = new Card(CardNumber.ACE,CardPattern.DIAMOND);
+        player.addCard(card1);
+        player.addCard(card2);
+
+        assertThat(player.isOverBlackJack()).isTrue();
+    }
+
+
 }
