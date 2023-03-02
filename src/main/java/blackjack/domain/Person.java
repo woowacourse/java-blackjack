@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Person {
 
-    void addCard();
+    void addCard(Card card);
 
     List<Card> showCards();
 
