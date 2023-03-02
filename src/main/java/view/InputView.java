@@ -20,7 +20,7 @@ public class InputView {
 
     private InputView() {}
 
-    public List<String> readPlayersName() {
+    public static List<String> readPlayersName() {
         System.out.println(PLAYER_NAME_GUIDE_MESSAGE);
 
         String input = scanner.nextLine();
@@ -30,7 +30,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public boolean readStand(PlayerName playerName) {
+    public static boolean readStand(PlayerName playerName) {
         System.out.println(playerName.getName() + STAND_GUIDE_MESSAGE);
 
         String input = scanner.nextLine().strip();
@@ -38,7 +38,7 @@ public class InputView {
         return input.equalsIgnoreCase(YES);
     }
 
-    private void validateStand(String input) {
+    private static void validateStand(String input) {
         if (input.equalsIgnoreCase(YES) || input.equalsIgnoreCase(NO)) {
             throw new IllegalArgumentException(INPUT_Y_OR_N_ERROR_GUIDE_MESSAGE);
         }
