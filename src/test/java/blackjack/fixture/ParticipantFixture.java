@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class ParticipantFixture {
     public static Participant create(final Card one, final Card two, final List<Card> cards) {
         ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, cards);
-        return new Participant(participantsCards) {
+        return new Participant(participantsCards, "pobi") {
             @Override
             protected void hit(final Card card) {
                 /* NOT IMPLEMENTED */
