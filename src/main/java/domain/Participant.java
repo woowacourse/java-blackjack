@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Participant {
 
-    private final String name;
-    private final List<Card> cards = new ArrayList<>();
+    protected final String name;
+    protected final List<Card> cards = new ArrayList<>();
 
     public Participant(String name) {
         this.name = name;
@@ -15,6 +15,13 @@ public class Participant {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getReadyCards() {
+        if (cards.size() < 2) {
+            throw new IllegalStateException();
+        }
+        return List.of(cards.get(0), cards.get(1));
     }
 
     @Override
