@@ -1,5 +1,7 @@
 package player;
 
+import java.util.List;
+
 import card.Card;
 
 public class Player {
@@ -16,5 +18,9 @@ public class Player {
 
     public int calculateScore() {
         return hand.calculateScore();
+    }
+
+    public List<Card> showCards() {
+        return hand.getCards();
     }
 }

@@ -43,4 +43,18 @@ class PlayerTest {
 
         assertThat(player.calculateScore()).isEqualTo(15);
     }
+
+    @Test
+    @DisplayName("플레이어는 현재 가지고 있는 카드를 반환할수 있다.")
+    void showCards() {
+        Player player = new Player(new Name("폴로"));
+        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        player.hit(card1);
+        player.hit(card2);
+        player.hit(card3);
+
+        assertThat(player.showCards()).contains(card1, card2, card3);
+    }
 }
