@@ -10,6 +10,10 @@ public class Player {
         this.cardPool = cardPool;
     }
 
+    public void draw(Card card) {
+        cardPool.add(card);
+    }
+
     public int sumCardPool() {
         return cardPool.sumCardNumbers();
     }
