@@ -4,7 +4,7 @@ import domain.deck.CardDeck;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Participant;
-import domain.player.State;
+import domain.player.HitState;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -48,7 +48,7 @@ class BlackJackGameTest {
             final Participant 말랑 = 말랑(under21CardArea());
             final Participant 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            blackJackGame.participants().forEach(it -> it.changeState(State.STAY));
+            blackJackGame.participants().forEach(it -> it.changeState(HitState.STAY));
 
             // when & then
             assertThat(blackJackGame.existCanHitParticipant()).isFalse();
@@ -71,7 +71,7 @@ class BlackJackGameTest {
             final Participant 말랑 = 말랑(under21CardArea());
             final Participant 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            말랑.changeState(State.HIT);
+            말랑.changeState(HitState.HIT);
 
             // when & then
             assertThat(blackJackGame.existCanHitParticipant()).isTrue();
@@ -129,7 +129,7 @@ class BlackJackGameTest {
             // given
             final Participant 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            코다.changeState(State.HIT);
+            코다.changeState(HitState.HIT);
             final int before = 코다.score();
 
             // when
@@ -144,7 +144,7 @@ class BlackJackGameTest {
             // given
             final Participant 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            코다.changeState(State.STAY);
+            코다.changeState(HitState.STAY);
             final int before = 코다.score();
 
             // when

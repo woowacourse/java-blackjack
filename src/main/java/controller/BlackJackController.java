@@ -2,9 +2,9 @@ package controller;
 
 import domain.deck.CardDeck;
 import domain.game.BlackJackGame;
+import domain.player.HitState;
 import domain.player.Name;
 import domain.player.Participant;
-import domain.player.State;
 import view.InputView;
 import view.OutputView;
 
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private static final Map<String, State> COMMAND_STATE_MAP = new HashMap<>();
+    private static final Map<String, HitState> COMMAND_STATE_MAP = new HashMap<>();
 
     static {
-        COMMAND_STATE_MAP.put("y", State.HIT);
-        COMMAND_STATE_MAP.put("n", State.STAY);
+        COMMAND_STATE_MAP.put("y", HitState.HIT);
+        COMMAND_STATE_MAP.put("n", HitState.STAY);
     }
 
     public void run() {
@@ -46,24 +46,24 @@ public class BlackJackController {
     private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
         while (blackJackGame.existCanHitParticipant()) {
             final Participant canHitParticipant = blackJackGame.findCanHitParticipant();
-            final State state = inputHitOrStay(canHitParticipant);
-            canHitParticipant.changeState(state);
+            final HitState hitState = inputHitOrStay(canHitParticipant);
+            canHitParticipant.changeState(hitState);
             blackJackGame.hitOrStayForParticipant(canHitParticipant);
             OutputView.showPlayerCardAreaState(canHitParticipant);
         }
     }
 
-    private State inputHitOrStay(final Participant participant) {
+    private HitState inputHitOrStay(final Participant participant) {
         final String command = InputView.readMoreCard(participant);
         return mapOrThrowCommand(command);
     }
 
-    private State mapOrThrowCommand(final String command) {
-        final State state = COMMAND_STATE_MAP.getOrDefault(command, null);
-        if (state == null) {
+    private HitState mapOrThrowCommand(final String command) {
+        final HitState hitState = COMMAND_STATE_MAP.getOrDefault(command, null);
+        if (hitState == null) {
             throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
         }
-        return state;
+        return hitState;
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {

@@ -4,7 +4,7 @@ import domain.area.CardArea;
 
 public class Participant extends Player {
 
-    private State state;
+    private final States states = States.init();
 
     public Participant(final Name name, final CardArea cardArea) {
         super(name, cardArea);
@@ -12,14 +12,14 @@ public class Participant extends Player {
 
     @Override
     public boolean canHit() {
-        return cardArea.canMoreCard() && state != State.STAY;
+        return cardArea.canMoreCard() && !states.isStay();
     }
 
     public boolean wantHit() {
-        return state == State.HIT;
+        return states.isHit();
     }
 
-    public void changeState(final State state) {
-        this.state = state;
+    public void changeState(final HitState hitState) {
+        states.setState(hitState);
     }
 }

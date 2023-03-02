@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
@@ -34,17 +33,16 @@ class ParticipantTest {
         final Participant participant = new Participant(Name.of("player1"), cardArea);
 
         // when
-        assertDoesNotThrow(() -> participant.changeState(State.HIT));
+        assertDoesNotThrow(() -> participant.changeState(HitState.HIT));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = "HIT")
-    @NullSource
-    void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final State state) {
+    @ValueSource(strings = {"HIT", "INIT"})
+    void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final HitState hitState) {
         // given
         final Participant participant = new Participant(Name.of("player1"), cardArea);
 
-        participant.changeState(state);
+        participant.changeState(hitState);
 
         // when & then
         assertTrue(participant.canHit());
@@ -52,10 +50,10 @@ class ParticipantTest {
 
     @ParameterizedTest
     @MethodSource("canNotMoreCard")
-    void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final State state) {
+    void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final HitState hitState) {
         // given
         final Participant participant = new Participant(Name.of("player1"), cardArea);
-        participant.changeState(state);
+        participant.changeState(hitState);
 
         // when & then
         assertFalse(participant.canHit());
@@ -76,10 +74,10 @@ class ParticipantTest {
         over21CardArea.addCard(new Card(CardShape.SPADE, TWO));
 
         return Stream.of(
-                Arguments.of(under21CardArea, State.STAY),
+                Arguments.of(under21CardArea, HitState.STAY),
                 Arguments.of(over21CardArea, null),
-                Arguments.of(over21CardArea, State.STAY),
-                Arguments.of(over21CardArea, State.HIT)
+                Arguments.of(over21CardArea, HitState.STAY),
+                Arguments.of(over21CardArea, HitState.HIT)
         );
     }
 }
