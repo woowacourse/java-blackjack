@@ -12,4 +12,8 @@ public class Card {
     public String getName() {
         return cardNumber.getLabel() + pattern.getValue();
     }
+
+    public int getScore() {
+        return cardNumber.getValue();
+    }
 }

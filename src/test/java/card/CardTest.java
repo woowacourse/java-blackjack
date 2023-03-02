@@ -23,4 +23,12 @@ class CardTest {
 
         assertThat(card.getName()).isEqualTo("A하트");
     }
+
+    @Test
+    @DisplayName("카드의 점수를 가져올 수 있다.")
+    void getScore() {
+        Card card = new Card(ACE, HEART);
+        int score = card.getScore();
+        assertThat(score).isEqualTo(1);
+    }
 }
