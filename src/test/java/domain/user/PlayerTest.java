@@ -40,7 +40,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 합산 점수가 21을 초과하면 Bust 상태가 된다.")
+    @DisplayName("합산 점수가 21을 초과하면 Bust 상태가 된다.")
     void checkBustByScoreTest() {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING);
@@ -48,9 +48,9 @@ class PlayerTest {
 
         //when
         player.receiveCard(CloverCard.CLOVER_QUEEN);
-        boolean result = player.isBust();
+        UserStatus result = player.getStatus();
 
         //then
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(PlayerStatus.BUST);
     }
 }
