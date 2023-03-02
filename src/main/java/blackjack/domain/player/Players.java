@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.exception.DuplicatedPlayerNameException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +17,11 @@ public class Players {
 
     public static Players from(List<String> names) {
         validateDuplicatedNames(names);
-        List<Player> players = names.stream()
-                .map(Challenger::new)
-                .collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
         players.add(new Dealer());
+        names.stream()
+                .map(Challenger::new)
+                .forEach(players::add);
         return new Players(players);
     }
 
@@ -39,5 +41,18 @@ public class Players {
             Card card2 = cardDeck.pick();
             player.pickStartCards(card1, card2);
         }
+    }
+
+    public List<Player> getChallengers() {
+        return players.stream()
+                .filter(player -> player instanceof Challenger)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public Player getDealer() {
+        return players.stream()
+                .filter(player -> player instanceof Dealer)
+                .findFirst()
+                .orElse(null);
     }
 }

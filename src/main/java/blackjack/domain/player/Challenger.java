@@ -24,4 +24,9 @@ public class Challenger extends Player {
     public Boolean canPick() {
         return holdingCards.sum() <= MAXIMUM_POINT;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }

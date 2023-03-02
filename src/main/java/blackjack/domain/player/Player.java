@@ -23,4 +23,6 @@ public abstract class Player {
     }
 
     public abstract Boolean canPick();
+
+    public abstract String getName();
 }
