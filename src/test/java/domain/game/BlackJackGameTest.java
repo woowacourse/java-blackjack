@@ -1,10 +1,7 @@
 package domain.game;
 
 import domain.deck.CardDeck;
-import domain.player.Dealer;
-import domain.player.HitState;
-import domain.player.Name;
-import domain.player.Player;
+import domain.player.*;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -69,9 +66,9 @@ class BlackJackGameTest {
         final GameStatistic statistic = blackJackGame.statistic();
 
         // then
-        assertThat(statistic.resultPerParticipant().get(말랑)).isEqualTo(ParticipantResult.DRAWER);
-        assertThat(statistic.resultPerParticipant().get(콩떡)).isEqualTo(ParticipantResult.LOSER);
-        assertThat(statistic.resultPerParticipant().get(코다)).isEqualTo(ParticipantResult.WINNER);
+        assertThat(statistic.resultPerParticipant().get(말랑)).isEqualTo(DealerCompeteResult.DRAW);
+        assertThat(statistic.resultPerParticipant().get(콩떡)).isEqualTo(DealerCompeteResult.WIN);
+        assertThat(statistic.resultPerParticipant().get(코다)).isEqualTo(DealerCompeteResult.LOSE);
     }
 
     @Nested

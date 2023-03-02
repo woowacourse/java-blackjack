@@ -3,6 +3,7 @@ package domain.game;
 import domain.area.CardArea;
 import domain.deck.CardDeck;
 import domain.player.Dealer;
+import domain.player.DealerCompeteResult;
 import domain.player.Name;
 import domain.player.Player;
 
@@ -62,11 +63,11 @@ public class BlackJackGame {
     }
 
     public GameStatistic statistic() {
-        final Map<Player, ParticipantResult> resultPerParticipant = players.stream()
+        final Map<Player, DealerCompeteResult> resultPerParticipant = players.stream()
                 .collect(toMap(
                         identity(),
-                        (it) -> ParticipantResult.judge(it, dealer))
-                );
+                        dealer::compete
+                ));
 
         return new GameStatistic(dealer, players, resultPerParticipant);
     }

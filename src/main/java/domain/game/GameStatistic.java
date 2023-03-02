@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.player.Dealer;
+import domain.player.DealerCompeteResult;
 import domain.player.Player;
 
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ public class GameStatistic {
 
     private final Dealer dealer;
     private final List<Player> players;
-    private final Map<Player, ParticipantResult> resultPerParticipant;
+    private final Map<Player, DealerCompeteResult> resultPerParticipant;
 
-    public GameStatistic(final Dealer dealer, final List<Player> players, final Map<Player, ParticipantResult> resultPerParticipant) {
+    public GameStatistic(final Dealer dealer, final List<Player> players, final Map<Player, DealerCompeteResult> resultPerParticipant) {
         this.dealer = dealer;
         this.players = players;
         this.resultPerParticipant = resultPerParticipant;
@@ -27,7 +28,7 @@ public class GameStatistic {
         return new ArrayList<>(players);
     }
 
-    public Map<Player, ParticipantResult> resultPerParticipant() {
+    public Map<Player, DealerCompeteResult> resultPerParticipant() {
         return resultPerParticipant;
     }
 }

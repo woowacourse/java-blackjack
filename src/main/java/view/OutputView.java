@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.game.GameStatistic;
-import domain.game.ParticipantResult;
 import domain.player.Dealer;
+import domain.player.DealerCompeteResult;
 import domain.player.Participant;
 import domain.player.Player;
 
@@ -24,7 +24,7 @@ public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
-    private static final Map<ParticipantResult, String> PLAYER_RESULT_MESSAGE_MAP = new EnumMap<>(ParticipantResult.class);
+    private static final Map<DealerCompeteResult, String> PLAYER_RESULT_MESSAGE_MAP = new EnumMap<>(DealerCompeteResult.class);
 
     private static final String EMPTY = "";
     private static final String DELIMITER = ", ";
@@ -59,9 +59,9 @@ public class OutputView {
     }
 
     private static void makePlayerResultMessage() {
-        PLAYER_RESULT_MESSAGE_MAP.put(ParticipantResult.WINNER, "승");
-        PLAYER_RESULT_MESSAGE_MAP.put(ParticipantResult.LOSER, "패");
-        PLAYER_RESULT_MESSAGE_MAP.put(ParticipantResult.DRAWER, "무");
+        PLAYER_RESULT_MESSAGE_MAP.put(DealerCompeteResult.WIN, "승");
+        PLAYER_RESULT_MESSAGE_MAP.put(DealerCompeteResult.LOSE, "패");
+        PLAYER_RESULT_MESSAGE_MAP.put(DealerCompeteResult.DRAW, "무");
     }
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Player> players) {
@@ -132,30 +132,30 @@ public class OutputView {
     }
 
     private static void showFinalDealerWinLose(final GameStatistic gameStatistic) {
-        final Map<Player, ParticipantResult> resultPerParticipant = gameStatistic.resultPerParticipant();
-        final Map<ParticipantResult, Long> participantWinLoseCount = resultPerParticipant.values().stream()
+        final Map<Player, DealerCompeteResult> resultPerParticipant = gameStatistic.resultPerParticipant();
+        final Map<DealerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
                 .collect(Collectors.groupingBy(Function.identity(), counting()));
         final String dealerStatisticMessage = stringBuilder.append("딜러:")
-                .append(dealerResultCount(participantWinLoseCount, ParticipantResult.LOSER))
-                .append(dealerResultCount(participantWinLoseCount, ParticipantResult.DRAWER))
-                .append(dealerResultCount(participantWinLoseCount, ParticipantResult.WINNER))
+                .append(dealerResultCount(dealerWinLoseCount, DealerCompeteResult.WIN))
+                .append(dealerResultCount(dealerWinLoseCount, DealerCompeteResult.DRAW))
+                .append(dealerResultCount(dealerWinLoseCount, DealerCompeteResult.LOSE))
                 .toString();
         System.out.println(dealerStatisticMessage);
     }
 
-    private static String dealerResultCount(final Map<ParticipantResult, Long> participantWinLoseCount, final ParticipantResult participantResult) {
-        final Long count = participantWinLoseCount.getOrDefault(participantResult.reverse(), 0L);
+    private static String dealerResultCount(final Map<DealerCompeteResult, Long> dealerWinLoseCount, final DealerCompeteResult dealerCompeteResult) {
+        final Long count = dealerWinLoseCount.getOrDefault(dealerCompeteResult, 0L);
         if (count == 0L) {
             return EMPTY;
         }
-        return String.format(" %d%s", count, PLAYER_RESULT_MESSAGE_MAP.get(participantResult.reverse()));
+        return String.format(" %d%s", count, PLAYER_RESULT_MESSAGE_MAP.get(dealerCompeteResult));
     }
 
     private static void showFinalParticipantsWinLose(final GameStatistic statistic) {
-        final Map<Player, ParticipantResult> resultPerParticipant = statistic.resultPerParticipant();
+        final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.resultPerParticipant();
         final List<Player> players = statistic.participants();
         players.stream()
-                .map(it -> it.name().value() + ": " + PLAYER_RESULT_MESSAGE_MAP.get(resultPerParticipant.get(it)))
+                .map(it -> it.name().value() + ": " + PLAYER_RESULT_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
                 .forEach(System.out::println);
     }
 }
