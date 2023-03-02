@@ -31,13 +31,18 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("ACE의 존재여부를 확인 할 수 있다.")
-    void isExistAceTest() {
+    @DisplayName("카드목록에 ACE가 존재하고 카드값의 합이 21 초과시 ACE의 값을 1로 계산한다")
+    void changeAceValue() {
         Card card1 = new Card(CardNumber.ACE,CardPattern.DIAMOND);
+        Card card2 = new Card(CardNumber.ACE,CardPattern.SPADE);
+        Card card3 = new Card(CardNumber.ACE,CardPattern.HEART);
+
         Cards cards = new Cards();
         cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
 
-        Assertions.assertThat(cards.isExistAce()).isTrue();
+        Assertions.assertThat(cards.getSum()).isEqualTo(13);
     }
-    
+
 }
