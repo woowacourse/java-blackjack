@@ -12,6 +12,7 @@ public class Result {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
     private static final int CAN_RECEIVE_DEALER_MAX_NUMBER = 16;
+    private static final int BURST_NUMBER = 21;
 
     private final Map<User, List<Card>> scoreBoards;
 
@@ -55,11 +56,20 @@ public class Result {
                 .mapToInt(Card::getValue)
                 .sum();
 
-        if (totalValue > 21 && cards.stream().anyMatch(Card::isValueAce)) {
-            return totalValue - 10;
+        return modifyValueOverBurstWithAce(cards, totalValue);
+    }
+
+    private int modifyValueOverBurstWithAce(final List<Card> cards, final int totalValue) {
+        if (isOverBurstWithAce(cards, totalValue)) {
+            final int minAceValue = totalValue - 10;
+            return minAceValue;
         }
 
         return totalValue;
+    }
+
+    private boolean isOverBurstWithAce(final List<Card> cards, final int totalValue) {
+        return totalValue > BURST_NUMBER && cards.stream().anyMatch(Card::isValueAce);
     }
 
     public Map<User, List<Card>> getUserScoreBoards(final User user) {
