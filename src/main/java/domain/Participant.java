@@ -16,6 +16,6 @@ abstract class Participant {
     }
 
     public boolean isDrawable() {
-        return upperBoundOfDrawable >= hand.calculateScore();
+        return upperBoundOfDrawable > hand.calculateScore();
     }
 }
