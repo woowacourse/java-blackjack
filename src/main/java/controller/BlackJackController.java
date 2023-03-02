@@ -5,7 +5,6 @@ import domain.game.BlackJackGame;
 import domain.player.Name;
 import domain.player.Participant;
 import domain.player.State;
-import org.jetbrains.annotations.NotNull;
 import view.InputView;
 import view.OutputView;
 
@@ -31,7 +30,6 @@ public class BlackJackController {
         OutputView.showGameStatistic(blackJackGame.statistic());
     }
 
-    @NotNull
     private BlackJackGame setUpGame() {
         final List<Name> participantNames = createParticipantNames();
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
