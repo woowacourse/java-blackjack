@@ -6,8 +6,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Participant extends Player {
-    private final String name;
     private GameResult gameResult;
+    private final String name;
 
     public Participant(String name) {
         this.name = name;
@@ -39,6 +39,11 @@ public class Participant extends Player {
         return Arrays.stream(GameResult.values())
                 .map(this::isGameResultEqualTo)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public boolean isNameEqualTo(String playerName) {
+        return this.name.equals(playerName);
     }
 
     private int isGameResultEqualTo(GameResult gameResult) {

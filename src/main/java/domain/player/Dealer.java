@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 
 public class Dealer extends Player {
     private final Map<GameResult, Integer> gameResults;
+    private final String name;
 
     public Dealer() {
         super();
+        name = "딜러";
         gameResults = new EnumMap<>(GameResult.class);
         initGameResult();
     }
@@ -48,6 +50,11 @@ public class Dealer extends Player {
         return Arrays.stream(GameResult.values())
                 .map(this.gameResults::get)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public boolean isNameEqualTo(String name) {
+        return this.name.equals(name);
     }
 
     @Override

@@ -36,6 +36,14 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
         blackJack.startGame();
 
-//        blackJack.giveCard("여우");
+        blackJack.giveCard("여우");
+
+        List<Card> cards = blackJack.getCardsFrom("여우");
+
+        assertThat(cards).containsExactly(
+                new Card(Shape.HEART, Number.THREE),
+                new Card(Shape.HEART, Number.FOUR),
+                new Card(Shape.HEART, Number.SEVEN)
+        );
     }
 }

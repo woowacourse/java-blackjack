@@ -32,4 +32,5 @@ public abstract class Player {
 
     public abstract List<Integer> getGameResult();
 
+    public abstract boolean isNameEqualTo(String playerName);
 }
