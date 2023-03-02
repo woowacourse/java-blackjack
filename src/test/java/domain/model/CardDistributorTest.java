@@ -16,7 +16,7 @@ class CardDistributorTest {
     public void testGiveCardToOne() {
         //given
         Set<Card> cardSet = new HashSet<>();
-        Player player = new Player(new Cards(cardSet));
+        Player player = new Player(new Cards(cardSet), "palyer");
 
         //when
         cardDistributor.giveCard(player);
@@ -30,9 +30,9 @@ class CardDistributorTest {
     public void testGiveCardToAll() {
         //given
         Set<Card> cardSet1 = new HashSet<>();
-        Player player1 = new Player(new Cards(cardSet1));
+        Player player1 = new Player(new Cards(cardSet1), "player1");
         Set<Card> cardSet2 = new HashSet<>();
-        Player player2 = new Player(new Cards(cardSet2));
+        Player player2 = new Player(new Cards(cardSet2), "player2");
 
         //when
         cardDistributor.giveCard(List.of(player1, player2));

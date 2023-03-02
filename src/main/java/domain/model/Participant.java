@@ -5,10 +5,12 @@ import java.util.Set;
 public abstract class Participant {
 
     private final Cards cards;
+    private final String name;
     private Score score;
 
-    public Participant(final Cards cards) {
+    public Participant(final Cards cards, final String name) {
         this.cards = cards;
+        this.name = name;
         this.score = makeScore(cards);
     }
 
@@ -27,6 +29,10 @@ public abstract class Participant {
 
     public Cards getCards() {
         return new Cards(Set.copyOf(cards.getCards()));
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Score getScore() {
