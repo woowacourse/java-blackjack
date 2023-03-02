@@ -48,6 +48,10 @@ public class Game {
         }
     }
 
+    public void dealAnotherCard() {
+        dealer.addCard(deck.drawCard());
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
