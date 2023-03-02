@@ -5,7 +5,7 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
 
-    public BlackjackGame(Players players){
+    public BlackjackGame(Players players) {
         this.deck = new Deck();
         this.dealer = new Dealer();
 
@@ -34,13 +34,13 @@ public class BlackjackGame {
         participant.receiveCard(card);
     }
 
-    public void giveAdditionalCardToDealer(){
-        while(dealer.calculateScore() < 17){
+    public void giveAdditionalCardToDealer() {
+        while (dealer.calculateScore() < 17) {
             giveCardTo(dealer);
         }
     }
 
-    public Dealer getDealer(){
+    public Dealer getDealer() {
         return dealer;
     }
 

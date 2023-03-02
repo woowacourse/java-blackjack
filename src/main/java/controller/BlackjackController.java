@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.Command;
+import domain.Dealer;
 import domain.Player;
 import domain.PlayerName;
 import domain.Players;
@@ -25,13 +26,15 @@ public class BlackjackController {
         Players players = createPlayers();
         BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitCards();
+        Dealer dealer = blackjackGame.getDealer();
 
-        outputView.printInitCards(blackjackGame.getDealer(), players);
+        outputView.printInitCards(dealer, players);
 
         for (Player player : players.getPlayers()) {
             requestMoreCard(blackjackGame, player);
         }
         blackjackGame.giveAdditionalCardToDealer();
+        outputView.printDealerHitCount(dealer.getHitCardCount());
         blackjackGame.result();
     }
 
@@ -52,6 +55,13 @@ public class BlackjackController {
             outputView.printPlayerCards(player);
         }
 
+        printPlayerCurrentState(player);
+    }
+    private boolean isHitCommand(String name) {
+        return Command.from(inputView.requestMoreCard(name)) != Command.HOLD;
+    }
+
+    private void printPlayerCurrentState(Player player) {
         if (player.isBusted()) {
             outputView.printBusted(player.getName());
             return;
@@ -60,7 +70,4 @@ public class BlackjackController {
         outputView.printPlayerCards(player);
     }
 
-    private boolean isHitCommand(String name) {
-        return Command.from(inputView.requestMoreCard(name)) != Command.HOLD;
-    }
 }

@@ -12,8 +12,9 @@ public class OutputView {
     private static final String GAME_INIT_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s";
     private static final String BUSTED_FORMAT = "%s는 버스트 되었습니다.";
-
     public static final String DELIMITER = ", ";
+    public static final String DEALER_NO_MORE_CARD = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
+    public static final String DEALER_MORE_CARDS_FORMAT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
 
     public void printInitCards(Dealer dealer, Players players) {
         String namesFormat = players.getPlayers().stream().map(Player::getName)
@@ -42,7 +43,7 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private String getCardFormat(Card card){
+    private String getCardFormat(Card card) {
         return card.getNumberName() + card.getShapeName();
     }
 
@@ -52,5 +53,13 @@ public class OutputView {
 
     public void printBusted(String name) {
         System.out.println(String.format(BUSTED_FORMAT, name));
+    }
+
+    public void printDealerHitCount(int hitCardCount) {
+        if (hitCardCount == 0) {
+            System.out.println(DEALER_NO_MORE_CARD);
+            return;
+        }
+        System.out.println(String.format(DEALER_MORE_CARDS_FORMAT, hitCardCount));
     }
 }

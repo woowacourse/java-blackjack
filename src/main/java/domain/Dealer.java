@@ -47,5 +47,9 @@ public class Dealer extends Participant {
     public Card getDealerFirstCard() {
         return getCards().get(FIRST_CARD_INDEX);
     }
+    public int getHitCardCount() {
+        return getCards().size() - 2;
+    }
+
 
 }
