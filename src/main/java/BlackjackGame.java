@@ -25,12 +25,16 @@ public class BlackjackGame {
         }
     }
 
-    public void supplyCardsToPlayer() {
+    public void supplyCardsToPlayers() {
         int playerCount = players.count();
         for (int i = 0; i < playerCount; i++) {
-            for (int j = 0; j < FIRST_DRAW_COUNT; j++) {
-                players.takeCard(i, deck.drawCard());
-            }
+            supplyCardToPlayer(i);
+        }
+    }
+
+    private void supplyCardToPlayer(int i) {
+        for (int j = 0; j < FIRST_DRAW_COUNT; j++) {
+            players.takeCard(i, deck.drawCard());
         }
     }
 }

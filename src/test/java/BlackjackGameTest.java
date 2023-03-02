@@ -57,7 +57,7 @@ class BlackjackGameTest {
         blackjackGame.addPlayer(player1);
         blackjackGame.addPlayer(player2);
 
-        blackjackGame.supplyCardsToPlayer();
+        blackjackGame.supplyCardsToPlayers();
 
         assertThat(player1.showCards()).contains(new Card(CardNumber.ACE, Pattern.DIAMOND),
                 new Card(CardNumber.ACE, Pattern.SPADE));
