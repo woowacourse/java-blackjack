@@ -1,11 +1,17 @@
 package domain;
 
+import java.util.regex.Pattern;
+
 public class Name {
 
+    private static final Pattern NAME_REGEX = Pattern.compile("^[a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\\s]*$");
     private final String name;
 
     public Name(final String name) {
         validateLength(name);
+        if (!NAME_REGEX.matcher(name).matches()) {
+            throw new IllegalArgumentException("이름에 숫자나 특수문자가 포함될 수 없습니다.");
+        }
         this.name = name;
     }
 
