@@ -35,4 +35,8 @@ public class Name {
             throw new IllegalArgumentException("이름은 " + RESTRICT + "일 수 없습니다. 현재 이름: " + value);
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }
