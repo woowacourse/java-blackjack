@@ -51,6 +51,18 @@ class DealerTest {
 
         assertThat(dealer.isHittable()).isFalse();
     }
+
+    @Test
+    void 점수를_확인한다() {
+        final Cards cards = new Cards(List.of(
+                new Card(TWO, CLOVER),
+                new Card(SIX, HEART),
+                new Card(SEVEN, DIAMOND)
+        ));
+        final Dealer dealer = new Dealer(cards);
+
+        assertThat(dealer.getScore()).isEqualTo(15);
+    }
 }
 
 class Dealer {
@@ -74,5 +86,9 @@ class Dealer {
 
     private boolean isScoreLow() {
         return cards.calculateTotalScore() <= MAXIMUM_SCORE;
+    }
+
+    public int getScore() {
+        return cards.calculateTotalScore();
     }
 }
