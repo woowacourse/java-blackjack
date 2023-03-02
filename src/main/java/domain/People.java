@@ -36,6 +36,12 @@ public class People {
         player.draw(deck.serve());
     }
 
+    public void letDealerHitUntilThreshold(Deck deck, int threshold) {
+        while(dealer.isHit(threshold)) {
+            dealer.draw(deck.serve());
+        }
+    }
+
     public Player playerByName(String playerName) {
         return players.stream()
                 .filter(it -> it.hasSameNameWith(playerName))
