@@ -24,7 +24,12 @@ public abstract class Player {
         return cards.isBurst();
     }
 
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
     public abstract void battle(Player player);
 
     public abstract List<Integer> getGameResult();
+
 }

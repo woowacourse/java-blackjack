@@ -2,10 +2,16 @@ package domain.player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Participant extends Player {
+    private final String name;
     private GameResult gameResult;
+
+    public Participant(String name) {
+        this.name = name;
+    }
 
     @Override
     public void battle(Player player) {
@@ -40,5 +46,18 @@ public class Participant extends Player {
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && gameResult == that.gameResult;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, gameResult);
     }
 }

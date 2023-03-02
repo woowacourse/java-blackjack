@@ -15,7 +15,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        participant = new Participant();
+        participant = new Participant("test");
     }
 
     @Test

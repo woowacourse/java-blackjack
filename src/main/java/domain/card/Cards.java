@@ -45,4 +45,8 @@ public class Cards {
     public boolean isBurst() {
         return getTotalScore() > 21;
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
