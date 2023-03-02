@@ -36,4 +36,8 @@ public class ParticipantName {
             throw new IllegalArgumentException("이름은 1글자에서 20글자 사이여야 합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

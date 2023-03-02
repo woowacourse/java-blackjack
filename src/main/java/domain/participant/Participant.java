@@ -34,4 +34,8 @@ public abstract class Participant {
     public boolean isBlackJack() {
         return participantCard.isBlackJack();
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }
