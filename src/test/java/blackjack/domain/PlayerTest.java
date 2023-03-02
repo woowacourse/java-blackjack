@@ -29,7 +29,7 @@ public class PlayerTest {
          List<Card> cards = player.getCards().getCards();
 
          // when
-         player.addCard(new Card(Number.ACE, Pattern.HEART));
+         player.receiveCard(new Card(Number.ACE, Pattern.HEART));
 
          // then
          assertThat(cards.size()).isEqualTo(1);

@@ -29,11 +29,9 @@
 - [x] `Card`를 받는다.
 
 ### BlackjackGame
-- [ ] `Participants`를 가진다.
-- [ ] 뽑았던 카드를 기억한다.
-- [ ] 시작하면서, `Participants`의 모두에게 2장의 카드를 나눠준다.
-  - [ ] 뽑은 적이 없는 랜덤한 2장의 카드를 뽑는다.
-  - [ ] 2장의 카드를 `Participants` 각각에게 나눠준다.
+- [x] `Participants`를 가진다.
+- [x] `Deck`을 가진다.
+- [x] `Participants`의 모두에게 2장의 카드를 나눠준다.
 - [ ] `Participants` 순서대로 카드를 더 받을 지 물어본다.
   - [ ] 블랙잭인 참가자에게는 물어보지 않는다.
 - [ ] 카드 세팅을 한다.
