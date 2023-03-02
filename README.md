@@ -10,8 +10,11 @@
 
 ```mermaid
 classDiagram
-    Controller <|-- Gamblers
-    Controller <|-- Deck
+    BlackJackGame <|-- Gamblers
+    BlackJackGame <|-- Deck
+    Controller <|-- BlackJackGame
+    Controller <|-- InputView
+    Controller <|-- OutputView
     Deck <.. DeckGenerator
     <<interface>>DeckGenerator
     DeckGenerator <|.. RandomDeckGenerator
