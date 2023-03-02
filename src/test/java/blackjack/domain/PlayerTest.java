@@ -1,7 +1,15 @@
 package blackjack.domain;
 
+import static blackjack.domain.Number.ACE;
+import static blackjack.domain.Number.KING;
+import static blackjack.domain.Number.QUEEN;
+import static blackjack.domain.Number.TWO;
+import static blackjack.domain.Suit.CLOVER;
+import static blackjack.domain.Suit.DIAMOND;
+import static blackjack.domain.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,8 +22,8 @@ class PlayerTest {
     @Test
     void 이름을_확인한다() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.QUEEN, Suit.CLOVER),
-                new Card(Number.QUEEN, Suit.HEART)
+                new Card(QUEEN, CLOVER),
+                new Card(QUEEN, HEART)
         ));
         final Player player = new Player("dazzle", cards);
 
@@ -25,8 +33,8 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있으면_true_반환한다() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.QUEEN, Suit.CLOVER),
-                new Card(Number.QUEEN, Suit.HEART)
+                new Card(QUEEN, CLOVER),
+                new Card(QUEEN, HEART)
         ));
         final Player player = new Player("kokodak", cards);
 
@@ -36,11 +44,28 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_없으면_false_반환한다() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.QUEEN, Suit.CLOVER),
-                new Card(Number.ACE, Suit.HEART)
+                new Card(QUEEN, CLOVER),
+                new Card(ACE, HEART)
         ));
         final Player player = new Player("kokodak", cards);
 
+        assertThat(player.isHittable()).isFalse();
+    }
+
+    @Test
+    void 카드를_받는다() {
+        //given
+        List<Card> cardPack = new ArrayList<>(List.of(
+                new Card(QUEEN, CLOVER),
+                new Card(KING, HEART)
+        ));
+        final Cards cards = new Cards(cardPack);
+        final Player player = new Player("dazzle", cards);
+
+        //when
+        player.hit(new Card(TWO, DIAMOND));
+
+        //then
         assertThat(player.isHittable()).isFalse();
     }
 }
@@ -55,11 +80,19 @@ class Player {
         this.cards = cards;
     }
 
-    public String getName() {
-        return name.getValue();
+    public void hit(final Card card) {
+        cards.addCard(card);
     }
 
     public boolean isHittable() {
         return !cards.isMaximumScore() && !cards.isTotalScoreOver();
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }
