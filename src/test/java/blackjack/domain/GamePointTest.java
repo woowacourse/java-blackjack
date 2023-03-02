@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardGamePointTest {
+public class GamePointTest {
 
     @Test
     @DisplayName("카드 게임 포인트는 카드들을 기반으로 값을 계산한다.")
@@ -18,8 +18,8 @@ public class CardGamePointTest {
                 new Card(Shape.HEART, CardNumber.of(4))
         );
 
-        final CardGamePoint cardGamePoint = new CardGamePoint(data);
-        assertThat(cardGamePoint.getOptimizePoint()).isEqualTo(9);
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.getOptimizePoint()).isEqualTo(9);
     }
 
     @Test
@@ -31,8 +31,8 @@ public class CardGamePointTest {
                 new Card(Shape.HEART, CardNumber.of(3))
         );
 
-        final CardGamePoint cardGamePoint = new CardGamePoint(data);
-        assertThat(cardGamePoint.getOptimizePoint()).isEqualTo(16);
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.getOptimizePoint()).isEqualTo(16);
     }
 
     @Test
@@ -43,8 +43,8 @@ public class CardGamePointTest {
                 new Card(Shape.DIAMOND, CardNumber.of(13)),
                 new Card(Shape.HEART, CardNumber.of(2))
         );
-        final CardGamePoint cardGamePoint = new CardGamePoint(data);
-        assertThat(cardGamePoint.getOptimizePoint()).isEqualTo(0);
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.getOptimizePoint()).isEqualTo(0);
     }
 
     @Test
@@ -55,8 +55,8 @@ public class CardGamePointTest {
                 new Card(Shape.DIAMOND, CardNumber.of(13)),
                 new Card(Shape.HEART, CardNumber.of(1))
         );
-        final CardGamePoint cardGamePoint = new CardGamePoint(data);
-        assertThat(cardGamePoint.getOptimizePoint()).isEqualTo(21);
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.getOptimizePoint()).isEqualTo(21);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class CardGamePointTest {
                 new Card(Shape.HEART, CardNumber.of(1)),
                 new Card(Shape.HEART, CardNumber.of(1))
         );
-        final CardGamePoint cardGamePoint = new CardGamePoint(data);
-        assertThat(cardGamePoint.getOptimizePoint()).isEqualTo(16);
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.getOptimizePoint()).isEqualTo(16);
     }
 }

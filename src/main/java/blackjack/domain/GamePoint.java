@@ -2,12 +2,12 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class CardGamePoint {
+public class GamePoint {
 
     private static final int BURST = 0;
     private final int gamePoint;
 
-    public CardGamePoint(final List<Card> cards) {
+    public GamePoint(final List<Card> cards) {
         int point = 0;
         point = calculateMaxValueOf(cards);
         if (isBurst(point) && containAceInCars(cards)) {
