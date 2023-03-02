@@ -1,3 +1,5 @@
+package domain;
+
 public class Player extends Participant {
     private final PlayerName name;
 

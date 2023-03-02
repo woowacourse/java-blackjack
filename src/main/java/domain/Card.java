@@ -1,3 +1,5 @@
+package domain;
+
 public class Card {
 
     private final Shape shape;

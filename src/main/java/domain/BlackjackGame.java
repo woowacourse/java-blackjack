@@ -1,3 +1,5 @@
+package domain;
+
 public class BlackjackGame {
     private final Deck deck;
     private final Dealer dealer;

@@ -1,3 +1,5 @@
+package domain;
+
 public enum Number {
     A(11),
     TWO(2),

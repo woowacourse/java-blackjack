@@ -1,3 +1,5 @@
+package domain;
+
 public enum Result {
     WIN("승"),
     DRAW("무"),
