@@ -17,4 +17,22 @@ class ParticipantsTest {
             .asInstanceOf(InstanceOfAssertFactories.map(Participant.class, GameStatus.class))
             .containsKeys(new Participant("echo"), new Participant("split"));
     }
+
+    @DisplayName("참가자의 게임 상태 업데이트 기능 구현")
+    @Test
+    void updateTest() {
+        Participant participant = new Participant("echo");
+        Participants participants = new Participants(List.of(participant, new Participant("split")));
+        participant.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
+        participant.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
+        participant.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
+        participants.update(participant);
+        GameStatus gameStatus = participants.getGameStatusByParticipant(participant);
+        Assertions.assertThat(gameStatus)
+            .extracting("participantStatus")
+            .isEqualTo(ParticipantStatus.BUST);
+        Assertions.assertThat(gameStatus)
+            .extracting("score")
+            .isEqualTo(30);
+    }
 }

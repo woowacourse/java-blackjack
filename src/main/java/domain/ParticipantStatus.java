@@ -1,5 +1,5 @@
 package domain;
 
 public enum ParticipantStatus {
-    NOT_BUST
+    BUST, BLACK_JACK, NOT_BUST
 }
