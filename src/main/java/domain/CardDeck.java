@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class CardDeck {
     private final Queue<Card> cards;
@@ -14,6 +11,15 @@ public class CardDeck {
 
     public Card poll(){
         return cards.poll();
+    }
+
+    public void shuffle(){
+        List<Card> shuffledCards = new ArrayList<>();
+        shuffledCards.addAll(cards);
+        Collections.shuffle(shuffledCards);
+
+        cards.clear();
+        cards.addAll(shuffledCards);
     }
 
 }

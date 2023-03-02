@@ -4,9 +4,11 @@ import java.util.*;
 
 public class CardGenerator {
     public Queue<Card> generate() {
+        Queue<Card> cardDeck = new LinkedList<>();
         List<Card> cards = new ArrayList<>();
         makeCards(cards);
-        return suffleCards(cards);
+        cardDeck.addAll(cards);
+        return cardDeck;
     }
 
     private void makeCards(List<Card> cards) {
@@ -19,13 +21,6 @@ public class CardGenerator {
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardNumber, cardPattern));
         }
-    }
-
-    private Queue<Card> suffleCards(List<Card> cards){
-        Queue<Card> suffledCards = new LinkedList<>();
-        Collections.shuffle(cards);
-        suffledCards.addAll(cards);
-        return suffledCards;
     }
 
 }
