@@ -1,11 +1,17 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
 
     private final List<Card> cards;
     private int score;
+
+
+    public Player() {
+        this(new ArrayList<>());
+    }
 
     public Player(List<Card> cards) {
         this.cards = cards;
@@ -59,6 +65,11 @@ public class Player {
         cards.add(card);
         this.score = calculateScore();
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
 }
 
 
