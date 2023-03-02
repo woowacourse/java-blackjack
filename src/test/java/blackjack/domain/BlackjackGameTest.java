@@ -36,7 +36,7 @@ class BlackjackGameTest {
      * ako : 10(10) 10(10) => 20점
      */
     @Test
-    @DisplayName("")
+    @DisplayName("딜러가 17점일 때 포비(5점),아코(20점)의 결과는 각각 LOSE,WIN")
     void playerResultTest() {
         //given
         List<Integer> testData = settingTestData();
@@ -59,6 +59,24 @@ class BlackjackGameTest {
                 assertThat(result.get(participant)).isEqualTo(WinningResult.WIN);
             }
         }
+    }
+
+    @Test
+    @DisplayName("포비가 5점이고 아코가 20점일 때 딜러가 17점 이면 결과는 각각 WIN,LOSE")
+    void dealerResultTest() {
+        //given
+        List<Integer> testData = settingTestData();
+        TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
+        Participants participants = Participants.generate(List.of("pobi", "ako"));
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
+        game.settingGame(testCardPickerGenerator);
+
+        //when
+        List<WinningResult> result = game.generateDealerResult();
+
+        //then
+        assertThat(result.get(0)).isEqualTo(WinningResult.WIN);
+        assertThat(result.get(1)).isEqualTo(WinningResult.LOSE);
     }
 
     private static List<Integer> settingTestData() {

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.util.CardPickerGenerator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,16 @@ public class BlackjackGame {
             playerResultSave(playersResult, player, dealerResult);
         }
         return playersResult;
+    }
+
+    public List<WinningResult> generateDealerResult() {
+        List<WinningResult> dealerResult = new ArrayList<>();
+        Dealer dealer = extractDealer();
+        List<Participant> players = extractPlayers();
+        for (Participant player : players) {
+            dealerResult.add(dealer.judgeWinOrLose(player));
+        }
+        return dealerResult;
     }
 
     public void settingGame(CardPickerGenerator cardPickerGenerator) {
