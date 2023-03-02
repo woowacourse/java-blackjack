@@ -27,9 +27,8 @@ class DealerTest {
 
         dealer.battle(anotherPlayer);
 
-        assertThat(dealer.getWinningCount()).isEqualTo(1);
-        assertThat(dealer.getLoseCount()).isEqualTo(0);
-        assertThat(dealer.getDrawCount()).isEqualTo(0);
+        assertThat(dealer.getGameResult())
+                .containsExactly(1, 0, 0);
     }
 
     @Test
@@ -41,9 +40,8 @@ class DealerTest {
 
         dealer.battle(anotherPlayer);
 
-        assertThat(dealer.getWinningCount()).isEqualTo(0);
-        assertThat(dealer.getLoseCount()).isEqualTo(1);
-        assertThat(dealer.getDrawCount()).isEqualTo(0);
+        assertThat(dealer.getGameResult())
+                .containsExactly(0, 1, 0);
     }
 
     @Test
@@ -55,8 +53,7 @@ class DealerTest {
 
         dealer.battle(anotherPlayer);
 
-        assertThat(dealer.getWinningCount()).isEqualTo(0);
-        assertThat(dealer.getLoseCount()).isEqualTo(0);
-        assertThat(dealer.getDrawCount()).isEqualTo(1);
+        assertThat(dealer.getGameResult())
+                .containsExactly(0, 0, 1);
     }
 }

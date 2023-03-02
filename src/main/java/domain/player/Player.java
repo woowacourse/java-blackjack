@@ -3,6 +3,8 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
+import java.util.List;
+
 public abstract class Player {
     private final Cards cards;
 
@@ -24,9 +26,5 @@ public abstract class Player {
 
     public abstract void battle(Player player);
 
-    public abstract int getWinningCount();
-
-    public abstract int getLoseCount();
-
-    public abstract int getDrawCount();
+    public abstract List<Integer> getGameResult();
 }

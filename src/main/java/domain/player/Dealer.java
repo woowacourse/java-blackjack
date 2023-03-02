@@ -1,14 +1,21 @@
 package domain.player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Dealer extends Player {
-    private final List<GameResult> gameResults;
+    private final Map<GameResult, Integer> gameResults;
 
     public Dealer() {
         super();
-        gameResults = new ArrayList<>();
+        gameResults = new EnumMap<>(GameResult.class);
+        initGameResult();
+    }
+
+    private void initGameResult() {
+        for (GameResult gameResult : GameResult.values()) {
+            gameResults.put(gameResult, 0);
+        }
     }
 
     @Override
@@ -20,36 +27,26 @@ public class Dealer extends Player {
 
     private void decideGameResult(int totalScore, int totalScoreOfOtherPlayer) {
         if (totalScore > totalScoreOfOtherPlayer) {
-            gameResults.add(GameResult.WIN);
+            gameResults.put(GameResult.WIN, getGameResultCount(GameResult.WIN) + 1);
             return;
         }
 
         if (totalScore < totalScoreOfOtherPlayer) {
-            gameResults.add(GameResult.LOSE);
+            gameResults.put(GameResult.LOSE, getGameResultCount(GameResult.LOSE) + 1);
             return;
         }
 
-        gameResults.add(GameResult.DRAW);
+        gameResults.put(GameResult.DRAW, getGameResultCount(GameResult.DRAW) + 1);
+    }
+
+    private int getGameResultCount(GameResult gameResult) {
+        return gameResults.getOrDefault(gameResult, 0);
     }
 
     @Override
-    public int getWinningCount() {
-        return (int) gameResults.stream()
-                .filter(GameResult::isWinning)
-                .count();
-    }
-
-    @Override
-    public int getLoseCount() {
-        return (int) gameResults.stream()
-                .filter(GameResult::isLose)
-                .count();
-    }
-
-    @Override
-    public int getDrawCount() {
-        return (int) gameResults.stream()
-                .filter(GameResult::isDraw)
-                .count();
+    public List<Integer> getGameResult() {
+        return Arrays.stream(GameResult.values())
+                .map(this.gameResults::get)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
