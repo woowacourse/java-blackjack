@@ -14,10 +14,10 @@ public class OutputView {
     private static final String WIN = "승";
     private static final String LOSE = "패";
     private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패";
-    private static final String RESULT_GUIDE_MESSAGE = "## 최종 승패";
+    private static final String RESULT_GUIDE_MESSAGE = "\n+ ## 최종 승패";
     private static final String SCORE_GUIDE_MESSAGE = " - 결과: ";
     private static final String POSTFIX_INITIAL_PICK_GUIDE_MESSAGE = "에게 2장을 나누었습니다.";
-    private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "딜러와";
+    private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "딜러와 ";
 
     private OutputView() {
     }
@@ -30,41 +30,40 @@ public class OutputView {
     private static void printPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
             printSingleGambler(player);
-            System.out.println();
         }
     }
 
     public static void printSingleGambler(Gambler gambler) {
-        printPlayerName(gambler);
-        printPlayerCards(gambler);
+        printGamblerName(gambler);
+        printGamblerCards(gambler);
     }
 
     private static void printDealerCards(Dealer dealer) {
-        printPlayerName(dealer);
-        printPlayerCards(dealer);
+        printGamblerName(dealer);
+        printGamblerCards(dealer);
     }
 
-    private static void printPlayerName(Gambler gambler) {
+    private static void printGamblerName(Gambler gambler) {
         String name = gambler.getName();
         System.out.print(name + NAME_FORMAT);
     }
 
-    private static void printPlayerCards(Gambler gambler) {
-        String output = getPlayerCards(gambler);
-        System.out.print(String.join(DELIMITER, output));
+    private static void printGamblerCards(Gambler gambler) {
+        List<String> output = getPlayerCards(gambler);
+        System.out.println(String.join(DELIMITER, output));
     }
 
-    public static String getPlayerCards(Gambler gambler) {
-        String output = INIT;
+    public static List<String> getPlayerCards(Gambler gambler) {
+        List<String> output = new ArrayList<>();
         for (Card card : gambler.getCards()) {
-            output += card.getSuit() + card.getName();
+            output.add(card.getName() + card.getSuit());
         }
         return output;
     }
 
     public static void printScore(Gambler gambler) {
-        printPlayerName(gambler);
-        printPlayerCards(gambler);
+        printGamblerName(gambler);
+        printGamblerCards(gambler);
         System.out.print(SCORE_GUIDE_MESSAGE);
         System.out.println(gambler.getScore());
     }
@@ -104,6 +103,7 @@ public class OutputView {
             int loseCount = size - winCount - 1;
             System.out.printf(DEALER_RESULT_FORMAT, winCount, loseCount);
         }
+        System.out.println();
     }
 
     public static void printInitialPickGuideMessage(Players players) {
