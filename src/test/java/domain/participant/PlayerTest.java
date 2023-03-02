@@ -9,9 +9,9 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static domain.card.CardValue.*;
+import static domain.card.CardValue.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -22,14 +22,9 @@ class PlayerTest {
 
     final CardArea cardArea = new CardArea(
             new Card(CardShape.SPADE, CardValue.TEN),
-            new Card(CardShape.SPADE, CardValue.TEN)) {
-        @Override
-        public boolean wantHit() {
-            return false;
-        }
-    };
+            new Card(CardShape.SPADE, CardValue.TEN));
 
-    final Player player = new Player(name, cardArea){
+    final Player player = new Player(name, cardArea) {
         @Override
         public boolean canHit() {
             return false;
@@ -45,7 +40,7 @@ class PlayerTest {
     @Test
     void 이름과_area_가진다() {
         // when & then
-        assertDoesNotThrow(() -> new Player(name, cardArea){
+        assertDoesNotThrow(() -> new Player(name, cardArea) {
             @Override
             public boolean canHit() {
                 return false;

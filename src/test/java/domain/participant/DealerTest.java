@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.area.CardArea;
-import domain.area.ParticipantCardArea;
 import domain.card.Card;
 import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +20,7 @@ class DealerTest {
     @Test
     void 딜러는_16이하면_카드를_더_받을_수_있다() {
         // given
-        final CardArea cardArea = new ParticipantCardArea(
+        final CardArea cardArea = new CardArea(
                 new Card(CardShape.CLOVER, TEN),
                 new Card(CardShape.CLOVER, SIX)
         );
@@ -35,7 +34,7 @@ class DealerTest {
     @Test
     void 딜러는_16초과면_카드를_더_받을_수_없다() {
         // given
-        final CardArea cardArea = new ParticipantCardArea(
+        final CardArea cardArea = new CardArea(
                 new Card(CardShape.CLOVER, TEN),
                 new Card(CardShape.CLOVER, SEVEN)
         );

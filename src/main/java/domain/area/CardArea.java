@@ -5,15 +5,13 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CardArea {
+public class CardArea {
 
     private final List<Card> cards = new ArrayList<>();
 
     public CardArea(final Card firstCard, final Card secondCard) {
         cards.addAll(List.of(firstCard, secondCard));
     }
-
-    public abstract boolean wantHit();
 
     public List<Card> cards() {
         return new ArrayList<>(cards);

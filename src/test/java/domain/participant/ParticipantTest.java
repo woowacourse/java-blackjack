@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.area.CardArea;
-import domain.area.ParticipantCardArea;
 import domain.card.Card;
 import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Participant 은")
 class ParticipantTest {
 
-    final CardArea cardArea = new ParticipantCardArea(
+    final CardArea cardArea = new CardArea(
             new Card(CardShape.CLOVER, TEN),
             new Card(CardShape.CLOVER, SEVEN)
     );
@@ -67,22 +66,12 @@ class ParticipantTest {
         final CardArea under21CardArea = new CardArea(
                 new Card(CardShape.SPADE, TEN),
                 new Card(CardShape.DIAMOND, TEN)
-        ) {
-            @Override
-            public boolean wantHit() {
-                return false;
-            }
-        };
+        );
 
         final CardArea over21CardArea = new CardArea(
                 new Card(CardShape.SPADE, TEN),
                 new Card(CardShape.DIAMOND, TEN)
-        ) {
-            @Override
-            public boolean wantHit() {
-                return false;
-            }
-        };
+        );
 
         over21CardArea.addCard(new Card(CardShape.SPADE, TWO));
 
