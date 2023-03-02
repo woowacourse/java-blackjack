@@ -17,7 +17,7 @@ class HoldingCardsTest {
         HoldingCards holdingCards = new HoldingCards();
         Card card1 = new Card(Shape.DIAMOND, Number.KING);
         Card card2 = new Card(Shape.SPADE, Number.FOUR);
-        holdingCards.initialCard(List.of(card1, card2));
+        holdingCards.initialCard(card1, card2);
 
         assertThat(holdingCards.sum()).isEqualTo(14);
     }

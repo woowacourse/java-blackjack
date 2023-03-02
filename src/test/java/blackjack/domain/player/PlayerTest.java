@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ class PlayerTest {
     void get_two_cards() {
         Card card1 = new Card(Shape.HEART, Number.FOUR);
         Card card2 = new Card(Shape.CLOVER, Number.KING);
-        player.pickStartCards(List.of(card1, card2));
+        player.pickStartCards(card1, card2);
 
         assertThat(player.getHoldingCards().getCards())
                 .containsExactly(card1, card2);

@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import java.util.List;
 
 public abstract class Player {
 
@@ -11,8 +10,8 @@ public abstract class Player {
         this.holdingCards = new HoldingCards();
     }
 
-    public void pickStartCards(List<Card> cards) {
-        holdingCards.initialCard(cards);
+    public void pickStartCards(Card card1, Card card2) {
+        holdingCards.initialCard(card1, card2);
     }
 
     public HoldingCards getHoldingCards() {

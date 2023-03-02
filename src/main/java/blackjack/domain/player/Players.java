@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.exception.DuplicatedPlayerNameException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +18,8 @@ public class Players {
         validateDuplicatedNames(names);
         List<Player> players = names.stream()
                 .map(Challenger::new)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
+        players.add(new Dealer());
         return new Players(players);
     }
 
@@ -27,6 +30,14 @@ public class Players {
 
         if (names.size() != distinctNameCount) {
             throw new DuplicatedPlayerNameException();
+        }
+    }
+
+    public void pickStartCards(CardDeck cardDeck) {
+        for (Player player : players) {
+            Card card1 = cardDeck.pick();
+            Card card2 = cardDeck.pick();
+            player.pickStartCards(card1, card2);
         }
     }
 }
