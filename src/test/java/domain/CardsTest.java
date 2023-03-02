@@ -30,4 +30,14 @@ public class CardsTest {
         Assertions.assertThat(cards.getSum()).isEqualTo(22);
     }
 
+    @Test
+    @DisplayName("ACE의 존재여부를 확인 할 수 있다.")
+    void isExistAceTest() {
+        Card card1 = new Card(CardNumber.ACE,CardPattern.DIAMOND);
+        Cards cards = new Cards();
+        cards.add(card1);
+
+        Assertions.assertThat(cards.isExistAce()).isTrue();
+    }
+    
 }
