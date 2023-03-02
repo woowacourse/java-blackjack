@@ -91,7 +91,7 @@ public class Controller {
             result.put(player, 1);
         }
 
-        if(isPlayerLose(dealer,player)){
+        if (isPlayerLose(dealer, player)) {
             result.put(player, 0);
             result.replace(dealer, result.get(dealer) + 1);
         }

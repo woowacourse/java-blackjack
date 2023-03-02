@@ -46,7 +46,9 @@ public class Dealer implements Gambler {
         return cards.calculateScore();
     }
 
-    public int getPickBoundary(){return PICK_BOUNDARY;}
+    public int getPickBoundary() {
+        return PICK_BOUNDARY;
+    }
 
 
 }

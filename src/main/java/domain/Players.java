@@ -17,7 +17,7 @@ public class Players {
         validatePlayers(playerNames);
         this.players = createPlayers(playerNames);
     }
-    
+
     private void validatePlayers(List<String> playerNames) {
         validateSameName(playerNames);
         validateSize(playerNames);
@@ -31,7 +31,7 @@ public class Players {
     }
 
     private void validateSize(List<String> playerNames) {
-        if(playerNames.size()> MAX_PLAYERS_SIZE){
+        if (playerNames.size() > MAX_PLAYERS_SIZE) {
             throw new IllegalArgumentException(SIZE_ERROR_GUIDE_MESSAGE);
         }
     }
