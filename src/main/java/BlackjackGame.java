@@ -33,4 +33,14 @@ public class BlackjackGame {
         Card card = deck.drawCard();
         participant.receiveCard(card);
     }
+
+    public void giveAdditionalCardToDealer(){
+        while(dealer.calculateScore() < 17){
+            giveCardTo(dealer);
+        }
+    }
+
+    public Participant getDealer(){
+        return dealer;
+    }
 }
