@@ -13,16 +13,18 @@ class DealerTest {
     @Test
     void resultSuccessTest() {
         Dealer dealer = new Dealer();
-        giveCardsTo(dealer, List.of(VALUE_TEN, VALUE_NINE)); // 19
-
         Player pobi = new Player(new PlayerName("pobi"));
         Player crong = new Player(new PlayerName("crong"));
+
+        giveCardsTo(dealer, List.of(VALUE_TEN, VALUE_NINE)); // 19
+
         giveCardsTo(pobi, List.of(VALUE_TEN, VALUE_TEN)); // 20
         giveCardsTo(crong, List.of(VALUE_TEN, VALUE_EIGHT)); // 18
 
         dealer.decideResults(new Players(List.of(pobi, crong)));
 
-        Assertions.assertThat(dealer.getResult()).contains(Result.LOSE, Result.WIN);
+        Assertions.assertThat(dealer.getPlayerResultMap().values())
+                .containsExactly(Result.LOSE, Result.WIN);
     }
 
     public void giveCardsTo(Participant participant, List<Card> cards){
