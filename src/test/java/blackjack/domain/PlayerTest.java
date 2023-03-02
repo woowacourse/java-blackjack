@@ -17,7 +17,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new ArrayList<>(List.of(new Card(TrumpShape.DIAMOND, TrumpNumber.EIGHT), new Card(TrumpShape.HEART, TrumpNumber.JACK))));
+        player = new Player("IO", new ArrayList<>(List.of(new Card(TrumpShape.DIAMOND, TrumpNumber.EIGHT), new Card(TrumpShape.HEART, TrumpNumber.JACK))));
     }
 
     @Test
