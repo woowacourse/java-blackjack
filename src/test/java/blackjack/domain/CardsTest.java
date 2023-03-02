@@ -91,4 +91,25 @@ public class CardsTest {
                 Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), false)
         );
     }
+
+    @ParameterizedTest(name = "버스트인지 확인한다. 입력값: {0}, 결과값: {1}")
+    @MethodSource("isBustSource")
+    void 버스트인지_확인한다(final List<Rank> ranks, final boolean result) {
+        final Cards cards = new Cards();
+
+        for (Rank rank : ranks) {
+            cards.add(new Card(rank, Shape.SPADE));
+        }
+
+        assertThat(cards.isBust()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isBustSource() {
+        return Stream.of(
+                Arguments.of(List.of(Rank.FIVE, Rank.ACE), false),
+                Arguments.of(List.of(Rank.ACE, Rank.ACE), false),
+                Arguments.of(List.of(Rank.ACE, Rank.KING), false),
+                Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), true)
+        );
+    }
 }

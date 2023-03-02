@@ -52,4 +52,8 @@ class Cards {
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_COUNT && calculateTotalScore() == BLACKJACK_SCORE;
     }
+
+    public boolean isBust() {
+        return BLACKJACK_SCORE < calculateMinScore();
+    }
 }
