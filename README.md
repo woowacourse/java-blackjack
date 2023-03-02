@@ -8,9 +8,6 @@
 - [x] 입력된 이름을 가지고 `Players`를 만들어 반환한다.
   - [x] 최소 2명에서 최대 8명의 `Players`를 생성한다.
 
-### Participants
-- [x] `Participant`들을 가진다.
-
 ### Participant
 - [x] `Cards`를 가진다.
 - [x] `Card`를 받는다.
@@ -25,13 +22,12 @@
 - [x] `Player`들을 가진다.
 
 ### Dealer (extends Participant)
+- [x] `Players`를 가진다.
+- [x] `Deck`을 가진다.
 - [x] `Cards`를 가진다.
 - [x] `Card`를 받는다.
-
-### BlackjackGame
-- [x] `Participants`를 가진다.
-- [x] `Deck`을 가진다.
-- [x] `Participants`의 모두에게 2장의 카드를 나눠준다.
+- [x] `Players`의 모두에게 2장의 카드를 나눠준다.
+- [x] 자신의 카드 2장을 뽑는다.
 - [x] 카드를 더 받길 희망하는 참가자에게 카드를 한 장 준다.
 - [ ] 최종 승패를 결정한다.
 

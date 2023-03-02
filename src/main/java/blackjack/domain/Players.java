@@ -14,4 +14,15 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+
+    public int size() {
+        return players.size();
+    }
+
+    public void receiveSettingCards(List<Card> settingCards) {
+        for (int cardIndex = 0, playerIndex = 0; cardIndex < settingCards.size(); cardIndex += 2, playerIndex++) {
+            players.get(playerIndex).receiveCard(settingCards.get(cardIndex));
+            players.get(playerIndex).receiveCard(settingCards.get(cardIndex + 1));
+        }
+    }
 }
