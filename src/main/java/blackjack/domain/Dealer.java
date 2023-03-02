@@ -38,7 +38,7 @@ public class Dealer implements Player {
 
     @Override
     public GamePoint getGamePoint() {
-        if(canReceive()){
+        if (canReceive()) {
             throw new IllegalStateException("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
         }
         return cards.getPoint();

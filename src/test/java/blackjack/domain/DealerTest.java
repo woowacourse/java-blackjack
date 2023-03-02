@@ -66,10 +66,10 @@ public class DealerTest {
     void cantReceiveTest2() {
         final List<Card> data = List.of(
                 new Card(Shape.HEART, CardNumber.of(10)),
-                new Card(Shape.HEART, CardNumber.of(10))
+                new Card(Shape.HEART, CardNumber.of(6))
         );
         final Dealer dealer = new Dealer(data);
-        dealer.draw(new Card(Shape.HEART, CardNumber.of(2)));
+        dealer.draw(new Card(Shape.HEART, CardNumber.of(10)));
         assertThat(dealer.canReceive()).isFalse();
     }
 

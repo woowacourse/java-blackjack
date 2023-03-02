@@ -80,4 +80,16 @@ public class GamePoint {
     public boolean isLowerThan(final int value) {
         return gamePoint <= value;
     }
+
+    public boolean isLowerThan(final GamePoint point) {
+        return gamePoint < point.gamePoint;
+    }
+
+    public boolean isGreaterThan(final GamePoint point) {
+        return gamePoint > point.gamePoint;
+    }
+
+    public boolean isEqualTo(final GamePoint point) {
+        return this.gamePoint == point.gamePoint;
+    }
 }

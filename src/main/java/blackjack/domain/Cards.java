@@ -34,4 +34,16 @@ public class Cards {
     public boolean isLowerThan(final int value) {
         return point.isLowerThan(value);
     }
+
+    public boolean isLowerThan(final GamePoint point) {
+        return this.point.isLowerThan(point);
+    }
+
+    public boolean isGreaterThan(final GamePoint point) {
+        return this.point.isGreaterThan(point);
+    }
+
+    public boolean havePointOf(final GamePoint point) {
+        return this.point.isEqualTo(point);
+    }
 }

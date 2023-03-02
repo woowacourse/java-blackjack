@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class User implements Player {
     private static final int INITIAL_CARD_COUNT = 2;
     private final Name name;
@@ -35,4 +37,15 @@ public class User implements Player {
         return cards.getPoint();
     }
 
+    public boolean isGreaterThan(final GamePoint point) {
+        return cards.isGreaterThan(point);
+    }
+
+    public boolean isEqualTo(final GamePoint point) {
+        return cards.havePointOf(point);
+    }
+
+    public boolean isLowerThan(final GamePoint point) {
+        return cards.isLowerThan(point);
+    }
 }
