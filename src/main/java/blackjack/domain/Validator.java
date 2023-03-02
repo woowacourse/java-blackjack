@@ -26,4 +26,10 @@ public class Validator {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
     }
+
+    public void validatePlayerIntention(String intention) {
+        if (!intention.equals("y") && !intention.equals("n")) {
+            throw new IllegalArgumentException(PLAYER_INTENTION_ERROR_MESSAGE);
+        }
+    }
 }
