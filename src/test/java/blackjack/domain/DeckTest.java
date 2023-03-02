@@ -17,7 +17,7 @@ class DeckTest {
     @Test
     @DisplayName("덱에서 첫번째 카드를 하나 뽑는다")
     void drawTest() {
-        final Deck deck = new Deck(new TestDeckGenerator());
+        final Deck deck = new Deck(new TestDeckGenerator(testCards));
 
         final Card card = deck.draw();
 
