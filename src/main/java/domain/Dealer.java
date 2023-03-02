@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class Dealer extends Participant {
     }
 
     public Map<Player, Result> getPlayerResultMap() {
-        return playerResultMap;
+        return Collections.unmodifiableMap(playerResultMap);
     }
 
     public Card getDealerFirstCard() {
@@ -49,6 +50,12 @@ public class Dealer extends Participant {
     }
     public int getHitCardCount() {
         return getCards().size() - 2;
+    }
+
+    public int getResultCount(Result result){
+        return (int) playerResultMap.values().stream()
+                .filter(result::equals)
+                .count();
     }
 
 

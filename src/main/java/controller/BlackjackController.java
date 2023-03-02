@@ -37,7 +37,9 @@ public class BlackjackController {
         outputView.printDealerHitCount(dealer.getHitCardCount());
         blackjackGame.result();
 
-        outputView.printCardsWithScore(dealer,players);
+        outputView.printCardsWithScore(dealer, players);
+        outputView.printFinalResult(dealer);
+
     }
 
     private Players createPlayers() {
@@ -59,6 +61,7 @@ public class BlackjackController {
 
         printPlayerCurrentState(player);
     }
+
     private boolean isHitCommand(String name) {
         return Command.from(inputView.requestMoreCard(name)) != Command.HOLD;
     }

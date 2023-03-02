@@ -11,4 +11,20 @@ public enum Result {
     Result(String value) {
         this.value = value;
     }
+
+    public Result convertToOpposite() {
+        if (this == WIN) {
+            return LOSE;
+        }
+
+        if (this == LOSE) {
+            return WIN;
+        }
+
+        return DRAW;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

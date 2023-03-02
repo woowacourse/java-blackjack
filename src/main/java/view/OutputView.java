@@ -5,6 +5,7 @@ import domain.Dealer;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
+import domain.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,17 +15,22 @@ public class OutputView {
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s";
     private static final String SCORE_FORMAT = " - 결과: %d";
     private static final String BUSTED_FORMAT = "%s는 버스트 되었습니다.";
-    public static final String DELIMITER = ", ";
-    public static final String DEALER_NO_MORE_CARD = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
-    public static final String DEALER_MORE_CARDS_FORMAT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
+    private static final String FINAL_RESULT = "## 최종 승패";
+    private static final String DEALER_RESULT_FORMAT = "%s: %d승 %d무 %d패";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %s";
+    private static final String DELIMITER = ", ";
+    private static final String DEALER_NO_MORE_CARD = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
+    private static final String DEALER_MORE_CARDS_FORMAT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
+    public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printInitCards(Dealer dealer, Players players) {
         String namesFormat = players.getPlayers().stream().map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
 
-        System.out.println(String.format(GAME_INIT_MESSAGE, namesFormat));
+        System.out.println(String.format(LINE_SEPARATOR + GAME_INIT_MESSAGE, namesFormat));
         printInitDealerCards(dealer);
         printInitPlayerCards(players);
+        System.out.println();
     }
 
     private void printInitDealerCards(Dealer dealer) {
@@ -62,7 +68,7 @@ public class OutputView {
             System.out.println(DEALER_NO_MORE_CARD);
             return;
         }
-        System.out.println(String.format(DEALER_MORE_CARDS_FORMAT, hitCardCount));
+        System.out.println(String.format(LINE_SEPARATOR + DEALER_MORE_CARDS_FORMAT + LINE_SEPARATOR, hitCardCount));
     }
 
     public void printCardsWithScore(Dealer dealer, Players players){
@@ -82,5 +88,26 @@ public class OutputView {
     private String getCardsWithScoreFormat(Participant participant, String name) {
         return String.format(PLAYER_CARDS_FORMAT + SCORE_FORMAT, name,
                 getCardsFormat(participant.getCards()), participant.calculateScore());
+    }
+
+    public void printFinalResult(Dealer dealer) {
+        System.out.println(LINE_SEPARATOR + FINAL_RESULT);
+        System.out.println(getDealerResultFormat(dealer));
+
+        dealer.getPlayerResultMap().forEach(
+                (key, value) -> printPlayerResult(key, value.convertToOpposite())
+        );
+    }
+
+    private void printPlayerResult(Player player, Result result) {
+        System.out.println(String.format(PLAYER_RESULT_FORMAT, player.getName(), result.getValue()));
+    }
+
+    private String getDealerResultFormat(Dealer dealer) {
+        return String.format(DEALER_RESULT_FORMAT, DEALER_NAME,
+                dealer.getResultCount(Result.WIN),
+                dealer.getResultCount(Result.DRAW),
+                dealer.getResultCount(Result.LOSE)
+        );
     }
 }
