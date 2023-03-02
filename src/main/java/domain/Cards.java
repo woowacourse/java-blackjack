@@ -10,6 +10,10 @@ public class Cards {
     private static final String ACE = "A";
     private final List<Card> cards;
 
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
+
     public Cards(List<Card> cards) {
         this.cards = cards;
     }

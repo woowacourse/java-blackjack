@@ -9,6 +9,12 @@ public class Player implements Gambler {
     public Player(PlayerName playerName, Cards cards) {
         this.playerName = playerName;
         this.cards = cards;
+        initialPick();
+    }
+
+    private void initialPick() {
+        pickCard();
+        pickCard();
     }
 
     @Override
