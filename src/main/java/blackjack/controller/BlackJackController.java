@@ -11,11 +11,12 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackJackController {
 
     public void run() {
-        List<Person> persons = getPersons();
+        List<Person> persons = repeat(this::getPersons);
         Dealer dealer = new Dealer();
         persons.add(0, dealer);
         Cards uniqueCards = dealer.createUniqueCards();
@@ -27,11 +28,30 @@ public class BlackJackController {
         printGameResult(dealer, persons);
     }
 
+    private <T> T repeat(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return repeat(supplier);
+        }
+    }
+
     private List<Person> getPersons() {
         String[] names = InputView.readPersonNames();
+        validateDuplicate(names);
         return Arrays.stream(names)
                 .map(Person::new)
                 .collect(toList());
+    }
+
+    private void validateDuplicate(String[] names) {
+        long uniqueNamesCount = Arrays.stream(names)
+                .distinct()
+                .count();
+        if (uniqueNamesCount != names.length) {
+            throw new IllegalArgumentException("[ERROR] 중복된 이름이 있습니다.");
+        }
     }
 
     private void initDrawCard(List<Person> persons, Cards uniqueCards) {
