@@ -12,12 +12,15 @@ public abstract class User {
         this.cardGroup = cardGroup;
     }
 
+    final public int getScore() {
+        return cardGroup.getTotalValue();
+    }
 
-    public String getName() {
+    final public String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
+    final public List<Card> getCards() {
         return cardGroup.getCards();
     }
 }
