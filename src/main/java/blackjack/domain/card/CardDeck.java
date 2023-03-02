@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CardDeck {
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     private CardDeck(List<Card> cards) {
         this.cards = cards;
