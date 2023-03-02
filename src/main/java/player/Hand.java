@@ -17,8 +17,14 @@ public class Hand {
     }
 
     public int calculateScore() {
-        return cards.stream()
+        int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+        boolean containAce = cards.stream()
+                .anyMatch(Card::isAce);
+        if (containAce && score <= 11) {
+            score += 10;
+        }
+        return score;
     }
 }

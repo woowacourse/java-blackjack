@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import card.Card;
@@ -53,13 +54,31 @@ class HandTest {
     @DisplayName("카드들의 점수를 계산할 수 있다.")
     void calculateScore() {
         hand = new Hand();
-        Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
+        Card card = new Card(CardNumber.TWO, Pattern.CLOVER);
         Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
         hand.add(card);
         hand.add(card2);
 
         int score = hand.calculateScore();
 
-        assertThat(score).isEqualTo(9);
+        assertThat(score).isEqualTo(10);
     }
+
+    @DisplayName("에이스가 있을 때")
+    @Nested
+    class AceTest {
+        @DisplayName("합계가 11 이하이면 에이스가 11로 계산된다.")
+        @Test
+        void underEleven() {
+            hand = new Hand();
+            Card card = new Card(CardNumber.ACE, Pattern.HEART);
+            Card card1 = new Card(CardNumber.TWO, Pattern.HEART);
+            hand.add(card);
+            hand.add(card1);
+
+            int score = hand.calculateScore();
+            assertThat(score).isEqualTo(13);
+        }
+    }
+
 }
