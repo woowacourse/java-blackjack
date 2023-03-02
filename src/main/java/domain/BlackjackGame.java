@@ -6,28 +6,13 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private List<Player> players;
-    private Deck deck;
+    private final Deck deck;
+    private final People people;
 
     public BlackjackGame(List<String> playerNames, String dealerName, NumberGenerator numberGenerator) {
-        initPlayers(playerNames, dealerName);
-        initDeck(numberGenerator);
+        this.deck = new Deck(numberGenerator);
+        this.people = new People(playerNames, dealerName);
     }
 
-    private void initDeck(NumberGenerator numberGenerator) {
-        deck = new Deck(numberGenerator);
-    }
 
-    private void initPlayers(List<String> playerNames, String dealerName) {
-        players = playerNames.stream()
-                .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList())))
-                .collect(Collectors.toList());
-        players.add(new Dealer(dealerName, new CardPool(Collections.emptyList())));
-    }
-
-    public void letPlayersToHit() {
-        for (Player player : players) {
-            player.draw(deck.serve());
-        }
-    }
 }
