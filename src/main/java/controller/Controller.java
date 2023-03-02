@@ -10,6 +10,7 @@ import static view.InputView.readPlayersName;
 import static view.OutputView.*;
 
 public class Controller {
+    private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     //TODO: 21넘는 Gambler는 패배처리
 
     public void blackjack() {
@@ -41,9 +42,9 @@ public class Controller {
     }
 
     private void dealerHitOrStand(Dealer dealer) {
-        while (dealer.getScore() <= 16) {
+        while (dealer.getScore() <= dealer.getPickBoundary()) {
             dealer.pickCard();
-            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.println(DEALER_HIT);
         }
     }
 
