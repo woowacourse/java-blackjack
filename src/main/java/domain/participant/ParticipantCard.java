@@ -11,6 +11,7 @@ public class ParticipantCard {
 
     private static final int FIRST_CARD_INDEX = 0;
     private static final int ACE_HIGH_POINTS = 11;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -50,5 +51,9 @@ public class ParticipantCard {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
     }
 }

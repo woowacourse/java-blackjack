@@ -79,4 +79,17 @@ class PlayerTest {
         assertThat(score)
                 .isSameAs(expected);
     }
+
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
+    @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
+    void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
+        // given
+        cards.forEach(player::addCard);
+
+        // when
+        boolean actual = player.isBust();
+
+        // then
+        assertThat(actual).isSameAs(expected);
+    }
 }

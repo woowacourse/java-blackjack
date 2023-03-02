@@ -21,4 +21,13 @@ public final class ParticipantArguments {
                         Card.create(CardPattern.CLOVER, CardNumber.TWO), Card.create(CardPattern.SPADE, CardNumber.TWO)), 17)
         );
     }
+
+    private static Stream<Arguments> makeBustCard() {
+        return Stream.of(
+                Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
+                        Card.create(CardPattern.CLOVER, CardNumber.THREE), Card.create(CardPattern.SPADE, CardNumber.QUEEN)), false)
+                , Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.QUEEN), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
+                        Card.create(CardPattern.CLOVER, CardNumber.TEN), Card.create(CardPattern.SPADE, CardNumber.TWO)), true)
+        );
+    }
 }

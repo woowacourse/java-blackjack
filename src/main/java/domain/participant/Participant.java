@@ -26,4 +26,8 @@ public abstract class Participant {
     public int calculateScore() {
         return participantCard.calculateScore();
     }
+
+    public boolean isBust() {
+        return participantCard.isBust();
+    }
 }
