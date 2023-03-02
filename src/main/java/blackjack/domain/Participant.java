@@ -15,6 +15,12 @@ public class Participant {
         cards.add(card);
     }
 
+    public int calculateSumOfRank() {
+        return cards.stream()
+                .mapToInt(card -> card.getRank().getValue())
+                .sum();
+    }
+
     public Set<Card> getCards() {
         return cards;
     }

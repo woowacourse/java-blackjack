@@ -25,8 +25,8 @@ class CardTest {
         int indexOfRank = numberGenerator.generate(12);
         int indexOfSuit = numberGenerator.generate(3);
 
-        Rank rank = Rank.getValue(indexOfRank);
-        Suit suit = Suit.getValue(indexOfSuit);
+        Rank rank = Rank.getRank(indexOfRank);
+        Suit suit = Suit.getSuit(indexOfSuit);
 
         // when & then
         assertDoesNotThrow(() -> new Card(rank, suit));
