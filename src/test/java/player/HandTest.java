@@ -39,5 +39,13 @@ class HandTest {
         assertThat(hand.getCards()).isInstanceOf(ArrayList.class);
     }
 
+    @Test
+    @DisplayName("Hand에 추가한 카드가 카드리스트에 들어있다.")
+    void getCa1rds() {
+        hand = new Hand();
+        Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
+        hand.add(card);
 
+        assertThat(hand.getCards()).contains(card);
+    }
 }
