@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -33,5 +35,9 @@ public class Dealer extends Participant {
 
     public void giveOneMoreCard(Player player) {
         player.receiveCard(deck.drawCard());
+    }
+
+    public Map<Player, Result> decideResult() {
+        return players.decideResults(cards.calculateTotalScore());
     }
 }

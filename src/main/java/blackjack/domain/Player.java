@@ -19,6 +19,10 @@ public class Player extends Participant {
         }
     }
 
+    public int calculateTotalScore() {
+        return this.cards.calculateTotalScore();
+    }
+
     public String getName() {
         return name;
     }
