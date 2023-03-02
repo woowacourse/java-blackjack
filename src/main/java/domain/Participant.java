@@ -23,4 +23,8 @@ public class Participant {
         }
         return totalScore;
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }

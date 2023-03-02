@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,5 +25,15 @@ public class Participants {
         if (participants.size() < MIN_SIZE_EXCLUSIVE || participants.size() > MAX_SIZE_EXCLUSIVE) {
             throw new IllegalArgumentException("전체 참가자 수는 2명 이상 8명 이하여야 합니다!");
         }
+    }
+
+    public List<String> getNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<Participant> getParticipants() {
+        return Collections.unmodifiableList(participants);
     }
 }

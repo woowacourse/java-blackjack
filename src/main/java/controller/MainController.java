@@ -16,6 +16,8 @@ public class MainController {
 
     public void run() {
         Participants participants = new Participants(inputView.readPlayerNames());
+        outputView.printInitialMessage(participants.getNames());
+        outputView.printInitialState(participants);
 
     }
 }

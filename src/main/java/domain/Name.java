@@ -24,4 +24,8 @@ public class Name {
             throw new IllegalArgumentException("[ERROR] 이름의 길이는 10글자 이하여야 합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
