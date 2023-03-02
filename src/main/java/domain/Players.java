@@ -54,4 +54,8 @@ public class Players {
         return new Player(new Name(playerName), new Cards(distributor.distributeInitialCard()));
     }
 
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
+
 }
