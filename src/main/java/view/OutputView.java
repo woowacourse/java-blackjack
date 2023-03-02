@@ -29,10 +29,14 @@ public class OutputView {
 
     private static void printPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
-            printPlayerName(player);
-            printPlayerCards(player);
+            printSingleGambler(player);
             System.out.println();
         }
+    }
+
+    public static void printSingleGambler(Gambler gambler) {
+        printPlayerName(gambler);
+        printPlayerCards(gambler);
     }
 
     private static void printDealerCards(Dealer dealer) {
@@ -40,12 +44,12 @@ public class OutputView {
         printPlayerCards(dealer);
     }
 
-    public static void printPlayerName(Gambler gambler) {
+    private static void printPlayerName(Gambler gambler) {
         String name = gambler.getName();
         System.out.print(name + NAME_FORMAT);
     }
 
-    public static void printPlayerCards(Gambler gambler) {
+    private static void printPlayerCards(Gambler gambler) {
         String output = getPlayerCards(gambler);
         System.out.print(String.join(DELIMITER, output));
     }
@@ -75,12 +79,16 @@ public class OutputView {
         }
     }
 
-    public static void printPlayersResult(Map.Entry<Gambler, Integer> resultEntry) {
-        if (resultEntry.getKey().getClass().isInstance(Player.class)) {
-            int winCount = resultEntry.getValue();
-            System.out.print(resultEntry.getKey().getName() + ": ");
+    public static void printPlayersResult(Map.Entry<Gambler, Integer> gamblerEntry) {
+        if (!isDealer(gamblerEntry)) {
+            int winCount = gamblerEntry.getValue();
+            System.out.print(gamblerEntry.getKey().getName() + ": ");
             System.out.println(resolveOutcome(winCount));
         }
+    }
+
+    private static boolean isDealer(Map.Entry<Gambler, Integer> gamblerEntry) {
+        return gamblerEntry.getKey().getName().equals("딜러");
     }
 
     public static String resolveOutcome(int winCount) {
@@ -91,7 +99,7 @@ public class OutputView {
     }
 
     public static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
-        if (gamblerEntry.getKey().getClass().isInstance(Dealer.class)) {
+        if (isDealer(gamblerEntry)) {
             int winCount = gamblerEntry.getValue();
             int loseCount = size - winCount - 1;
             System.out.printf(DEALER_RESULT_FORMAT, winCount, loseCount);
