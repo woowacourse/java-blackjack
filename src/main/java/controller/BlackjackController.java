@@ -36,6 +36,8 @@ public class BlackjackController {
         blackjackGame.giveAdditionalCardToDealer();
         outputView.printDealerHitCount(dealer.getHitCardCount());
         blackjackGame.result();
+
+        outputView.printCardsWithScore(dealer,players);
     }
 
     private Players createPlayers() {
