@@ -1,16 +1,12 @@
 package domain;
 
-class Player {
+class Player extends Participant{
 
     public static final int MAX_NAME_LENGTH = 5;
 
-    private final String name;
-    private final Cards cards;
-
     public Player(String name, Cards cards) {
+        super(name, cards);
         validateNameLength(name);
-        this.name = name;
-        this.cards = cards;
     }
 
     private void validateNameLength(String name) {
@@ -19,6 +15,7 @@ class Player {
         }
     }
 
+    @Override
     public boolean canAddCard() {
         return cards.getScore() < Cards.BLACKJACK_NUMBER;
     }

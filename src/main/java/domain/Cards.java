@@ -39,4 +39,8 @@ public class Cards {
         }
         return sum + ADDITIONAL_A_VALUE;
     }
+
+    public int getSize() {
+        return cards.size();
+    }
 }
