@@ -31,6 +31,11 @@ public class Gambler implements Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }

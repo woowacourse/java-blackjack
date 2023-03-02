@@ -24,7 +24,7 @@ public class DealerTest {
 
     @Test
     void 딜러를_생성한다() {
-        Dealer dealer = Dealer.create();
+        final Dealer dealer = Dealer.create();
 
         assertThat(dealer.getName()).isEqualTo("딜러");
     }
@@ -71,5 +71,12 @@ public class DealerTest {
                 Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER)), true),
                 Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SEVEN, CLOVER)), false)
         );
+    }
+
+    @Test
+    void 딜러인지_확인한다() {
+        final Dealer dealer = Dealer.create();
+
+        assertThat(dealer.isDealer()).isTrue();
     }
 }

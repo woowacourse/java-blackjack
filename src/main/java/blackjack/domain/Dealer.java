@@ -32,6 +32,11 @@ public class Dealer implements Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }

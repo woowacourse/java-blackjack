@@ -5,6 +5,8 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -13,10 +15,11 @@ public class Players {
     private static final int NAME_COUNT_UPPER_BOUND = 6;
     static final String INVALID_NAME_COUNT =
             "플레이어는 최소 " + NAME_COUNT_LOWER_BOUND + "명 이상, 최대 " + NAME_COUNT_UPPER_BOUND + "명 이하여야 합니다. 입력값:";
-    
+    private static final String INVALID_DEALER_MESSAGE = "딜러가 존재하지 않습니다.";
+
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
+    private Players(final List<Player> players) {
         this.players = players;
     }
 
@@ -55,9 +58,22 @@ public class Players {
         return players;
     }
 
+    public Player getDealer() {
+        return players.stream()
+                .filter(Player::isDealer)
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(INVALID_DEALER_MESSAGE));
+    }
+
     public List<String> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(toUnmodifiableList());
+    }
+
+    public List<Player> getGambler() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(Collectors.toList());
     }
 }

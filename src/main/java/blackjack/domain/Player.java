@@ -9,6 +9,8 @@ public interface Player {
 
     boolean isDrawable();
 
+    boolean isDealer();
+
     String getName();
 
     List<String> getCardLetters();

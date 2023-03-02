@@ -46,4 +46,25 @@ public class PlayersTest {
 
         assertThat(players.getNames()).containsExactly("딜러", "후추", "허브");
     }
+
+    @Test
+    void 겜블러들을_반환한다() {
+        final List<String> names = List.of("후추", "허브");
+        final Players players = from(names);
+
+        List<Player> result = players.getGambler();
+
+        assertThat(result).extracting(Player::getName)
+                .containsExactly("후추", "허브");
+    }
+
+    @Test
+    void 딜러를_반환한다() {
+        final List<String> names = List.of("후추", "허브");
+        final Players players = from(names);
+
+        final Player player = players.getDealer();
+
+        assertThat(player.getName()).isEqualTo("딜러");
+    }
 }

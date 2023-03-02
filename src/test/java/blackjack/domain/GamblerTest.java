@@ -46,4 +46,11 @@ public class GamblerTest {
         assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드");
     }
 
+    @Test
+    void 딜러가_아닌지_확인한다() {
+        final Gambler gambler = new Gambler("후추");
+
+        assertThat(gambler.isDealer()).isFalse();
+    }
+
 }
