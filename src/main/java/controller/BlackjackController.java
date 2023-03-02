@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
-// TODO: 2023/02/28 결과 계산하기
-// TODO: 2023/02/28 출력
 public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -23,24 +21,39 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = createPlayers();
-        BlackjackGame blackjackGame = new BlackjackGame(players);
+        BlackjackGame blackjackGame = createBlackjackGame();
+
+        play(blackjackGame);
+        result(blackjackGame);
+    }
+
+    private BlackjackGame createBlackjackGame() {
+        BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
         blackjackGame.giveInitCards();
-        Dealer dealer = blackjackGame.getDealer();
+        outputView.printInitCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        return blackjackGame;
+    }
 
-        outputView.printInitCards(dealer, players);
-
+    private void play(BlackjackGame blackjackGame) {
+        Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
             requestMoreCard(blackjackGame, player);
         }
+
+        Dealer dealer = blackjackGame.getDealer();
         blackjackGame.giveAdditionalCardToDealer();
         outputView.printDealerHitCount(dealer.getHitCardCount());
-        blackjackGame.result();
+    }
 
+    private void result(BlackjackGame blackjackGame) {
+        Players players = blackjackGame.getPlayers();
+
+        blackjackGame.result();
+        Dealer dealer = blackjackGame.getDealer();
         outputView.printCardsWithScore(dealer, players);
         outputView.printFinalResult(dealer);
-
     }
+
 
     private Players createPlayers() {
         return new Players(readNames().stream()

@@ -40,11 +40,16 @@ public class BlackjackGame {
         }
     }
 
+    public void result() {
+        dealer.decideResults(players);
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
 
-    public void result() {
-        dealer.decideResults(players);
+    public Players getPlayers() {
+        return players;
     }
+
 }
