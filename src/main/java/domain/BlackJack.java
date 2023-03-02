@@ -43,9 +43,12 @@ public class BlackJack {
 
     private void giveCardToPerPlayer(Player player) {
         for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
-            Card card = cardRepository.findAnyOneCard();
-            player.addCard(card);
+            player.addCard(findAnyOneCard());
         }
+    }
+
+    private Card findAnyOneCard() {
+        return cardRepository.findAnyOneCard();
     }
 
     public Map<Player, List<Card>> getPlayersCards() {
@@ -73,7 +76,14 @@ public class BlackJack {
     }
 
     public boolean shouldDealerGetCard() {
-        Player dealer = players.get(0);
-        return dealer.getTotalScore() <= 16;
+        return getDealer().getTotalScore() <= 16;
+    }
+
+    public void giveDealerCard() {
+        getDealer().addCard(findAnyOneCard());
+    }
+
+    private Player getDealer() {
+        return players.get(0);
     }
 }

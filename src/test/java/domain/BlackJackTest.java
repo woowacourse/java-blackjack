@@ -64,4 +64,15 @@ class BlackJackTest {
 
         assertThat(blackJack.shouldDealerGetCard()).isFalse();
     }
+
+    @Test
+    @DisplayName("딜러에게 한 장의 카드를 추가한다.")
+    void thenGiveDealerCard() {
+        BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
+        blackJack.startGame();
+
+        blackJack.giveDealerCard();
+
+        assertThat(blackJack.getCardsFrom("딜러")).contains(new Card(Shape.HEART, Number.SEVEN));
+    }
 }
