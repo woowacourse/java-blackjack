@@ -28,4 +28,19 @@ class DeckTest {
         assertThat(Deck.create(mockShuffler))
                 .isExactlyInstanceOf(Deck.class);
     }
+
+    @Test
+    @DisplayName("draw()는 호출하면 카드 한 장을 뽑는다.")
+    void draw_whenCall_thenReturnCard() {
+        // given
+        Deck deck = Deck.create(mockShuffler);
+        Card expected = Card.create(CardPattern.HEART, CardNumber.ACE);
+
+        // when
+        Card actual = deck.draw();
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
 }

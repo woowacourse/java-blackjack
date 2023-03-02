@@ -23,6 +23,10 @@ public class Deck {
         return new Deck(new LinkedList<>(shuffledCards));
     }
 
+    public Card draw() {
+        return deck.poll();
+    }
+
     private static List<Card> makeCards(final List<CardPattern> cardPatterns, final List<CardNumber> cardNumbers) {
         return cardPatterns.stream()
                 .flatMap(pattern -> cardNumbers.stream().map(number -> Card.create(pattern, number)))
