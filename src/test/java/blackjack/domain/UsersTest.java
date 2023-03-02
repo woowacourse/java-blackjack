@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,4 +42,13 @@ class UsersTest {
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
     }
 
+    @Test
+    @DisplayName("딜러의 스코어가 16이 넘는지 확인하는 기능 테스트")
+    void isDealerOverDrawLimitTest() {
+        final Users users = new Users(List.of("필립"), new Deck(new TestDeckGenerator(testCards)));
+
+        boolean dealerOverDrawLimit = users.isDealerOverDrawLimit();
+
+        Assertions.assertThat(dealerOverDrawLimit).isTrue();
+    }
 }

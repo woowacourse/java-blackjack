@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class Users {
 
+    private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
+    private static final int DEALER_DRAW_LIMIT = 16;
     private final List<User> users;
 
     public Users(List<String> playerNames, Deck deck) {
@@ -28,5 +30,16 @@ public class Users {
     public Map<String, List<Card>> getInitialStatus() {
         return users.stream()
                 .collect(Collectors.toUnmodifiableMap(User::getName, User::getInitialStatus));
+    }
+
+    public boolean isDealerOverDrawLimit() {
+        return BlackJackRule.getScore(getDealer()) > DEALER_DRAW_LIMIT;
+    }
+
+    private User getDealer() {
+        return users.stream()
+                .filter(user -> user instanceof Dealer)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(NOT_CONTAIN_DEALER));
     }
 }
