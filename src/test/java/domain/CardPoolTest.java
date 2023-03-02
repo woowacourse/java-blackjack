@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardPoolTest {
@@ -79,5 +79,16 @@ class CardPoolTest {
 
         assertThat(cardPool.sumCardNumbers())
                 .isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("카드가 잘 들어가는지 테스트한다.")
+    void addTest() {
+        CardPool cardPool = new CardPool(Collections.emptyList());
+        Card card = new Card(CardType.CLOVER, CardNumber.FOUR);
+
+        cardPool.add(card);
+
+        assertThat(cardPool.getCards()).contains(card);
     }
 }

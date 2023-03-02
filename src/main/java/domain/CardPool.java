@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardPool {
@@ -7,7 +8,11 @@ public class CardPool {
     private final List<Card> cards;
 
     public CardPool(List<Card> cards) {
-        this.cards = List.copyOf(cards);
+        this.cards = new ArrayList<>(cards);
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public int sumCardNumbers() {
