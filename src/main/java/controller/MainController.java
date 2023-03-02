@@ -1,7 +1,6 @@
 package controller;
 
-import domain.Names;
-import java.util.List;
+import domain.Participants;
 import view.InputView;
 import view.OutputView;
 
@@ -16,6 +15,7 @@ public class MainController {
     }
 
     public void run() {
-        Names names = new Names(inputView.readPlayerNames());
+        Participants participants = new Participants(inputView.readPlayerNames());
+
     }
 }

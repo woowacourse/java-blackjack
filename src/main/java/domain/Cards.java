@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class Cards {
@@ -18,6 +20,10 @@ public class Cards {
             }
         }
         return cards;
+    }
+
+    public List<Card> getInitialCards() {
+        return new ArrayList<>(List.of(cards.pop(), cards.pop()));
     }
 
     public boolean contains(final Card card) {
