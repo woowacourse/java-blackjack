@@ -18,4 +18,10 @@ public class Challenger extends Player {
             throw new InvalidPlayerNameException();
         }
     }
+
+    @Override
+    public Boolean canPick() {
+
+        return null;
+    }
 }

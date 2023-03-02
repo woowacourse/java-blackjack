@@ -19,9 +19,9 @@ class ChallengerTest {
         Player player = new Challenger("oing");
         Card card1 = new Card(Shape.HEART, Number.FOUR);
         Card card2 = new Card(Shape.CLOVER, Number.KING);
-        player.getInitialCards(List.of(card1, card2));
+        player.pickStartCards(List.of(card1, card2));
 
-        assertThat(player.getHoldingCards())
+        assertThat(player.getHoldingCards().getCards())
                 .containsExactly(card1, card2);
     }
 
@@ -32,7 +32,7 @@ class ChallengerTest {
         Card card = new Card(Shape.DIAMOND, Number.JACK);
         player.pick(card);
 
-        assertThat(player.getHoldingCards())
+        assertThat(player.getHoldingCards().getCards())
                 .contains(card);
     }
 
