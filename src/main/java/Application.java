@@ -54,5 +54,43 @@ public class Application {
 
         outputView.printPlayerNames(namesCopy);
         outputView.printCardsPerPlayer(namesCopy, cardsCardsCopy);
+
+        for (int i = 1; i < players.size(); i++) {
+            while (true) {
+                String yOrN = inputView.addOrStop(players.get(i).getName());
+                if (yOrN.equals("n")) {
+                    outputView.printCurrentPlayerResult(players.get(i).getName(), players.get(i).getCards());
+                    break;
+                }
+                boolean flag2 = true;
+                while (flag2) {
+                    flag2 = !players.get(i).selectToPickOtherCard(cardBox, cardNumberGenerator);
+                }
+                outputView.printCurrentPlayerResult(players.get(i).getName(), players.get(i).getCards());
+            }
+        }
+
+        System.out.println();
+        while (dealer.isSumUnderStandard()) {
+            outputView.noticeDealerUnderStandard();
+            boolean flag2 = true;
+            while (flag2) {
+                flag2 = !dealer.selectToPickOtherCard(cardBox, cardNumberGenerator);
+            }
+        }
+        System.out.println();
+        for (Player player : players) {
+            outputView.printAllCardResult(player.getName(), player.getCards(),
+                    player.sumOfPlayerCards());
+        }
+
+        List<Integer> winningResult = new ArrayList<>();
+
+        for (int i = 1; i < players.size(); i++) {
+            winningResult.add(dealer.checkWinningResult(players.get(i)));
+        }
+
+        outputView.printWinningResult(winningResult, namesCopy);
+
     }
 }

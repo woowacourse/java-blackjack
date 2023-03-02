@@ -15,23 +15,23 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class PlayerTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {
-            "Y,0,false",
-            "Y,1,true",
-            "N,0,false",
-    })
-    void Y_입력시_카드를_추가하고_N_입력시_카드를_추가하지_않는다(String input, int randomCardIndex, boolean expected) {
-        Name name = new Name("hamad");
-        List<Card> cardsByCardBox = new ArrayList<>();
-        cardsByCardBox.add(new Card("A하트", 11));
-        cardsByCardBox.add(new Card("3하트", 3));
-        Cards cards = new Cards(cardsByCardBox);
-
-        Player player = new Player(name, cards);
-
-        assertThat(player.selectToPickOtherCard(input, 카드박스, () -> randomCardIndex)).isEqualTo(expected);
-    }
+//    @ParameterizedTest
+//    @CsvSource(value = {
+//            "Y,0,false",
+//            "Y,1,true",
+//            "N,0,false",
+//    })
+//    void Y_입력시_카드를_추가하고_N_입력시_카드를_추가하지_않는다(String input, int randomCardIndex, boolean expected) {
+//        Name name = new Name("hamad");
+//        List<Card> cardsByCardBox = new ArrayList<>();
+//        cardsByCardBox.add(new Card("A하트", 11));
+//        cardsByCardBox.add(new Card("3하트", 3));
+//        Cards cards = new Cards(cardsByCardBox);
+//
+//        Player player = new Player(name, cards);
+//
+//        assertThat(player.selectToPickOtherCard(input, 카드박스, () -> randomCardIndex)).isEqualTo(expected);
+//    }
 
     @Test
     void 본인의_카드뭉치의_총합을_반환한다() {

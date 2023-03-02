@@ -1,5 +1,6 @@
 package view;
 
+import domain.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,5 +22,18 @@ public class InputView {
         return Arrays.stream(input.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+    }
+
+    public String addOrStop(final String playerName) {
+        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String input = scanner.nextLine();
+        validateYOrN(input);
+        return input;
+    }
+
+    private void validateYOrN(final String input) {
+        if (!input.equals("y") && !input.equals("n")) {
+            throw new IllegalArgumentException("y 혹은 n 만 입력가능합니다.");
+        }
     }
 }

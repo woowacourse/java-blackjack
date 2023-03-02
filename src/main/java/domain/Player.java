@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Player {
 
     private final Name name;
@@ -10,12 +12,8 @@ public class Player {
         this.cards = cards;
     }
 
-    public boolean selectToPickOtherCard(final String yesOrNo, final CardBox cardBox,
-                                         final CardNumberGenerator generator) {
-        if (yesOrNo.equals("Y")) {
-            return pickOtherCard(cardBox, generator);
-        }
-        return false;
+    public boolean selectToPickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
+        return pickOtherCard(cardBox, generator);
     }
 
     protected boolean pickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
@@ -28,5 +26,9 @@ public class Player {
 
     public String getName() {
         return name.getName();
+    }
+
+    public List<String> getCards() {
+        return cards.getCards();
     }
 }

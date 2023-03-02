@@ -16,11 +16,26 @@ public class Cards {
     }
 
     public int sumOfCards() {
+        if (isOddSum()) {
+            return calculateOddCardsSum();
+        }
         int sum = 0;
         for (int i = 0; i < cards.size(); i += 2) {
             sum += cards.get(i).sum(cards.get(i + 1));
         }
         return sum;
+    }
+
+    private int calculateOddCardsSum() {
+        int sum = cards.get(0).sum(new Card("조커", 0));
+        for (int i = 1; i < cards.size(); i += 2) {
+            sum += cards.get(i).sum(cards.get(i + 1));
+        }
+        return sum;
+    }
+
+    private boolean isOddSum() {
+        return cards.size() % 2 != 0;
     }
 
     public boolean addCard(final Card otherCard) {
