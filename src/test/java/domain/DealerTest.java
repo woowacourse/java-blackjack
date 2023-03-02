@@ -49,4 +49,24 @@ public class DealerTest {
         assertThat(dealer.isBust()).isFalse();
     }
 
+    @Test
+    @DisplayName("딜러의 점수가 17점 이상이면 더 이상 카드를 받지 못한다.")
+    void noMoreCard() {
+        Dealer dealer = new Dealer(new Cards(cards));
+
+        dealer.pick(new Card(Shape.HEART, Value.FIVE));
+
+        assertThat(dealer.isMoreCardAble()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러의 점수가 16점 이하이면 카드를 더 받을 수 있다.")
+    void isMoreCardAble() {
+        Dealer dealer = new Dealer(new Cards(cards));
+
+        dealer.pick(new Card(Shape.HEART, Value.FOUR));
+
+        assertThat(dealer.isMoreCardAble()).isTrue();
+    }
+
 }
