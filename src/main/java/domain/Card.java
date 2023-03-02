@@ -2,10 +2,10 @@ package domain;
 
 public class Card {
 
-    private final String face;
+    private final Face face;
     private final String letter;
 
-    public Card(String face, String letter) {
+    public Card(Face face, String letter) {
         this.face = face;
         this.letter = letter;
     }
@@ -13,4 +13,5 @@ public class Card {
     public String getLetter() {
         return letter;
     }
+
 }

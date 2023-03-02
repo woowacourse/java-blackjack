@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static domain.Face.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -98,7 +99,7 @@ public class GameTest {
 
     private List<Card> createCards(String... letters) {
         return Arrays.stream(letters)
-                .map(letter -> new Card("heart", letter))
+                .map(letter -> new Card(SPADE, letter))
                 .collect(Collectors.toList());
     }
 }

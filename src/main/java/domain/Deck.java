@@ -15,16 +15,16 @@ public class Deck {
 
     private List<Card> buildDeck() {
         var cards = new ArrayList<Card>();
-        var faces = List.of("heart", "spade", "diamond", "clover");
+        var faces = List.of(Face.values());
 
-        for (String face : faces) {
+        for (Face face : faces) {
             cards.addAll(buildCardsFrom(face));
         }
 
         return cards;
     }
 
-    private List<Card> buildCardsFrom(String face) {
+    private List<Card> buildCardsFrom(Face face) {
         var cards = new ArrayList<Card>();
         var letters = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J");
 
