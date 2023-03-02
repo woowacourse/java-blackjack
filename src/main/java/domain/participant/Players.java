@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.card.Deck;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,5 +45,13 @@ public class Players {
         if (removedDistinctCount != names.size()) {
             throw new IllegalArgumentException(ERROR_DUPLICATED_NAME);
         }
+    }
+
+    public void initPlayersHand(Deck deck) {
+        players.forEach(player -> player.initHand(deck.pollTwoCards()));
+    }
+
+    public List<Participant> toList() {
+        return players;
     }
 }

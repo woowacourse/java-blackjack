@@ -28,15 +28,19 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
-    }
-
     public Card pollAvailableCard() {
         if (cards.size() == 0) {
             throw new IllegalStateException(ERROR_EMPTY_CARDS);
         }
 
         return cards.poll();
+    }
+
+    public List<Card> pollTwoCards() {
+        return List.of(pollAvailableCard(), pollAvailableCard());
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }

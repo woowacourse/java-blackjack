@@ -28,6 +28,10 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK;
     }
 
+    public void initHand(List<Card> twoCards) {
+        twoCards.forEach(hand::addCard);
+    }
+
     public abstract boolean isStay();
 
     public List<Card> getCards() {
