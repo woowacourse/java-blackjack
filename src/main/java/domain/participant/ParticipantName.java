@@ -1,26 +1,32 @@
-package domain.player;
+package domain.participant;
 
 import java.util.Objects;
 
-public class PlayerName {
+public class ParticipantName {
 
     private static final int MAX_LENGTH = 20;
 
     private final String name;
 
-    private PlayerName(final String name) {
-        String trimName = name.trim();
-        validateBlankName(trimName);
+    private ParticipantName(final String name) {
+        validateBlankName(name);
         validateNameLength(name);
-        this.name = trimName;
+        this.name = name;
     }
 
-    public static PlayerName create(final String name) {
-        return new PlayerName(name);
+    public static ParticipantName create(final String name) {
+        validateNullName(name);
+        return new ParticipantName(name.trim());
+    }
+
+    private static void validateNullName(final String name) {
+        if (Objects.isNull(name)) {
+            throw new IllegalArgumentException("이름은 Null일 수 없습니다.");
+        }
     }
 
     private void validateBlankName(final String name) {
-        if (Objects.isNull(name) || name.isBlank()) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
         }
     }

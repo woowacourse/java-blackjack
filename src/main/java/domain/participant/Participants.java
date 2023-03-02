@@ -1,18 +1,18 @@
-package domain.player;
+package domain.participant;
 
 import java.util.List;
 
-public class Players {
+public class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 7;
 
-    private Players(final List<String> playerNames) {
+    private Participants(final List<String> playerNames) {
         validatePlayerCount(playerNames);
     }
 
-    public static Players create(final List<String> playerNames) {
-        return new Players(playerNames);
+    public static Participants create(final List<String> playerNames) {
+        return new Participants(playerNames);
     }
 
     private void validatePlayerCount(final List<String> playerNames) {
