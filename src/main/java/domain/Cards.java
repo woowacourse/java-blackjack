@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
     private List<Card> cards;
@@ -18,4 +19,12 @@ public class Cards {
         return cards.get(index);
     }
 
+
+    public int getSum() {
+        Integer sum = cards.stream()
+                .map(s->s.getCardValue())
+                .collect(Collectors.summingInt(Integer::intValue));
+
+        return sum;
+    }
 }
