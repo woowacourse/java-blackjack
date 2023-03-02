@@ -1,11 +1,12 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardsTest {
@@ -18,7 +19,7 @@ class CardsTest {
 
         //then
         int expectedScore = 15;
-        Assertions.assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
+        assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
     }
 
     @Test
@@ -29,6 +30,6 @@ class CardsTest {
 
         //then
         int expectedScore = 21;
-        Assertions.assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
+        assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
     }
 }

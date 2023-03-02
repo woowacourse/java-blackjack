@@ -1,12 +1,10 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayerTest {
@@ -21,6 +19,6 @@ class PlayerTest {
         player.pickCard();
         int nowSize = player.getCards().size();
         //then
-        Assertions.assertThat(nowSize).isEqualTo(prevSize + 1);
+        assertThat(nowSize).isEqualTo(prevSize + 1);
     }
 }

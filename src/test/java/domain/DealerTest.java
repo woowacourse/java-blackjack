@@ -1,11 +1,12 @@
 package domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DealerTest {
@@ -18,7 +19,7 @@ class DealerTest {
         int actual = dealer.getCardsSize();
 
         //then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -34,6 +35,6 @@ class DealerTest {
         int actual = dealer.getCardsSize();
 
         //then
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 }
