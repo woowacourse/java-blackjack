@@ -18,13 +18,16 @@ public class Dealer extends Participant {
     }
 
     public boolean checkCardsCondition() {
+        return getMaxSum() < LIMIT_TAKE_CARD_VALUE;
+    }
+
+    public int getMaxSum() {
         List<Integer> totalValues = new ArrayList<>();
         totalValues.add(0);
         for (Card card : cards) {
             totalValues = setTotalValuesByAceExistence(totalValues, card);
         }
-        Integer maxSum = calculateMaxSum(totalValues);
-        return maxSum < LIMIT_TAKE_CARD_VALUE;
+        return calculateMaxSum(totalValues);
     }
 
     private Integer calculateMaxSum(List<Integer> totalValues) {

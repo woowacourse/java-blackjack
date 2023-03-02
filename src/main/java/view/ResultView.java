@@ -18,4 +18,8 @@ public class ResultView {
         }
         System.out.println(name + result);
     }
+
+    public static void printParticipantFinalResult(String name, List<String> cardName, int totalValueSum) {
+        System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
+    }
 }

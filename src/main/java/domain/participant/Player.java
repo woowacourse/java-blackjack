@@ -14,14 +14,18 @@ public class Player extends Participant {
     }
 
     public boolean checkCardsCondition() {
-        int totalValue = 0;
-        for (Card card : cards) {
-            totalValue += card.getValue();
-        }
-        return totalValue <= LIMIT_TAKE_CARD_VALUE;
+        return getTotalValue() <= LIMIT_TAKE_CARD_VALUE;
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int getTotalValue() {
+        int totalValue = 0;
+        for (Card card : cards) {
+            totalValue += card.getValue();
+        }
+        return totalValue;
     }
 }
