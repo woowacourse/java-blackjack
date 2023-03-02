@@ -13,12 +13,21 @@ public class Score {
     }
 
     public static Score of(final Cards cards) {
-        int score = getInitialScore(cards);
-        if (score > BLACK_JACK && cards.contains(Letter.ACE)) {
-            score -= Letter.ACE.getNumber();
-            score += ACE_SUB_NUMBER;
+        final int score = getInitialScore(cards);
+        final int count = cards.count(Letter.ACE);
+        return new Score(modifyScoreByAce(score, count));
+    }
+
+    private static int modifyScoreByAce(int score, final int count) {
+        for (int i = 0; i < count; i++) {
+            if (score > BLACK_JACK) {
+                score -= Letter.ACE.getNumber();
+                score += ACE_SUB_NUMBER;
+                continue;
+            }
+            break;
         }
-        return new Score(score);
+        return score;
     }
 
     private static int getInitialScore(final Cards cards) {
