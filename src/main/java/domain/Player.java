@@ -1,6 +1,7 @@
 package domain;
 
 public class Player {
+    private static final int BLACK_JACK = 21;
     private final Name name;
     private final Cards cards;
 
@@ -15,5 +16,9 @@ public class Player {
 
     public Card getCard(int index){
         return cards.getCard(index);
+    }
+
+    public boolean isOverBlackJack() {
+        return cards.getSum() > BLACK_JACK;
     }
 }
