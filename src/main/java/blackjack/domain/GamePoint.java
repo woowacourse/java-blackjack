@@ -4,27 +4,26 @@ import java.util.List;
 
 public class GamePoint {
 
-    private static final int BURST = 0;
+    private static final int BUST = 0;
     private final int gamePoint;
 
     public GamePoint(final List<Card> cards) {
-        int point = 0;
-        point = calculateMaxValueOf(cards);
-        if (isBurst(point) && containAceInCars(cards)) {
+        int point = calculateMaxPoint(cards);
+        if (isBust(point) && containAceInCards(cards)) {
             this.gamePoint = getOptimizePoint(point, getCountOfAce(cards));
             return;
         }
-        this.gamePoint = calculateBurst(point);
+        this.gamePoint = calculateBust(point);
     }
 
-    private boolean isBurst(final int point) {
-        return calculateBurst(point) == BURST;
+    private boolean isBust(final int point) {
+        return calculateBust(point) == BUST;
     }
 
-    private int calculateMaxValueOf(final List<Card> cards) {
+    private int calculateMaxPoint(final List<Card> cards) {
         int point = 0;
         for (Card card : cards) {
-            point += optimize(card);
+            point += transform(card);
         }
         return point;
     }
@@ -37,10 +36,10 @@ public class GamePoint {
             remainAce -= 1;
         }
 
-        return calculateBurst(optimizedPoint);
+        return calculateBust(optimizedPoint);
     }
 
-    private boolean containAceInCars(List<Card> cards) {
+    private boolean containAceInCards(List<Card> cards) {
         if (getCountOfAce(cards) != 0) {
             return true;
         }
@@ -53,14 +52,14 @@ public class GamePoint {
                 .count();
     }
 
-    private int calculateBurst(final int point) {
+    private int calculateBust(final int point) {
         if (point > 21) {
-            return BURST;
+            return BUST;
         }
         return point;
     }
 
-    private int optimize(Card card) {
+    private int transform(Card card) {
         if (card.isAce()) {
             return 11;
         }
