@@ -13,9 +13,13 @@ public abstract class Participant {
         return cards.calculate();
     }
 
-    protected abstract void hit(final Card card);
+    protected void hit(final Card card) {
+        cards.receive(card);
+    }
 
-    protected abstract List<Card> open(final int cardCount);
+    protected List<Card> open(final int cardCount) {
+        return cards.open(cardCount);
+    }
 
     protected abstract boolean isHittable();
 }
