@@ -8,6 +8,8 @@ public enum Value {
     SIX("6", 6), SEVEN("7", 7), EIGHT("8", 8), NINE("9", 9), TEN("10", 10),
     JACK("J", 10), QUEEN("Q", 10), KING("K", 10);
 
+    private static final int BLACKJAK_NUMBER = 21;
+    private static final int ACE_LOWER_VALUE = 1;
     private final String value;
     private final int score;
 
@@ -27,7 +29,11 @@ public enum Value {
         return value;
     }
 
-    public int getScore() {
+    public int getScore(final int totalScore) {
+        boolean isOverBlackJack = totalScore + score >= BLACKJAK_NUMBER;
+        if (isAce() && isOverBlackJack) {
+            return ACE_LOWER_VALUE;
+        }
         return score;
     }
 

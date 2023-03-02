@@ -12,12 +12,8 @@ public class Card {
         this.shape = Shape.of(shape);
     }
 
-    public int getScore() {
-        return value.getScore();
-    }
-
-    public boolean isAce() {
-        return value.isAce();
+    public int getScore(final int totalScore) {
+        return value.getScore(totalScore);
     }
 
     @Override

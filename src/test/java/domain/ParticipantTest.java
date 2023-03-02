@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
     @Test
     void test() {
-        List<Card> cards = new ArrayList<>(List.of(new Card("3", "스페이드"), new Card("10", "하트")));
+        List<Card> cards = new ArrayList<>(List.of(new Card("K", "스페이드"), new Card("10", "하트")));
         Participant participant = new Participant(new Name("mango"), cards);
-        assertThat(participant.calculateScore()).isEqualTo(13);
+        assertThat(participant.calculateScore()).isEqualTo(20);
         participant.receiveCard(new Card("A", "클로버"));
-        assertThat(participant.calculateScore()).isEqualTo(14);
+        assertThat(participant.calculateScore()).isEqualTo(21);
     }
 
 }

@@ -17,16 +17,12 @@ public class Participant {
     }
 
     public int calculateScore() {
-        int score = 0;
+        int totalScore = 0;
         for (Card card : cards) {
-            if (card.isAce()) {
-                if (score >= 11) {
-                    score += 1;
-                    continue;
-                }
-            }
-            score += card.getScore();
+            totalScore += card.getScore(totalScore);
         }
-        return score;
+        return totalScore;
     }
+
+
 }
