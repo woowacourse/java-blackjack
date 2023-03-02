@@ -42,4 +42,8 @@ public class Users {
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(NOT_CONTAIN_DEALER));
     }
+
+    public void drawDealer(final Deck deck) {
+        getDealer().drawCard(deck);
+    }
 }
