@@ -12,9 +12,9 @@ public abstract class User {
         cards = new ArrayList<>(firstTurnCards);
     }
 
-//    public void receiveCard(){
-//
-//    }
+    public void receiveCard(Card card){
+        cards.add(card);
+    }
 
     public List<Integer> getCardNumbers() {
         return cards.stream()
