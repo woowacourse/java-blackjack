@@ -11,4 +11,10 @@ class StandardCardTest {
         Assertions.assertThat(standardCard).isInstanceOf(StandardCard.class);
     }
 
+    @Test
+    void getValue() {
+        Card standardCard = new StandardCard("3");
+        Assertions.assertThat(standardCard.getValue()).isEqualTo(3);
+    }
+
 }

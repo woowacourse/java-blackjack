@@ -12,4 +12,10 @@ class AceCardTest {
         Card card = new AceCard();
         Assertions.assertThat(card).isInstanceOf(AceCard.class);
     }
+
+    @Test
+    void getValue() {
+        Card aceCard = new AceCard();
+        Assertions.assertThat(aceCard.getValue()).isEqualTo(11);
+    }
 }
