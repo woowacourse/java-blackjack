@@ -36,6 +36,6 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertThat(dealer.getFirstCard()).isEqualTo(card1);
+        assertThat(dealer.getCards()).contains(card1, card2);
     }
 }

@@ -12,7 +12,4 @@ public class Dealer extends Participant {
         return name.getValue();
     }
 
-    public Card getFirstCard() {
-        return super.playerCards.getFirst();
-    }
 }
