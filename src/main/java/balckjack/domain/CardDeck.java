@@ -26,9 +26,4 @@ public class CardDeck {
         return cards.size();
     }
 
-    public int calculateScore() {
-        return cards.stream().mapToInt(Card::getValue).sum();
-    }
-
-
 }

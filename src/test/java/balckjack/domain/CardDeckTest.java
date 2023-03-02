@@ -22,16 +22,8 @@ class CardDeckTest {
     @Test
     void findCardCount() {
         deck.addCard(new CourtCard("K"));
-        deck.addCard(new StandardCard(4));
+        deck.addCard(new StandardCard("4"));
         Assertions.assertThat(deck.getCardCount()).isEqualTo(2);
-    }
-
-    @Test
-    void findCardScore() {
-        deck.addCard(new CourtCard("K"));
-        deck.addCard(new StandardCard(4));
-        Assertions.assertThat(deck.calculateScore()).isEqualTo(14);
-
     }
 
 }

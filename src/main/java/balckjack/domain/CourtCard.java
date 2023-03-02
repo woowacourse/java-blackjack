@@ -7,7 +7,7 @@ public class CourtCard extends Card {
     private static final List<String> symbols = List.of("J", "Q", "K");
 
     public CourtCard(String symbol) {
-        super(symbol, 10);
+        super(symbol);
     }
 
     @Override
@@ -16,5 +16,10 @@ public class CourtCard extends Card {
             throw new IllegalArgumentException(
                 String.format("심볼은 J, Q, K 중 하나여야 합니다. 입력된 값 : %s", symbol));
         }
+    }
+
+    @Override
+    protected int getValue() {
+        return 10;
     }
 }

@@ -17,7 +17,7 @@ public class CardPool {
         List<Card> a = new ArrayList<>();
         a.add(new AceCard());
         for (int i = 2; i < 11; i++) {
-            a.add(new StandardCard(i));
+            a.add(new StandardCard(String.valueOf(i)));
         }
         a.add(new CourtCard("J"));
         a.add(new CourtCard("K"));
