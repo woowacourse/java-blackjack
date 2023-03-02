@@ -15,13 +15,24 @@ public class InputView {
     public List<String> requestNames() {
         askInputNames();
         List<String> names = Arrays.asList(scanner.nextLine().split(delimiter, -1));
-        validateNumberOfNames(names);
+        validate(names);
         return names;
+    }
+
+    private void validate(List<String> names) {
+        validateNumberOfNames(names);
+        validateNoDuplication(names);
     }
 
     private void validateNumberOfNames(List<String> names) {
         if (names.size() < 1 || names.size() > 7) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_OF_PLAYER.getMessage());
+        }
+    }
+
+    private void validateNoDuplication(List<String> names) {
+        if (names.stream().distinct().count() != names.size()) {
+            throw new IllegalArgumentException(ErrorMessage.NAME_IS_DUPLICATED.getMessage());
         }
     }
 

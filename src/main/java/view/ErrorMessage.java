@@ -5,7 +5,8 @@ public enum ErrorMessage {
     INVALID_NUMBER_OF_PLAYER("플레이어의 수는 1명 이상, 7명 이하여야 합니다."),
     NAME_IS_EMPTY("이름은 공백일 수 없습니다."),
     NAME_IS_NULL("이름은 null일 수 없습니다."),
-    NAME_IS_DEALER("이름은 '딜러'일 수 없습니다.");
+    NAME_IS_DEALER("이름은 '딜러'일 수 없습니다."),
+    NAME_IS_DUPLICATED("이름이 중복되었습니다.");
 
     private final String message;
 
