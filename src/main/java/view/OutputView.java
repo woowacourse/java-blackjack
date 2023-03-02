@@ -1,9 +1,8 @@
 package view;
 
-import domain.Card;
-import domain.Gambler;
-import domain.Player;
-import domain.Players;
+import domain.*;
+
+import java.util.Map;
 
 public class OutputView {
 
@@ -45,5 +44,29 @@ public class OutputView {
         printPlayerCards(gambler);
         System.out.print(" - 결과: ");
         System.out.println(gambler.getScore());
+    }
+
+    public static void printResult(Map<Gambler, Integer> result) {
+        System.out.println("## 최종 승패");
+
+
+        for (Map.Entry<Gambler, Integer> resultEntry : result.entrySet()) {
+            printDealerResult(resultEntry, result.size());
+            printPlayersResult(resultEntry);
+        }
+        /*
+        Controller >> Map<Gambler,승리횟수>
+        * */
+    }
+
+    private static void printPlayersResult(Map.Entry<Gambler, Integer> resultEntry) {
+    }
+
+    private static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
+        if (gamblerEntry.getKey().getClass().isInstance(Dealer.class)) {
+            int winCount = gamblerEntry.getValue();
+            int loseCount = size - winCount - 1;
+            System.out.printf("딜러: %d승 %d패", winCount, loseCount);
+        }
     }
 }
