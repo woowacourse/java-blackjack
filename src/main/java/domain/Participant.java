@@ -20,5 +20,5 @@ public abstract class Participant {
         return drawnCards.calculateScore();
     }
 
-    abstract List<Card> openDrawnCards();
+    public abstract List<Card> openDrawnCards();
 }
