@@ -45,10 +45,21 @@ public class Users {
     }
 
     public List<Card> getCardsOf(final User user) {
-        final int targetUser = users.indexOf(user);
-        if(targetUser == -1){
+        final int targetUser = getUserIndexOf(user);
+
+        return users.get(targetUser).openCards();
+    }
+
+    private int getUserIndexOf(final User user) {
+        int targetUserIndex = users.indexOf(user);
+        if (targetUserIndex == -1) {
             throw new IllegalArgumentException("없는 유저 입니다.");
         }
-        return users.get(targetUser).openCards();
+        return targetUserIndex;
+    }
+
+    public void findUserAndGive(final User user, final Card card) {
+        final int targetUser = users.indexOf(user);
+        users.get(targetUser).draw(card);
     }
 }

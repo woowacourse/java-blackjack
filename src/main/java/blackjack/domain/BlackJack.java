@@ -30,15 +30,25 @@ public class BlackJack {
         }
     }
 
+    public void drawCard(User user) {
+        users.findUserAndGive(user, deck.drawCard());
+    }
+
     public List<Card> getDealerCard() {
         return dealer.openCards();
     }
 
-    public List<Card> getInitialDealerCard(){
+    public List<Card> getInitialDealerCard() {
         return dealer.getFirstCard();
     }
 
     public List<Card> getUserCard(User user) {
         return users.getCardsOf(user);
+    }
+
+    public void finalizeDealer() {
+        while (dealer.needCard()) {
+            dealer.draw(deck.drawCard());
+        }
     }
 }
