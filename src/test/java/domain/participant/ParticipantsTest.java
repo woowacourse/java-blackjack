@@ -1,5 +1,7 @@
 package domain.participant;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,6 +31,16 @@ class ParticipantsTest {
         assertThatThrownBy(() -> Participants.create(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 최소 1명, 최대 7명이어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("create()는 중복된 플레이어 이름을 받으면, 예외가 발생한다")
+    void create_givenDuplicateNames_thenFail() {
+        List<String> duplicateNames = List.of("a", "b", "c", "d", "e", "f", "a");
+
+        assertThatThrownBy(() -> Participants.create(duplicateNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
     }
 
     private static Stream<Arguments> validPlayerNames() {
