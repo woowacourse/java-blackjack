@@ -16,7 +16,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         cards.add(new Card(Shape.DIAMOND, Value.TWO));
-        cards.add(new Card(Shape.CLOVER, Value.ACE));
+        cards.add(new Card(Shape.CLOVER, Value.JACK));
     }
 
     @Test
@@ -24,9 +24,29 @@ public class PlayerTest {
     void pickNewCard() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
-        player.pick(new Card(Shape.DIAMOND, Value.JACK));
+        player.pick(new Card(Shape.DIAMOND, Value.NINE));
 
         assertThat(player.getCards().getCards().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 21점을 넘기면 bust 이다.")
+    void bustPlayer() {
+        Player player = new Player(new Name("hello"), new Cards(cards));
+
+        player.pick(new Card(Shape.HEART, Value.QUEEN));
+
+        assertThat(player.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 21점 미만이면 bust 가 아니다.")
+    void notBustPlayer() {
+        Player player = new Player(new Name("hello"), new Cards(cards));
+
+        player.pick(new Card(Shape.HEART, Value.ACE));
+
+        assertThat(player.isBust()).isFalse();
     }
 
 }
