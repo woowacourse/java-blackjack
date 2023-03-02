@@ -65,7 +65,7 @@ public class OutputView {
         }
     }
 
-    private static void printPlayersResult(Map.Entry<Gambler, Integer> resultEntry) {
+    public static void printPlayersResult(Map.Entry<Gambler, Integer> resultEntry) {
         if (resultEntry.getKey().getClass().isInstance(Player.class)) {
             int winCount = resultEntry.getValue();
             System.out.print(resultEntry.getKey().getName() + ": ");
@@ -73,14 +73,14 @@ public class OutputView {
         }
     }
 
-    private static String resolveOutcome(int winCount) {
+    public static String resolveOutcome(int winCount) {
         if (winCount == 1) {
             return WIN;
         }
         return LOSE;
     }
 
-    private static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
+    public static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
         if (gamblerEntry.getKey().getClass().isInstance(Dealer.class)) {
             int winCount = gamblerEntry.getValue();
             int loseCount = size - winCount - 1;
@@ -88,7 +88,7 @@ public class OutputView {
         }
     }
 
-    private static void printInitialPickGuideMessage(Players players) {
+    public static void printInitialPickGuideMessage(Players players) {
         System.out.print(PREFIX_INITIAL_PICK_GUIDE_MESSAGE);
         List<String> message = new ArrayList<>();
         for (Player player : players.getPlayers()) {
