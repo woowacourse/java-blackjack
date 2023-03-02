@@ -15,7 +15,7 @@ class CardTest {
     void return_true_when_is_ace(int index) {
         // given
         Type[] types = Type.values();
-        Card card = new Card(types[index], Value.A);
+        Card card = new Card(types[index], Value.ACE);
 
         // when
         boolean result = card.isAce();

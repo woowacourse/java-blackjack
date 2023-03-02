@@ -11,10 +11,10 @@ public enum Value {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
-    J(10),
-    Q(10),
-    K(10),
-    A(11);
+    JACK(10),
+    QUEEN(10),
+    KING(10),
+    ACE(11);
 
     private final int score;
 
@@ -27,6 +27,6 @@ public enum Value {
     }
 
     public boolean isAce() {
-        return this.equals(A);
+        return this.equals(ACE);
     }
 }

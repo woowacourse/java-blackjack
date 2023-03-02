@@ -61,7 +61,7 @@ class CardDeckTest {
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < 52; i++) {
-            cards.add(new Card(Type.CLUB, Value.A));
+            cards.add(new Card(Type.CLUB, Value.ACE));
         }
         return cards;
     }
