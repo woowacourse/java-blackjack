@@ -3,8 +3,7 @@ package blackjack.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participant {
-    private static final int MAX_SCORE_TO_RECEIVE = 21;
+abstract class Participant {
 
     List<Card> cards;
     Score score;
@@ -14,19 +13,16 @@ public class Participant {
         this.score = new Score();
     }
 
-    private List<TrumpNumber> extractNumbers() {
-        return cards.stream()
-                .map(Card::getTrumpNumber)
-                .collect(Collectors.toList());
-    }
+    abstract boolean isAbleToReceive();
 
     public void receiveCard(Card card) {
         cards.add(card);
     }
 
-    public boolean isAbleToReceive() {
-        score.calculateScore(extractNumbers());
-        return score.getScore() <= MAX_SCORE_TO_RECEIVE;
+    protected List<TrumpNumber> extractNumbers() {
+        return cards.stream()
+                .map(Card::getTrumpNumber)
+                .collect(Collectors.toList());
     }
 
     public List<Card> getCards() {
