@@ -18,13 +18,14 @@ public enum CardNumber {
     QUEEN(10),
     JACK(10);
 
+    public static final int ACE_CONVERT_NUMBER = 10;
     private final int value;
 
     CardNumber(final int value) {
         this.value = value;
     }
 
-    public static int getMaxValueNear21(final List<CardNumber> numbers) {
+    public static int getMaxValueNearBlackJack(final List<CardNumber> numbers, final int blackJack) {
         final int aceCount = (int) numbers.stream()
                 .filter(number -> number == ACE)
                 .count();
@@ -34,17 +35,13 @@ public enum CardNumber {
                 .sum();
 
         return IntStream.range(0, aceCount)
-                .reduce(sumBeforeOptimize, (before, after) -> optimizeMaxValue(before));
+                .reduce(sumBeforeOptimize, (before, after) -> optimizeMaxValue(before, blackJack));
     }
 
-    private static int optimizeMaxValue(final int before) {
-        if (before + 10 <= 21) {
-            return before + 10;
+    private static int optimizeMaxValue(final int before, final int blackJack) {
+        if (before + ACE_CONVERT_NUMBER <= blackJack) {
+            return before + ACE_CONVERT_NUMBER;
         }
         return before;
-    }
-
-    public int getValue() {
-        return value;
     }
 }

@@ -15,7 +15,7 @@ class CardNumberTest {
     @MethodSource("getMaxValueNear21Dummy")
     @DisplayName("카드 숫자 합이 21에 가장 가까운 값이 되도록 구한다.")
     void getMaxValueNear21(final List<CardNumber> cardNumbers, final int expectedValue) {
-        int maxValue = CardNumber.getMaxValueNear21(cardNumbers);
+        int maxValue = CardNumber.getMaxValueNearBlackJack(cardNumbers, 21);
         assertThat(maxValue).isEqualTo(expectedValue);
     }
 
