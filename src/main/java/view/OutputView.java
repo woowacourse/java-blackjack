@@ -16,7 +16,6 @@ public class OutputView {
     private static final String SCORE_FORMAT = " - 결과: %d";
     private static final String BUSTED_FORMAT = "%s는 버스트 되었습니다.";
     private static final String FINAL_RESULT = "## 최종 승패";
-    private static final String DEALER_RESULT_FORMAT = "%s: %d승 %d무 %d패";
     private static final String PLAYER_RESULT_FORMAT = "%s: %s";
     private static final String DELIMITER = ", ";
     private static final String DEALER_NO_MORE_CARD = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
@@ -24,10 +23,12 @@ public class OutputView {
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printInitCards(Dealer dealer, Players players) {
-        String namesFormat = players.getPlayers().stream().map(Player::getName)
+        String namesFormat = players.getPlayers().stream()
+                .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
 
-        System.out.println(String.format(LINE_SEPARATOR + GAME_INIT_MESSAGE, namesFormat));
+        String format = String.format(LINE_SEPARATOR + GAME_INIT_MESSAGE, namesFormat);
+        System.out.println(format);
         printInitDealerCards(dealer);
         printInitPlayerCards(players);
         System.out.println();
@@ -36,12 +37,14 @@ public class OutputView {
     private void printInitDealerCards(Dealer dealer) {
         Card dealerFirstCard = dealer.getDealerFirstCard();
 
-        System.out.println(String.format(PLAYER_CARDS_FORMAT, DEALER_NAME, getCardFormat(dealerFirstCard)));
+        String format = String.format(PLAYER_CARDS_FORMAT, DEALER_NAME, getCardFormat(dealerFirstCard));
+        System.out.println(format);
     }
 
     private void printInitPlayerCards(Players players) {
         for (Player player : players.getPlayers()) {
-            System.out.println(String.format(PLAYER_CARDS_FORMAT, player.getName(), getCardsFormat(player.getCards())));
+            String format = String.format(PLAYER_CARDS_FORMAT, player.getName(), getCardsFormat(player.getCards()));
+            System.out.println(format);
         }
     }
 
@@ -56,11 +59,13 @@ public class OutputView {
     }
 
     public void printPlayerCards(Player player) {
-        System.out.println(String.format(PLAYER_CARDS_FORMAT, player.getName(), getCardsFormat(player.getCards())));
+        String format = String.format(PLAYER_CARDS_FORMAT, player.getName(), getCardsFormat(player.getCards()));
+        System.out.println(format);
     }
 
     public void printBusted(String name) {
-        System.out.println(String.format(BUSTED_FORMAT, name));
+        String format = String.format(BUSTED_FORMAT, name);
+        System.out.println(format);
     }
 
     public void printDealerHitCount(int hitCardCount) {
@@ -68,13 +73,16 @@ public class OutputView {
             System.out.println(DEALER_NO_MORE_CARD);
             return;
         }
-        System.out.println(String.format(LINE_SEPARATOR + DEALER_MORE_CARDS_FORMAT + LINE_SEPARATOR, hitCardCount));
+        String format = String.format(LINE_SEPARATOR + DEALER_MORE_CARDS_FORMAT, hitCardCount);
+        System.out.println(format);
     }
 
-    public void printCardsWithScore(Dealer dealer, Players players){
+    public void printCardsWithScore(Dealer dealer, Players players) {
+        System.out.println();
         printDealerCardsWithScore(dealer);
         printPlayersCardsWithScore(players);
     }
+
     private void printDealerCardsWithScore(Dealer dealer) {
         System.out.println(getCardsWithScoreFormat(dealer, DEALER_NAME));
     }
@@ -100,14 +108,24 @@ public class OutputView {
     }
 
     private void printPlayerResult(Player player, Result result) {
-        System.out.println(String.format(PLAYER_RESULT_FORMAT, player.getName(), result.getValue()));
+        String format = String.format(PLAYER_RESULT_FORMAT, player.getName(), result.getValue());
+        System.out.println(format);
     }
 
     private String getDealerResultFormat(Dealer dealer) {
-        return String.format(DEALER_RESULT_FORMAT, DEALER_NAME,
-                dealer.getResultCount(Result.WIN),
-                dealer.getResultCount(Result.DRAW),
-                dealer.getResultCount(Result.LOSE)
-        );
+        StringBuilder dealerResultsFormat = new StringBuilder();
+        for (Result result : Result.values()) {
+            dealerResultsFormat.append(getResultFormat(result, dealer.getResultCount(result)));
+        }
+
+        return String.format(PLAYER_RESULT_FORMAT, DEALER_NAME, dealerResultsFormat);
+    }
+
+    private String getResultFormat(Result result, int resultCount) {
+        if (resultCount == 0) {
+            return "";
+        }
+
+        return resultCount + result.getValue();
     }
 }
