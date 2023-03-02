@@ -1,6 +1,5 @@
 import deck.Deck;
 import player.Dealer;
-import player.Name;
 import player.Player;
 import player.Players;
 
@@ -16,13 +15,22 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public void addPlayer(String playerName) {
-        players.add(new Player(new Name(playerName)));
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
     public void supplyCardsToDealer() {
         for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
             dealer.hit(deck.drawCard());
+        }
+    }
+
+    public void supplyCardsToPlayer() {
+        int playerCount = players.count();
+        for (int i = 0; i < playerCount; i++) {
+            for (int j = 0; j < FIRST_DRAW_COUNT; j++) {
+                players.takeCard(i, deck.drawCard());
+            }
         }
     }
 }

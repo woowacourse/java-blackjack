@@ -11,6 +11,8 @@ import deck.CardsGenerator;
 import deck.Deck;
 import fixedCaradsGenerator.FixedCardsGenerator;
 import player.Dealer;
+import player.Name;
+import player.Player;
 import player.Players;
 
 class BlackjackGameTest {
@@ -32,8 +34,8 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어를 만들고 플레이어즈에 추가할 수 있다")
     void addPlayer() {
-        blackjackGame.addPlayer("폴로");
-        blackjackGame.addPlayer("로지");
+        blackjackGame.addPlayer(new Player(new Name("폴로")));
+        blackjackGame.addPlayer(new Player(new Name("로지")));
 
         assertThat(players.count()).isEqualTo(2);
     }
@@ -45,5 +47,22 @@ class BlackjackGameTest {
 
         assertThat(dealer.showCards())
                 .contains(new Card(CardNumber.ACE, Pattern.DIAMOND), new Card(CardNumber.ACE, Pattern.SPADE));
+    }
+
+    @Test
+    @DisplayName("플레이어들에게 카드를 두 장씩 줄 수 있다.")
+    void supplyCardsToPlayers() {
+        Player player1 = new Player(new Name("폴로"));
+        Player player2 = new Player(new Name("로지"));
+        blackjackGame.addPlayer(player1);
+        blackjackGame.addPlayer(player2);
+
+        blackjackGame.supplyCardsToPlayer();
+
+        assertThat(player1.showCards()).contains(new Card(CardNumber.ACE, Pattern.DIAMOND),
+                new Card(CardNumber.ACE, Pattern.SPADE));
+        assertThat(player2.showCards()).contains(new Card(CardNumber.ACE, Pattern.CLOVER),
+                new Card(CardNumber.ACE, Pattern.HEART));
+
     }
 }
