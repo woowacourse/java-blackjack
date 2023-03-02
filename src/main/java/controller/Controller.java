@@ -10,40 +10,41 @@ import static view.InputView.readPlayersName;
 import static view.OutputView.*;
 
 public class Controller {
-    //TODO: Player에 다시 뽑는지 아닌지 field 선언하기.
     //TODO: 21넘는 Gambler는 패배처리
 
-    public void blackjackGame() {
+    public void blackjack() {
         Players players = new Players(readPlayersName());
         Dealer dealer = new Dealer(new Cards());
 
+        gameStart(players, dealer);
+    }
+
+    private void gameStart(Players players, Dealer dealer) {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
-        boolean isGameEnd;
-        do {
-            isGameEnd = false;
-
-            for (Player player : players.getPlayers()) {
-                boolean isHit = readIsHit(player);
+        for (Player player : players.getPlayers()) {
+            boolean isHit;
+            do {
+                isHit = readIsHit(player);
                 if (isHit) {
                     player.pickCard();
-                    isGameEnd = true;
                 }
-
                 OutputView.printSingleGambler(player);
-            }
-        } while (isGameEnd);
+            } while (isHit);
+        }
 
+        dealerHitOrStand(dealer);
+        printScores(players, dealer);
+        LinkedHashMap<Gambler, Integer> result = calculateWinCount(dealer, players);
+        OutputView.printResult(result);
+    }
+
+    private void dealerHitOrStand(Dealer dealer) {
         while (dealer.getScore() <= 16) {
             dealer.pickCard();
             System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
-
-        printScores(players, dealer);
-
-        LinkedHashMap<Gambler, Integer> result = calculateWinCount(dealer, players);
-        OutputView.printResult(result);
     }
 
     private void printScores(Players players, Dealer dealer) {
