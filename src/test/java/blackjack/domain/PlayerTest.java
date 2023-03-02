@@ -44,7 +44,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("유저가 카드를 하나 뽑는 기능 테스트")
-    void drawCardTest(){
+    void drawCardTest() {
         final Card card = new Card(CardShape.HEART, CardNumber.JACK);
         final User player = new Player(name, initialGroup);
         final Deck deck = new Deck(new TestDeckGenerator(List.of(card)));
@@ -57,8 +57,16 @@ class PlayerTest {
     @Test
     @DisplayName("첫 패 확인 테스트")
     void getInitialStatus() {
-        User dealer = new Player(name, initialGroup);
+        final User player = new Player(name, initialGroup);
 
-        assertThat(dealer.getInitialStatus()).containsExactly(firstCard, secondCard);
+        assertThat(player.getInitialStatus()).containsExactly(firstCard, secondCard);
+    }
+
+    @Test
+    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
+    void getAceCountTest() {
+        final User player = new Player(name, initialGroup);
+
+        assertThat(player.getAceCount()).isEqualTo(1);
     }
 }

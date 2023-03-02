@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class DealerTest {
 
-    private final String name = "test";
     private final Card firstCard = new Card(CardShape.SPADE, CardNumber.ACE);
     private final Card secondCard = new Card(CardShape.CLOVER, CardNumber.EIGHT);
     private CardGroup initialGroup;
@@ -39,4 +37,11 @@ class DealerTest {
         assertThat(dealer.getInitialStatus()).containsExactly(firstCard);
     }
 
+    @Test
+    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
+    void getAceCountTest() {
+        final User dealer = new Dealer(initialGroup);
+
+        assertThat(dealer.getAceCount()).isEqualTo(1);
+    }
 }

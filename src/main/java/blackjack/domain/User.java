@@ -16,7 +16,7 @@ public abstract class User {
         return cardGroup.getTotalValue();
     }
 
-    final public void drawCard(final Deck deck){
+    final public void drawCard(final Deck deck) {
         cardGroup.add(deck.draw());
     }
 
@@ -26,6 +26,10 @@ public abstract class User {
 
     final public List<Card> getStatus() {
         return cardGroup.getCards();
+    }
+
+    final public int getAceCount() {
+        return cardGroup.getAceCount();
     }
 
     abstract protected List<Card> getInitialStatus();
