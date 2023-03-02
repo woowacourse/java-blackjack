@@ -14,7 +14,7 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    private CardDeck(final List<Card> cards) {
+    CardDeck(final List<Card> cards) {
         this.cards = cards;
     }
 
