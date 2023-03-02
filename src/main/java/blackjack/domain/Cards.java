@@ -22,4 +22,12 @@ public class Cards {
     public boolean isBust() {
         return point.isBusted();
     }
+
+    public GamePoint getPoint() {
+        return point;
+    }
+
+    public int size() {
+        return cards.size();
+    }
 }
