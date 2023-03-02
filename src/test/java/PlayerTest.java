@@ -23,8 +23,8 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 있는지 확인한다.")
-    void 카드_추가_가능_확인() {
+    @DisplayName("카드를 더 받을 수 있는 경우 true를 반환한다.")
+    void 카드_추가_가능() {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
@@ -32,7 +32,16 @@ class PlayerTest {
         assertThat(player.canAdd()).isTrue();
     }
 
-    // TODO: 카드 더 받을 수 없는 경우 테스트
+    @Test
+    @DisplayName("카드를 더 받을 수 없는 경우 false를 반환한다.")
+    void 카드_추가_불가능() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        Player player = new Player("name", cardHand);
+        assertThat(player.canAdd()).isFalse();
+    }
 
     @Test
     @DisplayName("카드를 저장한다.")
