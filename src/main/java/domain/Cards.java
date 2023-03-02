@@ -19,18 +19,21 @@ public class Cards {
         return cards.get(index);
     }
 
-
     public int getSum() {
         Integer sum = cards.stream()
                 .map(s -> s.getCardValue())
                 .collect(Collectors.summingInt(Integer::intValue));
 
+        int countAce = countAce();
+        while (countAce-- > 0 && sum > 21) {
+            sum -= 10;
+        }
+
         return sum;
     }
 
-    public boolean isExistAce() {
-        return cards.stream()
-                .anyMatch(s -> s.getCardValue() == CardNumber.ACE.getValue());
+    public int countAce() {
+        return Math.toIntExact(cards.stream().filter(s -> s.isAce()).count());
     }
 
     public List<String> getCards() {
