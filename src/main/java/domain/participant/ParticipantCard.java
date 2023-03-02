@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ParticipantCard {
 
+    private static final int FIRST_CARD_INDEX = 0;
+
     private final List<Card> cards;
 
     private ParticipantCard() {
@@ -17,8 +19,12 @@ public class ParticipantCard {
         return new ParticipantCard();
     }
 
-    public void addCard(final Card card) {
+    void addCard(final Card card) {
         cards.add(card);
+    }
+
+    Card getFirstCard() {
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     List<Card> getCards() {
