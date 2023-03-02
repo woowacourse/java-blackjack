@@ -1,6 +1,9 @@
 package player;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,4 +30,14 @@ class HandTest {
         assertThatCode(() -> hand.add(new Card(CardNumber.ACE, Pattern.CLOVER)))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("Hand에 들어있는 카드들을 가져올 수 있다.")
+    void getCards() {
+        hand = new Hand();
+
+        assertThat(hand.getCards()).isInstanceOf(ArrayList.class);
+    }
+
+
 }
