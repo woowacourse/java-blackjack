@@ -13,7 +13,7 @@ public class Player extends Participant{
     @Override
     public int calculateCardNumber() {
         int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
-        if (playerHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
+        if (participantHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
             return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
         }
         return totalSumAceCardValueOne;

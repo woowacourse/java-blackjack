@@ -20,6 +20,17 @@ public abstract class Participant {
         return receivedCards;
     }
 
+    public boolean participantHasAceCard() {
+        return receivedCards.stream()
+            .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+    }
+
+    public int calculateCardNumberAceCardValueOne() {
+        return receivedCards.stream()
+            .mapToInt(card -> card.getCardNumber().value)
+            .sum();
+    }
+
     abstract int calculateCardNumber();
 
 }

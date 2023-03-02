@@ -21,7 +21,7 @@ class DealerTest {
             dealer.hit(card);
         }
         //when
-        boolean result = dealer.judgeDealerHit();
+        boolean result = dealer.decideHit();
 
         //then
         assertThat(result).isTrue();
@@ -40,9 +40,32 @@ class DealerTest {
             dealer.hit(card);
         }
         //when
-        boolean result = dealer.judgeDealerHit();
+        boolean result = dealer.decideHit();
 
         //then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러는 소프트 17을 적용한다.(Ace는 11로 게산)")
+    void soft17() {
+        //given
+        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        List<Card> cards = List.of(
+            new Card(CardNumber.ACE, CardSuit.SPADE),
+            new Card(CardNumber.SIX, CardSuit.HEART)
+        );
+        for (Card card : cards) {
+            dealer.hit(card);
+        }
+        int expect = cards.stream()
+            .mapToInt(card -> card.getCardNumber().value)
+            .sum() + 10;
+
+        //when
+        int result = dealer.calculateCardNumber();
+
+        //then
+        assertThat(result).isEqualTo(expect);
     }
 }
