@@ -25,4 +25,14 @@ public enum CloverCard implements Card{
         this.pattern = pattern;
         this.number = number;
     }
+
+    @Override
+    public String getPattern() {
+        return pattern.getPattern();
+    }
+
+    @Override
+    public int getNumber() {
+        return number.getNumber();
+    }
 }
