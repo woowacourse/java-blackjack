@@ -12,19 +12,19 @@ public class CardPack {
 
     public CardPack() {
         cards = new ArrayList<>();
-        initCards();
+        initCardsShape();
     }
 
-    private void initCards() {
+    private void initCardsShape() {
         for (final CardShape currentShape : CardShape.values()) {
-            for (final CardNumber currentNumber : CardNumber.values()) {
-                cards.add(new Card(currentNumber, currentShape));
-            }
+            matchingNumberByShape(currentShape);
         }
     }
 
-    public Card get(final int i) {
-        return cards.get(i);
+    private void matchingNumberByShape(final CardShape currentShape) {
+        for (final CardNumber currentNumber : CardNumber.values()) {
+            cards.add(new Card(currentNumber, currentShape));
+        }
     }
 
     public void shuffle(final ShuffleStrategy strategy) {
@@ -33,5 +33,9 @@ public class CardPack {
 
     public int size() {
         return cards.size();
+    }
+
+    public Card pop() {
+        return cards.remove(cards.size() - 1);
     }
 }
