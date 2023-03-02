@@ -18,5 +18,13 @@ abstract class Participant {
         }
     }
 
+    public void hit(Card card) {
+        cards.add(card);
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public abstract boolean canAddCard();
 }
