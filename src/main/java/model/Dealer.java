@@ -1,8 +1,8 @@
 package model;
 
-public class Player extends User {
+public class Dealer extends User {
 
-    public Player(final String name) {
+    public Dealer(final String name) {
         super(name);
     }
 

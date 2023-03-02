@@ -22,16 +22,16 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ResultTest {
 
     private Result result;
-    private Player bebe;
-    private Player ethan;
-    private Players players;
+    private User bebe;
+    private User ethan;
+    private Users users;
 
     @BeforeEach
     void init() {
         bebe = new Player("bebe");
         ethan = new Player("ethan");
-        players = new Players(List.of("bebe", "ethan"));
-        result = new Result(players);
+        users = new Users(List.of("bebe", "ethan"));
+        result = new Result(users);
     }
 
     @Test
@@ -77,7 +77,7 @@ class ResultTest {
         final Card cloverTen = new Card(CLOVER, TEN);
         final Card heartSix = new Card(HEART, SIX);
 
-        Player dealer = Player.DEADLER;
+        User dealer = new Dealer("딜러");
         result.addCard(dealer, cloverTen);
         result.addCard(dealer, heartSix);
         // when, then
