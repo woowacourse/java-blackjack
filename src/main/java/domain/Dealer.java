@@ -19,14 +19,16 @@ public class Dealer extends Player {
 
     public void init() {
         for (Player player : players) {
-            player.drawCard(deck);
-            player.drawCard(deck);
+            player.drawCard(deck.popCard());
+            player.drawCard(deck.popCard());
         }
+        drawCard(deck.popCard());
+        drawCard(deck.popCard());
     }
 
     public void drawCard(String playerName) {
         Player player = findPlayer(playerName);
-        player.drawCard(deck);
+        player.drawCard(deck.popCard());
     }
 
     private Player findPlayer(String playerName) {
@@ -42,5 +44,16 @@ public class Dealer extends Player {
 
     public boolean isDealerDraw() {
         return getScore() < STOP_LOWER_BOUND;
+    }
+
+    public Outcome calculateOutcome(String playerName) {
+        Player player = findPlayer(playerName);
+        if (player.getScore() > getScore()) {
+            return Outcome.WIN;
+        }
+        if (player.getScore() < getScore()) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
     }
 }

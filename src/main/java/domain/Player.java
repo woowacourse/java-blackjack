@@ -11,8 +11,8 @@ public class Player {
         this.hand = new Hand();
     }
 
-    public void drawCard(Deck deck) {
-        hand.addCard(deck.popCard());
+    public void drawCard(Card card) {
+        hand.addCard(card);
     }
 
     public List<Card> getCards() {
