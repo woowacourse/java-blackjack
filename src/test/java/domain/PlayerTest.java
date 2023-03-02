@@ -27,4 +27,10 @@ class PlayerTest {
     void validateNoComma() {
         assertThatThrownBy(() -> new Player("딜,러")).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("플레이어의 이름의 길이가 10이상이 될 수 없다.")
+    void validateNameLength() {
+        assertThatThrownBy(() -> new Player("딜asdfasdfasdfasdf러")).isInstanceOf(IllegalArgumentException.class);
+    }
 }
