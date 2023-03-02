@@ -41,6 +41,16 @@ public class Game {
         return Result.LOSE;
     }
 
+    public List<Result> getDealerResults() {
+        List<Result> results = new ArrayList<>();
+
+        for (Player player : players) {
+            results.add(getResult(dealer, player));
+        }
+
+        return results;
+    }
+
     public void dealAnotherCard(int index) {
         Player player = players.get(index);
         if (player.getScore() < 21) {
