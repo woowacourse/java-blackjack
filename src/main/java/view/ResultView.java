@@ -22,4 +22,11 @@ public class ResultView {
     public static void printParticipantFinalResult(String name, List<String> cardName, int totalValueSum) {
         System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
     }
+
+    public static void printFinalFightResult(List<String> finalFightResults) {
+        System.out.println("\n## 최종 승패");
+        for (String result : finalFightResults) {
+            System.out.println(result);
+        }
+    }
 }
