@@ -52,4 +52,32 @@ class DealerTest {
         assertThat(dealer.canDrawCard())
                 .isFalse();
     }
+
+    @Test
+    @DisplayName("처음에 딜러는 2장의 카드 중 1장의 카드만 보여줘야 한다.")
+    void getInitCard_success() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+
+        // when
+        List<Card> cards = dealer.getInitCards();
+
+        // then
+        assertThat(cards)
+                .hasSize(1)
+                .containsExactly(new Card(Suit.DIAMOND, Rank.KING));
+    }
+
+    @Test
+    @DisplayName("dealer는 플레이어가 아니어야 한다.")
+    void isPlayer_false() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // expect
+        assertThat(dealer.isPlayer())
+                .isFalse();
+    }
 }

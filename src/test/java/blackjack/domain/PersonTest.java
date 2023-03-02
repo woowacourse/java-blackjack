@@ -113,4 +113,15 @@ class PersonTest {
             person.addCard(new Card(Suit.DIAMOND, Rank.ACE));
         }).withMessage("[ERROR] 점수가 21점을 넘으면 카드를 더 뽑을 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("person은 플레이어여야 한다.")
+    void isPlayer_true() {
+        // given
+        Person person = new Person("glen");
+
+        // expect
+        assertThat(person.isPlayer())
+                .isTrue();
+    }
 }

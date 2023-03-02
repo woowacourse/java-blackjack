@@ -26,4 +26,16 @@ public class Dealer extends Person {
     public boolean canDrawCard() {
         return getScore() <= DRAW_CARD_BOUNDARY;
     }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
+    @Override
+    public List<Card> getInitCards() {
+        return getCards().stream()
+                .limit(1)
+                .collect(toList());
+    }
 }

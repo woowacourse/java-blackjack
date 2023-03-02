@@ -56,4 +56,8 @@ public class OutputView {
     public static void printPersonResult(String personName, GameResult gameResult) {
         System.out.println(personName + ": " + gameResult.getName());
     }
+
+    public static void printExceptionMessage(String message) {
+        System.out.println(message);
+    }
 }
