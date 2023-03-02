@@ -12,14 +12,17 @@ public class OutputView {
     private static final String CARD = "카드";
     private static final String ITEM_DELIMITER = ", ";
     private static final String PLAYER_NAME_AND_CARDS_PARTITION = ": ";
+    private static final String RESULT_PREFIX = " - 결과: ";
 
     public static void printErrorMessage(Exception exception) {
         System.out.println(exception.getMessage());
     }
 
     public static void printStartStatus(PlayerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
+        System.out.println();
         printGivenMessage(dealerStatus, challengersStatus);
         printDealerStatus(dealerStatus);
+        System.out.println();
         printChallengersStatus(challengersStatus);
     }
 
@@ -34,21 +37,21 @@ public class OutputView {
         System.out.print(dealerStatus.getName());
         System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
         String cards = String.join(ITEM_DELIMITER, dealerStatus.getCards());
-        System.out.println(cards);
+        System.out.print(cards);
     }
 
     public static void printChallengersStatus(List<PlayerStatusDto> challengersStatus) {
         for (PlayerStatusDto challenger : challengersStatus) {
             printChallengerStatus(challenger);
+            System.out.println();
         }
-        System.out.println();
     }
 
     public static void printChallengerStatus(PlayerStatusDto challenger) {
         System.out.print(challenger.getName() + CARD);
         System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
         String cards = String.join(ITEM_DELIMITER, challenger.getCards());
-        System.out.println(cards);
+        System.out.print(cards);
     }
 
     private static List<String> toChallengerNames(List<PlayerStatusDto> challengersStatus) {
@@ -58,10 +61,25 @@ public class OutputView {
     }
 
     public static void printDealerResult(boolean dealerCanPick) {
+        System.out.println();
         if (dealerCanPick) {
             System.out.println(DEALER_CAN_PICK_MESSAGE);
             return;
         }
         System.out.println(DEALER_CAN_NOT_PICK_MESSAGE);
+        System.out.println();
+    }
+
+    public static void printEndStatus(PlayerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
+        printDealerStatus(dealerStatus);
+        printPoint(dealerStatus.getPoint());
+        for (PlayerStatusDto challenger : challengersStatus) {
+            printChallengerStatus(challenger);
+            printPoint(challenger.getPoint());
+        }
+    }
+
+    private static void printPoint(int point) {
+        System.out.println(RESULT_PREFIX + point);
     }
 }

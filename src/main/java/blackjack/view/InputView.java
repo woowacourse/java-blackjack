@@ -30,7 +30,7 @@ public class InputView {
     }
 
     public static boolean inputPlayerChoice(String name) {
-        System.out.println(name + REQUEST_PLAYER_CHOICE);
+        System.out.println(System.lineSeparator() + name + REQUEST_PLAYER_CHOICE);
         String choice = scanner.nextLine();
         return validateChoice(choice);
     }

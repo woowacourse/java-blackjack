@@ -15,27 +15,10 @@ public class BlackJackController {
 
     public void run() {
         init();
-
-        blackJackGame.handOutStartCards();
-
-        PlayerStatusDto dealer = makeDealerStatus();
-        List<PlayerStatusDto> challengers = makeChallengersStatus();
-        OutputView.printStartStatus(dealer, challengers);
-
-        takeAllChallengersTurn();
-
-        takeDealerTurn();
-
+        start();
+        takeTurn();
+        showResult();
         InputView.terminate();
-    }
-
-    private void takeDealerTurn() {
-        Player dealer = blackJackGame.getDealer();
-        boolean dealerCanPick = dealer.canPick();
-        if (dealerCanPick) {
-            blackJackGame.pick(dealer);
-        }
-        OutputView.printDealerResult(dealerCanPick);
     }
 
     private void init() {
@@ -46,6 +29,17 @@ public class BlackJackController {
             OutputView.printErrorMessage(e);
             init();
         }
+    }
+
+    private void start() {
+        blackJackGame.handOutStartCards();
+        showStartStatus();
+    }
+
+    private void showStartStatus() {
+        PlayerStatusDto dealerStatus = makeDealerStatus();
+        List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
+        OutputView.printStartStatus(dealerStatus, challengersStatus);
     }
 
     private PlayerStatusDto makeDealerStatus() {
@@ -61,6 +55,11 @@ public class BlackJackController {
             gameStatus.add(playerStatusDto);
         }
         return gameStatus;
+    }
+
+    private void takeTurn() {
+        takeAllChallengersTurn();
+        takeDealerTurn();
     }
 
     private void takeAllChallengersTurn() {
@@ -91,5 +90,20 @@ public class BlackJackController {
             OutputView.printChallengerStatus(new PlayerStatusDto(player));
             takeEachChallengerTurn(player);
         }
+    }
+
+    private void takeDealerTurn() {
+        Player dealer = blackJackGame.getDealer();
+        boolean dealerCanPick = dealer.canPick();
+        if (dealerCanPick) {
+            blackJackGame.pick(dealer);
+        }
+        OutputView.printDealerResult(dealerCanPick);
+    }
+
+    private void showResult() {
+        PlayerStatusDto dealerStatus = makeDealerStatus();
+        List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
+        OutputView.printEndStatus(dealerStatus, challengersStatus);
     }
 }

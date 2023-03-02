@@ -9,10 +9,12 @@ public class PlayerStatusDto {
 
     private final String name;
     private final List<String> cards;
+    private final int point;
 
     public PlayerStatusDto(Player player) {
         this.name = player.getName();
         this.cards = extractCardInfo(player);
+        this.point = player.getTotalPoint();
     }
 
     private List<String> extractCardInfo(Player player) {
@@ -30,5 +32,9 @@ public class PlayerStatusDto {
 
     public List<String> getCards() {
         return cards;
+    }
+
+    public int getPoint() {
+        return point;
     }
 }

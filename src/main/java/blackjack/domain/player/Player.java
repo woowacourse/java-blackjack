@@ -22,6 +22,10 @@ public abstract class Player {
         holdingCards.add(card);
     }
 
+    public int getTotalPoint() {
+        return holdingCards.sum();
+    }
+
     public abstract Boolean canPick();
 
     public abstract String getName();
