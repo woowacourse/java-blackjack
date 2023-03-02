@@ -1,21 +1,22 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import util.CardDeckMaker;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardDistributorTest {
 
     @Test
-    @DisplayName("카드 분배기가 카드를 분배해준다.")
-    void pickSuccess() {
-        CardDeck cardDeck = new CardDeck();
-        CardDistributor cardDistributor = new CardDistributor(cardDeck);
+    @DisplayName("카드는 한 번 뽑으면 삭제된다.")
+    void removeCardWhenPicked() {
+        CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
 
         Card card = cardDistributor.pick();
 
+        assertThat(cardDistributor.getDeckSize()).isEqualTo(51);
         assertThat(card).isNotNull();
     }
+
 }
