@@ -27,6 +27,7 @@ public class Cards {
     }
 
     public Card receiveCard() {
+        // TODO: EmptyStackException이 발생하면...?
         return cards.pop();
     }
 }
