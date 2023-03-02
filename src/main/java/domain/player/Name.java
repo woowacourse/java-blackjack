@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.player;
 
 public class Name {
 

@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.player;
 
 import domain.area.CardArea;
 import domain.card.Card;

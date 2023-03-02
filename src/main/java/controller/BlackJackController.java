@@ -2,10 +2,10 @@ package controller;
 
 import domain.area.CardArea;
 import domain.deck.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.State;
+import domain.player.Dealer;
+import domain.player.Name;
+import domain.player.Participant;
+import domain.player.State;
 import view.InputView;
 import view.OutputView;
 

@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.player;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
