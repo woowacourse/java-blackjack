@@ -20,11 +20,18 @@ public class Hand {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        boolean containAce = cards.stream()
-                .anyMatch(Card::isAce);
-        if (containAce && score <= 11) {
+        if (canAddTen(score)) {
             score += 10;
         }
         return score;
+    }
+
+    private boolean canAddTen(int score) {
+        return containAce() && score <= 11;
+    }
+
+    private boolean containAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 }
