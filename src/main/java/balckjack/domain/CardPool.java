@@ -12,7 +12,11 @@ public class CardPool {
     }
 
     static {
+        CardPool.init();
+    }
 
+    public static void init() {
+        cards.clear();
         final Pattern[] values = Pattern.values();
 
         for (Pattern pattern : values) {
@@ -39,4 +43,5 @@ public class CardPool {
     public static List<Card> getCards() {
         return cards;
     }
+
 }
