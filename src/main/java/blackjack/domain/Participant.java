@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class Participant {
 
-    private final Cards cards;
+    protected final Cards cards;
 
     public Participant(final Cards cards) {
         this.cards = cards;

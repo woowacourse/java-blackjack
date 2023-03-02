@@ -1,14 +1,14 @@
 package blackjack.domain;
 
-public class Player {
+public class Player extends Participant {
 
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 5;
 
     private final String name;
-    private final Cards cards = Cards.generateEmptyCards();
 
     public Player(String name) {
+        super(Cards.generateEmptyCards());
         validateNameLength(name);
         this.name = name;
     }
@@ -19,15 +19,7 @@ public class Player {
         }
     }
 
-    public void addCard(Card card) {
-        this.cards.add(card);
-    }
-
     public String getName() {
         return name;
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 }

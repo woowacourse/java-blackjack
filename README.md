@@ -18,15 +18,15 @@
 ### Player (extends Participant)
 - [x] 이름을 가진다.
   - [x] 이름의 길이는 최소 1글자에서 최대 5글자이다.
-- [ ] `Cards`를 가진다.
-- [ ] `Card`를 받는다.
+- [x] `Cards`를 가진다.
+- [x] `Card`를 받는다.
 
 ### Players
 - [x] `Player`들을 가진다.
 
 ### Dealer (extends Participant)
-- [ ] `Cards`를 가진다.
-- [ ] `Card`를 받는다.
+- [x] `Cards`를 가진다.
+- [x] `Card`를 받는다.
 
 ### BlackjackGame
 - [ ] 시작하면서, `Participants`의 모두에게 2장의 카드를 나눠준다.

@@ -1,14 +1,8 @@
 package blackjack.domain;
 
-public class Dealer {
+public class Dealer extends Participant {
 
-    private final Cards cards;
-
-    public Dealer(final Cards cards) {
-        this.cards = cards;
-    }
-
-    public Cards getCards() {
-        return cards;
+    public Dealer() {
+        super(Cards.generateEmptyCards());
     }
 }
