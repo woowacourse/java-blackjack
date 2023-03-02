@@ -17,6 +17,10 @@ public class CardAreaFixture {
         return new CardArea(new Card(CardShape.DIAMOND, CardValue.ACE), new Card(CardShape.DIAMOND, CardValue.ACE));
     }
 
+    public static CardArea equal20CardArea() {
+        return new CardArea(new Card(CardShape.DIAMOND, CardValue.TEN), new Card(CardShape.DIAMOND, CardValue.TEN));
+    }
+
     public static CardArea equal21CardArea() {
         return new CardArea(new Card(CardShape.DIAMOND, CardValue.TEN), new Card(CardShape.DIAMOND, CardValue.ACE));
     }

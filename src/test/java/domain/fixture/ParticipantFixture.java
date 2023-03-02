@@ -10,6 +10,10 @@ public class ParticipantFixture {
         return new Participant(Name.of("말랑"), cardArea);
     }
 
+    public static Participant 콩떡(final CardArea cardArea) {
+        return new Participant(Name.of("콩떡"), cardArea);
+    }
+
     public static Participant 코다(final CardArea cardArea) {
         return new Participant(Name.of("코다"), cardArea);
     }

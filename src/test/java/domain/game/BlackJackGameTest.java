@@ -12,8 +12,7 @@ import java.util.List;
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.NameFixture.말랑이름;
 import static domain.fixture.NameFixture.코다이름;
-import static domain.fixture.ParticipantFixture.말랑;
-import static domain.fixture.ParticipantFixture.코다;
+import static domain.fixture.ParticipantFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -195,5 +194,27 @@ class BlackJackGameTest {
 
         // then
         assertThat(dealer.score()).isNotEqualTo(before);
+    }
+
+    @Test
+    void 게임_결과를_통계낼_수_있다() {
+        // given
+
+        // 말랑 - 20(무), 콩떡 - 30(패), 코다 - 21(승)
+        // 딜러 - 20
+        final Participant 말랑 = 말랑(equal20CardArea());
+        final Participant 콩떡 = 콩떡(over21CardArea());
+        final Participant 코다 = 코다(equal21CardArea());
+        final Dealer dealer = new Dealer(equal20CardArea());
+
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
+
+        // when
+        final GameStatistic statistic = blackJackGame.statistic();
+
+        // then
+        assertThat(statistic.resultMap().get(말랑)).isEqualTo(PlayerResult.DRAWER);
+        assertThat(statistic.resultMap().get(콩떡)).isEqualTo(PlayerResult.LOSER);
+        assertThat(statistic.resultMap().get(코다)).isEqualTo(PlayerResult.WINNER);
     }
 }

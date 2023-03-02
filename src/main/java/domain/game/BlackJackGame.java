@@ -8,6 +8,8 @@ import domain.player.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -59,15 +61,20 @@ public class BlackJackGame {
         dealer.hit(cardDeck.draw());
     }
 
+    public GameStatistic statistic() {
+        final Map<Participant, PlayerResult> resultMap = participants.stream().collect(Collectors.toMap(
+                Function.identity(),
+                (it) -> PlayerResult.judge(it, dealer))
+        );
+
+        return new GameStatistic(dealer, resultMap);
+    }
+
     public List<Participant> participants() {
         return new ArrayList<>(participants);
     }
 
     public Dealer dealer() {
         return dealer;
-    }
-
-    public CardDeck cardDeck() {
-        return cardDeck;
     }
 }
