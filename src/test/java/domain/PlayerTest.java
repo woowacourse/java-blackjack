@@ -21,4 +21,10 @@ class PlayerTest {
     void validateNoDealer() {
         assertThatThrownBy(() -> new Player("딜러")).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("플레이어의 이름에 쉼표(,)가 포함 될 수 없다.")
+    void validateNoComma() {
+        assertThatThrownBy(() -> new Player("딜,러")).isInstanceOf(IllegalArgumentException.class);
+    }
 }
