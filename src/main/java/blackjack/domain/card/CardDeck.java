@@ -2,11 +2,12 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.exception.NoMoreCardException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private List<Card> cards;
 
     private CardDeck(List<Card> cards) {
         this.cards = cards;
@@ -28,6 +29,10 @@ public class CardDeck {
         for (Number number : Number.values()) {
             cards.add(new Card(shape, number));
         }
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 
     public Card pick() {

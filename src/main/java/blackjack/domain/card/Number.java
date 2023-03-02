@@ -15,16 +15,16 @@ public enum Number {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String number;
+    private final String name;
     private final int value;
 
-    Number(String number, int value) {
-        this.number = number;
+    Number(String name, int value) {
+        this.name = name;
         this.value = value;
     }
 
-    public String getNumber() {
-        return number;
+    public String getName() {
+        return name;
     }
 
     public int getValue() {
