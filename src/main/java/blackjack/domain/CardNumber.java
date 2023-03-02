@@ -1,20 +1,18 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CardNumber implements Comparable<CardNumber> {
     private static final int MAX_RANGE = 13;
     private static final int MIN_RANGE = 1;
 
-    private static final List<CardNumber> cache;
+    private static final Map<Integer, CardNumber> cache;
     private final int value;
 
     static {
-        cache = new ArrayList<>();
+        cache = new HashMap<>();
         for (int i = MIN_RANGE; i <= MAX_RANGE; i++) {
-            cache.add(new CardNumber(i));
+            cache.put(i, new CardNumber(i));
         }
     }
 
@@ -24,10 +22,10 @@ public class CardNumber implements Comparable<CardNumber> {
     }
 
     public static CardNumber of(final int value) {
-        return cache.stream()
-                .filter(cardNumber -> cardNumber.value == value)
-                .findAny()
-                .orElseThrow(() -> new AssertionError());
+        if (cache.containsKey(value)) {
+            return cache.get(value);
+        }
+        throw new AssertionError();
     }
 
     public static int getMinValue() {
