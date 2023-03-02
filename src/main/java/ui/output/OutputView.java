@@ -44,6 +44,6 @@ public class OutputView {
     }
 
     public static void printDealerGetCard() {
-        System.out.println(DEALER_GET_CARD);
+        System.out.println(System.lineSeparator() + DEALER_GET_CARD);
     }
 }
