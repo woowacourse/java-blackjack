@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Arrays;
 
@@ -25,7 +25,6 @@ public enum CardNumber {
     }
 
     public static CardNumber of(String inputNumber) {
-
         return Arrays.stream(CardNumber.values())
                 .filter(cardNumber -> cardNumber.number.equals(inputNumber))
                 .findFirst()
