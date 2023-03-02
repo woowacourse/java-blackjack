@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 public class PlayerTest {
@@ -31,4 +32,21 @@ public class PlayerTest {
                 .contains(card);
     }
 
+    @Test
+    @DisplayName("카드의 총 합을 보여주는 테스트")
+    void calculateTotal(){
+        // given
+        Player player = new Player(new Name("test"), new Cards());
+        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+        int expected = card1.getValue()+card2.getValue();
+        player.drawCard(card1);
+        player.drawCard(card2);
+
+        // when
+        int actual = player.calculateTotal();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }

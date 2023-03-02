@@ -12,11 +12,15 @@ public class Player {
         this.cards = cards;
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
     public void drawCard(Card card) {
         cards.add(card);
+    }
+
+    public int calculateTotal(){
+        return this.cards.calculateTotalScore();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }
