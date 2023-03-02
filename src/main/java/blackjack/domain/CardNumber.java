@@ -20,17 +20,17 @@ public enum CardNumber {
 
 
     private final String number;
-    private final List<Integer> transferNumber;
+    private final List<Integer> score;
 
-    CardNumber(String number, List<Integer> transferNumber) {
+    CardNumber(String number, List<Integer> score) {
         this.number = number;
-        this.transferNumber = transferNumber;
+        this.score = score;
     }
 
     public static List<Integer> getScoresByNumber(String number) {
         return Arrays.stream(values())
                 .filter(cardNumber -> cardNumber.getNumber().equals(number))
-                .map(CardNumber::getTransferNumber)
+                .map(CardNumber::getScore)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("숫자를 찾을 수 없습니다."));
     }
@@ -39,7 +39,7 @@ public enum CardNumber {
         return number;
     }
 
-    public List<Integer> getTransferNumber() {
-        return transferNumber;
+    public List<Integer> getScore() {
+        return score;
     }
 }
