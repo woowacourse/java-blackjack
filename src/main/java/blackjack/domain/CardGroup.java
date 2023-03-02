@@ -7,7 +7,7 @@ public class CardGroup {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public CardGroup(final Card firstCard, final Card secondCard){
+    public CardGroup(final Card firstCard, final Card secondCard) {
         cards.add(firstCard);
         cards.add(secondCard);
     }
@@ -24,5 +24,12 @@ public class CardGroup {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+
+    public int getAceCount() {
+        return (int) cards.stream()
+                .filter(card -> card.getNumber() == CardNumber.ACE)
+                .count();
     }
 }

@@ -22,7 +22,7 @@ class CardGroupTest {
 
     @Test
     @DisplayName("카드 그룹에 카드 하나를 추가하는 기능 테스트")
-    void addCardTest(){
+    void addCardTest() {
         final Card firstCard = new Card(CardShape.SPADE, CardNumber.ACE);
         final Card secondCard = new Card(CardShape.SPADE, CardNumber.EIGHT);
         final Card thirdCard = new Card(CardShape.HEART, CardNumber.TWO);
@@ -31,6 +31,18 @@ class CardGroupTest {
         cards.add(thirdCard);
 
         Assertions.assertThat(cards).extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .contains(firstCard,secondCard,thirdCard);
+                .contains(firstCard, secondCard, thirdCard);
+    }
+
+    @Test
+    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
+    void getAceCountTest() {
+        final Card firstCard = new Card(CardShape.SPADE, CardNumber.ACE);
+        final Card secondCard = new Card(CardShape.HEART, CardNumber.ACE);
+        CardGroup cardGroup = new CardGroup(firstCard, secondCard);
+
+        int aceCount = cardGroup.getAceCount();
+
+        Assertions.assertThat(aceCount).isEqualTo(2);
     }
 }
