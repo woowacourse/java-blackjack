@@ -24,6 +24,15 @@ public class Controller {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
+        playersHitOrStand(players);
+        dealerHitOrStand(dealer);
+
+        printScores(players, dealer);
+        LinkedHashMap<Gambler, Integer> result = calculateWinCount(dealer, players);
+        OutputView.printResult(result);
+    }
+
+    private void playersHitOrStand(Players players) {
         for (Player player : players.getPlayers()) {
             boolean isHit;
             do {
@@ -34,11 +43,6 @@ public class Controller {
                 OutputView.printSingleGambler(player);
             } while (isHit);
         }
-
-        dealerHitOrStand(dealer);
-        printScores(players, dealer);
-        LinkedHashMap<Gambler, Integer> result = calculateWinCount(dealer, players);
-        OutputView.printResult(result);
     }
 
     private void dealerHitOrStand(Dealer dealer) {
