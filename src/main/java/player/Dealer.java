@@ -8,4 +8,8 @@ public class Dealer {
     public void hit(Card card) {
         hand.add(card);
     }
+
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
 }

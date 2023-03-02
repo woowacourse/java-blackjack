@@ -1,6 +1,7 @@
 package player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,5 +26,19 @@ class DealerTest {
 
         assertThatCode(() -> dealer.hit(card))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("딜러는 받은 카드의 점수 합계를 구할 수 있다")
+    void calculateScore() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        assertThat(dealer.calculateScore()).isEqualTo(15);
     }
 }
