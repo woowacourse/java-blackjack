@@ -15,7 +15,7 @@ class CardRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        cardRepository = CardRepository.create();
+        cardRepository = CardRepository.create(cardSize -> 3);
     }
 
     @Test
@@ -27,7 +27,7 @@ class CardRepositoryTest {
     @Test
     @DisplayName("CardRepository에서 인덱스가 주어지면 그 인덱스에 해당하는 카드를 가져온다.")
     void findCardByIndex() {
-        Card card = cardRepository.findCardByIndex(3);
+        Card card = cardRepository.findAnyOneCard();
 
         assertThat(card).isEqualTo(new Card(Shape.HEART, Number.FOUR));
         assertThat(cardRepository.size()).isEqualTo(51);

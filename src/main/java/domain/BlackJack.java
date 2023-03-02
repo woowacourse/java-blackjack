@@ -14,8 +14,8 @@ public class BlackJack {
     private final CardRepository cardRepository;
     private final List<Player> players;
 
-    public BlackJack(String playerNames) {
-        this.cardRepository = CardRepository.create();
+    public BlackJack(String playerNames, IndexGenerator indexGenerator) {
+        this.cardRepository = CardRepository.create(indexGenerator);
         this.players = initPlayers(playerNames);
     }
 
@@ -31,19 +31,19 @@ public class BlackJack {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void startGame(IndexGenerator indexGenerator) {
-        giveCardToPlayers(indexGenerator);
+    public void startGame() {
+        giveCardToPlayers();
     }
 
-    private void giveCardToPlayers(IndexGenerator indexGenerator) {
+    private void giveCardToPlayers() {
         for (Player player : players) {
-            giveCardToPerPlayer(indexGenerator, player);
+            giveCardToPerPlayer(player);
         }
     }
 
-    private void giveCardToPerPlayer(IndexGenerator indexGenerator, Player player) {
+    private void giveCardToPerPlayer(Player player) {
         for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
-            Card card = cardRepository.findCardByIndex(indexGenerator.generate(cardRepository.size()));
+            Card card = cardRepository.findAnyOneCard();
             player.addCard(card);
         }
     }
