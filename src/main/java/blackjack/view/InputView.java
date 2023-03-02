@@ -7,7 +7,8 @@ public class InputView {
     private static InputView instance;
     private final Scanner scanner = new Scanner(System.in);
 
-    private InputView() {}
+    private InputView() {
+    }
 
     public static InputView getInstance() {
         if (instance == null) {
@@ -21,5 +22,18 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String[] names = scanner.nextLine().split(",");
         return List.of(names);
+    }
+
+    public String readHitOrStand(String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String input;
+        do {
+            input = scanner.nextLine();
+        } while (!isValidCommand(input));
+        return input;
+    }
+
+    private boolean isValidCommand(String input) {
+        return "y".equals(input) || "n".equals(input);
     }
 }
