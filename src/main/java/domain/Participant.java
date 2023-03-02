@@ -4,7 +4,7 @@ import java.util.List;
 
 abstract class Participant {
 
-    protected final PlayerCards playerCards;
+    private final PlayerCards playerCards;
 
     Participant() {
         this.playerCards = new PlayerCards();
@@ -24,5 +24,9 @@ abstract class Participant {
 
     public List<Card> getCards() {
         return playerCards.toList();
+    }
+
+    public int getScore() {
+        return playerCards.getScore();
     }
 }

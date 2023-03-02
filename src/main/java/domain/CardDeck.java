@@ -7,13 +7,13 @@ import java.util.List;
 public class CardDeck {
     private List<Card> cards;
 
-    private CardDeck(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public CardDeck() {
+        this.cards = new ArrayList<>(Card.values());
         shuffleCards();
     }
 
-    public static CardDeck generate() {
-        return new CardDeck(Card.values());
+    CardDeck(List<Card> cards) {
+        this.cards = cards;
     }
 
     public void initCard() {

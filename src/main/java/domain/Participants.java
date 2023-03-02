@@ -1,23 +1,25 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Players {
-    private final List<Participant> players;
+public class Participants {
+    private final List<Participant> participants;
 
-    private Players(List<Participant> players) {
-        this.players = players;
+    private Participants(List<Participant> participants) {
+        this.participants = participants;
     }
 
-    public static Players from(List<String> names) {
+    public static Participants from(List<String> names) {
         validateDuplicate(names);
         List<Participant> players = names.stream()
                                          .map(Player::new)
                                          .collect(Collectors.toList());
         players.add(new Dealer());
-        return new Players(players);
+        return new Participants(players);
     }
 
     private static void validateDuplicate(List<String> names) {
@@ -27,13 +29,13 @@ public class Players {
     }
 
     public void addTwoCards(CardDeck cardDeck) {
-        for (Participant player : players) {
+        for (Participant player : participants) {
             List<Card> cards = cardDeck.pickTwice();
             player.addCards(cards);
         }
     }
 
     public List<Participant> toList() {
-        return List.copyOf(players);
+        return List.copyOf(participants);
     }
 }

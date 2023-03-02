@@ -12,7 +12,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드 52개 생성한다")
     void createCardDeckTest() {
-        CardDeck cardDeck = CardDeck.generate();
+        CardDeck cardDeck = new CardDeck();
 
         assertThat(cardDeck.getCards()).hasSize(52);
     }
@@ -20,7 +20,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드 한 장을 나눠준다")
     void pickCardTest() {
-        CardDeck cardDeck = CardDeck.generate();
+        CardDeck cardDeck = new CardDeck();
 
         Card card = cardDeck.pick();
 
@@ -30,7 +30,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드 두 장을 나눠준다")
     void pickTwiceCardTest() {
-        CardDeck cardDeck = CardDeck.generate();
+        CardDeck cardDeck = new CardDeck();
 
         List<Card> cards = cardDeck.pickTwice();
 
