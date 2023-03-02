@@ -11,13 +11,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DealerTest {
-    private final CardPocket cardPocketUnderDrawPoint = generateUnderDrawPoint();
-    private final CardPocket cardPocketOverDrawPoint = generateOverDrawPoint();
-
+    private static final List<Card> overDrawPointCards = List.of(
+            new Card(Shape.CLOVER, Symbol.ACE),
+            new Card(Shape.HEART, Symbol.KING));
+    private static final List<Card> underDrawPointCards = List.of(
+            new Card(Shape.CLOVER, Symbol.TWO),
+            new Card(Shape.HEART, Symbol.EIGHT));
 
     @Test
     void 딜러의_카드가_16_이하의_점수라면_드로우_합니다() {
-        final Dealer dealer = new Dealer(cardPocketUnderDrawPoint);
+        final Dealer dealer = new Dealer();
+        underDrawPointCards.forEach(dealer::drawCard);
 
         assertThat(dealer.isDrawable())
                 .isTrue();
@@ -25,23 +29,11 @@ class DealerTest {
 
     @Test
     void 딜러의_카드가_17_이상의_점수라면_스테이_합니다() {
-        final Dealer dealer = new Dealer(cardPocketOverDrawPoint);
+        final Dealer dealer = new Dealer();
+        overDrawPointCards.forEach(dealer::drawCard);
 
         assertThat(dealer.isDrawable())
                 .isFalse();
     }
 
-    private CardPocket generateUnderDrawPoint() {
-        final List<Card> cardsUnderDrawPoint = List.of(
-                new Card(Shape.CLOVER, Symbol.TWO),
-                new Card(Shape.HEART, Symbol.EIGHT));
-        return new CardPocket(cardsUnderDrawPoint);
-    }
-
-    private CardPocket generateOverDrawPoint() {
-        final List<Card> cardsOverDrawPoint = List.of(
-                new Card(Shape.CLOVER, Symbol.ACE),
-                new Card(Shape.HEART, Symbol.KING));
-        return new CardPocket(cardsOverDrawPoint);
-    }
 }

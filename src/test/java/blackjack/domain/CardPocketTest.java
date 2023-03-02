@@ -8,26 +8,18 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardPocketTest {
-    private static List<Card> cards;
+    private static final List<Card> cards = List.of(new Card(Shape.CLOVER, Symbol.ACE), new Card(Shape.HEART, Symbol.EIGHT));
 
     private CardPocket cardPocket;
 
     @BeforeEach
     void setCardPocket() {
-        cards = List.of(new Card(Shape.CLOVER, Symbol.ACE), new Card(Shape.HEART, Symbol.EIGHT));
-        cardPocket = new CardPocket(cards);
-    }
-
-    @Test
-    void 카드_포켓_생성시_null_입력시_예외() {
-        assertThatThrownBy(() -> new CardPocket(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드를 입력하지 않았습니다");
+        cardPocket = CardPocket.empty();
+        cards.forEach(cardPocket::addCard);
     }
 
     @Test

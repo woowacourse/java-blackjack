@@ -5,12 +5,12 @@ import java.util.List;
 public abstract class Participant {
     private final CardPocket cardPocket;
 
-    protected Participant(final CardPocket cardPocket) {
-        this.cardPocket = cardPocket;
+    protected Participant() {
+        cardPocket = CardPocket.empty();
     }
 
-    public void drawCard(final Deck deck) {
-        cardPocket.addCard(deck.popCard());
+    public void drawCard(final Card card) {
+        cardPocket.addCard(card);
     }
 
     public int currentScore() {

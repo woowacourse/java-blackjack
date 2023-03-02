@@ -10,9 +10,13 @@ public class CardPocket {
     private static final int VALUE_ACE = 10;
     private final List<Card> cards;
 
-    public CardPocket(final List<Card> cards) {
+    private CardPocket(final List<Card> cards) {
         validateCardPocket(cards);
         this.cards = new ArrayList<>(cards);
+    }
+
+    public static CardPocket empty() {
+        return new CardPocket(new ArrayList<>());
     }
 
     private void validateCardPocket(final List<Card> cards) {

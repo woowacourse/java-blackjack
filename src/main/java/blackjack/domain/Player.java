@@ -4,8 +4,10 @@ import static blackjack.domain.BlackJackConstant.BLACKJACK;
 
 public class Player extends Participant {
 
-    protected Player(final CardPocket cardPocket) {
-        super(cardPocket);
+    private final Name name;
+
+    protected Player(final String name) {
+        this.name = new Name(name);
     }
 
     @Override
