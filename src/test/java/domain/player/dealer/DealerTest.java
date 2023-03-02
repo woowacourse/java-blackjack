@@ -1,8 +1,10 @@
-package domain.player;
+package domain.player.dealer;
 
 import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
+import domain.player.Player;
+import domain.player.dealer.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

@@ -1,6 +1,8 @@
-package domain.player;
+package domain.player.participant;
 
 import domain.area.CardArea;
+import domain.player.Name;
+import domain.player.Player;
 
 import java.util.Objects;
 

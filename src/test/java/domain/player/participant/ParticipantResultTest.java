@@ -1,8 +1,13 @@
-package domain.player;
+package domain.player.participant;
 
 import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
+import domain.player.Name;
+import domain.player.dealer.Dealer;
+import domain.player.dealer.DealerResult;
+import domain.player.participant.Participant;
+import domain.player.participant.ParticipantResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +21,7 @@ import java.util.stream.Stream;
 import static domain.card.CardShape.*;
 import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.TEN;
-import static domain.player.ParticipantResult.*;
+import static domain.player.participant.ParticipantResult.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("ParticipantResult 의")

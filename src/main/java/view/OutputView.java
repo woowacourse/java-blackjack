@@ -3,10 +3,10 @@ package view;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
-import domain.player.Dealer;
-import domain.player.DealerResult;
-import domain.player.Participant;
-import domain.player.ParticipantResult;
+import domain.player.dealer.Dealer;
+import domain.player.dealer.DealerResult;
+import domain.player.participant.Participant;
+import domain.player.participant.ParticipantResult;
 import domain.player.Player;
 
 import java.util.EnumMap;

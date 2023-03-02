@@ -2,12 +2,12 @@ package controller;
 
 import domain.area.CardArea;
 import domain.deck.CardDeck;
-import domain.player.Dealer;
-import domain.player.DealerResult;
+import domain.player.dealer.Dealer;
+import domain.player.dealer.DealerResult;
 import domain.player.Name;
-import domain.player.Participant;
-import domain.player.ParticipantResult;
-import domain.player.State;
+import domain.player.participant.Participant;
+import domain.player.participant.ParticipantResult;
+import domain.player.participant.State;
 import view.InputView;
 import view.OutputView;
 
@@ -23,6 +23,7 @@ public class BlackJackController {
     public void run() {
 
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+
         final List<Participant> participants = dealParticipantsCards(cardDeck);
         final Dealer dealer = dealDealerCards(cardDeck);
 

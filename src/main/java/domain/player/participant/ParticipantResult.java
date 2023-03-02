@@ -1,4 +1,7 @@
-package domain.player;
+package domain.player.participant;
+
+import domain.player.dealer.Dealer;
+import domain.player.dealer.DealerResult;
 
 public enum ParticipantResult {
     WINNER,

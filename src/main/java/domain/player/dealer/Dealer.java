@@ -1,6 +1,8 @@
-package domain.player;
+package domain.player.dealer;
 
 import domain.area.CardArea;
+import domain.player.Name;
+import domain.player.Player;
 
 public class Dealer extends Player {
 
