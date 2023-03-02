@@ -23,6 +23,4 @@ public class Participant {
         }
         return totalScore;
     }
-
-
 }
