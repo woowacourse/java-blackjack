@@ -1,9 +1,9 @@
 package view;
 
 import controller.BlackJackController;
-import controller.BlackJackController.PlayerResult;
 import domain.card.CardShape;
 import domain.card.CardValue;
+import domain.game.PlayerResult;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;

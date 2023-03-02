@@ -2,6 +2,7 @@ package controller;
 
 import domain.area.CardArea;
 import domain.deck.CardDeck;
+import domain.game.PlayerResult;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Participant;
@@ -71,7 +72,6 @@ public class BlackJackController {
     }
 
     private Dealer dealDealerCars(final CardDeck cardDeck) {
-        // TODO 수정
         return new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
     }
 
@@ -91,38 +91,6 @@ public class BlackJackController {
     private void gameStatistic(final List<Participant> participants, final Dealer dealer) {
         final Map<Participant, PlayerResult> collect1 = participants.stream().collect(Collectors.toMap(Function.identity(), it -> PlayerResult.judge(it, dealer)));
         OutputView.showGameStatistic(new ResultDto(collect1, participants, dealer));
-    }
-
-    public enum PlayerResult {
-        WINNER,
-        LOSER,
-        DRAWER;
-
-        public static PlayerResult judge(final Participant it, final Dealer dealer) {
-            if (it.isBurst()) {
-                return PlayerResult.LOSER;
-            }
-            if (dealer.isBurst()) {
-                return PlayerResult.WINNER;
-            }
-            if (it.score() > dealer.score()) {
-                return PlayerResult.WINNER;
-            }
-            if (it.score() == dealer.score()) {
-                return PlayerResult.DRAWER;
-            }
-            return PlayerResult.LOSER;
-        }
-
-        public PlayerResult reverse() {
-            if (this == WINNER) {
-                return LOSER;
-            }
-            if (this == LOSER) {
-                return WINNER;
-            }
-            return this;
-        }
     }
 
     public class ResultDto {
