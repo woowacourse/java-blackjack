@@ -38,4 +38,24 @@ class CardTest {
 
         assertThat(card.getScore()).isEqualTo(number.getScore());
     }
+
+    @Test
+    void 에이스라면_true_반환한다() {
+        final Suit suit = Suit.SPADE;
+        final Number number = Number.ACE;
+
+        final Card card = new Card(number, suit);
+
+        assertThat(card.isAce()).isTrue();
+    }
+
+    @Test
+    void 에이스가_아니라면_false_반환한다() {
+        final Suit suit = Suit.SPADE;
+        final Number number = Number.TEN;
+
+        final Card card = new Card(number, suit);
+
+        assertThat(card.isAce()).isFalse();
+    }
 }

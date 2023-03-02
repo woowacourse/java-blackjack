@@ -10,6 +10,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isAce() {
+        return number == Number.ACE;
+    }
+
     public int getScore() {
         return number.getScore();
     }
