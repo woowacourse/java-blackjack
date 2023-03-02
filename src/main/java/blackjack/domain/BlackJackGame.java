@@ -26,4 +26,9 @@ public class BlackJackGame {
         return users.stream()
                 .collect(Collectors.toUnmodifiableMap(User::getName, User::getStatus));
     }
+
+    public Map<String, List<Card>> getInitialStatus() {
+        return users.stream()
+                .collect(Collectors.toUnmodifiableMap(User::getName, User::getInitialStatus));
+    }
 }
