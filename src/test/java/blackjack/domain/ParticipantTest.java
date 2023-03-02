@@ -14,13 +14,13 @@ class ParticipantTest {
         // given
         Participant participant = new Participant();
         Card card = new Card(Rank.ACE, Suit.DIAMOND);
+        Card card1 = new Card(Rank.ACE, Suit.DIAMOND);
 
         // when
         participant.receiveCard(card);
+        participant.receiveCard(card1);
 
         // then
         assertThat(participant.getCards().size()).isEqualTo(1);
     }
-
-
 }

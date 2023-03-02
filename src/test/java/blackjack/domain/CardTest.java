@@ -4,6 +4,7 @@ import blackjack.domain.generator.NumberGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
@@ -29,5 +30,16 @@ class CardTest {
 
         // when & then
         assertDoesNotThrow(() -> new Card(rank, suit));
+    }
+
+    @DisplayName("같은 Rank와 Suit를 갖는 Card는 동일하다.")
+    @Test
+    void checkCardWithSameRankAndSuit() {
+        // given
+        Card card1 = new Card(Rank.ACE, Suit.DIAMOND);
+        Card card2 = new Card(Rank.ACE, Suit.DIAMOND);
+
+        // when & then
+        assertThat(card1.equals(card2)).isTrue();
     }
 }
