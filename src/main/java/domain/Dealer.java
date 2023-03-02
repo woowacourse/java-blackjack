@@ -39,4 +39,9 @@ public class Dealer implements Gambler {
     public int getCardsSize() {
         return cards.getCards().size();
     }
+
+    @Override
+    public int getScore() {
+        return cards.calculateScore();
+    }
 }

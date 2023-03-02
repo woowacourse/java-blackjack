@@ -18,6 +18,7 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             printPlayerName(player);
             printPlayerCards(player);
+            System.out.println();
         }
     }
 
@@ -28,7 +29,7 @@ public class OutputView {
 
     public static void printPlayerCards(Gambler gambler) {
         String output = getPlayerCards(gambler);
-        System.out.println(String.join(DELIMITER, output));
+        System.out.print(String.join(DELIMITER, output));
     }
 
     public static String getPlayerCards(Gambler gambler) {
@@ -37,5 +38,12 @@ public class OutputView {
             output += card.getSuit() + card.getName();
         }
         return output;
+    }
+
+    public static void printScore(Gambler gambler) {
+        printPlayerName(gambler);
+        printPlayerCards(gambler);
+        System.out.print(" - 결과: ");
+        System.out.println(gambler.getScore());
     }
 }

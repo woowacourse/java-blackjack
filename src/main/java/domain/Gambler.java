@@ -8,4 +8,5 @@ public interface Gambler {
     void initialPick();
     String getName();
     List<Card> getCards();
+    int getScore();
 }

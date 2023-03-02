@@ -31,4 +31,9 @@ public class Player implements Gambler {
     public String getName() {
         return playerName.getName();
     }
+
+    @Override
+    public int getScore() {
+        return cards.calculateScore();
+    }
 }
