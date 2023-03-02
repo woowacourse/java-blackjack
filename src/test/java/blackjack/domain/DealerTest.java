@@ -36,4 +36,18 @@ class DealerTest {
 
         assertThat(dealer.isUnderTakeLimit()).isFalse();
     }
+
+    @DisplayName("합을 비교해 최종 승패를 결정한다.")
+    @Test
+    void should_() {
+        Dealer dealer = new Dealer();
+
+        dealer.take(new Card(SPADE, QUEEN));
+        dealer.take(new Card(CLUB, SEVEN));
+
+        Player player = new Player("pobi");
+        player.take(new Card(SPADE, QUEEN));
+        player.take(new Card(CLUB, SIX));
+        assertThat(dealer.judge(player)).isEqualTo(PlayerResult.LOSE);
+    }
 }

@@ -31,7 +31,7 @@ public class Participant {
         return sum;
     }
 
-    private boolean isBust(int sum) {
+    public boolean isBust(int sum) {
         return sum > BLACK_JACK;
     }
 
