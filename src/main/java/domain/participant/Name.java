@@ -1,3 +1,5 @@
+package domain.participant;
+
 public class Name {
 
     public static final String NAME_REGEX_FORMAT = "^[a-zA-Z]+$";

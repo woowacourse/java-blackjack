@@ -1,10 +1,14 @@
+package domain.participant;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import domain.card.Card;
+
 public class Player {
 
-    public static final int LIMIT_TAKE_CARD_VALUE = 21;
+    private static final int LIMIT_TAKE_CARD_VALUE = 21;
     private final Name name;
     private final List<Card> cards;
 
@@ -17,15 +21,15 @@ public class Player {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public boolean checkCardsCondition() {
         int totalValue = 0;
         for (Card card : cards) {
             totalValue += card.getValue();
         }
         return totalValue <= LIMIT_TAKE_CARD_VALUE;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

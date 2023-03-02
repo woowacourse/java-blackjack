@@ -1,5 +1,8 @@
+package domain.card;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

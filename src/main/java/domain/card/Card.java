@@ -1,3 +1,5 @@
+package domain.card;
+
 public class Card {
 
     private final String name;
