@@ -41,4 +41,16 @@ public class DeckTest {
         assertThat(card.getValue()).isEqualTo(Letter.ACE.getValue());
     }
 
+    @Test
+    @DisplayName("덱 반환 테스트")
+    void getCardsTest(){
+        List<Card> cards = new ArrayList<>(
+                Arrays.asList(
+                        new Card(Shape.CLOVER, Letter.ACE),
+                        new Card(Shape.DIAMOND,Letter.JACK)));
+        CardPicker testCardPicker = new TestCardPicker();
+        Deck deck = new Deck(cards, testCardPicker);
+
+        assertThat(deck.getCards()).isEqualTo(cards);
+    }
 }
