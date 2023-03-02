@@ -17,11 +17,11 @@ public class CardsTest {
     @DisplayName("카드를 추가하면 크기가 1 증가한다.")
     void addCard() {
         Cards cards = new Cards();
-        int expectedSize = cards.getCards().size() + 1;
+        int expectedSize = cards.getCount() + 1;
 
         cards.add(new Card(Symbol.SPADE, Number.ACE));
 
-        assertThat(cards.getCards().size()).isEqualTo(expectedSize);
+        assertThat(cards.getCount()).isEqualTo(expectedSize);
     }
 
     @ParameterizedTest

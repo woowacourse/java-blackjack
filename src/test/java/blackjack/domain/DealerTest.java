@@ -21,7 +21,7 @@ public class DealerTest {
         dealer.addCard(new Card(Symbol.CLOVER, Number.ACE));
         dealer.addCard(new Card(Symbol.DIAMOND, Number.TEN));
 
-        assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
+        assertThat(dealer.getCards().getCount()).isEqualTo(2);
     }
 
     @ParameterizedTest
@@ -65,7 +65,7 @@ public class DealerTest {
         return Stream.of(
                 Arguments.of(List.of(new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.CLOVER, Number.TWO)), true),
                 Arguments.of(List.of(new Card(Symbol.HEART, Number.NINE), new Card(Symbol.HEART, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), true),
+                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), false),
                 Arguments.of(List.of(new Card(Symbol.CLOVER, Number.THREE), new Card(Symbol.CLOVER, Number.TWO), new Card(Symbol.SPADE, Number.TWO), new Card(Symbol.HEART, Number.TWO)), false),
                 Arguments.of(List.of(new Card(Symbol.CLOVER, Number.SEVEN), new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.DIAMOND, Number.SEVEN)), false),
                 Arguments.of(List.of(new Card(Symbol.CLOVER, Number.TEN), new Card(Symbol.SPADE, Number.TEN), new Card(Symbol.DIAMOND, Number.SEVEN)), false)

@@ -2,10 +2,10 @@ package blackjack.domain;
 
 public abstract class Participant {
 
-    private static final int BLACK_JACK_SCORE = 21;
-    private static final int ACE_ALTER_VALUE = 10;
+    protected static final int BLACK_JACK_SCORE = 21;
+    protected static final int ACE_ALTER_VALUE = 10;
 
-    private final Cards cards;
+    protected final Cards cards;
 
     public Participant() {
         this.cards = new Cards();

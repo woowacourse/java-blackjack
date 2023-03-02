@@ -12,6 +12,11 @@ public class Player extends Participant{
     }
 
     @Override
+    public boolean canReceive() {
+        return calculateScore() < BLACK_JACK_SCORE;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -23,4 +28,5 @@ public class Player extends Participant{
     public int hashCode() {
         return Objects.hash(name);
     }
+
 }

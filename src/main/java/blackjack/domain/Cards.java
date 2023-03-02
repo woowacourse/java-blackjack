@@ -26,8 +26,8 @@ public class Cards {
                 .count();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public int getCount() {
+        return cards.size();
     }
 
 }

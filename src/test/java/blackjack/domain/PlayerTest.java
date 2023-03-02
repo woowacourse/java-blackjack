@@ -21,7 +21,7 @@ public class PlayerTest {
         player.addCard(new Card(Symbol.CLOVER, Number.ACE));
         player.addCard(new Card(Symbol.DIAMOND, Number.TEN));
 
-        assertThat(player.getCards().getCards().size()).isEqualTo(2);
+        assertThat(player.getCards().getCount()).isEqualTo(2);
     }
 
     @ParameterizedTest
