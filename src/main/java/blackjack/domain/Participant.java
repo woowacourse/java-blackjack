@@ -5,6 +5,9 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
+    private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
+
     private final ParticipantName participantName;
     private final List<Card> receivedCards = new ArrayList<>();
 
@@ -31,8 +34,17 @@ public abstract class Participant {
             .sum();
     }
 
+    public boolean judgeBlackjack() {
+        return receivedCards.size() == 2 && calculateCardNumber() == 21;
+    }
+
+    public int calculateCardNumber() {
+        int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
+        if (participantHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
+            return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
+        }
+        return totalSumAceCardValueOne;
+    }
+
     abstract boolean decideHit();
-
-    abstract int calculateCardNumber();
-
 }
