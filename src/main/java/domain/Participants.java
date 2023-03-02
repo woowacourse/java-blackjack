@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class Participants {
+
     private final List<Participant> participants;
 
     private Participants(final List<Participant> participants) {

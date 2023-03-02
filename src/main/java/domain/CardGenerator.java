@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -23,7 +22,7 @@ public interface CardGenerator {
                 .map(createCard(shape));
     }
 
-    private static  Function<Number, Card> createCard(final Shape shape) {
+    private static Function<Number, Card> createCard(final Shape shape) {
         return number -> Card.of(shape, number);
     }
 }

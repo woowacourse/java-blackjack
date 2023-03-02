@@ -1,7 +1,6 @@
 package view;
 
 import domain.Card;
-import domain.Name;
 import domain.Results;
 
 import java.util.List;
@@ -12,9 +11,9 @@ public final class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public static void printPlayerCards(final Name name, final List<Card> cards) {
+    public static void printPlayerCards(final String name, final List<Card> cards) {
         final String playerCards = convertCardsFormat(cards);
-        System.out.printf("%s 카드: %s%n", name.getName(), playerCards);
+        System.out.printf("%s 카드: %s%n", name, playerCards);
     }
 
     public static void printSetupGame(List<String> names) {
@@ -27,17 +26,17 @@ public final class OutputView {
         System.out.println(hitOrStay(dealerScore));
     }
 
-    public static void printPlayerScore(final Name name, final List<Card> cards, final int playerScore) {
+    public static void printPlayerScore(final String name, final List<Card> cards, final int playerScore) {
         final String playerCards = convertCardsFormat(cards);
-        System.out.printf("%s 카드: %s - 결과: %d%n", name.getName(), playerCards, playerScore);
+        System.out.printf("%s 카드: %s - 결과: %d%n", name, playerCards, playerScore);
 
     }
 
     public static void printGameResult(final Results results) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패%n", results.countLosers(), results.countWinners());
-        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner.getName()));
-        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser.getName()));
+        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner));
+        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser));
     }
 
     private static String convertCardsFormat(final List<Card> cards) {

@@ -2,44 +2,43 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiPredicate;
+import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
 public class Results {
 
-    private final List<Name> winners;
-    private final List<Name> losers;
+    private static final int BUST_NUMBER = 21;
+    private final List<String> winners;
+    private final List<String> losers;
 
-    private Results(final List<Name> winners, final List<Name> losers) {
+    private Results(final List<String> winners, final List<String> losers) {
         this.winners = winners;
         this.losers = losers;
     }
 
     public static Results of(final int dealerScore, final List<Participant> participants) {
-        if (dealerScore > 21) {
-            final List<Name> winners = participants.stream().map(Player::getName).collect(toList());
-            final List<Name> losers = new ArrayList<>();
-            return new Results(winners, losers);
-        }
-        final List<Name> winners = getResult(dealerScore, participants, (participant, score) -> isWinner(dealerScore, participant));
-        final List<Name> losers = getResult(dealerScore, participants, (participant, score) -> isLoser(dealerScore, participant));
+        Map<Result, List<Participant>> result = participants.stream()
+                .collect(groupingBy(participant -> isWinner(dealerScore, participant)));
+
+        List<String> winners = convertToParticipantName(result.get(Result.VICTORY));
+        List<String> losers = convertToParticipantName(result.get(Result.DEFEAT));
+
         return new Results(winners, losers);
     }
 
-    private static boolean isWinner(final int dealerScore, final Participant participant) {
-        return dealerScore <= participant.getScore() && participant.getScore() <= 21;
+    private static List<String> convertToParticipantName(final List<Participant> result) {
+        if (result == null) {
+            return new ArrayList<>();
+        }
+        return result.stream().map(Player::getName).collect(toList());
     }
 
-    private static boolean isLoser(final int dealerScore, final Participant participant) {
-        return participant.getScore() < dealerScore || participant.getScore() > 21;
-    }
-
-    private static List<Name> getResult(final int dealerScore, final List<Participant> participants, BiPredicate<Participant, Integer> p) {
-        return participants.stream()
-                .filter(participant -> p.test(participant, dealerScore))
-                .map(Player::getName)
-                .collect(toUnmodifiableList());
+    private static Result isWinner(final int dealerScore, final Participant participant) {
+        if (participant.getScore() > BUST_NUMBER || (dealerScore <= BUST_NUMBER && dealerScore > participant.getScore())) {
+            return Result.DEFEAT;
+        }
+        return Result.VICTORY;
     }
 
     public int countWinners() {
@@ -50,11 +49,16 @@ public class Results {
         return losers.size();
     }
 
-    public List<Name> getWinners() {
+    public List<String> getWinners() {
         return List.copyOf(winners);
     }
 
-    public List<Name> getLosers() {
+    public List<String> getLosers() {
         return List.copyOf(losers);
+    }
+
+    private enum Result {
+        VICTORY,
+        DEFEAT
     }
 }

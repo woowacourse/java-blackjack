@@ -5,6 +5,7 @@ import java.util.List;
 
 public final class Cards {
 
+    private static final int ACE_ELEVEN = 10;
     private final List<Card> cards;
 
     public Cards() {
@@ -20,7 +21,7 @@ public final class Cards {
         final int score = sumScore();
 
         if (hasAce() && isUnderTwentyOne(score)) {
-            return score + 10;
+            return score + ACE_ELEVEN;
         }
         return score;
     }
