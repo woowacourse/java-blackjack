@@ -72,7 +72,7 @@ public class BlackJackController {
 
     private Dealer dealDealerCars(final CardDeck cardDeck) {
         // TODO 수정
-        return new Dealer(Name.of("딜러"), new CardArea(cardDeck.draw(), cardDeck.draw()));
+        return new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
     }
 
     private List<Participant> dealParticipantsCards(final CardDeck cardDeck, final List<Name> participantNames) {

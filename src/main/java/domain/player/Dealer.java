@@ -5,8 +5,10 @@ import domain.card.Card;
 
 public class Dealer extends Player {
 
-    public Dealer(final Name name, final CardArea cardArea) {
-        super(name, cardArea);
+    private static final Name DEALER_NAME = Name.of("딜러");
+
+    public Dealer(final CardArea cardArea) {
+        super(DEALER_NAME, cardArea);
     }
 
     @Override
