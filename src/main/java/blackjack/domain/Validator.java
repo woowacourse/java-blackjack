@@ -12,11 +12,18 @@ public class Validator {
 
     public void validatePlayerNames(List<String> playerNames) {
         validatePlayerCount(playerNames);
+        validateDuplicate(playerNames);
     }
 
     private void validatePlayerCount(List<String> playerNames) {
         if (playerNames.size() < MIN_PLAYER_COUNT || playerNames.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException(PLAYER_COUNT_ERROR_MESSAGE);
+        }
+    }
+
+    private void validateDuplicate(List<String> playerNames) {
+        if (playerNames.size() != playerNames.stream().distinct().count()) {
+            throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
     }
 }
