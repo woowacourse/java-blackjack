@@ -47,9 +47,17 @@ public class BlackjackController {
     }
 
     private void requestMoreCard(BlackjackGame blackjackGame, Player player) {
-        while (isHitCommand(player.getName()) && !player.isBusted()) {
+        while (!player.isBusted() && isHitCommand(player.getName())) {
             blackjackGame.giveCardTo(player);
+            outputView.printPlayerCards(player);
         }
+
+        if (player.isBusted()) {
+            outputView.printBusted(player.getName());
+            return;
+        }
+
+        outputView.printPlayerCards(player);
     }
 
     private boolean isHitCommand(String name) {

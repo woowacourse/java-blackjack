@@ -11,6 +11,7 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String GAME_INIT_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s";
+    private static final String BUSTED_FORMAT = "%s는 버스트 되었습니다.";
 
     public static final String DELIMITER = ", ";
 
@@ -43,5 +44,13 @@ public class OutputView {
 
     private String getCardFormat(Card card){
         return card.getNumberName() + card.getShapeName();
+    }
+
+    public void printPlayerCards(Player player) {
+        System.out.println(String.format(PLAYER_CARDS_FORMAT, player.getName(), getCardsFormat(player.getCards())));
+    }
+
+    public void printBusted(String name) {
+        System.out.println(String.format(BUSTED_FORMAT, name));
     }
 }
