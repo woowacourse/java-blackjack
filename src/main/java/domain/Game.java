@@ -19,6 +19,8 @@ public class Game {
             for (Player player : players) {
                 player.addCard(deck.drawCard());
             }
+
+            dealer.addCard(deck.drawCard());
         }
     }
 

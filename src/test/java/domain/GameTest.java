@@ -23,13 +23,17 @@ public class GameTest {
                 new Player("조이"),
                 new Player("땡칠")
         );
-        var game = new Game(players, new Deck(), new Dealer(createCards("K")));
+        Dealer dealer = new Dealer();
+
+        var game = new Game(players, new Deck(), dealer);
 
         game.dealCards();
 
         for (Player player : players) {
             assertThat(player.getCards()).hasSize(2);
         }
+
+        assertThat(dealer.getCards()).hasSize(2);
     }
 
     @ParameterizedTest(name = "딜러와 플레이어중에 21에 가까운 사람이 이긴다.")
