@@ -6,7 +6,8 @@ public enum ErrorMessage {
     NAME_IS_EMPTY("이름은 공백일 수 없습니다."),
     NAME_IS_NULL("이름은 null일 수 없습니다."),
     NAME_IS_DEALER("이름은 '딜러'일 수 없습니다."),
-    NAME_IS_DUPLICATED("이름이 중복되었습니다.");
+    NAME_IS_DUPLICATED("이름이 중복되었습니다."),
+    NAME_CONTAINS_COMMA("이름에 쉼표(,)가 들어갈 수 없습니다.");
 
     private final String message;
 

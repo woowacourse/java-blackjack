@@ -17,6 +17,7 @@ public class Player extends Participant {
         validateNotNull(name);
         validateNotEmpty(name);
         validateNoDealer(name);
+        validateDoesNotContainComma(name);
     }
 
     private void validateNotEmpty(String name) {
@@ -34,6 +35,12 @@ public class Player extends Participant {
     private void validateNoDealer(String name) {
         if (name.equals("딜러")) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_DEALER.getMessage());
+        }
+    }
+
+    private void validateDoesNotContainComma(String name) {
+        if (name.contains(",")) {
+            throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
         }
     }
 }
