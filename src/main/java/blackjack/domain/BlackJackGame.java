@@ -20,4 +20,14 @@ public class BlackJackGame {
     public Map<String, List<Card>> getInitialStatus() {
         return users.getInitialStatus();
     }
+
+    public int playDealerTurn() {
+        int drawCount = 0;
+        while (!users.isDealerOverDrawLimit()) {
+            users.drawDealer(deck);
+            drawCount++;
+        }
+        return drawCount;
+    }
+
 }
