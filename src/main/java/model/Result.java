@@ -46,4 +46,18 @@ public class Result {
     public Map<User, List<Card>> getScoreBoards() {
         return scoreBoards;
     }
+
+    public int calculateTotalCardValue(final User user) {
+        final List<Card> cards = scoreBoards.get(user);
+
+        final int totalValue = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+
+        if (totalValue > 21 && cards.stream().anyMatch(Card::isValueAce)) {
+            return totalValue - 10;
+        }
+
+        return totalValue;
+    }
 }

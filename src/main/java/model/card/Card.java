@@ -33,4 +33,8 @@ public class Card {
     public int getValue() {
         return this.value.getValue();
     }
+
+    public boolean isValueAce() {
+        return value == Value.ACE;
+    }
 }

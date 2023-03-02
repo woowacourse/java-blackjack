@@ -12,6 +12,8 @@ import static model.card.Shape.DIAMOND;
 import static model.card.Shape.HEART;
 import static model.card.Shape.SPADE;
 import static model.card.Value.ACE;
+import static model.card.Value.FIVE;
+import static model.card.Value.KING;
 import static model.card.Value.NINE;
 import static model.card.Value.SIX;
 import static model.card.Value.TEN;
@@ -88,6 +90,24 @@ class ResultTest {
                     result.addCard(dealer, new Card(SPADE, ACE));
                     assertThat(result.canDealerReceiveCard()).isFalse();
                 }
+        );
+    }
+
+    @DisplayName("User들의 카드 값의 총 합을 계산한다.")
+    @Test
+    void calculateTotalCardValue() {
+        // given
+        result.addCard(bebe, new Card(DIAMOND, SIX));
+        result.addCard(bebe, new Card(SPADE, KING));
+
+        result.addCard(ethan, new Card(HEART, FIVE));
+        result.addCard(ethan, new Card(DIAMOND, SIX));
+        result.addCard(ethan, new Card(CLOVER, ACE));
+
+        // when,  then
+        assertAll(
+                () -> assertThat(result.calculateTotalCardValue(bebe)).isEqualTo(16),
+                () -> assertThat(result.calculateTotalCardValue(ethan)).isEqualTo(12)
         );
     }
 }
