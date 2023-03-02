@@ -24,11 +24,4 @@ class DeckTest {
         assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
     }
 
-    class TestDeckGenerator implements DeckGenerator {
-
-        @Override
-        public List<Card> generate() {
-            return testCards;
-        }
-    }
 }
