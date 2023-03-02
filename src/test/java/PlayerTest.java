@@ -31,4 +31,15 @@ class PlayerTest {
         Player player = new Player("name", cardHand);
         assertThat(player.canAdd()).isTrue();
     }
+
+    // TODO: 카드 더 받을 수 없는 경우 테스트
+
+    @Test
+    @DisplayName("카드를 저장한다.")
+    void 카드_저장() {
+        Player player = new Player("name");
+        assertThat(player.calculateScore()).isEqualTo(0);
+        player.addCard(new Card(Symbol.SPADE, CardNumber.TWO));
+        assertThat(player.calculateScore()).isEqualTo(2);
+    }
 }

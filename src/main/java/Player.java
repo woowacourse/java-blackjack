@@ -25,4 +25,8 @@ public class Player {
     public boolean canAdd() {
         return cardHand.calculateScore() < SCORE_UPPER_LIMIT;
     }
+
+    public void addCard(Card card) {
+        this.cardHand.add(card);
+    }
 }

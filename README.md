@@ -31,7 +31,7 @@
 - [x] CardHand의 점수를 계산한다.
 - [x] 이름을 반환한다.
 - [x] 카드를 더 받을 수 있는 상황인지 확인한다.
-- [ ] CardHand에 Card를 저장한다.
+- [x] CardHand에 Card를 저장한다.
 - [ ] CardHand의 점수가 블랙잭인지 확인한다.
 
 ### Name
