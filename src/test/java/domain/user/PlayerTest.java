@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("플레이어는 ")
 class PlayerTest {
     @Test
-    @DisplayName("플레이어는 처음에 2장의 카드를 받는다.")
+    @DisplayName("처음에 2장의 카드를 받는다.")
     void generatePlayerTest() {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
@@ -25,7 +25,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 카드 한 장을 받아 패에 넣는다.")
+    @DisplayName("카드 한 장을 받아 패에 넣는다.")
     void receiveCardTest() {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
