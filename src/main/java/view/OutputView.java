@@ -10,26 +10,31 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String NAME_FORMAT = "카드: ";
-    private static final String INIT = "";
     private static final String WIN = "승";
     private static final String LOSE = "패";
     private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패";
     private static final String RESULT_GUIDE_MESSAGE = "\n## 최종 승패";
     private static final String SCORE_GUIDE_MESSAGE = " - 결과: ";
     private static final String POSTFIX_INITIAL_PICK_GUIDE_MESSAGE = "에게 2장을 나누었습니다.";
-    private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "딜러와 ";
+    private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "\n딜러와 ";
     private static final String COLON = ": ";
+    private static final String NEW_LINE = "\n";
 
     private OutputView() {
     }
 
     public static void printInitialPickGuideMessage(Players players) {
         System.out.print(PREFIX_INITIAL_PICK_GUIDE_MESSAGE);
-        List<String> message = new ArrayList<>();
+        List<String> playerNames = getPlayerNames(players);
+        System.out.println(String.join(DELIMITER, playerNames) + POSTFIX_INITIAL_PICK_GUIDE_MESSAGE);
+    }
+
+    private static List<String> getPlayerNames(Players players) {
+        List<String> playerNames = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            message.add(player.getName());
+            playerNames.add(player.getName());
         }
-        System.out.println(String.join(DELIMITER, message) + POSTFIX_INITIAL_PICK_GUIDE_MESSAGE);
+        return playerNames;
     }
 
     public static void printGamblersCards(Players players, Dealer dealer) {
@@ -40,6 +45,7 @@ public class OutputView {
     private static void printDealerCards(Dealer dealer) {
         printGamblerName(dealer);
         printGamblerCards(dealer);
+        printNewLine();
     }
 
     private static void printGamblerName(Gambler gambler) {
@@ -69,17 +75,18 @@ public class OutputView {
     public static void printSingleGambler(Gambler gambler) {
         printGamblerName(gambler);
         printGamblerCards(gambler);
+        printNewLine();
     }
 
     public static void printScore(Gambler gambler) {
+        printNewLine();
         printGamblerName(gambler);
         printGamblerCards(gambler);
-        System.out.print(SCORE_GUIDE_MESSAGE);
-        System.out.println(gambler.getScore());
+        System.out.print(SCORE_GUIDE_MESSAGE + gambler.getScore());
     }
 
     public static void printResult(Map<Gambler, Integer> result) {
-        System.out.println(RESULT_GUIDE_MESSAGE);
+        System.out.println(NEW_LINE + RESULT_GUIDE_MESSAGE);
 
         for (Map.Entry<Gambler, Integer> resultEntry : result.entrySet()) {
             printDealerResult(resultEntry, result.size());
@@ -91,7 +98,7 @@ public class OutputView {
         if (isDealer(gamblerEntry)) {
             int winCount = gamblerEntry.getValue();
             int loseCount = size - winCount - 1;
-            System.out.printf(DEALER_RESULT_FORMAT+"\n", winCount, loseCount);
+            System.out.printf(DEALER_RESULT_FORMAT + NEW_LINE, winCount, loseCount);
         }
     }
 
@@ -112,5 +119,9 @@ public class OutputView {
             return WIN;
         }
         return LOSE;
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 }
