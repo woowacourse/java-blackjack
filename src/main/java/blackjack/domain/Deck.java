@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DrawnCards {
+public class Deck {
 
     private final Set<Card> drawnCards = new HashSet<>();
 
