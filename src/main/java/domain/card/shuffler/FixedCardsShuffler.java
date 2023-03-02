@@ -1,6 +1,6 @@
-package domain;
+package domain.card.shuffler;
 
-import java.util.List;
+import domain.card.Card;
 import java.util.Stack;
 
 public class FixedCardsShuffler implements CardsShuffler {

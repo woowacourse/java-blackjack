@@ -1,7 +1,9 @@
 package view;
 
-import domain.Participant;
-import domain.Participants;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,13 @@ public class OutputView {
     }
 
     public void printInitialState(final Participants participants) {
-        for (Participant participant : participants.getParticipants()) {
+        Dealer dealer = (Dealer) participants.getParticipants().get(0);
+        List<Participant> players = participants.getParticipants().stream().skip(1).collect(Collectors.toList());
+        System.out.println(
+                dealer.getName() + ": " + dealer.showInitialCard().getValue() + dealer.showInitialCard().getShape());
+        for (Participant participant : players) {
+            Player player = (Player) participant;
+            System.out.println();
         }
     }
 }

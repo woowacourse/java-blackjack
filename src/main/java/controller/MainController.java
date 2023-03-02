@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Participants;
+import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
@@ -18,6 +18,5 @@ public class MainController {
         Participants participants = new Participants(inputView.readPlayerNames());
         outputView.printInitialMessage(participants.getNames());
         outputView.printInitialState(participants);
-
     }
 }

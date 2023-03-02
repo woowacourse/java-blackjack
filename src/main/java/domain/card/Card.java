@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.Objects;
 
@@ -14,6 +14,14 @@ public class Card {
 
     public int getScore(final int totalScore) {
         return value.getScore(totalScore);
+    }
+
+    public String getValue(){
+        return value.getValue();
+    }
+
+    public String getShape(){
+        return shape.getShape();
     }
 
     @Override

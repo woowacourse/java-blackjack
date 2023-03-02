@@ -1,11 +1,12 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
 import java.util.List;
 
 public class Participant {
 
     private final Name name;
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
     public Participant(final Name name, final List<Card> cards) {
         this.name = name;
@@ -26,5 +27,9 @@ public class Participant {
 
     public String getName() {
         return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

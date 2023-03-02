@@ -1,5 +1,8 @@
-package domain;
+package domain.participant;
 
+import domain.PlayerCommand;
+import domain.card.Card;
+import domain.card.Cards;
 import java.util.List;
 
 public class Player extends Participant {
