@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Name {
 
@@ -13,5 +13,9 @@ public class Name {
         if (value.length() < 1 || value.length() > 5) {
             throw new IllegalArgumentException("이름의 길이는 1이상 5이하만 가능합니다.");
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 }

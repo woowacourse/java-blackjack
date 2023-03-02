@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.participant.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;

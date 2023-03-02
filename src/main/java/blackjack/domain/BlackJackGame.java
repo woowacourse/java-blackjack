@@ -1,5 +1,10 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardMachine;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.*;
+
 public class BlackJackGame {
 
     private final Dealer dealer;

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public enum Rank {
     ACE(1), DEUCE(2), THREE(3), FOUR(4),
