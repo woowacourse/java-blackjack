@@ -18,27 +18,21 @@ class ScoreTest {
     void calculateScoreTest() {
         //given
         List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE);
-        ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         //when
-        int score = scoreCalculator.calculate(cards);
+        Score score = new Score(cards);
 
         //then
-        Assertions.assertThat(score).isEqualTo(14);
+        Assertions.assertThat(score.getScore()).isEqualTo(14);
     }
 
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase")
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
     void calculateScoreWithAceTest(List<Card> cards, int expected) {
-        //given
-        ScoreCalculator scoreCalculator = new ScoreCalculator();
+        Score score = new Score(cards);
 
-        //when
-        int score = scoreCalculator.calculate(cards);
-
-        //then
-        Assertions.assertThat(score).isEqualTo(expected);
+        Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> calculateScoreWithAceCase() {

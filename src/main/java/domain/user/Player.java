@@ -11,8 +11,8 @@ public class Player extends User{
     }
 
     @Override
-    protected void checkBustByScore(int score) {
-        if(score > BLACKJACK) {
+    protected void checkBustByScore() {
+        if(score.getScore() > BLACKJACK) {
             status = PlayerStatus.BUST;
         }
     }

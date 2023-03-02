@@ -5,13 +5,18 @@ import domain.Number;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ScoreCalculator {
-
+public class Score {
     private static final int BLACKJACK = 21;
     private static final int ZERO = 0;
     private static final int ACE_ONE = 1;
 
-    public int calculate(List<Card> cards) {
+    private int score;
+
+    public Score(List<Card> cards) {
+        calculate(cards);
+    }
+
+    public void calculate(List<Card> cards) {
         List<Integer> numbers = convertCardsToNumbers(cards);
         int aceCount = countOfAce(numbers);
         int sum = sum(numbers);
@@ -19,7 +24,7 @@ public class ScoreCalculator {
         if (sum > BLACKJACK) {
             sum = calculateAceAsOne(aceCount, sum);
         }
-        return sum;
+        score = sum;
     }
 
     private List<Integer> convertCardsToNumbers(List<Card> cards) {
@@ -47,5 +52,9 @@ public class ScoreCalculator {
             aceCount--;
         }
         return sum;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

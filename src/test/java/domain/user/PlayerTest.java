@@ -45,12 +45,9 @@ class PlayerTest {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING);
         Player player = new Player(firstTurnCards);
-        ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         //when
         player.receiveCard(CloverCard.CLOVER_QUEEN);
-        int score = scoreCalculator.calculate(player.getCards());
-        player.checkBustByScore(score);
         boolean result = player.isBust();
 
         //then

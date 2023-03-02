@@ -9,13 +9,17 @@ public abstract class User {
     protected static final int BLACKJACK = 21;
 
     private final List<Card> cards;
+    protected final Score score;
 
     public User(List<Card> firstTurnCards) {
         cards = new ArrayList<>(firstTurnCards);
+        score = new Score(firstTurnCards);
     }
 
     public void receiveCard(Card card){
         cards.add(card);
+        score.calculate(cards);
+        checkBustByScore();
     }
 
     public List<Integer> getCardNumbers() {
@@ -34,7 +38,11 @@ public abstract class User {
         return cards;
     }
 
-    protected abstract void checkBustByScore(int score);
+    public int getScore() {
+        return score.getScore();
+    }
+
+    protected abstract void checkBustByScore();
 
     protected abstract boolean isBust();
 }
