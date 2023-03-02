@@ -31,4 +31,16 @@ public class Users {
                 .filter(user -> method.test(user))
                 .collect(Collectors.toList());
     }
+
+    public void giveEachUser(final Deck deck, final int count) {
+        for (User user : users) {
+            letUserDrawFromDeck(deck, user, count);
+        }
+    }
+
+    private void letUserDrawFromDeck(final Deck deck, final User user, final int count) {
+        for (int i = 0; i < count; i++) {
+            user.draw(deck.drawCard());
+        }
+    }
 }
