@@ -4,9 +4,9 @@ import controller.BlackJackController;
 import controller.BlackJackController.PlayerResult;
 import domain.card.CardShape;
 import domain.card.CardValue;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
+import domain.player.Dealer;
+import domain.player.Participant;
+import domain.player.Player;
 
 import java.util.EnumMap;
 import java.util.List;
