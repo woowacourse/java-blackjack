@@ -11,9 +11,9 @@ public class Cards {
     private static final int MIN_CARD_SIZE = 1;
     private static List<Card> cards = new ArrayList<>();
 
-    public static void init(List<Card> newCards) {
-        validate(newCards);
-        cards = newCards;
+    public static void init() {
+        validate(CardFactory.of());
+        cards = CardFactory.of();
     }
 
     private static void validate(List<Card> cards) {

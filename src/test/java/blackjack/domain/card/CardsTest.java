@@ -5,26 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 class CardsTest {
 
     @BeforeEach
     void init() {
-        Cards.init(CardFactory.of());
-    }
-
-    @Test
-    @DisplayName("카드개수가 48개가 아니라면 예외처리한다.")
-    void cards_init_validate_test() {
-        // given & when
-        List<Card> cards = CardFactory.of();
-        cards.remove(0);
-
-        // then
-        Assertions.assertThatThrownBy(() -> Cards.init(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드의 개수는 총 48개여야 합니다.");
+        Cards.init();
     }
 
     @Test
