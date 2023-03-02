@@ -22,4 +22,15 @@ class PlayerTest {
         assertThat(player.getHoldingCards())
                 .containsExactly(card1, card2);
     }
+
+    @Test
+    @DisplayName("추가 카드를 뽑는다.")
+    void pick_card() {
+        Player player = new Player();
+        Card card = new Card(Shape.DIAMOND, Number.JACK);
+        player.pick(card);
+
+        assertThat(player.getHoldingCards())
+                .contains(card);
+    }
 }

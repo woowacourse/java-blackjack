@@ -17,4 +17,8 @@ public class Player {
     public List<Card> getHoldingCards() {
         return List.copyOf(holdingCards);
     }
+
+    public void pick(Card card) {
+        holdingCards.add(card);
+    }
 }
