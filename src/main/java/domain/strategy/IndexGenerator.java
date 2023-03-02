@@ -1,5 +1,5 @@
 package domain.strategy;
 
 public interface IndexGenerator {
-    int generate(int peopleSize);
+    int generate(int cardSize);
 }
