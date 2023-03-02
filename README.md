@@ -25,27 +25,31 @@
 graph TD
     BlackJackController --> InputView
     BlackJackController --> OutputView
-    BlackJackController --> BlackJackGame
-    BlackJackController --> DeckFactory
-    DeckFactory --> Deck
-    BlackJackGame --> Players
-    BlackJackGame --> Deck
-    BlackJackGame --> Result
-    Deck --> Cards
-    Cards --> Card
-    Card --> Symbol
-    Card --> Rank
-    Players --> Player
+    BlackJackController --> Participants
+    BlackJackController --> Deck
+    Participants --> Participant
+    Participant --> Player
+    Participant --> Dealer
+    Participant --> Cards
     Player --> Name
+    DeckFactory --> Deck
+    Cards --> Card
+    Card --> Suit
+    Card --> Number
 ```
 
 ## 기능 구현 목록
+
+### 참가자
+
+- [ ] 카드를 받는다.
+- [ ] 점수를 확인한다.
+- [ ] 카드 추가 여부를 결정한다.
 
 ### 플레이어
 
 - [ ] 이름을 가진다.
   - [x] 최소 1자, 최대 10자까지 가능하다.
-  - [ ] 앞, 뒤 공백은 제거한다.
   - [ ] 중간 공백은 허용한다.
   - [ ] 중복되는 이름은 가질 수 없다.
   - [x] `딜러`라는 이름은 가질 수 없다.
@@ -56,6 +60,7 @@ graph TD
 
 - [ ] 문양을 가진다.
 - [ ] 숫자를 가진다.
+- [ ] 점수를 계산한다.
 
 ### 덱
 
@@ -64,21 +69,10 @@ graph TD
 - [ ] 카드를 뽑는다.
   - [ ] 카드가 없으면 뽑을 수 없다.
 
-### 블랙잭 게임
-
-- [ ] 플레이어가 카드를 더 뽑을 수 있는지 판단한다.
-- [ ] 플레이어의 카드를 추가한다.
-- [ ] 점수를 계산한다.
-
-### 결과
-
-- [ ] 딜러와 플레이어의 점수를 확인한다.
-- [ ] 딜러가 몇 승 몇 패인지 확인한다.
-- [ ] 플레이어의 승패 여부를 확인한다.
-
 ### 입력
 
 - [ ] 플레이어의 이름을 입력한다.
+  - [ ] 앞, 뒤 공백은 제거한다.
 - [ ] 카드를 받을 여부를 입력한다.
 
 ### 출력
