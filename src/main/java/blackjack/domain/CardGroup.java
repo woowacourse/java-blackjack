@@ -21,4 +21,8 @@ public class CardGroup {
     public void add(final Card newCard) {
         cards.add(newCard);
     }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
 }
