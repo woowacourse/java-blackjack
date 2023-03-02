@@ -22,4 +22,8 @@ public enum TrumpNumber {
         this.name = name;
         this.score = score;
     }
+
+    public int getScore() {
+        return score;
+    }
 }

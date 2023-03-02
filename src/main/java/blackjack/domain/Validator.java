@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.view.InputView;
+
 import java.util.List;
 
 public class Validator {
@@ -9,6 +11,16 @@ public class Validator {
     public static final String PLAYER_INTENTION_ERROR_MESSAGE = "y 혹은 n 만 입력 가능 합니다.";
     public static final int MIN_PLAYER_COUNT = 1;
     public static final int MAX_PLAYER_COUNT = 7;
+
+    private static final Validator INSTANCE = new Validator();
+
+    private Validator() {}
+
+    public static Validator getInstance() {
+        return INSTANCE;
+    }
+
+
 
     public void validatePlayerNames(List<String> playerNames) {
         validatePlayerCount(playerNames);

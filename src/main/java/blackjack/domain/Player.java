@@ -7,8 +7,9 @@ public class Player extends Participant {
 
     private Name name;
 
-    public Player(List<Card> cards) {
+    public Player(String name, List<Card> cards) {
         super(cards);
+        this.name = new Name(name);
     }
 
     @Override
