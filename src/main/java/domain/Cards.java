@@ -12,7 +12,7 @@ public final class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void takeCard(Card card) {
+    public void takeCard(final Card card) {
         cards.add(card);
     }
 

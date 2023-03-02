@@ -16,7 +16,7 @@ public final class OutputView {
         System.out.printf("%s 카드: %s%n", name, playerCards);
     }
 
-    public static void printSetupGame(List<String> names) {
+    public static void printSetupGame(final List<String> names) {
         final String participants = String.join(DELIMITER, names);
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", participants);
 
@@ -49,5 +49,9 @@ public final class OutputView {
             return "딜러의 총점은 17 이상입니다. 게임을 종료합니다." + System.lineSeparator();
         }
         return "딜러의 총점은 16 이하라 한장의 카드를 더 받았습니다.";
+    }
+
+    public static void printExceptionMessage(final String message) {
+        System.out.println(message);
     }
 }

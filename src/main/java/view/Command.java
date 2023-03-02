@@ -15,7 +15,7 @@ public enum Command {
         this.value = value;
     }
 
-    public static Command from(String input) {
+    public static Command from(final String input) {
         return Arrays.stream(Command.values())
                 .filter(command -> input.equals(command.input))
                 .findFirst()

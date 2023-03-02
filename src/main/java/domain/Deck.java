@@ -12,12 +12,12 @@ public final class Deck {
         this.deck = deck;
     }
 
-    public static Deck from(CardGenerator cardGenerator) {
+    public static Deck from(final CardGenerator cardGenerator) {
         List<Card> cards = cardGenerator.shuffle();
         return new Deck(new ArrayDeque<>(cards));
     }
 
-    public Card drawCard() {
+    public Card dealCard() {
         return deck.removeFirst();
     }
 }

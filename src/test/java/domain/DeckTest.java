@@ -29,7 +29,7 @@ class DeckTest {
         Deck deck = Deck.from(new RandomCardGenerator());
 
         //when
-        deck.drawCard();
+        deck.dealCard();
 
         //then
         assertThat(deck)

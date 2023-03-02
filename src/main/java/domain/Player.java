@@ -15,13 +15,13 @@ public abstract class Player {
         this.cards = cards;
     }
 
-    private void validateBlank(String name) {
+    private void validateBlank(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException("참가자의 이름을 입력해 주세요");
         }
     }
 
-    private void validateLength(String name) {
+    private void validateLength(final String name) {
         if (name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("10자 이하의 이름만 입력해 주세요");
         }

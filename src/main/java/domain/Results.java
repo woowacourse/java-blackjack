@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.*;
 
 public class Results {
 
-    private static final int BUST_NUMBER = 21;
+    private static final int BUST_NUMBER = 22;
     private final List<String> winners;
     private final List<String> losers;
 
@@ -35,7 +35,7 @@ public class Results {
     }
 
     private static Result isWinner(final int dealerScore, final Participant participant) {
-        if (participant.getScore() > BUST_NUMBER || (dealerScore <= BUST_NUMBER && dealerScore > participant.getScore())) {
+        if (participant.getScore() >= BUST_NUMBER || (dealerScore < BUST_NUMBER && dealerScore > participant.getScore())) {
             return Result.DEFEAT;
         }
         return Result.VICTORY;
