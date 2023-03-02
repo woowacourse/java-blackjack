@@ -8,8 +8,7 @@ import java.util.Map;
 
 import static view.InputView.readPlayersName;
 import static view.InputView.readStand;
-import static view.OutputView.printInitialPickGuideMessage;
-import static view.OutputView.printScore;
+import static view.OutputView.*;
 
 public class Controller {
     //TODO: Player에 다시 뽑는지 아닌지 field 선언하기.
@@ -19,7 +18,7 @@ public class Controller {
         Players players = new Players(readPlayersName());
         Dealer dealer = new Dealer(new Cards());
         printInitialPickGuideMessage(players);
-        OutputView.printGamblersCards(players, dealer);
+        printGamblersCards(players, dealer);
 
         boolean isStopHit;
         do {
