@@ -16,8 +16,12 @@ public class CardDistributor {
         Collections.shuffle(cards);
     }
 
-    public Card pick() {
+    public Card distribute() {
         return cards.remove(cards.size() - 1);
+    }
+
+    public List<Card> distributeInitialCard() {
+        return List.of(distribute(), distribute());
     }
 
     public int getDeckSize() {
