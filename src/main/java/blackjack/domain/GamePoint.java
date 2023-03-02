@@ -76,4 +76,8 @@ public class GamePoint {
     public int getPoint() {
         return gamePoint;
     }
+
+    public boolean isLowerThan(final int value) {
+        return gamePoint <= value;
+    }
 }

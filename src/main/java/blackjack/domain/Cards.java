@@ -30,4 +30,8 @@ public class Cards {
     public int size() {
         return cards.size();
     }
+
+    public boolean isLowerThan(final int value) {
+        return point.isLowerThan(value);
+    }
 }
