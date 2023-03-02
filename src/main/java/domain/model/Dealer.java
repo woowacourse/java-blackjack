@@ -2,12 +2,13 @@ package domain.model;
 
 import java.util.Set;
 
-public class Player {
+public class Dealer {
 
+    private static final int MIN_SCORE_THRESHOLD = 16;
     private final Cards cards;
     private Score score;
 
-    public Player(final Cards cards) {
+    public Dealer(final Cards cards) {
         this.cards = cards;
         this.score = makeScore(cards);
     }
@@ -23,6 +24,10 @@ public class Player {
 
     public boolean isBust() {
         return score.isBust();
+    }
+
+    public boolean canReceiveCard() {
+        return score.getValue() <= MIN_SCORE_THRESHOLD;
     }
 
     public Cards getCards() {
