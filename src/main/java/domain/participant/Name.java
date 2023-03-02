@@ -25,4 +25,8 @@ public class Name {
     private boolean isContainBlank(String name) {
         return name.replaceAll("\\s", "").length() != name.length();
     }
+
+    public String getRawName() {
+        return name;
+    }
 }

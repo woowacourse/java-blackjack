@@ -8,7 +8,7 @@ public class ResultView {
 
     public static void printInitMessage(List<String> playerNames) {
         String names = String.join(JOIN_DELIMITER, playerNames);
-        System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
+        System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
     public static void printParticipantResult(String name, List<String> cardName) {

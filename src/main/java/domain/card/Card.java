@@ -10,6 +10,10 @@ public class Card {
         this.value = value;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getValue() {
         return value;
     }
