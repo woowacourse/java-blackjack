@@ -19,4 +19,8 @@ public class PlayerName {
             throw new IllegalArgumentException(BLANK_ERROR_GUIDE_MESSAGE);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
