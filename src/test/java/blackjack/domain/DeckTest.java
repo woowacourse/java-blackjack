@@ -31,4 +31,28 @@ class DeckTest {
 
         assertThat(cards).contains(deck.draw());
     }
+
+    @DisplayName("덱이 비어있다면 true를 반환할 수 있다.")
+    @Test
+    void Should_ReturnTrue_When_Empty() {
+        Deck deck = new Deck(new Stack<>());
+
+        assertThat(deck.isEmpty()).isTrue();
+    }
+
+    @DisplayName("덱이 비어있지 않다면 false를 반환할 수 있다.")
+    @Test
+    void Should_ReturnFalse_When_NotEmpty() {
+        Stack<Card> cards = new Stack<>();
+
+        Card card1 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
+        Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
+
+        cards.add(card1);
+        cards.add(card2);
+
+        Deck deck = new Deck(cards);
+
+        assertThat(deck.isEmpty()).isFalse();
+    }
 }

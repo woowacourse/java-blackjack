@@ -12,4 +12,8 @@ public class Deck {
     public Card draw() {
         return cards.pop();
     }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
 }
