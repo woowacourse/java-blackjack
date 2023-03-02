@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 public class Cards {
@@ -26,7 +24,7 @@ public class Cards {
         return cards.contains(card);
     }
 
-    public Card receiveCard() {
+    public Card getCard() {
         // TODO: EmptyStackException이 발생하면...?
         return cards.pop();
     }

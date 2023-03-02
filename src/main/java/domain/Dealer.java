@@ -10,7 +10,7 @@ public class Dealer extends Participant {
 
     public void fillCards(final Cards cards) {
         while (calculateScore() <= 16) {
-            this.receiveCard(cards.receiveCard());
+            this.receiveCard(cards.getCard());
         }
     }
 }
