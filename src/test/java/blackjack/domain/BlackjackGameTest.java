@@ -38,4 +38,14 @@ class BlackjackGameTest {
                 () -> assertThat(player2.getCards().getCards().size()).isEqualTo(2)
         );
     }
+
+    @Test
+    @DisplayName("참가자에게 한 장의 카드를 더 주는 기능 테스트")
+    void giveOneMoreCardTest() {
+        // when
+        blackjackGame.giveOneMoreCard(player1);
+
+        // then
+        assertThat(player1.getCards().getCards().size()).isEqualTo(1);
+    }
 }

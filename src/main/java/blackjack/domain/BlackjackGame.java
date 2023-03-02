@@ -22,4 +22,8 @@ public class BlackjackGame {
         }
         participants.receiveSettingCards(cardList);
     }
+
+    public void giveOneMoreCard(Participant participant) {
+        participant.receiveCard(deck.drawCard());
+    }
 }
