@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public class Card {
 
@@ -9,6 +9,12 @@ public class Card {
         this.number = number;
         this.symbol = symbol;
     }
+
+    public CardNumber getNumber(){
+        return this.number;
+    }
+
+    public CardSymbol getSymbol(){
+        return this.symbol;
+    }
 }
-
-
