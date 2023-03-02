@@ -27,6 +27,14 @@ public class Cards {
         return cards.remove(0);
     }
 
+    public List<Card> drawForFirstTurn() {
+        List<Card> firstTurnCards = new ArrayList<>();
+        firstTurnCards.add(drawCard());
+        firstTurnCards.add(drawCard());
+
+        return firstTurnCards;
+    }
+
     private boolean isEmpty() {
         return cards.isEmpty();
     }
