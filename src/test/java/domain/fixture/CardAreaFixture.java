@@ -14,7 +14,7 @@ public class CardAreaFixture {
     }
 
     public static CardArea under21CardArea() {
-        return new CardArea(new Card(CardShape.DIAMOND, CardValue.ACE), new Card(CardShape.DIAMOND, CardValue.ACE));
+        return new CardArea(new Card(CardShape.DIAMOND, CardValue.TWO), new Card(CardShape.DIAMOND, CardValue.TWO));
     }
 
     public static CardArea equal20CardArea() {
