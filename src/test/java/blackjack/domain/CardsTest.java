@@ -83,4 +83,19 @@ public class CardsTest {
         // expect
         assertThat(cards.isBlackjack()).isTrue();
     }
+
+
+    @Test
+    @DisplayName("가지고 있는 카드가 버스트인지 확인")
+    void isBust() {
+        // given
+        Cards cards = new Cards(List.of(
+                new Card(Number.K, Pattern.HEART),
+                new Card(Number.TEN, Pattern.DIAMOND),
+                new Card(Number.J, Pattern.CLUB)
+        ));
+
+        // expect
+        assertThat(cards.isBust()).isTrue();
+    }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 public class Cards {
 
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
-    //private static final int BURST_SCORE = 21;
     private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
 
@@ -25,7 +24,7 @@ public class Cards {
         int score = preCalculate();
 
         if (containsAce()) {
-            score = plusScoreIfNotBurst(score);
+            score = plusScoreIfNotBust(score);
         }
 
         return score;
@@ -40,7 +39,7 @@ public class Cards {
         return score;
     }
 
-    private int plusScoreIfNotBurst(int score) {
+    private int plusScoreIfNotBust(int score) {
         if (score + MAKE_ACE_BIGGER_SCORE <= BLACKJACK_SCORE_CONDITION) {
             score += MAKE_ACE_BIGGER_SCORE;
         }
@@ -60,6 +59,10 @@ public class Cards {
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_SIZE_CONDITION
                 && calculateTotalScore() == BLACKJACK_SCORE_CONDITION;
+    }
+
+    public boolean isBust() {
+        return calculateTotalScore() > BLACKJACK_SCORE_CONDITION;
     }
 
     public List<Card> getCards() {
