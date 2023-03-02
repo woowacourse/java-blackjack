@@ -6,10 +6,12 @@ import static blackjack.domain.Number.QUEEN;
 import static blackjack.domain.Number.TEN;
 import static blackjack.domain.Number.TWO;
 import static blackjack.domain.Suit.CLOVER;
+import static blackjack.domain.Suit.DIAMOND;
 import static blackjack.domain.Suit.HEART;
 import static blackjack.domain.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -91,5 +93,15 @@ class CardsTest {
                 ));
 
         assertThat(cards.isMaximumScore()).isFalse();
+    }
+
+    @Test
+    void 카드를_추가한다() {
+        final Cards cards = new Cards(new ArrayList<>());
+
+        final Card card = new Card(ACE, DIAMOND);
+        cards.addCard(card);
+
+        assertThat(cards.getCards()).hasSize(1);
     }
 }

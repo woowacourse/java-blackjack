@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -11,6 +12,10 @@ public class Cards {
 
     public Cards(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public void addCard(final Card card) {
+        cards.add(card);
     }
 
     public int calculateTotalScore() {
@@ -44,5 +49,9 @@ public class Cards {
 
     public boolean isMaximumScore() {
         return calculateTotalScore() == MAXIMUM_SCORE;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
