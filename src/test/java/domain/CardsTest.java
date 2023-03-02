@@ -21,13 +21,13 @@ public class CardsTest {
     @Test
     @DisplayName("카드목록의 합을 계산한다.")
     void sumTest() {
-        Card card1 = new Card(CardNumber.ACE,CardPattern.SPADE);
-        Card card2 = new Card(CardNumber.ACE,CardPattern.DIAMOND);
+        Card card1 = new Card(CardNumber.KING,CardPattern.SPADE);
+        Card card2 = new Card(CardNumber.KING,CardPattern.DIAMOND);
         Cards cards = new Cards();
         cards.add(card1);
         cards.add(card2);
 
-        Assertions.assertThat(cards.getSum()).isEqualTo(22);
+        Assertions.assertThat(cards.getSum()).isEqualTo(20);
     }
 
     @Test

@@ -9,7 +9,7 @@ public class DealerTest {
     @DisplayName("이름이 딜러인 딜러를 생성한다.")
     void createDealer() {
         Dealer dealer = new Dealer();
-        assertThat(dealer.getName()).isEqualTo("딜러");
+        assertThat(dealer.getName().getName()).isEqualTo("딜러");
     }
 
     @Test
