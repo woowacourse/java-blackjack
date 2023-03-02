@@ -6,10 +6,12 @@ public class Game {
 
     private final List<Player> players;
     private final Deck deck;
+    private final Dealer dealer;
 
-    public Game(List<Player> players, Deck deck) {
+    public Game(List<Player> players, Deck deck, Dealer dealer) {
         this.players = players;
         this.deck = deck;
+        this.dealer = dealer;
     }
 
     public void dealCards() {
@@ -18,5 +20,15 @@ public class Game {
                 player.addCard(deck.drawCard());
             }
         }
+    }
+
+    public boolean isWon(int index) {
+        Player player = players.get(index);
+
+        if (player.getScore() > dealer.getScore() || dealer.isBusted()) {
+            return true;
+        }
+
+        return false;
     }
 }
