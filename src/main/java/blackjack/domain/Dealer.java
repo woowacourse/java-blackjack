@@ -18,7 +18,8 @@ public class Dealer implements Person {
 
     @Override
     public boolean isHit() {
-        return false;
+        int totalScore = calculateScore();
+        return totalScore < 17;
     }
 
     @Override

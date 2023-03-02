@@ -91,15 +91,36 @@ class DealerTest {
         assertThat(dealer.calculateScore()).isEqualTo(12);
     }
 
+
+    @DisplayName("딜러는 카드의 합이 17 이상일 경우 카드를 지급 받을 수 없다.")
     @Test
-    void addCard() {
+    void Should_isHitFalse_When_MoreThan17() {
+        // given
+        Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.SEVEN, CardSymbol.HEARTS);
+
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(card);
+        dealer.addCard(card2);
+
+        // when, then
+        assertThat(dealer.isHit()).isFalse();
     }
 
+    @DisplayName("딜러는 카드의 합이 17을 초과하지 않는다면 카드를 지급 받을 수 있다.")
     @Test
-    void isHit() {
-    }
+    void Should_isHitTrue_When_LessThan17() {
+        // given
+        Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.SIX, CardSymbol.HEARTS);
 
-    @Test
-    void calculateScore() {
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(card);
+        dealer.addCard(card2);
+
+        // when, then
+        assertThat(dealer.isHit()).isTrue();
     }
 }
