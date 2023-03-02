@@ -1,6 +1,8 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer {
     private static final String NAME = "딜러";
@@ -19,6 +21,13 @@ public class Dealer {
     public Name getName() {
         return name;
     }
+
+    public Map<String, List<String>> getInfo() {
+        Map<String, List<String>> info = new HashMap<>();
+        info.put(getName().getName(), getCards());
+        return info;
+    }
+
 
     public Card getCard(int index) {
         return cards.getCard(index);

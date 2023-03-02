@@ -1,8 +1,7 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Players {
     private static final String INVALID_NAME = "중복된 이름입니다.";
@@ -27,11 +26,25 @@ public class Players {
         return Arrays.asList(names.split(","));
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(s -> s.getName().getName())
+                .collect(Collectors.toList());
     }
 
-    public void addCard(int index, Card card){
+    public void addCard(int index, Card card) {
         players.get(index).addCard(card);
+    }
+
+    public Map<String, List<String>> getInfo() {
+        Map<String, List<String>> info = new HashMap<>();
+        for (Player player : players) {
+            info.put(player.getName().getName(), player.getCards());
+        }
+        return info;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
