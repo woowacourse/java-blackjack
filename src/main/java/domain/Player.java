@@ -24,6 +24,10 @@ public class Player {
         return getTotalScore() > BUST_LIMIT;
     }
 
+    public boolean isMoreCardAble() {
+        return getTotalScore() < BUST_LIMIT;
+    }
+
     public Cards getCards() {
         return cards;
     }
