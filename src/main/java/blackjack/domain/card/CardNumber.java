@@ -30,4 +30,8 @@ public enum CardNumber {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 카드넘버입니다."));
     }
+
+    public int getValue() {
+        return this.value;
+    }
 }
