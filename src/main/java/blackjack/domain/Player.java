@@ -4,7 +4,7 @@ public class Player {
     private final Name name;
 
     public Player(final String name) {
-        this.name = new Name(name);
+        this.name = Name.from(name);
     }
 
     public String getName() {
