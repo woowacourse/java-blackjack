@@ -31,7 +31,7 @@ class ParticipantTest {
     @Test
     void 참가자는_상태를_바꿀_수_있다() {
         // given
-        final Participant participant = new Participant(new Name("player1"), cardArea);
+        final Participant participant = new Participant(Name.of("player1"), cardArea);
 
         // when
         assertDoesNotThrow(() -> participant.changeState(State.HIT));
@@ -42,7 +42,7 @@ class ParticipantTest {
     @NullSource
     void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final State state) {
         // given
-        final Participant participant = new Participant(new Name("player1"), cardArea);
+        final Participant participant = new Participant(Name.of("player1"), cardArea);
 
         participant.changeState(state);
 
@@ -54,7 +54,7 @@ class ParticipantTest {
     @MethodSource("canNotMoreCard")
     void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final State state) {
         // given
-        final Participant participant = new Participant(new Name("player1"), cardArea);
+        final Participant participant = new Participant(Name.of("player1"), cardArea);
         participant.changeState(state);
 
         // when & then

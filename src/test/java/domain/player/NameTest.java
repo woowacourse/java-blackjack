@@ -19,7 +19,7 @@ class NameTest {
     void 문자열을_받아_생성된다() {
         // given
         final String input = "문자열";
-        final Name name = new Name(input);
+        final Name name = Name.of(input);
 
         // when
         final String value = name.value();
@@ -32,7 +32,7 @@ class NameTest {
     @NullAndEmptySource
     void 빈_문자열인_경우_예외가_발생한다(final String input) {
         // when & then
-        assertThatThrownBy(() -> new Name(input))
+        assertThatThrownBy(() -> Name.of(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

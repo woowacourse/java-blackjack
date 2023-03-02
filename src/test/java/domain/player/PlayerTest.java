@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("Player 은")
 class PlayerTest {
 
-    final Name name = new Name("name");
+    final Name name = Name.of("name");
 
     final CardArea cardArea = new CardArea(
             new Card(CardShape.SPADE, CardValue.TEN),

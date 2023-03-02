@@ -4,9 +4,13 @@ public class Name {
 
     private final String value;
 
-    public Name(final String name) {
+    private Name(final String name) {
         validateEmpty(name);
         this.value = name;
+    }
+
+    public static Name of(final String name) {
+        return new Name(name);
     }
 
     private void validateEmpty(final String name) {

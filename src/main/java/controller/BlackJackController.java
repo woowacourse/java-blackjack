@@ -72,7 +72,7 @@ public class BlackJackController {
 
     private Dealer dealDealerCars(final CardDeck cardDeck) {
         // TODO 수정
-        return new Dealer(new Name("딜러"), new CardArea(cardDeck.draw(), cardDeck.draw()));
+        return new Dealer(Name.of("딜러"), new CardArea(cardDeck.draw(), cardDeck.draw()));
     }
 
     private List<Participant> dealParticipantsCards(final CardDeck cardDeck, final List<Name> participantNames) {
@@ -84,7 +84,7 @@ public class BlackJackController {
     private List<Name> createParticipantNames() {
         return InputView.readParticipantsName()
                 .stream()
-                .map(Name::new)
+                .map(Name::of)
                 .collect(Collectors.toList());
     }
 
