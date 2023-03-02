@@ -22,20 +22,20 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public int calculateScore() {
-        int score = sum();
+    public int getScore() {
+        int score = calculateScore();
         if (score >= BLACKJACK || hasNoAce()) {
             return score;
         }
 
-        if (calculateAceAs11(score) <= BLACKJACK) {
-            return calculateAceAs11(score);
+        if (changeAnAceTo11(score) <= BLACKJACK) {
+            return changeAnAceTo11(score);
         }
 
         return score;
     }
 
-    private int sum() {
+    private int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -45,7 +45,7 @@ public class Cards {
         return cards.stream().noneMatch(Card::isAce);
     }
 
-    private int calculateAceAs11(int score) {
+    private int changeAnAceTo11(int score) {
         return score + ACE_OFFSET;
     }
 }
