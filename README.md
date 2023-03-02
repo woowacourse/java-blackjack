@@ -9,27 +9,33 @@
   - [x] 최소 2명에서 최대 8명의 `Players`를 생성한다.
 
 ### Participants
-- `Players`와 `Dealer`를 가진다.
+- [ ] `Players`와 `Dealer`를 가진다.
 
-### Player
+### Participant
+- [ ] `Cards`를 가진다.
+- [ ] `Card`를 받는다. 
+
+### Player (extends Participant)
 - [x] 이름을 가진다.
   - [x] 이름의 길이는 최소 1글자에서 최대 5글자이다.
-- [x] `Cards`를 가진다.
-- [x] `Card`를 받는다.
+- [ ] `Cards`를 가진다.
+- [ ] `Card`를 받는다.
 
 ### Players
 - [x] `Player`들을 가진다.
 
-### Dealer
-- [x] `Cards`를 가진다.
+### Dealer (extends Participant)
+- [ ] `Cards`를 가진다.
+- [ ] `Card`를 받는다.
 
 ### BlackjackGame
-- 카드 세팅을 한다.
-- 시작하면서, `Participants`의 모두에게 2장의 카드를 나눠준다.
-- `Participants` 순서대로 카드를 더 받을 지 물어본다.
-  - 21을 넘은 참가자에게는 카드를 더 이상 주지 않는다.
-  - 'n'을 입력한 참가자에게는 더 이상 주지 않는다.
-- 최종 승패를 결정한다.
+- [ ] 시작하면서, `Participants`의 모두에게 2장의 카드를 나눠준다.
+- [ ] `Participants` 순서대로 카드를 더 받을 지 물어본다.
+  - [ ] 블랙잭인 참가자에게는 물어보지 않는다.
+- [ ] 카드 세팅을 한다.
+  - [ ] 21을 넘은 참가자에게는 카드를 더 이상 주지 않는다.
+  - [ ] 'n'을 입력한 참가자에게는 더 이상 주지 않는다.
+- [ ] 최종 승패를 결정한다.
 
 ### Card
 - [x] `Number`와 `Pattern`을 가진다.
