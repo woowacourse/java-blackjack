@@ -68,31 +68,16 @@ class PlayerTest {
         //then
         assertThat(player.isHittable()).isFalse();
     }
-}
 
-class Player {
+    @Test
+    void 점수를_확인한다() {
+        List<Card> cardPack = new ArrayList<>(List.of(
+                new Card(QUEEN, CLOVER),
+                new Card(KING, HEART)
+        ));
+        final Cards cards = new Cards(cardPack);
+        final Player player = new Player("dazzle", cards);
 
-    private final Name name;
-    private final Cards cards;
-
-    public Player(final String name, final Cards cards) {
-        this.name = new Name(name);
-        this.cards = cards;
-    }
-
-    public void hit(final Card card) {
-        cards.addCard(card);
-    }
-
-    public boolean isHittable() {
-        return !cards.isMaximumScore() && !cards.isTotalScoreOver();
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public Cards getCards() {
-        return cards;
+        assertThat(player.getScore()).isEqualTo(20);
     }
 }
