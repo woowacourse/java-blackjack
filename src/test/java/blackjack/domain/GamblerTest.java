@@ -53,4 +53,14 @@ public class GamblerTest {
         assertThat(gambler.isDealer()).isFalse();
     }
 
+    @Test
+    void 점수를_반환한다() {
+        final Gambler gambler = new Gambler("허브");
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, Shape.DIAMOND)
+        ));
+        gambler.draw(deck);
+
+        assertThat(gambler.calculateScore()).isEqualTo(11);
+    }
 }

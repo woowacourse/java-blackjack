@@ -79,4 +79,15 @@ public class DealerTest {
 
         assertThat(dealer.isDealer()).isTrue();
     }
+
+    @Test
+    void 점수를_반환한다() {
+        final Dealer dealer = Dealer.create();
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, Shape.DIAMOND)
+        ));
+        dealer.draw(deck);
+
+        assertThat(dealer.calculateScore()).isEqualTo(11);
+    }
 }

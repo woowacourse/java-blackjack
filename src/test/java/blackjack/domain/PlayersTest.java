@@ -1,9 +1,19 @@
 package blackjack.domain;
 
 import static blackjack.domain.Players.from;
+import static blackjack.domain.Rank.ACE;
+import static blackjack.domain.Rank.EIGHT;
+import static blackjack.domain.Rank.JACK;
+import static blackjack.domain.Rank.KING;
+import static blackjack.domain.Rank.TWO;
+import static blackjack.domain.Shape.CLOVER;
+import static blackjack.domain.Shape.DIAMOND;
+import static blackjack.domain.Shape.HEART;
+import static blackjack.domain.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -48,14 +58,33 @@ public class PlayersTest {
     }
 
     @Test
-    void 겜블러들을_반환한다() {
+    void 플레이어들이_게임_시작_시_카드를_뽑는다() {
+        final List<String> names = List.of("후추", "허브");
+        final Players players = from(names);
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, DIAMOND),
+                new Card(JACK, CLOVER),
+                new Card(TWO, CLOVER),
+                new Card(EIGHT, SPADE),
+                new Card(KING, HEART)
+        ));
+
+        players.initialDraw(deck);
+
+        assertThat(players.getPlayers())
+                .extracting(Player::calculateScore)
+                .containsExactly(11, 12, 18);
+    }
+
+    @Test
+    void 플레이어들을_반환한다() {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
 
-        List<Player> result = players.getGambler();
+        List<Player> result = players.getPlayers();
 
         assertThat(result).extracting(Player::getName)
-                .containsExactly("후추", "허브");
+                .containsExactly("딜러", "후추", "허브");
     }
 
     @Test

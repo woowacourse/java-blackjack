@@ -37,6 +37,11 @@ public class Dealer implements Player {
     }
 
     @Override
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }

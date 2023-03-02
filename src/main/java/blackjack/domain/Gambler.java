@@ -36,6 +36,11 @@ public class Gambler implements Player {
     }
 
     @Override
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }

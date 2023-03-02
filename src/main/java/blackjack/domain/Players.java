@@ -3,10 +3,10 @@ package blackjack.domain;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -58,6 +58,12 @@ public class Players {
         return players;
     }
 
+    public void initialDraw(final Deck deck) {
+        for (Player player : players) {
+            player.initialDraw(deck);
+        }
+    }
+
     public Player getDealer() {
         return players.stream()
                 .filter(Player::isDealer)
@@ -71,9 +77,7 @@ public class Players {
                 .collect(toUnmodifiableList());
     }
 
-    public List<Player> getGambler() {
-        return players.stream()
-                .filter(player -> !player.isDealer())
-                .collect(Collectors.toList());
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

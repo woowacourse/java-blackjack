@@ -11,6 +11,8 @@ public interface Player {
 
     boolean isDealer();
 
+    int calculateScore();
+
     String getName();
 
     List<String> getCardLetters();
