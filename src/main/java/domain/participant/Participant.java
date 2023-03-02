@@ -30,4 +30,8 @@ public abstract class Participant {
     public boolean isBust() {
         return participantCard.isBust();
     }
+
+    public boolean isBlackJack() {
+        return participantCard.isBlackJack();
+    }
 }

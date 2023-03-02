@@ -12,6 +12,7 @@ public class ParticipantCard {
     private static final int FIRST_CARD_INDEX = 0;
     private static final int ACE_HIGH_POINTS = 11;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -37,10 +38,18 @@ public class ParticipantCard {
 
     int calculateScore() {
         int score = sumCards();
-        if (score < ACE_HIGH_POINTS && hasAce()) {
+        if (score <= ACE_HIGH_POINTS && hasAce()) {
             score += (ACE_HIGH_POINTS - ACE.getNumber());
         }
         return score;
+    }
+
+    boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
+
+    boolean isBlackJack() {
+        return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 
     private boolean hasAce() {
@@ -51,9 +60,5 @@ public class ParticipantCard {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
-    }
-
-    public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
     }
 }
