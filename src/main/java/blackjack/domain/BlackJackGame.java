@@ -1,13 +1,15 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class BlackJackGame {
 
-    private final CardsGenerator cardsGenerator;
     private final Deck deck;
-    
-    public BlackJackGame(CardsGenerator cardsGenerator) {
-        this.cardsGenerator = cardsGenerator;
+    private final Participants participants;
+
+    public BlackJackGame(CardsGenerator cardsGenerator, List<String> playerNames) {
         this.deck = new Deck(cardsGenerator.generate());
+        this.participants = Participants.of(playerNames);
     }
 
 }
