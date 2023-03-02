@@ -16,6 +16,10 @@ public abstract class User {
         return cardGroup.getTotalValue();
     }
 
+    final public void drawCard(final Deck deck){
+        cardGroup.add(deck.draw());
+    }
+
     final public String getName() {
         return name.getValue();
     }
