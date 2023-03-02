@@ -28,7 +28,7 @@ public class InputView {
     }
 
     public static boolean readYesOrNo(String personName) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", personName, YES, NO);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", personName, YES, NO);
         String input = scanner.next();
         validateYesOrNo(input);
         return input.equals(YES);
@@ -38,6 +38,6 @@ public class InputView {
         if (input.equals(YES) || input.equals(NO)) {
             return;
         }
-        throw new IllegalArgumentException(String.format("예는 %s, 아니오는 %s을 입력해야합니다.", YES, NO));
+        throw new IllegalArgumentException(String.format("예는 %s, 아니오는 %s을 입력해야합니다.%n", YES, NO));
     }
 }
