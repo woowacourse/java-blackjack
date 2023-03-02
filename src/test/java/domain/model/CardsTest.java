@@ -1,7 +1,6 @@
 package domain.model;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.type.Letter;
 import domain.type.Suit;
@@ -27,22 +26,23 @@ class CardsTest {
         cards.add(card);
 
         //then
-        assertTrue(cards.contains(Letter.ACE));
+        assertThat(cards.count(Letter.ACE)).isEqualTo(2);
     }
 
     @Test
-    @DisplayName("보유 여부를 테스트")
-    public void testContains() {
+    @DisplayName("특정 문자 카드 보유 개수를 테스트")
+    public void testCount() {
         //given
-        Set<Card> cardSet = Set.of(new Card(Suit.CLUB, Letter.ACE));
+        Set<Card> cardSet = Set.of(new Card(Suit.CLUB, Letter.ACE), new Card(Suit.DIAMOND, Letter.ACE),
+            new Card(Suit.SPADE, Letter.ACE));
         Cards cards = new Cards(cardSet);
 
         //when
-        boolean result1 = cards.contains(Letter.ACE);
-        boolean result2 = cards.contains(Letter.TWO);
+        int result1 = cards.count(Letter.ACE);
+        int result2 = cards.count(Letter.TWO);
 
         //then
-        assertTrue(result1);
-        assertFalse(result2);
+        assertThat(result1).isEqualTo(3);
+        assertThat(result2).isEqualTo(0);
     }
 }
