@@ -20,10 +20,11 @@ class BlackJackResultMakerTest {
     @DisplayName("승패 결과 만들기 테스트(딜러 10패, 플레이어 모두 승)")
     public void testMakeResult() {
         //given
-        Cards cards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
-        Dealer dealer = new Dealer(cards);
+        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
+        Dealer dealer = new Dealer(dealerCards);
+        Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
         List<Player> players = IntStream.range(0, 10)
-            .mapToObj(i -> new Player(cards, "test"))
+            .mapToObj(i -> new Player(playerCards, "test"))
             .collect(Collectors.toList());
 
         //when
