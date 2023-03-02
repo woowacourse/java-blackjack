@@ -2,6 +2,8 @@ package domain.participant;
 
 import domain.card.Card;
 
+import java.util.List;
+
 public abstract class Participant {
 
     protected static final String DEALER_NAME = "딜러";
@@ -15,5 +17,9 @@ public abstract class Participant {
 
     public void addCard(final Card card) {
         participantCard.addCard(card);
+    }
+
+    public List<Card> getCard() {
+        return List.copyOf(participantCard.getCards());
     }
 }

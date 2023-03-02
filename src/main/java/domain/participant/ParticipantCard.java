@@ -20,4 +20,8 @@ public class ParticipantCard {
     public void addCard(final Card card) {
         cards.add(card);
     }
+
+    List<Card> getCards() {
+        return List.copyOf(cards);
+    }
 }
