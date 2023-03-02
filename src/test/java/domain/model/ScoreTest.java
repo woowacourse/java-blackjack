@@ -37,4 +37,18 @@ class ScoreTest {
         //then
         assertThat(value).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("ACE 2개가 포함된 21점 생성을 테스트")
+    public void testScoreContainsTwoAceOf21() {
+        //given
+        Cards cards = new Cards(Set.of(new Card(Suit.CLUB, Letter.ACE), new Card(Suit.DIAMOND, Letter.ACE),
+            new Card(Suit.DIAMOND, Letter.TEN), new Card(Suit.CLUB, Letter.NINE)));
+        Score score = Score.of(cards);
+        //when
+        int value = score.getValue();
+
+        //then
+        assertThat(value).isEqualTo(21);
+    }
 }
