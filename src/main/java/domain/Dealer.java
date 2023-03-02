@@ -16,6 +16,7 @@ public class Dealer implements Gambler {
 
     @Override
     public void pickCard() {
+        //TODO: 이 부분 리팩터링
         if (cards.calculateScore() <= PICK_BOUNDARY) {
             cards.addCard(Deck.pickCard());
         }
