@@ -11,8 +11,10 @@ public class Cards {
         this.cards = cards;
     }
 
-    public boolean contains(final Letter letter) {
-        return cards.stream().anyMatch(card -> card.isMatch(letter));
+    public int count(final Letter letter) {
+        return (int) cards.stream()
+            .filter(card -> card.isMatch(letter))
+            .count();
     }
 
     public void add(final Card card) {
