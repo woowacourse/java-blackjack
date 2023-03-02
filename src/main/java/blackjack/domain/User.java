@@ -4,17 +4,17 @@ import java.util.List;
 
 public abstract class User {
 
-    private final String name;
+    private final Name name;
     private final CardGroup cardGroup;
 
     protected User(String name, CardGroup cardGroup) {
-        this.name = name;
+        this.name = new Name(name);
         this.cardGroup = cardGroup;
     }
 
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public List<Card> getCards() {
