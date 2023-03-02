@@ -12,16 +12,15 @@
 classDiagram
     BlackJackGame <|-- Gamblers
     BlackJackGame <|-- Deck
+    BlackJackGame <|-- Players
+    BlackJackGame <|-- Dealer
     Controller <|-- BlackJackGame
     Controller <|-- InputView
     Controller <|-- OutputView
     Deck <.. DeckGenerator
     <<interface>>DeckGenerator
     DeckGenerator <|.. RandomDeckGenerator
-    Gamblers <-- Gambler
-    <<interface>> Gambler
-    Gambler <|.. Player
-    Gambler <|.. Dealer
+    Players <-- Player
     Player <-- Name
     Player <-- Hand
     Dealer <-- Name
