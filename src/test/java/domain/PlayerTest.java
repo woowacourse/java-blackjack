@@ -59,4 +59,14 @@ public class PlayerTest {
         assertThat(player.isMoreCardAble()).isFalse();
     }
 
+    @Test
+    @DisplayName("플레이어의 점수가 20점 이하이면 카드를 더 받을 수 있다.")
+    void isMoreCardAble() {
+        Player player = new Player(new Name("hello"), new Cards(cards));
+
+        player.pick(new Card(Shape.HEART, Value.FOUR));
+
+        assertThat(player.isMoreCardAble()).isTrue();
+    }
+
 }
