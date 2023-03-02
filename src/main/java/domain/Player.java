@@ -1,6 +1,6 @@
 package domain;
 
-class Player extends Participant{
+public class Player extends Participant{
 
     public static final int MAX_NAME_LENGTH = 5;
 

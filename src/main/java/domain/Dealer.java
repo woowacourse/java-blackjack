@@ -1,6 +1,6 @@
 package domain;
 
-class Dealer extends Participant{
+public class Dealer extends Participant{
 
     public static final int STANDARD_FOR_HIT = 16;
 
