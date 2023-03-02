@@ -14,4 +14,8 @@ public class Player extends Participant {
             throw new IllegalArgumentException("이름은 빈 문자열이거나 공백일 수 없습니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

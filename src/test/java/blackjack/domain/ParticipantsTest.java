@@ -1,8 +1,16 @@
 package blackjack.domain;
 
+import static blackjack.domain.Number.ACE;
+import static blackjack.domain.Number.FOUR;
+import static blackjack.domain.Number.THREE;
+import static blackjack.domain.Number.TWO;
+import static blackjack.domain.Symbol.DIAMOND;
+import static blackjack.domain.Symbol.HEART;
+import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -28,7 +36,7 @@ class ParticipantsTest {
         List<String> playerNames = List.of("pobi", "odo", "jason");
         Participants participants = Participants.of(playerNames);
 
-        participants.handOut(new Deck(new BlackJackCardsGenerator().generate()));
+        participants.handOut(new BlackJackDeckGenerator().generate());
 
         assertThat(participants.getDealerCards()).hasSize(2);
         List<List<Card>> playersCards = participants.getPlayersCards();
@@ -37,4 +45,24 @@ class ParticipantsTest {
         }
     }
 
+    @DisplayName("플레이어의 보유 카드를 모두 확인한다")
+    @Test
+    void should_OpenCards_Of_AllPlayers() {
+        List<String> playerNames = List.of("odo", "doy");
+        Participants participants = Participants.of(playerNames);
+
+        DeckGenerator mockGenerator = new MockDeckGenerator((List.of(
+                new Card(SPADE, ACE), new Card(SPADE, TWO),
+                new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR),
+                new Card(HEART, THREE), new Card(HEART, FOUR)
+        )));
+        participants.handOut(mockGenerator.generate());
+
+        Map<String, List<Card>> cardsByParticipants = participants.openCards();
+        assertThat(cardsByParticipants)
+                .containsAllEntriesOf(Map.of("딜러", List.of(new Card(SPADE, ACE), new Card(SPADE, TWO)),
+                        "odo", List.of(new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR)),
+                        "doy", List.of(new Card(HEART, THREE), new Card(HEART, FOUR))
+                ));
+    }
 }

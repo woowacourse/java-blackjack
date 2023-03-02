@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -42,6 +44,13 @@ public class Participants {
         for (Card card : cards) {
             participant.take(card);
         }
+    }
+
+    public Map<String, List<Card>> openCards() {
+        Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
+        cardsByParticipants.put("딜러", getDealerCards());
+        players.forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
+        return cardsByParticipants;
     }
 
     public List<Card> getDealerCards() {

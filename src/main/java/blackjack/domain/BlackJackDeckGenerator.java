@@ -6,14 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BlackJackCardsGenerator implements CardsGenerator {
-
-    @Override
-    public List<Card> generate() {
-        List<Card> cards = createCards();
-        Collections.shuffle(cards);
-        return cards;
-    }
+public class BlackJackDeckGenerator implements DeckGenerator {
 
     private static List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
@@ -27,5 +20,12 @@ public class BlackJackCardsGenerator implements CardsGenerator {
         for (Number number : values()) {
             cards.add(new Card(symbol, number));
         }
+    }
+
+    @Override
+    public Deck generate() {
+        List<Card> cards = createCards();
+        Collections.shuffle(cards);
+        return new Deck(cards);
     }
 }
