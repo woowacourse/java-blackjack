@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -40,13 +40,23 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21점 미만이면 bust 가 아니다.")
+    @DisplayName("플레이어의 점수가 21점 이하이면 bust 가 아니다.")
     void notBustPlayer() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
         player.pick(new Card(Shape.HEART, Value.ACE));
 
         assertThat(player.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받지 못한다.")
+    void noMoreCard() {
+        Player player = new Player(new Name("hello"), new Cards(cards));
+
+        player.pick(new Card(Shape.HEART, Value.NINE));
+
+        assertThat(player.isMoreCardAble()).isFalse();
     }
 
 }
