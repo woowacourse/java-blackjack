@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +15,8 @@ class PlayerTest {
 
     static Player player;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         player = new Player(new ArrayList<>(List.of(new Card(TrumpShape.DIAMOND, TrumpNumber.EIGHT), new Card(TrumpShape.HEART, TrumpNumber.JACK))));
     }
 
