@@ -28,5 +28,25 @@ public class DealerTest {
 
         assertThat(dealer.getCards().getCards().size()).isEqualTo(3);
     }
-    
+
+    @Test
+    @DisplayName("딜러의 점수가 21점을 넘기면 bust 이다.")
+    void bustDealer() {
+        Dealer dealer = new Dealer(new Cards(cards));
+
+        dealer.pick(new Card(Shape.HEART, Value.QUEEN));
+
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러의 점수가 21점 이하이면 bust 가 아니다.")
+    void notBustDealer() {
+        Dealer dealer = new Dealer(new Cards(cards));
+
+        dealer.pick(new Card(Shape.HEART, Value.ACE));
+
+        assertThat(dealer.isBust()).isFalse();
+    }
+
 }
