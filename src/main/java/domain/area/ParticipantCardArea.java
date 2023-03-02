@@ -12,8 +12,17 @@ public class ParticipantCardArea extends CardArea {
         this.participant = participant;
     }
 
+    public ParticipantCardArea(final Card firstCard, final Card secondCard) {
+        super(firstCard, secondCard);
+        this.participant = null;
+    }
+
     @Override
     public boolean wantHit() {
         return participant.wantHit();
+    }
+
+    public Participant participant() {
+        return participant;
     }
 }

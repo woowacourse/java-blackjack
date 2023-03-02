@@ -23,13 +23,13 @@ class ParticipantCardAreaTest {
     @Test
     void 참가자가_카드를_더_받기_원할_때만_카드를_받는다() {
         // given
-        final Participant participant = new Participant(new Name("player1"));
-
         final CardArea cardArea = new ParticipantCardArea(
                 new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN),
-                participant
+                new Card(CardShape.CLOVER, SEVEN)
         );
+
+        final Participant participant = new Participant(new Name("player1"), cardArea);
+
 
         participant.changeState(State.HIT);
 
@@ -40,13 +40,13 @@ class ParticipantCardAreaTest {
     @Test
     void 참가자가_카드를_더_받기_원하지_않을_때_카드를_받지_않는다() {
         // given
-        final Participant participant = new Participant(new Name("player1"));
-
         final CardArea cardArea = new ParticipantCardArea(
                 new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN),
-                participant
-        );
+                new Card(CardShape.CLOVER, SEVEN)
+                );
+
+        final Participant participant = new Participant(new Name("player1"), cardArea);
+
 
         participant.changeState(State.STAY);
 

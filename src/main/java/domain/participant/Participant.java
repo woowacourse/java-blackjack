@@ -1,12 +1,18 @@
 package domain.participant;
 
-public class Participant {
+import domain.area.CardArea;
 
-    private final Name name;
+public class Participant extends Player {
+
     private State state;
 
-    public Participant(final Name name) {
-        this.name = name;
+    public Participant(final Name name, final CardArea cardArea) {
+        super(name, cardArea);
+    }
+
+    @Override
+    public boolean canHit() {
+        return cardArea.canMoreCard() && state != State.STAY;
     }
 
     public boolean wantHit() {
