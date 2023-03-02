@@ -1,9 +1,9 @@
 package domain.user;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card.Card;
-import domain.Card.CloverCard;
+import domain.card.Card;
+import domain.card.CloverCard;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.Card.Card;
+import domain.card.Card;
 import domain.Number;
 import java.util.List;
 import java.util.stream.Collectors;

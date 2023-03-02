@@ -1,7 +1,7 @@
 package domain.user;
 
-import domain.Card.Card;
-import domain.Card.CloverCard;
+import domain.card.Card;
+import domain.card.CloverCard;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

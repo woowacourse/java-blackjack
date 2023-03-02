@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 import domain.Number;
 import domain.Pattern;

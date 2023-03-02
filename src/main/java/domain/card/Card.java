@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 public interface Card {
     int getNumber();

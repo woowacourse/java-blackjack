@@ -1,4 +1,4 @@
-package domain.Card;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
