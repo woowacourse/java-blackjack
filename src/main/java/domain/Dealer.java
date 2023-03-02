@@ -28,13 +28,16 @@ public class Dealer {
         return info;
     }
 
-
     public Card getCard(int index) {
         return cards.getCard(index);
     }
 
     public List<String> getCards() {
         return cards.getCards();
+    }
+
+    public boolean isOverStandard(){
+        return cards.getSum() > 16;
     }
 
 }
