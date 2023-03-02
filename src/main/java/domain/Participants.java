@@ -25,13 +25,18 @@ public class Participants {
         if (dealerHandValue > 21) {
             dealerHandValue = 0;
         }
-        if (player.getHandValue() > dealerHandValue) {
+
+        int playerHandValue = player.getHandValue();
+        if (playerHandValue > 21) {
+            playerHandValue = 0;
+        }
+        if (playerHandValue > dealerHandValue) {
             playerResults.put(player.getName(), Result.WIN);
         }
-        if (player.getHandValue() < dealerHandValue) {
+        if (playerHandValue < dealerHandValue) {
             playerResults.put(player.getName(), Result.LOSE);
         }
-        if (player.getHandValue() == dealerHandValue) {
+        if (playerHandValue == dealerHandValue) {
             compareHandCount(dealer, playerResults, player);
         }
     }
