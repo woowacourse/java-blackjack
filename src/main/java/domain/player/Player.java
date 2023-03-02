@@ -1,4 +1,7 @@
-package domain;
+package domain.player;
+
+import domain.card.Card;
+import domain.card.Cards;
 
 public abstract class Player {
     private final Cards cards;
