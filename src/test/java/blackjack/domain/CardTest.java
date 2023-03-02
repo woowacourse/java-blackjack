@@ -28,23 +28,14 @@ class CardTest {
 
         assertThat(card.getNumberName()).isEqualTo(number.getName());
     }
-}
 
-class Card {
+    @Test
+    void 숫자_점수를_확인한다() {
+        final Suit suit = Suit.SPADE;
+        final Number number = Number.ACE;
 
-    private final Number number;
-    private final Suit suit;
+        final Card card = new Card(number, suit);
 
-    public Card(final Number number, final Suit suit) {
-        this.number = number;
-        this.suit = suit;
-    }
-
-    public String getNumberName() {
-        return number.getName();
-    }
-
-    public String getSuitName() {
-        return suit.getName();
+        assertThat(card.getScore()).isEqualTo(number.getScore());
     }
 }
