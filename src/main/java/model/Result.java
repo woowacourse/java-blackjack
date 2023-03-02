@@ -3,6 +3,7 @@ package model;
 import model.card.Card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,5 +60,11 @@ public class Result {
         }
 
         return totalValue;
+    }
+
+    public Map<User, List<Card>> getUserScoreBoards(final User user) {
+        Map<User, List<Card>> scoreBoard = new HashMap<>();
+        scoreBoard.put(user, scoreBoards.get(user));
+        return scoreBoard;
     }
 }

@@ -44,6 +44,10 @@ public class OutputView {
     }
 
     public static void printDealerGetCard() {
-        System.out.println(System.lineSeparator() + DEALER_GET_CARD);
+        System.out.println(System.lineSeparator() + DEALER_GET_CARD + System.lineSeparator());
+    }
+
+    public static void printTotalValue(Map<User, List<Card>> scoreBoard, User user, final int totalCardValue) {
+        System.out.println(user.getName() + ": " + createCardInfo(scoreBoard, user) + " - 결과: " + totalCardValue);
     }
 }

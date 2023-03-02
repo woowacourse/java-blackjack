@@ -34,6 +34,10 @@ public class BlackJackController {
             }
         }
         dealerReceiveCard(result);
+        for (User user : users.getUsers()) {
+            final int totalCardValue = result.calculateTotalCardValue(user);
+            OutputView.printTotalValue(result.getUserScoreBoards(user), user, totalCardValue);
+        }
     }
 
     private static boolean canReceiveMoreCard(final Result result, final User user) {
