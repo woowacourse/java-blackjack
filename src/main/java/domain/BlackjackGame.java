@@ -40,7 +40,7 @@ public class BlackjackGame {
         }
     }
 
-    public Participant getDealer(){
+    public Dealer getDealer(){
         return dealer;
     }
 

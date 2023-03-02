@@ -10,11 +10,19 @@ public class Card {
         this.number = number;
     }
 
+    public boolean isAce() {
+        return this.number == Number.A;
+    }
+
     public int getScore() {
         return number.getScore();
     }
 
-    public boolean isAce() {
-        return this.number == Number.A;
+    public String getShapeName() {
+        return shape.getName();
     }
+    public String getNumberName() {
+        return number.getName();
+    }
+
 }

@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
+    private static final int FIRST_CARD_INDEX = 0;
 
     private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
 
@@ -42,4 +43,9 @@ public class Dealer extends Participant {
     public Map<Player, Result> getPlayerResultMap() {
         return playerResultMap;
     }
+
+    public Card getDealerFirstCard() {
+        return getCards().get(FIRST_CARD_INDEX);
+    }
+
 }

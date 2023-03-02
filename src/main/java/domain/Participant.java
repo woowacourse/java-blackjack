@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // TODO: 2023/03/02 추상클래스로 변경
@@ -41,5 +42,9 @@ public class Participant {
 
     public int cardSize() {
         return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
