@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
-abstract class Participant {
+public abstract class Participant {
 
     List<Card> cards;
     Score score;
@@ -29,4 +29,7 @@ abstract class Participant {
         return cards;
     }
 
+    public int getScore() {
+        return score.getScore();
+    }
 }

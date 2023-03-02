@@ -23,6 +23,10 @@ public enum TrumpNumber {
         this.score = score;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getScore() {
         return score;
     }

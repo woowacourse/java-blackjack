@@ -17,4 +17,8 @@ public class Player extends Participant {
         score.calculateScore(extractNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }

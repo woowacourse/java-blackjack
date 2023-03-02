@@ -18,4 +18,8 @@ public class Name {
             throw new IllegalArgumentException(NAME_BLANK_ERROR_MESSAGE);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
