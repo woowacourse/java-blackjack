@@ -31,4 +31,12 @@ class CardTest {
         int score = card.getScore();
         assertThat(score).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("카드가 A인지 아닌지 확인할 수 있다.")
+    void isAce() {
+        Card card = new Card(ACE, HEART);
+
+        assertThat(card.isAce()).isTrue();
+    }
 }
