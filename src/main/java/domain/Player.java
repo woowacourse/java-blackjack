@@ -22,4 +22,8 @@ public class Player {
     public String getName() {
         return name.getName();
     }
+
+    public int getScore() {
+        return hand.score();
+    }
 }

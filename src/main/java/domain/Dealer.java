@@ -5,13 +5,14 @@ import java.util.stream.Collectors;
 
 public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
+    public static final int STOP_LOWER_BOUND = 17;
     private final Deck deck;
     private final List<Player> players;
 
-    public Dealer(final List<String> names) {
+    public Dealer(Deck deck, final List<String> names) {
         super(DEALER_NAME);
-        deck = new Deck();
-        players = names.stream()
+        this.deck = deck;
+        this.players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
@@ -37,5 +38,9 @@ public class Dealer extends Player {
 
     public List<Card> getCards(String playerName) {
         return findPlayer(playerName).getCards();
+    }
+
+    public boolean isDealerDraw() {
+        return getScore() < STOP_LOWER_BOUND;
     }
 }

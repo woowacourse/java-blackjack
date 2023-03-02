@@ -13,8 +13,9 @@ public class DealerTest {
 
     @BeforeEach
     void setUp() {
+        Deck deck = new Deck();
         names = List.of("crong", "pobi", "jerry", "hardy");
-        dealer = new Dealer(names);
+        dealer = new Dealer(deck, names);
         dealer.init();
     }
 
