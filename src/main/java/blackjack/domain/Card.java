@@ -12,6 +12,14 @@ public class Card {
         this.number = number;
     }
 
+    public boolean isACE() {
+        return this.number == Number.ACE;
+    }
+
+    public int getNumberValue() {
+        return number.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
