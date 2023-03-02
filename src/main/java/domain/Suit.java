@@ -1,6 +1,6 @@
 package domain;
 
-public enum Type {
+public enum Suit {
     CLOVER("클로버"),
     HEART("하트"),
     SPACE("스페이스"),
@@ -8,7 +8,7 @@ public enum Type {
 
     private final String name;
 
-    Type(String name) {
+    Suit(String name) {
         this.name = name;
     }
 }
