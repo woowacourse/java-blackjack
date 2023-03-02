@@ -8,4 +8,8 @@ public class Card {
         this.cardNumber = cardNumber;
         this.cardPattern = cardPattern;
     }
+
+    public int getCardValue() {
+        return cardNumber.getValue();
+    }
 }
