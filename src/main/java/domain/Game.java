@@ -33,4 +33,15 @@ public class Game {
 
         return Result.LOSE;
     }
+
+    public void dealAnotherCard(int index) {
+        Player player = players.get(index);
+        if (player.getScore() < 21) {
+            player.addCard(deck.drawCard());
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
