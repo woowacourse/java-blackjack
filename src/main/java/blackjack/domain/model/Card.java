@@ -12,6 +12,10 @@ public class Card {
         this.letter = letter;
     }
 
+    public String getCardName() {
+        return letter.name() + shape.name();
+    }
+
     public int getValue() {
         return this.letter.getValue();
     }
