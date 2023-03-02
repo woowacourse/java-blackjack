@@ -29,7 +29,7 @@ class PlayerTest {
 
         assertSoftly(softly -> {
             softly.assertThat(player.getName()).isEqualTo(name);
-            softly.assertThat(player.getCards()).containsExactly(firstCard, secondCard);
+            softly.assertThat(player.getStatus()).containsExactly(firstCard, secondCard);
         });
     }
 
@@ -51,6 +51,14 @@ class PlayerTest {
 
         player.drawCard(deck);
 
-        Assertions.assertThat(player.getCards()).containsExactly(firstCard, secondCard, card);
+        Assertions.assertThat(player.getStatus()).containsExactly(firstCard, secondCard, card);
+    }
+
+    @Test
+    @DisplayName("첫 패 확인 테스트")
+    void getInitialStatus() {
+        User dealer = new Player(name, initialGroup);
+
+        assertThat(dealer.getInitialStatus()).containsExactly(firstCard, secondCard);
     }
 }

@@ -1,8 +1,11 @@
 package blackjack.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class DealerTest {
@@ -18,13 +21,22 @@ class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러 초기화 테스트")
     void initTest() {
-        Dealer dealer = new Dealer(initialGroup);
+        User dealer = new Dealer(initialGroup);
 
         assertSoftly(softly -> {
             softly.assertThat(dealer.getName()).isEqualTo(Dealer.DEALER_NAME);
-            softly.assertThat(dealer.getCards()).containsExactly(firstCard, secondCard);
+            softly.assertThat(dealer.getStatus()).containsExactly(firstCard, secondCard);
         });
+    }
+
+    @Test
+    @DisplayName("첫 패 확인 테스트")
+    void getInitialStatus() {
+        User dealer = new Dealer(initialGroup);
+
+        assertThat(dealer.getInitialStatus()).containsExactly(firstCard);
     }
 
 }
