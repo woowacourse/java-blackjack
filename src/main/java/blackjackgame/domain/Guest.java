@@ -1,34 +1,18 @@
 package blackjackgame.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
-public class Guest {
+public class Guest extends Player {
     Name name;
-    List<Card> cards;
 
     public Guest(Name name) {
         this.name = name;
         cards = new ArrayList<>();
     }
 
-    public int getScore() {
-        int totalScore = 0;
-        for (Card card : cards) {
-            totalScore += card.getScore();
-        }
-        return totalScore;
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public Collection<Object> getCards() {
-        return Collections.unmodifiableList(cards);
+    public boolean isPick() {
+        return getScore() < 21;
     }
 
     @Override
