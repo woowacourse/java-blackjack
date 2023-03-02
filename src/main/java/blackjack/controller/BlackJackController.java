@@ -22,9 +22,18 @@ public class BlackJackController {
         List<PlayerStatusDto> challengers = makeChallengersStatus();
         OutputView.printStartStatus(dealer, challengers);
 
-        takeAllPlayersTurn();
+        takeAllChallengersTurn();
+
+        takeDealerTurn();
 
         InputView.terminate();
+    }
+
+    private void takeDealerTurn() {
+        Player dealer = blackJackGame.getDealer();
+        if (dealer.canPick()) {
+            blackJackGame.pick(dealer);
+        }
     }
 
     private void init() {
@@ -52,14 +61,14 @@ public class BlackJackController {
         return gameStatus;
     }
 
-    private void takeAllPlayersTurn() {
+    private void takeAllChallengersTurn() {
         for (Player player : blackJackGame.getChallengers()) {
-            takeEachPlayerTurn(player);
+            takeEachChallengerTurn(player);
         }
     }
 
-    private void takeEachPlayerTurn(Player player) {
-        while (blackJackGame.canPick(player)) {
+    private void takeEachChallengerTurn(Player player) {
+        if (blackJackGame.canPick(player)) {
             checkChoice(player);
         }
     }
@@ -77,6 +86,8 @@ public class BlackJackController {
         boolean choice = InputView.inputPlayerChoice(player.getName());
         if (choice) {
             blackJackGame.pick(player);
+            OutputView.printChallengerStatus(new PlayerStatusDto(player));
+            takeEachChallengerTurn(player);
         }
     }
 }

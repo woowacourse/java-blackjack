@@ -28,21 +28,25 @@ public class OutputView {
         System.out.println(GIVE_START_CARD_COMPLETE_MESSAGE);
     }
 
-    private static void printDealerStatus(PlayerStatusDto dealerStatus) {
+    public static void printDealerStatus(PlayerStatusDto dealerStatus) {
         System.out.print(dealerStatus.getName());
         System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
         String cards = String.join(ITEM_DELIMITER, dealerStatus.getCards());
         System.out.println(cards);
     }
 
-    private static void printChallengersStatus(List<PlayerStatusDto> challengersStatus) {
+    public static void printChallengersStatus(List<PlayerStatusDto> challengersStatus) {
         for (PlayerStatusDto challenger : challengersStatus) {
-            System.out.print(challenger.getName() + CARD);
-            System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
-            String cards = String.join(ITEM_DELIMITER, challenger.getCards());
-            System.out.println(cards);
+            printChallengerStatus(challenger);
         }
         System.out.println();
+    }
+
+    public static void printChallengerStatus(PlayerStatusDto challenger) {
+        System.out.print(challenger.getName() + CARD);
+        System.out.print(PLAYER_NAME_AND_CARDS_PARTITION);
+        String cards = String.join(ITEM_DELIMITER, challenger.getCards());
+        System.out.println(cards);
     }
 
     private static List<String> toChallengerNames(List<PlayerStatusDto> challengersStatus) {
