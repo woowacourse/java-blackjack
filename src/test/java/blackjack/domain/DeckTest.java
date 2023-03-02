@@ -4,7 +4,9 @@ import static blackjack.domain.Number.ACE;
 import static blackjack.domain.Number.TWO;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -21,5 +23,15 @@ class DeckTest {
         Deck deck = new MockDeckGenerator(mockCards).generate();
         assertThat(deck.draw(2))
                 .containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
+    }
+
+    @DisplayName("카드 덱에 더 이상 카드가 없다면 예외를 발생한다.")
+    @Test
+    void should_ThrowException_When_DrawEmptyDeck() {
+        Deck deck = new Deck(new ArrayList<>());
+
+        assertThatThrownBy(() -> deck.draw(1))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("더 이상 꺼낼 카드가 없습니다.");
     }
 }
