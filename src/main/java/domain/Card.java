@@ -36,4 +36,8 @@ public class Card {
     public String getName() {
         return name;
     }
+
+    public boolean isA() {
+        return name.charAt(0) == 'A';
+    }
 }

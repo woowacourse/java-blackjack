@@ -17,11 +17,23 @@ public class Cards {
 
     public int sumOfCards() {
         if (isOddSum()) {
-            return calculateOddCardsSum();
+            int sum = calculateOddCardsSum();
+            return checkOver21AndContainsA(sum);
         }
         int sum = 0;
         for (int i = 0; i < cards.size(); i += 2) {
             sum += cards.get(i).sum(cards.get(i + 1));
+        }
+        return checkOver21AndContainsA(sum);
+    }
+
+    private int checkOver21AndContainsA(final int sum) {
+        if (sum > 21) {
+            for (Card card : cards) {
+                if (card.isA()) {
+                    return sum - 10;
+                }
+            }
         }
         return sum;
     }
