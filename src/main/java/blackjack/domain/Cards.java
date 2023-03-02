@@ -18,4 +18,8 @@ public class Cards {
         cardList.add(card);
         return new Cards(cardList);
     }
+
+    public boolean isBust() {
+        return point.isBusted();
+    }
 }

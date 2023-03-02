@@ -63,4 +63,16 @@ public class CardsTest {
                 .extracting("gamePoint")
                 .isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("cards의 bust 상태 테스트")
+    void bustTest() {
+        final List<Card> data = List.of(
+                new Card(Shape.HEART, CardNumber.of(10)),
+                new Card(Shape.HEART, CardNumber.of(10)),
+                new Card(Shape.HEART, CardNumber.of(10))
+        );
+        final Cards cards = new Cards(data);
+        assertThat(cards.isBust()).isTrue();
+    }
 }

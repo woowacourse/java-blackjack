@@ -28,10 +28,6 @@ public class Card {
         return Objects.hash(shape, cardNumber);
     }
 
-    public int plus(final int point) {
-        return cardNumber.plus(point);
-    }
-
     public boolean isAce() {
         if (cardNumber == CardNumber.of(1)) {
             return true;

@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public interface Player {
 
-    void add(Card card);
-    int getPoint();
+    void draw(Card card);
     boolean canReceive();
+    GamePoint getGamePoint();
 }

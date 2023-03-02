@@ -19,7 +19,7 @@ public class GamePointTest {
         );
 
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getOptimizePoint()).isEqualTo(9);
+        assertThat(gamePoint.getPoint()).isEqualTo(9);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class GamePointTest {
         );
 
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getOptimizePoint()).isEqualTo(16);
+        assertThat(gamePoint.getPoint()).isEqualTo(16);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class GamePointTest {
                 new Card(Shape.HEART, CardNumber.of(2))
         );
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getOptimizePoint()).isEqualTo(0);
+        assertThat(gamePoint.getPoint()).isEqualTo(0);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GamePointTest {
                 new Card(Shape.HEART, CardNumber.of(1))
         );
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getOptimizePoint()).isEqualTo(21);
+        assertThat(gamePoint.getPoint()).isEqualTo(21);
     }
 
     @Test
@@ -71,6 +71,6 @@ public class GamePointTest {
                 new Card(Shape.HEART, CardNumber.of(1))
         );
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getOptimizePoint()).isEqualTo(16);
+        assertThat(gamePoint.getPoint()).isEqualTo(16);
     }
 }

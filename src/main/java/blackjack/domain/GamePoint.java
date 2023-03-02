@@ -10,7 +10,7 @@ public class GamePoint {
     public GamePoint(final List<Card> cards) {
         int point = calculateMaxPoint(cards);
         if (isBust(point) && containAceInCards(cards)) {
-            this.gamePoint = getOptimizePoint(point, getCountOfAce(cards));
+            this.gamePoint = getPoint(point, getCountOfAce(cards));
             return;
         }
         this.gamePoint = calculateBust(point);
@@ -28,7 +28,7 @@ public class GamePoint {
         return point;
     }
 
-    private int getOptimizePoint(final int point, final int aceCount) {
+    private int getPoint(final int point, final int aceCount) {
         int optimizedPoint = point;
         int remainAce = aceCount;
         while (optimizedPoint > 21 && remainAce > 0) {
@@ -69,7 +69,11 @@ public class GamePoint {
         return card.getCardNumberValue();
     }
 
-    public int getOptimizePoint() {
+    public boolean isBusted() {
+        return gamePoint == BUST;
+    }
+
+    public int getPoint() {
         return gamePoint;
     }
 }
