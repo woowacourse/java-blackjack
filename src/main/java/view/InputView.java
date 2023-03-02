@@ -1,6 +1,6 @@
 package view;
 
-import domain.player.Participant;
+import domain.player.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +20,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String readMoreCard(final Participant participant) {
-        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", participant.name().value());
+    public static String readMoreCard(final Player player) {
+        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", player.name().value());
         return scanner.nextLine();
     }
 }

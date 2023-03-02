@@ -4,7 +4,7 @@ import domain.deck.CardDeck;
 import domain.game.BlackJackGame;
 import domain.player.HitState;
 import domain.player.Name;
-import domain.player.Participant;
+import domain.player.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -45,16 +45,16 @@ public class BlackJackController {
 
     private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
         while (blackJackGame.existCanHitParticipant()) {
-            final Participant canHitParticipant = blackJackGame.findCanHitParticipant();
-            final HitState hitState = inputHitOrStay(canHitParticipant);
-            canHitParticipant.changeState(hitState);
-            blackJackGame.hitOrStayForParticipant(canHitParticipant);
-            OutputView.showPlayerCardAreaState(canHitParticipant);
+            final Player canHitPlayer = blackJackGame.findCanHitParticipant();
+            final HitState hitState = inputHitOrStay(canHitPlayer);
+            canHitPlayer.changeState(hitState);
+            blackJackGame.hitOrStayForParticipant(canHitPlayer);
+            OutputView.showPlayerCardAreaState(canHitPlayer);
         }
     }
 
-    private HitState inputHitOrStay(final Participant participant) {
-        final String command = InputView.readMoreCard(participant);
+    private HitState inputHitOrStay(final Player player) {
+        final String command = InputView.readMoreCard(player);
         return mapOrThrowCommand(command);
     }
 

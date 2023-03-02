@@ -1,25 +1,37 @@
 package domain.player;
 
 import domain.area.CardArea;
+import domain.card.Card;
 
-public class Participant extends Player {
+public abstract class Participant {
 
-    private final States states = States.init();
+    protected final Name name;
+    protected final CardArea cardArea;
 
-    public Participant(final Name name, final CardArea cardArea) {
-        super(name, cardArea);
+    protected Participant(final Name name, final CardArea cardArea) {
+        this.name = name;
+        this.cardArea = cardArea;
     }
 
-    @Override
-    public boolean canHit() {
-        return cardArea.canMoreCard() && !states.isStay();
+    public Name name() {
+        return name;
     }
 
-    public boolean wantHit() {
-        return states.isHit();
+    public CardArea cardArea() {
+        return cardArea;
     }
 
-    public void changeState(final HitState hitState) {
-        states.setState(hitState);
+    public boolean isBurst() {
+        return cardArea.isBurst();
+    }
+
+    public void hit(final Card card) {
+        cardArea.addCard(card);
+    }
+
+    public abstract boolean canHit();
+
+    public int score() {
+        return cardArea.calculate();
     }
 }

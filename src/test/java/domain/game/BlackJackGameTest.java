@@ -2,9 +2,9 @@ package domain.game;
 
 import domain.deck.CardDeck;
 import domain.player.Dealer;
-import domain.player.Name;
-import domain.player.Participant;
 import domain.player.HitState;
+import domain.player.Name;
+import domain.player.Player;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.NameFixture.말랑이름;
 import static domain.fixture.NameFixture.코다이름;
-import static domain.fixture.ParticipantFixture.*;
+import static domain.fixture.PlayerFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -38,150 +38,6 @@ class BlackJackGameTest {
         assertThat(blackJackGame.dealer().cardArea().cards().size()).isEqualTo(2);
     }
 
-    @Nested
-    @DisplayName("existCanHitParticipant() 테스트")
-    class ExistCanHitParticipantTest {
-
-        @Test
-        void 참가자들_중_21_미만인_참가자가_있음에도_그들이_hit_을_원하지_않는다면_false를_반환한다() {
-            // given
-            final Participant 말랑 = 말랑(under21CardArea());
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            blackJackGame.participants().forEach(it -> it.changeState(HitState.STAY));
-
-            // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isFalse();
-        }
-
-        @Test
-        void 참가자들_중_21_미만인_참가자가_없는_경우_false_를_반환한다() {
-            // given
-            final Participant 말랑 = 말랑(over21CardArea());
-            final Participant 코다 = 코다(over21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-
-            // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isFalse();
-        }
-
-        @Test
-        void 참가자들_중_21_미만인_참가자가_있으며_HIT_을_원하는_경우_true_를_반환한다() {
-            // given
-            final Participant 말랑 = 말랑(under21CardArea());
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            말랑.changeState(HitState.HIT);
-
-            // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isTrue();
-        }
-
-        @Test
-        void 참가자들_중_21_미만인_참가자가_있으며_HIT_여부를_경정하지_않은_경우_true_를_반환한다() {
-            // given
-            final Participant 말랑 = 말랑(under21CardArea());
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-
-            // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isTrue();
-        }
-    }
-
-    @Nested
-    @DisplayName("findCanHitParticipant() 테스트")
-    class FindCanHitParticipantTest {
-
-        @Test
-        void Hit_이_가능한_임의의_참여자를_반환한다() {
-            // given
-            final Participant 말랑 = 말랑(over21CardArea());
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-
-            // when
-            Participant canHit = blackJackGame.findCanHitParticipant();
-
-            // then
-            assertThat(canHit).isEqualTo(코다);
-        }
-
-        @Test
-        void Hit_이_가능한_참여자가_없는_경우_예외를_발생한다() {
-            // given
-            final Participant 말랑 = 말랑(over21CardArea());
-            final Participant 코다 = 코다(over21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-
-            // when & then
-            assertThatThrownBy(blackJackGame::findCanHitParticipant)
-                    .isInstanceOf(IllegalArgumentException.class);
-        }
-    }
-
-    @Nested
-    @DisplayName("hitOrStayForParticipant() 테스트")
-    class HitOrStayForParticipantTest {
-
-        @Test
-        void 주어진_참가자가_Hit_을_원한다면_카드를_제공한다() {
-            // given
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            코다.changeState(HitState.HIT);
-            final int before = 코다.score();
-
-            // when
-            blackJackGame.hitOrStayForParticipant(코다);
-
-            // then
-            assertThat(코다.score()).isNotEqualTo(before);
-        }
-
-        @Test
-        void 주어진_참가자가_Hit_을_원하지_않는다면_카드를_제공하지_않는다() {
-            // given
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            코다.changeState(HitState.STAY);
-            final int before = 코다.score();
-
-            // when
-            blackJackGame.hitOrStayForParticipant(코다);
-
-            // then
-            assertThat(코다.score()).isEqualTo(before);
-        }
-    }
-
-    @Nested
-    @DisplayName("isDealerShouldMoreHit() 테스트")
-    class IsDealerShouldMoreHitTest {
-
-        @Test
-        void 딜러의_카드가_16_점_이하이면_항상_Hit_을_더_해야한다() {
-            // given
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame1 = new BlackJackGame(List.of(코다), new Dealer(under16CardArea()), CardDeck.shuffledFullCardDeck());
-            BlackJackGame blackJackGame2 = new BlackJackGame(List.of(코다), new Dealer(equal16CardArea()), CardDeck.shuffledFullCardDeck());
-
-            // when & then
-            assertThat(blackJackGame1.isDealerShouldMoreHit()).isTrue();
-            assertThat(blackJackGame2.isDealerShouldMoreHit()).isTrue();
-        }
-
-        @Test
-        void 딜러의_카드가_16_점_초과이면_항상_Hit_을_더_하지_않는다() {
-            // given
-            final Participant 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(over16CardArea()), CardDeck.shuffledFullCardDeck());
-
-            // when & then
-            assertThat(blackJackGame.isDealerShouldMoreHit()).isFalse();
-        }
-    }
-
     @Test
     void hitForDealer_시_딜러가_hit_한다() {
         // given
@@ -202,9 +58,9 @@ class BlackJackGameTest {
 
         // 말랑 - 20(무), 콩떡 - 30(패), 코다 - 21(승)
         // 딜러 - 20
-        final Participant 말랑 = 말랑(equal20CardArea());
-        final Participant 콩떡 = 콩떡(over21CardArea());
-        final Participant 코다 = 코다(equal21CardArea());
+        final Player 말랑 = 말랑(equal20CardArea());
+        final Player 콩떡 = 콩떡(over21CardArea());
+        final Player 코다 = 코다(equal21CardArea());
         final Dealer dealer = new Dealer(equal20CardArea());
 
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
@@ -213,8 +69,152 @@ class BlackJackGameTest {
         final GameStatistic statistic = blackJackGame.statistic();
 
         // then
-        assertThat(statistic.resultPerParticipant().get(말랑)).isEqualTo(PlayerResult.DRAWER);
-        assertThat(statistic.resultPerParticipant().get(콩떡)).isEqualTo(PlayerResult.LOSER);
-        assertThat(statistic.resultPerParticipant().get(코다)).isEqualTo(PlayerResult.WINNER);
+        assertThat(statistic.resultPerParticipant().get(말랑)).isEqualTo(ParticipantResult.DRAWER);
+        assertThat(statistic.resultPerParticipant().get(콩떡)).isEqualTo(ParticipantResult.LOSER);
+        assertThat(statistic.resultPerParticipant().get(코다)).isEqualTo(ParticipantResult.WINNER);
+    }
+
+    @Nested
+    @DisplayName("existCanHitParticipant() 테스트")
+    class ExistCanHitPlayerTest {
+
+        @Test
+        void 참가자들_중_21_미만인_참가자가_있음에도_그들이_hit_을_원하지_않는다면_false를_반환한다() {
+            // given
+            final Player 말랑 = 말랑(under21CardArea());
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            blackJackGame.participants().forEach(it -> it.changeState(HitState.STAY));
+
+            // when & then
+            assertThat(blackJackGame.existCanHitParticipant()).isFalse();
+        }
+
+        @Test
+        void 참가자들_중_21_미만인_참가자가_없는_경우_false_를_반환한다() {
+            // given
+            final Player 말랑 = 말랑(over21CardArea());
+            final Player 코다 = 코다(over21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+
+            // when & then
+            assertThat(blackJackGame.existCanHitParticipant()).isFalse();
+        }
+
+        @Test
+        void 참가자들_중_21_미만인_참가자가_있으며_HIT_을_원하는_경우_true_를_반환한다() {
+            // given
+            final Player 말랑 = 말랑(under21CardArea());
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            말랑.changeState(HitState.HIT);
+
+            // when & then
+            assertThat(blackJackGame.existCanHitParticipant()).isTrue();
+        }
+
+        @Test
+        void 참가자들_중_21_미만인_참가자가_있으며_HIT_여부를_경정하지_않은_경우_true_를_반환한다() {
+            // given
+            final Player 말랑 = 말랑(under21CardArea());
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+
+            // when & then
+            assertThat(blackJackGame.existCanHitParticipant()).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("findCanHitParticipant() 테스트")
+    class FindCanHitPlayerTest {
+
+        @Test
+        void Hit_이_가능한_임의의_참여자를_반환한다() {
+            // given
+            final Player 말랑 = 말랑(over21CardArea());
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+
+            // when
+            Player canHit = blackJackGame.findCanHitParticipant();
+
+            // then
+            assertThat(canHit).isEqualTo(코다);
+        }
+
+        @Test
+        void Hit_이_가능한_참여자가_없는_경우_예외를_발생한다() {
+            // given
+            final Player 말랑 = 말랑(over21CardArea());
+            final Player 코다 = 코다(over21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+
+            // when & then
+            assertThatThrownBy(blackJackGame::findCanHitParticipant)
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("hitOrStayForParticipant() 테스트")
+    class HitOrStayForPlayerTest {
+
+        @Test
+        void 주어진_참가자가_Hit_을_원한다면_카드를_제공한다() {
+            // given
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            코다.changeState(HitState.HIT);
+            final int before = 코다.score();
+
+            // when
+            blackJackGame.hitOrStayForParticipant(코다);
+
+            // then
+            assertThat(코다.score()).isNotEqualTo(before);
+        }
+
+        @Test
+        void 주어진_참가자가_Hit_을_원하지_않는다면_카드를_제공하지_않는다() {
+            // given
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            코다.changeState(HitState.STAY);
+            final int before = 코다.score();
+
+            // when
+            blackJackGame.hitOrStayForParticipant(코다);
+
+            // then
+            assertThat(코다.score()).isEqualTo(before);
+        }
+    }
+
+    @Nested
+    @DisplayName("isDealerShouldMoreHit() 테스트")
+    class IsDealerShouldMoreHitTest {
+
+        @Test
+        void 딜러의_카드가_16_점_이하이면_항상_Hit_을_더_해야한다() {
+            // given
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame1 = new BlackJackGame(List.of(코다), new Dealer(under16CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame2 = new BlackJackGame(List.of(코다), new Dealer(equal16CardArea()), CardDeck.shuffledFullCardDeck());
+
+            // when & then
+            assertThat(blackJackGame1.isDealerShouldMoreHit()).isTrue();
+            assertThat(blackJackGame2.isDealerShouldMoreHit()).isTrue();
+        }
+
+        @Test
+        void 딜러의_카드가_16_점_초과이면_항상_Hit_을_더_하지_않는다() {
+            // given
+            final Player 코다 = 코다(under21CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(over16CardArea()), CardDeck.shuffledFullCardDeck());
+
+            // when & then
+            assertThat(blackJackGame.isDealerShouldMoreHit()).isFalse();
+        }
     }
 }

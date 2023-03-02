@@ -3,7 +3,7 @@ package domain.player;
 import domain.area.CardArea;
 import domain.card.Card;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
     private static final Name DEALER_NAME = Name.of("딜러");
 

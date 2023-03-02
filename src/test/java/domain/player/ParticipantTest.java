@@ -3,81 +3,58 @@ package domain.player;
 import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
+import domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.stream.Stream;
-
-import static domain.card.CardValue.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static domain.card.CardValue.TEN;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("Participant 은")
 class ParticipantTest {
 
+    final Name name = Name.of("name");
+
     final CardArea cardArea = new CardArea(
-            new Card(CardShape.CLOVER, TEN),
-            new Card(CardShape.CLOVER, SEVEN)
-    );
+            new Card(CardShape.SPADE, CardValue.TEN),
+            new Card(CardShape.SPADE, CardValue.TEN));
+
+    final Participant participant = new Participant(name, cardArea) {
+        @Override
+        public boolean canHit() {
+            return false;
+        }
+    };
 
     @Test
-    void 참가자는_상태를_바꿀_수_있다() {
-        // given
-        final Participant participant = new Participant(Name.of("player1"), cardArea);
+    void 추상클래스다() {
+        //when & then
+        assertThat(Participant.class).isAbstract();
+    }
 
+    @Test
+    void 이름과_area_가진다() {
+        // when & then
+        assertDoesNotThrow(() -> new Participant(name, cardArea) {
+            @Override
+            public boolean canHit() {
+                return false;
+            }
+        });
+    }
+
+    @Test
+    void 카드를_추가할_수_있다() {
         // when
-        assertDoesNotThrow(() -> participant.changeState(HitState.HIT));
-    }
+        final int beforeSize = cardArea.cards().size();
+        participant.hit(new Card(CardShape.SPADE, TEN));
 
-    @ParameterizedTest
-    @ValueSource(strings = {"HIT", "INIT"})
-    void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final HitState hitState) {
-        // given
-        final Participant participant = new Participant(Name.of("player1"), cardArea);
-
-        participant.changeState(hitState);
-
-        // when & then
-        assertTrue(participant.canHit());
-    }
-
-    @ParameterizedTest
-    @MethodSource("canNotMoreCard")
-    void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final HitState hitState) {
-        // given
-        final Participant participant = new Participant(Name.of("player1"), cardArea);
-        participant.changeState(hitState);
-
-        // when & then
-        assertFalse(participant.canHit());
-    }
-
-    static Stream<Arguments> canNotMoreCard() {
-
-        final CardArea under21CardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
-
-        final CardArea over21CardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
-
-        over21CardArea.addCard(new Card(CardShape.SPADE, TWO));
-
-        return Stream.of(
-                Arguments.of(under21CardArea, HitState.STAY),
-                Arguments.of(over21CardArea, null),
-                Arguments.of(over21CardArea, HitState.STAY),
-                Arguments.of(over21CardArea, HitState.HIT)
-        );
+        // then
+        assertThat(cardArea.cards().size()).isEqualTo(beforeSize + 1);
     }
 }
