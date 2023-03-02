@@ -1,6 +1,6 @@
 package domain.user;
 
-public enum PlayerStatus {
+public enum PlayerStatus implements UserStatus{
     NORMAL,
     BUST
 }
