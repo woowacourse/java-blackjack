@@ -66,25 +66,13 @@ class CardDeckTest {
         return cards;
     }
 
-    //TODO: 추후에 로직 분리 예정
-//    @DisplayName("카드 섞였는지 테스트")
-//    @Test
-//    void a1() {
-//        // given
-//        List<Card> cardsNotShuffled = createFillCards();
-//
-//        // when & then
-//        assertThatThrownBy(() -> new CardDeck(cardsNotShuffled))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
-
-    @DisplayName("카드를 한 장 뽑아서 반환한다.")
+    @DisplayName("카드를 한 장을 맨 위에서 뽑아서 반환한다.")
     @Test
     void returns_drawn_card() {
         // given
         List<Card> givenCards = createFillCards();
         CardDeck cardDeck = new CardDeck(givenCards);
-        Card expectedCard = givenCards.get(givenCards.size() - 1);
+        Card expectedCard = givenCards.get(0);
 
         // when
         Card drawnCard = cardDeck.draw();

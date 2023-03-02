@@ -21,17 +21,7 @@ public class CardDeck {
         if (isDuplicate(cards)) {
             throw new IllegalArgumentException("중복된 카드가 존재합니다.");
         }
-
-        //TODO: 추후에 로직 분리 예정
-//        if(isNotShuffled()) {
-//            throw new IllegalArgumentException("카드가 섞이지 않았습니다.");
-//        }
     }
-
-//    private boolean isNotShuffled() {
-//        return false;
-//    }
-
 
     private boolean isDuplicate(final List<Card> cards) {
         return cards.stream()
@@ -40,7 +30,7 @@ public class CardDeck {
     }
 
     public Card draw() {
-        return cards.remove(getLastIndexOfCards());
+        return cards.remove(0);
     }
 
     private int getLastIndexOfCards() {
