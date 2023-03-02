@@ -18,6 +18,10 @@ public class Dealer {
         cards.addCard(card);
     }
 
+    public int calculateScore() {
+        return cards.calculateScore();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.toList());
     }
