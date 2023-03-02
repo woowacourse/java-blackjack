@@ -1,9 +1,8 @@
-package domain;
+package domain.participant;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.participant.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +52,7 @@ class DealerTest {
         //when
 
         //then
-        assertThat(dealer.isStay()).isFalse();
+        assertThat(dealer.isStand()).isFalse();
     }
 
     @Test
@@ -66,7 +65,7 @@ class DealerTest {
         //when
 
         //then
-        assertThat(dealer.isStay()).isTrue();
+        assertThat(dealer.isStand()).isTrue();
     }
 
     @Test

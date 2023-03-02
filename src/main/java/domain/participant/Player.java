@@ -6,6 +6,7 @@ public class Player extends Participant {
     private static final int MAX_NAME_LENGTH = 10;
 
     private final String name;
+    private boolean isStand = false;
 
     private Player(String name) {
         super();
@@ -24,7 +25,12 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean isStay() {
-        throw new UnsupportedOperationException();
+    public boolean isStand() {
+        return isStand;
+    }
+
+    @Override
+    public void stand() {
+        this.isStand = true;
     }
 }

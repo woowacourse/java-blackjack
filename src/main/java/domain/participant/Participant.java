@@ -24,15 +24,17 @@ public abstract class Participant {
         return hand.getScore();
     }
 
-    public boolean isBust() {
-        return calculateScore() > BLACKJACK;
-    }
-
     public void initHand(List<Card> twoCards) {
         twoCards.forEach(hand::addCard);
     }
 
-    public abstract boolean isStay();
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK;
+    }
+
+    abstract public boolean isStand();
+
+    abstract public void stand();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(hand.toList());

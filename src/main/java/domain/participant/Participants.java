@@ -2,25 +2,60 @@ package domain.participant;
 
 import domain.card.Deck;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
 
-    private final Participant dealer;
-    private final Players players;
+    private static final int MIN_PLAYER_COUNT = 1;
+    private static final int MAX_PLAYER_COUNT = 7;
+    private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
+    private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
 
-    private Participants(Participant dealer, Players players) {
+    private final Participant dealer;
+    private final List<Participant> players;
+
+    public Participants(Participant dealer, List<Participant> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
     public static Participants from(List<String> playersName) {
-        return new Participants(new Dealer(), Players.of(playersName));
+        validate(playersName);
+
+        List<Participant> players = playersName.stream()
+                .map(Player::from)
+                .collect(Collectors.toList());
+
+        return new Participants(new Dealer(), players);
+    }
+
+    private static void validate(List<String> names) {
+        validatePlayersCount(names);
+        validateDuplication(names);
+    }
+
+    private static void validatePlayersCount(List<String> names) {
+        if (names.size() < MIN_PLAYER_COUNT || names.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException(ERROR_PLAYER_COUNT);
+        }
+    }
+
+    private static void validateDuplication(List<String> names) {
+        long removedDistinctCount = names.stream()
+                .map(String::trim)
+                .distinct()
+                .count();
+
+        if (removedDistinctCount != names.size()) {
+            throw new IllegalArgumentException(ERROR_DUPLICATED_NAME);
+        }
     }
 
     public void initHand(Deck deck) {
         dealer.initHand(deck.pollTwoCards());
-        players.initPlayersHand(deck);
+        players.forEach(player -> player.initHand(deck.pollTwoCards()));
     }
 
     public Participant getDealer() {
@@ -28,6 +63,6 @@ public class Participants {
     }
 
     public List<Participant> getPlayers() {
-        return players.toList();
+        return Collections.unmodifiableList(players);
     }
 }
