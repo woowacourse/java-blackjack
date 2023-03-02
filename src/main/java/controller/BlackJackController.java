@@ -37,50 +37,17 @@ public class BlackJackController {
         showResults(gameService);
     }
 
-    private void showResults(GameService gameService) {
-        printScores(gameService);
-        printResults(gameService);
-    }
-
-    private void play(Participants participants, GameService gameService) {
-        hitOrStayForEachPlayer(participants, gameService);
-        hitOrStayForDealer(gameService);
-    }
-
     private void initGameStatus(GameService gameService) {
         init(gameService);
         printInitHands(gameService);
     }
 
-    private void printResults(GameService gameService) {
-        outputView.printResultInfo();
-
-        Map<String, Result> playerResults = gameService.calculatePlayerResults();
-        Map<Result, Integer> dealerResults = gameService.calculateDealerResults(playerResults);
-        outputView.printDealerResult(dealerResults);
-        for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
+    private void init(GameService gameService) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            gameService.dealCardsToParticipants();
         }
-    }
 
-    private void printScores(GameService gameService) {
-        for (Map.Entry<Participant, String> participantScore : gameService.getParticipantScores().entrySet()) {
-            outputView.printParticipantHandValue(participantScore.getKey().getName(),
-                participantScore.getKey().getCardNames(), participantScore.getValue());
-        }
-    }
-
-    private void hitOrStayForDealer(GameService gameService) {
-        while (gameService.isDealerHandValueUnderStandard()) {
-            gameService.dealerHit();
-            outputView.printDealerPickCardMessage();
-        }
-    }
-
-    private void hitOrStayForEachPlayer(Participants participants, GameService gameService) {
-        for (Player player : participants.findPlayers()) {
-            hitOrStay(gameService, player);
-        }
+        outputView.printInitializingFinishMessage(gameService.getParticipantsNames());
     }
 
     private void printInitHands(GameService gameService) {
@@ -90,12 +57,15 @@ public class BlackJackController {
         outputView.printEmptyLine();
     }
 
-    private void init(GameService gameService) {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            gameService.dealCardsToParticipants();
-        }
+    private void play(Participants participants, GameService gameService) {
+        hitOrStayForEachPlayer(participants, gameService);
+        hitOrStayForDealer(gameService);
+    }
 
-        outputView.printInitializingFinishMessage(gameService.getParticipantsNames());
+    private void hitOrStayForEachPlayer(Participants participants, GameService gameService) {
+        for (Player player : participants.findPlayers()) {
+            hitOrStay(gameService, player);
+        }
     }
 
     private void hitOrStay(GameService gameService, Player player) {
@@ -110,6 +80,36 @@ public class BlackJackController {
         if (!gameService.existHandInPool(player.getCardNames())) {
             gameService.addHandToPool(player.getCardNames());
             outputView.printParticipantCard(player.getName(), player.getCardNames());
+        }
+    }
+
+    private void hitOrStayForDealer(GameService gameService) {
+        while (gameService.isDealerHandValueUnderStandard()) {
+            gameService.dealerHit();
+            outputView.printDealerPickCardMessage();
+        }
+    }
+
+    private void showResults(GameService gameService) {
+        printScores(gameService);
+        printResults(gameService);
+    }
+
+    private void printScores(GameService gameService) {
+        for (Map.Entry<Participant, String> participantScore : gameService.getParticipantScores().entrySet()) {
+            outputView.printParticipantHandValue(participantScore.getKey().getName(),
+                participantScore.getKey().getCardNames(), participantScore.getValue());
+        }
+    }
+
+    private void printResults(GameService gameService) {
+        outputView.printResultInfo();
+
+        Map<String, Result> playerResults = gameService.calculatePlayerResults();
+        Map<Result, Integer> dealerResults = gameService.calculateDealerResults(playerResults);
+        outputView.printDealerResult(dealerResults);
+        for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
+            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
         }
     }
 }

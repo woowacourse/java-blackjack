@@ -6,7 +6,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import view.ErrorMessage;
+
 public class Participants {
+    private static final int BUST_BOUNDARY_VALUE = 21;
+    private static final int BUST_HAND_VALUE = 0;
+    private static final String BUST = "버스트";
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
@@ -20,44 +25,19 @@ public class Participants {
         return new Participants(participants);
     }
 
-    private static void compareHandValue(Dealer dealer, Map<String, Result> playerResults,
-        Player player) {
-        int dealerHandValue = getParticapantHandValue(dealer);
-        int playerHandValue = getParticapantHandValue(player);
-
-        if (playerHandValue != dealerHandValue) {
-            playerResults.put(player.getName(), Result.compareHandValue(playerHandValue, dealerHandValue));
-            return;
-        }
-        if (playerHandValue == 0) {
-            playerResults.put(player.getName(), Result.TIE);
-            return;
-        }
-        compareHandCount(dealer, playerResults, player);
-    }
-
-    private static int getParticapantHandValue(Participant participant) {
-        int participantHandValue = participant.getHandValue();
-        if (participantHandValue > 21) {
-            participantHandValue = 0;
-        }
-        return participantHandValue;
-    }
-
-    private static void compareHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
-        int playerHandCount = player.getCardNames().size();
-        int dealerHandCount = dealer.getCardNames().size();
-        if (playerHandCount != dealerHandCount) {
-            playerResults.put(player.getName(), Result.compareHandCount(playerHandCount, dealerHandCount));
-            return;
-        }
-        playerResults.put(player.getName(), Result.TIE);
-    }
-
     public void deal(Deck deck) {
         for (Participant participant : participants) {
             participant.receiveCard(deck.draw());
         }
+    }
+
+    public Dealer findDealer() {
+        Participant dealer = participants.stream()
+            .filter(participant -> participant.getClass().equals(Dealer.class))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_DEALER.getMessage())
+            );
+        return (Dealer)dealer;
     }
 
     public List<Player> findPlayers() {
@@ -66,15 +46,6 @@ public class Participants {
             addParticipantIfPlayer(players, participant);
         }
         return players;
-    }
-
-    public Dealer findDealer() {
-        Participant dealer = participants.stream()
-            .filter(participant -> participant.getClass().equals(Dealer.class))
-            .findFirst()
-            .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다.")
-            );
-        return (Dealer)dealer;
     }
 
     private void addParticipantIfPlayer(ArrayList<Player> players, Participant participant) {
@@ -93,21 +64,11 @@ public class Participants {
     }
 
     private void judgeBust(Map<Participant, String> scores, Participant participant) {
-        if (participant.getHandValue() > 21) {
-            scores.put(participant, "버스트");
+        if (participant.getHandValue() > BUST_BOUNDARY_VALUE) {
+            scores.put(participant, BUST);
             return;
         }
         scores.put(participant, String.valueOf(participant.getHandValue()));
-    }
-
-    public Map<String, Result> getPlayerResults() {
-        Dealer dealer = findDealer();
-        Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (Player player : findPlayers()) {
-            compareHandValue(dealer, playerResults, player);
-        }
-
-        return playerResults;
     }
 
     public Map<Result, Integer> getDealerResults(Map<String, Result> results) {
@@ -129,5 +90,52 @@ public class Participants {
         if (playerResult.equals(Result.LOSE)) {
             result.put(Result.WIN, result.getOrDefault(Result.WIN, 0) + 1);
         }
+    }
+
+    public Map<String, Result> getPlayerResults() {
+        Dealer dealer = findDealer();
+        Map<String, Result> playerResults = new LinkedHashMap<>();
+        for (Player player : findPlayers()) {
+            compareHandValue(dealer, playerResults, player);
+        }
+
+        return playerResults;
+    }
+
+    private void compareHandValue(Dealer dealer, Map<String, Result> playerResults, Player player) {
+        int dealerHandValue = getParticipantHandValue(dealer);
+        int playerHandValue = getParticipantHandValue(player);
+
+        if (playerHandValue != dealerHandValue) {
+            playerResults.put(player.getName(), Result.compareHandValue(playerHandValue, dealerHandValue));
+            return;
+        }
+        compareAtTieValue(dealer, playerResults, player, playerHandValue);
+    }
+
+    private void compareAtTieValue(Dealer dealer, Map<String, Result> playerResults, Player player, int playerHandValue) {
+        if (playerHandValue == BUST_HAND_VALUE) {
+            playerResults.put(player.getName(), Result.TIE);
+            return;
+        }
+        compareHandCount(dealer, playerResults, player);
+    }
+
+    private int getParticipantHandValue(Participant participant) {
+        int participantHandValue = participant.getHandValue();
+        if (participantHandValue > BUST_BOUNDARY_VALUE) {
+            participantHandValue = BUST_HAND_VALUE;
+        }
+        return participantHandValue;
+    }
+
+    private void compareHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
+        int playerHandCount = player.getCardNames().size();
+        int dealerHandCount = dealer.getCardNames().size();
+        if (playerHandCount != dealerHandCount) {
+            playerResults.put(player.getName(), Result.compareHandCount(playerHandCount, dealerHandCount));
+            return;
+        }
+        playerResults.put(player.getName(), Result.TIE);
     }
 }

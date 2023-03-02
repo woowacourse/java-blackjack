@@ -14,8 +14,6 @@ class PlayerTest {
         assertThatThrownBy(() -> new Player(name)).isInstanceOf(IllegalArgumentException.class);
     }
 
-
-
     @Test
     @DisplayName("플레이어의 이름은 '딜러'일 수 없다.")
     void validateNoDealer() {

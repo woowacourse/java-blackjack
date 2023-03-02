@@ -1,9 +1,9 @@
 package domain;
 
 public enum Result {
-    WIN("승 "),
-    LOSE("패 "),
-    TIE("무 ");
+    WIN("승"),
+    LOSE("패"),
+    TIE("무");
 
     private final String result;
 

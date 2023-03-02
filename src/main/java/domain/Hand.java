@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int INIT_ACE_COUNT = 0;
+    private static final int HIGH_ACE_VALUE = 11;
+    private static final int LOW_ACE_VALUE = 1;
+    private static final int BUST_BOUNDARY_VALUE = 21;
     private final List<Card> hand;
     private int aceCount;
 
     public Hand(List<Card> cards) {
         this.hand = cards;
-        this.aceCount = 0;
+        this.aceCount = INIT_ACE_COUNT;
     }
 
     public void addCard(Card card) {
-        if (card.getValue() == 11) {
+        if (card.getValue() == HIGH_ACE_VALUE) {
             aceCount += 1;
         }
         hand.add(card);
@@ -26,8 +30,8 @@ public class Hand {
             value += card.getValue();
         }
 
-        if (value > 21 && aceCount > 0) {
-            value -= 10;
+        if (value > BUST_BOUNDARY_VALUE && aceCount > INIT_ACE_COUNT) {
+            value -= HIGH_ACE_VALUE - LOW_ACE_VALUE;
             aceCount -= 1;
         }
         return value;

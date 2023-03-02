@@ -13,6 +13,8 @@ import domain.PrintedHandPool;
 import domain.Result;
 
 public class GameService {
+    private static final int DEALER_MINIMUM_VALUE= 17;
+    private static final String HIT_REQUEST = "y";
     private final Deck deck;
     private final Participants participants;
     private final PrintedHandPool printedHandPool;
@@ -23,14 +25,20 @@ public class GameService {
         this.printedHandPool = new PrintedHandPool();
     }
 
-    public void dealCardsToParticipants() {
-        participants.deal(deck);
-    }
-
     public List<String> getParticipantsNames() {
         return participants.findPlayers().stream()
             .map(Player::getName)
             .collect(Collectors.toList());
+    }
+
+    public void dealCardsToParticipants() {
+        participants.deal(deck);
+    }
+
+    public Map<String, List<String>> getParticipantsInitHands() {
+        Map<String, List<String>> participantsHands = getParticipantsHands();
+        participantsHands.replace("딜러", participantsHands.get("딜러").subList(0, 1));
+        return participantsHands;
     }
 
     public Map<String, List<String>> getParticipantsHands() {
@@ -42,14 +50,8 @@ public class GameService {
         return participantsHands;
     }
 
-    public Map<String, List<String>> getParticipantsInitHands() {
-        Map<String, List<String>> participantsHands = getParticipantsHands();
-        participantsHands.replace("딜러", participantsHands.get("딜러").subList(0, 1));
-        return participantsHands;
-    }
-
     public boolean isHit(String drawingInput) {
-        return drawingInput.equals("y");
+        return drawingInput.equals(HIT_REQUEST);
     }
 
     public void hit(Participant participant) {
@@ -57,7 +59,7 @@ public class GameService {
     }
 
     public boolean isDealerHandValueUnderStandard() {
-        return participants.findDealer().getHandValue() <= 16;
+        return participants.findDealer().getHandValue() < DEALER_MINIMUM_VALUE;
     }
 
     public void dealerHit() {

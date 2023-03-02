@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import view.ErrorMessage;
 
 public class Player extends Participant {
+    private static final int MAX_PLAYER_NAME_LENGTH = 10;
+    private static final String INVALID_NAME = "딜러";
+    private static final String COMMA = ",";
     private final String name;
 
     public Player(String name) {
@@ -21,7 +24,11 @@ public class Player extends Participant {
         validateNameLength(name);
     }
 
-
+    private void validateNotNull(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException(ErrorMessage.NAME_IS_NULL.getMessage());
+        }
+    }
 
     private void validateNotEmpty(String name) {
         if (name.isBlank()) {
@@ -29,26 +36,20 @@ public class Player extends Participant {
         }
     }
 
-    private void validateNotNull(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_IS_NULL.getMessage());
-        }
-    }
-
     private void validateNoDealer(String name) {
-        if (name.equals("딜러")) {
+        if (name.equals(INVALID_NAME)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_DEALER.getMessage());
         }
     }
 
     private void validateDoesNotContainComma(String name) {
-        if (name.contains(",")) {
+        if (name.contains(COMMA)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
         }
     }
 
     private void validateNameLength(String name) {
-        if (name.length() > 10) {
+        if (name.length() > MAX_PLAYER_NAME_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NAME_LENGTH.getMessage());
         }
     }
