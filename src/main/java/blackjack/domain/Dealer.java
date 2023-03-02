@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public class Dealer implements Player {
+    private static final int SCORE_LOWER_BOUND = 16;
     private final Name name;
     private final Hand hand;
 
@@ -16,18 +17,23 @@ public class Dealer implements Player {
     }
 
     @Override
-    public String getName() {
-        return name.getValue();
-    }
-
-    @Override
     public void initialDraw(final Deck deck) {
         hand.add(deck.draw());
     }
 
     @Override
-    public boolean canDraw() {
-        return hand.isPlayable();
+    public void draw(final Deck deck) {
+        hand.add(deck.draw());
+    }
+
+    @Override
+    public boolean isDrawable() {
+        return hand.isPlayable() && hand.calculateScore() <= SCORE_LOWER_BOUND;
+    }
+
+    @Override
+    public String getName() {
+        return name.getValue();
     }
 
     @Override

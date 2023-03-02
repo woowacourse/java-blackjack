@@ -33,4 +33,17 @@ public class GamblerTest {
 
         assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드", "J다이아몬드");
     }
+
+    @Test
+    void 카드를_뽑는다() {
+        final Gambler gambler = new Gambler("허브");
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, Shape.DIAMOND)
+        ));
+
+        gambler.draw(deck);
+
+        assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드");
+    }
+
 }

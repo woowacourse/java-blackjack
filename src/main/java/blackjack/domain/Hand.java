@@ -59,6 +59,10 @@ class Hand {
         return state.isPlayable();
     }
 
+    public int calculateScore() {
+        return cards.calculateTotalScore();
+    }
+
     public List<String> getCardLetters() {
         return cards.getCardLetters();
     }

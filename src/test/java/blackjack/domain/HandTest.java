@@ -7,6 +7,8 @@ import static blackjack.domain.Rank.KING;
 import static blackjack.domain.Rank.SEVEN;
 import static blackjack.domain.Rank.SIX;
 import static blackjack.domain.Rank.TWO;
+import static blackjack.domain.Shape.HEART;
+import static blackjack.domain.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -52,7 +54,7 @@ public class HandTest {
     private Hand generateHand(List<Rank> ranks) {
         final Hand hand = new Hand();
         for (Rank rank : ranks) {
-            hand.add(new Card(rank, Shape.SPADE));
+            hand.add(new Card(rank, SPADE));
         }
         return hand;
     }
@@ -61,7 +63,7 @@ public class HandTest {
     void 카드를_넣는다() {
         final Hand hand = new Hand();
 
-        hand.add(new Card(ACE, Shape.SPADE));
+        hand.add(new Card(ACE, SPADE));
 
         assertThat(hand.getCardLetters()).containsExactly("A스페이드");
     }
@@ -80,5 +82,13 @@ public class HandTest {
                 Arguments.of(List.of(JACK, JACK, TWO), false),
                 Arguments.of(List.of(JACK, JACK), true)
         );
+    }
+
+    @Test
+    void 점수_산정에_들어갈_결과값을_반환한다() {
+        final Hand hand = new Hand();
+        hand.add(new Card(ACE, HEART));
+
+        assertThat(hand.calculateScore()).isEqualTo(11);
     }
 }

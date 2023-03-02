@@ -3,11 +3,13 @@ package blackjack.domain;
 import java.util.List;
 
 public interface Player {
-    String getName();
-
     void initialDraw(final Deck deck);
 
-    boolean canDraw();
+    void draw(final Deck deck);
+
+    boolean isDrawable();
+
+    String getName();
 
     List<String> getCardLetters();
 }

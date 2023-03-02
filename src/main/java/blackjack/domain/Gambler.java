@@ -14,11 +14,6 @@ public class Gambler implements Player {
     }
 
     @Override
-    public String getName() {
-        return name.getValue();
-    }
-
-    @Override
     public void initialDraw(final Deck deck) {
         for (int count = 0; count < DRAW_COUNT; count++) {
             hand.add(deck.draw());
@@ -26,10 +21,21 @@ public class Gambler implements Player {
     }
 
     @Override
-    public boolean canDraw() {
+    public void draw(final Deck deck) {
+        hand.add(deck.draw());
+    }
+
+    @Override
+    public boolean isDrawable() {
         return hand.isPlayable();
     }
 
+    @Override
+    public String getName() {
+        return name.getValue();
+    }
+
+    @Override
     public List<String> getCardLetters() {
         return hand.getCardLetters();
     }
