@@ -24,9 +24,8 @@ public class Cards {
     private int getSum() {
         return cards.stream()
             .map(Card::getNumber)
-            .map(Number::getValue)
-            .reduce(Integer::sum)
-            .orElse(0);
+            .mapToInt(Number::getValue)
+            .sum();
     }
 
     private boolean hasA() {
