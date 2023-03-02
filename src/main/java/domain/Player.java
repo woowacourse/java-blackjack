@@ -2,6 +2,8 @@ package domain;
 
 public class Player {
 
+    private static final int BUST_LIMIT = 21;
+
     private final Name name;
     private final Cards cards;
 
@@ -12,6 +14,14 @@ public class Player {
 
     public void pick(Card card) {
         cards.addNewCard(card);
+    }
+
+    public int getTotalScore() {
+        return cards.calculateScore(BUST_LIMIT);
+    }
+
+    public boolean isBust() {
+        return getTotalScore() > BUST_LIMIT;
     }
 
     public Cards getCards() {
