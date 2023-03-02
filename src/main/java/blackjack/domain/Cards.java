@@ -12,4 +12,10 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
         this.point = new GamePoint(cards);
     }
+
+    public Cards add(final Card card) {
+        List<Card> cardList = new ArrayList<>(cards);
+        cardList.add(card);
+        return new Cards(cardList);
+    }
 }
