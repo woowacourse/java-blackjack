@@ -17,4 +17,8 @@ public class CardGroup {
                 .mapToInt(CardNumber::getValue)
                 .sum();
     }
+
+    public void add(final Card newCard) {
+        cards.add(newCard);
+    }
 }
