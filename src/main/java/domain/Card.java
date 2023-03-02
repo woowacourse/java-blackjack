@@ -16,6 +16,10 @@ public class Card {
         return value.getScore();
     }
 
+    public boolean isAce() {
+        return value.isAce();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

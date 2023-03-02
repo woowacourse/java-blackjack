@@ -30,4 +30,8 @@ public enum Value {
     public int getScore() {
         return score;
     }
+
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
 }
