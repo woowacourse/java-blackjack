@@ -62,4 +62,8 @@ public class Players {
             player.drawCard(deck.popCard());
         }
     }
+
+    public void calculateResult(final Dealer dealer) {
+        players.forEach(dealer::calculateResult);
+    }
 }

@@ -1,7 +1,10 @@
 package blackjack.domain;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -36,4 +39,43 @@ class DealerTest {
                 .isFalse();
     }
 
+    @Nested
+    @DisplayName("딜러를 통해 결과를 계산하면")
+    class CalculateResultTest {
+        private final Dealer dealer = new Dealer();
+        private Player player;
+
+        @BeforeEach
+        void setUp() {
+            dealer.drawCard(new Card(Shape.DIAMOND, Symbol.FIVE));
+            player = new Player("pobi");
+        }
+
+        @Test
+        void 딜러가_이긴_경우() {
+            player.drawCard(new Card(Shape.DIAMOND, Symbol.FOUR));
+            dealer.calculateResult(player);
+
+            assertThat(dealer.getResult())
+                    .containsEntry(player.getName(), ResultType.WIN);
+        }
+
+        @Test
+        void 딜러가_비긴_경우() {
+            player.drawCard(new Card(Shape.DIAMOND, Symbol.FIVE));
+            dealer.calculateResult(player);
+
+            assertThat(dealer.getResult())
+                    .containsEntry(player.getName(), ResultType.TIE);
+        }
+
+        @Test
+        void 딜러가_진_경우() {
+            player.drawCard(new Card(Shape.DIAMOND, Symbol.SIX));
+            dealer.calculateResult(player);
+
+            assertThat(dealer.getResult())
+                    .containsEntry(player.getName(), ResultType.LOSE);
+        }
+    }
 }

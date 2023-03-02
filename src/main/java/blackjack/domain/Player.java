@@ -15,4 +15,8 @@ public class Player extends Participant {
         final int currentScore = currentScore();
         return currentScore < BLACKJACK;
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }
