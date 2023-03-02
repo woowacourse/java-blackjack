@@ -39,4 +39,12 @@ class CardTest {
 
         assertThat(card.isAce()).isTrue();
     }
+
+    @Test
+    @DisplayName("숫자와 모양이 같으면 같은 카드다.")
+    void equals() {
+        Card card1 = new Card(ACE, HEART);
+        Card card2 = new Card(ACE, HEART);
+        assertThat(card1).isEqualTo(card2);
+    }
 }
