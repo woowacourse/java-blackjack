@@ -44,5 +44,5 @@ public abstract class User {
 
     protected abstract void checkBustByScore();
 
-    protected abstract boolean isBust();
+    protected abstract UserStatus getStatus();
 }
