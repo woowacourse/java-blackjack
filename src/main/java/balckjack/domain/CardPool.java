@@ -1,11 +1,12 @@
 package balckjack.domain;
 
+import balckjack.strategy.CardPicker;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardPool {
 
-    public static final List<Card> cards = new ArrayList<>();
+    private static final List<Card> cards = new ArrayList<>();
 
     private CardPool() {
     }
@@ -29,14 +30,13 @@ public class CardPool {
         return cards.size();
     }
 
-//    public static Card draw(CardPicker cardPicker) {
-//        //패턴도 셔플
-//        //그 안에 셔플
-//
-//        //하나의 리스트에 각 패턴마다 가져오고
-//        //셔플
-//        //첫번째 카드 get
-//        // 0, 4
-//        // 0, 13
-//    }
+    public static Card draw(CardPicker cardPicker) {
+        final Card card = cardPicker.pick();
+        cards.remove(card);
+        return card;
+    }
+
+    public static List<Card> getCards() {
+        return cards;
+    }
 }

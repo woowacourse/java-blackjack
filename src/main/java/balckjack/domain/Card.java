@@ -1,5 +1,7 @@
 package balckjack.domain;
 
+import java.util.Objects;
+
 abstract public class Card {
 
     protected final Pattern pattern;
@@ -15,4 +17,20 @@ abstract public class Card {
 
     abstract protected int getValue();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return pattern == card.pattern && Objects.equals(symbol, card.symbol);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pattern, symbol);
+    }
 }
