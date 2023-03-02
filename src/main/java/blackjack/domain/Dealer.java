@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Dealer implements Person {
@@ -27,6 +28,6 @@ public class Dealer implements Person {
 
     @Override
     public List<Card> showCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
