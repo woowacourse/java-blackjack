@@ -22,13 +22,15 @@ public class Game {
         }
     }
 
-    public boolean isWon(int index) {
+    public Result isWon(int index) {
         Player player = players.get(index);
-
+        if (player.getScore() == dealer.getScore() || (player.isBusted() && dealer.isBusted())) {
+            return Result.DRAW;
+        }
         if (player.getScore() > dealer.getScore() || dealer.isBusted()) {
-            return true;
+            return Result.WIN;
         }
 
-        return false;
+        return Result.LOSE;
     }
 }
