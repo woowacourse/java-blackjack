@@ -28,7 +28,7 @@ class DealerTest {
         ));
         final Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.isHittable()).isTrue();
+        assertThat(dealer.isDrawable()).isTrue();
     }
 
     @Test
@@ -39,7 +39,7 @@ class DealerTest {
         ));
         final Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.isHittable()).isFalse();
+        assertThat(dealer.isDrawable()).isFalse();
     }
 
     @Test
@@ -51,7 +51,7 @@ class DealerTest {
         ));
         final Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.isHittable()).isFalse();
+        assertThat(dealer.isDrawable()).isFalse();
     }
 
     @Test
@@ -65,10 +65,10 @@ class DealerTest {
         final Dealer dealer = new Dealer(cards);
 
         //when
-        dealer.hit(new Card(ACE, DIAMOND));
+        dealer.drawCard(new Card(ACE, DIAMOND));
 
         //then
-        assertThat(dealer.isHittable()).isFalse();
+        assertThat(dealer.isDrawable()).isFalse();
     }
 
     @Test

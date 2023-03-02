@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final Cards cards;
+    protected final Cards cards;
 
     protected Participant(final Cards cards) {
         this.cards = cards;

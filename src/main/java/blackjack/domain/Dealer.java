@@ -1,23 +1,19 @@
 package blackjack.domain;
 
-public class Dealer {
+public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int MAXIMUM_CARD_COUNT = 2;
     private static final int MAXIMUM_SCORE = 16;
 
     private final String name = DEALER_NAME;
-    private final Cards cards;
 
     public Dealer(final Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
-    public void hit(final Card card) {
-        cards.addCard(card);
-    }
-
-    public boolean isHittable() {
+    @Override
+    public boolean isDrawable() {
         return isCardShortage() && isScoreLow();
     }
 
@@ -29,15 +25,8 @@ public class Dealer {
         return cards.calculateTotalScore() <= MAXIMUM_SCORE;
     }
 
-    public int getScore() {
-        return cards.calculateTotalScore();
-    }
-
+    @Override
     public String getName() {
         return name;
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 }

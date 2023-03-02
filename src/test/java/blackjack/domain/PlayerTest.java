@@ -38,7 +38,7 @@ class PlayerTest {
         ));
         final Player player = new Player("kokodak", cards);
 
-        assertThat(player.isHittable()).isTrue();
+        assertThat(player.isDrawable()).isTrue();
     }
 
     @Test
@@ -49,7 +49,7 @@ class PlayerTest {
         ));
         final Player player = new Player("kokodak", cards);
 
-        assertThat(player.isHittable()).isFalse();
+        assertThat(player.isDrawable()).isFalse();
     }
 
     @Test
@@ -63,10 +63,10 @@ class PlayerTest {
         final Player player = new Player("dazzle", cards);
 
         //when
-        player.hit(new Card(TWO, DIAMOND));
+        player.drawCard(new Card(TWO, DIAMOND));
 
         //then
-        assertThat(player.isHittable()).isFalse();
+        assertThat(player.isDrawable()).isFalse();
     }
 
     @Test
