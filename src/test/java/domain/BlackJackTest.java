@@ -46,4 +46,24 @@ public class BlackJackTest {
         Map<Player, GameResult> gameResults = blackJack.calculateGameResults();
         assertThat(gameResults.get(player)).isEqualTo(GameResult.PUSH);
     }
+
+    @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
+    @Test
+    void PUSH_whenBothCardsOver21() {
+        Users users = Users.from(List.of("hongo"));
+        BlackJack blackJack = new BlackJack(users, new RandomCardIndexGenerator());
+        List<Player> players = users.getPlayers();
+
+        Player player = players.get(0);
+        Dealer dealer = users.getDealer();
+        player.hit(new Card(Denomination.SEVEN, Suits.HEART));
+        player.hit(new Card(Denomination.SIX, Suits.HEART));
+        player.hit(new Card(Denomination.JACK, Suits.HEART));
+        dealer.hit(new Card(Denomination.JACK, Suits.DIAMOND));
+        dealer.hit(new Card(Denomination.QUEEN, Suits.DIAMOND));
+        dealer.hit(new Card(Denomination.TWO, Suits.DIAMOND));
+
+        Map<Player, GameResult> gameResults = blackJack.calculateGameResults();
+        assertThat(gameResults.get(player)).isEqualTo(GameResult.PUSH);
+    }
 }
