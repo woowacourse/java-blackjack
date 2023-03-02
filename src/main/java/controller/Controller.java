@@ -34,22 +34,34 @@ public class Controller {
 
     private void playersHitOrStand(Players players) {
         for (Player player : players.getPlayers()) {
-            boolean isHit;
-            do {
-                isHit = readIsHit(player);
-                if (isHit) {
-                    player.pickCard();
-                }
-                OutputView.printSingleGambler(player);
-            } while (isHit);
+            playerHitOrStand(player);
+        }
+    }
+
+    private void playerHitOrStand(Player player) {
+        boolean isHit;
+        do {
+            isHit = readIsHit(player);
+            playerHit(player, isHit);
+            OutputView.printSingleGambler(player);
+        } while (isHit);
+    }
+
+    private void playerHit(Player player, boolean isHit) {
+        if (isHit) {
+            player.pickCard();
         }
     }
 
     private void dealerHitOrStand(Dealer dealer) {
         while (dealer.getScore() <= dealer.getPickBoundary()) {
-            dealer.pickCard();
-            System.out.println(DEALER_HIT);
+            dealerHit(dealer);
         }
+    }
+
+    private void dealerHit(Dealer dealer) {
+        dealer.pickCard();
+        System.out.println(DEALER_HIT);
     }
 
     private void printScores(Players players, Dealer dealer) {
@@ -77,7 +89,9 @@ public class Controller {
     private void decideWinner(Dealer dealer, LinkedHashMap<Gambler, Integer> result, Player player) {
         if (isPlayerWin(dealer, player)) {
             result.put(player, 1);
-        } else {
+        }
+
+        if(isPlayerLose(dealer,player)){
             result.put(player, 0);
             result.replace(dealer, result.get(dealer) + 1);
         }
@@ -85,5 +99,9 @@ public class Controller {
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
         return dealer.getScore() <= player.getScore();
+    }
+
+    private boolean isPlayerLose(Dealer dealer, Player player) {
+        return dealer.getScore() > player.getScore();
     }
 }
