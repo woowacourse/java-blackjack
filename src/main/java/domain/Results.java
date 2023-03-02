@@ -21,13 +21,13 @@ public class Results {
         Map<Result, List<Participant>> result = participants.stream()
                 .collect(groupingBy(participant -> isWinner(dealerScore, participant)));
 
-        List<String> winners = convertToParticipantName(result.get(Result.VICTORY));
-        List<String> losers = convertToParticipantName(result.get(Result.DEFEAT));
+        List<String> winners = classifyParticipants(result.get(Result.VICTORY));
+        List<String> losers = classifyParticipants(result.get(Result.DEFEAT));
 
         return new Results(winners, losers);
     }
 
-    private static List<String> convertToParticipantName(final List<Participant> result) {
+    private static List<String> classifyParticipants(final List<Participant> result) {
         if (result == null) {
             return new ArrayList<>();
         }
