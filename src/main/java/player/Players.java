@@ -16,4 +16,8 @@ public class Players {
         Player player = players.get(playerIndex);
         player.hit(card);
     }
+
+    public int count() {
+        return players.size();
+    }
 }

@@ -37,4 +37,18 @@ class PlayersTest {
 
         assertThat(player.showCards()).contains(card);
     }
+
+    @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
+    @Test
+    void count() {
+        Players players = new Players();
+        Player player1 = new Player(new Name("폴로"));
+        Player player2 = new Player(new Name("로지"));
+        Player player3 = new Player(new Name("연어"));
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+
+        assertThat(players.count()).isEqualTo(3);
+    }
 }
