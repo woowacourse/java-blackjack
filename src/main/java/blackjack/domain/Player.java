@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player implements Person {
@@ -24,7 +25,10 @@ public class Player implements Person {
 
     @Override
     public boolean isHit() {
-        return false;
+        int totalScore = cards.stream()
+                .map(card -> Collections.min(card.getScore()))
+                .reduce(0, Integer::sum);
+        return totalScore < 21;
     }
 
     @Override
