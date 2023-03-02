@@ -18,7 +18,7 @@ class PlayerTest {
         Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.NINE));
         Cards cards = new Cards(cardSet);
-        Player player = new Player(cards);
+        Player player = new Player(cards, "player");
 
         //when
         player.addCard(new Card(Suit.DIAMOND, Letter.NINE));
@@ -35,7 +35,7 @@ class PlayerTest {
         Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.TEN));
         Cards cards = new Cards(cardSet);
-        Player player = new Player(cards);
+        Player player = new Player(cards, "player");
 
         //when
         player.addCard(new Card(Suit.SPADE, Letter.TEN));
