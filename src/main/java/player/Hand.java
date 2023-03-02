@@ -15,4 +15,10 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
+
+    public int calculateScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
 }

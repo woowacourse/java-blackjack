@@ -41,11 +41,25 @@ class HandTest {
 
     @Test
     @DisplayName("Hand에 추가한 카드가 카드리스트에 들어있다.")
-    void getCa1rds() {
+    void saveCard() {
         hand = new Hand();
         Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
         hand.add(card);
 
         assertThat(hand.getCards()).contains(card);
+    }
+
+    @Test
+    @DisplayName("카드들의 점수를 계산할 수 있다.")
+    void calculateScore() {
+        hand = new Hand();
+        Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        hand.add(card);
+        hand.add(card2);
+
+        int score = hand.calculateScore();
+
+        assertThat(score).isEqualTo(9);
     }
 }
