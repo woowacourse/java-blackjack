@@ -15,9 +15,13 @@ public enum Number {
     Q(10),
     K(10);
 
-    private final int number;
+    private final int value;
 
-    Number(int number) {
-        this.number = number;
+    Number(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
