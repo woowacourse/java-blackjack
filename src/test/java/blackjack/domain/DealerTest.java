@@ -41,6 +41,56 @@ class DealerTest {
         assertThat(dealer.showCards()).containsAll(List.of(card, card2, card3));
     }
 
+    @DisplayName("딜러가 가진 카드의 점수 합을 구할 수 있다.")
+    @Test
+    void Should_Success_When_CalculateScore() {
+        // given
+        Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.KING, CardSymbol.HEARTS);
+
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(card);
+        dealer.addCard(card2);
+
+        // when, then
+        assertThat(dealer.calculateScore()).isEqualTo(20);
+    }
+
+    @DisplayName("딜러가 A를 가지고 있을 때 딜러의 점수 합이 21 이하면(버스트가 아니면) A는 11점으로 간주한다.")
+    @Test
+    void Should_AIs11_When_NotBurst() {
+        // given
+        Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(card);
+        dealer.addCard(card2);
+
+        // when, then
+        assertThat(dealer.calculateScore()).isEqualTo(21);
+    }
+
+    @DisplayName("딜러가 A를 가지고 있을 때 딜러의 점수 합이 21을 초과하면(burst이면) A는 1점으로 간주한다.")
+    @Test
+    void Should_AIs1_When_Burst() {
+        // given
+        Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
+        Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+
+        Dealer dealer = new Dealer();
+
+        dealer.addCard(card);
+        dealer.addCard(card2);
+        dealer.addCard(card3);
+
+        // when, then
+        assertThat(dealer.calculateScore()).isEqualTo(12);
+    }
+
     @Test
     void addCard() {
     }

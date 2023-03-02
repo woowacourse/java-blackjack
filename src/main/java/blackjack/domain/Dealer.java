@@ -23,7 +23,19 @@ public class Dealer implements Person {
 
     @Override
     public int calculateScore() {
-        return 0;
+        int totalScore = cards.stream()
+                .map(card -> Collections.max(card.getScore()))
+                .reduce(0, Integer::sum);
+
+        if (totalScore > 21 && hasACE()) {
+            return totalScore - 10;
+        }
+        return totalScore;
+    }
+
+    private boolean hasACE() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.getNumber()));
     }
 
     @Override
