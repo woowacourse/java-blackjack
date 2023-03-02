@@ -19,4 +19,10 @@ public class InputView {
         return playersName;
     }
 
+    public String readHitCommand() {
+        String inputHitCommand = scanner.nextLine();
+        inputValidator.validateInput(inputHitCommand);
+        inputValidator.checkHitCommand(inputHitCommand);
+        return inputHitCommand;
+    }
 }
