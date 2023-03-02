@@ -11,9 +11,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class ScoreCalculatorTest {
+@DisplayName("블랙잭 게임 점수는 ")
+class ScoreTest {
     @Test
-    @DisplayName("카드 숫자 값들이 주어지면 단순 합산으로 점수를 계산할 수 있다.")
+    @DisplayName("카드 숫자 값들이 주어지면 단순 합산으로 계산할 수 있다.")
     void calculateScoreTest() {
         //given
         List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE);
@@ -28,7 +29,7 @@ class ScoreCalculatorTest {
 
     @ParameterizedTest
     @MethodSource("calculateScoreWithAceCase")
-    @DisplayName("에이스를 포함한 합산 점수가 21 초과 시 에이스를 1점으로 계산한다.")
+    @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
     void calculateScoreWithAceTest(List<Card> cards, int expected) {
         //given
         ScoreCalculator scoreCalculator = new ScoreCalculator();

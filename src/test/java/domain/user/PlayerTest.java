@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("플레이어는 ")
 class PlayerTest {
     @Test
     @DisplayName("플레이어는 처음에 2장의 카드를 받는다.")

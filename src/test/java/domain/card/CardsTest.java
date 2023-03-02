@@ -8,9 +8,10 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("블랙잭 게임 ")
 class CardsTest {
     @Test
-    @DisplayName("블랙잭 게임 카드는 52장까지 뽑을 수 있다.")
+    @DisplayName("카드는 52장까지 뽑을 수 있다.")
     void drawCardTest() {
         //given
         Cards cards = new Cards();
@@ -23,7 +24,7 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("블랙잭 게임 시작 직후 카드를 두 장씩 분배한다.")
+    @DisplayName("시작 직후 카드를 두 장씩 분배한다.")
     void drawForFirstTurnTest() {
         Cards cards = new Cards();
 
