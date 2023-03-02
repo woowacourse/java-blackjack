@@ -1,11 +1,12 @@
 package view;
 
-import controller.BlackJackController;
-import controller.BlackJackController.PlayerResult;
+import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.player.Dealer;
+import domain.player.DealerResult;
 import domain.player.Participant;
+import domain.player.ParticipantResult;
 import domain.player.Player;
 
 import java.util.EnumMap;
@@ -13,18 +14,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-
 public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
-    private static final Map<PlayerResult, String> PLAYER_RESULT_MAP = new EnumMap<>(PlayerResult.class);
+    private static final Map<ParticipantResult, String> PARTICIPANT_RESULT_MAP = new EnumMap<>(ParticipantResult.class);
+    private static final Map<DealerResult, String> DEALER_RESULT_MAP = new EnumMap<>(DealerResult.class);
+
+    private static final String DELIM = ", ";
+    private static final String CARD_INFORMATION_FORMAT = "카드: ";
+    private static final String DEALER_INFORMATION_FORMAT = "딜러: ";
+    private static final String EMPTY_DELIM = " ";
+    private static final String COLON = ": ";
 
     static {
         makeShapeMessage();
         makeValueMessage();
-        makePlayerResultMessage();
+        makeParticipantResultMessage();
+        makeDealerResultMessage();
     }
 
     private static void makeShapeMessage() {
@@ -50,30 +57,55 @@ public class OutputView {
         VALUE_MESSAGE_MAP.put(CardValue.ACE, "A");
     }
 
-    private static void makePlayerResultMessage() {
-        PLAYER_RESULT_MAP.put(PlayerResult.WINNER, "승");
-        PLAYER_RESULT_MAP.put(PlayerResult.LOSER, "패");
-        PLAYER_RESULT_MAP.put(PlayerResult.DRAWER, "무");
+    private static void makeParticipantResultMessage() {
+        PARTICIPANT_RESULT_MAP.put(ParticipantResult.WINNER, "승");
+        PARTICIPANT_RESULT_MAP.put(ParticipantResult.LOSER, "패");
+        PARTICIPANT_RESULT_MAP.put(ParticipantResult.DRAWER, "무");
     }
 
-    public static void printAfterDeal(final List<? extends Player> participants) {
-        System.out.println("딜러와 " + participants.stream().map(it -> it.name().value())
-                                                .collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다");
+    private static void makeDealerResultMessage() {
+        DEALER_RESULT_MAP.put(DealerResult.WINNER, "승");
+        DEALER_RESULT_MAP.put(DealerResult.LOSER, "패");
+        DEALER_RESULT_MAP.put(DealerResult.DRAWER, "무");
     }
 
-    public static void showPlayersState(final List<? extends Player> participants) {
-        participants.forEach((participant) -> System.out.println(makeStateMessage(participant)));
+    public static void showDealtCardTo(final List<? extends Player> participants) {
+        System.out.println("딜러와 " + printDrawing(participants) + "에게 2장을 나누었습니다");
     }
 
-    public static void showPlayerState(final Player player) {
+    private static String printDrawing(final List<? extends Player> participants) {
+        return participants.stream()
+                           .map(OutputView::getPlayerName)
+                           .collect(Collectors.joining(DELIM));
+    }
+
+    public static void showStateOf(final Dealer dealer) {
+        final Card dealerFistCard = dealer.cardArea().firstCard();
+
+        System.out.println(getPlayerName(dealer)
+                                   + COLON
+                                   + VALUE_MESSAGE_MAP.get(dealerFistCard.cardValue())
+                                   + SHAPE_MESSAGE_MAP.get(dealerFistCard.cardShape())
+        );
+    }
+
+    public static void showStateOf(final List<? extends Player> participants) {
+        participants.forEach(participant -> System.out.println(makeStateMessage(participant)));
+    }
+
+    public static void showStateOf(final Player player) {
         System.out.println(makeStateMessage(player));
     }
 
     private static String makeStateMessage(final Player player) {
-        return player.cardArea().cards().stream()
-                     .map(card -> String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()),
+        return player.cardArea()
+                     .cards()
+                     .stream()
+                     .map(card -> String.format("%s %s",
+                                                VALUE_MESSAGE_MAP.get(card.cardValue()),
                                                 SHAPE_MESSAGE_MAP.get(card.cardShape())))
-                     .collect(Collectors.joining(", ", player.name().value() + "카드: ", ""));
+                     .collect(Collectors.joining(DELIM, getPlayerName(player)
+                             + CARD_INFORMATION_FORMAT, ""));
     }
 
     public static void showParticipantsStateResult(final List<? extends Player> participants) {
@@ -82,43 +114,42 @@ public class OutputView {
 
     public static void showPlayerStateResult(final Player player) {
         final String message = player.cardArea().cards().stream()
-                                     .map(card -> String.format("%s %s", VALUE_MESSAGE_MAP.get(card.cardValue()),
+                                     .map(card -> String.format("%s %s",
+                                                                VALUE_MESSAGE_MAP.get(card.cardValue()),
                                                                 SHAPE_MESSAGE_MAP.get(card.cardShape())))
-                                     .collect(Collectors.joining(", ", player.name().value() + "카드: ",
+                                     .collect(Collectors.joining(DELIM, getPlayerName(player)
+                                                                         + CARD_INFORMATION_FORMAT,
                                                                  String.format(" - 결과: %d",
                                                                                player.cardArea().calculate())));
+
         System.out.println(message);
+    }
+
+    private static String getPlayerName(final Player player) {
+        return player.name().value();
     }
 
     public static void dealerOneMoreCard() {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void showGameStatistic(BlackJackController.ResultDto resultDto) {
-        showPlayerStateResult(resultDto.dealer());
-        showParticipantsStateResult(resultDto.participants());
-        final Map<Participant, PlayerResult> result = resultDto.participantsResult();
+    public static void showDealerScoreBoard(final Map<DealerResult, Long> scoreBoard) {
 
-        final Map<PlayerResult, Long> winOrLose = result.keySet().stream()
-                                                        .collect(Collectors.groupingBy(result::get, counting()));
-
-        final String collect = winOrLose.keySet()
-                                        .stream()
-                                        .map(PlayerResult::reverse)
-                                        .map(it -> winOrLose.get(it) + PLAYER_RESULT_MAP.get(it))
-                                        .collect(Collectors.joining(" ", "딜러: ", ""));
-
-        System.out.println(collect);
-
-        resultDto.participants()
-                 .stream()
-                 .map(it -> it.name().value() + ": " + PLAYER_RESULT_MAP.get(result.get(it)))
-                 .forEach(System.out::println);
+        System.out.println(scoreBoard.keySet()
+                                     .stream()
+                                     .map(dealerResult -> scoreBoard.get(dealerResult)
+                                             + DEALER_RESULT_MAP.get(dealerResult))
+                                     .collect(Collectors.joining(EMPTY_DELIM, DEALER_INFORMATION_FORMAT, "")));
     }
 
-    public static void showDealerState(final Dealer dealer) {
-        System.out.println(dealer.name().value() + ": " + VALUE_MESSAGE_MAP.get(
-                dealer.cardArea().firstCard().cardValue()) + SHAPE_MESSAGE_MAP.get(
-                dealer.cardArea().firstCard().cardShape()));
+    public static void showParticipantsScoreBoard(final Map<Participant, ParticipantResult> scoreBoard,
+                                                  final List<Participant> participants) {
+
+        participants.stream()
+                    .map(participant -> getPlayerName(participant)
+                            + COLON
+                            + PARTICIPANT_RESULT_MAP.get(scoreBoard.get(participant))
+                    )
+                    .forEach(System.out::println);
     }
 }
