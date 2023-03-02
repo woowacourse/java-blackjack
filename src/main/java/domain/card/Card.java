@@ -36,4 +36,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(pattern, number);
     }
+
+    public int getNumber() {
+        return number.getNumber();
+    }
 }

@@ -3,24 +3,25 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
-@TestInstance(Lifecycle.PER_CLASS)
 class ParticipantCardTest {
 
     private Card card;
     private ParticipantCard participantCard;
 
-    @BeforeAll
+    @BeforeEach
     void init() {
         card = Card.create(CardPattern.HEART, CardNumber.ACE);
         participantCard = ParticipantCard.create();
@@ -59,5 +60,19 @@ class ParticipantCardTest {
 
         // then
         assertThat(actual).isSameAs(card);
+    }
+
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
+    @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
+    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+        // given
+        cards.forEach(participantCard::addCard);
+
+        // when
+        int score = participantCard.calculateScore();
+
+        // then
+        assertThat(score)
+                .isSameAs(expected);
     }
 }

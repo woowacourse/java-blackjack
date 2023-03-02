@@ -22,4 +22,8 @@ public abstract class Participant {
     public List<Card> getCard() {
         return List.copyOf(participantCard.getCards());
     }
+
+    public int calculateScore() {
+        return participantCard.calculateScore();
+    }
 }

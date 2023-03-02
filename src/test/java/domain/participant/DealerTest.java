@@ -6,6 +6,10 @@ import domain.card.CardPattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,5 +62,19 @@ class DealerTest {
 
         // then
         assertThat(actual).isEqualTo(card);
+    }
+
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
+    @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
+    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+        // given
+        cards.forEach(dealer::addCard);
+
+        // when
+        int score = dealer.calculateScore();
+
+        // then
+        assertThat(score)
+                .isSameAs(expected);
     }
 }

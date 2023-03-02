@@ -5,9 +5,12 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.card.CardNumber.ACE;
+
 public class ParticipantCard {
 
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int ACE_HIGH_POINTS = 11;
 
     private final List<Card> cards;
 
@@ -29,5 +32,23 @@ public class ParticipantCard {
 
     List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    int calculateScore() {
+        int score = sumCards();
+        if (score < ACE_HIGH_POINTS && hasAce()) {
+            score += (ACE_HIGH_POINTS - ACE.getNumber());
+        }
+        return score;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+    private int sumCards() {
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 }
