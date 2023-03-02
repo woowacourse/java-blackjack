@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ParticipantTest {
 
@@ -20,7 +19,6 @@ class ParticipantTest {
     @Test
     void increaseNumberOfCardWhenGivenCard() {
         // given
-        Participant participant = new Participant();
         Card card = new Card(Rank.ACE, Suit.DIAMOND);
 
         // when
@@ -35,8 +33,8 @@ class ParticipantTest {
     void returnsSumOfRank() {
         // given
         Rank rank1 = Rank.FIVE;
-        Rank rank2 = Rank.TEN;
-        Rank rank3 = Rank.DEUCE;
+        Rank rank2 = Rank.EIGHT;
+        Rank rank3 = Rank.SEVEN;
         int givenSum = rank1.getValue() + rank2.getValue() + rank3.getValue();
 
         Card card1 = new Card(rank1, Suit.CLOVER);

@@ -1,34 +1,29 @@
 package blackjack.domain;
 
-import java.util.Collections;
-import java.util.List;
-
 public class BlackJackGame {
 
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(String inputNames) {
+    public BlackJackGame(final String inputNames) {
         this.dealer = new Dealer();
         this.players = new Players(inputNames);
     }
 
-    public void handOutInitCards() {
-        List<Integer> keys = shuffleDeck();
-        handOutInitCardsTo(keys, dealer);
+    public void handOutCardTo(final CardMachine cardMachine, final Participant participant) {
+        Card card = Deck.from(cardMachine.draw());
+        participant.receiveCard(card);
+    }
+
+    public void handOutInitCards(final CardMachine cardMachine) {
+        handOutInitCardsTo(cardMachine, dealer);
         players.getPlayers()
-                .forEach(player -> handOutInitCardsTo(keys, player));
+                .forEach(player -> handOutInitCardsTo(cardMachine, player));
     }
 
-    private List<Integer> shuffleDeck() {
-        List<Integer> keys = Deck.getKeys();
-        Collections.shuffle(keys);
-        return keys;
-    }
-
-    private void handOutInitCardsTo(final List<Integer> keys, final Participant participant) {
+    private void handOutInitCardsTo(final CardMachine cardMachine, final Participant participant) {
         for (int i = 0; i < 2; i++) {
-            Card card = Deck.from(keys.remove(0));
+            Card card = Deck.from(cardMachine.draw());
             participant.receiveCard(card);
         }
     }

@@ -24,4 +24,8 @@ public class Participant {
     public Set<Card> getCards() {
         return cards;
     }
+
+    public boolean isUnderThanBoundary(int number) {
+        return this.calculateSumOfRank() < number;
+    }
 }
