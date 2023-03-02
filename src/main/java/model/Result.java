@@ -40,7 +40,7 @@ public class Result {
     }
 
     public boolean canDealerReceiveCard() {
-        return CAN_RECEIVE_DEALER_MAX_NUMBER >= scoreBoards.get(new Dealer("딜러")).stream()
+        return CAN_RECEIVE_DEALER_MAX_NUMBER >= scoreBoards.get(Dealer.getInstance()).stream()
                 .mapToInt(Card::getValue)
                 .sum();
     }

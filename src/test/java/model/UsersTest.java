@@ -19,6 +19,6 @@ class UsersTest {
         // then
         assertThat(users)
                 .extracting("users", InstanceOfAssertFactories.list(User.class))
-                .containsExactly(new Dealer("딜러"), new Player("bebe"), new Player("ethan"));
+                .containsExactly(Dealer.getInstance(), new Player("bebe"), new Player("ethan"));
     }
 }

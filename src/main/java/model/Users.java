@@ -20,7 +20,7 @@ public class Users {
                 .map(Player::new)
                 .collect(Collectors.toList());
 
-        players.add(0, new Dealer("딜러"));
+        players.add(0, Dealer.getInstance());
 
         return players;
     }

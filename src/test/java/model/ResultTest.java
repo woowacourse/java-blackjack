@@ -79,7 +79,7 @@ class ResultTest {
         final Card cloverTen = new Card(CLOVER, TEN);
         final Card heartSix = new Card(HEART, SIX);
 
-        User dealer = new Dealer("딜러");
+        User dealer = Dealer.getInstance();
         result.addCard(dealer, cloverTen);
         result.addCard(dealer, heartSix);
         // when, then
