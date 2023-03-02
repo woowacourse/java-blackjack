@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public final class Participants {
 
     private final List<Participant> participants;
@@ -12,7 +14,7 @@ public final class Participants {
         this.participants = participants;
     }
 
-    public static Participants from(List<String> playerNames) {
+    public static Participants from(final List<String> playerNames) {
         validateDuplicate(playerNames);
         List<Participant> participants = playerNames.stream()
                 .map(Participant::from)
@@ -21,7 +23,13 @@ public final class Participants {
         return new Participants(participants);
     }
 
-    private static void validateDuplicate(List<String> playerNames) {
+    public List<String> getNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(toList());
+    }
+
+    private static void validateDuplicate(final List<String> playerNames) {
         if (isDuplicate(playerNames)) {
             throw new IllegalArgumentException("중복되지 않은 이름만 입력해주세요");
         }
@@ -35,8 +43,8 @@ public final class Participants {
 
     public void drawCard(final Deck deck) {
         participants.forEach(participant -> {
-            participant.takeCard(deck.drawCard());
-            participant.takeCard(deck.drawCard());
+            participant.takeCard(deck.dealCard());
+            participant.takeCard(deck.dealCard());
         });
     }
 
