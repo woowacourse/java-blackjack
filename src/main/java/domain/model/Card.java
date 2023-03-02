@@ -37,7 +37,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return letter.getNumber() + suit.getName();
+        return letter.getSign() + suit.getName();
     }
 
     public int getNumber() {
