@@ -28,4 +28,8 @@ public class Dealer {
         return cards;
     }
 
+    public boolean isMoreCardAble() {
+        return getTotalScore() <= MORE_CARD_LIMIT;
+    }
+
 }
