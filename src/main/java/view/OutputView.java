@@ -2,6 +2,8 @@ package view;
 
 import domain.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -14,6 +16,8 @@ public class OutputView {
     private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패";
     private static final String RESULT_GUIDE_MESSAGE = "## 최종 승패";
     private static final String SCORE_GUIDE_MESSAGE = " - 결과: ";
+    private static final String POSTFIX_INITIAL_PICK_GUIDE_MESSAGE = "에게 2장을 나누었습니다.";
+    private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "딜러와";
 
     private OutputView() {
     }
@@ -82,5 +86,14 @@ public class OutputView {
             int loseCount = size - winCount - 1;
             System.out.printf(DEALER_RESULT_FORMAT, winCount, loseCount);
         }
+    }
+
+    private static void printInitialPickGuideMessage(Players players) {
+        System.out.print(PREFIX_INITIAL_PICK_GUIDE_MESSAGE);
+        List<String> message = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            message.add(player.getName());
+        }
+        System.out.println(String.join(DELIMITER, message) + POSTFIX_INITIAL_PICK_GUIDE_MESSAGE);
     }
 }
