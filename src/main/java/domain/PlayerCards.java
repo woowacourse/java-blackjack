@@ -11,7 +11,11 @@ public class PlayerCards {
     }
 
     public void add(Card card) {
-        cards.add(card);
+        this.cards.add(card);
+    }
+
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public int getScore() {

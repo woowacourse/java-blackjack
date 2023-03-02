@@ -29,4 +29,17 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복인 이름은 입력하실 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("플레이어는 두 장씩 카드를 받는다")
+    void addTwoCardsTest() {
+        List<String> names = List.of("jamie", "boxster");
+
+        Players players = Players.from(names);
+        players.addTwoCards(CardDeck.generate());
+
+        assertThat(players.toList()
+                          .get(0)
+                          .getCards()).hasSize(2);
+    }
 }

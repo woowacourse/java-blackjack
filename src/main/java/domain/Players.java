@@ -26,6 +26,13 @@ public class Players {
         }
     }
 
+    public void addTwoCards(CardDeck cardDeck) {
+        for (Participant player : players) {
+            List<Card> cards = cardDeck.pickTwice();
+            player.addCards(cards);
+        }
+    }
+
     public List<Participant> toList() {
         return List.copyOf(players);
     }

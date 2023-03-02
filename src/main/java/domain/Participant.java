@@ -14,6 +14,10 @@ abstract class Participant {
         playerCards.add(card);
     }
 
+    void addCards(List<Card> cards) {
+        playerCards.addAll(cards);
+    }
+
     ScoreState getState() {
         return ScoreState.of(playerCards.getScore());
     }
