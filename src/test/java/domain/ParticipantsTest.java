@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +13,8 @@ class ParticipantsTest {
     void create() {
         Participants participants = new Participants(List.of(new Participant("echo"), new Participant("split")));
         Assertions.assertThat(participants)
-            .extracting("participants")
-            .asList()
-            .hasSize(2);
-        Assertions.assertThat(participants)
-            .extracting("participants")
-            .asList()
-            .contains(new Participant("echo"), new Participant("split"));
+            .extracting("participantStatuses")
+            .asInstanceOf(InstanceOfAssertFactories.map(Participant.class, GameStatus.class))
+            .containsKeys(new Participant("echo"), new Participant("split"));
     }
 }
