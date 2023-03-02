@@ -6,7 +6,7 @@ import view.OutputView;
 
 import java.util.List;
 
-public class Controller {
+public final class Controller {
 
     private static final int BUST_NUMBER = 21;
     private static final int DEALER_STAY_NUMBER = 17;

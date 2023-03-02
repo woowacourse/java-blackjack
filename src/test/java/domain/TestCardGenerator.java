@@ -2,12 +2,22 @@ package domain;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.*;
+
 public class TestCardGenerator implements CardGenerator {
 
-    static List<Card> cards;
+    private final List<Card> cards;
 
-    static {
-        cards = CardGenerator.generate();
+    private TestCardGenerator(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static TestCardGenerator from(List<Number> numbers) {
+        final List<Card> cards = numbers.stream()
+                .map(number -> Card.of(Shape.CLUBS, number))
+                .collect(toList());
+
+        return new TestCardGenerator(cards);
     }
 
     @Override

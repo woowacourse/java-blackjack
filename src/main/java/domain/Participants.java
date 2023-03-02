@@ -14,7 +14,9 @@ public final class Participants {
 
     public static Participants from(List<String> playerNames) {
         validateDuplicate(playerNames);
-        List<Participant> participants = playerNames.stream().map(Participant::from).collect(Collectors.toList());
+        List<Participant> participants = playerNames.stream()
+                .map(Participant::from)
+                .collect(Collectors.toList());
 
         return new Participants(participants);
     }
