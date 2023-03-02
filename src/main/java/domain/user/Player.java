@@ -18,7 +18,7 @@ public class Player extends User{
     }
 
     @Override
-    protected boolean isBust() {
-        return status.equals(PlayerStatus.BUST);
+    protected UserStatus getStatus() {
+        return status;
     }
 }
