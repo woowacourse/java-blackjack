@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,10 @@ public class ParticipantName {
     public ParticipantName(String name) {
         validateName(name);
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private void validateName(String name) {
@@ -32,5 +37,22 @@ public class ParticipantName {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NULL_OR_BLANK_ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ParticipantName that = (ParticipantName) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

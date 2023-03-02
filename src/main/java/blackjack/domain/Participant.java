@@ -46,5 +46,9 @@ public abstract class Participant {
         return totalSumAceCardValueOne;
     }
 
+    public ParticipantName getParticipantName() {
+        return participantName;
+    }
+
     abstract boolean decideHit();
 }
