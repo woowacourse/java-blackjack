@@ -15,6 +15,10 @@ public class CardPack {
         initCardsShape();
     }
 
+    public CardPack(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
     private void initCardsShape() {
         for (final CardShape currentShape : CardShape.values()) {
             matchingNumberByShape(currentShape);
