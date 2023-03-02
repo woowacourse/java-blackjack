@@ -25,7 +25,7 @@ public class Name {
         return value == null || value.length() < NAME_LENGTH_LOWER_BOUND || NAME_LENGTH_UPPER_BOUND < value.length();
     }
 
-    public static Name from(String value) {
+    public static Name from(final String value) {
         if (RESERVED_NAME.equals(value)) {
             throw new IllegalArgumentException(RESERVED_NAME_MESSAGE);
         }

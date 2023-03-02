@@ -8,13 +8,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class PlayerTest {
+public class GamblerTest {
 
     @Test
-    void 플레이어가_정상_생성된다() {
-        final Player player = new Player("허브");
+    void 겜블러가_정상_생성된다() {
+        final Gambler gambler = new Gambler("허브");
 
-        assertThat(player.getName()).isEqualTo("허브");
+        assertThat(gambler.getName()).isEqualTo("허브");
     }
-
 }
