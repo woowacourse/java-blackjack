@@ -3,7 +3,7 @@ package domain;
 import java.util.Collections;
 import java.util.Stack;
 
-class CardDeck {
+public class CardDeck {
 
     private final Stack<Card> initPool = new Stack<>();
 
