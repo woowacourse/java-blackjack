@@ -5,6 +5,7 @@ import blackjack.domain.player.exception.InvalidPlayerNameException;
 public class Challenger extends Player {
 
     private static final String INVALID_NAME = "딜러";
+    private static final int MAXIMUM_POINT = 21;
 
     private final String name;
 
@@ -21,7 +22,6 @@ public class Challenger extends Player {
 
     @Override
     public Boolean canPick() {
-
-        return null;
+        return holdingCards.sum() <= MAXIMUM_POINT;
     }
 }
