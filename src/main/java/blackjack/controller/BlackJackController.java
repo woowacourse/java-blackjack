@@ -56,11 +56,11 @@ public class BlackJackController {
 
     private void initDrawCard(List<Person> persons, Cards uniqueCards) {
         for (Person person : persons) {
-            drawTwoCard(person, uniqueCards);
+            drawTwoCards(person, uniqueCards);
         }
     }
 
-    private void drawTwoCard(Person person, Cards cards) {
+    private void drawTwoCards(Person person, Cards cards) {
         person.addCard(cards.drawCard());
         person.addCard(cards.drawCard());
     }
