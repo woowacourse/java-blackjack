@@ -9,6 +9,7 @@ public class Cards {
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
     private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
+    private static final int SPECIFIC_SCORE_OF_DEALER = 16;
 
     private final List<Card> cards;
 
@@ -63,6 +64,10 @@ public class Cards {
 
     public boolean isBust() {
         return calculateTotalScore() > BLACKJACK_SCORE_CONDITION;
+    }
+
+    public boolean isLessThan16Score() {
+        return calculateTotalScore() <= SPECIFIC_SCORE_OF_DEALER;
     }
 
     public List<Card> getCards() {
