@@ -79,6 +79,21 @@ class HandTest {
             int score = hand.calculateScore();
             assertThat(score).isEqualTo(13);
         }
+
+        @DisplayName("합계가 11 초과이면 에이스가 1로 계산된다.")
+        @Test
+        void upperEleven() {
+            hand = new Hand();
+            Card card = new Card(CardNumber.ACE, Pattern.HEART);
+            Card card1 = new Card(CardNumber.TEN, Pattern.HEART);
+            Card card2 = new Card(CardNumber.FIVE, Pattern.HEART);
+            hand.add(card);
+            hand.add(card1);
+            hand.add(card2);
+
+            int score = hand.calculateScore();
+            assertThat(score).isEqualTo(16);
+        }
     }
 
 }
