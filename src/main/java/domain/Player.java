@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-public class Player implements Gambler{
+public class Player implements Gambler {
     private final PlayerName playerName;
     private final Cards cards;
 
