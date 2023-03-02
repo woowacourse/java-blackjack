@@ -2,8 +2,8 @@ package balckjack.domain;
 
 public class AceCard extends Card{
 
-    public AceCard() {
-        super("A");
+    public AceCard(Pattern pattern) {
+        super(pattern, "A");
     }
 
     @Override

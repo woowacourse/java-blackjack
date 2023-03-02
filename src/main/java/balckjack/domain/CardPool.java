@@ -1,33 +1,42 @@
 package balckjack.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CardPool {
 
-    public static final Map<Pattern, List<Card>> cards = new HashMap<>();
+    public static final List<Card> cards = new ArrayList<>();
 
     private CardPool() {
     }
 
     static {
-        List<Card> a = new ArrayList<>();
-        a.add(new AceCard());
-        for (int i = 2; i < 11; i++) {
-            a.add(new StandardCard(String.valueOf(i)));
-        }
-        a.add(new CourtCard("J"));
-        a.add(new CourtCard("K"));
-        a.add(new CourtCard("Q"));
 
-        Arrays.stream(Pattern.values()).forEach((pattern)->cards.put(pattern, a));
+        final Pattern[] values = Pattern.values();
+
+        for (Pattern pattern : values) {
+            cards.add(new AceCard(pattern));
+            for (int i = 2; i < 11; i++) {
+                cards.add(new StandardCard(pattern, String.valueOf(i)));
+            }
+            cards.add(new CourtCard(pattern, "J"));
+            cards.add(new CourtCard(pattern, "K"));
+            cards.add(new CourtCard(pattern, "Q"));
+        }
     }
 
     public static int getSize() {
-        return cards.values().stream().mapToInt(List::size).sum();
+        return cards.size();
     }
 
+//    public static Card draw(CardPicker cardPicker) {
+//        //패턴도 셔플
+//        //그 안에 셔플
+//
+//        //하나의 리스트에 각 패턴마다 가져오고
+//        //셔플
+//        //첫번째 카드 get
+//        // 0, 4
+//        // 0, 13
+//    }
 }

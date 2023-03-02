@@ -6,8 +6,8 @@ public class CourtCard extends Card {
 
     private static final List<String> symbols = List.of("J", "Q", "K");
 
-    public CourtCard(String symbol) {
-        super(symbol);
+    public CourtCard(Pattern pattern, String symbol) {
+        super(pattern, symbol);
     }
 
     @Override

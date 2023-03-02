@@ -17,17 +17,17 @@ class RefereeTest {
     @Test
     void testCommonCase() {
         CardDeck deck = new CardDeck();
-        deck.addCard(new CourtCard("K"));
-        deck.addCard(new StandardCard("4"));
+        deck.addCard(new CourtCard(Pattern.SPADE, "K"));
+        deck.addCard(new StandardCard(Pattern.SPADE, "4"));
         Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(14);
     }
 
     @Test
     void testBurstCase() {
         CardDeck deck = new CardDeck();
-        deck.addCard(new CourtCard("K"));
-        deck.addCard(new CourtCard("J"));
-        deck.addCard(new CourtCard("Q"));
+        deck.addCard(new CourtCard(Pattern.SPADE, "K"));
+        deck.addCard(new CourtCard(Pattern.SPADE, "J"));
+        deck.addCard(new CourtCard(Pattern.SPADE, "Q"));
 
         Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(-1);
     }
@@ -39,18 +39,18 @@ class RefereeTest {
         @Test
         void testOneAceCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new CourtCard("K"));
-            deck.addCard(new StandardCard("4"));
-            deck.addCard(new AceCard());
+            deck.addCard(new CourtCard(Pattern.SPADE, "K"));
+            deck.addCard(new StandardCard(Pattern.SPADE, "4"));
+            deck.addCard(new AceCard(Pattern.HEART));
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(15);
         }
 
         @Test
         void testElevenAceCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new StandardCard("2"));
-            deck.addCard(new StandardCard("4"));
-            deck.addCard(new AceCard());
+            deck.addCard(new StandardCard(Pattern.SPADE, "2"));
+            deck.addCard(new StandardCard(Pattern.SPADE, "4"));
+            deck.addCard(new AceCard(Pattern.HEART));
 
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(17);
         }
@@ -58,11 +58,11 @@ class RefereeTest {
         @Test
         void testManyAceCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new StandardCard("2"));
-            deck.addCard(new AceCard());
-            deck.addCard(new AceCard());
-            deck.addCard(new StandardCard("4"));
-            deck.addCard(new AceCard());
+            deck.addCard(new StandardCard(Pattern.SPADE, "2"));
+            deck.addCard(new AceCard(Pattern.HEART));
+            deck.addCard(new AceCard(Pattern.CLUB));
+            deck.addCard(new StandardCard(Pattern.SPADE, "4"));
+            deck.addCard(new AceCard(Pattern.DIAMOND));
 
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(19);
         }
@@ -70,11 +70,11 @@ class RefereeTest {
         @Test
         void testManyAceBurstCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new CourtCard("K"));
-            deck.addCard(new AceCard());
-            deck.addCard(new AceCard());
-            deck.addCard(new CourtCard("J"));
-            deck.addCard(new AceCard());
+            deck.addCard(new CourtCard(Pattern.SPADE, "K"));
+            deck.addCard(new AceCard(Pattern.SPADE));
+            deck.addCard(new AceCard(Pattern.HEART));
+            deck.addCard(new CourtCard(Pattern.SPADE, "J"));
+            deck.addCard(new AceCard(Pattern.CLUB));
 
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(-1);
         }
