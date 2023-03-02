@@ -1,19 +1,16 @@
 package controller;
 
 import domain.BlackJack;
+import domain.strategy.RandomBasedIndexGenerator;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    private final BlackJack blackJack;
-
-    public BlackJackController(BlackJack blackJack) {
-        this.blackJack = blackJack;
-    }
-
     public void startGame() {
         OutputView.printParticipantNamesGuide();
         String participantNames = InputView.repeat(InputView::inputParticipantNames);
 
+        BlackJack blackJack = new BlackJack(participantNames, new RandomBasedIndexGenerator());
+        blackJack.startGame();
     }
 }

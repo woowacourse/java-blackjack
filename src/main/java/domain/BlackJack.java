@@ -14,9 +14,9 @@ public class BlackJack {
     private final CardRepository cardRepository;
     private final List<Player> players;
 
-    public BlackJack(String playerNames, IndexGenerator indexGenerator) {
+    public BlackJack(String participantNames, IndexGenerator indexGenerator) {
         this.cardRepository = CardRepository.create(indexGenerator);
-        this.players = initPlayers(playerNames);
+        this.players = initPlayers(participantNames);
     }
 
     private List<Player> initPlayers(String playerNames) {
