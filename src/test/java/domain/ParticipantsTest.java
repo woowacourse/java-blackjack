@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Participant;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;

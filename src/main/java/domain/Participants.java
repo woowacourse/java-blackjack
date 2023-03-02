@@ -1,5 +1,7 @@
 package domain;
 
+import domain.participant.Participant;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,5 +32,9 @@ public class Participants {
             return ParticipantStatus.BLACK_JACK;
         }
         return ParticipantStatus.NOT_BUST;
+    }
+
+    public List<Participant> getAllParticipants() {
+        return new ArrayList<>(participantStatuses.keySet());
     }
 }

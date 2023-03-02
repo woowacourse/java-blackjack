@@ -1,11 +1,14 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
 
     private final List<Card> cards;
+    private int usedCount = 0;
+
 
     public Deck() {
         this.cards = generateCards();
@@ -24,6 +27,14 @@ public class Deck {
             Card card = new Card(value, cardShape);
             cards.add(card);
         }
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card draw() {
+        return cards.get(usedCount++);
     }
 
     public int getSize() {
