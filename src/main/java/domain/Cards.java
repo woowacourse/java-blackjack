@@ -25,6 +25,10 @@ public class Cards {
         return decreaseScoreByAce(sum, limit, aceCount);
     }
 
+    public void addNewCard(Card card) {
+        cards.add(card);
+    }
+
     private int increaseAceCount(int aceCount, Card card) {
         if (card.isAce()) {
             return aceCount + 1;
@@ -44,6 +48,10 @@ public class Cards {
 
     private boolean isScoreDecreasableByAce(int sum, int limit, int aceCount) {
         return sum != 21 && limit < sum && 0 < aceCount;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
 }
