@@ -18,4 +18,8 @@ public class Player {
     public List<Card> getCards() {
         return hand.getCards();
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }

@@ -23,7 +23,19 @@ public class Dealer extends Player {
         }
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
+    public void drawCard(String playerName) {
+        Player player = findPlayer(playerName);
+        player.drawCard(deck);
+    }
+
+    private Player findPlayer(String playerName) {
+        return players.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public List<Card> getCards(String playerName) {
+        return findPlayer(playerName).getCards();
     }
 }
