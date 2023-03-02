@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PersonTest {
 
@@ -123,5 +125,35 @@ class PersonTest {
         // expect
         assertThat(person.isPlayer())
                 .isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {" ", "  ", "", "\n"})
+    @DisplayName("이름이 공백이면 예외가 발생해야 한다.")
+    void validateBlankName(String input) {
+        // expect
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            new Person(input);
+        }).withMessage("[ERROR] 이름은 공백일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이름이 5글자를 초과하면 예외가 발생해야 한다.")
+    void validateNameLength() {
+        // expect
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            new Person("123456");
+        }).withMessage("[ERROR] 이름은 5글자를 넘을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("person이 정상적으로 생성되어야 한다.")
+    void create_success() {
+        // given
+        Person person = new Person("123");
+
+        // expect
+        assertThat(person.getName())
+                .isEqualTo("123");
     }
 }
