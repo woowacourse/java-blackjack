@@ -42,7 +42,11 @@ public class People {
         }
     }
 
-    public Player playerByName(String playerName) {
+    public boolean isBurst(String playerName, int blackJackNumber) {
+        return playerByName(playerName).sumCardPool() > blackJackNumber;
+    }
+
+    private Player playerByName(String playerName) {
         return players.stream()
                 .filter(it -> it.hasSameNameWith(playerName))
                 .findAny()

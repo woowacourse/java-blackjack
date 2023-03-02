@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
+    private static final int BLACK_JACK_NUMBER = 21;
+
     private final Deck deck;
     private final People people;
 
@@ -14,5 +16,7 @@ public class BlackjackGame {
         this.people = new People(playerNames, dealerName);
     }
 
-
+    public boolean isBurst(String playerName) {
+        return people.isBurst(playerName, BLACK_JACK_NUMBER);
+    }
 }
