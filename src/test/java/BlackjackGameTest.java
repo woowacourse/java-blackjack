@@ -40,4 +40,16 @@ class BlackjackGameTest {
         Assertions.assertThat(crong.cardSize()).isEqualTo(2);
     }
 
+    @DisplayName("딜러는 카드의 합이 17이 넘을때 까지 추가 카드를 받아야 한다.")
+    @Test
+    void giveAdditionalCardToDealerSuccessTest(){
+        blackjackGame.giveInitCards();
+        blackjackGame.giveAdditionalCardToDealer();
+
+        Participant dealer = blackjackGame.getDealer();
+
+        Assertions.assertThat(dealer.calculateScore())
+                .isGreaterThanOrEqualTo(17);
+    }
+
 }
