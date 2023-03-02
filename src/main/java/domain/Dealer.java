@@ -1,24 +1,18 @@
 package domain;
 
-import java.util.List;
+public class Dealer extends Participant {
 
-public class Dealer {
-
-    private final PlayerCards playerCards;
+    private final Name name;
 
     public Dealer() {
-        this.playerCards = new PlayerCards();
+        this.name = new Name("딜러");
     }
 
-    public List<Card> getCards() {
-        return playerCards.toList();
-    }
-
-    public void addCard(Card card) {
-        playerCards.add(card);
+    public String getName() {
+        return name.getValue();
     }
 
     public Card getFirstCard() {
-        return playerCards.getFirstCard();
+        return super.playerCards.getFirst();
     }
 }

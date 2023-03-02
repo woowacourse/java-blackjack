@@ -5,17 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
+    private final List<Participant> players;
 
-    private Players(List<Player> players) {
+    private Players(List<Participant> players) {
         this.players = players;
     }
 
     public static Players from(List<String> names) {
         validateDuplicate(names);
-        List<Player> players = names.stream()
-                                    .map(Player::new)
-                                    .collect(Collectors.toList());
+        List<Participant> players = names.stream()
+                                         .map(Player::new)
+                                         .collect(Collectors.toList());
+        players.add(new Dealer());
         return new Players(players);
     }
 
@@ -25,7 +26,7 @@ public class Players {
         }
     }
 
-    public List<Player> toList() {
+    public List<Participant> toList() {
         return List.copyOf(players);
     }
 }

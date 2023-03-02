@@ -11,13 +11,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PlayersTest {
 
     @Test
-    @DisplayName("이름들을 받아 players를 생성한다")
+    @DisplayName("이름들을 받아 딜러를 포함하여 players를 생성한다")
     void createPlayersTest() {
         List<String> names = List.of("jamie", "boxster");
 
         Players players = Players.from(names);
 
-        assertThat(players.toList()).hasSize(2);
+        assertThat(players.toList()).hasSize(3);
     }
 
     @Test
