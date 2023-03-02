@@ -43,4 +43,12 @@ public class Users {
             user.draw(deck.drawCard());
         }
     }
+
+    public List<Card> getCardsOf(final User user) {
+        final int targetUser = users.indexOf(user);
+        if(targetUser == -1){
+            throw new IllegalArgumentException("없는 유저 입니다.");
+        }
+        return users.get(targetUser).openCards();
+    }
 }

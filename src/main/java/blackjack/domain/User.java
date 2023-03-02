@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class User implements Player {
@@ -35,6 +36,10 @@ public class User implements Player {
     @Override
     public GamePoint getGamePoint() {
         return cards.getPoint();
+    }
+
+    public List<Card> openCards() {
+        return cards.getCards();
     }
 
     public boolean isGreaterThan(final GamePoint point) {

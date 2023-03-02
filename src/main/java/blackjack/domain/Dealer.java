@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer implements Player {
@@ -42,5 +43,17 @@ public class Dealer implements Player {
             throw new IllegalStateException("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
         }
         return cards.getPoint();
+    }
+
+    public List<Card> openCards() {
+        return cards.getCards();
+    }
+
+    public List<Card> getFirstCard() {
+        List<Card> returnCard = new ArrayList<>();
+        final List<Card> cardsData = this.cards.getCards();
+        final Card firstCard = cardsData.get(0);
+        returnCard.add(firstCard);
+        return cardsData;
     }
 }

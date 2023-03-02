@@ -46,4 +46,8 @@ public class Cards {
     public boolean havePointOf(final GamePoint point) {
         return this.point.isEqualTo(point);
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
