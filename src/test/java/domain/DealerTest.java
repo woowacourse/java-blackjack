@@ -22,5 +22,19 @@ public class DealerTest {
         assertThat(dealer.getCard(0)).isEqualTo(card);
     }
 
+    @Test
+    @DisplayName("딜러의 카드의 합이 16을 초과하는지 확인하기")
+    void isOverStandardTest() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardNumber.ACE,CardPattern.SPADE);
+        Card card2 = new Card(CardNumber.ACE,CardPattern.SPADE);
+        Card card3 = new Card(CardNumber.SEVEN,CardPattern.SPADE);
+        dealer.addCard(card1);
+        dealer.addCard(card2);
+        dealer.addCard(card3);
+
+        assertThat(dealer.isOverStandard()).isTrue();
+    }
+
 
 }
