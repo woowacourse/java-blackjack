@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
     @Test
@@ -14,7 +14,7 @@ class ParticipantTest {
     void getTotalPoint() {
         Card cardOne = new Card(CardShape.DIAMOND, CardNumber.SIX);
         Card cardTwo = new Card(CardShape.HEART, CardNumber.ACE);
-        Participant participant = ParticipantFixture.create(List.of(cardOne, cardTwo));
+        Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
         int totalPoint = participant.getTotalPoint();
 
         assertThat(totalPoint).isEqualTo(17);

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,16 +62,54 @@ class ParticipantCardsTest {
         assertThat(cardSum).isEqualTo(expectedSum);
     }
 
+    @ParameterizedTest
+    @MethodSource("isBustDummy")
+    @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
+    void isBust(final Card one, final Card two, final List<Card> additionalCards, final boolean expected) {
+        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, additionalCards);
+        boolean isBust = participantsCards.isBust();
+
+        assertThat(isBust).isEqualTo(expected);
+    }
+
     static Stream<Arguments> calculateDummy() {
         return Stream.of(
                 Arguments.arguments(List.of(
                         new Card(CardShape.DIAMOND, CardNumber.THREE),
                         new Card(CardShape.HEART, CardNumber.FOUR)
-                ), CardNumber.THREE.getValue() + CardNumber.FOUR.getValue()),
+                ), 7),
                 Arguments.arguments(List.of(
                         new Card(CardShape.SPADE, CardNumber.ACE),
                         new Card(CardShape.CLOVER, CardNumber.FOUR)
-                ), CardNumber.ACE.getValue() + CardNumber.FOUR.getValue())
+                ), 15)
+        );
+    }
+
+    static Stream<Arguments> isBustDummy() {
+        return Stream.of(
+                Arguments.arguments(
+                        new Card(CardShape.DIAMOND, CardNumber.TWO),
+                        new Card(CardShape.DIAMOND, CardNumber.FOUR),
+                        List.of(
+                                new Card(CardShape.DIAMOND, CardNumber.THREE),
+                                new Card(CardShape.HEART, CardNumber.FOUR)
+                        ), false),
+                Arguments.arguments(
+                        new Card(CardShape.DIAMOND, CardNumber.TWO),
+                        new Card(CardShape.DIAMOND, CardNumber.THREE),
+                        List.of(
+                                new Card(CardShape.SPADE, CardNumber.ACE),
+                                new Card(CardShape.CLOVER, CardNumber.FOUR)
+                        ), false),
+                Arguments.arguments(
+                        new Card(CardShape.DIAMOND, CardNumber.TWO),
+                        new Card(CardShape.DIAMOND, CardNumber.FOUR),
+                        List.of(
+                                new Card(CardShape.SPADE, CardNumber.ACE),
+                                new Card(CardShape.CLOVER, CardNumber.QUEEN),
+                                new Card(CardShape.HEART, CardNumber.JACK),
+                                new Card(CardShape.DIAMOND, CardNumber.THREE)
+                        ), true)
         );
     }
 }

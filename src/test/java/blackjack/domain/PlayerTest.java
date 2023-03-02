@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
     @Test
@@ -14,7 +14,7 @@ class PlayerTest {
     void hit() {
         Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
         Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
-        Participant player = new Player(ParticipantCardsFixture.createParticipantsCards(List.of(cardOne, cardTwo)));
+        Participant player = new Player(ParticipantCardsFixture.createParticipantsCards(cardOne, cardTwo, List.of()));
         int beforeHitPoint = player.getTotalPoint();
         player.hit(new Card(CardShape.SPADE, CardNumber.ACE));
         int afterHitPoint = player.getTotalPoint();
@@ -27,7 +27,7 @@ class PlayerTest {
     void open() {
         Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
         Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
-        Participant player = new Player(ParticipantCardsFixture.createParticipantsCards(List.of(cardOne, cardTwo)));
+        Participant player = new Player(ParticipantCardsFixture.createParticipantsCards(cardOne, cardTwo, List.of()));
 
         assertThat(player.open(2)).containsAll(List.of(cardOne, cardTwo));
     }

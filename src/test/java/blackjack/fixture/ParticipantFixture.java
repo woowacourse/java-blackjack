@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class ParticipantFixture {
-    public static Participant create(final List<Card> cards) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(cards);
+    public static Participant create(final Card one, final Card two, final List<Card> cards) {
+        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, cards);
         return new Participant(participantsCards) {
             @Override
             protected void hit(final Card card) {
@@ -19,6 +19,11 @@ public abstract class ParticipantFixture {
             @Override
             protected List<Card> open(final int cardCount) {
                 return Collections.emptyList();
+            }
+
+            @Override
+            protected boolean isHittable() {
+                return false;
             }
         };
     }
