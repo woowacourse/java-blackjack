@@ -22,4 +22,19 @@ class PlayerTest {
         //then
         assertThat(cards.size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("플레이어는 카드 한 장을 받아 패에 넣는다.")
+    void receiveCardTest() {
+        //given
+        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
+        Player player = new Player(firstTurnCards);
+        List<Card> cards = player.getCards();
+
+        //when
+        player.receiveCard(CloverCard.CLOVER_FOUR);
+
+        //then
+        assertThat(cards.size()).isEqualTo(3);
+    }
 }
