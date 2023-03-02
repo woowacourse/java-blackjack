@@ -12,4 +12,8 @@ public class Dealer extends Player {
     public boolean isPick() {
         return getScore() <= 16;
     }
+
+    public String getName() {
+        return "딜러";
+    }
 }

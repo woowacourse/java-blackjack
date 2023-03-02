@@ -15,6 +15,10 @@ public class Guest extends Player {
         return getScore() < 21;
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

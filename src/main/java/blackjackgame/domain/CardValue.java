@@ -25,7 +25,6 @@ public enum CardValue {
     }
 
     public String getValue() {
-
         return value;
     }
 

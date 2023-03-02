@@ -9,11 +9,15 @@ public class Card {
         this.cardValue = cardValue;
     }
 
+    public String getSymbol() {
+        return symbol.getSymbol();
+    }
+
     public int getScore() {
         return cardValue.getScore();
     }
 
-    public CardValue getValue() {
-        return cardValue;
+    public String getValue() {
+        return cardValue.getValue();
     }
 }

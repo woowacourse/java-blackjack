@@ -20,10 +20,10 @@ class CardMachineTest {
 
         cardMachine.initPlayersCards(guests, dealer);
 
-        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.getSize()).isEqualTo(2);
 
         for (Guest guest : guests.getGuests()) {
-            assertThat(guest.getCards().size()).isEqualTo(2);
+            assertThat(guest.getSize()).isEqualTo(2);
         }
     }
 
@@ -35,6 +35,6 @@ class CardMachineTest {
         Guest guest = new Guest(new Name("pobi"));
 
         cardMachine.giveCard(guest);
-        assertThat(guest.getCards().size()).isEqualTo(1);
+        assertThat(guest.getSize()).isEqualTo(1);
     }
 }

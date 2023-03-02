@@ -6,13 +6,13 @@ public enum Symbol {
     CLOVER("클로버"),
     DIAMOND("다이아몬드");
 
-    private final String name;
+    private final String symbol;
 
-    Symbol(final String name) {
-        this.name = name;
+    Symbol(final String symbol) {
+        this.symbol = symbol;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
     }
 }

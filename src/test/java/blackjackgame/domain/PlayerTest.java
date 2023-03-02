@@ -46,6 +46,6 @@ class PlayerTest {
         player.addCard(card2);
         player.addCard(new Card(Symbol.HEART, CardValue.QUEEN));
 
-        assertThat(player.getCards().size()).isEqualTo(3);
+        assertThat(player.getSize()).isEqualTo(3);
     }
 }

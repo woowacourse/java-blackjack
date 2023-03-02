@@ -1,7 +1,6 @@
 package blackjackgame.domain;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
@@ -11,7 +10,7 @@ public abstract class Player {
         int totalScore = 0;
         boolean hasAce = false;
         for (Card card : cards) {
-            hasAce |= card.getValue().equals(CardValue.ACE);
+            hasAce |= (card.getValue().equals(CardValue.ACE.getValue()));
             totalScore += card.getScore();
         }
 
@@ -25,9 +24,22 @@ public abstract class Player {
         cards.add(card);
     }
 
-    public Collection<Object> getCards() {
-        return Collections.unmodifiableList(cards);
+    public int getSize() {
+        return cards.size();
+    }
+
+    public List<List<String>> getCards() {
+        List<List<String>> playerCards = new ArrayList<>();
+        for (Card card : cards) {
+            List<String> playerCard = new ArrayList<>();
+            playerCard.add(card.getValue());
+            playerCard.add(card.getSymbol());
+            playerCards.add(playerCard);
+        }
+        return playerCards;
     }
 
     public abstract boolean isPick();
+
+    public abstract String getName();
 }
