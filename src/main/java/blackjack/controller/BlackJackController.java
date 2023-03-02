@@ -31,9 +31,11 @@ public class BlackJackController {
 
     private void takeDealerTurn() {
         Player dealer = blackJackGame.getDealer();
-        if (dealer.canPick()) {
+        boolean dealerCanPick = dealer.canPick();
+        if (dealerCanPick) {
             blackJackGame.pick(dealer);
         }
+        OutputView.printDealerResult(dealerCanPick);
     }
 
     private void init() {
