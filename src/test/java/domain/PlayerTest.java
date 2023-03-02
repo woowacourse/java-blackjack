@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -17,6 +18,14 @@ public class PlayerTest {
     void setUp() {
         cards.add(new Card(Shape.DIAMOND, Value.TWO));
         cards.add(new Card(Shape.CLOVER, Value.JACK));
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름은 딜러일 수 없다.")
+    void createPlayerFail() {
+        assertThatThrownBy(() -> new Player(new Name("딜러"), new Cards(cards)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Player 의 이름은 딜러일 수 없습니다.");
     }
 
     @Test
