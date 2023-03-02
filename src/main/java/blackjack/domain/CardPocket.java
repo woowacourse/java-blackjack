@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static blackjack.domain.BlackJackConstant.BLACKJACK;
+
 public class CardPocket {
     private static final int VALUE_ACE = 10;
-    private static final int VALUE_BLACKJACK = 21;
     private final List<Card> cards;
 
     public CardPocket(final List<Card> cards) {
@@ -48,7 +49,7 @@ public class CardPocket {
 
     //todo 메서드 네이밍, 로직 수정
     private int calculateAceScore(final int score) {
-        if (score + VALUE_ACE > VALUE_BLACKJACK) {
+        if (score + VALUE_ACE > BLACKJACK) {
             return score;
         }
         return score + VALUE_ACE;
