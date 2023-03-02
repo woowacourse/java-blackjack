@@ -100,7 +100,7 @@ public class OutputView {
     }
 
     public static void printDealerOneMoreCard() {
-        System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void showGameStatistic(final GameStatistic statistic) {
@@ -109,12 +109,12 @@ public class OutputView {
     }
 
     private static void showFinalCards(final GameStatistic statistic) {
+        System.out.println();
         showPlayerCardAreaResultState(statistic.dealer());
         showParticipantsResultState(new ArrayList<>(statistic.resultPerParticipant().keySet()));
     }
 
     private static void showParticipantsResultState(final List<? extends Participant> participants) {
-        System.out.println();
         participants.forEach(OutputView::showPlayerCardAreaResultState);
     }
 
