@@ -48,4 +48,36 @@ public class CardsTest {
         // that
         assertThat(expectedValue).isEqualTo(cards.calculateTotalScore());
     }
+
+    @Test
+    @DisplayName("패를 반환한다")
+    void getCardsTest(){
+        // given
+        Cards cards = new Cards();
+        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+
+        // when
+        cards.add(card1);
+        cards.add(card2);
+
+        // that
+        assertThat(cards.getCards()).contains(card1,card2);
+    }
+
+    @Test
+    @DisplayName("카드 한장을 반환하는 테스트")
+    void getFirstCardTest(){
+        // given
+        Cards cards = new Cards();
+        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+
+        // when
+        cards.add(card1);
+        cards.add(card2);
+
+        // that
+        assertThat(cards.getFirstCard().getCardName()).isEqualTo(card1.getCardName());
+    }
 }

@@ -23,4 +23,7 @@ public class Cards {
                 map(Card::getValue).
                 reduce(0,Integer::sum);
     }
+    public Card getFirstCard(){
+        return this.cards.get(0);
+    }
 }
