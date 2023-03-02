@@ -35,6 +35,33 @@ public class Participants {
         }
     }
 
+    public Map<Participant, GameResult> getResult() {
+        Map<Participant, GameResult> result = new HashMap<>();
+        List<Participant> players = participants.stream()
+                                                .filter(participant -> participant instanceof Player)
+                                                .collect(Collectors.toList());
+        for (Participant player : players) {
+            result.put(player, getGameResult(player.getScore()));
+        }
+        return result;
+    }
+
+    private GameResult getGameResult(int score) {
+        if (score > getDealerScore()) {
+            return GameResult.WIN;
+        }
+        return GameResult.LOSE;
+    }
+
+    private int getDealerScore() {
+        Participant dealer = participants.stream()
+                                         .filter(participant -> participant instanceof Dealer)
+                                         .findAny()
+                                         .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
+                                                 "찾지 못했습니다."));
+        return dealer.getScore();
+    }
+
     public List<Participant> toList() {
         return List.copyOf(participants);
     }
