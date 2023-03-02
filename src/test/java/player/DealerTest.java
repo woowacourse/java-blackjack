@@ -41,4 +41,32 @@ class DealerTest {
 
         assertThat(dealer.calculateScore()).isEqualTo(15);
     }
+
+    @Test
+    @DisplayName("딜러는 현재 가지고 있는 카드를 반환할수 있다.")
+    void showCards() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        assertThat(dealer.showCards()).contains(card1, card2, card3);
+    }
+
+    @Test
+    @DisplayName("딜러는 현재 가지고 있는 카드중 한장만 반환할 수 있다.")
+    void showOneCard() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        assertThat(dealer.showOneCard()).isEqualTo(card1);
+    }
 }
