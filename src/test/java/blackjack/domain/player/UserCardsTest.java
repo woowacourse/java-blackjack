@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-class PlayerCardsTest {
+class UserCardsTest {
 
     @Test
     @DisplayName("updateCardScore()는 카드를 하나씩 추가한다.")

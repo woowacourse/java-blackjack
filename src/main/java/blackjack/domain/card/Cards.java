@@ -12,8 +12,10 @@ public class Cards {
     private static List<Card> cards = new ArrayList<>();
 
     public static void init() {
-        validate(CardFactory.of());
-        cards = CardFactory.of();
+        List<Card> createdCards = CardFactory.of();
+        validate(createdCards);
+        cards = createdCards;
+        shuffleCards();
     }
 
     private static void validate(List<Card> cards) {
