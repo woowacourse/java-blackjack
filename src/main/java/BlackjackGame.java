@@ -1,11 +1,9 @@
-import java.util.List;
-
 public class BlackjackGame {
     private final Deck deck;
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
-    public BlackjackGame(List<Player> players){
+    public BlackjackGame(Players players){
         this.deck = new Deck();
         this.dealer = new Dealer();
 
@@ -18,7 +16,7 @@ public class BlackjackGame {
     }
 
     private void giveCardsToPlayers() {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             giveCardTo(player);
             giveCardTo(player);
         }
@@ -42,5 +40,9 @@ public class BlackjackGame {
 
     public Participant getDealer(){
         return dealer;
+    }
+
+    public void result() {
+        dealer.decideResults(players);
     }
 }

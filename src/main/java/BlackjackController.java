@@ -12,20 +12,22 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = createPlayers();
+        Players players = createPlayers();
         BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitCards();
 
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             requestMoreCard(blackjackGame, player);
         }
+        blackjackGame.giveAdditionalCardToDealer();
+        blackjackGame.result();
     }
 
-    private List<Player> createPlayers() {
-        return readNames().stream()
+    private Players createPlayers() {
+        return new Players(readNames().stream()
                 .map(PlayerName::new)
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     private List<String> readNames() {
