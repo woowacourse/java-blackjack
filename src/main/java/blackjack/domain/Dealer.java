@@ -21,11 +21,36 @@ public class Dealer extends Participant {
         return calculateCardNumber();
     }
 
+    public WinningResult judgeWinOrLose(Participant player) {
+        int myValue = calculateDealerCardNumber();
+        int otherPlayer = player.calculateCardNumber();
+        if (myValue > otherPlayer) {
+            return WinningResult.WIN;
+        }
+        if (myValue < otherPlayer) {
+            return WinningResult.LOSE;
+        }
+        return includeBlackjackWinOrLose(player);
+    }
+
     @Override
     boolean decideHit() {
         if (getReceivedCards().size() == FIRST_CARD_COUNT) {
             return calculateCardNumber() <= DEALER_HIT_BASED_NUMBER;
         }
         return calculateCardNumber() < BLACKJACK_MAX_NUMBER;
+    }
+
+    private WinningResult includeBlackjackWinOrLose(final Participant player) {
+        if (judgeBlackjack() && player.judgeBlackjack()) {
+            return WinningResult.PUSH;
+        }
+        if (judgeBlackjack()) {
+            return WinningResult.WIN;
+        }
+        if (player.judgeBlackjack()) {
+            return WinningResult.LOSE;
+        }
+        return WinningResult.PUSH;
     }
 }
