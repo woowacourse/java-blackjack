@@ -16,4 +16,6 @@ public abstract class Participant {
     protected abstract void hit(final Card card);
 
     protected abstract List<Card> open(final int cardCount);
+
+    protected abstract boolean isHittable();
 }

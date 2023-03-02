@@ -16,4 +16,9 @@ public class Player extends Participant {
     protected List<Card> open(final int cardCount) {
         return cards.open(cardCount);
     }
+
+    @Override
+    protected boolean isHittable() {
+        return !cards.isBust();
+    }
 }
