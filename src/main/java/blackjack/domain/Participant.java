@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public class Participant {
+public abstract class Participant {
 
     private static final int BLACK_JACK_SCORE = 21;
     private static final int ACE_ALTER_VALUE = 10;
@@ -25,6 +25,8 @@ public class Participant {
         }
         return sum;
     }
+
+    abstract boolean canReceive();
 
     public Cards getCards() {
         return cards;
