@@ -40,7 +40,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return calculateScore() <= BLACKJACK;
+        return calculateScore() > BLACKJACK;
     }
 
     public List<Card> getCards() {

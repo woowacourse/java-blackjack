@@ -71,18 +71,18 @@ class PlayerTest {
     }
 
     @Test
-    void 카드들의_합이_21_이하라면_더_받을_수_있다() throws Exception {
+    void 카드들의_합이_21_이하라면_더_받을_수_있다() {
         //given
         Player player = Player.from("연어");
 
         //when
 
         //then
-        assertThat(player.isBust()).isTrue();
+        assertThat(player.isBust()).isFalse();
     }
 
     @Test
-    void 카드들의_합이_21_초과라면_더_받을_수_없다() throws Exception {
+    void 카드들의_합이_21_초과라면_더_받을_수_없다() {
         //given
         Player player = Player.from("연어");
         List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
@@ -93,6 +93,6 @@ class PlayerTest {
         cards.forEach(player::addCard);
 
         //then
-        assertThat(player.isBust()).isFalse();
+        assertThat(player.isBust()).isTrue();
     }
 }
