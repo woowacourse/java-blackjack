@@ -1,7 +1,12 @@
 package blackjack.domain;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -43,5 +48,50 @@ class BlackJackGameTest {
 
         // then
         assertThat(dealerCardSize).isEqualTo(1);
+    }
+
+    @DisplayName("BlackJackGame의 findWinner는 각 참가자의 승패를 계산한다.")
+    @Test
+    void findResultForEachParticipant() {
+        // given
+        BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
+
+        // when
+        Card dealerCard1 = new Card(Rank.KING, Suit.CLOVER);
+        Card dealerCard2 = new Card(Rank.JACK, Suit.SPADE);
+
+        Card playerCard1 = new Card(Rank.THREE, Suit.SPADE);
+        Card playerCard2 = new Card(Rank.FOUR, Suit.SPADE);
+
+        Dealer dealer = blackJackGame.getDealer();
+        Players players = blackJackGame.getPlayers();
+
+        dealer.receiveCard(dealerCard1);
+        dealer.receiveCard(dealerCard2);
+
+        for (Player player : players.getPlayers()) {
+            player.receiveCard(playerCard1);
+            player.receiveCard(playerCard2);
+
+            playerCard1 = new Card(Rank.FIVE, Suit.SPADE);
+            playerCard2 = new Card(Rank.SIX, Suit.SPADE);
+        }
+
+        blackJackGame.findWinner();
+
+        // then
+        Map<Result, Integer> results = dealer.getResults();
+
+        List<Result> playerResults = new ArrayList<>();
+        for (Player player: players.getPlayers()) {
+            playerResults.add(player.getResult());
+        }
+
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(results.get(Result.WIN)).isEqualTo(2);
+            softly.assertThat(results.get(Result.LOSE)).isEqualTo(0);
+            softly.assertThat(results.get(Result.DRAW)).isEqualTo(0);
+            softly.assertThat(playerResults).isEqualTo(List.of(Result.LOSE, Result.LOSE));
+        });
     }
 }

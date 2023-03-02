@@ -28,6 +28,21 @@ public class BlackJackGame {
         }
     }
 
+    public void findWinner() {
+        int sumOfDealer = dealer.calculateSumOfRank();
+
+        for (Player player : players.getPlayers()) {
+            int sumOfPlayer = player.calculateSumOfRank();
+            if (sumOfPlayer < sumOfDealer) {
+                dealer.setResults(Result.WIN);
+                player.setResult(Result.LOSE);
+                continue;
+            }
+            dealer.setResults(Result.LOSE);
+            player.setResult(Result.WIN);
+        }
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
