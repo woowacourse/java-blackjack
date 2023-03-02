@@ -1,5 +1,5 @@
 public class Player {
-    private static final int SCORE_UPPER_LIMIT = 21;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
     private final CardHand cardHand;
@@ -23,7 +23,7 @@ public class Player {
     }
 
     public boolean canAdd() {
-        return cardHand.calculateScore() < SCORE_UPPER_LIMIT;
+        return cardHand.calculateScore() < BLACKJACK_SCORE;
     }
 
     public void addCard(Card card) {
@@ -32,5 +32,9 @@ public class Player {
             return;
         }
         throw new IllegalStateException("카드 추가가 불가능하여 실행되지 않았습니다.");
+    }
+
+    public boolean isBlackjack() {
+        return cardHand.calculateScore() == BLACKJACK_SCORE;
     }
 }
