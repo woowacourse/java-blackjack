@@ -5,15 +5,17 @@ import java.util.List;
 
 public class Player {
 
+    private final String name;
     private final List<Card> cards;
     private int score;
 
 
-    public Player() {
-        this(new ArrayList<>());
+    public Player(String name) {
+        this(name, new ArrayList<>());
     }
 
-    public Player(List<Card> cards) {
+    public Player(String name, List<Card> cards) {
+        this.name = name;
         this.cards = cards;
         this.score = calculateScore();
     }
@@ -70,6 +72,9 @@ public class Player {
         return cards;
     }
 
+    public String getName() {
+        return name;
+    }
 }
 
 

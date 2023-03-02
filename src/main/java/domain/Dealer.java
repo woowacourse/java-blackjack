@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Dealer {
 
+    private final String name = "딜러";
     private final List<Card> cards;
     private int score;
 

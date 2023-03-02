@@ -19,8 +19,8 @@ public class GameTest {
     @DisplayName("카드를 2장씩 분배한다.")
     void test_deal_two_cards() {
         var players = List.of(
-                new Player(),
-                new Player()
+                new Player("조이"),
+                new Player("땡칠")
         );
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
 
@@ -35,8 +35,8 @@ public class GameTest {
     @CsvSource({"0,LOSE", "1,WIN"})
     void test_21_win(int index, Result result) {
         var players = List.of(
-                new Player(createCards("9")),
-                new Player(createCards("A"))
+                new Player("조이", createCards("9")),
+                new Player("땡칠", createCards("A"))
         );
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
@@ -48,7 +48,7 @@ public class GameTest {
     @Test
     void test_draw() {
         var players = List.of(
-                new Player(createCards("10"))
+                new Player("땡칠", createCards("10"))
         );
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
@@ -60,7 +60,7 @@ public class GameTest {
     @Test
     void test_draw_all_busted() {
         var players = List.of(
-                new Player(createCards("10", "K", "K"))
+                new Player("땡칠", createCards("10", "K", "K"))
         );
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K", "9", "9")));
@@ -72,7 +72,7 @@ public class GameTest {
     @DisplayName("특정 플레이어가 21미만이라면 카드를 한장 더 준다")
     void test_deal_a_card() {
         var players = List.of(
-                new Player(createCards("10", "2"))
+                new Player("조이", createCards("10", "2"))
         );
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
@@ -86,7 +86,7 @@ public class GameTest {
     @DisplayName("특정 플레이어가 21이상이라면 카드를 주지 않는다")
     void test_do_not_deal_a_card() {
         var players = List.of(
-                new Player(createCards("10", "A"))
+                new Player("조이", createCards("10", "A"))
         );
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
