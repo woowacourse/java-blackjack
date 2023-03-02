@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Name {
     private final String value;
 
@@ -16,5 +18,9 @@ public class Name {
 
     public String getValue() {
         return value;
+    }
+
+    public boolean isSameWith(String name) {
+        return name.equals(value);
     }
 }
