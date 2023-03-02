@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Hand {
 
+    public static final int UPPER_BOUND = 11;
+    public static final int ACE_RANK_DIFFERENCE = 10;
+
     private final LinkedList<Card> cards;
 
     public Hand() {
@@ -33,8 +36,8 @@ public class Hand {
         for (Card card : cards) {
             sum += card.getRank().getScore();
         }
-        if (isAce(cards.getLast()) && sum <= 11) {
-            sum += 10;
+        if (isAce(cards.getLast()) && sum <= UPPER_BOUND) {
+            sum += ACE_RANK_DIFFERENCE;
         }
 
         return sum;
