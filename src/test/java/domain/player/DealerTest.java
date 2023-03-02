@@ -27,7 +27,7 @@ class DealerTest {
                 new Card(CardShape.CLOVER, SIX)
         );
 
-        final Player dealer = new Dealer(new Name("player1"), cardArea);
+        final Player dealer = new Dealer(cardArea);
 
         // when & then
         assertTrue(dealer.canHit());
@@ -41,7 +41,7 @@ class DealerTest {
                 new Card(CardShape.CLOVER, SEVEN)
         );
 
-        final Player dealer = new Dealer(new Name("player1"), cardArea);
+        final Player dealer = new Dealer(cardArea);
 
         // when & then
         assertFalse(dealer.canHit());
