@@ -10,14 +10,16 @@ public class PlayerCards {
     private static final int LIMIT_SCORE = 21;
 
     private final List<Card> playerCards;
+    private int totalScore;
 
     public PlayerCards() {
         this.playerCards = new ArrayList<>();
+        this.totalScore = 0;
     }
 
     public void updateCardScore(Card card) {
         this.playerCards.add(card);
-        calculateTotalScore();
+        totalScore = calculateTotalScore();
     }
 
     private int calculateTotalScore() {
@@ -47,6 +49,6 @@ public class PlayerCards {
     }
 
     public int getTotalScore() {
-        return calculateTotalScore();
+        return totalScore;
     }
 }
