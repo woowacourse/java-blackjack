@@ -1,17 +1,35 @@
 package domain.participant;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 7;
 
+    private final List<Participant> participants;
+
     private Participants(final List<String> playerNames) {
         validateDuplicateNames(playerNames);
         validatePlayerCount(playerNames);
+        this.participants = new ArrayList<>();
+        initParticipants(playerNames);
+    }
+
+    private void initParticipants(final List<String> playerNames) {
+        participants.add(Dealer.create());
+        List<Player> players = makePlayers(playerNames);
+        participants.addAll(players);
+    }
+
+    private List<Player> makePlayers(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::create)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public static Participants create(final List<String> playerNames) {
