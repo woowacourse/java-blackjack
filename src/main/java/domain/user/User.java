@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class User {
+    protected static final int BLACKJACK = 21;
+
     private final List<Card> cards;
 
     public User(List<Card> firstTurnCards) {
@@ -31,8 +33,8 @@ public abstract class User {
     public List<Card> getCards() {
         return cards;
     }
-//
-//    void checkBustByScore(int score) {
-//
-//    }
+
+    protected abstract void checkBustByScore(int score);
+
+    protected abstract boolean isBust();
 }
