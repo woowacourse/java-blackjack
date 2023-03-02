@@ -22,4 +22,14 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레어이는 5명까지 참가 가능합니다.");
     }
+
+    @Test
+    void player는_중복된_이름을_가질_수_없다() {
+        //given, when
+        List<String> playerNames = List.of("judy", "judy");
+        //then
+        assertThatThrownBy(() -> new Players(playerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 플레이어 이름은 중복일 수 없습니다.");
+    }
 }
