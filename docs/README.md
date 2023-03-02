@@ -47,7 +47,7 @@
 ## Players
 
 - [ ] Player들의 이름이 중복되는지 검증한다.  
-- [ ] Player는 5명까지 참여 가능하다.
+- [X] Player는 5명까지 참여 가능하다.
 
 ## InputView 
 
