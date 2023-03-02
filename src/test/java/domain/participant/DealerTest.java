@@ -43,7 +43,7 @@ class DealerTest {
     }
 
     @Test
-    void 카드의_합이_16_이하면_stay가_아니다() {
+    void 카드의_합이_16_이하면_stand가_아니다() {
         //given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.FIVE, Suit.HEART));
@@ -56,7 +56,7 @@ class DealerTest {
     }
 
     @Test
-    void 카드의_합이_16_초과면_stay() {
+    void 카드의_합이_16_초과면_stand() {
         //given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.SIX, Suit.HEART));

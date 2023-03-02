@@ -16,4 +16,8 @@ public class InputView {
         String input = scanner.nextLine();
         return List.of(input.split(DELIMITER_USERNAME));
     }
+
+    public static String readHit() {
+        return scanner.nextLine();
+    }
 }

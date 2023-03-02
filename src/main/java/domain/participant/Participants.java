@@ -4,6 +4,7 @@ import domain.card.Deck;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -16,12 +17,12 @@ public class Participants {
     private final Participant dealer;
     private final List<Participant> players;
 
-    public Participants(Participant dealer, List<Participant> players) {
+    private Participants(Participant dealer, List<Participant> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static Participants from(List<String> playersName) {
+    public static Participants of(List<String> playersName) {
         validate(playersName);
 
         List<Participant> players = playersName.stream()
@@ -56,6 +57,12 @@ public class Participants {
     public void initHand(Deck deck) {
         dealer.initHand(deck.pollTwoCards());
         players.forEach(player -> player.initHand(deck.pollTwoCards()));
+    }
+
+    public Optional<Participant> getNextTurnPlayer() {
+        return players.stream()
+                .filter(player -> !player.isStand() && !player.isBust())
+                .findFirst();
     }
 
     public Participant getDealer() {
