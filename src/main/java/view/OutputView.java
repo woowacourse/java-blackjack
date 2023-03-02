@@ -137,8 +137,9 @@ public class OutputView {
      */
     private static void showFinalCards(final GameStatistic statistic) {
         System.out.println();
-        final List<Participant> participant = new ArrayList<>(statistic.resultPerParticipant().keySet());
+        final List<Participant> participant = new ArrayList<>();
         participant.add(statistic.dealer());
+        participant.addAll(statistic.players());
         showParticipantsResultState(participant);
     }
 
