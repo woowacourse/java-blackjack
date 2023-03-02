@@ -7,7 +7,7 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ### 순서별 기능 목록
-- [ ] 참가자 이름을 요구한다
+- [x] 참가자 이름을 요구한다
 - [ ] 딜러와 참가자들에게 카드 2장을 나누어 준다
 - [ ] 딜러와 참가자의 카드를 공개한다
   - [ ] 딜러는 두장 중 한장의 카드만 공개한다
