@@ -46,4 +46,22 @@ class BlackJackTest {
                 new Card(Shape.HEART, Number.SEVEN)
         );
     }
+
+    @Test
+    @DisplayName("딜러의 총 점수가 16 이하인 지 확인한다.")
+    void givenDealerTotalScore_thenChecksOrLessSixTeen() {
+        BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 6);
+        blackJack.startGame();
+
+        assertThat(blackJack.shouldDealerGetCard()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러의 총 점수가 17 이상인 지 확인한다.")
+    void givenDealerTotalScore_thenChecksOrMoreSevenTeen() {
+        BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 7);
+        blackJack.startGame();
+
+        assertThat(blackJack.shouldDealerGetCard()).isFalse();
+    }
 }

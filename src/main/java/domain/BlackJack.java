@@ -71,4 +71,9 @@ public class BlackJack {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이름입니다."))
                 .getCards();
     }
+
+    public boolean shouldDealerGetCard() {
+        Player dealer = players.get(0);
+        return dealer.getTotalScore() <= 16;
+    }
 }
