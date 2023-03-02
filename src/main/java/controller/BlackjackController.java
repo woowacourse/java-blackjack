@@ -12,5 +12,7 @@ public class BlackjackController {
         while (blackjackGame.existNextPlayerTurn()) {
             blackjackGame.nextTurn(InputView.readHit());
         }
+
+        blackjackGame.dealerTurn();
     }
 }

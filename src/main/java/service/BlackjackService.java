@@ -44,4 +44,11 @@ public class BlackjackService {
         }
     }
 
+    public void dealerTurn() {
+        Participant dealer = participants.getDealer();
+        while (!dealer.isStand() && !dealer.isBust()) {
+            dealer.addCard(deck.pollAvailableCard());
+        }
+    }
+
 }
