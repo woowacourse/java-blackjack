@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 public class InputView {
 
     public static final String DELIMITER = ",";
+    public static final String YES = "y";
+    public static final String NO = "n";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -23,5 +25,19 @@ public class InputView {
         if (input.isBlank()) {
             throw new IllegalArgumentException("공백은 입력할 수 없습니다.");
         }
+    }
+
+    public static boolean readYesOrNo(String personName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", personName, YES, NO);
+        String input = scanner.next();
+        validateYesOrNo(input);
+        return input.equals(YES);
+    }
+
+    private static void validateYesOrNo(String input) {
+        if (input.equals(YES) || input.equals(NO)) {
+            return;
+        }
+        throw new IllegalArgumentException(String.format("예는 %s, 아니오는 %s을 입력해야합니다.", YES, NO));
     }
 }
