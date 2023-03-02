@@ -55,6 +55,25 @@ public class OutputView {
         System.out.println(name + ": " + result.getResult());
     }
 
+    public void printDealerResults(List<Result> results) {
+        int winCount = 0;
+        int loseCount = 0;
+        int drawCount = 0;
+        for (Result result : results) {
+            if (result == Result.WIN) {
+                ++winCount;
+            }
+            if (result == Result.LOSE) {
+                ++loseCount;
+            }
+            if (result == Result.DRAW) {
+                ++drawCount;
+            }
+        }
+        String result = winCount + "승 " + drawCount + "무 " + loseCount + "패";
+        System.out.println("딜러: " + result);
+    }
+
     private String getCardDisplays(List<Card> cards) {
         return cards.stream()
                 .map(this::getCardDisplay)
