@@ -9,7 +9,7 @@
   - [x] 최소 2명에서 최대 8명의 `Players`를 생성한다.
 
 ### Participants
-- [ ] `Players`와 `Dealer`를 가진다.
+- [x] `Participant`들을 가진다.
 
 ### Participant
 - [x] `Cards`를 가진다.
