@@ -1,4 +1,4 @@
-import domain.BlackJackController;
+import controller.BlackJackController;
 
 public class BlackJackApplicaion {
     public static void main(String[] args) {

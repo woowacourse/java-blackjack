@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.ResultCalculator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,10 @@
-package domain;
+package controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.BlackJackGame;
+import domain.result.ResultCalculator;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
