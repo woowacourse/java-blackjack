@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,4 +39,12 @@ class ValidatorTest {
     void playerCountSuccess(List<String> input) {
         assertThatNoException().isThrownBy(() -> validator.validatePlayerNames(input));
     }
+
+    @Test
+    @DisplayName("player 이름 중복 테스트")
+    void playerNameDuplicate(){
+        List<String> playerNames = List.of("io", "io");
+        assertThatThrownBy(() -> validator.validatePlayerNames(playerNames)).isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
