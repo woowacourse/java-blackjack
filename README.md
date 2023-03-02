@@ -9,14 +9,14 @@
 ```mermaid
 graph TD
 의존성그래프
-BlackJackGame --> Players
+BlackJackGame --> Participant
 BlackJackGame --> Deck
 BlackJackGame --> Dealer
 
 
-Player --> CardPocket
-Dealer --> Player
-NormalPlayer --> Player
+Participant --> CardPocket
+Dealer --> Participant
+Player --> Participant
 
 Players --> Player
 Player --> Name
@@ -48,14 +48,14 @@ Card --> Symbol
 2. BlackJack
     - 딜러와 플레이어에게 카드를 2장씩 나눠준다.
       -- 카드를 나눠준다
-3. Player
+3. Participant
     - 21 이상인지 확인하고
         - 21 이상이라면,
             - 블랙잭인지 확인한다 = 받을 수 없음
             - BURST인지 확인한다 = 받을 수 없음4
     - 현재 점수를 숫자 형태로 반환한다
     - 현재 카드를 반한한다
-4. NormalPlayer
+4. Player
     - 21 미만이면, 받을 수 있다는 boolean
 5. Dealer
     - 16 이하이면, 받을 수 있따는 boolean
