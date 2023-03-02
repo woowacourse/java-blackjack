@@ -9,8 +9,10 @@ import domain.player.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class BlackJackGame {
 
@@ -27,10 +29,8 @@ public class BlackJackGame {
     public static BlackJackGame defaultSetting(final CardDeck cardDeck, final List<Name> participantNames) {
         final List<Participant> participants = participantNames.stream()
                 .map(it -> new Participant(it, new CardArea(cardDeck.draw(), cardDeck.draw())))
-                .collect(Collectors.toList());
-
+                .collect(toList());
         final Dealer dealer = new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
-
         return new BlackJackGame(participants, dealer, cardDeck);
     }
 
@@ -62,10 +62,11 @@ public class BlackJackGame {
     }
 
     public GameStatistic statistic() {
-        final Map<Participant, PlayerResult> resultPerParticipant = participants.stream().collect(Collectors.toMap(
-                Function.identity(),
-                (it) -> PlayerResult.judge(it, dealer))
-        );
+        final Map<Participant, PlayerResult> resultPerParticipant = participants.stream()
+                .collect(toMap(
+                        identity(),
+                        (it) -> PlayerResult.judge(it, dealer))
+                );
 
         return new GameStatistic(dealer, participants, resultPerParticipant);
     }
