@@ -31,6 +31,4 @@ class CardsGeneratorTest {
         Stack<Card> cards = cardsGenerator.generate();
         assertThat(cards.stream().distinct()).hasSize(52);
     }
-
-
 }
