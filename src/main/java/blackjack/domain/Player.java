@@ -20,7 +20,7 @@ public class Player implements Person {
 
     @Override
     public List<Card> showCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     @Override
