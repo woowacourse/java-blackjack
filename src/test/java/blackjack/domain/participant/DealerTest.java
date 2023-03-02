@@ -1,15 +1,17 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Number.QUEEN;
-import static blackjack.domain.Number.SEVEN;
-import static blackjack.domain.Number.SIX;
-import static blackjack.domain.Number.TWO;
-import static blackjack.domain.Suit.CLOVER;
-import static blackjack.domain.Suit.DIAMOND;
-import static blackjack.domain.Suit.HEART;
+import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Number.QUEEN;
+import static blackjack.domain.card.Number.SEVEN;
+import static blackjack.domain.card.Number.SIX;
+import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Suit.CLOVER;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;

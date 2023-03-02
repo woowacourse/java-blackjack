@@ -1,14 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Number.JACK;
-import static blackjack.domain.Number.QUEEN;
-import static blackjack.domain.Number.TEN;
-import static blackjack.domain.Number.TWO;
-import static blackjack.domain.Suit.CLOVER;
-import static blackjack.domain.Suit.DIAMOND;
-import static blackjack.domain.Suit.HEART;
-import static blackjack.domain.Suit.SPADE;
+import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Number.JACK;
+import static blackjack.domain.card.Number.QUEEN;
+import static blackjack.domain.card.Number.TEN;
+import static blackjack.domain.card.Number.TWO;
+import static blackjack.domain.card.Suit.CLOVER;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;

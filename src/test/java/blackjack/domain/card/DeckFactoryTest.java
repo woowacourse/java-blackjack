@@ -1,7 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Suit.SPADE;
+import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Stack;

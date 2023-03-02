@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Suit.SPADE;
+import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
