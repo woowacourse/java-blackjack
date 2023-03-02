@@ -23,34 +23,55 @@ public class BlackJackController {
     }
 
     public void init() {
-        Users users = new Users(Arrays.asList(InputView.getPlayersName().split(",")));
-
-        users.getUsers().forEach(this::receiveInitialCards);
+        Users users = getUsers();
         OutputView.printDivideInitialCards(users);
 
-        for (User user : users.getUsers()) {
-            while (canReceiveMoreCard(user)) {
-                final Card card = deck.pick();
-                user.receiveCard(card);
-                OutputView.printPlayerHand(user);
-            }
-        }
-
-        if (dealer.canReceiveCard()) {
-            OutputView.printDealerGetCard();
-            dealer.receiveCard(deck.pick());
-        }
+        receiveCard(users);
 
         OutputView.printTotalValue(users);
+        OutputView.printFinalResult(users);
     }
+
+    private Users getUsers() {
+        Users users = new Users(Arrays.asList(InputView.getPlayersName().split(",")));
+        users.getUsers().forEach(this::receiveInitialCards);
+        return users;
+    }
+
     private void receiveInitialCards(final User user) {
         user.receiveCard(deck.pick());
         user.receiveCard(deck.pick());
     }
 
-    private static boolean canReceiveMoreCard(final User user) {
+    private void receiveCard(final Users users) {
+        forPlayer(users);
+        forDealer();
+    }
+
+    private void forPlayer(final Users users) {
+        for (User user : users.getUsers()) {
+            wantReceive(user);
+        }
+    }
+
+    private void wantReceive(final User user) {
+        while (canReceiveMoreCard(user)) {
+            final Card card = deck.pick();
+            user.receiveCard(card);
+            OutputView.printPlayerHand(user);
+        }
+    }
+
+    private boolean canReceiveMoreCard(final User user) {
         return !Dealer.getInstance().equals(user)
                 && user.canReceiveCard()
                 && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(user.getName()));
+    }
+
+    private void forDealer() {
+        if (dealer.canReceiveCard()) {
+            OutputView.printDealerGetCard();
+            dealer.receiveCard(deck.pick());
+        }
     }
 }
