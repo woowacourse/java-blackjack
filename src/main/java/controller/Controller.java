@@ -4,11 +4,11 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
+import java.util.function.Supplier;
 
 public final class Controller {
 
-    private static final int BUST_NUMBER = 21;
+    private static final int BUST_NUMBER = 22;
     private static final int DEALER_STAY_NUMBER = 17;
 
     private final Deck deck;
@@ -18,7 +18,7 @@ public final class Controller {
     }
 
     public void run() {
-        Participants participants = Participants.from(readPlayerNames());
+        Participants participants = retryOnError(() -> Participants.from(InputView.readPlayerNames()));
         Dealer dealer = Dealer.create();
 
         initGame(participants, dealer);
@@ -26,24 +26,27 @@ public final class Controller {
         printResult(participants, dealer);
     }
 
-    private List<String> readPlayerNames() {
-        final List<String> playerNames = InputView.readPlayerNames();
-        OutputView.printSetupGame(playerNames);
-        return playerNames;
+    private <T> T retryOnError(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (Exception e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return retryOnError(supplier);
+        }
     }
 
     private void initGame(final Participants participants, final Dealer dealer) {
-        dealer.takeCard(deck.drawCard());
+        OutputView.printSetupGame(participants.getNames());
+        dealer.takeCard(deck.dealCard());
 
         participants.drawCard(deck);
 
         OutputView.printPlayerCards(dealer.getName(), dealer.displayCards());
-
         participants.getParticipants()
                 .forEach(this::printPlayerCards);
     }
 
-    private void printPlayerCards(Participant participant) {
+    private void printPlayerCards(final Participant participant) {
         OutputView.printPlayerCards(participant.getName(), participant.displayCards());
     }
 
@@ -56,25 +59,25 @@ public final class Controller {
 
     private void playParticipantTurn(final Participant participant) {
         while (isKeepPlaying(participant)) {
-            participant.takeCard(deck.drawCard());
+            participant.takeCard(deck.dealCard());
 
             OutputView.printPlayerCards(participant.getName(), participant.displayCards());
         }
     }
 
-    private static boolean isKeepPlaying(final Participant participant) {
-        return participant.getScore() <= BUST_NUMBER && isHit(participant);
+    private boolean isKeepPlaying(final Participant participant) {
+        return participant.getScore() < BUST_NUMBER && isHit(participant);
     }
 
-    private static boolean isHit(final Participant participant) {
-        return InputView.readCommand(participant.getName()).isValue();
+    private boolean isHit(final Participant participant) {
+        return retryOnError(() -> InputView.readCommand(participant.getName()).isValue());
     }
 
     private void playDealerTurn(final Dealer dealer) {
         int score = dealer.getScore();
         while (score < DEALER_STAY_NUMBER) {
             OutputView.printHitOrStay(score);
-            dealer.takeCard(deck.drawCard());
+            dealer.takeCard(deck.dealCard());
             score = dealer.getScore();
         }
         OutputView.printHitOrStay(score);
