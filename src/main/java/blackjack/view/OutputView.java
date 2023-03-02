@@ -31,4 +31,22 @@ public class OutputView {
     public void printFinalCards(String name, List<String> cardNames, int score) {
         System.out.println(name + "카드: " + String.join(", ", cardNames) + " - 결과: " + score);
     }
+
+    public void printDealerResult(int winCount, int loseCount, int drawCount) {
+        System.out.print("딜러: ");
+        if (winCount > 0) {
+            System.out.print(winCount + "승 ");
+        }
+        if (loseCount > 0) {
+            System.out.print(loseCount + "패 ");
+        }
+        if (drawCount > 0) {
+            System.out.print(drawCount + "무");
+        }
+        System.out.println();
+    }
+
+    public void printPlayerResult(String playerName, String playerResult) {
+        System.out.println(playerName + ": " + playerResult);
+    }
 }

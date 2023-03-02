@@ -25,8 +25,13 @@ public class BlackJackController {
         showCurrentCards(players, dealer);
         playAllPlayer(players, trump);
         playDealer(dealer, trump);
-
         showFinalCards(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
+        List<Result> dealerResults = gameResult.getDealerResults();
+        showDealerResult(dealerResults);
+        for (Player player : players.getPlayers()) {
+            showPlayerResult(player, gameResult.getPlayerResult(player));
+        }
     }
 
     private Players generatePlayers(final Trump trump) {
@@ -121,4 +126,14 @@ public class BlackJackController {
                 player -> outputView.printFinalCards(player.getName(), makeCardNames(player), player.getScore()));
     }
 
+    private void showDealerResult(List<Result> dealerResults) {
+        int winCount = (int) dealerResults.stream().filter(dealerResult -> dealerResult.equals(Result.WIN)).count();
+        int loseCount = (int) dealerResults.stream().filter(dealerResult -> dealerResult.equals(Result.LOSE)).count();
+        int drawCount = (int) dealerResults.stream().filter(dealerResult -> dealerResult.equals(Result.DRAW)).count();
+        outputView.printDealerResult(winCount, loseCount, drawCount);
+    }
+
+    private void showPlayerResult(Player player, Result playerResult){
+        outputView.printPlayerResult(player.getName(), playerResult.getTerm());
+    }
 }
