@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrawnCards {
@@ -9,7 +10,7 @@ public class DrawnCards {
     private final List<Card> cards;
 
     public DrawnCards(final List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int calculateScore() {
@@ -33,5 +34,13 @@ public class DrawnCards {
             sum -= 10;
         }
         return sum;
+    }
+
+    public void add(final Card card) {
+        this.cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
