@@ -1,8 +1,11 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer implements Gambler {
 
     private static final int PICK_BOUNDARY = 16;
+    private static final String NAME = "딜러";
 
     private final Cards cards;
 
@@ -21,6 +24,16 @@ public class Dealer implements Gambler {
     @Override
     public void initialPick() {
         pickCard();
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 
     public int getCardsSize() {

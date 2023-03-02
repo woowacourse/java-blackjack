@@ -26,4 +26,9 @@ public class Player implements Gambler {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    @Override
+    public String getName() {
+        return playerName.getName();
+    }
 }

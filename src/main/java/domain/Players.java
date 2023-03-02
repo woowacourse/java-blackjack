@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,5 +40,9 @@ public class Players {
         return players.stream()
                 .map(name -> new Player(new PlayerName(name), new Cards()))
                 .collect(Collectors.toList());
+    }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
     }
 }

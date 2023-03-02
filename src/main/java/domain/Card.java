@@ -17,4 +17,8 @@ public class Card {
     public String getName() {
         return denomination.getName();
     }
+
+    public String getSuit() {
+        return suit.getName();
+    }
 }
