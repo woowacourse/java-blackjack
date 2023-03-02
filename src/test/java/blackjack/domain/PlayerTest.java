@@ -58,8 +58,54 @@ class PlayerTest {
         assertThat(tori.isHit()).isTrue();
     }
 
+    @DisplayName("플레이어가 가진 카드의 점수 합을 구할 수 있다.")
     @Test
-    void calculateScore() {
+    void Should_CalculateScore() {
+        // given
+        Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.KING, CardSymbol.HEARTS);
+
+        Player tori = new Player(new Name("tori"));
+
+        tori.addCard(card);
+        tori.addCard(card2);
+
+        // when, then
+        assertThat(tori.calculateScore()).isEqualTo(20);
+    }
+
+    @DisplayName("플레이어가 A를 가지고 있을 때 플레이어의 점수 합이 11 이하면 A는 11점으로 간주한다.")
+    @Test
+    void Should_AIs11_When_ScoreLessThan11() {
+        // given
+        Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+
+        Player tori = new Player(new Name("tori"));
+
+        tori.addCard(card);
+        tori.addCard(card2);
+
+        // when, then
+        assertThat(tori.calculateScore()).isEqualTo(21);
+    }
+
+    @DisplayName("플레이어가 A를 가지고 있을 때 플레이어의 점수 합이 11을 초과하면 A는 1점으로 간주한다.")
+    @Test
+    void Should_AIs1_When_ScoreMoreThan11() {
+        // given
+        Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
+        Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+
+        Player tori = new Player(new Name("tori"));
+
+        tori.addCard(card);
+        tori.addCard(card2);
+        tori.addCard(card3);
+
+        // when, then
+        assertThat(tori.calculateScore()).isEqualTo(12);
     }
 
     @Test

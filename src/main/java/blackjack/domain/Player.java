@@ -25,16 +25,27 @@ public class Player implements Person {
 
     @Override
     public boolean isHit() {
-        int totalScore = cards.stream()
-                .map(card -> Collections.min(card.getScore()))
-                .reduce(0, Integer::sum);
+        int totalScore = calculateScore();
         return totalScore < 21;
     }
 
     @Override
     public int calculateScore() {
-        return 0;
+        int totalScore = cards.stream()
+                .map(card -> Collections.min(card.getScore()))
+                .reduce(0, Integer::sum);
+
+        if (totalScore <= 11 && hasACE()) {
+            return totalScore + 10;
+        }
+        return totalScore;
     }
+
+    private boolean hasACE() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.getNumber()));
+    }
+
 
     public Name getName() {
         return name;
