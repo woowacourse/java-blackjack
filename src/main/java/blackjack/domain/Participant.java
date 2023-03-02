@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public abstract class Participant {
     private final CardPocket cardPocket;
 
@@ -13,6 +15,10 @@ public abstract class Participant {
 
     public int currentScore() {
         return cardPocket.calculateScore();
+    }
+
+    public List<Card> getCards() {
+        return cardPocket.getCards();
     }
 
     public abstract boolean isDrawable();
