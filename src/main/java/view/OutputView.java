@@ -161,7 +161,7 @@ public class OutputView {
     }
 
     private static void showFinalDealerWinLose(final GameStatistic gameStatistic) {
-        final Map<Player, DealerCompeteResult> resultPerParticipant = gameStatistic.resultPerParticipant();
+        final Map<Player, DealerCompeteResult> resultPerParticipant = gameStatistic.dealerResultPerPlayer();
         final Map<DealerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
                 .collect(Collectors.groupingBy(Function.identity(), counting()));
         final String dealerStatisticMessage = stringBuilder.append("딜러:")
@@ -181,8 +181,8 @@ public class OutputView {
     }
 
     private static void showFinalParticipantsWinLose(final GameStatistic statistic) {
-        final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.resultPerParticipant();
-        final List<Player> players = statistic.participants();
+        final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
+        final List<Player> players = statistic.players();
         players.stream()
                 .map(it -> it.name().value() + ": " + PLAYER_RESULT_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
                 .forEach(System.out::println);

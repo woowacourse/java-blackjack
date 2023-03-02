@@ -12,23 +12,23 @@ public class GameStatistic {
 
     private final Dealer dealer;
     private final List<Player> players;
-    private final Map<Player, DealerCompeteResult> resultPerParticipant;
+    private final Map<Player, DealerCompeteResult> dealerResultPerPlayer;
 
-    public GameStatistic(final Dealer dealer, final List<Player> players, final Map<Player, DealerCompeteResult> resultPerParticipant) {
+    public GameStatistic(final Dealer dealer, final List<Player> players, final Map<Player, DealerCompeteResult> dealerResultPerPlayer) {
         this.dealer = dealer;
         this.players = players;
-        this.resultPerParticipant = resultPerParticipant;
+        this.dealerResultPerPlayer = dealerResultPerPlayer;
     }
 
     public Dealer dealer() {
         return dealer;
     }
 
-    public List<Player> participants() {
+    public List<Player> players() {
         return new ArrayList<>(players);
     }
 
-    public Map<Player, DealerCompeteResult> resultPerParticipant() {
-        return resultPerParticipant;
+    public Map<Player, DealerCompeteResult> dealerResultPerPlayer() {
+        return dealerResultPerPlayer;
     }
 }

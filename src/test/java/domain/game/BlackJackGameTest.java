@@ -66,9 +66,9 @@ class BlackJackGameTest {
         final GameStatistic statistic = blackJackGame.statistic();
 
         // then
-        assertThat(statistic.resultPerParticipant().get(말랑)).isEqualTo(DealerCompeteResult.DRAW);
-        assertThat(statistic.resultPerParticipant().get(콩떡)).isEqualTo(DealerCompeteResult.WIN);
-        assertThat(statistic.resultPerParticipant().get(코다)).isEqualTo(DealerCompeteResult.LOSE);
+        assertThat(statistic.dealerResultPerPlayer().get(말랑)).isEqualTo(DealerCompeteResult.DRAW);
+        assertThat(statistic.dealerResultPerPlayer().get(콩떡)).isEqualTo(DealerCompeteResult.WIN);
+        assertThat(statistic.dealerResultPerPlayer().get(코다)).isEqualTo(DealerCompeteResult.LOSE);
     }
 
     @Nested
