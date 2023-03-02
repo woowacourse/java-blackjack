@@ -15,4 +15,8 @@ public class BlackJackRule {
         }
         return score;
     }
+
+    public static boolean isBust(User user) {
+        return getScore(user) > BLACK_JACK_NUMBER;
+    }
 }
