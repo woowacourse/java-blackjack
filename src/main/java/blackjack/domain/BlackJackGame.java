@@ -12,4 +12,7 @@ public class BlackJackGame {
         this.participants = Participants.of(playerNames);
     }
 
+    public void handOut() {
+        participants.handOut(deck);
+    }
 }

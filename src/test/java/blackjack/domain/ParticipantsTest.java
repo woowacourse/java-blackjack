@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +20,21 @@ class ParticipantsTest {
         Assertions.assertThatThrownBy(() -> Participants.of(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
+    }
+
+    @DisplayName("모든 참가자에게 카드를 2장씩 나눠준다.")
+    @Test
+    void should_AllParticipantsHas2Cards_When_HandOut() {
+        List<String> playerNames = List.of("pobi", "odo", "jason");
+        Participants participants = Participants.of(playerNames);
+
+        participants.handOut(new Deck(new BlackJackCardsGenerator().generate()));
+
+        assertThat(participants.getDealerCards()).hasSize(2);
+        List<List<Card>> playersCards = participants.getPlayersCards();
+        for (List<Card> cards : playersCards) {
+            assertThat(cards).hasSize(2);
+        }
     }
 
 }
