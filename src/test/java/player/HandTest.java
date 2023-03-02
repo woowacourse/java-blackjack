@@ -64,6 +64,22 @@ class HandTest {
         assertThat(score).isEqualTo(10);
     }
 
+    @Test
+    @DisplayName("첫번째 카드를 가져올 수 있다")
+    void pickFirstCard() {
+        hand = new Hand();
+        Card card = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card1 = new Card(CardNumber.TEN, Pattern.HEART);
+        Card card2 = new Card(CardNumber.FIVE, Pattern.HEART);
+        hand.add(card);
+        hand.add(card1);
+        hand.add(card2);
+
+        Card card3 = hand.pickFirstCard();
+
+        assertThat(card3).isEqualTo(card);
+    }
+
     @DisplayName("에이스가 있을 때")
     @Nested
     class AceTest {
@@ -95,5 +111,4 @@ class HandTest {
             assertThat(score).isEqualTo(16);
         }
     }
-
 }

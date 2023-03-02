@@ -34,4 +34,8 @@ public class Hand {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
+
+    public Card pickFirstCard() {
+        return cards.get(0);
+    }
 }
