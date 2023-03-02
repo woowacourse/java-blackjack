@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -49,41 +50,25 @@ class CardsTest {
 
         assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
     }
-}
 
-class Cards {
+    @Test
+    void 점수_최댓값_초과라면_true_반환한다() {
+        final Cards cards = new Cards(
+                List.of(new Card(TEN, SPADE),
+                        new Card(JACK, HEART),
+                        new Card(QUEEN, CLOVER)
+                ));
 
-    private static final int MAXIMUM_SCORE = 21;
-    private static final int ACE_BONUS = 10;
-
-    private final List<Card> cards;
-
-    public Cards(final List<Card> cards) {
-        this.cards = cards;
+        assertThat(cards.isTotalScoreOver()).isTrue();
     }
 
-    public int calculateTotalScore() {
-        final int score = getTotalScore();
+    @Test
+    void 점수_최댓값_이하라면_false_반환한다() {
+        final Cards cards = new Cards(
+                List.of(new Card(TEN, SPADE),
+                        new Card(JACK, HEART)
+                ));
 
-        if (isExistAce() && isScoreUpdatable(score)) {
-            return score + ACE_BONUS;
-        }
-
-        return score;
-    }
-
-    private int getTotalScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private boolean isExistAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
-    private boolean isScoreUpdatable(final int score) {
-        return score + ACE_BONUS <= MAXIMUM_SCORE;
+        assertThat(cards.isTotalScoreOver()).isFalse();
     }
 }
