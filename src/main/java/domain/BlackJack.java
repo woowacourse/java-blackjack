@@ -7,21 +7,22 @@ import domain.player.Participant;
 import domain.player.Player;
 import domain.strategy.IndexGenerator;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackJack {
     private final CardRepository cardRepository;
-    private final List<Participant> participants;
-    private final Dealer dealer;
+    private final List<Player> players;
 
     public BlackJack(String playerNames) {
-        cardRepository = CardRepository.create();
-        participants = initParticipants(playerNames);
-        dealer = new Dealer();
+        this.cardRepository = CardRepository.create();
+        this.players = initPlayers(playerNames);
+    }
+
+    private List<Player> initPlayers(String playerNames) {
+        List<Player> players = new ArrayList<>(List.of(new Dealer()));
+        players.addAll(initParticipants(playerNames));
+        return players;
     }
 
     private List<Participant> initParticipants(String playerNames) {
@@ -31,42 +32,29 @@ public class BlackJack {
     }
 
     public void startGame(IndexGenerator indexGenerator) {
-        giveCardToDealer(indexGenerator);
-        giveCardToParticipants(indexGenerator);
+        giveCardToPlayers(indexGenerator);
     }
 
-    private void giveCardToDealer(IndexGenerator indexGenerator) {
-        for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
-            Card card = cardRepository.findCardByIndex(indexGenerator.generate(cardRepository.size()));
-            dealer.addCard(card);
+    private void giveCardToPlayers(IndexGenerator indexGenerator) {
+        for (Player player : players) {
+            giveCardToPerPlayer(indexGenerator, player);
         }
     }
 
-    private void giveCardToParticipants(IndexGenerator indexGenerator) {
-        for (Participant participant : participants) {
-            giveCardToPerParticipant(indexGenerator, participant);
-        }
-    }
-
-    private void giveCardToPerParticipant(IndexGenerator indexGenerator, Participant participant) {
+    private void giveCardToPerPlayer(IndexGenerator indexGenerator, Player player) {
         for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
             Card card = cardRepository.findCardByIndex(indexGenerator.generate(cardRepository.size()));
-            participant.addCard(card);
+            player.addCard(card);
         }
     }
 
     public Map<Player, List<Card>> getPlayersCards() {
         HashMap<Player, List<Card>> cardsPerPlayer = new HashMap<>();
-        putDealerCards(cardsPerPlayer);
-        putParticipantsCards(cardsPerPlayer);
+        putPlayerCards(cardsPerPlayer);
         return cardsPerPlayer;
     }
 
-    private void putDealerCards(HashMap<Player, List<Card>> cardsPerPlayer) {
-        cardsPerPlayer.put(dealer, dealer.getCards());
-    }
-
-    private void putParticipantsCards(HashMap<Player, List<Card>> cardsPerPlayer) {
-        participants.forEach(participant -> cardsPerPlayer.put(participant, participant.getCards()));
+    private void putPlayerCards(HashMap<Player, List<Card>> cardsPerPlayer) {
+        players.forEach(player -> cardsPerPlayer.put(player, player.getCards()));
     }
 }
