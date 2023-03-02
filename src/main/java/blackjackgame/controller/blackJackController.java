@@ -7,6 +7,7 @@ import blackjackgame.domain.Cards;
 import blackjackgame.domain.Dealer;
 import blackjackgame.domain.Guest;
 import blackjackgame.domain.Guests;
+import blackjackgame.domain.Result;
 import blackjackgame.view.AddCardResponse;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
@@ -54,5 +55,9 @@ public class blackJackController {
             outputView.printCards(guest.getName(), guest.getCards());
             outputView.printScore(guest.getScore());
         }
+
+        Result result = new Result(dealer, guests.getGuests());
+
+        outputView.printResult(result.getDealerResult(), result.getGuestsResult());
     }
 }
