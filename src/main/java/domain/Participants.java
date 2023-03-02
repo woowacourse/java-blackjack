@@ -1,9 +1,7 @@
 package domain;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -28,32 +26,13 @@ public class Participants {
         }
     }
 
-    public void addTwoCards(CardDeck cardDeck) {
-        for (Participant player : participants) {
-            List<Card> cards = cardDeck.pickTwice();
-            player.addCards(cards);
-        }
+    public List<Participant> getPlayers() {
+        return participants.stream()
+                           .filter(participant -> participant instanceof Player)
+                           .collect(Collectors.toList());
     }
 
-    public Map<Participant, GameResult> getResult() {
-        Map<Participant, GameResult> result = new HashMap<>();
-        List<Participant> players = participants.stream()
-                                                .filter(participant -> participant instanceof Player)
-                                                .collect(Collectors.toList());
-        for (Participant player : players) {
-            result.put(player, getGameResult(player.getScore()));
-        }
-        return result;
-    }
-
-    private GameResult getGameResult(int score) {
-        if (score > getDealerScore()) {
-            return GameResult.WIN;
-        }
-        return GameResult.LOSE;
-    }
-
-    private int getDealerScore() {
+    public int getDealerScore() {
         Participant dealer = participants.stream()
                                          .filter(participant -> participant instanceof Dealer)
                                          .findAny()
