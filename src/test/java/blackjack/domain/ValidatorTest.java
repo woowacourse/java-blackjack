@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -46,5 +47,20 @@ class ValidatorTest {
         List<String> playerNames = List.of("io", "io");
         assertThatThrownBy(() -> validator.validatePlayerNames(playerNames)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @ParameterizedTest
+    @DisplayName("player 의사 유효성 검증")
+    @ValueSource(strings = {"y", "n"})
+    void playerIntentionSuccess(String input){
+        assertThatNoException().isThrownBy(()-> validator.validatePlayerIntention(input));
+    }
+
+    @ParameterizedTest
+    @DisplayName("player 의사 유효성 검증")
+    @ValueSource(strings = {"", "N", "IOIO"})
+    void playerIntentionFail(String input){
+        assertThatThrownBy(()-> validator.validatePlayerIntention(input)).isInstanceOf(IllegalArgumentException.class);
+    }
+
 
 }
