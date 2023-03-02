@@ -1,7 +1,8 @@
 public class Player {
+    private static final int SCORE_UPPER_LIMIT = 21;
+
     private final Name name;
     private final CardHand cardHand;
-
 
     public Player(String nameValue, CardHand cardHand) {
         this.cardHand = cardHand;
@@ -19,5 +20,9 @@ public class Player {
 
     public String getNameValue() {
         return this.name.getValue();
+    }
+
+    public boolean canAdd() {
+        return cardHand.calculateScore() < SCORE_UPPER_LIMIT;
     }
 }
