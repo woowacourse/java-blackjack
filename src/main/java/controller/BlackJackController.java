@@ -10,6 +10,8 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
@@ -24,70 +26,48 @@ public class BlackJackController {
         final Dealer dealer = dealDealerCars(cardDeck);
 
         OutputView.printAfterDeal(participants);
-        OutputView.showPlayerState(dealer);
+        OutputView.showDealerState(dealer);
         OutputView.showPlayersState(participants);
 
-        for (final Participant participant : participants) {
-            addParticipant(cardDeck, participant);
-        }
+        hitForParticipants(cardDeck, participants);
+        hitForDealer(cardDeck, dealer);
 
-        //딜러 반복해서 주고
+        //최종 승패
+        gameStatistic(participants, dealer);
+    }
+
+    private void hitForDealer(final CardDeck cardDeck, final Dealer dealer) {
         while (dealer.canHit()) {
             OutputView.dealerOneMoreCard();
             dealer.hit(cardDeck.draw());
         }
-
-        //전체 상태 다 출력 - 결과
-        OutputView.showParticipantsStateResult(participants);
-        OutputView.showPlayerStateResult(dealer);
-
-        //최종 승패
-        int dealerWin = 0;
-        int dealerDraw = 0;
-        int dealerLose = 0;
-        final int dealerScore = dealer.score();
-
-        for (final Participant participant : participants) {
-
-            if (participant.isBurst()) {
-                System.out.println(participant.name().value() + ": " + "패");
-                dealerWin++;
-            } else {
-                if (dealer.isBurst()) {
-                    System.out.println(participant.name().value() + ": " + "승");
-                    dealerLose++;
-                } else {
-                    if (participant.score() > dealerScore) {
-                        System.out.println(participant.name().value() + ": " + "승");
-                        dealerLose++;
-                    } else if (participant.score() == dealerScore) {
-                        System.out.println(participant.name().value() + ": " + "무승부");
-                        dealerDraw++;
-                    } else {
-                        System.out.println(participant.name().value() + ": " + "패");
-                        dealerWin++;
-                    }
-                }
-            }
-        }
-
-        System.out.println("딜러: " + dealerWin + "승" + dealerDraw + "무" + dealerLose + "패");
     }
 
-    private static void addParticipant(final CardDeck cardDeck, final Participant participant) {
-        // canMoreCard -> 21 이하이면서, 참여자가 STAY 를 원하지 않는 경우
-        while (participant.canHit()) {
-            if (InputView.readMoreCard(participant).equals("y")) {
-                participant.changeState(State.HIT);
-            } else {
-                participant.changeState(State.STAY);
-            }
-
-            if (participant.wantHit()) {
-                participant.hit(cardDeck.draw());
-            }
-            OutputView.showPlayerState(participant);
+    private void hitForParticipants(final CardDeck cardDeck, final List<Participant> participants) {
+        for (final Participant participant : participants) {
+            hitForParticipant(cardDeck, participant);
         }
+    }
+
+    private void hitForParticipant(final CardDeck cardDeck, final Participant participant) {
+        while (participant.canHit()) {
+            participant.changeState(inputHitOrStay(participant));
+            hitOrStayForParticipant(cardDeck, participant);
+        }
+    }
+
+    private void hitOrStayForParticipant(final CardDeck cardDeck, final Participant participant) {
+        if (participant.wantHit()) {
+            participant.hit(cardDeck.draw());
+        }
+        OutputView.showPlayerState(participant);
+    }
+
+    private State inputHitOrStay(final Participant participant) {
+        if (InputView.readMoreCard(participant).equals("y")) {
+            return State.HIT;
+        }
+        return State.STAY;
     }
 
     private Dealer dealDealerCars(final CardDeck cardDeck) {
@@ -106,5 +86,66 @@ public class BlackJackController {
                 .stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
+    }
+
+    private void gameStatistic(final List<Participant> participants, final Dealer dealer) {
+        final Map<Participant, PlayerResult> collect1 = participants.stream().collect(Collectors.toMap(Function.identity(), it -> PlayerResult.judge(it, dealer)));
+        OutputView.showGameStatistic(new ResultDto(collect1, participants, dealer));
+    }
+
+    public enum PlayerResult {
+        WINNER,
+        LOSER,
+        DRAWER;
+
+        public static PlayerResult judge(final Participant it, final Dealer dealer) {
+            if (it.isBurst()) {
+                return PlayerResult.LOSER;
+            }
+            if (dealer.isBurst()) {
+                return PlayerResult.WINNER;
+            }
+            if (it.score() > dealer.score()) {
+                return PlayerResult.WINNER;
+            }
+            if (it.score() == dealer.score()) {
+                return PlayerResult.DRAWER;
+            }
+            return PlayerResult.LOSER;
+        }
+
+        public PlayerResult reverse() {
+            if (this == WINNER) {
+                return LOSER;
+            }
+            if (this == LOSER) {
+                return WINNER;
+            }
+            return this;
+        }
+    }
+
+    public class ResultDto {
+        private final Map<Participant, PlayerResult> participantsResult;
+        private final List<Participant> participants;
+        private final Dealer dealer;
+
+        public ResultDto(final Map<Participant, PlayerResult> participantsResult, final List<Participant> participants, final Dealer dealer) {
+            this.participantsResult = participantsResult;
+            this.participants = participants;
+            this.dealer = dealer;
+        }
+
+        public Map<Participant, PlayerResult> participantsResult() {
+            return participantsResult;
+        }
+
+        public List<Participant> participants() {
+            return participants;
+        }
+
+        public Dealer dealer() {
+            return dealer;
+        }
     }
 }

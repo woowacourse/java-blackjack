@@ -1,7 +1,11 @@
 package view;
 
+import controller.BlackJackController;
+import controller.BlackJackController.PlayerResult;
 import domain.card.CardShape;
 import domain.card.CardValue;
+import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 
 import java.util.EnumMap;
@@ -9,14 +13,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.counting;
+
 public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
+    private static final Map<PlayerResult, String> PLAYER_RESULT_MAP = new EnumMap<>(PlayerResult.class);
 
     static {
         makeShapeMessage();
         makeValueMessage();
+        makePlayerResultMessage();
     }
 
     private static void makeShapeMessage() {
@@ -42,8 +50,14 @@ public class OutputView {
         VALUE_MESSAGE_MAP.put(CardValue.ACE, "A");
     }
 
+    private static void makePlayerResultMessage() {
+        PLAYER_RESULT_MAP.put(PlayerResult.WINNER, "승");
+        PLAYER_RESULT_MAP.put(PlayerResult.LOSER, "패");
+        PLAYER_RESULT_MAP.put(PlayerResult.DRAWER, "무");
+    }
+
     public static void printAfterDeal(final List<? extends Player> participants) {
-        System.out.println("딜러와" + participants.stream().map(it -> it.name().value()).collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다");
+        System.out.println("딜러와 " + participants.stream().map(it -> it.name().value()).collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다");
     }
 
     public static void showPlayersState(final List<? extends Player> participants) {
@@ -73,5 +87,30 @@ public class OutputView {
 
     public static void dealerOneMoreCard() {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void showGameStatistic(BlackJackController.ResultDto resultDto) {
+        showPlayerStateResult(resultDto.dealer());
+        showParticipantsStateResult(resultDto.participants());
+        final Map<Participant, PlayerResult> result = resultDto.participantsResult();
+
+        final Map<PlayerResult, Long> winOrLose = result.keySet().stream().collect(Collectors.groupingBy(result::get, counting()));
+
+        final String collect = winOrLose.keySet()
+                .stream()
+                .map(PlayerResult::reverse)
+                .map(it -> winOrLose.get(it) + PLAYER_RESULT_MAP.get(it))
+                .collect(Collectors.joining(" ", "딜러: ", ""));
+
+        System.out.println(collect);
+
+        resultDto.participants()
+                .stream()
+                .map(it -> it.name().value() + ": " + PLAYER_RESULT_MAP.get(result.get(it)))
+                .forEach(System.out::println);
+    }
+
+    public static void showDealerState(final Dealer dealer) {
+        System.out.println(dealer.name().value() + ": " + VALUE_MESSAGE_MAP.get(dealer.firstCard().cardValue()) + SHAPE_MESSAGE_MAP.get(dealer.firstCard().cardShape()));
     }
 }
