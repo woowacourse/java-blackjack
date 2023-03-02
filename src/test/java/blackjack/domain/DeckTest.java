@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.Number.ACE;
 import static blackjack.domain.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Stack;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,6 +24,16 @@ class DeckTest {
 
         assertThat(deck.draw()).isEqualTo(card);
     }
+
+    @Test
+    void 카드가_존재하지_않으면_예외를_던진다() {
+        final Stack<Card> cards = new Stack<>();
+
+        final Deck deck = new Deck(cards);
+
+        assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalStateException.class);
+    }
 }
 
 class Deck {
@@ -34,6 +45,9 @@ class Deck {
     }
 
     public Card draw() {
+        if (cards.empty()) {
+            throw new IllegalStateException("덱에 더 이상의 카드가 없습니다.");
+        }
         return cards.pop();
     }
 }
