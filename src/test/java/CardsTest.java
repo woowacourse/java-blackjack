@@ -26,8 +26,7 @@ class CardsTest {
     @DisplayName("카드를 한 장씩 반환받을 수 있다.")
     @Test
     void receiveCardTest() {
-        assertThat(cards.receiveCard(0)).isEqualTo(new Card("A", "스페이드"));
-        assertThat(cards.receiveCard(1)).isEqualTo(new Card("A", "클로버"));
-        assertThat(cards.receiveCard(51)).isEqualTo(new Card("K", "하트"));
+        assertThat(cards.receiveCard()).isEqualTo(new Card("K", "하트"));
+        assertThat(cards.receiveCard()).isEqualTo(new Card("K", "다이아몬드"));
     }
 }

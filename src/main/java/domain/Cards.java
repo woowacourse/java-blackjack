@@ -2,20 +2,21 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Cards {
 
-    private final List<Card> cards;
+    private final Stack<Card> cards;
 
     public Cards(CardsShuffler shuffler) {
         this.cards = shuffler.shuffleCards(initializeCards());
     }
 
-    private static List<Card> initializeCards() {
-        List<Card> cards = new ArrayList<>();
+    private static Stack<Card> initializeCards() {
+        Stack<Card> cards = new Stack<>();
         for (Value value : Value.values()) {
             for (Shape shape : Shape.values()) {
-                cards.add(new Card(value.getValue(), shape.getShape()));
+                cards.push(new Card(value.getValue(), shape.getShape()));
             }
         }
         return cards;
@@ -25,7 +26,7 @@ public class Cards {
         return cards.contains(card);
     }
 
-    public Card receiveCard(final int index) {
-        return cards.get(index);
+    public Card receiveCard() {
+        return cards.pop();
     }
 }

@@ -1,8 +1,8 @@
 package domain;
 
-import java.util.List;
+import java.util.Stack;
 
 public interface CardsShuffler {
 
-    public List<Card> shuffleCards(List<Card> cards);
+    public Stack<Card> shuffleCards(Stack<Card> cards);
 }

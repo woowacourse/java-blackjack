@@ -1,11 +1,11 @@
 package domain;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class RandomCardsShuffler implements CardsShuffler {
     @Override
-    public List<Card> shuffleCards(final List<Card> cards) {
+    public Stack<Card> shuffleCards(final Stack<Card> cards) {
         Collections.shuffle(cards);
         return cards;
     }
