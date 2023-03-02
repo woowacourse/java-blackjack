@@ -68,4 +68,8 @@ public class OutputView {
         printEmptyLine();
         System.out.println(RESULT_TAG);
     }
+
+    public void printExceptionMessage(IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+    }
 }

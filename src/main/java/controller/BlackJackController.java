@@ -29,12 +29,21 @@ public class BlackJackController {
 
     public void run() {
         Deck deck = settingService.createDeck();
-        Participants participants = settingService.createParticipants(inputView.requestNames());
+        Participants participants = makeParticipants();
         GameService gameService = new GameService(deck, participants);
 
         initGameStatus(gameService);
         play(participants, gameService);
         showResults(gameService);
+    }
+
+    private Participants makeParticipants() {
+        try {
+            return settingService.createParticipants(inputView.requestNames());
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            return makeParticipants();
+        }
     }
 
     private void initGameStatus(GameService gameService) {
@@ -64,7 +73,16 @@ public class BlackJackController {
 
     private void hitOrStayForEachPlayer(Participants participants, GameService gameService) {
         for (Player player : participants.findPlayers()) {
+            keepHitOrStay(gameService, player);
+        }
+    }
+
+    private void keepHitOrStay(GameService gameService, Player player) {
+        try {
             hitOrStay(gameService, player);
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            keepHitOrStay(gameService, player);
         }
     }
 
