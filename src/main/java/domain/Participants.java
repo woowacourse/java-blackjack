@@ -99,4 +99,16 @@ public class Participants {
                 .map(Participant::getHand)
                 .orElseThrow(() -> new IllegalStateException("없는 참여자의 이름입니다."));
     }
+
+    public List<String> names() {
+        return participants.stream()
+                .map(Participant::name)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Integer> scores() {
+        return players().stream()
+                .map(Participant::score)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

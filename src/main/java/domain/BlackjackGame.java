@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 public class BlackjackGame {
 
@@ -56,7 +57,20 @@ public class BlackjackGame {
                         , (d1, d2) -> d1, LinkedHashMap::new));
     }
 
-    public List<Card> getParticipantsCard(String currentPlayerName) {
+    public List<Card> getParticipantCards(String currentPlayerName) {
         return participants.getParticipantCards(currentPlayerName);
+    }
+
+    public Map<String, List<Card>> getParticipantsCards() {
+        return participants.names()
+                .stream()
+                .collect(toMap(Function.identity(), this::getParticipantCards
+                        , (d1, d2) -> d1, LinkedHashMap::new));
+    }
+
+    public List<Integer> scores() {
+        List<Integer> scores = participants.scores();
+        scores.add(0, participants.getDealerScore());
+        return scores;
     }
 }
