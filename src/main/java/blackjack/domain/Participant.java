@@ -25,11 +25,11 @@ public abstract class Participant {
         cards.receive(card);
     }
 
-    protected List<Card> open(final int cardCount) {
+    protected abstract boolean isHittable();
+
+    public List<Card> open(final int cardCount) {
         return cards.open(cardCount);
     }
-
-    protected abstract boolean isHittable();
 
     public Name getName() {
         return name;

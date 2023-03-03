@@ -31,4 +31,9 @@ public class Card {
     public int hashCode() {
         return Objects.hash(shape, number);
     }
+
+    @Override
+    public String toString() {
+        return number.getNumber() + shape.getValue();
+    }
 }
