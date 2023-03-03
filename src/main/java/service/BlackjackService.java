@@ -1,10 +1,13 @@
 package service;
 
+import domain.PlayerGameResult;
 import domain.card.Deck;
 import domain.participant.Participant;
 import domain.participant.Participants;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackService {
 
@@ -31,6 +34,10 @@ public class BlackjackService {
         return participants.getNextTurnPlayer().isPresent();
     }
 
+    public Participant getNextPlayer() {
+        return participants.getNextTurnPlayer().get();
+    }
+
     public void nextTurn(String hit) {
         Participant nextPlayer = participants.getNextTurnPlayer().get();
 
@@ -45,10 +52,32 @@ public class BlackjackService {
     }
 
     public void dealerTurn() {
-        Participant dealer = participants.getDealer();
-        while (!dealer.isStand() && !dealer.isBust()) {
-            dealer.addCard(deck.pollAvailableCard());
-        }
+        participants.playDealerTurn(deck);
     }
 
+    public boolean isDealerStand() {
+        return participants.isDealerStand();
+    }
+
+    public String getDealerName() {
+        return participants.getDealer().getName();
+    }
+
+    public List<String> getPlayersName() {
+        return participants.getPlayers().stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, PlayerGameResult> getResult() {
+        return participants.getResult();
+    }
+
+    public Participant getDealer() {
+        return participants.getDealer();
+    }
+
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
+    }
 }

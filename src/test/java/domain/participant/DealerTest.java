@@ -85,7 +85,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
                 new Card(Rank.TEN, Suit.HEART),
-                new Card(Rank.TEN, Suit.SPACE));
+                new Card(Rank.TEN, Suit.SPADE));
 
         //when
         cards.forEach(dealer::addCard);

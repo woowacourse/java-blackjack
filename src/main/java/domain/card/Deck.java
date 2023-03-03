@@ -6,19 +6,17 @@ import java.util.stream.Collectors;
 public class Deck {
     private static final String ERROR_EMPTY_CARDS = "[ERROR] 뽑을 수 있는 카드가 존재하지 않습니다";
 
-    private final Queue<Card> cards = new LinkedList<>();
+    private final Queue<Card> cards;
 
-    private Deck() {
+    private Deck(LinkedList<Card> cards) {
+        this.cards = cards;
     }
 
     public static Deck create() {
-        Deck deck = new Deck();
-
         List<Card> initialCards = generateCards();
         Collections.shuffle(initialCards);
-        deck.cards.addAll(initialCards);
 
-        return deck;
+        return new Deck(new LinkedList<>(initialCards));
     }
 
     private static List<Card> generateCards() {
@@ -41,6 +39,6 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return Collections.unmodifiableList((LinkedList<Card>) cards);
     }
 }

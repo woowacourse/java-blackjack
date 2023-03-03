@@ -1,10 +1,9 @@
 package domain.participant;
 
+import domain.PlayerGameResult;
 import domain.card.Deck;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -63,6 +62,37 @@ public class Participants {
         return players.stream()
                 .filter(player -> !player.isStand() && !player.isBust())
                 .findFirst();
+    }
+
+    public void playDealerTurn(Deck deck) {
+        while (!dealer.isStand() && !dealer.isBust()) {
+            dealer.addCard(deck.pollAvailableCard());
+        }
+    }
+
+    public boolean isDealerStand() {
+        return dealer.isStand() || dealer.isBust();
+    }
+
+    public Map<String, PlayerGameResult> getResult() {
+        Map<String, PlayerGameResult> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player.getName(), getPlayerGameResult(player)));
+
+        return result;
+    }
+
+    private PlayerGameResult getPlayerGameResult(Participant player) {
+        int dealerScore = dealer.calculateScore();
+        int playerScore = player.calculateScore();
+
+        if (playerScore < dealerScore && !dealer.isBust() || player.isBust()) {
+            return PlayerGameResult.LOSE;
+        }
+        if (playerScore == dealerScore) {
+            return PlayerGameResult.DRAW;
+        }
+
+        return PlayerGameResult.WIN;
     }
 
     public Participant getDealer() {

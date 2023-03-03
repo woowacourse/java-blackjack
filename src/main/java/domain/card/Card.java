@@ -31,5 +31,13 @@ public class Card {
     public int getScore() {
         return rank.getScore();
     }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
 }
 

@@ -5,12 +5,10 @@ public class Player extends Participant {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
 
-    private final String name;
     private boolean isStand = false;
 
     private Player(String name) {
-        super();
-        this.name = name.trim();
+        super(name.trim());
     }
 
     public static Player from(String name) {

@@ -10,10 +10,12 @@ public abstract class Participant {
 
     private static final int BLACKJACK = 21;
 
+    private final String name;
     private final Hand hand;
 
-    Participant() {
+    Participant(String name) {
         this.hand = new Hand();
+        this.name = name;
     }
 
     public void addCard(Card card) {
@@ -35,6 +37,10 @@ public abstract class Participant {
     abstract public boolean isStand();
 
     abstract public void stand();
+
+    public String getName() {
+        return name;
+    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(hand.toList());
