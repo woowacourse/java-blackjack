@@ -1,10 +1,15 @@
 package blackjack.view;
 
-import static blackjack.view.Result.DRAW;
-import static blackjack.view.Result.LOSE;
-import static blackjack.view.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 import static java.text.MessageFormat.format;
 
+import blackjack.domain.result.Result;
+import blackjack.view.dto.CardsResponse;
+import blackjack.view.dto.DealerStateResponse;
+import blackjack.view.dto.ParticipantResponse;
+import blackjack.view.dto.PlayerResultResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,127 +84,5 @@ public class OutputView {
 
     private void printPlayerResult(final PlayerResultResponse player) {
         System.out.println(format(RESULT_FORMAT, player.getName(), player.getResult().getName()));
-    }
-}
-
-enum Result {
-
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
-
-    private final String name;
-
-    Result(final String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-}
-
-class Score implements Comparable<Score> {
-
-    private final int value;
-
-    public Score(final int value) {
-        this.value = value;
-    }
-
-    public Result compare(final Score score) {
-        final int result = this.compareTo(score);
-        if (result > 0) {
-            return WIN;
-        }
-        if (result < 0) {
-            return LOSE;
-        }
-        return DRAW;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    @Override
-    public int compareTo(final Score score) {
-        return Integer.compare(value, score.getValue());
-    }
-}
-
-class PlayerResultResponse {
-
-    private final String name;
-    private final Result result;
-
-    public PlayerResultResponse(final String name, final Result result) {
-        this.name = name;
-        this.result = result;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Result getResult() {
-        return result;
-    }
-}
-
-class DealerStateResponse {
-
-    private final boolean drawable;
-    private final int limit;
-
-    public DealerStateResponse(final boolean drawable, final int limit) {
-        this.drawable = drawable;
-        this.limit = limit;
-    }
-
-    public boolean isDrawable() {
-        return drawable;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-}
-
-class ParticipantResponse {
-
-    private final String name;
-    private final CardsResponse cardsResponse;
-
-    public ParticipantResponse(final String name, final CardsResponse cardsResponse) {
-        this.name = name;
-        this.cardsResponse = cardsResponse;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CardsResponse getCardsResponse() {
-        return cardsResponse;
-    }
-}
-
-class CardsResponse {
-
-    private final int totalScore;
-    private final List<String> cardInfos;
-
-    public CardsResponse(final int totalScore, final List<String> cardInfos) {
-        this.totalScore = totalScore;
-        this.cardInfos = cardInfos;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public List<String> getCardInfos() {
-        return cardInfos;
     }
 }
