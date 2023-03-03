@@ -55,8 +55,7 @@ public class BackJackController {
     }
 
     private boolean isContinuous(String name, BlackJackGame blackJackGame) {
-        // todo: blackjack 확인
-        if (blackJackGame.isBust(name)) {
+        if (blackJackGame.isBlackJackScore(name) || blackJackGame.isBust(name)) {
             return false;
         }
         outputView.printDrawCardRequestMessage(name);
