@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.PlayerCommand;
+import domain.WinningStatus;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.List;

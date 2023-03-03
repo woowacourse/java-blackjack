@@ -1,11 +1,13 @@
 package view;
 
+import domain.WinningStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -64,5 +66,41 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
+    public void printFinalResult() {
+        System.out.println("## 최종 승패");
+    }
 
+    public void printDealerResult(final Map<WinningStatus, Integer> dealerResult) {
+        StringBuilder dealerDisplay = new StringBuilder();
+        int winCount = dealerResult.getOrDefault(WinningStatus.WIN, 0);
+        int tieCount = dealerResult.getOrDefault(WinningStatus.TIE, 0);
+        int loseCount = dealerResult.getOrDefault(WinningStatus.LOSE, 0);
+        if (winCount >= 1) {
+            dealerDisplay.append(winCount).append("승");
+        }
+        if (tieCount >= 1) {
+            dealerDisplay.append(tieCount).append("무");
+        }
+        if (loseCount >= 1) {
+            dealerDisplay.append(loseCount).append("패");
+        }
+        System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
+    }
+
+    public void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
+        for (Player player : playersResult.keySet()) {
+            String playerDisplay = "";
+            WinningStatus winningStatus = playersResult.get(player);
+            if (winningStatus.equals(WinningStatus.WIN)) {
+                playerDisplay = "승";
+            }
+            if (winningStatus.equals(WinningStatus.TIE)) {
+                playerDisplay = "무";
+            }
+            if (winningStatus.equals(WinningStatus.LOSE)) {
+                playerDisplay = "패";
+            }
+            System.out.printf("%s: %s" + System.lineSeparator(), player.getName(), playerDisplay);
+        }
+    }
 }
