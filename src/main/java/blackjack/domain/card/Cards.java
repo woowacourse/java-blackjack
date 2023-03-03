@@ -21,6 +21,7 @@ public class Cards {
     public int calculateTotalScore() {
         int totalScore = makeTotalScore();
         int aceCount = countAce();
+        System.out.println(aceCount);
         while(totalScore>21 && aceCount!=0){
             totalScore-=10;
             aceCount--;
