@@ -15,8 +15,8 @@ public class InputView {
         return names.split(DELIMITER);
     }
 
-    public static String readDrawCardDecision(String playerName) {
-        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static String readDrawCardDecision(final String playerName) {
+        System.out.println("\n" + playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
 }
