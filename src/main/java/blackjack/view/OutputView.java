@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players, final int count) {
+    public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players,
+                               final int count) {
         System.out.println(format("{0}와 {1}에게 {2}장을 나누었습니다.",
                 dealer.getName(), getPlayerNamesFormat(players), count));
 
@@ -40,6 +41,17 @@ public class OutputView {
         if (dealerStateResponse.isDrawable()) {
             System.out.println(format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.", dealerStateResponse.getLimit()));
         }
+    }
+
+    public void printHandedCardsWithScore(final ParticipantResponse participant) {
+        final CardsResponse cardsResponse = participant.getCardsResponse();
+        final int totalScore = cardsResponse.getTotalScore();
+
+        System.out.println(getHandedCards(participant) + " - " + getScoreFormat(totalScore));
+    }
+
+    private String getScoreFormat(final int totalScore) {
+        return format("결과: {0}", totalScore);
     }
 }
 
