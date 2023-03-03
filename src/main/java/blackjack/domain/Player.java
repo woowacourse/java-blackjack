@@ -6,7 +6,7 @@ public class Player extends Participant {
 
     private final Name name;
 
-    protected Player(final String name) {
+    Player(final String name) {
         this.name = new Name(name);
     }
 
@@ -20,7 +20,7 @@ public class Player extends Participant {
         return name.getName();
     }
 
-    public boolean hasName(final String playerName) {
+    boolean hasName(final String playerName) {
         return name.getName()
                 .equals(playerName);
     }

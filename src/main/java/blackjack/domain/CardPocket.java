@@ -16,7 +16,7 @@ public class CardPocket {
         this.cards = new ArrayList<>(cards);
     }
 
-    public static CardPocket empty() {
+    static CardPocket empty() {
         return new CardPocket(new ArrayList<>());
     }
 
@@ -26,11 +26,11 @@ public class CardPocket {
         }
     }
 
-    public void addCard(final Card card) {
+    void addCard(final Card card) {
         cards.add(card);
     }
 
-    public int calculateScore() {
+    int calculateScore() {
         final int countOfAce = countAce();
         int scoreOfCards = calculateMinimumScore();
         for (int i = 0; i < countOfAce; i++) {
@@ -76,8 +76,7 @@ public class CardPocket {
         return Objects.hash(cards);
     }
 
-    public List<Card> getCards() {
+    List<Card> getCards() {
         return List.copyOf(cards);
     }
-
 }

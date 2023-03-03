@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.Symbol;
-
 import java.util.Arrays;
 
 public enum OutputViewSymbol {

@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.Shape;
-
 import java.util.Arrays;
 
 public enum OutputViewShape {
@@ -11,7 +10,7 @@ public enum OutputViewShape {
     CLOVER("클로버", Shape.CLOVER);
 
     public final String printShape;
-
+    
     public final Shape shape;
 
     OutputViewShape(final String printShape, final Shape shape) {

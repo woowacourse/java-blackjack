@@ -1,12 +1,12 @@
 package blackjack.domain;
 
-import java.util.Map;
-
 import static blackjack.domain.BlackJackConstant.BLACKJACK;
+
+import java.util.Map;
 
 public class Dealer extends Participant {
 
-    public static final int CARD_DRAW_POINT = 16;
+    private static final int CARD_DRAW_POINT = 16;
     private final ParticipantResults participantResults = new ParticipantResults();
 
 
@@ -16,7 +16,7 @@ public class Dealer extends Participant {
         return currentScore <= CARD_DRAW_POINT;
     }
 
-    public void calculateResult(final Player player) {
+    void calculateResult(final Player player) {
         final int dealerScore = currentScore();
         final int playerScore = player.currentScore();
         if (isTie(dealerScore, playerScore)) {

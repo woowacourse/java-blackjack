@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParticipantResults {
+class ParticipantResults {
 
     private final Map<String, ResultType> playerNameToResultType = new HashMap<>();
 
@@ -19,7 +19,7 @@ public class ParticipantResults {
         playerNameToResultType.put(playerName, ResultType.LOSE);
     }
 
-    public Map<String, ResultType> getPlayerNameToResultType() {
+    Map<String, ResultType> getPlayerNameToResultType() {
         return Map.copyOf(playerNameToResultType);
     }
 }

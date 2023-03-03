@@ -5,9 +5,9 @@ package blackjack.domain;
  * <p/>
  * 많은 클래스가 블랙잭이라는 숫자에 대한 정보를 필요로 하기에 제작되었습니다
  */
-public class BlackJackConstant {
+class BlackJackConstant {
 
-    public static final int BLACKJACK = 21;
+    static final int BLACKJACK = 21;
 
     private BlackJackConstant() {
     }

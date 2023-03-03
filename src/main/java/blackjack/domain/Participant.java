@@ -6,7 +6,7 @@ public abstract class Participant {
 
     private final CardPocket cardPocket;
 
-    protected Participant() {
+    Participant() {
         cardPocket = CardPocket.empty();
     }
 

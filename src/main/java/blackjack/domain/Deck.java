@@ -4,7 +4,7 @@ import java.util.Queue;
 
 public class Deck {
 
-    public static final int NUMBER_OF_CARDS_IN_DECK = 52;
+    private static final int NUMBER_OF_CARDS_IN_DECK = 52;
 
     private final Queue<Card> cards;
 

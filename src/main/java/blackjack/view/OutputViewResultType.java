@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.ResultType;
-
 import java.util.Arrays;
 
 public enum OutputViewResultType {
