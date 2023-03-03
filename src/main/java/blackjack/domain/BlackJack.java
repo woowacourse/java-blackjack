@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
@@ -39,7 +38,7 @@ public class BlackJack {
         return additionalCardCount;
     }
 
-    public boolean checkBustBy(final Name name) {
+    public boolean isBust(final Name name) {
         return users.checkBustBy(name);
     }
 

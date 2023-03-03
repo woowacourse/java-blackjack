@@ -52,14 +52,12 @@ public class BlackJackController {
     }
 
     private void checkCardWanted(BlackJack blackJack, final Name name) {
-        boolean wantCard = getCardWantFromConsole(name);
-        while (wantCard) {
+        while (getCardWantFromConsole(name)) {
             blackJack.giveCard(name, randomDeck);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
-            if (blackJack.checkBustBy(name)) {
+            if (blackJack.isBust(name)) {
                 break;
             }
-            wantCard = getCardWantFromConsole(name);
         }
     }
 

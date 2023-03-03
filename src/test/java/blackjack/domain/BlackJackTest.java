@@ -135,8 +135,8 @@ public class BlackJackTest {
         blackJack.giveCard(푸우, new TestDeck(Arrays.asList(2)));
 
         assertAll(
-                () -> assertThat(blackJack.checkBustBy(푸우)).isTrue(),
-                () -> assertThat(blackJack.checkBustBy(헙크)).isFalse()
+                () -> assertThat(blackJack.isBust(푸우)).isTrue(),
+                () -> assertThat(blackJack.isBust(헙크)).isFalse()
         );
     }
 }
