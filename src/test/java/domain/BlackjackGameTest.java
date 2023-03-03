@@ -20,9 +20,9 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants);
         blackjackGame.dealOutCard();
 
-        assertThat(participants.toList()
-                               .get(0)
-                               .getCards()).hasSize(2);
+        Participant participant = participants.toList()
+                                              .get(0);
+        assertThat(participant.getCards()).hasSize(2);
     }
 
     @Test
@@ -34,8 +34,7 @@ class BlackjackGameTest {
         List<Card> cards = new ArrayList<>(List.of(
                 new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
                 new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING),
-                new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART,
-                        CardNumber.THREE)));
+                new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART, CardNumber.THREE)));
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
 

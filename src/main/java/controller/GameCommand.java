@@ -14,7 +14,7 @@ public enum GameCommand {
 
     public static GameCommand from(String input) {
         return Arrays.stream(GameCommand.values())
-                     .filter(command -> command.command.equals(input))
+                     .filter(command -> input.equals(command.command))
                      .findFirst()
                      .orElseThrow(() -> new IllegalArgumentException("y 또는 n를 입력해주세요."));
     }

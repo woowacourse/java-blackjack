@@ -7,6 +7,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isHit() {
-        return this.getState() == ScoreState.HIT;
+        return this.getState()
+                   .isHit();
     }
 }

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public CardDeck() {
         this.cards = new ArrayList<>(Card.values());
@@ -14,11 +14,6 @@ public class CardDeck {
 
     CardDeck(List<Card> cards) {
         this.cards = cards;
-    }
-
-    public void initCard() {
-        this.cards = Card.values();
-        shuffleCards();
     }
 
     private void shuffleCards() {

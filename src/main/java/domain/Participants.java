@@ -50,5 +50,4 @@ public class Participants {
     public List<Participant> toList() {
         return List.copyOf(participants);
     }
-
 }
