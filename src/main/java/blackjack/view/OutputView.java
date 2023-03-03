@@ -1,14 +1,15 @@
 package blackjack.view;
 
+import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.game.Result;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+
+import java.util.Map;
+
 import static java.lang.String.format;
 import static java.lang.String.join;
-
-import blackjack.domain.BlackjackGameResult;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Result;
-import java.util.Map;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();

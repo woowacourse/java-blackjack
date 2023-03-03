@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.BlackjackGameResult;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.ShuffledDeck;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+import blackjack.domain.card.ShuffledDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.function.Supplier;
