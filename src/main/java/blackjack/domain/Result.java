@@ -5,9 +5,11 @@ public enum Result {
     DRAW,
     LOSE;
 
+    private static final int BLACKJACK_CHECK_SUM = 21;
+
     public static Result calculate(Player player, Dealer dealer) {
-        int playerScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
+        int playerScore = calculateFinalScore(player.calculateScore());
+        int dealerScore = calculateFinalScore(dealer.calculateScore());
         if (playerScore > dealerScore) {
             return WIN;
         }
@@ -15,5 +17,12 @@ public enum Result {
             return DRAW;
         }
         return LOSE;
+    }
+
+    private static int calculateFinalScore(int sum) {
+        if (sum > BLACKJACK_CHECK_SUM) {
+            sum = 0;
+        }
+        return sum;
     }
 }
