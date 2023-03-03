@@ -24,6 +24,10 @@ public class InputView {
 
     public static String askToTake(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), playerName);
-        return scanner.nextLine();
+        String keyword = scanner.nextLine();
+        if (keyword.equals("y") || keyword.equals("n")) {
+            return keyword;
+        }
+        throw new IllegalArgumentException("올바르지 않은 입력입니다.");
     }
 }
