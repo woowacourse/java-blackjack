@@ -40,7 +40,7 @@ public class BlackJackController {
 
     private Players createPlayers() {
         return IllegalArgumentExceptionHandler.repeatUntilNoException(
-                inputView::inputPlayerNames, Players::from, outputView);
+                () -> Players.from(inputView.inputPlayerNames()), outputView::printError);
     }
 
     private void distributeInitialCard(final Players players, final Dealer dealer, final Deck deck) {

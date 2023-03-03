@@ -7,7 +7,6 @@ import blackjack.dto.FinalResultDto;
 import blackjack.dto.InitialCardDto;
 import blackjack.dto.PlayerCardDto;
 import blackjack.dto.PlayerCardsScoreDto;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -124,7 +123,7 @@ public class OutputView {
         }
     }
 
-    public void printError(final String errorMessage) {
-        System.out.println(errorMessage);
+    public void printError(final Exception exception) {
+        System.out.println(exception.getMessage());
     }
 }
