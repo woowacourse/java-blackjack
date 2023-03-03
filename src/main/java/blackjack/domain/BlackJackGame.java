@@ -25,6 +25,10 @@ public class BlackJackGame {
         return users.getPlayerNames();
     }
 
+    public boolean isBust(final String name) {
+        return BlackJackRule.isBust(users.getUser(name));
+    }
+
     public int playDealerTurn() {
         int drawCount = 0;
         while (!users.isDealerOverDrawLimit()) {

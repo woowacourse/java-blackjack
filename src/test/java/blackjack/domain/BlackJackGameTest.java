@@ -62,4 +62,14 @@ class BlackJackGameTest {
 
         assertThat(players).containsExactly("필립");
     }
+
+    @Test
+    @DisplayName("플레이어 이름으로 bust됬는지 확인하는 기능 테스트")
+    void isBustTest() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new RandomDeckGenerator());
+
+        boolean isBust = blackJackGame.isBust("필립");
+
+        assertThat(isBust).isFalse();
+    }
 }
