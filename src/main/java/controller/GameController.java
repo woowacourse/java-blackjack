@@ -41,6 +41,21 @@ public class GameController {
         printParticipantCards(participants);
         drawPlayersCard(participants, gameManager);
         handleDealerCards(participants, gameManager);
+        printGameResult(participants);
+    }
+
+    private void printGameResult(final Participants participants) {
+        OutputView.print(System.lineSeparator().trim());
+        Participant dealer = participants.getDealer();
+        printParticipantCardResult(dealer);
+        List<Participant> players = participants.getPlayer();
+        players.forEach(this::printParticipantCardResult);
+    }
+
+    private void printParticipantCardResult(final Participant participant) {
+        List<Card> participantCards = participant.getCard();
+        int participantScore = participant.calculateScore();
+        outputView.printCardResult(participant.getName(), participantCards, participantScore);
     }
 
     private Participants makeParticipants() {

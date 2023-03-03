@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import static view.message.Message.CARD_MESSAGE;
 import static view.message.Message.DRAW_MESSAGE;
+import static view.message.Message.PARTICIPANT_CARD_RESULT;
 
 public class OutputView {
 
@@ -33,10 +34,20 @@ public class OutputView {
     }
 
     public void printPlayerCard(final String playerName, final List<Card> playerCards) {
-        String cardsMessage = playerCards.stream().map(this::getCardMessage)
-                .collect(Collectors.joining(", "));
+        String cardsMessage = getCardsMessage(playerCards);
         String playerCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
         print(playerCardMessage);
+    }
+
+    public void printCardResult(final String participantName, final List<Card> participantCards, final int participantScore) {
+        String cardsResultMessage = String.format(PARTICIPANT_CARD_RESULT.getMessage(),
+                participantName, getCardsMessage(participantCards), participantScore);
+        print(cardsResultMessage);
+    }
+
+    private String getCardsMessage(final List<Card> participantCards) {
+        return participantCards.stream().map(this::getCardMessage)
+                .collect(Collectors.joining(", "));
     }
 
     private String getCardMessage(final Card participantCard) {
