@@ -24,6 +24,22 @@ public class OutputView {
         System.out.println(dealerInitCards + playersInitCards);
     }
 
+    public static void printParticipantCardWithResult(final Participant participant, final int totalPoint) {
+        String playerCards = getParticipantCards(participant, participant.openAll());
+        String playerTotalPoint = String.format(" - 결과: %d", totalPoint);
+        System.out.println(playerCards + playerTotalPoint);
+    }
+
+    public static void printParticipantsCards(final Participant participant) {
+        String playerCards = getParticipantCards(participant, participant.openAll());
+
+        System.out.println(playerCards);
+    }
+
+    public static void printDealerHit(final int hitCount) {
+        System.out.println(String.format("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", hitCount));
+    }
+
     private static String createBlackJackResult(BlackJackResults blackJackResults) {
         Map<Name, BlackJackResult> participants = blackJackResults.getParticipants();
         StringBuilder stringBuilder = new StringBuilder();

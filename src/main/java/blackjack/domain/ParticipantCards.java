@@ -13,13 +13,7 @@ public class ParticipantCards {
     private final List<Card> cards;
 
     public ParticipantCards(final List<Card> cards) {
-        if (cards.size() != INITIAL_SIZE) {
-            throw new IllegalArgumentException("첫 카드는 두 장이어야 합니다.");
-        }
-
-        if (new HashSet<>(cards).size() != INITIAL_SIZE) {
-            throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
-        }
+        validate(cards);
         this.cards = new ArrayList<>(cards);
     }
 
@@ -43,11 +37,25 @@ public class ParticipantCards {
                 .collect(Collectors.toList());
     }
 
+    public List<Card> openAll() {
+        return cards;
+    }
+
     public boolean isBust() {
         return calculate() > BLACK_JACK;
     }
 
     public boolean isBlackJack() {
         return calculate() == BLACK_JACK;
+    }
+
+    private void validate(final List<Card> cards) {
+        if (cards.size() != INITIAL_SIZE) {
+            throw new IllegalArgumentException("첫 카드는 두 장이어야 합니다.");
+        }
+
+        if (new HashSet<>(cards).size() != INITIAL_SIZE) {
+            throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
+        }
     }
 }

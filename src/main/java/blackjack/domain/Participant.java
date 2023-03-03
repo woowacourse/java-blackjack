@@ -11,12 +11,6 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    protected ResultType compare(final Participant participant) {
-        int totalPoint = getTotalPoint();
-        int compareTotalPoint = participant.getTotalPoint();
-        return ResultType.findBy(totalPoint, compareTotalPoint);
-    }
-
     protected int getTotalPoint() {
         return cards.calculate();
     }
@@ -29,6 +23,10 @@ public abstract class Participant {
 
     public List<Card> open(final int cardCount) {
         return cards.open(cardCount);
+    }
+
+    public List<Card> openAll() {
+        return cards.openAll();
     }
 
     public Name getName() {
