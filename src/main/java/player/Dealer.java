@@ -7,6 +7,7 @@ import card.Card;
 
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
+    public static final int UNDER_SCORE = 16;
     private final DealerResult dealerResult = new DealerResult();
 
 
@@ -19,7 +20,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isUnderScore() {
-        return hand.calculateScore() <= 16;
+        return hand.calculateScore() <= UNDER_SCORE;
     }
 
     public void lose() {

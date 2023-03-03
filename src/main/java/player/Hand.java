@@ -6,6 +6,8 @@ import java.util.List;
 import card.Card;
 
 public class Hand {
+    public static final int ACE_ADDITIONAL_SCORE = 10;
+    public static final int LIMIT_ADDITIONAL_SCORE = 11;
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -21,13 +23,13 @@ public class Hand {
                 .mapToInt(Card::getScore)
                 .sum();
         if (canAddTen(score)) {
-            score += 10;
+            score += ACE_ADDITIONAL_SCORE;
         }
         return score;
     }
 
     private boolean canAddTen(int score) {
-        return containAce() && score <= 11;
+        return containAce() && score <= LIMIT_ADDITIONAL_SCORE;
     }
 
     private boolean containAce() {
