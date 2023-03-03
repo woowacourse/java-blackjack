@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
-    public static final String DELIMITER = ",";
-    public static final String YES = "y";
-    public static final String NO = "n";
+    private static final String DELIMITER = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     private static final Scanner scanner = new Scanner(System.in);
 
