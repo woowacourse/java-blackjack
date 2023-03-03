@@ -50,3 +50,13 @@
 - [x] 딜러가 `Bust`된 경우
     - [x] `Bust`한 플레이어는 `무`이다.
     - [x] `Bust`하지 않은 플레이어는 `승`이다.
+
+### 1단계 리팩터링
+
+### 1단계 궁금증
+
+1. 상속 클래스를 사용했을 때 `다형성`을 어디까지 이용할 수 있을까?
+    - `Participant`를 상속받아 `Player`와 `Dealer`를 만들었다.
+    - 처음에는 `Participants`에서 `Player`와 `Dealer`를 모아 놓은 `List<Participant> participants`로 관리했다.
+    - 하지만 외부에서 `participants`의 형 변환 과정에서 어려움이 있어서, `List<Player> player`와 `Dealer`로 나누게 되었다.
+    - 상속을 통해서 `중복 기능에 대한 코드 중복 제거`라는 목적을 달성하긴 했는데, 상위 클래스로 관리함에 있어서 불편함이 있다면 이런 방식으로 관리하는 것도 괜찮을까?
