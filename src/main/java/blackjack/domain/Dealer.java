@@ -23,7 +23,7 @@ public class Dealer extends Participant {
             participantResults.tiePlayer(player.getName());
             return;
         }
-        if (isDealerWin(playerScore, dealerScore)) {
+        if (isDealerWin(dealerScore, playerScore)) {
             participantResults.winPlayer(player.getName());
             return;
         }
@@ -37,9 +37,12 @@ public class Dealer extends Participant {
         return playerScore == dealerScore;
     }
 
-    private boolean isDealerWin(final int playerScore, final int dealerScore) {
+    private boolean isDealerWin(final int dealerScore, final int playerScore) {
         if (playerScore > BLACKJACK) {
             return true;
+        }
+        if (dealerScore > BLACKJACK) {
+            return false;
         }
         return dealerScore > playerScore;
     }
