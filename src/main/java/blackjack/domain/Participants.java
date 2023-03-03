@@ -52,6 +52,12 @@ public class Participants {
         return cardsByParticipants;
     }
 
+    public Map<String, GameResult> openPlayerGameResults() {
+        Map<String, GameResult> gameResultsByPlayerName = new LinkedHashMap<>();
+        players.forEach(player -> gameResultsByPlayerName.put(player.getName(), GameResult.from(player)));
+        return gameResultsByPlayerName;
+    }
+
     public Card openDealerFirstCard() {
         return dealer.getCards().get(0);
     }
