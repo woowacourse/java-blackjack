@@ -12,4 +12,7 @@ public enum CardSuit {
         this.suit = suit;
     }
 
+    public String getSuit() {
+        return suit;
+    }
 }

@@ -36,4 +36,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(suit, number);
     }
+
+    public CardSuit getSuit() {
+        return suit;
+    }
+
+    public CardNumber getNumber() {
+        return number;
+    }
 }

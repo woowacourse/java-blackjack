@@ -16,12 +16,24 @@ public enum CardNumber {
     KING("K", 10, 10);
 
     private final String symbol;
-    private final int basicScore;
-    private final int specialScore;
+    private final int smallScore;
+    private final int bigScore;
 
-    CardNumber(String symbol, int basicScore, int specialScore) {
+    CardNumber(String symbol, int smallScore, int bigScore) {
         this.symbol = symbol;
-        this.basicScore = basicScore;
-        this.specialScore = specialScore;
+        this.smallScore = smallScore;
+        this.bigScore = bigScore;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public int getSmallScore() {
+        return smallScore;
+    }
+
+    public int getBigScore() {
+        return bigScore;
     }
 }
