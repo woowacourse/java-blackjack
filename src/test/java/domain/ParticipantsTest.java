@@ -169,4 +169,23 @@ class ParticipantsTest {
 
         }
     }
+
+    @Nested
+    class 플레이어가카드를그만받는다 {
+        @Test
+        void should_카드를받을수있는플레이어가다음으로넘어간다_when_현재플레이어가stand할시() {
+            //given
+            Participants participants = Participants.create(List.of("포이", "에밀"));
+            Deck deck = Deck.create();
+            participants.readyForGame(deck);
+            String expected = "에밀";
+
+            //when
+            participants.standCurrentPlayer();
+            String actual = participants.nextDrawablePlayerName();
+
+            //then
+            assertThat(actual).isEqualTo(expected);
+        }
+    }
 }
