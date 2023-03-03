@@ -11,11 +11,13 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static final int FIRST_HIT_COUNT = 2;
-    public static final int FIRST_CARD = 0;
+    private static final int FIRST_HIT_COUNT = 2;
+    private static final int FIRST_CARD = 0;
+    private static final int DEALER_INDEX = 0;
 
     public void printParticipants(List<String> participants) {
-        StringBuilder stringBuilder = new StringBuilder(participants.remove(FIRST_CARD));
+        System.out.println();
+        StringBuilder stringBuilder = new StringBuilder(participants.remove(DEALER_INDEX));
         stringBuilder.append("와 ");
         stringBuilder.append(String.join(", ", participants));
         stringBuilder.append("에게 2장을 나누었습니다.");
@@ -23,28 +25,33 @@ public class OutputView {
     }
 
     public void printParticipantsCard(Participants participants) {
-        for (Participant participant : participants.getParticipants()) {
-            printFirstDealerCards(participant);
-            printFirstPlayersCards(participant);
+        printFirstDealerCards(participants.getParticipants().get(DEALER_INDEX));
+        for (int i = 1; i < participants.getParticipants().size(); i++) {
+            printFirstPlayersCards(participants.getParticipants().get(i));
         }
     }
 
     public void printCurrentCards(Participant participant) {
         System.out.print(participant.getName() + "카드: ");
+        List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
         }
+        System.out.print(String.join(", ", cards));
+        System.out.println();
     }
 
     public void printTotalCardsAndScore(Participant participant) {
         System.out.print(participant.getName() + "카드: ");
+        List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(index));
-            System.out.print(cardNumber.getName() + cardSuit.getCardSuitName());
+            cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
         }
+        System.out.print(String.join(", ", cards));
         System.out.print("- 결과 : " + participant.calculateCardNumber());
         System.out.println();
     }
@@ -75,10 +82,14 @@ public class OutputView {
     }
 
     private void printFirstPlayersCards(final Participant participant) {
+        System.out.print(participant.getName() + " : ");
+        List<String> card = new ArrayList<>();
         for (int i = 0; i < FIRST_HIT_COUNT; i++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(i));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(i));
             card.add(cardNumber.getName() + cardSuit.getCardSuitName());
         }
+        System.out.printf(String.join(", ",card));
+        System.out.println();
     }
 }
