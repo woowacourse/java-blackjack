@@ -20,8 +20,18 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String readMoreCard(final Player player) {
+    public static boolean readWantHit(final Player player) {
         System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", player.name().value());
-        return scanner.nextLine();
+        return parseHitCommand(scanner.nextLine());
+    }
+
+    private static boolean parseHitCommand(final String input) {
+        if (input.equals("y")) {
+            return true;
+        }
+        if (input.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
     }
 }

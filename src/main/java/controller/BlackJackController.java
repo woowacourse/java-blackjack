@@ -9,21 +9,11 @@ import domain.player.Player;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-
-    private static final Map<String, HitState> COMMAND_STATE_MAP = new HashMap<>();
-
-    static {
-        COMMAND_STATE_MAP.put("y", HitState.HIT);
-        COMMAND_STATE_MAP.put("n", HitState.STAY);
-    }
 
     public void run() {
         final BlackJackGame blackJackGame = withExceptionHandle(this::setUpGame);
@@ -57,13 +47,10 @@ public class BlackJackController {
     }
 
     private HitState inputHitOrStay(final Player player) {
-        final String command = InputView.readMoreCard(player);
-        return mapCommandToStateOrElseThrow(command);
-    }
-
-    private HitState mapCommandToStateOrElseThrow(final String command) {
-        return Optional.ofNullable(COMMAND_STATE_MAP.getOrDefault(command, null))
-                .orElseThrow(() -> new IllegalArgumentException("y 혹은 n 만을 입력해주세요"));
+        if (withExceptionHandle(() -> InputView.readWantHit(player))) {
+            return HitState.HIT;
+        }
+        return HitState.STAY;
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
