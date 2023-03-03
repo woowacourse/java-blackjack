@@ -39,15 +39,12 @@ public class GameResult {
     }
 
     private void compareBuster(Dealer dealer, Player player) {
-        if (isBurst(player) && isBurst(dealer)) {
-            bothLose(player);
+        if (isBurst(player)) {
+            dealerWin(player);
             return;
         }
         if (isBurst(dealer)) {
             playerWin(player);
-        }
-        if (isBurst(player)) {
-            dealerWin(player);
         }
     }
 
@@ -58,11 +55,6 @@ public class GameResult {
 
     private void playerWin(Player player) {
         playersResults.put(player, Result.WIN);
-        dealerResults.add(Result.LOSE);
-    }
-
-    private void bothLose(Player player) {
-        playersResults.put(player, Result.LOSE);
         dealerResults.add(Result.LOSE);
     }
 
