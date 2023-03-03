@@ -1,14 +1,19 @@
 package blackjack.player;
 
+import static blackjackGame.Result.LOSE;
+import static blackjackGame.Result.TIE;
+import static blackjackGame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
+import player.Dealer;
 import player.Name;
 import player.Player;
 import player.Players;
@@ -66,5 +71,91 @@ class PlayersTest {
         player1.hit(new Card(CardNumber.KING, Pattern.SPADE));
 
         assertThat(players.isBust(0)).isTrue();
+    }
+
+    @Nested
+    @DisplayName("승패를 계산하는 기능")
+    class CalculateWinning {
+
+        @Test
+        @DisplayName("플레이어의 점수가 딜러의 점수보다 높고 플레이어가 버스트가 아니면 WIN을 반환한다.")
+        void winWhenScoreIsHigher() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+
+            Dealer dealer = new Dealer();
+            player.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+
+            players.calculateWinning(dealer);
+            assertThat(player.getResult()).isEqualTo(WIN);
+        }
+
+        @Test
+        @DisplayName("딜러가 버스트이고 플레이어가 버스트가 아니면 WIN을 반환한다.")
+        void winWhenDealerBust() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            dealer.hit(new Card(CardNumber.KING, Pattern.CLOVER));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(WIN);
+        }
+
+        @Test
+        @DisplayName("딜러보다 점수가 낮고 딜러가 버스트가 아니면 LOSE를 반환한다")
+        void loseWhenLowerScore() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(LOSE);
+        }
+
+        @Test
+        @DisplayName("플레이어가 버스트이면 LOSE를 반환한다")
+        void loseWhenPlayerBust() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(CardNumber.KING, Pattern.HEART));
+            player.hit(new Card(CardNumber.JACK, Pattern.CLOVER));
+            player.hit(new Card(CardNumber.JACK, Pattern.DIAMOND));
+            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(LOSE);
+        }
+
+        @Test
+        @DisplayName("플레이어와 딜러의 점수가 같고 버스트가 아닌 경우 TIE를 반환한다.")
+        void tieWhenSameScore() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(TIE);
+        }
     }
 }

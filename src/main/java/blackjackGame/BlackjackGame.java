@@ -67,8 +67,11 @@ public class BlackjackGame {
         return PlayerResultDto.fromDealer(dealer);
     }
 
-
     public List<PlayerResultDto> getPlayerResults() {
         return players.getPlayerResults();
+    }
+
+    public void calculateWinning() {
+        players.calculateWinning(dealer);
     }
 }

@@ -31,4 +31,25 @@ public class Players {
                 .map(PlayerResultDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public void calculateWinning(Dealer dealer) {
+        for (Player player : players) {
+            boolean playerBust = player.isBust();
+            int playerScore = player.calculateScore();
+            boolean dealerBust = dealer.isBust();
+            int dealerScore = dealer.calculateScore();
+            if ((playerScore > dealerScore && !playerBust) || (dealerBust && !playerBust)) {
+                player.win();
+                dealer.lose();
+            }
+            if (playerBust || playerScore < dealerScore && !dealerBust) {
+                player.lose();
+                dealer.win();
+            }
+            if (playerScore == dealerScore) {
+                player.tie();
+                dealer.tie();
+            }
+        }
+    }
 }
