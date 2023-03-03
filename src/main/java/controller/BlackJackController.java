@@ -10,45 +10,71 @@ import java.util.List;
 
 public class BlackJackController {
     public void startGame() {
+        BlackJack blackJack = new BlackJack(getParticipantNames(), new RandomBasedIndexGenerator());
+        initializedBlackjackGame(blackJack);
+
+        giveCardToPlayers(blackJack);
+        blackJack.battle();
+        OutputView.printPlayersGameResults(blackJack.getPlayers());
+    }
+
+    private String getParticipantNames() {
         OutputView.printParticipantNamesGuide();
-        String participantNames = InputView.repeat(InputView::inputParticipantNames);
+        return InputView.repeat(InputView::inputParticipantNames);
+    }
 
-        BlackJack blackJack = new BlackJack(participantNames, new RandomBasedIndexGenerator());
-        blackJack.startGame();
-
+    private void initializedBlackjackGame(BlackJack blackJack) {
+        blackJack.giveTwoCardToPlayers();
         OutputView.printPlayersInformation(blackJack.getPlayers());
+    }
 
+    private void giveCardToPlayers(BlackJack blackJack) {
+        giveCardToParticipants(blackJack);
+        giveCardToDealer(blackJack);
+        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
+    }
+
+    private void giveCardToParticipants(BlackJack blackJack) {
         List<Player> participants = blackJack.getParticipants();
         for (Player participant : participants) {
-            while (true) {
-                OutputView.printAddCardGuide(participant.getName());
-                String command = InputView.repeat(InputView::inputAddCardCommand);
-                if ("y".equals(command)) {
-                    blackJack.giveCard(participant.getName());
-                    OutputView.printParticipantCardCondition(List.of(participant));
-                }
+            giveCardToParticipant(blackJack, participant);
+        }
+    }
 
-                if ("n".equals(command)) {
-                    OutputView.printParticipantCardCondition(List.of(participant));
-                    break;
-                }
-
-                if (participant.isBurst()) {
-                    OutputView.printBurstMessage(participant.getName());
-                    break;
-                }
-            }
+    private void giveCardToParticipant(BlackJack blackJack, Player participant) {
+        String command = getCommand(participant);
+        if ("y".equals(command)) {
+            blackJack.giveCard(participant.getName());
+            OutputView.printParticipantCardCondition(List.of(participant));
         }
 
+        if ("n".equals(command) || participant.isBurst()) {
+            stopGivingCard(participant, command);
+            return;
+        }
+        giveCardToParticipant(blackJack, participant);
+    }
+
+    private String getCommand(Player participant) {
+        OutputView.printAddCardGuide(participant.getName());
+        return InputView.repeat(InputView::inputAddCardCommand);
+    }
+
+    private void stopGivingCard(Player participant, String command) {
+        if ("n".equals(command)) {
+            OutputView.printParticipantCardCondition(List.of(participant));
+            return;
+        }
+
+        if (participant.isBurst()) {
+            OutputView.printBurstMessage(participant.getName());
+        }
+    }
+
+    private void giveCardToDealer(BlackJack blackJack) {
         if (blackJack.shouldDealerGetCard()) {
             blackJack.giveDealerCard();
             OutputView.printGiveDealerCardMessage();
         }
-
-        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
-
-        blackJack.battle();
-
-        OutputView.printPlayersGameResults(blackJack.getPlayers());
     }
 }

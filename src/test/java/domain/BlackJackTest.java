@@ -19,7 +19,7 @@ class BlackJackTest {
     @DisplayName("게임 시작 시 플레이어들에게 카드를 2장씩 나눠준다.")
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
-        blackJack.startGame();
+        blackJack.giveTwoCardToPlayers();
 
         Map<Player, List<Card>> playersCards = blackJack.getPlayersCards();
         assertThat(playersCards.get(new Dealer()))
@@ -34,7 +34,7 @@ class BlackJackTest {
     @DisplayName("플레이어에게 한 장을 추가한다.")
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
-        blackJack.startGame();
+        blackJack.giveTwoCardToPlayers();
 
         blackJack.giveCard("여우");
 
@@ -51,7 +51,7 @@ class BlackJackTest {
     @DisplayName("딜러의 총 점수가 16 이하인 지 확인한다.")
     void givenDealerTotalScore_thenChecksOrLessSixTeen() {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 6);
-        blackJack.startGame();
+        blackJack.giveTwoCardToPlayers();
 
         assertThat(blackJack.shouldDealerGetCard()).isTrue();
     }
@@ -60,7 +60,7 @@ class BlackJackTest {
     @DisplayName("딜러의 총 점수가 17 이상인 지 확인한다.")
     void givenDealerTotalScore_thenChecksOrMoreSevenTeen() {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 7);
-        blackJack.startGame();
+        blackJack.giveTwoCardToPlayers();
 
         assertThat(blackJack.shouldDealerGetCard()).isFalse();
     }
@@ -69,7 +69,7 @@ class BlackJackTest {
     @DisplayName("딜러에게 한 장의 카드를 추가한다.")
     void thenGiveDealerCard() {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
-        blackJack.startGame();
+        blackJack.giveTwoCardToPlayers();
 
         blackJack.giveDealerCard();
 

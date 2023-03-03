@@ -31,17 +31,13 @@ public class BlackJack {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void startGame() {
-        giveCardToPlayers();
-    }
-
-    private void giveCardToPlayers() {
+    public void giveTwoCardToPlayers() {
         for (Player player : players) {
-            giveCardToPerPlayer(player);
+            giveTwoCardToPerPlayer(player);
         }
     }
 
-    private void giveCardToPerPlayer(Player player) {
+    private void giveTwoCardToPerPlayer(Player player) {
         for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
             player.addCard(findAnyOneCard());
         }
