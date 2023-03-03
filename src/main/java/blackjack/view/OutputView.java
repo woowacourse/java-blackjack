@@ -1,6 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.GameResult;
+import blackjack.domain.Result;
+import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
@@ -21,6 +23,7 @@ public class OutputView {
     private static final String ERROR_HEAD = "[ERROR] ";
 
     public void printInitialStatus(Dealer dealer, Users users) {
+        System.out.print(System.lineSeparator());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.",
                 getNameString(dealer.getName()),
                 makeUsersNameList(users));
@@ -33,6 +36,7 @@ public class OutputView {
         for (User user : users.getUsers()) {
             printCardsOf(user.getName(), user.openCards());
         }
+        System.out.print(System.lineSeparator());
     }
 
     public void printCardsOf(final Name name, final List<Card> cards) {
@@ -106,13 +110,16 @@ public class OutputView {
     }
 
     public void printAdditionalCardCountOfDealer(final int cardCount) {
+        System.out.print(System.lineSeparator());
         if (cardCount == 0) {
             System.out.println("딜러는 17 이상이라 카드를 받지 못했습니다.");
         }
         if (cardCount > 0) {
             System.out.printf("딜러는 16 이하라 %d장의 카드를 더 받았습니다.", cardCount);
+            System.out.print(System.lineSeparator());
         }
         System.out.print(System.lineSeparator());
+
     }
 
     public void printTotalPlayersStatus(final Dealer dealer, final List<User> users) {
@@ -138,6 +145,7 @@ public class OutputView {
     }
 
     public void printResult(GameResult gameResult) {
+        System.out.print(System.lineSeparator());
         System.out.println("## 최종 승패");
         printDealerResult(gameResult);
         printUsersResult(gameResult);
