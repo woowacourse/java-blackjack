@@ -7,7 +7,10 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackController controller = new BlackJackController(new InputView(new Scanner(System.in), new InputValidator()), new OutputView());
+        InputView inputView = new InputView(new Scanner(System.in), new InputValidator());
+        OutputView outputView = new OutputView();
+
+        BlackJackController controller = new BlackJackController(inputView, outputView);
         controller.play();
     }
 }
