@@ -23,4 +23,14 @@ public class OutputView {
                     .collect(Collectors.joining(", ")));
         }
     }
+
+    public void printBustMessage() {
+        System.out.println("버스트입니다. 카드를 더 받을 수 없습니다.");
+    }
+
+    public void printCurrentCards(String playerName, List<String> currentCards) {
+        System.out.println(playerName + "카드: " + currentCards
+                .stream()
+                .collect(Collectors.joining(", ")));
+    }
 }
