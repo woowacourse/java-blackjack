@@ -22,10 +22,10 @@ public enum AddCardResponse {
         return Arrays.stream(AddCardResponse.values())
             .filter(cardResponse -> cardResponse.value.equalsIgnoreCase(input))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(getErrorPowerMsg()));
+            .orElseThrow(() -> new IllegalArgumentException(getErrorRespondMsg()));
     }
 
-    private static String getErrorPowerMsg() {
+    private static String getErrorRespondMsg() {
         List<String> values = Arrays.stream(AddCardResponse.values())
             .map(AddCardResponse::getValue)
             .collect(Collectors.toList());

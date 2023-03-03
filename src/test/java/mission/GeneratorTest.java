@@ -1,7 +1,6 @@
 package mission;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.internal.bytebuddy.build.ToStringPlugin;
 import org.junit.jupiter.api.Test;
 
 public class GeneratorTest {
