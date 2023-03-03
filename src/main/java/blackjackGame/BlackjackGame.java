@@ -47,4 +47,8 @@ public class BlackjackGame {
     public boolean isBust(int playerIndex) {
         return players.isBust(playerIndex);
     }
+
+    public int countPlayer() {
+        return players.count();
+    }
 }

@@ -106,4 +106,15 @@ class BlackjackGameTest {
 
         assertThat(blackjackGame.isBust(0)).isTrue();
     }
+
+    @Test
+    @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
+    void countPlayers() {
+        Player player1 = new Player(new Name("폴로"));
+        Player player2 = new Player(new Name("로지"));
+        blackjackGame.addPlayer(player1);
+        blackjackGame.addPlayer(player2);
+
+        assertThat(blackjackGame.countPlayer()).isEqualTo(2);
+    }
 }
