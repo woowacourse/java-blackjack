@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,9 @@ public class BlackjackGame {
             distributeDealer();
             distributePlayers();
         }
+
+        List<CardNumber> list = new ArrayList<>();
+        list.add(CardNumber.ACE);
     }
 
     public void distributeDealer() {
@@ -35,5 +39,47 @@ public class BlackjackGame {
     public void distributePlayer(Player player) {
         player.addCard(cardDeck.poll());
 
+        Map<String, CardNumber> map = new HashMap<>();
+        map.put("a", CardNumber.ACE);
+
     }
+
+
+    public Map<String, Result> getPlayersResult() {
+        Map<String,Result> result = new HashMap<>();
+        int delaerSum = dealer.getCardsSum();
+        for (Player player : players.getPlayers()) {
+            result.put(player.getName().getName(),isPlayerWin(delaerSum,player.getCardsSum()));
+        }
+        return result;
+    }
+
+    public Result isPlayerWin(int dealerSum, int playerSum) {
+        if (playerSum > 21) {
+            return Result.LOSE;
+        }
+        if (dealerSum > 21) {
+            return Result.WIN;
+        }
+        if (dealerSum > playerSum) {
+            return Result.LOSE;
+        }
+        if (dealerSum < playerSum) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
+    }
+
+//    public Map<String,List<Integer>> calculateWinOrLose() {
+//        Map<String,List<Integer>> result = new HashMap<>();
+//        int dealerSum = dealer.getCardsSum();
+//        for(Player player: players.getPlayers()){
+//            int playerSum = player.getCardsSum();
+//            if(playerSum > 21){
+//                result.put(dealer.getName().getName(),List.of(1,0,0));
+//            }
+//        }
+//    }
+
+
 }
