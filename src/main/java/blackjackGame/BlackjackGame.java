@@ -2,6 +2,7 @@ package blackjackGame;
 
 import deck.Deck;
 import player.Dealer;
+import player.Name;
 import player.Player;
 import player.Players;
 
@@ -43,7 +44,7 @@ public class BlackjackGame {
     public void supplyAdditionalCard(int playerIndex) {
         players.takeCard(playerIndex, deck.drawCard());
     }
-    
+
     public boolean isBust(int playerIndex) {
         return players.isBust(playerIndex);
     }
@@ -59,4 +60,9 @@ public class BlackjackGame {
     public void supplyAdditionalCardToDealer() {
         dealer.hit(deck.drawCard());
     }
+
+    public Name getDealerName() {
+        return dealer.getName();
+    }
+
 }
