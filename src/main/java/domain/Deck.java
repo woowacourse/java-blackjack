@@ -18,11 +18,15 @@ public class Deck {
         List<Card> cards = new ArrayList<>();
         for (Suits suit : Suits.values()) {
             int denominationLength = Denomination.values().length;
-            for (int i = 0; i < denominationLength; i++) {
-                cards.add(new Card(Denomination.values()[i], suit));
-            }
+            addCard(cards, suit, denominationLength);
         }
         return new Deck(cardIndexGenerator, cards);
+    }
+
+    private static void addCard(final List<Card> cards,final Suits suit,final int denominationLength) {
+        for (int i = 0; i < denominationLength; i++) {
+            cards.add(new Card(Denomination.values()[i], suit));
+        }
     }
 
     public Card pickCard() {
