@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.Hand;
 import blackjack.model.card.CardDeck;
 
-public class StandState extends State{
+public class StandState extends State {
 
     public StandState(Hand hand) {
         super(hand);

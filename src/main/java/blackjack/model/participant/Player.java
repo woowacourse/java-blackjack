@@ -18,8 +18,8 @@ public class Player extends Participant {
 
     @Override
     public void changeToStand() {
-        if(currentState instanceof DrawState){
-            this.currentState = ((DrawState)currentState).turnStandState();
+        if (currentState instanceof DrawState) {
+            this.currentState = ((DrawState) currentState).turnStandState();
         }
     }
 }

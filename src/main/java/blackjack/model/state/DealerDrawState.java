@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.Hand;
 import blackjack.model.card.CardDeck;
 
-public class DealerDrawState extends State{
+public class DealerDrawState extends State {
     private static final int DEALER_HIT_NUMBER = 16;
 
     public DealerDrawState(Hand hand) {

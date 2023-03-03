@@ -10,7 +10,6 @@ import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class GameController {
         this.outputView = outputView;
     }
 
-    public void run(){
+    public void run() {
         List<Player> players = initializedPlayers();
         Dealer dealer = new Dealer(new InitialState(new Hand()));
         CardDeck cardDeck = new CardDeck();
@@ -49,7 +48,7 @@ public class GameController {
         if (dealer.isBlackjack()) {
             dealerResult += " (블랙잭!!)";
         }
-        if(dealer.isBust()) {
+        if (dealer.isBust()) {
             dealerResult = Integer.toString(dealerScore.smallScore());
         }
 
@@ -87,8 +86,8 @@ public class GameController {
                 playerResult.put(name, "패");
                 continue;
             }
-            if(dealer.isBust()){
-                if(player.isBust()){
+            if (dealer.isBust()) {
+                if (player.isBust()) {
                     win++;
                     playerResult.put(name, "패");
                     continue;
@@ -97,8 +96,8 @@ public class GameController {
                 playerResult.put(name, "승");
                 continue;
             }
-            if(dealer.isStand()){
-                if(player.isStand()){
+            if (dealer.isStand()) {
+                if (player.isStand()) {
                     int dealerSum = dealer.getScore();
                     int playerSum = player.getScore();
                     if (dealerSum > playerSum) {
@@ -115,7 +114,7 @@ public class GameController {
                     playerResult.put(name, "무");
                     continue;
                 }
-                if(player.isBlackjack()){
+                if (player.isBlackjack()) {
                     lose++;
                     playerResult.put(name, "승");
                     continue;

@@ -1,9 +1,9 @@
 package blackjack.model.participant;
 
+import blackjack.model.Name;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
-import blackjack.model.Name;
 import blackjack.model.state.State;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public abstract class Participant {
 
     abstract public void changeToStand();
 
-    public boolean isBlackjack(){
+    public boolean isBlackjack() {
         return currentState.isBlackjack();
     }
 
@@ -29,7 +29,7 @@ public abstract class Participant {
         return currentState.isBust();
     }
 
-    public boolean isStand(){
+    public boolean isStand() {
         return currentState.isStand();
     }
 

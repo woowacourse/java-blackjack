@@ -18,13 +18,13 @@ public class OutputView {
         return instance;
     }
 
-    public void printDistributionMessage(List<String> players){
+    public void printDistributionMessage(List<String> players) {
         String names = String.join(",", players);
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public void printNameAndHand(Map<String, List<String>> playerHand){
-        for(Map.Entry<String, List<String>> entry:playerHand.entrySet()){
+    public void printNameAndHand(Map<String, List<String>> playerHand) {
+        for (Map.Entry<String, List<String>> entry : playerHand.entrySet()) {
             String name = entry.getKey();
             String hand = String.join(",", entry.getValue());
             System.out.println(name + ": " + hand);
@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     public void printScoreResult(Map<String, List<String>> hand, String result) {
-        for(Map.Entry<String, List<String>> entry:hand.entrySet()){
+        for (Map.Entry<String, List<String>> entry : hand.entrySet()) {
             String name = entry.getKey();
             String cards = String.join(",", entry.getValue());
             System.out.println(name + ": " + cards + " - 결과: " + result);
@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     public void printPlayersWinningResult(Map<String, String> playerResult) {
-        for(Map.Entry entry : playerResult.entrySet()){
+        for (Map.Entry entry : playerResult.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }

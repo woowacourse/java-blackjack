@@ -24,7 +24,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public CardScore score(){
+    public CardScore score() {
         List<CardNumber> ownedNumbers = cards.stream().map(Card::getNumber).collect(Collectors.toList());
         return new CardScore(ownedNumbers);
     }
