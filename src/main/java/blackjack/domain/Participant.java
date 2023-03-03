@@ -29,9 +29,9 @@ public abstract class Participant {
         return cards.open(cardCount);
     }
 
-    protected List<Card> getCards() {
-        return cards.getCards();
-    }
-
     protected abstract boolean isHittable();
+
+    public Name getName() {
+        return name;
+    }
 }
