@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String DELIMITER = ", ";
+    private static final String NAME_DELIMITER = ", ";
+    private static final String RESULT_DELIMITER = ": ";
     private static final String NEW_LINE = System.getProperty("line.separator");
     public static final String WIN = "승";
     public static final String LOSE = "패";
@@ -18,12 +19,13 @@ public class OutputView {
         String names = infos.stream()
                 .filter(info -> !info.getName().equals("딜러"))
                 .map(info -> info.getName())
-                .collect(Collectors.joining(DELIMITER));
+                .collect(Collectors.joining(NAME_DELIMITER));
 
         System.out.println(NEW_LINE + "딜러와 " + names + "에게 2장을 나누었습니다.");
 
         infos.stream()
-                .forEach(info -> System.out.println(info.getName() + ": " + getCardsInfo(info.getDrawnCards())));
+                .forEach(info -> System.out.println(
+                        info.getName() + RESULT_DELIMITER + getCardsInfo(info.getDrawnCards())));
         System.out.println();
     }
 
@@ -33,7 +35,7 @@ public class OutputView {
 
     private String getCardsInfo(final List<String> cards) {
         return cards.stream()
-                .collect(Collectors.joining(DELIMITER));
+                .collect(Collectors.joining(NAME_DELIMITER));
     }
 
     public void printDealerCardPickMessage() {
@@ -53,13 +55,14 @@ public class OutputView {
         System.out.println(NEW_LINE + "## 최종 승패");
 
         System.out.println(
-                dealerWinLoseResult.getName() + ": " + dealerWinLoseResult.getWinCount() + "승 " + dealerWinLoseResult.getLoseCount() + "패");
+                dealerWinLoseResult.getName() + RESULT_DELIMITER + dealerWinLoseResult.getWinCount() + "승 "
+                        + dealerWinLoseResult.getLoseCount() + "패");
 
         winLoseResults.forEach(
-                result -> System.out.println(result.getName() + ": " + getWinLoseFormat(result.isWin())));
+                result -> System.out.println(result.getName() + RESULT_DELIMITER + getWinLoseFormat(result.isWin())));
     }
 
-    private String getWinLoseFormat(boolean isWin) {
+    private String getWinLoseFormat(final boolean isWin) {
         if (isWin) {
             return WIN;
         }
