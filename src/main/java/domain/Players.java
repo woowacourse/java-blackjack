@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 public class Players {
     private static final String INVALID_NAME = "중복된 이름입니다.";
+    private static final String SPLIT_DELIMITER = ",";
 
     private List<Player> players = new ArrayList<>();
 
@@ -23,17 +24,13 @@ public class Players {
     }
 
     private List<String> splitName(String names) {
-        return Arrays.asList(names.split(","));
+        return Arrays.asList(names.split(SPLIT_DELIMITER));
     }
 
     public List<String> getPlayersName() {
         return players.stream()
                 .map(s -> s.getName().getName())
                 .collect(Collectors.toList());
-    }
-
-    public void addCard(int index, Card card) {
-        players.get(index).addCard(card);
     }
 
     public Map<String, List<String>> getInfo() {
@@ -54,6 +51,6 @@ public class Players {
                 .findAny()
                 .get()
                 .getCardsSum();
-
     }
+
 }

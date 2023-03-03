@@ -21,4 +21,5 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름입니다.");
     }
+
 }

@@ -3,7 +3,6 @@ package domain;
 import java.util.List;
 
 public class Player {
-    private static final int BLACK_JACK = 21;
     private final Name name;
     private final Cards cards;
 
@@ -21,7 +20,7 @@ public class Player {
     }
 
     public boolean isOverBlackJack() {
-        return cards.getSum() >= BLACK_JACK;
+        return cards.getSum() >= BlackjackGame.BLACK_JACK;
     }
 
     public Name getName() {

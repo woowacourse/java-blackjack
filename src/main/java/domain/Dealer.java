@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Dealer {
     private static final String NAME = "딜러";
+    private static final int BOUND = 16;
     private final Name name;
     private final Cards cards;
 
@@ -37,11 +38,11 @@ public class Dealer {
         return cards.getCards();
     }
 
-    public boolean isOverStandard(){
-        return cards.getSum() > 16;
+    public boolean isOverStandard() {
+        return cards.getSum() > BOUND;
     }
 
-    public int getCardsSum(){
+    public int getCardsSum() {
         return cards.getSum();
     }
 }

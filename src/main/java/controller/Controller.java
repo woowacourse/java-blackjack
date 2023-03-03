@@ -5,8 +5,10 @@ import view.InputView;
 import view.OutputView;
 
 public class Controller {
-    InputView inputView;
-    OutputView outputView;
+    private static final String Y_COMMAND = "y";
+
+    private final InputView inputView;
+    private final OutputView outputView;
 
     public Controller(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -18,14 +20,11 @@ public class Controller {
         Players players = new Players(inputView.readPlayerNames());
         BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardGenerator().generate()));
         game.shuffleCardDeck();
-
         distributeInitialCard(dealer, players, game);
-
         selectAdditionalCard(players, game);
         addWhenUnderStandard(dealer, game);
-
         outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(game.getDealerResult(),game.getPlayersResult());
+        outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
@@ -35,14 +34,22 @@ public class Controller {
 
     private void selectAdditionalCard(Players players, BlackjackGame game) {
         for (Player player : players.getPlayers()) {
-            String command;
-            do {
-                command = inputView.readCommand(player.getName().getName());
-                if (command.equals("y")) {
-                    game.distributePlayer(player);
-                }
-                outputView.printPlayerCardsInfo(player);
-            } while (!player.isOverBlackJack() && command.equals("y"));
+            selectByPlayer(game, player);
+        }
+    }
+
+    private void selectByPlayer(BlackjackGame game, Player player) {
+        String command;
+        do {
+            command = inputView.readCommand(player.getName().getName());
+            distributeByCommand(game, player, command);
+            outputView.printPlayerCardsInfo(player);
+        } while (!player.isOverBlackJack() && command.equals(Y_COMMAND));
+    }
+
+    private void distributeByCommand(BlackjackGame game, Player player, String command) {
+        if (command.equals(Y_COMMAND)) {
+            game.distributePlayer(player);
         }
     }
 
