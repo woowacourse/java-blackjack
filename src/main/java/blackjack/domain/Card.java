@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+/**
+ * 하나의 카드에 대한 정보를 가지고 있는 자료구조입니다
+ */
 public class Card {
 
     private final Shape shape;
