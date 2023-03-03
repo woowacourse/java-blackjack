@@ -75,3 +75,21 @@
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+
+# 미션을 진행하며 궁금했던 점
+1. 일급 컬렉션을 쓰다보니 컨트롤러에서 `dealer.getPlayers().getPlayers()` 로 쓰이게 됩니다. 그래서 아래와 같은 방법을 생각해봤습니다.
+```java
+public class Dealer {
+  // ...
+  public List<Player> getPlayers() {
+      return this.players.getPlayers();
+  }
+}
+```
+그런데, 아무래도 캡슐화가 깨지는 느낌을 받아서 가독성 측면에서 보기 안좋지만 `dealer.getPlayers().getPlayers()` 처럼 하게 됐습니다. 더 나은 방법이 있을까요?
+
+2. 저희는 `Controller`에서 도메인으로부터 값을 받아 `View`에게 도메인 객체를 넘기지 않고, 필요한 정보를 재가공하여 전달하는 방식을 사용했습니다. 이렇게 하니, `OutputView`는 단순히 print만 하는 클래스가 되는 느낌이었고, `Controller`의 코드가 복잡해졌습니다.<br>
+이유는, `View`가 `Domain`을 직접적으로 아는 듯하여 의존성을 약하게 하기 위함입니다.<br>
+`OutputView`에서 `Domain` 객체를 직접 가공하는 것은 MVC 패턴에 위배되는 것 같은데, 저희의 방법이 적절한가요?
+
+3. `Enum` 객체에서 출력을 위한 상태를 가져도 괜찮은 지 궁금합니다.
