@@ -68,9 +68,9 @@
 
 ### Result (enum)
 - 게임 결과 정보
-- [ ] 게임 결과에 대한 정보를 갖고 있는 상수 집합을 구현한다.
+- [x] 게임 결과에 대한 정보를 갖고 있는 상수 집합을 구현한다.
 
-### ResultRepository
+### PlayerResultRepository
 - Player의 게임 결과(Result)를 매칭한 정보를 가지고 있는 객체.
-- [ ] Player의 게임 결과를 저장한다.
-- [ ] Player의 게임 결과를 반환한다.
+- [x] Player의 게임 결과를 저장한다.
+- [x] Player의 게임 결과를 반환한다.

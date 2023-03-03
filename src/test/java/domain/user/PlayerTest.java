@@ -6,7 +6,6 @@ import domain.CardNumber;
 import domain.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.user.Player;
 
 import static org.assertj.core.api.Assertions.*;
 
