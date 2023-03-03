@@ -1,13 +1,14 @@
 package blackjack.view;
 
+import blackjack.domain.user.name.UserName;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputVIew {
+public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public InputVIew() {
+    public InputView() {
     }
 
     public List<String> readParticipantName() {
@@ -20,7 +21,12 @@ public class InputVIew {
         return List.of(input.split(","));
     }
 
-    public boolean readCommand() {
+    public boolean readCommand(final UserName userName) {
+        System.out.println(
+                userName.getName() + "는 한장의 카드를 더 받겠습니까?"
+                        + "(예는 " + Command.YES.name()
+                        + "아니오는 " + Command.NO.name() + ")");
+
         final String input = scanner.nextLine();
         Command command = Command.from(input);
 

@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import java.util.List;
-import java.util.Set;
 
 public class Players {
 
@@ -25,10 +24,15 @@ public class Players {
     }
 
     private void validateDuplicatedNames(final List<Player> players) {
-        final Set<List<Player>> refinedPlayers = Set.of(players);
 
-        if (refinedPlayers.size() != players.size()) {
+        final long count = players.stream().map(User::getName).distinct().count();
+
+        if (count != players.size()) {
             throw new IllegalArgumentException("플레이어들의 이름은 고유하여야 합니다.");
         }
+    }
+
+    public List<Player> getPlayers() {
+        return this.players;
     }
 }

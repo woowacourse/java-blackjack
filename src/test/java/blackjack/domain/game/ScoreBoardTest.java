@@ -1,7 +1,8 @@
 package blackjack.domain.game;
 
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.name.DealerName;
+import blackjack.domain.user.Players;
 import blackjack.domain.user.name.PlayerName;
 import blackjack.domain.user.name.UserName;
 import java.util.List;
@@ -14,14 +15,14 @@ import org.junit.jupiter.api.Test;
 class ScoreBoardTest {
 
     @Test
-    void 점수판은_플레이어와_해당_플레어의_점수를_가진다() {
+    void 점수판은_플레이어와_해당_플레이어의_점수를_가진다() {
         // given
         int score = 10;
         Player user = new Player(new PlayerName("dummy"));
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(new DealerName(), List.of(user.getName()));
-        scoreBoard.writeScore(user.getName(), score);
+        ScoreBoard scoreBoard = new ScoreBoard(new Dealer(), new Players(List.of(user)));
+        scoreBoard.writeScore(user, score);
 
         // then
         Assertions.assertThat(scoreBoard.get(user.getName())).isEqualTo(score);
@@ -35,8 +36,8 @@ class ScoreBoardTest {
         UserName noParticipant = new UserName("dummy2");
 
         // when
-        ScoreBoard scoreBoard = new ScoreBoard(new DealerName(), List.of(user.getName()));
-        scoreBoard.writeScore(user.getName(), score);
+        ScoreBoard scoreBoard = new ScoreBoard(new Dealer(), new Players(List.of(user)));
+        scoreBoard.writeScore(user, score);
 
         // then
         Assertions.assertThatThrownBy(() -> scoreBoard.get(noParticipant))

@@ -24,19 +24,25 @@ public class ResultReferee {
         return new EnumMap<>(dealerScoreBoard);
     }
 
-    public Score askResultByPlayerName(final UserName name) {
+    public Score askResultByUserName(final UserName userName) {
 
-        final int playerScore = scoreBoard.get(name);
+        final int playerScore = scoreBoard.get(userName);
         final int dealerScore = scoreBoard.get(new DealerName());
 
         if (playerScore > dealerScore) {
+            updateDealerScoreBoard(Score.LOSE);
             return Score.WIN;
         }
 
         if (playerScore == dealerScore) {
+            updateDealerScoreBoard(Score.DRAW);
             return Score.DRAW;
         }
-
+        updateDealerScoreBoard(Score.WIN);
         return Score.LOSE;
+    }
+
+    private void updateDealerScoreBoard(final Score score) {
+        dealerScoreBoard.put(score, dealerScoreBoard.get(score) + 1);
     }
 }
