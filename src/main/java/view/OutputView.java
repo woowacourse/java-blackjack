@@ -24,7 +24,7 @@ public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
-    private static final Map<DealerCompeteResult, String> PLAYER_RESULT_MESSAGE_MAP = new EnumMap<>(DealerCompeteResult.class);
+    private static final Map<DealerCompeteResult, String> DEALER_COMPETE_MESSAGE_MAP = new EnumMap<>(DealerCompeteResult.class);
 
     private static final String EMPTY = "";
     private static final String DELIMITER = ", ";
@@ -59,9 +59,9 @@ public class OutputView {
     }
 
     private static void makePlayerResultMessage() {
-        PLAYER_RESULT_MESSAGE_MAP.put(DealerCompeteResult.WIN, "승");
-        PLAYER_RESULT_MESSAGE_MAP.put(DealerCompeteResult.LOSE, "패");
-        PLAYER_RESULT_MESSAGE_MAP.put(DealerCompeteResult.DRAW, "무");
+        DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.WIN, "승");
+        DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.LOSE, "패");
+        DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.DRAW, "무");
     }
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Player> players) {
@@ -144,11 +144,11 @@ public class OutputView {
     }
 
     private static void showParticipantsResultState(final List<? extends Participant> participants) {
-        participants.forEach(OutputView::showPlayerCardAreaResultState);
+        participants.forEach(OutputView::showParticipantsCardAreaResultState);
     }
 
     /* jason 카드: 7클로버, K 스페이드 - 결과: 17 */
-    private static void showPlayerCardAreaResultState(final Participant participant) {
+    private static void showParticipantsCardAreaResultState(final Participant participant) {
         final String message = participant.cardArea().cards().stream()
                 .map(OutputView::makeCardMessage)
                 .collect(Collectors.joining(DELIMITER, participant.name().value() + "카드: ", String.format(" - 결과: %d", participant.cardArea().calculate())));
@@ -178,14 +178,14 @@ public class OutputView {
         if (count == 0L) {
             return EMPTY;
         }
-        return String.format(" %d%s", count, PLAYER_RESULT_MESSAGE_MAP.get(dealerCompeteResult));
+        return String.format(" %d%s", count, DEALER_COMPETE_MESSAGE_MAP.get(dealerCompeteResult));
     }
 
     private static void showFinalParticipantsWinLose(final GameStatistic statistic) {
         final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
         final List<Player> players = statistic.players();
         players.stream()
-                .map(it -> it.name().value() + ": " + PLAYER_RESULT_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
+                .map(it -> it.name().value() + ": " + DEALER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
                 .forEach(System.out::println);
     }
 }
