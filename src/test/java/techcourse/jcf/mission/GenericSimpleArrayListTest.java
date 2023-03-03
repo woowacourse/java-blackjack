@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GenericSimpleArrayListTest {
 
@@ -27,5 +28,19 @@ public class GenericSimpleArrayListTest {
         final String[] arrays = {"first", "second"};
 
         final SimpleList<String> values = SimpleList.<String>fromArrayToList(arrays);
+    }
+
+    @DisplayName("숫자 타입의 SimpleList를 받아 모든 값을 더해주는 메서드 구현")
+    @Test
+    void sumTest() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
+        final SimpleList<String> stringValues = new SimpleArrayList<>("s", "d");
+
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+        assertThat(doubleTotal).isEqualTo(1.2);
+        assertThat(intTotal).isEqualTo(3);
+//        SimpleList.sum(stringValues); 컴파일 에러
     }
 }
