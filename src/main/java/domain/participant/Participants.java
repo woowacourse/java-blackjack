@@ -13,6 +13,7 @@ public class Participants {
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 7;
     private static final int DEALER_ORDER = 0;
+    private static final int PARTICIPANT_START_ORDER = 1;
 
     private final List<Participant> participants;
 
@@ -61,5 +62,13 @@ public class Participants {
     public boolean canDealerGiveCard() {
         Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
         return dealer.canGiveCard();
+    }
+
+    public Participant getDealer() {
+        return participants.get(DEALER_ORDER);
+    }
+
+    public List<Participant> getPlayer() {
+        return participants.subList(PARTICIPANT_START_ORDER, participants.size());
     }
 }
