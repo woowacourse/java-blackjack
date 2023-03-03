@@ -10,11 +10,12 @@ public class Game {
     public Game(Deck deck, GamePlayer gamePlayer) {
         this.deck = deck;
         this.gamePlayer = gamePlayer;
+        init();
     }
 
-    public void init() {
+    private void init() {
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < gamePlayer.getPlayers().count()+1; i++) {
+        for (int i = 0; i < gamePlayer.getPlayers().count() + 1; i++) {
             cards.add(deck.draw());
             cards.add(deck.draw());
         }
@@ -37,12 +38,43 @@ public class Game {
         gamePlayer.giveCardToDealer(deck.draw());
     }
 
-
     public Players getPlayers() {
         return gamePlayer.getPlayers();
     }
 
     public Dealer getDealer() {
         return gamePlayer.getDealer();
+    }
+
+    public List<String> showPlayersName() {
+        return getPlayers().getPlayersName();
+    }
+
+    public String showPlayerNameByIndex(int i) {
+        return getPlayers().showPlayerNameByIndex(i);
+    }
+
+    public List<Card> showPlayerCardsByIndex(int i) {
+        return getPlayers().showPlayerCardsByIndex(i);
+    }
+
+    public List<Card> showDealerCards() {
+        return getDealer().showCards();
+    }
+
+    public List<Card> showDealerAllCards() {
+        return getDealer().showAllCards();
+    }
+
+    public int getPlayersCount() {
+        return getPlayers().count();
+    }
+
+    public int getDealerScore() {
+        return getDealer().calculateScore();
+    }
+
+    public int getPlayerScoreByIndex(int i) {
+        return getPlayers().getPlayerScoreByIndex(i);
     }
 }

@@ -38,4 +38,16 @@ public class Players {
                 .map(Player::showName)
                 .collect(Collectors.toList());
     }
+
+    public int getPlayerScoreByIndex(int i) {
+        return getPlayer(i).calculateScore();
+    }
+
+    public List<Card> showPlayerCardsByIndex(int i) {
+        return getPlayer(i).showCards();
+    }
+
+    public String showPlayerNameByIndex(int i) {
+        return getPlayer(i).showName();
+    }
 }
