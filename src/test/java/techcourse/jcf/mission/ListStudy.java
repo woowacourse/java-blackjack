@@ -53,6 +53,16 @@ public class ListStudy {
 
         final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues2);
         final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues2);
+
+        // 미션5
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        SimpleList.copy(laserPrinters, printers);
+
+        System.out.println(printers.get(0) == laserPrinter); // true
     }
 }
 
