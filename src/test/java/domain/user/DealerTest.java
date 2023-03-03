@@ -47,4 +47,13 @@ class DealerTest {
         Dealer dealer = new Dealer(cardHand);
         assertThat(dealer.canAdd()).isFalse();
     }
+
+    @Test
+    @DisplayName("카드를 저장한다.")
+    void 카드_저장() {
+        Dealer dealer = new Dealer();
+        assertThat(dealer.calculateScore()).isEqualTo(0);
+        dealer.addCard(new Card(Symbol.SPADE, CardNumber.TWO));
+        assertThat(dealer.calculateScore()).isEqualTo(2);
+    }
 }
