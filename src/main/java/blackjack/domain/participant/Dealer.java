@@ -31,7 +31,7 @@ public class Dealer extends Participant {
         players.receiveSettingCards(cardList);
     }
 
-    public void drawSelfCards() {
+    public void drawSelfInitCards() {
         for (int count = 0; count < 2; count++) {
             Card drawnCard = deck.drawCard();
             receiveCard(drawnCard);
@@ -50,7 +50,7 @@ public class Dealer extends Participant {
         return cards.calculateTotalScore() <= SPECIFIC_SCORE_OF_DEALER;
     }
 
-    public void drawCardUntilOver16() {
+    public void drawOneMoreCard() {
         receiveCard(deck.drawCard());
     }
 }
