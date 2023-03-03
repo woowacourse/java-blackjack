@@ -17,7 +17,7 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public void printInitialCardDistribution(List<String> playerNames) {
+    public void printInitialCardMessage(List<String> playerNames) {
         System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }

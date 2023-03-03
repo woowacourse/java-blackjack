@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-    public static final int REPEAT_COUNT = 2;
+    public static final int INITIAL_CARD_COUNT = 2;
     public static final String YES = "y";
 
     private final InputView inputView;
@@ -36,7 +36,8 @@ public class BlackJackController {
 
     private List<Card> getInitialCards(final Trump trump) {
         List<Card> initialCards = new ArrayList<>();
-        for (int i = 0; i < REPEAT_COUNT; i++) {
+
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             initialCards.add(trump.getCard());
         }
 
@@ -62,51 +63,38 @@ public class BlackJackController {
                 .map(Player::getName)
                 .collect(Collectors.toList());
 
-        outputView.printInitialCardDistribution(playerNames);
+        outputView.printInitialCardMessage(playerNames);
         showDealerCards(dealer);
         players.getPlayers().forEach(this::showEachPlayerCards);
     }
 
     private void showDealerCards(final Dealer dealer) {
         Card openedDealerCard = dealer.getCards().get(0);
-        outputView.printInitialDealerCard(makeCardName(openedDealerCard));
+        outputView.printInitialDealerCard(openedDealerCard.getCardName());
     }
 
     private void showEachPlayerCards(final Player player) {
-        List<String> cards = makeCardNames(player);
-        outputView.printInitialPlayerCards(player.getName(), cards);
-    }
-
-    private List<String> makeCardNames(final Participant participant) {
-        return participant.getCards().stream()
-                .map(this::makeCardName)
-                .collect(Collectors.toList());
-    }
-
-    private String makeCardName(final Card card) {
-        return card.getTrumpNumber().getName() + card.getTrumpShape().getShape();
+        outputView.printInitialPlayerCards(player.getName(), player.getCardNames());
     }
 
     private void playGame(final Trump trump, final Dealer dealer, final Players players) {
-        playAllPlayer(trump, players);
-        playDealer(trump, dealer);
-    }
+        players.getPlayers().forEach(
+                player -> playEachPlayer(trump, player));
 
-    private void playAllPlayer(final Trump trump, final Players players) {
-        for (Player player : players.getPlayers()) {
-            playEachPlayer(trump, player);
-        }
+        playDealer(trump, dealer);
     }
 
     private void playEachPlayer(final Trump trump, final Player player) {
         boolean isRepeat = true;
+
         while (player.isAbleToReceive() && isRepeat) {
             isRepeat = isHit(trump, player);
         }
     }
 
     private boolean isHit(final Trump trump, final Player player) {
-        String intention = getIntention(player.getName());
+        String intention = requestIntention(player.getName());
+
         if (intention.equals(YES)) {
             hit(trump, player);
             return true;
@@ -114,7 +102,7 @@ public class BlackJackController {
         return false;
     }
 
-    private String getIntention(final String playerName) {
+    private String requestIntention(final String playerName) {
         outputView.printRequestIntention(playerName);
         String intention = inputView.readPlayerIntention();
         Validator.getInstance().validatePlayerIntention(intention);
@@ -144,9 +132,10 @@ public class BlackJackController {
     }
 
     private void showFinalCards(final Dealer dealer, final Players players) {
-        outputView.printFinalCards(dealer.getName(), makeCardNames(dealer), dealer.getScore());
+        outputView.printFinalCards(dealer.getName(), dealer.getCardNames(), dealer.getScore());
+
         players.getPlayers().forEach(
-                player -> outputView.printFinalCards(player.getName(), makeCardNames(player), player.getScore()));
+                player -> outputView.printFinalCards(player.getName(), player.getCardNames(), player.getScore()));
     }
 
     private void showDealerResult(final Map<Result, Integer> dealerResults) {

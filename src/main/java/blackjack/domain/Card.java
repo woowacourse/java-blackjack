@@ -10,6 +10,10 @@ public class Card {
         this.trumpNumber = trumpNumber;
     }
 
+    public String getCardName() {
+        return trumpNumber.getName() + trumpShape.getShape();
+    }
+
     public TrumpShape getTrumpShape() {
         return trumpShape;
     }

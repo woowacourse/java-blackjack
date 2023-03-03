@@ -26,6 +26,12 @@ public abstract class Participant {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getCardNames() {
+        return cards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toList());
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
