@@ -80,4 +80,11 @@ public class OutputView {
     public static void println(String message) {
         System.out.println(message);
     }
+
+    public static void printPlayersFinalInformation(List<Player> players) {
+        for (Player player : players) {
+            printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
+            System.out.printf(" - 결과: %d%n", player.getTotalScore());
+        }
+    }
 }

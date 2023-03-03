@@ -44,5 +44,9 @@ public class BlackJackController {
             blackJack.giveDealerCard();
             OutputView.printGiveDealerCardMessage();
         }
+
+        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
+
+        blackJack.battle();
     }
 }

@@ -14,23 +14,46 @@ public class Participant extends Player {
 
     @Override
     public void battle(Player player) {
+        if (isBurst() || player.isBurst()) {
+            decideGameResultOnBurst(player);
+            return;
+        }
+
         int totalScore = getTotalScore();
         int totalScoreOfOtherPlayer = player.getTotalScore();
-        decideGameResult(totalScore, totalScoreOfOtherPlayer);
+        decideGameResultOnScore(totalScore, totalScoreOfOtherPlayer);
     }
 
-    private void decideGameResult(int totalScore, int totalScoreOfOtherPlayer) {
+    private void decideGameResultOnBurst(Player player) {
+        if (isBurst() && player.isBurst()) {
+            decideGameResult(GameResult.DRAW);
+            return;
+        }
+
+        if (isBurst()) {
+            decideGameResult(GameResult.LOSE);
+            return;
+        }
+
+        decideGameResult(GameResult.WIN);
+    }
+
+    private void decideGameResultOnScore(int totalScore, int totalScoreOfOtherPlayer) {
         if (totalScore > totalScoreOfOtherPlayer) {
-            this.gameResult = GameResult.WIN;
+            decideGameResult(GameResult.WIN);
             return;
         }
 
         if (totalScore < totalScoreOfOtherPlayer) {
-            this.gameResult = GameResult.LOSE;
+            decideGameResult(GameResult.LOSE);
             return;
         }
 
-        this.gameResult = GameResult.DRAW;
+        decideGameResult(GameResult.DRAW);
+    }
+
+    private void decideGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
     }
 
     @Override

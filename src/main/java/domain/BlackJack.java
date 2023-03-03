@@ -96,4 +96,11 @@ public class BlackJack {
         players.remove(0);
         return players;
     }
+
+    public void battle() {
+        for (Player participant : getParticipants()) {
+            participant.battle(getDealer());
+            getDealer().battle(participant);
+        }
+    }
 }

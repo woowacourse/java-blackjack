@@ -20,23 +20,46 @@ public class Dealer extends Player {
 
     @Override
     public void battle(Player player) {
+        if (isBurst() || player.isBurst()) {
+            decideGameResultOnBurst(player);
+            return;
+        }
+
         int totalScore = getTotalScore();
         int totalScoreOfOtherPlayer = player.getTotalScore();
-        decideGameResult(totalScore, totalScoreOfOtherPlayer);
+        decideGameResultOnScore(totalScore, totalScoreOfOtherPlayer);
     }
 
-    private void decideGameResult(int totalScore, int totalScoreOfOtherPlayer) {
+    private void decideGameResultOnBurst(Player player) {
+        if (isBurst() && player.isBurst()) {
+            putGameResult(GameResult.DRAW);
+            return;
+        }
+
+        if (isBurst()) {
+            putGameResult(GameResult.LOSE);
+            return;
+        }
+
+        putGameResult(GameResult.WIN);
+    }
+
+    private void decideGameResultOnScore(int totalScore, int totalScoreOfOtherPlayer) {
         if (totalScore > totalScoreOfOtherPlayer) {
-            gameResults.put(GameResult.WIN, getGameResultCount(GameResult.WIN) + 1);
+            putGameResult(GameResult.WIN);
             return;
         }
 
         if (totalScore < totalScoreOfOtherPlayer) {
-            gameResults.put(GameResult.LOSE, getGameResultCount(GameResult.LOSE) + 1);
+            putGameResult(GameResult.LOSE);
             return;
         }
 
-        gameResults.put(GameResult.DRAW, getGameResultCount(GameResult.DRAW) + 1);
+        putGameResult(GameResult.DRAW);
+    }
+
+    private void putGameResult(GameResult gameResult) {
+        gameResults.put(gameResult, getGameResultCount(gameResult) + 1);
     }
 
     private int getGameResultCount(GameResult gameResult) {
