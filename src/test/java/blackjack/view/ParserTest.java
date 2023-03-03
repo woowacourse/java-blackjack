@@ -2,9 +2,7 @@ package blackjack.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -15,26 +13,28 @@ class ParserTest {
 
     @Test
     void 구분자를_기준으로_문자열을_파싱한다() {
-        final String input = "pobi,jason";
+        final String value = "pobi,jason";
 
-        final List<String> result = Parser.parseByDelimiter(input, ",");
+        final List<String> result = Parser.parseByDelimiter(value, ",");
 
         assertThat(result).containsExactly("pobi", "jason");
     }
 
     @Test
     void 구분자를_기준으로_빈문자열을_파싱한다() {
-        final String input = ",,";
+        final String value = ",,";
 
-        final List<String> result = Parser.parseByDelimiter(input, ",");
+        final List<String> result = Parser.parseByDelimiter(value, ",");
 
         assertThat(result).containsExactly("", "", "");
     }
-}
 
-class Parser {
+    @Test
+    void 문자열의_앞뒤_공백은_제거한다() {
+        final List<String> value = List.of(" pobi", "jason ", " crong ");
 
-    public static List<String> parseByDelimiter(final String value, final String delimiter) {
-        return Arrays.asList(value.split(delimiter, -1));
+        final List<String> result = Parser.trim(value);
+
+        assertThat(result).containsExactly("pobi", "jason", "crong");
     }
 }
