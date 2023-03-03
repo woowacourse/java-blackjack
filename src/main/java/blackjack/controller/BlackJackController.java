@@ -3,6 +3,9 @@ package blackjack.controller;
 import blackjack.common.exception.CustomException;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.Result;
+import blackjack.dto.ChallengerResultDto;
+import blackjack.dto.DealerResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -102,8 +105,20 @@ public class BlackJackController {
     }
 
     private void showResult() {
+        showPoint();
+        showRank();
+    }
+
+    private void showPoint() {
         PlayerStatusDto dealerStatus = makeDealerStatus();
         List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
         OutputView.printEndStatus(dealerStatus, challengersStatus);
+    }
+
+    private void showRank() {
+        Result result = blackJackGame.makeResult();
+        ChallengerResultDto challengerResultDto = new ChallengerResultDto(result, blackJackGame.getChallengers());
+        DealerResultDto dealerResultDto = new DealerResultDto(result, blackJackGame.getDealer());
+        OutputView.printFinalRank(challengerResultDto, dealerResultDto);
     }
 }

@@ -21,7 +21,7 @@ public class PlayerStatusDto {
         List<String> cardInfo = new ArrayList<>();
         List<Card> inputCards = player.getHoldingCards().getCards();
         for (Card card : inputCards) {
-            cardInfo.add(card.getNumber().getName()+card.getShape().getName());
+            cardInfo.add(card.getNumber().getName() + card.getShape().getName());
         }
         return cardInfo;
     }
