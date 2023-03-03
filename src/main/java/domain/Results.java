@@ -6,9 +6,10 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
-public class Results {
+public final class Results {
 
     private static final int BUST_NUMBER = 22;
+
     private final List<String> winners;
     private final List<String> losers;
 
@@ -31,14 +32,24 @@ public class Results {
         if (result == null) {
             return new ArrayList<>();
         }
-        return result.stream().map(Player::getName).collect(toList());
+        return result.stream()
+                .map(Player::getName)
+                .collect(toList());
     }
 
     private static Result isWinner(final int dealerScore, final Participant participant) {
-        if (participant.getScore() >= BUST_NUMBER || (dealerScore < BUST_NUMBER && dealerScore > participant.getScore())) {
+        if (isParticipantBusted(participant) || isParticipantDefeated(dealerScore, participant)) {
             return Result.DEFEAT;
         }
         return Result.VICTORY;
+    }
+
+    private static boolean isParticipantDefeated(final int dealerScore, final Participant participant) {
+        return dealerScore < BUST_NUMBER && dealerScore > participant.getScore();
+    }
+
+    private static boolean isParticipantBusted(final Participant participant) {
+        return participant.getScore() >= BUST_NUMBER;
     }
 
     public int countWinners() {

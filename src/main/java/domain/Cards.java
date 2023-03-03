@@ -6,6 +6,7 @@ import java.util.List;
 public final class Cards {
 
     private static final int ACE_ELEVEN = 10;
+    private static final int ACE_CONDITION = 21 - ACE_ELEVEN;
     private final List<Card> cards;
 
     public Cards() {
@@ -37,7 +38,7 @@ public final class Cards {
     }
 
     private static boolean isUnderTwentyOne(final int sum) {
-        return sum <= 11;
+        return sum <= ACE_CONDITION;
     }
 
     private boolean hasAce() {

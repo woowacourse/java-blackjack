@@ -23,24 +23,6 @@ public final class Participants {
         return new Participants(participants);
     }
 
-    public List<String> getNames() {
-        return participants.stream()
-                .map(Participant::getName)
-                .collect(toList());
-    }
-
-    private static void validateDuplicate(final List<String> playerNames) {
-        if (isDuplicate(playerNames)) {
-            throw new IllegalArgumentException("중복되지 않은 이름만 입력해주세요");
-        }
-
-    }
-
-    private static boolean isDuplicate(final List<String> playerNames) {
-        final int uniqueNameCount = new HashSet<>(playerNames).size();
-        return uniqueNameCount < playerNames.size();
-    }
-
     public void drawCard(final Deck deck) {
         participants.forEach(participant -> {
             participant.takeCard(deck.dealCard());
@@ -48,7 +30,24 @@ public final class Participants {
         });
     }
 
+    private static void validateDuplicate(final List<String> playerNames) {
+        if (isDuplicate(playerNames)) {
+            throw new IllegalArgumentException("중복되지 않은 이름만 입력해주세요");
+        }
+    }
+
+    private static boolean isDuplicate(final List<String> playerNames) {
+        final int uniqueNameCount = new HashSet<>(playerNames).size();
+        return uniqueNameCount < playerNames.size();
+    }
+
     public List<Participant> getParticipants() {
         return List.copyOf(participants);
+    }
+
+    public List<String> getNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(toList());
     }
 }

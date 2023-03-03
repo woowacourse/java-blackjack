@@ -29,7 +29,7 @@ public final class Controller {
     private <T> T retryOnError(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
             return retryOnError(supplier);
         }

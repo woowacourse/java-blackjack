@@ -5,6 +5,7 @@ import java.util.List;
 public abstract class Player {
 
     private static final int MAX_NAME_LENGTH = 10;
+
     private final String name;
     private final Cards cards;
 
