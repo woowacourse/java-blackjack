@@ -3,7 +3,6 @@ package domain.user;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class User {
     protected static final int BLACKJACK = 21;
@@ -20,18 +19,6 @@ public abstract class User {
         cards.add(card);
         score.calculate(cards);
         checkBustByScore();
-    }
-
-    public List<Integer> getCardNumbers() {
-        return cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> getCardPatterns() {
-        return cards.stream()
-                .map(Card::getPattern)
-                .collect(Collectors.toList());
     }
 
     public List<Card> getCards() {
