@@ -9,14 +9,20 @@ public class BlackJackResults {
     private final Map<Name, BlackJackResult> participants = new LinkedHashMap<>();
 
     public BlackJackResults(final Dealer dealer, final List<Player> players) {
-        participants.put(dealer.getName(), createDealerResults(dealer, players));
-        players.forEach(player -> participants.put(player.getName(), new BlackJackResult(player.compare(dealer))));
+        List<ResultType> dealerResults = createDealerResults(dealer, players);
+        participants.put(dealer.getName(), new BlackJackResult(dealerResults));
+        for (int index = 0; index < dealerResults.size(); index++) {
+            Name playerName = players.get(index).getName();
+            ResultType dealerResult = dealerResults.get(index);
+            ResultType reverseType = ResultType.getReverseType(dealerResult);
+            participants.put(playerName, new BlackJackResult(reverseType));
+        }
     }
 
-    private BlackJackResult createDealerResults(final Dealer dealer, final List<Player> players) {
-        return new BlackJackResult(players.stream()
-                .map(dealer::compare)
-                .collect(Collectors.toList()));
+    private List<ResultType> createDealerResults(final Dealer dealer, final List<Player> players) {
+        return players.stream()
+                .map(dealer::judgeResult)
+                .collect(Collectors.toList());
     }
 
     public Map<Name, BlackJackResult> getParticipants() {

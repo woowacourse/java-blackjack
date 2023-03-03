@@ -11,12 +11,12 @@ public enum ResultType {
         this.type = type;
     }
 
-    public static ResultType findBy(int totalPoint, int compareTotalPoint) {
-        if(totalPoint > compareTotalPoint) {
-            return WIN;
-        }
-        if(totalPoint < compareTotalPoint) {
+    public static ResultType getReverseType(ResultType type) {
+        if (type == WIN) {
             return LOSE;
+        }
+        if (type == LOSE) {
+            return WIN;
         }
         return PUSH;
     }
