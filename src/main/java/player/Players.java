@@ -2,6 +2,7 @@ package player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import card.Card;
 
@@ -23,5 +24,11 @@ public class Players {
 
     public boolean isBust(int playerIndex) {
         return players.get(playerIndex).isBust();
+    }
+
+    public List<PlayerResultDto> getPlayerResults() {
+        return players.stream()
+                .map(PlayerResultDto::from)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
