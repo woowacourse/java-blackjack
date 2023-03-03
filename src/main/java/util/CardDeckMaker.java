@@ -1,8 +1,8 @@
 package util;
 
 import domain.Card;
-import domain.Shape;
-import domain.Letter;
+import type.Shape;
+import type.Letter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

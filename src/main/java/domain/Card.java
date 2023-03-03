@@ -1,5 +1,8 @@
 package domain;
 
+import type.Letter;
+import type.Shape;
+
 public class Card {
 
     private final Shape shape;

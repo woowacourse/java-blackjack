@@ -4,6 +4,10 @@ import java.util.List;
 
 public class CardDeck {
 
+    private static final int BLACK_JACK = 21;
+    private static final int NONE_ACE = 0;
+    private static final int ACE_DECREASE = 10;
+
     private final List<Card> cards;
 
     public CardDeck(List<Card> cards) {
@@ -31,7 +35,7 @@ public class CardDeck {
 
     private int increaseAceCount(int aceCount, Card card) {
         if (card.isAce()) {
-            return aceCount + 1;
+            aceCount++;
         }
 
         return aceCount;
@@ -39,7 +43,7 @@ public class CardDeck {
 
     private int decreaseScoreByAce(int sum, int limit, int aceCount) {
         while (isScoreDecreasableByAce(sum, limit, aceCount)) {
-            sum -= 10;
+            sum -= ACE_DECREASE;
             aceCount--;
         }
 
@@ -47,7 +51,7 @@ public class CardDeck {
     }
 
     private boolean isScoreDecreasableByAce(int sum, int limit, int aceCount) {
-        return sum != 21 && limit < sum && 0 < aceCount;
+        return sum != BLACK_JACK && limit < sum && NONE_ACE < aceCount;
     }
 
     public List<Card> getCards() {
