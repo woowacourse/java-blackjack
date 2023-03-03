@@ -7,6 +7,7 @@ import deck.Deck;
 import player.Dealer;
 import player.Name;
 import player.Player;
+import player.PlayerResultDto;
 import player.Players;
 
 public class BlackjackGame {
@@ -72,5 +73,11 @@ public class BlackjackGame {
         return List.copyOf(dealer.showCards());
     }
 
+    public int getDealerScore() {
+        return dealer.calculateScore();
+    }
 
+    public List<PlayerResultDto> getPlayerResults() {
+        return players.getPlayerResults();
+    }
 }
