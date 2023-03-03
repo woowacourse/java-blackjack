@@ -30,4 +30,12 @@ public class Participant {
     public boolean isUnderThanBoundary(int number) {
         return this.calculateSumOfRank() < number;
     }
+
+    public boolean isBlackJack() {
+        return calculateSumOfRank() == 21 && cards.size() == 2;
+    }
+
+    public boolean isBust() {
+        return calculateSumOfRank() >= 21;
+    }
 }

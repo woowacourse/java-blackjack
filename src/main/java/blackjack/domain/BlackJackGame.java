@@ -38,13 +38,56 @@ public class BlackJackGame {
 
         for (Player player : players.getPlayers()) {
             int sumOfPlayer = player.calculateSumOfRank();
-            if (sumOfPlayer < sumOfDealer) {
+
+            if (player.isBlackJack() && dealer.isBlackJack()) {
+                dealer.setResults(Result.PUSH);
+                player.setResult(Result.PUSH);
+                continue;
+            }
+
+            if (player.isBlackJack() && !dealer.isBlackJack()) {
+                dealer.setResults(Result.LOSE);
+                player.setResult(Result.WIN);
+                continue;
+            }
+
+            if (player.isBust()) {
                 dealer.setResults(Result.WIN);
                 player.setResult(Result.LOSE);
                 continue;
             }
-            dealer.setResults(Result.LOSE);
-            player.setResult(Result.WIN);
+
+            if (!player.isBust()) {
+                if (dealer.isBust()) {
+                    dealer.setResults(Result.LOSE);
+                    player.setResult(Result.WIN);
+                    continue;
+                }
+
+                if (dealer.isBlackJack()) {
+                    dealer.setResults(Result.WIN);
+                    player.setResult(Result.LOSE);
+                    continue;
+                }
+
+                if (sumOfPlayer < sumOfDealer) {
+                    dealer.setResults(Result.WIN);
+                    player.setResult(Result.LOSE);
+                    continue;
+                }
+
+                if (sumOfPlayer == sumOfDealer) {
+                    dealer.setResults(Result.PUSH);
+                    player.setResult(Result.PUSH);
+                    continue;
+                }
+
+                if (sumOfPlayer > sumOfDealer) {
+                    dealer.setResults(Result.LOSE);
+                    player.setResult(Result.WIN);
+                    continue;
+                }
+            }
         }
     }
 
