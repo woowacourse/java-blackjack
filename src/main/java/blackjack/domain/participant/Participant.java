@@ -27,7 +27,7 @@ public class Participant {
     }
 
     public String getName() {
-        return name.get();
+        return name.getValue();
     }
     public List<Card> getCards(){
         return this.cards.getCards();
