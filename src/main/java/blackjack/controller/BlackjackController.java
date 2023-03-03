@@ -59,7 +59,7 @@ public class BlackjackController {
     }
 
     private static void giveAdditionalCard(String answer, Player player) {
-        while (answer.equals("y") && player.isUnderLimit()) {
+        while ("y".equals(answer) && player.isUnderLimit()) {
             player.updateCardScore(Cards.giveFirstCard());
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());
