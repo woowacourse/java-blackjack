@@ -1,6 +1,9 @@
 package mission;
 
+import java.util.List;
+
 public interface SimpleList<E> {
+
     boolean add(E value);
 
     void add(int index, E value);
@@ -29,5 +32,30 @@ public interface SimpleList<E> {
             tSimpleArrayList.add(array);
         }
         return tSimpleArrayList;
+    }
+
+    static <T extends Number> T sum(SimpleList<T> values) {
+        if (values.isEmpty()) {
+            return null;
+        }
+
+        T value = values.get(0);
+        if (value instanceof Integer) {
+            Integer sum = 0;
+            for (int i = 0; i < values.size(); i++) {
+                sum += values.get(i).intValue();
+            }
+            return (T) sum;
+        }
+
+        if (value instanceof Double) {
+            Double sum = 0d;
+            for (int i = 0; i < values.size(); i++) {
+                sum += values.get(i).doubleValue();
+            }
+            return (T) sum;
+        }
+
+        throw new UnsupportedOperationException();
     }
 }

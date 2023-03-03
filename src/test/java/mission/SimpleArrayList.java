@@ -14,6 +14,13 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         elements = new Object[DEFAULT_CAPACITY];
     }
 
+    public SimpleArrayList(E... elements) {
+        this.elements = Arrays.copyOf(elements, elements.length);
+        this.size = elements.length;
+        this.capacity = size;
+    }
+
+
     @Override
     public boolean add(E value) {
         adjustCapacityIfNecessary();
@@ -134,8 +141,9 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             elements[i] = null;
+        }
 
         size = 0;
         capacity = DEFAULT_CAPACITY;
