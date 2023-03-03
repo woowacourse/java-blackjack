@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     public void printPlayersWinningResult(Map<String, String> playerResult) {
-        for (Map.Entry entry : playerResult.entrySet()) {
+        for (Map.Entry<String, String> entry : playerResult.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }

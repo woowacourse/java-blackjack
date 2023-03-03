@@ -10,6 +10,7 @@ import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,38 +42,29 @@ public class GameController {
         //딜러 HitOrStand
         hitOrStandByDealer(cardDeck, dealer);
 
-        //딜러 결과 출력
-        CardScore dealerScore = dealer.cardScore();
-        String dealerResult = Integer.toString(dealerScore.bigScore());
-
+        //딜러 보유 카드. 숫자합 결과 출력
+        String dealerResult = Integer.toString(dealer.getScore());
         if (dealer.isBlackjack()) {
             dealerResult += " (블랙잭!!)";
         }
-        if (dealer.isBust()) {
-            dealerResult = Integer.toString(dealerScore.smallScore());
-        }
-
         outputView.printScoreResult(singleNameAndHand(dealer), dealerResult);
 
-        // 보유 카드. 숫자합 결과 출력
+        //플레이어 보유 카드. 숫자합 결과 출력
         for (Player player : players) {
-            CardScore cardScore = player.cardScore();
-            //블랙잭/버스트/숫자
-            String result = Integer.toString(cardScore.smallScore());
+            String playerResult = Integer.toString(player.getScore());
 
             if (player.isBlackjack()) {
-                result = Integer.toString(cardScore.bigScore());
-                result += " (블랙잭!!)";
+                playerResult += " (블랙잭!!)";
             }
-
-            outputView.printScoreResult(playerNamesAndHands(List.of(player)), result);
+            outputView.printScoreResult(playerNamesAndHands(List.of(player)), playerResult);
         }
 
-
         Map<String, String> playerResult = new HashMap<>();
+
         int win = 0;
         int same = 0;
         int lose = 0;
+        
         for (Player player : players) {
             String name = player.getName();
 
@@ -86,6 +78,7 @@ public class GameController {
                 playerResult.put(name, "패");
                 continue;
             }
+
             if (dealer.isBust()) {
                 if (player.isBust()) {
                     win++;
@@ -96,6 +89,7 @@ public class GameController {
                 playerResult.put(name, "승");
                 continue;
             }
+
             if (dealer.isStand()) {
                 if (player.isStand()) {
                     int dealerSum = dealer.getScore();
@@ -121,7 +115,6 @@ public class GameController {
                 }
                 win++;
                 playerResult.put(name, "패");
-                continue;
             }
         }
         outputView.printWinningResultMessage();
@@ -208,11 +201,10 @@ public class GameController {
     }
 
     private List<String> participantCardUnit(Participant participant) {
-        List<String> hand = participant.getCards()
+        return participant.getCards()
                 .stream()
                 .map(card -> cardUnit(card.getNumber(), card.getSuit()))
                 .collect(Collectors.toList());
-        return hand;
     }
 
     private String cardUnit(CardNumber number, CardSuit suit) {

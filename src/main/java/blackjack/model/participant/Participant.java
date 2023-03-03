@@ -39,7 +39,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        if (isBust()) {
+        if (isBust() || cardScore().bigScore() > 21) {
             return cardScore().smallScore();
         }
         return cardScore().bigScore();

@@ -13,19 +13,12 @@ public class DealerDrawState extends State {
     @Override
     public State draw(CardDeck cardDeck) {
         hand.add(cardDeck.pick());
-
-        if (hand.score().smallScore() > BLACKJACK_NUMBER && hand.score().bigScore() > BLACKJACK_NUMBER) {
-            return new BustState(hand);
-        }
-        if (!isFinished()) {
-            return this;
-        }
-        return new StandState(hand);
+        return checkStandOrBustState();
     }
 
     @Override
     public boolean isFinished() {
-        return hand.score().bigScore() > DEALER_HIT_NUMBER;
+        return false;
     }
 
     @Override
@@ -41,5 +34,15 @@ public class DealerDrawState extends State {
     @Override
     public boolean isStand() {
         return false;
+    }
+
+    public State checkStandOrBustState(){
+        if (hand.score().smallScore() > BLACKJACK_NUMBER && hand.score().bigScore() > BLACKJACK_NUMBER) {
+            return new BustState(hand);
+        }
+        if (hand.score().bigScore() > DEALER_HIT_NUMBER) {
+            return new StandState(hand);
+        }
+        return this;
     }
 }

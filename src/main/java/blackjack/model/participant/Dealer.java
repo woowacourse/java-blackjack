@@ -16,6 +16,7 @@ public class Dealer extends Participant {
         this.currentState = currentState.draw(cardDeck);
         if (currentState instanceof DrawState) {
             this.currentState = ((DrawState) currentState).turnDealerDrawState();
+            this.currentState = ((DealerDrawState)currentState).checkStandOrBustState();
         }
     }
 
