@@ -3,8 +3,6 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    private static final CardNumber TEN = CardNumber.of(10);
-
     private final Shape shape;
     private final CardNumber cardNumber;
 
