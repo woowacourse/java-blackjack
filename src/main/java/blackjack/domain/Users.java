@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class Users {
 
     private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
+    private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
     private static final int DEALER_DRAW_LIMIT = 16;
     private final List<User> users;
 
@@ -52,5 +53,12 @@ public class Users {
 
     public void drawDealer(final Deck deck) {
         getDealer().drawCard(deck);
+    }
+
+    public User getUser(final String name) {
+        return users.stream()
+                .filter(user -> user.getName().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
     }
 }

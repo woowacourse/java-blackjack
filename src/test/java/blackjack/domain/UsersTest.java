@@ -72,4 +72,14 @@ class UsersTest {
 
         assertThat(players).containsExactly("필립");
     }
+
+    @Test
+    @DisplayName("이름으로 유저를 반환하는 기능 테스트")
+    void getUserTest() {
+        final Users users = new Users(List.of("필립", "홍실"), new Deck(new RandomDeckGenerator()));
+
+        User philip = users.getUser("필립");
+
+        assertThat(philip.getName()).isEqualTo("필립");
+    }
 }
