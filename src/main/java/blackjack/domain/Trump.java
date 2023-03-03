@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Trump {
-    private List<Card> cards = new ArrayList<>();
-    private NumberGenerator numberGenerator;
+    private final List<Card> cards = new ArrayList<>();
+    private final NumberGenerator numberGenerator;
 
     public Trump(NumberGenerator numberGenerator) {
         generateTrump();
@@ -14,21 +14,18 @@ public class Trump {
     }
 
     private void generateTrump() {
-        List<TrumpShape> trumpShapes = Arrays.asList(TrumpShape.values());
-        for (TrumpShape trumpShape : trumpShapes) {
+        for (TrumpShape trumpShape : TrumpShape.values()) {
             generateTrumpForEachShape(trumpShape);
         }
     }
 
     private void generateTrumpForEachShape(TrumpShape trumpShape) {
-        List<TrumpNumber> trumpNumbers = Arrays.asList(TrumpNumber.values());
-        for (TrumpNumber trumpNumber : trumpNumbers) {
+        for (TrumpNumber trumpNumber : TrumpNumber.values()) {
             cards.add(new Card(trumpShape, trumpNumber));
         }
     }
 
-    public Card getCard(){
+    public Card getCard() {
         return cards.remove(numberGenerator.generate(cards.size()));
     }
-
 }

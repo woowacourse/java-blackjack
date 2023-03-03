@@ -6,36 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 public class GameResult {
-    private List<Result> dealerResults = new ArrayList<>();
-    private Map<Player, Result> playersResults = new HashMap<>();
+    public static final int MAX_BLACKJACK_SCORE = 21;
 
-    public GameResult(Players players, Dealer dealer) {
+    private final List<Result> dealerResults = new ArrayList<>();
+    private final Map<Player, Result> playersResults = new HashMap<>();
+
+    public GameResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             decideWinner(dealer, player);
         }
     }
 
     private void decideWinner(Dealer dealer, Player player) {
-        if (!isBurst(player) && !isBurst(dealer)) {
-            compareScore(player, dealer);
+        if (isBurst(player) || isBurst(dealer)) {
+            compareBuster(dealer, player);
         }
-        compareBuster(dealer, player);
+        compareScore(dealer, player);
     }
 
     private boolean isBurst(Participant participant) {
-        return participant.getScore() > 21;
-    }
-
-    private void compareScore(Player player, Dealer dealer) {
-        if (player.getScore() == dealer.getScore()) {
-            bothDraw(player);
-            return;
-        }
-        if (player.getScore() > dealer.getScore()) {
-            playerWin(player);
-            return;
-        }
-        dealerWin(player);
+        return participant.getScore() > MAX_BLACKJACK_SCORE;
     }
 
     private void compareBuster(Dealer dealer, Player player) {
@@ -46,6 +36,18 @@ public class GameResult {
         if (isBurst(dealer)) {
             playerWin(player);
         }
+    }
+
+    private void compareScore(Dealer dealer, Player player) {
+        if (player.getScore() == dealer.getScore()) {
+            bothDraw(player);
+            return;
+        }
+        if (player.getScore() > dealer.getScore()) {
+            playerWin(player);
+            return;
+        }
+        dealerWin(player);
     }
 
     private void dealerWin(Player player) {

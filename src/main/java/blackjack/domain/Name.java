@@ -6,7 +6,8 @@ public class Name {
     private static final String NAME_BLANK_ERROR_MESSAGE = "공백으로만 이루어진 이름은 사용할 수 없습니다.";
     private static final String BLANK = " ";
     private static final String EMPTY_STRING = "";
-    private String name;
+
+    private final String name;
 
     public Name(String name) {
         validate(name);

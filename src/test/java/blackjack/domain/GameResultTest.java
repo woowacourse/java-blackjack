@@ -28,7 +28,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 플레이어가 지는 경우")
     void gameResult1() {
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
@@ -40,7 +40,7 @@ class GameResultTest {
         player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.EIGHT));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.DRAW));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.DRAW);
@@ -53,7 +53,7 @@ class GameResultTest {
         player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.TWO));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.LOSE));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN);
@@ -66,7 +66,7 @@ class GameResultTest {
         player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.KING));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
@@ -78,7 +78,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.SEVEN));
         dealer.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.LOSE));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN);
@@ -93,7 +93,7 @@ class GameResultTest {
         player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.KING));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
@@ -107,7 +107,7 @@ class GameResultTest {
 
         players = new Players(List.of(player, player2, player3));
         players.getPlayers().forEach(Player::isAbleToReceive);
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN, Result.DRAW, Result.LOSE));
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);

@@ -1,14 +1,15 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Participant {
 
-    List<Card> cards;
-    Score score;
+    protected final List<Card> cards;
+    protected final Score score;
 
-    public Participant(List<Card> cards) {
+    protected Participant(List<Card> cards) {
         this.cards = cards;
         this.score = new Score();
     }
@@ -26,7 +27,7 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int getScore() {

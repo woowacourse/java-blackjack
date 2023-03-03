@@ -1,8 +1,8 @@
 package blackjack.domain;
 
 public class Card {
-    private TrumpShape trumpShape;
-    private TrumpNumber trumpNumber;
+    private final TrumpShape trumpShape;
+    private final TrumpNumber trumpNumber;
 
     public Card(TrumpShape trumpShape, TrumpNumber trumpNumber) {
         this.trumpShape = trumpShape;

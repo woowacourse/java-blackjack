@@ -12,6 +12,7 @@ public class Score {
         score = trumpNumbers.stream()
                 .mapToInt(TrumpNumber::getScore)
                 .sum();
+
         if (score > MAX_BLACKJACK_SCORE) {
             handleBurst(trumpNumbers);
         }
