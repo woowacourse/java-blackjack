@@ -2,6 +2,7 @@ package domain;
 
 import domain.user.AbstractUser;
 import domain.user.Dealer;
+import domain.user.Player;
 import domain.user.Players;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class BlackjackGame {
         return this.dealer;
     }
 
-    public Players getPlayers() {
-        return this.players;
+    public List<Player> getPlayers() {
+        return this.players.getPlayers();
     }
 }
