@@ -15,4 +15,8 @@ public class Dealer extends Participant {
         score.calculateScore(extractNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
+
+    public String getName() {
+        return "딜러";
+    }
 }
