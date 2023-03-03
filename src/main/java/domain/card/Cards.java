@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.card.shuffler.CardsShuffler;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -15,11 +16,11 @@ public class Cards {
 
     private static Stack<Card> initializeCards() {
         Stack<Card> cards = new Stack<>();
-        for (Value value : Value.values()) {
-            for (Shape shape : Shape.values()) {
-                cards.push(new Card(value.getValue(), shape.getShape()));
-            }
-        }
+        Arrays.stream(Value.values())
+                .map(Value::getValue)
+                .forEach(value -> Arrays.stream(Shape.values())
+                        .map(Shape::getShape)
+                        .forEach(shape -> cards.push(new Card(value, shape))));
         return cards;
     }
 
@@ -32,7 +33,6 @@ public class Cards {
     }
 
     public Card getCard() {
-        // TODO: EmptyStackException이 발생하면...?
         return cards.pop();
     }
 }
