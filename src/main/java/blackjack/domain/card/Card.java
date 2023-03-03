@@ -13,7 +13,7 @@ public class Card {
     }
 
     public String getCardName() {
-        return letter.name() + shape.name();
+        return letter.getValue() + shape.getValue();
     }
 
     public int getValue() {

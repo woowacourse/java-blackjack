@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +19,8 @@ public class CardTest {
     void getCardNameTest() {
         // given
         Card card = new Card(Shape.DIAMOND, Letter.ACE);
-        Player player = new Player(new Name("test"), new Cards());
-        String expected = card.getCardName();
-
-        // when
-        player.drawCard(card);
-        String actual = player.getOneCard().get(0);
+        String actual = card.getCardName();
+        String expected = Letter.ACE.getValue()+ Shape.DIAMOND.getValue();
 
         // then
         assertThat(actual).isEqualTo(expected);
