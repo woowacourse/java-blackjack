@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import card.Card;
+import dto.PlayerOpenDto;
+import dto.PlayerResultDto;
+import dto.PlayerWinningDto;
 
 public class Players {
     private final List<Player> players = new ArrayList<>();

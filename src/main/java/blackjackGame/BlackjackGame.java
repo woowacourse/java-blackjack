@@ -3,14 +3,14 @@ package blackjackGame;
 import java.util.List;
 
 import deck.Deck;
+import dto.DealerFirstOpenDto;
+import dto.DealerWinningDto;
+import dto.PlayerOpenDto;
+import dto.PlayerResultDto;
+import dto.PlayerWinningDto;
 import player.Dealer;
-import player.DealerFirstOpenDto;
-import player.DealerWinningDto;
 import player.Name;
 import player.Player;
-import player.PlayerOpenDto;
-import player.PlayerResultDto;
-import player.PlayerWinningDto;
 import player.Players;
 
 public class BlackjackGame {

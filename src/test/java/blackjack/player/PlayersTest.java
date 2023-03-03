@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
+import dto.PlayerWinningDto;
 import player.Dealer;
 import player.Name;
 import player.Player;
-import player.PlayerWinningDto;
 import player.Players;
 
 class PlayersTest {

@@ -1,6 +1,8 @@
-package player;
+package dto;
 
 import card.Card;
+import player.Dealer;
+import player.Name;
 
 public class DealerFirstOpenDto {
     private final Name name;

@@ -1,8 +1,10 @@
-package player;
+package dto;
 
 import java.util.List;
 
 import card.Card;
+import player.Name;
+import player.Player;
 
 public class PlayerOpenDto {
     private final Name name;

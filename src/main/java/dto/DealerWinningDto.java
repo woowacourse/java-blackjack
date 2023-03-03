@@ -1,8 +1,10 @@
-package player;
+package dto;
 
 import java.util.Map;
 
 import blackjackGame.Result;
+import player.Dealer;
+import player.Name;
 
 public class DealerWinningDto {
     private final Name name;

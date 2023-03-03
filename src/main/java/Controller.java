@@ -3,13 +3,13 @@ import java.util.List;
 import java.util.Set;
 
 import blackjackGame.BlackjackGame;
-import player.DealerFirstOpenDto;
-import player.DealerWinningDto;
+import dto.DealerFirstOpenDto;
+import dto.DealerWinningDto;
+import dto.PlayerOpenDto;
+import dto.PlayerResultDto;
+import dto.PlayerWinningDto;
 import player.Name;
 import player.Player;
-import player.PlayerOpenDto;
-import player.PlayerResultDto;
-import player.PlayerWinningDto;
 import view.InputView;
 import view.OutputView;
 

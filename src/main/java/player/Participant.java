@@ -4,7 +4,7 @@ import java.util.List;
 
 import card.Card;
 
-abstract class Participant {
+public abstract class Participant {
     public static final int BUST_SCORE = 22;
     protected final Name name;
     protected final Hand hand;

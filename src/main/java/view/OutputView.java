@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import card.Card;
-import player.DealerFirstOpenDto;
-import player.DealerWinningDto;
-import player.PlayerOpenDto;
-import player.PlayerResultDto;
-import player.PlayerWinningDto;
+import dto.DealerFirstOpenDto;
+import dto.DealerWinningDto;
+import dto.PlayerOpenDto;
+import dto.PlayerResultDto;
+import dto.PlayerWinningDto;
 
 public class OutputView {
 
