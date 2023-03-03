@@ -96,6 +96,10 @@ public class BlackjackGame {
         return players.getPlayerCards();
     }
 
+    public PlayerOpenDto getPlayerCardsByIndex(int playerIndex) {
+        return getPlayersCards().get(playerIndex);
+    }
+
     public Name findUserNameByIndex(int playerIndex) {
         return players.findPlayer(playerIndex);
     }
