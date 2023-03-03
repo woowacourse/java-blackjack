@@ -64,22 +64,27 @@ public class BlackJackController {
     }
 
     private void drawPlayerCard(final String playerName, final Deck deck, final Players players) {
-        DrawCommand playerInput;
-        while (players.isDrawable(playerName)) {
+        DrawCommand playerInput = DrawCommand.DRAW;
+        while (players.isDrawable(playerName) && playerInput != DrawCommand.STAY) {
             playerInput = inputView.inputCommand(playerName);
-
-            if (playerInput == DrawCommand.DRAW) {
-                players.draw(playerName, deck);
-            }
-
-            final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
-                    players.findCardsByPlayerName(playerName));
-            outputView.printCardStatusOfPlayer(playerCardDto);
-            if (playerInput == DrawCommand.STAY) {
-                break;
-            }
+            drawCard(playerName, deck, players, playerInput);
+            printPlayerResult(playerName, players);
         }
     }
+
+    private void drawCard(final String playerName, final Deck deck, final Players players,
+            final DrawCommand playerInput) {
+        if (playerInput == DrawCommand.DRAW) {
+            players.draw(playerName, deck);
+        }
+    }
+
+    private void printPlayerResult(final String playerName, final Players players) {
+        final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
+                players.findCardsByPlayerName(playerName));
+        outputView.printCardStatusOfPlayer(playerCardDto);
+    }
+
 
     private void drawDealerCards(final Dealer dealer, final Deck deck) {
         while (dealer.isDrawable()) {
