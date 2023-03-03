@@ -1,9 +1,8 @@
-package blackjack.view;
+package blackjack.util;
 
-import blackjack.domain.WinningResult;
 import java.util.List;
 
-public enum ViewWinningResult {
+public enum WinningResult {
 
     WIN("승"),
     LOSE("패"),
@@ -12,7 +11,7 @@ public enum ViewWinningResult {
 
     final String name;
 
-    ViewWinningResult(String name) {
+    WinningResult(String name) {
         this.name = name;
     }
 

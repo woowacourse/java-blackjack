@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.util.WinningResult;
+
 public class Dealer extends Participant {
 
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;

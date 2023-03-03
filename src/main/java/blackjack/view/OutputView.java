@@ -2,9 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
-import blackjack.domain.WinningResult;
 import blackjack.util.CardNumber;
 import blackjack.util.CardSuit;
+import blackjack.util.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -62,9 +62,9 @@ public class OutputView {
 
     public void printDealerWinORLose(List<WinningResult> dealerResult) {
         System.out.print("딜러: ");
-        System.out.print(ViewWinningResult.WIN.winCount(dealerResult) + ViewWinningResult.WIN.getName());
-        System.out.println(ViewWinningResult.PUSH.pushCount(dealerResult) + ViewWinningResult.PUSH.getName());
-        System.out.println(ViewWinningResult.LOSE.loseCount(dealerResult) + ViewWinningResult.LOSE.getName());
+        System.out.print(WinningResult.WIN.winCount(dealerResult) + WinningResult.WIN.getName());
+        System.out.print(WinningResult.PUSH.pushCount(dealerResult) + WinningResult.PUSH.getName());
+        System.out.println(WinningResult.LOSE.loseCount(dealerResult) + WinningResult.LOSE.getName());
     }
 
     public void printPlayerWinORLose(Map<Participant, WinningResult> playerResult) {
