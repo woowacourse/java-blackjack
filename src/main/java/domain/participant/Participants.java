@@ -75,4 +75,10 @@ public class Participants {
     public int size() {
         return participants.size();
     }
+
+    public List<String> getParticipantNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

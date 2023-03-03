@@ -54,7 +54,7 @@ public class ParticipantCard {
 
     private int sumCards() {
         return cards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt(Card::findCardNumber)
                 .sum();
     }
 

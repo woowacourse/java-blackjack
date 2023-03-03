@@ -37,7 +37,15 @@ public class Card {
         return Objects.hash(pattern, number);
     }
 
-    public int getNumber() {
+    public int findCardNumber() {
         return number.getNumber();
+    }
+
+    public CardPattern getCardPattern() {
+        return pattern;
+    }
+
+    public CardNumber getCardNumber() {
+        return number;
     }
 }
