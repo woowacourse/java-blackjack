@@ -54,4 +54,17 @@ class PlayersTest {
 
         assertThat(players.count()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("인덱스에 해당하는 플레이어의 버스트 여부를 알 수 있다")
+    void isBust() {
+        Players players = new Players();
+        Player player1 = new Player(new Name("폴로"));
+        players.add(player1);
+        player1.hit(new Card(CardNumber.KING, Pattern.HEART));
+        player1.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
+        player1.hit(new Card(CardNumber.KING, Pattern.SPADE));
+
+        assertThat(players.isBust(0)).isTrue();
+    }
 }

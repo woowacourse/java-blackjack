@@ -20,4 +20,8 @@ public class Players {
     public int count() {
         return players.size();
     }
+
+    public boolean isBust(int playerIndex) {
+        return players.get(playerIndex).isBust();
+    }
 }
