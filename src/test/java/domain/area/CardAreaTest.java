@@ -82,7 +82,7 @@ class CardAreaTest {
         assertThat(cardArea.calculate()).isEqualTo(totalScore);
     }
 
-    @ParameterizedTest(name = "[{index}] ACE 는 이전까지의 총합이 10 이하면 11로 계산한다")
+    @ParameterizedTest(name = "[{index}] ACE 는 해당 값을 포함한 전체 점수가 21 이하인 경우 11로 계산한다.")
     @MethodSource("containsAceCardArea")
     void ACE_는_이전까지의_총합이_10_이하면_11로_계산한다(final CardArea cardArea, final int totalScore) {
         // then
@@ -113,13 +113,18 @@ class CardAreaTest {
         final CardArea cardArea6 = new CardArea(new Card(CLOVER, TEN), new Card(CLOVER, ACE));
         cardArea6.addCard(new Card(CardShape.SPADE, SEVEN));
 
+        // [11] + [1] + [1] = 13
+        final CardArea cardArea7 = new CardArea(new Card(CLOVER, ACE), new Card(CLOVER, ACE));
+        cardArea6.addCard(new Card(CardShape.SPADE, ACE));
+
         return Stream.of(
                 Arguments.of(cardArea1, 21),
                 Arguments.of(cardArea2, 21),
                 Arguments.of(cardArea3, 21),
                 Arguments.of(cardArea4, 20),
                 Arguments.of(cardArea5, 21),
-                Arguments.of(cardArea6, 18)
+                Arguments.of(cardArea6, 18),
+                Arguments.of(cardArea7, 13)
         );
     }
 
@@ -142,7 +147,7 @@ class CardAreaTest {
     }
 
     @Test
-    void 총합이_21_초과이면_버스트_된다() {
+    void 총합이_21_초과이면_버스트_이다() {
         // given
         final CardArea cardArea = new CardArea(new Card(CLOVER, TEN), new Card(CLOVER, TEN));
         cardArea.addCard(new Card(CardShape.DIAMOND, TEN));

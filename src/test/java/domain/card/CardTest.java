@@ -25,7 +25,7 @@ class CardTest {
     }
 
     @Test
-    void 카드_종류를_가진다() throws Exception {
+    void 카드_종류를_가진다() {
         // given
         final Card card = new Card(CardShape.CLOVER, CardValue.TEN);
 

@@ -76,7 +76,7 @@ class BlackJackGameTest {
     class ExistCanHitPlayerTest {
 
         @Test
-        void 참가자들_중_21_미만인_참가자가_있음에도_그들이_hit_을_원하지_않는다면_false를_반환한다() {
+        void 참가자들_중_21_미만인_참가자가_있음에도_그들이_Hit_을_원하지_않는다면_false를_반환한다() {
             // given
             final Player 말랑 = 말랑(under21CardArea());
             final Player 코다 = 코다(under21CardArea());
@@ -99,7 +99,7 @@ class BlackJackGameTest {
         }
 
         @Test
-        void 참가자들_중_21_미만인_참가자가_있으며_HIT_을_원하는_경우_true_를_반환한다() {
+        void 참가자들_중_21_미만인_참가자가_있으며_Hit_을_원하는_경우_true_를_반환한다() {
             // given
             final Player 말랑 = 말랑(under21CardArea());
             final Player 코다 = 코다(under21CardArea());
@@ -111,7 +111,7 @@ class BlackJackGameTest {
         }
 
         @Test
-        void 참가자들_중_21_미만인_참가자가_있으며_HIT_여부를_경정하지_않은_경우_true_를_반환한다() {
+        void 참가자들_중_21_미만인_참가자가_있으며_Hit_여부를_경정하지_않은_경우_true_를_반환한다() {
             // given
             final Player 말랑 = 말랑(under21CardArea());
             final Player 코다 = 코다(under21CardArea());

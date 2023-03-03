@@ -2,6 +2,7 @@ package domain.deck;
 
 import domain.card.Card;
 import domain.card.CardShape;
+import domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -35,10 +36,10 @@ class CardDeckTest {
         for (final CardShape cardShape : result.keySet()) {
             final Set<Card> cards = new HashSet<>(result.get(cardShape));
 
-            assertEquals(cards.size(), 13);
+            assertEquals(cards.size(), CardValue.values().length);
         }
 
-        assertEquals(result.size(), 4);
+        assertEquals(result.size(), CardShape.values().length);
     }
 
     @Test
