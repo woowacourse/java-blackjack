@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Players;
+import domain.BlackjackGame;
 import view.InputView;
 
 public class BlackjackController {
@@ -12,7 +12,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = Players.from(inputView.readNames());
-
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.initialize(inputView.readNames());
     }
 }

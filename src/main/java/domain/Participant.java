@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 abstract class Participant {
 
     private final int upperBoundOfDrawable;
@@ -17,5 +19,9 @@ abstract class Participant {
 
     public boolean isDrawable() {
         return upperBoundOfDrawable > hand.calculateScore();
+    }
+
+    public List<Card> getHand() {
+        return hand.getCards();
     }
 }

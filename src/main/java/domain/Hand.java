@@ -1,7 +1,9 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Hand {
     public static final int ADDITIONAL_SCORE_OF_ACE = 10;
@@ -35,5 +37,9 @@ public class Hand {
             return score;
         }
         return score + ADDITIONAL_SCORE_OF_ACE;
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }
