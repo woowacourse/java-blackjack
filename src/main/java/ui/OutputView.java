@@ -1,10 +1,13 @@
 package ui;
 
 import domain.Card;
+import domain.PlayerResultRepository;
+import domain.Result;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -28,7 +31,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCardsStatusAndScoreOfUser(AbstractUser user){
+    public static void printCardsStatusAndScoreOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
                 .map(Card::getText)
                 .collect(Collectors.toList());
@@ -45,5 +48,19 @@ public class OutputView {
         System.out.println();
         printCardsStatusAndScoreOfUser(dealer);
         players.forEach(OutputView::printCardsStatusAndScoreOfUser);
+    }
+
+    public static void printResults(Map<Player, Result> repository) {
+        long dealerLose = repository.values().stream().filter(result -> result == Result.WIN).count();
+        long dealerWin = repository.values().stream().filter(result -> result == Result.LOSE).count();
+        long dealerDraws = repository.values().stream().filter(result -> result == Result.DRAW).count();
+        System.out.println();
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d패", dealerWin, dealerLose);
+        if(dealerDraws > 0) {
+            System.out.printf(" %d무", dealerDraws);
+        }
+        System.out.println();
+        repository.forEach((player, result) -> System.out.println(player.getNameValue()+ ": " + result.getKoreanText()));
     }
 }

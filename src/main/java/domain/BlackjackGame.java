@@ -40,8 +40,8 @@ public class BlackjackGame {
         this.dealer.addCard(deck.draw());
     }
 
-    public void calculateAllResults() {
-        this.players.getPlayers().forEach(player -> PlayerResultRepository.save(player, calculateResult(player)));
+    public void calculateAllResults(PlayerResultRepository playerResultRepository) {
+        this.players.getPlayers().forEach(player -> playerResultRepository.save(player, calculateResult(player)));
     }
 
     private Result calculateResult(Player player) {
