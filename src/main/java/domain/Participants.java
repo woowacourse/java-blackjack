@@ -13,6 +13,7 @@ public class Participants {
     public Participants(List<Participant> participants) {
         participants.forEach(
             (participant) -> participantStatuses.put(participant, new GameStatus(ParticipantStatus.NOT_BUST, 0)));
+        participantStatuses.put(new Dealer(), new GameStatus(ParticipantStatus.NOT_BUST, 0));
     }
 
     public void update(Participant participant) {

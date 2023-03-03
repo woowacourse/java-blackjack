@@ -22,6 +22,12 @@ public class Game {
         allParticipants.forEach((participant -> {
             deal(participant);
             deal(participant);
+            participants.update(participant);
         }));
     }
+
+    public List<Participant> getReadyResults() {
+        return participants.getAllParticipants();
+    }
+
 }
