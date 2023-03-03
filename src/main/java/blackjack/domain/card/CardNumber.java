@@ -3,8 +3,8 @@ package blackjack.domain.card;
 import java.util.*;
 
 public class CardNumber implements Comparable<CardNumber> {
-    private static final int MAX_RANGE = 13;
-    private static final int MIN_RANGE = 1;
+    public static final int MAX_RANGE = 13;
+    public static final int MIN_RANGE = 1;
 
     private static final Map<Integer, CardNumber> cache;
     private final int value;
@@ -26,14 +26,6 @@ public class CardNumber implements Comparable<CardNumber> {
             return cache.get(value);
         }
         throw new AssertionError();
-    }
-
-    public static int getMinValue() {
-        return MIN_RANGE;
-    }
-
-    public static int getMaxValue() {
-        return MAX_RANGE;
     }
 
     private void validateRange(final int value) {
