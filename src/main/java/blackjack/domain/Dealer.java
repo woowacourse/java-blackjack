@@ -43,6 +43,11 @@ public class Dealer implements Player {
     }
 
     @Override
+    public void stay() {
+        hand.stay();
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }

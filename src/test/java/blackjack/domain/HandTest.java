@@ -91,4 +91,13 @@ public class HandTest {
 
         assertThat(hand.calculateScore()).isEqualTo(11);
     }
+
+    @Test
+    void 상태를_STOP으로_바꾼다() {
+        final Hand hand = new Hand();
+
+        hand.stay();
+
+        assertThat(hand.isPlayable()).isFalse();
+    }
 }

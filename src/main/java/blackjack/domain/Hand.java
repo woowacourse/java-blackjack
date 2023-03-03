@@ -50,12 +50,17 @@ class Hand {
         return Result.DRAW;
     }
 
+
     public boolean isPlayable() {
         return state.isPlayable();
     }
 
     public int calculateScore() {
         return cards.calculateTotalScore();
+    }
+
+    public void stay() {
+        state = State.STOP;
     }
 
     public List<String> getCardLetters() {

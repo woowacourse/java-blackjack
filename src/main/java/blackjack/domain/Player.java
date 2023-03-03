@@ -13,6 +13,8 @@ public interface Player {
 
     int calculateScore();
 
+    void stay();
+
     String getName();
 
     List<String> getCardLetters();

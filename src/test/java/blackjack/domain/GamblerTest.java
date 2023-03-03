@@ -91,4 +91,13 @@ public class GamblerTest {
 
         assertThat(gambler.calculateScore()).isEqualTo(11);
     }
+
+    @Test
+    void 상태를_STOP으로_바꾼다() {
+        final Gambler gambler = new Gambler("허브");
+
+        gambler.stay();
+
+        assertThat(gambler.isDrawable()).isFalse();
+    }
 }

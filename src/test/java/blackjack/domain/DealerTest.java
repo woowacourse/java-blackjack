@@ -90,4 +90,14 @@ public class DealerTest {
 
         assertThat(dealer.calculateScore()).isEqualTo(11);
     }
+
+    @Test
+    void 상태를_STOP으로_바꾼다() {
+        final Dealer dealer = Dealer.create();
+
+        dealer.stay();
+
+        assertThat(dealer.isDrawable()).isFalse();
+    }
 }
+
