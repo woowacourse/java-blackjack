@@ -32,6 +32,7 @@ public class OutputView {
     }
 
     public void printDealerHitMessage() {
+        System.out.println();
         System.out.println("딜러가 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -40,6 +41,21 @@ public class OutputView {
             String name = entry.getKey();
             String cards = String.join(",", entry.getValue());
             System.out.println(name + ": " + cards + " - 결과: " + result);
+        }
+    }
+
+    public void printWinningResultMessage() {
+        System.out.println();
+        System.out.println("## 최종 승패");
+    }
+
+    public void printDealerWinningResult(List<Integer> result) {
+        System.out.println("딜러: " + result.get(0) + "승 " + result.get(1) + "무 " + result.get(2) + "패");
+    }
+
+    public void printPlayersWinningResult(Map<String, String> playerResult) {
+        for(Map.Entry entry : playerResult.entrySet()){
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
