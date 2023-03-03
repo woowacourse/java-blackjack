@@ -14,6 +14,7 @@ public class OutputView {
     private static final String FINAL_RESULT_TITLE = "## 최종 승패";
     private static final String RESULT_NAME_FORMAT = "%s: ";
     private static final String PARTICIPANT_CARD_STATUS_FORMAT = "%s 카드: %s ";
+    private static final int NONE = 0;
 
     public OutputView() {
     }
@@ -27,7 +28,7 @@ public class OutputView {
     }
 
     public void printDealerMoreCard(String dealerName, int cardCount) {
-        if (cardCount != 0) {
+        if (cardCount != NONE) {
             System.out.printf("\n\n" + DEALER_RECEIVE_CARD + "\n", dealerName, cardCount);
         }
     }
@@ -78,13 +79,13 @@ public class OutputView {
 
     private void printDealerResultCount(String dealerName, int winCount, int loseCount, int drawCount) {
         System.out.printf(RESULT_NAME_FORMAT, dealerName);
-        if (winCount != 0) {
+        if (winCount != NONE) {
             System.out.print(winCount + GameResult.WIN.getExpression());
         }
-        if (drawCount != 0) {
+        if (drawCount != NONE) {
             System.out.print(drawCount + GameResult.DRAW.getExpression());
         }
-        if (loseCount != 0) {
+        if (loseCount != NONE) {
             System.out.print(loseCount + GameResult.LOSE.getExpression());
         }
     }

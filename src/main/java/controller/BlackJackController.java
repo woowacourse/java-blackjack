@@ -1,7 +1,7 @@
 package controller;
 
-import domain.CardDistributor;
 import domain.CardDeck;
+import domain.CardDistributor;
 import domain.Dealer;
 import domain.Name;
 import domain.Participant;

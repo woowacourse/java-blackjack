@@ -1,6 +1,7 @@
 package type;
 
 public enum Letter {
+
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),

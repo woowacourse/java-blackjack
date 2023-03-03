@@ -36,5 +36,4 @@ public abstract class Participant {
         return name;
     }
 
-
 }
