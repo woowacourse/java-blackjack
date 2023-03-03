@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
+import static controller.DrawCardCommand.CARD_DRAW_STOP;
+import static view.message.Message.DRAW_CARD_CARD_MESSAGE;
 import static view.message.Message.PARTICIPANT_NAME_INPUT_MESSAGE;
 
 public class InputView {
@@ -29,6 +32,13 @@ public class InputView {
     public List<String> getParticipantNames() {
         OutputView.print(PARTICIPANT_NAME_INPUT_MESSAGE.getMessage());
         return Arrays.asList(Objects.requireNonNull(readConsole()).split(","));
+    }
+
+    public String getDrawCardCommand(final String name) {
+        String drawCardMessage = System.lineSeparator() + String.format(DRAW_CARD_CARD_MESSAGE.getMessage(), name,
+                CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+        OutputView.print(drawCardMessage);
+        return readConsole();
     }
 
     private String readConsole() {
