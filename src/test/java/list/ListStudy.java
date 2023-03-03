@@ -61,11 +61,22 @@ public class ListStudy {
 //        assertThat(values.isEmpty()).isTrue(); // 초기화되었는지 확인한다.
     }
 
-//    @Test
-//    public void linkedList() {
-//        SimpleLinkedList values = new SimpleLinkedList();
-//        values.add("first");
-//        values.add("second");
+    @Nested
+    public class LinkedList {
+        private SimpleLinkedList<String> stringValues;
+        private SimpleLinkedList<Integer> integerValues;
+
+        @BeforeEach
+        void setup() {
+            stringValues = new SimpleLinkedList<>();
+            integerValues = new SimpleLinkedList<>();
+        }
+
+        @Test
+        void add_test() {
+            assertThat(stringValues.add("ditoo")).isTrue();
+            assertThat(integerValues.add(1)).isTrue();
+        }
 //
 //        assertThat(values.add("third")).isTrue(); // 세 번째 값을 추가한다.
 //
@@ -102,5 +113,5 @@ public class ListStudy {
 //
 //        assertThatCode(values::clear).doesNotThrowAnyException(); // 리스트를 초기화한다.
 //        assertThat(values.isEmpty()).isTrue(); // 초기화되었는지 확인한다.
-//    }
+    }
 }
