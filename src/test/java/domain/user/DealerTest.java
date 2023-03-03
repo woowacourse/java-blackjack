@@ -1,7 +1,6 @@
 package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.Card;
 import domain.CardHand;
@@ -21,4 +20,11 @@ class DealerTest {
         assertThat(dealer.calculateScore()).isEqualTo(12);
     }
 
+    @Test
+    @DisplayName("이름을 반환한다.")
+    void 이름_반환() {
+        String nameValue = "딜러";
+        Dealer dealer = new Dealer();
+        assertThat(dealer.getNameValue()).isEqualTo(nameValue);
+    }
 }

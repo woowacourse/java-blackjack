@@ -22,12 +22,12 @@
 - [x] CardHand의 점수가 블랙잭인지 확인한다.
 - [x] 이름을 반환한다.
 
-### Dealer
+### Dealer extends AbstractUser
 - 플레이어와 비교하여 승패를 결정하는 유저
 - [ ] 카드를 더 받을 수 있는 상태인지 확인한다. (Override)
   - [ ] 점수가 16점 이상이면 카드를 더 받을 수 없다.
 
-### Player
+### Player extends AbstractUser
 - 게임에 참여하는 유저
 - [x] 카드를 더 받을 수 있는 상태인지 확인한다. (Override)
   - [x] 점수가 21점 이상이면 카드를 더 받을 수 없다.
