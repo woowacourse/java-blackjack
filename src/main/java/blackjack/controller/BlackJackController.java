@@ -13,7 +13,6 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private BlackJack blackJack;
     private RandomDeck randomDeck;
 
     public BlackJackController(final InputView inputView, final OutputView outputView) {
@@ -24,26 +23,35 @@ public class BlackJackController {
 
     public void run() {
         final List<Name> namesByView = getNamesByView();
-        this.blackJack = new BlackJack(namesByView, randomDeck);
+        final BlackJack blackJack = makeBlackJackBy(namesByView);
+        divideCardTo(blackJack, namesByView);
+        finalizeDealerCardStatus(blackJack);
+        printCompletedGame(blackJack);
+    }
+
+    private BlackJack makeBlackJackBy(final List<Name> namesByView) {
+        final BlackJack blackJack = new BlackJack(namesByView, randomDeck);
         outputView.printInitialStatus(blackJack.getDealerFirstCard(), blackJack.getUsers());
-        divideCardTo(namesByView);
-        finalizeDealerCardStatus();
+        return blackJack;
+    }
+
+    private void printCompletedGame(final BlackJack blackJack) {
         outputView.printTotalPlayersStatus(blackJack.getDealer(), blackJack.getUsersStatus());
         outputView.printResult(blackJack.getGameResult());
     }
 
-    private void finalizeDealerCardStatus() {
+    private void finalizeDealerCardStatus(final BlackJack blackJack) {
         final int cardCount = blackJack.finalizeDealer(randomDeck);
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 
-    private void divideCardTo(final List<Name> namesByView) {
+    private void divideCardTo(final BlackJack blackJack, final List<Name> namesByView) {
         for (Name name : namesByView) {
-            checkCardWanted(name);
+            checkCardWanted(blackJack, name);
         }
     }
 
-    private void checkCardWanted(final Name name) {
+    private void checkCardWanted(BlackJack blackJack, final Name name) {
         boolean wantCard = getCardWantFromConsole(name);
         while (wantCard) {
             blackJack.giveCard(name, randomDeck);
