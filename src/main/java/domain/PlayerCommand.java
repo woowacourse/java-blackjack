@@ -24,4 +24,8 @@ public enum PlayerCommand {
     public boolean isHit() {
         return this.equals(HIT);
     }
+
+    public boolean isStand() {
+        return this.equals(STAND);
+    }
 }
