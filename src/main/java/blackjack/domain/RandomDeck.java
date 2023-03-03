@@ -8,18 +8,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RandomDeck implements Deck{
+public class RandomDeck implements Deck {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public RandomDeck() {
-        for (Shape shape : Shape.values()) {
-            makeCardsOf(shape);
-        }
-        Collections.shuffle(cards);
+        final List<Card> allKindCard = getAllKindCard();
+        Collections.shuffle(allKindCard);
+        this.cards = allKindCard;
     }
 
-    private void makeCardsOf(final Shape shape) {
+    private List<Card> getAllKindCard() {
+        final ArrayList<Card> cardsData = new ArrayList<>();
+        for (Shape shape : Shape.values()) {
+            makeCardsOf(cardsData, shape);
+        }
+        return cardsData;
+    }
+
+    private void makeCardsOf(List<Card> cardData, final Shape shape) {
         for (int i = CardNumber.MIN_RANGE; i <= CardNumber.MAX_RANGE; i++) {
             cards.add(new Card(shape, CardNumber.of(i)));
         }
