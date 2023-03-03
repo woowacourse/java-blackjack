@@ -11,12 +11,33 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 public class ParticipantsTest {
+
     @Test
-    @DisplayName("참가자들 생성자 테스트")
-    void constructorTest(){
-        Dealer dealer = new Dealer();
-        String playerNames = "pobi, crong";
-        assertThatNoException().isThrownBy(()-> new Participants(dealer,playerNames));
+    @DisplayName("참가자들이 존재하지 않을 때 예외를 던지는지 테스트")
+    void throwExceptionWhenEmptyNames() {
+        String names = ",,";
+
+        Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자들이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("중복된 이름이 없을 경우 참여자들이 정상적으로 생성되는지 테스트")
+    void nonDuplicateNameTest() {
+        String names = "pobi, crong, eddy ";
+
+        assertThatNoException().isThrownBy(() -> new Participants(new Dealer(), names));
+    }
+
+    @Test
+    @DisplayName("중복된 이름이 존재하는 경우 예외를 던지는지 테스트")
+    void throwExceptionWhenExistDuplicateName() {
+        String names = "pobi, crong, crong ";
+
+        Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름이 존재합니다.");
     }
 
     @Test
@@ -35,7 +56,7 @@ public class ParticipantsTest {
         Dealer dealer = new Dealer();
         String playerNames = "pobi, crong";
         Participants participants = new Participants(dealer,playerNames);
-        Player expected = new Player(new Name(""));
+        Player expected = new Player(new Name("pobi"));
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(expected.getClass());
         assertThat(participants.getPlayers().size()).isEqualTo(2);
     }
