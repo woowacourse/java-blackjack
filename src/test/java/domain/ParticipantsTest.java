@@ -3,13 +3,13 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.collection;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Nested;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
@@ -26,16 +26,12 @@ class ParticipantsTest {
 
             //then
             assertAll(
-                    () -> {
-                        assertThat(participants).extracting("participants", collection(Participant.class))
-                                .first()
-                                .isInstanceOf(Dealer.class);
-                    },
-                    () -> {
-                        assertThat(participants).extracting("participants", collection(Participant.class))
-                                .filteredOn((participant) -> Objects.equals(Player.class, participant.getClass()))
-                                .hasSize(playerNames.size());
-                    }
+                    () -> assertThat(participants).extracting("participants", collection(Participant.class))
+                            .first()
+                            .isInstanceOf(Dealer.class),
+                    () -> assertThat(participants).extracting("participants", collection(Participant.class))
+                            .filteredOn((participant) -> Objects.equals(Player.class, participant.getClass()))
+                            .hasSize(playerNames.size())
             );
         }
         @Test
@@ -69,6 +65,45 @@ class ParticipantsTest {
             assertThat(participants).extracting("participants", collection(Participant.class))
                     .filteredOn((participant) -> participant.getHand().size() == 2)
                     .hasSize(3);
+        }
+    }
+
+    @Nested
+    class 카드를뽑을수있는플레이어존재여부판단 {
+        @Test
+        void should_hasDrawablePlayer가true반환_when_카드를뽑을수있는플레이어존재() {
+            //given
+            Participants participants = Participants.create(List.of("포이"));
+            Deck deck = Deck.create();
+            participants.readyForGame(deck);
+
+            //when
+            boolean existingDrawablePlayer = participants.hasDrawablePlayer();
+
+            //then
+            assertThat(existingDrawablePlayer).isTrue();
+
+        }
+
+        @Test
+        void should_hasDrawablePlayer가false반환_when_카드를뽑을수있는플레이어없을때() {
+            //given
+            Participants participants = Participants.create(List.of("포이"));
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+            });
+            participants.readyForGame(deck);
+
+            //when
+            boolean existingDrawablePlayer = participants.hasDrawablePlayer();
+
+            //then
+            assertThat(existingDrawablePlayer).isFalse();
         }
     }
 }

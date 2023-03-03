@@ -7,7 +7,6 @@ public class Player extends Participant {
     private Decision decision;
 
     public Player(String inputName) {
-        super(UPPER_BOUND_OF_DRAWABLE_SCORE);
         this.name = new Name(inputName);
         this.decision = Decision.HIT;
     }

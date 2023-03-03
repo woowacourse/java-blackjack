@@ -32,4 +32,13 @@ public class Participants {
             participant.receiveCard(deck.draw());
         });
     }
+
+    public boolean hasDrawablePlayer() {
+        int firstPlayerPosition = DEALER_POSITION + 1;
+        int numberOfParticipants = participants.size();
+
+        return participants.subList(firstPlayerPosition, numberOfParticipants)
+                .stream()
+                .anyMatch(Participant::isDrawable);
+    }
 }

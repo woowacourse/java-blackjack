@@ -15,7 +15,7 @@ class NameTest {
                 "' as ':이름의 양쪽에 공백이 들어갈 수 없습니다."}, delimiter = ':')
         void should_예외를던진다_when_적절하지않은이름으로생성(String inputName, String expectedErrorMessage) {
             //given
-            System.out.println(inputName);
+
             //when
             ThrowingCallable throwingCallable = () -> new Name(inputName);
 

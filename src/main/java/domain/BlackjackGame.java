@@ -14,4 +14,8 @@ public class BlackjackGame {
         RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
         deck.shuffle(shuffleStrategy);
     }
+
+    public boolean hasDrawablePlayer() {
+        return participants.hasDrawablePlayer();
+    }
 }

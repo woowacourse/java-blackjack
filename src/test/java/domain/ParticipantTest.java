@@ -1,9 +1,9 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.mockito.Mockito.spy;
 
+import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +18,10 @@ class ParticipantTest {
 
             //when
             participant.receiveCard(card);
+            List<Card> hand = participant.getHand();
 
             //then
-            assertThat(participant).extracting("hand")
-                    .extracting("cards", collection(Card.class))
-                    .hasSize(1)
+            assertThat(hand).hasSize(1)
                     .containsExactly(card);
         }
     }

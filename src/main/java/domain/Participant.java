@@ -4,14 +4,13 @@ import java.util.List;
 
 abstract class Participant {
 
-    private final int upperBoundOfDrawable;
-
     protected final Hand hand;
 
-    Participant(int upperBoundOfDrawable) {
-        this.upperBoundOfDrawable = upperBoundOfDrawable;
+    Participant() {
         this.hand = new Hand();
     }
+
+    abstract boolean isDrawable();
 
     public void receiveCard(Card card) {
         hand.add(card);
