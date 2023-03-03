@@ -37,13 +37,14 @@ public class Users {
     private static void validateDuplication(final List<String> names) {
         Set<String> distinctNames = new HashSet<>(names);
         if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 
     private static void validateSize(final List<String> names) {
         if (names.size() < PLAYER_MIN_SIZE || names.size() > PLAYER_MAX_SIZE) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                String.format("플레이어 수는 %d명 이상, %d명 이하여야 합니다.", PLAYER_MIN_SIZE, PLAYER_MAX_SIZE));
         }
     }
 

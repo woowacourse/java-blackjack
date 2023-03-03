@@ -18,9 +18,13 @@ public class Controller {
     }
 
     public void run() {
-        ready();
-        play();
-        end();
+        try {
+            ready();
+            play();
+            end();
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private void ready() {

@@ -33,20 +33,25 @@ public class UsersTest {
     @DisplayName("참여 인원은 1명미만이 될 수 없다")
     @Test
     void playerCount_shouldNotBeUnder1() {
-        assertThatThrownBy(() -> Users.from(Collections.emptyList()));
+        assertThatThrownBy(() -> Users.from(Collections.emptyList()))
+            .hasMessageContaining("플레이어 수는 ")
+            .hasMessageContaining("명 이상, ");
     }
 
     @DisplayName("참여 인원은 4명초과가 될 수 없다")
     @Test
     void playerCount_shouldNotBeOver4() {
-        assertThatThrownBy(() -> Users.from(List.of("a", "b", "c", "d", "e")));
+        assertThatThrownBy(() -> Users.from(List.of("a", "b", "c", "d", "e")))
+            .hasMessageContaining("플레이어 수는 ")
+            .hasMessageContaining("명 이하여야 합니다.");
     }
 
     @DisplayName("플레이어의 이름은 중복될 수 없다")
     @Test
     void validateDuplication() {
         assertThatThrownBy(() -> Users.from(List.of("hongo", "hongo", "ash", "kiara")))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("플레이어 이름은 중복될 수 없습니다.");
     }
 
     @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
