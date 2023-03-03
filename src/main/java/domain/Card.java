@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Card {
 
     private final Denomination denomination;
@@ -20,5 +22,9 @@ public class Card {
 
     public Suits getSuit() {
         return suit;
+    }
+
+    public List<String> getCardName() {
+        return List.of(denomination.getPoint(), suit.getName());
     }
 }
