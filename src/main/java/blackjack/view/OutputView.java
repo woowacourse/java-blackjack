@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     public void outputDealerDrawCard(final String name) {
-        System.out.println(CHANGE_LINE+name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
+        System.out.println(CHANGE_LINE + name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
     }
 
     public void outputScore(final int score) {
@@ -51,7 +51,7 @@ public class OutputView {
         System.out.println(name + PLAYER_SCORE_DELIMITER + result);
     }
 
-    public void changeLine(){
+    public void changeLine() {
         System.out.println();
     }
 }

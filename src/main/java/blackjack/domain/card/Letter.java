@@ -27,5 +27,8 @@ public enum Letter {
     public int getValue() {
         return this.value;
     }
-    public String getName(){return this.name;}
+
+    public String getName() {
+        return this.name;
+    }
 }
