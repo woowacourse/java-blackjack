@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import blackjackgame.domain.player.Dealer;
+import blackjackgame.domain.player.Guests;
+import blackjackgame.domain.player.Player;
+
 public class Deck {
     private final List<Card> cards;
     private int cursorIndex;
@@ -31,6 +35,18 @@ public class Deck {
         for (final CardValue cardValue : CardValue.values()) {
             cards.add(new Card(symbol, cardValue));
         }
+    }
+
+    public void initPlayersCards(final Guests guests, final Dealer dealer) {
+        for (int count = 0; count < 2; count++) {
+            distributeCard(dealer);
+            guests.getGuests()
+                .forEach(this::distributeCard);
+        }
+    }
+
+    public void distributeCard(final Player player) {
+        player.addCard(pickOne());
     }
 
     public Card pickOne() {
