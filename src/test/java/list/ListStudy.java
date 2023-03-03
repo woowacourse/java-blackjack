@@ -68,11 +68,21 @@ public class ListStudy {
             assertThat(integerValues.indexOf(0)).isEqualTo(0);
             assertThat(integerValues.indexOf(100)).isEqualTo(-1);
         }
-//
-//        assertThat(values.size()).isEqualTo(4); // list의 크기를 구한다.
-//
-//        assertThat(values.isEmpty()).isFalse(); // list가 비어있지 않다고 나오는지 확인한다.
-//        assertThat(new SimpleArrayList().isEmpty()).isTrue(); // 초기 리스트가 비어있는지 확인한다.
+
+        @Test
+        void size_test() {
+            assertThat(stringValues.size()).isEqualTo(1);
+            assertThat(integerValues.size()).isEqualTo(1);
+        }
+
+        @Test
+        void isEmpty_test() {
+            assertThat(stringValues.isEmpty()).isFalse();
+            assertThat(new SimpleArrayList<String>().isEmpty()).isTrue();
+            assertThat(integerValues.isEmpty()).isFalse();
+            assertThat(new SimpleArrayList<Integer>().isEmpty()).isTrue();
+        }
+
 //
 //        assertThat(values.remove("first")).isTrue(); // list에서 "first"를 삭제한다.
 //        assertThat(values.size()).isEqualTo(3); // 값이 삭제 됐는지 확인한다.
@@ -146,6 +156,20 @@ public class ListStudy {
             assertThat(stringValues.indexOf("fifth")).isEqualTo(-1);
             assertThat(integerValues.indexOf(0)).isEqualTo(0);
             assertThat(integerValues.indexOf(100)).isEqualTo(-1);
+        }
+
+        @Test
+        void size_test() {
+            assertThat(stringValues.size()).isEqualTo(1);
+            assertThat(integerValues.size()).isEqualTo(1);
+        }
+
+        @Test
+        void isEmpty_test() {
+            assertThat(stringValues.isEmpty()).isFalse();
+            assertThat(new SimpleArrayList<String>().isEmpty()).isTrue();
+            assertThat(integerValues.isEmpty()).isFalse();
+            assertThat(new SimpleArrayList<Integer>().isEmpty()).isTrue();
         }
     }
 }
