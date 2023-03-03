@@ -152,9 +152,10 @@ public class OutputView {
     }
 
     private String makeResultStringOf(final Map<Result, Integer> dealerResult) {
-        final StringBuilder stringBuilder = new StringBuilder(" ");
+        final StringBuilder stringBuilder = new StringBuilder();
         for (Result result : dealerResult.keySet()) {
             stringBuilder.append(makeStringOf(result, dealerResult.get(result)));
+            stringBuilder.append(" ");
         }
         return stringBuilder.toString();
     }
