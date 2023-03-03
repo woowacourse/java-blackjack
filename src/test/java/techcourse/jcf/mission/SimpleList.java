@@ -10,6 +10,14 @@ public interface SimpleList<T> {
         return simpleArrayList;
     }
 
+    static double sum(SimpleList<? extends Number> list) {
+        double sum = 0;
+        for (int i = 0; i < list.size(); i++) {
+            sum += list.get(i).doubleValue();
+        }
+        return sum;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);

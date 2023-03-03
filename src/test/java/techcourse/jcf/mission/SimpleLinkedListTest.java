@@ -40,4 +40,21 @@ class SimpleLinkedListTest {
         assertThat(child.getName())
                 .isEqualTo("child");
     }
+
+    @Test
+    void test3() {
+        // given
+        SimpleList<Double> list1 = new SimpleArrayList<>(0.5, 0.7);
+        SimpleList<Integer> list2 = new SimpleArrayList<>(1, 2);
+
+        // when
+        double doubleTotal = SimpleList.sum(list1);
+        double intTotal = SimpleList.sum(list2);
+
+        // then
+        assertThat(doubleTotal)
+                .isEqualTo(1.2);
+        assertThat(intTotal)
+                .isEqualTo(3.0);
+    }
 }

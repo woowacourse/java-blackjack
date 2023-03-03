@@ -10,6 +10,13 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.arrayNodes = new Object[DEFAULT_SIZE];
     }
 
+    public SimpleArrayList(T... args) {
+        this.arrayNodes = new Object[DEFAULT_SIZE];
+        for (T arg : args) {
+            this.add(arg);
+        }
+    }
+
     @Override
     public boolean add(T value) {
         if (index >= arrayNodes.length - 1) {
