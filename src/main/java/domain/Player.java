@@ -21,7 +21,7 @@ public class Player {
     }
 
     public boolean isOverBlackJack() {
-        return cards.getSum() > BLACK_JACK;
+        return cards.getSum() >= BLACK_JACK;
     }
 
     public Name getName() {
