@@ -40,8 +40,8 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "shape=" + shape +
-                ", value=" + value +
+                "shape=" + shape.getName() +
+                ", value=" + value.getExpression() +
                 '}';
     }
 

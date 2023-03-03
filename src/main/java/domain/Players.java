@@ -1,5 +1,6 @@
 package domain;
 
+import java.awt.geom.PathIterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,9 +10,9 @@ public class Players {
     private static final String PLAYER_LIMIT_ERROR_MESSAGE = "참여자는 최대 9명까지 가능합니다.";
     private static final String PLAYER_DUPLICATE_NAME_ERROR_MESSAGE = "참여자 이름은 중복될 수 없습니다.";
 
-    private final List<Player> players;
+    private final List<Participant> players;
 
-    public Players(List<Player> players) {
+    public Players(List<Participant> players) {
         this.players = players;
     }
 
@@ -44,7 +45,7 @@ public class Players {
         }
     }
 
-    private static List<Player> initializePlayers(List<String> playerNames, CardDistributor distributor) {
+    private static List<Participant> initializePlayers(List<String> playerNames, CardDistributor distributor) {
         return playerNames.stream()
                 .map(playerName -> createPlayer(distributor, playerName))
                 .collect(Collectors.toList());
@@ -54,7 +55,7 @@ public class Players {
         return new Player(new Name(playerName), new Cards(distributor.distributeInitialCard()));
     }
 
-    public List<Player> getPlayers() {
+    public List<Participant> getPlayers() {
         return List.copyOf(players);
     }
 

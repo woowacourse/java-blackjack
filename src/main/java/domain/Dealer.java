@@ -9,6 +9,10 @@ public class Dealer extends Participant {
         super(DEALER_NAME, cards);
     }
 
+    public Card showOneCard() {
+        return cards.getCards().get(0);
+    }
+
     @Override
     public boolean isMoreCardAble() {
         return getTotalScore() <= MORE_CARD_LIMIT;
@@ -16,7 +20,7 @@ public class Dealer extends Participant {
 
     @Override
     public int getTotalScore() {
-        return super.cards.calculateScore(MORE_CARD_LIMIT);
+        return cards.calculateScore(MORE_CARD_LIMIT);
     }
 
 }
