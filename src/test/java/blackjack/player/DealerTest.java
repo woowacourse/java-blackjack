@@ -3,6 +3,7 @@ package blackjack.player;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -69,5 +70,19 @@ class DealerTest {
         dealer.hit(card3);
 
         assertThat(dealer.showOneCard()).isEqualTo(card1);
+    }
+
+    @Test
+    @DisplayName("딜러의 점수합계가 16점 이하인지 확인할 수 있다.")
+    void isUnderScore() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        Assertions.assertThat(dealer.isUnderScore()).isTrue();
     }
 }

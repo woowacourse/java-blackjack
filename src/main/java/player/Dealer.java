@@ -22,4 +22,8 @@ public class Dealer {
     public Card showOneCard() {
         return hand.pickFirstCard();
     }
+
+    public boolean isUnderScore() {
+        return hand.calculateScore() <= 16;
+    }
 }
