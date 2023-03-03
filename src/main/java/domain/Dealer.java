@@ -7,4 +7,8 @@ public class Dealer extends Participant {
     public Dealer() {
         super(UPPER_BOUND_OF_DRAWABLE_SCORE);
     }
+
+    public boolean isDrawable() {
+        return UPPER_BOUND_OF_DRAWABLE_SCORE > hand.calculateScore();
+    }
 }
