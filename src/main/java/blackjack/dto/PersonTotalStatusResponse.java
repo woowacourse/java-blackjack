@@ -1,18 +1,22 @@
 package blackjack.dto;
 
 import blackjack.domain.Person;
-import java.util.List;
 
-public class PersonTotalStatusResponse extends PersonStatusResponse {
+public class PersonTotalStatusResponse {
+    private final PersonStatusResponse personStatusResponse;
     private final int score;
 
-    public PersonTotalStatusResponse(String name, List<String> cards, int score) {
-        super(name, cards);
+    public PersonTotalStatusResponse(PersonStatusResponse personStatusResponse, int score) {
+        this.personStatusResponse = personStatusResponse;
         this.score = score;
     }
 
     public static PersonTotalStatusResponse of(Person person) {
-        return new PersonTotalStatusResponse(person.getName(), getCardsStatus(person.getCards()), person.getScore());
+        return new PersonTotalStatusResponse(PersonStatusResponse.of(person), person.getScore());
+    }
+
+    public PersonStatusResponse getPersonStatusResponse() {
+        return personStatusResponse;
     }
 
     public int getScore() {

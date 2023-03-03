@@ -23,14 +23,14 @@ public class OutputView {
     }
 
     public static void printPersonStatus(final PersonStatusResponse response) {
-        System.out.println(getCardStatus(response));
+        System.out.println(getPersonStatus(response));
     }
 
     public static void printPersonTotalStatus(final PersonTotalStatusResponse response) {
-        System.out.println(getCardStatus(response) + " - 결과: " + response.getScore());
+        System.out.println(getPersonStatus(response.getPersonStatusResponse()) + " - 결과: " + response.getScore());
     }
 
-    private static String getCardStatus(final PersonStatusResponse response) {
+    private static String getPersonStatus(final PersonStatusResponse response) {
         final String allCards = String.join(", ", response.getCards());
         return response.getName() + " 카드: " + allCards;
     }
