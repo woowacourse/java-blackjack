@@ -6,7 +6,6 @@ import java.util.Map;
 public class BlackjackGame {
 
     private static final int BLACK_JACK_NUMBER = 21;
-    private static final int DEALER_THRESHOLD = 16;
     private static final int START_HIT_COUNT = 2;
 
     private final Deck deck;
@@ -18,7 +17,7 @@ public class BlackjackGame {
     }
 
     public void letDealerHitUntilThreshold() {
-        people.letDealerHitUntilThreshold(deck, DEALER_THRESHOLD);
+        people.letDealerHitUntilThreshold(deck);
     }
 
     public void startHit() {

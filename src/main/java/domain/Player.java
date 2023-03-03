@@ -22,10 +22,6 @@ public class Player {
         return cardPool.sumCardNumbers();
     }
 
-    public int compareTo(Player otherPlayer) {
-        return sumCardPool() - otherPlayer.sumCardPool();
-    }
-
     public Name getPlayerName() {
         return playerName;
     }

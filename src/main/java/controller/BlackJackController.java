@@ -33,7 +33,7 @@ public class BlackJackController {
 
     private void letPlayersHit(List<Player> players) {
         for (Player player : players) {
-            hitByChoice(player);
+            hitByChoice2(player);
         }
         blackjackGame.letDealerHitUntilThreshold();
     }
@@ -46,13 +46,23 @@ public class BlackJackController {
     }
 
     private void hitByChoice(Player player) {
+        String choice = "y";
+        while (choice.equals("y") && !blackjackGame.isBurst(player.getPlayerName().getValue())) {
+            choice = inputView.inputCardCommand(player.getPlayerName().getValue());
+            blackjackGame.hitFor(player.getPlayerName().getValue());
+            outputView.printPlayerCard(player);
+        }
+    }
+
+    private void hitByChoice2(Player player) {
         String choice = inputView.inputCardCommand(player.getPlayerName().getValue());
-        if (choice.equals("n")) {
+        if (choice.equals("n") || blackjackGame.isBurst(player.getPlayerName().getValue())) {
             return;
         }
-
         blackjackGame.hitFor(player.getPlayerName().getValue());
         outputView.printPlayerCard(player);
+
+        hitByChoice2(player);
     }
 
     private void initializeGame() {
