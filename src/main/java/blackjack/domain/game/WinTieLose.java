@@ -11,4 +11,10 @@ public enum WinTieLose {
     public String getValue(){
         return this.value;
     }
+
+    public WinTieLose reverseValue(){
+        if(this.equals(WIN)){return LOSE;}
+        if(this.equals(LOSE)){return WIN;}
+        return TIE;
+    }
 }
