@@ -1,5 +1,7 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.shuffler.FixedCardsShuffler;
@@ -19,8 +21,7 @@ class DealerTest {
 
         Cards cards = new Cards(new FixedCardsShuffler());
 
-      /*  dealer.fillCards(cards);
-        assertThat(dealer.calculateScore()).isGreaterThan(16)
-                .isEqualTo(23);*/
+        dealer.receiveCard(cards.getCard());
+        assertThat(dealer.calculateScore()).isEqualTo(23);
     }
 }

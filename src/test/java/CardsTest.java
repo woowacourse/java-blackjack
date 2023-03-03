@@ -12,8 +12,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class CardsTest {
 
-    private CardsShuffler fixedShuffler = new FixedCardsShuffler();
-    private Cards cards = new Cards(fixedShuffler);
+    private final CardsShuffler fixedShuffler = new FixedCardsShuffler();
+    private final Cards cards = new Cards(fixedShuffler);
 
     @DisplayName("52개의 카드를 생성할 수 있다.")
     @ParameterizedTest
