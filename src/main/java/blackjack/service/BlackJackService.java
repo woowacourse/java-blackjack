@@ -12,7 +12,6 @@ import blackjack.dto.DealerGameResultResponse;
 import blackjack.dto.PersonStatusResponse;
 import blackjack.dto.PersonTotalStatusResponse;
 import blackjack.dto.PlayerGameResultResponse;
-import java.util.Arrays;
 import java.util.List;
 
 public class BlackJackService {
@@ -23,19 +22,19 @@ public class BlackJackService {
         this.deck = cardsGenerator.generate();
     }
 
-    public void createPeople(String[] names) {
+    public void createPeople(List<String> names) {
         validateDuplicate(names);
-        List<Player> players = Arrays.stream(names)
+        List<Player> players = names.stream()
                 .map(Player::new)
                 .collect(toList());
         this.people = new People(new Dealer(), players);
     }
 
-    private void validateDuplicate(String[] names) {
-        long uniqueNamesCount = Arrays.stream(names)
+    private void validateDuplicate(List<String> names) {
+        long uniqueNamesCount = names.stream()
                 .distinct()
                 .count();
-        if (uniqueNamesCount != names.length) {
+        if (uniqueNamesCount != names.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름이 있습니다.");
         }
     }
