@@ -42,14 +42,23 @@ public class BlackJackController {
     }
 
     private void checkCardWanted(final Name name) {
-        boolean wantCard = inputView.cardRequest(name);
+        boolean wantCard = getCardWantFromConsole(name);
         while (wantCard) {
             blackJack.drawCard(name);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
             if (blackJack.isBusted(name)) {
                 break;
             }
-            wantCard = inputView.cardRequest(name);
+            wantCard = getCardWantFromConsole(name);
+        }
+    }
+
+    private boolean getCardWantFromConsole(Name name) {
+        try {
+            return inputView.cardRequest(name.getValue());
+        } catch (IllegalStateException e) {
+            outputView.printException(e);
+            return getCardWantFromConsole(name);
         }
     }
 
