@@ -16,6 +16,9 @@ class PlayersTest {
     @Test
     void Should_Create_When_NewPlayers() {
         List<Player> players = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            players.add(new Player(new Name("newName")));
+        }
         assertDoesNotThrow(() -> new Players(players));
     }
 
