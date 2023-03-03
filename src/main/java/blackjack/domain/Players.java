@@ -23,4 +23,8 @@ public class Players {
     public void addCardToPlayer(int i, Card card) {
         players.get(i).addCard(card);
     }
+
+    public Player getPlayer(int i) {
+        return players.get(i);
+    }
 }
