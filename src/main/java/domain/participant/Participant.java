@@ -26,15 +26,15 @@ public class Participant {
         return totalScore;
     }
 
+    public boolean isBust() {
+        return calculateScore() > BUST_BOUNDARY_EXCLUSIVE;
+    }
+
     public String getName() {
         return name.getName();
     }
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public boolean isBust() {
-        return calculateScore() > BUST_BOUNDARY_EXCLUSIVE;
     }
 }

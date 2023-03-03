@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.card.shuffler.CardsShuffler;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
@@ -32,7 +33,10 @@ public class Cards {
     }
 
     public Card getCard() {
-        // TODO: EmptyStackException이 발생하면...?
-        return cards.pop();
+        try {
+            return cards.pop();
+        } catch (EmptyStackException exception) {
+            throw new EmptyStackException();
+        }
     }
 }
