@@ -8,7 +8,7 @@ public class OutputView {
     private static final String PLAYERS_DELIMITER = ",";
     private static final String GIVE_TWO_CARD_MASSAGE = "에게 두장을 나누었습니다.";
     private static final String NOTICE_TOTAL_SCORE_UNDER_SIXTEEN = "는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String RESULT_DELIMITER = "- 결과 : ";
+    private static final String RESULT_DELIMITER = " - 결과 : ";
     private static final String FINAL_RESULT_MASSAGE = "## 최종 승패";
     private static final String DEALER_DELIMITER = " : ";
     private static final String WIN_COUNT_MASSAGE = "승 ";
@@ -25,11 +25,11 @@ public class OutputView {
     }
 
     public void outputPlayerCard(final String name, final List<String> cards) {
-        System.out.println(name + " : " + String.join(PLAYER_DELIMITER, cards));
+        System.out.print(name + " : " + String.join(PLAYER_DELIMITER, cards));
     }
 
     public void outputDealerDrawCard(final String name) {
-        System.out.println(name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
+        System.out.println(CHANGE_LINE+name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
     }
 
     public void outputScore(final int score) {
@@ -49,5 +49,9 @@ public class OutputView {
 
     public void outputPlayerResult(final String name, final String result) {
         System.out.println(name + PLAYER_SCORE_DELIMITER + result);
+    }
+
+    public void changeLine(){
+        System.out.println();
     }
 }

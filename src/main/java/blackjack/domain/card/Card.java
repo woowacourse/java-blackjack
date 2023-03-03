@@ -10,7 +10,7 @@ public class Card {
     }
 
     public String getCardName() {
-        return letter.getValue() + shape.getValue();
+        return letter.getName() + shape.getValue();
     }
 
     public int getValue() {
