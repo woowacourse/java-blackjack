@@ -27,4 +27,14 @@ class DealerTest {
         Dealer dealer = new Dealer();
         assertThat(dealer.getNameValue()).isEqualTo(nameValue);
     }
+
+    @Test
+    @DisplayName("카드를 더 받을 수 있는 경우 true를 반환한다.")
+    void 카드_추가_가능() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        Dealer dealer = new Dealer(cardHand);
+        assertThat(dealer.canAdd()).isTrue();
+    }
 }

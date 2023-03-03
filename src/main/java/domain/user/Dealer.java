@@ -4,6 +4,7 @@ import domain.CardHand;
 
 public class Dealer extends AbstractUser{
     private static final String DEALER_NAME = "딜러";
+    private static final int UPPER_LIMIT_TO_DRAW = 16;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -15,6 +16,6 @@ public class Dealer extends AbstractUser{
 
     @Override
     public boolean canAdd() {
-        return false;
+        return super.calculateScore() <= UPPER_LIMIT_TO_DRAW;
     }
 }
