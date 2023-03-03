@@ -28,7 +28,7 @@ public class RandomDeck implements Deck {
 
     private void makeCardsOf(List<Card> cardData, final Shape shape) {
         for (int i = CardNumber.MIN_RANGE; i <= CardNumber.MAX_RANGE; i++) {
-            cards.add(new Card(shape, CardNumber.of(i)));
+            cardData.add(new Card(shape, CardNumber.of(i)));
         }
     }
 
