@@ -30,7 +30,7 @@ public class Dealer extends User {
     }
 
     private WinningStatus compareByScore(final Player player) {
-        if (BlackJackRule.getScore(this) > BlackJackRule.getScore(player)) {
+        if (BlackJackRule.isBust(player) || BlackJackRule.getScore(this) > BlackJackRule.getScore(player)) {
             return WinningStatus.LOSE;
         }
         if (BlackJackRule.getScore(this) == BlackJackRule.getScore(player)) {
