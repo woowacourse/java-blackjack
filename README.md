@@ -60,3 +60,7 @@
     - 처음에는 `Participants`에서 `Player`와 `Dealer`를 모아 놓은 `List<Participant> participants`로 관리했다.
     - 하지만 외부에서 `participants`의 형 변환 과정에서 어려움이 있어서, `List<Player> player`와 `Dealer`로 나누게 되었다.
     - 상속을 통해서 `중복 기능에 대한 코드 중복 제거`라는 목적을 달성하긴 했는데, 상위 클래스로 관리함에 있어서 불편함이 있다면 이런 방식으로 관리하는 것도 괜찮을까?
+2. `Participants`를 `Dealer`와 `Players`에 대한 클래스로 분리하는 것 중 어떤 방법이 더 좋을까?
+    - 현재 `Participants` 클래스의 주요한 역할은 생성자에 있다. 생성 시에 모든 참가자에게 `card`를 두 장씩 나누어주는 역할을 한다.
+    - 이 작업은 `Dealer`를 포함하는 클래스이기 때문에 가능한 것 같기 때문에 현재 방식의 장점이다.
+    - 이외의 메서드 `getPlayerNames()`처럼 `Players` 클래스로 나누었다면 `getNames()`로 더 자연스럽게 사용할 수 있을 것 같은 메서드가 보이며, 이것은 현재 방식의 단점이다.
