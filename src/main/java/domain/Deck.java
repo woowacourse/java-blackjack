@@ -16,9 +16,12 @@ public class Deck {
         for (Suit suit : Suit.values()) {
             pushCards(cards, suit);
         }
-        Collections.shuffle(cards);
 
         return cards;
+    }
+
+    public void shuffleDeck() {
+        Collections.shuffle(cards);
     }
 
     private void pushCards(final Stack<Card> cards, final Suit suit) {
