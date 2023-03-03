@@ -6,8 +6,6 @@ import domain.card.CardShape;
 import domain.player.Name;
 import domain.player.dealer.Dealer;
 import domain.player.dealer.DealerResult;
-import domain.player.participant.Participant;
-import domain.player.participant.ParticipantResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +16,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.card.CardShape.*;
+import static domain.card.CardShape.CLOVER;
+import static domain.card.CardShape.DIAMOND;
+import static domain.card.CardShape.HEART;
+import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.TEN;
-import static domain.player.participant.ParticipantResult.*;
+import static domain.player.participant.ParticipantResult.DRAWER;
+import static domain.player.participant.ParticipantResult.LOSER;
+import static domain.player.participant.ParticipantResult.WINNER;
+import static domain.player.participant.ParticipantResult.matchBetween;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("ParticipantResult 의")

@@ -29,12 +29,10 @@ class CardDeckTest {
     @Test
     void 카드를_종류별로_값_별로_한장씩_모두_가진_채로_생성한다() {
         // given
-
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final Map<CardShape, List<Card>> numberOfEachCardShape = new HashMap<>();
 
         // when
-
         for (int count = 0; count < 52; count++) {
             final Card card = cardDeck.draw();
             final CardShape cardShape = card.cardShape();

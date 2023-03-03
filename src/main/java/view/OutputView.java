@@ -3,11 +3,11 @@ package view;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
+import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.dealer.DealerResult;
 import domain.player.participant.Participant;
 import domain.player.participant.ParticipantResult;
-import domain.player.Player;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -32,6 +32,9 @@ public class OutputView {
         makeValueMessage();
         makeParticipantResultMessage();
         makeDealerResultMessage();
+    }
+
+    private OutputView() {
     }
 
     private static void makeShapeMessage() {

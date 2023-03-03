@@ -4,8 +4,6 @@ import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.player.Name;
-import domain.player.participant.Participant;
-import domain.player.participant.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -18,8 +16,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
-import static domain.card.CardValue.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static domain.card.CardValue.SEVEN;
+import static domain.card.CardValue.TEN;
+import static domain.card.CardValue.TWO;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
