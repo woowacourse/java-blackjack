@@ -21,44 +21,35 @@ public class BlackJackController {
         blackjackGame.startHit();
 
         People people = blackjackGame.getPeople();
-        List<Player> players = people.getPlayers();
-        Dealer dealer = people.getDealer();
+        outputView.printPlayersInfoWhenGameStarted(people.getDealer(), people.getPlayers());
 
-        outputView.printPlayersInfo(dealer, players);
+        letPlayersHit(people.getPlayers());
+        outputView.printGameScore(people.getDealer(), people.getPlayers());
 
-        letPlayersHit(players);
-        printGameInfo(players, dealer);
+        outputView.printDealerRecord(people.getDealer(), blackjackGame.getDealerRecord());
+        outputView.printPlayerRecord(blackjackGame.getGameResultForAllPlayer());
+    }
 
-        outputView.printDealerRecord(dealer, blackjackGame.getDealerRecord());
-        outputView.printGameResult(blackjackGame.getGameResultForAllPlayer());
+    private void initializeGame() {
+        List<String> playersName = inputView.inputParticipantsName();
+        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomNumberGenerator());
     }
 
     private void letPlayersHit(List<Player> players) {
         for (Player player : players) {
-            hitByChoice(player);
+            hitByPlayerChoice(player);
         }
-
-        if (blackjackGame.dealerNeedsHit()) {
-            outputView.printDealerHitMessage();
-            blackjackGame.letDealerHitUntilThreshold();
-        }
+        hitByDealer();
     }
 
-    private void printGameInfo(List<Player> players, Dealer dealer) {
-        outputView.printResult(dealer);
-        for (Player player : players) {
-            outputView.printResult(player);
-        }
-    }
-
-    private void hitByChoice(Player player) {
+    private void hitByPlayerChoice(Player player) {
         if (needToQuit(player)) {
             return;
         }
         blackjackGame.hitFor(player.getPlayerName().getValue());
         outputView.printPlayerCardWithName(player);
 
-        hitByChoice(player);
+        hitByPlayerChoice(player);
     }
 
     private boolean needToQuit(Player player) {
@@ -69,8 +60,11 @@ public class BlackJackController {
         return choice.equals("n");
     }
 
-    private void initializeGame() {
-        List<String> playersName = inputView.inputParticipantsName();
-        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomNumberGenerator());
+    private void hitByDealer() {
+        if (blackjackGame.dealerNeedsHit()) {
+            outputView.printDealerHitMessage();
+            blackjackGame.letDealerHitUntilThreshold();
+        }
     }
+
 }
