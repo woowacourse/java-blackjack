@@ -29,13 +29,13 @@ public class Score {
 
     private List<Integer> convertCardsToNumbers(List<Card> cards) {
         return cards.stream()
-                .map(Card::getNumber)
+                .map(Card::getScore)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private int countOfAce(List<Integer> numbers) {
         return (int) numbers.stream()
-                .filter(number -> number == Number.ACE.getNumber())
+                .filter(number -> number == Number.ACE.getScore())
                 .count();
     }
 
@@ -47,7 +47,7 @@ public class Score {
 
     private int calculateAceAsOne(int aceCount, int sum) {
         while(aceCount > ZERO && sum > BLACKJACK) {
-            sum -= Number.ACE.getNumber();
+            sum -= Number.ACE.getScore();
             sum += ACE_ONE;
             aceCount--;
         }

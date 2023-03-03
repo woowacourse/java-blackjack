@@ -9,7 +9,7 @@ public class NumberTest {
     @DisplayName("블랙잭 게임 카드 숫자는 1~11의 값만 가진다.")
     void generateNumberTest() {
         for (Number number : Number.values()) {
-            Assertions.assertThat(number.getNumber())
+            Assertions.assertThat(number.getScore())
                     .isBetween(1, 11);
         }
     }

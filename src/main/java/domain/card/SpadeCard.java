@@ -27,12 +27,12 @@ public enum SpadeCard implements Card{
     }
 
     @Override
-    public String getPattern() {
-        return pattern.getPattern();
+    public String getSymbol() {
+        return number.getNumber() + pattern.getPattern();
     }
 
     @Override
-    public int getNumber() {
-        return number.getNumber();
+    public int getScore() {
+        return number.getScore();
     }
 }

@@ -1,7 +1,7 @@
 package domain.card;
 
 public interface Card {
-    int getNumber();
+    int getScore();
 
-    String getPattern();
+    String getSymbol();
 }
