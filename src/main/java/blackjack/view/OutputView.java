@@ -14,6 +14,7 @@ public class OutputView {
 
     private static final String SPLIT_DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
+    private static final StringBuilder finalResult = new StringBuilder();
 
     public static void printInitCard(final List<Player> players, final Card firstCardOfDealer) {
         String playerNames = printPlayerNames(players);
@@ -61,27 +62,16 @@ public class OutputView {
     }
 
     public static void printFinalResult(final List<Player> players, final Map<Result, Integer> dealerResult) {
-        String finalResult = makeDealerResult(dealerResult);
+        StringBuilder finalResult = new StringBuilder();
+        for (final Result result : dealerResult.keySet()) {
+            if (dealerResult.get(result) != 0) {
+                finalResult.append(dealerResult.get(result)).append(result.getValue());
+            }
+        }
         System.out.println(NEW_LINE + "## 최종 승패");
         System.out.println("딜러: " + finalResult);
-        for (final Player player : players) {
+        for (Player player : players) {
             System.out.println(player.getName() + ": " + player.getResult().getValue());
         }
-    }
-
-    private static String makeDealerResult(Map<Result, Integer> dealerResult) {
-        String finalResult = "";
-        for (Result result : dealerResult.keySet()) {
-            finalResult = appendResultExceptZero(dealerResult, result);
-        }
-        return finalResult;
-    }
-
-    private static String appendResultExceptZero(Map<Result, Integer> dealerResult, Result result) {
-        StringBuilder finalResult = new StringBuilder();
-        if (dealerResult.get(result) != 0) {
-            finalResult.append(dealerResult.get(result)).append(result.getValue());
-        }
-        return finalResult.toString();
     }
 }

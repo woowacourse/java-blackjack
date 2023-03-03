@@ -3,7 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Result;
 
 public class BlackJackGame {
 
@@ -39,57 +43,65 @@ public class BlackJackGame {
 
         for (final Player player : players.getPlayers()) {
             final int sumOfPlayer = player.calculateSumOfRank();
-
-            if (player.isBlackJack() && dealer.isBlackJack()) {
-                dealer.setResults(Result.PUSH);
-                player.setResult(Result.PUSH);
-                continue;
-            }
-
-            if (player.isBlackJack() && !dealer.isBlackJack()) {
-                dealer.setResults(Result.LOSE);
-                player.setResult(Result.WIN);
-                continue;
-            }
-
-            if (player.isBust()) {
-                dealer.setResults(Result.WIN);
-                player.setResult(Result.LOSE);
-                continue;
-            }
-
-            if (!player.isBust()) {
-                if (dealer.isBust()) {
-                    dealer.setResults(Result.LOSE);
-                    player.setResult(Result.WIN);
-                    continue;
-                }
-
-                if (dealer.isBlackJack()) {
-                    dealer.setResults(Result.WIN);
-                    player.setResult(Result.LOSE);
-                    continue;
-                }
-
-                if (sumOfPlayer < sumOfDealer) {
-                    dealer.setResults(Result.WIN);
-                    player.setResult(Result.LOSE);
-                    continue;
-                }
-
-                if (sumOfPlayer == sumOfDealer) {
-                    dealer.setResults(Result.PUSH);
-                    player.setResult(Result.PUSH);
-                    continue;
-                }
-
-                if (sumOfPlayer > sumOfDealer) {
-                    dealer.setResults(Result.LOSE);
-                    player.setResult(Result.WIN);
-                    continue;
-                }
-            }
+            judgeResult(player, sumOfDealer, sumOfPlayer);
         }
+    }
+
+    private void judgeResult(final Player player, final int sumOfDealer, final int sumOfPlayer) {
+        if (judgeResultWhenPlayerIsBlackJack(player)) {
+            return;
+        }
+        if (judgeResultWhenPlayerIsBust(player)) {
+            return;
+        }
+        judgeResultWhenPlayerIsNotBust(sumOfDealer, player, sumOfPlayer);
+    }
+
+    private boolean judgeResultWhenPlayerIsBlackJack(final Player player) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            setUpResultWhenPush(player);
+            return true;
+        }
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            setUpResultWhenPlayerWin(player);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean judgeResultWhenPlayerIsBust(final Player player) {
+        if (player.isBust()) {
+            setUpResultWhenDealerWin(player);
+            return true;
+        }
+        return false;
+    }
+
+    private void judgeResultWhenPlayerIsNotBust(final int sumOfDealer, final Player player, final int sumOfPlayer) {
+        if (dealer.isBust() || sumOfPlayer > sumOfDealer) {
+            setUpResultWhenPlayerWin(player);
+            return;
+        }
+        if (dealer.isBlackJack() || sumOfPlayer < sumOfDealer) {
+            setUpResultWhenDealerWin(player);
+            return;
+        }
+        setUpResultWhenPush(player);
+    }
+
+    private void setUpResultWhenPush(final Player player) {
+        dealer.setResults(Result.PUSH);
+        player.setResult(Result.PUSH);
+    }
+
+    private void setUpResultWhenDealerWin(final Player player) {
+        dealer.setResults(Result.WIN);
+        player.setResult(Result.LOSE);
+    }
+
+    private void setUpResultWhenPlayerWin(final Player player) {
+        dealer.setResults(Result.LOSE);
+        player.setResult(Result.WIN);
     }
 
     public Dealer getDealer() {
