@@ -1,6 +1,7 @@
 package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.Card;
 import domain.CardHand;
@@ -55,5 +56,18 @@ class DealerTest {
         assertThat(dealer.calculateScore()).isEqualTo(0);
         dealer.addCard(new Card(Symbol.SPADE, CardNumber.TWO));
         assertThat(dealer.calculateScore()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("카드를 추가하는 것이 불가능할 때 추가하려는 경우 예외가 발생한다.")
+    void 카드_저장_불가능시_예외() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        Dealer dealer = new Dealer(cardHand);
+        assertThatThrownBy(() -> dealer.addCard(new Card(Symbol.SPADE, CardNumber.ACE)))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("카드 추가가 불가능하여 실행되지 않았습니다.");
     }
 }
