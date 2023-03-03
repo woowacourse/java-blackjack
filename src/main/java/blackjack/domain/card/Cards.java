@@ -36,15 +36,15 @@ public class Cards {
     }
 
     public boolean haveLowerGamePointThan(final GamePoint point) {
-        return this.point.isLowerThan(point);
+        return this.point.compareTo(point) == -1;
     }
 
     public boolean isGreaterThan(final GamePoint point) {
-        return this.point.isGreaterThan(point);
+        return this.point.compareTo(point) == 1;
     }
 
     public boolean havePointOf(final GamePoint point) {
-        return this.point.isEqualTo(point);
+        return this.point.compareTo(point) == 0;
     }
 
     public List<Card> getCards() {

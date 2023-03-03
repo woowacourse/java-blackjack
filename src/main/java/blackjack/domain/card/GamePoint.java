@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.List;
 
-public class GamePoint {
+public class GamePoint implements Comparable<GamePoint>{
 
     private static final int BUST = 0;
     private static final CardNumber ACE = CardNumber.of(1);
@@ -18,7 +18,7 @@ public class GamePoint {
         if (canOptimize(cards, point)) {
             return getGamePoint(point, getCountOfAce(cards));
         }
-        return point;
+        return calculateWithBust(point);
     }
 
     private int calculateMaxPoint(final List<Card> cards) {
@@ -93,15 +93,10 @@ public class GamePoint {
         return gamePoint <= value;
     }
 
-    public boolean isLowerThan(final GamePoint point) {
-        return gamePoint < point.gamePoint;
-    }
-
-    public boolean isGreaterThan(final GamePoint point) {
-        return gamePoint > point.gamePoint;
-    }
-
-    public boolean isEqualTo(final GamePoint point) {
-        return this.gamePoint == point.gamePoint;
+    @Override
+    public int compareTo(final GamePoint other) {
+        final int compare = Integer.compare(this.gamePoint, other.gamePoint);
+        System.out.println(compare);
+        return compare;
     }
 }
