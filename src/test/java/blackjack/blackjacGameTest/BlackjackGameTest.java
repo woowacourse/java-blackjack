@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
@@ -107,6 +108,7 @@ class BlackjackGameTest {
         assertThat(blackjackGame.isBust(0)).isTrue();
     }
 
+
     @Test
     @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
     void countPlayers() {
@@ -116,5 +118,37 @@ class BlackjackGameTest {
         blackjackGame.addPlayer(player2);
 
         assertThat(blackjackGame.countPlayer()).isEqualTo(2);
+    }
+
+    @Nested
+    @DisplayName("딜러가 카드를 추가로 받을 수 있는지 확인하는 기능")
+    class canDealerHitTest {
+        @Test
+        @DisplayName("딜러가 버스트가 아니고 언더스코어인 경우")
+        void canDealerHitUnderScoreAndNotBust() {
+            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.TWO, Pattern.SPADE));
+
+            assertThat(blackjackGame.canDealerHit()).isTrue();
+        }
+
+        @Test
+        @DisplayName("딜러가 버스트인경우")
+        void cantDealerHitCuzBust() {
+            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            dealer.hit(new Card(CardNumber.TWO, Pattern.SPADE));
+
+            assertThat(blackjackGame.canDealerHit()).isFalse();
+        }
+
+        @Test
+        @DisplayName("버스트가 아니고, 언더스코어가 아닌경우")
+        void canDealerHit() {
+            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
+            dealer.hit(new Card(CardNumber.EIGHT, Pattern.SPADE));
+
+            assertThat(blackjackGame.canDealerHit()).isFalse();
+        }
     }
 }

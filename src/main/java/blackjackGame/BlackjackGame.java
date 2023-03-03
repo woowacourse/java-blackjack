@@ -51,4 +51,8 @@ public class BlackjackGame {
     public int countPlayer() {
         return players.count();
     }
+
+    public boolean canDealerHit() {
+        return !dealer.isBust() && dealer.isUnderScore();
+    }
 }
