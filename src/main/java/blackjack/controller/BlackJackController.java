@@ -27,11 +27,20 @@ public class BlackJackController {
         this.uniqueCards = createUniqueCards();
     }
 
+    private Cards createUniqueCards() {
+        List<Card> cards = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Suit.values())
+                        .flatMap(suit -> Stream.of(new Card(suit, rank)))
+                ).collect(toList());
+        Collections.shuffle(cards);
+        return new Cards(cards);
+    }
+
     public void run() {
         people = new People(new Dealer(), repeat(this::getPlayers));
         initDrawCard();
         printInitStatus();
-        drawMoreCardForAll();
+        drawMoreCardForPlayers();
         drawDealerMoreCard();
         printAllStatus();
         printGameResult();
@@ -52,15 +61,6 @@ public class BlackJackController {
         return Arrays.stream(names)
                 .map(Player::new)
                 .collect(toList());
-    }
-
-    public Cards createUniqueCards() {
-        List<Card> cards = Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(Suit.values())
-                        .flatMap(suit -> Stream.of(new Card(suit, rank)))
-                ).collect(toList());
-        Collections.shuffle(cards);
-        return new Cards(cards);
     }
 
     private void validateDuplicate(String[] names) {
@@ -94,7 +94,7 @@ public class BlackJackController {
         }
     }
 
-    private void drawMoreCardForAll() {
+    private void drawMoreCardForPlayers() {
         for (Person person : people.getPlayers()) {
             repeat(() -> drawMoreCard(person, uniqueCards));
         }
@@ -118,18 +118,18 @@ public class BlackJackController {
         OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
     }
 
-    private void validateOverScore(Person person) {
-        if (!person.canDrawCard()) {
-            throw new IllegalArgumentException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
-        }
-    }
-
     private boolean decideDraw(Person person) {
         String decision = InputView.readDrawCardDecision(person.getName());
         if (decision.equals("y") || decision.equals("n")) {
             return decision.equals("y");
         }
         throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
+    }
+
+    private void validateOverScore(Person person) {
+        if (!person.canDrawCard()) {
+            throw new IllegalArgumentException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
+        }
     }
 
     private List<String> getCardsStatus(List<Card> cards) {

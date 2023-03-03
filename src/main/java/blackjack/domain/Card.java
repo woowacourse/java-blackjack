@@ -11,12 +11,12 @@ public class Card {
         this.rank = rank;
     }
 
-    public int getScore() {
-        return rank.getValue();
-    }
-
     public boolean isAce() {
         return this.rank == Rank.ACE;
+    }
+
+    public int getScore() {
+        return rank.getValue();
     }
 
     public String getSuit() {

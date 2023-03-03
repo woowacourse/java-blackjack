@@ -18,8 +18,15 @@ public class Cards {
         this.cards = cards;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 남은 카드가 없습니다.");
+        }
+        return cards.remove(0);
     }
 
     public int getScore() {
@@ -44,14 +51,7 @@ public class Cards {
         return score;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public Card drawCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 남은 카드가 없습니다.");
-        }
-        return cards.remove(0);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
