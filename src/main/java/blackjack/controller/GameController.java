@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.card.HandCard;
-import blackjack.model.Name;
+import blackjack.model.participant.Name;
 import blackjack.model.card.*;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Participant;

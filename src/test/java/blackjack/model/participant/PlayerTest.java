@@ -1,6 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.model.Name;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
