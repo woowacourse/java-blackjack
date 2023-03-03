@@ -88,7 +88,7 @@ public class GameProcessController {
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canGiveCard()) {
             gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
-            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()));
+            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()) + System.lineSeparator());
         }
     }
 

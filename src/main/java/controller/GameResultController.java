@@ -28,7 +28,6 @@ public class GameResultController {
     }
 
     private void printGameResult(final Participants participants) {
-        OutputView.print(System.lineSeparator().trim());
         Participant dealer = participants.getDealer();
         printParticipantCardResult(dealer);
         List<Participant> players = participants.getPlayer();
