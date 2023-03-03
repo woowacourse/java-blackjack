@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static blackjack.controller.Repeater.repeatUntilNoException;
+
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.DeckFactory;
@@ -12,6 +14,7 @@ import blackjack.dto.PlayerCardsScoreDto;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -39,7 +42,7 @@ public class BlackJackController {
     }
 
     private Players createPlayers() {
-        return IllegalArgumentExceptionHandler.repeatUntilNoException(
+        return repeatUntilNoException(
                 () -> Players.from(inputView.inputPlayerNames()), outputView::printError);
     }
 
@@ -52,7 +55,8 @@ public class BlackJackController {
 
     private void printInitialCards(final Players players, final Dealer dealer) {
         final InitialCardDto initialCardDto = new InitialCardDto(
-                dealer.getCards().get(0),
+                dealer.getCards()
+                        .get(0),
                 players.findPlayerNameToCards());
         outputView.printInitialCards(initialCardDto);
     }
@@ -66,14 +70,15 @@ public class BlackJackController {
     private void drawPlayerCard(final String playerName, final Deck deck, final Players players) {
         DrawCommand playerInput = DrawCommand.DRAW;
         while (players.isDrawable(playerName) && playerInput != DrawCommand.STAY) {
-            playerInput = inputView.inputCommand(playerName);
+            playerInput = repeatUntilNoException(
+                    () -> inputView.inputCommand(playerName), outputView::printError);
             drawCard(playerName, deck, players, playerInput);
             printPlayerResult(playerName, players);
         }
     }
 
     private void drawCard(final String playerName, final Deck deck, final Players players,
-            final DrawCommand playerInput) {
+                          final DrawCommand playerInput) {
         if (playerInput == DrawCommand.DRAW) {
             players.draw(playerName, deck);
         }
