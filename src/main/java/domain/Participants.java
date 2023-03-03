@@ -48,6 +48,11 @@ public class Participants {
                 .receiveCard(card);
     }
 
+    public void standCurrentPlayer() {
+        Player nextPlayer = (Player) findNextDrawablePlayer();
+        nextPlayer.stand();
+    }
+
     private Participant findNextDrawablePlayer() {
         return players().stream()
                 .filter(Participant::isDrawable)
@@ -55,15 +60,15 @@ public class Participants {
                 .orElseThrow(() -> new IllegalStateException("카드를 받을 수 있는 플레이어가 없습니다."));
     }
 
-    public void standCurrentPlayer() {
-        Player nextPlayer = (Player) findNextDrawablePlayer();
-        nextPlayer.stand();
-    }
-
     private List<Participant> players() {
         int firstPlayerPosition = DEALER_POSITION + 1;
         int numberOfParticipants = participants.size();
 
         return participants.subList(firstPlayerPosition, numberOfParticipants);
+    }
+
+    public boolean isDealerDrawable() {
+        return participants.get(DEALER_POSITION)
+                .isDrawable();
     }
 }

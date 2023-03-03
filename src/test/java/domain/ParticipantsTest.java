@@ -188,4 +188,49 @@ class ParticipantsTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
+
+    @Nested
+    class 딜러가카드를뽑을수있는지여부판단 {
+        @Test
+        void should_isDealerDrawable가true반환_when_딜러점수가17점보다작을때() {
+            //given
+            Participants participants = Participants.create(List.of("포이"));
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(new Card(Suit.SPADE, Number.TEN));
+                cards.add(new Card(Suit.SPADE, Number.SIX));
+            });
+            participants.readyForGame(deck);
+
+            //when
+            boolean dealerDrawable = participants.isDealerDrawable();
+
+            //then
+            assertThat(dealerDrawable).isTrue();
+        }
+
+        @Test
+        void should_isDealerDrawable가false반환_when_딜러점수가17점이상일때() {
+            //given
+            Participants participants = Participants.create(List.of("포이"));
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.SEVEN));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(new Card(Suit.SPADE, Number.SEVEN));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+            });
+            participants.readyForGame(deck);
+
+            //when
+            boolean dealerDrawable = participants.isDealerDrawable();
+
+            //then
+            assertThat(dealerDrawable).isFalse();
+        }
+    }
 }
