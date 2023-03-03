@@ -6,6 +6,8 @@ import static blackjackGame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import card.Pattern;
 import player.Dealer;
 import player.Name;
 import player.Player;
+import player.PlayerWinningDto;
 import player.Players;
 
 class PlayersTest {
@@ -71,6 +74,21 @@ class PlayersTest {
         player1.hit(new Card(CardNumber.KING, Pattern.SPADE));
 
         assertThat(players.isBust(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름과 승패결과를 가져올 수 있다.")
+    void getWinningResult() {
+        Players players = new Players();
+        Player player = new Player(new Name("폴로"));
+        players.add(player);
+
+        player.win();
+        List<PlayerWinningDto> playerWinningResults = players.getWinningResults();
+        PlayerWinningDto playerWinningDto = playerWinningResults.get(0);
+
+        assertThat(playerWinningDto.getName().getValue()).isEqualTo("폴로");
+        assertThat(playerWinningDto.getResult()).isEqualTo(WIN);
     }
 
     @Nested

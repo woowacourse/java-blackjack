@@ -52,4 +52,10 @@ public class Players {
             }
         }
     }
+
+    public List<PlayerWinningDto> getWinningResults() {
+        return players.stream()
+                .map(PlayerWinningDto::from)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

@@ -7,6 +7,7 @@ import player.Dealer;
 import player.DealerWinningDto;
 import player.Player;
 import player.PlayerResultDto;
+import player.PlayerWinningDto;
 import player.Players;
 
 public class BlackjackGame {
@@ -78,5 +79,9 @@ public class BlackjackGame {
 
     public DealerWinningDto getDealerWinningResult() {
         return DealerWinningDto.from(dealer);
+    }
+
+    public List<PlayerWinningDto> getPlayerWinningResults() {
+        return players.getWinningResults();
     }
 }
