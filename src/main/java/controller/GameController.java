@@ -1,4 +1,4 @@
-package domain.controller;
+package controller;
 
 import domain.CardShuffler;
 import domain.card.Card;
@@ -7,8 +7,8 @@ import domain.game.GameManager;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import domain.view.InputView;
-import domain.view.OutputView;
+import view.InputView;
+import view.OutputView;
 
 import java.util.List;
 import java.util.stream.IntStream;

@@ -1,4 +1,4 @@
-package domain.view.message;
+package view.message;
 
 import domain.card.CardNumber;
 

@@ -1,4 +1,4 @@
-package domain.view;
+package view;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static domain.view.message.Message.PARTICIPANT_NAME_INPUT_MESSAGE;
+import static view.message.Message.PARTICIPANT_NAME_INPUT_MESSAGE;
 
 public class InputView {
     private final BufferedReader bufferedReader;

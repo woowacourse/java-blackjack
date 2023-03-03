@@ -1,8 +1,8 @@
+import controller.GameController;
 import domain.CardShuffler;
 import domain.card.CardRandomShuffler;
-import domain.controller.GameController;
-import domain.view.InputView;
-import domain.view.OutputView;
+import view.InputView;
+import view.OutputView;
 
 public class GameApplication {
     public static void main(String[] args) {

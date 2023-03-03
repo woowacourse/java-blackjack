@@ -1,17 +1,17 @@
-package domain.view;
+package view;
 
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.participant.Participants;
-import domain.view.message.NumberMessage;
-import domain.view.message.PatternMessage;
+import view.message.NumberMessage;
+import view.message.PatternMessage;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.view.message.Message.CARD_MESSAGE;
-import static domain.view.message.Message.DRAW_MESSAGE;
+import static view.message.Message.CARD_MESSAGE;
+import static view.message.Message.DRAW_MESSAGE;
 
 public class OutputView {
 
