@@ -24,18 +24,14 @@ public class BlackJackTest {
     void calculateGameResults() {
         Users users = Users.from(List.of("hongo", "kiara"));
         BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
-        List<Player> players = users.getPlayers();
-
-        Player player1 = players.get(0);
-        Player player2 = players.get(1);
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
         // dealer  : 5, 6       => 11
-        Map<Player, GameResult> gameResults = blackJack.calculateGameResults();
-        assertThat(gameResults.get(player1)).isEqualTo(GameResult.WIN);
-        assertThat(gameResults.get(player2)).isEqualTo(GameResult.LOSE);
+        Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
+        assertThat(gameResults.get("hongo")).isEqualTo(GameResult.WIN);
+        assertThat(gameResults.get("kiara")).isEqualTo(GameResult.LOSE);
     }
 
     @DisplayName("플레이어와 딜러의 점수가 같을 경우 무승부(PUSH)를 반환한다")
@@ -43,17 +39,15 @@ public class BlackJackTest {
     void calculateGameResults_PUSH() {
         Users users = Users.from(List.of("hongo"));
         BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
-        List<Player> players = users.getPlayers();
 
-        Player player = players.get(0);
         Dealer dealer = users.getDealer();
         dealer.hit(new Card(Denomination.SIX, Suits.DIAMOND));
 
         // 카드 현황
         // player : ACE(11), 2 => 13
         // dealer : 3, 4, 6    => 13
-        Map<Player, GameResult> gameResults = blackJack.calculateGameResults();
-        assertThat(gameResults.get(player)).isEqualTo(GameResult.PUSH);
+        Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
+        assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
     }
 
     @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
@@ -75,8 +69,8 @@ public class BlackJackTest {
         // dealer : 3, 4, 5, 10        => 22
         System.out.println(player.getScore());
         System.out.println(dealer.getScore());
-        Map<Player, GameResult> gameResults = blackJack.calculateGameResults();
-        assertThat(gameResults.get(player)).isEqualTo(GameResult.PUSH);
+        Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
+        assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
     }
 
     @DisplayName("유저가 요청하면 카드를 하나 더 준다")

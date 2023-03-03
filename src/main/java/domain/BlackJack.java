@@ -1,10 +1,15 @@
 package domain;
 
+import static domain.GameResult.LOSE;
+import static domain.GameResult.PUSH;
+import static domain.GameResult.WIN;
 import static domain.GameResult.comparePlayerWithDealer;
 
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,12 +46,28 @@ public class BlackJack {
         users.hitCardByName(playerName, deck.pickCard());
     }
 
-    public Map<Player, GameResult> calculateGameResults() {
+    public Map<String, GameResult> calculatePlayerResults() {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
         int dealerScore = dealer.getScore();
         return players.stream()
-            .collect(
-                Collectors.toMap(player -> player, player -> comparePlayerWithDealer(player.getScore(), dealerScore)));
+            .collect(Collectors.toMap
+                (Player::getName,
+                    player -> comparePlayerWithDealer(player.getScore(), dealerScore),
+                    (oldValue, newValue) -> newValue,
+                    LinkedHashMap::new));
+    }
+
+    public Map<GameResult, Integer> calculateDealerResult() {
+        Map<GameResult, Integer> dealerResult = new HashMap<>();
+        Map<String, GameResult> playerResults = calculatePlayerResults();
+        playerResults.values().forEach(result -> convertResult(result, dealerResult));
+        return dealerResult;
+    }
+
+    private void convertResult(final GameResult playerResult, final Map<GameResult, Integer> dealerResult) {
+        Map<GameResult, GameResult> converter = Map.of(WIN, LOSE, LOSE, WIN, PUSH, PUSH);
+        GameResult convertedResult = converter.get(playerResult);
+        dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
     }
 }

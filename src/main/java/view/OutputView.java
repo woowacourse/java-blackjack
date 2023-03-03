@@ -1,6 +1,7 @@
 package view;
 
 import domain.Card;
+import domain.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,4 +49,32 @@ public class OutputView {
         return cardName.get(0) + cardName.get(1);
     }
 
+    public void printGameResult(final Map<GameResult, Integer> dealerResult,
+        final Map<String, GameResult> playerResults) {
+        System.out.println("## 최종 승패");
+        printDealerResult(dealerResult);
+        printPlayerResults(playerResults);
+    }
+
+
+    private void printDealerResult(final Map<GameResult, Integer> dealerResult) {
+        StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
+        for (GameResult gameResult : dealerResult.keySet()) {
+            int count = dealerResult.getOrDefault(gameResult, 0);
+            dealerResultMessage.append(getDealerEachResult(gameResult.getName(), count));
+        }
+        System.out.println(dealerResultMessage);
+    }
+
+    private String getDealerEachResult(final String gameResultName, final int count) {
+        if (count != 0) {
+            return count + gameResultName + " ";
+        }
+        return "";
+    }
+
+    private void printPlayerResults(final Map<String, GameResult> playerResults) {
+        playerResults.forEach((playerName, gameResult) ->
+            System.out.println(playerName + ": " + gameResult.getName()));
+    }
 }

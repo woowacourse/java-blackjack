@@ -45,4 +45,8 @@ public class Player extends User {
     public boolean isHittable() {
         return cards.isUnder(BLACK_JACK_SCORE);
     }
+
+    public String getName() {
+        return name;
+    }
 }
