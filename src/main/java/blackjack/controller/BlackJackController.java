@@ -30,50 +30,38 @@ public class BlackJackController {
         final Dealer dealer = new Dealer();
         final Deck deck = deckFactory.generate();
 
+        distributeInitialCard(players, dealer, deck);
+        printInitialCards(players, dealer);
+        drawPlayersCards(players, deck);
+        drawDealerCards(dealer, deck);
+        players.calculateResult(dealer);
+        printResult(players, dealer);
+    }
+
+    private Players createPlayers() {
+        return IllegalArgumentExceptionHandler.repeatUntilNoException(
+                inputView::inputPlayerNames, Players::from, outputView);
+    }
+
+    private void distributeInitialCard(final Players players, final Dealer dealer, final Deck deck) {
         players.distributeInitialCards(deck);
         dealer.drawCard(deck.popCard());
         dealer.drawCard(deck.popCard());
-        final InitialCardDto initialCardDto = new InitialCardDto(
-                dealer.getCards()
-                        .get(0), players.findPlayerNameToCards());
-        outputView.printInitialCards(initialCardDto);
+    }
 
+
+    private void printInitialCards(final Players players, final Dealer dealer) {
+        final InitialCardDto initialCardDto = new InitialCardDto(
+                dealer.getCards().get(0),
+                players.findPlayerNameToCards());
+        outputView.printInitialCards(initialCardDto);
+    }
+
+    private void drawPlayersCards(final Players players, final Deck deck) {
         for (final String playerName : players.getPlayerNames()) {
             drawPlayerCard(playerName, deck, players);
-
         }
-        while (dealer.isDrawable()) {
-            dealer.drawCard(deck.popCard());
-            outputView.printDealerCardDrawMessage();
-        }
-        players.calculateResult(dealer);
-
-        printStatusOfGame(dealer, players);
-        outputView.printFinalResult(new FinalResultDto(dealer.getResult()));
     }
-
-    private void printStatusOfGame(final Dealer dealer, final Players players) {
-        outputView.printFinalStatusOfDealer(
-                new CardsScoreDto(dealer.getCards(), dealer.currentScore()));
-        outputView.printFinalStatusOfPlayers(createPlayerCardDto(players));
-    }
-
-    private PlayerCardsScoreDto createPlayerCardDto(final Players players) {
-        final Map<String, CardsScoreDto> playerNameToResult = new LinkedHashMap<>();
-
-        for (final String playerName : players.getPlayerNames()) {
-
-            final CardsScoreDto playerCardDto = new CardsScoreDto(
-                    players.findCardsByPlayerName(playerName),
-                    players.getPlayerScoreByName(playerName)
-            );
-
-            playerNameToResult.put(playerName, playerCardDto);
-        }
-
-        return new PlayerCardsScoreDto(playerNameToResult);
-    }
-
 
     private void drawPlayerCard(final String playerName, final Deck deck, final Players players) {
         DrawCommand playerInput;
@@ -91,12 +79,37 @@ public class BlackJackController {
                 break;
             }
         }
-
     }
 
+    private void drawDealerCards(final Dealer dealer, final Deck deck) {
+        while (dealer.isDrawable()) {
+            dealer.drawCard(deck.popCard());
+            outputView.printDealerCardDrawMessage();
+        }
+    }
 
-    private Players createPlayers() {
-        return IllegalArgumentExceptionHandler.repeatUntilNoException(
-                inputView::inputPlayerNames, Players::from, outputView);
+    private void printResult(final Players players, final Dealer dealer) {
+        printStatusOfGame(dealer, players);
+        outputView.printFinalResult(new FinalResultDto(dealer.getResult()));
+    }
+
+    private void printStatusOfGame(final Dealer dealer, final Players players) {
+        outputView.printFinalStatusOfDealer(
+                new CardsScoreDto(dealer.getCards(), dealer.currentScore()));
+        outputView.printFinalStatusOfPlayers(createPlayerCardDto(players));
+    }
+
+    private PlayerCardsScoreDto createPlayerCardDto(final Players players) {
+        final Map<String, CardsScoreDto> playerNameToResult = new LinkedHashMap<>();
+
+        for (final String playerName : players.getPlayerNames()) {
+            final CardsScoreDto playerCardDto = new CardsScoreDto(
+                    players.findCardsByPlayerName(playerName),
+                    players.getPlayerScoreByName(playerName)
+            );
+            playerNameToResult.put(playerName, playerCardDto);
+        }
+
+        return new PlayerCardsScoreDto(playerNameToResult);
     }
 }
