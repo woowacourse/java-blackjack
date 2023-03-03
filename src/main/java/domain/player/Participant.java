@@ -7,10 +7,9 @@ import java.util.stream.Collectors;
 
 public class Participant extends Player {
     private GameResult gameResult;
-    private final String name;
 
     public Participant(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class Participant extends Player {
 
     @Override
     public boolean isNameEqualTo(String playerName) {
-        return this.name.equals(playerName);
+        return getName().equals(playerName);
     }
 
     private int isGameResultEqualTo(GameResult gameResult) {
@@ -58,11 +57,11 @@ public class Participant extends Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(name, that.name) && gameResult == that.gameResult;
+        return Objects.equals(getName(), that.getName()) && gameResult == that.gameResult;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, gameResult);
+        return Objects.hash(getName(), gameResult);
     }
 }

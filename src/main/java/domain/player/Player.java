@@ -7,9 +7,11 @@ import java.util.List;
 
 public abstract class Player {
     private final Cards cards;
+    private final String name;
 
-    public Player() {
+    public Player(String name) {
         this.cards = new Cards();
+        this.name = name;
     }
 
     public void addCard(Card card) {
@@ -33,4 +35,8 @@ public abstract class Player {
     public abstract List<Integer> getGameResult();
 
     public abstract boolean isNameEqualTo(String playerName);
+
+    public String getName() {
+        return this.name;
+    }
 }

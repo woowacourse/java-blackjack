@@ -5,11 +5,9 @@ import java.util.stream.Collectors;
 
 public class Dealer extends Player {
     private final Map<GameResult, Integer> gameResults;
-    private final String name;
 
     public Dealer() {
-        super();
-        name = "딜러";
+        super("딜러");
         gameResults = new EnumMap<>(GameResult.class);
         initGameResult();
     }
@@ -54,7 +52,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean isNameEqualTo(String name) {
-        return this.name.equals(name);
+        return getName().equals(name);
     }
 
     @Override
