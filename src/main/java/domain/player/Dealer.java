@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     public Card firstCard() {
-        return cardArea.cards().get(0);
+        return cardArea.firstCard();
     }
 
     public DealerCompeteResult compete(final Participant participant) {

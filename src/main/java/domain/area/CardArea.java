@@ -52,4 +52,8 @@ public class CardArea {
     public boolean isBurst() {
         return calculate() > BLACK_JACK_NUMBER;
     }
+
+    public Card firstCard() {
+        return cards.get(FIRST_CARD_INDEX);
+    }
 }
