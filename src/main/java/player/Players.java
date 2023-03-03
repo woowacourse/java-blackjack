@@ -9,32 +9,6 @@ import card.Card;
 public class Players {
     private final List<Player> players = new ArrayList<>();
 
-    private static void combat(Dealer dealer, Player player) {
-        boolean playerBust = player.isBust();
-        int playerScore = player.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        int dealerScore = dealer.calculateScore();
-        if (!playerBust && dealerBust || isPlayerHigher(playerScore, dealerScore)) {
-            player.win();
-            dealer.lose();
-        }
-        if (!dealerBust && playerBust || isPlayerLower(playerScore, dealerScore)) {
-            player.lose();
-            dealer.win();
-        }
-        if ((playerScore == dealerScore) && !playerBust) {
-            player.tie();
-            dealer.tie();
-        }
-    }
-
-    private static boolean isPlayerLower(int playerScore, int dealerScore) {
-        return playerScore < dealerScore;
-    }
-
-    private static boolean isPlayerHigher(int playerScore, int dealerScore) {
-        return playerScore > dealerScore;
-    }
 
     public void add(Player player) {
         players.add(player);
@@ -63,6 +37,33 @@ public class Players {
         for (Player player : players) {
             combat(dealer, player);
         }
+    }
+
+    private void combat(Dealer dealer, Player player) {
+        boolean playerBust = player.isBust();
+        int playerScore = player.calculateScore();
+        boolean dealerBust = dealer.isBust();
+        int dealerScore = dealer.calculateScore();
+        if (!playerBust && (dealerBust || isPlayerHigher(playerScore, dealerScore))) {
+            player.win();
+            dealer.lose();
+        }
+        if (!dealerBust && (playerBust || isPlayerLower(playerScore, dealerScore))) {
+            player.lose();
+            dealer.win();
+        }
+        if (!playerBust && (playerScore == dealerScore)) {
+            player.tie();
+            dealer.tie();
+        }
+    }
+
+    private boolean isPlayerLower(int playerScore, int dealerScore) {
+        return playerScore < dealerScore;
+    }
+
+    private boolean isPlayerHigher(int playerScore, int dealerScore) {
+        return playerScore > dealerScore;
     }
 
     public List<PlayerWinningDto> getWinningResults() {
