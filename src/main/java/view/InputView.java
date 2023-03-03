@@ -25,7 +25,7 @@ public class InputView {
         System.out.println(PLAYER_NAME_GUIDE_MESSAGE);
 
         String input = scanner.nextLine();
-        String[] split = input.split(DELIMITER);
+        String[] split = input.split(DELIMITER, -1);
         return Arrays.stream(split)
                 .map(String::strip)
                 .collect(Collectors.toList());
