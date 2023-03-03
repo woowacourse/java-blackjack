@@ -103,7 +103,7 @@
 
 ## ✔ 기능 다이어그램
 
-<img src = "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fc61c841-19f2-40ec-9485-076afd44de74/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230228%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230228T055401Z&X-Amz-Expires=86400&X-Amz-Signature=cd100845afc10ac9bdc0c902cdd7c6156f8dd36e1e94345b2245a4bce7066f8f&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject">
+<img src = "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5a9cbccd-0493-4ae1-a79b-508faeaa47e1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230303%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230303T075409Z&X-Amz-Expires=86400&X-Amz-Signature=c87b31a5878c4f2b03764e2dac8b75fb87d4576958330892649f5a2ea63dd86c&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject">
 
 ---
 
