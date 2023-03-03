@@ -1,5 +1,8 @@
 package blackjackGame;
 
+import java.util.List;
+
+import card.Card;
 import deck.Deck;
 import player.Dealer;
 import player.Name;
@@ -64,5 +67,10 @@ public class BlackjackGame {
     public Name getDealerName() {
         return dealer.getName();
     }
+
+    public List<Card> getDealerCard() {
+        return List.copyOf(dealer.showCards());
+    }
+
 
 }
