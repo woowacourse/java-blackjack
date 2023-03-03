@@ -29,7 +29,7 @@ public class Game {
 
     public void dealCard(String name) {
         Player player = players.findUserByName(name);
-        player.addCard(deck.drawCard());
+        player.addCard(deck.draw());
     }
 
     public boolean canHit(String name) {

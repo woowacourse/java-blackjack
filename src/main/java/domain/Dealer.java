@@ -21,7 +21,7 @@ public class Dealer extends Player {
 
     public boolean drawCardIfNecessary(Deck deck) {
         if (!canHit()) {
-            addCard(deck.drawCard());
+            addCard(deck.draw());
             return true;
         }
         return false;

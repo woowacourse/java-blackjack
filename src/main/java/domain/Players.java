@@ -22,9 +22,9 @@ public class Players {
 
     public void dealCardsFrom(Deck deck) {
         for (Player user : users) {
-            user.addCard(deck.drawCard());
+            user.addCard(deck.draw());
         }
-        dealer.addCard(deck.drawCard());
+        dealer.addCard(deck.draw());
     }
 
     public Result getUserResult(String name) {

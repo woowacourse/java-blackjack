@@ -14,33 +14,23 @@ public class Deck {
     }
 
     private List<Card> buildDeck() {
-        var cards = new ArrayList<Card>();
-        var faces = List.of(Face.values());
-
-        for (Face face : faces) {
-            cards.addAll(buildCardsFrom(face));
+        List<Card> cards = new ArrayList<>();
+        for (Face face : Face.values()) {
+            cards.addAll(buildCardsOf(face));
         }
-
         return cards;
     }
 
-    private List<Card> buildCardsFrom(Face face) {
-        var cards = new ArrayList<Card>();
-
+    private List<Card> buildCardsOf(Face face) {
+        List<Card> cards = new ArrayList<>();
         for (Letter letter : Letter.values()) {
             cards.add(new Card(face, letter));
         }
-
         return cards;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public Card drawCard() {
+    public Card draw() {
         validateNotEmpty();
-
         return cards.remove(pickRandomCard());
     }
 
@@ -54,4 +44,7 @@ public class Deck {
         return random.nextInt(cards.size());
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
 }

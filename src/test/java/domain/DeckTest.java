@@ -20,7 +20,7 @@ class DeckTest {
     @DisplayName("카드 한 장을 준다")
     void aa() {
         var deck = new Deck();
-        deck.drawCard();
+        deck.draw();
 
         assertThat(deck.getCards()).hasSize(51);
     }
@@ -29,7 +29,7 @@ class DeckTest {
     @DisplayName("뽑힌 카드는 덱에서 제거된다")
     void aaa() {
         var deck = new Deck();
-        var card = deck.drawCard();
+        var card = deck.draw();
 
         assertThat(card).isNotIn(deck.getCards());
     }
@@ -39,10 +39,10 @@ class DeckTest {
     void aaaa() {
         var deck = new Deck();
         for (int i = 0; i < 52; i++) {
-            deck.drawCard();
+            deck.draw();
         }
 
-        assertThatThrownBy(deck::drawCard)
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드가 모두 소진됐습니다.");
     }
