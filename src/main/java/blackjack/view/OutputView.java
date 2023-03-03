@@ -37,4 +37,18 @@ public class OutputView {
     public void printDealerDrawOneMoreCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
+
+    public void printDealerFinalCards(List<String> cards, int score) {
+        System.out.println("딜러 카드: " + cards.stream()
+                .collect(Collectors.joining(", ")) + " - 결과: " + score);
+    }
+
+    public void printPlayerFinalCards(Map<String, List<String>> cardsWithName, List<Integer> scores) {
+        int index = 0;
+        for (String playerName : cardsWithName.keySet()) {
+            System.out.println(playerName + "카드: " + cardsWithName.get(playerName)
+                    .stream()
+                    .collect(Collectors.joining(", ")) + " - 결과: " + scores.get(index++));
+        }
+    }
 }
