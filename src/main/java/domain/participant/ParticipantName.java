@@ -37,7 +37,7 @@ public class ParticipantName {
         }
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 }

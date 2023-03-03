@@ -48,14 +48,14 @@ public class ParticipantCard {
         return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 
-    private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
-    }
-
     private int sumCards() {
         return cards.stream()
                 .mapToInt(Card::findCardNumber)
                 .sum();
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     List<Card> getCards() {
