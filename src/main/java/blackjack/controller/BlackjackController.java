@@ -1,10 +1,14 @@
-package blackjack.domain;
+package blackjack.controller;
 
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+import blackjack.domain.player.User;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Names;
-import blackjack.domain.view.InputView;
-import blackjack.domain.view.OutputView;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +37,7 @@ public class BlackjackController {
     private static void giveAdditionalCard(String answer, Player player) {
         // TODO : y/n 와 총점이 21이 넘어가는 경우 출력
         while (answer.equals("y") && player.isUnderLimit()) {
-            player.playerCards.updateCardScore(Cards.giveFirstCard());
+            player.updateCardScore(Cards.giveFirstCard());
             OutputView.printPlayerCurrentCards(player);
             System.out.println(player.getTotalScore());
             answer = InputView.askAdditionalCard(player.getPlayerName());
@@ -44,7 +48,7 @@ public class BlackjackController {
     public void giveAdditionalCardToDealer() {
         while (dealer.isUnderLimit()) {
             System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-            dealer.playerCards.updateCardScore(Cards.giveFirstCard());
+            dealer.updateCardScore(Cards.giveFirstCard());
         }
     }
 
@@ -67,7 +71,7 @@ public class BlackjackController {
 
     private void giveFirstCard(User user) {
         for (int i = 0; i < 2; i++) {
-            user.playerCards.updateCardScore(Cards.giveFirstCard());
+            user.updateCardScore(Cards.giveFirstCard());
         }
     }
 }

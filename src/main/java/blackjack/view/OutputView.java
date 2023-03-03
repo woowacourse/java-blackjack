@@ -1,9 +1,9 @@
-package blackjack.domain.view;
+package blackjack.view;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.User;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+import blackjack.domain.player.User;
 import blackjack.domain.player.Name;
 
 import java.util.List;

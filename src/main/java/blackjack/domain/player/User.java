@@ -1,7 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.PlayerCards;
 
 import java.util.List;
 
@@ -20,4 +19,8 @@ public abstract class User {
         return playerCards.getTotalScore();
     }
     public abstract boolean isUnderLimit();
+
+    public void updateCardScore(Card card) {
+        playerCards.updateCardScore(card);
+    }
 }

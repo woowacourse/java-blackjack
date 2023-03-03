@@ -1,6 +1,4 @@
-package blackjack.domain;
-
-import blackjack.domain.player.Name;
+package blackjack.domain.player;
 
 public class Player extends User {
 
