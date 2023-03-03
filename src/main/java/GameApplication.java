@@ -1,4 +1,4 @@
-import controller.GameController;
+import controller.GamePrepareController;
 import domain.CardShuffler;
 import domain.card.CardRandomShuffler;
 import view.InputView;
@@ -10,7 +10,7 @@ public class GameApplication {
         final OutputView outputView = new OutputView();
         final CardShuffler cardShuffler = new CardRandomShuffler();
 
-        GameController gameController = new GameController(inputView, outputView);
-        gameController.start(cardShuffler);
+        GamePrepareController gamePrepareController = new GamePrepareController(inputView, outputView);
+        gamePrepareController.start(cardShuffler);
     }
 }
