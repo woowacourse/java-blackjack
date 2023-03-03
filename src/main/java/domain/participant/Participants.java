@@ -12,6 +12,7 @@ public class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 7;
+    private static final int DEALER_ORDER = 0;
 
     private final List<Participant> participants;
 
@@ -55,5 +56,10 @@ public class Participants {
         if (playerCount < MIN_COUNT || playerCount > MAX_COUNT) {
             throw new IllegalArgumentException("플레이어는 최소 1명, 최대 7명이어야 합니다.");
         }
+    }
+
+    public boolean canDealerGiveCard() {
+        Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
+        return dealer.canGiveCard();
     }
 }

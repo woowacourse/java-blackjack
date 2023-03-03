@@ -60,6 +60,21 @@ class ParticipantsTest {
                 .doesNotThrowAnyException();
     }
 
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
+    @ParameterizedTest(name = "canDealerGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
+    void canDealerGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
+        // given
+        List<String> playerNames = List.of("a", "b", "c", "d", "e");
+        Participants participants = Participants.create(playerNames);
+        cards.forEach(card -> participants.addCard(0, card));
+
+        // when
+        boolean actual = participants.canDealerGiveCard();
+
+        // then
+        assertThat(actual).isSameAs(expected);
+    }
+
     private static Stream<Arguments> validPlayerNames() {
         return Stream.of(
                 Arguments.of(List.of("zeeto")),
