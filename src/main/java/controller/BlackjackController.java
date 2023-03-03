@@ -16,14 +16,22 @@ public class BlackjackController {
     }
 
     public void run() {
-        this.blackjackGame.initGame(deck);
+        this.blackjackGame.initGame(this.deck);
         OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
         blackjackGame.getPlayers().forEach(this::giveCardUntilImpossible);
+        addCardToDealerIfPossible();
+    }
+
+    private void addCardToDealerIfPossible() {
+        if (blackjackGame.getDealer().canAdd()) {
+            OutputView.announceAddCardToDealer();
+            blackjackGame.addCardToDealerIfPossible(this.deck);
+        }
     }
 
     private void giveCardUntilImpossible(Player player) {
         while (player.canAdd() && InputView.readWhetherDrawCardOrNot(player).equals("y")){
-            player.addCard(deck.draw());
+            player.addCard(this.deck.draw());
             OutputView.printCardsStatusOfUser(player);
         }
     }

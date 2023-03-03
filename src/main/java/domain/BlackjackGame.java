@@ -35,4 +35,8 @@ public class BlackjackGame {
     public List<Player> getPlayers() {
         return this.players.getPlayers();
     }
+
+    public void addCardToDealerIfPossible(Deck deck) {
+        this.dealer.addCard(deck.draw());
+    }
 }
