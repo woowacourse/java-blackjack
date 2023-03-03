@@ -24,33 +24,9 @@ public class MainController {
     }
 
     public void run() {
-
         BlackJackGame blackJackGame = createBlackJackGame();
-
-        for (Player player : blackJackGame.getParticipants().getPlayers()) {
-            boolean repeat = true;
-            while (repeat) {
-                PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
-                if (command.isHit()) {
-                    blackJackGame.giveCardTo(player);
-                }
-                outputView.printSingleState(player);
-                repeat = player.canReceive() && command.isHit();
-            }
-        }
-
-        Dealer dealer = blackJackGame.getParticipants().getDealer();
-        while (dealer.isFill()) {
-            outputView.printFillDealerCards();
-            blackJackGame.giveCardTo(dealer);
-        }
-
-        outputView.printFinalState(blackJackGame.getParticipants());
-
-        WinningResult winningResult = new WinningResult(blackJackGame.getParticipants());
-        outputView.printFinalResult();
-        outputView.printDealerResult(winningResult.getDealerResult());
-        outputView.printPlayerResult(winningResult.getPlayersResult());
+        playGame(blackJackGame);
+        showResult(blackJackGame);
     }
 
     private BlackJackGame createBlackJackGame() {
@@ -58,8 +34,46 @@ public class MainController {
         Participants participants = new Participants(inputView.readPlayerNames(), cards);
         BlackJackGame blackJackGame = new BlackJackGame(participants, cards);
 
-        outputView.printInitialMessage(blackJackGame.getParticipants().getPlayerNames());
+        outputView.printInitialMessage(blackJackGame.getPlayers());
         outputView.printAllState(blackJackGame.getParticipants());
+
         return blackJackGame;
+    }
+
+    private void playGame(final BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
+            distributeCardToPlayer(blackJackGame, player);
+        }
+
+        distributeCardToDealer(blackJackGame);
+    }
+
+    private void distributeCardToPlayer(final BlackJackGame blackJackGame, final Player player) {
+        boolean repeat = true;
+        while (repeat) {
+            PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
+            if (command.isHit()) {
+                blackJackGame.giveCardTo(player);
+            }
+            outputView.printSingleState(player);
+            repeat = player.canReceive() && command.isHit();
+        }
+    }
+
+    private void distributeCardToDealer(final BlackJackGame blackJackGame) {
+        Dealer dealer = blackJackGame.getDealer();
+        while (dealer.isFill()) {
+            outputView.printFillDealerCards();
+            blackJackGame.giveCardTo(dealer);
+        }
+    }
+
+    private void showResult(final BlackJackGame blackJackGame) {
+        outputView.printFinalState(blackJackGame.getParticipants());
+
+        WinningResult winningResult = new WinningResult(blackJackGame.getParticipants());
+        outputView.printFinalResult();
+        outputView.printDealerResult(winningResult.getDealerResult());
+        outputView.printPlayerResult(winningResult.getPlayersResult());
     }
 }

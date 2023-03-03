@@ -1,8 +1,11 @@
 package domain;
 
 import domain.card.Cards;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
+import java.util.List;
 
 public class BlackJackGame {
 
@@ -14,11 +17,19 @@ public class BlackJackGame {
         this.cards = cards;
     }
 
-    public void giveCardTo(Participant participant){
+    public void giveCardTo(Participant participant) {
         participant.receiveCard(cards.getCard());
     }
 
     public Participants getParticipants() {
         return participants;
+    }
+
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
+    }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 }

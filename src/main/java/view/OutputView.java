@@ -21,8 +21,8 @@ public class OutputView {
     private OutputView() {
     }
 
-    public void printInitialMessage(final List<String> names) {
-        String playerNames = String.join(", ", names);
+    public void printInitialMessage(final List<Player> players) {
+        String playerNames = players.stream().map(Participant::getName).collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), playerNames);
     }
 
