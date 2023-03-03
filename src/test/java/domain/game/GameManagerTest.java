@@ -44,4 +44,14 @@ class GameManagerTest {
         assertThatCode(() -> gameManager.giveCards(0, 2))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("canDealerGiveCar는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
+    void canDealerGiveCard_whenCall_thenReturnCanGiveCard() {
+        // given
+        GameManager gameManager = GameManager.create(deck, participants);
+
+        // when, then
+        assertThatCode(gameManager::canDealerGiveCard).doesNotThrowAnyException();
+    }
 }
