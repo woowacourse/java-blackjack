@@ -24,19 +24,19 @@ public class BlackjackGame {
     }
 
     public void giveTwoCardEveryone() {
-        Dealer dealer = participants.getDealer();
+        final Dealer dealer = participants.getDealer();
         giveTwoCard(dealer);
 
-        List<Player> players = participants.getPlayers();
+        final List<Player> players = participants.getPlayers();
         players.forEach(this::giveTwoCard);
     }
 
-    private void giveTwoCard(Participant participant) {
+    private void giveTwoCard(final Participant participant) {
         participant.drawCard(deck.drawCard());
         participant.drawCard(deck.drawCard());
     }
 
-    public void drawCard(Participant participant) {
+    public void drawCard(final Participant participant) {
         participant.drawCard(deck.drawCard());
     }
 }

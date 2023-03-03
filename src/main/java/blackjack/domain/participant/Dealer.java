@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public List<String> getOneCard() {
-        Card firstCard = this.getCards().get(0);
+        final Card firstCard = this.getCards().get(0);
 
         return List.of(firstCard.getCardName());
     }

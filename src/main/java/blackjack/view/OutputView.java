@@ -17,22 +17,22 @@ public class OutputView {
     private static final String PLAYER_SCORE_DELIMITER = " : ";
     private static final String PLAYER_DELIMITER = ", ";
 
-    public void outputSplitMessage(String dealer, List<String> players) {
+    public void outputSplitMessage(final String dealer, final List<String> players) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(CHANGE_LINE + dealer + DEALER_ANDE_PLAYER_DELIMITER);
         stringBuilder.append(String.join(PLAYERS_DELIMITER, players) + GIVE_TWO_CARD_MASSAGE);
         System.out.println(stringBuilder);
     }
 
-    public void outputPlayerCard(String name, List<String> cards) {
+    public void outputPlayerCard(final String name, final List<String> cards) {
         System.out.println(name + " : " + String.join(PLAYER_DELIMITER, cards));
     }
 
-    public void outputDealerDrawCard(String name) {
+    public void outputDealerDrawCard(final String name) {
         System.out.println(name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
     }
 
-    public void outputScore(int score) {
+    public void outputScore(final int score) {
         System.out.println(RESULT_DELIMITER + score);
     }
 
@@ -40,18 +40,14 @@ public class OutputView {
         System.out.println(FINAL_RESULT_MASSAGE);
     }
 
-    public void outputDealerResult(String name, int win, int tie, int lose) {
+    public void outputDealerResult(final String name, final int win, final int tie, final int lose) {
         System.out.println(name + DEALER_DELIMITER
                 + win + WIN_COUNT_MASSAGE
                 + tie + TIE_COUNT_MASSAGE
                 + lose + LOSE_COUNT_MASSAGE);
     }
 
-    public void outputPlayerResult(String name, String result) {
+    public void outputPlayerResult(final String name, final String result) {
         System.out.println(name + PLAYER_SCORE_DELIMITER + result);
-    }
-
-    public void changeLine() {
-        System.out.println();
     }
 }

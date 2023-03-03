@@ -10,12 +10,12 @@ public class Participant {
     private final Name name;
     private final Cards cards;
 
-    public Participant(Name name) {
+    public Participant(final Name name) {
         this.name = name;
         this.cards = new Cards();
     }
 
-    public void drawCard(Card card) {
+    public void drawCard(final Card card) {
         cards.add(card);
     }
 

@@ -6,7 +6,7 @@ public enum WinTieLose {
     LOSE("패");
     private final String value;
 
-    WinTieLose(String value) {
+    WinTieLose(final String value) {
         this.value = value;
     }
 

@@ -6,7 +6,7 @@ public class RandomCardPicker implements CardPicker {
     public static final Random RANDOM = new Random();
 
     @Override
-    public int pickIndex(int size) {
+    public int pickIndex(final int size) {
         return RANDOM.nextInt(size);
     }
 }

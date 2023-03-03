@@ -19,7 +19,7 @@ public enum Letter {
     private final String name;
     private final int value;
 
-    Letter(String name, int value) {
+    Letter(final String name, final int value) {
         this.name = name;
         this.value = value;
     }

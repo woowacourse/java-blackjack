@@ -12,7 +12,7 @@ public class ResultGame {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public ResultGame(Participants participants) {
+    public ResultGame(final Participants participants) {
         this.dealer = participants.getDealer();
         this.players = participants.getPlayers();
         this.playersResult = new HashMap<>();
@@ -22,7 +22,7 @@ public class ResultGame {
         players.forEach(this::compareScore);
     }
 
-    private void compareScore(Player player) {
+    private void compareScore(final Player player) {
         if (dealer.isBust()) {
             compareScoreWithBustDealer(player);
             return;
@@ -34,7 +34,7 @@ public class ResultGame {
         compareScoreWithNotBustDealer(player);
     }
 
-    private void compareScoreWithBustedPlayer(Player player) {
+    private void compareScoreWithBustedPlayer(final Player player) {
         if (dealer.isBust()) {
             playersResult.put(player, WinTieLose.TIE);
             return;
@@ -43,8 +43,8 @@ public class ResultGame {
 
     }
 
-    private void compareScoreWithNotBustDealer(Player player) {
-        int dealerScore = dealer.getTotalScore();
+    private void compareScoreWithNotBustDealer(final Player player) {
+        final int dealerScore = dealer.getTotalScore();
         if (dealerScore == player.getTotalScore()) {
             playersResult.put(player, WinTieLose.TIE);
         }
@@ -56,7 +56,7 @@ public class ResultGame {
         }
     }
 
-    private void compareScoreWithBustDealer(Player player) {
+    private void compareScoreWithBustDealer(final Player player) {
         if (player.isBust()) {
             playersResult.put(player, WinTieLose.TIE);
             return;
@@ -64,14 +64,14 @@ public class ResultGame {
         playersResult.put(player, WinTieLose.WIN);
     }
 
-    public int getDealerCount(WinTieLose expected) {
+    public int getDealerCount(final WinTieLose expected) {
         return (int) playersResult.values()
                 .stream()
                 .filter(winTieLose -> winTieLose.equals(expected.reverseValue()))
                 .count();
     }
 
-    public WinTieLose getPlayerResult(Player player) {
+    public WinTieLose getPlayerResult(final Player player) {
         return playersResult.get(player);
     }
 }

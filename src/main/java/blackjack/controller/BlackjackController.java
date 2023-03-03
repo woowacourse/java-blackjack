@@ -33,61 +33,57 @@ public class BlackjackController {
         final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
 
         startGame(blackjackGame);
-
         showAllParticipantCards(participants);
-
         hitParticipants(blackjackGame);
-
         showAllCardsAndScore(blackjackGame);
-
         showAllResult(blackjackGame);
     }
 
     private Participants makeParticipants() {
-        Dealer dealer = new Dealer();
-        String playerNames = inputView.inputPlayers();
+        final Dealer dealer = new Dealer();
+        final String playerNames = inputView.inputPlayers();
         return new Participants(dealer, playerNames);
     }
 
     private Deck makeDeck() {
-        DeckMaker deckMaker = new DeckMaker();
+        final DeckMaker deckMaker = new DeckMaker();
         return new Deck(deckMaker.makeDeck(), cardPicker);
     }
 
-    private void startGame(BlackjackGame blackjackGame) {
-        Participants participants = blackjackGame.getParticipants();
-        Dealer dealer = participants.getDealer();
-        List<String> playerNames = participants.getPlayerNames();
+    private void startGame(final BlackjackGame blackjackGame) {
+        final Participants participants = blackjackGame.getParticipants();
+        final Dealer dealer = participants.getDealer();
+        final List<String> playerNames = participants.getPlayerNames();
 
         outputView.outputSplitMessage(dealer.getName(), playerNames);
         blackjackGame.giveTwoCardEveryone();
     }
 
-    private void showAllParticipantCards(Participants participants) {
-        Dealer dealer = participants.getDealer();
+    private void showAllParticipantCards(final Participants participants) {
+        final Dealer dealer = participants.getDealer();
         outputView.outputPlayerCard(dealer.getName(), dealer.getOneCard());
 
-        List<Player> players = participants.getPlayers();
-        for (Player player : players) {
+        final List<Player> players = participants.getPlayers();
+        for (final Player player : players) {
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
         }
     }
 
-    private void hitParticipants(BlackjackGame blackjackGame) {
+    private void hitParticipants(final BlackjackGame blackjackGame) {
         hitPlayers(blackjackGame);
         hitDealer(blackjackGame);
     }
 
-    private void hitPlayers(BlackjackGame blackjackGame) {
-        List<Player> players = blackjackGame.getParticipants().getPlayers();
+    private void hitPlayers(final BlackjackGame blackjackGame) {
+        final List<Player> players = blackjackGame.getParticipants().getPlayers();
 
-        for (Player player : players) {
+        for (final Player player : players) {
             hitEachPlayer(blackjackGame, player);
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
         }
     }
 
-    private void hitEachPlayer(BlackjackGame blackjackGame, Player player) {
+    private void hitEachPlayer(final BlackjackGame blackjackGame, final Player player) {
         while (!player.isBust() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
@@ -95,12 +91,12 @@ public class BlackjackController {
     }
 
     private boolean isMoreHit(final Player player) {
-        Order order = Order.from(inputView.inputOrderCard(player.getName()));
+        final Order order = Order.from(inputView.inputOrderCard(player.getName()));
         return order.isYES();
     }
 
-    private void hitDealer(BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.getParticipants().getDealer();
+    private void hitDealer(final BlackjackGame blackjackGame) {
+        final Dealer dealer = blackjackGame.getParticipants().getDealer();
 
         while (dealer.canHit()) {
             outputView.outputDealerDrawCard(dealer.getName());
@@ -108,39 +104,39 @@ public class BlackjackController {
         }
     }
 
-    private void showAllCardsAndScore(BlackjackGame blackjackGame) {
-        Participants participants = blackjackGame.getParticipants();
+    private void showAllCardsAndScore(final BlackjackGame blackjackGame) {
+        final Participants participants = blackjackGame.getParticipants();
 
         showDealerCardsAndScore(participants);
         showPlayersCardsAndScore(participants);
     }
 
-    private void showDealerCardsAndScore(Participants participants) {
-        Dealer dealer = participants.getDealer();
+    private void showDealerCardsAndScore(final Participants participants) {
+        final Dealer dealer = participants.getDealer();
         outputView.outputPlayerCard(dealer.getName(), dealer.getCardNames());
         outputView.outputScore(dealer.getTotalScore());
     }
 
-    private void showPlayersCardsAndScore(Participants participants) {
-        List<Player> players = participants.getPlayers();
+    private void showPlayersCardsAndScore(final Participants participants) {
+        final List<Player> players = participants.getPlayers();
 
-        for (Player player : players) {
+        for (final Player player : players) {
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
             outputView.outputScore(player.getTotalScore());
         }
     }
 
-    private void showAllResult(BlackjackGame blackjackGame) {
+    private void showAllResult(final BlackjackGame blackjackGame) {
         outputView.outputResult();
-        Participants participants = blackjackGame.getParticipants();
-        Dealer dealer = participants.getDealer();
-        ResultGame resultGame = new ResultGame(participants);
+        final Participants participants = blackjackGame.getParticipants();
+        final Dealer dealer = participants.getDealer();
+        final ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
         outputView.outputDealerResult(dealer.getName(),
                 resultGame.getDealerCount(WinTieLose.WIN),
                 resultGame.getDealerCount(WinTieLose.TIE),
                 resultGame.getDealerCount(WinTieLose.LOSE));
-        for (Player player : participants.getPlayers()) {
+        for (final Player player : participants.getPlayers()) {
             outputView.outputPlayerResult(player.getName(), resultGame.getPlayerResult(player).getValue());
         }
     }

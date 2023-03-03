@@ -23,7 +23,6 @@ public class Cards {
 
     public int calculateTotalScore() {
         int totalScore = makeTotalScore();
-        int aceCount = countAce();
         totalScore = makeTotalUnder21(totalScore);
         return totalScore;
     }

@@ -21,7 +21,7 @@ public class Participants {
     }
 
     private void validate(final String playerNames) {
-        List<String> names = Arrays.stream(playerNames.split(COMMA))
+        final List<String> names = Arrays.stream(playerNames.split(COMMA))
                 .map(String::strip)
                 .collect(Collectors.toList());
 
@@ -29,20 +29,20 @@ public class Participants {
         validateDuplicateName(names);
     }
 
-    private void validateEmptyNames(List<String> names) {
+    private void validateEmptyNames(final List<String> names) {
         if (names.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
         }
     }
 
-    private void validateDuplicateName(List<String> names) {
+    private void validateDuplicateName(final List<String> names) {
         if (isDuplicateName(names)) {
             throw new IllegalArgumentException(DUPLICATE_ERROR_MESSAGE);
         }
     }
 
-    private boolean isDuplicateName(List<String> names) {
-        HashSet<String> uniqueNames = new HashSet<>(names);
+    private boolean isDuplicateName(final List<String> names) {
+        final HashSet<String> uniqueNames = new HashSet<>(names);
         return uniqueNames.size() != names.size();
     }
 

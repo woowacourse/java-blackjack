@@ -22,7 +22,7 @@ public enum Order {
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public boolean isYES() {
