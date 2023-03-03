@@ -14,12 +14,13 @@ public class OutputView {
 
     public void printFirstDrawMessage(List<String> names) {
         String joinedNames = String.join(", ", names);
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.", joinedNames);
+        System.out.printf("%n 딜러와 %s에게 2장을 나누었습니다.%n", joinedNames);
     }
 
     public void printFirstOpenCards(DealerFirstOpenDto dealerFirstOpen, List<PlayerOpenDto> playersCards) {
         System.out.println(dealerFirstOpen.getName().getValue() + ": " + dealerFirstOpen.getCard());
         playersCards.forEach(this::printPlayerCard);
+        System.out.println();
     }
 
     public void printPlayerCard(PlayerOpenDto playerOpenDto) {
@@ -34,10 +35,11 @@ public class OutputView {
     }
 
     public void printDealerHitMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printFinalResults(PlayerResultDto dealerResult, List<PlayerResultDto> playerResults) {
+        System.out.println();
         printFinalResult(dealerResult);
         for (PlayerResultDto result : playerResults) {
             printFinalResult(result);
@@ -51,6 +53,7 @@ public class OutputView {
     }
 
     public void printWinningResults(DealerWinningDto dealerWinningResult, List<PlayerWinningDto> playerWinningResults) {
+        System.out.println();
         System.out.println("## 최종 승패");
         String parsedDealerWinningResult = parseDealerWinningResult(dealerWinningResult);
         System.out.println(dealerWinningResult.getName().getValue() + ": " + parsedDealerWinningResult);
