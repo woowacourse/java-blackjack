@@ -11,10 +11,14 @@ public class DrawState extends State {
     @Override
     public State draw(CardDeck cardDeck) {
         hand.add(cardDeck.pick());
-        if (hand.score().smallScore() > BLACKJACK_NUMBER && hand.score().bigScore() > BLACKJACK_NUMBER) {
+        if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
         }
         return this;
+    }
+
+    private boolean isScoreHigherThanBlackjackNumber() {
+        return hand.score().smallScore() > BLACKJACK_NUMBER;
     }
 
     public State turnStandState() {

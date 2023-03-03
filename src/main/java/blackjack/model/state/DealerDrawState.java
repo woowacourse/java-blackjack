@@ -37,12 +37,20 @@ public class DealerDrawState extends State {
     }
 
     public State checkStandOrBustState(){
-        if (hand.score().smallScore() > BLACKJACK_NUMBER && hand.score().bigScore() > BLACKJACK_NUMBER) {
+        if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
         }
-        if (hand.score().bigScore() > DEALER_HIT_NUMBER) {
+        if (isScoreHigherThanDealerHitNumber()) {
             return new StandState(hand);
         }
         return this;
+    }
+
+    private boolean isScoreHigherThanBlackjackNumber() {
+        return hand.score().smallScore() > BLACKJACK_NUMBER;
+    }
+
+    private boolean isScoreHigherThanDealerHitNumber() {
+        return hand.score().bigScore() > DEALER_HIT_NUMBER;
     }
 }
