@@ -5,6 +5,7 @@ import domain.card.CardType;
 import java.util.Arrays;
 
 public enum CardTypeMapper {
+
     HEART(CardType.HEART, "하트"),
     SPADE(CardType.SPADE, "스페이드"),
     CLOVER(CardType.CLOVER, "클로버"),

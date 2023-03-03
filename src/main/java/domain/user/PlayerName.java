@@ -1,6 +1,7 @@
 package domain.user;
 
 public class PlayerName {
+
     private final String value;
 
     public PlayerName(String value) {

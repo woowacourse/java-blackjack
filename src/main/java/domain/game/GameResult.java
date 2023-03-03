@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 public enum GameResult {
+
     WIN((playerPoint, dealerPoint) -> playerPoint > dealerPoint),
     LOSE((playerPoint, dealerPoint) -> playerPoint < dealerPoint),
     DRAW(Integer::equals);
@@ -45,7 +46,7 @@ public enum GameResult {
     }
 
     private static int calculateGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
-        return (int)gameResults.stream()
+        return (int) gameResults.stream()
                 .filter(gameResult -> gameResult == gameResultType)
                 .count();
 

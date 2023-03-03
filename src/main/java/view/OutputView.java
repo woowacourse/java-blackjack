@@ -21,7 +21,7 @@ public class OutputView {
 
         printPlayerCardWithName(dealer);
         for (Player player : players) {
-           printPlayerCardWithName(player);
+            printPlayerCardWithName(player);
         }
     }
 
@@ -42,7 +42,7 @@ public class OutputView {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerRecord(Dealer dealer,Map<GameResult, Integer> dealerRecord) {
+    public void printDealerRecord(Dealer dealer, Map<GameResult, Integer> dealerRecord) {
         System.out.println("## 최종 승패");
         System.out.print(dealer.getPlayerName().getValue() + " : ");
 
