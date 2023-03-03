@@ -26,4 +26,8 @@ public class Dealer {
     public boolean isUnderScore() {
         return hand.calculateScore() <= 16;
     }
+
+    public boolean isBust() {
+        return hand.calculateScore() >= 22;
+    }
 }

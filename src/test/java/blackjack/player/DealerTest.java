@@ -85,4 +85,18 @@ class DealerTest {
 
         Assertions.assertThat(dealer.isUnderScore()).isTrue();
     }
+
+    @Test
+    @DisplayName("딜러가 버스트인지 확인할 수 있다")
+    void isBust() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardNumber.KING, Pattern.SPADE);
+        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card3 = new Card(CardNumber.KING, Pattern.HEART);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        Assertions.assertThat(dealer.isBust()).isTrue();
+    }
 }
