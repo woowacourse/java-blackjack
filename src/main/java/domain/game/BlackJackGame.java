@@ -2,9 +2,14 @@ package domain.game;
 
 import domain.card.Cards;
 import domain.user.Dealer;
+import domain.user.DealerStatus;
 import domain.user.Player;
+import domain.user.PlayerStatus;
+import domain.user.UserStatus;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
     private final List<Player> players;
@@ -17,17 +22,57 @@ public class BlackJackGame {
         this.cards = cards;
     }
 
-    //플레이어 별 카드를 한장씩 더 뽑도록 하는 기능
-    public void drawOneMoreCardForPlayer() {
-
+    public void drawOneMoreCardForPlayer(Player player) {
+        player.receiveCard(cards.drawCard());
     }
-    //딜러 별 카드를 한장씩 더 뽑도록 하는 기능
 
-    //딜러 상태가 Normal / Bust 상태가 되기 전까지 카드 뽑는 기능
+    public List<Player> getPlayers() {
+        return players;
+    }
 
-    //딜러와 플레이어 전부와 승패를 비교하는 기능
+    public void drawCardUntilOverSixteen() {
+        while (dealer.getStatus().equals(DealerStatus.UNDER_SEVENTEEN)) {
+            dealer.receiveCard(cards.drawCard());
+        }
+    }
 
-    //딜러와 단일 플레이어와 승패를 비교하는 기능
+    public Dealer getDealer() {
+        return dealer;
+    }
 
-    //딜러와 플레이어 점수를 비교하는 기능
+    public void judgeWinner() {
+        int dealerScore = dealer.getScore();
+        UserStatus dealerStatus = dealer.getStatus();
+        for (Player player : players) {
+            UserStatus playerStatus = player.getStatus();
+            if (playerStatus.equals(PlayerStatus.BUST)) {
+                dealer.win();
+                player.lose();
+                continue;
+            }
+            if(playerStatus.equals(PlayerStatus.NORMAL) && dealerStatus.equals(DealerStatus.BUST)) {
+                dealer.lose();
+                player.win();
+                continue;
+            }
+            if(dealerScore >= player.getScore()) {
+                dealer.win();
+                player.lose();
+            }
+            if(dealerScore < player.getScore()) {
+                dealer.lose();
+                player.win();
+            }
+        }
+    }
+
+    public Map<String, Boolean> getUserFinalResult() {
+        Map<String, Boolean> userFinalResult = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            userFinalResult.put(player.getName(), player.isWinner());
+        }
+
+        return userFinalResult;
+    }
 }
