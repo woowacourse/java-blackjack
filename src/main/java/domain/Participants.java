@@ -109,6 +109,6 @@ public class Participants {
     public List<Integer> scores() {
         return players().stream()
                 .map(Participant::score)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 }

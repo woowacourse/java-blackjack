@@ -46,7 +46,10 @@ public class OutputView {
     }
 
     private void printInitializedState(Map<String, List<String>> participantsCards) {
-        participantsCards.forEach((name, cards) -> System.out.print(String.join(", ", name)));
+        StringBuilder stringbuilder = new StringBuilder();
+        participantsCards.forEach((name, cards) -> stringbuilder.append(name).append(", "));
+        stringbuilder.delete(stringbuilder.lastIndexOf(","), stringbuilder.length());
+        System.out.print(stringbuilder);
         System.out.println("에게 2장을 나누었습니다.");
     }
 
