@@ -11,12 +11,8 @@ public class Dealer extends Player {
     @Override
     public Boolean canPick() {
         List<Integer> sumPossibility = holdingCards.getSums();
-        for (Integer sum : sumPossibility) {
-            if (sum <= MAXIMUM_POINT_TO_PICK) {
-                return true;
-            }
-        }
-        return false;
+        return sumPossibility.stream()
+                .anyMatch(sum -> sum <= MAXIMUM_POINT_TO_PICK);
     }
 
     @Override

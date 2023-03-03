@@ -24,12 +24,8 @@ public class Challenger extends Player {
     @Override
     public Boolean canPick() {
         List<Integer> sumPossibility = holdingCards.getSums();
-        for (Integer sum : sumPossibility) {
-            if (sum <= MAXIMUM_POINT) {
-                return true;
-            }
-        }
-        return false;
+        return sumPossibility.stream()
+                .anyMatch(sum -> sum <= MAXIMUM_POINT);
     }
 
     @Override
