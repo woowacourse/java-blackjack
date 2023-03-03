@@ -1,7 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.Hand;
-import blackjack.model.Name;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
@@ -14,8 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 

@@ -1,6 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.model.Name;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.State;
