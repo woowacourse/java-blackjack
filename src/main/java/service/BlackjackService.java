@@ -13,6 +13,7 @@ public class BlackjackService {
 
     private static final String HIT = "y";
     private static final String STAND = "n";
+    public static final String ERROR_HIT_OPERATION = "[ERROR] y 또는 n만 입력할 수 있습니다";
 
     private final Deck deck;
     private final Participants participants;
@@ -49,6 +50,8 @@ public class BlackjackService {
         if (hit.equals(HIT)) {
             nextPlayer.addCard(deck.pollAvailableCard());
         }
+
+        throw new IllegalArgumentException(ERROR_HIT_OPERATION);
     }
 
     public void dealerTurn() {
@@ -57,10 +60,6 @@ public class BlackjackService {
 
     public boolean isDealerStand() {
         return participants.isDealerStand();
-    }
-
-    public String getDealerName() {
-        return participants.getDealer().getName();
     }
 
     public List<String> getPlayersName() {
