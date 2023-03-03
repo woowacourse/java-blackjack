@@ -1,4 +1,6 @@
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import blackjackGame.BlackjackGame;
 import player.DealerFirstOpenDto;
@@ -32,13 +34,31 @@ public class Controller {
     }
 
     private void setGame() {
-        List<String> names = inputView.readPlayerNames();
+        try {
+            List<String> names = inputView.readPlayerNames();
+            validateDuplicatedName(names);
+            addPlayer(names);
+            blackjackGame.supplyCardsToDealer();
+            blackjackGame.supplyCardsToPlayers();
+            outputView.printFirstDrawMessage(names);
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception);
+            setGame();
+        }
+
+    }
+
+    private void validateDuplicatedName(List<String> names) {
+        Set<String> namesWithoutDuplication = new HashSet<>(names);
+        if (namesWithoutDuplication.size() != names.size()) {
+            throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
+        }
+    }
+
+    private void addPlayer(List<String> names) {
         for (String name : names) {
             blackjackGame.addPlayer(new Player(new Name(name)));
         }
-        blackjackGame.supplyCardsToDealer();
-        blackjackGame.supplyCardsToPlayers();
-        outputView.printFirstDrawMessage(names);
     }
 
     private void showFirstDraw() {
