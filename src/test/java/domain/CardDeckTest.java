@@ -19,7 +19,7 @@ class CardDeckTest {
 
         // when & then
         assertThatNoException()
-                .isThrownBy(() -> new CardDeck(cards));
+                .isThrownBy(() -> CardDeck.createShuffled(cards));
     }
 
     private List<Card> createFillCards() {
@@ -41,7 +41,7 @@ class CardDeckTest {
         List<Card> cards = new ArrayList<>();
 
         // when & then
-        assertThatThrownBy(() -> new CardDeck(cards))
+        assertThatThrownBy(() -> CardDeck.createShuffled(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("전체 카드의 수는 52장이어야 합니다.");
     }
@@ -53,7 +53,7 @@ class CardDeckTest {
         List<Card> cards = createFillSameCards();
 
         // when & then
-        assertThatThrownBy(() -> new CardDeck(cards))
+        assertThatThrownBy(() -> CardDeck.createShuffled(cards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -71,7 +71,7 @@ class CardDeckTest {
     void returns_drawn_card() {
         // given
         List<Card> givenCards = createFillCards();
-        CardDeck cardDeck = new CardDeck(givenCards);
+        CardDeck cardDeck = CardDeck.createShuffled(givenCards);
         Card expectedCard = givenCards.get(0);
 
         // when

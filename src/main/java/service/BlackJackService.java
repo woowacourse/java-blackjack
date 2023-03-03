@@ -2,7 +2,6 @@ package service;
 
 import static java.util.stream.Collectors.toList;
 
-import domain.Card;
 import domain.CardDeck;
 import domain.Dealer;
 import domain.DrawCommand;
@@ -29,7 +28,7 @@ public class BlackJackService {
         players.stream()
                 .forEach(player -> splitCards(player, cardDeck));
 
-        return getDrawnCardsInfos(dealer, dealer.openDrawnCards(), players);
+        return getDrawnCardsInfos(dealer, players);
     }
 
     private void splitCards(final Participant participant, final CardDeck cardDeck) {
@@ -39,13 +38,12 @@ public class BlackJackService {
     }
 
     private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer,
-                                                    final List<Card> dealerCards,
                                                     final Players players) {
         List<DrawnCardsInfo> cardInfos = new ArrayList<>();
-        addDealerCardInfo(dealer, dealerCards, cardInfos);
+        addDealerCardInfo(dealer, cardInfos);
 
         players.stream()
-                .forEach(player -> cardInfos.add(DrawnCardsInfo.toDto(player, player.openDrawnCards())));
+                .forEach(player -> cardInfos.add(DrawnCardsInfo.toDto(player)));
 
         return cardInfos;
     }
@@ -57,7 +55,7 @@ public class BlackJackService {
             player.pickCard(cardDeck.draw());
         }
 
-        return DrawnCardsInfo.toDto(player, player.openDrawnCards());
+        return DrawnCardsInfo.toDto(player);
     }
 
     public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
@@ -94,9 +92,8 @@ public class BlackJackService {
     }
 
     private void addDealerCardInfo(final Dealer dealer,
-                                   final List<Card> dealerCards,
                                    final List<DrawnCardsInfo> cardInfos) {
-        cardInfos.add(DrawnCardsInfo.toDto(dealer, dealerCards));
+        cardInfos.add(DrawnCardsInfo.toDto(dealer));
     }
 
     public List<WinLoseResult> getWinLoseResults(final Dealer dealer, final Players players) {

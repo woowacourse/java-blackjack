@@ -13,6 +13,4 @@ public class Player extends Participant {
     public List<Card> openDrawnCards() {
         return Collections.unmodifiableList(drawnCards.getCards());
     }
-
-
 }

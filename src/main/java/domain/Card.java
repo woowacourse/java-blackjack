@@ -12,6 +12,22 @@ public class Card {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return value.isAce();
+    }
+
+    public int getScore() {
+        return value.getScore();
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(final Object other) {
         if (this == other) {
@@ -27,21 +43,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(type, value);
-    }
-
-    public int getScore() {
-        return value.getScore();
-    }
-
-    public boolean isAce() {
-        return value.isAce();
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Value getValue() {
-        return value;
     }
 }
