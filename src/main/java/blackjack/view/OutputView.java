@@ -22,13 +22,14 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String ERROR_HEAD = "[ERROR] ";
 
-    public void printInitialStatus(Dealer dealer, Users users) {
+    public void printInitialStatus(Card card, Users users) {
         System.out.print(System.lineSeparator());
+        final Name DealerName = new Name(Dealer.DEALER_NAME);
         System.out.printf("%s와 %s에게 2장을 나누었습니다.",
-                getNameString(dealer.getName()),
+                getNameString(DealerName),
                 makeUsersNameList(users));
         System.out.print(System.lineSeparator());
-        printCardsOf(dealer.getName(), List.of(dealer.getFirstCard()));
+        printCardsOf(DealerName, List.of(card));
         printUsersCards(users);
     }
 

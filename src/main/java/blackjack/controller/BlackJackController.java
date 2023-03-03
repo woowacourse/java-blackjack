@@ -25,10 +25,10 @@ public class BlackJackController {
     public void run() {
         final List<Name> namesByView = getNamesByView();
         this.blackJack = new BlackJack(namesByView, randomDeck);
-        outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
+        outputView.printInitialStatus(blackJack.getDealerFirstCard(), blackJack.getUsers());
         divideCardTo(namesByView);
         finalizeDealerCardStatus();
-        outputView.printTotalPlayersStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
+        outputView.printTotalPlayersStatus(blackJack.getDealer(), blackJack.getUsersStatus());
         outputView.printResult(blackJack.getGameResult());
     }
 

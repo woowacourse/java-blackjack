@@ -44,8 +44,8 @@ public class BlackJack {
         return users.getCardsOf(user);
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public Card getDealerFirstCard() {
+        return dealer.getFirstCard();
     }
 
     public int finalizeDealer(Deck deck) {
@@ -61,7 +61,7 @@ public class BlackJack {
         return users.getUsers();
     }
 
-    public Dealer getDealerStatus() {
+    public Dealer getDealer() {
         if (dealer.needCard()) {
             throw new IllegalStateException("딜러가 아직 카드의 결론이 나지 않았습니다.");
         }
