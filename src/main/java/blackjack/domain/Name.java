@@ -21,6 +21,10 @@ public class Name {
         }
     }
 
+    public String getName() {
+        return value;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
