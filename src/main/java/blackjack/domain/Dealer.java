@@ -32,7 +32,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    boolean decideHit() {
+    public boolean decideHit() {
         return calculateCardNumber() <= DEALER_HIT_BASED_NUMBER;
     }
 
