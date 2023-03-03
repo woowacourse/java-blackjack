@@ -3,16 +3,16 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final Rank rank;
+    private final Denomination denomination;
     private final Suit suit;
 
-    public Card(Rank rank, Suit suit) {
-        this.rank = rank;
+    public Card(Denomination denomination, Suit suit) {
+        this.denomination = denomination;
         this.suit = suit;
     }
 
     public boolean isAce() {
-        return rank.isAce();
+        return denomination.isAce();
     }
 
     @Override
@@ -20,20 +20,20 @@ public class Card {
         if (this == o) return true;
         if (!(o instanceof Card)) return false;
         Card card = (Card) o;
-        return rank == card.rank && suit == card.suit;
+        return denomination == card.denomination && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, suit);
+        return Objects.hash(denomination, suit);
     }
 
     public int getScore() {
-        return rank.getScore();
+        return denomination.getScore();
     }
 
-    public Rank getRank() {
-        return rank;
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     public Suit getSuit() {

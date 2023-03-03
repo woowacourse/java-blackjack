@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Rank;
+import domain.card.Denomination;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class DealerTest {
         int beforeCount = dealer.getCards().size();
 
         //when
-        dealer.addCard(new Card(Rank.ACE, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
         //then
         int afterCount = dealer.getCards().size();
@@ -32,7 +32,7 @@ class DealerTest {
     void 카드들의_합을_계산_할_수_있다() {
         //given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
+        List<Card> cards = List.of(new Card(Denomination.ACE, Suit.CLUB), new Card(Denomination.EIGHT, Suit.HEART));
         cards.forEach(dealer::addCard);
 
         //when
@@ -46,7 +46,7 @@ class DealerTest {
     void 카드의_합이_16_이하면_stand가_아니다() {
         //given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.FIVE, Suit.HEART));
+        List<Card> cards = List.of(new Card(Denomination.ACE, Suit.CLUB), new Card(Denomination.FIVE, Suit.HEART));
         cards.forEach(dealer::addCard);
 
         //when
@@ -59,7 +59,7 @@ class DealerTest {
     void 카드의_합이_16_초과면_stand() {
         //given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.SIX, Suit.HEART));
+        List<Card> cards = List.of(new Card(Denomination.ACE, Suit.CLUB), new Card(Denomination.SIX, Suit.HEART));
         cards.forEach(dealer::addCard);
 
         //when
@@ -83,9 +83,9 @@ class DealerTest {
     void 카드들의_합이_21_초과라면_bust() {
         //given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
-                new Card(Rank.TEN, Suit.HEART),
-                new Card(Rank.TEN, Suit.SPADE));
+        List<Card> cards = List.of(new Card(Denomination.FIVE, Suit.CLUB),
+                new Card(Denomination.TEN, Suit.HEART),
+                new Card(Denomination.TEN, Suit.SPADE));
 
         //when
         cards.forEach(dealer::addCard);

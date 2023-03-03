@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum Rank {
+public enum Denomination {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -17,7 +17,7 @@ public enum Rank {
 
     private final int score;
 
-    Rank(int score) {
+    Denomination(int score) {
         this.score = score;
     }
 

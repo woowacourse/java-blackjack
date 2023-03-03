@@ -2,7 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.Rank;
+import domain.card.Denomination;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
@@ -57,7 +57,7 @@ class DeckTest {
     }
 
     private List<Card> initCards() {
-        return Arrays.stream(Rank.values())
+        return Arrays.stream(Denomination.values())
                 .flatMap(rank -> Arrays.stream(Suit.values())
                         .map(suit -> new Card(rank, suit)))
                 .collect(Collectors.toUnmodifiableList());

@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Rank;
+import domain.card.Denomination;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ class PlayerTest {
         int beforeCount = player.getCards().size();
 
         //when
-        player.addCard(new Card(Rank.ACE, Suit.CLUB));
+        player.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
         //then
         int afterCount = player.getCards().size();
@@ -73,7 +73,7 @@ class PlayerTest {
     void 카드들의_합을_계산_할_수_있다() {
         //given
         Player player = Player.from("연어");
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
+        List<Card> cards = List.of(new Card(Denomination.ACE, Suit.CLUB), new Card(Denomination.EIGHT, Suit.HEART));
         cards.forEach(player::addCard);
 
         //when
@@ -98,9 +98,9 @@ class PlayerTest {
     void 카드들의_합이_21_초과라면_더_받을_수_없다() {
         //given
         Player player = Player.from("연어");
-        List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
-                new Card(Rank.TEN, Suit.HEART),
-                new Card(Rank.TEN, Suit.SPADE));
+        List<Card> cards = List.of(new Card(Denomination.FIVE, Suit.CLUB),
+                new Card(Denomination.TEN, Suit.HEART),
+                new Card(Denomination.TEN, Suit.SPADE));
 
         //when
         cards.forEach(player::addCard);

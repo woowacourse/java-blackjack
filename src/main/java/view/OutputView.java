@@ -2,7 +2,7 @@ package view;
 
 import domain.PlayerGameResult;
 import domain.card.Card;
-import domain.card.Rank;
+import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Participant;
 
@@ -58,7 +58,7 @@ public class OutputView {
     }
 
     private static String makeCardView(Card card) {
-        return makeRankView(card.getRank()) + makeSuitView(card.getSuit());
+        return makeDenominationView(card.getDenomination()) + makeSuitView(card.getSuit());
     }
 
     private static String makeSuitView(Suit suit) {
@@ -75,21 +75,21 @@ public class OutputView {
         return CLUB;
     }
 
-    private static String makeRankView(Rank rank) {
-        if (rank.equals(Rank.ACE)) {
+    private static String makeDenominationView(Denomination denomination) {
+        if (denomination.equals(Denomination.ACE)) {
             return ACE;
         }
-        if (rank.equals(Rank.JACK)) {
+        if (denomination.equals(Denomination.JACK)) {
             return JACK;
         }
-        if (rank.equals(Rank.QUEEN)) {
+        if (denomination.equals(Denomination.QUEEN)) {
             return QUEEN;
         }
-        if (rank.equals(Rank.KING)) {
+        if (denomination.equals(Denomination.KING)) {
             return KING;
         }
 
-        return String.valueOf(rank.getScore());
+        return String.valueOf(denomination.getScore());
     }
 
     public static void printDealerHit() {
