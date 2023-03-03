@@ -1,12 +1,14 @@
-package domain;
+package domain.user;
+
+import domain.card.Card;
 
 public class Player {
 
-    private Name playerName;
+    private PlayerName playerName;
     private CardPool cardPool;
 
     public Player(String playerName, CardPool cardPool) {
-        this.playerName = new Name(playerName);
+        this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
     }
 
@@ -26,7 +28,7 @@ public class Player {
         return cardPool.isOverCardPointLimit();
     }
 
-    public Name getPlayerName() {
+    public PlayerName getPlayerName() {
         return playerName;
     }
 

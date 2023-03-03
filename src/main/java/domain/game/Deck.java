@@ -1,4 +1,9 @@
-package domain;
+package domain.game;
+
+import domain.strategy.NumberGenerator;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardType;
 
 import java.util.ArrayList;
 import java.util.List;

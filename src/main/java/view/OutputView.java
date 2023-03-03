@@ -1,9 +1,12 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Player;
+import domain.card.Card;
+import domain.user.Dealer;
+import domain.game.GameResult;
+import domain.user.Player;
+import view.mapper.CardNumberMapper;
+import view.mapper.CardTypeMapper;
+import view.mapper.GameResultMapper;
 
 import java.util.List;
 import java.util.Map;

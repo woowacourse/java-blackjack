@@ -1,4 +1,7 @@
-package domain;
+package domain.user;
+
+import domain.game.Deck;
+import domain.game.GameResult;
 
 import java.util.Collections;
 import java.util.HashMap;

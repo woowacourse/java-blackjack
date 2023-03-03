@@ -1,8 +1,10 @@
-package domain;
+package domain.game;
+
+import domain.user.Dealer;
+import domain.user.Player;
 
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 public enum GameResult {
     WIN((playerPoint, dealerPoint) -> playerPoint > dealerPoint),

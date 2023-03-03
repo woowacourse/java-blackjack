@@ -1,6 +1,9 @@
-package domain;
+package domain.user;
 
-public class Dealer extends Player{
+import domain.user.CardPool;
+import domain.user.Player;
+
+public class Dealer extends Player {
 
     private static final int DEALER_THRESHOLD = 16;
 

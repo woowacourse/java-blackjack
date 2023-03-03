@@ -1,6 +1,9 @@
 package controller;
 
-import domain.*;
+import domain.game.BlackjackGame;
+import domain.strategy.RandomNumberGenerator;
+import domain.user.People;
+import domain.user.Player;
 import view.InputView;
 import view.OutputView;
 

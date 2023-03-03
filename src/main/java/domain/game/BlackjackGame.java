@@ -1,4 +1,8 @@
-package domain;
+package domain.game;
+
+import domain.strategy.NumberGenerator;
+import domain.user.People;
+import domain.user.Player;
 
 import java.util.List;
 import java.util.Map;

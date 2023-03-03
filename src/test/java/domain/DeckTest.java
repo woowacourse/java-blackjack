@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardType;
+import domain.game.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
