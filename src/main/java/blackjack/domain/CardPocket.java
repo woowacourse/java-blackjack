@@ -52,7 +52,6 @@ public class CardPocket {
                 .sum();
     }
 
-    //todo 메서드 네이밍, 로직 수정
     private int calculateAceScore(final int score) {
         if (score + VALUE_ACE > BLACKJACK) {
             return score;
