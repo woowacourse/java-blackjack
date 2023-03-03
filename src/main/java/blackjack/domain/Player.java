@@ -15,7 +15,7 @@ public interface Player {
 
     void stay();
 
-    Result play(Hand hand);
+    Result play(final Hand hand);
 
     String getName();
 

@@ -48,7 +48,7 @@ public class Dealer implements Player {
     }
 
     @Override
-    public Result play(Hand hand) {
+    public Result play(final Hand hand) {
         throw new UnsupportedOperationException();
     }
 
