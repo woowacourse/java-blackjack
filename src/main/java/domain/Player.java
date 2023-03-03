@@ -48,7 +48,6 @@ public class Player {
         return score;
     }
 
-    // TODO: 2023/03/03 메서드명 변경
     private int getScoreFromA(int score) {
         if (score + 11 > 21) {
             return 1;
@@ -63,6 +62,18 @@ public class Player {
         }
 
         return Integer.parseInt(letter);
+    }
+
+    public Result compare(Player other) {
+        if (getScore() == other.getScore() || (isBusted() && other.isBusted())) {
+            return Result.DRAW;
+        }
+
+        if (!isBusted() && (getScore() > other.getScore() || other.isBusted())) {
+            return Result.WIN;
+        }
+
+        return Result.LOSE;
     }
 
     public int getScore() {

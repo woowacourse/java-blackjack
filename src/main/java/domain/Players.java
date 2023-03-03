@@ -27,28 +27,16 @@ public class Players {
         dealer.addCard(deck.drawCard());
     }
 
-    private Result getResult(Player player, Player other) {
-        if (player.getScore() == other.getScore() || (player.isBusted() && other.isBusted())) {
-            return Result.DRAW;
-        }
-
-        if (!player.isBusted() && (player.getScore() > other.getScore() || other.isBusted())) {
-            return Result.WIN;
-        }
-
-        return Result.LOSE;
-    }
-
     public Result getUserResult(String name) {
         Player player = findUserByName(name);
-        return getResult(player, dealer);
+        return player.compare(dealer);
     }
 
     public List<Result> getDealerResults() {
         List<Result> results = new ArrayList<>();
 
         for (Player player : users) {
-            results.add(getResult(dealer, player));
+            results.add(dealer.compare(player));
         }
         return results;
     }

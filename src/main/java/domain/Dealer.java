@@ -20,7 +20,6 @@ public class Dealer extends Player {
     }
 
     public boolean drawCardIfNecessary(Deck deck) {
-        // TODO: 메서드 이름 생각해보기
         if (!canHit()) {
             addCard(deck.drawCard());
             return true;
