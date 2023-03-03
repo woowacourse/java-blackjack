@@ -37,7 +37,7 @@ public class Players {
     }
 
     public Map<String, List<String>> getInfo() {
-        Map<String, List<String>> info = new HashMap<>();
+        Map<String, List<String>> info = new LinkedHashMap<>();
         for (Player player : players) {
             info.put(player.getName().getName(), player.getCards());
         }

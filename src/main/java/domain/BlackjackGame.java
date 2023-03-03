@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -43,7 +40,7 @@ public class BlackjackGame {
     public void distributePlayer(Player player) {
         player.addCard(cardDeck.poll());
 
-        Map<String, CardNumber> map = new HashMap<>();
+        Map<String, CardNumber> map = new LinkedHashMap<>();
         map.put("a", CardNumber.ACE);
 
     }
@@ -51,7 +48,7 @@ public class BlackjackGame {
 
     public Map<String,List<Result>> getDealerResult(){
         Map<String,Result> playerResult = getPlayersResult();
-        Map<String,List<Result>> dealerResult = new HashMap<>();
+        Map<String,List<Result>> dealerResult = new LinkedHashMap<>();
         List<Result> dealerResults = new ArrayList<>();
         for(String name : playerResult.keySet()){
             Result result = playerResult.get(name);
@@ -62,7 +59,7 @@ public class BlackjackGame {
     }
 
     public Map<String, Result> getPlayersResult() {
-        Map<String,Result> result = new HashMap<>();
+        Map<String,Result> result = new LinkedHashMap<>();
         int dealer = this.dealer.getCardsSum();
         for (Player player : players.getPlayers()) {
             result.put(player.getName().getName(),isPlayerWin(dealer,player.getCardsSum()));
@@ -87,7 +84,7 @@ public class BlackjackGame {
     }
 
 //    public Map<String,List<Integer>> calculateWinOrLose() {
-//        Map<String,List<Integer>> result = new HashMap<>();
+//        Map<String,List<Integer>> result = new LinkedHashMap<>();
 //        int dealerSum = dealer.getCardsSum();
 //        for(Player player: players.getPlayers()){
 //            int playerSum = player.getCardsSum();
