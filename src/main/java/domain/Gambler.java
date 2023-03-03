@@ -13,4 +13,6 @@ public interface Gambler {
     List<Card> getCards();
 
     int getScore();
+
+    boolean isBustedGambler(int sum);
 }
