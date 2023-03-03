@@ -41,7 +41,7 @@ public class BlackJackController {
         initDrawCard();
         printInitStatus();
         drawMoreCardForPlayers();
-        drawDealerMoreCard();
+        drawMoreCardForDealer();
         printAllStatus();
         printGameResult();
     }
@@ -138,7 +138,7 @@ public class BlackJackController {
                 .collect(toList());
     }
 
-    private void drawDealerMoreCard() {
+    private void drawMoreCardForDealer() {
         Person dealer = people.getDealer();
         OutputView.printDealerDrawCardMessage(dealer.getScore());
         if (dealer.canDrawCard()) {
