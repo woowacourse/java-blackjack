@@ -19,7 +19,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
 
     public void printPlayerNameRequestMessage() {
-        System.out.printf(PLAYER_NAME_REQUEST_MESSAGE);
+        System.out.println(PLAYER_NAME_REQUEST_MESSAGE);
     }
 
     public void printInitialStatus(Map<String, List<String>> initialStatus) {
@@ -32,7 +32,7 @@ public class OutputView {
         playerNames.forEach(name -> printCards(name, initialStatus.get(name)));
     }
 
-    private void printCards(String name, List<String> cardNames) {
+    public void printCards(String name, List<String> cardNames) {
         System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, name
                 , String.join(DELIMITER, cardNames)));
     }
