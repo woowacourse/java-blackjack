@@ -14,8 +14,8 @@ public class Participants {
     public static Participants from(List<String> names) {
         validateDuplicate(names);
         List<Participant> players = names.stream()
-                                         .map(Player::new)
-                                         .collect(Collectors.toList());
+                .map(Player::new)
+                .collect(Collectors.toList());
         players.add(new Dealer());
         return new Participants(players);
     }
@@ -28,23 +28,23 @@ public class Participants {
 
     public List<Player> getPlayers() {
         return participants.stream()
-                           .filter(participant -> participant instanceof Player)
-                           .map(participant -> (Player) participant)
-                           .collect(Collectors.toList());
+                .filter(participant -> participant instanceof Player)
+                .map(participant -> (Player) participant)
+                .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {
         return (Dealer) participants.stream()
-                                    .filter(participant -> participant instanceof Dealer)
-                                    .findAny()
-                                    .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
-                                            "찾지 못했습니다."));
+                .filter(participant -> participant instanceof Dealer)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
+                        "찾지 못했습니다."));
     }
 
     public List<String> getPlayerNames() {
         return getPlayers().stream()
-                           .map(Participant::getName)
-                           .collect(Collectors.toList());
+                .map(Participant::getName)
+                .collect(Collectors.toList());
     }
 
     public List<Participant> toList() {

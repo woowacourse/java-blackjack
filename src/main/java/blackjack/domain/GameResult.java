@@ -10,11 +10,11 @@ public enum GameResult {
         this.value = value;
     }
 
-    public static GameResult of(Participant player, Participant dealer) {
-        if (player.getState() == ScoreState.BUST) {
+    public static GameResult of(Player player, Dealer dealer) {
+        if (player.getState().isBust()) {
             return GameResult.LOSE;
         }
-        if (dealer.getState() == ScoreState.BUST) {
+        if (dealer.getState().isBust()) {
             return GameResult.WIN;
         }
         if (player.getScore() >= dealer.getScore()) {

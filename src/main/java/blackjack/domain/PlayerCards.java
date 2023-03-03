@@ -11,8 +11,7 @@ public class PlayerCards {
     }
 
     private static int getTotalScore(int score, Card card) {
-        if (card.isAce() && ScoreState.of(score)
-                                      .isBust()) {
+        if (card.isAce() && ScoreState.of(score).isBust()) {
             score -= 10;
         }
         return score;

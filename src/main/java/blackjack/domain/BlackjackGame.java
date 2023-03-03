@@ -27,7 +27,7 @@ public class BlackjackGame {
 
     public Map<Participant, GameResult> getResult() {
         Map<Participant, GameResult> result = new LinkedHashMap<>();
-        for (Participant player : participants.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             result.put(player, GameResult.of(player, participants.getDealer()));
         }
         return result;
