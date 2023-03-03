@@ -37,4 +37,8 @@ public class BlackJackGame {
         }
         return drawCount;
     }
+
+    public void playPlayer(final String userName) {
+        users.getUser(userName).drawCard(deck);
+    }
 }

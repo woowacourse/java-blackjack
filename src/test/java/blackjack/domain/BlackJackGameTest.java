@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackGameTest {
-    final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE), // 필립
-            new Card(CardShape.CLOVER, CardNumber.TEN),  // 필립
-            new Card(CardShape.CLOVER, CardNumber.NINE),    // 홍실
-            new Card(CardShape.HEART, CardNumber.JACK),     // 홍실
-            new Card(CardShape.HEART, CardNumber.NINE),     // 딜러
-            new Card(CardShape.DIAMOND, CardNumber.FOUR),   // 딜러
+    final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
+            new Card(CardShape.CLOVER, CardNumber.TEN),
+            new Card(CardShape.CLOVER, CardNumber.NINE),
+            new Card(CardShape.HEART, CardNumber.JACK),
+            new Card(CardShape.HEART, CardNumber.NINE),
+            new Card(CardShape.DIAMOND, CardNumber.FOUR),
             new Card(CardShape.DIAMOND, CardNumber.TWO),
             new Card(CardShape.DIAMOND, CardNumber.SIX),
             new Card(CardShape.DIAMOND, CardNumber.SEVEN),
@@ -71,5 +71,19 @@ class BlackJackGameTest {
         boolean isBust = blackJackGame.isBust("필립");
 
         assertThat(isBust).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어 턴 진행 테스트")
+    void playPlayerTest() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
+
+        blackJackGame.playPlayer("필립");
+        List<Card> cards = blackJackGame.getStatus().get("필립");
+
+        assertThat(cards).containsExactly(new Card(CardShape.SPADE, CardNumber.ACE), // 필립
+                new Card(CardShape.CLOVER, CardNumber.TEN),
+                new Card(CardShape.HEART, CardNumber.NINE));
+
     }
 }
