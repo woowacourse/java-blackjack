@@ -3,6 +3,7 @@ package controller;
 import domain.PlayerCommand;
 import domain.card.Cards;
 import domain.card.shuffler.RandomCardsShuffler;
+import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import view.InputView;
@@ -32,6 +33,12 @@ public class MainController {
                 repeat = player.calculateScore() < 21 && command.isHit();
                 outputView.printSinglePlayerCards(player);
             }
+        }
+
+        Dealer dealer = participants.getDealer();
+        if (dealer.calculateScore() <= 16) {
+            outputView.printFillDealerCards();
+            dealer.fillCards(cards);
         }
     }
 }
