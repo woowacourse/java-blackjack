@@ -19,4 +19,9 @@ public class Player extends Participant {
     public String getName() {
         return name.getName();
     }
+
+    public boolean hasName(final String playerName) {
+        return name.getName()
+                .equals(playerName);
+    }
 }
