@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.util.CardNumber;
+import blackjack.util.CardSuit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public abstract class Participant {
 
     public int calculateCardNumberAceCardValueOne() {
         return receivedCards.stream()
-            .mapToInt(card -> card.getCardNumber().value)
+            .mapToInt(card -> card.getCardNumber().getValue())
             .sum();
     }
 

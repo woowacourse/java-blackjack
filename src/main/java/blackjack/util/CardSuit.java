@@ -1,9 +1,8 @@
-package blackjack.view;
+package blackjack.util;
 
-import blackjack.domain.CardSuit;
 import java.util.stream.Stream;
 
-public enum ViewCardSuit {
+public enum CardSuit {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
@@ -12,12 +11,12 @@ public enum ViewCardSuit {
 
     final String cardSuitName;
 
-    ViewCardSuit(String cardSuitName) {
+    CardSuit(String cardSuitName) {
         this.cardSuitName = cardSuitName;
     }
 
-    public static ViewCardSuit getCardSuit(CardSuit cardSuit) {
-        return Stream.of(ViewCardSuit.values())
+    public static CardSuit getCardSuit(CardSuit cardSuit) {
+        return Stream.of(CardSuit.values())
             .filter(suit -> suit.equals(cardSuit))
             .findFirst()
             .get();

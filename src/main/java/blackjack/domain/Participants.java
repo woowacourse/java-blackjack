@@ -24,11 +24,12 @@ public class Participants {
     public List<String> getParticipantsName() {
         return participants.stream()
             .map(participant -> participant.getParticipantName().getName())
-            .collect(Collectors.toUnmodifiableList());
+            .collect(Collectors.toList());
     }
 
     public List<Participant> getParticipants() {
         return participants;
     }
 
+    //todo : 바로 이름을 가져오는 기능 추가
 }
