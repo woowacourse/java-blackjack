@@ -27,4 +27,8 @@ public class Players {
     public Player getPlayer(int i) {
         return players.get(i);
     }
+
+    public int count() {
+        return players.size();
+    }
 }
