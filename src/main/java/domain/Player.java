@@ -69,6 +69,10 @@ public class Player {
         return calculateScore();
     }
 
+    public boolean canHit() {
+        return getScore() < 21;
+    }
+
     public boolean isBusted() {
         return getScore() > 21;
     }

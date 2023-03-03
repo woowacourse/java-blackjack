@@ -74,7 +74,7 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("특정 플레이어가 21미만이라면 카드를 한장 더 준다")
+    @DisplayName("특정 플레이어에게 카드를 한장 더 준다")
     void test_deal_a_card() {
         var players = List.of(
                 new Player("조이", createCards("10", "2"))
@@ -85,20 +85,6 @@ public class GameTest {
 
         var player = game.getPlayers().get(0);
         assertThat(player.getCards()).hasSize(3);
-    }
-
-    @Test
-    @DisplayName("특정 플레이어가 21이상이라면 카드를 주지 않는다")
-    void test_do_not_deal_a_card() {
-        var players = List.of(
-                new Player("조이", createCards("10", "A"))
-        );
-
-        var game = new Game(players, new Deck(), new Dealer(createCards("K")));
-        game.dealAnotherCard(0);
-
-        var player = game.getPlayers().get(0);
-        assertThat(player.getCards()).hasSize(2);
     }
 
     private List<Card> createCards(String... letters) {

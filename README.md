@@ -4,6 +4,7 @@
 
 ## 리팩터링 목록
 - [ ] Game::getResult 메서드 너무 복잡하고 길어
+  - [ ] index -> name 이용하도록 변경 (isWon, dealAnotherCard)
 - [ ] 제약조건을 더 고려해보자
 - [ ] Application 메서드 분리
 - [x] Player::calculateScore 메서드 분리
@@ -13,6 +14,7 @@
 - [ ] Game도 3개다
   - dealer를 players 안에 넣자.
 - [ ] 카드 글자 리팩터링 Deck::buildCards()
+- [ ] Cards 구현
 
 ## 기능 구현 목록
 
@@ -26,6 +28,7 @@
 ### 플레이어
 - [x] 이름을 가진다
 - [x] 플레이어는 카드를 받을 수 있다.
+- [x] hit이 가능한지 확인할 수 있다.
 - [x] 점수를 계산한다
   - [x] king, queen, jack 은 10으로 계산한다.
   - [x] ace 는 1이나 11로 계산한다.

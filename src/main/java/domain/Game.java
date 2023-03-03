@@ -53,9 +53,11 @@ public class Game {
 
     public void dealAnotherCard(int index) {
         Player player = players.get(index);
-        if (player.getScore() < 21) {
-            player.addCard(deck.drawCard());
-        }
+        player.addCard(deck.drawCard());
+    }
+
+    public boolean canHit(Player player) {
+        return player.canHit();
     }
 
     public void dealAnotherCard() {
