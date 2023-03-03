@@ -57,7 +57,7 @@ class ParticipantsTest {
         Participants participants = Participants.of(players);
 
         //when
-        participants.initHand(Deck.create().pollTwoCards());
+        participants.initHand(Deck.create());
 
         //then
         assertThat(participants.getDealer().getCards()).hasSize(2);

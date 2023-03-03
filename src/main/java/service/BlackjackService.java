@@ -28,7 +28,7 @@ public class BlackjackService {
     }
 
     public void start() {
-        participants.initHand(deck.pollTwoCards());
+        participants.initHand(deck);
     }
 
     public boolean existNextPlayerTurn() {

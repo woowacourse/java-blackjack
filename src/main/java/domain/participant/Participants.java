@@ -58,9 +58,9 @@ public class Participants {
         }
     }
 
-    public void initHand(List<Card> cards) {
-        dealer.initHand(cards);
-        players.forEach(player -> player.initHand(cards));
+    public void initHand(Deck deck) {
+        dealer.initHand(deck.pollTwoCards());
+        players.forEach(player -> player.initHand(deck.pollTwoCards()));
     }
 
     public Optional<Participant> getNextTurnPlayer() {
