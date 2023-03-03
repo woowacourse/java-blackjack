@@ -1,5 +1,9 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.*;
 
+import domain.Card;
+import domain.Deck;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

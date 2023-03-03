@@ -1,3 +1,5 @@
+package domain;
+
 public class Card {
     private final Symbol symbol;
     private final CardNumber cardNumber;

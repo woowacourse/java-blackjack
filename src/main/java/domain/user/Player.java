@@ -1,3 +1,8 @@
+package domain.user;
+
+import domain.Card;
+import domain.CardHand;
+
 public class Player extends AbstractUser {
 
     public Player(String nameValue) {

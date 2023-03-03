@@ -1,3 +1,8 @@
+package domain.user;
+
+import domain.CardHand;
+import domain.Name;
+
 abstract public class AbstractUser {
     protected static final int BLACKJACK_SCORE = 21;
 
