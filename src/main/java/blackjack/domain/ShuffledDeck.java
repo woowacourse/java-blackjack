@@ -5,8 +5,8 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Queue;
 
 public class ShuffledDeck implements Deck {
     private static final Deck DECK;
@@ -19,9 +19,9 @@ public class ShuffledDeck implements Deck {
         DECK = new ShuffledDeck(new ArrayDeque<>(cards));
     }
 
-    private final Queue<Card> cards;
+    private final Deque<Card> cards;
 
-    private ShuffledDeck(final Queue<Card> cards) {
+    private ShuffledDeck(final Deque<Card> cards) {
         this.cards = cards;
     }
 
@@ -31,8 +31,8 @@ public class ShuffledDeck implements Deck {
 
     @Override
     public Card draw() {
-        final Card card = cards.remove();
-        cards.add(card);
+        final Card card = cards.removeFirst();
+        cards.addLast(card);
         return card;
     }
 }
