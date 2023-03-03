@@ -15,18 +15,17 @@ import org.junit.jupiter.api.Test;
 class BlackJackResultMakerTest {
 
     private final BlackJackResultMaker blackJackResultMaker = new BlackJackResultMaker();
+    private final Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
+    private final Dealer dealer = new Dealer(dealerCards);
+    private final Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
+    private final List<Participant> players = IntStream.range(0, 10)
+        .mapToObj(i -> new Player(playerCards, "test"))
+        .collect(Collectors.toList());
 
     @Test
     @DisplayName("플레이어들 승패 결과 만들기 테스트(플레이어 모두 승)")
     public void testMakeParticipantsResult() {
         //given
-        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
-        Dealer dealer = new Dealer(dealerCards);
-        Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
-        List<Participant> players = IntStream.range(0, 10)
-            .mapToObj(i -> new Player(playerCards, "test"))
-            .collect(Collectors.toList());
-
         //when
         Map<Participant, Result> results = blackJackResultMaker.makeParticipantsResult(dealer, players);
 
@@ -41,13 +40,6 @@ class BlackJackResultMakerTest {
     @DisplayName("딜러 승패 결과 만들기 테스트(딜러 10패, 플레이어 모두 승)")
     public void testMakeDealerResult() {
         //given
-        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
-        Dealer dealer = new Dealer(dealerCards);
-        Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
-        List<Participant> players = IntStream.range(0, 10)
-            .mapToObj(i -> new Player(playerCards, "test"))
-            .collect(Collectors.toList());
-
         //when
         Result result = blackJackResultMaker.makeDealerResult(dealer, players);
 

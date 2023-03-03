@@ -16,7 +16,6 @@ public class RandomCardGenerator implements CardGenerator {
         }
         return -1;
     });
-    ;
 
     static {
         Arrays.stream(Letter.values())

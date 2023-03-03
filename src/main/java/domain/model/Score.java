@@ -20,12 +20,15 @@ public class Score {
 
     private static int modifyScoreByAce(int score, final int count) {
         for (int i = 0; i < count; i++) {
-            if (score > BLACK_JACK) {
-                score -= Letter.ACE.getNumber();
-                score += ACE_SUB_NUMBER;
-                continue;
-            }
-            break;
+            score = changeToAceSub(score);
+        }
+        return score;
+    }
+
+    private static int changeToAceSub(int score) {
+        if (score > BLACK_JACK) {
+            score -= Letter.ACE.getNumber();
+            score += ACE_SUB_NUMBER;
         }
         return score;
     }
