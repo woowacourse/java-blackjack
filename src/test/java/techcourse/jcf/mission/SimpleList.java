@@ -1,14 +1,14 @@
 package techcourse.jcf.mission;
 
-public interface SimpleList {
+public interface SimpleList<E> {
 
-    boolean add(String value);
+    boolean add(E value);
 
-    void add(int index, String value);
+    void add(int index, E value);
 
     String set(int index, String value);
 
-    String get(int index);
+    E get(int index);
 
     boolean contains(String value);
 
@@ -23,4 +23,12 @@ public interface SimpleList {
     String remove(int index);
 
     void clear();
+
+    static <E> SimpleList<E> fromArrayToList(Object[] values) {
+        SimpleList<E> objectSimpleList = new SimpleArrayList<>();
+        for (Object value : values) {
+            objectSimpleList.add((E) value);
+        }
+        return objectSimpleList;
+    }
 }

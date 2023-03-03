@@ -25,12 +25,17 @@ public class ListStudy {
             System.out.println(value);
         }
 
+        // 미션1
         SimpleList<Integer> values2 = new SimpleArrayList<Integer>();
         values2.add(1);
         values2.add(2);
 
         Integer first = values2.get(0);
         Integer second = values2.get(1);
+
+        // 미션2
+        final String[] arrays = {"first", "second"};
+        final SimpleList<String> values3 = SimpleList.<String>fromArrayToList(arrays);
     }
 }
 

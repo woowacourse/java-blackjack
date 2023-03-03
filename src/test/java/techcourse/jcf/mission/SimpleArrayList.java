@@ -1,15 +1,16 @@
 package techcourse.jcf.mission;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<E> implements SimpleList<E> {
 
-    private static final String[] DEFAULT_EMPTY_ELEMENT_DATA = {};
+    private static final Object[] DEFAULT_EMPTY_ELEMENT_DATA = {};
     private static final int DEFAULT_CAPACITY = 10; // 사이즈 늘릴 때 늘리기 전이 초기 값이면 해당 값으로 사이즈 설정
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
-    private String[] elementData;
+    private Object[] elementData;
     private int size;
 
     public SimpleArrayList() {
@@ -18,21 +19,21 @@ public class SimpleArrayList implements SimpleList {
 
     public SimpleArrayList(int initialCapacity) { // 초기 사이즈를 가지고 생성 시 분기처리하여 생성
         if (initialCapacity > 0) {
-            this.elementData = new String[initialCapacity];
+            this.elementData = new Object[initialCapacity];
         } else if (initialCapacity == 0) {
-            this.elementData = new String[]{};
+            this.elementData = new Object[]{};
         } else {
             throw new IllegalArgumentException("[ERROR] SimpleArrayList initialCapacity is Illegal");
         }
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(E value) {
         add(value, elementData, size);
         return false;
     }
 
-    private void add(String value, String[] elementData, int s) {
+    private void add(E value, Object[] elementData, int s) {
         if (size == elementData.length) {
             elementData = grow();
         }
@@ -40,11 +41,11 @@ public class SimpleArrayList implements SimpleList {
         size = s + 1;
     }
 
-    private String[] grow() {
+    private Object[] grow() {
         return grow(size + 1);
     }
 
-    private String[] grow(int expandCapacity) {
+    private Object[] grow(int expandCapacity) {
         elementData = Arrays.copyOf(elementData, newCapacity(expandCapacity));
         return elementData;
     }
@@ -83,10 +84,10 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         rangeCheckForAdd(index);
         final int s;
-        String[] elementData;
+        Object[] elementData;
         if ((s = size) == (elementData = this.elementData).length)
             elementData = grow();
         System.arraycopy(elementData, index, elementData, index + 1, s - index);
@@ -108,9 +109,9 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String get(int index) {
+    public E get(int index) {
         Objects.checkIndex(index, size);
-        return elementData[index];
+        return (E) elementData[index];
     }
 
     @Override
@@ -212,4 +213,12 @@ public class SimpleArrayList implements SimpleList {
     public String[] getElementData() {
         return elementData;
     }
+
+//    public SimpleList<E> fromArrayToList(Object[] values){
+//        SimpleList<E> objectSimpleList = new SimpleArrayList<>();
+//        for(Object value: values) {
+//            objectSimpleList.add((E)value);
+//        }
+//        return objectSimpleList;
+//    }
 }
