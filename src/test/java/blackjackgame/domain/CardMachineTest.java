@@ -7,6 +7,13 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjackgame.domain.card.CardMachine;
+import blackjackgame.domain.card.Deck;
+import blackjackgame.domain.player.Dealer;
+import blackjackgame.domain.player.Guest;
+import blackjackgame.domain.player.Guests;
+import blackjackgame.domain.player.Name;
+
 class CardMachineTest {
     @DisplayName("카드 머신이 참여자들에게 카드를 두장씩 배분하는지 확인한다.")
     @Test

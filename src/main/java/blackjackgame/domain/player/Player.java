@@ -1,8 +1,11 @@
-package blackjackgame.domain;
+package blackjackgame.domain.player;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import blackjackgame.domain.card.Card;
+import blackjackgame.domain.card.CardValue;
 
 public abstract class Player {
     private static final int ACE_BONUS_SCORE = 10;

@@ -5,6 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjackgame.domain.player.Name;
+
 class NameTest {
     @DisplayName("이름으로 공백이 입력되면 예외를 던지는지 확인한다")
     @Test

@@ -9,6 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import blackjackgame.domain.card.Card;
+import blackjackgame.domain.card.CardValue;
+import blackjackgame.domain.card.Symbol;
+import blackjackgame.domain.player.Dealer;
+import blackjackgame.domain.player.Guest;
+import blackjackgame.domain.player.Name;
+import blackjackgame.domain.player.Player;
+
 class ResultTest {
     private final Card ten = new Card(Symbol.CLOVER, CardValue.KING);
     private final Card nine = new Card(Symbol.CLOVER, CardValue.NINE);
@@ -43,6 +51,12 @@ class ResultTest {
         assertThat(dealerResult.get("승")).isEqualTo(1);
         assertThat(dealerResult.get("패")).isEqualTo(1);
         assertThat(dealerResult.get("무")).isEqualTo(1);
+    }
+
+    private void addCards(Player player, Card... cards) {
+        for (Card card : cards) {
+            player.addCard(card);
+        }
     }
 
     @Nested
@@ -88,7 +102,6 @@ class ResultTest {
             assertThat(dealerResult.get("무")).isEqualTo(1);
         }
     }
-
 
     @Nested
     @DisplayName("딜러의 점수가 높을 때, ")
@@ -175,7 +188,6 @@ class ResultTest {
 
     }
 
-
     @Nested
     @DisplayName("게스트의 점수가 높을 때, ")
     class GuestHigherScore {
@@ -260,16 +272,5 @@ class ResultTest {
         }
 
     }
-
-    private void addCards(Player player, Card ... cards) {
-        for (Card card : cards) {
-            player.addCard(card);
-        }
-    }
-
-
-
-
-
 
 }

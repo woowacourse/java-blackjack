@@ -1,4 +1,4 @@
-package blackjackgame.domain;
+package blackjackgame.domain.card;
 
 public class Card {
     private final Symbol symbol;

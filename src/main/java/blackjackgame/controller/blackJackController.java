@@ -2,12 +2,12 @@ package blackjackgame.controller;
 
 import java.util.List;
 
-import blackjackgame.domain.CardMachine;
-import blackjackgame.domain.Dealer;
-import blackjackgame.domain.Deck;
-import blackjackgame.domain.Guest;
-import blackjackgame.domain.Guests;
 import blackjackgame.domain.Result;
+import blackjackgame.domain.card.CardMachine;
+import blackjackgame.domain.card.Deck;
+import blackjackgame.domain.player.Dealer;
+import blackjackgame.domain.player.Guest;
+import blackjackgame.domain.player.Guests;
 import blackjackgame.view.AddCardResponse;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;

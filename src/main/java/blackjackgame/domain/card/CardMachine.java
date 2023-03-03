@@ -1,4 +1,8 @@
-package blackjackgame.domain;
+package blackjackgame.domain.card;
+
+import blackjackgame.domain.player.Dealer;
+import blackjackgame.domain.player.Guests;
+import blackjackgame.domain.player.Player;
 
 public class CardMachine {
     private final Deck deck;

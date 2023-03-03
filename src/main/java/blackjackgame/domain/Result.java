@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import blackjackgame.domain.player.Dealer;
+import blackjackgame.domain.player.Guest;
+
 public class Result {
     private static final int BLACKJACK_MAX_SCORE = 21;
 

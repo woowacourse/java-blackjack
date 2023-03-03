@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjackgame.domain.player.Guests;
+
 class GuestsTest {
     @DisplayName("참여자가 1명 미만이면 예외를 던지는지 확인한다.")
     @Test

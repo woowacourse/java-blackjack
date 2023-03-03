@@ -1,4 +1,4 @@
-package blackjackgame.domain;
+package blackjackgame.domain.card;
 
 public enum CardValue {
     ACE("A", 1),
