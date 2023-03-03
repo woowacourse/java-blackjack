@@ -44,4 +44,15 @@ class DealerTest {
 
         assertThat(dealer.getAceCount()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("플레이어와 비교해 플레이어의 승리여부 판단하는기능 테스트")
+    void comparePlayerTest() {
+        final Dealer dealer = new Dealer(initialGroup);
+        final Player player = new Player("필립", initialGroup);
+
+        WinningStatus winningStatus = dealer.comparePlayer(player);
+
+        assertThat(winningStatus).isEqualTo(WinningStatus.TIE);
+    }
 }

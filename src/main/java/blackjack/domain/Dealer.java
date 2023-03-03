@@ -14,4 +14,28 @@ public class Dealer extends User {
     public List<Card> getInitialStatus() {
         return List.of(getStatus().get(0));
     }
+
+    public WinningStatus comparePlayer(final Player player) {
+        if (BlackJackRule.isBust(this)) {
+            return compareByBust(player);
+        }
+        return compareByScore(player);
+    }
+
+    private WinningStatus compareByBust(final Player player) {
+        if (BlackJackRule.isBust(player)) {
+            return WinningStatus.TIE;
+        }
+        return WinningStatus.WIN;
+    }
+
+    private WinningStatus compareByScore(final Player player) {
+        if (BlackJackRule.getScore(this) > BlackJackRule.getScore(player)) {
+            return WinningStatus.LOSE;
+        }
+        if (BlackJackRule.getScore(this) == BlackJackRule.getScore(player)) {
+            return WinningStatus.TIE;
+        }
+        return WinningStatus.WIN;
+    }
 }
