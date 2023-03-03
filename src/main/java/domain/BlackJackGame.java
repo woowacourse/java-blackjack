@@ -11,7 +11,7 @@ public class BlackJackGame {
     private final Deck deck;
     private final List<Player> players;
 
-    public BlackJackGame(Deck deck, List<String> playerNames) {
+    public BlackJackGame(final Deck deck, final List<String> playerNames) {
         this.deck = deck;
         this.players = new ArrayList<>();
         addPlayers(playerNames);
@@ -32,12 +32,12 @@ public class BlackJackGame {
         }
     }
 
-    public void drawCard(String playerName) {
+    public void drawCard(final String playerName) {
         Player player = findPlayer(playerName);
         player.drawCard(deck.popCard());
     }
 
-    private Player findPlayer(String playerName) {
+    private Player findPlayer(final String playerName) {
         return players.stream()
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
@@ -50,14 +50,6 @@ public class BlackJackGame {
 
     private Dealer findDealer() {
         return (Dealer) players.get(0);
-    }
-
-    public List<Card> getCards(String playerName) {
-        return findPlayer(playerName).getCards();
-    }
-
-    public int getScore(String playerName) {
-        return findPlayer(playerName).getScore();
     }
 
     public Map<String, Outcome> decidePlayersOutcome() {
@@ -82,7 +74,7 @@ public class BlackJackGame {
         return Outcome.LOSE;
     }
 
-    private boolean isPlayerWin(int dealerScore, int playerScore) {
+    private boolean isPlayerWin(final int dealerScore, final int playerScore) {
         if (dealerScore > BLACK_JACK_NUMBER && playerScore <= BLACK_JACK_NUMBER) {
             return true;
         }
@@ -92,7 +84,7 @@ public class BlackJackGame {
         return false;
     }
 
-    private boolean isPlayerDraw(int dealerScore, int playerScore) {
+    private boolean isPlayerDraw(final int dealerScore, final int playerScore) {
         if (dealerScore > BLACK_JACK_NUMBER && playerScore > BLACK_JACK_NUMBER) {
             return true;
         }
@@ -100,5 +92,13 @@ public class BlackJackGame {
             return true;
         }
         return false;
+    }
+
+    public List<Card> getCards(final String playerName) {
+        return findPlayer(playerName).getCards();
+    }
+
+    public int getScore(final String playerName) {
+        return findPlayer(playerName).getScore();
     }
 }

@@ -11,15 +11,4 @@ public class Dealer extends Player {
     public boolean isDealerDraw() {
         return getScore() < STOP_LOWER_BOUND;
     }
-
-    //public Outcome calculateOutcome(String playerName) {
-    //    Player player = findPlayer(playerName);
-    //    if (player.getScore() > getScore()) {
-    //        return Outcome.WIN;
-    //    }
-    //    if (player.getScore() < getScore()) {
-    //        return Outcome.LOSE;
-    //    }
-    //    return Outcome.DRAW;
-    //}
 }

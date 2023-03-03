@@ -1,6 +1,8 @@
 package controller;
 
+
 import domain.BlackJackGame;
+import domain.Card;
 import domain.Deck;
 import java.util.List;
 import view.InputView;
@@ -23,29 +25,29 @@ public class MainController {
         outputCardResult();
     }
 
-    private void outputCardResult() {
-        OutputView.printCardResult(
-                DEALER_NAME,
-                blackJackGame.getCards(DEALER_NAME),
-                blackJackGame.getScore(DEALER_NAME)
-        );
-
-        names.forEach(name ->
-                OutputView.printCardResult(name, blackJackGame.getCards(name), blackJackGame.getScore(name))
-        );
+    private List<String> inputNames() {
+        OutputView.printInputNames();
+        return InputView.readNames();
     }
 
-    private void drawCardsDealer() {
-        while (blackJackGame.isDealerDraw()) {
-            OutputView.printDealerDrawCard();
-            blackJackGame.drawCard(DEALER_NAME);
-        }
+    private BlackJackGame generateBlackJackGame() {
+        Deck deck = new Deck();
+        deck.shuffleDeck();
+        BlackJackGame blackJackGame = new BlackJackGame(deck, names);
+        OutputView.printDistributeCard(names);
+        return blackJackGame;
+    }
+
+    private void outputCards() {
+        final Card dealerCard = blackJackGame.getCards(DEALER_NAME).get(0);
+        OutputView.printDealerCard(dealerCard);
+        names.forEach(name ->
+                OutputView.printPlayerCard(name, blackJackGame.getCards(name))
+        );
     }
 
     private void drawCardsPlayer() {
-        for (String playerName : names) {
-            drawWhileYes(playerName);
-        }
+        names.forEach(this::drawWhileYes);
     }
 
     private void drawWhileYes(final String playerName) {
@@ -66,23 +68,22 @@ public class MainController {
         return false;
     }
 
-    private void outputCards() {
-        OutputView.printDealerCard(blackJackGame.getCards(DEALER_NAME).get(0));
-        names.forEach(name ->
-                OutputView.printPlayerCard(name, blackJackGame.getCards(name))
+    private void drawCardsDealer() {
+        while (blackJackGame.isDealerDraw()) {
+            OutputView.printDealerDrawCard();
+            blackJackGame.drawCard(DEALER_NAME);
+        }
+    }
+
+    private void outputCardResult() {
+        OutputView.printCardResult(
+                DEALER_NAME,
+                blackJackGame.getCards(DEALER_NAME),
+                blackJackGame.getScore(DEALER_NAME)
         );
-    }
 
-    private BlackJackGame generateBlackJackGame() {
-        Deck deck = new Deck();
-        deck.shuffleDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(deck, names);
-        OutputView.printDistributeCard(names);
-        return blackJackGame;
-    }
-
-    private List<String> inputNames() {
-        OutputView.printInputNames();
-        return InputView.readNames();
+        names.forEach(name ->
+                OutputView.printCardResult(name, blackJackGame.getCards(name), blackJackGame.getScore(name))
+        );
     }
 }

@@ -11,7 +11,7 @@ public class Player {
         this.hand = new Hand();
     }
 
-    public void drawCard(Card card) {
+    public void drawCard(final Card card) {
         hand.addCard(card);
     }
 
