@@ -40,8 +40,10 @@ public class OutputView {
         System.out.println("딜러는 16초과라 카드를 받지 않았습니다.");
     }
 
-    public void printCardsAndScores(List<Player> players) {
-        for (Player player : players) {
+    public void printCardsAndScores(Players players) {
+        printCardsAndScore(players.getDealer());
+
+        for (Player player : players.getUsers()) {
             printCardsAndScore(player);
         }
     }

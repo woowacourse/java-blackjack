@@ -36,8 +36,8 @@ public class Game {
         return players.findUserByName(name).canHit();
     }
 
-    public void dealCardToDealer() {
-        players.dealCardToDealer(deck);
+    public boolean dealCardToDealer() {
+        return players.getDealer().drawCardIfNecessary(deck);
     }
 
     public List<Card> getCards(String name) {

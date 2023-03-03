@@ -24,10 +24,6 @@ public class Players {
         for (Player user : users) {
             user.addCard(deck.drawCard());
         }
-        dealCardToDealer(deck);
-    }
-
-    public void dealCardToDealer(Deck deck) {
         dealer.addCard(deck.drawCard());
     }
 

@@ -1,7 +1,4 @@
-import domain.Dealer;
-import domain.Deck;
-import domain.Game;
-import domain.Player;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
@@ -13,38 +10,48 @@ public class Application {
     private static final OutputView outputView = new OutputView();
 
     public static void main(String[] args) {
-
         List<String> playerNames = inputView.readNames();
         List<Player> players = createPlayersWith(playerNames);
+        Game game = new Game(players, new Deck(), new Dealer());
 
-        Dealer dealer = new Dealer();
-        Game game = new Game(players, new Deck(), dealer);
+        start(game);
+        play(playerNames, game);
+        printResult(game);
+    }
+
+    private static void start(Game game) {
+        Players players = game.getPlayers();
         game.dealTwoCards();
 
-        outputView.printDealCards(players);
-        outputView.printFirstPlayerCard(dealer);
-        outputView.printPlayersCards(players);
+        outputView.printDealCards(players.getUsers());
+        outputView.printFirstPlayerCard(players.getDealer());
+        outputView.printPlayersCards(players.getUsers());
+    }
 
+    private static void play(List<String> playerNames, Game game) {
         for (String playerName : playerNames) {
             selectHitAndStand(game, playerName);
         }
+        dealCardToDealer(game);
+    }
 
-        if (!dealer.isOverSixteen()) {
-            game.dealAnotherCard();
-            outputView.noticeDealerAccept();
-        } else {
-            outputView.noticeDealerDecline();
-        }
-
-        outputView.printCardsAndScore(dealer);
+    private static void printResult(Game game) {
+        Players players = game.getPlayers();
         outputView.printCardsAndScores(players);
-
         System.out.println("## 최종 승패");
-        outputView.printDealerResults(game.getDealerResults());
-
-        for (String playerName : playerNames) {
-            outputView.printResult(playerName, game.isWon(playerName));
+        outputView.printDealerResults(players.getDealerResults());
+        for (Player user : players.getUsers()) {
+            String name = user.getName();
+            outputView.printResult(name, players.getUserResult(name));
         }
+    }
+
+    private static void dealCardToDealer(Game game) {
+        if (game.dealCardToDealer()) {
+            outputView.noticeDealerAccept();
+            return;
+        }
+        outputView.noticeDealerDecline();
     }
 
     private static void selectHitAndStand(Game game, String playerName) {
@@ -56,16 +63,11 @@ public class Application {
 
     private static boolean dealAnotherCardIfHit(Game game, String playerName) {
         if (inputView.askForAnotherCard(playerName)) {
-            game.dealAnotherCard(playerName);
+            game.dealCard(playerName);
             outputView.printPlayerCards(playerName, game.getCards(playerName));
             return true;
         }
         return false;
-    }
-
-    private static List<Player> createPlayers() {
-        List<String> playerNames = inputView.readNames();
-        return createPlayersWith(playerNames);
     }
 
     private static List<Player> createPlayersWith(List<String> playerNames) {

@@ -62,7 +62,7 @@ class DealerTest {
                 new Card(face1, letter1),
                 new Card(face2, letter2)));
 
-        assertThat(dealer.isOverSixteen()).isEqualTo(isOverSixteen);
+        assertThat(dealer.canHit()).isEqualTo(isOverSixteen);
     }
 
     @Test

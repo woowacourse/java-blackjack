@@ -14,15 +14,18 @@ public class Dealer extends Player {
         super("딜러", cards);
     }
 
-    public boolean isOverSixteen() {
+    @Override
+    public boolean canHit() {
         return getScore() > 16;
     }
 
-    public void drawCardIfNecessary(Deck deck) {
+    public boolean drawCardIfNecessary(Deck deck) {
         // TODO: 메서드 이름 생각해보기
-        if (!isOverSixteen()) {
+        if (!canHit()) {
             addCard(deck.drawCard());
+            return true;
         }
+        return false;
     }
 }
 
