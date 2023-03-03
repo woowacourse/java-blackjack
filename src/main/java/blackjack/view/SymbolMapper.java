@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Symbol;
+import blackjack.domain.card.Symbol;
 
 import java.util.Arrays;
 
@@ -9,7 +9,7 @@ public enum SymbolMapper {
     SPADE(Symbol.SPADE, "스페이드"),
     DIAMOND(Symbol.DIAMOND, "다이아몬드"),
     HEART(Symbol.HEART, "하트"),
-    CLOVER(Symbol.CLOVER,"클로버");
+    CLOVER(Symbol.CLOVER, "클로버");
 
     private final Symbol symbol;
     private final String value;

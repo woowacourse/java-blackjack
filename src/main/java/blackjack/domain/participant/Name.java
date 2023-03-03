@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class Name {
     }
 
     private void validateSpace(String name) {
-        if(name.isBlank() || name.contains(SPACE)) {
+        if (name.isBlank() || name.contains(SPACE)) {
             throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
         }
     }

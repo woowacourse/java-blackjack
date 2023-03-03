@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public abstract class Participant {
 
@@ -26,7 +29,7 @@ public abstract class Participant {
         return sum;
     }
 
-    abstract boolean canReceive();
+    public abstract boolean canReceive();
 
     public Cards getCards() {
         return cards;

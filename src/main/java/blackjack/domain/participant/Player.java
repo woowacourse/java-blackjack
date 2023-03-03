@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class Player extends Participant{
+public class Player extends Participant {
 
     private final Name name;
 

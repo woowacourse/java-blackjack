@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Number;
+import blackjack.domain.card.Number;
 
 import java.util.Arrays;
 

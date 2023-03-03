@@ -1,10 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
 
-    private static final int CARD_RECEIVE_CRITERIA  = 16;
+    private static final int CARD_RECEIVE_CRITERIA = 16;
     private static final int MAX_CARD_COUNT = 3;
     private static final int FIRST_CARD_INDEX = 0;
 
