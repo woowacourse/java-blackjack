@@ -20,7 +20,6 @@ class PlayerTest {
     void player_initial_state_draw() {
         //given
         Player player = new Player(new Name("도치"), new InitialState(new Hand()));
-
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
         List<Card> cards = List.of(card1, card2);
@@ -30,7 +29,7 @@ class PlayerTest {
         player.play(cardDeck);
 
         //then
-        Assertions.assertThat(player.getCards()).containsExactly(card2, card1);
+        Assertions.assertThat(player.getHand().getCards()).containsExactly(card2, card1);
     }
 
     @Test
@@ -41,7 +40,6 @@ class PlayerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.FIVE);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.NINE);
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-
         List<Card> cards = List.of(card4, card3);
         Player player = new Player(new Name("도치"), new DrawState(new Hand(new ArrayList<>(List.of(card1, card2)))));
         CardDeck cardDeck = new CardDeck(cards);
@@ -62,7 +60,6 @@ class PlayerTest {
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.JACK);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.KING);
-
         List<Card> cards = List.of(card1, card2, card3);
         Player player = new Player(new Name("도치"), new InitialState(new Hand()));
         CardDeck cardDeck = new CardDeck(cards);

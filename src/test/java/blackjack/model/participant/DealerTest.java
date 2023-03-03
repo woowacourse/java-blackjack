@@ -22,7 +22,6 @@ class DealerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.FIVE);
         Card card3 = Card.of(CardSuit.HEART, CardNumber.FIVE);
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
-
         List<Card> cards = List.of(card4, card3);
         Dealer dealer = new Dealer(new DealerDrawState(new Hand(new ArrayList<>(List.of(card1, card2)))));
         CardDeck cardDeck = new CardDeck(cards);
