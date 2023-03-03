@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJack {
@@ -9,10 +10,27 @@ public class BlackJack {
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackJack(Users users, Dealer dealer, Deck deck) {
-        this.users = users;
-        this.dealer = dealer;
+    public BlackJack(List<Name> usersName, Deck deck) {
+        this.users = makeUsersBy(usersName, deck);
+        this.dealer = new Dealer(getInitialCards(deck));
         this.deck = deck;
+    }
+
+    private Users makeUsersBy(final List<Name> usersName, final Deck deck) {
+        List<User> users = new ArrayList<>();
+        for (Name name : usersName) {
+            List<Card> cards = getInitialCards(deck);
+            final User user = new User(name, new Cards(cards));
+            users.add(user);
+        }
+        return new Users(users);
+    }
+
+    private List<Card> getInitialCards(final Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(deck.drawCard());
+        cards.add(deck.drawCard());
+        return cards;
     }
 
     private void giveCardToPlayers() {
