@@ -15,12 +15,15 @@ import java.util.stream.IntStream;
 
 import static view.message.Message.BLACKJACK_MESSAGE;
 import static view.message.Message.BUST_MESSAGE;
+import static view.message.Message.DEALER_DRAW_MESSAGE;
 
 public class GameController {
 
     private static final int START_GIVEN_COUNT = 2;
     private static final int PARTICIPANT_GIVEN_COUNT = 1;
     private static final int PLAYER_ORDER_OFFSET = 1;
+    private static final int DEALER_ORDER = 0;
+
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -37,6 +40,7 @@ public class GameController {
         handCards(participants, gameManager);
         printParticipantCards(participants);
         drawPlayersCard(participants, gameManager);
+        handleDealerCards(participants, gameManager);
     }
 
     private Participants makeParticipants() {
@@ -116,5 +120,14 @@ public class GameController {
             String command = inputView.getDrawCardCommand(player.getName());
             return DrawCardCommand.findCardCommand(command);
         });
+    }
+
+    private void handleDealerCards(final Participants participants, final GameManager gameManager) {
+        Dealer dealer = (Dealer) participants.getDealer();
+        OutputView.print(System.lineSeparator().trim());
+        while (dealer.canGiveCard()) {
+            gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
+            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()));
+        }
     }
 }

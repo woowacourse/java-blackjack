@@ -21,7 +21,7 @@ public enum DrawCardCommand {
     }
 
     public static DrawCardCommand findCardCommand(final String command) {
-        return Optional.ofNullable(CACHE.get(command))
+        return Optional.ofNullable(CACHE.get(command.toLowerCase()))
                 .orElseThrow(() -> new IllegalArgumentException(getExceptionMessage()));
     }
 
