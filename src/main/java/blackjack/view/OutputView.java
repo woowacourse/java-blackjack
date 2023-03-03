@@ -8,11 +8,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    public static final String CARD_USER_DELIMITER = ": ";
+    public static final String BLANK = " ";
+    public static final String DEALER_CARD = "딜러 카드: ";
+    public static final String DEALER = "딜러: ";
+    public static final String RESULT_DELIMITER = " - 결과: ";
+    public static final String CARD_DELIMITER = "카드: ";
+    public static final String RESULT_TITLE = "## 최종 승패";
+
     private OutputView() {
     }
 
     public static void printReadyMessage(List<Name> names) {
-        String allName = names.stream().map(Name::getName).collect(Collectors.joining(", "));
+        String allName = names.stream()
+                .map(Name::getName)
+                .collect(Collectors.joining(", "));
         System.out.println("딜러와 " + allName + "2장을 나누었습니다.");
     }
 
@@ -24,7 +35,7 @@ public class OutputView {
 
     public static void printPlayerCurrentCards(Player player) {
         String playerCards = getPlayerCards(player);
-        System.out.println(player.getPlayerName() + "카드: " + playerCards);
+        System.out.println(player.getPlayerName() + CARD_DELIMITER + playerCards);
     }
 
     private static String getPlayerCards(User user) {
@@ -38,27 +49,27 @@ public class OutputView {
                 .map(card -> card.getNumber().getNumber() + card.getSymbol().getSymbol())
                 .limit(1)
                 .collect(Collectors.joining(""));
-        System.out.println("딜러 카드: " + dealerCards);
+        System.out.println(DEALER_CARD + dealerCards);
     }
 
     public static void printScore(Dealer dealer, Players players) {
-        System.out.println("딜러 카드: " + getPlayerCards(dealer) + " - 결과: " + dealer.getTotalScore());
+        System.out.println(DEALER_CARD + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
         for (Player player : players.getPlayers()) {
-            System.out.println(getPlayerCards(player) + " - 결과: " + player.getTotalScore());
+            System.out.println(getPlayerCards(player) + RESULT_DELIMITER + player.getTotalScore());
         }
     }
 
     public static void printResults(HashMap<Player, Result> playerResults, HashMap<Result, Integer> dealerResults) {
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
+        System.out.println(RESULT_TITLE);
+        System.out.print(DEALER);
         for (Result result : dealerResults.keySet()) {
             if (dealerResults.get(result) > 0) {
-                System.out.print(dealerResults.get(result) + result.getResult() + " ");
+                System.out.print(dealerResults.get(result) + result.getResult() + BLANK);
             }
         }
         System.out.println();
         for (Player player : playerResults.keySet()) {
-            System.out.println(player.getPlayerName() + ": " + playerResults.get(player).getResult());
+            System.out.println(player.getPlayerName() + CARD_USER_DELIMITER + playerResults.get(player).getResult());
         }
     }
 
