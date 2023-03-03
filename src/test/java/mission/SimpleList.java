@@ -69,4 +69,13 @@ public interface SimpleList<E> {
         }
         return tmpList;
     }
+
+    static void copy(SimpleList<? extends Printer> child, SimpleList<? super Printer> parent) {
+        // Laser<>   Print<>
+
+        parent.clear();
+        for (int i = 0; i < child.size(); i++) {
+            parent.add(child.get(i));
+        }
+    }
 }

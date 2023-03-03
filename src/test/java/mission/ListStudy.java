@@ -2,6 +2,9 @@ package mission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -59,4 +62,20 @@ public class ListStudy {
         assertThat(filteredIntValues.get(0)).isEqualTo(1);
         assertThat(filteredIntValues.get(1)).isEqualTo(2);
     }
+
+    @Test
+    void mission5() {
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+        SimpleList.copy(laserPrinters, printers);
+
+        System.out.println(printers.get(0) == laserPrinter); // true
+
+    }
 }
+
+
+class Printer { }
+class LaserPrinter extends Printer { }
