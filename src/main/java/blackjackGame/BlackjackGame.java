@@ -39,4 +39,8 @@ public class BlackjackGame {
             players.takeCard(i, deck.drawCard());
         }
     }
+
+    public void supplyAdditionalCard(int playerIndex) {
+        players.takeCard(playerIndex, deck.drawCard());
+    }
 }
