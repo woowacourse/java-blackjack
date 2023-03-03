@@ -1,3 +1,5 @@
+package domain.card;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;

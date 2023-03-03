@@ -2,7 +2,7 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.PlayerCommand;
-import domain.WinningResult;
+import domain.result.WinningResult;
 import domain.card.Cards;
 import domain.card.shuffler.CardsShuffler;
 import domain.participant.Dealer;
