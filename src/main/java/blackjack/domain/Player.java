@@ -1,11 +1,22 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Name;
-import blackjack.domain.player.PlayerCards;
 
 public class Player extends User {
 
-    public Player(Name name, PlayerCards playerCards) {
-        super(name, playerCards);
+    private static final int SCORE_LIMIT = 21;
+    private final Name name;
+
+    public Player(Name name) {
+        this.name = name;
+    }
+
+    public String getPlayerName() {
+        return name.getName();
+    }
+
+    @Override
+    public boolean isUnderLimit() {
+        return playerCards.getTotalScore() < SCORE_LIMIT;
     }
 }
