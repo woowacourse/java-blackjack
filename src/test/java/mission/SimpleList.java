@@ -33,7 +33,7 @@ public interface SimpleList<T> {
     static double sum(SimpleList<? extends Number> values) {
         Double sum = 0d;
         for (int index = 0; index < values.size(); index++) {
-            sum += Double.parseDouble(String.valueOf(values.get(index)));
+            sum += values.get(index).doubleValue();
         }
         return sum;
     }
@@ -41,8 +41,9 @@ public interface SimpleList<T> {
     static <T> SimpleList<T> filterNegative(SimpleList<? extends Number> values) {
         SimpleList<T> simpleList = new SimpleArrayList<>();
         for (int index = 0; index < values.size(); index++) {
-            if (Double.parseDouble(String.valueOf(values.get(index))) >= 0) {
-                simpleList.add((T) values.get(index));
+            Number element = values.get(index);
+            if (element.doubleValue() >= 0) {
+                simpleList.add((T) element);
             }
         }
         return simpleList;
