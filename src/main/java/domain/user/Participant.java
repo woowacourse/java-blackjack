@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.user;
 
 import domain.Card;
 import java.util.ArrayList;

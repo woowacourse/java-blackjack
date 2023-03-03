@@ -1,6 +1,6 @@
 package domain;
 
-import domain.participant.Participant;
+import domain.user.Participant;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
