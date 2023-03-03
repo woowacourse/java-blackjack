@@ -36,4 +36,20 @@ public class GamePlayer {
             giveCardToDealer(card);
         }
     }
+
+    public boolean isHitDealer() {
+        return dealer.isHit();
+    }
+
+    public boolean isHitPlayerByIndex(int i) {
+        return players.getPlayerIsHit(i);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
 }
