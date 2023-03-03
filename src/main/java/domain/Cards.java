@@ -28,14 +28,15 @@ public class Cards {
     }
 
     private int checkOver21AndContainsA(final int sum) {
-        if (sum > 21) {
-            for (Card card : cards) {
-                if (card.isA()) {
-                    return sum - 10;
-                }
-            }
+        if (sum > 21 && containsA()) {
+            return sum - 10;
         }
         return sum;
+    }
+
+    private boolean containsA() {
+        return cards.stream()
+                .anyMatch(Card::isA);
     }
 
     private int calculateOddCardsSum() {

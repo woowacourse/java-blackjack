@@ -12,7 +12,10 @@ public class Dealer extends Player {
     public int checkWinningResult(final Player player) {
         int sumOfDealerCards = this.sumOfPlayerCards();
         int sumOfPlayerCards = player.sumOfPlayerCards();
+        return dealerCompareToPlayer(sumOfDealerCards, sumOfPlayerCards);
+    }
 
+    private static int dealerCompareToPlayer(final int sumOfDealerCards, final int sumOfPlayerCards) {
         if (sumOfDealerCards > 21 && sumOfPlayerCards > 21) {
             return 0;
         }
