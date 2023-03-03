@@ -18,6 +18,7 @@ public abstract class User {
     public int getTotalScore() {
         return playerCards.getTotalScore();
     }
+
     public abstract boolean isUnderLimit();
 
     public void updateCardScore(Card card) {

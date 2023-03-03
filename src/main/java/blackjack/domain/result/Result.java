@@ -12,11 +12,11 @@ public enum Result {
     }
 
     public static Result calculateResult(int playerScore, int dealerScore) {
-        if(playerScore>21){
-            playerScore =0;
+        if (playerScore > 21) {
+            playerScore = 0;
         }
-        if(dealerScore>21){
-            dealerScore =0;
+        if (dealerScore > 21) {
+            dealerScore = 0;
         }
         if (playerScore < dealerScore) {
             return LOSE;

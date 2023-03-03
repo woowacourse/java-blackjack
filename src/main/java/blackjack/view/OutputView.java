@@ -1,16 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
-import blackjack.domain.player.User;
-import blackjack.domain.player.Name;
+import blackjack.domain.player.*;
 import blackjack.domain.result.Result;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class OutputView {
     private OutputView() {
@@ -56,7 +51,7 @@ public class OutputView {
     public static void printResults(HashMap<Player, Result> playerResults, HashMap<Result, Integer> dealerResults) {
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
-        for(Result result : dealerResults.keySet()) {
+        for (Result result : dealerResults.keySet()) {
             if (dealerResults.get(result) > 0) {
                 System.out.print(dealerResults.get(result) + result.getResult() + " ");
             }
@@ -64,5 +59,9 @@ public class OutputView {
         for (Player player : playerResults.keySet()) {
             System.out.println(player.getPlayerName() + ": " + playerResults.get(player).getResult());
         }
+    }
+
+    public static void printDealerOneMore() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
