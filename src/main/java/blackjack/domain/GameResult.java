@@ -20,6 +20,7 @@ public class GameResult {
     private void decideWinner(Dealer dealer, Player player) {
         if (isBurst(player) || isBurst(dealer)) {
             compareBuster(dealer, player);
+            return;
         }
         compareScore(dealer, player);
     }
