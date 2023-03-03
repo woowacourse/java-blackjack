@@ -13,7 +13,7 @@ public class Card {
     }
 
     public int getScore(final int totalScore) {
-        return value.getScore(totalScore);
+        return value.assignScore(totalScore);
     }
 
     public String getValue(){
