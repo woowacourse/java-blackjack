@@ -7,15 +7,18 @@ import java.util.stream.Collectors;
 
 public class BlackJackResultMaker {
 
-    public Map<Participant, Result> makeResult(final Dealer dealer, final List<Player> players) {
+    public Map<Participant, Result> makeParticipantsResult(final Dealer dealer, final List<Participant> participants) {
         final Map<Participant, Result> results = new LinkedHashMap<>();
-        for (Player player : players) {
-            results.put(player, Result.decide(player.getScore(), dealer.getScore()));
+        for (Participant participant : participants) {
+            results.put(participant, Result.decide(participant.getScore(), dealer.getScore()));
         }
-        final List<Score> scores = players.stream()
+        return results;
+    }
+
+    public Result makeDealerResult(final Dealer dealer, final List<Participant> participants) {
+        final List<Score> scores = participants.stream()
             .map(Participant::getScore)
             .collect(Collectors.toList());
-        results.put(dealer, Result.decide(dealer.getScore(), scores));
-        return results;
+        return Result.decide(dealer.getScore(), scores);
     }
 }
