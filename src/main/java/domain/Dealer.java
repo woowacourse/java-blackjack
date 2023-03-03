@@ -6,4 +6,7 @@ public class Dealer extends Participant {
         super(new Name("딜러"));
     }
 
+    public boolean isHit() {
+        return this.getState() == ScoreState.HIT;
+    }
 }
