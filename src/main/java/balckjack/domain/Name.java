@@ -1,6 +1,6 @@
 package balckjack.domain;
 
-class Name {
+public class Name {
 
     private final String value;
 

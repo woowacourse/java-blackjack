@@ -43,12 +43,6 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    public List<CardDeck> extractCardDeck() {
-        return players.stream()
-            .map(Player::getCardDeck)
-            .collect(Collectors.toList());
-    }
-
     public List<Player> getPlayers() {
         return players;
     }

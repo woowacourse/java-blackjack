@@ -1,6 +1,6 @@
 package balckjack.domain;
 
-class Player extends Participant {
+public class Player extends Participant {
 
     private final Name name;
 
