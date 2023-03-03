@@ -1,11 +1,11 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
     private final Deck deck;
-
     private final Players players;
 
     public Game(List<Player> players, Deck deck, Dealer dealer) {
@@ -13,31 +13,38 @@ public class Game {
         this.deck = deck;
     }
 
-    public void dealTwoCards() {
+    public void dealCardsTwice() {
         for (int i = 0; i < 2; i++) {
             players.dealCardsFrom(deck);
         }
     }
 
+    public void dealCardTo(String name) {
+        Player player = players.findUserByName(name);
+        player.addCard(deck.draw());
+    }
+
+    public boolean dealCardToDealer() {
+        Dealer dealer = players.getDealer();
+        if (dealer.canHit()) {
+            dealer.addCard(deck.draw());
+            return true;
+        }
+        return false;
+    }
+
     public Result getResult(String name) {
-        return players.getUserResult(name);
+        Player player = players.findUserByName(name);
+        Dealer dealer = players.getDealer();
+        return player.competeWith(dealer);
     }
 
     public List<Result> getDealerResults() {
         return players.getDealerResults();
     }
 
-    public void dealCard(String name) {
-        Player player = players.findUserByName(name);
-        player.addCard(deck.draw());
-    }
-
     public boolean canHit(String name) {
         return players.findUserByName(name).canHit();
-    }
-
-    public boolean dealCardToDealer() {
-        return players.getDealer().drawCardIfNecessary(deck);
     }
 
     public List<Card> getCards(String name) {

@@ -27,12 +27,7 @@ public class Players {
         dealer.addCard(deck.draw());
     }
 
-    public Result getUserResult(String name) {
-        Player player = findUserByName(name);
-        return player.competeWith(dealer);
-    }
-
-    public List<Result> getDealerResults() {
+    List<Result> getDealerResults() {
         List<Result> results = new ArrayList<>();
 
         for (Player player : users) {

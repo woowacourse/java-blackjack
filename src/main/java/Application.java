@@ -21,7 +21,7 @@ public class Application {
 
     private static void start(Game game) {
         Players players = game.getPlayers();
-        game.dealTwoCards();
+        game.dealCardsTwice();
 
         outputView.printDealCards(players.getUsers());
         outputView.printFirstPlayerCard(players.getDealer());
@@ -30,7 +30,7 @@ public class Application {
 
     private static void play(List<String> playerNames, Game game) {
         for (String playerName : playerNames) {
-            selectHitAndStand(game, playerName);
+            selectHitOrStand(game, playerName);
         }
         dealCardToDealer(game);
     }
@@ -39,10 +39,10 @@ public class Application {
         Players players = game.getPlayers();
         outputView.printCardsAndScores(players);
         System.out.println("## 최종 승패");
-        outputView.printDealerResults(players.getDealerResults());
+        outputView.printDealerResults(game.getDealerResults());
         for (Player user : players.getUsers()) {
             String name = user.getName();
-            outputView.printResult(name, players.getUserResult(name));
+            outputView.printResult(name, game.getResult(name));
         }
     }
 
@@ -54,16 +54,16 @@ public class Application {
         outputView.noticeDealerDecline();
     }
 
-    private static void selectHitAndStand(Game game, String playerName) {
+    private static void selectHitOrStand(Game game, String playerName) {
         boolean hit = true;
         while (hit && game.canHit(playerName)) {
-            hit = dealAnotherCardIfHit(game, playerName);
+            hit = dealCardIfHit(game, playerName);
         }
     }
 
-    private static boolean dealAnotherCardIfHit(Game game, String playerName) {
-        if (inputView.askForAnotherCard(playerName)) {
-            game.dealCard(playerName);
+    private static boolean dealCardIfHit(Game game, String playerName) {
+        if (inputView.askForHit(playerName)) {
+            game.dealCardTo(playerName);
             outputView.printPlayerCards(playerName, game.getCards(playerName));
             return true;
         }
