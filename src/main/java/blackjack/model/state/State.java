@@ -1,6 +1,6 @@
 package blackjack.model.state;
 
-import blackjack.Hand;
+import blackjack.model.card.HandCard;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
@@ -10,10 +10,10 @@ import java.util.List;
 public abstract class State {
     protected static final int BLACKJACK_NUMBER = 21;
 
-    protected final Hand hand;
+    protected final HandCard handCard;
 
-    public State(Hand hand) {
-        this.hand = hand;
+    public State(HandCard handCard) {
+        this.handCard = handCard;
     }
 
     public abstract State draw(CardDeck cardDeck);
@@ -27,10 +27,10 @@ public abstract class State {
     public abstract boolean isStand();
 
     public CardScore getScore() {
-        return hand.score();
+        return handCard.score();
     }
 
     public List<Card> getHand() {
-        return hand.getCards();
+        return handCard.getCards();
     }
 }

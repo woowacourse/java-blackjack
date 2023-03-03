@@ -1,6 +1,6 @@
 package blackjack.model.participant;
 
-import blackjack.Hand;
+import blackjack.model.card.HandCard;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
@@ -25,7 +25,7 @@ class DealerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
 
         List<Card> cards = List.of(card4, card3);
-        Dealer dealer = new Dealer(new DealerDrawState(new Hand(new ArrayList<>(List.of(card1, card2)))));
+        Dealer dealer = new Dealer(new DealerDrawState(new HandCard(new ArrayList<>(List.of(card1, card2)))));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when

@@ -1,31 +1,31 @@
 package blackjack.model.state;
 
-import blackjack.Hand;
+import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
 public class DealerDrawState extends State{
     private static final int DEALER_HIT_NUMBER = 16;
 
-    public DealerDrawState(Hand hand) {
-        super(hand);
+    public DealerDrawState(HandCard handCard) {
+        super(handCard);
     }
 
     @Override
     public State draw(CardDeck cardDeck) {
-        hand.add(cardDeck.pick());
+        handCard.add(cardDeck.pick());
 
-        if (hand.score().smallScore() > BLACKJACK_NUMBER && hand.score().bigScore() > BLACKJACK_NUMBER) {
-            return new BustState(hand);
+        if (handCard.score().smallScore() > BLACKJACK_NUMBER && handCard.score().bigScore() > BLACKJACK_NUMBER) {
+            return new BustState(handCard);
         }
         if (!isFinished()) {
             return this;
         }
-        return new StandState(hand);
+        return new StandState(handCard);
     }
 
     @Override
     public boolean isFinished() {
-        return hand.score().bigScore() > DEALER_HIT_NUMBER;
+        return handCard.score().bigScore() > DEALER_HIT_NUMBER;
     }
 
     @Override

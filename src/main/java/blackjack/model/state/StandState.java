@@ -1,12 +1,12 @@
 package blackjack.model.state;
 
-import blackjack.Hand;
+import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
 public class StandState extends State{
 
-    public StandState(Hand hand) {
-        super(hand);
+    public StandState(HandCard handCard) {
+        super(handCard);
     }
 
     @Override

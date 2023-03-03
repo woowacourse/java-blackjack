@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.model.card;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
@@ -9,14 +9,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Hand {
+public class HandCard {
     private final List<Card> cards;
 
-    public Hand() {
+    public HandCard() {
         this.cards = new ArrayList<>();
     }
 
-    public Hand(List<Card> cards) {
+    public HandCard(List<Card> cards) {
         this.cards = cards;
     }
 

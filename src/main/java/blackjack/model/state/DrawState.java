@@ -1,28 +1,28 @@
 package blackjack.model.state;
 
-import blackjack.Hand;
+import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
 public class DrawState extends State {
-    public DrawState(Hand hand) {
-        super(hand);
+    public DrawState(HandCard handCard) {
+        super(handCard);
     }
 
     @Override
     public State draw(CardDeck cardDeck) {
-        hand.add(cardDeck.pick());
-        if(hand.score().smallScore() > BLACKJACK_NUMBER && hand.score().bigScore() > BLACKJACK_NUMBER){
-            return new BustState(hand);
+        handCard.add(cardDeck.pick());
+        if(handCard.score().smallScore() > BLACKJACK_NUMBER && handCard.score().bigScore() > BLACKJACK_NUMBER){
+            return new BustState(handCard);
         }
         return this;
     }
 
     public State turnStandState(){
-        return new StandState(hand);
+        return new StandState(handCard);
     }
 
     public State turnDealerDrawState(){
-        return new DealerDrawState(hand);
+        return new DealerDrawState(handCard);
     }
 
     @Override

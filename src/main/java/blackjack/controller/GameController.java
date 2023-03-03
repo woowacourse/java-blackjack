@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.Hand;
+import blackjack.model.card.HandCard;
 import blackjack.model.Name;
 import blackjack.model.card.*;
 import blackjack.model.participant.Dealer;
@@ -10,7 +10,6 @@ import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class GameController {
 
     public void run(){
         List<Player> players = initializedPlayers();
-        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Dealer dealer = new Dealer(new InitialState(new HandCard()));
         CardDeck cardDeck = new CardDeck();
 
         //카드 나누기
@@ -187,7 +186,7 @@ public class GameController {
         List<String> playerNames = inputView.readNames();
 
         return playerNames.stream()
-                .map(name -> new Player(new Name(name), new InitialState(new Hand())))
+                .map(name -> new Player(new Name(name), new InitialState(new HandCard())))
                 .collect(Collectors.toList());
     }
 

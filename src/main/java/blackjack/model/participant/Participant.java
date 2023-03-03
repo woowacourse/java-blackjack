@@ -1,9 +1,9 @@
 package blackjack.model.participant;
 
+import blackjack.model.Name;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
-import blackjack.model.Name;
 import blackjack.model.state.State;
 
 import java.util.List;
