@@ -15,13 +15,19 @@ public class GameResult {
     public GameResult(final Participants participants) {
         this.gameResults = new LinkedHashMap<>();
 
-        Participant dealer = participants.getDealer();
-        List<Participant> players = participants.getPlayer();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayer();
         players.forEach(player -> calculateResult(dealer, player));
     }
 
     public static GameResult create(final Participants participants) {
         return new GameResult(participants);
+    }
+
+    public Map<String, Result> getPlayerGameResults() {
+        return gameResults.keySet().stream()
+                .collect(Collectors.toMap(Participant::getName, gameResults::get,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 
     private void calculateResult(Participant dealer, Participant player) {
@@ -47,11 +53,5 @@ public class GameResult {
         return dealer.isBust()
                 || player.isBlackJack()
                 || dealer.calculateScore() < player.calculateScore();
-    }
-
-    public Map<String, Result> getPlayerGameResults() {
-        return gameResults.keySet().stream()
-                .collect(Collectors.toMap(Participant::getName, gameResults::get,
-                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }
