@@ -34,6 +34,17 @@ public class OutputView {
         }
     }
 
+    public void printTotalCardsAndScore(Participant participant) {
+        System.out.print(participant.getName() + "카드: ");
+        for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
+            ViewCardNumber cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(index));
+            ViewCardSuit cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
+            System.out.print(cardNumber.getName() + cardSuit.getCardSuitName());
+        }
+        System.out.print("- 결과 : " + participant.calculateCardNumber());
+        System.out.println();
+    }
+
     private void printFirstDealerCards(final Participant participant) {
         if (participant.isDealer()) {
             ViewCardNumber cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(FIRST_CARD));
