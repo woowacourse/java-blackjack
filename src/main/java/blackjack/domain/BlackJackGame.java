@@ -37,8 +37,7 @@ public class BlackJackGame {
     }
 
     public Result makeResult() {
-        Result result = Result.from(players);
-        return result;
+        return Result.from(players);
     }
 
     public Player getDealer() {
