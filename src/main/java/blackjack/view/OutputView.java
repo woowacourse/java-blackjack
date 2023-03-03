@@ -45,6 +45,10 @@ public class OutputView {
         System.out.println();
     }
 
+    public void dealerHitMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
     private void printFirstDealerCards(final Participant participant) {
         if (participant.isDealer()) {
             ViewCardNumber cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(FIRST_CARD));
