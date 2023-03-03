@@ -46,6 +46,11 @@ public class BlackJack {
         users.hitCardByName(playerName, deck.pickCard());
     }
 
+    public void giveCardToDealer() {
+        Dealer dealer = users.getDealer();
+        dealer.hit(deck.pickCard());
+    }
+
     public Map<String, GameResult> calculatePlayerResults() {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
@@ -69,5 +74,28 @@ public class BlackJack {
         Map<GameResult, GameResult> converter = Map.of(WIN, LOSE, LOSE, WIN, PUSH, PUSH);
         GameResult convertedResult = converter.get(playerResult);
         dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
+    }
+
+    public Card getDealerCardWithHidden() {
+        Dealer dealer = users.getDealer();
+        return dealer.getCards().get(0);
+    }
+
+    public Map<String, List<Card>> getPlayerToCard() {
+        List<Player> players = users.getPlayers();
+        return players.stream().collect(Collectors.toMap(
+            Player::getName,
+            Player::getCards,
+            (oldValue, newValue) -> newValue,
+            LinkedHashMap::new
+        ));
+    }
+
+    public List<Player> getHittablePlayers() {
+        return users.getHittablePlayers();
+    }
+
+    public boolean isDealerHittable() {
+        return users.isDealerHittable();
     }
 }

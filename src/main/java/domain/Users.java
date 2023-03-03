@@ -58,6 +58,10 @@ public class Users {
             .orElseThrow(IllegalArgumentException::new);
     }
 
+    public boolean isDealerHittable() {
+        return getDealer().isHittable();
+    }
+
     public List<Player> getPlayers() {
         return users.stream()
             .filter(user -> user instanceof Player)
@@ -71,5 +75,12 @@ public class Users {
             .findAny()
             .orElseThrow(IllegalArgumentException::new);
         return (Dealer) dealer;
+    }
+
+    public List<Player> getHittablePlayers() {
+        List<Player> players = getPlayers();
+        return players.stream()
+            .filter(Player::isHittable)
+            .collect(Collectors.toUnmodifiableList());
     }
 }

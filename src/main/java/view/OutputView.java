@@ -82,10 +82,12 @@ public class OutputView {
     }
 
     public void printDealerHitMessage() {
+        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printInitMessage(List<String> playerNames) {
+        System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 }
