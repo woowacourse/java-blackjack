@@ -17,7 +17,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printDefaultDrawCardMessage(final List<String> playerNames) {
+    public static void printInitDrawCardMessage(final List<String> playerNames) {
         final String names = String.join(", ", playerNames);
         System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
     }
