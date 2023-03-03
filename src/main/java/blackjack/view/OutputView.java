@@ -56,6 +56,7 @@ public class OutputView {
                 System.out.print(dealerResults.get(result) + result.getResult() + " ");
             }
         }
+        System.out.println();
         for (Player player : playerResults.keySet()) {
             System.out.println(player.getPlayerName() + ": " + playerResults.get(player).getResult());
         }
@@ -63,5 +64,9 @@ public class OutputView {
 
     public static void printDealerOneMore() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printScoreUnderLimit() {
+        System.out.println("현재 카드 점수 총합은 21을 초과합니다.");
     }
 }

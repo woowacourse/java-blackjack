@@ -1,6 +1,8 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Cards;
+import blackjack.domain.factory.PlayersFactory;
 import blackjack.domain.player.*;
 import blackjack.domain.result.Result;
 import blackjack.view.InputView;
@@ -8,64 +10,74 @@ import blackjack.view.OutputView;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
     private Players players;
     private Dealer dealer;
 
     public void run() {
-        getReady();
-        giveFirstCards();
+        ready();
+        printNewCards();
+        giveAdditionalCards();
+        printFinalResults();
+    }
 
+    private void ready() {
+        getReady();
+        BlackjackGame.giveFirstCards(players, dealer);
+    }
+
+    private void printNewCards() {
         OutputView.printDealerCurrentCards(dealer);
         OutputView.printPlayersCurrentCards(players);
+    }
 
-        giveAdditionalCards();
+    private void giveAdditionalCards() {
+        giveAdditionalCardsToPlayers();
         giveAdditionalCardToDealer();
+    }
 
+    private void printFinalResults() {
         OutputView.printScore(dealer, players);
         printResults();
+    }
+
+    private void getReady() {
+        Names names = new Names(InputView.inputPeopleNames());
+        this.players = PlayersFactory.of(names);
+        this.dealer = new Dealer();
+        OutputView.printReadyMessage(names.getNames());
     }
 
     private void printResults() {
         int dealerScore = dealer.getTotalScore();
         HashMap<Player, Result> playerResults = new HashMap<>();
         HashMap<Result, Integer> dealerResults = initializedResults();
-
-        for (Player player : players.getPlayers()) {
-            Result playerResult = Result.calculateResult(player.getTotalScore(), dealerScore);
-            Result dealerResult = playerResult.ofOppositeResult();
-            playerResults.put(player, playerResult);
-            dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
-        }
+        BlackjackGame.calculateResults(dealerScore, players, playerResults, dealerResults);
         OutputView.printResults(playerResults, dealerResults);
     }
 
     private HashMap<Result, Integer> initializedResults() {
         HashMap<Result, Integer> dealerResults = new HashMap<>();
-
-        for (Result result : Result.values()) {
-            dealerResults.put(result, 0);
-        }
+        Arrays.stream(Result.values())
+                .forEach(result -> dealerResults.put(result, 0));
         return dealerResults;
     }
 
-    private void giveAdditionalCards() {
+    private void giveAdditionalCardsToPlayers() {
         for (Player player : players.getPlayers()) {
             String answer = InputView.askAdditionalCard(player.getPlayerName());
             giveAdditionalCard(answer, player);
         }
     }
 
-    private static void giveAdditionalCard(String answer, Player player) {
+    private void giveAdditionalCard(String answer, Player player) {
         while (GameCommand.isContinue(answer) && player.isUnderLimit()) {
             player.updateCardScore(Cards.giveFirstCard());
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());
         }
-        OutputView.printPlayerCurrentCards(player);
+        stopServingCard(player);
     }
 
     public void giveAdditionalCardToDealer() {
@@ -75,30 +87,11 @@ public class BlackjackController {
         }
     }
 
-    private void getReady() {
-        List<Name> names = new Names(InputView.inputPeopleNames()).getNames();
-
-        List<Player> players = names.stream().map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
-
-        this.players = new Players(players);
-        this.dealer = new Dealer();
-
-        OutputView.printReadyMessage(names);
-    }
-
-    public void giveFirstCards() {
-        Cards.init();
-        for (Player player : players.getPlayers()) {
-            giveFirstCard(player);
+    private void stopServingCard(Player player) {
+        if (player.isUnderLimit()) {
+            OutputView.printScoreUnderLimit();
         }
-        giveFirstCard(dealer);
-    }
-
-    private void giveFirstCard(User user) {
-        for (int i = 0; i < 2; i++) {
-            user.updateCardScore(Cards.giveFirstCard());
-        }
+        OutputView.printPlayerCurrentCards(player);
     }
 
     private enum GameCommand {
