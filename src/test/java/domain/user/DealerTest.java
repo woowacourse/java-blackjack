@@ -81,4 +81,14 @@ class DealerTest {
         Dealer dealer = new Dealer(cardHand);
         assertThat(dealer.isBlackjack()).isTrue();
     }
+
+    @Test
+    @DisplayName("Dealer가 가진 카드의 점수의 합이 블랙잭이 아니면 false를 반환한다.")
+    void 카드_블랙잭_아닌지_확인() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        Dealer dealer = new Dealer(cardHand);
+        assertThat(dealer.isBlackjack()).isFalse();
+    }
 }
