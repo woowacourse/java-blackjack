@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +36,11 @@ public class Participants {
 
     public static Participants create(final List<String> playerNames) {
         return new Participants(playerNames);
+    }
+
+    public void addCard(final int participantOrder, final Card card) {
+        Participant participant = participants.get(participantOrder);
+        participant.addCard(card);
     }
 
     private void validateDuplicateNames(final List<String> playerNames) {

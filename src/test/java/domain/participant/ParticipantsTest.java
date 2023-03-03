@@ -1,10 +1,14 @@
 package domain.participant;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardPattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -41,6 +45,19 @@ class ParticipantsTest {
         assertThatThrownBy(() -> Participants.create(duplicateNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
+    }
+
+    @ParameterizedTest(name = "addCard()는 플레이어의 순서와 카드를 전달하면, 정상적으로 실행된다.")
+    @ValueSource(ints = {0, 1, 2, 3})
+    void addCard_givenParticipantOrderAndCard_thenSuccess(final int participantOrder) {
+        // given
+        List<String> playerNames = List.of("a", "b", "c", "d", "e");
+        Participants participants = Participants.create(playerNames);
+        Card card = Card.create(CardPattern.CLOVER, CardNumber.QUEEN);
+
+        // when, then
+        assertThatCode(() -> participants.addCard(participantOrder, card))
+                .doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> validPlayerNames() {
