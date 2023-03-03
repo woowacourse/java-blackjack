@@ -11,6 +11,12 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
+    protected ResultType compare(final Participant participant) {
+        int totalPoint = getTotalPoint();
+        int compareTotalPoint = participant.getTotalPoint();
+        return ResultType.findBy(totalPoint, compareTotalPoint);
+    }
+
     protected int getTotalPoint() {
         return cards.calculate();
     }
@@ -21,6 +27,10 @@ public abstract class Participant {
 
     protected List<Card> open(final int cardCount) {
         return cards.open(cardCount);
+    }
+
+    protected List<Card> getCards() {
+        return cards.getCards();
     }
 
     protected abstract boolean isHittable();

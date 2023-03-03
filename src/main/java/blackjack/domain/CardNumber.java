@@ -38,6 +38,10 @@ public enum CardNumber {
                 .reduce(sumBeforeOptimize, (before, after) -> optimizeMaxValue(before, blackJack));
     }
 
+    public int getValue() {
+        return value;
+    }
+
     private static int optimizeMaxValue(final int before, final int blackJack) {
         if (before + ACE_CONVERT_NUMBER <= blackJack) {
             return before + ACE_CONVERT_NUMBER;
