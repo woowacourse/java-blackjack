@@ -19,4 +19,27 @@ class ParticipantTest {
 
         assertThat(totalPoint).isEqualTo(17);
     }
+
+    @Test
+    @DisplayName("참가자가 카드를 뽑는다.")
+    void hit() {
+        Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
+        Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
+        int beforeHitPoint = participant.getTotalPoint();
+        participant.hit(new Card(CardShape.SPADE, CardNumber.ACE));
+        int afterHitPoint = participant.getTotalPoint();
+
+        assertThat(afterHitPoint).isGreaterThan(beforeHitPoint);
+    }
+
+    @Test
+    @DisplayName("참가자가 카드를 보여준다.")
+    void open() {
+        Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
+        Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
+
+        assertThat(participant.open(2)).containsAll(List.of(cardOne, cardTwo));
+    }
 }
