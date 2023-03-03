@@ -1,8 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.GameResult;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +13,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String DEALER_NAME = "딜러";
     private static final String OPEN_CARD_FORMAT = "%s : %s%n";
+    private static final String GAME_RESULT_FORMAT = "%s카드: %s - 결과: %d%n";
     private static final String OPEN_CARD_MESSAGE = "%n%s에게 2장을 나누었습니다.%n";
     private static final String DEALER_HIT_RESULT_MESSAGE = DEALER_NAME + "는 16 이하라 %d장의 카드를 더 받았습니다.%n";
 
@@ -44,5 +47,16 @@ public class OutputView {
             return;
         }
         System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
+    }
+
+    public static void showParticipantGameResults(GameResult dealerResult,
+                                                  Map<String, GameResult> playerResults) {
+        System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardNames(dealerResult.getCards()),
+                dealerResult.getSum());
+        for (Entry<String, GameResult> result : playerResults.entrySet()) {
+            GameResult gameResult = result.getValue();
+            System.out.printf(GAME_RESULT_FORMAT, result.getKey(), joinAllCardNames(gameResult.getCards()),
+                    gameResult.getSum());
+        }
     }
 }
