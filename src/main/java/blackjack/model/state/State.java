@@ -30,7 +30,11 @@ public abstract class State {
         return hand.score();
     }
 
-    public List<Card> getHand() {
+/*    public List<Card> getCards() {
         return hand.getCards();
+    }*/
+
+    public Hand getHand() {
+        return hand;
     }
 }

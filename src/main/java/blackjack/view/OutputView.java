@@ -39,10 +39,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printScoreResult(Map<String, List<String>> hand, String result) {
+    public void printScoreResult(Map<String, List<String>> hand, int score, boolean isBlackjack) {
         for (Map.Entry<String, List<String>> entry : hand.entrySet()) {
             String name = entry.getKey();
             String cards = String.join(",", entry.getValue());
+            String result = Integer.toString(score);
+            if(isBlackjack){
+                result += " (블랙잭)";
+            }
             System.out.println(name + ": " + cards + " - 결과: " + result);
         }
     }
@@ -52,8 +56,8 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerWinningResult(List<Integer> result) {
-        System.out.println("딜러: " + result.get(0) + "승 " + result.get(1) + "무 " + result.get(2) + "패");
+    public void printDealerWinningResult(long win, long tie, long lose) {
+        System.out.println("딜러: " + win + "승 " + tie + "무 " + lose + "패");
     }
 
     public void printPlayersWinningResult(Map<String, String> playerResult) {

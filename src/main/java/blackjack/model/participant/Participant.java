@@ -1,11 +1,10 @@
 package blackjack.model.participant;
 
-import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
 import blackjack.model.state.State;
 
-import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     protected Name name;
@@ -45,13 +44,24 @@ public abstract class Participant {
         return cardScore().bigScore();
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
-    public List<Card> getCards() {
+    public Hand getHand() {
         return currentState.getHand();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
-
-
