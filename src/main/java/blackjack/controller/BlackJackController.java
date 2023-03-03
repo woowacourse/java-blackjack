@@ -24,7 +24,7 @@ public class BlackJackController {
     public void run() {
         final List<Name> namesByView = getNamesByView();
         final BlackJack blackJack = makeBlackJackBy(namesByView);
-        divideCardTo(blackJack, namesByView);
+        drawCardBy(blackJack, namesByView);
         finalizeDealerCardStatus(blackJack);
         printCompletedGame(blackJack);
     }
@@ -45,13 +45,13 @@ public class BlackJackController {
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 
-    private void divideCardTo(final BlackJack blackJack, final List<Name> namesByView) {
-        for (Name name : namesByView) {
-            checkCardWanted(blackJack, name);
+    private void drawCardBy(final BlackJack blackJack, final List<Name> names) {
+        for (Name name : names) {
+            drawCardUntilWanted(blackJack, name);
         }
     }
 
-    private void checkCardWanted(BlackJack blackJack, final Name name) {
+    private void drawCardUntilWanted(BlackJack blackJack, final Name name) {
         while (getCardWantFromConsole(name)) {
             blackJack.giveCard(name, randomDeck);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
