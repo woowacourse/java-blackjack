@@ -67,6 +67,6 @@
 ## 리팩터링
 - [x] 이름 저장할 때 양옆 공백 trim
 - [x] string join 할 때 , 뒤에 공백 추가
-- [ ] 중복이름 / 플레이어 수1명이상 검증 -> players? participants?
+- [x] 중복이름 / 플레이어 수1명이상 검증 -> players? participants?
 - [ ] 비대해진 컨트롤러
 - 
