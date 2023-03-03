@@ -58,4 +58,15 @@ public interface SimpleList<E> {
 
         throw new UnsupportedOperationException();
     }
+
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> values) {
+        SimpleList<T> tmpList = new SimpleArrayList<>();
+
+        for(int i =0; i<values.size(); i++){
+            if(values.get(i).doubleValue() >= 0){
+                tmpList.add(values.get(i));
+            }
+        }
+        return tmpList;
+    }
 }
