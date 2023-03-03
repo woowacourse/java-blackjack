@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.List;
 
-public class GamePoint implements Comparable<GamePoint>{
+public class GamePoint implements Comparable<GamePoint> {
 
     private static final int BUST = 0;
     private static final CardNumber ACE = CardNumber.of(1);

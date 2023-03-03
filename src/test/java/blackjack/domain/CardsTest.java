@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardsTest {
@@ -23,7 +23,7 @@ public class CardsTest {
                 new Card(Shape.DIAMOND, CardNumber.of(2)),
                 new Card(Shape.HEART, CardNumber.of(3))
         );
-        assertDoesNotThrow(()->{
+        assertDoesNotThrow(() -> {
             final Cards cards = new Cards(data);
         });
     }

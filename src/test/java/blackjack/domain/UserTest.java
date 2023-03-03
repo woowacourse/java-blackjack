@@ -148,7 +148,7 @@ class UserTest {
                 Arrays.asList(
                         new Card(Shape.HEART, CardNumber.of(2)),
                         new Card(Shape.HEART, CardNumber.of(10))
-                        )
+                )
         ));
         USER_22.draw(new Card(Shape.HEART, CardNumber.of(10)));
         assertAll(

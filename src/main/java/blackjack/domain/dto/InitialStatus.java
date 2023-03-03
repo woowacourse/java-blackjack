@@ -21,7 +21,7 @@ public class InitialStatus {
 
     private Map<String, List<Card>> makeUsersCardsStatus(final Users users) {
         final HashMap<String, List<Card>> resultMap = new HashMap<>();
-        for (User user : users.getUsers()){
+        for (User user : users.getUsers()) {
             final Name userName = user.getName();
             resultMap.put(userName.getValue(), users.getCardsOf(userName));
         }

@@ -1,13 +1,14 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class CardNumber implements Comparable<CardNumber> {
     public static final int MAX_RANGE = 13;
     public static final int MIN_RANGE = 1;
 
     private static final Map<Integer, CardNumber> cache;
-    private final int value;
 
     static {
         cache = new HashMap<>();
@@ -15,6 +16,8 @@ public class CardNumber implements Comparable<CardNumber> {
             cache.put(i, new CardNumber(i));
         }
     }
+
+    private final int value;
 
     private CardNumber(final int value) {
         validateRange(value);

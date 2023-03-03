@@ -153,7 +153,7 @@ public class DealerTest {
 
         final Dealer dealer = new Dealer(data);
 
-        assertThatThrownBy(()->dealer.openCards())
+        assertThatThrownBy(() -> dealer.openCards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
     }
@@ -167,7 +167,7 @@ public class DealerTest {
         );
         final Dealer dealer = new Dealer(data);
 
-        assertDoesNotThrow(()->dealer.openCards());
+        assertDoesNotThrow(() -> dealer.openCards());
     }
 
     @Test

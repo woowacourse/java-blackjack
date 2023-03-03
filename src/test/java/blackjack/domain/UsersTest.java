@@ -28,7 +28,7 @@ public class UsersTest {
     void setting() {
         헙크 = new User(new Name("헙크"), CARDS_20);
         푸우 = new User(new Name("푸우"), CARDS_20);
-        HupkAndPooh = new Users(Arrays.asList(new Name("헙크"), new Name("푸우")), new TestDeck(Arrays.asList(10,10,10,10)));
+        HupkAndPooh = new Users(Arrays.asList(new Name("헙크"), new Name("푸우")), new TestDeck(Arrays.asList(10, 10, 10, 10)));
     }
 
     @Test

@@ -23,7 +23,7 @@ public class Users {
 
     private List<User> makeUsersBy(final List<Name> userNames, final Deck deck) {
         final ArrayList<User> usersData = new ArrayList<>();
-        for(Name name : userNames){
+        for (Name name : userNames) {
             usersData.add(new User(name, getCardsOfTwoCardBy(deck)));
         }
         return usersData;

@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.GamePoint;
 import blackjack.domain.card.Shape;
 import blackjack.domain.dto.FinalStatus;
 import blackjack.domain.dto.GameResult;
