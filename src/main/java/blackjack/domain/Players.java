@@ -16,4 +16,11 @@ public class Players {
         }
     }
 
+    public boolean getPlayerIsHit(int i) {
+        return players.get(i).isHit();
+    }
+
+    public void addCardToPlayer(int i, Card card) {
+        players.get(i).addCard(card);
+    }
 }

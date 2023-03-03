@@ -31,5 +31,4 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.");
     }
-
 }
