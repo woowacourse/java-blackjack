@@ -19,6 +19,23 @@ public interface SimpleList<T> {
         return total;
     }
 
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> doubleValues) {
+        final SimpleList<T> filtered = new SimpleArrayList<>();
+        while (!doubleValues.isEmpty()) {
+            final T remove = doubleValues.remove(0);
+            if (remove.doubleValue() >= 0) {
+                filtered.add(remove);
+            }
+        }
+        return filtered;
+    }
+
+    static <T> void copy(SimpleList<? extends T> laserPrinters, SimpleList<? super T> printers) {
+        while (!laserPrinters.isEmpty()) {
+            printers.add(laserPrinters.remove(0));
+        }
+    }
+
     boolean add(T value);
 
     void add(int index, T value);
