@@ -8,11 +8,10 @@ import java.util.stream.Collectors;
 public class BlackJackResultMaker {
 
     public Map<Participant, Result> makeParticipantsResult(final Dealer dealer, final List<Participant> participants) {
-        final Map<Participant, Result> results = new LinkedHashMap<>();
-        for (Participant participant : participants) {
-            results.put(participant, Result.decide(participant.getScore(), dealer.getScore()));
-        }
-        return results;
+        return participants.stream()
+            .collect(Collectors.toMap(participant -> participant,
+                participant -> Result.decide(participant.getScore(), dealer.getScore()), (a, b) -> b,
+                LinkedHashMap::new));
     }
 
     public Result makeDealerResult(final Dealer dealer, final List<Participant> participants) {

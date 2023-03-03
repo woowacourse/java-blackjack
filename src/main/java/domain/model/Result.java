@@ -15,11 +15,11 @@ public class Result {
     }
 
     public static Result decide(final Score score, final Score comparedScore) {
-        if (isDraw(score, comparedScore)) {
-            return new Result(0, 1, 0);
-        }
         if (isVictory(score, comparedScore)) {
             return new Result(1, 0, 0);
+        }
+        if (isDraw(score, comparedScore)) {
+            return new Result(0, 1, 0);
         }
         return new Result(0, 0, 1);
     }
