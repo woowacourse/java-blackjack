@@ -44,10 +44,9 @@ public class Users {
         }
     }
 
-    public List<Card> getCardsOf(final User user) {
-        final int targetUser = getUserIndexOf(user);
-
-        return users.get(targetUser).openCards();
+    public List<Card> getCardsOf(final Name user) {
+        final User targetUser = finUserByName(user);
+        return targetUser.openCards();
     }
 
     private int getUserIndexOf(final User user) {
@@ -58,8 +57,15 @@ public class Users {
         return targetUserIndex;
     }
 
-    public void findUserAndGive(final User user, final Card card) {
-        final int targetUser = users.indexOf(user);
-        users.get(targetUser).draw(card);
+    public void findUserAndGive(final Name userName, final Card card) {
+        final User findUser = finUserByName(userName);
+        findUser.draw(card);
+    }
+
+    private User finUserByName(final Name userName) {
+        return users.stream()
+                .filter(user -> user.isNameOf(userName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
     }
 }

@@ -48,7 +48,7 @@ public class BlackJack {
         }
     }
 
-    public void drawCard(User user) {
+    public void drawCard(Name user) {
         users.findUserAndGive(user, deck.drawCard());
     }
 
@@ -60,7 +60,7 @@ public class BlackJack {
         return dealer.getFirstCard();
     }
 
-    public List<Card> getUserCard(User user) {
+    public List<Card> getUserCard(Name user) {
         return users.getCardsOf(user);
     }
 
