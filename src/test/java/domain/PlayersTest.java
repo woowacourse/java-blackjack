@@ -24,7 +24,7 @@ public class PlayersTest {
     void createPlayersCountFail() {
         List<String> playerNames = List.of("a", "b", "c", "d", "f", "q", "w", "e", "r", "z");
 
-        assertThatThrownBy(() -> Players.from(playerNames, distributor))
+        assertThatThrownBy(() -> Players.of(playerNames, distributor))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참여자는 최대 9명까지 가능합니다.");
     }
@@ -34,7 +34,7 @@ public class PlayersTest {
     void createPlayersDuplicateFail() {
         List<String> playerNames = List.of("a", "a", "a");
 
-        assertThatThrownBy(() -> Players.from(playerNames, distributor))
+        assertThatThrownBy(() -> Players.of(playerNames, distributor))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참여자 이름은 중복될 수 없습니다.");
     }
