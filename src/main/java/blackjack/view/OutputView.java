@@ -18,6 +18,7 @@ public class OutputView {
     }
 
     public void printInitialCardDistribution(List<String> playerNames) {
+        System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
@@ -34,6 +35,7 @@ public class OutputView {
     }
 
     public void printDealerReceived() {
+        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -42,7 +44,7 @@ public class OutputView {
     }
 
     public void printDealerResult(int winCount, int loseCount, int drawCount) {
-        System.out.print("## 최종 승패 \n딜러: ");
+        System.out.print(System.lineSeparator() + "## 최종 승패" + System.lineSeparator() + "딜러: ");
         if (winCount > 0) {
             System.out.print(winCount + "승 ");
         }
