@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-class ShuffledDeck implements Deck {
+public class ShuffledDeck implements Deck {
     private static final int TOP_CARD_INDEX = 0;
     private static final Deck DECK;
 

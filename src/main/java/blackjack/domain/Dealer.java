@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Dealer implements Player {
     private static final int SCORE_LOWER_BOUND = 16;
+
     private final Name name;
     private final Hand hand;
 
