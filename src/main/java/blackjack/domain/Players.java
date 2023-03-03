@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -65,5 +67,47 @@ public class Players {
 
     public void calculateResult(final Dealer dealer) {
         players.forEach(dealer::calculateResult);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isDrawable(final String playerName) {
+        return players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findFirst()
+                .map(Player::isDrawable)
+                .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
+    }
+
+    public void draw(final String playerName, final Deck deck) {
+        final Player targetPlayer = players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
+        targetPlayer.drawCard(deck.popCard());
+    }
+
+    public Optional<List<Card>> findCardsByPlayerName(final String playerName) {
+        return players.stream()
+                .filter(player -> player.hasName(playerName))
+                .findAny()
+                .map(Player::getCards);
+    }
+
+    public Map<String, List<Card>> findPlayerNameToCards() {
+        return players.stream()
+                .collect(Collectors.toMap(Player::getName, Participant::getCards));
+    }
+
+    public int getPlayerScoreByName(final String name) {
+        return players.stream()
+                .filter(player -> player.hasName(name))
+                .findFirst()
+                .map(Participant::currentScore)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다"));
     }
 }
