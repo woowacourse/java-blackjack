@@ -35,6 +35,31 @@ public class OutputView {
     private String getCardInfosFormat(final List<String> cardInfos) {
         return String.join(", ", cardInfos);
     }
+
+    public void printDealerCardDrawn(final DealerStateResponse dealerStateResponse) {
+        if (dealerStateResponse.isDrawable()) {
+            System.out.println(format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.", dealerStateResponse.getLimit()));
+        }
+    }
+}
+
+class DealerStateResponse {
+
+    private final boolean drawable;
+    private final int limit;
+
+    public DealerStateResponse(final boolean drawable, final int limit) {
+        this.drawable = drawable;
+        this.limit = limit;
+    }
+
+    public boolean isDrawable() {
+        return drawable;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
 }
 
 class ParticipantResponse {
