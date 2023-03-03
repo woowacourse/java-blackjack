@@ -15,14 +15,14 @@ public class InputView {
 
     public List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        String playerNames = scanner.next();
+        String playerNames = scanner.nextLine();
         String[] splitNames = playerNames.split(DELIMITER);
         return Arrays.asList(splitNames);
     }
 
     public String readChoiceOfDrawCard(final String name) {
         System.out.println(name + generatePreposition(name) + " 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     private String generatePreposition(final String name) {
