@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
-// TODO: 2023/03/02 View 리팩토링
 // TODO: 2023/03/02 코드 스타일/포맷 맞추기
 public class BlackjackController {
     private final InputView inputView;

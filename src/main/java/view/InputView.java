@@ -17,15 +17,16 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public String requestMoreCard(String name){
-        System.out.println(String.format(Message.PLAYER_WANT_MORE_CARD.message,name));
+    public String requestMoreCard(String name) {
+        String format = String.format(Message.PLAYER_WANT_MORE_CARD.message, name);
+        System.out.println(format);
+
         return SCANNER.nextLine();
     }
 
     private enum Message {
         PLAYER_NAMES_INPUT("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"),
-        PLAYER_WANT_MORE_CARD("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오 n)")
-        ;
+        PLAYER_WANT_MORE_CARD("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오 n)");
         private final String message;
 
         Message(String message) {
