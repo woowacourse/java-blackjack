@@ -5,8 +5,10 @@ import java.util.stream.Collectors;
 
 import card.Card;
 import player.DealerFirstOpenDto;
+import player.DealerWinningDto;
 import player.PlayerOpenDto;
 import player.PlayerResultDto;
+import player.PlayerWinningDto;
 
 public class OutputView {
 
@@ -46,5 +48,20 @@ public class OutputView {
         System.out.println(
                 result.getName().getValue() + " 카드:" + result.getCards().stream().map(Card::toString).collect(
                         Collectors.joining(", ")) + " - 결과: " + result.getScore());
+    }
+
+    public void printWinningResults(DealerWinningDto dealerWinningResult, List<PlayerWinningDto> playerWinningResults) {
+        System.out.println("## 최종 승패");
+        String parsedDealerWinningResult = parseDealerWinningResult(dealerWinningResult);
+        System.out.println(dealerWinningResult.getName().getValue() + ": " + parsedDealerWinningResult);
+
+        playerWinningResults.forEach(playerWinningDto -> System.out.println(
+                playerWinningDto.getName().getValue() + ": " + playerWinningDto.getResult().getLabel()));
+    }
+
+    private String parseDealerWinningResult(DealerWinningDto dealerWinningResult) {
+        return dealerWinningResult.getWinningMap().keySet().stream()
+                .map(result -> dealerWinningResult.getWinningMap().get(result) + result.getLabel()).collect(
+                        Collectors.joining(" "));
     }
 }
