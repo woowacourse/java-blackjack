@@ -29,8 +29,16 @@ public class Game {
         dealer.addCard(deck.drawCard());
     }
 
-    public Result isWon(int index) {
-        return getResult(players.get(index), dealer);
+    public Result isWon(String name) {
+        Player player = findByName(name);
+        return getResult(player, dealer);
+    }
+
+    private Player findByName(String name) {
+        return players.stream()
+                .filter(player -> player.hasName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다"));
     }
 
     private Result getResult(Player player, Player other) {
@@ -55,17 +63,21 @@ public class Game {
         return results;
     }
 
-    public void dealAnotherCard(int index) {
-        Player player = players.get(index);
+    public void dealAnotherCard(String name) {
+        Player player = findByName(name);
         player.addCard(deck.drawCard());
     }
 
-    public boolean canHit(Player player) {
-        return player.canHit();
+    public boolean canHit(String name) {
+        return findByName(name).canHit();
     }
 
     public void dealAnotherCard() {
         dealer.addCard(deck.drawCard());
+    }
+
+    public List<Card> getCards(String name) {
+        return findByName(name).getCards();
     }
 
     public List<Player> getPlayers() {

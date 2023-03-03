@@ -14,13 +14,15 @@ public class OutputView {
         System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
     }
 
-    public void printPlayerCards(List<Player> players) {
+    public void printPlayersCards(List<Player> players) {
         for (Player player : players) {
             String name = player.getName();
-            String cardDisplays = getCardDisplays(player.getCards());
-
-            System.out.println(name + "카드: " + cardDisplays);
+            printPlayerCards(name, player.getCards());
         }
+    }
+
+    public void printPlayerCards(String playerName, List<Card> cards) {
+        System.out.println(playerName + "카드: " + getCardDisplays(cards));
     }
 
     public void printFirstPlayerCard(Player player) {
