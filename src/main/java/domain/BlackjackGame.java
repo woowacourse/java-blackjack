@@ -34,6 +34,10 @@ public class BlackjackGame {
         return people.makeGameResultForAllPlayer();
     }
 
+    public Map<GameResult, Integer> getDealerRecord() {
+        return people.getDealerRecord(people.makeGameResultForAllPlayer());
+    }
+
     public void hitFor(String playerName) {
         people.letPlayerToHit(playerName, deck);
     }

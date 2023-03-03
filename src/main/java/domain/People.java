@@ -55,6 +55,10 @@ public class People {
         players.forEach(player -> record.put(player, GameResult.getResult(player, dealer)));
     }
 
+    public Map<GameResult, Integer> getDealerRecord(Map<Player, GameResult> record) {
+        return GameResult.makeDealerRecord(record);
+    }
+
     public boolean isBurst(String playerName, int blackJackNumber) {
         return playerByName(playerName).sumCardPool() > blackJackNumber;
     }

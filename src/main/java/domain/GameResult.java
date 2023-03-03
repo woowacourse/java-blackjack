@@ -1,7 +1,8 @@
 package domain;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 public enum GameResult {
     WIN((playerPoint, dealerPoint) -> playerPoint > dealerPoint),
@@ -26,5 +27,25 @@ public enum GameResult {
             return 0;
         }
         return player.sumCardPool();
+    }
+
+    public static Map<GameResult, Integer> makeDealerRecord(Map<Player, GameResult> record) {
+        Map<GameResult, Integer> dealerRecord = new HashMap<>();
+        int win = calculateGameResult(record.values(), LOSE);
+        int draw = calculateGameResult(record.values(), DRAW);
+        int lose = calculateGameResult(record.values(), WIN);
+
+        dealerRecord.put(WIN, win);
+        dealerRecord.put(DRAW, draw);
+        dealerRecord.put(LOSE, lose);
+
+        return dealerRecord;
+    }
+
+    private static int calculateGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
+        return (int)gameResults.stream()
+                .filter(gameResult -> gameResult == gameResultType)
+                .count();
+
     }
 }

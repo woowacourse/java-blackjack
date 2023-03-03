@@ -31,6 +31,8 @@ public class BlackJackController {
         printGameInfo(players, dealer);
 
         outputView.printGameResult(blackjackGame.getGameResultForAllPlayer());
+
+        outputView.printDealerRecord(dealer, blackjackGame.getDealerRecord());
     }
 
     private void letPlayersHit(List<Player> players) {
