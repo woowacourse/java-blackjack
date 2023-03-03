@@ -48,6 +48,6 @@ class DealerTest {
         Player player = new Player("pobi");
         player.take(new Card(SPADE, QUEEN));
         player.take(new Card(CLUB, SIX));
-        assertThat(dealer.judge(player)).isEqualTo(ParticipantResult.LOSE);
+        assertThat(dealer.judge(player)).isEqualTo(WinResult.LOSE);
     }
 }

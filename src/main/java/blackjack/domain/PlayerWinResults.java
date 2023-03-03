@@ -1,21 +1,21 @@
 package blackjack.domain;
 
-import static blackjack.domain.ParticipantResult.LOSE;
-import static blackjack.domain.ParticipantResult.PUSH;
-import static blackjack.domain.ParticipantResult.WIN;
+import static blackjack.domain.WinResult.LOSE;
+import static blackjack.domain.WinResult.PUSH;
+import static blackjack.domain.WinResult.WIN;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PlayerResults {
+public class PlayerWinResults {
 
-    private final Map<String, ParticipantResult> results;
+    private final Map<String, WinResult> results;
 
-    public PlayerResults() {
+    public PlayerWinResults() {
         this.results = new LinkedHashMap<>();
     }
 
-    public void addResultByPlayerName(String playerName, ParticipantResult playerResult) {
+    public void addResultByPlayerName(String playerName, WinResult playerResult) {
         results.put(playerName, playerResult);
     }
 
@@ -31,14 +31,14 @@ public class PlayerResults {
         return computeDealerResultCount(WIN);
     }
 
-    private int computeDealerResultCount(ParticipantResult participantResult) {
+    private int computeDealerResultCount(WinResult winResult) {
         return (int) results.values()
                 .stream()
-                .filter(result -> result == participantResult)
+                .filter(result -> result == winResult)
                 .count();
     }
 
-    public Map<String, ParticipantResult> getResults() {
+    public Map<String, WinResult> getResults() {
         return results;
     }
 }

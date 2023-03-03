@@ -23,7 +23,7 @@ public class BlackJackController {
         OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
                 blackJackGame.computePlayerGameResults());
 
-        OutputView.showFinalResult(blackJackGame.computePlayerResults());
+        OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
     }
 
     private void startGame() {

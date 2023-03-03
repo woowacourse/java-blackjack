@@ -32,10 +32,6 @@ public class BlackJackGame {
         return participants.openDealerFirstCard();
     }
 
-    public List<Card> openDealerCards() {
-        return participants.openDealerCards();
-    }
-
     public List<String> findAvailablePlayerNames() {
         return participants.findAvailablePlayerNames();
     }
@@ -66,7 +62,7 @@ public class BlackJackGame {
         return participants.openPlayerGameResults();
     }
 
-    public PlayerResults computePlayerResults() {
-        return participants.computePlayerResults();
+    public PlayerWinResults computePlayerWinResults() {
+        return participants.computePlayerWinResults();
     }
 }

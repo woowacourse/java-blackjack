@@ -70,12 +70,12 @@ public class Participants {
         return dealer.getCards();
     }
 
-    public PlayerResults computePlayerResults() {
-        PlayerResults playerResults = new PlayerResults();
+    public PlayerWinResults computePlayerWinResults() {
+        PlayerWinResults playerWinResults = new PlayerWinResults();
         for (Player player : players) {
-            playerResults.addResultByPlayerName(player.getName(), dealer.judge(player));
+            playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
         }
-        return playerResults;
+        return playerWinResults;
     }
 
     public List<String> findAvailablePlayerNames() {
