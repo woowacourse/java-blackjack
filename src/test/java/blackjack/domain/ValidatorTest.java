@@ -43,23 +43,23 @@ class ValidatorTest {
 
     @Test
     @DisplayName("player 이름 중복 테스트")
-    void playerNameDuplicate(){
+    void playerNameDuplicate() {
         List<String> playerNames = List.of("io", "io");
+
         assertThatThrownBy(() -> validator.validatePlayerNames(playerNames)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
     @DisplayName("player 의사 유효성 검증")
     @ValueSource(strings = {"y", "n"})
-    void playerIntentionSuccess(String input){
-        assertThatNoException().isThrownBy(()-> validator.validatePlayerIntention(input));
+    void playerIntentionSuccess(String input) {
+        assertThatNoException().isThrownBy(() -> validator.validatePlayerIntention(input));
     }
 
     @ParameterizedTest
     @DisplayName("player 의사 유효성 검증")
     @ValueSource(strings = {"", "N", "IOIO"})
-    void playerIntentionFail(String input){
-        assertThatThrownBy(()-> validator.validatePlayerIntention(input)).isInstanceOf(IllegalArgumentException.class);
+    void playerIntentionFail(String input) {
+        assertThatThrownBy(() -> validator.validatePlayerIntention(input)).isInstanceOf(IllegalArgumentException.class);
     }
-
 }

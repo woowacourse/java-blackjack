@@ -13,6 +13,7 @@ class TrumpTest {
     @DisplayName("트럼프 기본 카드 생성 테스트")
     void generateTrumpSuccess() {
         TestNumberGenerator testNumberGenerator = new TestNumberGenerator(newArrayList(3, 51, 30));
+
         assertThatCode(() -> new Trump(testNumberGenerator)).doesNotThrowAnyException();
     }
 
