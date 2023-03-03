@@ -18,7 +18,7 @@ public class OutputVIew {
         printMessage(DEALER_RECEIVED_MESSAGE);
     }
 
-    private static void printMessage(String message) {
+    public static void printMessage(String message) {
         System.out.println(message);
     }
 }

@@ -18,10 +18,7 @@ public class BlackJackController {
     private Dealer dealer;
 
     public BlackJackController() {
-        OutputVIew.printInputPlayerNameMessage();
-        List<String> playerNames = InputView.inputPlayerNames();
-        ResultView.printInitMessage(playerNames);
-        this.players = generatePlayers(playerNames);
+        this.players = generatePlayers();
         this.dealer = new Dealer();
         initSetting();
     }
@@ -33,6 +30,17 @@ public class BlackJackController {
         printFinalFightResult();
     }
 
+    private List<String> initPlayerNames() {
+        try {
+            OutputVIew.printInputPlayerNameMessage();
+            List<String> playerNames = InputView.inputPlayerNames();
+            return playerNames;
+        } catch (IllegalArgumentException e) {
+            OutputVIew.printMessage(e.getMessage());
+            return initPlayerNames();
+        }
+    }
+
     private void initSetting() {
         BlackJackGame.initSettingCards(players, dealer);
         ResultView.printParticipantResult(dealer.getName(), dealer.getCardNames());
@@ -41,12 +49,19 @@ public class BlackJackController {
         }
     }
 
-    private static Players generatePlayers(List<String> playerNames) {
-        Players players = new Players(playerNames.stream()
-                .map(Name::new)
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList()));
-        return players;
+    private Players generatePlayers() {
+        try {
+            List<String> playerNames = initPlayerNames();
+            Players players = new Players(playerNames.stream()
+                    .map(Name::new)
+                    .map(Player::new)
+                    .collect(Collectors.toUnmodifiableList()));
+            ResultView.printInitMessage(playerNames);
+            return players;
+        } catch (IllegalArgumentException e) {
+            OutputVIew.printMessage(e.getMessage());
+            return generatePlayers();
+        }
     }
 
     private void askEachPlayers() {
@@ -57,6 +72,15 @@ public class BlackJackController {
     }
 
     private void askPlayerDistribute(Player player) {
+        try {
+            checkAdditionalDistribute(player);
+        } catch (IllegalArgumentException e) {
+            OutputVIew.printMessage(e.getMessage());
+            askPlayerDistribute(player);
+        }
+    }
+
+    private void checkAdditionalDistribute(Player player) {
         do {
             OutputVIew.printInputReceiveYesOrNotMessage(player.getName());
             ResultView.printParticipantResult(player.getName(), player.getCardNames());

@@ -68,25 +68,27 @@ public class ResultCalculator {
     public List<String> getFinalFightResults() {
         List<String> finalFightResults = new ArrayList<>();
         for (String name : results.keySet()) {
-            List<Integer> dealerResult = results.get(name);
-            Integer winCount = dealerResult.get(0);
-            Integer drawCount = dealerResult.get(1);
-            Integer loseCount = dealerResult.get(2);
-
-            StringBuilder sb = new StringBuilder(name + ": ");
-            if (winCount != 0) {
-                sb.append(winCount).append("승 ");
-            }
-            if (drawCount != 0) {
-                sb.append(drawCount).append("무 ");
-            }
-            if (loseCount != 0) {
-                sb.append(loseCount).append("패");
-            }
+            List<Integer> participantResult = results.get(name);
+            StringBuilder sb = getResultCount(name, participantResult);
             finalFightResults.add(sb.toString());
         }
         return finalFightResults;
     }
+
+    private StringBuilder getResultCount(String name, List<Integer> participantResult) {
+        StringBuilder sb = new StringBuilder(name + ": ");
+        if (participantResult.get(0) != 0) {
+            sb.append(participantResult.get(0)).append("승 ");
+        }
+        if (participantResult.get(1) != 0) {
+            sb.append(participantResult.get(1)).append("무 ");
+        }
+        if (participantResult.get(2) != 0) {
+            sb.append(participantResult.get(2)).append("패");
+        }
+        return sb;
+    }
+
 
     public List<Integer> getResultsByName(String name) {
         return results.get(name);
