@@ -25,4 +25,20 @@ public enum Number {
     public int score() {
         return score;
     }
+
+    public String value() {
+        if (this == ACE) {
+            return "A";
+        }
+        if (this == KING) {
+            return "K";
+        }
+        if (this == QUEEN) {
+            return "Q";
+        }
+        if (this == JACK) {
+            return "J";
+        }
+        return String.valueOf(score);
+    }
 }

@@ -35,4 +35,9 @@ public class Card {
     public int hashCode() {
         return Objects.hash(suit, number);
     }
+
+    @Override
+    public String toString() {
+        return number.value() + suit.value();
+    }
 }

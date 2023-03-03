@@ -3,6 +3,7 @@ package domain;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -90,5 +91,12 @@ public class Participants {
     public Map<String, Integer> getPlayerScores() {
         return players().stream()
                 .collect(Collectors.toMap(Participant::name, Participant::score, (d1, d2) -> d1, LinkedHashMap::new));
+    }
+
+    public List<Card> getParticipantCards(String playerName) {
+        return participants.stream().filter(participant -> Objects.equals(participant.name(), playerName))
+                .findFirst()
+                .map(Participant::getHand)
+                .orElseThrow(() -> new IllegalStateException("없는 참여자의 이름입니다."));
     }
 }

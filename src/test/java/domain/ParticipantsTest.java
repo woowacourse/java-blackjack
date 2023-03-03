@@ -153,7 +153,7 @@ class ParticipantsTest {
     @Nested
     class 다음플레이어에게카드를나눠준다 {
         @Test
-        void should_다음플레이어는카드를한장받는다_when_handOutCard호출시() {
+        void should_다음플레이어는카드를한장받는다_when_handOutCardToPlayer호출시() {
             //given
             Participants participants = Participants.create(List.of("포이", "에밀"));
             Deck deck = Deck.create();
@@ -161,7 +161,7 @@ class ParticipantsTest {
             String expected = "에밀";
 
             //when
-            participants.handOutCard(new Card(Suit.SPADE, Number.ACE));
+            participants.handOutCardToPlayer(new Card(Suit.SPADE, Number.ACE));
             String actual = participants.nextDrawablePlayerName();
 
             //then
@@ -231,6 +231,33 @@ class ParticipantsTest {
 
             //then
             assertThat(dealerDrawable).isFalse();
+        }
+    }
+
+    @Nested
+    class 딜러에게카드를나눠준다 {
+        @Test
+        void should_딜러는카드를한장받는다_when_handOutCardToDealer호출시() {
+            //given
+            Participants participants = Participants.create(List.of("포이"));
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.SEVEN));
+                cards.add(new Card(Suit.SPADE, Number.NINE));
+                cards.add(new Card(Suit.SPADE, Number.SEVEN));
+                cards.add(new Card(Suit.SPADE, Number.NINE));
+            });
+            participants.readyForGame(deck);
+            boolean expected = false;
+
+            //when
+            participants.handOutCardToDealer(new Card(Suit.SPADE, Number.ACE));
+            boolean actual = participants.isDealerDrawable();
+
+            //then
+            assertThat(actual).isEqualTo(expected);
+
         }
     }
 }

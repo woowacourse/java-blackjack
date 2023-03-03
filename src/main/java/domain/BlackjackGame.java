@@ -32,6 +32,21 @@ public class BlackjackGame {
         participants.handOutCardToPlayer(deck.draw());
     }
 
+    public void standCurrentPlayer() {
+        participants.standCurrentPlayer();
+    }
+
+    public boolean isDealerDrawable() {
+        return participants.isDealerDrawable();
+    }
+
+    public void handOutCardToDealer() {
+        participants.handOutCardToDealer(deck.draw());
+    }
+
+//    public Map<String, List<Card>> getParticipantsCards() {
+//    }
+
     public Map<String, GameOutcome> getPlayersOutcome() {
         int dealerScore = participants.getDealerScore();
         return participants.getPlayerScores()
@@ -39,5 +54,9 @@ public class BlackjackGame {
                 .stream()
                 .collect(toMap(Entry::getKey, e -> GameOutcome.of(e.getValue(), dealerScore)
                         , (d1, d2) -> d1, LinkedHashMap::new));
+    }
+
+    public List<Card> getParticipantsCard(String currentPlayerName) {
+        return participants.getParticipantCards(currentPlayerName);
     }
 }
