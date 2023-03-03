@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Cards;
 
 public class Player extends Participant {
 
@@ -17,10 +19,6 @@ public class Player extends Participant {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
         }
-    }
-
-    public int calculateTotalScore() {
-        return this.cards.calculateTotalScore();
     }
 
     public String getName() {

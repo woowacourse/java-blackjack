@@ -1,14 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import org.junit.jupiter.api.Assertions;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
-import java.util.Map;
 
 class DealerTest {
 

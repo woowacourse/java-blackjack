@@ -71,7 +71,6 @@
 - [ ] 참가자와 딜러가 가진 카드들을 모두 출력하고, 총점도 같이 출력한다.
 - [ ] 최종 승패를 출력한다.
 
-
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)

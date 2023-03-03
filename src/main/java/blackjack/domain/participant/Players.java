@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static blackjack.domain.Result.DRAW;
 import static blackjack.domain.Result.LOSE;
 import static blackjack.domain.Result.WIN;
 
+import blackjack.domain.Result;
+import blackjack.domain.card.Card;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

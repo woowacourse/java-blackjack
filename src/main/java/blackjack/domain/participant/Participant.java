@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public class Participant {
 
@@ -12,9 +15,11 @@ public class Participant {
         cards.add(card);
     }
 
+    public int calculateTotalScore() {
+        return this.cards.calculateTotalScore();
+    }
+
     public Cards getCards() {
         return cards;
     }
-
-    
 }
