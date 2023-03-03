@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static String readNames() {
@@ -12,7 +13,7 @@ public class InputView {
     }
 
     public static String readOneCard(final String playerName) {
-        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(NEW_LINE + playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
 }

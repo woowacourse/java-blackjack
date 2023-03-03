@@ -12,10 +12,6 @@ public enum Rank {
         this.value = value;
     }
 
-    public static Rank getRank(final int index) {
-        return values()[index];
-    }
-
     public int getValue() {
         return value;
     }

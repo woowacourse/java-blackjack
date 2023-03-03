@@ -22,9 +22,28 @@ public class BlackJackGameController {
 
         OutputView.printInitCard(players.getPlayers(), dealer.getCards());
         for (Player player : players.getPlayers()) {
-            InputView.readOneCard(player.getName());
+            String playerAnswer;
+            do {
+                playerAnswer = InputView.readOneCard(player.getName());
+                if (playerAnswer.equals("y")) {
+                    blackJackGame.handOutCardTo(cardMachine, player);
+                    OutputView.printParticipantCards(player.getName(), player.getCards());
+                }
+                if (playerAnswer.equals("n")) {
+                    OutputView.printParticipantCards(player.getName(), player.getCards());
+                    break;
+                }
+            } while(player.isUnderThanBoundary(21));
+
+
+
         }
-        OutputView.printDealerReceiveOneMoreCard();
+
+
+        while (dealer.isUnderThanBoundary(16)) {
+            blackJackGame.handOutCardTo(cardMachine, dealer);
+            OutputView.printDealerReceiveOneMoreCard();
+        }
 
         blackJackGame.findWinner();
         OutputView.printCardsWithSum(players.getPlayers(), dealer);

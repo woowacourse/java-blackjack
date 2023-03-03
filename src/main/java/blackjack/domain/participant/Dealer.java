@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     private Map<Result, Integer> initResult() {
-        Map<Result, Integer> results = new HashMap<>();
+        Map<Result, Integer> results = new LinkedHashMap<>();
         for (Result result : Result.values()) {
             results.put(result, 0);
         }

@@ -12,10 +12,6 @@ public enum Suit {
         this.value = value;
     }
 
-    public static Suit getSuit(final int index) {
-        return values()[index];
-    }
-
     public String getValue() {
         return value;
     }

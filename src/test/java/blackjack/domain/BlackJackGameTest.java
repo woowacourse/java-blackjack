@@ -98,7 +98,7 @@ class BlackJackGameTest {
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(results.get(Result.WIN)).isEqualTo(2);
             softly.assertThat(results.get(Result.LOSE)).isEqualTo(0);
-            softly.assertThat(results.get(Result.DRAW)).isEqualTo(0);
+            softly.assertThat(results.get(Result.PUSH)).isEqualTo(0);
             softly.assertThat(playerResults).isEqualTo(List.of(Result.LOSE, Result.LOSE));
         });
     }

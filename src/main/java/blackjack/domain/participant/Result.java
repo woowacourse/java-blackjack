@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 public enum Result {
     WIN("승"),
-    DRAW("무"),
+    PUSH("무"),
     LOSE("패"),
     EMPTY("");
 
@@ -13,6 +13,6 @@ public enum Result {
     }
 
     public String getValue() {
-        return this == EMPTY ? "" : this.value;
+        return this.value;
     }
 }
