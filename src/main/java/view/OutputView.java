@@ -5,6 +5,8 @@ import domain.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static domain.Result.*;
+
 public class OutputView {
     public void printDealCards(List<Player> players) {
         String joinedPlayerNames = players.stream()
@@ -60,22 +62,17 @@ public class OutputView {
     }
 
     public void printDealerResults(List<Result> results) {
-        int winCount = 0;
-        int loseCount = 0;
-        int drawCount = 0;
-        for (Result result : results) {
-            if (result == Result.WIN) {
-                ++winCount;
-            }
-            if (result == Result.LOSE) {
-                ++loseCount;
-            }
-            if (result == Result.DRAW) {
-                ++drawCount;
-            }
-        }
+        long winCount = getCount(results, WIN);
+        long loseCount = getCount(results, LOSE);
+        long drawCount = getCount(results, DRAW);
         String result = winCount + "승 " + drawCount + "무 " + loseCount + "패";
         System.out.println("딜러: " + result);
+    }
+
+    private long getCount(List<Result> results, Result target) {
+        return results.stream()
+                .filter(result -> result.equals(target))
+                .count();
     }
 
     private String getCardDisplays(List<Card> cards) {
