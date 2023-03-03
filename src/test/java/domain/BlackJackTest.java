@@ -6,6 +6,7 @@ import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,11 +20,19 @@ public class BlackJackTest {
         }
     }
 
+    private Users users;
+    private BlackJack blackJack;
+
+    @BeforeEach
+    void setUsers() {
+        users = Users.from(List.of("hongo"));
+        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+    }
+
     @DisplayName("플레이어의 승부 결과를 반환한다")
     @Test
     void calculateGameResults() {
-        Users users = Users.from(List.of("hongo", "kiara"));
-        BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        users = Users.from(List.of("hongo", "kiara"));
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13
@@ -37,9 +46,6 @@ public class BlackJackTest {
     @DisplayName("플레이어와 딜러의 점수가 같을 경우 무승부(PUSH)를 반환한다")
     @Test
     void calculateGameResults_PUSH() {
-        Users users = Users.from(List.of("hongo"));
-        BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
-
         Dealer dealer = users.getDealer();
         dealer.hit(new Card(Denomination.SIX, Suits.DIAMOND));
 
@@ -53,8 +59,6 @@ public class BlackJackTest {
     @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
     @Test
     void PUSH_whenBothCardsOver21() {
-        Users users = Users.from(List.of("hongo"));
-        BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
         List<Player> players = users.getPlayers();
 
         Player player = players.get(0);
@@ -67,8 +71,6 @@ public class BlackJackTest {
         // 카드 현황
         // player : ACE(1), 2, 10, 10  => 23
         // dealer : 3, 4, 5, 10        => 22
-        System.out.println(player.getScore());
-        System.out.println(dealer.getScore());
         Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
         assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
     }
@@ -76,14 +78,11 @@ public class BlackJackTest {
     @DisplayName("유저가 요청하면 카드를 하나 더 준다")
     @Test
     void giveCard_whenRequest() {
-        String playerName = "hongo";
-        Users users = Users.from(List.of(playerName));
-        BlackJack blackJack = BlackJack.of(users, new ZeroIndexGenerator());
         List<Player> players = users.getPlayers();
 
         Player player = players.get(0);
         int oldScore = player.getScore();
-        blackJack.giveCard(playerName);
+        blackJack.giveCard("hongo");
         assertThat(player.getScore()).isGreaterThan(oldScore);
     }
 }
