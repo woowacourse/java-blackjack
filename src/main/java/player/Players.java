@@ -46,7 +46,7 @@ public class Players {
                 player.lose();
                 dealer.win();
             }
-            if (playerScore == dealerScore) {
+            if ((playerScore == dealerScore) && !playerBust) {
                 player.tie();
                 dealer.tie();
             }
