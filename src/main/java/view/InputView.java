@@ -15,6 +15,7 @@ public class InputView {
     }
 
     public String readCommand(String name) {
+        System.out.println();
         System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
         return scanner.nextLine();
     }

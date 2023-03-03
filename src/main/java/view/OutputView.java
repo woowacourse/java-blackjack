@@ -19,6 +19,7 @@ public class OutputView {
 
 
     public void printInitialCards(Dealer dealer, Players players) {
+        System.out.println();
         System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName().getName(), players.getPlayersName()
                 .stream()
                 .collect(Collectors.joining(", ")));
@@ -36,10 +37,12 @@ public class OutputView {
     }
 
     public void printDistributeDealer(Dealer dealer) {
+        System.out.println();
         System.out.printf(DEALER_DISTRIBUTE_MESSAGE, dealer.getName().getName());
     }
 
     public void printCardsResult(Dealer dealer, Players players) {
+        System.out.println();
         System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName().getName(), dealer.getCards()
                 .stream()
                 .collect(Collectors.joining(", ")), dealer.getCardsSum());
@@ -51,6 +54,7 @@ public class OutputView {
     }
 
     public void printWinnerResult(Map<String, List<Result>> dealerResult, Map<String, Result> playerResult) {
+        System.out.println();
         System.out.println("## 최종 승패");
         String name = dealerResult.keySet().stream().findFirst().get();
         List<Result> dealerResults = dealerResult.get(name);
