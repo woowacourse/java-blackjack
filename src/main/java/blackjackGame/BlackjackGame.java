@@ -43,4 +43,8 @@ public class BlackjackGame {
     public void supplyAdditionalCard(int playerIndex) {
         players.takeCard(playerIndex, deck.drawCard());
     }
+
+    public boolean isBust(int playerIndex) {
+        return players.isBust(playerIndex);
+    }
 }

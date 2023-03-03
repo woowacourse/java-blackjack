@@ -2,6 +2,8 @@ package blackjack.blackjacGameTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Stack;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,5 +82,28 @@ class BlackjackGameTest {
 
         assertThat(player1.showCards()).contains(new Card(CardNumber.ACE, Pattern.DIAMOND),
                 new Card(CardNumber.ACE, Pattern.SPADE), new Card(CardNumber.ACE, Pattern.CLOVER));
+    }
+
+    @Test
+    @DisplayName("인덱스에 해당하는 플레이어의 버스트를 확인할 수 있다.")
+    void isBust() {
+        CardsGenerator fixedGenerator = () -> {
+            Stack<Card> cards = new Stack<>();
+            cards.push(new Card(CardNumber.KING, Pattern.HEART));
+            cards.push(new Card(CardNumber.KING, Pattern.CLOVER));
+            cards.push(new Card(CardNumber.KING, Pattern.DIAMOND));
+            cards.push(new Card(CardNumber.KING, Pattern.SPADE));
+            return cards;
+        };
+
+        Deck fixedDeck = new Deck(fixedGenerator);
+        blackjackGame = new BlackjackGame(players, dealer, fixedDeck);
+
+        Player player1 = new Player(new Name("폴로"));
+        blackjackGame.addPlayer(player1);
+        blackjackGame.supplyCardsToPlayers();
+        blackjackGame.supplyAdditionalCard(0);
+
+        assertThat(blackjackGame.isBust(0)).isTrue();
     }
 }
