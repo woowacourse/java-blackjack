@@ -15,8 +15,22 @@ public class Participants {
     private final List<Player> players;
 
     public Participants(Dealer dealer, List<Player> players) {
+        validateDuplicatedPlayer(players);
+        validatePlayerCount(players);
         this.dealer = dealer;
         this.players = players;
+    }
+
+    private void validateDuplicatedPlayer(List<Player> players){
+        if(players.stream().distinct().count() != players.size()){
+            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerCount(List<Player> players){
+        if(players.isEmpty()){
+            throw new IllegalArgumentException("게임을 시작하려면 플레이어는 한명 이상이여야 합니다.");
+        }
     }
 
     public void distributeTwoCardsToEach(CardDeck cardDeck) {
