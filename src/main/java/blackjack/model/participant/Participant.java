@@ -7,6 +7,9 @@ import blackjack.model.state.State;
 import java.util.Objects;
 
 public abstract class Participant {
+
+    protected static final int BLACKJACK_NUMBER = 21;
+
     protected Name name;
     protected State currentState;
 
@@ -38,7 +41,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        if (isBust() || cardScore().bigScore() > 21) {
+        if (isBust() || cardScore().bigScore() > BLACKJACK_NUMBER) {
             return cardScore().smallScore();
         }
         return cardScore().bigScore();

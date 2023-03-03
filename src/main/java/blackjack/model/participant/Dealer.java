@@ -9,9 +9,10 @@ import blackjack.model.state.State;
 public class Dealer extends Participant {
 
     private static final int DEALER_FIRST_CARD = 0;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer(State currentState) {
-        super(new Name("딜러"), currentState);
+        super(new Name(DEALER_NAME), currentState);
     }
 
     @Override
