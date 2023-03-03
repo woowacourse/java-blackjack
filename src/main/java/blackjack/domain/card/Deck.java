@@ -1,6 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Deck {
 
@@ -15,13 +18,13 @@ public class Deck {
 
     private static void makeDeck() {
         int count = 0;
-        for (Rank rank : Rank.values()) {
+        for (final Rank rank : Rank.values()) {
             count = addCardsToDeck(rank, count);
         }
     }
 
     private static int addCardsToDeck(final Rank rank, int count) {
-        for (Suit suit : Suit.values()) {
+        for (final Suit suit : Suit.values()) {
             deck.put(count, new Card(rank, suit));
             count++;
         }

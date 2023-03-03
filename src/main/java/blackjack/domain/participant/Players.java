@@ -1,11 +1,16 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.participant.Player;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
+
+    private static final String COMMA = ",";
+    private static final int NUMBER_OF_MINIMUM_PLAYER = 1;
+    private static final int NUMBER_OF_MAXIMUM_PLAYER = 7;
 
     private final List<Player> players;
 
@@ -14,7 +19,7 @@ public class Players {
     }
 
     private List<Player> makePlayers(final String input) {
-        final List<Player> names = Arrays.stream(input.split(","))
+        final List<Player> names = Arrays.stream(input.split(COMMA))
                 .map(Player::new)
                 .collect(Collectors.toList());
         validateNumberOfPlayers(names);
@@ -23,7 +28,7 @@ public class Players {
     }
 
     private void validateNumberOfPlayers(final List<Player> names) {
-        if (names.size() < 1 || names.size() > 7) {
+        if (names.size() < NUMBER_OF_MINIMUM_PLAYER || names.size() > NUMBER_OF_MAXIMUM_PLAYER) {
             throw new IllegalArgumentException("플레이어의 수는 1명 이상 7명 이하만 가능합나다.");
         }
     }
@@ -38,6 +43,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return this.players;
+        return Collections.unmodifiableList(this.players);
     }
 }

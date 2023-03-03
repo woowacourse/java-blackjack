@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.Objects;
-
 public class Player extends Participant {
 
     private final Name name;
@@ -17,10 +15,10 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name.getValue();
+        return this.name.getValue();
     }
 
-    public void setResult(Result result) {
+    public void setResult(final Result result) {
         this.result = result;
     }
 }

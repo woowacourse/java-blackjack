@@ -9,22 +9,24 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    private static final int INCREASING_NUMBER = 1;
+
     private final Map<Result, Integer> results;
 
     public Dealer() {
-        this.results = initResult();
+        this.results = initResults();
     }
 
-    private Map<Result, Integer> initResult() {
-        Map<Result, Integer> results = new LinkedHashMap<>();
-        for (Result result : Result.values()) {
+    private Map<Result, Integer> initResults() {
+        final Map<Result, Integer> results = new LinkedHashMap<>();
+        for (final Result result : Result.values()) {
             results.put(result, 0);
         }
         return results;
     }
 
     public Card getFirstCard() {
-        List<Card> cards = new ArrayList<>(super.getCards());
+        final List<Card> cards = new ArrayList<>(super.getCards());
         return cards.get(0);
     }
 
@@ -33,6 +35,6 @@ public class Dealer extends Participant {
     }
 
     public void setResults(final Result result) {
-        results.put(result, results.get(result) + 1);
+        results.put(result, results.get(result) + INCREASING_NUMBER);
     }
 }

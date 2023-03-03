@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.card.CardMachine;
+import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -10,34 +10,39 @@ import blackjack.view.OutputView;
 
 public class BlackJackGameController {
 
-    public void run() {
-        BlackJackGame blackJackGame = generateBlackJackGame();
-        CardMachine cardMachine = new CardMachine();
+    private static final String YES_COMMAND = "y";
+    private static final String NO_COMMAND = "n";
+    private static final int DEALER_DRAWING_BOUNDARY = 16;
+    private static final int PLAYER_BUST_BOUNDARY = 21;
 
-        blackJackGame.handOutInitCards(cardMachine);
-        Dealer dealer = blackJackGame.getDealer();
-        Players players = blackJackGame.getPlayers();
+    public void run() {
+        final BlackJackGame blackJackGame = generateBlackJackGame();
+        final ShufflingMachine shufflingMachine = new ShufflingMachine();
+
+        blackJackGame.handOutInitCards(shufflingMachine);
+        final Dealer dealer = blackJackGame.getDealer();
+        final Players players = blackJackGame.getPlayers();
 
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
 
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             String playerAnswer;
 
             do {
                 playerAnswer = inputGameCommandToGetOneMoreCard(player);
-                if (playerAnswer.equals("y")) {
-                    blackJackGame.handOutCardTo(cardMachine, player);
+                if (playerAnswer.equals(YES_COMMAND)) {
+                    blackJackGame.handOutCardTo(shufflingMachine, player);
                     OutputView.printParticipantCards(player.getName(), player.getCards());
                 }
-                if (playerAnswer.equals("n")) {
+                if (playerAnswer.equals(NO_COMMAND)) {
                     OutputView.printParticipantCards(player.getName(), player.getCards());
                     break;
                 }
-            } while(player.isUnderThanBoundary(21));
+            } while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY));
         }
 
-        while (dealer.isUnderThanBoundary(16)) {
-            blackJackGame.handOutCardTo(cardMachine, dealer);
+        while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
+            blackJackGame.handOutCardTo(shufflingMachine, dealer);
             OutputView.printDealerReceiveOneMoreCard();
         }
 
@@ -48,7 +53,7 @@ public class BlackJackGameController {
 
     private BlackJackGame generateBlackJackGame() {
         try {
-            String inputNames = InputView.readNames();
+            final String inputNames = InputView.readNames();
             return new BlackJackGame(inputNames);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -58,7 +63,7 @@ public class BlackJackGameController {
 
     private String inputGameCommandToGetOneMoreCard(final Player player) {
         try {
-            String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
+            final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
             validateCorrectCommand(gameCommand);
             return gameCommand;
         } catch (IllegalArgumentException e) {
@@ -68,7 +73,7 @@ public class BlackJackGameController {
     }
 
     private static void validateCorrectCommand(final String gameCommand) {
-        if (!(gameCommand.equals("y") || gameCommand.equals("n"))) {
+        if (!(gameCommand.equals(YES_COMMAND) || gameCommand.equals(NO_COMMAND))) {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
     }

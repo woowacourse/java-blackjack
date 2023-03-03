@@ -1,12 +1,13 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardMachine;
+import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 
 public class BlackJackGame {
 
+    private static final int NUMBER_OF_INITIAL_CARD = 2;
     private final Dealer dealer;
     private final Players players;
 
@@ -15,29 +16,29 @@ public class BlackJackGame {
         this.players = new Players(inputNames);
     }
 
-    public void handOutCardTo(final CardMachine cardMachine, final Participant participant) {
-        Card card = Deck.from(cardMachine.draw());
+    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant) {
+        final Card card = Deck.from(shufflingMachine.draw());
         participant.receiveCard(card);
     }
 
-    public void handOutInitCards(final CardMachine cardMachine) {
-        handOutInitCardsTo(cardMachine, dealer);
+    public void handOutInitCards(final ShufflingMachine shufflingMachine) {
+        handOutInitCardsTo(shufflingMachine, dealer);
         players.getPlayers()
-                .forEach(player -> handOutInitCardsTo(cardMachine, player));
+                .forEach(player -> handOutInitCardsTo(shufflingMachine, player));
     }
 
-    private void handOutInitCardsTo(final CardMachine cardMachine, final Participant participant) {
-        for (int i = 0; i < 2; i++) {
-            Card card = Deck.from(cardMachine.draw());
+    private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
+        for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
+            final Card card = Deck.from(shufflingMachine.draw());
             participant.receiveCard(card);
         }
     }
 
     public void findWinner() {
-        int sumOfDealer = dealer.calculateSumOfRank();
+        final int sumOfDealer = dealer.calculateSumOfRank();
 
-        for (Player player : players.getPlayers()) {
-            int sumOfPlayer = player.calculateSumOfRank();
+        for (final Player player : players.getPlayers()) {
+            final int sumOfPlayer = player.calculateSumOfRank();
 
             if (player.isBlackJack() && dealer.isBlackJack()) {
                 dealer.setResults(Result.PUSH);
@@ -92,10 +93,10 @@ public class BlackJackGame {
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return this.dealer;
     }
 
     public Players getPlayers() {
-        return players;
+        return this.players;
     }
 }

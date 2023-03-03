@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class Name {
 
+    private static final int LENGTH_OF_MINIMUM_PLAYER_NAME = 1;
+    private static final int LENGTH_OF_MAXIMUM_PLAYER_NAME = 5;
+
     private final String value;
 
     public Name(final String value) {
@@ -19,7 +22,7 @@ public class Name {
     }
 
     private void validateLengthOfName(final String value) {
-        if (value.length() < 1 || value.length() > 5) {
+        if (value.length() < LENGTH_OF_MINIMUM_PLAYER_NAME || value.length() > LENGTH_OF_MAXIMUM_PLAYER_NAME) {
             throw new IllegalArgumentException("이름의 길이는 1이상 5이하만 가능합니다.");
         }
     }
@@ -38,6 +41,6 @@ public class Name {
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 }

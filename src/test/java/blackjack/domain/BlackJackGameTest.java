@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardMachine;
+import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
@@ -25,10 +25,10 @@ class BlackJackGameTest {
     void checkCardSizeOfParticipantsAfterInitialHandOut() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
-        CardMachine cardMachine = new CardMachine();
+        ShufflingMachine shufflingMachine = new ShufflingMachine();
 
         // when
-        blackJackGame.handOutInitCards(cardMachine);
+        blackJackGame.handOutInitCards(shufflingMachine);
 
         Players players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
@@ -47,11 +47,11 @@ class BlackJackGameTest {
     void handOutCardTo() {
         // given
         BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
-        CardMachine cardMachine = new CardMachine();
+        ShufflingMachine shufflingMachine = new ShufflingMachine();
         Dealer dealer = blackJackGame.getDealer();
 
         // when
-        blackJackGame.handOutCardTo(cardMachine, dealer);
+        blackJackGame.handOutCardTo(shufflingMachine, dealer);
         int dealerCardSize = dealer.getCards().size();
 
         // then

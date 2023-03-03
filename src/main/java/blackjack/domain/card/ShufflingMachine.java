@@ -3,17 +3,16 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.List;
 
-public class CardMachine {
+public class ShufflingMachine {
 
-    // TODO: 변수명 생각
     private final List<Integer> keys;
 
-    public CardMachine() {
+    public ShufflingMachine() {
         this.keys = shuffleDeck();
     }
 
     private List<Integer> shuffleDeck() {
-        List<Integer> keys = Deck.getKeys();
+        final List<Integer> keys = Deck.getKeys();
         Collections.shuffle(keys);
         return keys;
     }

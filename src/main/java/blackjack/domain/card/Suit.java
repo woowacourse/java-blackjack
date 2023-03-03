@@ -13,6 +13,6 @@ public enum Suit {
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 }
