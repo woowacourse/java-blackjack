@@ -14,15 +14,17 @@ public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
     private BlackJack blackJack;
+    private Deck deck;
 
     public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        deck = new Deck();
     }
 
     public void run() {
         final List<Name> namesByView = getNamesByView();
-        this.blackJack = new BlackJack(namesByView, new Deck());
+        this.blackJack = new BlackJack(namesByView, deck);
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
         divideCardTo(namesByView);
         finalizeDealerCardStatus();
@@ -31,7 +33,7 @@ public class BlackJackController {
     }
 
     private void finalizeDealerCardStatus() {
-        final int cardCount = blackJack.finalizeDealer();
+        final int cardCount = blackJack.finalizeDealer(deck);
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 
@@ -44,7 +46,7 @@ public class BlackJackController {
     private void checkCardWanted(final Name name) {
         boolean wantCard = getCardWantFromConsole(name);
         while (wantCard) {
-            blackJack.drawCard(name);
+            blackJack.giveCard(name, deck);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
             if (blackJack.checkBustBy(name)) {
                 break;

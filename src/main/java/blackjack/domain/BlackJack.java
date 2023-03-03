@@ -11,15 +11,12 @@ import java.util.List;
 
 public class BlackJack {
 
-    private static final int INITIAL_CARD_COUNT = 2;
     private final Users users;
     private final Dealer dealer;
-    private final Deck deck;
 
     public BlackJack(List<Name> usersName, Deck deck) {
         this.users = makeUsersBy(usersName, deck);
         this.dealer = new Dealer(getInitialCards(deck));
-        this.deck = deck;
     }
 
     private Users makeUsersBy(final List<Name> usersName, final Deck deck) {
@@ -39,12 +36,8 @@ public class BlackJack {
         return cards;
     }
 
-    public void drawCard(Name user) {
+    public void giveCard(Name user, Deck deck) {
         users.giveCardByName(user, deck.drawCard());
-    }
-
-    public List<Card> getDealerCard() {
-        return dealer.openCards();
     }
 
     public List<Card> getUserCard(Name user) {
@@ -55,7 +48,7 @@ public class BlackJack {
         return dealer;
     }
 
-    public int finalizeDealer() {
+    public int finalizeDealer(Deck deck) {
         int additionalCardCount = 0;
         while (dealer.needCard()) {
             dealer.draw(deck.drawCard());
