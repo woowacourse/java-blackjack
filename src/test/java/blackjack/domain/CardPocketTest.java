@@ -1,18 +1,19 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardPocketTest {
-    private static final List<Card> cards = List.of(new Card(Shape.CLOVER, Symbol.ACE), new Card(Shape.HEART, Symbol.EIGHT));
+
+    private static final List<Card> cards = List.of(new Card(Shape.CLOVER, Symbol.ACE),
+            new Card(Shape.HEART, Symbol.EIGHT));
 
     private CardPocket cardPocket;
 

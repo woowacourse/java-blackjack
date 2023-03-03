@@ -1,10 +1,10 @@
 package blackjack.dto;
 
 import blackjack.domain.Card;
-
 import java.util.List;
 
 public class PlayerCardDto {
+
     private final String name;
     private final List<Card> cards;
 

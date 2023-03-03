@@ -1,12 +1,13 @@
 package blackjack.domain;
 
+import static blackjack.domain.BlackJackConstant.BLACKJACK;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static blackjack.domain.BlackJackConstant.BLACKJACK;
-
 public class CardPocket {
+
     private static final int VALUE_ACE = 10;
     private final List<Card> cards;
 

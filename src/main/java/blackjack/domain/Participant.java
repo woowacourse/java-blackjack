@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Participant {
+
     private final CardPocket cardPocket;
 
     protected Participant() {

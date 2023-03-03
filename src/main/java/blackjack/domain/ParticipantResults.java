@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParticipantResults {
+
     private final Map<String, ResultType> playerNameToResultType = new HashMap<>();
 
     void tiePlayer(final String playerName) {
