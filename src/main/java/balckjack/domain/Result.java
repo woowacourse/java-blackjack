@@ -11,4 +11,7 @@ public enum Result {
         this.result = result;
     }
 
+    public String getResult() {
+        return result;
+    }
 }

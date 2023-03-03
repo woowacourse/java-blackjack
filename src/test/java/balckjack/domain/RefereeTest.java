@@ -122,7 +122,7 @@ class RefereeTest {
         players.getPlayers().get(3).hit(new StubCardPicker(card12));
         players.getPlayers().get(3).hit(new StubCardPicker(card13));
 
-        List<Result> result = referee.judge(dealer, players);
+        List<Result> result = referee.judgeResult(dealer, players);
         Assertions.assertThat(result)
             .isEqualTo(List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE));
     }
