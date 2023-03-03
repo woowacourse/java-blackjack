@@ -20,6 +20,7 @@ public class BlackjackController {
         OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
         blackjackGame.getPlayers().forEach(this::giveCardUntilImpossible);
         addCardToDealerIfPossible();
+        OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private void addCardToDealerIfPossible() {
@@ -34,5 +35,6 @@ public class BlackjackController {
             player.addCard(this.deck.draw());
             OutputView.printCardsStatusOfUser(player);
         }
+        OutputView.printCardsStatusOfUser(player);
     }
 }

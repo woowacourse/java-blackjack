@@ -17,6 +17,7 @@ public class OutputView {
         System.out.println();
         printCardsStatusOfUser(dealer);
         players.forEach(OutputView::printCardsStatusOfUser);
+        System.out.println();
     }
 
     public static void printCardsStatusOfUser(AbstractUser user) {
@@ -27,7 +28,22 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printCardsStatusAndScoreOfUser(AbstractUser user){
+        List<String> cardTexts = user.getCards().stream()
+                .map(Card::getText)
+                .collect(Collectors.toList());
+        System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
+        System.out.println(" - 결과: " + user.calculateScore());
+    }
+
     public static void announceAddCardToDealer() {
+        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printCardsStatusWithScore(Dealer dealer, List<Player> players) {
+        System.out.println();
+        printCardsStatusAndScoreOfUser(dealer);
+        players.forEach(OutputView::printCardsStatusAndScoreOfUser);
     }
 }
