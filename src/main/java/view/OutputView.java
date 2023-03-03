@@ -22,9 +22,8 @@ public class OutputView {
     }
 
     public void printInitialMessage(final List<String> names) {
-        String dealerName = names.get(0);
-        String playerNames = names.stream().skip(1).collect(Collectors.joining(", "));
-        System.out.printf("%s와 %s에게 2장을 나누었습니다." + System.lineSeparator(), dealerName, playerNames);
+        String playerNames = String.join(", ", names);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), playerNames);
     }
 
     public void printAllState(final Participants participants) {

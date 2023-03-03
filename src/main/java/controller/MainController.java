@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BlackJackGame;
 import domain.PlayerCommand;
 import domain.WinningResult;
 import domain.card.Cards;
@@ -24,34 +25,41 @@ public class MainController {
 
     public void run() {
 
-        Cards cards = new Cards(cardsShuffler);
-        Participants participants = new Participants(inputView.readPlayerNames(), cards);
-        outputView.printInitialMessage(participants.getPlayerNames());
-        outputView.printAllState(participants);
+        BlackJackGame blackJackGame = createBlackJackGame();
 
-        for (Player player : participants.getPlayers()) {
+        for (Player player : blackJackGame.getParticipants().getPlayers()) {
             boolean repeat = true;
             while (repeat) {
                 PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
                 if (command.isHit()) {
-                    player.receiveCard(cards.getCard());
+                    blackJackGame.giveCardTo(player);
                 }
                 outputView.printSingleState(player);
                 repeat = player.canReceive() && command.isHit();
             }
         }
 
-        Dealer dealer = participants.getDealer();
+        Dealer dealer = blackJackGame.getParticipants().getDealer();
         while (dealer.isFill()) {
             outputView.printFillDealerCards();
-            dealer.receiveCard(cards.getCard());
+            blackJackGame.giveCardTo(dealer);
         }
 
-        outputView.printFinalState(participants);
+        outputView.printFinalState(blackJackGame.getParticipants());
 
-        WinningResult winningResult = new WinningResult(participants);
+        WinningResult winningResult = new WinningResult(blackJackGame.getParticipants());
         outputView.printFinalResult();
         outputView.printDealerResult(winningResult.getDealerResult());
         outputView.printPlayerResult(winningResult.getPlayersResult());
+    }
+
+    private BlackJackGame createBlackJackGame() {
+        Cards cards = new Cards(cardsShuffler);
+        Participants participants = new Participants(inputView.readPlayerNames(), cards);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cards);
+
+        outputView.printInitialMessage(blackJackGame.getParticipants().getPlayerNames());
+        outputView.printAllState(blackJackGame.getParticipants());
+        return blackJackGame;
     }
 }

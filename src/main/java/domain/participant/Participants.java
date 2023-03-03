@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Cards;
-import domain.card.shuffler.RandomCardsShuffler;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
