@@ -8,4 +8,8 @@ public enum Suit {
     Suit(final String suit) {
         this.suit = suit;
     }
+
+    public String getSuit() {
+        return suit;
+    }
 }
