@@ -1,11 +1,9 @@
-package domain;
+package domain.user;
 
-import java.util.Objects;
-
-public class Name {
+public class PlayerName {
     private final String value;
 
-    public Name(String value) {
+    public PlayerName(String value) {
         validate(value);
         this.value = value;
     }

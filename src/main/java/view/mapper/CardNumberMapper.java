@@ -1,7 +1,6 @@
-package view;
+package view.mapper;
 
-import domain.CardNumber;
-import domain.CardType;
+import domain.card.CardNumber;
 
 import java.util.Arrays;
 

@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.user.CardPool;
+import domain.card.CardType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CardPoolTest {
 

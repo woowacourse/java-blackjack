@@ -1,6 +1,6 @@
-package view;
+package view.mapper;
 
-import domain.GameResult;
+import domain.game.GameResult;
 
 import java.util.Arrays;
 
