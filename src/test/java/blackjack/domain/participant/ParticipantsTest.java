@@ -1,11 +1,7 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Number.ACE;
-import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,14 +13,11 @@ class ParticipantsTest {
 
     @Test
     void 중복되는_이름이_존재하면_예외를_던진다() {
-        final Cards cards = new Cards(List.of(
-                new Card(ACE, SPADE)
-        ));
         final List<Participant> participants = List.of(
-                new Dealer(cards),
-                new Player("dazzle", cards),
-                new Player("dazzle", cards),
-                new Player("kokodak", cards));
+                new Dealer(),
+                new Player("dazzle"),
+                new Player("dazzle"),
+                new Player("kokodak"));
 
         assertThatThrownBy(() -> new Participants(participants))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -32,17 +25,14 @@ class ParticipantsTest {
 
     @Test
     void 딜러_포함_참여자가_6명_초과라면_예외를_던진다() {
-        final Cards cards = new Cards(List.of(
-                new Card(ACE, SPADE)
-        ));
         final List<Participant> participants = List.of(
-                new Dealer(cards),
-                new Player("dazzle", cards),
-                new Player("kokodak", cards),
-                new Player("odo", cards),
-                new Player("hoi", cards),
-                new Player("gray", cards),
-                new Player("pobi", cards)
+                new Dealer(),
+                new Player("dazzle"),
+                new Player("kokodak"),
+                new Player("odo"),
+                new Player("hoi"),
+                new Player("gray"),
+                new Player("pobi")
         );
 
         assertThatThrownBy(() -> new Participants(participants))

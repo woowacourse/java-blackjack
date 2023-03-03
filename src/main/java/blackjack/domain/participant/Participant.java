@@ -8,6 +8,10 @@ public abstract class Participant {
 
     protected final Cards cards;
 
+    protected Participant() {
+        this(new Cards());
+    }
+
     protected Participant(final Cards cards) {
         this.cards = cards;
     }

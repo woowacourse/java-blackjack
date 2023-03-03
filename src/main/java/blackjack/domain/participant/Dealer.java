@@ -10,6 +10,10 @@ public class Dealer extends Participant {
 
     private final String name = DEALER_NAME;
 
+    public Dealer() {
+        super();
+    }
+
     public Dealer(final Cards cards) {
         super(cards);
     }
