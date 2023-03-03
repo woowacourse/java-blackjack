@@ -19,8 +19,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public boolean cardRequest(Name name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.getValue());
+    public boolean cardRequest(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         System.out.print(System.lineSeparator());
         final String input = readLine();
         return isValid(input);
