@@ -5,6 +5,7 @@ import domain.CardDeck;
 import domain.Dealer;
 import domain.Name;
 import domain.Participant;
+import domain.Player;
 import domain.Players;
 import domain.Result;
 import util.CardDeckMaker;
@@ -38,7 +39,7 @@ public class BlackJackController {
     }
 
     private void progress(Players players, CardDistributor cardDistributor, Dealer dealer) {
-        for (Participant player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             requestPlayerMoreCard(cardDistributor, player);
         }
         int dealerMoreCardCount = 0;
@@ -79,7 +80,7 @@ public class BlackJackController {
         return playerNames;
     }
 
-    private void requestPlayerMoreCard(CardDistributor cardDistributor, Participant player) {
+    private void requestPlayerMoreCard(CardDistributor cardDistributor, Player player) {
         boolean isCardRequested = true;
 
         while (player.isMoreCardAble() && isCardRequested) {
@@ -95,7 +96,7 @@ public class BlackJackController {
         }
     }
 
-    private boolean isNoStop(CardDistributor cardDistributor, Participant player, String answer) {
+    private boolean isNoStop(CardDistributor cardDistributor, Player player, String answer) {
         if (answer.equals(MORE_CARD)) {
             player.pick(cardDistributor.distribute());
         }
