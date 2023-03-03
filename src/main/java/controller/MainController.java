@@ -23,7 +23,7 @@ public class MainController {
         Cards cards = new Cards(new RandomCardsShuffler());
         Participants participants = new Participants(inputView.readPlayerNames(), cards);
         outputView.printInitialMessage(participants.getPlayerNames());
-        outputView.printInitialState(participants);
+        outputView.printAllState(participants);
 
         for (Player player : participants.getPlayers()) {
             boolean repeat = true;
@@ -31,14 +31,16 @@ public class MainController {
                 PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
                 player.receiveAdditionalCard(command, cards);
                 repeat = player.calculateScore() < 21 && command.isHit();
-                outputView.printSinglePlayerCards(player);
+                outputView.printSingleState(player);
             }
         }
 
         Dealer dealer = participants.getDealer();
-        if (dealer.calculateScore() <= 16) {
+        while (dealer.calculateScore() <= 16) {
             outputView.printFillDealerCards();
-            dealer.fillCards(cards);
+            dealer.receiveCard(cards.getCard());
         }
+
+        outputView.printFinalState(participants);
     }
 }
