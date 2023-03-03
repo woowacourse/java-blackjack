@@ -65,10 +65,6 @@ public class Cards {
         return calculateTotalScore() > BLACKJACK_SCORE_CONDITION;
     }
 
-    public boolean isLessThan16Score() {
-        return calculateTotalScore() <= SPECIFIC_SCORE_OF_DEALER;
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

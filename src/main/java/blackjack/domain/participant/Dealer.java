@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    private static final int SPECIFIC_SCORE_OF_DEALER = 16;
+
     private final Players players;
     private final Deck deck;
 
@@ -42,5 +44,13 @@ public class Dealer extends Participant {
 
     public Map<Player, Result> decideResult() {
         return players.decideResults(cards.calculateTotalScore());
+    }
+
+    public boolean canDraw() {
+        return cards.calculateTotalScore() <= SPECIFIC_SCORE_OF_DEALER;
+    }
+
+    public void drawCardUntilOver16() {
+        receiveCard(deck.drawCard());
     }
 }

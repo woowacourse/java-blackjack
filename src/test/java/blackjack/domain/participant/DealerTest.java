@@ -50,4 +50,24 @@ class DealerTest {
 
         assertThat(player1.getCards().getCards().size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("딜러의 점수가 16점 이하이면 16점을 초과할 때까지 계속해서 카드를 뽑는다.")
+    void canDrawTest() {
+        // given
+        dealer.receiveCard(new Card(Number.TWO, Pattern.HEART));
+        dealer.receiveCard(new Card(Number.THREE, Pattern.HEART));
+        int initSize = dealer.getCards().getCards().size();
+
+        // when
+        while (dealer.canDraw()) {
+            dealer.drawCardUntilOver16();
+        }
+
+        // then
+        assertAll(
+                () -> assertThat(initSize).isNotEqualTo(dealer.getCards().getCards().size()),
+                () -> assertThat(dealer.calculateTotalScore()).isGreaterThan(16)
+        );
+    }
 }
