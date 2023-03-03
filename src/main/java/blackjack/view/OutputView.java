@@ -11,17 +11,19 @@ public class OutputView {
     }
 
     public static void printBlackJackResults(BlackJackResults blackJackResults) {
+        System.out.println("\n## 최종 승패");
         System.out.println(createBlackJackResult(blackJackResults));
     }
 
     public static void printParticipantsInitCards(final Dealer dealer, final List<Player> players) {
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().getValue(), getPlayerNames(players)));
-        String dealerInitCards = getParticipantCards(dealer, 1);
+        String dealerInitCards = getParticipantCards(dealer, dealer.open(1));
         String playersInitCards = players.stream()
-                .map(player -> getParticipantCards(player, 2))
-                .collect(Collectors.joining());
+                .map(player -> getParticipantCards(player, player.open(2)))
+                .collect(Collectors.joining(System.lineSeparator()));
 
-        System.out.println(dealerInitCards + playersInitCards);
+        System.out.println(dealerInitCards);
+        System.out.println(playersInitCards);
     }
 
     public static void printParticipantCardWithResult(final Participant participant, final int totalPoint) {
@@ -58,15 +60,13 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private static String getParticipantCards(final Participant participant, final int openCount) {
+    private static String getParticipantCards(final Participant participant, final List<Card> participantCards) {
         StringBuilder messageBuilder = new StringBuilder();
         messageBuilder.append(participant.getName().getValue())
                 .append(": ")
-                .append(participant.open(openCount)
-                        .stream()
+                .append(participantCards.stream()
                         .map(Card::toString)
-                        .collect(Collectors.joining(", ")))
-                .append(System.lineSeparator());
+                        .collect(Collectors.joining(", ")));
         return messageBuilder.toString();
     }
 
@@ -79,7 +79,7 @@ public class OutputView {
                 .forEach(entry -> {
                     int resultTypeCount = entry.getValue();
                     String resultType = entry.getKey().getType();
-                    stringBuilder.append(resultTypeCount).append(resultType);
+                    stringBuilder.append(resultTypeCount).append(resultType).append(" ");
                 });
         stringBuilder.append(System.lineSeparator());
         return stringBuilder.toString();
