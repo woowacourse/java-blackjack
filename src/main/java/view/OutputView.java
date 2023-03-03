@@ -1,9 +1,6 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Participants;
-import domain.Player;
+import domain.*;
 
 import java.util.stream.Collectors;
 
@@ -13,6 +10,7 @@ public class OutputView {
             + "딜러와 %s에게 2장을 나누었습니다." + LINE_SEPARATOR;
     private static final String DEARER_CARDS_FORMAT = "%s: %s" + LINE_SEPARATOR;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
+    private static final String CARDS_RESULT_FORMAT = "%s카드: %s -결과: %d" + LINE_SEPARATOR;
     private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public void printInitCards(Participants participants) {
@@ -37,15 +35,33 @@ public class OutputView {
     }
 
     public void printPlayerCards(Player player) {
-        String cardNames = player.getCards()
-                                 .stream()
-                                 .map(this::convertCard)
-                                 .collect(Collectors.joining(", "));
-
+        String cardNames = getParticipantCardsView(player);
         System.out.printf(PLAYER_CARDS_FORMAT, player.getName(), cardNames);
     }
 
     public void printDealerState() {
         System.out.println(DEALER_HIT_MESSAGE);
+    }
+
+    public void printCardResult(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        String dealerCards = getParticipantCardsView(dealer);
+        printCardResultFormat(dealer, dealerCards);
+
+        for (Player player : participants.getPlayers()) {
+            String cards = getParticipantCardsView(player);
+            printCardResultFormat(player, cards);
+        }
+    }
+
+    private void printCardResultFormat(Participant participant, String cards) {
+        System.out.printf(CARDS_RESULT_FORMAT, participant.getName(), cards, participant.getScore());
+    }
+
+    private String getParticipantCardsView(Participant participant) {
+        return participant.getCards()
+                          .stream()
+                          .map(this::convertCard)
+                          .collect(Collectors.joining(", "));
     }
 }

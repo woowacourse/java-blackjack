@@ -3,7 +3,7 @@ package domain;
 import java.util.List;
 import java.util.Objects;
 
-abstract class Participant {
+public abstract class Participant {
 
     private final PlayerCards playerCards;
     private final Name name;

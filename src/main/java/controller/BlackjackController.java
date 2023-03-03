@@ -25,6 +25,7 @@ public class BlackjackController {
         blackjackGame.dealOutCard();
         outputView.printInitCards(participants);
         play(participants, blackjackGame);
+        outputView.printCardResult(participants);
     }
 
     private void play(Participants participants, BlackjackGame blackjackGame) {
