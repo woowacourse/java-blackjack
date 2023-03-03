@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,6 +50,13 @@ public class OutputView {
             System.out.println(playerName + "카드: " + cardsWithName.get(playerName)
                     .stream()
                     .collect(Collectors.joining(", ")) + " - 결과: " + scores.get(index++));
+        }
+    }
+
+    public void printGameResult(List<Integer> dealerResult, Map<String, String> result) {
+        System.out.println("딜러: " + dealerResult.get(0) + "승 " + dealerResult.get(1) + "무 " + dealerResult.get(2) + "패 ");
+        for (String playerName : result.keySet()) {
+            System.out.println(playerName + ":" + result.get(playerName));
         }
     }
 }

@@ -45,6 +45,18 @@ public class Players {
     }
 
     private void compareScore(final Map<Player, Result> results, final int dealerScore, final Player player) {
+        if (dealerScore > 21 && player.isBust()) {
+            results.put(player, DRAW);
+            return;
+        }
+        if (dealerScore > 21 && !player.isBust()) {
+            results.put(player, WIN);
+            return;
+        }
+        if (dealerScore <= 21 && player.isBust()) {
+            results.put(player, LOSE);
+            return;
+        }
         if (dealerScore < player.calculateTotalScore()) {
             results.put(player, WIN);
         }
