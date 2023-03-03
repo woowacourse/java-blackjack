@@ -23,52 +23,68 @@ public class Controller {
     }
 
     void run() {
+        setGame();
+        showFirstDraw();
+        playersHit();
+        dealerHit();
+        printFinalCards();
+        printWinningResult();
+    }
 
-        // 참여자 이름 받아 플레이어 생성
-        List<String> names = inputView.readPlayerNames();
-        for (String name : names) {
-            blackjackGame.addPlayer(new Player(new Name(name)));
-        }
-        // 첫번째 draw
-        blackjackGame.supplyCardsToDealer();
-        blackjackGame.supplyCardsToPlayers();
-        outputView.printFirstDrawMessage(names);
-
-        DealerFirstOpenDto dealerFirstOpen = blackjackGame.getDealerFirstOpen();
-        List<PlayerOpenDto> playersCards = blackjackGame.getPlayersCards();
-        outputView.printFirstOpenCards(dealerFirstOpen, playersCards);
-
-        // 추가 카드 draw
-        for (int i = 0; i < blackjackGame.countPlayer(); i++) {
-            Name userName = blackjackGame.findUserNameByIndex(i);
-            String hitCommand = inputView.readHitCommand(userName);
-            while (hitCommand.equals("y") && !blackjackGame.isBust(i)) {
-                blackjackGame.supplyAdditionalCard(i);
-                PlayerOpenDto playerCard = blackjackGame.getPlayerCardsByIndex(i);
-                outputView.printPlayerCard(playerCard);
-                if (blackjackGame.isBust(i)) {
-                    break;
-                }
-                hitCommand = inputView.readHitCommand(userName);
-            }
-        }
-        // 딜러 추가 카드 draw
-        while (blackjackGame.canDealerHit()) {
-//            아웃풋 뷰 출력 어쩌고 저쩌고
-            blackjackGame.supplyAdditionalCardToDealer();
-            outputView.printDealerHitMessage();
-        }
-        // 결과 출력
-        PlayerResultDto dealerResult = blackjackGame.getDealerResult();
-        List<PlayerResultDto> playerResults = blackjackGame.getPlayerResults();
-
-        outputView.printFinalResults(dealerResult, playerResults);
-
-//        출력따리
-        // 승패 출력
+    private void printWinningResult() {
         blackjackGame.calculateWinning();
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         List<PlayerWinningDto> playerWinningResults = blackjackGame.getPlayerWinningResults();
         outputView.printWinningResults(dealerWinningResult, playerWinningResults);
+    }
+
+    private void printFinalCards() {
+        PlayerResultDto dealerResult = blackjackGame.getDealerResult();
+        List<PlayerResultDto> playerResults = blackjackGame.getPlayerResults();
+
+        outputView.printFinalResults(dealerResult, playerResults);
+    }
+
+    private void dealerHit() {
+        while (blackjackGame.canDealerHit()) {
+            blackjackGame.supplyAdditionalCardToDealer();
+            outputView.printDealerHitMessage();
+        }
+    }
+
+    private void playersHit() {
+        for (int i = 0; i < blackjackGame.countPlayer(); i++) {
+            Name userName = blackjackGame.findUserNameByIndex(i);
+            String hitCommand = inputView.readHitCommand(userName);
+            playerHit(i, userName, hitCommand);
+        }
+    }
+
+    private void playerHit(int i, Name userName, String hitCommand) {
+        while (hitCommand.equals("y") && !blackjackGame.isBust(i)) {
+            blackjackGame.supplyAdditionalCard(i);
+            PlayerOpenDto playerCard = blackjackGame.getPlayerCardsByIndex(i);
+            outputView.printPlayerCard(playerCard);
+            if (blackjackGame.isBust(i)) {
+                break;
+            }
+            hitCommand = inputView.readHitCommand(userName);
+        }
+    }
+
+    private void showFirstDraw() {
+        DealerFirstOpenDto dealerFirstOpen = blackjackGame.getDealerFirstOpen();
+        List<PlayerOpenDto> playersCards = blackjackGame.getPlayersCards();
+        outputView.printFirstOpenCards(dealerFirstOpen, playersCards);
+    }
+
+    private void setGame() {
+        List<String> names = inputView.readPlayerNames();
+        for (String name : names) {
+            blackjackGame.addPlayer(new Player(new Name(name)));
+        }
+        blackjackGame.supplyCardsToDealer();
+        blackjackGame.supplyCardsToPlayers();
+        outputView.printFirstDrawMessage(names);
     }
 }
