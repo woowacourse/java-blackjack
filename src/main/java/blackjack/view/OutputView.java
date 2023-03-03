@@ -1,19 +1,18 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
 import blackjack.domain.card.Shape;
+import blackjack.domain.dto.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -106,10 +105,6 @@ public class OutputView {
         return name.getValue();
     }
 
-    public void printException(final Exception exception) {
-        System.out.println(ERROR_HEAD + exception.getMessage());
-    }
-
     public void printAdditionalCardCountOfDealer(final int cardCount) {
         System.out.print(System.lineSeparator());
         if (cardCount == 0) {
@@ -145,6 +140,8 @@ public class OutputView {
         return String.valueOf(point);
     }
 
+
+    ////
     public void printResult(GameResult gameResult) {
         System.out.print(System.lineSeparator());
         System.out.println("## 최종 승패");
@@ -153,66 +150,51 @@ public class OutputView {
     }
 
     private void printDealerResult(final GameResult gameResult) {
-        printPlayer(gameResult.getDealerResult(), Dealer.DEALER_NAME);
+        printDealer(gameResult.getDealerResult(), Dealer.DEALER_NAME);
     }
 
-    private void printUsersResult(final GameResult gameResult) {
-//        final Map<Name, List<Result>> userResult = gameResult.getUserResult();
-//        final Set<Name> names = userResult.keySet();
-//        for (Name name : names) {
-//            printPlayer(userResult.get(name), name.getValue());
-//        }
-        for (Map.Entry<Name, List<Result>> entry : gameResult.getUserResult().entrySet()) {
-            printPlayer(entry.getValue(), entry.getKey().getValue());
+    private void printDealer(final Map<Result, Integer> dealerResult, final String dealerName) {
+        System.out.println(String.format("딜러: %s", makeResultStringOf(dealerResult)));
+    }
+
+    private String makeResultStringOf(final Map<Result, Integer> dealerResult) {
+        final StringBuilder stringBuilder = new StringBuilder(" ");
+        for (Result result : dealerResult.keySet()) {
+            stringBuilder.append(makeStringOf(result, dealerResult.get(result)));
         }
+        return stringBuilder.toString();
     }
 
-    private void printPlayer(final List<Result> results, String name) {
-        System.out.printf("%s: %s", name, makeTotalGameResult(results));
-        System.out.print(System.lineSeparator());
+    private String makeStringOf(final Result result, final Integer count) {
+        return String.format("%d%s", count, getResultString(result));
     }
 
-    private String makeTotalGameResult(final List<Result> results) {
-        final int drawCount = getCount(results, m -> m == Result.DRAW);
-        final int winCount = getCount(results, m -> m == Result.WIN);
-        final int loseCount = getCount(results, m -> m == Result.LOSE);
-        return makeResultOf(drawCount, winCount, loseCount);
-    }
-
-    private int getCount(final List<Result> results, Predicate<Result> predicate) {
-        return (int) results.stream()
-                .filter(predicate::test)
-                .count();
-    }
-
-    private String makeResultOf(final int drawCount, final int winCount, final int loseCount) {
-        if ((drawCount + winCount + loseCount) != 1) {
-            return getMultipleResult(drawCount, winCount, loseCount);
-        }
-        if (winCount == 1) {
-            return "승";
-        }
-        if (loseCount == 1) {
+    private String getResultString(final Result result) {
+        if(result == Result.LOSE){
             return "패";
         }
-        if (drawCount == 1) {
+        if(result == Result.DRAW){
             return "무";
+        }
+        if(result == Result.WIN){
+            return "승";
         }
         throw new AssertionError();
     }
 
-    private String getMultipleResult(final int drawCount, final int winCount, final int loseCount) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (drawCount > 0) {
-            stringBuilder.append(String.format("%d무 ", drawCount));
+    private void printUsersResult(final GameResult gameResult) {
+        for (Map.Entry<String, Result> userData : gameResult.getUserResult().entrySet()) {
+            printUser(userData.getKey(), userData.getValue());
         }
-        if (winCount > 0) {
-            stringBuilder.append(String.format("%d승 ", winCount));
-        }
-        if (loseCount > 0) {
-            stringBuilder.append(String.format("%d패 ", loseCount));
-        }
-        return stringBuilder.toString();
+    }
+
+    private void printUser(final String name, final Result result) {
+        System.out.printf("%s: %s", name, getResultString(result));
+        System.out.print(System.lineSeparator());
+    }
+
+    public void printException(final Exception exception) {
+        System.out.println(ERROR_HEAD + exception.getMessage());
     }
 
 }
