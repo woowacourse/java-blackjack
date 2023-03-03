@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import blackjack.model.participant.Name;
 import org.assertj.core.api.Assertions;
