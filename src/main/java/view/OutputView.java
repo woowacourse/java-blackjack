@@ -28,26 +28,30 @@ public class OutputView {
     }
 
     public void printParticipantMessage(final Participants participants) {
-        List<String> participantNames = participants.getParticipantNames();
-        String participantNamesMessage = String.join(", ", participantNames)
+        final List<String> participantNames = participants.getParticipantNames();
+        final String participantNamesMessage = String.join(", ", participantNames)
                 .replace(",", "와");
-        String participantNameMessage = String.format(System.lineSeparator() + DRAW_MESSAGE.getMessage(), participantNamesMessage);
+        final String participantNameMessage = String.format(System.lineSeparator() + DRAW_MESSAGE.getMessage(),
+                participantNamesMessage);
         print(participantNameMessage);
     }
 
     public void printDealerCard(final String dealerName, final Card dealerFirstCard) {
-        String dealerCardMessage = String.format(CARD_MESSAGE.getMessage(), dealerName, getCardMessage(dealerFirstCard));
+        final String dealerCardMessage = String.format(CARD_MESSAGE.getMessage(),
+                dealerName, getCardMessage(dealerFirstCard));
         print(dealerCardMessage);
     }
 
     public void printPlayerCard(final String playerName, final List<Card> playerCards) {
-        String cardsMessage = getCardsMessage(playerCards);
-        String playerCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
+        final String cardsMessage = getCardsMessage(playerCards);
+        final String playerCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
         print(playerCardMessage);
     }
 
-    public void printCardResult(final String participantName, final List<Card> participantCards, final int participantScore) {
-        String cardsResultMessage = String.format(PARTICIPANT_CARD_RESULT.getMessage(),
+    public void printCardResult(final String participantName,
+                                final List<Card> participantCards,
+                                final int participantScore) {
+        final String cardsResultMessage = String.format(PARTICIPANT_CARD_RESULT.getMessage(),
                 participantName, getCardsMessage(participantCards), participantScore);
         print(cardsResultMessage);
     }
@@ -58,33 +62,36 @@ public class OutputView {
         printPlayerGameResult(playerGameResults);
     }
 
+    private String getCardMessage(final Card participantCard) {
+        final CardNumber cardNumber = participantCard.getCardNumber();
+        final CardPattern cardPattern = participantCard.getCardPattern();
+
+        final String numberMessage = NumberMessage.findMessage(cardNumber);
+        final String patternMessage = PatternMessage.findMessage(cardPattern);
+
+        return numberMessage + patternMessage;
+    }
+
     private String getCardsMessage(final List<Card> participantCards) {
         return participantCards.stream().map(this::getCardMessage)
                 .collect(Collectors.joining(", "));
     }
 
-    private String getCardMessage(final Card participantCard) {
-        CardNumber cardNumber = participantCard.getCardNumber();
-        CardPattern cardPattern = participantCard.getCardPattern();
-
-        String numberMessage = NumberMessage.findMessage(cardNumber);
-        String patternMessage = PatternMessage.findMessage(cardPattern);
-
-        return numberMessage + patternMessage;
-    }
-
     private void printDealerGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
-        int dealerWinCount = Collections.frequency(playerGameResults.values(), Result.LOSE);
-        int dealerLoseCount = Collections.frequency(playerGameResults.values(), Result.WIN);
-        int drawCount = Collections.frequency(playerGameResults.values(), Result.DRAW);
-        String dealerGameResultMessage = String.format(DEALER_GAME_RESULT.getMessage(), dealerName, dealerWinCount, dealerLoseCount, drawCount);
+        final int dealerWinCount = Collections.frequency(playerGameResults.values(), Result.LOSE);
+        final int dealerLoseCount = Collections.frequency(playerGameResults.values(), Result.WIN);
+        final int drawCount = Collections.frequency(playerGameResults.values(), Result.DRAW);
+
+        final String dealerGameResultMessage = String.format(DEALER_GAME_RESULT.getMessage(),
+                dealerName, dealerWinCount, dealerLoseCount, drawCount);
         print(dealerGameResultMessage);
     }
 
     private void printPlayerGameResult(final Map<String, Result> playerGameResults) {
         playerGameResults.keySet().forEach(playerName -> {
-            Result playerResult = playerGameResults.get(playerName);
-            String playerGameResultMessage = String.format(PLAYER_GAME_RESULT.getMessage(), playerName, GameResultMessage.findMessage(playerResult));
+            final Result playerResult = playerGameResults.get(playerName);
+            final String playerGameResultMessage = String.format(PLAYER_GAME_RESULT.getMessage(),
+                    playerName, GameResultMessage.findMessage(playerResult));
             print(playerGameResultMessage);
         });
     }

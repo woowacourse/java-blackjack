@@ -23,8 +23,9 @@ public enum NumberMessage {
     JACK(CardNumber.JACK, "J");
 
     private static final Map<CardNumber, String> CACHE = Stream.of(NumberMessage.values())
-            .collect(Collectors.toUnmodifiableMap(numberMessage -> numberMessage.number, numberMessage -> numberMessage.message));
-    
+            .collect(Collectors.toUnmodifiableMap(numberMessage -> numberMessage.number,
+                    numberMessage -> numberMessage.message));
+
     private final CardNumber number;
     private final String message;
 

@@ -13,8 +13,7 @@ public enum PatternMessage {
     SPADE(CardPattern.SPADE, "스페이드");
 
     private static final Map<CardPattern, String> CACHE = Stream.of(PatternMessage.values())
-            .collect(Collectors.toUnmodifiableMap(
-                    patternMessage -> patternMessage.pattern,
+            .collect(Collectors.toUnmodifiableMap(patternMessage -> patternMessage.pattern,
                     patternMessage -> patternMessage.message));
 
     private final CardPattern pattern;

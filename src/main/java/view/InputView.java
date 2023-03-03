@@ -14,6 +14,7 @@ import static view.message.Message.DRAW_CARD_CARD_MESSAGE;
 import static view.message.Message.PARTICIPANT_NAME_INPUT_MESSAGE;
 
 public class InputView {
+
     private final BufferedReader bufferedReader;
 
     public InputView() {
@@ -35,8 +36,8 @@ public class InputView {
     }
 
     public String getDrawCardCommand(final String name) {
-        String drawCardMessage = System.lineSeparator() + String.format(DRAW_CARD_CARD_MESSAGE.getMessage(), name,
-                CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+        final String drawCardMessage = System.lineSeparator() + String.format(DRAW_CARD_CARD_MESSAGE.getMessage(),
+                name, CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
         OutputView.print(drawCardMessage);
         return readConsole();
     }

@@ -12,7 +12,8 @@ public enum GameResultMessage {
     DRAW(Result.DRAW, "무");
 
     private static final Map<Result, String> CACHE = Stream.of(GameResultMessage.values())
-            .collect(Collectors.toUnmodifiableMap(resultMessage -> resultMessage.result, resultMessage -> resultMessage.message));
+            .collect(Collectors.toUnmodifiableMap(resultMessage -> resultMessage.result,
+                    resultMessage -> resultMessage.message));
 
     private final Result result;
     private final String message;

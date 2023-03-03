@@ -10,7 +10,7 @@ public class GameApplication {
         final OutputView outputView = new OutputView();
         final CardShuffler cardShuffler = new CardRandomShuffler();
 
-        GamePrepareController gamePrepareController = new GamePrepareController(inputView, outputView);
+        final GamePrepareController gamePrepareController = new GamePrepareController(inputView, outputView);
         gamePrepareController.start(cardShuffler);
     }
 }
