@@ -1,14 +1,18 @@
 package controller;
 
+import domain.DrawCommand;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.game.BlackJackGame;
 import domain.user.Dealer;
 import domain.user.Name;
 import domain.user.Player;
+import domain.user.PlayerStatus;
+import domain.user.User;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
@@ -24,6 +28,56 @@ public class BlackJackGameController {
 
     public void run() {
         BlackJackGame blackJackGame = setUp();
+        playGame(blackJackGame);
+    }
+
+    private void playGame(BlackJackGame blackJackGame) {
+        progressPlayersTurn(blackJackGame);
+        progressDealerTurn(blackJackGame);
+        showUsersCardResult(blackJackGame);
+        blackJackGame.judgeWinner();
+        showFinalResult(blackJackGame);
+    }
+
+    private void showFinalResult(BlackJackGame blackJackGame) {
+        Map<Boolean, Integer> dealerWinningRecord = blackJackGame.getDealer().getWinningRecord();
+        Map<String, Boolean> userFinalResult = blackJackGame.getUserFinalResult();
+        outputView.printFinalResult(dealerWinningRecord, userFinalResult);
+    }
+
+    private void showUsersCardResult(BlackJackGame blackJackGame) {
+        Map<User, List<Card>> userResult = new LinkedHashMap<>();
+        userResult.put(blackJackGame.getDealer(), blackJackGame.getDealer().getCards());
+        blackJackGame.getPlayers().forEach(player -> userResult.put(player, player.getCards()));
+        outputView.printUsersCardResult(userResult);
+    }
+
+    private void progressPlayersTurn(BlackJackGame blackJackGame) {
+        List<Player> players = blackJackGame.getPlayers();
+        for(Player player : players) {
+            progressPlayerTurn(blackJackGame, player);
+        }
+    }
+
+    private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
+        while(player.getStatus().equals(PlayerStatus.NORMAL) && readDrawCommand(player).equals(DrawCommand.DRAW)) {
+            blackJackGame.drawOneMoreCardForPlayer(player);
+            showDrawResult(player);
+        }
+        if(player.getStatus().equals(PlayerStatus.NORMAL)) {
+            showDrawResult(player);
+        }
+    }
+
+    private void progressDealerTurn(BlackJackGame blackJackGame) {
+        blackJackGame.drawCardUntilOverSixteen();
+
+        Dealer dealer = blackJackGame.getDealer();
+        int dealerDrawCount = dealer.getCards().size() - 2;
+
+        if (dealerDrawCount > 0) {
+            outputView.printDealerDrawResult(dealerDrawCount);
+        }
     }
 
     private BlackJackGame setUp() {
@@ -47,8 +101,17 @@ public class BlackJackGameController {
         outputView.printSetUpResult(setUpResult);
     }
 
+    private void showDrawResult(Player player) {
+        outputView.printPlayerDrawResult(player.getName(), player.getCards());
+    }
+
     private List<String> readUsersName() {
         outputView.printInputPlayerNameMessage();
         return inputView.readPlayersName();
+    }
+
+    private DrawCommand readDrawCommand(Player player) {
+        outputView.printAskOneMoreCardMessage(player.getName());
+        return inputView.readDrawCommand();
     }
 }
