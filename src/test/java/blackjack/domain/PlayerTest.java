@@ -88,4 +88,44 @@ class PlayerTest {
         //then
         assertThat(result).isEqualTo(19);
     }
+
+    @Test
+    @DisplayName("플레이어의 숫자가 21보다 작으면 true를 반환한다")
+    void decideHit1() {
+        //given
+        Player player = new Player(new ParticipantName("ako"));
+        List<Card> cards = List.of(
+            new Card(CardNumber.QUEEN, CardSuit.CLUB),
+            new Card(CardNumber.FIVE, CardSuit.SPADE)
+        );
+        for (Card card : cards) {
+            player.hit(card);
+        }
+
+        //when
+        boolean result= player.decideHit();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 숫자가 21보다 크면 false를 반환한다")
+    void decideHit2() {
+        //given
+        Player player = new Player(new ParticipantName("ako"));
+        List<Card> cards = List.of(
+            new Card(CardNumber.QUEEN, CardSuit.CLUB),
+            new Card(CardNumber.ACE, CardSuit.SPADE)
+        );
+
+        //when
+        for (Card card : cards) {
+            player.hit(card);
+        }
+        boolean result = player.decideHit();
+
+        //then
+        assertThat(result).isFalse();
+    }
 }
