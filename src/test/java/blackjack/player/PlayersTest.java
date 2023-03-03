@@ -175,5 +175,24 @@ class PlayersTest {
 
             assertThat(player.getResult()).isEqualTo(TIE);
         }
+
+        @Test
+        @DisplayName("둘다 버스트인 경우는 플레이어가 패한다.")
+        void bothBust() {
+            Players players = new Players();
+            Player player = new Player(new Name("폴로"));
+            players.add(player);
+            Dealer dealer = new Dealer();
+
+            player.hit(new Card(CardNumber.KING, Pattern.HEART));
+            player.hit(new Card(CardNumber.JACK, Pattern.CLOVER));
+            player.hit(new Card(CardNumber.JACK, Pattern.DIAMOND));
+            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            dealer.hit(new Card(CardNumber.QUEEN, Pattern.SPADE));
+            players.calculateWinning(dealer);
+
+            assertThat(player.getResult()).isEqualTo(LOSE);
+        }
     }
 }

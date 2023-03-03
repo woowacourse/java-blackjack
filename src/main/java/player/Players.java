@@ -47,11 +47,11 @@ public class Players {
         int playerScore = player.calculateScore();
         boolean dealerBust = dealer.isBust();
         int dealerScore = dealer.calculateScore();
-        if (!playerBust && (dealerBust || isPlayerHigher(playerScore, dealerScore))) {
+        if ((!playerBust && dealerBust) || (!dealerBust && isPlayerHigher(playerScore, dealerScore))) {
             player.win();
             dealer.lose();
         }
-        if (!dealerBust && (playerBust || isPlayerLower(playerScore, dealerScore))) {
+        if (playerBust || (isPlayerLower(playerScore, dealerScore) && !dealerBust)) {
             player.lose();
             dealer.win();
         }
