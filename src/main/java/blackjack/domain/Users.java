@@ -1,10 +1,12 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -12,11 +14,26 @@ import java.util.stream.Collectors;
 public class Users {
     private final List<User> users;
 
-    public Users(final List<User> users) {
-        if (users.isEmpty()) {
+    public Users(final List<Name> userNames, Deck deck) {
+        if (userNames.isEmpty()) {
             throw new IllegalArgumentException("유저는 최소 한 명 이상이여야 합니다.");
         }
-        this.users = users;
+        this.users = makeUsersBy(userNames, deck);
+    }
+
+    private List<User> makeUsersBy(final List<Name> userNames, final Deck deck) {
+        final ArrayList<User> usersData = new ArrayList<>();
+        for(Name name : userNames){
+            usersData.add(new User(name, getCardsOfTwoCardBy(deck)));
+        }
+        return usersData;
+    }
+
+    private Cards getCardsOfTwoCardBy(final Deck deck) {
+        final ArrayList<Card> cards = new ArrayList<>();
+        cards.add(deck.drawCard());
+        cards.add(deck.drawCard());
+        return new Cards(cards);
     }
 
     public List<User> getUsersGreaterThan(GamePoint point) {

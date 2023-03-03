@@ -14,19 +14,9 @@ public class BlackJack {
     private final Users users;
     private final Dealer dealer;
 
-    public BlackJack(List<Name> usersName, Deck deck) {
-        this.users = makeUsersBy(usersName, deck);
+    public BlackJack(List<Name> usersNames, Deck deck) {
+        this.users = new Users(usersNames, deck);
         this.dealer = new Dealer(getInitialCards(deck));
-    }
-
-    private Users makeUsersBy(final List<Name> usersName, final Deck deck) {
-        List<User> users = new ArrayList<>();
-        for (Name name : usersName) {
-            List<Card> cards = getInitialCards(deck);
-            final User user = new User(name, new Cards(cards));
-            users.add(user);
-        }
-        return new Users(users);
     }
 
     private List<Card> getInitialCards(final Deck randomDeck) {
