@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dealer extends User{
+public class Dealer extends User {
     private DealerStatus status;
     private Map<Boolean, Integer> winningRecord;
 
@@ -23,17 +23,17 @@ public class Dealer extends User{
 
     @Override
     public void win() {
-        winningRecord.put(true, winningRecord.getOrDefault(true,0) + 1);
+        winningRecord.put(true, winningRecord.getOrDefault(true, 0) + 1);
     }
 
     @Override
     public void lose() {
-        winningRecord.put(false, winningRecord.getOrDefault(false,0) + 1);
+        winningRecord.put(false, winningRecord.getOrDefault(false, 0) + 1);
     }
 
     @Override
     protected void checkBustByScore() {
-        if(score.getScore() > BLACKJACK) {
+        if (score.getScore() > BLACKJACK) {
             status = DealerStatus.BUST;
             return;
         }

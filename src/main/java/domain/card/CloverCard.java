@@ -3,7 +3,7 @@ package domain.card;
 import domain.Number;
 import domain.Pattern;
 
-public enum CloverCard implements Card{
+public enum CloverCard implements Card {
     CLOVER_ACE(Pattern.CLOVER, Number.ACE),
     CLOVER_TWO(Pattern.CLOVER, Number.TWO),
     CLOVER_THREE(Pattern.CLOVER, Number.THREE),

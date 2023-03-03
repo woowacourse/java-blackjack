@@ -50,16 +50,16 @@ public class BlackJackGame {
                 player.lose();
                 continue;
             }
-            if(playerStatus.equals(PlayerStatus.NORMAL) && dealerStatus.equals(DealerStatus.BUST)) {
+            if (playerStatus.equals(PlayerStatus.NORMAL) && dealerStatus.equals(DealerStatus.BUST)) {
                 dealer.lose();
                 player.win();
                 continue;
             }
-            if(dealerScore >= player.getScore()) {
+            if (dealerScore >= player.getScore()) {
                 dealer.win();
                 player.lose();
             }
-            if(dealerScore < player.getScore()) {
+            if (dealerScore < player.getScore()) {
                 dealer.lose();
                 player.win();
             }

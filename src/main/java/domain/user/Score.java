@@ -46,7 +46,7 @@ public class Score {
     }
 
     private int calculateAceAsOne(int aceCount, int sum) {
-        while(aceCount > ZERO && sum > BLACKJACK) {
+        while (aceCount > ZERO && sum > BLACKJACK) {
             sum -= Number.ACE.getScore();
             sum += ACE_ONE;
             aceCount--;

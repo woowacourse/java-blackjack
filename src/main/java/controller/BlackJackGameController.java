@@ -54,17 +54,17 @@ public class BlackJackGameController {
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
         List<Player> players = blackJackGame.getPlayers();
-        for(Player player : players) {
+        for (Player player : players) {
             progressPlayerTurn(blackJackGame, player);
         }
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while(player.getStatus().equals(PlayerStatus.NORMAL) && readDrawCommand(player).equals(DrawCommand.DRAW)) {
+        while (player.getStatus().equals(PlayerStatus.NORMAL) && readDrawCommand(player).equals(DrawCommand.DRAW)) {
             blackJackGame.drawOneMoreCardForPlayer(player);
             showDrawResult(player);
         }
-        if(player.getStatus().equals(PlayerStatus.NORMAL)) {
+        if (player.getStatus().equals(PlayerStatus.NORMAL)) {
             showDrawResult(player);
         }
     }
@@ -96,7 +96,7 @@ public class BlackJackGameController {
 
     private void showSetUpResult(Dealer dealer, List<Player> players) {
         HashMap<String, List<Card>> setUpResult = new LinkedHashMap<>();
-        setUpResult.put("딜러", dealer.getCards().subList(0,1));
+        setUpResult.put("딜러", dealer.getCards().subList(0, 1));
         players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
         outputView.printSetUpResult(setUpResult);
     }

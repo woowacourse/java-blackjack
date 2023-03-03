@@ -15,7 +15,7 @@ public abstract class User {
         score = new Score(firstTurnCards);
     }
 
-    public void receiveCard(Card card){
+    public void receiveCard(Card card) {
         cards.add(card);
         score.calculate(cards);
         checkBustByScore();

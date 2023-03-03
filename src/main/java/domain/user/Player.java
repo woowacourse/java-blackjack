@@ -4,7 +4,7 @@ import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
 
-public class Player extends User{
+public class Player extends User {
     private final Name name;
     private PlayerStatus status = PlayerStatus.NORMAL;
     private boolean isWinner = false;
@@ -26,7 +26,7 @@ public class Player extends User{
 
     @Override
     protected void checkBustByScore() {
-        if(score.getScore() > BLACKJACK) {
+        if (score.getScore() > BLACKJACK) {
             status = PlayerStatus.BUST;
         }
     }
