@@ -46,7 +46,7 @@ public class BlackJackController {
             dealer.pick(cardDistributor.distribute());
             dealerMoreCardCount++;
         }
-        outputView.printDealerMoreCard(dealer.getName().getValue(), 16, dealerMoreCardCount);
+        outputView.printDealerMoreCard(dealer.getName().getValue(), dealerMoreCardCount);
     }
 
     private void end(Players players, Dealer dealer) {
@@ -57,7 +57,7 @@ public class BlackJackController {
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getName().getValue(),
-                CardStatusConverter.convertToCardStatus(participant.getCards().getCards()), participant.getTotalScore());
+                CardStatusConverter.convertToCardStatus(participant.getCardDeck().getCards()), participant.getTotalScore());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
@@ -65,7 +65,7 @@ public class BlackJackController {
 
         outputView.printCardStatus(dealer.getName().getValue(), CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
         for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getCards()));
+            outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
         }
     }
 
@@ -100,7 +100,7 @@ public class BlackJackController {
             player.pick(cardDistributor.distribute());
         }
 
-        outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getCards()));
+        outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
         return answer.equals(MORE_CARD);
     }
 

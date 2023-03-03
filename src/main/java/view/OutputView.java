@@ -8,11 +8,12 @@ import java.util.Map;
 public class OutputView {
     
     private static final String INITIAL_CARD_DISTRIBUTION = "%s와 %s에게 2장을 나누었습니다.";
-    private static final String DEALER_RECEIVE_CARD = "%s는 %d이하라 %d장의 카드를 더 받았습니다.";
+    private static final String DEALER_RECEIVE_CARD = "%s는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String NAME_DELIMITER = ", ";
     private static final String FINAL_SCORE = " - 결과: %d";
     private static final String FINAL_RESULT_TITLE = "## 최종 승패";
     private static final String RESULT_NAME_FORMAT = "%s: ";
+    private static final String PARTICIPANT_CARD_STATUS_FORMAT = "%s 카드: %s ";
 
     public OutputView() {
     }
@@ -22,12 +23,12 @@ public class OutputView {
     }
 
     public void printCardStatus(String name, List<String> cards) {
-        System.out.printf("\n" + "%s카드: %s ", name, String.join(NAME_DELIMITER, cards));
+        System.out.printf("\n" + PARTICIPANT_CARD_STATUS_FORMAT, name, String.join(NAME_DELIMITER, cards));
     }
 
-    public void printDealerMoreCard(String dealerName, int dealerCardLimit, int cardCount) {
+    public void printDealerMoreCard(String dealerName, int cardCount) {
         if (cardCount != 0) {
-            System.out.printf("\n\n" + DEALER_RECEIVE_CARD + "\n", dealerName, dealerCardLimit, cardCount);
+            System.out.printf("\n\n" + DEALER_RECEIVE_CARD + "\n", dealerName, cardCount);
         }
     }
 

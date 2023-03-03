@@ -26,7 +26,7 @@ public class DealerTest {
 
         dealer.pick(new Card(Shape.DIAMOND, Letter.NINE));
 
-        assertThat(dealer.getCards().getCards().size()).isEqualTo(3);
+        assertThat(dealer.getCardDeck().getCards().size()).isEqualTo(3);
     }
 
     @Test

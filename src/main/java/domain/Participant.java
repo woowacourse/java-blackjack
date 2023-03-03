@@ -28,7 +28,7 @@ public abstract class Participant {
         return getTotalScore() < BUST_LIMIT;
     }
 
-    public CardDeck getCards() {
+    public CardDeck getCardDeck() {
         return cardDeck;
     }
 
