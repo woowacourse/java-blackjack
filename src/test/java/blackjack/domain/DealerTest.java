@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Shape;
 import blackjack.domain.user.Dealer;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +42,18 @@ public class DealerTest {
         assertThatThrownBy(() -> new Dealer(cardData))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("딜러는 카드 2장 이상을 갖고 있어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("딜러의 첫 번째 카드를 받을 수 있다.")
+    void getDealersFirstCardTest() {
+        final Card firstCard = new Card(Shape.HEART, CardNumber.of(10));
+        final List<Card> data = List.of(
+                firstCard,
+                new Card(Shape.HEART, CardNumber.of(6))
+        );
+        final Dealer dealer = new Dealer(data);
+        assertThat(dealer.getFirstCard()).isEqualTo(firstCard);
     }
 
     @Test
@@ -132,6 +145,33 @@ public class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러의 카드가 결론나기 전까지는 카드를 얻을 수 없다.")
+    void openCardsExceptionTest() {
+        final List<Card> data = List.of(
+                new Card(Shape.HEART, CardNumber.of(10)),
+                new Card(Shape.HEART, CardNumber.of(6))
+        );
+
+        final Dealer dealer = new Dealer(data);
+
+        assertThatThrownBy(()->dealer.openCards())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("딜러의 카드가 결론나면 카드를 얻을 수 있다.")
+    void openCardsTest() {
+        final List<Card> data = List.of(
+                new Card(Shape.HEART, CardNumber.of(10)),
+                new Card(Shape.HEART, CardNumber.of(7))
+        );
+        final Dealer dealer = new Dealer(data);
+
+        assertDoesNotThrow(()->dealer.openCards());
+    }
+
+    @Test
     @DisplayName("딜러의 결과를 얻고 싶다면 카드를 줄 수 있을 때 까지 줘야한다.")
     void dealerCantReceiveResultTest() {
         final List<Card> data = List.of(
@@ -173,7 +213,3 @@ public class DealerTest {
                 .isEqualTo(0);
     }
 }
-
-// 1. 딜러는 카드를 두 장 가지고 있다.
-// 2. 딜러가 카드를 못 받는 것은 합이 17 이상이거나 버스트인 경우이다.
-// 3. 딜러의 점수를 묻기 위해서(게임이 끝나는 조건)는 딜러의 카드 합이 17 이상이거나 버스트여야 한다.
