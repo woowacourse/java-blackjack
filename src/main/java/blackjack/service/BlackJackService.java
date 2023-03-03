@@ -23,14 +23,14 @@ public class BlackJackService {
     }
 
     public void createPeople(List<String> names) {
-        validateDuplicate(names);
+        validateDuplicateName(names);
         List<Player> players = names.stream()
                 .map(Player::new)
                 .collect(toList());
         this.people = new People(new Dealer(), players);
     }
 
-    private void validateDuplicate(List<String> names) {
+    private void validateDuplicateName(List<String> names) {
         long uniqueNamesCount = names.stream()
                 .distinct()
                 .count();

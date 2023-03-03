@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 public class MockCardsGenerator implements CardsGenerator {
     private final Card card;
+
     public MockCardsGenerator(Card card) {
         this.card = card;
     }
