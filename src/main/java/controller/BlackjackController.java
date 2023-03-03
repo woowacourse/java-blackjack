@@ -4,11 +4,10 @@ import domain.BlackjackGame;
 import domain.Command;
 import domain.Dealer;
 import domain.Player;
-import domain.PlayerName;
+import domain.PlayerNames;
 import domain.Players;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -37,10 +36,7 @@ public class BlackjackController {
 
     private Players createPlayers() {
         return retryOnInvalidUserInput(
-                () -> new Players(readNames().stream()
-                        .map(PlayerName::new)
-                        .map(Player::new)
-                        .collect(Collectors.toList()))
+                () -> Players.from(PlayerNames.from(readNames()))
         );
     }
 

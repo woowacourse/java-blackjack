@@ -1,7 +1,7 @@
 import domain.BlackjackGame;
 import domain.Participant;
 import domain.Player;
-import domain.PlayerName;
+import domain.PlayerNames;
 import domain.Players;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -16,10 +16,7 @@ class BlackjackGameTest {
 
     @BeforeEach
     void setUp() {
-        Player pobi = new Player(new PlayerName("pobi"));
-        Player crong = new Player(new PlayerName("crong"));
-
-        players = new Players(List.of(pobi, crong));
+        players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
         blackjackGame = new BlackjackGame(players);
     }
 

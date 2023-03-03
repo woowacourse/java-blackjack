@@ -44,4 +44,8 @@ public class PlayerNames {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATION);
         }
     }
+
+    public List<PlayerName> getNames() {
+        return names;
+    }
 }

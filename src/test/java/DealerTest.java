@@ -3,7 +3,7 @@ import domain.Dealer;
 import domain.Number;
 import domain.Participant;
 import domain.Player;
-import domain.PlayerName;
+import domain.PlayerNames;
 import domain.Players;
 import domain.Result;
 import domain.Shape;
@@ -22,15 +22,16 @@ class DealerTest {
     @Test
     void resultSuccessTest() {
         Dealer dealer = new Dealer();
-        Player pobi = new Player(new PlayerName("pobi"));
-        Player crong = new Player(new PlayerName("crong"));
+        Players players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
+        Player pobi = players.getPlayers().get(0);
+        Player crong = players.getPlayers().get(1);
 
         giveCardsTo(dealer, List.of(VALUE_TEN, VALUE_NINE)); // 19
 
         giveCardsTo(pobi, List.of(VALUE_TEN, VALUE_TEN)); // 20
         giveCardsTo(crong, List.of(VALUE_TEN, VALUE_EIGHT)); // 18
 
-        dealer.decideResults(new Players(List.of(pobi, crong)));
+        dealer.decideResults(players);
 
         Assertions.assertThat(dealer.getPlayerResultMap().values())
                 .containsExactly(Result.LOSE, Result.WIN);
