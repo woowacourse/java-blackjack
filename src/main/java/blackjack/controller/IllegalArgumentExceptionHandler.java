@@ -1,34 +1,30 @@
 package blackjack.controller;
 
 import blackjack.view.OutputView;
-
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class IllegalArgumentExceptionHandler {
 
-    public static <Input, Output> Output repeatUntilNoException(final Supplier<Input> supplier,
-                                                                final Function<Input, Output> function,
-                                                                final OutputView outputView) {
-        Output output = null;
-
-        while (output == null) {
-            output = createOutputOrNull(supplier, function, outputView);
+    public static <T, R> R repeatUntilNoException(final Supplier<T> supplier,
+            final Function<T, R> function,
+            final OutputView outputView) {
+        R result = null;
+        while (result == null) {
+            result = createOutputOrNull(supplier, function, outputView);
         }
-        return output;
+        return result;
     }
 
-    public static <Input, Output> Output createOutputOrNull(final Supplier<Input> inputSupplier,
-                                                            final Function<Input, Output> function,
-                                                            final OutputView outputView) {
+    public static <T, R> R createOutputOrNull(final Supplier<T> inputSupplier,
+            final Function<T, R> function,
+            final OutputView outputView) {
         try {
-            final Input input = inputSupplier.get();
-            return function.apply(input);
-
+            final T result = inputSupplier.get();
+            return function.apply(result);
         } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return null;
         }
     }
-
 }
