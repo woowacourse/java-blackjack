@@ -17,10 +17,11 @@ public class BlackJackGame {
         participants.handOut(deck);
     }
 
-    public void handOneCard(String playerName) {
+    public boolean handOneCard(String playerName) {
         Player player = participants.findPlayerBy(playerName);
         List<Card> card = deck.draw(1);
         player.take(card.get(0));
+        return participants.isAvailable(player);
     }
 
     public Map<String, List<Card>> openPlayersCards() {
@@ -33,5 +34,10 @@ public class BlackJackGame {
 
     public List<String> findAvailablePlayerNames() {
         return participants.findAvailablePlayerNames();
+    }
+
+    public List<Card> openPlayerCards(String playerName) {
+        Player player = participants.findPlayerBy(playerName);
+        return player.getCards();
     }
 }

@@ -69,10 +69,14 @@ public class Participants {
     }
 
     private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
-        int sum = player.computeSumOfCards();
-        if (!player.isBlackJack(sum) && !player.isBust(sum)) {
+        if (isAvailable(player)) {
             availablePlayerNames.add(player.getName());
         }
+    }
+
+    public boolean isAvailable(Player player) {
+        int sum = player.computeSumOfCards();
+        return !player.isBlackJack(sum) && !player.isBust(sum);
     }
 
     public List<Card> getDealerCards() {
