@@ -131,7 +131,8 @@ public class OutputView {
     }
 
     public void printErrorMessage(String message) {
-        System.out.println(message);
+        String format = String.format(Format.ERROR.format, message);
+        System.out.println(format);
     }
 
     private void lineBreak() {
@@ -145,6 +146,7 @@ public class OutputView {
         BUSTED("%s는 버스트 되었습니다."),
         RESULT("%s: %s"),
         DEALER_MORE_CARDS("딜러는 16이하라 %d장의 카드를 더 받았습니다."),
+        ERROR("[Error] %s")
         ;
 
         private final String format;
