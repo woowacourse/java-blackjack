@@ -57,4 +57,25 @@ class SimpleLinkedListTest {
         assertThat(intTotal)
                 .isEqualTo(3.0);
     }
+
+    @Test
+    void test4() {
+        // given
+        SimpleList<Double> list1 = new SimpleArrayList<>(-0.1, 0.5, 0.7);
+        SimpleList<Integer> list2 = new SimpleArrayList<>(-10, 1, 2);
+
+        // when
+        SimpleList<Double> doubleSimpleList = SimpleList.filterNegative(list1);
+        SimpleList<Integer> integerSimpleList = SimpleList.filterNegative(list2);
+
+        // then
+        assertThat(doubleSimpleList.get(0))
+                .isEqualTo(0.5);
+        assertThat(doubleSimpleList.get(1))
+                .isEqualTo(0.7);
+        assertThat(integerSimpleList.get(0))
+                .isEqualTo(1);
+        assertThat(integerSimpleList.get(1))
+                .isEqualTo(2);
+    }
 }
