@@ -55,7 +55,15 @@ public class Controller {
             isHit = getIsHit(player);
             playerHit(player, isHit);
             OutputView.printSingleGambler(player);
+            isHit = isPickAble(player, isHit);
         } while (isHit);
+    }
+
+    private boolean isPickAble(Player player, boolean isHit) {
+        if (player.isBustedGambler(player.getScore())) {
+            isHit = false;
+        }
+        return isHit;
     }
 
     private boolean getIsHit(Player player) {
