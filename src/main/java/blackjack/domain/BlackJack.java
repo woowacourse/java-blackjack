@@ -33,21 +33,6 @@ public class BlackJack {
         return cards;
     }
 
-    private void giveCardToPlayers() {
-        giveCardToUsers();
-        giveCardToDealer();
-    }
-
-    private void giveCardToUsers() {
-        users.giveEachUser(deck, INITIAL_CARD_COUNT);
-    }
-
-    private void giveCardToDealer() {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            dealer.draw(deck.drawCard());
-        }
-    }
-
     public void drawCard(Name user) {
         users.findUserAndGive(user, deck.drawCard());
     }
