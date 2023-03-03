@@ -46,11 +46,11 @@ public class User implements Player {
     }
 
     public boolean isGreaterThan(final GamePoint point) {
-        return cards.isGreaterThan(point);
+        return cards.haveGreaterGamePointThan(point);
     }
 
     public boolean isEqualTo(final GamePoint point) {
-        return cards.havePointOf(point);
+        return cards.haveGamePointOf(point);
     }
 
     public boolean isLowerThan(final GamePoint point) {

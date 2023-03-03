@@ -14,17 +14,13 @@ public class Cards {
     }
 
     public Cards add(final Card card) {
-        List<Card> cardList = new ArrayList<>(cards);
-        cardList.add(card);
-        return new Cards(cardList);
+        List<Card> newCardList = new ArrayList<>(cards);
+        newCardList.add(card);
+        return new Cards(newCardList);
     }
 
     public boolean isBust() {
         return point.isBusted();
-    }
-
-    public GamePoint getPoint() {
-        return point;
     }
 
     public int size() {
@@ -39,15 +35,19 @@ public class Cards {
         return this.point.compareTo(point) == -1;
     }
 
-    public boolean isGreaterThan(final GamePoint point) {
+    public boolean haveGreaterGamePointThan(final GamePoint point) {
         return this.point.compareTo(point) == 1;
     }
 
-    public boolean havePointOf(final GamePoint point) {
+    public boolean haveGamePointOf(final GamePoint point) {
         return this.point.compareTo(point) == 0;
     }
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public GamePoint getPoint() {
+        return point;
     }
 }
