@@ -13,14 +13,6 @@ public abstract class Person {
         this.cards = new Cards();
     }
 
-    public abstract void addCard(Card card);
-
-    public abstract boolean isPlayer();
-
-    public abstract boolean isDealer();
-
-    public abstract List<Card> getInitCards();
-
     public GameResult matchGame(Person otherPerson) {
         int otherScore = correctionOverScore(otherPerson.getScore());
         int myScore = correctionOverScore(this.getScore());
@@ -40,6 +32,10 @@ public abstract class Person {
         return score;
     }
 
+    public void addCard(Card card) {
+        this.cards.addCard(card);
+    }
+
     public int getScore() {
         return cards.getScore();
     }
@@ -51,4 +47,12 @@ public abstract class Person {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public abstract boolean isPlayer();
+
+    public abstract boolean isDealer();
+
+    public abstract List<Card> getInitCards();
+
+    public abstract boolean canDrawCard();
 }

@@ -6,27 +6,35 @@ import blackjack.domain.Card;
 import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
+import blackjack.domain.People;
 import blackjack.domain.Person;
 import blackjack.domain.Player;
+import blackjack.domain.Rank;
+import blackjack.domain.Suit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class BlackJackController {
+    private People people;
+    private final Cards uniqueCards;
+
+    public BlackJackController() {
+        this.uniqueCards = createUniqueCards();
+    }
 
     public void run() {
-        List<Person> players = repeat(this::getPlayers);
-        Dealer dealer = new Dealer();
-        players.add(0, dealer);
-        Cards uniqueCards = dealer.createUniqueCards();
-        initDrawCard(players, uniqueCards);
-        printInitStatus(players);
-        drawMoreCardForAll(players, uniqueCards);
-        drawDealerMoreCard(dealer, uniqueCards);
-        printAllStatus(players);
-        printGameResult(dealer, players);
+        people = new People(new Dealer(), repeat(this::getPlayers));
+        initDrawCard();
+        printInitStatus();
+        drawMoreCardForAll();
+        drawDealerMoreCard();
+        printAllStatus();
+        printGameResult();
     }
 
     private <T> T repeat(Supplier<T> supplier) {
@@ -38,12 +46,21 @@ public class BlackJackController {
         }
     }
 
-    private List<Person> getPlayers() {
+    private List<Player> getPlayers() {
         String[] names = InputView.readPlayerNames();
         validateDuplicate(names);
         return Arrays.stream(names)
                 .map(Player::new)
                 .collect(toList());
+    }
+
+    public Cards createUniqueCards() {
+        List<Card> cards = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Suit.values())
+                        .flatMap(suit -> Stream.of(new Card(suit, rank)))
+                ).collect(toList());
+        Collections.shuffle(cards);
+        return new Cards(cards);
     }
 
     private void validateDuplicate(String[] names) {
@@ -55,8 +72,9 @@ public class BlackJackController {
         }
     }
 
-    private void initDrawCard(List<Person> people, Cards uniqueCards) {
-        for (Person person : people) {
+    private void initDrawCard() {
+        List<Person> persons = people.getPeople();
+        for (Person person : persons) {
             drawTwoCards(person, uniqueCards);
         }
     }
@@ -66,24 +84,18 @@ public class BlackJackController {
         person.addCard(cards.drawCard());
     }
 
-    private void printInitStatus(List<Person> people) {
-        List<String> playerNames = getWithoutDealer(people).stream()
+    private void printInitStatus() {
+        List<String> playerNames = people.getPlayers().stream()
                 .map(Person::getName)
                 .collect(toList());
         OutputView.printDefaultDrawCardMessage(playerNames);
-        for (Person person : people) {
+        for (Person person : people.getPeople()) {
             OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getInitCards()));
         }
     }
 
-    private List<Person> getWithoutDealer(List<Person> people) {
-        return people.stream()
-                .filter(Person::isPlayer)
-                .collect(toList());
-    }
-
-    private void drawMoreCardForAll(List<Person> people, Cards uniqueCards) {
-        for (Person person : getWithoutDealer(people)) {
+    private void drawMoreCardForAll() {
+        for (Person person : people.getPlayers()) {
             repeat(() -> drawMoreCard(person, uniqueCards));
         }
     }
@@ -99,10 +111,17 @@ public class BlackJackController {
 
     private void drawMoreCard(Person person, Cards cards) {
         while (decideDraw(person)) {
+            validateOverScore(person);
             person.addCard(cards.drawCard());
             OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
         }
         OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
+    }
+
+    private void validateOverScore(Person person) {
+        if (!person.canDrawCard()) {
+            throw new IllegalArgumentException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
+        }
     }
 
     private boolean decideDraw(Person person) {
@@ -119,15 +138,16 @@ public class BlackJackController {
                 .collect(toList());
     }
 
-    private void drawDealerMoreCard(Dealer dealer, Cards uniqueCards) {
+    private void drawDealerMoreCard() {
+        Person dealer = people.getDealer();
         OutputView.printDealerDrawCardMessage(dealer.getScore());
         if (dealer.canDrawCard()) {
             dealer.addCard(uniqueCards.drawCard());
         }
     }
 
-    private void printAllStatus(List<Person> people) {
-        for (Person person : people) {
+    private void printAllStatus() {
+        for (Person person : people.getPeople()) {
             printPersonStatus(person);
         }
     }
@@ -136,14 +156,15 @@ public class BlackJackController {
         OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()), person.getScore());
     }
 
-    private void printGameResult(Dealer dealer, List<Person> people) {
+    private void printGameResult() {
         OutputView.printGameEndMessage();
-        List<GameResult> dealerGameResults = getWithoutDealer(people)
+        Person dealer = people.getDealer();
+        List<GameResult> dealerGameResults = people.getPlayers()
                 .stream()
                 .map(dealer::matchGame)
                 .collect(toList());
         OutputView.printDealerResult(dealerGameResults);
-        for (Person person : getWithoutDealer(people)) {
+        for (Person person : people.getPlayers()) {
             OutputView.printPlayerResult(person.getName(), person.matchGame(dealer));
         }
     }

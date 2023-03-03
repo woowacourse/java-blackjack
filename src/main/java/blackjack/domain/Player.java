@@ -28,14 +28,6 @@ public class Player extends Person {
     }
 
     @Override
-    public void addCard(Card card) {
-        if (getScore() > MAX_SCORE) {
-            throw new IllegalArgumentException("[ERROR] 점수가 " + MAX_SCORE + "점을 넘으면 카드를 더 뽑을 수 없습니다.");
-        }
-        cards.addCard(card);
-    }
-
-    @Override
     public boolean isPlayer() {
         return true;
     }
@@ -48,5 +40,10 @@ public class Player extends Person {
     @Override
     public List<Card> getInitCards() {
         return getCards();
+    }
+
+    @Override
+    public boolean canDrawCard() {
+        return getScore() < MAX_SCORE;
     }
 }
