@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private final Dealer dealer;
@@ -45,11 +46,23 @@ public class BlackjackGame {
     }
 
 
+    public Map<String,List<Result>> getDealerResult(){
+        Map<String,Result> playerResult = getPlayersResult();
+        Map<String,List<Result>> dealerResult = new HashMap<>();
+        List<Result> dealerResults = new ArrayList<>();
+        for(String name : playerResult.keySet()){
+            Result result = playerResult.get(name);
+            dealerResults.add(result);
+        }
+        dealerResult.put(dealer.getName().getName(),dealerResults);
+        return dealerResult;
+    }
+
     public Map<String, Result> getPlayersResult() {
         Map<String,Result> result = new HashMap<>();
-        int delaerSum = dealer.getCardsSum();
+        int dealer = this.dealer.getCardsSum();
         for (Player player : players.getPlayers()) {
-            result.put(player.getName().getName(),isPlayerWin(delaerSum,player.getCardsSum()));
+            result.put(player.getName().getName(),isPlayerWin(dealer,player.getCardsSum()));
         }
         return result;
     }
