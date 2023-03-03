@@ -1,5 +1,6 @@
 package controller;
 
+import common.Logger;
 import domain.deck.CardDeck;
 import domain.game.BlackJackGame;
 import domain.player.HitState;
@@ -11,6 +12,7 @@ import view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
@@ -31,7 +33,7 @@ public class BlackJackController {
     }
 
     private BlackJackGame setUpGame() {
-        final List<Name> participantNames = createParticipantNames();
+        final List<Name> participantNames = withExceptionHandle(this::createParticipantNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         return BlackJackGame.defaultSetting(cardDeck, participantNames);
     }
@@ -46,7 +48,7 @@ public class BlackJackController {
     private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
         while (blackJackGame.existCanHitParticipant()) {
             final Player canHitPlayer = blackJackGame.findCanHitParticipant();
-            final HitState hitState = inputHitOrStay(canHitPlayer);
+            final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitPlayer));
             canHitPlayer.changeState(hitState);
             blackJackGame.hitOrStayForParticipant(canHitPlayer);
             OutputView.showPlayerCardAreaState(canHitPlayer);
@@ -70,6 +72,15 @@ public class BlackJackController {
         while (blackJackGame.isDealerShouldMoreHit()) {
             OutputView.printDealerOneMoreCard();
             blackJackGame.hitForDealer();
+        }
+    }
+
+    private <T> T withExceptionHandle(final Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            Logger.error(e.getMessage());
+            return withExceptionHandle(supplier);
         }
     }
 }
