@@ -2,10 +2,7 @@ package blackjack.controller;
 
 import blackjack.Hand;
 import blackjack.model.Name;
-import blackjack.model.card.Card;
-import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardSuit;
+import blackjack.model.card.*;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
@@ -13,6 +10,7 @@ import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +28,7 @@ public class GameController {
     }
 
     public void run(){
-        List<Player> players = initializedPlayers(inputView);
+        List<Player> players = initializedPlayers();
         Dealer dealer = new Dealer(new InitialState(new Hand()));
         CardDeck cardDeck = new CardDeck();
 
@@ -43,6 +41,93 @@ public class GameController {
         }
         //딜러 HitOrStand
         hitOrStandByDealer(cardDeck, dealer);
+
+        //딜러 결과 출력
+        CardScore dealerScore = dealer.cardScore();
+        String dealerResult = Integer.toString(dealerScore.bigScore());
+
+        if (dealer.isBlackjack()) {
+            dealerResult += " (블랙잭!!)";
+        }
+        if(dealer.isBust()) {
+            dealerResult = Integer.toString(dealerScore.smallScore());
+        }
+
+        outputView.printScoreResult(singleNameAndHand(dealer), dealerResult);
+
+        // 보유 카드. 숫자합 결과 출력
+        for (Player player : players) {
+            CardScore cardScore = player.cardScore();
+            //블랙잭/버스트/숫자
+            String result = Integer.toString(cardScore.smallScore());
+
+            if (player.isBlackjack()) {
+                result = Integer.toString(cardScore.bigScore());
+                result += " (블랙잭!!)";
+            }
+
+            outputView.printScoreResult(playerNamesAndHands(List.of(player)), result);
+        }
+
+
+        Map<String, String> playerResult = new HashMap<>();
+        int win = 0;
+        int same = 0;
+        int lose = 0;
+        for (Player player : players) {
+            String name = player.getName();
+
+            if (dealer.isBlackjack()) {
+                if (player.isBlackjack()) {
+                    same++;
+                    playerResult.put(name, "무");
+                    continue;
+                }
+                win++;
+                playerResult.put(name, "패");
+                continue;
+            }
+            if(dealer.isBust()){
+                if(player.isBust()){
+                    win++;
+                    playerResult.put(name, "패");
+                    continue;
+                }
+                lose++;
+                playerResult.put(name, "승");
+                continue;
+            }
+            if(dealer.isStand()){
+                if(player.isStand()){
+                    int dealerSum = dealer.getScore();
+                    int playerSum = player.getScore();
+                    if (dealerSum > playerSum) {
+                        win++;
+                        playerResult.put(name, "패");
+                        continue;
+                    }
+                    if (dealerSum < playerSum) {
+                        lose++;
+                        playerResult.put(name, "승");
+                        continue;
+                    }
+                    same++;
+                    playerResult.put(name, "무");
+                    continue;
+                }
+                if(player.isBlackjack()){
+                    lose++;
+                    playerResult.put(name, "승");
+                    continue;
+                }
+                win++;
+                playerResult.put(name, "패");
+                continue;
+            }
+        }
+        outputView.printWinningResultMessage();
+        outputView.printDealerWinningResult(List.of(win, same, lose));
+        outputView.printPlayersWinningResult(playerResult);
     }
 
     private void distributeFirstCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
@@ -98,7 +183,7 @@ public class GameController {
         return nameAndHand;
     }
 
-    private List<Player> initializedPlayers(InputView inputView) {
+    private List<Player> initializedPlayers() {
         List<String> playerNames = inputView.readNames();
 
         return playerNames.stream()

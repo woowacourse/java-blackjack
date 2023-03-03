@@ -29,4 +29,19 @@ public class DrawState extends State {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isStand() {
+        return false;
+    }
 }

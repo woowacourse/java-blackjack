@@ -20,6 +20,12 @@ public abstract class State {
 
     public abstract boolean isFinished();
 
+    public abstract boolean isBlackjack();
+
+    public abstract boolean isBust();
+
+    public abstract boolean isStand();
+
     public CardScore getScore() {
         return hand.score();
     }

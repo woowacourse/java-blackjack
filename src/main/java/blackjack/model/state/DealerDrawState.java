@@ -27,4 +27,19 @@ public class DealerDrawState extends State{
     public boolean isFinished() {
         return hand.score().bigScore() > DEALER_HIT_NUMBER;
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isStand() {
+        return false;
+    }
 }

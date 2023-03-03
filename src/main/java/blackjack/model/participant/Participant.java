@@ -21,12 +21,31 @@ public abstract class Participant {
 
     abstract public void changeToStand();
 
+    public boolean isBlackjack(){
+        return currentState.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return currentState.isBust();
+    }
+
+    public boolean isStand(){
+        return currentState.isStand();
+    }
+
     public boolean isFinished() {
         return currentState.isFinished();
     }
 
     public CardScore cardScore() {
         return currentState.getScore();
+    }
+
+    public int getScore() {
+        if (isBust()) {
+            return cardScore().smallScore();
+        }
+        return cardScore().bigScore();
     }
 
     public String getName() {

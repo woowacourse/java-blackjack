@@ -18,4 +18,19 @@ public class BustState extends State {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return true;
+    }
+
+    @Override
+    public boolean isStand() {
+        return false;
+    }
 }
