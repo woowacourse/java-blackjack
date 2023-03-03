@@ -7,6 +7,15 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     private Object[] elements = new Object[1];
     private int count = 0;
 
+    public SimpleArrayList() {
+    }
+
+    @SafeVarargs
+    public SimpleArrayList(final T... values) {
+        this.elements = values;
+        count = values.length;
+    }
+
     @Override
     public boolean add(final T value) {
         if (isFull()) {

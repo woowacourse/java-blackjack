@@ -10,6 +10,15 @@ public interface SimpleList<T> {
         return tSimpleArrayList;
     }
 
+    static <T extends Number> double sum(final SimpleList<T> values) {
+        double total = 0;
+        while (!values.isEmpty()) {
+            final T remove = values.remove(0);
+            total += remove.doubleValue();
+        }
+        return total;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);
