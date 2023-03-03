@@ -103,4 +103,15 @@ class DealerTest {
         // then
         assertThat(actual).isSameAs(expected);
     }
+
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
+    @ParameterizedTest(name = "canGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
+    void canGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
+        // given
+        cards.forEach(dealer::addCard);
+
+        // when, then
+        assertThat(dealer.canGiveCard())
+                .isSameAs(expected);
+    }
 }
