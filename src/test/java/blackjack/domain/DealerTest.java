@@ -99,5 +99,17 @@ public class DealerTest {
 
         assertThat(dealer.isDrawable()).isFalse();
     }
+
+    @Test
+    void 딜러의_카드수를_반환한다() {
+        final Dealer dealer = Dealer.create();
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, DIAMOND)
+        ));
+
+        dealer.draw(deck);
+
+        assertThat(dealer.getCardCount()).isEqualTo(1);
+    }
 }
 

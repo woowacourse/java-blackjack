@@ -96,4 +96,21 @@ public class PlayersTest {
 
         assertThat(player.getName()).isEqualTo("딜러");
     }
+
+    @Test
+    void 딜러가_카드를_가능할_때_까지_뽑는다() {
+        final List<String> names = List.of("후추");
+        final Players players = from(names);
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, DIAMOND),
+                new Card(JACK, CLOVER),
+                new Card(TWO, CLOVER),
+                new Card(EIGHT, SPADE)
+        ));
+        players.initialDraw(deck);
+
+        players.drawByDealer(deck);
+
+        assertThat(players.getDealer().calculateScore()).isEqualTo(19);
+    }
 }

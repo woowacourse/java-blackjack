@@ -64,8 +64,15 @@ public class Players {
         }
     }
 
-    public Player getDealer() {
-        return players.stream()
+    public void drawByDealer(final Deck deck) {
+        final Dealer dealer = getDealer();
+        while (dealer.isDrawable()) {
+            dealer.draw(deck);
+        }
+    }
+
+    public Dealer getDealer() {
+        return (Dealer) players.stream()
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(INVALID_DEALER_MESSAGE));

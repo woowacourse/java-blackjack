@@ -56,4 +56,8 @@ public class Dealer implements Player {
     public List<String> getCardLetters() {
         return hand.getCardLetters();
     }
+
+    public int getCardCount() {
+        return hand.getCardLetters().size();
+    }
 }
