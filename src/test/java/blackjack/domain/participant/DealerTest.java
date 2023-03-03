@@ -82,6 +82,6 @@ class DealerTest {
         ));
         final Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.getScore()).isEqualTo(15);
+        assertThat(dealer.getScore().getValue()).isEqualTo(15);
     }
 }

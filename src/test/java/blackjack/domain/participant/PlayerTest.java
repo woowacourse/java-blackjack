@@ -80,6 +80,6 @@ class PlayerTest {
         final Cards cards = new Cards(cardPack);
         final Player player = new Player("dazzle", cards);
 
-        assertThat(player.getScore()).isEqualTo(20);
+        assertThat(player.getScore().getValue()).isEqualTo(20);
     }
 }

@@ -21,6 +21,7 @@ public class OutputView {
 
     public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players,
                                final int count) {
+        System.out.println();
         System.out.println(format("{0}와 {1}에게 {2}장을 나누었습니다.",
                 dealer.getName(), getPlayerNamesFormat(players), count));
 
@@ -51,7 +52,9 @@ public class OutputView {
 
     public void printDealerCardDrawn(final DealerStateResponse dealerStateResponse) {
         if (dealerStateResponse.isDrawable()) {
+            System.out.println();
             System.out.println(format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.", dealerStateResponse.getLimit()));
+            System.out.println();
         }
     }
 
@@ -67,19 +70,28 @@ public class OutputView {
     }
 
     public void printResult(final String dealerName, final List<PlayerResultResponse> players) {
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.println(format(RESULT_FORMAT, dealerName, getDealerResult(players)));
         players.forEach(this::printPlayerResult);
     }
 
     private String getDealerResult(final List<PlayerResultResponse> players) {
-        final Map<Result, Integer> playerResult = new HashMap<>();
+        final Map<Result, Integer> playerResult = initPlayerResult();
         for (PlayerResultResponse player : players) {
             final Result result = player.getResult();
             playerResult.put(result, playerResult.getOrDefault(result, 0) + 1);
         }
 
         return format("{0}승 {1}무 {2}패", playerResult.get(LOSE), playerResult.get(DRAW), playerResult.get(WIN));
+    }
+
+    private Map<Result, Integer> initPlayerResult() {
+        final Map<Result, Integer> playerResult = new HashMap<>();
+        for (final Result result : Result.values()) {
+            playerResult.put(result, 0);
+        }
+        return playerResult;
     }
 
     private void printPlayerResult(final PlayerResultResponse player) {

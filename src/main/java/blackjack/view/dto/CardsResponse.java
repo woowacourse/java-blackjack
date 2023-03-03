@@ -1,6 +1,7 @@
 package blackjack.view.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Score;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,8 @@ public class CardsResponse {
         this.cardInfos = cardInfos;
     }
 
-    public static CardsResponse of(final int totalScore, final List<Card> cards) {
-        return new CardsResponse(totalScore, getCardInfos(cards));
+    public static CardsResponse of(final Score score, final List<Card> cards) {
+        return new CardsResponse(score.getValue(), getCardInfos(cards));
     }
 
     private static List<String> getCardInfos(final List<Card> cards) {
