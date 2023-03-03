@@ -35,7 +35,7 @@ public class Participant {
         Integer maxSum = totalValues.stream()
                 .filter(value -> value < MIN_BUST_NUMBER)
                 .max(Integer::compare)
-                .orElseThrow(IllegalStateException::new);
+                .orElse(totalValues.get(0));
         return maxSum;
     }
 

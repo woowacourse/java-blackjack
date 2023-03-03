@@ -30,7 +30,17 @@ public class DealerTest {
     void isCardValueOver16() {
         Dealer dealer = new Dealer();
         dealer.takeCard(new Card("10다이아몬드", 10));
+        dealer.takeCard(new Card("7다이아몬드", 7));
+        assertThat(dealer.checkCardsCondition()).isFalse();
+    }
+
+    @Test
+    @DisplayName("가지고 있는 카드의 합이 21 초과이면 false를 반환한다. (소프트 17 케이스는 제외)")
+    void isCardValueOver21() {
+        Dealer dealer = new Dealer();
+        dealer.takeCard(new Card("10다이아몬드", 10));
         dealer.takeCard(new Card("9다이아몬드", 9));
+        dealer.takeCard(new Card("3다이아몬드", 3));
         assertThat(dealer.checkCardsCondition()).isFalse();
     }
 
