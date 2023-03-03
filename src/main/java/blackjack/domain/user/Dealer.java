@@ -18,15 +18,25 @@ public class Dealer implements Player {
         this.cards = new Cards(cards);
     }
 
-    public Name getName() {
-        return name;
-    }
-
     private void validateCardsSize(final int size) {
         if (size != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("유저는 카드 2장 이상을 갖고 있어야 합니다.");
+            throw new IllegalArgumentException("딜러는 카드 2장 이상을 갖고 있어야 합니다.");
         }
     }
+
+    public boolean needCard() {
+        return canReceive();
+    }
+
+
+    public List<Card> openCards() {
+        return cards.getCards();
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirstCard();
+    }
+
 
     @Override
     public void draw(final Card card) {
@@ -36,9 +46,6 @@ public class Dealer implements Player {
         this.cards = cards.add(card);
     }
 
-    public boolean needCard() {
-        return canReceive();
-    }
 
     @Override
     public boolean canReceive() {
@@ -53,16 +60,8 @@ public class Dealer implements Player {
         return cards.getPoint();
     }
 
-    public List<Card> openCards() {
-        return cards.getCards();
-    }
-
-    public List<Card> getFirstCard() {
-        List<Card> returnCard = new ArrayList<>();
-        final List<Card> cardsData = this.cards.getCards();
-        final Card firstCard = cardsData.get(0);
-        returnCard.add(firstCard);
-        return returnCard;
+    public Name getName() {
+        return name;
     }
 
     public Cards getCards() {

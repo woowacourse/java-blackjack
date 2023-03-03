@@ -50,4 +50,8 @@ public class Cards {
     public GamePoint getPoint() {
         return point;
     }
+
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
 }

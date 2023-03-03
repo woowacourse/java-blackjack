@@ -28,7 +28,7 @@ public class OutputView {
                 getNameString(dealer.getName()),
                 makeUsersNameList(users));
         System.out.print(System.lineSeparator());
-        printCardsOf(dealer.getName(), dealer.getFirstCard());
+        printCardsOf(dealer.getName(), List.of(dealer.getFirstCard()));
         printUsersCards(users);
     }
 
