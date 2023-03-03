@@ -1,11 +1,9 @@
-package domain;
+package domain.user;
 
-import domain.user.Participant;
+import domain.Card;
 import java.util.List;
 
 public class Dealer extends Participant {
-
-    public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         super(DEALER_NAME);

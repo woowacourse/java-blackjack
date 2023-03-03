@@ -1,5 +1,6 @@
 package domain;
 
+import domain.user.Dealer;
 import domain.user.Participant;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
