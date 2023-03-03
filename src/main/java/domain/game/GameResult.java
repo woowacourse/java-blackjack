@@ -6,6 +6,7 @@ import domain.participant.Participants;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameResult {
 
@@ -17,6 +18,10 @@ public class GameResult {
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayer();
         players.forEach(player -> calculateResult(dealer, player));
+    }
+
+    public static GameResult create(final Participants participants) {
+        return new GameResult(participants);
     }
 
     private void calculateResult(Participant dealer, Participant player) {
@@ -44,7 +49,8 @@ public class GameResult {
                 || dealer.calculateScore() < player.calculateScore();
     }
 
-    public static GameResult create(final Participants participants) {
-        return new GameResult(participants);
+    public Map<String, Result> getPlayerGameResults() {
+        return gameResults.keySet().stream()
+                .collect(Collectors.toUnmodifiableMap(Participant::getName, gameResults::get));
     }
 }
