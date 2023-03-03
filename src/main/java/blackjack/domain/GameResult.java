@@ -1,17 +1,13 @@
 package blackjack.domain;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
-    private final Map<Name, List<Result>> result;
-    private final Dealer dealer;
+    private final Map<Name, List<Result>> userResult;
+    private final List<Result> dealerResult = new ArrayList<>();
 
     public GameResult(final Dealer dealer, final Users users) {
-        result = new LinkedHashMap<>();
-        this.dealer = dealer;
+        userResult = new LinkedHashMap<>();
         judgeUsers(users, dealer.getGamePoint());
     }
 
@@ -24,8 +20,8 @@ public class GameResult {
     private void enrollUser(final List<User> winningUsers, Result rs) {
         for (User user : winningUsers) {
             final Name name = user.getName();
-            result.put(name, Arrays.asList(rs));
-            addResultToDealer(dealer, getDealerResultOf(rs));
+            userResult.put(name, Arrays.asList(rs));
+            addResultToDealer(getDealerResultOf(rs));
         }
     }
 
@@ -42,12 +38,15 @@ public class GameResult {
         throw new AssertionError();
     }
 
-    private void addResultToDealer(final Dealer dealer, final Result rs) {
-        final Name dealerName = dealer.getName();
-        if (!result.containsKey(dealerName)) {
-            result.put(dealerName, Arrays.asList(rs));
-        }
-        result.get(dealer).add(rs);
+    private void addResultToDealer(final Result rs) {
+        dealerResult.add(rs);
     }
 
+    public Map<Name, List<Result>> getUserResult() {
+        return userResult;
+    }
+
+    public List<Result> getDealerResult() {
+        return dealerResult;
+    }
 }

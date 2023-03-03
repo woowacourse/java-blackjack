@@ -27,6 +27,7 @@ public class BlackJackController {
         divideCardTo(namesByView);
         finalizeDealerCardStatus();
         outputView.printTotalPlayersStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
+        outputView.printResult(blackJack.getGameResult());
     }
 
     private void finalizeDealerCardStatus() {

@@ -3,6 +3,9 @@ package blackjack.view;
 import blackjack.domain.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -127,4 +130,74 @@ public class OutputView {
         }
         return String.valueOf(point);
     }
+
+    public void printResult(GameResult gameResult) {
+        System.out.println("## 최종 승패");
+        printDealerResult(gameResult);
+        printUsersResult(gameResult);
+    }
+
+    private void printDealerResult(final GameResult gameResult) {
+        printPlayer(gameResult.getDealerResult(), Dealer.DEALER_NAME);
+    }
+
+    private void printUsersResult(final GameResult gameResult) {
+//        final Map<Name, List<Result>> userResult = gameResult.getUserResult();
+//        final Set<Name> names = userResult.keySet();
+//        for (Name name : names) {
+//            printPlayer(userResult.get(name), name.getValue());
+//        }
+        for (Map.Entry<Name, List<Result>> entry : gameResult.getUserResult().entrySet()) {
+            printPlayer(entry.getValue(), entry.getKey().getValue());
+        }
+    }
+
+    private void printPlayer(final List<Result> results, String name) {
+        System.out.printf("%s: %s", name, makeTotalGameResult(results));
+        System.out.print(System.lineSeparator());
+    }
+
+    private String makeTotalGameResult(final List<Result> results) {
+        final int drawCount = getCount(results, m -> m == Result.DRAW);
+        final int winCount = getCount(results, m -> m == Result.WIN);
+        final int loseCount = getCount(results, m -> m == Result.LOSE);
+        return makeResultOf(drawCount, winCount, loseCount);
+    }
+
+    private int getCount(final List<Result> results, Predicate<Result> predicate) {
+        return (int) results.stream()
+                .filter(predicate::test)
+                .count();
+    }
+
+    private String makeResultOf(final int drawCount, final int winCount, final int loseCount) {
+        if ((drawCount + winCount + loseCount) != 1) {
+            return getMultipleResult(drawCount, winCount, loseCount);
+        }
+        if (winCount == 1) {
+            return "승";
+        }
+        if (loseCount == 1) {
+            return "패";
+        }
+        if (drawCount == 1) {
+            return "무";
+        }
+        throw new AssertionError();
+    }
+
+    private String getMultipleResult(final int drawCount, final int winCount, final int loseCount) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (drawCount > 0) {
+            stringBuilder.append(String.format("%d무 ", drawCount));
+        }
+        if (winCount > 0) {
+            stringBuilder.append(String.format("%d승 ", winCount));
+        }
+        if (loseCount > 0) {
+            stringBuilder.append(String.format("%d패 ", loseCount));
+        }
+        return stringBuilder.toString();
+    }
+
 }
