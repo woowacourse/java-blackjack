@@ -28,7 +28,6 @@ public class OutputView {
         printDealerStatus(dealerStatus);
         System.out.println();
         printChallengersStatus(challengersStatus);
-        System.out.println();
     }
 
     private static void printGivenMessage(PlayerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
@@ -47,9 +46,13 @@ public class OutputView {
 
     public static void printChallengersStatus(List<PlayerStatusDto> challengersStatus) {
         for (PlayerStatusDto challenger : challengersStatus) {
-            printChallengerStatus(challenger);
-            System.out.println();
+            printChallengerStatusInGame(challenger);
         }
+    }
+
+    public static void printChallengerStatusInGame(PlayerStatusDto playerStatusDto) {
+        printChallengerStatus(playerStatusDto);
+        System.out.println();
     }
 
     public static void printChallengerStatus(PlayerStatusDto challenger) {

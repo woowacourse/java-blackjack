@@ -94,7 +94,7 @@ public class BlackJackController {
         boolean choice = InputView.inputPlayerChoice(player.getName());
         if (choice) {
             blackJackGame.pick(player);
-            OutputView.printChallengerStatus(new PlayerStatusDto(player));
+            OutputView.printChallengerStatusInGame(new PlayerStatusDto(player));
             takeEachChallengerTurn(player);
         }
     }
