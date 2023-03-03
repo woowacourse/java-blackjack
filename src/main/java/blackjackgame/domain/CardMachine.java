@@ -1,25 +1,21 @@
 package blackjackgame.domain;
 
 public class CardMachine {
-    Cards cards;
+    private final Deck deck;
 
-    public CardMachine(Cards cards) {
-        this.cards = cards;
+    public CardMachine(final Deck deck) {
+        this.deck = deck;
     }
 
-    public void initPlayersCards(Guests guests, Dealer dealer) {
+    public void initPlayersCards(final Guests guests, final Dealer dealer) {
         for (int count = 0; count < 2; count++) {
-            giveCard(dealer);
+            distributeCard(dealer);
             guests.getGuests()
-                .forEach(this::giveCard);
+                .forEach(this::distributeCard);
         }
     }
 
-    public void giveCard(Guest guest) {
-        guest.addCard(cards.pickOne());
-    }
-
-    public void giveCard(Dealer dealer) {
-        dealer.addCard(cards.pickOne());
+    public void distributeCard(final Player player) {
+        player.addCard(deck.pickOne());
     }
 }

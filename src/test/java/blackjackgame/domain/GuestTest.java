@@ -15,7 +15,7 @@ class GuestTest {
         guest.addCard(card1);
         guest.addCard(card2);
 
-        assertThat(guest.isPick()).isEqualTo(true);
+        assertThat(guest.canHit()).isEqualTo(true);
     }
 
     @DisplayName("게스트가 가진 카드들의 합이 21이상이면, false를 반환한다.")
@@ -30,6 +30,6 @@ class GuestTest {
         guest.addCard(card2);
         guest.addCard(card3);
 
-        assertThat(guest.isPick()).isEqualTo(false);
+        assertThat(guest.canHit()).isEqualTo(false);
     }
 }

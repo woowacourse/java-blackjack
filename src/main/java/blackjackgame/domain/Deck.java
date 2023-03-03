@@ -4,30 +4,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
-    List<Card> cards;
+public class Deck {
+    private final List<Card> cards;
     private int cursorIndex;
 
-    public Cards() {
+    public Deck() {
+        this.cursorIndex = 0;
         this.cards = generateCards();
         Collections.shuffle(cards);
     }
 
-    public Cards(List<Card> cards) {
+    public Deck(final List<Card> cards) {
+        this.cursorIndex = 0;
         this.cards = cards;
-        cursorIndex = 0;
     }
 
     private List<Card> generateCards() {
         List<Card> cards = new ArrayList<>();
-        for (Symbol symbol : Symbol.values()) {
+        for (final Symbol symbol : Symbol.values()) {
             addCard(cards, symbol);
         }
         return cards;
     }
 
-    private void addCard(List<Card> cards, Symbol symbol) {
-        for (CardValue cardValue : CardValue.values()) {
+    private void addCard(final List<Card> cards, final Symbol symbol) {
+        for (final CardValue cardValue : CardValue.values()) {
             cards.add(new Card(symbol, cardValue));
         }
     }

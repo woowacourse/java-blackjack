@@ -1,19 +1,14 @@
 package blackjackgame.domain;
 
-import java.util.ArrayList;
-
 public class Dealer extends Player {
+    private static final int DEALER_HIT_STANDARD = 16;
+    private static final String DEALER = "딜러";
 
-    public Dealer() {
-        this.cards = new ArrayList<>();
-    }
-
-    // TODO : 메서드 네이밍 고민 후 수정하기
-    public boolean isPick() {
-        return getScore() <= 16;
+    public boolean canHit() {
+        return getScore() <= DEALER_HIT_STANDARD;
     }
 
     public String getName() {
-        return "딜러";
+        return DEALER;
     }
 }

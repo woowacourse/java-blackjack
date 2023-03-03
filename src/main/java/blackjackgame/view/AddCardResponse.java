@@ -9,18 +9,18 @@ public enum AddCardResponse {
 
     private final String value;
 
-    AddCardResponse(String value) {
+    AddCardResponse(final String value) {
         this.value = value;
     }
 
-    public static String printAddCardResponse(String playerName) {
+    public static String printAddCardResponse(final String playerName) {
         return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%s", System.lineSeparator() + playerName
             , YES.value, NO.value, System.lineSeparator());
     }
 
-    public static AddCardResponse validate(String input) {
+    public static AddCardResponse validate(final String input) {
         return Arrays.stream(AddCardResponse.values())
-            .filter(power -> power.value.equalsIgnoreCase(input))
+            .filter(cardResponse -> cardResponse.value.equalsIgnoreCase(input))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(getErrorPowerMsg()));
     }

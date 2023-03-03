@@ -1,26 +1,50 @@
 package blackjackgame.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Player {
-    List<Card> cards;
+    private static final int ACE_BONUS_SCORE = 10;
+    private static final int MAX_BASIC_SCORE = 11;
+
+    private final List<Card> cards;
+
+    public Player() {
+        this.cards = new ArrayList<>();
+    }
+
+    public abstract boolean canHit();
+
+    public abstract String getName();
 
     public int getScore() {
-        int totalScore = 0;
-        boolean hasAce = false;
-        for (Card card : cards) {
-            hasAce |= (card.getValue().equals(CardValue.ACE.getValue()));
-            totalScore += card.getScore();
-        }
+        int totalScore = getBasicScore();
+        boolean hasAce = findAce();
 
-        if (hasAce && totalScore <= 11) {
-            totalScore += 10;
+        if (hasAce && totalScore <= MAX_BASIC_SCORE) {
+            totalScore += ACE_BONUS_SCORE;
         }
         return totalScore;
     }
 
-    public void addCard(Card card) {
+    private boolean findAce() {
+        boolean hasAce = false;
+        for (final Card card : cards) {
+            hasAce |= (card.getValue().equals(CardValue.ACE.getValue()));
+        }
+        return hasAce;
+    }
+
+    private int getBasicScore() {
+        int basicScore = 0;
+        for (final Card card : cards) {
+            basicScore += card.getScore();
+        }
+        return basicScore;
+    }
+
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
@@ -30,16 +54,12 @@ public abstract class Player {
 
     public List<List<String>> getCards() {
         List<List<String>> playerCards = new ArrayList<>();
-        for (Card card : cards) {
+        for (final Card card : cards) {
             List<String> playerCard = new ArrayList<>();
             playerCard.add(card.getValue());
             playerCard.add(card.getSymbol());
             playerCards.add(playerCard);
         }
-        return playerCards;
+        return Collections.unmodifiableList(playerCards);
     }
-
-    public abstract boolean isPick();
-
-    public abstract String getName();
 }

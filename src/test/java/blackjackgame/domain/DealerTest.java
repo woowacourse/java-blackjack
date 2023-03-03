@@ -16,7 +16,7 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertThat(dealer.isPick()).isEqualTo(true);
+        assertThat(dealer.canHit()).isEqualTo(true);
     }
 
     @DisplayName("딜러가 가진 카드들의 합이 17이상이면, true를 반환한다.")
@@ -28,6 +28,6 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertThat(dealer.isPick()).isEqualTo(false);
+        assertThat(dealer.canHit()).isEqualTo(false);
     }
 }

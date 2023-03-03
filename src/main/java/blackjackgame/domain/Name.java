@@ -16,13 +16,13 @@ public class Name {
         this.name = trimmedName;
     }
 
-    private void validateBlank(String name) {
+    private void validateBlank(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(ERROR_NAME_BLANK_MSG);
         }
     }
 
-    private void validateRange(String name) {
+    private void validateRange(final String name) {
         if (name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(ERROR_NAME_LENGTH_OVER_MSG);
         }
@@ -34,12 +34,14 @@ public class Name {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
-        Name name1 = (Name)o;
-        return Objects.equals(name, name1.name);
+        }
+        Name compareName = (Name)o;
+        return Objects.equals(name, compareName.name);
     }
 
     @Override

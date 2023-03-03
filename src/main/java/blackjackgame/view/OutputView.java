@@ -4,40 +4,56 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    public void printCards(String playerName, List<List<String>> cards) {
+    public static final String FINAL_RESULT_MSG = "## 최종 승패";
+    private static final String DELIMITER = ", ";
+    private static final String DEALER_HIT_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+
+    public void printFirstDealerCards(final String playerName, final List<List<String>> cards) {
+        List<String> card = cards.get(1);
+        System.out.printf("%s%s: %s", System.lineSeparator(), playerName, String.join("", card));
+    }
+
+    public void printCards(final String playerName, final List<List<String>> cards) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(System.lineSeparator()).append(playerName).append("카드: ");
-        for (List<String> card : cards) {
-            stringBuilder.append(card.get(0));
-            stringBuilder.append(card.get(1));
-            stringBuilder.append(", ");
+        System.out.printf("%s%s: ", System.lineSeparator(), playerName);
+        for (final List<String> card : cards) {
+            stringBuilder.append(String.join("", card))
+                .append(DELIMITER);
         }
-        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(", "));
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(DELIMITER));
         System.out.print(stringBuilder);
     }
 
     public void dealerAddCard() {
-        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(System.lineSeparator() + DEALER_HIT_CARD_MSG);
     }
 
-    public void printScore(int score) {
+    public void printScore(final int score) {
         System.out.print(" - 결과: " + score);
     }
 
-    public void printResult(Map<String, Integer> dealerResult, Map<String, String> result) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패").append(System.lineSeparator()).append("딜러: ");
-        for (String gameOutcome : dealerResult.keySet()) {
-            int number = dealerResult.get(gameOutcome);
-            if (number != 0) {
-                stringBuilder.append(number).append(gameOutcome).append(" ");
-            }
-        }
+    public void printResult(final Map<String, Integer> dealerResult, final Map<String, String> result) {
+        System.out.println();
+        StringBuilder stringBuilder = new StringBuilder(FINAL_RESULT_MSG + System.lineSeparator() + "딜러: ");
+        appendDealerResult(dealerResult, stringBuilder);
+        appendGuestsResult(result, stringBuilder);
+        System.out.println(System.lineSeparator() + stringBuilder);
+    }
 
-        for (String name : result.keySet()){
-            stringBuilder.append(System.lineSeparator());
-            stringBuilder.append(name).append(": ").append(result.get(name));
+    private void appendDealerResult(final Map<String, Integer> dealerResult, final StringBuilder stringBuilder) {
+        for (final String gameOutcome : dealerResult.keySet()) {
+            stringBuilder.append(dealerResult.get(gameOutcome))
+                .append(gameOutcome)
+                .append(" ");
         }
-        System.out.print(System.lineSeparator() + System.lineSeparator() + stringBuilder);
+    }
+
+    private void appendGuestsResult(final Map<String, String> result, final StringBuilder stringBuilder) {
+        for (final String name : result.keySet()) {
+            stringBuilder.append(System.lineSeparator());
+            stringBuilder.append(name)
+                .append(": ")
+                .append(result.get(name));
+        }
     }
 }

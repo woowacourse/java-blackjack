@@ -1,18 +1,18 @@
 package blackjackgame.domain;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Guest extends Player {
-    Name name;
+    private static final int BLACKJACK_MAX_SCORE = 21;
 
-    public Guest(Name name) {
+    private final Name name;
+
+    public Guest(final Name name) {
         this.name = name;
-        cards = new ArrayList<>();
     }
 
-    public boolean isPick() {
-        return getScore() < 21;
+    public boolean canHit() {
+        return getScore() < BLACKJACK_MAX_SCORE;
     }
 
     public String getName() {
@@ -21,10 +21,12 @@ public class Guest extends Player {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         Guest guest = (Guest)o;
         return Objects.equals(name, guest.name);
     }
