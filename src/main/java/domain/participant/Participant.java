@@ -38,8 +38,4 @@ public abstract class Participant {
     public String getName() {
         return name.getName();
     }
-
-    public List<Card> getParticipantCard() {
-        return participantCard.getCards();
-    }
 }

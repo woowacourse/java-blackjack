@@ -40,7 +40,8 @@ class DealerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         dealer.addCard(card);
-        List<Card> cards = dealer.getParticipantCard();
+        ParticipantCard participantCard = dealer.participantCard;
+        List<Card> cards = participantCard.getCards();
 
         // then
         assertThat(cards)

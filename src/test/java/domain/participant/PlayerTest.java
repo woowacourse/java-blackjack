@@ -55,7 +55,8 @@ class PlayerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         player.addCard(card);
-        List<Card> cards = player.getParticipantCard();
+        ParticipantCard participantCard = player.participantCard;
+        List<Card> cards = participantCard.getCards();
 
         // then
         assertThat(cards)
