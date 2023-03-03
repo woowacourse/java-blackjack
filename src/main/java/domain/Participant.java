@@ -3,6 +3,7 @@ package domain;
 public abstract class Participant {
 
     public static final int INITIAL_CARDS_SIZE = 2;
+
     final String name;
     final Cards cards;
 
@@ -27,4 +28,8 @@ public abstract class Participant {
     }
 
     public abstract boolean canAddCard();
+
+    public Cards getCards() {
+        return cards;
+    }
 }
