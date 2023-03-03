@@ -12,6 +12,7 @@ import view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -61,11 +62,8 @@ public class BlackJackController {
     }
 
     private HitState mapCommandToStateOrElseThrow(final String command) {
-        final HitState hitState = COMMAND_STATE_MAP.getOrDefault(command, null);
-        if (hitState == null) {
-            throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
-        }
-        return hitState;
+        return Optional.ofNullable(COMMAND_STATE_MAP.getOrDefault(command, null))
+                .orElseThrow(() -> new IllegalArgumentException("y 혹은 n 만을 입력해주세요"));
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
