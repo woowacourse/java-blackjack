@@ -19,7 +19,7 @@ public class Cards {
         int sum = 0;
         for (Card card : cards) {
             aceCount = increaseAceCount(aceCount, card);
-            sum += card.getValue().getValue();
+            sum += card.getValue().getScore();
         }
 
         return decreaseScoreByAce(sum, limit, aceCount);

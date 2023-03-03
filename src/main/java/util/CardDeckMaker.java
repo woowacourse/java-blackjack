@@ -2,7 +2,7 @@ package util;
 
 import domain.Card;
 import domain.Shape;
-import domain.Value;
+import domain.Letter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ public class CardDeckMaker {
         List<Card> cards = new ArrayList<>();
 
         for (Shape shape : Shape.values()) {
-            Arrays.stream(Value.values())
+            Arrays.stream(Letter.values())
                     .forEach(value -> cards.add(new Card(shape, value)));
         }
 

@@ -15,8 +15,8 @@ public class DealerTest {
 
     @BeforeEach
     void setUp() {
-        cards.add(new Card(Shape.DIAMOND, Value.TWO));
-        cards.add(new Card(Shape.CLOVER, Value.JACK));
+        cards.add(new Card(Shape.DIAMOND, Letter.TWO));
+        cards.add(new Card(Shape.CLOVER, Letter.JACK));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class DealerTest {
     void pickNewCard() {
         Participant dealer = new Dealer(new Cards(cards));
 
-        dealer.pick(new Card(Shape.DIAMOND, Value.NINE));
+        dealer.pick(new Card(Shape.DIAMOND, Letter.NINE));
 
         assertThat(dealer.getCards().getCards().size()).isEqualTo(3);
     }
@@ -34,7 +34,7 @@ public class DealerTest {
     void bustDealer() {
         Participant dealer = new Dealer(new Cards(cards));
 
-        dealer.pick(new Card(Shape.HEART, Value.QUEEN));
+        dealer.pick(new Card(Shape.HEART, Letter.QUEEN));
 
         assertThat(dealer.isBust()).isTrue();
     }
@@ -44,7 +44,7 @@ public class DealerTest {
     void notBustDealer() {
         Participant dealer = new Dealer(new Cards(cards));
 
-        dealer.pick(new Card(Shape.HEART, Value.ACE));
+        dealer.pick(new Card(Shape.HEART, Letter.ACE));
 
         assertThat(dealer.isBust()).isFalse();
     }
@@ -54,7 +54,7 @@ public class DealerTest {
     void noMoreCard() {
         Participant dealer = new Dealer(new Cards(cards));
 
-        dealer.pick(new Card(Shape.HEART, Value.FIVE));
+        dealer.pick(new Card(Shape.HEART, Letter.FIVE));
 
         assertThat(dealer.isMoreCardAble()).isFalse();
     }
@@ -64,7 +64,7 @@ public class DealerTest {
     void isMoreCardAble() {
         Participant dealer = new Dealer(new Cards(cards));
 
-        dealer.pick(new Card(Shape.HEART, Value.FOUR));
+        dealer.pick(new Card(Shape.HEART, Letter.FOUR));
 
         assertThat(dealer.isMoreCardAble()).isTrue();
     }

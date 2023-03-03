@@ -1,8 +1,6 @@
 package domain;
 
-import java.nio.channels.NetworkChannel;
-
-public enum Value {
+public enum Letter {
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -18,19 +16,19 @@ public enum Value {
     JACK("J", 10);
 
     final String expression;
-    final int value;
+    final int score;
 
-    Value(String expression, int value) {
+    Letter(String expression, int score) {
         this.expression = expression;
-        this.value = value;
+        this.score = score;
     }
 
     public String getExpression() {
         return expression;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 
 }

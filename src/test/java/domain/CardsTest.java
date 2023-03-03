@@ -12,7 +12,7 @@ public class CardsTest {
     @Test
     @DisplayName("Cards 를 생성한다.")
     void createCardsSuccess() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Value.TWO), new Card(Shape.HEART, Value.ACE));
+        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
 
         Cards cards = new Cards(initialCards);
 
@@ -22,7 +22,7 @@ public class CardsTest {
     @Test
     @DisplayName("Player 의 카드 점수를 계산한다.")
     void calculateCardScorePlayer() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Value.TWO), new Card(Shape.HEART, Value.ACE));
+        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
 
         Cards cards = new Cards(initialCards);
 
@@ -32,7 +32,7 @@ public class CardsTest {
     @Test
     @DisplayName("Player 의 Ace 를 2개 낮춰야 하는 경우 카드 점수를 계산한다.")
     void calculateCardScoreWhenAceDecreaseTwice() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Value.ACE), new Card(Shape.DIAMOND, Value.JACK),new Card(Shape.HEART, Value.ACE));
+        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK),new Card(Shape.HEART, Letter.ACE));
 
         Cards cards = new Cards(initialCards);
 
@@ -42,7 +42,7 @@ public class CardsTest {
     @Test
     @DisplayName("Dealer 의 카드 점수를 계산한다.")
     void calculateCardScoreOfDealer() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Value.ACE), new Card(Shape.DIAMOND, Value.NINE));
+        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.NINE));
 
         Cards cards = new Cards(initialCards);
 
@@ -52,7 +52,7 @@ public class CardsTest {
     @Test
     @DisplayName("블랙잭일 때 Dealer 의 카드 점수를 계산한다.")
     void calculateCardScoreOfDealerWhenBlackJack() {
-        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Value.ACE), new Card(Shape.DIAMOND, Value.JACK));
+        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK));
 
         Cards cards = new Cards(initialCards);
 

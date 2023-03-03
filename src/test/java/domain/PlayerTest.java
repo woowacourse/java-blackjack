@@ -16,8 +16,8 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        cards.add(new Card(Shape.DIAMOND, Value.TWO));
-        cards.add(new Card(Shape.CLOVER, Value.JACK));
+        cards.add(new Card(Shape.DIAMOND, Letter.TWO));
+        cards.add(new Card(Shape.CLOVER, Letter.JACK));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class PlayerTest {
     void pickNewCard() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
-        player.pick(new Card(Shape.DIAMOND, Value.NINE));
+        player.pick(new Card(Shape.DIAMOND, Letter.NINE));
 
         assertThat(player.getCards().getCards().size()).isEqualTo(3);
     }
@@ -43,7 +43,7 @@ public class PlayerTest {
     void bustPlayer() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
-        player.pick(new Card(Shape.HEART, Value.QUEEN));
+        player.pick(new Card(Shape.HEART, Letter.QUEEN));
 
         assertThat(player.isBust()).isTrue();
     }
@@ -53,7 +53,7 @@ public class PlayerTest {
     void notBustPlayer() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
-        player.pick(new Card(Shape.HEART, Value.ACE));
+        player.pick(new Card(Shape.HEART, Letter.ACE));
 
         assertThat(player.isBust()).isFalse();
     }
@@ -63,7 +63,7 @@ public class PlayerTest {
     void noMoreCard() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
-        player.pick(new Card(Shape.HEART, Value.NINE));
+        player.pick(new Card(Shape.HEART, Letter.NINE));
 
         assertThat(player.isMoreCardAble()).isFalse();
     }
@@ -73,7 +73,7 @@ public class PlayerTest {
     void isMoreCardAble() {
         Player player = new Player(new Name("hello"), new Cards(cards));
 
-        player.pick(new Card(Shape.HEART, Value.FOUR));
+        player.pick(new Card(Shape.HEART, Letter.FOUR));
 
         assertThat(player.isMoreCardAble()).isTrue();
     }
