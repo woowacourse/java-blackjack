@@ -67,7 +67,7 @@ public class BlackJackGameController {
         }
     }
 
-    private static void validateCorrectCommand(String gameCommand) {
+    private static void validateCorrectCommand(final String gameCommand) {
         if (!(gameCommand.equals("y") || gameCommand.equals("n"))) {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
