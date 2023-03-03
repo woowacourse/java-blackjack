@@ -63,4 +63,8 @@ public class OutputView {
         }
         return "패";
     }
+
+    public void printExceptionMessage(final String message) {
+        System.out.println(message);
+    }
 }

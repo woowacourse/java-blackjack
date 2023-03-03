@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import domain.Card;
 import domain.CardDeck;
 import domain.Dealer;
+import domain.DrawCommand;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
@@ -51,15 +52,15 @@ public class BlackJackService {
 
     public DrawnCardsInfo drawCards(final CardDeck cardDeck,
                                     final Player player,
-                                    final String result) {
-        if (result.equals("y")) {
+                                    final DrawCommand drawCommand) {
+        if (drawCommand.isDraw()) {
             player.pickCard(cardDeck.draw());
         }
         return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }
 
-    public boolean canDrawMore(final Player player, final String result) {
-        if (player.calculateCardScore() > 21 || result.equals("n")) {
+    public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
+        if (player.calculateCardScore() > 21 || drawCommand.isStop()) {
             return false;
         }
 
