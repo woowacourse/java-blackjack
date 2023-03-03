@@ -14,13 +14,17 @@ public enum GameResult {
     }
 
     public static GameResult comparePlayerWithDealer(final int playerScore, final int dealerScore) {
-        if ((playerScore == dealerScore) || (playerScore > BLACK_JACK_SCORE && dealerScore > BLACK_JACK_SCORE)) {
+        if ((playerScore == dealerScore) || (isBust(playerScore) && isBust(dealerScore))) {
             return PUSH;
         }
-        if (playerScore < dealerScore) {
+        if (playerScore < dealerScore || isBust(playerScore)) {
             return LOSE;
         }
         return WIN;
+    }
+
+    private static boolean isBust(int score) {
+        return score > BLACK_JACK_SCORE;
     }
 
     public String getName() {

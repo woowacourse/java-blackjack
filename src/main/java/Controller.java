@@ -20,6 +20,7 @@ public class Controller {
     public void run() {
         ready();
         play();
+        end();
     }
 
     private void ready() {
@@ -40,11 +41,13 @@ public class Controller {
     }
 
     private void askPlayerHitCommand(final Player player) {
-        while (player.isHittable()) {
+        HitCommand hitCommand = HitCommand.Y;
+        while (player.isHittable() && hitCommand.isHit()) {
             String playerName = player.getName();
             String command = inputView.askHitCommand(playerName);
-            HitCommand hitCommand = HitCommand.from(command);
+            hitCommand = HitCommand.from(command);
             giveCardToHittable(playerName, hitCommand);
+            outputView.printEachPlayerCards(playerName, player.getCards());
         }
     }
 
@@ -59,5 +62,11 @@ public class Controller {
             blackJack.giveCardToDealer();
             outputView.printDealerHitMessage();
         }
+    }
+
+    private void end() {
+        outputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
+        outputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
+        outputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
     }
 }

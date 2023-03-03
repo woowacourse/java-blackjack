@@ -55,6 +55,7 @@ public class OutputView {
 
     public void printGameResult(final Map<GameResult, Integer> dealerResult,
         final Map<String, GameResult> playerResults) {
+        System.out.println();
         System.out.println("## 최종 승패");
         printDealerResult(dealerResult);
         printPlayerResults(playerResults);

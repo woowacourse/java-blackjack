@@ -91,8 +91,26 @@ public class BlackJack {
         ));
     }
 
+    public Map<String, Integer> getPlayerToScore() {
+        List<Player> players = users.getPlayers();
+        return players.stream().collect(Collectors.toMap(
+            Player::getName,
+            Player::getScore,
+            (oldValue, newValue) -> newValue,
+            LinkedHashMap::new
+        ));
+    }
+
     public List<Player> getHittablePlayers() {
         return users.getHittablePlayers();
+    }
+
+    public List<Card> getDealerCards() {
+        return users.getDealer().getCards();
+    }
+
+    public int getDealerScore() {
+        return users.getDealer().getScore();
     }
 
     public boolean isDealerHittable() {
