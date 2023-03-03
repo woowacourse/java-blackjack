@@ -42,4 +42,17 @@ class ParticipantTest {
 
         assertThat(participant.open(2)).containsAll(List.of(cardOne, cardTwo));
     }
+
+    @Test
+    @DisplayName("참가자의 결과를 가져온다.")
+    void compare() {
+        Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
+        Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        Participant firstParticipant = ParticipantFixture.create(cardOne, cardTwo, List.of());
+        Card secondCardOne = new Card(CardShape.DIAMOND, CardNumber.SIX);
+        Card secondCardTwo = new Card(CardShape.HEART, CardNumber.ACE);
+        Participant secondParticipant = ParticipantFixture.create(secondCardOne, secondCardTwo, List.of());
+
+        assertThat(firstParticipant.compare(secondParticipant)).isEqualTo(ResultType.LOSE);
+    }
 }
