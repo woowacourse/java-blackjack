@@ -12,6 +12,7 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String OPEN_CARD_FORMAT = "%s : %s%n";
     private static final String OPEN_CARD_MESSAGE = "%n%s에게 2장을 나누었습니다.%n";
+    private static final String DEALER_HIT_RESULT_MESSAGE = DEALER_NAME + "는 16 이하라 %d장의 카드를 더 받았습니다.%n";
 
     public static void showOpenCards(Card dealerFirstCard, Map<String, List<Card>> playersCards) {
         Set<String> playerNames = playersCards.keySet();
@@ -36,5 +37,12 @@ public class OutputView {
                 .map(OutputView::toCardName)
                 .collect(Collectors.toList());
         return String.join(DELIMITER, cardNames);
+    }
+
+    public static void showDealerHitResult(int hitCount) {
+        if (hitCount == 0) {
+            return;
+        }
+        System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
     }
 }

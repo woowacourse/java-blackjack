@@ -19,6 +19,7 @@ public class BlackJackController {
         startGame();
         hitOrStayForAvailablePlayers(blackJackGame.findAvailablePlayerNames());
         int hitCount = blackJackGame.hitOrStayForDealer();
+        OutputView.showDealerHitResult(hitCount);
     }
 
     private void startGame() {
