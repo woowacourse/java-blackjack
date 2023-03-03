@@ -2,8 +2,9 @@ package balckjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-class CardDeck {
+public class CardDeck {
 
     private final List<Card> cards;
 
@@ -26,8 +27,15 @@ class CardDeck {
         return cards.size();
     }
 
+
+    public List<String> getCardsInfo() {
+        return cards.stream()
+            .map(Card::getCardInfo)
+            .collect(Collectors.toList());
+    }
+
+
     public List<Card> getCards() {
         return cards;
     }
-
 }

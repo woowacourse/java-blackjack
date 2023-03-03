@@ -36,6 +36,19 @@ public class Players {
         return !NAMES_FORMAT.matcher(names).matches();
     }
 
+    public List<String> getPlayerNames() {
+        return players.stream()
+            .map(Player::getName)
+            .map(Name::getValue)
+            .collect(Collectors.toList());
+    }
+
+    public List<CardDeck> extractCardDeck() {
+        return players.stream()
+            .map(Player::getCardDeck)
+            .collect(Collectors.toList());
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

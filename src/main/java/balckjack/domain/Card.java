@@ -33,4 +33,8 @@ abstract class Card {
     public int hashCode() {
         return Objects.hash(pattern, symbol);
     }
+
+    public String getCardInfo() {
+        return symbol + pattern.getName();
+    }
 }
