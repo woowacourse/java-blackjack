@@ -49,8 +49,7 @@ public class Hand {
         }
         return Result.DRAW;
     }
-
-
+    
     public boolean isPlayable() {
         return state.isPlayable();
     }
