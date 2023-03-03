@@ -27,7 +27,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), dealer);
 
-        game.dealCards();
+        game.dealTwoCards();
 
         for (Player player : players) {
             assertThat(player.getCards()).hasSize(2);

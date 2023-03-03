@@ -8,7 +8,7 @@
 - [ ] 제약조건을 더 고려해보자
 - [ ] Application 메서드 분리
 - [x] Player::calculateScore 메서드 분리
-- [ ] Game::dealCards indent가 2 임.
+- [x] Game::dealCards indent가 2 임.
 - [ ] 매직 넘버 상수화
 - [x] Player 인스턴스 변수 개수 3개다.
 - [ ] Game도 3개다

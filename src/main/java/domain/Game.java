@@ -15,14 +15,18 @@ public class Game {
         this.dealer = dealer;
     }
 
-    public void dealCards() {
+    public void dealTwoCards() {
         for (int i = 0; i < 2; i++) {
-            for (Player player : players) {
-                player.addCard(deck.drawCard());
-            }
-
-            dealer.addCard(deck.drawCard());
+            dealCards();
         }
+    }
+
+    private void dealCards() {
+        for (Player player : players) {
+            player.addCard(deck.drawCard());
+        }
+
+        dealer.addCard(deck.drawCard());
     }
 
     public Result isWon(int index) {

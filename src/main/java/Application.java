@@ -17,7 +17,7 @@ public class Application {
 
         Dealer dealer = new Dealer();
         Game game = new Game(players, new Deck(), dealer);
-        game.dealCards();
+        game.dealTwoCards();
 
         outputView.printDealCards(players);
         outputView.printFirstPlayerCard(dealer);
