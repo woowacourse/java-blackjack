@@ -7,6 +7,6 @@ public class Player extends Participant {
 
     @Override
     protected boolean isHittable() {
-        return !cards.isBust();
+        return !cards.isBlackJack() && !cards.isBust();
     }
 }

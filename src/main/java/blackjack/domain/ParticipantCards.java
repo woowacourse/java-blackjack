@@ -46,4 +46,8 @@ public class ParticipantCards {
     public boolean isBust() {
         return calculate() > BLACK_JACK;
     }
+
+    public boolean isBlackJack() {
+        return calculate() == BLACK_JACK;
+    }
 }
