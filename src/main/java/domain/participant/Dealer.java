@@ -15,8 +15,4 @@ public class Dealer extends Participant {
             this.receiveCard(cards.getCard());
         }
     }
-
-    public Card showInitialCard() {
-        return this.cards.get(0);
-    }
 }
