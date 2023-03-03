@@ -18,10 +18,20 @@ public class Result {
         if (isDraw(score, comparedScore)) {
             return new Result(0, 1, 0);
         }
-        if (score.getValue() > comparedScore.getValue()) {
+        if (isVictory(score, comparedScore)) {
             return new Result(1, 0, 0);
         }
         return new Result(0, 0, 1);
+    }
+
+    private static boolean isDraw(final Score score, final Score comparedScore) {
+        return score.isBust() && comparedScore.isBust()
+            || score.getValue() == comparedScore.getValue();
+    }
+
+    private static boolean isVictory(final Score score, final Score comparedScore) {
+        return !score.isBust()
+            && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
     }
 
     public static Result decide(final Score score, final List<Score> comparedScores) {
@@ -35,15 +45,11 @@ public class Result {
             result.addDraw();
             return;
         }
-        if (score.getValue() > comparedScore.getValue()) {
+        if (isVictory(score, comparedScore)) {
             result.addVictory();
             return;
         }
         result.addDefeat();
-    }
-
-    private static boolean isDraw(final Score score, final Score comparedScore) {
-        return score.isBust() && comparedScore.isBust() || score.getValue() == comparedScore.getValue();
     }
 
     public void addVictory() {
