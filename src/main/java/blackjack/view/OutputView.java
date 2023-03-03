@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.GameResult;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final int DEALER_DRAW_BOUNDARY = 16;
@@ -45,9 +44,10 @@ public class OutputView {
     }
 
     public static void printDealerResult(final List<GameResult> gameResults) {
-        final Map<String, Long> collect = gameResults.stream()
-                .collect(groupingBy(GameResult::getName, counting()));
-        final String result = collect.entrySet().stream()
+        final String result = gameResults.stream()
+                .collect(groupingBy(GameResult::getName, counting()))
+                .entrySet()
+                .stream()
                 .map(entry -> entry.getValue() + entry.getKey())
                 .collect(joining(" "));
         System.out.println("딜러: " + result);
