@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    protected Player(final Name name, final DrawnCards drawnCards) {
+    public Player(final Name name, final DrawnCards drawnCards) {
         super(name, drawnCards);
     }
 

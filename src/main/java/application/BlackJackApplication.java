@@ -74,9 +74,9 @@ public class BlackJackApplication {
         DrawCommand drawCommand;
         do {
             drawCommand = getRawCommand(player.getName());
-            DrawnCardsInfo drawnCardsInfo = blackJackService.drawCards(cardDeck, player, drawCommand);
+            DrawnCardsInfo drawnCardsInfo = blackJackService.drawCardByCommand(cardDeck, player, drawCommand);
             outputView.printPlayerCardInfo(drawnCardsInfo);
-        } while (blackJackService.canDrawMore(player, drawCommand));
+        } while (blackJackService.canPlayerDrawMore(player, drawCommand));
     }
 
     private DrawCommand getRawCommand(final String name) {
@@ -92,7 +92,7 @@ public class BlackJackApplication {
 
     private void drawDealerCards(final CardDeck cardDeck, final Dealer dealer) {
         do {
-            blackJackService.pickDealerCard(cardDeck, dealer);
+            blackJackService.drawDealerCard(cardDeck, dealer);
             outputView.printDealerCardPickMessage();
         } while (blackJackService.canDealerDrawMore(dealer));
     }

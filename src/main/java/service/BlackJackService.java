@@ -1,7 +1,5 @@
 package service;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 import domain.CardDeck;
@@ -16,13 +14,13 @@ import dto.ParticipantResult;
 import dto.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackService {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
     private static final int BURST_NUMBER = 21;
     private static final int DEALER_DRAW_LIMIT_SCORE = 16;
+
 
     public List<DrawnCardsInfo> splitCards(final Dealer dealer,
                                            final Players players,
@@ -51,9 +49,9 @@ public class BlackJackService {
         return cardInfos;
     }
 
-    public DrawnCardsInfo drawCards(final CardDeck cardDeck,
-                                    final Player player,
-                                    final DrawCommand drawCommand) {
+    public DrawnCardsInfo drawCardByCommand(final CardDeck cardDeck,
+                                            final Player player,
+                                            final DrawCommand drawCommand) {
         if (drawCommand.isDraw()) {
             player.pickCard(cardDeck.draw());
         }
@@ -61,7 +59,7 @@ public class BlackJackService {
         return DrawnCardsInfo.toDto(player);
     }
 
-    public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
+    public boolean canPlayerDrawMore(final Player player, final DrawCommand drawCommand) {
         if (player.calculateCardScore() > BURST_NUMBER || drawCommand.isStop()) {
             return false;
         }
@@ -69,7 +67,7 @@ public class BlackJackService {
         return true;
     }
 
-    public void pickDealerCard(final CardDeck cardDeck, final Dealer dealer) {
+    public void drawDealerCard(final CardDeck cardDeck, final Dealer dealer) {
         if (dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE) {
             dealer.pickCard(cardDeck.draw());
         }

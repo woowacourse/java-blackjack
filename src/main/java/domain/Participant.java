@@ -8,7 +8,7 @@ public abstract class Participant {
     protected final Name name;
     protected final DrawnCards drawnCards;
 
-    protected Participant(final Name name, final DrawnCards drawnCards) {
+    public Participant(final Name name, final DrawnCards drawnCards) {
         this.name = name;
         this.drawnCards = drawnCards;
     }

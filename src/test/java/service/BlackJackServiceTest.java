@@ -1,0 +1,274 @@
+package service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.Card;
+import domain.CardDeck;
+import domain.Dealer;
+import domain.DrawCommand;
+import domain.DrawnCards;
+import domain.Name;
+import domain.Player;
+import domain.Players;
+import domain.Type;
+import domain.Value;
+import dto.WinLoseResult;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class BlackJackServiceTest {
+
+    private final BlackJackService blackJackService = new BlackJackService();
+
+
+    @DisplayName("카드를 딜러에게 우선적으로 2장 분배한다.")
+    @Test
+    void split_to_dealer() {
+        // given
+        List<Card> cards = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(cards);
+        Players players = new Players(createPlayers("pobi"));
+        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+
+        Card expectedFirst = cards.get(0);
+        Card expectedSecond = cards.get(1);
+        // when
+        blackJackService.splitCards(dealer, players, cardDeck);
+        List<Card> actual = dealer.getDrawnCards();
+        // then
+        assertThat(actual).containsExactly(expectedFirst, expectedSecond);
+    }
+
+    @DisplayName("카드를 딜러에게 분배한 후 플레이어들에게 2장씩 분배한다.")
+    @Test
+    void split_card_player_after_dealer() {
+        // given
+        List<Card> cards = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(cards);
+        Players players = new Players(createPlayers("pobi", "ori"));
+        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+
+        Card expectedFirst = cards.get(4);
+        Card expectedSecond = cards.get(5);
+        // when
+        blackJackService.splitCards(dealer, players, cardDeck);
+        Player player = players.stream()
+                .collect(Collectors.toList())
+                .get(1);
+        List<Card> actualCards = player.getDrawnCards();
+        // then
+        assertThat(actualCards).containsExactly(expectedFirst, expectedSecond);
+    }
+
+    @DisplayName("카드를 뽑는 커맨드면 카드를 뽑는다.")
+    @Test
+    void draw_card_if_command_true() {
+        // given
+        List<Card> cards = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(cards);
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
+        DrawCommand drawCommand = new DrawCommand("y");
+        Card expectedCard = cards.get(0);
+        // when
+        blackJackService.drawCardByCommand(cardDeck, player, drawCommand);
+        List<Card> actualCards = player.getDrawnCards();
+        // then
+        assertThat(actualCards).containsExactly(expectedCard);
+    }
+
+    @DisplayName("카드를 뽑는 커맨드가 아니면 카드를 뽑지않는다..")
+    @Test
+    void draw_card_if_command_false() {
+        // given
+        List<Card> cards = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(cards);
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
+        DrawCommand drawCommand = new DrawCommand("n");
+
+        int expectedSize = 0;
+        // when
+        blackJackService.drawCardByCommand(cardDeck, player, drawCommand);
+        int actualSize = player.getDrawnCards().size();
+        // then
+        assertThat(actualSize).isEqualTo(expectedSize);
+    }
+
+    @DisplayName("플레이어가 조건을 만족하면 카드를 더 뽑을 수 있다.")
+    @Test
+    void player_can_draw_card_if_command_false() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Type.HEART, Value.JACK));
+        Player player = new Player(new Name("ori"), new DrawnCards(cards));
+        DrawCommand drawCommand = new DrawCommand("y");
+
+        boolean expected = true;
+        // when
+        boolean actual = blackJackService.canPlayerDrawMore(player, drawCommand);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("커맨드가 false면 카드를 더 뽑지 못한다.")
+    @Test
+    void player_stop_draw_card_if_command_false() {
+        // given
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
+        DrawCommand drawCommand = new DrawCommand("n");
+
+        boolean expected = false;
+        // when
+        boolean actual = blackJackService.canPlayerDrawMore(player, drawCommand);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("플레이어의 점수가 버스트 넘버를 넘어가면 카드를 더 뽑지 못한다.")
+    @Test
+    void player_stop_draw_card_if_over_burst_number() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Type.SPADE, Value.JACK));
+        cards.add(new Card(Type.HEART, Value.JACK));
+        cards.add(new Card(Type.DIAMOND, Value.JACK));
+        Player player = new Player(new Name("ori"), new DrawnCards(cards));
+        DrawCommand drawCommand = new DrawCommand("y");
+
+        boolean expected = false;
+        // when
+        boolean actual = blackJackService.canPlayerDrawMore(player, drawCommand);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("딜러가 조건을 만족하면 카드를 더 뽑는다.")
+    @Test
+    void dealer__draw_card() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Card givenCard = new Card(Type.SPADE, Value.JACK);
+        cards.add(givenCard);
+
+        Dealer dealer = new Dealer(new DrawnCards(cards));
+        List<Card> rawDeck = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
+
+        Card expectedCard = rawDeck.get(0);
+        // when
+
+        blackJackService.drawDealerCard(cardDeck, dealer);
+        List<Card> drawnCards = dealer.getDrawnCards();
+
+        // then
+        assertThat(drawnCards)
+                .containsExactly(givenCard, expectedCard);
+    }
+
+    @DisplayName("딜러가 조건을 만족하지못하면 카드를 뽑지 못한다.")
+    @Test
+    void dealer_not_draw_card_if_not_satisfied() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Card givenCardFirst = new Card(Type.SPADE, Value.JACK);
+        Card givenCardSecond = new Card(Type.HEART, Value.JACK);
+        Card givenCardThird = new Card(Type.CLUB, Value.JACK);
+
+        cards.add(givenCardFirst);
+        cards.add(givenCardSecond);
+        cards.add(givenCardThird);
+
+        Dealer dealer = new Dealer(new DrawnCards(cards));
+        List<Card> rawDeck = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
+        // when
+
+        blackJackService.drawDealerCard(cardDeck, dealer);
+        List<Card> drawnCards = dealer.getDrawnCards();
+
+        // then
+        assertThat(drawnCards)
+                .containsExactly(givenCardFirst, givenCardSecond, givenCardThird);
+    }
+
+    @DisplayName("딜러가 조건을 만족하면 카드를 더 뽑을 수 있다.")
+    @Test
+    void dealer_can_draw_card() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Type.SPADE, Value.JACK));
+        Dealer dealer = new Dealer(new DrawnCards(cards));
+
+        boolean expected = true;
+        // when
+        boolean actual = blackJackService.canDealerDrawMore(dealer);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("딜러의 한계 넘버를 넘으면 더 이상 카드를 뽑지 못한다.")
+    @Test
+    void dealer_can_draw_card_if_score_over_limit() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Type.SPADE, Value.JACK));
+        cards.add(new Card(Type.HEART, Value.JACK));
+        Dealer dealer = new Dealer(new DrawnCards(cards));
+
+        boolean expected = false;
+        // when
+        boolean actual = blackJackService.canDealerDrawMore(dealer);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("딜러의 점수를 바탕으로 플레이어들의 승패를 계산한다.")
+    @Test
+    void get_win_loss_result() {
+        // given
+        List<Card> playerCards = new ArrayList<>();
+        playerCards.add(new Card(Type.SPADE, Value.EIGHT));
+        Player player = new Player(new Name("pobi"), new DrawnCards(playerCards));
+
+        Players players = new Players(List.of(player));
+
+        List<Card> dealerCard = new ArrayList<>();
+        dealerCard.add(new Card(Type.SPADE, Value.TWO));
+        Dealer dealer = new Dealer(new DrawnCards(dealerCard));
+
+        boolean expected = true;
+        // when
+        List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
+        boolean actual = winLoseResults.get(0)
+                .isWin();
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private List<Card> createFillCards() {
+        List<Card> cards = new ArrayList<>();
+
+        for (Type type : Type.values()) {
+            for (Value value : Value.values()) {
+                cards.add(new Card(type, value));
+            }
+        }
+
+        return cards;
+    }
+
+    public List<Player> createPlayers(String... names) {
+        List<Card> cards = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            players.add(new Player(new Name(name), new DrawnCards(cards)));
+        }
+
+        return players;
+    }
+}
