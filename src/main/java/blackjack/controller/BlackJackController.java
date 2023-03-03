@@ -61,8 +61,12 @@ public class BlackJackController {
     }
 
     private void takeTurn() {
-        takeAllChallengersTurn();
-        takeDealerTurn();
+        try {
+            takeAllChallengersTurn();
+            takeDealerTurn();
+        } catch (CustomException e) {
+            OutputView.printErrorMessage(e);
+        }
     }
 
     private void takeAllChallengersTurn() {
