@@ -69,7 +69,7 @@ public class OutputView {
 
     public void printPlayerWinORLose(Map<Participant, WinningResult> playerResult) {
         for (Participant player : playerResult.keySet()) {
-            System.out.println(player.getName() + " : " + playerResult.get(player));
+            System.out.println(player.getName() + " : " + playerResult.get(player).getName());
         }
     }
 
