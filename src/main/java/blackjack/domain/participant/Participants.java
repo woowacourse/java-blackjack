@@ -42,6 +42,21 @@ public class Participants {
         }
     }
 
+    public Dealer getDealer() {
+        return participants.stream()
+                .filter(Dealer.class::isInstance)
+                .map(Dealer.class::cast)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("딜러는 존재해야 합니다."));
+    }
+
+    public List<Player> getPlayers() {
+        return participants.stream()
+                .filter(Player.class::isInstance)
+                .map(Player.class::cast)
+                .collect(Collectors.toList());
+    }
+
     public List<Participant> getParticipants() {
         return participants;
     }
