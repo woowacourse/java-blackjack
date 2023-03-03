@@ -22,7 +22,7 @@ public class Application {
         }
     }
 
-    public void run() {
+    private void run() {
         CardDeck cardDeck = initDeck();
         Dealer dealer = new Dealer(getInitCards(cardDeck));
         List<Player> players = makePlayers(cardDeck);
