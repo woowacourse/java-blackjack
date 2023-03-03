@@ -40,14 +40,6 @@ public class BlackJack {
         users.giveCardByName(user, deck.drawCard());
     }
 
-    public List<Card> getUserCard(Name user) {
-        return users.getCardsOf(user);
-    }
-
-    public Card getDealerFirstCard() {
-        return dealer.getFirstCard();
-    }
-
     public int finalizeDealer(Deck deck) {
         int additionalCardCount = 0;
         while (dealer.needCard()) {
@@ -55,6 +47,18 @@ public class BlackJack {
             additionalCardCount += 1;
         }
         return additionalCardCount;
+    }
+
+    public boolean checkBustBy(final Name name) {
+        return users.checkBustBy(name);
+    }
+
+    public List<Card> getUserCard(Name user) {
+        return users.getCardsOf(user);
+    }
+
+    public Card getDealerFirstCard() {
+        return dealer.getFirstCard();
     }
 
     public List<User> getUsersStatus() {
@@ -74,9 +78,5 @@ public class BlackJack {
 
     public Users getUsers() {
         return users;
-    }
-
-    public boolean checkBustBy(final Name name) {
-        return users.checkBustBy(name);
     }
 }
