@@ -23,7 +23,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public String readReceiveIntention(String name) {
+    public String readIntention(String name) {
         printMessage(name + CARD_INPUT_MESSAGE);
         try {
             String intention = input().toLowerCase();
@@ -31,7 +31,7 @@ public class InputView {
             return intention;
         } catch (IllegalArgumentException e) {
             printMessage(e.getMessage());
-            return readReceiveIntention(name);
+            return readIntention(name);
         }
     }
 

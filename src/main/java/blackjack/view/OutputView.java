@@ -20,11 +20,8 @@ public class OutputView {
     private static final String DEALER_IMPOSSIBLE_MESSAGE = "딜러는 17이상이라 카드를 받지 못합니다.";
     private static final String RESULT_MESSAGE = " - 결과: ";
     private static final String FINAL_RESULT = "## 최종 승패";
-    private static final String WIN_MESSAGE = "승";
-    private static final String DRAW_MESSAGE = "무";
-    private static final String LOSE_MESSAGE = "패";
 
-    public void showSetUp(List<Player> players) {
+    public void showInitStatus(List<Player> players) {
         printMessage(LINE_SEPARATOR);
         String names = players.stream()
                 .map(Player::getName)
@@ -37,13 +34,13 @@ public class OutputView {
         System.out.println(DEALER_NAME + DELIMITER + mapCard(card));
     }
 
-    public void showPlayerCards(Player player) {
+    public void showPlayer(Player player) {
         printMessage(player.getName() + CARD + DELIMITER + convertCard(player.getCards()));
     }
 
-    public void showPlayersCards(List<Player> players) {
+    public void showPlayers(List<Player> players) {
         for (Player player : players) {
-            showPlayerCards(player);
+            showPlayer(player);
         }
         printMessage(LINE_SEPARATOR);
     }
@@ -69,7 +66,7 @@ public class OutputView {
         }
     }
 
-    public void showResult(Map<Player, Result> results, List<Player> players) {
+    public void showFinalResult(Map<Player, Result> results, List<Player> players) {
         printMessage(LINE_SEPARATOR);
         printMessage(FINAL_RESULT);
         printMessage(DEALER_NAME + DELIMITER + ResultMapper.getDealerResult(new ArrayList<>(results.values())));
