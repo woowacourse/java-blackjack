@@ -15,8 +15,12 @@ public class InputView {
         return names.split(DELIMITER);
     }
 
-    public static String readDrawCardDecision(final String playerName) {
+    public static boolean readDrawCardDecision(final String playerName) {
         System.out.println("\n" + playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        if (input.equals("y") || input.equals("n")) {
+            return input.equals("y");
+        }
+        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
     }
 }

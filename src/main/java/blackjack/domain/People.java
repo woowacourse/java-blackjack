@@ -30,4 +30,11 @@ public class People {
     public List<Person> getPeople() {
         return Collections.unmodifiableList(people);
     }
+
+    public Person findByName(String playerName) {
+        return people.stream()
+                .filter(person -> person.isNameMatch(playerName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 이름의 플레이어가 없습니다."));
+    }
 }

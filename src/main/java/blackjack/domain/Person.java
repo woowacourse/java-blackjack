@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Person {
     protected static final int MAX_SCORE = 21;
@@ -46,6 +47,10 @@ public abstract class Person {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public boolean isNameMatch(String name) {
+        return Objects.equals(this.name, name);
     }
 
     public abstract boolean isPlayer();

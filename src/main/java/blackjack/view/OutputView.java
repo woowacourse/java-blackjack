@@ -5,6 +5,10 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.GameResult;
+import blackjack.dto.DealerGameResultResponse;
+import blackjack.dto.PersonStatusResponse;
+import blackjack.dto.PersonTotalStatusResponse;
+import blackjack.dto.PlayerGameResultResponse;
 import java.util.List;
 
 public class OutputView {
@@ -18,33 +22,33 @@ public class OutputView {
         System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCardsStatus(final String playerName, final List<String> cards) {
-        System.out.println(getCardStatus(playerName, cards));
+    public static void printPersonStatus(final PersonStatusResponse response) {
+        System.out.println(getCardStatus(response));
     }
 
-    private static String getCardStatus(final String playerName, final List<String> cards) {
-        final String allCards = String.join(", ", cards);
-        return playerName + " 카드: " + allCards;
+    public static void printPersonTotalStatus(final PersonTotalStatusResponse response) {
+        System.out.println(getCardStatus(response) + " - 결과: " + response.getScore());
     }
 
-    public static void printCardsStatus(final String playerName, final List<String> cards, int score) {
-        System.out.println(getCardStatus(playerName, cards) + " - 결과: " + score);
+    private static String getCardStatus(final PersonStatusResponse response) {
+        final String allCards = String.join(", ", response.getCards());
+        return response.getName() + " 카드: " + allCards;
     }
 
-    public static void printDealerDrawCardMessage(final int score) {
-        if (score > DEALER_DRAW_BOUNDARY) {
-            System.out.println("\n딜러는 " + DEALER_DRAW_BOUNDARY + "초과라 카드를 받지 않았습니다.\n");
+    public static void printDealerDrawCardMessage(final boolean isDraw) {
+        if (isDraw) {
+            System.out.println("\n딜러는 " + DEALER_DRAW_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.\n");
             return;
         }
-        System.out.println("\n딜러는 " + DEALER_DRAW_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("\n딜러는 " + DEALER_DRAW_BOUNDARY + "초과라 카드를 받지 않았습니다.\n");
     }
 
     public static void printGameEndMessage() {
         System.out.println("\n## 최종 승패");
     }
 
-    public static void printDealerResult(final List<GameResult> gameResults) {
-        final String result = gameResults.stream()
+    public static void printDealerResult(final DealerGameResultResponse response) {
+        final String result = response.getResults().stream()
                 .collect(groupingBy(GameResult::getName, counting()))
                 .entrySet()
                 .stream()
@@ -53,8 +57,8 @@ public class OutputView {
         System.out.println("딜러: " + result);
     }
 
-    public static void printPlayerResult(final String playerName, final GameResult gameResult) {
-        System.out.println(playerName + ": " + gameResult.getName());
+    public static void printPlayerResult(final PlayerGameResultResponse response) {
+        System.out.println(response.getName() + ": " + response.getGameResult());
     }
 
     public static void printExceptionMessage(final String message) {
