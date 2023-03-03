@@ -50,7 +50,7 @@ public class BlackjackGameTest {
 
     @Test
     @DisplayName("플레이어의 최종 승패 결과를 가져온다.")
-    void calculateWinOrLoseTest1() {
+    void calculatePlayerWinOrLoseTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
 
         blackjackGame.distributeInitialCard();
@@ -59,8 +59,23 @@ public class BlackjackGameTest {
         playerResult.put("pobi", Result.LOSE);
         playerResult.put("jason", Result.LOSE);
 
-        Assertions.assertThat(blackjackGame.getPlayersResult()).usingRecursiveComparison().isEqualTo(playerResult);
+        Assertions.assertThat(blackjackGame.getPlayersResult()).isEqualTo(playerResult);
     }
+
+    @Test
+    @DisplayName("딜러의 최종 승패 결과를 가져온다.")
+    void calculateDealerWinOrLoseTest() {
+        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+
+        blackjackGame.distributeInitialCard();
+
+        Map<String, List<Result>> playerResult = new HashMap<>();
+
+        playerResult.put(dealer.getName().getName(), List.of(Result.LOSE, Result.LOSE));
+
+        Assertions.assertThat(blackjackGame.getDealerResult()).isEqualTo(playerResult);
+    }
+
 
     @Test
     @DisplayName("플레이어와 딜러의 승패 계산")
