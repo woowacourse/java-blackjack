@@ -14,8 +14,8 @@ import view.OutputVIew;
 import view.ResultView;
 
 public class BlackJackController {
-    private Players players;
-    private Dealer dealer;
+    private final Players players;
+    private final Dealer dealer;
 
     public BlackJackController() {
         this.players = generatePlayers();
