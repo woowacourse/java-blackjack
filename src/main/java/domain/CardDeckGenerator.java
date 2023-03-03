@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CardDeckGenerator {
@@ -19,11 +18,6 @@ public class CardDeckGenerator {
             }
         }
 
-        shuffleCards(cards);
-        return new CardDeck(cards);
-    }
-
-    private static void shuffleCards(final List<Card> cards) {
-        Collections.shuffle(cards);
+        return CardDeck.createShuffled(cards);
     }
 }

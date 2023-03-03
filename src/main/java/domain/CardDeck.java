@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
@@ -8,9 +9,14 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck(final List<Card> cards) {
+    private CardDeck(final List<Card> cards) {
         validate(cards);
         this.cards = cards;
+    }
+
+    public static CardDeck createShuffled(List<Card> cards) {
+        Collections.shuffle(cards);
+        return new CardDeck(cards);
     }
 
     private void validate(final List<Card> cards) {
@@ -31,9 +37,5 @@ public class CardDeck {
 
     public Card draw() {
         return cards.remove(0);
-    }
-
-    private int getLastIndexOfCards() {
-        return cards.size() - 1;
     }
 }
