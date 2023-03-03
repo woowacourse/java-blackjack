@@ -36,4 +36,7 @@ public class Player implements Gambler {
     public int getScore() {
         return cards.calculateScore();
     }
+
+    @Override
+    public boolean isBustedGambler(int sum){return this.cards.isBusted(sum);}
 }
