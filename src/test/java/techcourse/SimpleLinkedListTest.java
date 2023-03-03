@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class SimpleLinkedListTest {
 
-    private final SimpleList emptyList = new SimpleLinkedList();
-    private final SimpleList size1List = new SimpleLinkedList();
-    private final SimpleList list = new SimpleLinkedList();
-    private final List<SimpleList> lists = List.of(emptyList, size1List, list);
+    private final SimpleList<String> emptyList = new SimpleLinkedList<>();
+    private final SimpleList<String> size1List = new SimpleLinkedList<>();
+    private final SimpleList<String> list = new SimpleLinkedList<>();
+    private final List<SimpleList<String>> lists = List.of(emptyList, size1List, list);
 
     @BeforeEach
     void init() {

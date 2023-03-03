@@ -2,13 +2,13 @@ package techcourse;
 
 import java.util.Arrays;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<T> implements SimpleList<T> {
 
-    private String[] elements = new String[1];
+    private Object[] elements = new Object[1];
     private int count = 0;
 
     @Override
-    public boolean add(final String value) {
+    public boolean add(final T value) {
         if (isFull()) {
             grow();
         }
@@ -21,7 +21,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public void add(final int index, final String value) {
+    public void add(final int index, final T value) {
         validateAddIndex(index);
         if (isFull()) {
             grow();
@@ -42,9 +42,9 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(final int index, final String value) {
+    public T set(final int index, final T value) {
         validateIndex(index);
-        String old = elements[index];
+        T old = (T) elements[index];
         elements[index] = value;
         return old;
     }
@@ -56,18 +56,18 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String get(final int index) {
+    public T get(final int index) {
         validateIndex(index);
-        return elements[index];
+        return (T) elements[index];
     }
 
     @Override
-    public boolean contains(final String value) {
+    public boolean contains(final T value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(final String value) {
+    public int indexOf(final T value) {
         for (int i = 0; i < count; i++) {
             if (elements[i].equals(value)) {
                 return i;
@@ -87,7 +87,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(final String value) {
+    public boolean remove(final T value) {
         int index = indexOf(value);
         if (index == -1) {
             return false;
@@ -98,9 +98,9 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(final int index) {
+    public T remove(final int index) {
         validateIndex(index);
-        String removed = elements[index];
+        T removed = (T) elements[index];
         System.arraycopy(elements, index + 1, elements, index, elements.length - index - 1);
         count--;
         return removed;
@@ -109,6 +109,6 @@ public class SimpleArrayList implements SimpleList {
     @Override
     public void clear() {
         count = 0;
-        elements = new String[elements.length];
+        elements = new Object[elements.length];
     }
 }

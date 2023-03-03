@@ -1,13 +1,13 @@
 package techcourse;
 
-public class SimpleLinkedList implements SimpleList {
+public class SimpleLinkedList<T> implements SimpleList<T> {
 
-    private Node head;
-    private Node tail;
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
 
     @Override
-    public boolean add(final String value) {
+    public boolean add(final T value) {
         if (isEmpty()) {
             return addFirst(value);
         }
@@ -15,7 +15,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public void add(int index, final String value) {
+    public void add(int index, final T value) {
         validateAddIndex(index);
         if (isEmpty() || index == 0) {
             addFirst(value);
@@ -25,11 +25,11 @@ public class SimpleLinkedList implements SimpleList {
             addLast(value);
             return;
         }
-        Node node = node(index);
+        Node<T> node = node(index);
         addBetween(node.prev, node, value);
     }
 
-    private boolean addFirst(final String value) {
+    private boolean addFirst(final T value) {
         size++;
         if (size == 1) {
             head = Node.first(value, head);
@@ -41,23 +41,23 @@ public class SimpleLinkedList implements SimpleList {
         return true;
     }
 
-    private boolean addLast(final String value) {
+    private boolean addLast(final T value) {
         size++;
-        Node last = Node.last(tail, value);
+        Node<T> last = Node.last(tail, value);
         tail.next = last;
         tail = last;
         return true;
     }
 
-    private void addBetween(final Node prev, final Node next, final String element) {
+    private void addBetween(final Node<T> prev, final Node<T> next, final T element) {
         size++;
-        Node node = new Node(prev, element, next);
+        Node<T> node = new Node<>(prev, element, next);
         prev.next = node;
         next.prev = node;
     }
 
-    private Node node(int index) {
-        Node temp = head;
+    private Node<T> node(int index) {
+        Node<T> temp = head;
         while (index > 0) {
             temp = temp.next;
             index--;
@@ -72,11 +72,11 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String set(int index, final String value) {
+    public T set(int index, final T value) {
         validateIndex(index);
 
-        Node node = node(index);
-        String replaced = node.element;
+        Node<T> node = node(index);
+        T replaced = node.element;
         node.element = value;
         return replaced;
     }
@@ -88,19 +88,19 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         validateIndex(index);
         return node(index).element;
     }
 
     @Override
-    public boolean contains(final String value) {
+    public boolean contains(final T value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(final String value) {
-        Node temp = head;
+    public int indexOf(final T value) {
+        Node<T> temp = head;
         int index = 0;
         while (temp != null) {
             if (temp.element.equals(value)) {
@@ -123,7 +123,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean remove(final String value) {
+    public boolean remove(final T value) {
         if (isEmpty()) {
             return false;
         }
@@ -140,7 +140,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(final int index) {
+    public T remove(final int index) {
         validateIndex(index);
         if (index == 0) {
             return removeFirst();
@@ -151,32 +151,32 @@ public class SimpleLinkedList implements SimpleList {
         return removeBetween(index);
     }
 
-    private String removeFirst() {
+    private T removeFirst() {
         size--;
         if (size == 0) {
-            String removed = head.element;
+            T removed = head.element;
             head = null;
             tail = null;
             return removed;
         }
-        String removed = head.element;
+        T removed = head.element;
         head = head.next;
         return removed;
     }
 
-    private String removeLast() {
+    private T removeLast() {
         size--;
-        String removed = tail.element;
+        T removed = tail.element;
         tail = tail.prev;
         tail.next = null;
         return removed;
     }
 
-    private String removeBetween(final int index) {
+    private T removeBetween(final int index) {
         size--;
-        Node node = node(index);
-        Node prev = node.prev;
-        Node next = node.next;
+        Node<T> node = node(index);
+        Node<T> prev = node.prev;
+        Node<T> next = node.next;
         prev.next = next;
         next.prev = prev;
         return node.element;
@@ -188,23 +188,23 @@ public class SimpleLinkedList implements SimpleList {
         tail = null;
     }
 
-    private static class Node {
-        String element;
-        Node next;
-        Node prev;
+    private static class Node<T> {
+        T element;
+        Node<T> next;
+        Node<T> prev;
 
-        Node(Node prev, String element, Node next) {
+        Node(Node<T> prev, T element, Node<T> next) {
             this.element = element;
             this.next = next;
             this.prev = prev;
         }
 
-        static Node first(final String element, final Node next) {
-            return new Node(null, element, next);
+        static <T> Node<T> first(final T element, final Node<T> next) {
+            return new Node<>(null, element, next);
         }
 
-        static Node last(final Node prev, final String element) {
-            return new Node(prev, element, null);
+        static <T> Node<T> last(final Node<T> prev, final T element) {
+            return new Node<T>(prev, element, null);
         }
     }
 }
