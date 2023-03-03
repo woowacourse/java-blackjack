@@ -16,7 +16,7 @@ public class GameStatistic {
 
     public GameStatistic(final Dealer dealer, final List<Player> players, final Map<Player, DealerCompeteResult> dealerResultPerPlayer) {
         this.dealer = dealer;
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.dealerResultPerPlayer = dealerResultPerPlayer;
     }
 
