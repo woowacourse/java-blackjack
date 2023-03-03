@@ -20,4 +20,8 @@ public enum ScoreState {
         }
         return HIT;
     }
+
+    public boolean isBust() {
+        return this == BUST;
+    }
 }

@@ -38,4 +38,8 @@ public class Card {
     public CardNumber getNumber() {
         return cardNumber;
     }
+
+    public boolean isAce() {
+        return this.cardNumber.isAce();
+    }
 }

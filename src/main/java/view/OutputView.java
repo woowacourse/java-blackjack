@@ -10,7 +10,7 @@ public class OutputView {
             + "딜러와 %s에게 2장을 나누었습니다." + LINE_SEPARATOR;
     private static final String DEARER_CARDS_FORMAT = "%s: %s" + LINE_SEPARATOR;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
-    private static final String CARDS_RESULT_FORMAT = "%s카드: %s -결과: %d" + LINE_SEPARATOR;
+    private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
     private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public void printInitCards(Participants participants) {
