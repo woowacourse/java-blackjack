@@ -43,4 +43,15 @@ public class GenericSimpleArrayListTest {
         assertThat(intTotal).isEqualTo(3);
 //        SimpleList.sum(stringValues); 컴파일 에러
     }
+
+    @DisplayName("숫자 타입의 SimpleList를 받아 음수를 제외하고 반환하는 메서드 구현")
+    @Test
+    void filterNegativeTest() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
+
+        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+
+    }
 }
