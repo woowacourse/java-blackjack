@@ -17,9 +17,9 @@ public class BlackjackGame {
         this.players = new Players(nameValues);
     }
 
-    public void initGame(Deck deck){
+    public void initGame(Deck deck) {
         addInitialCards(dealer, deck);
-        players.getPlayers().forEach(player -> addInitialCards(player,deck));
+        players.getPlayers().forEach(player -> addInitialCards(player, deck));
     }
 
     private void addInitialCards(AbstractUser user, Deck deck) {
@@ -38,5 +38,25 @@ public class BlackjackGame {
 
     public void addCardToDealerIfPossible(Deck deck) {
         this.dealer.addCard(deck.draw());
+    }
+
+    public void calculateAllResults() {
+        this.players.getPlayers().forEach(player -> PlayerResultRepository.save(player, calculateResult(player)));
+    }
+
+    private Result calculateResult(Player player) {
+        if (player.calculateScore() > 21) {
+            return Result.LOSE;
+        }
+        if (dealer.calculateScore() > 21) {
+            return Result.WIN;
+        }
+        if (player.calculateScore() == dealer.calculateScore()) {
+            return Result.DRAW;
+        }
+        if (player.calculateScore() > dealer.calculateScore()) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
     }
 }
