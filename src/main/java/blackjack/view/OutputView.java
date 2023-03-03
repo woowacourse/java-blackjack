@@ -1,11 +1,18 @@
 package blackjack.view;
 
+import static blackjack.view.Result.DRAW;
+import static blackjack.view.Result.LOSE;
+import static blackjack.view.Result.WIN;
 import static java.text.MessageFormat.format;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final String RESULT_FORMAT = "{0}: {1}";
 
     public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players,
                                final int count) {
@@ -47,11 +54,96 @@ public class OutputView {
         final CardsResponse cardsResponse = participant.getCardsResponse();
         final int totalScore = cardsResponse.getTotalScore();
 
-        System.out.println(getHandedCards(participant) + " - " + getScoreFormat(totalScore));
+        System.out.println(format("{0} - {1}", getHandedCards(participant), getScoreFormat(totalScore)));
     }
 
     private String getScoreFormat(final int totalScore) {
         return format("결과: {0}", totalScore);
+    }
+
+    public void printResult(final String dealerName, final List<PlayerResultResponse> players) {
+        System.out.println("## 최종 승패");
+        System.out.println(format(RESULT_FORMAT, dealerName, getDealerResult(players)));
+        players.forEach(this::printPlayerResult);
+    }
+
+    private String getDealerResult(final List<PlayerResultResponse> players) {
+        final Map<Result, Integer> playerResult = new HashMap<>();
+        for (PlayerResultResponse player : players) {
+            final Result result = player.getResult();
+            playerResult.put(result, playerResult.getOrDefault(result, 0) + 1);
+        }
+
+        return format("{0}승 {1}무 {2}패", playerResult.get(LOSE), playerResult.get(DRAW), playerResult.get(WIN));
+    }
+
+    private void printPlayerResult(final PlayerResultResponse player) {
+        System.out.println(format(RESULT_FORMAT, player.getName(), player.getResult().getName()));
+    }
+}
+
+enum Result {
+
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패");
+
+    private final String name;
+
+    Result(final String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Score implements Comparable<Score> {
+
+    private final int value;
+
+    public Score(final int value) {
+        this.value = value;
+    }
+
+    public Result compare(final Score score) {
+        final int result = this.compareTo(score);
+        if (result > 0) {
+            return WIN;
+        }
+        if (result < 0) {
+            return LOSE;
+        }
+        return DRAW;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public int compareTo(final Score score) {
+        return Integer.compare(value, score.getValue());
+    }
+}
+
+class PlayerResultResponse {
+
+    private final String name;
+    private final Result result;
+
+    public PlayerResultResponse(final String name, final Result result) {
+        this.name = name;
+        this.result = result;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Result getResult() {
+        return result;
     }
 }
 
