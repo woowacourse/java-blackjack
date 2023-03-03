@@ -41,9 +41,10 @@ public class BlackJack {
         return dealer.openCards();
     }
 
-    public List<Card> getInitialDealerCard() {
-        return dealer.getFirstCard();
-    }
+//    public List<Card> getInitialDealerCard() {
+////        return dealer.getFirstCard();
+
+//    }
 
     public List<Card> getUserCard(Name user) {
         return users.getCardsOf(user);

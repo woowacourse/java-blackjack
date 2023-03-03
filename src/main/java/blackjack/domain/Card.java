@@ -41,4 +41,8 @@ public class Card {
     public int getCardNumberValue() {
         return cardNumber.getValue();
     }
+
+    public Shape getShape() {
+        return shape;
+    }
 }
