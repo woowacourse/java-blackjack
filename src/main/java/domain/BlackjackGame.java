@@ -1,6 +1,7 @@
 package domain;
 
 public class BlackjackGame {
+    public static final int STANDARD_OF_HIT = 17;
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -34,7 +35,7 @@ public class BlackjackGame {
     }
 
     public void giveAdditionalCardToDealer() {
-        while (dealer.calculateScore() < 17) {
+        while (dealer.calculateScore() < STANDARD_OF_HIT) {
             giveCardTo(dealer);
         }
     }

@@ -27,6 +27,7 @@ public class InputView {
     private enum Message {
         PLAYER_NAMES_INPUT("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"),
         PLAYER_WANT_MORE_CARD("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오 n)");
+
         private final String message;
 
         Message(String message) {
