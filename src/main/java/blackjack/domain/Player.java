@@ -23,6 +23,10 @@ public class Player implements Person {
         return Collections.unmodifiableList(cards);
     }
 
+    public String showName() {
+        return name.getName();
+    }
+
     @Override
     public boolean isHit() {
         int totalScore = calculateScore();
