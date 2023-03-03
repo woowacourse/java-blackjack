@@ -1,17 +1,17 @@
 package list;
 
-public class SimpleLinkedList implements SimpleList {
+public class SimpleLinkedList<T> implements SimpleList<T> {
 
     private Node head;
     private Node tail;
     private int size;
 
     private class Node {
-        private String value;
+        private T value;
         private Node previous;
         private Node next;
 
-        public Node(String value) {
+        public Node(T value) {
             this.value = value;
             this.previous = null;
             this.next = null;
@@ -19,7 +19,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(T value) {
         Node node = new Node(value);
         if (size == 0) {
             head = node;
@@ -35,7 +35,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, T value) {
         checkIndexOutOfBounds(index);
         if (size == index) {
             add(value);
@@ -63,7 +63,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public T set(int index, T value) {
         checkIndexOutOfBounds(index);
         Node node = getNodeByIndex(index);
         node.value = value;
@@ -71,14 +71,14 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         checkIndexOutOfBounds(index);
         Node node = getNodeByIndex(index);
         return node.value;
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(T value) {
         Node node = head;
         for (int i = 0; i < size; i++) {
             if (node.value.equals(value)) {
@@ -90,7 +90,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(T value) {
         Node node = head;
         for (int i = 0; i < size; i++) {
             if (node.value.equals(value)) {
@@ -112,7 +112,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(T value) {
         Node node = head;
         for (int i = 0; i < size; i++) {
             if (node.value.equals(value)) {
@@ -125,7 +125,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         checkIndexOutOfBounds(index);
         if (index == 0) {
             Node node = head;

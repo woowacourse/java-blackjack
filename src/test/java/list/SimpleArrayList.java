@@ -1,22 +1,24 @@
 package list;
 
-public class SimpleArrayList implements SimpleList {
+import java.util.Arrays;
+
+public class SimpleArrayList<T> implements SimpleList<T> {
 
     private static final int INITIAL_CAPACITY = 1;
     private static final int INITIAL_SIZE = 0;
 
     private int capacity;
     private int size;
-    private String[] data;
+    private T[] data;
 
     public SimpleArrayList() {
         this.capacity = INITIAL_CAPACITY;
         this.size = INITIAL_SIZE;
-        this.data = new String[capacity];
+        this.data = (T[]) new Object[capacity];
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(T value) {
         if (capacity == size) {
             expandCapacity();
         }
@@ -25,7 +27,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, T value) {
         checkIndexOutOfBounds(index);
         if (capacity == size) {
             expandCapacity();
@@ -38,21 +40,21 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public T set(int index, T value) {
         checkIndexOutOfBounds(index);
         data[index] = value;
         return value;
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         checkIndexOutOfBounds(index);
         return data[index];
     }
 
     @Override
-    public boolean contains(String value) {
-        for (String element : data) {
+    public boolean contains(T value) {
+        for (T element : data) {
             if (element.equals(value)) {
                 return true;
             }
@@ -61,7 +63,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(T value) {
         for (int i = 0; i < size; i++) {
             if (data[i].equals(value)) {
                 return i;
@@ -81,7 +83,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(T value) {
         int index = indexOf(value);
         if (index == -1) {
             return false;
@@ -91,9 +93,9 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         checkIndexOutOfBounds(index);
-        String value = data[index];
+        T value = data[index];
         removeByIndex(index);
         return value;
     }
@@ -102,7 +104,7 @@ public class SimpleArrayList implements SimpleList {
     public void clear() {
         capacity = INITIAL_CAPACITY;
         size = INITIAL_SIZE;
-        data = new String[capacity];
+        data = (T[]) new Object[capacity];
     }
 
     public void printAll() {
@@ -114,12 +116,12 @@ public class SimpleArrayList implements SimpleList {
 
     private void expandCapacity() {
         capacity *= 2;
-        String[] newData = new String[capacity];
+        T[] newData = (T[]) new Object[capacity];
         copyArray(newData, data);
         data = newData;
     }
 
-    private void copyArray(String[] newData, String[] oldData) {
+    private void copyArray(T[] newData, T[] oldData) {
         for (int i = 0; i < oldData.length; i++) {
             newData[i] = oldData[i];
         }
