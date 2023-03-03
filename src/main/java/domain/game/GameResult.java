@@ -40,7 +40,7 @@ public class GameResult {
         return player.isBust()
                 || dealer.isBlackJack()
                 || dealer.isBust() && player.isBust()
-                || dealer.calculateScore() > player.calculateScore();
+                || !dealer.isBust() && dealer.calculateScore() > player.calculateScore();
     }
 
     private boolean isPlayerWin(final Participant dealer, final Participant player) {
