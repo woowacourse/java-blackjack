@@ -11,7 +11,6 @@ import static view.OutputView.*;
 
 public class Controller {
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    //TODO: 21넘는 Gambler는 패배처리
 
     public void blackjack() {
         Players players = new Players(readPlayersName());
@@ -27,8 +26,8 @@ public class Controller {
         playersHitOrStand(players);
         dealerHitOrStand(dealer);
 
-        printScores(players, dealer);
-        LinkedHashMap<Gambler, Integer> result = calculateWinCount(dealer, players);
+        printScores(players, dealer); //TODO: getResult
+        LinkedHashMap<Gambler, Integer> result = getResult(dealer, players);
         OutputView.printResult(result);
     }
 
@@ -71,37 +70,40 @@ public class Controller {
         }
     }
 
-    private LinkedHashMap<Gambler, Integer> calculateWinCount(Dealer dealer, Players players) {
+    private LinkedHashMap<Gambler, Integer> getResult(Dealer dealer, Players players) {
         LinkedHashMap<Gambler, Integer> result = new LinkedHashMap<>();
-        mapInitSetting(dealer, players, result);
-
-        return result;
+        return calculateWinCount(dealer, players, result);
     }
 
-    private void mapInitSetting(Dealer dealer, Players players, LinkedHashMap<Gambler, Integer> result) {
+    private LinkedHashMap<Gambler, Integer> calculateWinCount(Dealer dealer, Players players, LinkedHashMap<Gambler, Integer> result) {
         result.put(dealer, 0);
         for (Player player : players.getPlayers()) {
             decideWinner(dealer, result, player);
         }
-
+        return result;
     }
 
     private void decideWinner(Dealer dealer, LinkedHashMap<Gambler, Integer> result, Player player) {
         if (isPlayerWin(dealer, player)) {
             result.put(player, 1);
+            return;
         }
 
-        if (isPlayerLose(dealer, player)) {
+        if (isDealerWin(dealer, player)) {
             result.put(player, 0);
             result.replace(dealer, result.get(dealer) + 1);
         }
     }
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
-        return dealer.getScore() <= player.getScore();
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+        return (dealerScore <= playerScore && !player.isBustedGambler(playerScore)) || dealer.isBustedGambler(dealerScore);
     }
 
-    private boolean isPlayerLose(Dealer dealer, Player player) {
-        return dealer.getScore() > player.getScore();
+    private boolean isDealerWin(Dealer dealer, Player player) {
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+        return dealerScore > playerScore || player.isBustedGambler(playerScore);
     }
 }
