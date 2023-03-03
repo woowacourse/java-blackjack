@@ -27,10 +27,10 @@ public class InputView {
     }
 
     private boolean isValid(final String input) {
-        if (input.equals(YES)) {
+        if (YES.equals(input)) {
             return true;
         }
-        if (input.equals(NO)) {
+        if (NO.equals(input)) {
             return false;
         }
         throw new IllegalStateException(
