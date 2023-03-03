@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import card.Card;
 import card.CardNumber;
@@ -22,8 +23,12 @@ public class ShuffledCardsGenerator implements CardsGenerator {
 
     private List<Card> createCards() {
         return Arrays.stream(CardNumber.values())
-                .flatMap(cardNumber ->
-                        Arrays.stream(Pattern.values()).map(pattern -> new Card(cardNumber, pattern))
-                ).collect(Collectors.toList());
+                .flatMap(this::createCardByNumber).
+                collect(Collectors.toList());
+    }
+
+    private Stream<Card> createCardByNumber(CardNumber cardNumber) {
+        return Arrays.stream(Pattern.values())
+                .map(pattern -> new Card(cardNumber, pattern));
     }
 }
