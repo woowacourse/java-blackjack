@@ -14,7 +14,6 @@ import blackjack.dto.PlayerCardsScoreDto;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -78,7 +77,7 @@ public class BlackJackController {
     }
 
     private void drawCard(final String playerName, final Deck deck, final Players players,
-                          final DrawCommand playerInput) {
+            final DrawCommand playerInput) {
         if (playerInput == DrawCommand.DRAW) {
             players.draw(playerName, deck);
         }
