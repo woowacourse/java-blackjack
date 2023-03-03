@@ -2,6 +2,14 @@ package techcourse.icf.mission;
 
 public interface SimpleList<T> {
 
+    static <T> SimpleList<T> fromArrayToList(T[] arrays) {
+        SimpleList<T> result = new SimpleArrayList<T>();
+        for (T value : arrays) {
+            result.add(value);
+        }
+        return result;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);

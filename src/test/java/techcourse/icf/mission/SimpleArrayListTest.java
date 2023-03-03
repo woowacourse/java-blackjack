@@ -21,6 +21,20 @@ class SimpleArrayListTest {
 
         Assertions.assertThat(first).isEqualTo(1);
         Assertions.assertThat(second).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("미션2")
+    void genericMethod() {
+        final String[] arrays = {"first", "second"};
+        final SimpleList<String> values = SimpleList.<String>fromArrayToList(arrays);
+        final SimpleList<String> values2 = new SimpleArrayList<>();
+        values2.add("first");
+        values2.add("second");
+        Assertions.assertThat(values.size()).isEqualTo(values2.size());
+        for (int i = 0; i < arrays.length; i++) {
+            Assertions.assertThat(values.get(i)).isEqualTo(values2.get(i));
+        }
 
     }
 }
