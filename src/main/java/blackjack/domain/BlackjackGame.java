@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.util.CardPickerGenerator;
 import blackjack.util.WinningResult;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ public class BlackjackGame {
     }
 
     public Map<Participant, WinningResult> generatePlayersResult() {
-        Map<Participant, WinningResult> playersResult = new HashMap<>();
+        Map<Participant, WinningResult> playersResult = new LinkedHashMap<>();
         Dealer dealer = extractDealer();
         List<Participant> players = extractPlayers();
         for (Participant player : players) {
