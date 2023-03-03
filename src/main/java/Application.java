@@ -13,7 +13,9 @@ public class Application {
     private static final OutputView outputView = new OutputView();
 
     public static void main(String[] args) {
-        List<Player> players = createPlayers();
+
+        List<String> playerNames = inputView.readNames();
+        List<Player> players = createPlayersWith(playerNames);
 
         Dealer dealer = new Dealer();
         Game game = new Game(players, new Deck(), dealer);
@@ -21,15 +23,10 @@ public class Application {
 
         outputView.printDealCards(players);
         outputView.printFirstPlayerCard(dealer);
-        outputView.printPlayerCards(players);
+        outputView.printPlayersCards(players);
 
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
-            if (game.canHit(player)) {
-                if (inputView.askForAnotherCard(player.getName())) {
-                    game.dealAnotherCard(i);
-                }
-            }
+        for (String playerName : playerNames) {
+            selectHitAndStand(game, playerName);
         }
 
         if (!dealer.isOverSixteen()) {
@@ -45,10 +42,25 @@ public class Application {
         System.out.println("## 최종 승패");
         outputView.printDealerResults(game.getDealerResults());
 
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
-            outputView.printResult(player.getName(), game.isWon(i));
+        for (String playerName : playerNames) {
+            outputView.printResult(playerName, game.isWon(playerName));
         }
+    }
+
+    private static void selectHitAndStand(Game game, String playerName) {
+        boolean hit = true;
+        while (hit && game.canHit(playerName)) {
+            hit = dealAnotherCardIfHit(game, playerName);
+        }
+    }
+
+    private static boolean dealAnotherCardIfHit(Game game, String playerName) {
+        if (inputView.askForAnotherCard(playerName)) {
+            game.dealAnotherCard(playerName);
+            outputView.printPlayerCards(playerName, game.getCards(playerName));
+            return true;
+        }
+        return false;
     }
 
     private static List<Player> createPlayers() {
