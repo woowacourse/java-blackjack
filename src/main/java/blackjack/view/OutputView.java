@@ -34,4 +34,12 @@ public class OutputView {
     public void printDealerHitMessage() {
         System.out.println("딜러가 16이하라 한장의 카드를 더 받았습니다.");
     }
+
+    public void printScoreResult(Map<String, List<String>> hand, String result) {
+        for(Map.Entry<String, List<String>> entry:hand.entrySet()){
+            String name = entry.getKey();
+            String cards = String.join(",", entry.getValue());
+            System.out.println(name + ": " + cards + " - 결과: " + result);
+        }
+    }
 }
