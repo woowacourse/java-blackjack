@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -91,11 +90,12 @@ public class Players {
         targetPlayer.drawCard(deck.popCard());
     }
 
-    public Optional<List<Card>> findCardsByPlayerName(final String playerName) {
+    public List<Card> findCardsByPlayerName(final String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findAny()
-                .map(Player::getCards);
+                .map(Player::getCards)
+                .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
     }
 
     public Map<String, List<Card>> findPlayerNameToCards() {

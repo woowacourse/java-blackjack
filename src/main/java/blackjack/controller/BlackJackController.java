@@ -64,8 +64,7 @@ public class BlackJackController {
         for (final String playerName : players.getPlayerNames()) {
 
             final CardsScoreDto playerCardDto = new CardsScoreDto(
-                    players.findCardsByPlayerName(playerName)
-                            .get(),
+                    players.findCardsByPlayerName(playerName),
                     players.getPlayerScoreByName(playerName)
             );
 
@@ -86,8 +85,7 @@ public class BlackJackController {
             }
 
             final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
-                    players.findCardsByPlayerName(playerName)
-                            .get());
+                    players.findCardsByPlayerName(playerName));
             outputView.printCardStatusOfPlayer(playerCardDto);
             if (playerInput == DrawCommand.STAY) {
                 break;
