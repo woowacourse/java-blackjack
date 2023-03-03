@@ -70,4 +70,15 @@ class DealerTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드 추가가 불가능하여 실행되지 않았습니다.");
     }
+
+    @Test
+    @DisplayName("Dealer가 가진 카드의 점수의 합이 블랙잭이면 true를 반환한다.")
+    void 카드_블랙잭_인지_확인() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        Dealer dealer = new Dealer(cardHand);
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
 }
