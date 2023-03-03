@@ -12,15 +12,15 @@ public class WinLoseResult {
         this.isWin = isWin;
     }
 
+    public static WinLoseResult toDto(final Player player, final boolean isWin) {
+        return new WinLoseResult(player.getName(), isWin);
+    }
+
     public String getName() {
         return name;
     }
 
     public boolean isWin() {
         return isWin;
-    }
-
-    public static WinLoseResult toDto(final Player player, final boolean isWin) {
-        return new WinLoseResult(player.getName(), isWin);
     }
 }

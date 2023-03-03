@@ -1,5 +1,7 @@
 package service;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 import domain.CardDeck;
@@ -14,12 +16,13 @@ import dto.ParticipantResult;
 import dto.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackService {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
-    public static final int BURST_NUMBER = 21;
-    public static final int DEALER_DRAW_LIMIT_SCORE = 16;
+    private static final int BURST_NUMBER = 21;
+    private static final int DEALER_DRAW_LIMIT_SCORE = 16;
 
     public List<DrawnCardsInfo> splitCards(final Dealer dealer,
                                            final Players players,
@@ -100,14 +103,14 @@ public class BlackJackService {
         int dealerScore = dealer.calculateCardScore();
         boolean isDealerBurst = dealerScore > BURST_NUMBER;
 
-        List<WinLoseResult> winLoseResults = players.stream()
-                .map(player -> calculateWinLose(dealerScore, isDealerBurst, player))
+        return players.stream()
+                .map(player -> calculateWinLose(player, dealerScore, isDealerBurst))
                 .collect(toList());
-
-        return winLoseResults;
     }
 
-    private WinLoseResult calculateWinLose(final int dealerScore, final boolean isDealerBurst, final Player player) {
+    private WinLoseResult calculateWinLose(final Player player,
+                                           final int dealerScore,
+                                           final boolean isDealerBurst) {
         int playerScore = player.calculateCardScore();
         if (playerScore > BURST_NUMBER) {
             return WinLoseResult.toDto(player, false);
@@ -128,7 +131,6 @@ public class BlackJackService {
                 .count();
         int dealerWinCount = winLoseResults.size() - dealerLoseCount;
 
-        DealerWinLoseResult dealerWinLoseResult = DealerWinLoseResult.toDto(dealer, dealerWinCount, dealerLoseCount);
-        return dealerWinLoseResult;
+        return DealerWinLoseResult.toDto(dealer, dealerWinCount, dealerLoseCount);
     }
 }
