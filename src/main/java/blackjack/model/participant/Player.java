@@ -15,7 +15,6 @@ public class Player extends Participant {
         this.currentState = currentState.draw(cardDeck);
     }
 
-    @Override
     public void changeToStand() {
         if (currentState instanceof DrawState) {
             this.currentState = ((DrawState) currentState).turnStandState();

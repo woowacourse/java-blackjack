@@ -18,8 +18,6 @@ public abstract class Participant {
 
     abstract public void play(CardDeck cardDeck);
 
-    abstract public void changeToStand();
-
     public boolean isBlackjack() {
         return currentState.isBlackjack();
     }
