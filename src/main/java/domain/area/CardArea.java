@@ -9,6 +9,7 @@ public class CardArea {
 
     private static final int SPECIAL_ACE_ADD_VALUE = 10;
     private static final int BLACK_JACK_NUMBER = 21;
+    private static final int FIRST_CARD_INDEX = 0;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -32,16 +33,16 @@ public class CardArea {
         return total;
     }
 
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(it -> it.cardValue().isAce());
+    }
+
     private int calculateSpecialAceValue(final int total) {
         if (total + SPECIAL_ACE_ADD_VALUE <= BLACK_JACK_NUMBER) {
             return total + SPECIAL_ACE_ADD_VALUE;
         }
         return total;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(it -> it.cardValue().isAce());
     }
 
     public boolean canMoreCard() {

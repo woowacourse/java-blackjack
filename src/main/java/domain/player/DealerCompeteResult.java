@@ -3,7 +3,8 @@ package domain.player;
 public enum DealerCompeteResult {
     WIN,
     LOSE,
-    DRAW;
+    DRAW,
+    ;
 
     public DealerCompeteResult reverse() {
         if (this == WIN) {
