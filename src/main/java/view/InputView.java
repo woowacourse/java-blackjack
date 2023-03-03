@@ -1,16 +1,10 @@
 package view;
 
-import domain.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-/**
- * @author 우가
- * @version 1.0.0
- * @Created by 우가 on 2023/03/01
- */
 public class InputView {
 
     Scanner scanner = new Scanner(System.in);
@@ -24,11 +18,11 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public String addOrStop(final String playerName) {
+    public boolean addOrStop(final String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
         validateYOrN(input);
-        return input;
+        return input.equals("y");
     }
 
     private void validateYOrN(final String input) {

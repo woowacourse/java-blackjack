@@ -63,6 +63,7 @@ public class BlackJackGame {
     }
 
     private void printFinalCardResult(final List<Player> players) {
+        System.out.println();
         players.forEach(player ->
                 outputView.printAllCardResult(player.getName(), player.getCards(), player.sumOfPlayerCards())
         );
@@ -97,9 +98,7 @@ public class BlackJackGame {
     }
 
     private void playerSelectAddCard(final List<Player> players, final int index) {
-        String yOrN = "";
-        while (!yOrN.equals("n")) {
-            yOrN = inputView.addOrStop(players.get(index).getName());
+        while (inputView.addOrStop(players.get(index).getName())) {
             playerDrawIfSelectToAddCard(players, index);
         }
         outputView.printCurrentPlayerResult(players.get(index).getName(), players.get(index).getCards());
@@ -114,12 +113,10 @@ public class BlackJackGame {
     }
 
     private void dealerDrawIfUnderStandard(final Dealer dealer) {
-        System.out.println();
         while (dealer.isSumUnderStandard()) {
             outputView.noticeDealerUnderStandard();
             dealerDrawCard(dealer);
         }
-        System.out.println();
     }
 
     private void dealerDrawCard(final Dealer dealer) {
