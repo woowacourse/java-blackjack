@@ -1,6 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -19,11 +23,16 @@ public class Dealer extends Participant {
         return results;
     }
 
-    public void setResults(final Result result) {
-        results.put(result, results.get(result) + 1);
+    public Card getFirstCard() {
+        List<Card> cards = new ArrayList<>(super.getCards());
+        return cards.get(0);
     }
 
     public Map<Result, Integer> getResults() {
         return this.results;
+    }
+
+    public void setResults(final Result result) {
+        results.put(result, results.get(result) + 1);
     }
 }

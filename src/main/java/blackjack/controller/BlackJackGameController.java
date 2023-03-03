@@ -20,7 +20,7 @@ public class BlackJackGameController {
         Dealer dealer = blackJackGame.getDealer();
         Players players = blackJackGame.getPlayers();
 
-        OutputView.printInitCard(players.getPlayers(), dealer.getCards());
+        OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
         for (Player player : players.getPlayers()) {
             String playerAnswer;
             do {
@@ -34,11 +34,7 @@ public class BlackJackGameController {
                     break;
                 }
             } while(player.isUnderThanBoundary(21));
-
-
-
         }
-
 
         while (dealer.isUnderThanBoundary(16)) {
             blackJackGame.handOutCardTo(cardMachine, dealer);

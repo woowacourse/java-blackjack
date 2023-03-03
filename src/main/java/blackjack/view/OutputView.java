@@ -14,13 +14,13 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
 
-    public static void printInitCard(List<Player> players, Set<Card> dealerCards) {
+    public static void printInitCard(List<Player> players, Card firstCardOfDealer) {
         String playerNames = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.println(NEW_LINE + "딜러와 " + playerNames + "에게 2장을 나누었습니다.");
 
-        printParticipantCards("딜러", dealerCards);
+        System.out.print("딜러: " + printCard(firstCardOfDealer));
         System.out.println();
         for (Player player : players) {
             printParticipantCards(player.getName(), player.getCards());
@@ -32,14 +32,14 @@ public class OutputView {
         System.out.print(playerName + "카드: " + printCards(cards));
     }
 
+    private static String printCard(Card card) {
+        return card.getRank().getValue() + card.getSuit().getValue();
+    }
+
     private static String printCards(Set<Card> cards) {
         return cards.stream()
                 .map(OutputView::printCard)
                 .collect(Collectors.joining(", "));
-    }
-
-    private static String printCard(Card card) {
-        return card.getRank().getValue() + card.getSuit().getValue();
     }
 
     public static void printDealerReceiveOneMoreCard() {
