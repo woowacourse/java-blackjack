@@ -71,4 +71,8 @@ public class Participants {
     public List<Participant> getPlayer() {
         return participants.subList(PARTICIPANT_START_ORDER, participants.size());
     }
+
+    public int size() {
+        return participants.size();
+    }
 }

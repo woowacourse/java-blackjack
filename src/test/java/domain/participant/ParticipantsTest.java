@@ -75,6 +75,20 @@ class ParticipantsTest {
         assertThat(actual).isSameAs(expected);
     }
 
+    @Test
+    @DisplayName("size()는 호출하면 모든 참가자의 수를 반환한다")
+    void size_whenCall_thenReturnParticipantSize() {
+        // given
+        List<String> playerNames = List.of("a", "b", "c", "d", "e");
+        Participants participants = Participants.create(playerNames);
+
+        // when
+        int actual = participants.size();
+
+        // then
+        assertThat(actual).isSameAs(6);
+    }
+
     private static Stream<Arguments> validPlayerNames() {
         return Stream.of(
                 Arguments.of(List.of("zeeto")),
