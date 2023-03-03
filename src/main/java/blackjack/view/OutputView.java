@@ -23,8 +23,8 @@ public class OutputView {
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public void printNameAndHand(Map<String, List<String>> playerHand) {
-        for (Map.Entry<String, List<String>> entry : playerHand.entrySet()) {
+    public void printNameAndHand(Map<String, List<String>> namesAndHands) {
+        for (Map.Entry<String, List<String>> entry : namesAndHands.entrySet()) {
             String name = entry.getKey();
             String hand = String.join(",", entry.getValue());
             System.out.println(name + ": " + hand);
@@ -39,8 +39,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printScoreResult(Map<String, List<String>> hand, int score, boolean isBlackjack) {
-        for (Map.Entry<String, List<String>> entry : hand.entrySet()) {
+    public void printScoreResult(Map<String, List<String>> namesAndHands, int score, boolean isBlackjack) {
+        for (Map.Entry<String, List<String>> entry : namesAndHands.entrySet()) {
             String name = entry.getKey();
             String cards = String.join(",", entry.getValue());
             String result = Integer.toString(score);
