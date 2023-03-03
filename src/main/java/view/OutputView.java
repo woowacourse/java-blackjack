@@ -43,6 +43,7 @@ public class OutputView {
         for (Player player : players) {
             printSingleState(player);
         }
+        System.out.print(System.lineSeparator());
     }
 
     private void printInitialDealerState(Dealer dealer) {
@@ -64,6 +65,7 @@ public class OutputView {
         for (Player player : players) {
             System.out.printf(finalFormat, formatCardState(player), player.calculateScore());
         }
+        System.out.print(System.lineSeparator());
     }
 
     private String formatCardState(final Participant participant) {
@@ -74,7 +76,7 @@ public class OutputView {
     }
 
     public void printFillDealerCards() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
     public void printFinalResultMessage() {
