@@ -19,11 +19,7 @@ public class ViewRenderer {
 
     private static final Map<CardShape, String> CARD_SHAPE_STRING_MAPPER;
     private static final Map<CardNumber, String> CARD_NUMBER_STRING_MAPPER;
-    private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER = Map.of(
-            WinningStatus.WIN, "승 ",
-            WinningStatus.TIE, "무 ",
-            WinningStatus.LOSE, "패 "
-    );
+    private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER;
     private static final String BLANK = "";
 
     static {
@@ -48,6 +44,12 @@ public class ViewRenderer {
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.JACK, "J");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.QUEEN, "Q");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.KING, "K");
+
+        WINNING_STATUS_MAPPER = Map.of(
+                WinningStatus.WIN, "승 ",
+                WinningStatus.TIE, "무 ",
+                WinningStatus.LOSE, "패 "
+        );
     }
 
     public static Map<String, List<String>> renderStatus(final Map<String, List<Card>> status) {
