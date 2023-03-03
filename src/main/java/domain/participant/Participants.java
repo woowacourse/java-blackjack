@@ -1,7 +1,6 @@
 package domain.participant;
 
-import domain.card.Cards;
-import domain.card.shuffler.RandomCardsShuffler;
+import domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,13 +13,13 @@ public class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(List<String> names, Cards cards) {
+    public Participants(List<String> names, Deck deck) {
         validateSize(names);
         this.players = names.stream()
                 .map(Name::new)
-                .map(name -> new Player(name, cards.getInitialCards()))
+                .map(name -> new Player(name, deck.getInitialDeck()))
                 .collect(Collectors.toList());
-        this.dealer = new Dealer(cards.getInitialCards());
+        this.dealer = new Dealer(deck.getInitialDeck());
     }
 
     private void validateSize(final List<String> names) {

@@ -1,9 +1,8 @@
 package domain.participant;
 
 import domain.PlayerCommand;
-import domain.WinningStatus;
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Deck;
 import java.util.List;
 
 public class Player extends Participant {
@@ -12,9 +11,9 @@ public class Player extends Participant {
         super(name, cards);
     }
 
-    public void receiveAdditionalCard(final PlayerCommand command, final Cards cards) {
+    public void receiveAdditionalCard(final PlayerCommand command, final Deck deck) {
         if(command.isHit()){
-            this.receiveCard(cards.getCard());
+            this.receiveCard(deck.getCard());
         }
     }
 }

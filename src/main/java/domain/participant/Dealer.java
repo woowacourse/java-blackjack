@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Deck;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -10,9 +10,9 @@ public class Dealer extends Participant {
         super(new Name("딜러"), cards);
     }
 
-    public void fillCards(final Cards cards) {
+    public void fillCards(final Deck deck) {
         while (calculateScore() <= 16) {
-            this.receiveCard(cards.getCard());
+            this.receiveCard(deck.getCard());
         }
     }
 

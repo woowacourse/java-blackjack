@@ -3,8 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Cards;
-import domain.card.shuffler.FixedCardsShuffler;
+import domain.card.Deck;
+import domain.card.shuffler.FixedDeckShuffler;
 import domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,9 @@ class DealerTest {
         ArrayList<Card> initialCards = new ArrayList<>(List.of(new Card("3", "스페이드"), new Card("K", "스페이드")));
         Dealer dealer = new Dealer(initialCards);
 
-        Cards cards = new Cards(new FixedCardsShuffler());
+        Deck deck = new Deck(new FixedDeckShuffler());
 
-        dealer.fillCards(cards);
+        dealer.fillCards(deck);
         assertThat(dealer.calculateScore()).isGreaterThan(16)
                 .isEqualTo(23);
     }
