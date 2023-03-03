@@ -26,4 +26,12 @@ public class BlackjackGame {
             user.addCard(deck.draw());
         }
     }
+
+    public Dealer getDealer() {
+        return this.dealer;
+    }
+
+    public Players getPlayers() {
+        return this.players;
+    }
 }

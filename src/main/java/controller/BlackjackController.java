@@ -3,6 +3,7 @@ package controller;
 import domain.BlackjackGame;
 import domain.Deck;
 import ui.InputView;
+import ui.OutputView;
 
 public class BlackjackController {
     private final BlackjackGame blackjackGame;
@@ -15,5 +16,6 @@ public class BlackjackController {
 
     public void run() {
         this.blackjackGame.initGame(deck);
+        OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 }
