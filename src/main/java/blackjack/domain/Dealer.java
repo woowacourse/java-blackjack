@@ -58,6 +58,6 @@ public class Dealer implements Player {
         final List<Card> cardsData = this.cards.getCards();
         final Card firstCard = cardsData.get(0);
         returnCard.add(firstCard);
-        return cardsData;
+        return returnCard;
     }
 }

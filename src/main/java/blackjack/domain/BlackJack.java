@@ -41,13 +41,12 @@ public class BlackJack {
         return dealer.openCards();
     }
 
-//    public List<Card> getInitialDealerCard() {
-////        return dealer.getFirstCard();
-
-//    }
-
     public List<Card> getUserCard(Name user) {
         return users.getCardsOf(user);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public int finalizeDealer() {
@@ -72,5 +71,13 @@ public class BlackJack {
 
     public GameResult getGameResult() {
         return new GameResult(dealer, users);
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public boolean isBusted(final Name name) {
+        return users.isBusted(name);
     }
 }

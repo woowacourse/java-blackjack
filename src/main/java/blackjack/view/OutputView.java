@@ -9,22 +9,24 @@ public class OutputView {
 
     private static final String PRINT_FORMAT = "%s: %s";
     private static final String DELIMITER = ", ";
+    private static final String ERROR_HEAD = "[ERROR] ";
 
     public void printInitialStatus(Dealer dealer, Users users) {
         System.out.printf("%s와 %s에게 2장을 나누었습니다.",
                 getNameString(dealer.getName()),
                 makeUsersNameList(users));
-        printCardsof(dealer.getName(), dealer.getFirstCard());
+        System.out.print(System.lineSeparator());
+        printCardsOf(dealer.getName(), dealer.getFirstCard());
         printUsersCards(users);
     }
 
     private void printUsersCards(final Users users) {
         for (User user : users.getUsers()) {
-            printCardsof(user.getName(), user.openCards());
+            printCardsOf(user.getName(), user.openCards());
         }
     }
 
-    public void printCardsof(final Name name, final List<Card> cards) {
+    public void printCardsOf(final Name name, final List<Card> cards) {
         System.out.printf(PRINT_FORMAT,
                 getNameString(name),
                 getCardStringOf(cards));
@@ -86,4 +88,16 @@ public class OutputView {
         return name.getValue();
     }
 
+    public void printException(final Exception exception) {
+        System.out.println(ERROR_HEAD + exception.getMessage());
+    }
+
+    public void printAdditionalCardCountOfDealer(final int cardCount) {
+        if (cardCount == 0) {
+            System.out.println("딜러는 17 이상이라 카드를 받지 못했습니다.");
+        }
+        if (cardCount > 0) {
+            System.out.printf("딜러는 16 이하라 %d장의 카드를 더 받았습니다.", cardCount);
+        }
+    }
 }

@@ -72,4 +72,8 @@ public class Users {
     public List<User> getUsers() {
         return List.copyOf(users);
     }
+
+    public boolean isBusted(final Name name) {
+        return finUserByName(name).isBusted();
+    }
 }

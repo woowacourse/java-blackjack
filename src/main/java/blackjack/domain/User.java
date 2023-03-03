@@ -61,4 +61,8 @@ public class User implements Player {
     public Name getName() {
         return name;
     }
+
+    public boolean isBusted() {
+        return cards.isBust();
+    }
 }
