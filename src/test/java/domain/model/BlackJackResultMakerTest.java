@@ -17,28 +17,43 @@ class BlackJackResultMakerTest {
     private final BlackJackResultMaker blackJackResultMaker = new BlackJackResultMaker();
 
     @Test
-    @DisplayName("승패 결과 만들기 테스트(딜러 10패, 플레이어 모두 승)")
-    public void testMakeResult() {
+    @DisplayName("플레이어들 승패 결과 만들기 테스트(플레이어 모두 승)")
+    public void testMakeParticipantsResult() {
         //given
         Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
         Dealer dealer = new Dealer(dealerCards);
         Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
-        List<Player> players = IntStream.range(0, 10)
+        List<Participant> players = IntStream.range(0, 10)
             .mapToObj(i -> new Player(playerCards, "test"))
             .collect(Collectors.toList());
 
         //when
-        Map<Participant, Result> results = blackJackResultMaker.makeResult(dealer, players);
+        Map<Participant, Result> results = blackJackResultMaker.makeParticipantsResult(dealer, players);
 
         //then
-        for (Participant participant : results.keySet()) {
-            if (participant instanceof Dealer) {
-                assertThat(results.get(participant).getDefeat()).isEqualTo(10);
-                assertThat(results.get(participant).getVictory()).isEqualTo(0);
-                continue;
-            }
-            assertThat(results.get(participant).getVictory()).isEqualTo(1);
-            assertThat(results.get(participant).getDefeat()).isEqualTo(0);
+        for (Participant player : results.keySet()) {
+            assertThat(results.get(player).getVictory()).isEqualTo(1);
+            assertThat(results.get(player).getDefeat()).isEqualTo(0);
         }
+    }
+
+    @Test
+    @DisplayName("딜러 승패 결과 만들기 테스트(딜러 10패, 플레이어 모두 승)")
+    public void testMakeDealerResult() {
+        //given
+        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
+        Dealer dealer = new Dealer(dealerCards);
+        Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
+        List<Participant> players = IntStream.range(0, 10)
+            .mapToObj(i -> new Player(playerCards, "test"))
+            .collect(Collectors.toList());
+
+        //when
+        Result result = blackJackResultMaker.makeDealerResult(dealer, players);
+
+        //then
+        assertThat(result.getDefeat()).isEqualTo(10);
+        assertThat(result.getVictory()).isEqualTo(0);
+        assertThat(result.getDraw()).isEqualTo(0);
     }
 }
