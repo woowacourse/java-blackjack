@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.Deck;
+import blackjack.domain.RandomDeck;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -14,17 +14,17 @@ public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
     private BlackJack blackJack;
-    private Deck deck;
+    private RandomDeck randomDeck;
 
     public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        deck = new Deck();
+        randomDeck = new RandomDeck();
     }
 
     public void run() {
         final List<Name> namesByView = getNamesByView();
-        this.blackJack = new BlackJack(namesByView, deck);
+        this.blackJack = new BlackJack(namesByView, randomDeck);
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
         divideCardTo(namesByView);
         finalizeDealerCardStatus();
@@ -33,7 +33,7 @@ public class BlackJackController {
     }
 
     private void finalizeDealerCardStatus() {
-        final int cardCount = blackJack.finalizeDealer(deck);
+        final int cardCount = blackJack.finalizeDealer(randomDeck);
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 
@@ -46,7 +46,7 @@ public class BlackJackController {
     private void checkCardWanted(final Name name) {
         boolean wantCard = getCardWantFromConsole(name);
         while (wantCard) {
-            blackJack.giveCard(name, deck);
+            blackJack.giveCard(name, randomDeck);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
             if (blackJack.checkBustBy(name)) {
                 break;

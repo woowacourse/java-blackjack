@@ -11,26 +11,26 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class DeckTest {
-    private Deck deck;
+public class RandomDeckTest {
+    private RandomDeck randomDeck;
 
     @BeforeEach
     void setting(){
-        deck = new Deck();
+        randomDeck = new RandomDeck();
     }
 
     @Test
     @DisplayName("덱이 생성된다.")
     void createDeck() {
-        final Deck deck = new Deck();
-        assertThat(deck.drawCard()).isInstanceOf(Card.class);
+        final RandomDeck randomDeck = new RandomDeck();
+        assertThat(randomDeck.drawCard()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("카드를 가져오면 해당 덱에서는 카드가 한장 사라진다.")
     void drawCardTest() {
-        Card card = deck.drawCard();
-        assertThat(deck).extracting("cards", InstanceOfAssertFactories.collection(List.class))
+        Card card = randomDeck.drawCard();
+        assertThat(randomDeck).extracting("cards", InstanceOfAssertFactories.collection(List.class))
                 .size()
                 .isEqualTo(51);
 
@@ -41,7 +41,7 @@ public class DeckTest {
     void returnDifferentCardTest() {
         final HashSet<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(deck.drawCard());
+            cards.add(randomDeck.drawCard());
         }
         assertThat(cards)
                 .size()
@@ -52,9 +52,9 @@ public class DeckTest {
     @DisplayName("52개 이상을 덱에서 뽑으면 예외가 발생한다.")
     void drawExceptionTest() {
         for (int i = 0; i < 52; i++) {
-            deck.drawCard();
+            randomDeck.drawCard();
         }
-        assertThatThrownBy(() -> deck.drawCard())
+        assertThatThrownBy(() -> randomDeck.drawCard())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드 업슝");
     }

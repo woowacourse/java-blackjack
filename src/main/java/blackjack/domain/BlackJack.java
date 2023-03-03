@@ -29,10 +29,10 @@ public class BlackJack {
         return new Users(users);
     }
 
-    private List<Card> getInitialCards(final Deck deck) {
+    private List<Card> getInitialCards(final Deck randomDeck) {
         List<Card> cards = new ArrayList<>();
-        cards.add(deck.drawCard());
-        cards.add(deck.drawCard());
+        cards.add(randomDeck.drawCard());
+        cards.add(randomDeck.drawCard());
         return cards;
     }
 
