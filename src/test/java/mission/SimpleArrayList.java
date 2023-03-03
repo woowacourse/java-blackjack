@@ -2,20 +2,20 @@ package mission;
 
 import java.util.Arrays;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<E> implements SimpleList<E> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private int size;
     private int capacity;
-    private String[] elements;
+    private Object[] elements;
 
     public SimpleArrayList() {
         capacity = DEFAULT_CAPACITY;
-        elements = new String[DEFAULT_CAPACITY];
+        elements = new Object[DEFAULT_CAPACITY];
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(E value) {
         adjustCapacityIfNecessary();
         this.elements[size++] = value;
 
@@ -23,7 +23,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         validateIndex(index);
         size++;
         adjustCapacityIfNecessary();
@@ -47,12 +47,12 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public E set(int index, E value) {
         validateIndex(index);
-        String preElement = elements[index];
+        Object preElement = elements[index];
         this.elements[index] = value;
 
-        return preElement;
+        return (E) preElement;
     }
 
     private void validateIndex(int index) {
@@ -62,14 +62,14 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String get(int index) {
+    public E get(int index) {
         validateIndex(index);
 
-        return elements[index];
+        return (E) elements[index];
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(E value) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(value)) {
                 return true;
@@ -80,7 +80,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(value)) {
                 return i;
@@ -104,7 +104,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(E value) {
         int index = indexOf(value);
 
         if (index == -1) {
@@ -120,16 +120,16 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public E remove(int index) {
         validateIndex(index);
-        String removedElement = elements[index];
+        Object removedElement = elements[index];
 
         for (int i = index; i < size; i++) {
             elements[i] = elements[i + 1];
         }
         elements[size--] = null;
 
-        return removedElement;
+        return (E) removedElement;
     }
 
     @Override
