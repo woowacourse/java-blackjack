@@ -67,6 +67,22 @@ class CardPoolTest {
     }
 
     @Test
+    @DisplayName("에이스카드가 먼저 뽑혀도 나머지 카드의 합이 10보다 크면 1로 결정된다")
+    void decideAceSumOverWhenFirstDraw() {
+        List<Card> cards = List.of(
+                new Card(CardType.CLOVER, CardNumber.ACE),
+                new Card(CardType.CLOVER, CardNumber.FIVE),
+                new Card(CardType.HEART, CardNumber.EIGHT)
+
+        );
+
+        CardPool cardPool = new CardPool(cards);
+
+        assertThat(cardPool.sumCardNumbers())
+                .isEqualTo(14);
+    }
+
+    @Test
     @DisplayName("에이스카드는 나머지 카드의 합이 10보다 작으면 11로 결정된다")
     void decideAceSumUnder() {
         List<Card> cards = List.of(
