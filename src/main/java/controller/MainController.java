@@ -1,9 +1,9 @@
 package controller;
 
 
-import domain.game.BlackJackGame;
 import domain.deck.Card;
 import domain.deck.Deck;
+import domain.game.BlackJackGame;
 import domain.game.Outcome;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +37,7 @@ public class MainController {
         Deck deck = new Deck();
         deck.shuffleDeck();
         BlackJackGame blackJackGame = new BlackJackGame(deck, names);
+        OutputView.printEmptyLine();
         OutputView.printDistributeCard(names);
         return blackJackGame;
     }
@@ -95,7 +96,7 @@ public class MainController {
 
     private void outputGameResult() {
         final Map<String, Outcome> result = blackJackGame.decidePlayersOutcome();
+        OutputView.printEmptyLine();
         OutputView.printGameResult(result);
-
     }
 }

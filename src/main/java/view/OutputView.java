@@ -12,19 +12,21 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printDistributeCard(List<String> names) {
+    public static void printDistributeCard(final List<String> names) {
         final String joinedName = String.join(", ", names);
-        System.out.println(System.lineSeparator() + "딜러와 " + joinedName + "에게 2장을 나누었습니다.");
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", joinedName);
     }
 
-    public static void printDealerCard(Card card) {
-        System.out.println("딜러: " + card.getRank().getRank() + card.getSuit().getSuit());
+    public static void printDealerCard(final Card card) {
+        final String rank = card.getRank().getRank();
+        final String suit = card.getSuit().getSuit();
+        System.out.printf("딜러: %s%s%n", rank, suit);
     }
 
-    public static void printPlayerCard(String playerName, List<Card> cards) {
+    public static void printPlayerCard(final String playerName, final List<Card> cards) {
         String toStringCards = toStringCards(cards);
 
-        System.out.println(playerName + ": " + toStringCards);
+        System.out.printf("%s: %s%n", playerName, toStringCards);
     }
 
     private static String toStringCards(final List<Card> cards) {
@@ -36,24 +38,24 @@ public class OutputView {
         return stringJoiner.toString();
     }
 
-    public static void printOneMoreCard(String playerName) {
-        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static void printOneMoreCard(final String playerName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
     }
 
     public static void printDealerDrawCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(String name, List<Card> cards, int score) {
-        System.out.println(name + " 카드: " + toStringCards(cards) + " - 결과: " + score);
+    public static void printCardResult(final String name, final List<Card> cards, final int score) {
+        System.out.printf("%s 카드: %s - 결과: %s%n", name, toStringCards(cards), score);
     }
 
     public static void printEmptyLine() {
         System.out.println();
     }
 
-    public static void printGameResult(Map<String, Outcome> result) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
+    public static void printGameResult(final Map<String, Outcome> result) {
+        System.out.println("## 최종 승패");
         printDealerResult(result);
         printPlayerResult(result);
     }
@@ -84,7 +86,7 @@ public class OutputView {
 
     private static void printPlayerResult(final Map<String, Outcome> result) {
         result.keySet().forEach(name ->
-            printEachPlayerResult(result, name)
+                printEachPlayerResult(result, name)
         );
     }
 
@@ -100,7 +102,7 @@ public class OutputView {
         }
     }
 
-    private static void printGameEachResult(String playerName, int win, int draw, int lose) {
-        System.out.println(playerName + ": " + win + "승 " + draw + "무 " + lose + "패");
+    private static void printGameEachResult(final String playerName, final int win, final int draw, final int lose) {
+        System.out.printf("%s: %s승 %s무 %s패%n", playerName, win, draw, lose);
     }
 }

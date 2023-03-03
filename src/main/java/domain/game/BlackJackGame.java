@@ -82,20 +82,14 @@ public class BlackJackGame {
         if (dealerScore > BLACK_JACK_NUMBER && playerScore <= BLACK_JACK_NUMBER) {
             return true;
         }
-        if (playerScore <= BLACK_JACK_NUMBER && playerScore > dealerScore) {
-            return true;
-        }
-        return false;
+        return playerScore <= BLACK_JACK_NUMBER && playerScore > dealerScore;
     }
 
     private boolean isPlayerDraw(final int dealerScore, final int playerScore) {
         if (dealerScore > BLACK_JACK_NUMBER && playerScore > BLACK_JACK_NUMBER) {
             return true;
         }
-        if (dealerScore == playerScore) {
-            return true;
-        }
-        return false;
+        return dealerScore == playerScore;
     }
 
     public List<Card> getCards(final String playerName) {
