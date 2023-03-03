@@ -4,7 +4,7 @@ import balckjack.strategy.CardPicker;
 import java.util.ArrayList;
 import java.util.List;
 
-class CardPool {
+public class CardPool {
 
     private static final List<Card> cards = new ArrayList<>();
 

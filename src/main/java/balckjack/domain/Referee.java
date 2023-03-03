@@ -1,6 +1,10 @@
 package balckjack.domain;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Referee {
@@ -9,6 +13,13 @@ public class Referee {
     private static final int MAX_ACE_VALUE = 11;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BURST_CODE = -1;
+
+    private Map<String, Integer> scoreResult;
+    private Map<String, Result> result;
+
+    public Referee() {
+        //scoreResult=Hah
+    }
 
     /**
      * 카드 덱의 점수를 계산하는 메서드
@@ -77,7 +88,14 @@ public class Referee {
             .collect(Collectors.toList());
     }
 
+    public Map<String, Long> countDealerResult(List<Result> results) {
+        return results.stream().collect(groupingBy(Result::getResult, counting()));
+    }
+
     private Result compareScore(int dealerScore, int playerScore) {
+        if (playerScore == BURST_CODE) {
+            return Result.LOSE;
+        }
         if (playerScore > dealerScore) {
             return Result.WIN;
         }

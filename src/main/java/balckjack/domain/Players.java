@@ -1,5 +1,6 @@
 package balckjack.domain;
 
+import balckjack.strategy.CardPicker;
 import balckjack.util.StringUtil;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -41,6 +42,10 @@ public class Players {
             .map(Player::getName)
             .map(Name::getValue)
             .collect(Collectors.toList());
+    }
+
+    public void initHit(CardPicker cardPicker) {
+        players.forEach(player -> player.initHit(cardPicker));
     }
 
     public List<Player> getPlayers() {

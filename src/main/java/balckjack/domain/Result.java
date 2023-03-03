@@ -1,9 +1,9 @@
 package balckjack.domain;
 
 public enum Result {
-    WIN("승"),
+    LOSE("패"),
     DRAW("무"),
-    LOSE("패");
+    WIN("승");
 
     private final String result;
 

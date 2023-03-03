@@ -31,12 +31,16 @@ public class OutputView {
         System.out.println(player.getName().getValue() + "카드: " + cards);
     }
 
-    public static void printParticipantCardDeck(Player player, int score) {
+    public static void printParticipantCardDeck(Player player, int rawScore) {
         final String cards = String.join(", ", player.getCardDeck().getCardsInfo());
+        String score = String.valueOf(rawScore);
+        if (score.equals("-1")) {
+            score = "Burst";
+        }
         System.out.println(player.getName().getValue() + "카드: " + cards + " - 결과: " + score);
     }
 
-    public static void printDealerPick() {
+    public static void printDealerPickMessage() {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -45,9 +49,15 @@ public class OutputView {
         System.out.println();
         final List<String> playerNames = players.getPlayerNames();
         final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();
+
+        String score = String.valueOf(referee.calculateDeckScore(dealer.getCardDeck()));
+        if (score.equals("-1")) {
+            score = "Burst";
+        }
+
         System.out.println(
-            String.format("딜러 카드: %s - 결과: %d", dealerCards.get(0), referee.calculateDeckScore(
-                dealer.getCardDeck())));
+            String.format("딜러 카드: %s - 결과: %s", String.join(", ", dealerCards),
+                score));
 
         for (int index = 0; index < playerNames.size(); index++) {
             printParticipantCardDeck(players.getPlayers().get(index),
@@ -64,8 +74,8 @@ public class OutputView {
         System.out.print("딜러: ");
         for (Result result : Result.values()) {
             if (dealerResult.containsKey(result.getResult())) {
-                Long a = dealerResult.get(result.getResult());
-                System.out.println(a + result.getResult() + " ");
+                Long count = dealerResult.get(result.getResult());
+                System.out.print(count + reverse(result) + " ");
             }
         }
         System.out.println();
@@ -76,4 +86,21 @@ public class OutputView {
 
     }
 
+    private static String reverse(Result result) {
+        if (result == Result.WIN) {
+            return Result.LOSE.getResult();
+        }
+        if (result == Result.LOSE) {
+            return Result.WIN.getResult();
+        }
+        return result.getResult();
+    }
+
+    public static void printBurstMessage() {
+        System.out.println(">>>Burst<<< 너~무 아쉬워요:( ");
+    }
+
+    public static void printErrorMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
