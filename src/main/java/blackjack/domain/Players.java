@@ -1,12 +1,16 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 public class Players {
 
@@ -69,6 +73,18 @@ public class Players {
         while (dealer.isDrawable()) {
             dealer.draw(deck);
         }
+    }
+
+    public Map<Player, Result> play() {
+        final Dealer dealer = getDealer();
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(toMap(
+                        Function.identity(),
+                        player -> player.play(dealer.getHand()),
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
     }
 
     public Dealer getDealer() {

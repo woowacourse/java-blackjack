@@ -111,5 +111,14 @@ public class DealerTest {
 
         assertThat(dealer.getCardCount()).isEqualTo(1);
     }
+
+    @Test
+    void 핸드를_반환한다() {
+        final Dealer dealer = Dealer.create();
+
+        final Hand hand = dealer.getHand();
+
+        assertThat(hand.calculateScore()).isEqualTo(0);
+    }
 }
 

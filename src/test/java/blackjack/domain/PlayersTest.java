@@ -5,7 +5,11 @@ import static blackjack.domain.Rank.ACE;
 import static blackjack.domain.Rank.EIGHT;
 import static blackjack.domain.Rank.JACK;
 import static blackjack.domain.Rank.KING;
+import static blackjack.domain.Rank.NINE;
+import static blackjack.domain.Rank.SEVEN;
 import static blackjack.domain.Rank.TWO;
+import static blackjack.domain.Result.DRAW;
+import static blackjack.domain.Result.WIN;
 import static blackjack.domain.Shape.CLOVER;
 import static blackjack.domain.Shape.DIAMOND;
 import static blackjack.domain.Shape.HEART;
@@ -15,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.util.FixedDeck;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -112,5 +117,25 @@ public class PlayersTest {
         players.drawByDealer(deck);
 
         assertThat(players.getDealer().calculateScore()).isEqualTo(19);
+    }
+
+    @Test
+    void 게임_결과를_반반환다() {
+        final List<String> names = List.of("후추", "허브");
+        final Players players = from(names);
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, DIAMOND),
+                new Card(JACK, CLOVER),
+                new Card(NINE, CLOVER),
+                new Card(NINE, SPADE),
+                new Card(NINE, HEART),
+                new Card(SEVEN, SPADE)
+        ));
+        players.initialDraw(deck);
+        players.drawByDealer(deck);
+        
+        Map<Player, Result> result = players.play();
+
+        assertThat(result.values()).containsExactly(WIN, DRAW);
     }
 }

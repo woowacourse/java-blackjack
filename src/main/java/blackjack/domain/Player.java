@@ -15,6 +15,8 @@ public interface Player {
 
     void stay();
 
+    Result play(Hand hand);
+
     String getName();
 
     List<String> getCardLetters();

@@ -48,6 +48,15 @@ public class Dealer implements Player {
     }
 
     @Override
+    public Result play(Hand hand) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }

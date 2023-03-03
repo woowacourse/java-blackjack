@@ -25,12 +25,12 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    private void printPlayerMessage(final Player player, final String message) {
-        System.out.println(format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message));
-    }
-
     private String generateNames(final Players players) {
         return join(DELIMITER, players.getNames());
+    }
+
+    private void printPlayerMessage(final Player player, final String message) {
+        System.out.println(format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message));
     }
 
     private String generateCardMessage(final Player player) {

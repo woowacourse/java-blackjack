@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.Rank.ACE;
 import static blackjack.domain.Rank.FOUR;
 import static blackjack.domain.Rank.JACK;
+import static blackjack.domain.Rank.KING;
 import static blackjack.domain.Rank.SEVEN;
 import static blackjack.domain.Rank.SIX;
 import static blackjack.domain.Rank.THREE;
@@ -99,5 +100,21 @@ public class GamblerTest {
         gambler.stay();
 
         assertThat(gambler.isDrawable()).isFalse();
+    }
+
+    @Test
+    void 게임의_결과를_반환한다() {
+        final Gambler gambler = new Gambler("허브");
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, Shape.DIAMOND),
+                new Card(KING, Shape.DIAMOND)
+        ));
+        gambler.draw(deck);
+        final Dealer dealer = Dealer.create();
+        dealer.draw(deck);
+
+        final Result result = gambler.play(dealer.getHand());
+
+        assertThat(result).isEqualTo(Result.WIN);
     }
 }
