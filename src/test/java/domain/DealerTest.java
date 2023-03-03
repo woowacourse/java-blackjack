@@ -64,27 +64,4 @@ class DealerTest {
 
         assertThat(dealer.canHit()).isEqualTo(isOverSixteen);
     }
-
-    @Test
-    @DisplayName("점수가 16 이하이면 카드 1장을 뽑는다")
-    void test_draw_16() {
-        var dealer = new Dealer(List.of(
-                new Card(HEART, "10"),
-                new Card(HEART, "6")));
-        dealer.drawCardIfNecessary(new Deck());
-
-        assertThat(dealer.getScore()).isGreaterThan(16);
-    }
-
-    @Test
-    @DisplayName("점수가 16을 초과하면 카드를 뽑지 않는다")
-    void test_not_draw_16() {
-        var dealer = new Dealer(List.of(
-                new Card(HEART, "10"),
-                new Card(HEART, "7")));
-        dealer.drawCardIfNecessary(new Deck());
-
-        assertThat(dealer.getScore()).isEqualTo(17);
-    }
-
 }

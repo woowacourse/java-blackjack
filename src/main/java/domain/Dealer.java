@@ -3,7 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Dealer extends Player {
 
     public Dealer() {
@@ -17,14 +16,6 @@ public class Dealer extends Player {
     @Override
     public boolean canHit() {
         return getScore() > 16;
-    }
-
-    public boolean drawCardIfNecessary(Deck deck) {
-        if (!canHit()) {
-            addCard(deck.draw());
-            return true;
-        }
-        return false;
     }
 }
 
