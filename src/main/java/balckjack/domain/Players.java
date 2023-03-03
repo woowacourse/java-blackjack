@@ -35,4 +35,8 @@ public class Players {
     private boolean isFormat(String names) {
         return !NAMES_FORMAT.matcher(names).matches();
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

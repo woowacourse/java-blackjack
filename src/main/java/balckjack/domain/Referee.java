@@ -68,5 +68,24 @@ public class Referee {
         return (BLACKJACK_SCORE - sum) - restAceCount * MIN_ACE_VALUE >= ACE_VALUE_GAP;
     }
 
+    public List<Result> judge(Participant dealer, Players players) {
+        int dealerScore = calculateDeckScore(dealer.getCardDeck());
+        List<Integer> playerScores = players.getPlayers().stream()
+            .map((player) -> calculateDeckScore(player.getCardDeck())).collect(
+                Collectors.toList());
+        return playerScores.stream().map((score) -> compareScore(dealerScore, score))
+            .collect(Collectors.toList());
+    }
+
+    private Result compareScore(int dealerScore, int playerScore) {
+        if (playerScore > dealerScore) {
+            return Result.WIN;
+        }
+        if (playerScore == dealerScore) {
+            return Result.DRAW;
+        }
+        return Result.LOSE;
+    }
+
 
 }
