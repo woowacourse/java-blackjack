@@ -31,7 +31,7 @@ public class BlackJackController {
 
     private BlackJack makeBlackJackBy(final List<Name> namesByView) {
         final BlackJack blackJack = new BlackJack(namesByView, randomDeck);
-        outputView.printInitialStatus(blackJack.getDealerFirstCard(), blackJack.getUsers());
+        outputView.printInitialStatus(blackJack.getInitialStatus());
         return blackJack;
     }
 
@@ -54,7 +54,7 @@ public class BlackJackController {
     private void drawCardUntilWanted(BlackJack blackJack, final Name name) {
         while (getCardWantFromConsole(name)) {
             blackJack.giveCard(name, randomDeck);
-            outputView.printCardsOf(name, blackJack.getUserCard(name));
+            outputView.printCardsOf(name.getValue(), blackJack.getUserCard(name));
             if (blackJack.isBust(name)) {
                 break;
             }

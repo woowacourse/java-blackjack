@@ -7,12 +7,14 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
 import blackjack.domain.card.Shape;
 import blackjack.domain.dto.GameResult;
+import blackjack.domain.dto.InitialStatus;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -21,32 +23,40 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String ERROR_HEAD = "[ERROR] ";
 
-    public void printInitialStatus(Card card, Users users) {
+    public void printInitialStatus(InitialStatus initialStatus) {
         System.out.print(System.lineSeparator());
-        final Name DealerName = new Name(Dealer.DEALER_NAME);
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.",
-                getNameString(DealerName),
-                makeUsersNameList(users));
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.",
+                makeUsersNameList(initialStatus.getUsersData().keySet()));
         System.out.print(System.lineSeparator());
-        printCardsOf(DealerName, List.of(card));
-        printUsersCards(users);
+        printDealerFirstCard(initialStatus.getDealerCard());
+        printUsersCards(initialStatus.getUsersData());
     }
 
-    private void printUsersCards(final Users users) {
-        for (User user : users.getUsers()) {
-            printCardsOf(user.getName(), user.openCards());
+    private String makeUsersNameList(Set<String> userNames) {
+        return userNames
+                .stream()
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private void printDealerFirstCard(Card card) {
+        System.out.println(String.format("딜러: %s", makeCardString(card)));
+    }
+
+    private void printUsersCards(final Map<String, List<Card>> usersData) {
+        for (String userName : usersData.keySet()) {
+            printCardsOf(userName, usersData.get(userName));
         }
         System.out.print(System.lineSeparator());
     }
 
-    public void printCardsOf(final Name name, final List<Card> cards) {
+    public void printCardsOf(final String name, final List<Card> cards) {
         System.out.printf(getPlayerCards(name, cards));
         System.out.print(System.lineSeparator());
     }
 
-    private String getPlayerCards(final Name name, final List<Card> cards) {
+    private String getPlayerCards(final String name, final List<Card> cards) {
         return String.format(PRINT_FORMAT,
-                getNameString(name),
+                name,
                 getCardStringOf(cards));
     }
 
@@ -92,17 +102,6 @@ public class OutputView {
             return "스페이드";
         }
         throw new AssertionError();
-    }
-
-    private String makeUsersNameList(Users users) {
-        return users.getUsers()
-                .stream()
-                .map(user -> user.getName().getValue())
-                .collect(Collectors.joining(DELIMITER));
-    }
-
-    private String getNameString(final Name name) {
-        return name.getValue();
     }
 
     public void printAdditionalCardCountOfDealer(final int cardCount) {
