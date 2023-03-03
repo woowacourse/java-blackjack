@@ -2,8 +2,8 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardNumber;
-import domain.user.CardPool;
 import domain.card.CardType;
+import domain.user.CardPool;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class CardPoolTest {
                 new Card(CardType.CLOVER, CardNumber.EIGHT),
                 new Card(CardType.DIAMOND, CardNumber.ACE),
                 new Card(CardType.HEART, CardNumber.KING)
-                );
+        );
 
         CardPool cardPool = new CardPool(cards);
 

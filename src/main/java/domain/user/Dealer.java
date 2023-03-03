@@ -1,6 +1,6 @@
 package domain.user;
 
-public class Dealer extends Player{
+public class Dealer extends Player {
 
     private static final int DEALER_THRESHOLD = 16;
 

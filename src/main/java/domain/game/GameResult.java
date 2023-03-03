@@ -3,7 +3,10 @@ package domain.game;
 import domain.user.Dealer;
 import domain.user.Player;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 public enum GameResult {
@@ -45,7 +48,7 @@ public enum GameResult {
     }
 
     private static int calculateGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
-        return (int)gameResults.stream()
+        return (int) gameResults.stream()
                 .filter(gameResult -> gameResult == gameResultType)
                 .count();
 
