@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.ResultReferee;
-import blackjack.domain.game.Score;
 import blackjack.domain.game.ScoreBoard;
 import blackjack.domain.game.ScoreReferee;
 import blackjack.domain.user.Dealer;
@@ -46,9 +46,7 @@ public class BlackjackController {
     }
 
     private void processGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        players.getPlayers().forEach((player -> {
-            processPlayerDraw(blackjackGame, player);
-        }));
+        players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
 
         processDealerDraw(dealer, blackjackGame);
     }
@@ -76,8 +74,8 @@ public class BlackjackController {
 
     private void printResult(final Players players, final ScoreBoard scoreBoard) {
         ResultReferee referee = new ResultReferee(scoreBoard);
-        final Map<UserName, Score> playerScore = getPlayerScore(players, referee);
-        final Map<Score, Integer> dealerScore = referee.getDealerScore();
+        final Map<UserName, GameResult> playerScore = getPlayerScore(players, referee);
+        final Map<GameResult, Integer> dealerScore = referee.getDealerScore();
         outputView.printGameResult(dealerScore, playerScore);
     }
 
@@ -92,11 +90,11 @@ public class BlackjackController {
                 .collect(Collectors.toList()));
     }
 
-    public Map<UserName, Score> getPlayerScore(final Players players, final ResultReferee referee) {
-        Map<UserName, Score> result = new HashMap<>();
+    public Map<UserName, GameResult> getPlayerScore(final Players players, final ResultReferee referee) {
+        Map<UserName, GameResult> result = new HashMap<>();
 
         players.getPlayers().forEach((player) -> {
-            final Score score = referee.askResultByUserName(player.getName());
+            final GameResult score = referee.askResultByUserName(player.getName());
             result.put(player.getName(), score);
         });
 

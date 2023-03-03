@@ -9,7 +9,7 @@ import java.util.Map;
 public class ResultReferee {
 
     private final ScoreBoard scoreBoard;
-    private final Map<Score, Integer> dealerScoreBoard = new EnumMap<>(Score.class);
+    private final Map<GameResult, Integer> dealerScoreBoard = new EnumMap<>(GameResult.class);
 
     public ResultReferee(final ScoreBoard scoreBoard) {
         this.scoreBoard = scoreBoard;
@@ -17,36 +17,36 @@ public class ResultReferee {
     }
 
     private void initDealerScore() {
-        Arrays.stream(Score.values())
+        Arrays.stream(GameResult.values())
                 .forEach(score -> dealerScoreBoard.put(score, 0));
     }
 
-    public Score askResultByUserName(final UserName userName) {
+    public GameResult askResultByUserName(final UserName userName) {
         final int playerScore = scoreBoard.get(userName);
         final int dealerScore = scoreBoard.get(new DealerName());
 
         return declareScore(playerScore, dealerScore);
     }
 
-    private Score declareScore(final int playerScore, final int dealerScore) {
+    private GameResult declareScore(final int playerScore, final int dealerScore) {
         if (playerScore > dealerScore) {
-            updateDealerScoreBoard(Score.LOSE);
-            return Score.WIN;
+            updateDealerScoreBoard(GameResult.LOSE);
+            return GameResult.WIN;
         }
 
         if (playerScore == dealerScore) {
-            updateDealerScoreBoard(Score.DRAW);
-            return Score.DRAW;
+            updateDealerScoreBoard(GameResult.DRAW);
+            return GameResult.DRAW;
         }
-        updateDealerScoreBoard(Score.WIN);
-        return Score.LOSE;
+        updateDealerScoreBoard(GameResult.WIN);
+        return GameResult.LOSE;
     }
 
-    private void updateDealerScoreBoard(final Score score) {
+    private void updateDealerScoreBoard(final GameResult score) {
         dealerScoreBoard.put(score, dealerScoreBoard.get(score) + 1);
     }
 
-    public Map<Score, Integer> getDealerScore() {
+    public Map<GameResult, Integer> getDealerScore() {
         return new EnumMap<>(dealerScoreBoard);
     }
 }

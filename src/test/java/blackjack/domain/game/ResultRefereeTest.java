@@ -71,9 +71,9 @@ class ResultRefereeTest {
         ResultReferee referee = new ResultReferee(scoreBoard);
 
         // then
-        Assertions.assertThat(referee.askResultByUserName(player1.getName())).isEqualTo(Score.WIN);
-        Assertions.assertThat(referee.askResultByUserName(player2.getName())).isEqualTo(Score.DRAW);
-        Assertions.assertThat(referee.askResultByUserName(player3.getName())).isEqualTo(Score.LOSE);
+        Assertions.assertThat(referee.askResultByUserName(player1.getName())).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(referee.askResultByUserName(player2.getName())).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(referee.askResultByUserName(player3.getName())).isEqualTo(GameResult.LOSE);
     }
 
     @Test

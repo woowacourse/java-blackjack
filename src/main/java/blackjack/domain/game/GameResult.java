@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-public enum Score {
+public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
@@ -8,7 +8,7 @@ public enum Score {
 
     private final String view;
 
-    Score(final String view) {
+    GameResult(final String view) {
         this.view = view;
     }
 

@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.game.Score;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.ScoreBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -66,10 +66,11 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(final Map<Score, Integer> dealerScore, final Map<UserName, Score> playerScore) {
+    public void printGameResult(final Map<GameResult, Integer> dealerScore,
+                                final Map<UserName, GameResult> playerScore) {
         System.out.println("## 최종 승패");
         StringBuilder stringBuilder = new StringBuilder();
-        for (final Score score : dealerScore.keySet()) {
+        for (final GameResult score : dealerScore.keySet()) {
             final Integer count = dealerScore.get(score);
             stackResult(stringBuilder, score, count);
         }
@@ -81,7 +82,7 @@ public class OutputView {
         });
     }
 
-    private static void stackResult(final StringBuilder stringBuilder, final Score score, final Integer count) {
+    private static void stackResult(final StringBuilder stringBuilder, final GameResult score, final Integer count) {
         if (count != 0) {
             stringBuilder.append(count).append(score.getView()).append(" ");
         }
