@@ -10,8 +10,15 @@ public class PlayersFactory {
     public static final int MAX_PLAYER_COUNT = 8;
 
     public static Players from(String[] names) {
+        trimNames(names);
         validateLength(names);
         return createPlayers(names);
+    }
+
+    private static void trimNames(String[] names) {
+        for (int i = 0; i < names.length; i++) {
+            names[i] = names[i].trim();
+        }
     }
 
     private static Players createPlayers(final String[] names) {
