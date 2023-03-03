@@ -39,4 +39,12 @@ public class Card {
                 ", number=" + number +
                 '}';
     }
+
+    public Number getNumber() {
+        return number;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
 }

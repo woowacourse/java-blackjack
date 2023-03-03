@@ -12,5 +12,7 @@ public class BlackJackController {
 
         BlackJack blackJack = new BlackJack(participantNames, new RandomBasedIndexGenerator());
         blackJack.startGame();
+
+        OutputView.printPlayersInformation(blackJack.getPlayers());
     }
 }

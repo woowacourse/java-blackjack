@@ -86,4 +86,8 @@ public class BlackJack {
     private Player getDealer() {
         return players.get(0);
     }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(this.players);
+    }
 }
