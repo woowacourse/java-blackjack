@@ -14,6 +14,11 @@ public class Score implements Comparable<Score> {
 
     public Result compare(final Score score) {
         final int result = this.compareTo(score);
+        if (value > 21) {
+            if (score.getValue() > 21) return DRAW;
+            return LOSE;
+        }
+
         if (result > 0) {
             return WIN;
         }
