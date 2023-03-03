@@ -1,7 +1,7 @@
+package domain.card;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Deck;
 import domain.card.shuffler.DeckShuffler;
 import domain.card.shuffler.FixedDeckShuffler;
 import org.junit.jupiter.api.DisplayName;

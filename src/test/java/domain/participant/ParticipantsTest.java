@@ -1,11 +1,10 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.Deck;
 import domain.card.shuffler.FixedDeckShuffler;
-import domain.participant.Participants;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

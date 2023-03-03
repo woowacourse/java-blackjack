@@ -1,10 +1,10 @@
+package domain.participant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.shuffler.FixedDeckShuffler;
-import domain.participant.Name;
-import domain.participant.Player;
 import domain.PlayerCommand;
 import java.util.ArrayList;
 import java.util.List;

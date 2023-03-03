@@ -1,11 +1,10 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.shuffler.FixedDeckShuffler;
-import domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
