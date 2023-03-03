@@ -23,6 +23,7 @@ public class Controller {
         addWhenUnderStandard(dealer, game);
 
         outputView.printCardsResult(dealer, players);
+        outputView.printWinnerResult(game.getDealerResult(),game.getPlayersResult());
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {

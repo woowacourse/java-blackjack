@@ -3,8 +3,10 @@ package view;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
+import domain.Result;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -12,6 +14,8 @@ public class OutputView {
     private static final String DEALER_DISTRIBUTE_MESSAGE = "%s 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator();
     private static final String DEALER_CARDS_RESULT_MESSAGE = "%s 카드: %s - 결과: %d" + System.lineSeparator();
     private static final String PLAYER_CARDS_RESULT_MESSAGE = "%s카드: %s - 결과: %d" + System.lineSeparator();
+    private static final String DEALER_RESULT_MESSAGE = "%s: %d승 %d무 %d패" + System.lineSeparator();
+    private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
 
 
     public void printInitialCards(Dealer dealer, Players players) {
@@ -43,6 +47,18 @@ public class OutputView {
             List<String> value = players.getInfo().get(key);
             System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, key, value.stream()
                     .collect(Collectors.joining(", ")), players.getCardsSum(key));
+        }
+    }
+
+    public void printWinnerResult(Map<String, List<Result>> dealerResult, Map<String, Result> playerResult) {
+        System.out.println("## 최종 승패");
+        String name = dealerResult.keySet().stream().findFirst().get();
+        List<Result> dealerResults = dealerResult.get(name);
+        System.out.printf(DEALER_RESULT_MESSAGE, name, dealerResults.stream().filter(s->s == Result.LOSE).count(),
+                dealerResults.stream().filter(s->s == Result.DRAW).count(),
+                dealerResults.stream().filter(s->s == Result.WIN).count());
+        for(String key : playerResult.keySet()) {
+            System.out.printf(PLAYER_RESULT_MESSAGE, key,playerResult.get(key).getResult());
         }
     }
 
