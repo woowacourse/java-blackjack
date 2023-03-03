@@ -20,7 +20,7 @@ class DealerTest {
         Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
         Dealer dealer = new Dealer();
         dealer.addCard(card);
-        assertThat(dealer.showCards()).contains(card);
+        assertThat(dealer.getCards()).contains(card);
     }
 
     @DisplayName("딜러가 가진 카드를 가져올 수 있다.")
@@ -38,7 +38,7 @@ class DealerTest {
         dealer.addCard(card3);
 
         // when, then
-        assertThat(dealer.showCards()).containsAll(List.of(card, card2, card3));
+        assertThat(dealer.getCards()).containsAll(List.of(card, card2, card3));
     }
 
     @DisplayName("딜러가 가진 카드의 점수 합을 구할 수 있다.")

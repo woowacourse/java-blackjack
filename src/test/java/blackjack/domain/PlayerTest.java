@@ -124,6 +124,6 @@ class PlayerTest {
         tori.addCard(card3);
 
         // when, then
-        assertThat(tori.showCards()).containsAll(List.of(card,card2,card3));
+        assertThat(tori.showCards()).containsAll(List.of(card, card2, card3));
     }
 }

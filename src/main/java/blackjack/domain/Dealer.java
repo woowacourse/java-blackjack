@@ -41,6 +41,10 @@ public class Dealer implements Person {
 
     @Override
     public List<Card> showCards() {
+        return List.of(cards.get(0));
+    }
+
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }
