@@ -5,6 +5,18 @@ import java.util.Stack;
 
 public class Deck {
 
+    public static final Stack<Card> TRUMP;
+
+    static {
+        final Stack<Card> pack = new Stack<>();
+        for (final Suit suit : Suit.values()) {
+            for (final Number number : Number.values()) {
+                pack.add(new Card(number, suit));
+            }
+        }
+        TRUMP = pack;
+    }
+
     private final Stack<Card> cards;
 
     public Deck(final Stack<Card> cards) {
