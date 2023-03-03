@@ -16,6 +16,7 @@
 - [x] 플레이어(Player)
   - [x] 이름을 가진다
     - [x] 2 ~ 10 글자
+    - [x] '딜러'를 이름으로 가질 수 없다
   - [x] 카드를 가질 수 있다
   - [x] 카드들의 합을 구할 수 있다
     - [x] Ace를 11로 계산해도 총 합이 21이 넘지 않으면 11로 계산한다
@@ -32,3 +33,26 @@
 - [x] 플레이어들의 버스트 여부를 기준으로 카드를 더 받는 기능
 - [x] 딜러의 stand 여부를 기준으로 카드를 더 받는 기능
 - [x] 승패를 구하는 기능
+
+# 다이어그램
+
+```mermaid
+graph TD
+
+    BlackjackController --> BlackjackService
+    
+    BlackjackService --> Participants
+    BlackjackService --> Deck
+
+    Deck --> Hand
+    Hand --> Card
+    Card --> Rank
+    Card --> Suit
+
+    Participants --> Player
+    Participants --> Dealer
+
+    Dealer --> Participant
+    Player --> Participant
+    
+```
