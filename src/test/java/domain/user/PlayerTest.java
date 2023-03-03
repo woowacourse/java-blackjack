@@ -15,7 +15,7 @@ class PlayerTest {
     void generatePlayerTest() {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
-        Player player = new Player(firstTurnCards);
+        Player player = new Player(new Name("플레이어"), firstTurnCards);
 
         //when
         List<Card> cards = player.getCards();
@@ -29,7 +29,7 @@ class PlayerTest {
     void receiveCardTest() {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_FIVE);
-        Player player = new Player(firstTurnCards);
+        Player player = new Player(new Name("플레이어"), firstTurnCards);
         List<Card> cards = player.getCards();
 
         //when
@@ -44,7 +44,7 @@ class PlayerTest {
     void checkBustByScoreTest() {
         //given
         List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING);
-        Player player = new Player(firstTurnCards);
+        Player player = new Player(new Name("플레이어"), firstTurnCards);
 
         //when
         player.receiveCard(CloverCard.CLOVER_QUEEN);

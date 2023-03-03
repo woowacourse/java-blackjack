@@ -4,10 +4,12 @@ import domain.card.Card;
 import java.util.List;
 
 public class Player extends User{
+    private final Name name;
     private PlayerStatus status = PlayerStatus.NORMAL;
 
-    public Player(List<Card> firstTurnCards) {
+    public Player(Name name, List<Card> firstTurnCards) {
         super(firstTurnCards);
+        this.name = name;
     }
 
     @Override
@@ -20,5 +22,9 @@ public class Player extends User{
     @Override
     protected UserStatus getStatus() {
         return status;
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }
