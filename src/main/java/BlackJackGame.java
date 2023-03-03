@@ -14,28 +14,23 @@ import view.OutputView;
 public class BlackJackGame {
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardBox cardBox;
-    private final CardNumberGenerator generator;
 
     private List<Player> players;
 
-    public BlackJackGame(final InputView inputView, final OutputView outputView, final CardBox cardBox,
-                         final CardNumberGenerator generator) {
+    public BlackJackGame(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardBox = cardBox;
-        this.generator = generator;
     }
 
-    public void run() {
+    public void run(final CardNumberGenerator generator, final CardBox cardBox) {
         List<Name> names = getNames();
-        List<Cards> randomBoxedCars = getRandomCards(names);
+        List<Cards> randomBoxedCars = getRandomCards(names, generator, cardBox);
         Dealer dealer = readDealer(randomBoxedCars);
         readPlayers(names, randomBoxedCars, dealer);
         List<String> boxedNames = boxedNames(players);
         printInitialCardResult(randomBoxedCars, boxedNames);
-        playersTurn(players);
-        dealerDrawIfUnderStandard(dealer);
+        playersTurn(players, cardBox, generator);
+        dealerDrawIfUnderStandard(dealer, generator, cardBox);
         printFinalCardResult(players);
         printWinningResult(dealer, players, boxedNames);
     }
@@ -45,8 +40,9 @@ public class BlackJackGame {
         printPlayerNamesAndCardsPerPlayer(boxedNames, copiedBoxedCards);
     }
 
-    private List<Cards> getRandomCards(final List<Name> names) {
-        return randomCards(names);
+    private List<Cards> getRandomCards(final List<Name> names, final CardNumberGenerator generator,
+                                       final CardBox cardBox) {
+        return randomCards(names, generator, cardBox);
     }
 
     private void printWinningResult(final Dealer dealer, final List<Player> players, final List<String> boxedNames) {
@@ -91,20 +87,23 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private void playersTurn(final List<Player> players) {
+    private void playersTurn(final List<Player> players, final CardBox cardBox, final CardNumberGenerator generator) {
         for (int index = 1; index < players.size(); index++) {
-            playerSelectAddCard(players, index);
+            playerSelectAddCard(players, index, cardBox, generator);
         }
     }
 
-    private void playerSelectAddCard(final List<Player> players, final int index) {
+    private void playerSelectAddCard(final List<Player> players, final int index, final CardBox cardBox,
+                                     final CardNumberGenerator generator) {
         while (inputView.addOrStop(players.get(index).getName())) {
-            playerDrawIfSelectToAddCard(players, index);
+            playerDrawIfSelectToAddCard(players, index, cardBox, generator);
         }
         outputView.printCurrentPlayerResult(players.get(index).getName(), players.get(index).getCards());
     }
 
-    private void playerDrawIfSelectToAddCard(final List<Player> players, final int index) {
+    private void playerDrawIfSelectToAddCard(final List<Player> players, final int index,
+                                             final CardBox cardBox,
+                                             final CardNumberGenerator generator) {
         boolean flag = true;
         while (flag) {
             flag = !players.get(index).selectToPickOtherCard(cardBox, generator);
@@ -112,14 +111,15 @@ public class BlackJackGame {
         outputView.printCurrentPlayerResult(players.get(index).getName(), players.get(index).getCards());
     }
 
-    private void dealerDrawIfUnderStandard(final Dealer dealer) {
+    private void dealerDrawIfUnderStandard(final Dealer dealer, final CardNumberGenerator generator,
+                                           final CardBox cardBox) {
         while (dealer.isSumUnderStandard()) {
             outputView.noticeDealerUnderStandard();
-            dealerDrawCard(dealer);
+            dealerDrawCard(dealer, generator, cardBox);
         }
     }
 
-    private void dealerDrawCard(final Dealer dealer) {
+    private void dealerDrawCard(final Dealer dealer, final CardNumberGenerator generator, final CardBox cardBox) {
         boolean flag = true;
         while (flag) {
             flag = !dealer.selectToPickOtherCard(cardBox, generator);
@@ -145,7 +145,8 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private List<Cards> randomCards(final List<Name> names) {
+    private List<Cards> randomCards(final List<Name> names, final CardNumberGenerator generator,
+                                    final CardBox cardBox) {
         return IntStream.range(0, names.size() + 1)
                 .mapToObj(i -> IntStream.range(0, 2)
                         .mapToObj(j -> cardBox.get(generator.generateIndex()))

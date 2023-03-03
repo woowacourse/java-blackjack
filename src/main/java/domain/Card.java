@@ -16,6 +16,10 @@ public class Card {
         return this.value + otherCard.value;
     }
 
+    public boolean isA() {
+        return name.charAt(0) == 'A';
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -35,9 +39,5 @@ public class Card {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isA() {
-        return name.charAt(0) == 'A';
     }
 }

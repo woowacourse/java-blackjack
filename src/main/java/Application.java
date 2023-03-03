@@ -7,11 +7,9 @@ public class Application {
     public static void main(String[] args) {
         BlackJackGame game = new BlackJackGame(
                 new InputView(),
-                new OutputView(),
-                new CardBox(),
-                new RandomCardNumberGenerator()
+                new OutputView()
         );
 
-        game.run();
+        game.run(new RandomCardNumberGenerator(), new CardBox());
     }
 }
