@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ListStudy {
     @Test
-    public void mission1() {
+    void mission1() {
         SimpleList<Integer> values = new SimpleArrayList<Integer>();
         values.add(1);
         values.add(2);
@@ -22,5 +22,14 @@ public class ListStudy {
 
         assertThat(first).isEqualTo(1);
         assertThat(second).isEqualTo(2);
+    }
+
+    @Test
+    void mission2() {
+        final String[] arrays = {"first", "second"};
+
+        final SimpleList<String> values = SimpleList.<String>fromArrayToList(arrays);
+        assertThat(values.contains("first")).isTrue();
+        assertThat(values.contains("second")).isTrue();
     }
 }
