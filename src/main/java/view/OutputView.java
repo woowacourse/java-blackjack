@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import card.Card;
 import player.DealerFirstOpenDto;
 import player.PlayerOpenDto;
+import player.PlayerResultDto;
 
 public class OutputView {
 
@@ -32,5 +33,18 @@ public class OutputView {
 
     public void printDealerHitMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printFinalResults(PlayerResultDto dealerResult, List<PlayerResultDto> playerResults) {
+        printFinalResult(dealerResult);
+        for (PlayerResultDto result : playerResults) {
+            printFinalResult(result);
+        }
+    }
+
+    private void printFinalResult(PlayerResultDto result) {
+        System.out.println(
+                result.getName().getValue() + " 카드:" + result.getCards().stream().map(Card::toString).collect(
+                        Collectors.joining(", ")) + " - 결과: " + result.getScore());
     }
 }
