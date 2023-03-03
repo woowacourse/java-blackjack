@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import java.util.ArrayList;
 import java.util.List;
 
-class Cards {
+public class Cards {
     private static final int ACE_ADDITIONAL_SCORE = 10;
     private static final int BUST_LOWER_BOUND = 22;
     private static final int BLACKJACK_COUNT = 2;

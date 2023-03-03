@@ -46,7 +46,7 @@ public class Gambler implements Player {
     }
 
     @Override
-    public Result play(Hand hand) {
+    public Result play(final Hand hand) {
         return this.hand.play(hand);
     }
 
