@@ -14,6 +14,10 @@ public class Dealer implements Player {
         this.cards = new Cards(cards);
     }
 
+    public Name getName() {
+        return name;
+    }
+
     private void validateCardsSize(final int size) {
         if (size != INITIAL_CARD_COUNT) {
             throw new IllegalArgumentException("유저는 카드 2장 이상을 갖고 있어야 합니다.");

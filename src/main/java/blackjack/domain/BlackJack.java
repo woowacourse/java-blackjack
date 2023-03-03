@@ -49,9 +49,27 @@ public class BlackJack {
         return users.getCardsOf(user);
     }
 
-    public void finalizeDealer() {
+    public int finalizeDealer() {
+        int additionalCardCount = 0;
         while (dealer.needCard()) {
             dealer.draw(deck.drawCard());
+            additionalCardCount += 1;
         }
+        return additionalCardCount;
+    }
+
+    public List<User> getUsersStatus() {
+        return users.getUsers();
+    }
+
+    public Dealer getDealerStatus() {
+        if (dealer.needCard()) {
+            throw new IllegalStateException("딜러가 아직 카드의 결론이 나지 않았습니다.");
+        }
+        return dealer;
+    }
+
+    public GameResult getGameResult() {
+        return new GameResult(dealer, users);
     }
 }

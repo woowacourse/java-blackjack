@@ -68,4 +68,8 @@ public class Users {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
     }
+
+    public List<User> getUsers() {
+        return List.copyOf(users);
+    }
 }

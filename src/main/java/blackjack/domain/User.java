@@ -57,4 +57,8 @@ public class User implements Player {
     public boolean isNameOf(final Name userName) {
         return this.name.equals(userName);
     }
+
+    public Name getName() {
+        return name;
+    }
 }
