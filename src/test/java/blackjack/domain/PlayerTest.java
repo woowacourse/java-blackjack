@@ -138,6 +138,15 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("이름이 딜러면 예외가 발생해야 한다.")
+    void validateBlacklist() {
+        // expect
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            new Player("딜러");
+        }).withMessage("[ERROR] 딜러는 사용할 수 없는 이름입니다.");
+    }
+
+    @Test
     @DisplayName("이름이 5글자를 초과하면 예외가 발생해야 한다.")
     void validateNameLength() {
         // expect

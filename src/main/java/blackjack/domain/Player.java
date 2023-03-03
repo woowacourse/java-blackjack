@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Player extends Person {
     private static final int MAX_NAME_LENGTH = 5;
+    private static final List<String> BLACKLIST = List.of("딜러");
 
     public Player(String name) {
         super(name);
@@ -12,12 +13,19 @@ public class Player extends Person {
 
     private void validate(String name) {
         validateBlankName(name);
+        validateBlacklist(name);
         validateNameLength(name);
     }
 
     private void validateBlankName(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 이름은 공백일 수 없습니다.");
+        }
+    }
+
+    private void validateBlacklist(String name) {
+        if (BLACKLIST.contains(name)) {
+            throw new IllegalArgumentException("[ERROR] " + name + "는 사용할 수 없는 이름입니다.");
         }
     }
 
