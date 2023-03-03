@@ -8,6 +8,8 @@ public class Dealer {
     public static final String DEALER_NAME = "딜러";
     private final Name name;
     private final Hand hand = new Hand();
+    private final DealerResult dealerResult = new DealerResult();
+
 
     public Dealer() {
         this.name = new Name(DEALER_NAME);
@@ -39,5 +41,17 @@ public class Dealer {
 
     public Name getName() {
         return name;
+    }
+
+    public void lose() {
+        dealerResult.addLose();
+    }
+
+    public void win() {
+        dealerResult.addWin();
+    }
+
+    public void tie() {
+        dealerResult.addTie();
     }
 }
