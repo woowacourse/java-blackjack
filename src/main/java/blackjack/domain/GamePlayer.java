@@ -26,13 +26,13 @@ public class GamePlayer {
 
     private void initPlayer(List<Card> cards) {
         for (int i = 0; i < players.count(); i++) {
-            players.addCardToPlayer(i, cards.get(i*2));
-            players.addCardToPlayer(i, cards.get(i*2+1));
+            players.addCardToPlayer(i, cards.get(i * 2));
+            players.addCardToPlayer(i, cards.get(i * 2 + 1));
         }
     }
 
     private void initDealer(List<Card> cards) {
-        for (Card card:cards) {
+        for (Card card : cards) {
             giveCardToDealer(card);
         }
     }

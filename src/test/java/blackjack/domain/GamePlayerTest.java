@@ -54,7 +54,6 @@ class GamePlayerTest {
         Card card7 = new Card(CardNumber.TEN, CardSymbol.CLUBS);
         Card card8 = new Card(CardNumber.TEN, CardSymbol.HEARTS);
 
-
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
