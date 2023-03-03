@@ -17,7 +17,11 @@ public class BlackJackGame {
         participants.handOut(deck);
     }
 
-    public Map<String, List<Card>> openCards() {
+    public Map<String, List<Card>> openPlayersCards() {
         return participants.openPlayerCards();
+    }
+
+    public Card openDealerFirstCard() {
+        return participants.openDealerFirstCard();
     }
 }

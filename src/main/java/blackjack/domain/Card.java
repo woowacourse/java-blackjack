@@ -16,6 +16,14 @@ public class Card {
         return this.number == Number.ACE;
     }
 
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public Number getNumber() {
+        return number;
+    }
+
     public int getNumberValue() {
         return number.getValue();
     }
