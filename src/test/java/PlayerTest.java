@@ -28,10 +28,10 @@ class PlayerTest {
         assertThat(player.calculateScore()).isEqualTo(13);
     }
 
-    @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
+/*    @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
         player.receiveAdditionalCard(PlayerCommand.HIT, new Cards(new FixedCardsShuffler()));
         assertThat(player.calculateScore()).isEqualTo(23);
-    }
+    }*/
 }

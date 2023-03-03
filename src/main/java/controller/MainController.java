@@ -33,7 +33,9 @@ public class MainController {
             boolean repeat = true;
             while (repeat) {
                 PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
-                player.receiveAdditionalCard(command, cards);
+                if (command.isHit()) {
+                    player.receiveCard(cards.getCard());
+                }
                 outputView.printSingleState(player);
                 repeat = player.isNotBust() && command.isHit();
             }
