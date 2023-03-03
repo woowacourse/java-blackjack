@@ -1,15 +1,12 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Name;
-import blackjack.domain.player.PlayerCards;
-
 public class Dealer extends User {
 
-    public Dealer(Name name, PlayerCards playerCards) {
-        super(name, playerCards);
+    private static final int MINIMUM_SCORE = 17;
+
+    @Override
+    public boolean isUnderLimit() {
+        return playerCards.getTotalScore() < MINIMUM_SCORE;
     }
 
-    public boolean isNotOverSeventeen() {
-        return playerCards.getTotalScore() < 17;
-    }
 }

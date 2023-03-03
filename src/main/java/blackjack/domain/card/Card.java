@@ -10,15 +10,15 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public CardNumber getNumber(){
+    public CardNumber getNumber() {
         return this.number;
     }
 
-    public CardSymbol getSymbol(){
+    public CardSymbol getSymbol() {
         return this.symbol;
     }
 
-    public boolean isAce(){
+    public boolean isAce() {
         return number.equals(CardNumber.ACE);
     }
 }

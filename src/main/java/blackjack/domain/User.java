@@ -1,23 +1,23 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.PlayerCards;
 
 import java.util.List;
 
-public class User {
-    private static final int SCORE_LIMIT = 21;
-    Name name;
+public abstract class User {
     PlayerCards playerCards;
 
-    public User(Name name, PlayerCards playerCards) {
-        this.name = name;
-        this.playerCards = playerCards;
+    public User() {
+        this.playerCards = new PlayerCards();
     }
 
-    public boolean isUnderScoreLimit() {
-        return playerCards.getTotalScore() < SCORE_LIMIT;
+    public List<Card> getPlayerCards() {
+        return playerCards.getPlayerCards();
     }
 
+    public int getTotalScore() {
+        return playerCards.getTotalScore();
+    }
+    public abstract boolean isUnderLimit();
 }
