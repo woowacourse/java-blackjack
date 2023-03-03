@@ -15,8 +15,14 @@ public class PlayerResultDto {
         this.score = score;
     }
 
+
+    //    TODO : ^^ 중복제거 ^^
     public static PlayerResultDto from(Player player) {
         return new PlayerResultDto(player.getName(), player.showCards(), player.calculateScore());
+    }
+
+    public static PlayerResultDto fromDealer(Dealer dealer) {
+        return new PlayerResultDto(dealer.getName(), dealer.showCards(), dealer.calculateScore());
     }
 
     public Name getName() {
