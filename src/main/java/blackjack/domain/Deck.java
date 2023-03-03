@@ -8,7 +8,7 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    Deck(final Queue<Card> cards) { //생성자, 정적팩토리메서드(로직이 있는 경우) , 팩토리 패턴(연쇄적 )
+    Deck(final Queue<Card> cards) {
         validateCards(cards);
         this.cards = cards;
     }
@@ -24,6 +24,5 @@ public class Deck {
 
     public Card popCard() {
         return cards.remove();
-//        Card card = cards.poll(); illegal(커스텀메시지 넣기 위해서) or NoSuchException ***
     }
 }

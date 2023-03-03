@@ -12,7 +12,6 @@ import blackjack.dto.PlayerCardsScoreDto;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,12 +35,10 @@ public class BlackJackController {
                 blackJackGame.findDealerInitialCard(), blackJackGame.findPlayerNameToCards());
         outputView.printInitialCards(initialCardDto);
 
-        //플레이어 카드 드로우
         for (final String playerName : blackJackGame.getPlayerNames()) {
             drawPlayerCard(playerName, deck, blackJackGame);
 
         }
-        //
         while (blackJackGame.isDealerDrawable()) {
             blackJackGame.dealerDrawCard(deck);
             outputView.printDealerCardDrawMessage();
@@ -53,7 +50,8 @@ public class BlackJackController {
     }
 
     private void printStatusOfGame(final BlackJackGame blackJackGame) {
-        outputView.printFinalStatusOfDealer(new CardsScoreDto(blackJackGame.getDealerCards(), blackJackGame.getDealerScore()));
+        outputView.printFinalStatusOfDealer(
+                new CardsScoreDto(blackJackGame.getDealerCards(), blackJackGame.getDealerScore()));
         outputView.printFinalStatusOfPlayers(createPlayerCardDto(blackJackGame));
     }
 
@@ -83,8 +81,9 @@ public class BlackJackController {
                 blackJackGame.drawPlayerCard(playerName, deck);
             }
 
-            final PlayerCardDto playerCardDto = new PlayerCardDto(playerName, blackJackGame.findCardsByPlayerName(playerName)
-                    .get());
+            final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
+                    blackJackGame.findCardsByPlayerName(playerName)
+                            .get());
             outputView.printCardStatusOfPlayer(playerCardDto);
             if (playerInput == DrawCommand.STAY) {
                 break;
