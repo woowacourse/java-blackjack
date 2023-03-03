@@ -1,32 +1,17 @@
 package player;
 
-import java.util.List;
 import java.util.Map;
 
 import blackjackGame.Result;
 import card.Card;
 
-public class Dealer {
+public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
-    private final Name name;
-    private final Hand hand = new Hand();
     private final DealerResult dealerResult = new DealerResult();
 
 
     public Dealer() {
-        this.name = new Name(DEALER_NAME);
-    }
-
-    public void hit(Card card) {
-        hand.add(card);
-    }
-
-    public int calculateScore() {
-        return hand.calculateScore();
-    }
-
-    public List<Card> showCards() {
-        return hand.getCards();
+        super(new Name(DEALER_NAME), new Hand());
     }
 
     public Card showOneCard() {
@@ -35,14 +20,6 @@ public class Dealer {
 
     public boolean isUnderScore() {
         return hand.calculateScore() <= 16;
-    }
-
-    public boolean isBust() {
-        return hand.calculateScore() >= 22;
-    }
-
-    public Name getName() {
-        return name;
     }
 
     public void lose() {
