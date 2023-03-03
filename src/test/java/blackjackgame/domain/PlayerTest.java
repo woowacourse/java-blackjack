@@ -24,7 +24,7 @@ class PlayerTest {
     }
 
     @DisplayName("딜러가 가진 카드들의 합을 반환한다.")
-    @ParameterizedTest
+    @ParameterizedTest(name = "딜러가 가진 카드의 합은 {1}이다.")
     @MethodSource("cardDummy")
     void Should_ReturnScore_When_Request(List<Card> cards, int expected) {
 
