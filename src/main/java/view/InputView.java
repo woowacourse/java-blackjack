@@ -44,4 +44,8 @@ public class InputView {
             throw new IllegalArgumentException(INPUT_Y_OR_N_ERROR_GUIDE_MESSAGE);
         }
     }
+
+    public static void printErrorMessage(RuntimeException exception) {
+        System.out.println(exception.getMessage());
+    }
 }

@@ -1,22 +1,34 @@
 package controller;
 
 import domain.*;
+import view.InputView;
 import view.OutputView;
 
 import java.util.LinkedHashMap;
 
-import static view.InputView.readIsHit;
-import static view.InputView.readPlayersName;
+import static view.InputView.*;
 import static view.OutputView.*;
 
 public class Controller {
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public void blackjack() {
-        Players players = new Players(readPlayersName());
+        Players players = getPlayers();
         Dealer dealer = new Dealer(new Cards());
 
         gameStart(players, dealer);
+    }
+
+    private Players getPlayers() {
+        Players players;
+
+        try {
+            players = new Players(readPlayersName());
+        } catch (RuntimeException exception) {
+            printErrorMessage(exception);
+            players = getPlayers();
+        }
+        return players;
     }
 
     private void gameStart(Players players, Dealer dealer) {
@@ -26,7 +38,7 @@ public class Controller {
         playersHitOrStand(players);
         dealerHitOrStand(dealer);
 
-        printScores(players, dealer); //TODO: getResult
+        printScores(players, dealer);
         LinkedHashMap<Gambler, Integer> result = getResult(dealer, players);
         OutputView.printResult(result);
     }
@@ -40,10 +52,21 @@ public class Controller {
     private void playerHitOrStand(Player player) {
         boolean isHit;
         do {
-            isHit = readIsHit(player);
+            isHit = getIsHit(player);
             playerHit(player, isHit);
             OutputView.printSingleGambler(player);
         } while (isHit);
+    }
+
+    private boolean getIsHit(Player player) {
+        boolean isHit;
+        try {
+            isHit = readIsHit(player);
+        } catch (RuntimeException exception) {
+            InputView.printErrorMessage(exception);
+            isHit = getIsHit(player);
+        }
+        return isHit;
     }
 
     private void playerHit(Player player, boolean isHit) {
