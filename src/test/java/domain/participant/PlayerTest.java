@@ -11,12 +11,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 class PlayerTest {
 
@@ -58,11 +55,10 @@ class PlayerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         player.addCard(card);
+        List<Card> cards = player.getParticipantCard();
 
         // then
-        assertThat(player)
-                .extracting("participantCard", type(ParticipantCard.class))
-                .extracting("cards", as(list(Card.class)))
+        assertThat(cards)
                 .hasSize(1);
     }
 

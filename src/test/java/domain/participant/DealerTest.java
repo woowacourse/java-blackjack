@@ -11,11 +11,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 class DealerTest {
 
@@ -43,11 +40,10 @@ class DealerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         dealer.addCard(card);
+        List<Card> cards = dealer.getParticipantCard();
 
         // then
-        assertThat(dealer)
-                .extracting("participantCard", type(ParticipantCard.class))
-                .extracting("cards", as(list(Card.class)))
+        assertThat(cards)
                 .hasSize(1);
     }
 
