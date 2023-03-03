@@ -2,7 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.WinningResult;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -47,6 +49,19 @@ public class OutputView {
 
     public void dealerHitMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printDealerWinORLose(List<WinningResult> dealerResult) {
+        System.out.print("딜러: ");
+        System.out.print(ViewWinningResult.WIN.winCount(dealerResult) + ViewWinningResult.WIN.getName());
+        System.out.println(ViewWinningResult.PUSH.pushCount(dealerResult) + ViewWinningResult.PUSH.getName());
+        System.out.println(ViewWinningResult.LOSE.loseCount(dealerResult) + ViewWinningResult.LOSE.getName());
+    }
+
+    public void printPlayerWinORLose(Map<Participant, WinningResult> playerResult) {
+        for (Participant player : playerResult.keySet()) {
+            System.out.println(player.getName() + " : " + playerResult.get(player));
+        }
     }
 
     private void printFirstDealerCards(final Participant participant) {
