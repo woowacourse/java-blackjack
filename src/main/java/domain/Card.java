@@ -17,4 +17,8 @@ public class Card {
     public Face getFace() {
         return face;
     }
+
+    public boolean isNotA() {
+        return !letter.equals("A");
+    }
 }

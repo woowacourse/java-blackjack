@@ -6,11 +6,10 @@
 - [ ] Game::getResult 메서드 너무 복잡하고 길어
 - [ ] 제약조건을 더 고려해보자
 - [ ] Application 메서드 분리
-- [ ] Player::calculateScore 메서드 분리
+- [x] Player::calculateScore 메서드 분리
 - [ ] Game::dealCards indent가 2 임.
 - [ ] 매직 넘버 상수화
-- [ ] Player 인스턴스 변수 개수 3개다.
-  - score 없앨 수 있을 듯?
+- [x] Player 인스턴스 변수 개수 3개다.
 - [ ] Game도 3개다
   - dealer를 players 안에 넣자.
 - [ ] 카드 글자 리팩터링 Deck::buildCards()

@@ -2,12 +2,12 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
 
     private final String name;
     private final List<Card> cards;
-    private int score;
 
 
     public Player(String name) {
@@ -17,34 +17,44 @@ public class Player {
     public Player(String name, List<Card> cards) {
         this.name = name;
         this.cards = new ArrayList<>(cards);
-        this.score = calculateScore();
     }
 
     private int calculateScore() {
-        int countA = 0;
+        List<Card> cardsExceptA = getCardsExceptA();
+        int scoreExceptA = getScoreExceptA(cardsExceptA);
+        int countA = cards.size() - cardsExceptA.size();
+        return getFinalScore(countA, scoreExceptA);
+    }
 
-        int score = 0;
-        for (Card card : cards) {
-            var letter = card.getLetter();
+    private int getScoreExceptA(List<Card> cardsExceptA) {
+        return cardsExceptA.stream()
+                .map(Card::getLetter)
+                .mapToInt(this::getScoreFrom)
+                .sum();
+    }
 
-            if (letter.equals("A")) {
-                ++countA;
-                continue;
-            }
+    private List<Card> getCardsExceptA() {
+        return cards.stream()
+                .filter(Card::isNotA)
+                .collect(Collectors.toList());
+    }
 
-            score += getScoreFrom(letter);
-        }
-
+    private int getFinalScore(int countA, final int scoreExceptA) {
+        int score = scoreExceptA;
         for (int i = 0; i < countA; i++) {
-            if (score + 11 > 21) {
-                score += 1;
-                continue;
-            }
-
-            score += 11;
+            score += getScoreFromA(score);
         }
 
         return score;
+    }
+
+    // TODO: 2023/03/03 메서드명 변경
+    private int getScoreFromA(int score) {
+        if (score + 11 > 21) {
+            return 1;
+        }
+
+        return 11;
     }
 
     private int getScoreFrom(String letter) {
@@ -56,16 +66,15 @@ public class Player {
     }
 
     public int getScore() {
-        return score;
+        return calculateScore();
     }
 
     public boolean isBusted() {
-        return score > 21;
+        return getScore() > 21;
     }
 
     public void addCard(Card card) {
         cards.add(card);
-        this.score = calculateScore();
     }
 
     public List<Card> getCards() {
