@@ -85,9 +85,7 @@ public class OutputView {
     private static int[] getDealerResult(final List<Integer> winningResult) {
         int[] result = new int[3];
 
-        winningResult.forEach(integer -> {
-            makeDealerResult(result, integer);
-        });
+        winningResult.forEach(integer -> makeDealerResult(result, integer));
         return result;
     }
 
