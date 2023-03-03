@@ -27,4 +27,8 @@ public class Player {
     public boolean isBust() {
         return hand.calculateScore() >= 22;
     }
+
+    public Name getName() {
+        return name;
+    }
 }
