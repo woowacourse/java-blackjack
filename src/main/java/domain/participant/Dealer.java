@@ -1,18 +1,17 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
 import java.util.List;
 
 public class Dealer extends Participant {
+
+    private static final int FILL_BOUNDARY_INCLUSIVE = 16;
 
     public Dealer(final List<Card> cards) {
         super(new Name("딜러"), cards);
     }
 
-    public void fillCards(final Cards cards) {
-        while (calculateScore() <= 16) {
-            this.receiveCard(cards.getCard());
-        }
+    public boolean isFill() {
+        return calculateScore() <= FILL_BOUNDARY_INCLUSIVE;
     }
 }

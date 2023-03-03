@@ -34,13 +34,13 @@ public class MainController {
             while (repeat) {
                 PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
                 player.receiveAdditionalCard(command, cards);
-                repeat = player.calculateScore() < 21 && command.isHit();
                 outputView.printSingleState(player);
+                repeat = player.isNotBust() && command.isHit();
             }
         }
 
         Dealer dealer = participants.getDealer();
-        while (dealer.calculateScore() <= 16) {
+        while (dealer.isFill()) {
             outputView.printFillDealerCards();
             dealer.receiveCard(cards.getCard());
         }
