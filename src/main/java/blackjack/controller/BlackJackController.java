@@ -22,6 +22,8 @@ public class BlackJackController {
         OutputView.showDealerHitResult(hitCount);
         OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
                 blackJackGame.computePlayerGameResults());
+
+        OutputView.showFinalResult(blackJackGame.computePlayerResults());
     }
 
     private void startGame() {

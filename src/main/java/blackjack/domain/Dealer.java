@@ -8,20 +8,20 @@ public class Dealer extends Participant {
         return computeSumOfCards() < CARD_TAKE_LIMIT;
     }
 
-    public PlayerResult judge(Player player) {
+    public ParticipantResult judge(Player player) {
         int dealerSum = computeSumOfCards();
         if (isBust(dealerSum)) {
-            return PlayerResult.WIN;
+            return ParticipantResult.WIN;
         }
 
         int playerSum = player.computeSumOfCards();
         if (playerSum == dealerSum) {
-            return PlayerResult.PUSH;
+            return ParticipantResult.PUSH;
         }
         if (playerSum > dealerSum) {
-            return PlayerResult.WIN;
+            return ParticipantResult.WIN;
         }
-        return PlayerResult.LOSE;
+        return ParticipantResult.LOSE;
     }
 
     public boolean isAvailable() {

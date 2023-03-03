@@ -65,4 +65,8 @@ public class BlackJackGame {
     public Map<String, GameResult> computePlayerGameResults() {
         return participants.openPlayerGameResults();
     }
+
+    public PlayerResults computePlayerResults() {
+        return participants.computePlayerResults();
+    }
 }

@@ -70,6 +70,14 @@ public class Participants {
         return dealer.getCards();
     }
 
+    public PlayerResults computePlayerResults() {
+        PlayerResults playerResults = new PlayerResults();
+        for (Player player : players) {
+            playerResults.addResultByPlayerName(player.getName(), dealer.judge(player));
+        }
+        return playerResults;
+    }
+
     public List<String> findAvailablePlayerNames() {
         List<String> availablePlayerNames = new ArrayList<>();
         for (Player player : players) {
