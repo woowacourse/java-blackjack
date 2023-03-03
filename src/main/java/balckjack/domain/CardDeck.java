@@ -3,7 +3,7 @@ package balckjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardDeck {
+class CardDeck {
 
     private final List<Card> cards;
 

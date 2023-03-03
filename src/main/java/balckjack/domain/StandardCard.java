@@ -1,6 +1,6 @@
 package balckjack.domain;
 
-public class StandardCard extends Card {
+class StandardCard extends Card {
 
     public static final int MAX_BOUND_VALUE = 10;
     public static final int MIN_BOUND_VALUE = 2;

@@ -1,6 +1,6 @@
 package balckjack.domain;
 
-public class AceCard extends Card{
+class AceCard extends Card{
 
     public AceCard(Pattern pattern) {
         super(pattern, "A");

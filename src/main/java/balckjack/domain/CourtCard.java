@@ -2,7 +2,7 @@ package balckjack.domain;
 
 import java.util.List;
 
-public class CourtCard extends Card {
+class CourtCard extends Card {
 
     private static final List<String> symbols = List.of("J", "Q", "K");
 

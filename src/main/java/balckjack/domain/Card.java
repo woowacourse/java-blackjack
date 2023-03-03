@@ -2,7 +2,7 @@ package balckjack.domain;
 
 import java.util.Objects;
 
-abstract public class Card {
+abstract class Card {
 
     protected final Pattern pattern;
     protected final String symbol;
