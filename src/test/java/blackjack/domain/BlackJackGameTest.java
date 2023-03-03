@@ -53,4 +53,13 @@ class BlackJackGameTest {
         assertThat(drawCount).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("플레이어 이름 리스트를 반환하는 기능 테스트")
+    void getPlayersTest() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new RandomDeckGenerator());
+
+        final List<String> players = blackJackGame.getPlayerNames();
+
+        assertThat(players).containsExactly("필립");
+    }
 }

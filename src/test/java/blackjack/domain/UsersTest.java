@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +48,7 @@ class UsersTest {
 
         boolean dealerOverDrawLimit = users.isDealerOverDrawLimit();
 
-        Assertions.assertThat(dealerOverDrawLimit).isTrue();
+        assertThat(dealerOverDrawLimit).isTrue();
     }
 
     @Test
@@ -61,6 +60,16 @@ class UsersTest {
         users.drawDealer(deck);
         int dealerCardCount = users.getStatus().get("딜러").size();
 
-        Assertions.assertThat(dealerCardCount).isEqualTo(3);
+        assertThat(dealerCardCount).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("플레이어 리스트를 반환하는 기능 테스트")
+    void getPlayersTest() {
+        final Users users = new Users(List.of("필립"), new Deck(new RandomDeckGenerator()));
+
+        final List<String> players = users.getPlayerNames();
+
+        assertThat(players).containsExactly("필립");
     }
 }

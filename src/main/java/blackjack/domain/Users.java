@@ -43,6 +43,13 @@ public class Users {
                 .orElseThrow(() -> new IllegalStateException(NOT_CONTAIN_DEALER));
     }
 
+    public List<String> getPlayerNames() {
+        return users.stream()
+                .filter(user -> user instanceof Player)
+                .map(User::getName)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     public void drawDealer(final Deck deck) {
         getDealer().drawCard(deck);
     }

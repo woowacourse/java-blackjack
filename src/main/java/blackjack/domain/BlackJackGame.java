@@ -21,6 +21,10 @@ public class BlackJackGame {
         return users.getInitialStatus();
     }
 
+    public List<String> getPlayerNames() {
+        return users.getPlayerNames();
+    }
+
     public int playDealerTurn() {
         int drawCount = 0;
         while (!users.isDealerOverDrawLimit()) {
@@ -29,5 +33,4 @@ public class BlackJackGame {
         }
         return drawCount;
     }
-
 }
