@@ -53,4 +53,8 @@ public class Dealer extends Participant {
     public void drawOneMoreCard() {
         receiveCard(deck.drawCard());
     }
+
+    public Players getPlayers() {
+        return players;
+    }
 }

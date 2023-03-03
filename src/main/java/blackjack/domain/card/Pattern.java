@@ -22,4 +22,8 @@ public enum Pattern {
 
         return patterns.get(0);
     }
+
+    public String getName() {
+        return name;
+    }
 }
