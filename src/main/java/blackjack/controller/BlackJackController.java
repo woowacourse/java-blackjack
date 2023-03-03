@@ -6,12 +6,13 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
     public static final int REPEAT_COUNT = 2;
     public static final String YES = "y";
-    
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -135,9 +136,8 @@ public class BlackJackController {
         showFinalCards(dealer, players);
 
         GameResult gameResult = new GameResult(dealer, players);
-        List<Result> dealerResults = gameResult.getDealerResults();
 
-        showDealerResult(dealerResults);
+        showDealerResult(gameResult.getDealerResults());
         players.getPlayers().forEach(
                 player -> showPlayerResult(player, gameResult.getPlayerResult(player)));
     }

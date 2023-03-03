@@ -30,7 +30,7 @@ class GameResultTest {
     void gameResult1() {
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
+        assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
     }
 
