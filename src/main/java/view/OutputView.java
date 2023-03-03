@@ -19,7 +19,7 @@ public class OutputView {
         playersCards.forEach(this::printPlayerCard);
     }
 
-    private void printPlayerCard(PlayerOpenDto playerOpenDto) {
+    public void printPlayerCard(PlayerOpenDto playerOpenDto) {
         System.out.println(
                 playerOpenDto.getName().getValue() + "카드: " + parseCards(playerOpenDto));
     }
