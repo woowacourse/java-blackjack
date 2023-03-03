@@ -7,7 +7,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.ResultCalculator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +25,8 @@ public class ResultCalculatorTest {
         dealer.takeCard(new Card("8클로버", 8));
         resultCalculator.fight(player, dealer);
 
-        List<Integer> playerResults =resultCalculator.getResultsByName("dino");
-        List<Integer> dealerResults =resultCalculator.getResultsByName("딜러");
+        List<Integer> playerResults = resultCalculator.getResultsByName("dino");
+        List<Integer> dealerResults = resultCalculator.getResultsByName("딜러");
 
         Assertions.assertThat(playerResults).isEqualTo(List.of(1, 0, 0));
         Assertions.assertThat(dealerResults).isEqualTo(List.of(0, 0, 1));
@@ -45,8 +44,8 @@ public class ResultCalculatorTest {
         dealer.takeCard(new Card("5클로버", 5));
         resultCalculator.fight(player, dealer);
 
-        List<Integer> playerResults =resultCalculator.getResultsByName("dino");
-        List<Integer> dealerResults =resultCalculator.getResultsByName("딜러");
+        List<Integer> playerResults = resultCalculator.getResultsByName("dino");
+        List<Integer> dealerResults = resultCalculator.getResultsByName("딜러");
 
         Assertions.assertThat(playerResults).isEqualTo(List.of(0, 1, 0));
         Assertions.assertThat(dealerResults).isEqualTo(List.of(0, 1, 0));

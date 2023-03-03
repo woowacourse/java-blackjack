@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.BlackJackGame;
-import domain.result.ResultCalculator;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.ResultCalculator;
 import view.InputView;
 import view.OutputVIew;
 import view.ResultView;
@@ -24,6 +24,13 @@ public class BlackJackController {
         this.players = generatePlayers(playerNames);
         this.dealer = new Dealer();
         initSetting();
+    }
+
+    public void run() {
+        askEachPlayers();
+        dealerDistributeOrNot();
+        printFinalGameStatus();
+        printFinalFightResult();
     }
 
     private void initSetting() {
@@ -42,7 +49,7 @@ public class BlackJackController {
         return players;
     }
 
-    public void askEachPlayers() {
+    private void askEachPlayers() {
         System.out.println();
         for (Player player : players.getPlayers()) {
             askPlayerDistribute(player);
@@ -65,14 +72,14 @@ public class BlackJackController {
         return false;
     }
 
-    public void dealerDistributeOrNot() {
+    private void dealerDistributeOrNot() {
         while (dealer.checkCardsCondition()) {
             BlackJackGame.distributeCard(dealer, 1);
             OutputVIew.printDealerReceivedMessage();
         }
     }
 
-    public void printFinalGameStatus() {
+    private void printFinalGameStatus() {
         System.out.println();
         ResultView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.getMaxSum());
         for (Player player : players.getPlayers()) {
@@ -80,7 +87,7 @@ public class BlackJackController {
         }
     }
 
-    public void printFinalFightResult() {
+    private void printFinalFightResult() {
         ResultCalculator resultCalculator = new ResultCalculator(players, dealer);
         resultCalculator.executeGame(players, dealer);
         ResultView.printFinalFightResult(resultCalculator.getFinalFightResults());
