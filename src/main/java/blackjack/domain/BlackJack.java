@@ -6,7 +6,6 @@ import blackjack.domain.dto.GameResult;
 import blackjack.domain.dto.InitialStatus;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
-import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +50,6 @@ public class BlackJack {
 
     public Card getDealerFirstCard() {
         return dealer.getFirstCard();
-    }
-
-    public List<User> getUsersStatus() {
-        return users.getUsers();
     }
 
     public Dealer getDealer() {
