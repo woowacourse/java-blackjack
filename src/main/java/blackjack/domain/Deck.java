@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
@@ -7,6 +8,7 @@ public class Deck {
 
     public Deck(Stack<Card> cards) {
         this.cards = (Stack<Card>) cards.clone();
+        Collections.shuffle(this.cards);
     }
 
     public Card draw() {
