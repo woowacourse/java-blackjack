@@ -14,12 +14,15 @@ public class Deck {
         initializeCards();
     }
 
-    // TODO : 메서드 분리
     private void initializeCards() {
         for (CardType cardType : CardType.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
-                cards.add(new Card(cardType, cardNumber));
-            }
+            mapCardNumbers(cardType);
+        }
+    }
+
+    private void mapCardNumbers(CardType cardType) {
+        for (CardNumber cardNumber : CardNumber.values()) {
+            cards.add(new Card(cardType, cardNumber));
         }
     }
 
