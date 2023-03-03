@@ -7,6 +7,7 @@ public class Dealer extends Participant {
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
     private static final int DEALER_HIT_BASED_NUMBER = 16;
     private static final int FIRST_CARD_COUNT = 2;
+    private static final int WIN_MAX_NUMBER = 21;
 
 
     public Dealer(ParticipantName participantName) {
@@ -24,11 +25,21 @@ public class Dealer extends Participant {
     public WinningResult judgeWinOrLose(Participant player) {
         int myValue = calculateDealerCardNumber();
         int otherPlayer = player.calculateCardNumber();
-        if (myValue > otherPlayer) {
+        return getWinningResult(player, myValue, otherPlayer);
+    }
+
+    private WinningResult getWinningResult(final Participant player, final int myValue, final int otherPlayer) {
+        if (otherPlayer > WIN_MAX_NUMBER && myValue > WIN_MAX_NUMBER) {
+            return WinningResult.PUSH;
+        }
+        if (otherPlayer > WIN_MAX_NUMBER) {
             return WinningResult.WIN;
         }
-        if (myValue < otherPlayer) {
+        if (myValue > WIN_MAX_NUMBER || myValue < otherPlayer) {
             return WinningResult.LOSE;
+        }
+        if (myValue > otherPlayer) {
+            return WinningResult.WIN;
         }
         return includeBlackjackWinOrLose(player);
     }
