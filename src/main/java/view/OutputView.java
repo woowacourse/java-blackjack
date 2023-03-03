@@ -3,6 +3,7 @@ package view;
 import domain.Card;
 import domain.Cards;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Participant;
 import domain.Player;
 import java.util.List;
@@ -58,5 +59,23 @@ public class OutputView {
     private static void printResult(Participant participant) {
         System.out.printf("%s카드: %s - 결과: %d%n", participant.getName(),
             getAllCardsNames(participant), participant.getCards().getScore());
+    }
+
+    public static void printWinOrLose(DealerScore dealerScore, List<PlayerScore> results) {
+        printDealerWinOrLose(dealerScore);
+        printPlayersWinOrLose(results);
+    }
+
+    private static void printDealerWinOrLose(DealerScore dealerScore) {
+        System.out.printf("딜러: %d%s %d%s %d%s%n",
+            dealerScore.getWin(), Converter.of(GameResult.WIN),
+            dealerScore.getLose(), Converter.of(GameResult.LOSE),
+            dealerScore.getDraw(), Converter.of(GameResult.DRAW));
+    }
+
+    private static void printPlayersWinOrLose(List<PlayerScore> results) {
+        for (PlayerScore result : results) {
+            System.out.printf("%s: %s%n", result.getName(), Converter.of(result.getGameResult()));
+        }
     }
 }

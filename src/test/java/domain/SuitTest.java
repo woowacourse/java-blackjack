@@ -11,6 +11,6 @@ class SuitTest {
     @DisplayName("타입은 다이아몬드, 클로버, 하트, 스페이스가 있다")
     void generateType() {
         assertThat(Suit.values())
-            .contains(Suit.DIAMOND, Suit.CLOVER, Suit.HEART, Suit.SPACE);
+            .contains(Suit.DIAMOND, Suit.CLOVER, Suit.HEART, Suit.SPADE);
     }
 }
