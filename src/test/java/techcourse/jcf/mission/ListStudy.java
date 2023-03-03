@@ -24,6 +24,13 @@ public class ListStudy {
         for (String value : values) {
             System.out.println(value);
         }
+
+        SimpleList<Integer> values2 = new SimpleArrayList<Integer>();
+        values2.add(1);
+        values2.add(2);
+
+        Integer first = values2.get(0);
+        Integer second = values2.get(1);
     }
 }
 
