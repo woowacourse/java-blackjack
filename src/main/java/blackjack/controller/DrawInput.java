@@ -23,4 +23,8 @@ public enum DrawInput {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INPUT_FORM_EXCEPTION_MESSAGE));
     }
+
+    public boolean isDraw() {
+        return isDraw;
+    }
 }

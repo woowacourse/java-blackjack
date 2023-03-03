@@ -53,8 +53,7 @@ public class BackJackController {
             return false;
         }
         outputView.printDrawCardRequestMessage(name);
-        String drawOrStay = inputView.readDrawOrStay();
-        return drawOrStay.equals("y");
+        return DrawInput.from(inputView.readDrawOrStay()).isDraw();
     }
 
     private void playDealerTurn(BlackJackGame blackJackGame) {
