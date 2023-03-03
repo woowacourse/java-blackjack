@@ -118,7 +118,7 @@ class ParticipantsTest {
             String expected = "포이";
 
             //when
-            String actual = participants.nextDrawablePlayer();
+            String actual = participants.nextDrawablePlayerName();
 
             //then
             assertThat(actual).isEqualTo(expected);
@@ -141,12 +141,32 @@ class ParticipantsTest {
             participants.readyForGame(deck);
 
             //when
-            ThrowingCallable throwingCallable = participants::nextDrawablePlayer;
+            ThrowingCallable throwingCallable = participants::nextDrawablePlayerName;
 
             //then
             assertThatThrownBy(throwingCallable)
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessage("카드를 받을 수 있는 플레이어가 없습니다.");
+        }
+    }
+
+    @Nested
+    class 다음플레이어에게카드를나눠준다 {
+        @Test
+        void should_다음플레이어는카드를한장받는다_when_handOutCard호출시() {
+            //given
+            Participants participants = Participants.create(List.of("포이", "에밀"));
+            Deck deck = Deck.create();
+            participants.readyForGame(deck);
+            String expected = "에밀";
+
+            //when
+            participants.handOutCard(new Card(Suit.SPADE, Number.ACE));
+            String actual = participants.nextDrawablePlayerName();
+
+            //then
+            assertThat(actual).isEqualTo(expected);
+
         }
     }
 }

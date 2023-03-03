@@ -20,6 +20,10 @@ public class BlackjackGame {
     }
 
     public String nextDrawablePlayer() {
-        return participants.nextDrawablePlayer();
+        return participants.nextDrawablePlayerName();
+    }
+
+    public void handOutCardToNextPlayer() {
+        participants.handOutCard(deck.draw());
     }
 }
