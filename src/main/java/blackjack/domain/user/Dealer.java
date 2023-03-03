@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer implements Player {
@@ -28,10 +27,9 @@ public class Dealer implements Player {
         return cards.getFirstCard();
     }
 
-    public boolean needCard() {
+    public boolean needCardToGetResult() {
         return canReceive();
     }
-
 
     public List<Card> openCards() {
         validateDealerStatus();

@@ -41,7 +41,7 @@ public class BlackJackController {
     }
 
     private void finalizeDealerCardStatus(final BlackJack blackJack) {
-        final int cardCount = blackJack.finalizeDealer(randomDeck);
+        final int cardCount = blackJack.giveCardToDealerUntilDontNeed(randomDeck);
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 

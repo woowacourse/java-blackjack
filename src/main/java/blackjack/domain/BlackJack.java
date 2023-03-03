@@ -29,9 +29,9 @@ public class BlackJack {
         users.giveCardByName(user, deck.drawCard());
     }
 
-    public int finalizeDealer(Deck deck) {
+    public int giveCardToDealerUntilDontNeed(Deck deck) {
         int additionalCardCount = 0;
-        while (dealer.needCard()) {
+        while (dealer.needCardToGetResult()) {
             dealer.draw(deck.drawCard());
             additionalCardCount += 1;
         }
@@ -55,7 +55,7 @@ public class BlackJack {
     }
 
     public Dealer getDealer() {
-        if (dealer.needCard()) {
+        if (dealer.needCardToGetResult()) {
             throw new IllegalStateException("딜러가 아직 카드의 결론이 나지 않았습니다.");
         }
         return dealer;

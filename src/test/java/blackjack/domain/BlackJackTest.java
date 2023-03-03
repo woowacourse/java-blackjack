@@ -61,7 +61,7 @@ public class BlackJackTest {
     void finalizeDealerTest() {
         final Name 푸우 = new Name("푸우");
         final BlackJack blackJack = new BlackJack(List.of(푸우), new TestDeck(Arrays.asList(10, 3, 2, 2)));
-        assertThat(blackJack.finalizeDealer(new TestDeck(Arrays.asList(2, 2, 2, 2, 2, 2, 1))))
+        assertThat(blackJack.giveCardToDealerUntilDontNeed(new TestDeck(Arrays.asList(2, 2, 2, 2, 2, 2, 1))))
                 .isEqualTo(7);
     }
 
