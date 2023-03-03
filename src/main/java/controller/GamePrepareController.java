@@ -26,9 +26,9 @@ public class GamePrepareController {
     }
 
     public void start(final CardShuffler cardShuffler) {
-        Participants participants = makeParticipants();
-        Deck deck = Deck.create(cardShuffler);
-        GameManager gameManager = GameManager.create(deck, participants);
+        final Participants participants = makeParticipants();
+        final Deck deck = Deck.create(cardShuffler);
+        final GameManager gameManager = GameManager.create(deck, participants);
         handCards(participants, gameManager);
         printParticipantCards(participants);
         processGame(participants, gameManager);
@@ -42,8 +42,8 @@ public class GamePrepareController {
     }
 
     private void handCards(final Participants participants, final GameManager gameManager) {
-        int size = participants.size();
-        IntStream.range(0, size)
+        final int participantSize = participants.size();
+        IntStream.range(0, participantSize)
                 .forEach(participantOrder -> gameManager.giveCards(participantOrder, START_GIVEN_COUNT));
     }
 
@@ -54,13 +54,13 @@ public class GamePrepareController {
     }
 
     private void printDealerCard(final Participants participants) {
-        Dealer dealer = (Dealer) participants.getDealer();
-        Card dealerFirstCard = dealer.getFirstCard();
+        final Dealer dealer = (Dealer) participants.getDealer();
+        final Card dealerFirstCard = dealer.getFirstCard();
         outputView.printDealerCard(dealer.getName(), dealerFirstCard);
     }
 
     private void printPlayerCards(final Participants participants) {
-        List<Participant> players = participants.getPlayer();
+        final List<Participant> players = participants.getPlayer();
         for (Participant player : players) {
             List<Card> playerCards = player.getCard();
             outputView.printPlayerCard(player.getName(), playerCards);
@@ -68,7 +68,7 @@ public class GamePrepareController {
     }
 
     private void processGame(final Participants participants, final GameManager gameManager) {
-        GameProcessController gameProcessController = GameProcessController.create(inputView, outputView);
+        final GameProcessController gameProcessController = GameProcessController.create(inputView, outputView);
         gameProcessController.start(participants, gameManager);
     }
 }

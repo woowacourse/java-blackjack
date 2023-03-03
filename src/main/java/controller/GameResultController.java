@@ -28,22 +28,22 @@ public class GameResultController {
     }
 
     private void printGameResult(final Participants participants) {
-        Participant dealer = participants.getDealer();
+        final Participant dealer = participants.getDealer();
         printParticipantCardResult(dealer);
-        List<Participant> players = participants.getPlayer();
+        final List<Participant> players = participants.getPlayer();
         players.forEach(this::printParticipantCardResult);
     }
 
     private void printParticipantCardResult(final Participant participant) {
-        List<Card> participantCards = participant.getCard();
-        int participantScore = participant.calculateScore();
+        final List<Card> participantCards = participant.getCard();
+        final int participantScore = participant.calculateScore();
         outputView.printCardResult(participant.getName(), participantCards, participantScore);
     }
 
     private void printFinalGameResult(final Participants participants) {
-        GameResult gameResult = GameResult.create(participants);
-        Map<String, Result> playerGameResults = gameResult.getPlayerGameResults();
-        Participant dealer = participants.getDealer();
+        final GameResult gameResult = GameResult.create(participants);
+        final Map<String, Result> playerGameResults = gameResult.getPlayerGameResults();
+        final Participant dealer = participants.getDealer();
         outputView.printFinalGameResult(dealer.getName(), playerGameResults);
     }
 }

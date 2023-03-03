@@ -38,29 +38,37 @@ public class GameProcessController {
     }
 
     private void drawPlayersCard(final Participants participants, final GameManager gameManager) {
-        List<Participant> players = participants.getPlayer();
+        final List<Participant> players = participants.getPlayer();
         for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
-            Participant player = players.get(playerIndex);
+            final Participant player = players.get(playerIndex);
             handleDrawCard(gameManager, playerIndex, player);
         }
     }
 
-    private void handleDrawCard(final GameManager gameManager, final int playerIndex, final Participant player) {
+    private void handleDrawCard(final GameManager gameManager,
+                                final int playerIndex,
+                                final Participant player) {
         DrawCardCommand drawCardCommand;
         do {
             drawCardCommand = getDrawCardCommand(player);
-            if (drawCardCommand.isDrawAgain()) {
-                gameManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
-            }
+            checkDraw(gameManager, playerIndex, drawCardCommand);
             outputView.printPlayerCard(player.getName(), player.getCard());
         } while (canDrawCard(player, drawCardCommand));
     }
 
     private DrawCardCommand getDrawCardCommand(final Participant player) {
         return inputView.getInputWithRetry(() -> {
-            String command = inputView.getDrawCardCommand(player.getName());
+            final String command = inputView.getDrawCardCommand(player.getName());
             return DrawCardCommand.findCardCommand(command);
         });
+    }
+
+    private void checkDraw(final GameManager gameManager,
+                           final int playerIndex,
+                           final DrawCardCommand drawCardCommand) {
+        if (drawCardCommand.isDrawAgain()) {
+            gameManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
+        }
     }
 
     private boolean canDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
@@ -68,7 +76,7 @@ public class GameProcessController {
     }
 
     private boolean isBust(final Participant player) {
-        boolean isBust = player.isBust();
+        final boolean isBust = player.isBust();
         if (isBust) {
             OutputView.print(BUST_MESSAGE.getMessage());
         }
@@ -76,7 +84,7 @@ public class GameProcessController {
     }
 
     private boolean isBlackJack(final Participant player) {
-        boolean isBlackJack = player.isBlackJack();
+        final boolean isBlackJack = player.isBlackJack();
         if (isBlackJack) {
             OutputView.print(BLACKJACK_MESSAGE.getMessage());
         }
@@ -84,16 +92,17 @@ public class GameProcessController {
     }
 
     private void handleDealerCards(final Participants participants, final GameManager gameManager) {
-        Dealer dealer = (Dealer) participants.getDealer();
+        final Dealer dealer = (Dealer) participants.getDealer();
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canGiveCard()) {
             gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
-            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()) + System.lineSeparator());
+            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(),
+                    dealer.getName()) + System.lineSeparator());
         }
     }
 
     private void displayGameResult(final Participants participants) {
-        GameResultController gameResultController = GameResultController.create(outputView);
+        final GameResultController gameResultController = GameResultController.create(outputView);
         gameResultController.start(participants);
     }
 }
