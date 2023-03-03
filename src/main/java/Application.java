@@ -9,15 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Application {
+    private static final InputView inputView = new InputView();
+    private static final OutputView outputView = new OutputView();
+
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
-
-        List<String> playerNames = inputView.readNames();
-
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        List<Player> players = createPlayers();
 
         Dealer dealer = new Dealer();
         Game game = new Game(players, new Deck(), dealer);
@@ -29,7 +25,7 @@ public class Application {
 
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if (player.getScore() < 21) {
+            if (game.canHit(player)) {
                 if (inputView.askForAnotherCard(player.getName())) {
                     game.dealAnotherCard(i);
                 }
@@ -53,5 +49,16 @@ public class Application {
             Player player = players.get(i);
             outputView.printResult(player.getName(), game.isWon(i));
         }
+    }
+
+    private static List<Player> createPlayers() {
+        List<String> playerNames = inputView.readNames();
+        return createPlayersWith(playerNames);
+    }
+
+    private static List<Player> createPlayersWith(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 }
