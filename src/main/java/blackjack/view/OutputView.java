@@ -18,8 +18,13 @@ public class OutputView {
         System.out.printf(OPEN_CARD_MESSAGE, String.join(DELIMITER, playerNames));
         System.out.printf(OPEN_CARD_FORMAT, DEALER_NAME, toCardName(dealerFirstCard));
         for (String playerName : playerNames) {
-            System.out.printf(OPEN_CARD_FORMAT, playerName, joinAllCardNames(playersCards.get(playerName)));
+            List<Card> playerCard = playersCards.get(playerName);
+            showPlayerCard(playerName, playerCard);
         }
+    }
+
+    public static void showPlayerCard(String playerName, List<Card> playerCard) {
+        System.out.printf(OPEN_CARD_FORMAT, playerName, joinAllCardNames(playerCard));
     }
 
     private static String toCardName(Card card) {
