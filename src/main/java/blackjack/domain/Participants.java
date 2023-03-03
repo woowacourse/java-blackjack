@@ -69,14 +69,9 @@ public class Participants {
     }
 
     private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
-        if (isAvailable(player)) {
+        if (player.isAvailable()) {
             availablePlayerNames.add(player.getName());
         }
-    }
-
-    public boolean isAvailable(Player player) {
-        int sum = player.computeSumOfCards();
-        return !player.isBlackJack(sum) && !player.isBust(sum);
     }
 
     public List<Card> getDealerCards() {
@@ -94,5 +89,9 @@ public class Participants {
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

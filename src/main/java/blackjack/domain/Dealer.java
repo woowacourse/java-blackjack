@@ -13,7 +13,7 @@ public class Dealer extends Participant {
         if (isBust(dealerSum)) {
             return PlayerResult.WIN;
         }
-        
+
         int playerSum = player.computeSumOfCards();
         if (playerSum == dealerSum) {
             return PlayerResult.PUSH;
@@ -22,5 +22,10 @@ public class Dealer extends Participant {
             return PlayerResult.WIN;
         }
         return PlayerResult.LOSE;
+    }
+
+    public boolean isAvailable() {
+        int sum = computeSumOfCards();
+        return sum < CARD_TAKE_LIMIT;
     }
 }

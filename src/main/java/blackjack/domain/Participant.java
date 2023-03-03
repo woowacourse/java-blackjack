@@ -31,6 +31,11 @@ public class Participant {
         return sum;
     }
 
+    public boolean isAvailable() {
+        int sum = computeSumOfCards();
+        return !isBlackJack(sum) && !isBust(sum);
+    }
+
     public boolean isBust(int sum) {
         return sum > BLACK_JACK;
     }

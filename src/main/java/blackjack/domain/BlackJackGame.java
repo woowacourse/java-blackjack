@@ -21,7 +21,7 @@ public class BlackJackGame {
         Player player = participants.findPlayerBy(playerName);
         List<Card> card = deck.draw(1);
         player.take(card.get(0));
-        return participants.isAvailable(player);
+        return player.isAvailable();
     }
 
     public Map<String, List<Card>> openPlayersCards() {
@@ -32,6 +32,10 @@ public class BlackJackGame {
         return participants.openDealerFirstCard();
     }
 
+    public List<Card> openDealerCards() {
+        return participants.openDealerCards();
+    }
+
     public List<String> findAvailablePlayerNames() {
         return participants.findAvailablePlayerNames();
     }
@@ -39,5 +43,18 @@ public class BlackJackGame {
     public List<Card> openPlayerCards(String playerName) {
         Player player = participants.findPlayerBy(playerName);
         return player.getCards();
+    }
+
+    public int hitOrStayForDealer() {
+        Dealer dealer = participants.getDealer();
+        int hitCount = 0;
+
+        while (dealer.isAvailable()) {
+            List<Card> cards = deck.draw(1);
+            dealer.take(cards.get(0));
+            hitCount++;
+        }
+
+        return hitCount;
     }
 }
