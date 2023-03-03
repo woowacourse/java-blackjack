@@ -43,4 +43,12 @@ public class Cards {
     public int getSize() {
         return cards.size();
     }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public Card get(int index) {
+        return cards.get(index);
+    }
 }

@@ -13,7 +13,7 @@ class CardsTest {
     @DisplayName("card 리스트를 입력했을 때 Cards객체가 정상적으로 생성됨")
     void makeCards() {
         List<Card> cards = List.of(new Card(Suit.CLOVER, Number.A),
-            new Card(Suit.SPACE, Number.FIVE),
+            new Card(Suit.SPADE, Number.FIVE),
             new Card(Suit.HEART, Number.J));
 
         Assertions.assertDoesNotThrow(() -> new Cards(cards));
@@ -25,7 +25,7 @@ class CardsTest {
         Cards cards = new Cards(
             List.of(new Card(Suit.CLOVER, Number.THREE),
                 new Card(Suit.HEART, Number.FOUR),
-                new Card(Suit.SPACE, Number.FIVE)));
+                new Card(Suit.SPADE, Number.FIVE)));
 
         assertThat(cards.getScore()).isEqualTo(12);
     }
@@ -36,7 +36,7 @@ class CardsTest {
         Cards cards = new Cards(
             List.of(new Card(Suit.CLOVER, Number.A),
                 new Card(Suit.HEART, Number.FOUR),
-                new Card(Suit.SPACE, Number.FIVE)));
+                new Card(Suit.SPADE, Number.FIVE)));
 
         assertThat(cards.getScore()).isEqualTo(20);
     }
@@ -47,7 +47,7 @@ class CardsTest {
         Cards cards = new Cards(
             List.of(new Card(Suit.CLOVER, Number.FIVE),
                 new Card(Suit.HEART, Number.K),
-                new Card(Suit.SPACE, Number.A)));
+                new Card(Suit.SPADE, Number.A)));
 
         assertThat(cards.getScore()).isEqualTo(16);
     }

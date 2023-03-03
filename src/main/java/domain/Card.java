@@ -13,6 +13,9 @@ public class Card {
         this.number = number;
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
     public Number getNumber() {
         return number;
     }
