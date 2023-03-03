@@ -84,4 +84,11 @@ public class Participants {
                 .map(Player::getCards)
                 .collect(Collectors.toList());
     }
+
+    public Player findPlayerBy(String playerName) {
+        return players.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
+    }
 }

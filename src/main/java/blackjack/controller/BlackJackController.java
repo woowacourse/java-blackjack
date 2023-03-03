@@ -33,8 +33,10 @@ public class BlackJackController {
 
     private void hitOrStay(String playerName) {
         String toTakeKeyword = InputView.askToTake(playerName);
-        System.out.println(toTakeKeyword);
         // TODO blackjackgame hit or stay
+        if (toTakeKeyword.equals("y")) {
+            blackJackGame.handOneCard(playerName);
+        }
         // TODO outputview 플레이어 보유 카드 출력
     }
 }

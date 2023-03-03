@@ -17,6 +17,12 @@ public class BlackJackGame {
         participants.handOut(deck);
     }
 
+    public void handOneCard(String playerName) {
+        Player player = participants.findPlayerBy(playerName);
+        List<Card> card = deck.draw(1);
+        player.take(card.get(0));
+    }
+
     public Map<String, List<Card>> openPlayersCards() {
         return participants.openPlayerCards();
     }
