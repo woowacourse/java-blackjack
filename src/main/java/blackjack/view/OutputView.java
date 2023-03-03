@@ -28,6 +28,7 @@ public class OutputView {
         printDealerStatus(dealerStatus);
         System.out.println();
         printChallengersStatus(challengersStatus);
+        System.out.println();
     }
 
     private static void printGivenMessage(PlayerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
@@ -68,6 +69,7 @@ public class OutputView {
         System.out.println();
         if (dealerCanPick) {
             System.out.println(DEALER_CAN_PICK_MESSAGE);
+            System.out.println();
             return;
         }
         System.out.println(DEALER_CAN_NOT_PICK_MESSAGE);
