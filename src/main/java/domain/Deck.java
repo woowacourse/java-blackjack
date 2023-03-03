@@ -26,9 +26,8 @@ public class Deck {
 
     private List<Card> buildCardsFrom(Face face) {
         var cards = new ArrayList<Card>();
-        var letters = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J");
 
-        for (String letter : letters) {
+        for (Letter letter : Letter.values()) {
             cards.add(new Card(face, letter));
         }
 

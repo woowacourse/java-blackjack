@@ -68,11 +68,9 @@ public class Player {
         if (getScore() == other.getScore() || (isBusted() && other.isBusted())) {
             return Result.DRAW;
         }
-
         if (!isBusted() && (getScore() > other.getScore() || other.isBusted())) {
             return Result.WIN;
         }
-
         return Result.LOSE;
     }
 

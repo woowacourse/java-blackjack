@@ -3,15 +3,20 @@ package domain;
 public class Card {
 
     private final Face face;
-    private final String letter;
+    private final Letter letter;
 
     public Card(Face face, String letter) {
+        this.face = face;
+        this.letter = Letter.of(letter);
+    }
+
+    public Card(Face face, Letter letter) {
         this.face = face;
         this.letter = letter;
     }
 
     public String getLetter() {
-        return letter;
+        return letter.getLetter();
     }
 
     public Face getFace() {
@@ -19,6 +24,6 @@ public class Card {
     }
 
     public boolean isNotA() {
-        return !letter.equals("A");
+        return letter.isNotA();
     }
 }
