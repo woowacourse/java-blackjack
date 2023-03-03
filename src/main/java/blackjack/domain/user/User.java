@@ -8,6 +8,7 @@ import java.util.List;
 
 public class User implements Player {
     private static final int INITIAL_CARD_COUNT = 2;
+
     private final Name name;
     private Cards cards;
 
@@ -19,7 +20,7 @@ public class User implements Player {
 
     private void validateCardsSize(final int size) {
         if (size != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("유저는 카드 2장 이상을 갖고 있어야 합니다.");
+            throw new IllegalArgumentException("유저는 최소 2장의 카드 갖고 있어야 합니다.");
         }
     }
 

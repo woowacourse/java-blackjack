@@ -24,19 +24,25 @@ public class Dealer implements Player {
         }
     }
 
+    public Card getFirstCard() {
+        return cards.getFirstCard();
+    }
+
     public boolean needCard() {
         return canReceive();
     }
 
 
     public List<Card> openCards() {
+        validateDealerStatus();
         return cards.getCards();
     }
 
-    public Card getFirstCard() {
-        return cards.getFirstCard();
+    private void validateDealerStatus() {
+        if (canReceive()) {
+            throw new IllegalStateException("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
+        }
     }
-
 
     @Override
     public void draw(final Card card) {
@@ -54,9 +60,7 @@ public class Dealer implements Player {
 
     @Override
     public GamePoint getGamePoint() {
-        if (canReceive()) {
-            throw new IllegalStateException("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
-        }
+        validateDealerStatus();
         return cards.getPoint();
     }
 
@@ -65,6 +69,7 @@ public class Dealer implements Player {
     }
 
     public Cards getCards() {
+        validateDealerStatus();
         return cards;
     }
 }

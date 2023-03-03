@@ -40,7 +40,7 @@ public class DealerTest {
         }
         assertThatThrownBy(() -> new Dealer(cardData))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("유저는 카드 2장 이상을 갖고 있어야 합니다.");
+                .hasMessage("딜러는 카드 2장 이상을 갖고 있어야 합니다.");
     }
 
     @Test
