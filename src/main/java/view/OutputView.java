@@ -29,6 +29,10 @@ public class OutputView {
         });
     }
 
+    public void printEachPlayerCards(final String playerName, final List<Card> cards) {
+        System.out.println(getEachPlayerCards(playerName, cards));
+    }
+
     private void printCardWithScore(final String playerName, final List<Card> cards, final int score) {
         System.out.println(getEachPlayerCards(playerName, cards) + " - 결과: " + score);
     }
@@ -56,7 +60,6 @@ public class OutputView {
         printPlayerResults(playerResults);
     }
 
-
     private void printDealerResult(final Map<GameResult, Integer> dealerResult) {
         StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
         for (GameResult gameResult : dealerResult.keySet()) {
@@ -76,5 +79,9 @@ public class OutputView {
     private void printPlayerResults(final Map<String, GameResult> playerResults) {
         playerResults.forEach((playerName, gameResult) ->
             System.out.println(playerName + ": " + gameResult.getName()));
+    }
+
+    public void printDealerHitMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
