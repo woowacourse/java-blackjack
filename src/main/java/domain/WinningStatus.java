@@ -1,7 +1,7 @@
 package domain;
 
 public enum WinningStatus {
-    WIN, LOSE, TIE;
+    WIN, LOSE, DRAW;
 
     public WinningStatus reverse() {
         if (this == WIN) {
@@ -10,6 +10,6 @@ public enum WinningStatus {
         if (this == LOSE) {
             return WIN;
         }
-        return TIE;
+        return DRAW;
     }
 }

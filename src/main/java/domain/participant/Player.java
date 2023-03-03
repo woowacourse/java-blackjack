@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.WinningStatus;
 import domain.card.Card;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Player extends Participant {
         super(name, cards);
     }
 
-    public boolean isNotBust() {
-        return calculateScore() < BUST_BOUNDARY_EXCLUSIVE;
+    public boolean canReceive() {
+        return this.calculateScore() < BUST_BOUNDARY_EXCLUSIVE;
     }
 }

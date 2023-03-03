@@ -1,7 +1,9 @@
 package domain;
 
+import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,40 +13,50 @@ public class WinningResult {
     private final Map<WinningStatus, Integer> dealerResult = new HashMap<>();
 
     public WinningResult(final Participants participants) {
-        makeWinningResult(participants);
+        computeWinningResult(participants);
     }
 
-    private void makeWinningResult(final Participants participants) {
-        int dealerScore = participants.getDealer().calculateScore();
+    private void computeWinningResult(final Participants participants) {
+        Dealer dealer = participants.getDealer();
         for (Player player : participants.getPlayers()) {
-            WinningStatus playerWinningStatus = decideWinningStatus(player, dealerScore);
+            WinningStatus playerWinningStatus = compete(player, dealer);
             playersResult.put(player, playerWinningStatus);
-            dealerResult.put(playerWinningStatus.reverse(),
-                    dealerResult.getOrDefault(playerWinningStatus.reverse(), 0) + 1);
+            WinningStatus dealerWinningStatus = playerWinningStatus.reverse();
+            dealerResult.put(dealerWinningStatus, dealerResult.getOrDefault(dealerWinningStatus, 0) + 1);
         }
     }
-    private WinningStatus decideWinningStatus(final Player player, final int dealerScore) {
-        int score = player.calculateScore();
-        if (dealerScore > 21) {
-            if (score > 21) {
-                return WinningStatus.TIE;
-            }
+
+    private WinningStatus compete(final Player player, final Dealer dealer) {
+        if (dealer.isBust()) {
+            return statusWhenDealerBust(player);
+        }
+        return statusWhenDealerNotBust(player, dealer);
+    }
+
+    private WinningStatus statusWhenDealerBust(final Player player) {
+        if (player.isBust()) {
+            return WinningStatus.DRAW;
+        }
+        return WinningStatus.WIN;
+    }
+
+    private WinningStatus statusWhenDealerNotBust(final Player player, final Dealer dealer) {
+        int playerScore = player.calculateScore();
+        int dealerScore = dealer.calculateScore();
+        if (!player.isBust() && playerScore > dealerScore) {
             return WinningStatus.WIN;
         }
-        if (score <= 21 && score > dealerScore) {
-            return WinningStatus.WIN;
-        }
-        if (score == dealerScore) {
-            return WinningStatus.TIE;
+        if (playerScore == dealerScore) {
+            return WinningStatus.DRAW;
         }
         return WinningStatus.LOSE;
     }
 
     public Map<Player, WinningStatus> getPlayersResult() {
-        return playersResult;
+        return Collections.unmodifiableMap(playersResult);
     }
 
     public Map<WinningStatus, Integer> getDealerResult() {
-        return dealerResult;
+        return Collections.unmodifiableMap(dealerResult);
     }
 }

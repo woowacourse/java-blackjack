@@ -73,7 +73,7 @@ public class OutputView {
     public void printDealerResult(final Map<WinningStatus, Integer> dealerResult) {
         StringBuilder dealerDisplay = new StringBuilder();
         int winCount = dealerResult.getOrDefault(WinningStatus.WIN, 0);
-        int tieCount = dealerResult.getOrDefault(WinningStatus.TIE, 0);
+        int tieCount = dealerResult.getOrDefault(WinningStatus.DRAW, 0);
         int loseCount = dealerResult.getOrDefault(WinningStatus.LOSE, 0);
         if (winCount >= 1) {
             dealerDisplay.append(winCount).append("승");
@@ -94,7 +94,7 @@ public class OutputView {
             if (winningStatus.equals(WinningStatus.WIN)) {
                 playerDisplay = "승";
             }
-            if (winningStatus.equals(WinningStatus.TIE)) {
+            if (winningStatus.equals(WinningStatus.DRAW)) {
                 playerDisplay = "무";
             }
             if (winningStatus.equals(WinningStatus.LOSE)) {

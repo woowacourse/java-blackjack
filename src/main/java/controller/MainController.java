@@ -37,7 +37,7 @@ public class MainController {
                     player.receiveCard(cards.getCard());
                 }
                 outputView.printSingleState(player);
-                repeat = player.isNotBust() && command.isHit();
+                repeat = player.canReceive() && command.isHit();
             }
         }
 
