@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameController {
+    private static final int DEALER_FIRST_CARD = 0;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -34,10 +35,26 @@ public class GameController {
         CardDeck cardDeck = new CardDeck();
 
         //카드 나누기
+        distributeFirstCards(players, dealer, cardDeck);
+
+        //플레이어 HitOrStand
+        for (Player player : players) {
+            hitOrStandByPlayer(cardDeck, player);
+        }
+        //딜러 HitOrStand
+        hitOrStandByDealer(cardDeck, dealer);
+    }
+
+    private void distributeFirstCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
         distributeCards(players, dealer, cardDeck);
         printCardDistribution(players, dealer);
+    }
 
-
+    private void distributeCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
+        dealer.play(cardDeck);
+        for (Player player : players) {
+            player.play(cardDeck);
+        }
     }
 
     private void printCardDistribution(List<Player> players, Dealer dealer) {
@@ -49,9 +66,33 @@ public class GameController {
         outputView.printNameAndHand(playerNamesAndHands(players));
     }
 
+    private void hitOrStandByPlayer(CardDeck cardDeck, Player player) {
+        while (!player.isFinished()) {
+            boolean isHit = inputView.readHitOrStand(player.getName());
+            hitOrStand(cardDeck, player, isHit);
+            outputView.printNameAndHand(playerNamesAndHands(List.of(player)));
+        }
+    }
+
+    private void hitOrStand(CardDeck cardDeck, Player player, boolean isHit) {
+        if (isHit) {
+            player.play(cardDeck);
+            return;
+        }
+        player.changeToStand();
+    }
+
+    private void hitOrStandByDealer(CardDeck cardDeck, Dealer dealer) {
+        while (!dealer.isFinished()) {
+            dealer.play(cardDeck);
+            outputView.printDealerHitMessage();
+        }
+    }
+
     private Map<String, List<String>> dealerNameAndHand(Dealer dealer) {
         String name = dealer.getName();
-        Card card = dealer.getCards().get(0);
+        Card card = dealer.getCards().get(DEALER_FIRST_CARD);
+
         Map<String, List<String>> nameAndHand = new HashMap<>();
         nameAndHand.put(name, List.of(cardUnit(card.getNumber(), card.getSuit())));
         return nameAndHand;
@@ -63,13 +104,6 @@ public class GameController {
         return playerNames.stream()
                 .map(name -> new Player(new Name(name), new InitialState(new Hand())))
                 .collect(Collectors.toList());
-    }
-
-    private void distributeCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-        dealer.play(cardDeck);
-        for (Player player : players) {
-            player.play(cardDeck);
-        }
     }
 
     public Map<String, List<String>> playerNamesAndHands(List<Player> players) {

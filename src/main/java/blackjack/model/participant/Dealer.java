@@ -14,9 +14,16 @@ public class Dealer extends Participant{
     @Override
     public void play(CardDeck cardDeck) {
         this.currentState = currentState.draw(cardDeck);
+        if(currentState instanceof DrawState){
+            this.currentState = ((DrawState)currentState).turnDealerDrawState();
+        }
     }
 
     @Override
     public void changeToStand() {
+        if(currentState instanceof DrawState){
+            this.currentState = ((DrawState)currentState).turnStandState();
+        }
     }
+
 }

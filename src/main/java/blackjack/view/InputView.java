@@ -24,13 +24,13 @@ public class InputView {
         return List.of(names);
     }
 
-    public String readHitOrStand(String name) {
+    public boolean readHitOrStand(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input;
         do {
             input = scanner.nextLine();
         } while (!isValidCommand(input));
-        return input;
+        return input.equals("y");
     }
 
     private boolean isValidCommand(String input) {

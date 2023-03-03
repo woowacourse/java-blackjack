@@ -21,6 +21,10 @@ public class DrawState extends State {
         return new StandState(hand);
     }
 
+    public State turnDealerDrawState(){
+        return new DealerDrawState(hand);
+    }
+
     @Override
     public boolean isFinished() {
         return false;
