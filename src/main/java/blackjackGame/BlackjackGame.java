@@ -69,7 +69,7 @@ public class BlackjackGame {
     }
 
     public PlayerResultDto getDealerResult() {
-        return PlayerResultDto.fromDealer(dealer);
+        return PlayerResultDto.from(dealer);
     }
 
     public List<PlayerResultDto> getPlayerResults() {

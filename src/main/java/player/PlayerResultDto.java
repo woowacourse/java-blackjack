@@ -16,13 +16,8 @@ public class PlayerResultDto {
     }
 
 
-    //    TODO : ^^ 중복제거 ^^
-    public static PlayerResultDto from(Player player) {
-        return new PlayerResultDto(player.getName(), player.showCards(), player.calculateScore());
-    }
-
-    public static PlayerResultDto fromDealer(Dealer dealer) {
-        return new PlayerResultDto(dealer.getName(), dealer.showCards(), dealer.calculateScore());
+    public static PlayerResultDto from(Participant participant) {
+        return new PlayerResultDto(participant.getName(), participant.showCards(), participant.calculateScore());
     }
 
     public Name getName() {
