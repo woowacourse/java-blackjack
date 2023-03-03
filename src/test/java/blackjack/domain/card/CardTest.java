@@ -25,4 +25,12 @@ public class CardTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("카드가 에이스 인지 확인하는 테스트")
+    void isAceTest(){
+        Card card = new Card(Shape.DIAMOND, Letter.ACE);
+
+        assertThat(card.isAce()).isTrue();
+    }
 }

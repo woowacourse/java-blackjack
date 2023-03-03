@@ -82,4 +82,39 @@ public class CardsTest {
         // that
         assertThat(cards.getFirstCard().getCardName()).isEqualTo(card1.getCardName());
     }
+
+    @Test
+    @DisplayName("에이스 2장 일때 합 12가 되는지 테스트")
+    void calculateTotalOver21Test(){
+        // given
+        Cards cards = new Cards();
+        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card2 = new Card(Shape.DIAMOND, Letter.ACE);
+
+        // when
+        cards.add(card1);
+        cards.add(card2);
+
+        // that
+        assertThat(cards.calculateTotalScore()).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("에이스 2장에 기본 19 일때 합 21가 되는지 테스트")
+    void calculateTotalOver21Test2(){
+        // given
+        Cards cards = new Cards();
+        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
+        Card card3 = new Card(Shape.CLOVER, Letter.ACE);
+        Card card4 = new Card(Shape.CLOVER, Letter.NINE);
+        // when
+        cards.add(card1);
+        cards.add(card2);
+        cards.add(card3);
+        cards.add(card4);
+
+        // that
+        assertThat(cards.calculateTotalScore()).isEqualTo(21);
+    }
 }

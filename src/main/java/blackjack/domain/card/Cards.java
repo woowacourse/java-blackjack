@@ -19,11 +19,23 @@ public class Cards {
     }
 
     public int calculateTotalScore() {
-        return this.cards.stream().
-                map(Card::getValue).
-                reduce(0,Integer::sum);
+        int totalScore = makeTotalScore();
+        int aceCount = countAce();
+        while(totalScore>21 && aceCount!=0){
+            totalScore-=10;
+        }
+        return totalScore;
     }
     public Card getFirstCard(){
         return this.cards.get(0);
+    }
+    private int countAce(){
+        return (int) cards.stream().filter(card->card.isAce()).count();
+    }
+
+    private int makeTotalScore(){
+        return this.cards.stream().
+                map(Card::getValue).
+                reduce(0,Integer::sum);
     }
 }
