@@ -1,26 +1,27 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 
 public class ShuffledDeck implements Deck {
-    private static final int TOP_CARD_INDEX = 0;
     private static final Deck DECK;
 
     static {
-        final List<Card> cards = new ArrayList<>();
-        for (final Rank rank : Rank.values()) {
-            Arrays.stream(Shape.values()).forEach(shape -> cards.add(new Card(rank, shape)));
-        }
+        final List<Card> cards = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Shape.values()).map(shape -> new Card(rank, shape)))
+                .collect(toList());
         Collections.shuffle(cards);
-        DECK = new ShuffledDeck(cards);
+        DECK = new ShuffledDeck(new ArrayDeque<>(cards));
     }
 
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
-    private ShuffledDeck(final List<Card> cards) {
+    private ShuffledDeck(final Queue<Card> cards) {
         this.cards = cards;
     }
 
@@ -30,6 +31,8 @@ public class ShuffledDeck implements Deck {
 
     @Override
     public Card draw() {
-        return cards.remove(TOP_CARD_INDEX);
+        final Card card = cards.remove();
+        cards.add(card);
+        return card;
     }
 }
