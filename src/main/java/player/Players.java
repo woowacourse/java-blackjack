@@ -64,4 +64,8 @@ public class Players {
                 .map(PlayerOpenDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public Name findPlayer(int playerIndex) {
+        return players.get(playerIndex).getName();
+    }
 }

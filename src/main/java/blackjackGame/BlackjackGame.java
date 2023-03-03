@@ -6,6 +6,7 @@ import deck.Deck;
 import player.Dealer;
 import player.DealerFirstOpenDto;
 import player.DealerWinningDto;
+import player.Name;
 import player.Player;
 import player.PlayerOpenDto;
 import player.PlayerResultDto;
@@ -93,5 +94,9 @@ public class BlackjackGame {
 
     public List<PlayerOpenDto> getPlayersCards() {
         return players.getPlayerCards();
+    }
+
+    public Name findUserNameByIndex(int playerIndex) {
+        return players.findPlayer(playerIndex);
     }
 }
