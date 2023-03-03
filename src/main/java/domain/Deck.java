@@ -16,6 +16,9 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    private Deck() {
+    }
+
     private static List<Card> createDeck() {
         return Arrays.stream(Denomination.values())
                 .flatMap(
