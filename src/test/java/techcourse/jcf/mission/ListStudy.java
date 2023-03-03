@@ -36,6 +36,16 @@ public class ListStudy {
         // 미션2
         final String[] arrays = {"first", "second"};
         final SimpleList<String> values3 = SimpleList.<String>fromArrayToList(arrays);
+
+        // 미션3
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
+
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+
+        System.out.println("double = " + doubleTotal);
+        System.out.println("int = " + intTotal);
     }
 }
 
