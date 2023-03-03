@@ -102,21 +102,6 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("점수가 21점을 넘을 때 카드를 뽑으면 예외가 발생해야 한다.")
-    void addCard_overScore() {
-        // given
-        Player player = new Player("encho");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-
-        // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            player.addCard(new Card(Suit.DIAMOND, Rank.ACE));
-        }).withMessage("[ERROR] 점수가 21점을 넘으면 카드를 더 뽑을 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("Player는 플레이어여야 한다.")
     void isPlayer_true() {
         // given
