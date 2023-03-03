@@ -1,86 +1,54 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
-    private final List<Player> players;
     private final Deck deck;
-    private final Dealer dealer;
+
+    private final Players players;
 
     public Game(List<Player> players, Deck deck, Dealer dealer) {
-        this.players = players;
+        this.players = new Players(players, dealer);
         this.deck = deck;
-        this.dealer = dealer;
     }
 
     public void dealTwoCards() {
         for (int i = 0; i < 2; i++) {
-            dealCards();
+            players.dealCardsFrom(deck);
         }
     }
 
-    private void dealCards() {
-        for (Player player : players) {
-            player.addCard(deck.drawCard());
-        }
-
-        dealer.addCard(deck.drawCard());
-    }
-
-    public Result isWon(String name) {
-        Player player = findByName(name);
-        return getResult(player, dealer);
-    }
-
-    private Player findByName(String name) {
-        return players.stream()
-                .filter(player -> player.hasName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다"));
-    }
-
-    private Result getResult(Player player, Player other) {
-        if (player.getScore() == other.getScore() || (player.isBusted() && other.isBusted())) {
-            return Result.DRAW;
-        }
-
-        if (!player.isBusted() && (player.getScore() > other.getScore() || other.isBusted())) {
-            return Result.WIN;
-        }
-
-        return Result.LOSE;
+    public Result getResult(String name) {
+        return players.getUserResult(name);
     }
 
     public List<Result> getDealerResults() {
-        List<Result> results = new ArrayList<>();
-
-        for (Player player : players) {
-            results.add(getResult(dealer, player));
-        }
-
-        return results;
+        return players.getDealerResults();
     }
 
-    public void dealAnotherCard(String name) {
-        Player player = findByName(name);
+    public void dealCard(String name) {
+        Player player = players.findUserByName(name);
         player.addCard(deck.drawCard());
     }
 
     public boolean canHit(String name) {
-        return findByName(name).canHit();
+        return players.findUserByName(name).canHit();
     }
 
-    public void dealAnotherCard() {
-        dealer.addCard(deck.drawCard());
+    public void dealCardToDealer() {
+        players.dealCardToDealer(deck);
     }
 
     public List<Card> getCards(String name) {
-        return findByName(name).getCards();
+        return players.findUserByName(name).getCards();
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> getUsers() {
+        return players.getUsers();
+    }
+
+    public Players getPlayers() {
         return players;
     }
 }

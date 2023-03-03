@@ -17,6 +17,7 @@
 - [x] Player 인스턴스 변수 개수 3개다.
 - [ ] 카드 글자 리팩터링 Deck::buildCards()
 - [ ] Cards 구현
+- [x] Players 일급 컬렉션 사용
 
 ## 기능 구현 목록
 
