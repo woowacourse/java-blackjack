@@ -7,7 +7,6 @@ public class Cards {
 
     private static final int BOUNDARY = 21;
     private static final int BIGGER_A_SCORE = 10;
-    private static final String ACE = "A";
     private final List<Card> cards;
 
     public Cards() {
@@ -24,21 +23,25 @@ public class Cards {
         for (Card card : cards) {
             sum += card.getScore();
         }
-        if (isContainA() && notBusted(sum)) {
+        if (notBustedWhenHasAce(sum + BIGGER_A_SCORE)) {
             sum += BIGGER_A_SCORE;
         }
 
         return sum;
     }
 
-    private boolean notBusted(int sum) {
-        return sum + BIGGER_A_SCORE <= BOUNDARY;
+    private boolean notBustedWhenHasAce(int sum) {
+        return isContainAce() && !isBusted(sum);
     }
 
-    private boolean isContainA() {
+    public boolean isBusted(int sum) {
+        return sum > BOUNDARY;
+    }
+
+    private boolean isContainAce() {
         return cards.stream()
                 .map(Card::getName)
-                .anyMatch(name -> name.equals(ACE));
+                .anyMatch(name -> name.equals(Denomination.ACE.getName()));
     }
 
     public void addCard(Card card) {
