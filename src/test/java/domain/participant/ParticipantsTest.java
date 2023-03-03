@@ -66,20 +66,6 @@ class ParticipantsTest {
                 .doesNotThrowAnyException();
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
-    @ParameterizedTest(name = "canDealerGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
-    void canDealerGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(card -> participants.addCard(0, card));
-
-        // when
-        final boolean actual = participants.canDealerGiveCard();
-
-        // then
-        assertThat(actual)
-                .isSameAs(expected);
-    }
-
     @Test
     @DisplayName("size()는 호출하면 모든 참가자의 수를 반환한다")
     void size_whenCall_thenReturnParticipantSize() {

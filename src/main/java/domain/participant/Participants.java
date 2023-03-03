@@ -65,11 +65,6 @@ public class Participants {
         }
     }
 
-    public boolean canDealerGiveCard() {
-        Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
-        return dealer.canGiveCard();
-    }
-
     public Participant getDealer() {
         return participants.get(DEALER_ORDER);
     }

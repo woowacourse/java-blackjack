@@ -24,8 +24,4 @@ public class GameManager {
             participants.addCard(participantOrder, deck.draw());
         }
     }
-
-    public boolean canDealerGiveCard() {
-        return participants.canDealerGiveCard();
-    }
 }
