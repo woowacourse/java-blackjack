@@ -1,16 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.Result;
-import blackjack.domain.Users;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
 import blackjack.domain.card.Shape;
+import blackjack.domain.dto.FinalStatus;
 import blackjack.domain.dto.GameResult;
 import blackjack.domain.dto.InitialStatus;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Name;
-import blackjack.domain.user.User;
 
 import java.util.List;
 import java.util.Map;
@@ -117,30 +114,28 @@ public class OutputView {
 
     }
 
-    public void printTotalPlayersStatus(final Dealer dealer, final List<User> users) {
-        printPlayerResult(dealer.getName(), dealer.getCards());
-        for (User user : users) {
-            printPlayerResult(user.getName(), user.getCards());
+    public void printFinalPlayersStatus(FinalStatus finalStatus) {
+        printPlayFinalStatus("딜러", finalStatus.getDealerCards(), finalStatus.getDealerPoint());
+        final Map<String, List<Card>> userCardsData = finalStatus.getUserCardsData();
+        final Map<String, Integer> userScores = finalStatus.getUserScores();
+        for (String userName : finalStatus.getUsersNames()) {
+            printPlayFinalStatus(userName, userCardsData.get(userName), userScores.get(userName));
         }
     }
 
-    private void printPlayerResult(final Name name, final Cards cards) {
-        System.out.printf("%s - 결과: %s",
-                getPlayerCards(name, cards.getCards())
-                , printGamePoint(cards.getPoint()));
-        System.out.print(System.lineSeparator());
+    private void printPlayFinalStatus(final String playerName, final List<Card> cards, final int score) {
+        System.out.println(String.format("%s 카드 : %s- 결과: %s", playerName, getCardStringOf(cards), getScoreString(score)));
     }
 
-    private String printGamePoint(final GamePoint gamePoint) {
-        final int point = gamePoint.getGamePoint();
-        if (point == 0) {
+
+    private String getScoreString(final int score) {
+        if (score == 0) {
             return "버스트";
         }
-        return String.valueOf(point);
+        return String.valueOf(score);
     }
 
 
-    ////
     public void printResult(GameResult gameResult) {
         System.out.print(System.lineSeparator());
         System.out.println("## 최종 승패");
@@ -169,13 +164,13 @@ public class OutputView {
     }
 
     private String getResultString(final Result result) {
-        if(result == Result.LOSE){
+        if (result == Result.LOSE) {
             return "패";
         }
-        if(result == Result.DRAW){
+        if (result == Result.DRAW) {
             return "무";
         }
-        if(result == Result.WIN){
+        if (result == Result.WIN) {
             return "승";
         }
         throw new AssertionError();

@@ -36,7 +36,7 @@ public class BlackJackController {
     }
 
     private void printCompletedGame(final BlackJack blackJack) {
-        outputView.printTotalPlayersStatus(blackJack.getDealer(), blackJack.getUsersStatus());
+        outputView.printFinalPlayersStatus(blackJack.getFinalStatus());
         outputView.printResult(blackJack.getGameResult());
     }
 

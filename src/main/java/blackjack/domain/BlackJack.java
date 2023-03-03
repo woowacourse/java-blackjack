@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.dto.FinalStatus;
 import blackjack.domain.dto.GameResult;
 import blackjack.domain.dto.InitialStatus;
 import blackjack.domain.user.Dealer;
@@ -63,8 +64,12 @@ public class BlackJack {
         return dealer;
     }
 
-    public InitialStatus getInitialStatus(){
+    public InitialStatus getInitialStatus() {
         return new InitialStatus(dealer, users);
+    }
+
+    public FinalStatus getFinalStatus() {
+        return new FinalStatus(dealer, users);
     }
 
     public GameResult getGameResult() {
