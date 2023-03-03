@@ -17,6 +17,15 @@ public class InputView {
         }
     }
 
+    public static String inputAddCardCommand() {
+        try {
+            return BUFFERED_READER.readLine();
+        } catch (IOException ioException) {
+            OutputView.println(ioException.getMessage());
+            return inputAddCardCommand();
+        }
+    }
+
     public static <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();

@@ -47,7 +47,7 @@ public class OutputView {
         printPlayerCardCondition(dealer, DEALER_CARD_CONDITION_FORMAT, parseCardInformation(card));
     }
 
-    private static void printParticipantCardCondition(List<Player> participants) {
+    public static void printParticipantCardCondition(List<Player> participants) {
         for (Player participant : participants) {
             printPlayerCardCondition(participant, PARTICIPANT_CARD_CONDITION_FORMAT, parseCardsInformation(participant.getCards()));
         }
@@ -67,5 +67,13 @@ public class OutputView {
 
     private static void printPlayerCardCondition(Player player, String format, String cardsDisplay) {
         System.out.printf(format, player.getName(), cardsDisplay);
+    }
+
+    public static void printAddCardGuide(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+    }
+
+    public static void printBurstMessage(String name) {
+        System.out.printf("%s님은 버스트 되셨습니다. 더이상 카드를 뽑을 수 없습니다.%n", name);
     }
 }

@@ -90,4 +90,10 @@ public class BlackJack {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(this.players);
     }
+
+    public List<Player> getParticipants() {
+        List<Player> players = new ArrayList<>(getPlayers());
+        players.remove(0);
+        return players;
+    }
 }
