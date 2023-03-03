@@ -5,7 +5,7 @@ import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Player;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public class BlackJackGame {
     }
 
     public Map<String, Outcome> decidePlayersOutcome() {
-        Map<String, Outcome> result = new HashMap<>();
+        Map<String, Outcome> result = new LinkedHashMap<>();
         final int dealerScore = findDealer().getScore();
         final List<Player> players = this.players.subList(1, this.players.size());
 

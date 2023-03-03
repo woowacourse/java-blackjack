@@ -1,7 +1,10 @@
 package view;
 
-import domain.Card;
+import domain.deck.Card;
+import domain.game.Outcome;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -43,5 +46,61 @@ public class OutputView {
 
     public static void printCardResult(String name, List<Card> cards, int score) {
         System.out.println(name + " 카드: " + toStringCards(cards) + " - 결과: " + score);
+    }
+
+    public static void printEmptyLine() {
+        System.out.println();
+    }
+
+    public static void printGameResult(Map<String, Outcome> result) {
+        System.out.println(System.lineSeparator() + "## 최종 승패");
+        printDealerResult(result);
+        printPlayerResult(result);
+    }
+
+    private static void printDealerResult(final Map<String, Outcome> result) {
+        EnumMap<Outcome, Integer> dealerResult = initializeDealerResult();
+        for (String key : result.keySet()) {
+            final Outcome outcome = result.get(key);
+            dealerResult.put(outcome, dealerResult.get(outcome) + 1);
+        }
+        printGameEachResult(
+                "딜러",
+                dealerResult.get(Outcome.LOSE),
+                dealerResult.get(Outcome.DRAW),
+                dealerResult.get(Outcome.WIN)
+        );
+    }
+
+    private static EnumMap<Outcome, Integer> initializeDealerResult() {
+        EnumMap<Outcome, Integer> enumMap = new EnumMap<>(Outcome.class);
+
+        for (Outcome outcome : Outcome.values()) {
+            enumMap.put(outcome, 0);
+        }
+
+        return enumMap;
+    }
+
+    private static void printPlayerResult(final Map<String, Outcome> result) {
+        result.keySet().forEach(name ->
+            printEachPlayerResult(result, name)
+        );
+    }
+
+    private static void printEachPlayerResult(final Map<String, Outcome> result, final String name) {
+        if (result.get(name).equals(Outcome.WIN)) {
+            printGameEachResult(name, 1, 0, 0);
+        }
+        if (result.get(name).equals(Outcome.DRAW)) {
+            printGameEachResult(name, 0, 1, 0);
+        }
+        if (result.get(name).equals(Outcome.LOSE)) {
+            printGameEachResult(name, 0, 0, 1);
+        }
+    }
+
+    private static void printGameEachResult(String playerName, int win, int draw, int lose) {
+        System.out.println(playerName + ": " + win + "승 " + draw + "무 " + lose + "패");
     }
 }
