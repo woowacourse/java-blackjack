@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.Card;
 import domain.CardHand;
 import domain.Name;
 
@@ -19,6 +20,8 @@ abstract public class AbstractUser {
         this.cardHand = cardHand;
     }
 
+    abstract public boolean canAdd();
+
     public String getNameValue() {
         return this.name.getValue();
     }
@@ -29,5 +32,13 @@ abstract public class AbstractUser {
 
     public boolean isBlackjack() {
         return cardHand.calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public void addCard(Card card) {
+        if (canAdd()) {
+            cardHand.add(card);
+            return;
+        }
+        throw new IllegalStateException("카드 추가가 불가능하여 실행되지 않았습니다.");
     }
 }
