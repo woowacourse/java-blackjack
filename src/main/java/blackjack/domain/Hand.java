@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-class Hand {
+public class Hand {
     private final Cards cards;
     private State state;
 
