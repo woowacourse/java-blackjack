@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String PRINT_FORMAT = "%s: %s";
+    private static final String PRINT_FORMAT = "%s 카드: %s";
     private static final String DELIMITER = ", ";
     private static final String ERROR_HEAD = "[ERROR] ";
 
@@ -27,10 +27,14 @@ public class OutputView {
     }
 
     public void printCardsOf(final Name name, final List<Card> cards) {
-        System.out.printf(PRINT_FORMAT,
+        System.out.printf(getPlayerCards(name, cards));
+        System.out.print(System.lineSeparator());
+    }
+
+    private String getPlayerCards(final Name name, final List<Card> cards) {
+        return String.format(PRINT_FORMAT,
                 getNameString(name),
                 getCardStringOf(cards));
-        System.out.print(System.lineSeparator());
     }
 
     private String getCardStringOf(final List<Card> cards) {
@@ -99,5 +103,28 @@ public class OutputView {
         if (cardCount > 0) {
             System.out.printf("딜러는 16 이하라 %d장의 카드를 더 받았습니다.", cardCount);
         }
+        System.out.print(System.lineSeparator());
+    }
+
+    public void printTotalPlayersStatus(final Dealer dealer, final List<User> users) {
+        printPlayerResult(dealer.getName(), dealer.getCards());
+        for (User user : users) {
+            printPlayerResult(user.getName(), user.getCards());
+        }
+    }
+
+    private void printPlayerResult(final Name name, final Cards cards) {
+        System.out.printf("%s - 결과: %s",
+                getPlayerCards(name, cards.getCards())
+                , printGamePoint(cards.getPoint()));
+        System.out.print(System.lineSeparator());
+    }
+
+    private String printGamePoint(final GamePoint gamePoint) {
+        final int point = gamePoint.getPoint();
+        if (point == 0) {
+            return "버스트";
+        }
+        return String.valueOf(point);
     }
 }

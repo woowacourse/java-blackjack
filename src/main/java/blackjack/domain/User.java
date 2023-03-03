@@ -65,4 +65,8 @@ public class User implements Player {
     public boolean isBusted() {
         return cards.isBust();
     }
+
+    public Cards getCards() {
+        return cards;
+    }
 }

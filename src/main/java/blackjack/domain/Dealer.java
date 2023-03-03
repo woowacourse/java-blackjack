@@ -60,4 +60,8 @@ public class Dealer implements Player {
         returnCard.add(firstCard);
         return returnCard;
     }
+
+    public Cards getCards() {
+        return cards;
+    }
 }
