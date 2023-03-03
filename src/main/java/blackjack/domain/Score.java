@@ -14,11 +14,11 @@ public class Score {
                 .sum();
 
         if (score > MAX_BLACKJACK_SCORE) {
-            handleBurst(trumpNumbers);
+            handleBust(trumpNumbers);
         }
     }
 
-    private void handleBurst(List<TrumpNumber> trumpNumbers) {
+    private void handleBust(List<TrumpNumber> trumpNumbers) {
         int aceCount = countAce(trumpNumbers);
         while (score > MAX_BLACKJACK_SCORE && aceCount > 0) {
             score -= ACE_GAP;
@@ -28,7 +28,7 @@ public class Score {
 
     private int countAce(List<TrumpNumber> trumpNumbers) {
         return (int) trumpNumbers.stream()
-                .filter(e -> e.equals(TrumpNumber.ACE))
+                .filter(number -> number.equals(TrumpNumber.ACE))
                 .count();
     }
 

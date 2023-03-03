@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public class Card {
+
     private final TrumpShape trumpShape;
     private final TrumpNumber trumpNumber;
 

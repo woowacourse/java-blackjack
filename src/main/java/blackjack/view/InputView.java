@@ -8,8 +8,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = ",";
 
-    private InputView() {
-    }
+    private InputView() {}
 
     public static InputView getInstance() {
         return INSTANCE;

@@ -61,6 +61,7 @@ public class BlackJackController {
         List<String> playerNames = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
+
         outputView.printInitialCardDistribution(playerNames);
         showDealerCards(dealer);
         players.getPlayers().forEach(this::showEachPlayerCards);
@@ -68,12 +69,12 @@ public class BlackJackController {
 
     private void showDealerCards(final Dealer dealer) {
         Card openedDealerCard = dealer.getCards().get(0);
-        outputView.printDealerCard(makeCardName(openedDealerCard));
+        outputView.printInitialDealerCard(makeCardName(openedDealerCard));
     }
 
     private void showEachPlayerCards(final Player player) {
         List<String> cards = makeCardNames(player);
-        outputView.printEachPlayerCards(player.getName(), cards);
+        outputView.printInitialPlayerCards(player.getName(), cards);
     }
 
     private List<String> makeCardNames(final Participant participant) {

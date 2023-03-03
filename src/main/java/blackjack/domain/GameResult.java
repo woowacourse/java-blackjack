@@ -24,50 +24,50 @@ public class GameResult {
     }
 
     private void decideWinner(Dealer dealer, Player player) {
-        if (isBurst(player) || isBurst(dealer)) {
-            compareBuster(dealer, player);
+        if (isBust(player) || isBust(dealer)) {
+            compareBust(dealer, player);
             return;
         }
         compareScore(dealer, player);
     }
 
-    private boolean isBurst(Participant participant) {
+    private boolean isBust(Participant participant) {
         return participant.getScore() > MAX_BLACKJACK_SCORE;
     }
 
-    private void compareBuster(Dealer dealer, Player player) {
-        if (isBurst(player)) {
-            dealerWin(player);
+    private void compareBust(Dealer dealer, Player player) {
+        if (isBust(player)) {
+            saveDealerWin(player);
             return;
         }
-        if (isBurst(dealer)) {
-            playerWin(player);
+        if (isBust(dealer)) {
+            savePlayerWin(player);
         }
     }
 
     private void compareScore(Dealer dealer, Player player) {
         if (player.getScore() == dealer.getScore()) {
-            bothDraw(player);
+            saveBothDraw(player);
             return;
         }
         if (player.getScore() > dealer.getScore()) {
-            playerWin(player);
+            savePlayerWin(player);
             return;
         }
-        dealerWin(player);
+        saveDealerWin(player);
     }
 
-    private void dealerWin(Player player) {
+    private void saveDealerWin(Player player) {
         playersResults.put(player, Result.LOSE);
         dealerResults.replace(Result.WIN, dealerResults.get(Result.WIN) + 1);
     }
 
-    private void playerWin(Player player) {
+    private void savePlayerWin(Player player) {
         playersResults.put(player, Result.WIN);
         dealerResults.replace(Result.LOSE, dealerResults.get(Result.LOSE) + 1);
     }
 
-    private void bothDraw(Player player) {
+    private void saveBothDraw(Player player) {
         playersResults.put(player, Result.DRAW);
         dealerResults.replace(Result.DRAW, dealerResults.get(Result.DRAW) + 1);
     }

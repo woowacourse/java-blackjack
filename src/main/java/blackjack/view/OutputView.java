@@ -7,8 +7,7 @@ public class OutputView {
     private static final OutputView INSTANCE = new OutputView();
     private static final String ERROR = "[ERROR] : ";
 
-    private OutputView() {
-    }
+    private OutputView() {}
 
     public static OutputView getInstance() {
         return INSTANCE;
@@ -23,11 +22,11 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerCard(String cardName) {
+    public void printInitialDealerCard(String cardName) {
         System.out.println("딜러: " + cardName);
     }
 
-    public void printEachPlayerCards(String playerName, List<String> cardNames) {
+    public void printInitialPlayerCards(String playerName, List<String> cardNames) {
         System.out.println(playerName + "카드: " + String.join(", ", cardNames));
     }
 

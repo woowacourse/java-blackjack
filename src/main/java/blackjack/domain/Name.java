@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import javax.print.attribute.standard.MediaSize;
-
 public class Name {
     private static final String NAME_BLANK_ERROR_MESSAGE = "공백으로만 이루어진 이름은 사용할 수 없습니다.";
     private static final String BLANK = " ";

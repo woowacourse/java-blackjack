@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 public enum Result {
-    WIN("승"), LOSE("패"), DRAW("무");
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무");
 
     private final String term;
 

@@ -5,6 +5,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int MAX_SCORE_TO_RECEIVE = 16;
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer(List<Card> cards) {
         super(cards);
@@ -12,11 +13,11 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(extractNumbers());
+        score.calculateScore(extractTrumpNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
 
     public String getName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 }
