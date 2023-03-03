@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class ListStudy {
 
@@ -26,8 +27,17 @@ public class ListStudy {
             assertThat(integerValues.add(1)).isTrue();
         }
 
-//        assertThatCode(() -> values.add(0, "zero")).doesNotThrowAnyException(); // 맨 앞에 0을 추가한다.
-//        assertThatCode(() -> values.add(100, "hundred")).isInstanceOf(RuntimeException.class); // 인덱스가 넘어가면 예외가 발생한다.
+        @Test
+        void add_test2() {
+            stringValues.add("init");
+            integerValues.add(0);
+            assertThatCode(() -> stringValues.add(0, "zero")).doesNotThrowAnyException();
+            assertThatCode(() -> stringValues.add(100, "hundred")).isInstanceOf(RuntimeException.class);
+            assertThatCode(() -> integerValues.add(0, 1)).doesNotThrowAnyException();
+            assertThatCode(() -> integerValues.add(100, 100)).isInstanceOf(RuntimeException.class);
+        }
+
+
 //
 //        assertThat(values.set(0, "0")).isEqualTo("0"); // 첫번째 원소가 "0"으로 바뀐다.
 //        assertThatCode(() -> values.set(100, "100")).isInstanceOf(RuntimeException.class); // 인덱스가 넘어가면 예외가 발생한다.
@@ -77,11 +87,17 @@ public class ListStudy {
             assertThat(stringValues.add("ditoo")).isTrue();
             assertThat(integerValues.add(1)).isTrue();
         }
-//
-//        assertThat(values.add("third")).isTrue(); // 세 번째 값을 추가한다.
-//
-//        assertThatCode(() -> values.add(0, "zero")).doesNotThrowAnyException(); // 맨 앞에 0을 추가한다.
-//        assertThatCode(() -> values.add(100, "hundred")).isInstanceOf(RuntimeException.class); // 인덱스가 넘어가면 예외가 발생한다.
+
+        @Test
+        void add_test2() {
+            stringValues.add("init");
+            integerValues.add(0);
+            assertThatCode(() -> stringValues.add(0, "zero")).doesNotThrowAnyException();
+            assertThatCode(() -> stringValues.add(100, "hundred")).isInstanceOf(RuntimeException.class);
+            assertThatCode(() -> integerValues.add(0, 1)).doesNotThrowAnyException();
+            assertThatCode(() -> integerValues.add(100, 100)).isInstanceOf(RuntimeException.class);
+        }
+
 //
 //        assertThat(values.set(0, "0")).isEqualTo("0"); // 첫번째 원소가 "0"으로 바뀐다.
 //        assertThatCode(() -> values.set(100, "100")).isInstanceOf(RuntimeException.class); // 인덱스가 넘어가면 예외가 발생한다.
