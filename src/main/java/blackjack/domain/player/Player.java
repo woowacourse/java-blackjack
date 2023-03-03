@@ -23,7 +23,7 @@ public abstract class Player {
     }
 
     public int getTotalPoint() {
-        return holdingCards.sum();
+        return holdingCards.getSum();
     }
 
     public abstract Boolean canPick();

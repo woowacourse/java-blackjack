@@ -10,6 +10,10 @@ public class Card {
         this.number = number;
     }
 
+    public boolean isAce() {
+        return number.equals(Number.ACE);
+    }
+
     public Shape getShape() {
         return shape;
     }
@@ -20,7 +24,6 @@ public class Card {
     }
 
     public int getPoint() {
-        // TODO : Ace의 경우 1 또는 11 반환 처리
         return number.getValue();
     }
 }

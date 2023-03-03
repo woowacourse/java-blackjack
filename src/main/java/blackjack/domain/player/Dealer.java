@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import java.util.List;
+
 public class Dealer extends Player {
 
     private static final String NAME = "딜러";
@@ -8,7 +10,13 @@ public class Dealer extends Player {
 
     @Override
     public Boolean canPick() {
-        return holdingCards.sum() <= MAXIMUM_POINT_TO_PICK;
+        List<Integer> sumPossibility = holdingCards.getSums();
+        for (Integer sum : sumPossibility) {
+            if (sum <= MAXIMUM_POINT_TO_PICK) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
