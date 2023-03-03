@@ -53,6 +53,4 @@ public class Dealer implements Gambler {
     public int getPickBoundary() {
         return PICK_BOUNDARY;
     }
-
-
 }

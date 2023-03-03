@@ -38,5 +38,7 @@ public class Player implements Gambler {
     }
 
     @Override
-    public boolean isBustedGambler(int sum){return this.cards.isBusted(sum);}
+    public boolean isBustedGambler(int sum) {
+        return this.cards.isBusted(sum);
+    }
 }
