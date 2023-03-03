@@ -42,6 +42,19 @@ class PlayerTest {
     }
 
     @Test
+    void 딜러를_이름으로_가질_수_없다() {
+        //given
+        String name = "딜러";
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> Player.from(name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 플레이어의 이름은 '딜러'일 수 없습니다.");
+    }
+
+    @Test
     void 카드를_뽑을_수_있다() {
         //given
         Player player = Player.from("럿고");
