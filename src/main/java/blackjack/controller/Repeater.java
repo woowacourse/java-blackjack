@@ -5,6 +5,9 @@ import java.util.function.Supplier;
 
 class Repeater {
 
+    private Repeater() {
+    }
+
     static <T> T repeatUntilNoException(final Supplier<T> supplier,
             final Consumer<Exception> exceptionHandler) {
         T result = null;
