@@ -1,14 +1,12 @@
 package controller;
 
 import domain.PlayerCommand;
-import domain.WinningStatus;
+import domain.WinningResult;
 import domain.card.Cards;
 import domain.card.shuffler.CardsShuffler;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.HashMap;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -49,34 +47,9 @@ public class MainController {
 
         outputView.printFinalState(participants);
 
-        int dealerScore = dealer.calculateScore();
-        Map<Player, WinningStatus> playersResult = new HashMap<>();
-        Map<WinningStatus, Integer> dealerResult = new HashMap<>();
-        for (Player player : participants.getPlayers()) {
-            WinningStatus playerWinningStatus = decideWinningStatus(player, dealerScore);
-            playersResult.put(player, playerWinningStatus);
-            dealerResult.put(playerWinningStatus.reverse(),
-                    dealerResult.getOrDefault(playerWinningStatus.reverse(), 0) + 1);
-        }
+        WinningResult winningResult = new WinningResult(participants);
         outputView.printFinalResult();
-        outputView.printDealerResult(dealerResult);
-        outputView.printPlayerResult(playersResult);
-    }
-
-    public WinningStatus decideWinningStatus(final Player player, final int dealerScore) {
-        int score = player.calculateScore();
-        if (dealerScore > 21) {
-            if (score > 21) {
-                return WinningStatus.TIE;
-            }
-            return WinningStatus.WIN;
-        }
-        if (score <= 21 && score > dealerScore) {
-            return WinningStatus.WIN;
-        }
-        if (score == dealerScore) {
-            return WinningStatus.TIE;
-        }
-        return WinningStatus.LOSE;
+        outputView.printDealerResult(winningResult.getDealerResult());
+        outputView.printPlayerResult(winningResult.getPlayersResult());
     }
 }
