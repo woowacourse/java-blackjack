@@ -86,4 +86,8 @@ public class OutputView {
                      .filter(GameResult::isWin)
                      .count();
     }
+
+    public void printException(String message) {
+        System.out.println(message);
+    }
 }

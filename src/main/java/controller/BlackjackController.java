@@ -36,26 +36,39 @@ public class BlackjackController {
     }
 
     private Participants getParticipants() {
-        List<String> names = inputView.readNames();
-        Participants participants = Participants.from(names);
-        return participants;
+        try {
+            List<String> names = inputView.readNames();
+            return Participants.from(names);
+        } catch (IllegalArgumentException exception) {
+            outputView.printException(exception.getMessage());
+            return getParticipants();
+        }
     }
 
     private void play(Participants participants, BlackjackGame blackjackGame) {
         for (Player player : participants.getPlayers()) {
-            playPerPlayer(player, blackjackGame);
+            playEachPlayer(player, blackjackGame);
         }
         Dealer dealer = participants.getDealer();
         playDealer(dealer, blackjackGame);
     }
 
-    private void playPerPlayer(Player player, BlackjackGame blackjackGame) {
+    private void playEachPlayer(Player player, BlackjackGame blackjackGame) {
         GameCommand command = GameCommand.PLAY;
         while (!player.isBust() && command.isPlay()) {
-            String inputCommand = inputView.readIsContinue(player.getName());
-            command = GameCommand.from(inputCommand);
+            command = getCommand(player);
             giveCard(player, blackjackGame, command);
             outputView.printPlayerCards(player);
+        }
+    }
+
+    private GameCommand getCommand(Player player) {
+        try {
+            String inputCommand = inputView.readIsContinue(player.getName());
+            return GameCommand.from(inputCommand);
+        } catch (IllegalArgumentException exception) {
+            outputView.printException(exception.getMessage());
+            return getCommand(player);
         }
     }
 
