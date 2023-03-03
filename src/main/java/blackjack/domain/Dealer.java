@@ -3,7 +3,7 @@ package blackjack.domain;
 public class Dealer extends Participant{
 
     private static final int CARD_RECEIVE_CRITERIA  = 16;
-    private static final int MAX_CARD_COUNT = 4;
+    private static final int MAX_CARD_COUNT = 3;
 
     public Dealer() {
         super();
