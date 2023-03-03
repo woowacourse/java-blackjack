@@ -46,8 +46,4 @@ public class Deck {
         }
         return cards.pop();
     }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
 }

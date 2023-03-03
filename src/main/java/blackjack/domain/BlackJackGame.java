@@ -20,7 +20,7 @@ public class BlackJackGame {
 
     public static BlackJackGame create(Players players) {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.create(CardFactory.createCard());
+        Deck deck = Deck.create(CardFactory.createShuffledCard());
         return new BlackJackGame(players, dealer, deck);
     }
 
@@ -32,13 +32,6 @@ public class BlackJackGame {
         drawCard(dealer, INIT_CARD_COUNT);
     }
 
-    public void addCard(Participant participant) {
-        if (participant.canReceive()) {
-            Card card = deck.draw();
-            participant.addCard(card);
-        }
-    }
-
     public Map<Player, Result> calculateResult() {
         Map<Player, Result> result = new HashMap<>();
 
@@ -48,15 +41,15 @@ public class BlackJackGame {
         return result;
     }
 
-    private void drawCard(Participant participant, int count) {
+    public void drawCard(Participant participant, int count) {
         for (int i = 0; i < count; i++) {
-            Card card = deck.draw();
-            passCard(participant, card);
-}
+            passCard(participant);
+        }
     }
 
-    private void passCard(Participant participant, Card card) {
+    private void passCard(Participant participant) {
         if (participant.canReceive()) {
+            Card card = deck.draw();
             participant.addCard(card);
         }
     }

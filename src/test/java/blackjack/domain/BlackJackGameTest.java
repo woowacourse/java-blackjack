@@ -52,9 +52,9 @@ public class BlackJackGameTest {
         Player gray = players.get(0);
         Player luca = players.get(1);
 
-        blackJackGame.addCard(gray);
-        blackJackGame.addCard(luca);
-        blackJackGame.addCard(luca);
+        blackJackGame.drawCard(gray, 1);
+        blackJackGame.drawCard(luca, 1);
+        blackJackGame.drawCard(luca, 1);
 
         assertAll(
                 () -> assertThat(gray.getCards().getCount()).isEqualTo(1),
@@ -70,7 +70,7 @@ public class BlackJackGameTest {
         dealer.addCard(new Card(Symbol.SPADE, Number.TEN));
         int beforeCount = dealer.getCards().getCount();
 
-        blackJackGame.addCard(dealer);
+        blackJackGame.drawCard(dealer, 1);
 
         assertThat(dealer.getCards().getCount()).isEqualTo(beforeCount + 1);
     }
@@ -84,7 +84,7 @@ public class BlackJackGameTest {
         dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
         int beforeCount = dealer.getCards().getCount();
 
-        blackJackGame.addCard(dealer);
+        blackJackGame.drawCard(dealer, 1);
 
         assertThat(dealer.getCards().getCount()).isEqualTo(beforeCount);
     }
