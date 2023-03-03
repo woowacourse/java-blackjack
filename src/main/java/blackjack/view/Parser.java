@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Parser {
 
-    public static List<String> parseByDelimiter(final String value, final String delimiter) {
+    public static List<String> split(final String value, final String delimiter) {
         return Arrays.asList(value.split(delimiter, -1));
     }
 

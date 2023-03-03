@@ -15,7 +15,7 @@ class ParserTest {
     void 구분자를_기준으로_문자열을_파싱한다() {
         final String value = "pobi,jason";
 
-        final List<String> result = Parser.parseByDelimiter(value, ",");
+        final List<String> result = Parser.split(value, ",");
 
         assertThat(result).containsExactly("pobi", "jason");
     }
@@ -24,7 +24,7 @@ class ParserTest {
     void 구분자를_기준으로_빈문자열을_파싱한다() {
         final String value = ",,";
 
-        final List<String> result = Parser.parseByDelimiter(value, ",");
+        final List<String> result = Parser.split(value, ",");
 
         assertThat(result).containsExactly("", "", "");
     }

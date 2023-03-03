@@ -80,7 +80,7 @@ public class BlackJackController {
     }
 
     private void cardDraw(final Player player, final Deck deck) {
-        while (player.isDrawable() && inputView.readDrawState(player.getName())) {
+        while (player.isDrawable() && inputView.readMoreDraw(player.getName())) {
             player.drawCard(deck.draw());
             outputView.printHandedCardsWithoutScore(ParticipantResponse.from(player));
         }
