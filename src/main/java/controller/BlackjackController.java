@@ -7,10 +7,13 @@ import domain.Player;
 import domain.PlayerName;
 import domain.Players;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
+// TODO: 2023/03/02 View 리팩토링
+// TODO: 2023/03/02 코드 스타일/포맷 맞추기
 public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -56,10 +59,12 @@ public class BlackjackController {
 
 
     private Players createPlayers() {
-        return new Players(readNames().stream()
+        return retryOnInvalidUserInput(
+                () -> new Players(readNames().stream()
                 .map(PlayerName::new)
                 .map(Player::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()))
+        );
     }
 
     private List<String> readNames() {
@@ -76,7 +81,11 @@ public class BlackjackController {
     }
 
     private boolean isHitCommand(String name) {
-        return Command.from(inputView.requestMoreCard(name)) != Command.HOLD;
+        Command command = retryOnInvalidUserInput(
+                () -> Command.from(inputView.requestMoreCard(name))
+        );
+
+        return command == Command.HIT;
     }
 
     private void printPlayerCurrentState(Player player) {
@@ -86,6 +95,15 @@ public class BlackjackController {
         }
 
         outputView.printPlayerCards(player);
+    }
+
+    private <T> T retryOnInvalidUserInput(Supplier<T> request) {
+        try {
+            return request.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return retryOnInvalidUserInput(request);
+        }
     }
 
 }

@@ -128,4 +128,8 @@ public class OutputView {
 
         return resultCount + result.getValue();
     }
+
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
 }
