@@ -7,9 +7,11 @@ import blackjack.domain.player.User;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Names;
+import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,30 @@ public class BlackjackController {
         OutputView.printPlayersCurrentCards(players);
         giveAdditionalCards();
         giveAdditionalCardToDealer();
-        OutputView.printResult(dealer, players);
+        OutputView.printScore(dealer, players);
+        printResults();
+    }
+
+    private void printResults() {
+        int dealerScore = dealer.getTotalScore();
+        HashMap<Player, Result> playerResults = new HashMap<>();
+        HashMap<Result, Integer> dealerResults = initializedResults();
+        for (Player player : players.getPlayers()) {
+            Result playerResult = Result.calculateResult(player.getTotalScore(), dealerScore);
+            Result dealerResult = playerResult.ofOppositeResult();
+            playerResults.put(player, playerResult);
+            dealerResults.put(dealerResult, dealerResults.get(dealerResult)+1);
+        }
+        OutputView.printResults(playerResults, dealerResults);
+    }
+
+    private HashMap<Result, Integer> initializedResults() {
+        HashMap<Result, Integer> dealerResults = new HashMap<>();
+
+        for (Result result : Result.values()) {
+            dealerResults.put(result, 0);
+        }
+        return dealerResults;
     }
 
     private void giveAdditionalCards() {

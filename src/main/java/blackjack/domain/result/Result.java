@@ -37,4 +37,7 @@ public enum Result {
         return TIE;
     }
 
+    public String getResult() {
+        return this.playerResult;
+    }
 }
