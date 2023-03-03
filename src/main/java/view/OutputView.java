@@ -1,8 +1,8 @@
 package view;
 
-import dto.DealerResult;
+import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
-import dto.GameResult;
+import dto.ParticipantResult;
 import dto.WinLoseResult;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +11,8 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.getProperty("line.separator");
+    public static final String WIN = "승";
+    public static final String LOSE = "패";
 
     public void printCardSplitMessage(final List<DrawnCardsInfo> infos) {
         String names = infos.stream()
@@ -30,7 +32,6 @@ public class OutputView {
     }
 
     private String getCardsInfo(final List<String> cards) {
-
         return cards.stream()
                 .collect(Collectors.joining(DELIMITER));
     }
@@ -39,7 +40,7 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printScoreResult(final List<GameResult> results) {
+    public void printParticipantResults(final List<ParticipantResult> results) {
         System.out.println();
         results.stream()
                 .forEach(result -> System.out.println(
@@ -47,21 +48,22 @@ public class OutputView {
                                 + result.getScore()));
     }
 
-    public void printResult(final List<WinLoseResult> winLoseResults,
-                            final DealerResult dealerResult) {
+    public void printWinLoseResult(final List<WinLoseResult> winLoseResults,
+                                   final DealerWinLoseResult dealerWinLoseResult) {
         System.out.println(NEW_LINE + "## 최종 승패");
 
         System.out.println(
-                dealerResult.getName() + ": " + dealerResult.getWinCount() + "승 " + dealerResult.getLoseCount() + "패");
+                dealerWinLoseResult.getName() + ": " + dealerWinLoseResult.getWinCount() + "승 " + dealerWinLoseResult.getLoseCount() + "패");
 
-        winLoseResults.forEach(result -> System.out.println(result.getName() + ": " + isWin(result.isWin())));
+        winLoseResults.forEach(
+                result -> System.out.println(result.getName() + ": " + getWinLoseFormat(result.isWin())));
     }
 
-    private String isWin(boolean isWin) {
+    private String getWinLoseFormat(boolean isWin) {
         if (isWin) {
-            return "승";
+            return WIN;
         }
-        return "패";
+        return LOSE;
     }
 
     public void printExceptionMessage(final String message) {

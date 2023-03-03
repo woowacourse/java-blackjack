@@ -9,9 +9,9 @@ import domain.DrawCommand;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
-import dto.DealerResult;
+import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
-import dto.GameResult;
+import dto.ParticipantResult;
 import dto.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,17 @@ import java.util.List;
 public class BlackJackService {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
-
+    public static final int BURST_NUMBER = 21;
+    public static final int DEALER_DRAW_LIMIT_SCORE = 16;
 
     public List<DrawnCardsInfo> splitCards(final Dealer dealer,
                                            final Players players,
                                            final CardDeck cardDeck) {
         splitCards(dealer, cardDeck);
-
         players.stream()
                 .forEach(player -> splitCards(player, cardDeck));
 
-        return createDrawnCardsInfos(dealer, dealer.openDrawnCards(), players);
+        return getDrawnCardsInfos(dealer, dealer.openDrawnCards(), players);
     }
 
     private void splitCards(final Participant participant, final CardDeck cardDeck) {
@@ -38,9 +38,9 @@ public class BlackJackService {
         }
     }
 
-    private List<DrawnCardsInfo> createDrawnCardsInfos(final Dealer dealer,
-                                                       final List<Card> dealerCards,
-                                                       final Players players) {
+    private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer,
+                                                    final List<Card> dealerCards,
+                                                    final Players players) {
         List<DrawnCardsInfo> cardInfos = new ArrayList<>();
         addDealerCardInfo(dealer, dealerCards, cardInfos);
 
@@ -56,11 +56,12 @@ public class BlackJackService {
         if (drawCommand.isDraw()) {
             player.pickCard(cardDeck.draw());
         }
+
         return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }
 
     public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
-        if (player.calculateCardScore() > 21 || drawCommand.isStop()) {
+        if (player.calculateCardScore() > BURST_NUMBER || drawCommand.isStop()) {
             return false;
         }
 
@@ -68,28 +69,28 @@ public class BlackJackService {
     }
 
     public void pickDealerCard(final CardDeck cardDeck, final Dealer dealer) {
-        if (dealer.calculateCardScore() <= 16) {
+        if (dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE) {
             dealer.pickCard(cardDeck.draw());
         }
     }
 
     public boolean canDealerDrawMore(final Dealer dealer) {
-        if (dealer.calculateCardScore() > 16) {
+        if (dealer.calculateCardScore() > DEALER_DRAW_LIMIT_SCORE) {
             return false;
         }
 
         return true;
     }
 
-    public List<GameResult> createResultStatus(final Dealer dealer,
-                                               final Players players) {
-        List<GameResult> result = new ArrayList<>();
-        result.add(GameResult.toDto(dealer));
+    public List<ParticipantResult> getParticipantResults(final Dealer dealer,
+                                                         final Players players) {
+        List<ParticipantResult> participantResults = new ArrayList<>();
+        participantResults.add(ParticipantResult.toDto(dealer));
 
         players.stream()
-                .forEach(player -> result.add(GameResult.toDto(player)));
+                .forEach(player -> participantResults.add(ParticipantResult.toDto(player)));
 
-        return result;
+        return participantResults;
     }
 
     private void addDealerCardInfo(final Dealer dealer,
@@ -100,7 +101,7 @@ public class BlackJackService {
 
     public List<WinLoseResult> getWinLoseResults(final Dealer dealer, final Players players) {
         int dealerScore = dealer.calculateCardScore();
-        boolean isDealerBurst = dealerScore > 21;
+        boolean isDealerBurst = dealerScore > BURST_NUMBER;
 
         List<WinLoseResult> winLoseResults = players.stream()
                 .map(player -> calculateWinLose(dealerScore, isDealerBurst, player))
@@ -111,7 +112,7 @@ public class BlackJackService {
 
     private WinLoseResult calculateWinLose(final int dealerScore, final boolean isDealerBurst, final Player player) {
         int playerScore = player.calculateCardScore();
-        if (playerScore > 21) {
+        if (playerScore > BURST_NUMBER) {
             return WinLoseResult.toDto(player, false);
         }
 
@@ -120,17 +121,17 @@ public class BlackJackService {
 
         }
 
-        boolean result = playerScore > dealerScore;
-        return WinLoseResult.toDto(player, result);
+        boolean isPlayerWin = playerScore > dealerScore;
+        return WinLoseResult.toDto(player, isPlayerWin);
     }
 
-    public DealerResult getDealerResult(final List<WinLoseResult> winLoseResults, final Dealer dealer) {
+    public DealerWinLoseResult getDealerResult(final List<WinLoseResult> winLoseResults, final Dealer dealer) {
         int dealerLoseCount = (int) winLoseResults.stream()
                 .filter(WinLoseResult::isWin)
                 .count();
         int dealerWinCount = winLoseResults.size() - dealerLoseCount;
 
-        DealerResult dealerResult = DealerResult.toDto(dealer, dealerWinCount, dealerLoseCount);
-        return dealerResult;
+        DealerWinLoseResult dealerWinLoseResult = DealerWinLoseResult.toDto(dealer, dealerWinCount, dealerLoseCount);
+        return dealerWinLoseResult;
     }
 }

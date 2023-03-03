@@ -10,9 +10,9 @@ import domain.Name;
 import domain.ParticipantGenerator;
 import domain.Player;
 import domain.Players;
-import dto.DealerResult;
+import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
-import dto.GameResult;
+import dto.ParticipantResult;
 import dto.WinLoseResult;
 import java.util.List;
 import service.BlackJackService;
@@ -40,7 +40,7 @@ public class BlackJackApplication {
 
         splitCards(cardDeck, dealer, players);
         drawCards(cardDeck, dealer, players);
-        printResultStatus(dealer, players);
+        printParticipantResults(dealer, players);
         printWinLoseResult(dealer, players);
     }
 
@@ -51,6 +51,7 @@ public class BlackJackApplication {
             List<Name> names = rawNames.stream()
                     .map(Name::new)
                     .collect(toList());
+
             return ParticipantGenerator.createPlayers(names);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
@@ -72,20 +73,20 @@ public class BlackJackApplication {
     private void drawPlayerCards(final CardDeck cardDeck, final Player player) {
         DrawCommand drawCommand;
         do {
-            drawCommand = inputCommand(player.getName());
+            drawCommand = getRawCommand(player.getName());
             DrawnCardsInfo drawnCardsInfo = blackJackService.drawCards(cardDeck, player, drawCommand);
             outputView.printPlayerCardInfo(drawnCardsInfo);
         } while (blackJackService.canDrawMore(player, drawCommand));
     }
 
-    private DrawCommand inputCommand(final String name) {
+    private DrawCommand getRawCommand(final String name) {
         try {
-            String input = inputView.readChoiceOfDrawCard(name);
-            DrawCommand drawCommand = new DrawCommand(input);
+            String rawCommand = inputView.readChoiceOfDrawCard(name);
+            DrawCommand drawCommand = new DrawCommand(rawCommand);
             return drawCommand;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return inputCommand(name);
+            return getRawCommand(name);
         }
     }
 
@@ -96,14 +97,14 @@ public class BlackJackApplication {
         } while (blackJackService.canDealerDrawMore(dealer));
     }
 
-    private void printResultStatus(final Dealer dealer, final Players players) {
-        List<GameResult> result = blackJackService.createResultStatus(dealer, players);
-        outputView.printScoreResult(result);
+    private void printParticipantResults(final Dealer dealer, final Players players) {
+        List<ParticipantResult> participantResults = blackJackService.getParticipantResults(dealer, players);
+        outputView.printParticipantResults(participantResults);
     }
 
     private void printWinLoseResult(final Dealer dealer, final Players players) {
         List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
-        DealerResult dealerResult = blackJackService.getDealerResult(winLoseResults, dealer);
-        outputView.printResult(winLoseResults, dealerResult);
+        DealerWinLoseResult dealerWinLoseResult = blackJackService.getDealerResult(winLoseResults, dealer);
+        outputView.printWinLoseResult(winLoseResults, dealerWinLoseResult);
     }
 }
