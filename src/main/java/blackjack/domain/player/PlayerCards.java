@@ -34,6 +34,7 @@ public class PlayerCards {
         int aceSize = getAceCardsSize();
         while (aceSize > 0 && totalScore > LIMIT_SCORE) {
             totalScore -= ACE_VALUE_GAP;
+            aceSize--;
         }
         return totalScore;
     }
