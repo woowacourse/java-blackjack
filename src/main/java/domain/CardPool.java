@@ -29,6 +29,10 @@ public class CardPool {
         return sum;
     }
 
+    public boolean isOverCardPointLimit() {
+        return sumCardNumbers() > CARD_POINT_LIMIT;
+    }
+
     private boolean containsAce() {
         return cards.stream()
                 .anyMatch(card -> card.getNumber() == CardNumber.ACE);

@@ -1,9 +1,6 @@
 package domain;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 
 public enum GameResult {
@@ -17,10 +14,17 @@ public enum GameResult {
         this.function = function;
     }
 
-    public static GameResult getResult(int playerPoint, int dealerPoint) {
+    public static GameResult getResult(Player player, Dealer dealer) {
         return Arrays.stream(GameResult.values())
-                .filter(it -> it.function.apply(playerPoint, dealerPoint))
+                .filter(it -> it.function.apply(getPlayerPoint(player), getPlayerPoint(dealer)))
                 .findAny()
                 .orElseThrow();
+    }
+
+    private static int getPlayerPoint(Player player) {
+        if (player.isOverCardPointLimit()) {
+            return 0;
+        }
+        return player.sumCardPool();
     }
 }

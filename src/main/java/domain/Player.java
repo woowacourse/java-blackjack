@@ -22,6 +22,10 @@ public class Player {
         return cardPool.sumCardNumbers();
     }
 
+    public boolean isOverCardPointLimit() {
+        return cardPool.isOverCardPointLimit();
+    }
+
     public Name getPlayerName() {
         return playerName;
     }

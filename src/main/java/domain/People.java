@@ -45,15 +45,14 @@ public class People {
     }
 
     public Map<Player, GameResult> makeGameResultForAllPlayer() {
-        int dealerPoint = dealer.sumCardPool();
         Map<Player, GameResult> record = new HashMap<>();
-        recordGameResult(dealerPoint, record);
+        recordGameResult(record);
 
         return record;
     }
 
-    private void recordGameResult(int dealerPoint, Map<Player, GameResult> record) {
-        players.forEach(player -> record.put(player, GameResult.getResult(player.sumCardPool(), dealerPoint)));
+    private void recordGameResult(Map<Player, GameResult> record) {
+        players.forEach(player -> record.put(player, GameResult.getResult(player, dealer)));
     }
 
     public boolean isBurst(String playerName, int blackJackNumber) {
