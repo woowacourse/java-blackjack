@@ -20,6 +20,7 @@ public class Card {
     public String getShapeName() {
         return shape.getName();
     }
+
     public String getNumberName() {
         return number.getName();
     }
