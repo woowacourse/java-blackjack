@@ -11,7 +11,7 @@ public class Player extends Participant {
     }
 
     private void validate(Name name) {
-        if (name.getName().equals(BAN_NAME)) {
+        if (name.getValue().equals(BAN_NAME)) {
             throw new IllegalArgumentException(BAN_NAME_ERROR_MESSAGE);
         }
     }

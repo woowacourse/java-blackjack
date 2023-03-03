@@ -1,7 +1,6 @@
 package domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -16,7 +15,7 @@ public class NameTest {
     void createNameSuccess(String input) {
         Name name = new Name(input);
 
-        assertThat(name.getName()).isEqualTo(input);
+        assertThat(name.getValue()).isEqualTo(input);
     }
 
     @DisplayName("이름은 1글자 ~ 5글자 사이가 아닌 경우 예외가 발생한다.")

@@ -46,26 +46,26 @@ public class BlackJackController {
             dealer.pick(cardDistributor.distribute());
             dealerMoreCardCount++;
         }
-        outputView.printDealerMoreCard(dealer.getName().getName(), 16, dealerMoreCardCount);
+        outputView.printDealerMoreCard(dealer.getName().getValue(), 16, dealerMoreCardCount);
     }
 
     private void end(Players players, Dealer dealer) {
         printFinalCard(dealer);
         players.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(dealer.getName().getName(),new Result(dealer, players).getResult());
+        outputView.printFinalResult(dealer.getName().getValue(),new Result(dealer, players).getResult());
     }
 
     private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getName().getName(),
+        outputView.printCardAndScore(participant.getName().getValue(),
                 CardStatusConverter.convertToCardStatus(participant.getCards().getCards()), participant.getTotalScore());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
-        outputView.printFirstCardDistribution(dealer.getName().getName(), getPlayerNames(players));
+        outputView.printFirstCardDistribution(dealer.getName().getValue(), getPlayerNames(players));
 
-        outputView.printCardStatus(dealer.getName().getName(), CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
+        outputView.printCardStatus(dealer.getName().getValue(), CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
         for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getName().getName(), CardStatusConverter.convertToCardStatus(player.getCards().getCards()));
+            outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getCards()));
         }
     }
 
@@ -74,7 +74,7 @@ public class BlackJackController {
         playerNames = players.getPlayers()
                 .stream()
                 .map(Participant::getName)
-                .map(Name::getName)
+                .map(Name::getValue)
                 .collect(Collectors.toList());
         return playerNames;
     }
@@ -83,7 +83,7 @@ public class BlackJackController {
         boolean isCardRequested = true;
 
         while (player.isMoreCardAble() && isCardRequested) {
-            String answer = inputView.askMoreCard(player.getName().getName());
+            String answer = inputView.askMoreCard(player.getName().getValue());
             validate(answer);
             isCardRequested = isNoStop(cardDistributor, player, answer);
         }
@@ -100,7 +100,7 @@ public class BlackJackController {
             player.pick(cardDistributor.distribute());
         }
 
-        outputView.printCardStatus(player.getName().getName(), CardStatusConverter.convertToCardStatus(player.getCards().getCards()));
+        outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getCards()));
         return answer.equals(MORE_CARD);
     }
 

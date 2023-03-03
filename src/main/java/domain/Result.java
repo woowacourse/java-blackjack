@@ -26,19 +26,19 @@ public class Result {
 
     private void win(Participant dealer, Participant player) {
         if (!player.isBust() && (dealer.isBust() || dealer.getTotalScore() < player.getTotalScore())) {
-            gameResult.put(player.getName().getName(), GameResult.WIN);
+            gameResult.put(player.getName().getValue(), GameResult.WIN);
         }
     }
 
     private void lose(Participant dealer, Participant player) {
         if (!dealer.isBust() && (player.isBust() || dealer.getTotalScore() > player.getTotalScore())) {
-            gameResult.put(player.getName().getName(), GameResult.LOSE);
+            gameResult.put(player.getName().getValue(), GameResult.LOSE);
         }
     }
 
     private void draw(Participant dealer, Participant player) {
         if (dealer.isBust() && player.isBust() || dealer.getTotalScore() == player.getTotalScore()) {
-            gameResult.put(player.getName().getName(), GameResult.DRAW);
+            gameResult.put(player.getName().getValue(), GameResult.DRAW);
         }
     }
 

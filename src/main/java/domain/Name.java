@@ -6,11 +6,11 @@ public class Name {
     private static final int MAX_LENGTH = 5;
     private static final String NAME_OUT_OF_RANGE_ERROR_MESSAGE = "이름은 1 ~ 5글자 사이여야 합니다.";
 
-    private final String name;
+    private final String value;
 
-    public Name(String name) {
-        validate(name);
-        this.name = name;
+    public Name(String value) {
+        validate(value);
+        this.value = value;
     }
 
     private void validate(String name) {
@@ -23,8 +23,8 @@ public class Name {
         return !(MIN_LENGTH <= name.length() && name.length() <= MAX_LENGTH);
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
 }
