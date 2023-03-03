@@ -1,8 +1,18 @@
 package domain;
 
 public enum CardSuit {
-    SPADE, HEART, DIAMOND, CLUB;
+    SPADE("스페이드"),
+    HEART("하트"),
+    DIAMOND("다이아몬드"),
+    CLUB("클로버");
 
-    CardSuit() {
+    private final String value;
+
+    CardSuit(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

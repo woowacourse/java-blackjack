@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BlackjackGame;
 import domain.Participants;
 import view.InputView;
 import view.OutputView;
@@ -18,5 +19,8 @@ public class BlackjackController {
     public void run() {
         List<String> names = inputView.readNames();
         Participants participants = Participants.from(names);
+        BlackjackGame blackjackGame = new BlackjackGame(participants);
+        blackjackGame.dealOutCard();
+        outputView.printInitCards(participants);
     }
 }

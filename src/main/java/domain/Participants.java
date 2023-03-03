@@ -26,21 +26,29 @@ public class Participants {
         }
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return participants.stream()
                            .filter(participant -> participant instanceof Player)
+                           .map(participant -> (Player) participant)
                            .collect(Collectors.toList());
     }
 
-    public Participant getDealer() {
-        return participants.stream()
-                           .filter(participant -> participant instanceof Dealer)
-                           .findAny()
-                           .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
-                                   "찾지 못했습니다."));
+    public Dealer getDealer() {
+        return (Dealer) participants.stream()
+                                    .filter(participant -> participant instanceof Dealer)
+                                    .findAny()
+                                    .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
+                                            "찾지 못했습니다."));
+    }
+
+    public List<String> getPlayerNames() {
+        return getPlayers().stream()
+                           .map(Participant::getName)
+                           .collect(Collectors.toList());
     }
 
     public List<Participant> toList() {
         return List.copyOf(participants);
     }
+
 }
