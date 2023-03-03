@@ -59,4 +59,15 @@ class PlayerTest {
 
         assertThat(player.showCards()).contains(card1, card2, card3);
     }
+
+    @Test
+    @DisplayName("플레이어는 자신의 버스트 여부를 반환할 수 있다.")
+    void isBust() {
+        Player player = new Player(new Name("폴로"));
+        player.hit(new Card(CardNumber.KING, Pattern.HEART));
+        player.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
+        player.hit(new Card(CardNumber.KING, Pattern.SPADE));
+
+        assertThat(player.isBust()).isTrue();
+    }
 }

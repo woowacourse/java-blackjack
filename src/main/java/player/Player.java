@@ -23,4 +23,8 @@ public class Player {
     public List<Card> showCards() {
         return hand.getCards();
     }
+
+    public boolean isBust() {
+        return hand.calculateScore() >= 22;
+    }
 }
