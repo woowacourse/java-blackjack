@@ -17,6 +17,8 @@ import static java.util.stream.Collectors.toMap;
 
 public class BlackJackGame {
 
+    private static final int MAX_PARTICIPANT_COUNT_INCLUDE = 10;
+
     private final List<Player> players;
     private final Dealer dealer;
     private final CardDeck cardDeck;
@@ -28,11 +30,18 @@ public class BlackJackGame {
     }
 
     public static BlackJackGame defaultSetting(final CardDeck cardDeck, final List<Name> participantNames) {
+        validateParticipantsSize(participantNames);
         final List<Player> players = participantNames.stream()
                 .map(it -> new Player(it, new CardArea(cardDeck.draw(), cardDeck.draw())))
                 .collect(toList());
         final Dealer dealer = new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
         return new BlackJackGame(players, dealer, cardDeck);
+    }
+
+    private static void validateParticipantsSize(final List<Name> participantNames) {
+        if (participantNames.size() > MAX_PARTICIPANT_COUNT_INCLUDE) {
+            throw new IllegalArgumentException(String.format("참가자는 %d명 이하여야 합니다.", MAX_PARTICIPANT_COUNT_INCLUDE));
+        }
     }
 
     public boolean existCanHitParticipant() {

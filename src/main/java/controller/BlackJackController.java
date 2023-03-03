@@ -25,7 +25,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final BlackJackGame blackJackGame = setUpGame();
+        final BlackJackGame blackJackGame = withExceptionHandle(this::setUpGame);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
         hitOrStayForParticipants(blackJackGame);
         hitOrStayForDealer(blackJackGame);
