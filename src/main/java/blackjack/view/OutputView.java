@@ -14,22 +14,22 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printDefaultDrawCardMessage(List<String> personNames) {
-        final String names = String.join(", ", personNames);
+    public static void printDefaultDrawCardMessage(List<String> playerNames) {
+        final String names = String.join(", ", playerNames);
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCardsStatus(String personName, List<String> cards) {
-        System.out.println(getCardStatus(personName, cards));
+    public static void printCardsStatus(String playerName, List<String> cards) {
+        System.out.println(getCardStatus(playerName, cards));
     }
 
-    private static String getCardStatus(String personName, List<String> cards) {
+    private static String getCardStatus(String playerName, List<String> cards) {
         final String allCards = String.join(", ", cards);
-        return personName + " 카드: " + allCards;
+        return playerName + " 카드: " + allCards;
     }
 
-    public static void printCardsStatus(String personName, List<String> cards, int score) {
-        System.out.println(getCardStatus(personName, cards) + "- 결과: " + score);
+    public static void printCardsStatus(String playerName, List<String> cards, int score) {
+        System.out.println(getCardStatus(playerName, cards) + "- 결과: " + score);
     }
 
     public static void printDealerDrawCardMessage(int score) {
@@ -53,8 +53,8 @@ public class OutputView {
         System.out.println("딜러: " + result);
     }
 
-    public static void printPersonResult(String personName, GameResult gameResult) {
-        System.out.println(personName + ": " + gameResult.getName());
+    public static void printPlayerResult(String playerName, GameResult gameResult) {
+        System.out.println(playerName + ": " + gameResult.getName());
     }
 
     public static void printExceptionMessage(String message) {

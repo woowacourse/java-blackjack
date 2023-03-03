@@ -7,6 +7,7 @@ import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Person;
+import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -16,16 +17,16 @@ import java.util.function.Supplier;
 public class BlackJackController {
 
     public void run() {
-        List<Person> persons = repeat(this::getPersons);
+        List<Person> players = repeat(this::getPlayers);
         Dealer dealer = new Dealer();
-        persons.add(0, dealer);
+        players.add(0, dealer);
         Cards uniqueCards = dealer.createUniqueCards();
-        initDrawCard(persons, uniqueCards);
-        printInitStatus(persons);
-        drawMoreCardForAll(persons, uniqueCards);
+        initDrawCard(players, uniqueCards);
+        printInitStatus(players);
+        drawMoreCardForAll(players, uniqueCards);
         drawDealerMoreCard(dealer, uniqueCards);
-        printAllStatus(persons);
-        printGameResult(dealer, persons);
+        printAllStatus(players);
+        printGameResult(dealer, players);
     }
 
     private <T> T repeat(Supplier<T> supplier) {
@@ -37,11 +38,11 @@ public class BlackJackController {
         }
     }
 
-    private List<Person> getPersons() {
-        String[] names = InputView.readPersonNames();
+    private List<Person> getPlayers() {
+        String[] names = InputView.readPlayerNames();
         validateDuplicate(names);
         return Arrays.stream(names)
-                .map(Person::new)
+                .map(Player::new)
                 .collect(toList());
     }
 
@@ -54,8 +55,8 @@ public class BlackJackController {
         }
     }
 
-    private void initDrawCard(List<Person> persons, Cards uniqueCards) {
-        for (Person person : persons) {
+    private void initDrawCard(List<Person> people, Cards uniqueCards) {
+        for (Person person : people) {
             drawTwoCards(person, uniqueCards);
         }
     }
@@ -65,25 +66,24 @@ public class BlackJackController {
         person.addCard(cards.drawCard());
     }
 
-    private void printInitStatus(List<Person> persons) {
-        List<String> personNames = getWithoutDealer(persons)
-                .stream()
+    private void printInitStatus(List<Person> people) {
+        List<String> playerNames = getWithoutDealer(people).stream()
                 .map(Person::getName)
                 .collect(toList());
-        OutputView.printDefaultDrawCardMessage(personNames);
-        for (Person person : persons) {
+        OutputView.printDefaultDrawCardMessage(playerNames);
+        for (Person person : people) {
             OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getInitCards()));
         }
     }
 
-    private List<Person> getWithoutDealer(List<Person> persons) {
-        return persons.stream()
+    private List<Person> getWithoutDealer(List<Person> people) {
+        return people.stream()
                 .filter(Person::isPlayer)
                 .collect(toList());
     }
 
-    private void drawMoreCardForAll(List<Person> persons, Cards uniqueCards) {
-        for (Person person : getWithoutDealer(persons)) {
+    private void drawMoreCardForAll(List<Person> people, Cards uniqueCards) {
+        for (Person person : getWithoutDealer(people)) {
             repeat(() -> drawMoreCard(person, uniqueCards));
         }
     }
@@ -126,8 +126,8 @@ public class BlackJackController {
         }
     }
 
-    private void printAllStatus(List<Person> persons) {
-        for (Person person : persons) {
+    private void printAllStatus(List<Person> people) {
+        for (Person person : people) {
             printPersonStatus(person);
         }
     }
@@ -136,15 +136,15 @@ public class BlackJackController {
         OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()), person.getScore());
     }
 
-    private void printGameResult(Dealer dealer, List<Person> persons) {
+    private void printGameResult(Dealer dealer, List<Person> people) {
         OutputView.printGameEndMessage();
-        List<GameResult> dealerGameResults = getWithoutDealer(persons)
+        List<GameResult> dealerGameResults = getWithoutDealer(people)
                 .stream()
                 .map(dealer::matchGame)
                 .collect(toList());
         OutputView.printDealerResult(dealerGameResults);
-        for (Person person : getWithoutDealer(persons)) {
-            OutputView.printPersonResult(person.getName(), person.matchGame(dealer));
+        for (Person person : getWithoutDealer(people)) {
+            OutputView.printPlayerResult(person.getName(), person.matchGame(dealer));
         }
     }
 }

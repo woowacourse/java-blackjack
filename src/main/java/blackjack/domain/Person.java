@@ -2,42 +2,24 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Person {
-    private static final int MAX_NAME_LENGTH = 5;
-    private static final int MAX_SCORE = 21;
+public abstract class Person {
+    protected static final int MAX_SCORE = 21;
 
-    private final String name;
-    private final Cards cards;
+    protected final String name;
+    protected final Cards cards;
 
-    public Person(String name) {
-        validate(name);
+    protected Person(String name) {
         this.name = name;
         this.cards = new Cards();
     }
 
-    private void validate(String name) {
-        validateBlankName(name);
-        validateNameLength(name);
-    }
+    public abstract void addCard(Card card);
 
-    private void validateBlankName(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 공백일 수 없습니다.");
-        }
-    }
+    public abstract boolean isPlayer();
 
-    private void validateNameLength(String name) {
-        if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 이름은 " + MAX_NAME_LENGTH + "글자를 넘을 수 없습니다.");
-        }
-    }
+    public abstract boolean isDealer();
 
-    public void addCard(Card card) {
-        if (getScore() > MAX_SCORE) {
-            throw new IllegalArgumentException("[ERROR] 점수가 " + MAX_SCORE + "점을 넘으면 카드를 더 뽑을 수 없습니다.");
-        }
-        cards.addCard(card);
-    }
+    public abstract List<Card> getInitCards();
 
     public GameResult matchGame(Person otherPerson) {
         int otherScore = correctionOverScore(otherPerson.getScore());
@@ -56,14 +38,6 @@ public class Person {
             return 0;
         }
         return score;
-    }
-
-    public boolean isPlayer() {
-        return true;
-    }
-
-    public List<Card> getInitCards() {
-        return getCards();
     }
 
     public int getScore() {

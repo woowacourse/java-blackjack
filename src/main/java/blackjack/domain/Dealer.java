@@ -28,8 +28,18 @@ public class Dealer extends Person {
     }
 
     @Override
+    public void addCard(Card card) {
+        cards.addCard(card);
+    }
+
+    @Override
     public boolean isPlayer() {
         return false;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
     }
 
     @Override
