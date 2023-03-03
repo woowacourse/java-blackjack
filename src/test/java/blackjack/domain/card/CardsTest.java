@@ -68,22 +68,6 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("카드 한장을 반환하는 테스트")
-    void getFirstCardTest(){
-        // given
-        Cards cards = new Cards();
-        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
-        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-
-        // when
-        cards.add(card1);
-        cards.add(card2);
-
-        // that
-        assertThat(cards.getFirstCard().getCardName()).isEqualTo(card1.getCardName());
-    }
-
-    @Test
     @DisplayName("에이스 2장 일때 합 12가 되는지 테스트")
     void calculateTotalOver21Test(){
         // given

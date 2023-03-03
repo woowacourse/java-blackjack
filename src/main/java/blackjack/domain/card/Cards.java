@@ -22,14 +22,16 @@ public class Cards {
         int totalScore = makeTotalScore();
         int aceCount = countAce();
         System.out.println(aceCount);
+        totalScore = makeTotalUnder21(totalScore);
+        return totalScore;
+    }
+    private int makeTotalUnder21(int totalScore){
+        int aceCount = countAce();
         while(totalScore>21 && aceCount!=0){
             totalScore-=10;
             aceCount--;
         }
         return totalScore;
-    }
-    public Card getFirstCard(){
-        return this.cards.get(0);
     }
     private int countAce(){
         return (int) cards.stream().filter(card->card.isAce()).count();
