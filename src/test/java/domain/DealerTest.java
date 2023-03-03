@@ -20,7 +20,7 @@ class DealerTest {
         List<Card> emptyCards = new ArrayList<>();
         DrawnCards drawnCards = new DrawnCards(emptyCards);
 
-        Dealer dealer = new Dealer(name, drawnCards);
+        Dealer dealer = new Dealer(drawnCards);
 
         // when
         dealer.pickCard(cardA);
@@ -44,7 +44,7 @@ class DealerTest {
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        Dealer dealer = new Dealer(name, drawnCards);
+        Dealer dealer = new Dealer(drawnCards);
 
         // when
         int expectedCardScore = dealer.calculateCardScore();
@@ -64,7 +64,7 @@ class DealerTest {
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        Dealer dealer = new Dealer(name, drawnCards);
+        Dealer dealer = new Dealer(drawnCards);
 
         // when
         List<Card> expectedDrawnCards = dealer.openDrawnCards();

@@ -17,14 +17,14 @@ public class GameResult {
         this.score = score;
     }
 
-    public static GameResult toDto(final Participant participant, final List<Card> cards, final int score) {
+    public static GameResult toDto(final Participant participant) {
         List<String> cardInfos = new ArrayList<>();
-
+        List<Card> cards = participant.getDrawnCards();
         for (Card drawnCard : cards) {
             cardInfos.add(drawnCard.getValue().getName() + drawnCard.getType().getName());
         }
 
-        return new GameResult(participant.getName(), cardInfos, score);
+        return new GameResult(participant.getName(), cardInfos, participant.calculateCardScore());
     }
 
     public String getName() {
