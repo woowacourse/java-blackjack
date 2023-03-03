@@ -14,6 +14,10 @@ public class Card {
         return cardNumber;
     }
 
+    public CardSuit getCardSuit() {
+        return cardSuit;
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();

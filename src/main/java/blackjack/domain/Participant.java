@@ -50,5 +50,20 @@ public abstract class Participant {
         return participantName;
     }
 
+    public String getName() {
+        return participantName.getName();
+    }
+    public CardNumber getCardNumber(int index) {
+        return receivedCards.get(index).getCardNumber();
+    }
+
+    public CardSuit getCardSuit(int index) {
+        return receivedCards.get(index).getCardSuit();
+    }
+
+    public boolean isDealer() {
+       return participantName.equals(new ParticipantName("딜러"));
+    }
+
     abstract boolean decideHit();
 }
