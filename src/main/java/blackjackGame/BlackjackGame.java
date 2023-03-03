@@ -4,6 +4,7 @@ import java.util.List;
 
 import deck.Deck;
 import player.Dealer;
+import player.DealerFirstOpenDto;
 import player.DealerWinningDto;
 import player.Player;
 import player.PlayerResultDto;
@@ -83,5 +84,9 @@ public class BlackjackGame {
 
     public List<PlayerWinningDto> getPlayerWinningResults() {
         return players.getWinningResults();
+    }
+
+    public DealerFirstOpenDto getDealerFirstOpen() {
+        return DealerFirstOpenDto.from(dealer);
     }
 }
