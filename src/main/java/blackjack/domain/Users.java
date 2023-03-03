@@ -42,7 +42,7 @@ public class Users {
         return targetUser.openCards();
     }
 
-    public void findUserAndGive(final Name userName, final Card card) {
+    public void giveCardByName(final Name userName, final Card card) {
         final User findUser = finUserByName(userName);
         findUser.draw(card);
     }
@@ -58,7 +58,7 @@ public class Users {
         return List.copyOf(users);
     }
 
-    public boolean isBusted(final Name name) {
+    public boolean checkBustBy(final Name name) {
         return finUserByName(name).isBusted();
     }
 }

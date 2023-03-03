@@ -40,7 +40,7 @@ public class BlackJack {
     }
 
     public void drawCard(Name user) {
-        users.findUserAndGive(user, deck.drawCard());
+        users.giveCardByName(user, deck.drawCard());
     }
 
     public List<Card> getDealerCard() {
@@ -83,7 +83,7 @@ public class BlackJack {
         return users;
     }
 
-    public boolean isBusted(final Name name) {
-        return users.isBusted(name);
+    public boolean checkBustBy(final Name name) {
+        return users.checkBustBy(name);
     }
 }

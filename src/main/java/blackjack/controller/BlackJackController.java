@@ -46,7 +46,7 @@ public class BlackJackController {
         while (wantCard) {
             blackJack.drawCard(name);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
-            if (blackJack.isBusted(name)) {
+            if (blackJack.checkBustBy(name)) {
                 break;
             }
             wantCard = getCardWantFromConsole(name);
