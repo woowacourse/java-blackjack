@@ -2,6 +2,14 @@ package techcourse;
 
 public interface SimpleList<T> {
 
+    static <T> SimpleList<T> fromArrayToList(final T[] array) {
+        final SimpleArrayList<T> tSimpleArrayList = new SimpleArrayList<>();
+        for (final T t : array) {
+            tSimpleArrayList.add(t);
+        }
+        return tSimpleArrayList;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);
