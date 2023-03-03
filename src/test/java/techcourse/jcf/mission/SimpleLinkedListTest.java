@@ -78,4 +78,24 @@ class SimpleLinkedListTest {
         assertThat(integerSimpleList.get(1))
                 .isEqualTo(2);
     }
+
+    @Test
+    void test5() {
+        // given
+        Child child = new Child("child");
+        SimpleArrayList<Parent> parentList = new SimpleArrayList<>();
+        SimpleArrayList<Child> childList = new SimpleArrayList<>(child);
+        SimpleArrayList<Number> numberList = new SimpleArrayList<>();
+        SimpleArrayList<Integer> intList = new SimpleArrayList<>(1);
+
+        // when
+        SimpleList.copy(childList, parentList);
+        SimpleList.copy(intList, numberList);
+
+        // then
+        assertThat(parentList.get(0))
+                .isEqualTo(child);
+        assertThat(numberList.get(0))
+                .isEqualTo(1);
+    }
 }
