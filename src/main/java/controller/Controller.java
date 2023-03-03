@@ -17,6 +17,8 @@ public class Controller {
         Dealer dealer = new Dealer();
         Players players = new Players(inputView.readPlayerNames());
         BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardGenerator().generate()));
+        game.shuffleCardDeck();
+
         distributeInitialCard(dealer, players, game);
 
         selectAdditionalCard(players, game);
