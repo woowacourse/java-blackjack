@@ -11,10 +11,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantCardTest {
 
@@ -30,10 +28,9 @@ class ParticipantCardTest {
     @Test
     @DisplayName("create()는 호출하면, ParticipantCard를 생성한다")
     void create_whenCall_thenSuccess() {
-        assertThatCode(() -> ParticipantCard.create())
-                .doesNotThrowAnyException();
+        final ParticipantCard participantCard = assertDoesNotThrow(ParticipantCard::create);
 
-        assertThat(ParticipantCard.create())
+        assertThat(participantCard)
                 .isExactlyInstanceOf(ParticipantCard.class);
     }
 
@@ -44,8 +41,8 @@ class ParticipantCardTest {
         participantCard.addCard(card);
 
         // then
-        assertThat(participantCard)
-                .extracting("cards", as(list(Card.class)))
+        final List<Card> cards = participantCard.getCards();
+        assertThat(cards)
                 .hasSize(1);
     }
 
@@ -56,10 +53,11 @@ class ParticipantCardTest {
         participantCard.addCard(card);
 
         // when
-        Card actual = participantCard.getFirstCard();
+        final Card actual = participantCard.getFirstCard();
 
         // then
-        assertThat(actual).isSameAs(card);
+        assertThat(actual)
+                .isSameAs(card);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
@@ -69,7 +67,7 @@ class ParticipantCardTest {
         cards.forEach(participantCard::addCard);
 
         // when
-        int score = participantCard.calculateScore();
+        final int score = participantCard.calculateScore();
 
         // then
         assertThat(score)
@@ -83,10 +81,11 @@ class ParticipantCardTest {
         cards.forEach(participantCard::addCard);
 
         // when
-        boolean actual = participantCard.isBust();
+        final boolean actual = participantCard.isBust();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
@@ -96,9 +95,10 @@ class ParticipantCardTest {
         cards.forEach(participantCard::addCard);
 
         // when
-        boolean actual = participantCard.isBlackJack();
+        final boolean actual = participantCard.isBlackJack();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 }

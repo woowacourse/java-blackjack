@@ -6,18 +6,17 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantNameTest {
 
     @ParameterizedTest(name = "create()는 파라미터로 입력된 name이 유효하면, 예외가 발생하지 않는다")
     @ValueSource(strings = {"1", "abcdeabcdeabcdeabcde"})
     void create_givenValidName_thenSuccess(final String validName) {
-        assertThatCode(() -> ParticipantName.create(validName))
-                .doesNotThrowAnyException();
+        final ParticipantName participantName = assertDoesNotThrow(() -> ParticipantName.create(validName));
 
-        assertThat(ParticipantName.create(validName))
+        assertThat(participantName)
                 .isExactlyInstanceOf(ParticipantName.class);
     }
 

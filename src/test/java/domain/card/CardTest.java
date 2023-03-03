@@ -1,21 +1,19 @@
 package domain.card;
 
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class CardTest {
 
     @ParameterizedTest(name = "create()는 전달받은 CardPattern과 CardNumber를 조합하여 카드를 생성한다")
     @CsvSource(value = {"HEART:ACE", "SPADE:TWO", "DIAMOND:THREE", "CLOVER:FOUR"}, delimiter = ':')
     void create_givenCardPatternAndCardNumber_thenSuccess(final CardPattern cardPattern, final CardNumber cardNumber) {
-        assertThatCode(() -> Card.create(cardPattern, cardNumber))
-                .doesNotThrowAnyException();
+        final Card card = assertDoesNotThrow(() -> Card.create(cardPattern, cardNumber));
 
-        assertThat(Card.create(cardPattern, cardNumber))
+        assertThat(card)
                 .isExactlyInstanceOf(Card.class);
     }
 
@@ -23,11 +21,12 @@ class CardTest {
     @CsvSource(value = {"ACE:true", "TWO:false", "KING:false"}, delimiter = ':')
     void isAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
         // given
-        Card card = Card.create(CardPattern.HEART, cardNumber);
+        final Card card = Card.create(CardPattern.HEART, cardNumber);
 
         // when
-        boolean actual = card.isAce();
+        final boolean actual = card.isAce();
 
-        AssertionsForClassTypes.assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 }

@@ -13,17 +13,18 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayerTest {
 
+    private String playerName;
     private Card card;
     private Player player;
 
     @BeforeEach
     void init() {
         // given
-        final String playerName = "pobi";
+        playerName = "pobi";
         card = Card.create(CardPattern.HEART, CardNumber.ACE);
         player = Player.create(playerName);
     }
@@ -31,14 +32,9 @@ class PlayerTest {
     @Test
     @DisplayName("create()를 호출하면, Player가 생성된다")
     void create_whenCall_thenSuccess() {
-        // given
-        final String name = "pobi";
+        final Player player = assertDoesNotThrow(() -> Player.create(playerName));
 
-        // when, then
-        assertThatCode(() -> Player.create(name))
-                .doesNotThrowAnyException();
-
-        assertThat(Player.create(name))
+        assertThat(player)
                 .isExactlyInstanceOf(Player.class);
     }
 
@@ -55,10 +51,11 @@ class PlayerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         player.addCard(card);
-        ParticipantCard participantCard = player.participantCard;
-        List<Card> cards = participantCard.getCards();
 
         // then
+        final ParticipantCard participantCard = player.participantCard;
+        final List<Card> cards = participantCard.getCards();
+
         assertThat(cards)
                 .hasSize(1);
     }
@@ -70,7 +67,7 @@ class PlayerTest {
         cards.forEach(player::addCard);
 
         // when
-        int score = player.calculateScore();
+        final int score = player.calculateScore();
 
         // then
         assertThat(score)
@@ -84,10 +81,11 @@ class PlayerTest {
         cards.forEach(player::addCard);
 
         // when
-        boolean actual = player.isBust();
+        final boolean actual = player.isBust();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
@@ -97,9 +95,10 @@ class PlayerTest {
         cards.forEach(player::addCard);
 
         // when
-        boolean actual = player.isBlackJack();
+        final boolean actual = player.isBlackJack();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 }

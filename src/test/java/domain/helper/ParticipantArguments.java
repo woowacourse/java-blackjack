@@ -13,6 +13,19 @@ public final class ParticipantArguments {
     private ParticipantArguments() {
     }
 
+    private static Stream<Arguments> validPlayerNames() {
+        return Stream.of(
+                Arguments.of(List.of("zeeto")),
+                Arguments.of(List.of("zeeto", "journey", "pobi", "neo", "lisa", "wonnie", "cron"))
+        );
+    }
+
+    private static Stream<Arguments> invalidPlayerNames() {
+        return Stream.of(
+                Arguments.of(List.of("zeeto", "journey", "pobi", "neo", "lisa", "wonnie", "cron", "juno"))
+        );
+    }
+
     private static Stream<Arguments> makeCards() {
         return Stream.of(
                 Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),

@@ -14,13 +14,16 @@ class CardPatternTest {
     @DisplayName("getAll()은 호출하면 모든 CardPattern을 반환한다")
     void getAll_whenCall_thenReturnCardPatterns() {
         // given
-        List<CardPattern> expected = Arrays.asList(CardPattern.values());
+        final List<CardPattern> expected = Arrays.asList(CardPattern.values());
 
         // when
-        List<CardPattern> actual = CardPattern.getAll();
+        final List<CardPattern> actual = CardPattern.getAll();
 
         // then
-        assertThat(actual.size()).isSameAs(expected.size());
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.size())
+                .isSameAs(expected.size());
+
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 }

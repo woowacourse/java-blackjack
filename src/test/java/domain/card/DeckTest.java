@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeckTest {
@@ -22,10 +22,9 @@ class DeckTest {
     @Test
     @DisplayName("create()는 호출하면 섞인 52장의 카드 뭉치를 생성한다.")
     void create_whenCall_thenSuccess() {
-        assertThatCode(() -> Deck.create(mockShuffler))
-                .doesNotThrowAnyException();
+        final Deck deck = assertDoesNotThrow(() -> Deck.create(mockShuffler));
 
-        assertThat(Deck.create(mockShuffler))
+        assertThat(deck)
                 .isExactlyInstanceOf(Deck.class);
     }
 
@@ -33,11 +32,11 @@ class DeckTest {
     @DisplayName("draw()는 호출하면 카드 한 장을 뽑는다.")
     void draw_whenCall_thenReturnCard() {
         // given
-        Deck deck = Deck.create(mockShuffler);
-        Card expected = Card.create(CardPattern.HEART, CardNumber.ACE);
+        final Deck deck = Deck.create(mockShuffler);
+        final Card expected = Card.create(CardPattern.HEART, CardNumber.ACE);
 
         // when
-        Card actual = deck.draw();
+        final Card actual = deck.draw();
 
         // then
         assertThat(actual)

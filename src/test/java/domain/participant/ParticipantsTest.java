@@ -3,33 +3,41 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantsTest {
 
-    @MethodSource(value = "validPlayerNames")
+    private List<String> playerNames;
+    private Participants participants;
+
+    @BeforeEach
+    void init() {
+        playerNames = List.of("a", "b", "c", "d", "e");
+        participants = Participants.create(playerNames);
+    }
+
+    @MethodSource(value = "domain.helper.ParticipantArguments#validPlayerNames")
     @ParameterizedTest(name = "create()는 유효한 수의 플레이어 이름 컬렉션을 받으면, 예외가 발생하지 않는다")
     void create_givenPlayerNames_thenSuccess(final List<String> playerNames) {
-        assertThatCode(() -> Participants.create(playerNames))
-                .doesNotThrowAnyException();
+        final Participants participants = assertDoesNotThrow(() -> Participants.create(playerNames));
 
-        assertThat(Participants.create(playerNames))
+        assertThat(participants)
                 .isInstanceOf(Participants.class);
     }
 
-    @MethodSource(value = "invalidPlayerNames")
+    @MethodSource(value = "domain.helper.ParticipantArguments#invalidPlayerNames")
     @ParameterizedTest(name = "create()는 7명 초과의 플레이어 이름 컬렉션을 받으면, 예외가 발생한다")
     void create_givenPlayerNames_thenFail(final List<String> playerNames) {
         assertThatThrownBy(() -> Participants.create(playerNames))
@@ -40,7 +48,7 @@ class ParticipantsTest {
     @Test
     @DisplayName("create()는 중복된 플레이어 이름을 받으면, 예외가 발생한다")
     void create_givenDuplicateNames_thenFail() {
-        List<String> duplicateNames = List.of("a", "b", "c", "d", "e", "a ");
+        final List<String> duplicateNames = List.of("a", "b", "c", "d", "e", "a ");
 
         assertThatThrownBy(() -> Participants.create(duplicateNames))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -51,9 +59,7 @@ class ParticipantsTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void addCard_givenParticipantOrderAndCard_thenSuccess(final int participantOrder) {
         // given
-        List<String> playerNames = List.of("a", "b", "c", "d", "e");
-        Participants participants = Participants.create(playerNames);
-        Card card = Card.create(CardPattern.CLOVER, CardNumber.QUEEN);
+        final Card card = Card.create(CardPattern.CLOVER, CardNumber.QUEEN);
 
         // when, then
         assertThatCode(() -> participants.addCard(participantOrder, card))
@@ -64,41 +70,24 @@ class ParticipantsTest {
     @ParameterizedTest(name = "canDealerGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
     void canDealerGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
         // given
-        List<String> playerNames = List.of("a", "b", "c", "d", "e");
-        Participants participants = Participants.create(playerNames);
         cards.forEach(card -> participants.addCard(0, card));
 
         // when
-        boolean actual = participants.canDealerGiveCard();
+        final boolean actual = participants.canDealerGiveCard();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 
     @Test
     @DisplayName("size()는 호출하면 모든 참가자의 수를 반환한다")
     void size_whenCall_thenReturnParticipantSize() {
-        // given
-        List<String> playerNames = List.of("a", "b", "c", "d", "e");
-        Participants participants = Participants.create(playerNames);
-
         // when
-        int actual = participants.size();
+        final int actual = participants.size();
 
         // then
-        assertThat(actual).isSameAs(6);
-    }
-
-    private static Stream<Arguments> validPlayerNames() {
-        return Stream.of(
-                Arguments.of(List.of("zeeto")),
-                Arguments.of(List.of("zeeto", "journey", "pobi", "neo", "lisa", "wonnie", "cron"))
-        );
-    }
-
-    private static Stream<Arguments> invalidPlayerNames() {
-        return Stream.of(
-                Arguments.of(List.of("zeeto", "journey", "pobi", "neo", "lisa", "wonnie", "cron", "juno"))
-        );
+        assertThat(actual)
+                .isSameAs(6);
     }
 }

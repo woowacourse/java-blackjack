@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class DealerTest {
 
@@ -28,10 +28,8 @@ class DealerTest {
     @Test
     @DisplayName("create()는 호출하면, 딜러를 생성한다")
     void create_whenCall_thenSuccess() {
-        assertThatCode(() -> Dealer.create())
-                .doesNotThrowAnyException();
-
-        assertThat(Dealer.create())
+        final Dealer dealer = assertDoesNotThrow(Dealer::create);
+        assertThat(dealer)
                 .isExactlyInstanceOf(Dealer.class);
     }
 
@@ -40,8 +38,8 @@ class DealerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         dealer.addCard(card);
-        ParticipantCard participantCard = dealer.participantCard;
-        List<Card> cards = participantCard.getCards();
+        final ParticipantCard participantCard = dealer.participantCard;
+        final List<Card> cards = participantCard.getCards();
 
         // then
         assertThat(cards)
@@ -55,10 +53,11 @@ class DealerTest {
         dealer.addCard(card);
 
         // when
-        Card actual = dealer.getFirstCard();
+        final Card actual = dealer.getFirstCard();
 
         // then
-        assertThat(actual).isEqualTo(card);
+        assertThat(actual)
+                .isEqualTo(card);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
@@ -68,7 +67,7 @@ class DealerTest {
         cards.forEach(dealer::addCard);
 
         // when
-        int score = dealer.calculateScore();
+        final int score = dealer.calculateScore();
 
         // then
         assertThat(score)
@@ -82,10 +81,11 @@ class DealerTest {
         cards.forEach(dealer::addCard);
 
         // when
-        boolean actual = dealer.isBust();
+        final boolean actual = dealer.isBust();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
@@ -95,10 +95,11 @@ class DealerTest {
         cards.forEach(dealer::addCard);
 
         // when
-        boolean actual = dealer.isBlackJack();
+        final boolean actual = dealer.isBlackJack();
 
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")

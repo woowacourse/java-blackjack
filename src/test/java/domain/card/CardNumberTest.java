@@ -16,21 +16,25 @@ class CardNumberTest {
     @DisplayName("getAll()은 호출하면 모든 CardNumber을 반환한다")
     void getAll_whenCall_thenReturnCardNumbers() {
         // given
-        List<CardNumber> expected = Arrays.asList(CardNumber.values());
+        final List<CardNumber> expected = Arrays.asList(CardNumber.values());
 
         // when
-        List<CardNumber> actual = CardNumber.getAll();
+        final List<CardNumber> actual = CardNumber.getAll();
 
         // then
-        assertThat(actual.size()).isSameAs(expected.size());
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.size())
+                .isSameAs(expected.size());
+
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "isAce()는 호출하면, 에이스인지 여부를 반환한다")
     @CsvSource(value = {"ACE:true", "TWO:false", "KING:false"}, delimiter = ':')
     void isAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
-        boolean actual = cardNumber.isAce();
+        final boolean actual = cardNumber.isAce();
 
-        assertThat(actual).isSameAs(expected);
+        assertThat(actual)
+                .isSameAs(expected);
     }
 }
