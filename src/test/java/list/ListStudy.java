@@ -19,6 +19,8 @@ public class ListStudy {
         void setup() {
             stringValues = new SimpleArrayList<>();
             integerValues = new SimpleArrayList<>();
+            stringValues.add("init");
+            integerValues.add(0);
         }
 
         @Test
@@ -29,8 +31,6 @@ public class ListStudy {
 
         @Test
         void add_test2() {
-            stringValues.add("init");
-            integerValues.add(0);
             assertThatCode(() -> stringValues.add(0, "zero")).doesNotThrowAnyException();
             assertThatCode(() -> stringValues.add(100, "hundred")).isInstanceOf(RuntimeException.class);
             assertThatCode(() -> integerValues.add(0, 1)).doesNotThrowAnyException();
@@ -39,16 +39,21 @@ public class ListStudy {
 
         @Test
         void set_test() {
-            stringValues.add("init");
-            integerValues.add(0);
             assertThat(stringValues.set(0, "0")).isEqualTo("0");
             assertThatCode(() -> stringValues.set(100, "100")).isInstanceOf(RuntimeException.class);
             assertThat(integerValues.set(0, 0)).isEqualTo(0);
             assertThatCode(() -> integerValues.set(100, 100)).isInstanceOf(RuntimeException.class);
         }
-//
-//        assertThat(values.get(0)).isEqualTo("0"); // 첫 번째 값을 찾는다.
-//        assertThatCode(() -> values.get(100)).isInstanceOf(RuntimeException.class); // 인덱스가 넘어가면 예외가 발생한다.
+
+        @Test
+        void get_test() {
+            assertThat(stringValues.get(0)).isEqualTo("init");
+            assertThatCode(() -> stringValues.get(100)).isInstanceOf(RuntimeException.class);
+            assertThat(integerValues.get(0)).isEqualTo(0);
+            assertThatCode(() -> integerValues.get(100)).isInstanceOf(RuntimeException.class);
+        }
+
+
 //
 //        assertThat(values.contains("first")).isTrue(); // "first" 값이 포함되어 있는지를 확인한다.
 //        assertThat(values.contains("fifth")).isFalse(); // "fifth" 값이 포함되어있지 않은지를 확인한다.
@@ -85,6 +90,8 @@ public class ListStudy {
         void setup() {
             stringValues = new SimpleLinkedList<>();
             integerValues = new SimpleLinkedList<>();
+            stringValues.add("init");
+            integerValues.add(0);
         }
 
         @Test
@@ -95,8 +102,6 @@ public class ListStudy {
 
         @Test
         void add_test2() {
-            stringValues.add("init");
-            integerValues.add(0);
             assertThatCode(() -> stringValues.add(0, "zero")).doesNotThrowAnyException();
             assertThatCode(() -> stringValues.add(100, "hundred")).isInstanceOf(RuntimeException.class);
             assertThatCode(() -> integerValues.add(0, 1)).doesNotThrowAnyException();
@@ -105,12 +110,18 @@ public class ListStudy {
 
         @Test
         void set_test() {
-            stringValues.add("init");
-            integerValues.add(0);
             assertThat(stringValues.set(0, "0")).isEqualTo("0");
             assertThatCode(() -> stringValues.set(100, "100")).isInstanceOf(RuntimeException.class);
             assertThat(integerValues.set(0, 0)).isEqualTo(0);
             assertThatCode(() -> integerValues.set(100, 100)).isInstanceOf(RuntimeException.class);
+        }
+
+        @Test
+        void get_test() {
+            assertThat(stringValues.get(0)).isEqualTo("init");
+            assertThatCode(() -> stringValues.get(100)).isInstanceOf(RuntimeException.class);
+            assertThat(integerValues.get(0)).isEqualTo(0);
+            assertThatCode(() -> integerValues.get(100)).isInstanceOf(RuntimeException.class);
         }
     }
 }
