@@ -15,6 +15,7 @@ public class OutputView {
     private static final String DEALER_DRAW_INFO_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_RESULT_MESSAGE_FORMAT = CARD_INFO_MESSAGE_FORMAT + " - 결과: %d";
     private static final String WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
+    private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
     private static final String DELIMITER = ", ";
 
     public void printPlayerNameRequestMessage() {
@@ -55,8 +56,13 @@ public class OutputView {
     }
 
     public void printWinningResult(final Map<String, String> winningResults) {
+        System.out.println(WINNING_RESULT_INFO_MESSAGE);
         for (String name : winningResults.keySet()) {
             System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, name, winningResults.get(name)));
         }
+    }
+
+    public void printLineBreak() {
+        System.out.println();
     }
 }

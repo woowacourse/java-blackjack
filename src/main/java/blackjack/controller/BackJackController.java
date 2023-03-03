@@ -19,7 +19,7 @@ public class BackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = initBlackJackGame();
-        outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialStatus()));
+        printInitialStatus(blackJackGame);
         playPlayerTurn(blackJackGame);
         playDealerTurn(blackJackGame);
         printCardResult(blackJackGame);
@@ -29,13 +29,20 @@ public class BackJackController {
     private BlackJackGame initBlackJackGame() {
         outputView.printPlayerNameRequestMessage();
         final List<String> names = inputView.readPlayerNames();
+        outputView.printLineBreak();
         return new BlackJackGame(names, new RandomDeckGenerator());
+    }
+
+    private void printInitialStatus(BlackJackGame blackJackGame) {
+        outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialStatus()));
+        outputView.printLineBreak();
     }
 
     private void playPlayerTurn(BlackJackGame blackJackGame) {
         final List<String> playerNames = blackJackGame.getPlayerNames();
         for (final String name : playerNames) {
             playFor(blackJackGame, name);
+            outputView.printLineBreak();
         }
     }
 
@@ -53,6 +60,7 @@ public class BackJackController {
             return false;
         }
         outputView.printDrawCardRequestMessage(name);
+        outputView.printLineBreak();
         return DrawInput.from(inputView.readDrawOrStay()).isDraw();
     }
 
@@ -61,6 +69,7 @@ public class BackJackController {
         while (dealerDrawCount-- > 0) {
             outputView.printDealerDrawInfoMessage();
         }
+        outputView.printLineBreak();
     }
 
     private void printCardResult(BlackJackGame blackJackGame) {
@@ -69,6 +78,7 @@ public class BackJackController {
             final CardResult cardDto = cardResult.get(name);
             outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardDto.getCards()), cardDto.getScore());
         }
+        outputView.printLineBreak();
     }
 
     private void printWinningResult(BlackJackGame blackJackGame) {
