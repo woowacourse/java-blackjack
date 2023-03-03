@@ -43,17 +43,21 @@ class Cards {
         return score + ACE_ADDITIONAL_SCORE < BUST_LOWER_BOUND;
     }
 
-    public List<String> getCardLetters() {
-        return cards.stream()
-                .map(Card::getLetter)
-                .collect(toUnmodifiableList());
-    }
-
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_COUNT && calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
         return BLACKJACK_SCORE < calculateMinScore();
+    }
+
+    public boolean isBlackjackScore() {
+        return calculateTotalScore() == BLACKJACK_SCORE;
+    }
+    
+    public List<String> getCardLetters() {
+        return cards.stream()
+                .map(Card::getLetter)
+                .collect(toUnmodifiableList());
     }
 }

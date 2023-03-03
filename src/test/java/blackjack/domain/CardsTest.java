@@ -112,4 +112,24 @@ public class CardsTest {
                 Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), true)
         );
     }
+
+    @ParameterizedTest(name = "결과값이 블랙잭 점수인지 확인한다. 입력값: {0}, 결과값: {1}")
+    @MethodSource("isBlackjackScoreSource")
+    void 결과값이_블랙잭_점수인지_확인한다(final List<Rank> ranks, final boolean result) {
+        final Cards cards = new Cards();
+
+        for (Rank rank : ranks) {
+            cards.add(new Card(rank, Shape.SPADE));
+        }
+
+        assertThat(cards.isBlackjackScore()).isEqualTo(result);
+    }
+
+    static Stream<Arguments> isBlackjackScoreSource() {
+        return Stream.of(
+                Arguments.of(List.of(Rank.FIVE, Rank.ACE, Rank.FIVE), true),
+                Arguments.of(List.of(Rank.ACE, Rank.ACE, Rank.EIGHT), false),
+                Arguments.of(List.of(Rank.KING, Rank.KING, Rank.JACK), false)
+        );
+    }
 }
