@@ -13,6 +13,7 @@ public class BlackjackService {
 
     private static final String HIT = "y";
     private static final String STAND = "n";
+    private static final String ERROR_INVALID_COMMAND = "[ERROR] y 혹은 n만 입력하실 수 있습니다.";
 
     private final Deck deck;
     private final Participants participants;
@@ -27,7 +28,7 @@ public class BlackjackService {
     }
 
     public void start() {
-        participants.initHand(deck);
+        participants.initHand(deck.pollTwoCards());
     }
 
     public boolean existNextPlayerTurn() {
@@ -45,10 +46,11 @@ public class BlackjackService {
             nextPlayer.stand();
             return;
         }
-
         if (hit.equals(HIT)) {
             nextPlayer.addCard(deck.pollAvailableCard());
+            return;
         }
+        throw new IllegalArgumentException(ERROR_INVALID_COMMAND);
     }
 
     public void dealerTurn() {
@@ -57,10 +59,6 @@ public class BlackjackService {
 
     public boolean isDealerStand() {
         return participants.isDealerStand();
-    }
-
-    public String getDealerName() {
-        return participants.getDealer().getName();
     }
 
     public List<String> getPlayersName() {
