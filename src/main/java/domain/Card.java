@@ -1,7 +1,6 @@
 package domain;
 
 public class Card {
-
     private final Shape shape;
     private final Number number;
 
@@ -24,5 +23,4 @@ public class Card {
     public String getNumberName() {
         return number.getName();
     }
-
 }

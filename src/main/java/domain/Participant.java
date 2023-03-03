@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: 2023/03/02 추상클래스로 변경
 public class Participant {
+    private static final int BUST_LIMIT = 21;
+    private static final int ACE_GAP = 10;
     private final List<Card> cards = new ArrayList<>();
 
     public void receiveCard(Card card) {
@@ -28,16 +29,16 @@ public class Participant {
     }
 
     private int applyAce(int score, int aceCount) {
-        while (score > 21 && aceCount > 0) {
-            score -= 10;
-            aceCount -= 1;
+        while (score > BUST_LIMIT && aceCount > 0) {
+            score -= ACE_GAP;
+            aceCount--;
         }
 
         return score;
     }
 
     public boolean isBusted() {
-        return calculateScore() > 21;
+        return calculateScore() > BUST_LIMIT;
     }
 
     public int cardSize() {

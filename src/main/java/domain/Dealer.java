@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int INIT_CARD_COUNT = 2;
 
     private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
 
@@ -48,15 +49,14 @@ public class Dealer extends Participant {
     public Card getDealerFirstCard() {
         return getCards().get(FIRST_CARD_INDEX);
     }
+
     public int getHitCardCount() {
-        return getCards().size() - 2;
+        return getCards().size() - INIT_CARD_COUNT;
     }
 
-    public int getResultCount(Result result){
+    public int getResultCount(Result result) {
         return (int) playerResultMap.values().stream()
                 .filter(result::equals)
                 .count();
     }
-
-
 }

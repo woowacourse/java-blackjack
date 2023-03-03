@@ -42,8 +42,4 @@ public class Deck {
             throw new IllegalStateException();
         }
     }
-
-    public int size() {
-        return shuffledDeck.size();
-    }
 }

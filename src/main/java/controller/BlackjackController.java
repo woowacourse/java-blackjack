@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
-// TODO: 2023/03/02 코드 스타일/포맷 맞추기
 public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -36,6 +35,19 @@ public class BlackjackController {
         return blackjackGame;
     }
 
+    private Players createPlayers() {
+        return retryOnInvalidUserInput(
+                () -> new Players(readNames().stream()
+                        .map(PlayerName::new)
+                        .map(Player::new)
+                        .collect(Collectors.toList()))
+        );
+    }
+
+    private List<String> readNames() {
+        return inputView.requestPlayerNames();
+    }
+
     private void play(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
@@ -45,29 +57,6 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         blackjackGame.giveAdditionalCardToDealer();
         outputView.printDealerHitCount(dealer.getHitCardCount());
-    }
-
-    private void result(BlackjackGame blackjackGame) {
-        Players players = blackjackGame.getPlayers();
-
-        blackjackGame.result();
-        Dealer dealer = blackjackGame.getDealer();
-        outputView.printCardsWithScore(dealer, players);
-        outputView.printFinalResult(dealer);
-    }
-
-
-    private Players createPlayers() {
-        return retryOnInvalidUserInput(
-                () -> new Players(readNames().stream()
-                .map(PlayerName::new)
-                .map(Player::new)
-                .collect(Collectors.toList()))
-        );
-    }
-
-    private List<String> readNames() {
-        return inputView.requestPlayerNames();
     }
 
     private void requestMoreCard(BlackjackGame blackjackGame, Player player) {
@@ -96,6 +85,15 @@ public class BlackjackController {
         outputView.printPlayerCards(player);
     }
 
+    private void result(BlackjackGame blackjackGame) {
+        Players players = blackjackGame.getPlayers();
+
+        blackjackGame.result();
+        Dealer dealer = blackjackGame.getDealer();
+        outputView.printCardsWithScore(dealer, players);
+        outputView.printFinalResult(dealer);
+    }
+
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
             return request.get();
@@ -104,5 +102,4 @@ public class BlackjackController {
             return retryOnInvalidUserInput(request);
         }
     }
-
 }

@@ -10,8 +10,9 @@ class DeckTest {
     void createDeckSizeSuccessTest(){
         Deck deck = new Deck();
 
-        Assertions.assertThat(deck.size())
-                .isEqualTo(52);
+        Assertions.assertThat(deck).extracting("shuffledDeck")
+                .asList()
+                .hasSize(52);
     }
 
     @DisplayName("카드가 남아있지 않으면 뽑을 수 없다.")

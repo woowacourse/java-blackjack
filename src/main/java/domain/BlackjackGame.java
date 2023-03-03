@@ -16,17 +16,16 @@ public class BlackjackGame {
         giveCardsToDealer();
         giveCardsToPlayers();
     }
+    private void giveCardsToDealer() {
+        giveCardTo(dealer);
+        giveCardTo(dealer);
+    }
 
     private void giveCardsToPlayers() {
         for (Player player : players.getPlayers()) {
             giveCardTo(player);
             giveCardTo(player);
         }
-    }
-
-    private void giveCardsToDealer() {
-        giveCardTo(dealer);
-        giveCardTo(dealer);
     }
 
     public void giveCardTo(Participant participant) {
@@ -51,5 +50,4 @@ public class BlackjackGame {
     public Players getPlayers() {
         return players;
     }
-
 }
