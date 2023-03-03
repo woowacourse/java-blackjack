@@ -6,7 +6,7 @@ public class Name {
 
     public Name(String name) {
         validateIsEmpty(name);
-        this.name = name;
+        this.name = name.trim();
     }
 
     private void validateIsEmpty(String name) {
