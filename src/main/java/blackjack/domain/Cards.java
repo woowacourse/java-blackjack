@@ -52,9 +52,9 @@ class Cards {
     }
 
     public boolean isBlackjackScore() {
-        return calculateTotalScore() == BLACKJACK_SCORE;
+        return cards.size() != BLACKJACK_COUNT && calculateTotalScore() == BLACKJACK_SCORE;
     }
-    
+
     public List<String> getCardLetters() {
         return cards.stream()
                 .map(Card::getLetter)

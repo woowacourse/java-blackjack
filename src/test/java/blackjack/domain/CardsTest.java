@@ -128,6 +128,7 @@ public class CardsTest {
     static Stream<Arguments> isBlackjackScoreSource() {
         return Stream.of(
                 Arguments.of(List.of(Rank.FIVE, Rank.ACE, Rank.FIVE), true),
+                Arguments.of(List.of(Rank.ACE, Rank.JACK), false),
                 Arguments.of(List.of(Rank.ACE, Rank.ACE, Rank.EIGHT), false),
                 Arguments.of(List.of(Rank.KING, Rank.KING, Rank.JACK), false)
         );

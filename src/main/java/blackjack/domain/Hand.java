@@ -13,20 +13,7 @@ class Hand {
 
     public void add(final Card card) {
         cards.add(card);
-        this.state = calculateState();
-    }
-
-    private State calculateState() {
-        if (cards.isBlackjack()) {
-            return State.BLACKJACK;
-        }
-        if (cards.isBust()) {
-            return State.BUST;
-        }
-        if (cards.isBlackjackScore()) {
-            return State.STOP;
-        }
-        return State.PLAY;
+        state = State.calculateState(cards);
     }
 
     public Result play(final Hand other) {
