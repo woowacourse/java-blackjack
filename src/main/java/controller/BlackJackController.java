@@ -48,5 +48,7 @@ public class BlackJackController {
         OutputView.printPlayersFinalInformation(blackJack.getPlayers());
 
         blackJack.battle();
+
+        OutputView.printPlayersGameResults(blackJack.getPlayers());
     }
 }

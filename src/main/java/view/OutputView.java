@@ -6,6 +6,7 @@ import domain.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -26,7 +27,7 @@ public class OutputView {
 
     private static void printPlayerNames(List<String> playerNames) {
         playerNames = new ArrayList<>(playerNames);
-        System.out.printf("%s와 %s에게 2장을 나누어주었습니다.%n",
+        System.out.printf("%n%s와 %s에게 2장을 나누어주었습니다.%n",
                 playerNames.remove(0),
                 String.join(", ", playerNames));
     }
@@ -66,7 +67,7 @@ public class OutputView {
     }
 
     public static void printAddCardGuide(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
     }
 
     public static void printBurstMessage(String name) {
@@ -74,17 +75,54 @@ public class OutputView {
     }
 
     public static void printGiveDealerCardMessage() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public static void println(String message) {
-        System.out.println(message);
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printPlayersFinalInformation(List<Player> players) {
+        println("");
         for (Player player : players) {
             printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore());
         }
+    }
+
+    public static void printPlayersGameResults(List<Player> players) {
+        players = new ArrayList<>(players);
+        println("\n## 최종 승패");
+        printDealerGameResult(players.remove(0));
+        printParticipantsGameResult(players);
+    }
+
+    private static void printDealerGameResult(Player dealer) {
+        System.out.printf("딜러: %s%n", parsePlayerGameResultDisplay(dealer));
+    }
+
+    private static String parsePlayerGameResultDisplay(Player dealer) {
+        List<String> strings = List.of("승", "패", "무");
+        List<Integer> gameResults = dealer.getGameResult();
+
+        return IntStream.range(0, gameResults.size())
+                .filter(dealerGameResultIndex -> !OutputView.isGameResultCountZero(gameResults, dealerGameResultIndex))
+                .mapToObj(dealerGameResultIndex -> gameResults.get(dealerGameResultIndex) + strings.get(dealerGameResultIndex))
+                .collect(Collectors.joining(" "));
+
+    }
+
+    private static boolean isGameResultCountZero(List<Integer> gameResults, int dealerGameResultIndex) {
+        return gameResults.get(dealerGameResultIndex) == 0;
+    }
+
+    private static void printParticipantsGameResult(List<Player> participants) {
+        participants.stream()
+                .map(OutputView::parseParticipantGameResultDisplay)
+                .forEach(OutputView::println);
+    }
+
+    private static String parseParticipantGameResultDisplay(Player player) {
+        return String.format("%s: %s", player.getName(), parsePlayerGameResultDisplay(player));
+    }
+
+    public static void println(String message) {
+        System.out.println(message);
     }
 }
