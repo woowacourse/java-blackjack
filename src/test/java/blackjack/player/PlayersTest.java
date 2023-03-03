@@ -1,4 +1,4 @@
-package player;
+package blackjack.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
+import player.Name;
+import player.Player;
+import player.Players;
 
 class PlayersTest {
     @DisplayName("생성할 수 있다")

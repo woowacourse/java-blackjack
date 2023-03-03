@@ -1,15 +1,18 @@
+package blackjack.blackjacGameTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
+import blackjackGame.BlackjackGame;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
 import deck.CardsGenerator;
 import deck.Deck;
-import fixedCaradsGenerator.FixedCardsGenerator;
 import player.Dealer;
 import player.Name;
 import player.Player;

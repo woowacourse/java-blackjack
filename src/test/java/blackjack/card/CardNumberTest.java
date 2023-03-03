@@ -1,4 +1,4 @@
-package card;
+package blackjack.card;
 
 import static card.CardNumber.ACE;
 import static card.CardNumber.TWO;

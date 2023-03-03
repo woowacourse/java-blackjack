@@ -1,4 +1,4 @@
-package player;
+package blackjack.player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
+import player.Dealer;
 
 class DealerTest {
     @Test

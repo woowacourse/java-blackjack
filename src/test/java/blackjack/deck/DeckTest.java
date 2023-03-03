@@ -1,4 +1,4 @@
-package deck;
+package blackjack.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -7,10 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
-import fixedCaradsGenerator.FixedCardsGenerator;
+import deck.CardsGenerator;
+import deck.Deck;
 
 class DeckTest {
     Deck deck;
