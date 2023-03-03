@@ -93,7 +93,7 @@ class UserTest {
             푸우.draw(new Card(Shape.HEART, CardNumber.of(1)));
         }
         assertThat(푸우.getGamePoint())
-                .extracting("point")
+                .extracting("gamePoint")
                 .isEqualTo(14);
     }
 }
