@@ -4,9 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class UsersTest {
 
@@ -82,4 +84,23 @@ class UsersTest {
 
         assertThat(philip.getName()).isEqualTo("필립");
     }
+
+    /*
+    필립: 21
+    홍실: 19
+    딜러: 13
+     */
+    @Test
+    @DisplayName("플레이어들의 승리 여부 반환 테스트")
+    void getWinningResultTest() {
+        final Users users = new Users(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
+
+        Map<String, WinningStatus> winningResult = users.getWinningResult();
+
+        assertSoftly(softly -> {
+            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.WIN);
+            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.WIN);
+        });
+    }
+
 }

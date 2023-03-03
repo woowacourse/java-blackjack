@@ -55,4 +55,8 @@ public class BlackJackGame {
 
         return cardResult;
     }
+
+    public Map<String, WinningStatus> getWinningResult() {
+        return users.getWinningResult();
+    }
 }

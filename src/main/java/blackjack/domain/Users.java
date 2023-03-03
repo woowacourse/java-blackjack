@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,5 +61,21 @@ public class Users {
                 .filter(user -> user.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
+    }
+
+    public Map<String, WinningStatus> getWinningResult() {
+        final Dealer dealer = (Dealer) getDealer();
+        final Map<String, WinningStatus> winningResult = new HashMap<>();
+        for (final Player player : getPlayers()) {
+            winningResult.put(player.getName(), dealer.comparePlayer(player));
+        }
+        return winningResult;
+    }
+
+    private List<Player> getPlayers() {
+        return users.stream()
+                .filter(user -> user instanceof Player)
+                .map(user -> (Player) user)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
