@@ -38,12 +38,13 @@ public interface SimpleList<T> {
         return sum;
     }
 
-    static <T> SimpleList<T> filterNegative(SimpleList<? extends Number> values) {
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> values) {
         SimpleList<T> simpleList = new SimpleArrayList<>();
+
         for (int index = 0; index < values.size(); index++) {
-            Number element = values.get(index);
+            T element = values.get(index);
             if (element.doubleValue() >= 0) {
-                simpleList.add((T) element);
+                simpleList.add(element);
             }
         }
         return simpleList;
