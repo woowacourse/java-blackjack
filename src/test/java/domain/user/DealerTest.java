@@ -37,4 +37,14 @@ class DealerTest {
         Dealer dealer = new Dealer(cardHand);
         assertThat(dealer.canAdd()).isTrue();
     }
+
+    @Test
+    @DisplayName("카드를 더 받을 수 없는 경우 false를 반환한다.")
+    void 카드_추가_불가능() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.SPADE, CardNumber.SEVEN));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        Dealer dealer = new Dealer(cardHand);
+        assertThat(dealer.canAdd()).isFalse();
+    }
 }
