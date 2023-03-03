@@ -16,15 +16,18 @@ public class ShuffledDeckFactory implements DeckFactory {
         return new Deck(new ArrayDeque<>(cards));
     }
 
-
     private List<Card> generateCards() {
         final List<Card> cards = new ArrayList<>();
 
         for (final Shape shape : Shape.values()) {
-            for (final Symbol symbol : Symbol.values()) {
-                cards.add(new Card(shape, symbol));
-            }
+            generateSameShapeCards(cards, shape);
         }
         return cards;
+    }
+
+    private void generateSameShapeCards(final List<Card> cards, final Shape shape) {
+        for (final Symbol symbol : Symbol.values()) {
+            cards.add(new Card(shape, symbol));
+        }
     }
 }
