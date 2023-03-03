@@ -55,10 +55,10 @@ public class BlackJackController {
 
     private HitState inputHitOrStay(final Player player) {
         final String command = InputView.readMoreCard(player);
-        return mapOrThrowCommand(command);
+        return mapCommandToStateOrElseThrow(command);
     }
 
-    private HitState mapOrThrowCommand(final String command) {
+    private HitState mapCommandToStateOrElseThrow(final String command) {
         final HitState hitState = COMMAND_STATE_MAP.getOrDefault(command, null);
         if (hitState == null) {
             throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
