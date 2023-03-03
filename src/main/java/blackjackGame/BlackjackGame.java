@@ -43,7 +43,7 @@ public class BlackjackGame {
     public void supplyAdditionalCard(int playerIndex) {
         players.takeCard(playerIndex, deck.drawCard());
     }
-
+    
     public boolean isBust(int playerIndex) {
         return players.isBust(playerIndex);
     }
@@ -54,5 +54,9 @@ public class BlackjackGame {
 
     public boolean canDealerHit() {
         return !dealer.isBust() && dealer.isUnderScore();
+    }
+
+    public void supplyAdditionalCardToDealer() {
+        dealer.hit(deck.drawCard());
     }
 }

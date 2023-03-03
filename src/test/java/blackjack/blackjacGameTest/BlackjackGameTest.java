@@ -120,6 +120,16 @@ class BlackjackGameTest {
         assertThat(blackjackGame.countPlayer()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("딜러에게 추가카드를 줄 수 있다.")
+    void supplyAdditionalCardToDealer() {
+        int beforeSize = dealer.showCards().size();
+        blackjackGame.supplyAdditionalCardToDealer();
+        int afterSize = dealer.showCards().size();
+
+        assertThat(afterSize - beforeSize).isEqualTo(1);
+    }
+
     @Nested
     @DisplayName("딜러가 카드를 추가로 받을 수 있는지 확인하는 기능")
     class canDealerHitTest {
