@@ -7,6 +7,7 @@ import player.Dealer;
 import player.DealerFirstOpenDto;
 import player.DealerWinningDto;
 import player.Player;
+import player.PlayerOpenDto;
 import player.PlayerResultDto;
 import player.PlayerWinningDto;
 import player.Players;
@@ -88,5 +89,9 @@ public class BlackjackGame {
 
     public DealerFirstOpenDto getDealerFirstOpen() {
         return DealerFirstOpenDto.from(dealer);
+    }
+
+    public List<PlayerOpenDto> getPlayersCards() {
+        return players.getPlayerCards();
     }
 }

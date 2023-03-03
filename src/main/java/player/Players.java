@@ -58,4 +58,10 @@ public class Players {
                 .map(PlayerWinningDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public List<PlayerOpenDto> getPlayerCards() {
+        return players.stream()
+                .map(PlayerOpenDto::from)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }
