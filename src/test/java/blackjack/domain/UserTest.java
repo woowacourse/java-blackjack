@@ -1,9 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.*;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -11,13 +8,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class UserTest {
+    private static final User USER_16 = new User(new Name("유저1"), new Cards(
+            Arrays.asList(new Card(Shape.HEART, CardNumber.of(6)), new Card(Shape.HEART, CardNumber.of(10)))
+    ));
+    private static final User USER_18 = new User(new Name("유저2"), new Cards(
+            Arrays.asList(new Card(Shape.HEART, CardNumber.of(8)), new Card(Shape.HEART, CardNumber.of(10)))
+    ));
+    private static final User USER_21 = new User(new Name("유저1"), new Cards(
+            Arrays.asList(
+                    new Card(Shape.HEART, CardNumber.of(1)),
+                    new Card(Shape.HEART, CardNumber.of(10))
+            )
+    ));
+    private static final GamePoint GAME_POINT_17 = new GamePoint(Arrays.asList(new Card(Shape.HEART, CardNumber.of(7)), new Card(Shape.HEART, CardNumber.of(10))));
     private User 푸우;
 
     @BeforeEach
@@ -95,5 +107,57 @@ class UserTest {
         assertThat(푸우.getGamePoint())
                 .extracting("gamePoint")
                 .isEqualTo(14);
+    }
+
+    @Test
+    @DisplayName("유저가 해당 GamePoint보다 큰 값을 갖고 있는지 확인한다.")
+    void isGreaterThanTest() {
+        assertAll(
+                () -> {
+                    assertThat(USER_18.isGreaterThan(GAME_POINT_17)).isTrue();
+                },
+                () -> {
+                    assertThat(USER_16.isGreaterThan(GAME_POINT_17)).isFalse();
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("유저가 해당 GamePoint보다 작은 값을 갖고 있는지 확인한다.")
+    void isLowerThanTest() {
+        assertAll(
+                () -> {
+                    assertThat(USER_16.isLowerThan(GAME_POINT_17)).isTrue();
+                },
+                () -> {
+                    assertThat(USER_18.isLowerThan(GAME_POINT_17)).isFalse();
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("해당 이름을 가진 유저인지 확인한다.")
+    void isNameOfTest() {
+        assertThat(푸우.isNameOf(new Name("푸우"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("유저가 버스트 난 유저 인지 확인한다.")
+    void isBustedTest() {
+        final User USER_22 = new User(new Name("유저1"), new Cards(
+                Arrays.asList(
+                        new Card(Shape.HEART, CardNumber.of(2)),
+                        new Card(Shape.HEART, CardNumber.of(10))
+                        )
+        ));
+        USER_22.draw(new Card(Shape.HEART, CardNumber.of(10)));
+        assertAll(
+                () -> {
+                    assertThat(USER_21.isBusted()).isFalse();
+                },
+                () -> {
+                    assertThat(USER_22.isBusted()).isTrue();
+                }
+        );
     }
 }
