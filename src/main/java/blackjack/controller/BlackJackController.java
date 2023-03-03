@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.Deck;
-import blackjack.domain.Name;
+import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

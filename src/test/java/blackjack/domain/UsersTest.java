@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.card.*;
+import blackjack.domain.user.Name;
+import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

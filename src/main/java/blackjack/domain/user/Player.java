@@ -1,6 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
-import java.util.List;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.GamePoint;
 
 public interface Player {
 

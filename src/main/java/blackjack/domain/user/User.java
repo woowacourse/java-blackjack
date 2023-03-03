@@ -1,7 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.GamePoint;
 
 import java.util.List;
-import java.util.Objects;
 
 public class User implements Player {
     private static final int INITIAL_CARD_COUNT = 2;
