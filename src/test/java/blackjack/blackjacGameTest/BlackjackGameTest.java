@@ -1,7 +1,11 @@
 package blackjack.blackjacGameTest;
 
+import static blackjackGame.Result.LOSE;
+import static blackjackGame.Result.TIE;
+import static blackjackGame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Map;
 import java.util.Stack;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +15,14 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import blackjackGame.BlackjackGame;
+import blackjackGame.Result;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
 import deck.CardsGenerator;
 import deck.Deck;
 import player.Dealer;
+import player.DealerWinningDto;
 import player.Name;
 import player.Player;
 import player.Players;
@@ -128,6 +134,24 @@ class BlackjackGameTest {
         int afterSize = dealer.showCards().size();
 
         assertThat(afterSize - beforeSize).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러의 게임 결과를 반환할 수 있다.")
+    void getDealerWinningResult() {
+        dealer.win();
+        dealer.win();
+        dealer.lose();
+        dealer.tie();
+
+        DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
+        Name name = dealerWinningResult.getName();
+        Map<Result, Integer> dealerResult = dealerWinningResult.getWinningMap();
+
+        assertThat(name.getValue()).isEqualTo("딜러");
+        assertThat(dealerResult.get(WIN)).isEqualTo(2);
+        assertThat(dealerResult.get(LOSE)).isEqualTo(1);
+        assertThat(dealerResult.get(TIE)).isEqualTo(1);
     }
 
     @Nested

@@ -16,4 +16,12 @@ public class DealerWinningDto {
     public static DealerWinningDto from(Dealer dealer) {
         return new DealerWinningDto(dealer.getName(), dealer.getDealerResult());
     }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Map<Result, Integer> getWinningMap() {
+        return winningMap;
+    }
 }
