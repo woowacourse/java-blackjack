@@ -51,6 +51,7 @@ public class GameResult {
 
     public Map<String, Result> getPlayerGameResults() {
         return gameResults.keySet().stream()
-                .collect(Collectors.toUnmodifiableMap(Participant::getName, gameResults::get));
+                .collect(Collectors.toMap(Participant::getName, gameResults::get,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }

@@ -9,7 +9,10 @@ public enum Message {
     BUST_MESSAGE("카드의 합이 21을 초과했습니다."),
     BLACKJACK_MESSAGE("축하드립니다! 블랙잭입니다!"),
     DEALER_DRAW_MESSAGE("%s는 16이하라 한장의 카드를 더 받았습니다."),
-    PARTICIPANT_CARD_RESULT("%s 카드: %s - 결과: %d");
+    PARTICIPANT_CARD_RESULT("%s 카드: %s - 결과: %d"),
+    FINAL_GAME_RESULT("## 최종 승패"),
+    DEALER_GAME_RESULT("%s: %d승 %d패 %d무"),
+    PLAYER_GAME_RESULT("%s: %s");
 
     private final String message;
 

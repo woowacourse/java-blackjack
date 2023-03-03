@@ -4,6 +4,8 @@ import domain.CardShuffler;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.game.GameManager;
+import domain.game.GameResult;
+import domain.game.Result;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -11,6 +13,7 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import static view.message.Message.BLACKJACK_MESSAGE;
@@ -42,6 +45,7 @@ public class GameController {
         drawPlayersCard(participants, gameManager);
         handleDealerCards(participants, gameManager);
         printGameResult(participants);
+        printFinalGameResult(participants);
     }
 
     private void printGameResult(final Participants participants) {
@@ -144,5 +148,12 @@ public class GameController {
             gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
             OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()));
         }
+    }
+
+    private void printFinalGameResult(final Participants participants) {
+        GameResult gameResult = GameResult.create(participants);
+        Map<String, Result> playerGameResults = gameResult.getPlayerGameResults();
+        Participant dealer = participants.getDealer();
+        outputView.printFinalGameResult(dealer.getName(), playerGameResults);
     }
 }
