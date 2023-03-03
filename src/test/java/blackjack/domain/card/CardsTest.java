@@ -1,9 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Letter;
-import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +49,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("패를 반환한다")
-    void getCardsTest(){
+    void getCardsTest() {
         // given
         Cards cards = new Cards();
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
@@ -64,12 +60,12 @@ public class CardsTest {
         cards.add(card2);
 
         // that
-        assertThat(cards.getCards()).contains(card1,card2);
+        assertThat(cards.getCards()).contains(card1, card2);
     }
 
     @Test
     @DisplayName("에이스 2장 일때 합 12가 되는지 테스트")
-    void calculateTotalOver21Test(){
+    void calculateTotalOver21Test() {
         // given
         Cards cards = new Cards();
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
@@ -85,7 +81,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("에이스 2장에 기본 19 일때 합 21가 되는지 테스트")
-    void calculateTotalOver21Test2(){
+    void calculateTotalOver21Test2() {
         // given
         Cards cards = new Cards();
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);

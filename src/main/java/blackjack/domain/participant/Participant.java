@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 public class Participant {
     private final Name name;
     private final Cards cards;
-    public Participant(Name name){
+
+    public Participant(Name name) {
         this.name = name;
         this.cards = new Cards();
     }
@@ -18,18 +19,19 @@ public class Participant {
         cards.add(card);
     }
 
-    public int getTotalScore(){
+    public int getTotalScore() {
         return this.cards.calculateTotalScore();
     }
 
-    public boolean isBust(){
-        return getTotalScore()>21;
+    public boolean isBust() {
+        return getTotalScore() > 21;
     }
 
     public String getName() {
         return name.getValue();
     }
-    public List<Card> getCards(){
+
+    public List<Card> getCards() {
         return this.cards.getCards();
     }
 

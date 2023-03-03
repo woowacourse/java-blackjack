@@ -52,10 +52,11 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public Dealer getDealer(){
+    public Dealer getDealer() {
         return this.dealer;
     }
-    public List<Player>  getPlayers() {
+
+    public List<Player> getPlayers() {
         return players;
     }
 

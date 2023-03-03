@@ -24,12 +24,12 @@ public class DeckTest {
 
     @Test
     @DisplayName("카드를 뽑는다")
-    void drawCardTest(){
+    void drawCardTest() {
         //given
         List<Card> cards = new ArrayList<>(
                 Arrays.asList(
-                new Card(Shape.CLOVER, Letter.ACE),
-                new Card(Shape.DIAMOND,Letter.JACK)));
+                        new Card(Shape.CLOVER, Letter.ACE),
+                        new Card(Shape.DIAMOND, Letter.JACK)));
         CardPicker testCardPicker = new TestCardPicker();
         Deck deck = new Deck(cards, testCardPicker);
 
@@ -42,11 +42,11 @@ public class DeckTest {
 
     @Test
     @DisplayName("덱 반환 테스트")
-    void getCardsTest(){
+    void getCardsTest() {
         List<Card> cards = new ArrayList<>(
                 Arrays.asList(
                         new Card(Shape.CLOVER, Letter.ACE),
-                        new Card(Shape.DIAMOND,Letter.JACK)));
+                        new Card(Shape.DIAMOND, Letter.JACK)));
         CardPicker testCardPicker = new TestCardPicker();
         Deck deck = new Deck(cards, testCardPicker);
 

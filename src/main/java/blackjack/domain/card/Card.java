@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Letter;
-import blackjack.domain.card.Shape;
-
 public class Card {
     final private Shape shape;
     final private Letter letter;
@@ -19,5 +16,8 @@ public class Card {
     public int getValue() {
         return this.letter.getValue();
     }
-    public boolean isAce(){return this.letter.equals(Letter.ACE);}
+
+    public boolean isAce() {
+        return this.letter.equals(Letter.ACE);
+    }
 }

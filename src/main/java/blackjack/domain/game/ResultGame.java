@@ -27,7 +27,20 @@ public class ResultGame {
             compareScoreWithBustDealer(player);
             return;
         }
+        if (player.isBust()) {
+            compareScoreWithBustedPlayer(player);
+            return;
+        }
         compareScoreWithNotBustDealer(player);
+    }
+
+    private void compareScoreWithBustedPlayer(Player player) {
+        if (dealer.isBust()) {
+            playersResult.put(player, WinTieLose.TIE);
+            return;
+        }
+        playersResult.put(player, WinTieLose.LOSE);
+
     }
 
     private void compareScoreWithNotBustDealer(Player player) {
@@ -51,14 +64,14 @@ public class ResultGame {
         playersResult.put(player, WinTieLose.WIN);
     }
 
-    public int getDealerCount(WinTieLose expected){
+    public int getDealerCount(WinTieLose expected) {
         return (int) playersResult.values()
                 .stream()
                 .filter(winTieLose -> winTieLose.equals(expected.reverseValue()))
                 .count();
     }
 
-    public WinTieLose getPlayerResult(Player player){
+    public WinTieLose getPlayerResult(Player player) {
         return playersResult.get(player);
     }
 }

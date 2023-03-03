@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Letter;
+import blackjack.domain.card.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
@@ -13,8 +13,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException
 public class ParticipantTest {
     @Test
     @DisplayName("플레이어 생성 테스트")
-    void constructorPlayer(){
-        assertThatNoException().isThrownBy(()->new Participant(new Name("test")));
+    void constructorPlayer() {
+        assertThatNoException().isThrownBy(() -> new Participant(new Name("test")));
     }
 
     @Test
@@ -34,12 +34,12 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("카드의 총 합을 보여주는 테스트")
-    void getTotalScoreTest(){
+    void getTotalScoreTest() {
         // given
         Participant participant = new Participant(new Name("test"));
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        int expected = card1.getValue()+card2.getValue();
+        int expected = card1.getValue() + card2.getValue();
         participant.drawCard(card1);
         participant.drawCard(card2);
 
@@ -52,14 +52,14 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("플레이어 이름 반환하는 테스트")
-    void getNameTest(){
+    void getNameTest() {
         Participant participant = new Participant(new Name("test"));
         assertThat(participant.getName()).isEqualTo("test");
     }
 
     @Test
     @DisplayName("플레이어의 카드 리스트를 반환하는 테스트")
-    void getCardsTest(){
+    void getCardsTest() {
         // given
         Participant participant = new Participant(new Name("test"));
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
@@ -70,12 +70,12 @@ public class ParticipantTest {
         participant.drawCard(card2);
 
         // then
-        Assertions.assertThat(participant.getCards()).contains(card1,card2);
+        Assertions.assertThat(participant.getCards()).contains(card1, card2);
     }
 
     @Test
     @DisplayName("플레이어의 카드 이름 리스트를 반환하는 테스트 ")
-    void getCardNamesTest(){
+    void getCardNamesTest() {
         // given
         Participant participant = new Participant(new Name("test"));
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
@@ -86,11 +86,12 @@ public class ParticipantTest {
         participant.drawCard(card2);
 
         // then
-        Assertions.assertThat(participant.getCardNames()).contains(card1.getCardName(),card2.getCardName());
+        Assertions.assertThat(participant.getCardNames()).contains(card1.getCardName(), card2.getCardName());
     }
+
     @Test
     @DisplayName("합이 21 초과인지 테스트")
-    void isBustTest(){
+    void isBustTest() {
         // given
         Participant participant = new Participant(new Name("test"));
         Card card1 = new Card(Shape.CLOVER, Letter.TWO);
@@ -108,7 +109,7 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("합이 21 이하인지 테스트")
-    void isNotBustTest(){
+    void isNotBustTest() {
         // given
         Participant participant = new Participant(new Name("test"));
         Card card1 = new Card(Shape.CLOVER, Letter.TWO);

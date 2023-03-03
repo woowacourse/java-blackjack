@@ -1,38 +1,57 @@
 package blackjack.view;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class OutputView {
-    public void outputSplitMessage(String dealer, List<String> players){
+    private static final String CHANGE_LINE = "\n";
+    private static final String DEALER_ANDE_PLAYER_DELIMITER = "와 ";
+    private static final String PLAYERS_DELIMITER = ",";
+    private static final String GIVE_TWO_CARD_MASSAGE = "에게 두장을 나누었습니다.";
+    private static final String NOTICE_TOTAL_SCORE_UNDER_SIXTEEN = "는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String RESULT_DELIMITER = "- 결과 : ";
+    private static final String FINAL_RESULT_MASSAGE = "## 최종 승패";
+    private static final String DEALER_DELIMITER = " : ";
+    private static final String WIN_COUNT_MASSAGE = "승 ";
+    private static final String TIE_COUNT_MASSAGE = "무 ";
+    private static final String LOSE_COUNT_MASSAGE = "패";
+    private static final String PLAYER_SCORE_DELIMITER = " : ";
+    private static final String PLAYER_DELIMITER = ", ";
+
+    public void outputSplitMessage(String dealer, List<String> players) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(dealer+"와 ");
-        stringBuilder.append(String.join(",", players)+"에게 두장을 나누었습니다.");
+        stringBuilder.append(CHANGE_LINE + dealer + DEALER_ANDE_PLAYER_DELIMITER);
+        stringBuilder.append(String.join(PLAYERS_DELIMITER, players) + GIVE_TWO_CARD_MASSAGE);
         System.out.println(stringBuilder);
     }
-    public void outputPlayerCard(String name, List<String> cards){
-        System.out.println(name+" : "+String.join(", ",cards));
+
+    public void outputPlayerCard(String name, List<String> cards) {
+        System.out.println(name + " : " + String.join(PLAYER_DELIMITER, cards));
     }
 
-    public void outputDealerDrawCard(String name){
-        System.out.println(name+"는 16이하라 한장의 카드를 더 받았습니다.");
+    public void outputDealerDrawCard(String name) {
+        System.out.println(name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
     }
 
-    public void outputScore(int score){
-        System.out.println("- 결과 : "+ score);
+    public void outputScore(int score) {
+        System.out.println(RESULT_DELIMITER + score);
     }
 
-    public void outputResult(){
-        System.out.println("## 최종 승패");
+    public void outputResult() {
+        System.out.println(FINAL_RESULT_MASSAGE);
     }
 
-    public void outputDealerResult(String name,int win, int tie,int lose){
-        System.out.println(name+" : "+win+"승 "+tie+"무 "+lose+"vo");
+    public void outputDealerResult(String name, int win, int tie, int lose) {
+        System.out.println(name + DEALER_DELIMITER
+                + win + WIN_COUNT_MASSAGE
+                + tie + TIE_COUNT_MASSAGE
+                + lose + LOSE_COUNT_MASSAGE);
     }
-    public void outputPlayerResult(String name,String result){
-        System.out.println(name+" : "+result);
+
+    public void outputPlayerResult(String name, String result) {
+        System.out.println(name + PLAYER_SCORE_DELIMITER + result);
     }
-    public void changeLine(){
+
+    public void changeLine() {
         System.out.println();
     }
 }

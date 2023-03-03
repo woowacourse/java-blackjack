@@ -5,16 +5,22 @@ public enum WinTieLose {
     TIE("무"),
     LOSE("패");
     private final String value;
-    WinTieLose(String value){
-        this.value=value;
+
+    WinTieLose(String value) {
+        this.value = value;
     }
-    public String getValue(){
+
+    public String getValue() {
         return this.value;
     }
 
-    public WinTieLose reverseValue(){
-        if(this.equals(WIN)){return LOSE;}
-        if(this.equals(LOSE)){return WIN;}
+    public WinTieLose reverseValue() {
+        if (this.equals(WIN)) {
+            return LOSE;
+        }
+        if (this.equals(LOSE)) {
+            return WIN;
+        }
         return TIE;
     }
 }

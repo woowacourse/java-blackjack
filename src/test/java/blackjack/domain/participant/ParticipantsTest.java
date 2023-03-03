@@ -5,8 +5,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
@@ -42,20 +40,20 @@ public class ParticipantsTest {
 
     @Test
     @DisplayName("딜러를 반환하는 테스트")
-    void getDealerTest(){
+    void getDealerTest() {
         Dealer dealer = new Dealer();
         String playerNames = "pobi, crong";
-        Participants participants = new Participants(dealer,playerNames);
+        Participants participants = new Participants(dealer, playerNames);
 
         assertThat(participants.getDealer()).isEqualTo(dealer);
     }
 
     @Test
     @DisplayName("플레이어들을 반환하는 테스트")
-    void getPlayersTest(){
+    void getPlayersTest() {
         Dealer dealer = new Dealer();
         String playerNames = "pobi, crong";
-        Participants participants = new Participants(dealer,playerNames);
+        Participants participants = new Participants(dealer, playerNames);
         Player expected = new Player(new Name("pobi"));
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(expected.getClass());
         assertThat(participants.getPlayers().size()).isEqualTo(2);
@@ -63,11 +61,11 @@ public class ParticipantsTest {
 
     @Test
     @DisplayName("플레이어들의 이름을 반환하는 테스트")
-    void getPlayerNames(){
+    void getPlayerNames() {
         Dealer dealer = new Dealer();
         String playerNames = "pobi, crong";
-        Participants participants = new Participants(dealer,playerNames);
+        Participants participants = new Participants(dealer, playerNames);
 
-        Assertions.assertThat(participants.getPlayerNames()).contains("pobi","crong");
+        Assertions.assertThat(participants.getPlayerNames()).contains("pobi", "crong");
     }
 }

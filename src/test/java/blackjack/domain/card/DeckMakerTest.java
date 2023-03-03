@@ -12,13 +12,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException
 public class DeckMakerTest {
     @Test
     @DisplayName("덱 메이커 생성자 테스트")
-    void constructorTest(){
-        assertThatNoException().isThrownBy(()-> new DeckMaker());
+    void constructorTest() {
+        assertThatNoException().isThrownBy(() -> new DeckMaker());
     }
 
     @Test
     @DisplayName("중복되지 않은 52장의 카드 생성 테스트")
-    void makeDeckTest(){
+    void makeDeckTest() {
         // given
         DeckMaker deckMaker = new DeckMaker();
 

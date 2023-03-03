@@ -12,5 +12,7 @@ public enum Shape {
         this.value = value;
     }
 
-    public String getValue(){return this.value;}
+    public String getValue() {
+        return this.value;
+    }
 }
