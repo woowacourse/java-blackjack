@@ -23,7 +23,11 @@ public class Card {
         return face;
     }
 
-    public boolean isNotA() {
-        return letter.isNotA();
+    public boolean isA() {
+        return letter.isA();
+    }
+
+    public int getScore() {
+        return letter.getScore();
     }
 }

@@ -29,14 +29,14 @@ public class Players {
 
     public Result getUserResult(String name) {
         Player player = findUserByName(name);
-        return player.compare(dealer);
+        return player.competeWith(dealer);
     }
 
     public List<Result> getDealerResults() {
         List<Result> results = new ArrayList<>();
 
         for (Player player : users) {
-            results.add(dealer.compare(player));
+            results.add(dealer.competeWith(player));
         }
         return results;
     }

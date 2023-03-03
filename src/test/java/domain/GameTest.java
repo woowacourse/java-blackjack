@@ -1,20 +1,18 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import static domain.Face.SPADE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.Face.SPADE;
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class GameTest {
-
 
     @Test
     @DisplayName("카드를 2장씩 분배한다.")
@@ -71,6 +69,30 @@ public class GameTest {
         var game = new Game(players, new Deck(), new Dealer(createCards("K", "9", "9")));
 
         assertThat(game.getResult("땡칠")).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("딜러가 살고, 플레이어가 죽으면 딜러가 이긴다")
+    @Test
+    void test_lose_player_busted() {
+        var players = List.of(
+                new Player("땡칠", createCards("10", "K", "K"))
+        );
+
+        var game = new Game(players, new Deck(), new Dealer(createCards("K", "9")));
+
+        assertThat(game.getResult("땡칠")).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("플레이어가 살고, 딜러가 죽으면 플레이어가 이긴다")
+    @Test
+    void test_win_dealer_busted() {
+        var players = List.of(
+                new Player("땡칠", createCards("10", "K"))
+        );
+
+        var game = new Game(players, new Deck(), new Dealer(createCards("K", "9","J")));
+
+        assertThat(game.getResult("땡칠")).isEqualTo(Result.WIN);
     }
 
     @Test
