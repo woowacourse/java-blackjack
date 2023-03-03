@@ -39,5 +39,10 @@ public class BlackJackController {
                 }
             }
         }
+
+        if (blackJack.shouldDealerGetCard()) {
+            blackJack.giveDealerCard();
+            OutputView.printGiveDealerCardMessage();
+        }
     }
 }

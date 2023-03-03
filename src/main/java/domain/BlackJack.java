@@ -83,7 +83,7 @@ public class BlackJack {
         getDealer().addCard(findAnyOneCard());
     }
 
-    private Player getDealer() {
+    public Player getDealer() {
         return players.get(0);
     }
 

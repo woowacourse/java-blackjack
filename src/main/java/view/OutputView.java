@@ -16,10 +16,6 @@ public class OutputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void println(String message) {
-        System.out.println(message);
-    }
-
     public static void printPlayersInformation(List<Player> players) {
         List<String> playerNames = players.stream()
                 .map(Player::getName)
@@ -75,5 +71,13 @@ public class OutputView {
 
     public static void printBurstMessage(String name) {
         System.out.printf("%s님은 버스트 되셨습니다. 더이상 카드를 뽑을 수 없습니다.%n", name);
+    }
+
+    public static void printGiveDealerCardMessage() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void println(String message) {
+        System.out.println(message);
     }
 }

@@ -8,7 +8,7 @@ public class NumberDisplayMatcher {
     private static final Map<Number, String> messagesMapper = new HashMap<>();
 
     static {
-        List<String> messages = new ArrayList<>(List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"));
+        List<String> messages = new ArrayList<>(List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J"));
         for (Number number : Number.values()) {
             messagesMapper.put(number, messages.remove(0));
         }
