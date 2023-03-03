@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    String name() {
+    public String name() {
         return "딜러";
     }
 }
