@@ -16,10 +16,11 @@ public class Deck {
     }
 
     public static Deck create(final CardShuffler cardShuffler) {
-        List<CardPattern> cardPatterns = CardPattern.getAll();
-        List<CardNumber> cardNumbers = CardNumber.getAll();
-        List<Card> cards = makeCards(cardPatterns, cardNumbers);
-        List<Card> shuffledCards = cardShuffler.shuffle(cards);
+        final List<CardPattern> cardPatterns = CardPattern.getAll();
+        final List<CardNumber> cardNumbers = CardNumber.getAll();
+        final List<Card> cards = makeCards(cardPatterns, cardNumbers);
+        final List<Card> shuffledCards = cardShuffler.shuffle(cards);
+
         return new Deck(new LinkedList<>(shuffledCards));
     }
 
@@ -29,7 +30,8 @@ public class Deck {
 
     private static List<Card> makeCards(final List<CardPattern> cardPatterns, final List<CardNumber> cardNumbers) {
         return cardPatterns.stream()
-                .flatMap(pattern -> cardNumbers.stream().map(number -> Card.create(pattern, number)))
+                .flatMap(pattern -> cardNumbers.stream()
+                        .map(number -> Card.create(pattern, number)))
                 .collect(Collectors.toList());
     }
 }

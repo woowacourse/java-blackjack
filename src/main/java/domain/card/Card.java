@@ -20,6 +20,10 @@ public class Card {
         return number.isAce();
     }
 
+    public int findCardNumber() {
+        return number.getNumber();
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) {
@@ -35,10 +39,6 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(pattern, number);
-    }
-
-    public int findCardNumber() {
-        return number.getNumber();
     }
 
     public CardPattern getCardPattern() {
