@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Number;
+
 import java.util.Arrays;
 
 public enum NumberWord {

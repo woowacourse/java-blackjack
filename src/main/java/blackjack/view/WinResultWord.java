@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.WinResult;
+
 import java.util.Arrays;
 
 public enum WinResultWord {
