@@ -17,7 +17,7 @@ public class OutputView {
         System.out.printf(INIT_FORMAT, String.join(", ", participants.getPlayerNames()));
         printDealerInitCard(participants.getDealer());
         for (Player player : participants.getPlayers()) {
-            printPlayerInitCard(player);
+            printPlayerCards(player);
         }
         System.out.println();
     }
@@ -34,7 +34,7 @@ public class OutputView {
                                      .getValue();
     }
 
-    private void printPlayerInitCard(Player player) {
+    public void printPlayerCards(Player player) {
         String cardNames = player.getCards()
                                  .stream()
                                  .map(this::convertCard)

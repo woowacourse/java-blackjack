@@ -32,4 +32,8 @@ public class BlackjackGame {
         }
         return result;
     }
+
+    public void giveCard(Participant participant) {
+        participant.addCard(cardDeck.pick());
+    }
 }
