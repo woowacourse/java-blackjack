@@ -18,7 +18,7 @@ public class BackJackController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        BlackJackGame blackJackGame = initBlackJackGame();
+        final BlackJackGame blackJackGame = initBlackJackGame();
         printInitialStatus(blackJackGame);
         playPlayerTurn(blackJackGame);
         playDealerTurn(blackJackGame);
@@ -33,12 +33,11 @@ public class BackJackController {
         return new BlackJackGame(names, new RandomDeckGenerator());
     }
 
-    private void printInitialStatus(BlackJackGame blackJackGame) {
+    private void printInitialStatus(final BlackJackGame blackJackGame) {
         outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialStatus()));
-        outputView.printLineBreak();
     }
 
-    private void playPlayerTurn(BlackJackGame blackJackGame) {
+    private void playPlayerTurn(final BlackJackGame blackJackGame) {
         final List<String> playerNames = blackJackGame.getPlayerNames();
         for (final String name : playerNames) {
             playFor(blackJackGame, name);
@@ -46,7 +45,7 @@ public class BackJackController {
         }
     }
 
-    private void playFor(BlackJackGame blackJackGame, String name) {
+    private void playFor(final BlackJackGame blackJackGame, final String name) {
         while (isContinuous(name, blackJackGame)) {
             blackJackGame.playPlayer(name);
             List<Card> userCards = blackJackGame.getStatus().get(name);
@@ -54,12 +53,11 @@ public class BackJackController {
         }
     }
 
-    private boolean isContinuous(String name, BlackJackGame blackJackGame) {
+    private boolean isContinuous(final String name, BlackJackGame blackJackGame) {
         if (blackJackGame.isBlackJackScore(name) || blackJackGame.isBust(name)) {
             return false;
         }
         outputView.printDrawCardRequestMessage(name);
-        outputView.printLineBreak();
         return DrawInput.from(inputView.readDrawOrStay()).isDraw();
     }
 

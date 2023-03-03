@@ -30,6 +30,7 @@ public class OutputView {
         printInitialStatusInfoMessage(playerNames);
         printCards(Dealer.DEALER_NAME, initialStatus.get(Dealer.DEALER_NAME));
         playerNames.forEach(name -> printCards(name, initialStatus.get(name)));
+        printLineBreak();
     }
 
     public void printCards(String name, List<String> cardNames) {
@@ -44,6 +45,7 @@ public class OutputView {
 
     public void printDrawCardRequestMessage(final String name) {
         System.out.println(String.format(DRAW_CARD_REQUEST_MESSAGE, name));
+        printLineBreak();
     }
 
     public void printDealerDrawInfoMessage() {
@@ -64,5 +66,9 @@ public class OutputView {
 
     public void printLineBreak() {
         System.out.println();
+    }
+
+    public void printExceptionMessage(Exception e) {
+        System.out.println(e.getMessage());
     }
 }
