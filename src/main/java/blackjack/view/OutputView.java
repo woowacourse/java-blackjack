@@ -48,11 +48,12 @@ public class OutputView {
     }
 
     public static void printDealerReceiveOneMoreCard() {
+        System.out.println();
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printCardsWithSum(final List<Player> players, final Dealer dealer) {
-        System.out.println(NEW_LINE);
+        System.out.println();
         printParticipantCards("딜러", dealer.getCards());
         System.out.println(" - 결과: " + dealer.calculateSumOfRank());
         for (Player player : players) {
@@ -62,16 +63,19 @@ public class OutputView {
     }
 
     public static void printFinalResult(final List<Player> players, final Map<Result, Integer> dealerResult) {
-        StringBuilder finalResult = new StringBuilder();
         for (final Result result : dealerResult.keySet()) {
-            if (dealerResult.get(result) != 0) {
-                finalResult.append(dealerResult.get(result)).append(result.getValue());
-            }
+            generateDealerResult(dealerResult, result);
         }
         System.out.println(NEW_LINE + "## 최종 승패");
         System.out.println("딜러: " + finalResult);
         for (Player player : players) {
             System.out.println(player.getName() + ": " + player.getResult().getValue());
+        }
+    }
+
+    private static void generateDealerResult(Map<Result, Integer> dealerResult, Result result) {
+        if (dealerResult.get(result) != 0) {
+            finalResult.append(dealerResult.get(result)).append(result.getValue());
         }
     }
 }
