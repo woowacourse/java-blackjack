@@ -47,29 +47,13 @@ public class People {
     public Map<Player, GameResult> makeGameResultForAllPlayer() {
         int dealerPoint = dealer.sumCardPool();
         Map<Player, GameResult> record = new HashMap<>();
-        recordWhoWin(dealerPoint, record);
-        recordWhoLose(dealerPoint, record);
-        recordWhoDraw(dealerPoint, record);
+        recordGameResult(dealerPoint, record);
 
         return record;
     }
 
-    private void recordWhoLose(int dealerPoint, Map<Player, GameResult> record) {
-        players.stream()
-                .filter(player -> player.sumCardPool() < dealerPoint)
-                .forEach(player -> record.put(player, GameResult.LOSE));
-    }
-
-    private void recordWhoWin(int dealerPoint, Map<Player, GameResult> record) {
-        players.stream()
-                .filter(player -> player.sumCardPool() > dealerPoint)
-                .forEach(player -> record.put(player, GameResult.WIN));
-    }
-
-    private void recordWhoDraw(int dealerPoint, Map<Player, GameResult> record) {
-        players.stream()
-                .filter(player -> player.sumCardPool() == dealerPoint)
-                .forEach(player -> record.put(player, GameResult.DRAW));
+    private void recordGameResult(int dealerPoint, Map<Player, GameResult> record) {
+        players.forEach(player -> record.put(player, GameResult.getResult(player.sumCardPool(), dealerPoint)));
     }
 
     public boolean isBurst(String playerName, int blackJackNumber) {
