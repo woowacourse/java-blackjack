@@ -2,6 +2,10 @@ package techcourse.jcf.mission;
 
 public interface SimpleList<T> {
 
+    static <T> SimpleList<T> fromArrayToList(T[] arrays) {
+        return new SimpleArrayList<>(arrays);
+    }
+
     boolean add(T value);
 
     void add(int index, T value);

@@ -14,6 +14,10 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         arrayList = (T[]) new Object[initialValue];
     }
 
+    public SimpleArrayList(T[] values) {
+        arrayList = values;
+    }
+
     @Override
     public boolean add(T value) {
         size++;
