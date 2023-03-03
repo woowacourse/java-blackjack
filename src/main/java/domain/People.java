@@ -63,6 +63,10 @@ public class People {
         return playerByName(playerName).sumCardPool() > blackJackNumber;
     }
 
+    public boolean dealerNeedsHit() {
+        return dealer.isHit();
+    }
+
     private Player playerByName(String playerName) {
         return players.stream()
                 .filter(it -> it.hasSameNameWith(playerName))

@@ -20,6 +20,10 @@ public class BlackjackGame {
         people.letDealerHitUntilThreshold(deck);
     }
 
+    public boolean dealerNeedsHit() {
+        return people.dealerNeedsHit();
+    }
+
     public void startHit() {
         for (int i = 0; i < START_HIT_COUNT; i++) {
             people.letPlayersToHit(deck);

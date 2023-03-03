@@ -24,22 +24,24 @@ public class BlackJackController {
         List<Player> players = people.getPlayers();
         Dealer dealer = people.getDealer();
 
-        outputView.printPlayerInfo(dealer);
-        outputView.printPlayersInfo(players);
+        outputView.printPlayersInfo(dealer, players);
 
         letPlayersHit(players);
         printGameInfo(players, dealer);
 
-        outputView.printGameResult(blackjackGame.getGameResultForAllPlayer());
-
         outputView.printDealerRecord(dealer, blackjackGame.getDealerRecord());
+        outputView.printGameResult(blackjackGame.getGameResultForAllPlayer());
     }
 
     private void letPlayersHit(List<Player> players) {
         for (Player player : players) {
             hitByChoice(player);
         }
-        blackjackGame.letDealerHitUntilThreshold();
+
+        if (blackjackGame.dealerNeedsHit()) {
+            outputView.printDealerHitMessage();
+            blackjackGame.letDealerHitUntilThreshold();
+        }
     }
 
     private void printGameInfo(List<Player> players, Dealer dealer) {
@@ -54,7 +56,7 @@ public class BlackJackController {
             return;
         }
         blackjackGame.hitFor(player.getPlayerName().getValue());
-        outputView.printPlayerCard(player);
+        outputView.printPlayerCardWithName(player);
 
         hitByChoice(player);
     }
