@@ -13,34 +13,31 @@ public class Result {
     }
 
     private void calculate(Dealer dealer, Players players) {
-        int dealerScore = dealer.getTotalScore();
-
         for (Player player : players.getPlayers()) {
-            calculateWinLose(dealer, dealerScore, player);
+            calculateWinLose(dealer, player);
         }
     }
 
-    private void calculateWinLose(Dealer dealer, int dealerScore, Player player) {
-        int playerScore = player.getTotalScore();
-        draw(dealer, dealerScore, player, playerScore);
-        lose(dealerScore, player, playerScore);
-        win(dealer, dealerScore, player, playerScore);
+    private void calculateWinLose(Dealer dealer, Player player) {
+        win(dealer, player);
+        lose(dealer, player);
+        draw(dealer, player);
     }
 
-    private void win(Dealer dealer, int dealerScore, Player player, int playerScore) {
-        if (dealer.isBust() || dealerScore < playerScore) {
+    private void win(Dealer dealer, Player player) {
+        if (!player.isBust() && (dealer.isBust() || dealer.getTotalScore() < player.getTotalScore())) {
             gameResult.put(player.getName().getName(), GameResult.WIN);
         }
     }
 
-    private void lose(int dealerScore, Player player, int playerScore) {
-        if (player.isBust() || dealerScore > playerScore) {
+    private void lose(Dealer dealer, Player player) {
+        if (!dealer.isBust() && (player.isBust() || dealer.getTotalScore() > player.getTotalScore())) {
             gameResult.put(player.getName().getName(), GameResult.LOSE);
         }
     }
 
-    private void draw(Dealer dealer, int dealerScore, Player player, int playerScore) {
-        if (dealer.isBust() && player.isBust() || dealerScore == playerScore) {
+    private void draw(Dealer dealer, Player player) {
+        if (dealer.isBust() && player.isBust() || dealer.getTotalScore() == player.getTotalScore()) {
             gameResult.put(player.getName().getName(), GameResult.DRAW);
         }
     }

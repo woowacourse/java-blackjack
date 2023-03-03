@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +22,10 @@ public class CardDistributor {
     }
 
     public List<Card> distributeInitialCard() {
-        return List.of(distribute(), distribute());
+        return new ArrayList<>() {{
+            add(distribute());
+            add(distribute());
+        }};
     }
 
     public int getDeckSize() {
