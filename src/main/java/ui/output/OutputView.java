@@ -57,7 +57,7 @@ public class OutputView {
 
     public static void printFinalResult(final Users users) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        final List<Boolean> results = users.getFinalResultWithoutDealer();
+        final List<Boolean> results = users.getFinalResult(Dealer.getInstance());
 
         final List<User> participants = users.getUsers();
         printDealerFinalResult(results, participants);

@@ -33,7 +33,7 @@ public class BlackJackController {
     }
 
     private Users getUsers() {
-        Users users = new Users(Arrays.asList(InputView.getPlayersName().split(",")));
+        Users users = Users.from(Arrays.asList(InputView.getPlayersName().split(",")));
         users.getUsers().forEach(this::receiveInitialCards);
         return users;
     }
