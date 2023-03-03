@@ -49,15 +49,19 @@ public class MainController {
     }
 
     private void distributeCardToPlayer(final BlackJackGame blackJackGame, final Player player) {
-        boolean repeat = true;
-        while (repeat) {
+        boolean isRepeat = true;
+        while (isRepeat) {
             PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
-            if (command.isHit()) {
-                blackJackGame.giveCardTo(player);
-            }
-            outputView.printSingleState(player);
-            repeat = player.canReceive() && command.isHit();
+            distributeByCommand(blackJackGame, player, command);
+            isRepeat = player.canReceive() && command.isHit();
         }
+    }
+
+    private void distributeByCommand(final BlackJackGame blackJackGame, final Player player, final PlayerCommand command) {
+        if (command.isHit()) {
+            blackJackGame.giveCardTo(player);
+        }
+        outputView.printSingleState(player);
     }
 
     private void distributeCardToDealer(final BlackJackGame blackJackGame) {
