@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 
 public class Participants {
 
     private final Map<Participant, GameStatus> participantStatuses = new LinkedHashMap<>();
+
+    private int completedPlayerCount = 0;
 
     public Participants(List<Participant> participants) {
         participants.forEach(
@@ -18,7 +22,11 @@ public class Participants {
 
     public void update(Participant participant) {
         int score = participant.calculateScore();
-        participantStatuses.put(participant, new GameStatus(getStatusByScore(score), score));
+        ParticipantStatus statusByScore = getStatusByScore(score);
+        if (statusByScore != ParticipantStatus.NOT_BUST) {
+            completedPlayerCount++;
+        }
+        participantStatuses.put(participant, new GameStatus(statusByScore, score));
     }
 
     public GameStatus getGameStatusByParticipant(Participant participant) {
@@ -37,5 +45,16 @@ public class Participants {
 
     public List<Participant> getAllParticipants() {
         return new ArrayList<>(participantStatuses.keySet());
+    }
+
+    public Participant getCurrentParticipant() {
+        Optional<Entry<Participant, GameStatus>> currentParticipantEntry = participantStatuses.entrySet()
+            .stream()
+            .filter((entry) -> entry.getValue().isAbleToHit())
+            .findFirst();
+        if (currentParticipantEntry.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        return currentParticipantEntry.get().getKey();
     }
 }
