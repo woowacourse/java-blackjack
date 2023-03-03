@@ -14,13 +14,6 @@ public class Referee {
     private static final int BLACKJACK_SCORE = 21;
     private static final int BURST_CODE = -1;
 
-    private Map<String, Integer> scoreResult;
-    private Map<String, Result> result;
-
-    public Referee() {
-        //scoreResult=Hah
-    }
-
     /**
      * 카드 덱의 점수를 계산하는 메서드
      *
