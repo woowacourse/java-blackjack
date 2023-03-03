@@ -18,10 +18,11 @@ public class Participants {
     private final List<Participant> participants;
 
     private Participants(final List<String> playerNames) {
-        validateDuplicateNames(playerNames);
-        validatePlayerCount(playerNames);
+        List<String> trimPlayerNames = trimPlayerNames(playerNames);
+        validateDuplicateNames(trimPlayerNames);
+        validatePlayerCount(trimPlayerNames);
         this.participants = new ArrayList<>();
-        initParticipants(playerNames);
+        initParticipants(trimPlayerNames);
     }
 
     private void initParticipants(final List<String> playerNames) {
@@ -43,6 +44,11 @@ public class Participants {
     public void addCard(final int participantOrder, final Card card) {
         Participant participant = participants.get(participantOrder);
         participant.addCard(card);
+    }
+
+    private List<String> trimPlayerNames(final List<String> playerNames) {
+        return playerNames.stream().map(String::trim)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void validateDuplicateNames(final List<String> playerNames) {

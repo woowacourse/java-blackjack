@@ -40,7 +40,7 @@ class ParticipantsTest {
     @Test
     @DisplayName("create()는 중복된 플레이어 이름을 받으면, 예외가 발생한다")
     void create_givenDuplicateNames_thenFail() {
-        List<String> duplicateNames = List.of("a", "b", "c", "d", "e", "f", "a");
+        List<String> duplicateNames = List.of("a", "b", "c", "d", "e", "a ");
 
         assertThatThrownBy(() -> Participants.create(duplicateNames))
                 .isInstanceOf(IllegalArgumentException.class)

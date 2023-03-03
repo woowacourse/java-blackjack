@@ -16,7 +16,7 @@ public class ParticipantName {
 
     public static ParticipantName create(final String name) {
         validateNullName(name);
-        return new ParticipantName(name.trim());
+        return new ParticipantName(name);
     }
 
     private static void validateNullName(final String name) {
