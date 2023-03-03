@@ -13,10 +13,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     private Object[] elementData;
     private int size;
 
-    public SimpleArrayList() {
-        this.elementData = DEFAULT_EMPTY_ELEMENT_DATA; // 아무런 파라미터 없이 생성 시 빈 배열로 할당
-    }
-
     public SimpleArrayList(int initialCapacity) { // 초기 사이즈를 가지고 생성 시 분기처리하여 생성
         if (initialCapacity > 0) {
             this.elementData = new Object[initialCapacity];
@@ -25,6 +21,11 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         } else {
             throw new IllegalArgumentException("[ERROR] SimpleArrayList initialCapacity is Illegal");
         }
+    }
+
+    public SimpleArrayList(E ... values) {
+        this.elementData = values;
+        size += values.length;
     }
 
     @Override
@@ -101,9 +102,9 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public String set(int index, String value) {
+    public Object set(int index, E value) {
         Objects.checkIndex(index, size);
-        String oldValue = elementData[index];
+        Object oldValue = elementData[index];
         elementData[index] = value;
         return oldValue;
     }
@@ -115,12 +116,12 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         return indexOfRange(value, 0, size);
     }
 
-    private int indexOfRange(String value, int start, int end) {
-        String[] es = elementData;
+    private int indexOfRange(E value, int start, int end) {
+        Object[] es = elementData;
         if (value == null) {
             for (int i = start; i < end; i++) {
                 if (es[i] == null) {
@@ -138,7 +139,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
 
@@ -153,15 +154,15 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public boolean remove(String value) {
-        final String[] es = elementData;
+    public boolean remove(E value) {
+        final Object[] es = elementData;
         final int size = this.size;
         int foundIndex = findIndex(es, size, value);
         fastRemove(elementData, foundIndex);
         return true;
     }
 
-    private int findIndex(String[] elementData, int size, String valueToFind) {
+    private int findIndex(Object[] elementData, int size, E valueToFind) {
         int foundIndex = 0;
         if (valueToFind == null) {
             for (int i = 0; i < size; i++) {
@@ -180,19 +181,19 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public String remove(int index) {
+    public Object remove(int index) {
         Objects.checkIndex(index, size);
-        final String[] es = elementData;
+        final Object[] es = elementData;
 
-        String oldValue = es[index];
+        Object oldValue = es[index];
         fastRemove(es, index);
 
         return oldValue;
     }
 
-    private void fastRemove(String[] elementData, int index) {
+    private void fastRemove(Object[] elementData, int index) {
         final int newSize;
-        newSize = size -1;
+        newSize = size - 1;
         if (newSize > index) {
             // 지우려는 인덱스 뒤 요소들을 하나씩 앞으로 땡긴다.
             System.arraycopy(elementData, index + 1, elementData, index, newSize - index);
@@ -210,15 +211,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         }
     }
 
-    public String[] getElementData() {
+    public Object[] getElementData() {
         return elementData;
     }
-
-//    public SimpleList<E> fromArrayToList(Object[] values){
-//        SimpleList<E> objectSimpleList = new SimpleArrayList<>();
-//        for(Object value: values) {
-//            objectSimpleList.add((E)value);
-//        }
-//        return objectSimpleList;
-//    }
 }
