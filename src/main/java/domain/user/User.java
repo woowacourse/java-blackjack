@@ -21,6 +21,12 @@ public abstract class User {
         checkBustByScore();
     }
 
+    protected abstract void checkBustByScore();
+
+    public abstract void win();
+
+    public abstract void lose();
+
     public List<Card> getCards() {
         return cards;
     }
@@ -32,10 +38,4 @@ public abstract class User {
     public abstract UserStatus getStatus();
 
     public abstract String getName();
-
-    public abstract void win();
-
-    public abstract void lose();
-
-    protected abstract void checkBustByScore();
 }

@@ -20,13 +20,13 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public DrawCommand readDrawCommand() {
-        return DrawCommand.of(scanner.nextLine());
-    }
-
     private void validatePlayersSize(List<String> players) {
         if (players.size() > MAX_PLAYER_SIZE) {
             throw new IllegalArgumentException("플레이어는 최대 5명입니다.");
         }
+    }
+
+    public DrawCommand readDrawCommand() {
+        return DrawCommand.of(scanner.nextLine());
     }
 }

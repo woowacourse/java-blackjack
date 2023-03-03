@@ -32,6 +32,20 @@ public class Player extends User {
     }
 
     @Override
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    @Override
+    public String getName() {
+        return name.getName();
+    }
+
+    public boolean isWinner() {
+        return isWinner;
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -46,19 +60,5 @@ public class Player extends User {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    @Override
-    public String getName() {
-        return name.getName();
-    }
-
-    public boolean isWinner() {
-        return isWinner;
     }
 }

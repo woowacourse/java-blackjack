@@ -26,44 +26,46 @@ public class BlackJackGame {
         player.receiveCard(cards.drawCard());
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public void drawCardUntilOverSixteen() {
         while (dealer.getStatus().equals(DealerStatus.UNDER_SEVENTEEN)) {
             dealer.receiveCard(cards.drawCard());
         }
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public void judgeWinner() {
+        for (Player player : players) {
+            compareDealerWithPlayer(player);
+        }
     }
 
-    public void judgeWinner() {
-        int dealerScore = dealer.getScore();
-        UserStatus dealerStatus = dealer.getStatus();
-        for (Player player : players) {
-            UserStatus playerStatus = player.getStatus();
-            if (playerStatus.equals(PlayerStatus.BUST)) {
-                dealer.win();
-                player.lose();
-                continue;
-            }
-            if (playerStatus.equals(PlayerStatus.NORMAL) && dealerStatus.equals(DealerStatus.BUST)) {
-                dealer.lose();
-                player.win();
-                continue;
-            }
-            if (dealerScore >= player.getScore()) {
-                dealer.win();
-                player.lose();
-            }
-            if (dealerScore < player.getScore()) {
-                dealer.lose();
-                player.win();
-            }
+    private void compareDealerWithPlayer(Player player) {
+        UserStatus playerStatus = player.getStatus();
+        if (playerStatus.equals(PlayerStatus.BUST)) {
+            dealerWin(player);
+            return;
         }
+        if (playerStatus.equals(PlayerStatus.NORMAL) && dealer.getStatus().equals(DealerStatus.BUST)) {
+            playerWin(player);
+            return;
+        }
+        compareScore(player);
+    }
+
+    private void playerWin(Player player) {
+        dealer.lose();
+        player.win();
+    }
+
+    private void dealerWin(Player player) {
+        dealer.win();
+        player.lose();
+    }
+
+    private void compareScore(Player player) {
+        if (dealer.getScore() >= player.getScore()) {
+            dealerWin(player);
+        }
+        playerWin(player);
     }
 
     public Map<String, Boolean> getUserFinalResult() {
@@ -74,5 +76,13 @@ public class BlackJackGame {
         }
 
         return userFinalResult;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
