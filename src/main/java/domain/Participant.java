@@ -16,6 +16,10 @@ abstract class Participant {
         hand.add(card);
     }
 
+    public int score() {
+        return hand.calculateScore();
+    }
+
     public List<Card> getHand() {
         return hand.getCards();
     }

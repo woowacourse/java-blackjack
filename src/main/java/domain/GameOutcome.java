@@ -27,4 +27,18 @@ public enum GameOutcome {
         }
         return DRAW;
     }
+
+    public GameOutcome oppositeOutcome() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public String value() {
+        return value;
+    }
 }

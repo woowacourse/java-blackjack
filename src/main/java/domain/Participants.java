@@ -1,10 +1,14 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
+
     private static final int DEALER_POSITION = 0;
+
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
@@ -43,7 +47,7 @@ public class Participants {
                 .name();
     }
 
-    public void handOutCard(Card card) {
+    public void handOutCardToPlayer(Card card) {
         findNextDrawablePlayer()
                 .receiveCard(card);
     }
@@ -68,7 +72,23 @@ public class Participants {
     }
 
     public boolean isDealerDrawable() {
-        return participants.get(DEALER_POSITION)
-                .isDrawable();
+        return dealer().isDrawable();
+    }
+
+    public void handOutCardToDealer(Card card) {
+        dealer().receiveCard(card);
+    }
+
+    public int getDealerScore() {
+        return dealer().score();
+    }
+
+    private Participant dealer() {
+        return participants.get(DEALER_POSITION);
+    }
+
+    public Map<String, Integer> getPlayerScores() {
+        return players().stream()
+                .collect(Collectors.toMap(Participant::name, Participant::score, (d1, d2) -> d1, LinkedHashMap::new));
     }
 }
