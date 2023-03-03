@@ -5,19 +5,20 @@ import java.util.List;
 public class GamePoint {
 
     private static final int BUST = 0;
+    private static final CardNumber ACE = CardNumber.of(1);
+    private static final CardNumber TEN = CardNumber.of(10);
     private final int gamePoint;
 
     public GamePoint(final List<Card> cards) {
-        int point = calculateMaxPoint(cards);
-        if (isBust(point) && containAceInCards(cards)) {
-            this.gamePoint = getPoint(point, getCountOfAce(cards));
-            return;
-        }
-        this.gamePoint = calculateBust(point);
+        this.gamePoint = getOptimizeValueOf(cards);
     }
 
-    private boolean isBust(final int point) {
-        return calculateBust(point) == BUST;
+    private Integer getOptimizeValueOf(final List<Card> cards) {
+        int point = calculateMaxPoint(cards);
+        if (canOptimize(cards, point)) {
+            return getGamePoint(point, getCountOfAce(cards));
+        }
+        return point;
     }
 
     private int calculateMaxPoint(final List<Card> cards) {
@@ -28,15 +29,33 @@ public class GamePoint {
         return point;
     }
 
-    private int getPoint(final int point, final int aceCount) {
-        int optimizedPoint = point;
-        int remainAce = aceCount;
-        while (optimizedPoint > 21 && remainAce > 0) {
-            optimizedPoint -= 10;
-            remainAce -= 1;
+    private int transform(Card card) {
+        if (isAce(card)) {
+            return 11;
         }
+        if (card.haveOverNumberThan(TEN)) {
+            return 10;
+        }
+        return card.getCardNumberValue();
+    }
 
-        return calculateBust(optimizedPoint);
+    private boolean isAce(final Card card) {
+        return card.haveCardNumberOf(ACE);
+    }
+
+    private boolean canOptimize(final List<Card> cards, final int point) {
+        return isBust(point) && containAceInCards(cards);
+    }
+
+    private boolean isBust(final int point) {
+        return calculateWithBust(point) == BUST;
+    }
+
+    private int calculateWithBust(final int point) {
+        if (point > 21) {
+            return BUST;
+        }
+        return point;
     }
 
     private boolean containAceInCards(List<Card> cards) {
@@ -46,34 +65,27 @@ public class GamePoint {
         return false;
     }
 
-    private static int getCountOfAce(final List<Card> cards) {
+    private int getCountOfAce(final List<Card> cards) {
         return (int) cards.stream()
-                .filter((card) -> card.isAce())
+                .filter((card) -> isAce(card))
                 .count();
     }
 
-    private int calculateBust(final int point) {
-        if (point > 21) {
-            return BUST;
+    private int getGamePoint(final int point, final int aceCount) {
+        int optimizedPoint = point;
+        int remainAce = aceCount;
+        while (optimizedPoint > 21 && remainAce > 0) {
+            optimizedPoint -= 10;
+            remainAce -= 1;
         }
-        return point;
-    }
-
-    private int transform(Card card) {
-        if (card.isAce()) {
-            return 11;
-        }
-        if (card.isOverTen()) {
-            return 10;
-        }
-        return card.getCardNumberValue();
+        return calculateWithBust(optimizedPoint);
     }
 
     public boolean isBusted() {
         return gamePoint == BUST;
     }
 
-    public int getPoint() {
+    public int getGamePoint() {
         return gamePoint;
     }
 

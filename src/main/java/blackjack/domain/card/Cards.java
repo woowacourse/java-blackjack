@@ -31,11 +31,11 @@ public class Cards {
         return cards.size();
     }
 
-    public boolean isLowerThan(final int value) {
+    public boolean haveLowerGamePointThan(final int value) {
         return point.isLowerThan(value);
     }
 
-    public boolean isLowerThan(final GamePoint point) {
+    public boolean haveLowerGamePointThan(final GamePoint point) {
         return this.point.isLowerThan(point);
     }
 

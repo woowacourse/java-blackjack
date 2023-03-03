@@ -42,7 +42,7 @@ public class Dealer implements Player {
 
     @Override
     public boolean canReceive() {
-        return cards.isLowerThan(16) && !cards.isBust();
+        return cards.haveLowerGamePointThan(16) && !cards.isBust();
     }
 
     @Override

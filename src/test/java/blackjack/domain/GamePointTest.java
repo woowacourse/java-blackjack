@@ -23,7 +23,7 @@ public class GamePointTest {
         );
 
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getPoint()).isEqualTo(9);
+        assertThat(gamePoint.getGamePoint()).isEqualTo(9);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class GamePointTest {
         );
 
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getPoint()).isEqualTo(16);
+        assertThat(gamePoint.getGamePoint()).isEqualTo(16);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class GamePointTest {
                 new Card(Shape.HEART, CardNumber.of(2))
         );
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getPoint()).isEqualTo(0);
+        assertThat(gamePoint.getGamePoint()).isEqualTo(0);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class GamePointTest {
                 new Card(Shape.HEART, CardNumber.of(1))
         );
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getPoint()).isEqualTo(21);
+        assertThat(gamePoint.getGamePoint()).isEqualTo(21);
     }
 
     @Test
@@ -75,6 +75,6 @@ public class GamePointTest {
                 new Card(Shape.HEART, CardNumber.of(1))
         );
         final GamePoint gamePoint = new GamePoint(data);
-        assertThat(gamePoint.getPoint()).isEqualTo(16);
+        assertThat(gamePoint.getGamePoint()).isEqualTo(16);
     }
 }

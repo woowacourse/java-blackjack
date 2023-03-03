@@ -137,7 +137,7 @@ public class OutputView {
     }
 
     private String printGamePoint(final GamePoint gamePoint) {
-        final int point = gamePoint.getPoint();
+        final int point = gamePoint.getGamePoint();
         if (point == 0) {
             return "버스트";
         }

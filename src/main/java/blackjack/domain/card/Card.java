@@ -13,6 +13,14 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
+    public boolean haveOverNumberThan(CardNumber cardNumber) {
+        return this.cardNumber.compareTo(cardNumber) == 1;
+    }
+
+    public boolean haveCardNumberOf(final CardNumber number) {
+        return this.cardNumber.compareTo(number) == 0;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -30,13 +38,6 @@ public class Card {
         return Objects.hash(shape, cardNumber);
     }
 
-    public boolean isAce() {
-        return cardNumber == CardNumber.of(1);
-    }
-
-    public boolean isOverTen() {
-        return TEN.compareTo(cardNumber) <= 0;
-    }
 
     public int getCardNumberValue() {
         return cardNumber.getValue();
@@ -45,4 +46,6 @@ public class Card {
     public Shape getShape() {
         return shape;
     }
+
+
 }

@@ -54,7 +54,7 @@ public class User implements Player {
     }
 
     public boolean isLowerThan(final GamePoint point) {
-        return cards.isLowerThan(point);
+        return cards.haveLowerGamePointThan(point);
     }
 
     public boolean isNameOf(final Name userName) {
