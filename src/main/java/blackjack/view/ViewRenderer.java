@@ -6,6 +6,7 @@ import blackjack.domain.CardShape;
 import blackjack.domain.Dealer;
 import blackjack.domain.WinningStatus;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,8 +18,13 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class ViewRenderer {
 
-    private static final Map<CardShape, String> CARD_SHAPE_STRING_MAPPER;
-    private static final Map<CardNumber, String> CARD_NUMBER_STRING_MAPPER;
+    private static final Map<CardShape, String> CARD_SHAPE_STRING_MAPPER = Map.of(
+            CardShape.SPADE, "스페이드",
+            CardShape.CLOVER, "클로버",
+            CardShape.DIAMOND, "다이아몬드",
+            CardShape.HEART, "하트"
+    );
+    private static final Map<CardNumber, String> CARD_NUMBER_STRING_MAPPER = new EnumMap<>(CardNumber.class);
     private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER = Map.of(
             WinningStatus.WIN, "승 ",
             WinningStatus.TIE, "무 ",
@@ -27,14 +33,6 @@ public class ViewRenderer {
     private static final String BLANK = "";
 
     static {
-        CARD_SHAPE_STRING_MAPPER = Map.of(
-                CardShape.SPADE, "스페이드",
-                CardShape.CLOVER, "클로버",
-                CardShape.DIAMOND, "다이아몬드",
-                CardShape.HEART, "하트"
-        );
-
-        CARD_NUMBER_STRING_MAPPER = new HashMap<>();
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.ACE, "A");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.TWO, "2");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.THREE, "3");
@@ -50,10 +48,13 @@ public class ViewRenderer {
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.KING, "K");
     }
 
-    public static Map<String, List<String>> renderStatus(final Map<String, List<Card>> status) {
-        Map<String, List<String>> renderedStatus = new HashMap<>();
+    private ViewRenderer() {
+    }
 
-        for (String name : status.keySet()) {
+    public static Map<String, List<String>> renderStatus(final Map<String, List<Card>> status) {
+        final Map<String, List<String>> renderedStatus = new HashMap<>();
+
+        for (final String name : status.keySet()) {
             renderedStatus.put(name, renderCardsToString(status.get(name)));
         }
         return renderedStatus;
@@ -95,7 +96,6 @@ public class ViewRenderer {
         stringBuilder.append(renderWinningStatus(WinningStatus.WIN, dealerWinningResult));
         stringBuilder.append(renderWinningStatus(WinningStatus.TIE, dealerWinningResult));
         stringBuilder.append(renderWinningStatus(WinningStatus.LOSE, dealerWinningResult));
-
         return stringBuilder.toString();
     }
 
