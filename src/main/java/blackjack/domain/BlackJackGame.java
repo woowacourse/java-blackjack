@@ -24,4 +24,8 @@ public class BlackJackGame {
     public Card openDealerFirstCard() {
         return participants.openDealerFirstCard();
     }
+
+    public List<String> findAvailablePlayerNames() {
+        return participants.findAvailablePlayerNames();
+    }
 }

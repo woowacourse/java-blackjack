@@ -60,6 +60,21 @@ public class Participants {
         return dealer.getCards();
     }
 
+    public List<String> findAvailablePlayerNames() {
+        List<String> availablePlayerNames = new ArrayList<>();
+        for (Player player : players) {
+            addAvailablePlayer(player, availablePlayerNames);
+        }
+        return availablePlayerNames;
+    }
+
+    private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
+        int sum = player.computeSumOfCards();
+        if (!player.isBlackJack(sum) && !player.isBust(sum)) {
+            availablePlayerNames.add(player.getName());
+        }
+    }
+
     public List<Card> getDealerCards() {
         return new ArrayList<>(dealer.getCards());
     }

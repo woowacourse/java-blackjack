@@ -16,16 +16,24 @@ public class BlackJackController {
         List<String> playerNames = InputView.askPlayerNames();
         blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), playerNames);
 
-        blackJackGame.handOut();
+        startGame();
+        hitOrStayForAvailablePlayers(blackJackGame.findAvailablePlayerNames());
+    }
 
+    private void startGame() {
+        blackJackGame.handOut();
         Card dealerFirstCard = blackJackGame.openDealerFirstCard();
         Map<String, List<Card>> playersCards = blackJackGame.openPlayersCards();
         OutputView.showOpenCards(dealerFirstCard, playersCards);
-        // TODO 각각 플레이어 처리
+    }
+
+    private void hitOrStayForAvailablePlayers(List<String> playerNames) {
+        playerNames.forEach(this::hitOrStay);
     }
 
     private void hitOrStay(String playerName) {
-        InputView.askToTake(playerName);
+        String toTakeKeyword = InputView.askToTake(playerName);
+        System.out.println(toTakeKeyword);
         // TODO blackjackgame hit or stay
         // TODO outputview 플레이어 보유 카드 출력
     }

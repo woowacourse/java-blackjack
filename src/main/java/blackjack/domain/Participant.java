@@ -35,6 +35,10 @@ public class Participant {
         return sum > BLACK_JACK;
     }
 
+    public boolean isBlackJack(int sum) {
+        return sum == BLACK_JACK;
+    }
+
     private boolean hasACE() {
         return cards.stream()
                 .anyMatch(Card::isACE);
