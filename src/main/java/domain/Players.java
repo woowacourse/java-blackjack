@@ -1,6 +1,5 @@
 package domain;
 
-import java.awt.geom.PathIterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,7 @@ public class Players {
     }
 
     private static Player createPlayer(CardDistributor distributor, String playerName) {
-        return new Player(new Name(playerName), new Cards(distributor.distributeInitialCard()));
+        return new Player(new Name(playerName), new CardDeck(distributor.distributeInitialCard()));
     }
 
     public List<Participant> getPlayers() {

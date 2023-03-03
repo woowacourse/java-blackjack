@@ -2,11 +2,11 @@ package domain;
 
 import java.util.List;
 
-public class Cards {
+public class CardDeck {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public CardDeck(List<Card> cards) {
         this.cards = cards;
     }
 

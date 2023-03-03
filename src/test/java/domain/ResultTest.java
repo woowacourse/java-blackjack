@@ -21,7 +21,7 @@ public class ResultTest {
     void setUp() {
         cards.add(new Card(Shape.CLOVER, Letter.JACK));
         cards.add(new Card(Shape.HEART, Letter.EIGHT));
-        dealer = new Dealer(new Cards(cards));
+        dealer = new Dealer(new CardDeck(cards));
         names = List.of("aa");
     }
 

@@ -1,7 +1,7 @@
 package controller;
 
 import domain.CardDistributor;
-import domain.Cards;
+import domain.CardDeck;
 import domain.Dealer;
 import domain.Name;
 import domain.Participant;
@@ -31,7 +31,7 @@ public class BlackJackController {
         List<String> playerNames = requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
         Players players = Players.from(playerNames, cardDistributor);
-        Dealer dealer = new Dealer(new Cards(cardDistributor.distributeInitialCard()));
+        Dealer dealer = new Dealer(new CardDeck(cardDistributor.distributeInitialCard()));
         printInitialDistribution(players, dealer);
         progress(players, cardDistributor, dealer);
         end(players, dealer);

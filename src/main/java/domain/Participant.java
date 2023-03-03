@@ -5,15 +5,15 @@ public abstract class Participant {
     private static final int BUST_LIMIT = 21;
 
     protected final Name name;
-    protected final Cards cards;
+    protected final CardDeck cardDeck;
 
-    protected Participant(Name name, Cards cards) {
+    protected Participant(Name name, CardDeck cardDeck) {
         this.name = name;
-        this.cards = cards;
+        this.cardDeck = cardDeck;
     }
 
     public void pick(Card card) {
-        cards.addNewCard(card);
+        cardDeck.addNewCard(card);
     }
 
     public boolean isBust() {
@@ -21,15 +21,15 @@ public abstract class Participant {
     }
 
     public int getTotalScore() {
-        return cards.calculateScore(BUST_LIMIT);
+        return cardDeck.calculateScore(BUST_LIMIT);
     }
 
     public boolean isMoreCardAble() {
         return getTotalScore() < BUST_LIMIT;
     }
 
-    public Cards getCards() {
-        return cards;
+    public CardDeck getCards() {
+        return cardDeck;
     }
 
     public Name getName() {

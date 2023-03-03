@@ -23,7 +23,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 이름은 딜러일 수 없다.")
     void createPlayerFail() {
-        assertThatThrownBy(() -> new Player(new Name("딜러"), new Cards(cards)))
+        assertThatThrownBy(() -> new Player(new Name("딜러"), new CardDeck(cards)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Player 의 이름은 딜러일 수 없습니다.");
     }
@@ -31,7 +31,7 @@ public class PlayerTest {
     @Test
     @DisplayName("새로운 카드를 추가한다.")
     void pickNewCard() {
-        Player player = new Player(new Name("hello"), new Cards(cards));
+        Player player = new Player(new Name("hello"), new CardDeck(cards));
 
         player.pick(new Card(Shape.DIAMOND, Letter.NINE));
 
@@ -41,7 +41,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 점수가 21점을 넘기면 bust 이다.")
     void bustPlayer() {
-        Player player = new Player(new Name("hello"), new Cards(cards));
+        Player player = new Player(new Name("hello"), new CardDeck(cards));
 
         player.pick(new Card(Shape.HEART, Letter.QUEEN));
 
@@ -51,7 +51,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 점수가 21점 이하이면 bust 가 아니다.")
     void notBustPlayer() {
-        Player player = new Player(new Name("hello"), new Cards(cards));
+        Player player = new Player(new Name("hello"), new CardDeck(cards));
 
         player.pick(new Card(Shape.HEART, Letter.ACE));
 
@@ -61,7 +61,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받지 못한다.")
     void noMoreCard() {
-        Player player = new Player(new Name("hello"), new Cards(cards));
+        Player player = new Player(new Name("hello"), new CardDeck(cards));
 
         player.pick(new Card(Shape.HEART, Letter.NINE));
 
@@ -71,7 +71,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 점수가 20점 이하이면 카드를 더 받을 수 있다.")
     void isMoreCardAble() {
-        Player player = new Player(new Name("hello"), new Cards(cards));
+        Player player = new Player(new Name("hello"), new CardDeck(cards));
 
         player.pick(new Card(Shape.HEART, Letter.FOUR));
 
