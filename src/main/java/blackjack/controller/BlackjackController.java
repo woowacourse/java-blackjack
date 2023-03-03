@@ -1,12 +1,14 @@
 package blackjack.controller;
 
-import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.cardPicker.CardPicker;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckMaker;
+import blackjack.domain.cardPicker.CardPicker;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.game.WinTieLose;
-import blackjack.domain.participant.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.Order;
 import blackjack.view.OutputView;
@@ -86,19 +88,21 @@ public class BlackjackController {
     }
 
     private void hitEachPlayer(BlackjackGame blackjackGame, Player player) {
-        Order wantOrder = new Order(inputView.inputOrderCard(player.getName()));
-
-        while(!player.isBust() && wantOrder.getOrder().equals("y")) {
+        while (!player.isBust() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
-            outputView.outputPlayerCard(player.getName(),player.getCardNames());
-            wantOrder = new Order(inputView.inputOrderCard(player.getName()));
+            outputView.outputPlayerCard(player.getName(), player.getCardNames());
         }
+    }
+
+    private boolean isMoreHit(final Player player) {
+        Order order = Order.from(inputView.inputOrderCard(player.getName()));
+        return order.isYES();
     }
 
     private void hitDealer(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getParticipants().getDealer();
 
-        while(dealer.canHit()) {
+        while (dealer.canHit()) {
             outputView.outputDealerDrawCard(dealer.getName());
             blackjackGame.drawCard(dealer);
         }
@@ -120,7 +124,7 @@ public class BlackjackController {
     private void showPlayersCardsAndScore(Participants participants) {
         List<Player> players = participants.getPlayers();
 
-        for(Player player: players) {
+        for (Player player : players) {
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
             outputView.outputScore(player.getTotalScore());
         }
@@ -136,8 +140,8 @@ public class BlackjackController {
                 resultGame.getDealerCount(WinTieLose.WIN),
                 resultGame.getDealerCount(WinTieLose.TIE),
                 resultGame.getDealerCount(WinTieLose.LOSE));
-        for(Player player:participants.getPlayers()){
-            outputView.outputPlayerResult(player.getName(),resultGame.getPlayerResult(player).getValue());
+        for (Player player : participants.getPlayers()) {
+            outputView.outputPlayerResult(player.getName(), resultGame.getPlayerResult(player).getValue());
         }
     }
 }

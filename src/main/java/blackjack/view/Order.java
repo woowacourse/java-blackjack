@@ -1,21 +1,33 @@
 package blackjack.view;
 
-public class Order {
-    private static final String YES = "y";
-    private static final String NO = "n";
-    private static final String NOT_RIGHT_ORDER_MESSAGE = "y나 n을 입력하셔야 합니다.";
-    private final String order;
-    public Order(String order){
-        this.order =order;
-    }
-    private void validate(String order){
+import java.util.Arrays;
 
-        if(!order.equals(YES)||!order.equals(NO)){
-            throw new IllegalArgumentException(NOT_RIGHT_ORDER_MESSAGE);
-        }
+public enum Order {
+    YES("y"),
+    NO("n");
+
+    private static final String INVALID_VALUE_MESSAGE = "해당 값에 해당하는 상수가 존재하지 않습니다.";
+
+    private final String value;
+
+    Order(final String value) {
+        this.value = value;
     }
 
-    public String getOrder() {
-        return order;
+    public static Order from(final String value) {
+        return Arrays.stream(Order.values())
+                .filter(order -> order.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_VALUE_MESSAGE));
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public boolean isYES() {
+        return this.equals(Order.YES);
     }
 }
+
+
