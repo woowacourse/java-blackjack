@@ -53,13 +53,21 @@ public class ListStudy {
             assertThatCode(() -> integerValues.get(100)).isInstanceOf(RuntimeException.class);
         }
 
+        @Test
+        void contains_test() {
+            assertThat(stringValues.contains("init")).isTrue();
+            assertThat(stringValues.contains("fifth")).isFalse();
+            assertThat(integerValues.contains(0)).isTrue();
+            assertThat(integerValues.contains(100)).isFalse();
+        }
 
-//
-//        assertThat(values.contains("first")).isTrue(); // "first" 값이 포함되어 있는지를 확인한다.
-//        assertThat(values.contains("fifth")).isFalse(); // "fifth" 값이 포함되어있지 않은지를 확인한다.
-//
-//        assertThat(values.indexOf("second")).isEqualTo(2); // "second" 값의 index가 2인지 확인한다.
-//        assertThat(values.indexOf("fifth")).isEqualTo(-1); // 존재하지 않는 값을 조회하면 -1을 반환하는지 확인한다.
+        @Test
+        void indexOf_test() {
+            assertThat(stringValues.indexOf("init")).isEqualTo(0);
+            assertThat(stringValues.indexOf("fifth")).isEqualTo(-1);
+            assertThat(integerValues.indexOf(0)).isEqualTo(0);
+            assertThat(integerValues.indexOf(100)).isEqualTo(-1);
+        }
 //
 //        assertThat(values.size()).isEqualTo(4); // list의 크기를 구한다.
 //
@@ -122,6 +130,22 @@ public class ListStudy {
             assertThatCode(() -> stringValues.get(100)).isInstanceOf(RuntimeException.class);
             assertThat(integerValues.get(0)).isEqualTo(0);
             assertThatCode(() -> integerValues.get(100)).isInstanceOf(RuntimeException.class);
+        }
+
+        @Test
+        void contains_test() {
+            assertThat(stringValues.contains("init")).isTrue();
+            assertThat(stringValues.contains("fifth")).isFalse();
+            assertThat(integerValues.contains(0)).isTrue();
+            assertThat(integerValues.contains(100)).isFalse();
+        }
+
+        @Test
+        void indexOf_test() {
+            assertThat(stringValues.indexOf("init")).isEqualTo(0);
+            assertThat(stringValues.indexOf("fifth")).isEqualTo(-1);
+            assertThat(integerValues.indexOf(0)).isEqualTo(0);
+            assertThat(integerValues.indexOf(100)).isEqualTo(-1);
         }
     }
 }
