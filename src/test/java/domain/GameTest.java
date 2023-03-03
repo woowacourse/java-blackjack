@@ -13,7 +13,7 @@ class GameTest {
     @DisplayName("참가자에게 카드를 지급한다.")
     void dealTest() {
         Dealer dealer = new Dealer();
-        Game game = new Game(new Participants(List.of(dealer)));
+        Game game = new Game(Participants.of("echo"));
         game.deal(dealer);
         List<Card> readyCards = dealer.getReadyCards();
         Assertions.assertThat(readyCards).containsExactly(new Card(CardNumber.ACE, CardShape.SPADE));
@@ -22,13 +22,13 @@ class GameTest {
     @Test
     @DisplayName("게임이 준비완료된 상태를 반환한다.")
     void readyResultTest() {
-        Participant player = new Participant("echo");
-        Game game = new Game(new Participants(List.of(player)));
+        Game game = new Game(Participants.of("echo"));
         game.ready();
-        List<Participant> readyResults = game.getReadyResults();
-        Participant dealer = readyResults.get(1);
-        Assertions.assertThat(readyResults).containsExactly(player, new Dealer());
+        List<Participant> readyResults = game.getAllParticipant();
+        Participant dealer = readyResults.get(0);
+        Participant echo = readyResults.get(1);
+        Assertions.assertThat(readyResults).containsExactly(new Dealer(), new Participant("echo"));
         Assertions.assertThat(dealer.getReadyCards()).hasSize(1);
-        Assertions.assertThat(player.getReadyCards()).hasSize(2);
+        Assertions.assertThat(echo.getReadyCards()).hasSize(2);
     }
 }

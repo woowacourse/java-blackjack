@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Objects;
 
-public class GameStatus {
+public class GameStatus implements Comparable<GameStatus> {
 
     private final ParticipantStatus participantStatus;
     private final int score;
@@ -31,5 +31,27 @@ public class GameStatus {
     @Override
     public int hashCode() {
         return Objects.hash(participantStatus, score);
+    }
+
+    @Override
+    public int compareTo(GameStatus o) {
+        if (this.participantStatus == ParticipantStatus.BUST && o.participantStatus == ParticipantStatus.BUST) {
+            return 0;
+        }
+        if (this.participantStatus == ParticipantStatus.BUST) {
+            return -1;
+        }
+        if (o.participantStatus == ParticipantStatus.BUST) {
+            return 1;
+        }
+        return Integer.compare(this.score, o.score);
+    }
+
+    @Override
+    public String toString() {
+        return "GameStatus{" +
+            "participantStatus=" + participantStatus +
+            ", score=" + score +
+            '}';
     }
 }

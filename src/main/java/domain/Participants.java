@@ -3,25 +3,40 @@ package domain;
 import domain.user.Dealer;
 import domain.user.Participant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Participants {
 
     private final Map<Participant, GameStatus> participantStatuses = new LinkedHashMap<>();
 
-    public Participants(List<Participant> participants) {
+    private Participants(List<Participant> participants) {
+        initializeParticipantStatues(participants);
+    }
+
+    private void initializeParticipantStatues(List<Participant> participants) {
         participants.forEach(
             (participant) -> participantStatuses.put(participant, new GameStatus(ParticipantStatus.NOT_BUST, 0)));
         participantStatuses.put(new Dealer(), new GameStatus(ParticipantStatus.NOT_BUST, 0));
     }
 
+    public static Participants of(String participantNames) {
+        String[] split = participantNames.split(",");
+        return new Participants(Arrays.stream(split).map(Participant::new).collect(Collectors.toList()));
+    }
+
     public void update(Participant participant) {
         int score = participant.calculateScore();
         ParticipantStatus statusByScore = getStatusByScore(score);
+        if (participant.hasAce() && score == 11) {
+            participantStatuses.put(participant, new GameStatus(ParticipantStatus.BLACK_JACK, 21));
+            return;
+        }
         GameStatus prevGameStatus = participantStatuses.get(participant);
         GameStatus newGameStatus = new GameStatus(statusByScore, score);
         if (prevGameStatus.equals(newGameStatus)) {
@@ -44,7 +59,7 @@ public class Participants {
         return ParticipantStatus.NOT_BUST;
     }
 
-    public List<Participant> getAllParticipants() {
+    public List<Participant> getAllParticipantsDealerInLastIndex() {
         return new ArrayList<>(participantStatuses.keySet());
     }
 
@@ -57,5 +72,11 @@ public class Participants {
             throw new IllegalStateException();
         }
         return currentParticipantEntry.get().getKey();
+    }
+
+    public GameResult compareWithDealer(Participant participant) {
+        GameStatus dealerGameStatus = participantStatuses.get(new Dealer());
+        GameStatus playerGameStatus = participantStatuses.get(participant);
+        return GameResult.from(playerGameStatus.compareTo(dealerGameStatus));
     }
 }
