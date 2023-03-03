@@ -2,10 +2,8 @@ package blackjackGame;
 
 import java.util.List;
 
-import card.Card;
 import deck.Deck;
 import player.Dealer;
-import player.Name;
 import player.Player;
 import player.PlayerResultDto;
 import player.Players;
@@ -65,17 +63,10 @@ public class BlackjackGame {
         dealer.hit(deck.drawCard());
     }
 
-    public Name getDealerName() {
-        return dealer.getName();
+    public PlayerResultDto getDealerResult() {
+        return PlayerResultDto.fromDealer(dealer);
     }
 
-    public List<Card> getDealerCard() {
-        return List.copyOf(dealer.showCards());
-    }
-
-    public int getDealerScore() {
-        return dealer.calculateScore();
-    }
 
     public List<PlayerResultDto> getPlayerResults() {
         return players.getPlayerResults();
