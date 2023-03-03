@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Dealer implements Person {
+    private static final int DEALER_STOP_HIT_BOUND = 17;
+    private static final int BURST_NUMBER = 21;
+    private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;
     private final List<Card> cards;
 
     public Dealer() {
@@ -19,7 +22,7 @@ public class Dealer implements Person {
     @Override
     public boolean isHit() {
         int totalScore = calculateScore();
-        return totalScore < 17;
+        return totalScore < DEALER_STOP_HIT_BOUND;
     }
 
     @Override
@@ -28,8 +31,8 @@ public class Dealer implements Person {
                 .map(card -> Collections.max(card.getScore()))
                 .reduce(0, Integer::sum);
 
-        if (totalScore > 21 && hasACE()) {
-            return totalScore - 10;
+        if (totalScore > BURST_NUMBER && hasACE()) {
+            return totalScore - DIFFERENCE_WITH_ACE_NUMBER;
         }
         return totalScore;
     }
@@ -44,7 +47,7 @@ public class Dealer implements Person {
         return List.of(cards.get(0));
     }
 
-    public List<Card> getCards() {
+    public List<Card> showAllCards() {
         return Collections.unmodifiableList(cards);
     }
 }

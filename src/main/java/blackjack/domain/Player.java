@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Player implements Person {
+    private static final int BURST_NUMBER = 21;
+    private static final int ACE_MAX_NUMBER = 11;
+    private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;
     private final Name name;
     private final List<Card> cards;
 
@@ -30,7 +33,7 @@ public class Player implements Person {
     @Override
     public boolean isHit() {
         int totalScore = calculateScore();
-        return totalScore < 21;
+        return totalScore < BURST_NUMBER;
     }
 
     @Override
@@ -39,8 +42,8 @@ public class Player implements Person {
                 .map(card -> Collections.min(card.getScore()))
                 .reduce(0, Integer::sum);
 
-        if (totalScore <= 11 && hasACE()) {
-            return totalScore + 10;
+        if (totalScore <= ACE_MAX_NUMBER && hasACE()) {
+            return totalScore + DIFFERENCE_WITH_ACE_NUMBER;
         }
         return totalScore;
     }
