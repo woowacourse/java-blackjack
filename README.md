@@ -13,6 +13,8 @@ BlackJackGame --> Players
 BlackJackGame --> Deck
 BlackJackGame --> Dealer
 
+Players --> Dealer
+Dealer --> Player
 
 Participant --> CardPocket
 Dealer --> Participant
@@ -72,8 +74,10 @@ Card --> Symbol
     - [x] Shape와 Symbol을 저장하는 자료구조
 
 10. Players
-    - 플레이어 이름 중복
-    - 플레이어 수 1명이상, 5명 이하
+    - [x] 플레이어 이름 중복
+    - [x] 플레이어 수 1명이상, 5명 이하
+    - [x] 플레이어에게 카드 나눠주기
+    - [x] 플레이어의 draw여부 알기
 11. Name
     - [x] isBlank 체크
     - [x] 100자 이하 체크
