@@ -1,13 +1,11 @@
 package controller;
 
-import domain.BlackjackGame;
-import domain.Dealer;
-import domain.Participants;
-import domain.Player;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -19,13 +17,28 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> names = inputView.readNames();
-        Participants participants = Participants.from(names);
+        Participants participants = getParticipants();
         BlackjackGame blackjackGame = new BlackjackGame(participants);
+        startGame(participants, blackjackGame);
+        printResult(blackjackGame);
+    }
+
+    private void startGame(Participants participants, BlackjackGame blackjackGame) {
         blackjackGame.dealOutCard();
         outputView.printInitCards(participants);
         play(participants, blackjackGame);
         outputView.printCardResult(participants);
+    }
+
+    private void printResult(BlackjackGame blackjackGame) {
+        Map<Participant, GameResult> result = blackjackGame.getResult();
+        outputView.printGameResult(result);
+    }
+
+    private Participants getParticipants() {
+        List<String> names = inputView.readNames();
+        Participants participants = Participants.from(names);
+        return participants;
     }
 
     private void play(Participants participants, BlackjackGame blackjackGame) {

@@ -2,6 +2,7 @@ package view;
 
 import domain.*;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -12,6 +13,9 @@ public class OutputView {
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + LINE_SEPARATOR;
     private static final String CARDS_RESULT_FORMAT = "%s카드: %s - 결과: %d" + LINE_SEPARATOR;
     private static final String DEALER_HIT_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String RESULT_MESSAGE = "## 최종 승패";
+    private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패" + LINE_SEPARATOR;
+    private static final String PLAYER_RESULT_FORMAT = "%s: %s" + LINE_SEPARATOR;
 
     public void printInitCards(Participants participants) {
         System.out.printf(INIT_FORMAT, String.join(", ", participants.getPlayerNames()));
@@ -63,5 +67,23 @@ public class OutputView {
                           .stream()
                           .map(this::convertCard)
                           .collect(Collectors.joining(", "));
+    }
+
+    public void printGameResult(Map<Participant, GameResult> result) {
+        System.out.println(RESULT_MESSAGE);
+        long loseCount = getPlayerWinCount(result);
+        System.out.printf(DEALER_RESULT_FORMAT, (result.size() - loseCount), loseCount);
+        for (Participant participant : result.keySet()) {
+            System.out.printf(PLAYER_RESULT_FORMAT,
+                    participant.getName(), result.get(participant)
+                                                 .getValue());
+        }
+    }
+
+    private long getPlayerWinCount(Map<Participant, GameResult> result) {
+        return result.values()
+                     .stream()
+                     .filter(GameResult::isWin)
+                     .count();
     }
 }
