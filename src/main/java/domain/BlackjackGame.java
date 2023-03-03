@@ -18,4 +18,8 @@ public class BlackjackGame {
     public boolean hasDrawablePlayer() {
         return participants.hasDrawablePlayer();
     }
+
+    public String nextDrawablePlayer() {
+        return participants.nextDrawablePlayer();
+    }
 }

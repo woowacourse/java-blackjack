@@ -34,6 +34,7 @@ class ParticipantsTest {
                             .hasSize(playerNames.size())
             );
         }
+
         @Test
         void should_예외를던진다_when_플레이어가0명인경우() {
             //given
@@ -82,7 +83,6 @@ class ParticipantsTest {
 
             //then
             assertThat(existingDrawablePlayer).isTrue();
-
         }
 
         @Test
@@ -104,6 +104,49 @@ class ParticipantsTest {
 
             //then
             assertThat(existingDrawablePlayer).isFalse();
+        }
+    }
+
+    @Nested
+    class 카드를받을수있는플레이어이름반환 {
+        @Test
+        void should_카드를받을다음플레이어이름반환_when_카드를받을수있는플레이어가존재할시() {
+            //given
+            Participants participants = Participants.create(List.of("포이", "에밀"));
+            Deck deck = Deck.create();
+            participants.readyForGame(deck);
+            String expected = "포이";
+
+            //when
+            String actual = participants.nextDrawablePlayer();
+
+            //then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void should_예외를반환한다_when_카드를받을수있는플레이어가없을시() {
+            //given
+            Participants participants = Participants.create(List.of("포이", "에밀"));
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+            });
+            participants.readyForGame(deck);
+
+            //when
+            ThrowingCallable throwingCallable = participants::nextDrawablePlayer;
+
+            //then
+            assertThatThrownBy(throwingCallable)
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("카드를 받을 수 있는 플레이어가 없습니다.");
         }
     }
 }

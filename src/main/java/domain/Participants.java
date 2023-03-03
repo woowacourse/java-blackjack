@@ -41,4 +41,12 @@ public class Participants {
                 .stream()
                 .anyMatch(Participant::isDrawable);
     }
+
+    public String nextDrawablePlayer() {
+        int firstPlayerPosition = DEALER_POSITION + 1;
+        int numberOfParticipants = participants.size();
+
+        return participants.subList(firstPlayerPosition, numberOfParticipants)
+                .stream().filter(Participant::isDrawable).findFirst().orElseThrow(() -> new IllegalStateException("카드를 받을 수 있는 플레이어가 없습니다.")).name();
+    }
 }

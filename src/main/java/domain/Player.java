@@ -15,8 +15,14 @@ public class Player extends Participant {
         decision = Decision.STAND;
     }
 
+    @Override
     public boolean isDrawable() {
         return decision == Decision.HIT &&
                 hand.calculateScore() < UPPER_BOUND_OF_DRAWABLE_SCORE;
+    }
+
+    @Override
+    String name() {
+        return name.value();
     }
 }

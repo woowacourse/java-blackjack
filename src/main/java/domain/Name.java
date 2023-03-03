@@ -32,4 +32,8 @@ public class Name {
             throw new IllegalArgumentException("이름은 1 ~ 5자입니다.");
         }
     }
+
+    public String value() {
+        return value;
+    }
 }
