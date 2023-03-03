@@ -17,4 +17,8 @@ public class Names {
                 .map(Name::new)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public List<Name> getNames() {
+        return names;
+    }
 }

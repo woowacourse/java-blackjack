@@ -20,4 +20,8 @@ public enum CardSymbol {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 카드심볼 입니다."));
     }
+
+    public String getSymbol() {
+        return this.symbol;
+    }
 }

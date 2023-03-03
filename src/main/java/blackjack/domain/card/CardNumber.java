@@ -34,4 +34,8 @@ public enum CardNumber {
     public int getValue() {
         return this.value;
     }
+
+    public String getNumber() {
+        return this.number;
+    }
 }
