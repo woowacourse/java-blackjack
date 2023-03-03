@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.dto.CardResult;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -85,5 +87,19 @@ class BlackJackGameTest {
                 new Card(CardShape.CLOVER, CardNumber.TEN),
                 new Card(CardShape.HEART, CardNumber.NINE));
 
+    }
+
+    @Test
+    @DisplayName("점수를 포함한 상태를 반환하는 기능 테스트")
+    void getCardResult() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
+
+        CardResult philip = blackJackGame.getCardResult().get("필립");
+
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(philip.getCards()).contains(new Card(CardShape.SPADE, CardNumber.ACE)
+                    , new Card(CardShape.CLOVER, CardNumber.TEN));
+            softly.assertThat(philip.getScore()).isEqualTo(21);
+        });
     }
 }

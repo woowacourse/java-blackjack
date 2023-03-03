@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.dto.CardResult;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,5 +43,16 @@ public class BlackJackGame {
 
     public void playPlayer(final String userName) {
         users.getUser(userName).drawCard(deck);
+    }
+
+    public Map<String, CardResult> getCardResult() {
+        final Map<String, CardResult> cardResult = new HashMap<>();
+        final Map<String, List<Card>> status = users.getStatus();
+
+        for (final String name : status.keySet()) {
+            cardResult.put(name, new CardResult(status.get(name), BlackJackRule.getScore(users.getUser(name))));
+        }
+
+        return cardResult;
     }
 }
