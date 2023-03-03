@@ -95,8 +95,6 @@ public class GamePoint implements Comparable<GamePoint>{
 
     @Override
     public int compareTo(final GamePoint other) {
-        final int compare = Integer.compare(this.gamePoint, other.gamePoint);
-        System.out.println(compare);
-        return compare;
+        return Integer.compare(this.gamePoint, other.gamePoint);
     }
 }
