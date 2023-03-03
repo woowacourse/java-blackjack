@@ -29,7 +29,13 @@ public abstract class User {
         return score.getScore();
     }
 
-    protected abstract void checkBustByScore();
+    public abstract UserStatus getStatus();
 
-    protected abstract UserStatus getStatus();
+    public abstract String getName();
+
+    public abstract void win();
+
+    public abstract void lose();
+
+    protected abstract void checkBustByScore();
 }
