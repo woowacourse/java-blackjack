@@ -115,7 +115,7 @@ class CardAreaTest {
 
         // [11] + [1] + [1] = 13
         final CardArea cardArea7 = new CardArea(new Card(CLOVER, ACE), new Card(CLOVER, ACE));
-        cardArea6.addCard(new Card(CardShape.SPADE, ACE));
+        cardArea7.addCard(new Card(CardShape.SPADE, ACE));
 
         return Stream.of(
                 Arguments.of(cardArea1, 21),
