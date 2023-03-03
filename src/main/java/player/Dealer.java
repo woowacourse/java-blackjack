@@ -1,7 +1,9 @@
 package player;
 
 import java.util.List;
+import java.util.Map;
 
+import blackjackGame.Result;
 import card.Card;
 
 public class Dealer {
@@ -53,5 +55,9 @@ public class Dealer {
 
     public void tie() {
         dealerResult.addTie();
+    }
+
+    public Map<Result, Integer> getDealerResult() {
+        return dealerResult.getDealerResult();
     }
 }

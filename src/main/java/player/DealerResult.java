@@ -5,6 +5,8 @@ import static blackjackGame.Result.TIE;
 import static blackjackGame.Result.WIN;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import blackjackGame.Result;
 
@@ -27,5 +29,10 @@ public class DealerResult {
 
     public void addLose() {
         dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
+    }
+
+    public Map<Result, Integer> getDealerResult() {
+        Map<Result, Integer> newMap = new HashMap<>(dealerResult);
+        return Map.copyOf(newMap);
     }
 }

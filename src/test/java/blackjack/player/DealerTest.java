@@ -1,12 +1,18 @@
 package blackjack.player;
 
+import static blackjackGame.Result.LOSE;
+import static blackjackGame.Result.TIE;
+import static blackjackGame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
+import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjackGame.Result;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;
@@ -87,7 +93,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 버스트인지 확인할 수 있다")
+    @DisplayName("딜러가 버스트인지 확인할 수 있다.")
     void isBust() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(CardNumber.KING, Pattern.SPADE);
@@ -98,5 +104,21 @@ class DealerTest {
         dealer.hit(card3);
 
         Assertions.assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러의 승패 결과를 확인할 수 있다.")
+    void getWinningResult() {
+        Dealer dealer = new Dealer();
+        dealer.win();
+        dealer.win();
+        dealer.lose();
+        dealer.tie();
+
+        Map<Result, Integer> dealerResult = dealer.getDealerResult();
+
+        Assertions.assertThat(dealerResult.get(WIN)).isEqualTo(2);
+        Assertions.assertThat(dealerResult.get(LOSE)).isEqualTo(1);
+        Assertions.assertThat(dealerResult.get(TIE)).isEqualTo(1);
     }
 }
