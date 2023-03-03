@@ -9,7 +9,6 @@ public class Users {
 
     private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
     private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
-    private static final int DEALER_DRAW_LIMIT = 16;
     private final List<User> users;
 
     public Users(List<String> playerNames, Deck deck) {
@@ -35,12 +34,13 @@ public class Users {
     }
 
     public boolean isDealerOverDrawLimit() {
-        return BlackJackRule.getScore(getDealer()) > DEALER_DRAW_LIMIT;
+        return getDealer().isOverDraw();
     }
 
-    private User getDealer() {
+    private Dealer getDealer() {
         return users.stream()
                 .filter(user -> user instanceof Dealer)
+                .map(user -> (Dealer) user)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(NOT_CONTAIN_DEALER));
     }
@@ -64,7 +64,7 @@ public class Users {
     }
 
     public Map<String, WinningStatus> getWinningResult() {
-        final Dealer dealer = (Dealer) getDealer();
+        final Dealer dealer = getDealer();
         final Map<String, WinningStatus> winningResult = new HashMap<>();
         for (final Player player : getPlayers()) {
             winningResult.put(player.getName(), dealer.comparePlayer(player));

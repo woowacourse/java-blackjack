@@ -55,4 +55,15 @@ class DealerTest {
 
         assertThat(winningStatus).isEqualTo(WinningStatus.TIE);
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 추가로 뽑아야 하는지 확인 테스트")
+    void isOverDrawTest() {
+        final Dealer dealer = new Dealer(initialGroup);
+
+        boolean isOverDraw = dealer.isOverDraw();
+
+        assertThat(isOverDraw).isTrue();
+    }
+
 }
