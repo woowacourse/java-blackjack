@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class ResultReferee {
+
     private final ScoreBoard scoreBoard;
     private final Map<Score, Integer> dealerScoreBoard = new EnumMap<>(Score.class);
 
@@ -20,15 +21,14 @@ public class ResultReferee {
                 .forEach(score -> dealerScoreBoard.put(score, 0));
     }
 
-    public Map<Score, Integer> getDealerScore() {
-        return new EnumMap<>(dealerScoreBoard);
-    }
-
     public Score askResultByUserName(final UserName userName) {
-
         final int playerScore = scoreBoard.get(userName);
         final int dealerScore = scoreBoard.get(new DealerName());
 
+        return declareScore(playerScore, dealerScore);
+    }
+
+    private Score declareScore(final int playerScore, final int dealerScore) {
         if (playerScore > dealerScore) {
             updateDealerScoreBoard(Score.LOSE);
             return Score.WIN;
@@ -44,5 +44,9 @@ public class ResultReferee {
 
     private void updateDealerScoreBoard(final Score score) {
         dealerScoreBoard.put(score, dealerScoreBoard.get(score) + 1);
+    }
+
+    public Map<Score, Integer> getDealerScore() {
+        return new EnumMap<>(dealerScoreBoard);
     }
 }

@@ -10,6 +10,7 @@ public class BlackjackGame {
     private static final int INIT_DRAW_COUNT = 2;
     private static final int MIN_DEALER_SCORE = 16;
     private static final int BUST_SCORE = -1;
+
     private final CardPack cardPack;
 
     public BlackjackGame() {

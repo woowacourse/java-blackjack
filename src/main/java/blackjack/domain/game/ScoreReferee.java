@@ -8,22 +8,25 @@ import java.util.List;
 
 public class ScoreReferee {
 
+    public static final int MAX_NUMBER = 21;
+    public static final int ACE_PARSING_NUMBER = 10;
+    public static final int BUST_NUMBER = -1;
+
     private ScoreReferee() {
-        
+
     }
 
     public static int calculateScore(final List<Card> cards) {
-
         int sum = getSum(cards);
         final List<Card> acePack = getAcePack(cards);
 
-        while (sum > 21 && !acePack.isEmpty()) {
-            sum -= 10;
+        while (sum > MAX_NUMBER && !acePack.isEmpty()) {
+            sum -= ACE_PARSING_NUMBER;
             acePack.remove(0);
         }
 
-        if (sum > 21) {
-            return -1;
+        if (sum > MAX_NUMBER) {
+            return BUST_NUMBER;
         }
 
         return sum;

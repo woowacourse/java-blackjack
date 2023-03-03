@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 public enum Score {
+
     WIN("승"),
     LOSE("패"),
     DRAW("무");

@@ -3,6 +3,7 @@ package blackjack.view;
 import java.util.Arrays;
 
 enum Command {
+
     YES("y", true),
     NO("n", false);
 

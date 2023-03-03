@@ -44,7 +44,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    void 게임은_딜러가_21점_초과이면_False() {
+    void 게임은_딜러가_21점_초과이면_True() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(new CardPack());
         Dealer dealer = new Dealer();
@@ -56,7 +56,7 @@ class BlackjackGameTest {
 
         // then
         final boolean dealerEnd = blackjackGame.isDealerEnd(dealer);
-        Assertions.assertThat(dealerEnd).isFalse();
+        Assertions.assertThat(dealerEnd).isTrue();
     }
 
 
@@ -73,6 +73,6 @@ class BlackjackGameTest {
 
         // then
         final boolean dealerEnd = blackjackGame.isDealerEnd(dealer);
-        Assertions.assertThat(dealerEnd).isTrue();
+        Assertions.assertThat(dealerEnd).isFalse();
     }
 }

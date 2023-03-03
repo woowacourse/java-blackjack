@@ -30,36 +30,48 @@ public class BlackjackController {
     }
 
     public void run() {
-        final List<String> strings = inputView.readParticipantName();
-
-        Players players = new Players(strings.stream()
-                .map(name -> new Player(new PlayerName(name))).collect(Collectors.toList()));
+        Players players = getPlayers();
         Dealer dealer = new Dealer();
-
         BlackjackGame blackjackGame = new BlackjackGame();
-        initUserCard(players, dealer, blackjackGame);
-        outputView.printUsersCard(dealer, players);
 
+        startGame(players, dealer, blackjackGame);
+        processGame(players, dealer, blackjackGame);
+        endGame(players, dealer);
+    }
+
+    private void startGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
+        blackjackGame.initGame(dealer);
+        players.getPlayers().forEach(blackjackGame::initGame);
+        outputView.printUsersCard(dealer, players);
+    }
+
+    private void processGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         players.getPlayers().forEach((player -> {
-            while (inputView.readCommand(player.getName()) && !isBust(player.showCards())) {
-                blackjackGame.draw(player);
-                outputView.printUserCards(player);
-            }
+            processPlayerDraw(blackjackGame, player);
         }));
 
+        processDealerDraw(dealer, blackjackGame);
+    }
+
+    private void processPlayerDraw(final BlackjackGame blackjackGame, final Player player) {
+        while (inputView.readCommand(player.getName()) && !isBust(player.showCards())) {
+            blackjackGame.draw(player);
+            outputView.printUserCards(player);
+        }
+    }
+
+    private void processDealerDraw(final Dealer dealer, final BlackjackGame blackjackGame) {
         while (!blackjackGame.isDealerEnd(dealer)) {
             blackjackGame.draw(dealer);
             outputView.printDealerDraw();
         }
+    }
 
+    private void endGame(final Players players, final Dealer dealer) {
         ScoreBoard scoreBoard = new ScoreBoard(dealer, players);
         outputView.printCardResult(scoreBoard);
 
         printResult(players, scoreBoard);
-    }
-
-    private boolean isBust(final List<Card> showCards) {
-        return ScoreReferee.calculateScore(showCards) == BUST_SCORE;
     }
 
     private void printResult(final Players players, final ScoreBoard scoreBoard) {
@@ -67,6 +79,17 @@ public class BlackjackController {
         final Map<UserName, Score> playerScore = getPlayerScore(players, referee);
         final Map<Score, Integer> dealerScore = referee.getDealerScore();
         outputView.printGameResult(dealerScore, playerScore);
+    }
+
+    private boolean isBust(final List<Card> showCards) {
+        return ScoreReferee.calculateScore(showCards) == BUST_SCORE;
+    }
+
+    private Players getPlayers() {
+        final List<String> strings = inputView.readParticipantName();
+        return new Players(strings.stream()
+                .map(name -> new Player(new PlayerName(name)))
+                .collect(Collectors.toList()));
     }
 
     public Map<UserName, Score> getPlayerScore(final Players players, final ResultReferee referee) {
@@ -79,10 +102,4 @@ public class BlackjackController {
 
         return result;
     }
-
-    private static void initUserCard(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        blackjackGame.initGame(dealer);
-        players.getPlayers().forEach(blackjackGame::initGame);
-    }
-
 }

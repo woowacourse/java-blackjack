@@ -12,7 +12,6 @@ public class Card {
         this.shape = shape;
     }
 
-
     public CardNumber getNumber() {
         return number;
     }

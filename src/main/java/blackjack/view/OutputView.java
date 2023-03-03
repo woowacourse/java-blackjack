@@ -43,7 +43,7 @@ public class OutputView {
         final CardNumber number = card.getNumber();
         final CardShape shape = card.getShape();
 
-        return number.getName() + shape.getName();
+        return number.getName() + shape.getView();
     }
 
     private static List<String> extractPlayerNames(final Players players) {

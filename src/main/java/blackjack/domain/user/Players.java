@@ -5,6 +5,7 @@ import java.util.List;
 public class Players {
 
     private static final int MAX_PLAYER_COUNT = 13;
+
     private final List<Player> players;
 
     public Players(final List<Player> players) {

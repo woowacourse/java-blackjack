@@ -26,10 +26,6 @@ public class ScoreBoard {
         scoreBoard.put(user, score);
     }
 
-    public List<User> getParticipants() {
-        return new ArrayList<>(scoreBoard.keySet());
-    }
-
     private User getUserByName(final UserName queryName) {
         return scoreBoard.keySet().stream()
                 .filter(user -> user.getName().equals(queryName))
@@ -37,14 +33,18 @@ public class ScoreBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름을 찾을 수 없습니다."));
     }
 
-    public int get(final UserName name) {
-        validateParticipants(name);
-        return scoreBoard.get(getUserByName(name));
-    }
-
     private void validateParticipants(final UserName name) {
         if (!scoreBoard.containsKey(getUserByName(name))) {
             throw new IllegalArgumentException("참가한 유저의 점수만 검색할 수 있습니다" + System.lineSeparator() + "이름:" + name);
         }
+    }
+
+    public List<User> getParticipants() {
+        return new ArrayList<>(scoreBoard.keySet());
+    }
+
+    public int get(final UserName name) {
+        validateParticipants(name);
+        return scoreBoard.get(getUserByName(name));
     }
 }
