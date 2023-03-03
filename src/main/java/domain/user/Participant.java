@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Participant {
 
+    protected static final String DEALER_NAME = "딜러";
     protected final String name;
     protected final List<Card> cards = new ArrayList<>();
 
@@ -52,6 +53,10 @@ public class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isPlayer() {
+        return !name.equals(DEALER_NAME);
     }
 }
 

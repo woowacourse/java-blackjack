@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Game {
 
+    public static final int DEALER_THRESHOLDS = 16;
     private final Deck deck = new Deck();
     private final Participants participants;
 
@@ -30,4 +31,18 @@ public class Game {
         return participants.getAllParticipants();
     }
 
+    public void run(Participant currentParticipant, BlackJackAction action) {
+        if (action == BlackJackAction.HIT) {
+            deal(currentParticipant);
+        }
+        participants.update(currentParticipant);
+    }
+
+    public Participant getCurrentParticipant() {
+        return participants.getCurrentParticipant();
+    }
+
+    public boolean isDealerNeedCard(Participant dealer) {
+        return dealer.calculateScore() <= DEALER_THRESHOLDS;
+    }
 }
