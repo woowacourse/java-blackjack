@@ -1,16 +1,17 @@
 package blackjack.controller;
 
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.cardPicker.CardPicker;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.*;
 import blackjack.domain.card.DeckMaker;
-import blackjack.domain.participant.Name;
-import blackjack.domain.card.Order;
+import blackjack.domain.game.ResultGame;
+import blackjack.domain.game.WinTieLose;
+import blackjack.domain.participant.*;
 import blackjack.view.InputView;
+import blackjack.view.Order;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
+import java.util.List;
 
 public class BlackjackController {
 
@@ -18,94 +19,125 @@ public class BlackjackController {
     private final OutputView outputView;
     private final CardPicker cardPicker;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView, CardPicker cardPicker) {
+    public BlackjackController(final InputView inputView, final OutputView outputView, final CardPicker cardPicker) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.cardPicker = cardPicker;
     }
 
     public void run() {
+        final Participants participants = makeParticipants();
+        final Deck deck = makeDeck();
+        final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+
+        startGame(blackjackGame);
+
+        showAllParticipantCards(participants);
+
+        hitParticipants(blackjackGame);
+
+        showAllCardsAndScore(blackjackGame);
+
+        showAllResult(blackjackGame);
+    }
+
+    private Participants makeParticipants() {
+        Dealer dealer = new Dealer();
         String playerNames = inputView.inputPlayers();
+        return new Participants(dealer, playerNames);
+    }
 
-        Player dealer = new Player(new Name("딜러"), new Cards());
-        Players players = new Players(playerNames);
+    private Deck makeDeck() {
         DeckMaker deckMaker = new DeckMaker();
-        Deck deck = new Deck(deckMaker.makeDeck(),cardPicker);
+        return new Deck(deckMaker.makeDeck(), cardPicker);
+    }
 
-        //TODO: 메서드 분리
-        outputView.outputSplitMessage(dealer.getName(), players.getNames());
-        giveTwoCardToPlayer(dealer,deck);
-        for(Player player:players.getPlayers()){
-            giveTwoCardToPlayer(player,deck);
-        }
+    private void startGame(BlackjackGame blackjackGame) {
+        Participants participants = blackjackGame.getParticipants();
+        Dealer dealer = participants.getDealer();
+        List<String> playerNames = participants.getPlayerNames();
 
-        //TODO: 메서드 분리
+        outputView.outputSplitMessage(dealer.getName(), playerNames);
+        blackjackGame.giveTwoCardEveryone();
+    }
+
+    private void showAllParticipantCards(Participants participants) {
+        Dealer dealer = participants.getDealer();
         outputView.outputPlayerCard(dealer.getName(), dealer.getOneCard());
-        for (Player player : players.getPlayers()) {
-            outputView.outputPlayerCard(player.getName(), player.getCards());
-        }
 
-        //TODO: 메서드 분리
-        for (Player player : players.getPlayers()) {
-            while(inputView.inputOrderCard(player.getName()).equals(Order.NO)) {
-                player.drawCard(deck.drawCard());
-
-                if (player.calculateTotal() > 21) {
-                    break;
-                }
-            }
-        }
-
-        while (dealer.calculateTotal() <= 16) {
-            outputView.outputDealerDrawCard(dealer.getName());
-            dealer.drawCard(deck.drawCard());
-        }
-
-        HashMap<Player,Integer> scoreMap = new HashMap<>();
-        outputView.outputPlayerCard(dealer.getName(), dealer.getCards());
-        scoreMap.put(dealer,dealer.calculateTotal());
-        outputView.outputScore(scoreMap.get(dealer));
-        for(Player player: players.getPlayers()) {
-            outputView.outputPlayerCard(player.getName(), player.getCards());
-            scoreMap.put(player,player.calculateTotal());
-            outputView.outputScore(scoreMap.get(player));
-        }
-
-        outputView.outputResult();
-        int win = 0;
-        int tie = 0;
-        int lose = 0;
-        int dealerScore = scoreMap.get(dealer);
-        for(Player player: players.getPlayers()) {
-            int playerScore = scoreMap.get(player);
-            if(playerScore>21){
-                if(dealerScore>21) tie++;
-                if(dealerScore<=21) win++;
-                continue;
-            }
-            if (dealerScore <= 21 && dealerScore > playerScore) win++;
-            if (dealerScore <= 21 && dealerScore == playerScore) tie++;
-            if (dealerScore <= 21 && dealerScore < playerScore) lose++;
-        }
-
-        outputView.outputDealerResult(dealer.getName(), win, tie, lose);
-
-
-        for(Player player: players.getPlayers()) {
-            if (scoreMap.get(dealer) > scoreMap.get(player)) {
-                outputView.outputPlayerResult(player.getName(), "승");
-            }
-            if (scoreMap.get(dealer) == scoreMap.get(player)) {
-                outputView.outputPlayerResult(player.getName(), "무");
-            }
-            if (scoreMap.get(dealer) < scoreMap.get(player)) {
-                outputView.outputPlayerResult(player.getName(), "패");
-            }
+        List<Player> players = participants.getPlayers();
+        for (Player player : players) {
+            outputView.outputPlayerCard(player.getName(), player.getCardNames());
         }
     }
 
-    private void giveTwoCardToPlayer(Player player, Deck deck){
-        player.drawCard(deck.drawCard());
-        player.drawCard(deck.drawCard());
+    private void hitParticipants(BlackjackGame blackjackGame) {
+        hitPlayers(blackjackGame);
+        hitDealer(blackjackGame);
+    }
+
+    private void hitPlayers(BlackjackGame blackjackGame) {
+        List<Player> players = blackjackGame.getParticipants().getPlayers();
+
+        for (Player player : players) {
+            hitEachPlayer(blackjackGame, player);
+            outputView.outputPlayerCard(player.getName(), player.getCardNames());
+        }
+    }
+
+    private void hitEachPlayer(BlackjackGame blackjackGame, Player player) {
+        Order wantOrder = new Order(inputView.inputOrderCard(player.getName()));
+
+        while(!player.isBust() && wantOrder.getOrder().equals("y")) {
+            blackjackGame.drawCard(player);
+            outputView.outputPlayerCard(player.getName(),player.getCardNames());
+            wantOrder = new Order(inputView.inputOrderCard(player.getName()));
+        }
+    }
+
+    private void hitDealer(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getParticipants().getDealer();
+
+        while(dealer.canHit()) {
+            outputView.outputDealerDrawCard(dealer.getName());
+            blackjackGame.drawCard(dealer);
+        }
+    }
+
+    private void showAllCardsAndScore(BlackjackGame blackjackGame) {
+        Participants participants = blackjackGame.getParticipants();
+
+        showDealerCardsAndScore(participants);
+        showPlayersCardsAndScore(participants);
+    }
+
+    private void showDealerCardsAndScore(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        outputView.outputPlayerCard(dealer.getName(), dealer.getCardNames());
+        outputView.outputScore(dealer.getTotalScore());
+    }
+
+    private void showPlayersCardsAndScore(Participants participants) {
+        List<Player> players = participants.getPlayers();
+
+        for(Player player: players) {
+            outputView.outputPlayerCard(player.getName(), player.getCardNames());
+            outputView.outputScore(player.getTotalScore());
+        }
+    }
+
+    private void showAllResult(BlackjackGame blackjackGame) {
+        outputView.outputResult();
+        Participants participants = blackjackGame.getParticipants();
+        Dealer dealer = participants.getDealer();
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+        outputView.outputDealerResult(dealer.getName(),
+                resultGame.getDealerCount(WinTieLose.WIN),
+                resultGame.getDealerCount(WinTieLose.TIE),
+                resultGame.getDealerCount(WinTieLose.LOSE));
+        for(Player player:participants.getPlayers()){
+            outputView.outputPlayerResult(player.getName(),resultGame.getPlayerResult(player).getValue());
+        }
     }
 }

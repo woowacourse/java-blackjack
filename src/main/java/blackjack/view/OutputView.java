@@ -11,7 +11,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
     public void outputPlayerCard(String name, List<String> cards){
-        System.out.print(name+" : "+String.join(", ",cards));
+        System.out.println(name+" : "+String.join(", ",cards));
     }
 
     public void outputDealerDrawCard(String name){
@@ -31,5 +31,8 @@ public class OutputView {
     }
     public void outputPlayerResult(String name,String result){
         System.out.println(name+" : "+result);
+    }
+    public void changeLine(){
+        System.out.println();
     }
 }

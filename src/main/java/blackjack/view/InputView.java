@@ -13,12 +13,12 @@ public class InputView {
     }
 
     public String inputPlayers() {
-        System.out.printf(INPUT_PLAYERS_MESSAGE);
+        System.out.println(INPUT_PLAYERS_MESSAGE);
         return scanner.nextLine();
     }
 
     public String inputOrderCard(String name) {
-        System.out.printf(String.format(INPUT_ORDER_CARD_MESSAGE, name));
+        System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
         return scanner.nextLine();
     }
 }

@@ -33,4 +33,12 @@ public class CardTest {
 
         assertThat(card.isAce()).isTrue();
     }
+
+    @Test
+    @DisplayName("카드가 에이스 아닌지 확인하는 테스트")
+    void isNotAceTest(){
+        Card card = new Card(Shape.DIAMOND, Letter.NINE);
+
+        assertThat(card.isAce()).isFalse();
+    }
 }

@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.controller.BlackjackController;
 import blackjack.domain.cardPicker.CardPicker;
 import blackjack.domain.cardPicker.RandomCardPicker;
 import blackjack.view.InputView;
@@ -16,7 +17,7 @@ public class BlackjackApplication {
         OutputView outputView = new OutputView();
         CardPicker cardPicker = new RandomCardPicker();
 
-        // BlackjackController blackjackController = new BlackjackController(inputView, outputView, cardPicker);
-
+        BlackjackController blackjackController = new BlackjackController(inputView, outputView, cardPicker);
+        blackjackController.run();
     }
 }

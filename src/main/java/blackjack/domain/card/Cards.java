@@ -23,6 +23,7 @@ public class Cards {
         int aceCount = countAce();
         while(totalScore>21 && aceCount!=0){
             totalScore-=10;
+            aceCount--;
         }
         return totalScore;
     }
