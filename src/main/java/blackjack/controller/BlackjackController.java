@@ -6,6 +6,7 @@ import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class BlackjackController {
     }
 
     private static void giveAdditionalCard(String answer, Player player) {
-        while ("y".equals(answer) && player.isUnderLimit()) {
+        while (GameCommand.isContinue(answer) && player.isUnderLimit()) {
             player.updateCardScore(Cards.giveFirstCard());
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());
@@ -97,6 +98,25 @@ public class BlackjackController {
     private void giveFirstCard(User user) {
         for (int i = 0; i < 2; i++) {
             user.updateCardScore(Cards.giveFirstCard());
+        }
+    }
+
+    private enum GameCommand {
+        CONTINUE("y"),
+        QUIT("n");
+
+        private final String input;
+
+        GameCommand(String input) {
+            this.input = input;
+        }
+
+        public static boolean isContinue(String input) {
+            Arrays.stream(GameCommand.values())
+                    .filter(gameCommand -> gameCommand.input.equals(input))
+                    .findAny()
+                    .orElseThrow(() -> new IllegalArgumentException("'y' 또는 'n' 중에 입력하세요."));
+            return CONTINUE.input.equals(input);
         }
     }
 }
