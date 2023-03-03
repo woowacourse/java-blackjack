@@ -35,7 +35,7 @@ public class CardArea {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(it -> it.cardValue().isAce());
+                .anyMatch(Card::isAce);
     }
 
     private int calculateSpecialAceValue(final int total) {
