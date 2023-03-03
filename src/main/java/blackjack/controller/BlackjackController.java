@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.BlackjackGameResult;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.ShuffledDeck;
@@ -31,6 +32,9 @@ public class BlackjackController {
             outputView.printPlayerResult(player);
         }
 
+        final BlackjackGameResult result = blackjackGame.play();
+        outputView.printGameResult(result);
+
     }
 
     private BlackjackGame generateBlackjackGame() {
@@ -49,7 +53,7 @@ public class BlackjackController {
 
     private void drawBy(final Player player) {
         while (isDrawable(player)) {
-            final BlackjackCommand command = inputView.readCommand(player);
+            final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
             drawOnce(player, command);
             outputView.printDrawResult(player);
         }

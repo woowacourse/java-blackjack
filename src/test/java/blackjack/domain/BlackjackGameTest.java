@@ -5,6 +5,7 @@ import static blackjack.domain.Rank.EIGHT;
 import static blackjack.domain.Rank.JACK;
 import static blackjack.domain.Rank.KING;
 import static blackjack.domain.Rank.TWO;
+import static blackjack.domain.Result.WIN;
 import static blackjack.domain.Shape.CLOVER;
 import static blackjack.domain.Shape.DIAMOND;
 import static blackjack.domain.Shape.HEART;
@@ -72,5 +73,23 @@ public class BlackjackGameTest {
 
         final Dealer dealer = blackjackGame.getPlayers().getDealer();
         assertThat(dealer.getCardCount()).isEqualTo(3);
+    }
+
+    @Test
+    void 게임_결과를_반환한다() {
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"));
+        final Deck deck = new FixedDeck(List.of(
+                new Card(JACK, CLOVER),
+                new Card(TWO, CLOVER),
+                new Card(EIGHT, SPADE),
+                new Card(TWO, DIAMOND),
+                new Card(KING, HEART)
+        ));
+        blackjackGame.initialDraw(deck);
+        blackjackGame.drawByDealer(deck);
+
+        final BlackjackGameResult result = blackjackGame.play();
+
+        assertThat(result.getResult().values()).containsExactly(WIN);
     }
 }

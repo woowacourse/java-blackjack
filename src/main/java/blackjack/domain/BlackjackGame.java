@@ -18,4 +18,8 @@ public class BlackjackGame {
     public void drawByDealer(final Deck deck) {
         players.drawByDealer(deck);
     }
+
+    public BlackjackGameResult play() {
+        return new BlackjackGameResult(players.play());
+    }
 }
