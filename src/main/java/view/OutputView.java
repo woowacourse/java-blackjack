@@ -78,4 +78,8 @@ public class OutputView {
             System.out.printf("%s: %s%n", result.getName(), Converter.of(result.getGameResult()));
         }
     }
+
+    public static void printError(Exception e) {
+        System.out.printf("[ERROR] %s%n", e.getMessage());
+    }
 }
