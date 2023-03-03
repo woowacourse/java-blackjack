@@ -71,17 +71,27 @@ public class Controller {
     private void playersHit() {
         for (int i = 0; i < blackjackGame.countPlayer(); i++) {
             Name userName = blackjackGame.findUserNameByIndex(i);
-            String hitCommand = inputView.readHitCommand(userName);
-            playerHit(i, userName, hitCommand);
+            playerHit(i, userName);
         }
     }
 
-    private void playerHit(int i, Name userName, String hitCommand) {
-        while (hitCommand.equals("y") && !blackjackGame.isBust(i)) {
-            blackjackGame.supplyAdditionalCard(i);
-            PlayerOpenDto playerCard = blackjackGame.getPlayerCardsByIndex(i);
+    private void playerHit(int playerIndex, Name userName) {
+        try {
+            hitByCommand(playerIndex, userName);
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception);
+            playerHit(playerIndex, userName);
+        }
+    }
+
+    private void hitByCommand(int playerIndex, Name userName) {
+        String hitCommand = inputView.readHitCommand(userName);
+        HitCommand.validateCommand(hitCommand);
+        while (HitCommand.isYes(hitCommand) && !blackjackGame.isBust(playerIndex)) {
+            blackjackGame.supplyAdditionalCard(playerIndex);
+            PlayerOpenDto playerCard = blackjackGame.getPlayerCardsByIndex(playerIndex);
             outputView.printPlayerCard(playerCard);
-            if (blackjackGame.isBust(i)) {
+            if (blackjackGame.isBust(playerIndex)) {
                 break;
             }
             hitCommand = inputView.readHitCommand(userName);
