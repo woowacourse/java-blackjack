@@ -122,6 +122,7 @@ class BlackJackGameTest {
             softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.WIN);
         });
     }
+
     @Test
     @DisplayName("유저의 점수가 BlackJackNumber인지 확인하는 기능 테스트")
     void isBlackJackScoreTest() {

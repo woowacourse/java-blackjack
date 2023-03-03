@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Player extends User{
+public class Player extends User {
 
     protected Player(String name, CardGroup cardGroup) {
         super(name, cardGroup);

@@ -19,7 +19,7 @@ public enum DrawInput {
 
     public static DrawInput from(String input) {
         return Arrays.stream(DrawInput.values())
-                .filter(drawInput ->  drawInput.input.equals(input))
+                .filter(drawInput -> drawInput.input.equals(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INPUT_FORM_EXCEPTION_MESSAGE));
     }

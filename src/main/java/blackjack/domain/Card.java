@@ -12,11 +12,11 @@ public class Card {
         this.number = number;
     }
 
-    public CardShape getShape(){
+    public CardShape getShape() {
         return cardShape;
     }
 
-    public CardNumber getNumber(){
+    public CardNumber getNumber() {
         return number;
     }
 
