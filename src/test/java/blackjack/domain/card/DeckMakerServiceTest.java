@@ -1,11 +1,8 @@
-package blackjack.domain.service;
+package blackjack.domain.card;
 
-import blackjack.domain.model.Card;
-import blackjack.domain.model.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 

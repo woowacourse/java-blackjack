@@ -1,8 +1,7 @@
-package blackjack.domain.model;
+package blackjack.domain.card;
 
-import blackjack.domain.CardPicker;
-import blackjack.domain.vo.Letter;
-import blackjack.domain.vo.Shape;
+import blackjack.domain.cardPicker.CardPicker;
+import blackjack.domain.cardPicker.TestCardPicker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

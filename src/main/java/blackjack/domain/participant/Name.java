@@ -1,4 +1,4 @@
-package blackjack.domain.vo;
+package blackjack.domain.participant;
 
 public class Name {
     private final String value;

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.cardPicker;
 
 import java.util.Random;
 

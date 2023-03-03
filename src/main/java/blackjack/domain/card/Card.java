@@ -1,7 +1,7 @@
-package blackjack.domain.model;
+package blackjack.domain.card;
 
-import blackjack.domain.vo.Letter;
-import blackjack.domain.vo.Shape;
+import blackjack.domain.card.Letter;
+import blackjack.domain.card.Shape;
 
 public class Card {
     final private Shape shape;

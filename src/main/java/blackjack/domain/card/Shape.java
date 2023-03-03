@@ -1,4 +1,4 @@
-package blackjack.domain.vo;
+package blackjack.domain.card;
 
 public enum Shape {
     DIAMOND("다이아몬드"),

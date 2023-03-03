@@ -1,6 +1,6 @@
-package blackjack.domain.model;
+package blackjack.domain.card;
 
-import blackjack.domain.CardPicker;
+import blackjack.domain.cardPicker.CardPicker;
 
 import java.util.List;
 

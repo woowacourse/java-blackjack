@@ -1,7 +1,9 @@
-package blackjack.domain.model;
+package blackjack.domain.card;
 
-import blackjack.domain.vo.Letter;
-import blackjack.domain.vo.Shape;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Letter;
+import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
