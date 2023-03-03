@@ -24,7 +24,7 @@ class ParticipantTest {
 
     @DisplayName("Ace 카드가 없는 경우, 카드의 숫자를 더해 계산할 수 있다.")
     @Test
-    void scoreTest(){
+    void scoreTest() {
         assertThat(participant.calculateScore()).isEqualTo(6);
     }
 
@@ -38,7 +38,7 @@ class ParticipantTest {
 
     @DisplayName("Ace 카드가 있는 경우, 상황에 따라 11로 계산할 수 있다.")
     @Test
-    void aceScoreElevenTest(){
+    void aceScoreElevenTest() {
         participant.receiveCard(new Card("A", "하트"));
         assertThat(participant.calculateScore()).isEqualTo(17);
     }

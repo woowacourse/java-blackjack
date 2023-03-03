@@ -16,11 +16,11 @@ public class Card {
         return value.assignScore(totalScore);
     }
 
-    public String getValue(){
+    public String getValue() {
         return value.getValue();
     }
 
-    public String getShape(){
+    public String getShape() {
         return shape.getShape();
     }
 

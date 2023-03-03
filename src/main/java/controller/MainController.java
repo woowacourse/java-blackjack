@@ -50,6 +50,7 @@ public class MainController {
 
     private void distributeCardToPlayer(final BlackJackGame blackJackGame, final Player player) {
         boolean isRepeat = true;
+
         while (isRepeat) {
             PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
             distributeByCommand(blackJackGame, player, command);
@@ -57,17 +58,21 @@ public class MainController {
         }
     }
 
-    private void distributeByCommand(final BlackJackGame blackJackGame, final Player player, final PlayerCommand command) {
+    private void distributeByCommand(final BlackJackGame blackJackGame, final Player player,
+                                     final PlayerCommand command) {
         if (command.isHit()) {
             blackJackGame.giveCardTo(player);
         }
+
         outputView.printSingleState(player);
     }
 
     private void distributeCardToDealer(final BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
+
         while (dealer.isFill()) {
             outputView.printFillDealerCards();
+
             blackJackGame.giveCardTo(dealer);
         }
     }
@@ -76,6 +81,7 @@ public class MainController {
         outputView.printFinalState(blackJackGame.getParticipants());
 
         WinningResult winningResult = new WinningResult(blackJackGame.getParticipants());
+
         outputView.printFinalResult();
         outputView.printDealerResult(winningResult.getDealerResult());
         outputView.printPlayerResult(winningResult.getPlayersResult());
