@@ -1,10 +1,11 @@
 package blackjack.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackRuleTest {
 
@@ -17,7 +18,7 @@ class BlackJackRuleTest {
 
         int score = BlackJackRule.getScore(user);
 
-        Assertions.assertThat(score).isEqualTo(12);
+        assertThat(score).isEqualTo(12);
     }
 
     @Test
@@ -30,7 +31,17 @@ class BlackJackRuleTest {
         user.drawCard(new Deck(new TestDeckGenerator(List.of(new Card(CardShape.HEART, CardNumber.FOUR)))));
         boolean isBust = BlackJackRule.isBust(user);
 
-        Assertions.assertThat(isBust).isTrue();
+        assertThat(isBust).isTrue();
     }
 
+    @Test
+    @DisplayName("유저의 점수가 BlackJackNumber인지 확인하는 기능 테스트")
+    void isBlackJackScoreTest() {
+        final User user = new Player("필립", new CardGroup(
+                new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.HEART, CardNumber.TEN)));
+
+        boolean isBlackJack = BlackJackRule.isBlackJackScore(user);
+
+        assertThat(isBlackJack).isTrue();
+    }
 }
