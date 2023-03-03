@@ -1,5 +1,7 @@
 package domain;
 
+import domain.deck.Deck;
+import domain.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -3,6 +3,7 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import domain.deck.Deck;
 import java.util.EmptyStackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

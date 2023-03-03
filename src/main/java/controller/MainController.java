@@ -1,9 +1,9 @@
 package controller;
 
 
-import domain.BlackJackGame;
-import domain.Card;
-import domain.Deck;
+import domain.game.BlackJackGame;
+import domain.deck.Card;
+import domain.deck.Deck;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -44,6 +44,7 @@ public class MainController {
         names.forEach(name ->
                 OutputView.printPlayerCard(name, blackJackGame.getCards(name))
         );
+        OutputView.printEmptyLine();
     }
 
     private void drawCardsPlayer() {
@@ -69,10 +70,12 @@ public class MainController {
     }
 
     private void drawCardsDealer() {
+        OutputView.printEmptyLine();
         while (blackJackGame.isDealerDraw()) {
             OutputView.printDealerDrawCard();
             blackJackGame.drawCard(DEALER_NAME);
         }
+        OutputView.printEmptyLine();
     }
 
     private void outputCardResult() {

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public enum Outcome {
     WIN("승"), DRAW("무"), LOSE("패");

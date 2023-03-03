@@ -2,6 +2,8 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.deck.Deck;
+import domain.game.BlackJackGame;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
