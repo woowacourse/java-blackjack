@@ -3,21 +3,24 @@
 블랙잭 미션 저장소
 
 ## 리팩터링 목록
-- [ ] Game::getResult 메서드 너무 복잡하고 길어
+- [x] Game::getResult 메서드 너무 복잡하고 길어
   - [x] index -> name 이용하도록 변경 (isWon, dealAnotherCard)
-- [ ] 제약조건을 더 고려해보자
 
-- [ ] Application 메서드 분리
-- [ ] Game도 인스턴스 변수 개수 3개다
+- [x] Application 메서드 분리
+- [x] Game도 인스턴스 변수 개수 3개다
   - dealer를 players 안에 넣자.
 
 - [x] Player::calculateScore 메서드 분리
 - [x] Game::dealCards indent가 2 임.
-- [ ] 매직 넘버 상수화
 - [x] Player 인스턴스 변수 개수 3개다.
-- [ ] 카드 글자 리팩터링 Deck::buildCards()
-- [ ] Cards 구현
+- [x] 카드 글자 리팩터링 Deck::buildCards()
 - [x] Players 일급 컬렉션 사용
+
+- [ ] 매직 넘버 상수화
+- [ ] Cards 구현
+- [ ] 제약조건을 더 고려해보자
+  - 인원수 제한 (카드는 52개임)
+  - 입력값 검증
 
 ## 기능 구현 목록
 
