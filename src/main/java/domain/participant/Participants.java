@@ -17,9 +17,9 @@ public class Participants {
         validateSize(names);
         this.players = names.stream()
                 .map(Name::new)
-                .map(name -> new Player(name, cards.getInitialCards()))
+                .map(name -> new Player(name, cards.giveInitialCards()))
                 .collect(Collectors.toList());
-        this.dealer = new Dealer(cards.getInitialCards());
+        this.dealer = new Dealer(cards.giveInitialCards());
     }
 
     private void validateSize(final List<String> names) {

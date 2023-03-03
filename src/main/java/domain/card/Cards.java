@@ -23,7 +23,7 @@ public class Cards {
         return cards;
     }
 
-    public List<Card> getInitialCards() {
+    public List<Card> giveInitialCards() {
         return new ArrayList<>(List.of(cards.pop(), cards.pop()));
     }
 
