@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -33,7 +34,7 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = BlackJackGame.create(players);
 
         blackJackGame.setUp();
-        List<Player> players = blackJackGame.getPlayers().getPlayers();
+        List<Player> players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
 
         Assertions.assertAll(
@@ -69,7 +70,7 @@ public class BlackJackGameTest {
         dealer.addCard(new Card(Symbol.SPADE, Number.TEN));
         int beforeCount = dealer.getCards().getCount();
 
-        blackJackGame.addDealerCard();
+        blackJackGame.addCard(dealer);
 
         assertThat(dealer.getCards().getCount()).isEqualTo(beforeCount + 1);
     }
@@ -83,9 +84,35 @@ public class BlackJackGameTest {
         dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
         int beforeCount = dealer.getCards().getCount();
 
-        //현재 0점
-        blackJackGame.addDealerCard();
+        blackJackGame.addCard(dealer);
 
         assertThat(dealer.getCards().getCount()).isEqualTo(beforeCount);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어의 승패를 반환한다.")
+    void calculateResult() {
+        BlackJackGame blackJackGame = BlackJackGame.create(players);
+        List<Player> players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
+        Player gray = players.get(0);
+        Player luca = players.get(1);
+
+        setCards(dealer, gray, luca);
+        Map<Player, Result> result = blackJackGame.calculateResult();
+
+        Assertions.assertAll(
+                () -> assertThat(result.get(gray)).isEqualTo(Result.WIN),
+                () -> assertThat(result.get(luca)).isEqualTo(Result.LOSE)
+        );
+    }
+
+    private void setCards(Dealer dealer, Player gray, Player luca) {
+        dealer.addCard(new Card(Symbol.HEART, Number.TEN));
+        dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
+        gray.addCard(new Card(Symbol.SPADE, Number.ACE));
+        gray.addCard(new Card(Symbol.SPADE, Number.TEN));
+        luca.addCard(new Card(Symbol.DIAMOND, Number.SIX));
+        luca.addCard(new Card(Symbol.DIAMOND, Number.TEN));
     }
 }
