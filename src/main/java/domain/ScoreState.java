@@ -24,4 +24,8 @@ public enum ScoreState {
     public boolean isBust() {
         return this == BUST;
     }
+
+    public boolean isHit() {
+        return this == HIT;
+    }
 }

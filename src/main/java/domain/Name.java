@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Name {
     private final String value;
 
-
     public Name(String value) {
         validateBlank(value);
         this.value = value;
