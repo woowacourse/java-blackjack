@@ -12,8 +12,6 @@ public class Participants {
 
     private final Map<Participant, GameStatus> participantStatuses = new LinkedHashMap<>();
 
-    private int completedPlayerCount = 0;
-
     public Participants(List<Participant> participants) {
         participants.forEach(
             (participant) -> participantStatuses.put(participant, new GameStatus(ParticipantStatus.NOT_BUST, 0)));
@@ -23,10 +21,12 @@ public class Participants {
     public void update(Participant participant) {
         int score = participant.calculateScore();
         ParticipantStatus statusByScore = getStatusByScore(score);
-        if (statusByScore != ParticipantStatus.NOT_BUST) {
-            completedPlayerCount++;
+        GameStatus prevGameStatus = participantStatuses.get(participant);
+        GameStatus newGameStatus = new GameStatus(statusByScore, score);
+        if (prevGameStatus.equals(newGameStatus)) {
+            newGameStatus = new GameStatus(ParticipantStatus.STAND, score);
         }
-        participantStatuses.put(participant, new GameStatus(statusByScore, score));
+        participantStatuses.put(participant, newGameStatus);
     }
 
     public GameStatus getGameStatusByParticipant(Participant participant) {
