@@ -66,10 +66,6 @@ public class Participants {
         return dealer.getCards().get(0);
     }
 
-    public List<Card> openDealerCards() {
-        return dealer.getCards();
-    }
-
     public PlayerWinResults computePlayerWinResults() {
         PlayerWinResults playerWinResults = new PlayerWinResults();
         for (Player player : players) {
