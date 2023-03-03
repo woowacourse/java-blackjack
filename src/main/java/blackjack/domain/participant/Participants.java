@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -31,6 +33,12 @@ public class Participants {
 
         if (uniqueParticipants.size() != participants.size()) {
             throw new IllegalArgumentException("참가자 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    public void drawCard(final Deck deck, int count) {
+        while (count-- > 0) {
+            participants.forEach(participant -> participant.drawCard(deck.draw()));
         }
     }
 
