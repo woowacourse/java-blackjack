@@ -11,24 +11,66 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-    private Players players;
-    private Dealer dealer;
-
     public void run() {
-        getReady();
-        giveFirstCards();
+        List<Name> names = (InputView.repeat(() -> new Names(InputView.inputPeopleNames()))).getNames();
+        Players players = new Players(names.stream().map(Player::new)
+                .collect(Collectors.toUnmodifiableList()));
+        Dealer dealer = new Dealer();
+        OutputView.printReadyMessage(names);
+
+        Cards.init();
+
+        giveFirstCards(players, dealer);
 
         OutputView.printDealerCurrentCards(dealer);
         OutputView.printPlayersCurrentCards(players);
 
-        giveAdditionalCards();
-        giveAdditionalCardToDealer();
+        giveCardOrNotForPlayers(players);
+        giveCardOrNotForDealer(dealer);
 
-        OutputView.printScore(dealer, players);
-        printResults();
+        printResults(players, dealer);
     }
 
-    private void printResults() {
+    public void giveFirstCards(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            giveFirstCard(player);
+        }
+        giveFirstCard(dealer);
+    }
+
+    private void giveFirstCard(User user) {
+        for (int i = 0; i < 2; i++) {
+            user.updateCardScore(Cards.giveFirstCard());
+        }
+    }
+
+    private void giveCardOrNotForPlayers(Players players) {
+        for (Player player : players.getPlayers()) {
+            giveCardOrNotForPlayer(player);
+        }
+    }
+
+    private void giveCardOrNotForPlayer(Player player) {
+        Answer answer = Answer.of(InputView.repeat(() -> InputView.askAdditionalCard(player.getPlayerName())));
+
+        if (answer.equals(Answer.YES) && player.isUnderLimit()) {
+            player.updateCardScore(Cards.giveFirstCard());
+            OutputView.printPlayerCurrentCards(player);
+            giveCardOrNotForPlayer(player);
+        }
+    }
+
+    private void giveCardOrNotForDealer(Dealer dealer) {
+        if (dealer.isUnderLimit()) {
+            OutputView.printDealerOneMore();
+            dealer.updateCardScore(Cards.giveFirstCard());
+            giveCardOrNotForDealer(dealer);
+        }
+    }
+
+    private void printResults(Players players, Dealer dealer) {
+        OutputView.printScore(dealer, players);
+
         int dealerScore = dealer.getTotalScore();
         HashMap<Player, Result> playerResults = new HashMap<>();
         HashMap<Result, Integer> dealerResults = initializedResults();
@@ -49,54 +91,5 @@ public class BlackjackController {
             dealerResults.put(result, 0);
         }
         return dealerResults;
-    }
-
-    private void giveAdditionalCards() {
-        for (Player player : players.getPlayers()) {
-            String answer = InputView.askAdditionalCard(player.getPlayerName());
-            giveAdditionalCard(answer, player);
-        }
-    }
-
-    private static void giveAdditionalCard(String answer, Player player) {
-        while ("y".equals(answer) && player.isUnderLimit()) {
-            player.updateCardScore(Cards.giveFirstCard());
-            OutputView.printPlayerCurrentCards(player);
-            answer = InputView.askAdditionalCard(player.getPlayerName());
-        }
-        OutputView.printPlayerCurrentCards(player);
-    }
-
-    public void giveAdditionalCardToDealer() {
-        while (dealer.isUnderLimit()) {
-            OutputView.printDealerOneMore();
-            dealer.updateCardScore(Cards.giveFirstCard());
-        }
-    }
-
-    private void getReady() {
-        List<Name> names = new Names(InputView.inputPeopleNames()).getNames();
-
-        List<Player> players = names.stream().map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
-
-        this.players = new Players(players);
-        this.dealer = new Dealer();
-
-        OutputView.printReadyMessage(names);
-    }
-
-    public void giveFirstCards() {
-        Cards.init();
-        for (Player player : players.getPlayers()) {
-            giveFirstCard(player);
-        }
-        giveFirstCard(dealer);
-    }
-
-    private void giveFirstCard(User user) {
-        for (int i = 0; i < 2; i++) {
-            user.updateCardScore(Cards.giveFirstCard());
-        }
     }
 }
