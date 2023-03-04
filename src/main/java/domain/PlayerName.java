@@ -3,6 +3,7 @@ package domain;
 public class PlayerName {
 
     private static final String BLANK_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이어의 이름은 빈 칸일 수 없습니다.";
+
     private final String name;
 
     public PlayerName(String name) {

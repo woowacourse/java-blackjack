@@ -2,23 +2,21 @@ package domain;
 
 import java.util.List;
 
-public class Player implements Gambler {
+public class Player {
+
     private final PlayerName playerName;
     private final Cards cards;
 
-    public Player(PlayerName playerName, Cards cards) {
+    public Player(PlayerName playerName) {
         this.playerName = playerName;
-        this.cards = cards;
-        initialPick();
+        this.cards = new Cards();
     }
 
-    @Override
     public void initialPick() {
         pickCard();
         pickCard();
     }
 
-    @Override
     public void pickCard() {
         cards.addCard(Deck.pickCard());
     }
@@ -27,17 +25,14 @@ public class Player implements Gambler {
         return cards.getCards();
     }
 
-    @Override
     public String getName() {
         return playerName.getName();
     }
 
-    @Override
     public int getScore() {
         return cards.calculateScore();
     }
 
-    @Override
     public boolean isBustedGambler(int sum) {
         return this.cards.isBusted(sum);
     }
