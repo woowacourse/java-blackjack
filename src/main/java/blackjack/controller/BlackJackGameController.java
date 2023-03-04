@@ -33,27 +33,32 @@ public class BlackJackGameController {
         OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
     }
 
-    private static void handOutCardToDealer(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Dealer dealer) {
+    private static void handOutCardToDealer(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
+                                            final Dealer dealer) {
         while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
             blackJackGame.handOutCardTo(shufflingMachine, dealer);
             OutputView.printDealerReceiveOneMoreCard();
         }
     }
 
-    private void handOutCardToPlayers(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Players players) {
+    private void handOutCardToPlayers(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
+                                      final Players players) {
         for (final Player player : players.getPlayers()) {
             handOutCardToEachPlayer(blackJackGame, shufflingMachine, player);
         }
     }
 
-    private void handOutCardToEachPlayer(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Player player) {
+    private void handOutCardToEachPlayer(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
+                                         final Player player) {
         String playerAnswer = inputGameCommandToGetOneMoreCard(player);
-        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) && handOutCardByCommand(blackJackGame, shufflingMachine, player, playerAnswer)) {
+        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) &&
+                handOutCardByCommand(blackJackGame, shufflingMachine, player, playerAnswer)) {
             playerAnswer = inputGameCommandToGetOneMoreCard(player);
         }
     }
 
-    private static boolean handOutCardByCommand(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Player player, String playerAnswer) {
+    private static boolean handOutCardByCommand(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
+                                                final Player player, final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.handOutCardTo(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
