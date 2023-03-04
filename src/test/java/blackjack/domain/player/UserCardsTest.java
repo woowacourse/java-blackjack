@@ -15,18 +15,15 @@ import java.util.stream.Stream;
 
 class UserCardsTest {
 
-    @Test
-    @DisplayName("updateCardScore()는 카드를 하나씩 추가한다.")
-    void test_() {
-        // given
-        PlayerCards playerCards = new PlayerCards();
-
-        // when
-        Card card = new Card(CardNumber.FIVE, CardSymbol.HEART);
-        playerCards.updateCardScore(card);
-
-        // then
-        Assertions.assertThat(playerCards.getPlayerCards()).hasSize(1);
+    private static Stream<Arguments> provideCards() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(CardNumber.TWO, CardSymbol.HEART), new Card(CardNumber.THREE, CardSymbol.HEART), new Card(CardNumber.FOUR, CardSymbol.HEART)), 9),
+                Arguments.of(List.of(new Card(CardNumber.KING, CardSymbol.HEART), new Card(CardNumber.JACK, CardSymbol.HEART), new Card(CardNumber.QUEEN, CardSymbol.HEART)), 30),
+                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART), new Card(CardNumber.JACK, CardSymbol.HEART), new Card(CardNumber.QUEEN, CardSymbol.HEART)), 21),
+                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART), new Card(CardNumber.THREE, CardSymbol.HEART), new Card(CardNumber.ACE, CardSymbol.SPADE)), 15),
+                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART), new Card(CardNumber.ACE, CardSymbol.DIAMOND), new Card(CardNumber.ACE, CardSymbol.SPADE)), 13),
+                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART), new Card(CardNumber.ACE, CardSymbol.DIAMOND), new Card(CardNumber.ACE, CardSymbol.SPADE), new Card(CardNumber.ACE, CardSymbol.DIAMOND)), 14)
+        );
     }
 
     @ParameterizedTest
@@ -41,17 +38,6 @@ class UserCardsTest {
         Assertions.assertThat(playerCards.getTotalScore()).isEqualTo(expectedTotalScore);
     }
 
-    private static Stream<Arguments> provideCards() {
-        return Stream.of(
-                Arguments.of(List.of(new Card(CardNumber.TWO, CardSymbol.HEART), new Card(CardNumber.THREE, CardSymbol.HEART), new Card(CardNumber.FOUR, CardSymbol.HEART)), 9),
-                Arguments.of(List.of(new Card(CardNumber.KING, CardSymbol.HEART), new Card(CardNumber.JACK, CardSymbol.HEART), new Card(CardNumber.QUEEN, CardSymbol.HEART)), 30),
-                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART), new Card(CardNumber.JACK, CardSymbol.HEART), new Card(CardNumber.QUEEN, CardSymbol.HEART)), 21),
-                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART),new Card(CardNumber.THREE, CardSymbol.HEART),new Card(CardNumber.ACE, CardSymbol.SPADE)), 15),
-                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART),new Card(CardNumber.ACE, CardSymbol.DIAMOND),new Card(CardNumber.ACE, CardSymbol.SPADE)), 13),
-                Arguments.of(List.of(new Card(CardNumber.ACE, CardSymbol.HEART),new Card(CardNumber.ACE, CardSymbol.DIAMOND),new Card(CardNumber.ACE, CardSymbol.SPADE), new Card(CardNumber.ACE, CardSymbol.DIAMOND)), 14)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("provideCards")
     @DisplayName("updateCardScore() 는 점수를 업데이트 한다.")
@@ -64,4 +50,17 @@ class UserCardsTest {
         Assertions.assertThat(playerCards.getTotalScore()).isEqualTo(expectedTotalScore);
     }
 
+    @Test
+    @DisplayName("updateCardScore()는 카드를 하나씩 추가한다.")
+    void add_card() {
+        // given
+        PlayerCards playerCards = new PlayerCards();
+
+        // when
+        Card card = new Card(CardNumber.FIVE, CardSymbol.HEART);
+        playerCards.updateCardScore(card);
+
+        // then
+        Assertions.assertThat(playerCards.getPlayerCards()).hasSize(1);
+    }
 }

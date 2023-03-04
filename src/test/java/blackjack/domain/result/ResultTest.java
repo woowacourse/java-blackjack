@@ -10,7 +10,7 @@ class ResultTest {
     @ParameterizedTest
     @CsvSource(value = {"19:18:WIN", "18:19:LOSE", "18:18:TIE", "23:18:LOSE", "23:22:TIE", "14:22:WIN"}, delimiter = ':')
     @DisplayName("calculateResult()는 플레이어의 결과를 반환한다.")
-    void test_(String playerScore, String dealerScore, String inputResult) {
+    void calculate_result(String playerScore, String dealerScore, String inputResult) {
         // given & when
         Result result = Result.calculateResult(Integer.parseInt(playerScore), Integer.parseInt(dealerScore));
         Result expectedResult = Result.valueOf(inputResult);
@@ -21,11 +21,11 @@ class ResultTest {
 
     @ParameterizedTest
     @CsvSource(value = {"LOSE:WIN", "WIN:LOSE", "TIE:TIE"}, delimiter = ':')
-    @DisplayName("calculateResult()는 플레이어의 결과를 반환한다.")
+    @DisplayName("ofOppositeResult()는 특정 게임 결과를 입력하면 상대방의 결과를 반환한다.")
     void test_2(String inputPlayerResult, String inputDealerResult) {
         // given & when
-        Result playerResult =Result.valueOf(inputPlayerResult);
-        Result expectedResult =Result.valueOf(inputDealerResult);
+        Result playerResult = Result.valueOf(inputPlayerResult);
+        Result expectedResult = Result.valueOf(inputDealerResult);
 
         // then
         Assertions.assertThat(playerResult.ofOppositeResult()).isEqualTo(expectedResult);
