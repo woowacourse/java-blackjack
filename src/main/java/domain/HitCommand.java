@@ -1,3 +1,5 @@
+package domain;
+
 import java.util.Arrays;
 
 public enum HitCommand {
@@ -14,9 +16,9 @@ public enum HitCommand {
 
     public static HitCommand from(final String command) {
         return Arrays.stream(HitCommand.values())
-            .filter(hitCommand -> command.equals(hitCommand.command))
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+                .filter(hitCommand -> command.equals(hitCommand.command))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean isHit() {

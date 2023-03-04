@@ -23,8 +23,8 @@ public class Users {
         validate(names);
         Dealer dealer = new Dealer();
         List<User> users = names.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
+                .map(Player::new)
+                .collect(Collectors.toList());
         users.add(dealer);
         return new Users(users);
     }
@@ -44,7 +44,7 @@ public class Users {
     private static void validateSize(final List<String> names) {
         if (names.size() < PLAYER_MIN_SIZE || names.size() > PLAYER_MAX_SIZE) {
             throw new IllegalArgumentException(
-                String.format("플레이어 수는 %d명 이상, %d명 이하여야 합니다.", PLAYER_MIN_SIZE, PLAYER_MAX_SIZE));
+                    String.format("플레이어 수는 %d명 이상, %d명 이하여야 합니다.", PLAYER_MIN_SIZE, PLAYER_MAX_SIZE));
         }
     }
 
@@ -54,9 +54,9 @@ public class Users {
 
     private Player findByName(final String name) {
         return getPlayers().stream()
-            .filter(player -> player.isRightName(name))
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+                .filter(player -> player.isRightName(name))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean isDealerHittable() {
@@ -65,23 +65,23 @@ public class Users {
 
     public List<Player> getPlayers() {
         return users.stream()
-            .filter(user -> user instanceof Player)
-            .map(user -> (Player) user)
-            .collect(Collectors.toUnmodifiableList());
+                .filter(user -> user instanceof Player)
+                .map(user -> (Player) user)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public Dealer getDealer() {
         User dealer = users.stream()
-            .filter(user -> user instanceof Dealer)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+                .filter(user -> user instanceof Dealer)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
         return (Dealer) dealer;
     }
 
     public List<Player> getHittablePlayers() {
         List<Player> players = getPlayers();
         return players.stream()
-            .filter(Player::isHittable)
-            .collect(Collectors.toUnmodifiableList());
+                .filter(Player::isHittable)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

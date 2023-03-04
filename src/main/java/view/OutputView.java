@@ -14,7 +14,7 @@ public class OutputView {
 
     public void printPlayerCards(final Map<String, List<Card>> playerToCard) {
         playerToCard.forEach((playerName, cards) ->
-            System.out.println(getEachPlayerCards(playerName, cards)));
+                System.out.println(getEachPlayerCards(playerName, cards)));
     }
 
     public void printDealerCardWithScore(final List<Card> cards, final int score) {
@@ -22,7 +22,7 @@ public class OutputView {
     }
 
     public void printPlayerCardWithScore(final Map<String, List<Card>> playerToCard,
-        final Map<String, Integer> playerToScore) {
+                                         final Map<String, Integer> playerToScore) {
         playerToCard.forEach((playerName, cards) -> {
             int score = playerToScore.get(playerName);
             printCardWithScore(playerName, cards, score);
@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     public void printGameResult(final Map<GameResult, Integer> dealerResult,
-        final Map<String, GameResult> playerResults) {
+                                final Map<String, GameResult> playerResults) {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerResult(dealerResult);
@@ -79,7 +79,7 @@ public class OutputView {
 
     private void printPlayerResults(final Map<String, GameResult> playerResults) {
         playerResults.forEach((playerName, gameResult) ->
-            System.out.println(playerName + ": " + gameResult.getName()));
+                System.out.println(playerName + ": " + gameResult.getName()));
     }
 
     public void printDealerHitMessage() {

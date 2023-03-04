@@ -23,8 +23,8 @@ public class Cards {
 
     public int getSumOfScores() {
         int sumOfScores = cards.stream()
-            .map(Card::getScore)
-            .reduce(0, Integer::sum);
+                .map(Card::getScore)
+                .reduce(0, Integer::sum);
         if (isContainAce() && sumOfScores + ACE_OFFSET <= BLACK_JACK_SCORE) {
             return sumOfScores + Cards.ACE_OFFSET;
         }
@@ -33,7 +33,7 @@ public class Cards {
 
     private boolean isContainAce() {
         return cards.stream()
-            .anyMatch(card -> card.getDenomination() == ACE);
+                .anyMatch(card -> card.getDenomination() == ACE);
     }
 
     public boolean isUnder(int score) {

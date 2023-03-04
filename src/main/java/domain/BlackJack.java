@@ -56,11 +56,11 @@ public class BlackJack {
         Dealer dealer = users.getDealer();
         int dealerScore = dealer.getScore();
         return players.stream()
-            .collect(Collectors.toMap
-                (Player::getName,
-                    player -> comparePlayerWithDealer(player.getScore(), dealerScore),
-                    (oldValue, newValue) -> newValue,
-                    LinkedHashMap::new));
+                .collect(Collectors.toMap
+                        (Player::getName,
+                                player -> comparePlayerWithDealer(player.getScore(), dealerScore),
+                                (oldValue, newValue) -> newValue,
+                                LinkedHashMap::new));
     }
 
     public Map<GameResult, Integer> calculateDealerResult() {
@@ -84,20 +84,20 @@ public class BlackJack {
     public Map<String, List<Card>> getPlayerToCard() {
         List<Player> players = users.getPlayers();
         return players.stream().collect(Collectors.toMap(
-            Player::getName,
-            Player::getCards,
-            (oldValue, newValue) -> newValue,
-            LinkedHashMap::new
+                Player::getName,
+                Player::getCards,
+                (oldValue, newValue) -> newValue,
+                LinkedHashMap::new
         ));
     }
 
     public Map<String, Integer> getPlayerToScore() {
         List<Player> players = users.getPlayers();
         return players.stream().collect(Collectors.toMap(
-            Player::getName,
-            Player::getScore,
-            (oldValue, newValue) -> newValue,
-            LinkedHashMap::new
+                Player::getName,
+                Player::getScore,
+                (oldValue, newValue) -> newValue,
+                LinkedHashMap::new
         ));
     }
 
