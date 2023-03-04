@@ -37,7 +37,7 @@ public class BlackJackGameController {
         Cards cards = new Cards();
         Dealer dealer = new Dealer(cards.drawForFirstTurn());
         List<Player> players = setUpPlayers(cards);
-        showSetUpResult(dealer, players);
+        printSetUpResult(dealer, players);
         return new BlackJackGame(players, dealer, cards);
     }
 
@@ -52,7 +52,7 @@ public class BlackJackGameController {
         return inputView.readPlayersName();
     }
 
-    private void showSetUpResult(Dealer dealer, List<Player> players) {
+    private void printSetUpResult(Dealer dealer, List<Player> players) {
         HashMap<String, List<Card>> setUpResult = new LinkedHashMap<>();
         setUpResult.put(dealer.getName(), dealer.getCards().subList(0, 1));
         players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
@@ -62,9 +62,9 @@ public class BlackJackGameController {
     private void playGame(BlackJackGame blackJackGame) {
         progressPlayersTurn(blackJackGame);
         progressDealerTurn(blackJackGame);
-        showUsersCardResult(blackJackGame);
+        printUsersCardResult(blackJackGame);
         blackJackGame.judgeWinner();
-        showFinalResult(blackJackGame);
+        printFinalResult(blackJackGame);
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
@@ -77,10 +77,10 @@ public class BlackJackGameController {
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
         while (player.getStatus().equals(PlayerStatus.NORMAL) && readDrawCommand(player).equals(DrawCommand.DRAW)) {
             blackJackGame.drawOneMoreCardForPlayer(player);
-            showDrawResult(player);
+            printDrawResult(player);
         }
         if (player.getStatus().equals(PlayerStatus.NORMAL)) {
-            showDrawResult(player);
+            printDrawResult(player);
         }
     }
 
@@ -89,7 +89,7 @@ public class BlackJackGameController {
         return inputView.readDrawCommand();
     }
 
-    private void showDrawResult(Player player) {
+    private void printDrawResult(Player player) {
         outputView.printPlayerDrawResult(player.getName(), player.getCards());
     }
 
@@ -104,14 +104,14 @@ public class BlackJackGameController {
         }
     }
 
-    private void showUsersCardResult(BlackJackGame blackJackGame) {
+    private void printUsersCardResult(BlackJackGame blackJackGame) {
         Map<User, List<Card>> userResult = new LinkedHashMap<>();
         userResult.put(blackJackGame.getDealer(), blackJackGame.getDealer().getCards());
         blackJackGame.getPlayers().forEach(player -> userResult.put(player, player.getCards()));
         outputView.printUsersCardResult(userResult);
     }
 
-    private void showFinalResult(BlackJackGame blackJackGame) {
+    private void printFinalResult(BlackJackGame blackJackGame) {
         Map<Boolean, Integer> dealerWinningRecord = blackJackGame.getDealer().getWinningRecord();
         Map<String, Boolean> userFinalResult = blackJackGame.getUserFinalResult();
         outputView.printFinalResult(dealerWinningRecord, userFinalResult);
