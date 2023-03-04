@@ -50,4 +50,21 @@ class SimpleArrayListTest {
         Assertions.assertThat(intTotal).isEqualTo(3);
 
     }
+
+    @Test
+    @DisplayName("미션4")
+    void filter() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
+
+        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+
+        for (int i = 0; i < filteredDoubleValues.size(); i++) {
+            Assertions.assertThat(filteredDoubleValues.get(i) >= 0).isTrue();
+        }
+        for (int i = 0; i < filteredIntValues.size(); i++) {
+            Assertions.assertThat(filteredIntValues.get(i) >= 0).isTrue();
+        }
+    }
 }

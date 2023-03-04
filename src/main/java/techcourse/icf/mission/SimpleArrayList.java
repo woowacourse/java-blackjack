@@ -24,6 +24,13 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         add(v1);
     }
 
+    public SimpleArrayList(T v, T v1, T v2) {
+        this();
+        add(v);
+        add(v1);
+        add(v2);
+    }
+
     private void add(int index, T value, int s) {
         if (s == capacity) {
             capacity += capacity / 2;
