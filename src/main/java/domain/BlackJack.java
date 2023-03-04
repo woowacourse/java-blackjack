@@ -71,7 +71,11 @@ public class BlackJack {
     }
 
     private void convertResult(final GameResult playerResult, final Map<GameResult, Integer> dealerResult) {
-        Map<GameResult, GameResult> converter = Map.of(WIN, LOSE, LOSE, WIN, PUSH, PUSH);
+        Map<GameResult, GameResult> converter = Map.of(
+            WIN, LOSE,
+            LOSE, WIN,
+            PUSH, PUSH
+        );
         GameResult convertedResult = converter.get(playerResult);
         dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
     }
