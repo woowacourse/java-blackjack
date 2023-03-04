@@ -23,8 +23,8 @@ class ShuffledCardsGeneratorTest {
 
         // then
         assertThat(cards)
-                .hasSize(48);
+                .hasSize(52);
         assertThat(uniqueCardsCount)
-                .isEqualTo(48);
+                .isEqualTo(52);
     }
 }
