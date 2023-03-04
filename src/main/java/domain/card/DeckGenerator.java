@@ -5,11 +5,11 @@ import java.util.List;
 
 public class DeckGenerator {
 
-    public static Deck generate() {
+    public Deck generate() {
         return new Deck(generateCards());
     }
 
-    private static List<Card> generateCards() {
+    private List<Card> generateCards() {
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             addCardBySuit(cards, suit);
@@ -17,7 +17,7 @@ public class DeckGenerator {
         return cards;
     }
 
-    private static void addCardBySuit(List<Card> cards, Suit suit) {
+    private void addCardBySuit(List<Card> cards, Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             cards.add(new Card(suit, denomination));
         }
