@@ -8,18 +8,17 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-    private static final List<Card> deck;
-    private static int index = 0;
+    private final List<Card> deck;
 
-    static {
-        deck = createDeck();
+    private static int index;
+
+    public Deck() {
+        this.deck = createDeck();
+        index = 0;
         Collections.shuffle(deck);
     }
 
-    private Deck() {
-    }
-
-    private static List<Card> createDeck() {
+    private List<Card> createDeck() {
         return Arrays.stream(Denomination.values())
                 .flatMap(
                         denomination -> Arrays.stream(Suit.values())
@@ -28,11 +27,11 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public static Card pickCard() {
+    public Card pickCard() {
         return deck.get(index++);
     }
 
-    public static List<Card> getDeck() {
+    public List<Card> getDeck() {
         return new ArrayList<>(deck);
     }
 }

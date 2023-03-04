@@ -11,7 +11,9 @@ class DeckTest {
 
     @Test
     void initDeck_카드갯수_테스트() {
-        int size = Deck.getDeck().size();
+        //given
+        Deck deck = new Deck();
+        int size = deck.getDeck().size();
         //then
         assertThat(size).isEqualTo(52);
     }
