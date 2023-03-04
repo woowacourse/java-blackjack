@@ -1,7 +1,6 @@
 package blackjack.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.domain.Card;
@@ -20,18 +19,6 @@ class BlackJackServiceTest {
     @BeforeEach
     void setUp() {
         blackJackService = new BlackJackService(new MockCardsGenerator(new Card(Suit.DIAMOND, Rank.KING)));
-    }
-
-    @Test
-    @DisplayName("중복된 이름이 있으면 예외가 발생해야 한다.")
-    void createPeople_duplicateName() {
-        // given
-        List<String> names = List.of("glen", "pobi", "glen");
-
-        // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            blackJackService.createPeople(names);
-        }).withMessage("[ERROR] 중복된 이름이 있습니다.");
     }
 
     @Test

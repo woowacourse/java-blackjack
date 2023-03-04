@@ -10,8 +10,19 @@ public class People {
     private final List<Person> people = new ArrayList<>();
 
     public People(Dealer dealer, List<Player> players) {
+        validateDuplicatePlayer(players);
         this.people.add(dealer);
         this.people.addAll(players);
+    }
+
+    private void validateDuplicatePlayer(List<Player> players) {
+        long uniquePlayersCount = players.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
+        if (uniquePlayersCount != players.size()) {
+            throw new IllegalArgumentException("[ERROR] 중복된 이름이 있습니다.");
+        }
     }
 
     public List<Person> getPlayers() {

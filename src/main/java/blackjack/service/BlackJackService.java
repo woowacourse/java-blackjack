@@ -23,20 +23,10 @@ public class BlackJackService {
     }
 
     public void createPeople(List<String> names) {
-        validateDuplicateName(names);
         List<Player> players = names.stream()
                 .map(Player::new)
                 .collect(toList());
         this.people = new People(new Dealer(), players);
-    }
-
-    private void validateDuplicateName(List<String> names) {
-        long uniqueNamesCount = names.stream()
-                .distinct()
-                .count();
-        if (uniqueNamesCount != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름이 있습니다.");
-        }
     }
 
     public void initDrawCard() {
