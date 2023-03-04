@@ -18,7 +18,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackGameController {
-    private static final String DEALER_NAME = "딜러";
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final InputView inputView;
@@ -55,7 +54,7 @@ public class BlackJackGameController {
 
     private void showSetUpResult(Dealer dealer, List<Player> players) {
         HashMap<String, List<Card>> setUpResult = new LinkedHashMap<>();
-        setUpResult.put(DEALER_NAME, dealer.getCards().subList(0, 1));
+        setUpResult.put(dealer.getName(), dealer.getCards().subList(0, 1));
         players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
         outputView.printSetUpResult(setUpResult);
     }
