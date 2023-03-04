@@ -1,7 +1,6 @@
 package blackjack.view;
 
-import blackjack.validator.CommonValidator;
-
+import java.util.Objects;
 import java.util.Scanner;
 
 public class InputView {
@@ -22,7 +21,13 @@ public class InputView {
 
     private static String readLine() {
         String input = sc.nextLine();
-        CommonValidator.validateBlank(input);
+        validateBlank(input);
         return input;
+    }
+
+    public static void validateBlank(String input) {
+        if (Objects.isNull(input) || input.isBlank()) {
+            throw new IllegalArgumentException("빈 값을 입력할 수 없습니다.");
+        }
     }
 }
