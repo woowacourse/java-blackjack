@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Dealer extends User {
+    private static final String DEALER_NAME = "딜러";
+    private static final int RECORD_INITIAL_VALUE = 0;
+    private static final int SEVENTEEN = 16;
+
     private DealerStatus status;
     private Map<Boolean, Integer> winningRecord;
 
@@ -17,18 +21,18 @@ public class Dealer extends User {
 
     private void initWinningRecord() {
         winningRecord = new HashMap<>();
-        winningRecord.put(true, 0);
-        winningRecord.put(false, 0);
+        winningRecord.put(true, RECORD_INITIAL_VALUE);
+        winningRecord.put(false, RECORD_INITIAL_VALUE);
     }
 
     @Override
     public void win() {
-        winningRecord.put(true, winningRecord.getOrDefault(true, 0) + 1);
+        winningRecord.put(true, winningRecord.getOrDefault(true, RECORD_INITIAL_VALUE) + 1);
     }
 
     @Override
     public void lose() {
-        winningRecord.put(false, winningRecord.getOrDefault(false, 0) + 1);
+        winningRecord.put(false, winningRecord.getOrDefault(false, RECORD_INITIAL_VALUE) + 1);
     }
 
     @Override
@@ -37,7 +41,7 @@ public class Dealer extends User {
             status = DealerStatus.BUST;
             return;
         }
-        if (score.getScore() <= 16) {
+        if (score.getScore() < SEVENTEEN) {
             status = DealerStatus.UNDER_SEVENTEEN;
             return;
         }
@@ -51,7 +55,7 @@ public class Dealer extends User {
 
     @Override
     public String getName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 
     public Map<Boolean, Integer> getWinningRecord() {
