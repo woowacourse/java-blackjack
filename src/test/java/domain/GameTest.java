@@ -1,18 +1,15 @@
 package domain;
 
-import static domain.Face.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class GameTest {
+public class GameTest extends AbstractTestFixture {
 
     @Test
     @DisplayName("카드를 2장씩 분배한다.")
@@ -90,7 +87,7 @@ public class GameTest {
                 new Player("땡칠", createCards("10", "K"))
         );
 
-        var game = new Game(players, new Deck(), new Dealer(createCards("K", "9","J")));
+        var game = new Game(players, new Deck(), new Dealer(createCards("K", "9", "J")));
 
         assertThat(game.getResult("땡칠")).isEqualTo(Result.WIN);
     }
@@ -107,11 +104,5 @@ public class GameTest {
 
         var player = game.getUsers().get(0);
         assertThat(player.getCards()).hasSize(3);
-    }
-
-    private List<Card> createCards(String... letters) {
-        return Arrays.stream(letters)
-                .map(letter -> new Card(SPADE, letter))
-                .collect(Collectors.toList());
     }
 }
