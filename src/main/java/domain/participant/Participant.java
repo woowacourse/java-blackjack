@@ -11,15 +11,15 @@ public abstract class Participant {
     private static final int MIN_BUST_NUMBER = 22;
 
     protected Name name;
-    protected List<Card> cards;
+    protected HandCards handCards;
 
-    public Participant(Name name) {
+    public Participant(Name name, HandCards handCards) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.handCards = handCards;
     }
 
     public void takeCard(Card card) {
-        cards.add(card);
+        handCards.addCard(card);
     }
 
     public int getMaxSum() {
