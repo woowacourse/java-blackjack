@@ -27,10 +27,9 @@ public class BlackJackController {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames,
             OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
-        Referee referee = new Referee();
-        dealer.initHit(cardPicker);
-        players.initHit(cardPicker);
-        OutputView.printInitCardDeck(dealer, players);
+        final Referee referee = new Referee();
+
+        init(players, dealer);
 
         for (Player player : players.getPlayers()) {
             askPlayer(referee, player);
@@ -45,6 +44,12 @@ public class BlackJackController {
         OutputView.printFinalCardDeck(dealer, players, referee);
         OutputView.printResult(referee.countDealerResult(results), dealer, players,
             results);
+    }
+
+    private void init(Players players, Dealer dealer) {
+        dealer.initHit(cardPicker);
+        players.initHit(cardPicker);
+        OutputView.printInitCardDeck(dealer, players);
     }
 
     private void askPlayer(Referee referee, Player player) {
