@@ -6,6 +6,7 @@ import blackjack.model.card.*;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
+import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -26,48 +27,19 @@ public class GameController {
         this.outputView = outputView;
     }
 
-    public void run(){
+    public void run() {
         List<Player> players = initializedPlayers();
         Dealer dealer = new Dealer(new InitialState(new HandCard()));
         CardDeck cardDeck = new CardDeck();
 
-        //카드 나누기
         distributeFirstCards(players, dealer, cardDeck);
 
-        //플레이어 HitOrStand
-        for (Player player : players) {
-            hitOrStandByPlayer(cardDeck, player);
-        }
-        //딜러 HitOrStand
-        hitOrStandByDealer(cardDeck, dealer);
+        playHitOrStand(players, dealer, cardDeck);
 
-        //딜러 결과 출력
-        CardScore dealerScore = dealer.cardScore();
-        String dealerResult = Integer.toString(dealerScore.bigScore());
+        printDealerScoreResult(dealer);
+        printPlayerScoreResult(players);
 
-        if (dealer.isBlackjack()) {
-            dealerResult += " (블랙잭!!)";
-        }
-        if(dealer.isBust()) {
-            dealerResult = Integer.toString(dealerScore.smallScore());
-        }
-
-        outputView.printScoreResult(singleNameAndHand(dealer), dealerResult);
-
-        // 보유 카드. 숫자합 결과 출력
-        for (Player player : players) {
-            CardScore cardScore = player.cardScore();
-            //블랙잭/버스트/숫자
-            String result = Integer.toString(cardScore.smallScore());
-
-            if (player.isBlackjack()) {
-                result = Integer.toString(cardScore.bigScore());
-                result += " (블랙잭!!)";
-            }
-
-            outputView.printScoreResult(playerNamesAndHands(List.of(player)), result);
-        }
-
+        //승패 결과 계산
 
         Map<String, String> playerResult = new HashMap<>();
         int win = 0;
@@ -86,8 +58,8 @@ public class GameController {
                 playerResult.put(name, "패");
                 continue;
             }
-            if(dealer.isBust()){
-                if(player.isBust()){
+            if (dealer.isBust()) {
+                if (player.isBust()) {
                     win++;
                     playerResult.put(name, "패");
                     continue;
@@ -96,8 +68,8 @@ public class GameController {
                 playerResult.put(name, "승");
                 continue;
             }
-            if(dealer.isStand()){
-                if(player.isStand()){
+            if (dealer.isStand()) {
+                if (player.isStand()) {
                     int dealerSum = dealer.getScore();
                     int playerSum = player.getScore();
                     if (dealerSum > playerSum) {
@@ -114,7 +86,7 @@ public class GameController {
                     playerResult.put(name, "무");
                     continue;
                 }
-                if(player.isBlackjack()){
+                if (player.isBlackjack()) {
                     lose++;
                     playerResult.put(name, "승");
                     continue;
@@ -124,9 +96,31 @@ public class GameController {
                 continue;
             }
         }
+
         outputView.printWinningResultMessage();
         outputView.printDealerWinningResult(List.of(win, same, lose));
         outputView.printPlayersWinningResult(playerResult);
+    }
+
+    private void printPlayerScoreResult(List<Player> players) {
+        for (Player player : players) {
+            CardScore cardScore = player.cardScore();
+
+            String result = Integer.toString(cardScore.smallScore());
+            if (player.isBlackjack()) {
+                result = Integer.toString(cardScore.bigScore());
+                result += " (블랙잭!!)";
+            }
+
+            outputView.printScoreResult(playerNamesAndHands(List.of(player)), result);
+        }
+    }
+
+    private void playHitOrStand(List<Player> players, Dealer dealer, CardDeck cardDeck) {
+        for (Player player : players) {
+            hitOrStandByPlayer(cardDeck, player);
+        }
+        hitOrStandByDealer(cardDeck, dealer);
     }
 
     private void distributeFirstCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
@@ -168,9 +162,16 @@ public class GameController {
 
     private void hitOrStandByDealer(CardDeck cardDeck, Dealer dealer) {
         while (!dealer.isFinished()) {
-            dealer.play(cardDeck);
             outputView.printDealerHitMessage();
         }
+    }
+
+    private void printDealerScoreResult(Dealer dealer) {
+        String dealerResult = Integer.toString(dealer.getScore());
+        if (dealer.isBlackjack()) {
+            dealerResult += " (블랙잭!!)";
+        }
+        outputView.printScoreResult(singleNameAndHand(dealer), dealerResult);
     }
 
     private Map<String, List<String>> dealerNameAndHand(Dealer dealer) {
