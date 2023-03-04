@@ -4,7 +4,9 @@ import domain.user.User;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     private final int INITIAL_CARDS_COUNT = 2;
@@ -40,8 +42,10 @@ public class BlackjackGame {
         this.dealer.addCard(deck.draw());
     }
 
-    public void calculateAllResults(PlayerResultRepository playerResultRepository) {
-        this.players.getPlayers().forEach(player -> playerResultRepository.save(player, calculateResult(player)));
+    public Map<Player, Result> calculateAllResults() {
+        Map<Player, Result> resultsOfPlayers = new HashMap<>();
+        this.players.getPlayers().forEach(player -> resultsOfPlayers.put(player, calculateResult(player)));
+        return resultsOfPlayers;
     }
 
     private Result calculateResult(Player player) {

@@ -2,17 +2,14 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.Deck;
-import domain.PlayerResultRepository;
 import domain.user.Player;
 import ui.InputView;
 import ui.OutputView;
 
 public class BlackjackController {
-    private final PlayerResultRepository playerResultRepository;
     private final Deck deck;
 
     public BlackjackController() {
-        this.playerResultRepository = new PlayerResultRepository();
         this.deck = new Deck();
     }
 
@@ -23,8 +20,7 @@ public class BlackjackController {
         blackjackGame.getPlayers().forEach(this::giveCardUntilImpossible);
         addCardToDealerIfPossible(blackjackGame);
         OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        blackjackGame.calculateAllResults(playerResultRepository);
-        OutputView.printResults(playerResultRepository.getRepository());
+        OutputView.printResults(blackjackGame.calculateAllResults());
     }
 
     private void addCardToDealerIfPossible(BlackjackGame blackjackGame) {
