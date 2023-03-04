@@ -64,20 +64,24 @@ public class Users {
         return getDealer().isHittable();
     }
 
-    public List<Player> getPlayers() {
-        return users.stream()
-            .filter(user -> user instanceof Player)
-            .map(user -> (Player) user)
-            .collect(Collectors.toUnmodifiableList());
-    }
+	public Dealer getDealer() {
+		User dealer = users.stream()
+			.filter(user -> user instanceof Dealer)
+			.findAny()
+			.orElseThrow(IllegalArgumentException::new);
+		return (Dealer)dealer;
+	}
 
-    public Dealer getDealer() {
-        User dealer = users.stream()
-            .filter(user -> user instanceof Dealer)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
-        return (Dealer) dealer;
-    }
+	public List<Player> getPlayers() {
+		return users.stream()
+			.filter(user -> user instanceof Player)
+			.map(user -> (Player)user)
+			.collect(Collectors.toUnmodifiableList());
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
 
     public List<Player> getHittablePlayers() {
         List<Player> players = getPlayers();
