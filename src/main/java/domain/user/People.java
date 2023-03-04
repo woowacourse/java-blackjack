@@ -21,12 +21,12 @@ public class People {
 
     private List<Player> mapToPlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList())))
+                .map(playerName -> new Player(playerName, new Hand(Collections.emptyList())))
                 .collect(Collectors.toList());
     }
 
     private Dealer mapToDealer(String dealerName) {
-        return new Dealer(dealerName, new CardPool(Collections.emptyList()));
+        return new Dealer(dealerName, new Hand(Collections.emptyList()));
     }
 
     public void letPlayersToHit(Deck deck) {

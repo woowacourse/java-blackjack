@@ -6,13 +6,13 @@ import domain.card.Denomination;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardPool {
+public class Hand {
 
     private static final int CARD_POINT_LIMIT = 21;
 
     private final List<Card> cards;
 
-    public CardPool(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 

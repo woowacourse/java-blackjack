@@ -3,7 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.user.CardPool;
+import domain.user.Hand;
 import domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class DealerTest {
     @Test
     @DisplayName("17이면 히트가 아니다")
     void notHit() {
-        Dealer dealer = new Dealer("deal", new CardPool(List.of(
+        Dealer dealer = new Dealer("deal", new Hand(List.of(
                 new Card(Suit.HEART, Denomination.SIX),
                 new Card(Suit.HEART, Denomination.ACE)
         )));
@@ -28,7 +28,7 @@ class DealerTest {
     @Test
     @DisplayName("16이면 히트다")
     void isHit() {
-        Dealer dealer = new Dealer("deal", new CardPool(List.of(
+        Dealer dealer = new Dealer("deal", new Hand(List.of(
                 new Card(Suit.HEART, Denomination.FIVE),
                 new Card(Suit.HEART, Denomination.ACE)
         )));

@@ -5,15 +5,15 @@ import domain.card.Card;
 public class Player {
 
     private final PlayerName playerName;
-    private final CardPool cardPool;
+    private final Hand hand;
 
-    public Player(String playerName, CardPool cardPool) {
+    public Player(String playerName, Hand hand) {
         this.playerName = new PlayerName(playerName);
-        this.cardPool = cardPool;
+        this.hand = hand;
     }
 
     public void draw(Card card) {
-        cardPool.add(card);
+        hand.add(card);
     }
 
     public boolean hasSameNameWith(String name) {
@@ -21,18 +21,18 @@ public class Player {
     }
 
     public int sumCardPool() {
-        return cardPool.sumCardNumbers();
+        return hand.sumCardNumbers();
     }
 
     public boolean isOverCardPointLimit() {
-        return cardPool.isOverCardPointLimit();
+        return hand.isOverCardPointLimit();
     }
 
     public PlayerName getPlayerName() {
         return playerName;
     }
 
-    public CardPool getCardPool() {
-        return cardPool;
+    public Hand getCardPool() {
+        return hand;
     }
 }

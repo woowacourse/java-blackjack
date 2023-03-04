@@ -3,7 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.user.CardPool;
+import domain.user.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-class CardPoolTest {
+class HandTest {
 
     @Test
     @DisplayName("카드 풀에 카드가 저장된다")
@@ -23,9 +23,9 @@ class CardPoolTest {
                 new Card(Suit.HEART, Denomination.KING)
         );
 
-        CardPool cardPool = new CardPool(cards);
+        Hand hand = new Hand(cards);
 
-        assertThat(cardPool.getCards())
+        assertThat(hand.getCards())
                 .isEqualTo(cards);
     }
 
@@ -34,9 +34,9 @@ class CardPoolTest {
     void sumCardPoolWhenCardsNotExist() {
         List<Card> cards = Collections.emptyList();
 
-        CardPool cardPool = new CardPool(cards);
+        Hand hand = new Hand(cards);
 
-        assertThat(cardPool.sumCardNumbers())
+        assertThat(hand.sumCardNumbers())
                 .isEqualTo(0);
     }
 
@@ -48,9 +48,9 @@ class CardPoolTest {
                 new Card(Suit.HEART, Denomination.EIGHT)
         );
 
-        CardPool cardPool = new CardPool(cards);
+        Hand hand = new Hand(cards);
 
-        assertThat(cardPool.sumCardNumbers())
+        assertThat(hand.sumCardNumbers())
                 .isEqualTo(13);
     }
 
@@ -63,9 +63,9 @@ class CardPoolTest {
                 new Card(Suit.CLOVER, Denomination.ACE)
         );
 
-        CardPool cardPool = new CardPool(cards);
+        Hand hand = new Hand(cards);
 
-        assertThat(cardPool.sumCardNumbers())
+        assertThat(hand.sumCardNumbers())
                 .isEqualTo(14);
     }
 
@@ -79,9 +79,9 @@ class CardPoolTest {
 
         );
 
-        CardPool cardPool = new CardPool(cards);
+        Hand hand = new Hand(cards);
 
-        assertThat(cardPool.sumCardNumbers())
+        assertThat(hand.sumCardNumbers())
                 .isEqualTo(14);
     }
 
@@ -94,20 +94,20 @@ class CardPoolTest {
                 new Card(Suit.CLOVER, Denomination.ACE)
         );
 
-        CardPool cardPool = new CardPool(cards);
+        Hand hand = new Hand(cards);
 
-        assertThat(cardPool.sumCardNumbers())
+        assertThat(hand.sumCardNumbers())
                 .isEqualTo(20);
     }
 
     @Test
     @DisplayName("카드가 잘 들어가는지 테스트한다.")
     void addTest() {
-        CardPool cardPool = new CardPool(Collections.emptyList());
+        Hand hand = new Hand(Collections.emptyList());
         Card card = new Card(Suit.CLOVER, Denomination.FOUR);
 
-        cardPool.add(card);
+        hand.add(card);
 
-        assertThat(cardPool.getCards()).contains(card);
+        assertThat(hand.getCards()).contains(card);
     }
 }
