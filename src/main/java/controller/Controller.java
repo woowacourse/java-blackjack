@@ -1,8 +1,6 @@
 package controller;
 
 import domain.*;
-import view.InputView;
-import view.OutputView;
 
 import java.util.LinkedHashMap;
 
@@ -10,39 +8,35 @@ import static view.InputView.*;
 import static view.OutputView.*;
 
 public class Controller {
-    private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     private final Deck deck = new Deck();
 
     public void blackjack() {
         Players players = getPlayers();
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer();
 
         gameStart(players, dealer);
     }
 
     private Players getPlayers() {
-        Players players;
 
         try {
-            players = new Players(readPlayersName());
+            return new Players(readPlayersName());
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            players = getPlayers();
+            return getPlayers();
         }
-        return players;
     }
 
     private void gameStart(Players players, Dealer dealer) {
-        printInitialPickGuideMessage(players);
-        printGamblersCards(players, dealer);
+        drawInitialCards(players, dealer);
 
         playersHitOrStand(players);
         dealerHitOrStand(dealer);
 
         printScores(players, dealer);
-        LinkedHashMap<Gambler, Integer> result = getResult(dealer, players);
-        OutputView.printResult(result);
+        LinkedHashMap<Player, Integer> result = getResult(dealer, players);
+        printResult(result);
     }
 
     private void drawInitialCards(final Players players, final Dealer dealer) {
@@ -52,7 +46,7 @@ public class Controller {
             player.drawCard(deck.pickCard());
         }
         dealer.drawCard(deck.pickCard());
-        printPlayersCards(players, dealer);
+        printPlayersCards(dealer, players);
     }
 
     private void playersHitOrStand(Players players) {
@@ -77,12 +71,11 @@ public class Controller {
             printErrorMessage(exception);
             return getIsHit(player);
         }
-        return isHit;
     }
 
-    private void playerHit(Player player, boolean isHit) {
-        if (isHit) {
-            player.pickCard();
+    private void playerHit(Player player, boolean canHit) {
+        if (canHit) {
+            player.drawCard(deck.pickCard());
         }
     }
 
@@ -92,14 +85,14 @@ public class Controller {
     }
 
     private void dealerHitOrStand(Dealer dealer) {
-        while (dealer.getScore() <= dealer.getPickBoundary()) {
+        while (dealer.isHittable()) {
             dealerHit(dealer);
         }
     }
 
     private void dealerHit(Dealer dealer) {
-        dealer.pickCard();
-        System.out.println(DEALER_HIT);
+        dealer.drawCard(deck.pickCard());
+        printDealerDrawMessage();
     }
 
     private void printScores(Players players, Dealer dealer) {
@@ -109,12 +102,12 @@ public class Controller {
         }
     }
 
-    private LinkedHashMap<Gambler, Integer> getResult(Dealer dealer, Players players) {
-        LinkedHashMap<Gambler, Integer> result = new LinkedHashMap<>();
+    private LinkedHashMap<Player, Integer> getResult(Dealer dealer, Players players) {
+        LinkedHashMap<Player, Integer> result = new LinkedHashMap<>();
         return calculateWinCount(dealer, players, result);
     }
 
-    private LinkedHashMap<Gambler, Integer> calculateWinCount(Dealer dealer, Players players, LinkedHashMap<Gambler, Integer> result) {
+    private LinkedHashMap<Player, Integer> calculateWinCount(Dealer dealer, Players players, LinkedHashMap<Player, Integer> result) {
         result.put(dealer, 0);
         for (Player player : players.getPlayers()) {
             decideWinner(dealer, result, player);
@@ -122,7 +115,7 @@ public class Controller {
         return result;
     }
 
-    private void decideWinner(Dealer dealer, LinkedHashMap<Gambler, Integer> result, Player player) {
+    private void decideWinner(Dealer dealer, LinkedHashMap<Player, Integer> result, Player player) {
         if (isPlayerWin(dealer, player)) {
             result.put(player, 1);
             return;
@@ -135,14 +128,14 @@ public class Controller {
     }
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        return (dealerScore <= playerScore && !player.isBustedGambler(playerScore)) || dealer.isBustedGambler(dealerScore);
+        int playerScore = player.getScore().getValue();
+        int dealerScore = dealer.getScore().getValue();
+        return (dealerScore <= playerScore && !player.isBustedPlayer()) || dealer.isBustedPlayer();
     }
 
     private boolean isDealerWin(Dealer dealer, Player player) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        return dealerScore > playerScore || player.isBustedGambler(playerScore);
+        int playerScore = player.getScore().getValue();
+        int dealerScore = dealer.getScore().getValue();
+        return dealerScore > playerScore || player.isBustedPlayer();
     }
 }
