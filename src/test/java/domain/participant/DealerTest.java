@@ -3,7 +3,6 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,19 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class DealerTest {
 
-    private Card card;
-    private Dealer dealer;
-
-    @BeforeEach
-    void init() {
-        card = Card.create(CardPattern.HEART, CardNumber.ACE);
-        dealer = Dealer.create();
-    }
+    private final Dealer dealer = Dealer.create();
 
     @Test
-    @DisplayName("create()는 호출하면, 딜러를 생성한다")
+    @DisplayName("create()는 호출하면 딜러를 생성한다")
     void create_whenCall_thenSuccess() {
         final Dealer dealer = assertDoesNotThrow(Dealer::create);
+
         assertThat(dealer)
                 .isExactlyInstanceOf(Dealer.class);
     }
@@ -37,6 +30,7 @@ class DealerTest {
     @DisplayName("addCard()는 카드를 건네주면 참가자의 카드에 추가한다")
     void addCard_givenCard_thenSuccess() {
         // when
+        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
         dealer.addCard(card);
         final ParticipantCard participantCard = dealer.participantCard;
         final List<Card> cards = participantCard.getCards();
@@ -50,6 +44,7 @@ class DealerTest {
     @DisplayName("getFirst()는 호출하면, 딜러의 첫 번째 카드를 조회한다")
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
+        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
         dealer.addCard(card);
 
         // when

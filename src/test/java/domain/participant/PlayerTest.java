@@ -23,14 +23,13 @@ class PlayerTest {
 
     @BeforeEach
     void init() {
-        // given
         playerName = "pobi";
         card = Card.create(CardPattern.HEART, CardNumber.ACE);
         player = Player.create(playerName);
     }
 
     @Test
-    @DisplayName("create()를 호출하면, Player가 생성된다")
+    @DisplayName("create()를 호출하면 Player가 생성된다")
     void create_whenCall_thenSuccess() {
         final Player player = assertDoesNotThrow(() -> Player.create(playerName));
 
