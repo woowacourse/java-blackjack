@@ -16,6 +16,7 @@ public class OutputView {
     public static final String RESULT_DELIMITER = " - 결과: ";
     public static final String CARD_DELIMITER = "카드: ";
     public static final String RESULT_TITLE = "## 최종 승패";
+    public static final String NAME_JOINING_DELIMITER = ", ";
 
     private OutputView() {
     }
@@ -23,14 +24,20 @@ public class OutputView {
     public static void printReadyMessage(List<Name> names) {
         String allName = names.stream()
                 .map(Name::getName)
-                .collect(Collectors.joining(", "));
-        System.out.println("딜러와 " + allName + "2장을 나누었습니다.");
+                .collect(Collectors.joining(NAME_JOINING_DELIMITER));
+        printEmptyLine();
+        System.out.println("딜러와 " + allName + "에게 2장을 나누었습니다.");
     }
 
     public static void printPlayersCurrentCards(Players players) {
         for (Player player : players.getPlayers()) {
             printPlayerCurrentCards(player);
         }
+        printEmptyLine();
+    }
+
+    private static void printEmptyLine() {
+        System.out.println();
     }
 
     public static void printPlayerCurrentCards(Player player) {
@@ -41,7 +48,7 @@ public class OutputView {
     private static String getPlayerCards(User user) {
         return user.getPlayerCards().stream()
                 .map(card -> card.getNumber().getNumber() + card.getSymbol().getSymbol())
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(NAME_JOINING_DELIMITER));
     }
 
     public static void printDealerCurrentCards(Dealer dealer) {
@@ -53,10 +60,12 @@ public class OutputView {
     }
 
     public static void printScore(Dealer dealer, Players players) {
+        printEmptyLine();
         System.out.println(DEALER_CARD + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
         for (Player player : players.getPlayers()) {
             System.out.println(getPlayerCards(player) + RESULT_DELIMITER + player.getTotalScore());
         }
+        printEmptyLine();
     }
 
     public static void printResults(HashMap<Player, Result> playerResults, HashMap<Result, Integer> dealerResults) {
@@ -65,7 +74,7 @@ public class OutputView {
         dealerResults.keySet().stream()
                 .filter(result -> dealerResults.get(result) > 0)
                 .forEach(result -> System.out.print(dealerResults.get(result) + result.getResult() + BLANK));
-        System.out.println();
+        printEmptyLine();
         for (Player player : playerResults.keySet()) {
             System.out.println(player.getPlayerName() + CARD_USER_DELIMITER + playerResults.get(player).getResult());
         }
@@ -76,6 +85,8 @@ public class OutputView {
     }
 
     public static void printScoreUnderLimit() {
+        printEmptyLine();
         System.out.println("현재 카드 점수 총합은 21을 초과합니다.");
+        printEmptyLine();
     }
 }
