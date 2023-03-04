@@ -23,4 +23,12 @@ public interface SimpleList<T> {
     T remove(int index);
 
     void clear();
+
+    static <T> SimpleList<T> fromArrayToList(T[] array) {
+        SimpleList<T> list = new SimpleLinkedList<>();
+        for (T value : array) {
+            list.add(value);
+        }
+        return list;
+    }
 }
