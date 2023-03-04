@@ -2,89 +2,43 @@ package domain.player.participant;
 
 import domain.area.CardArea;
 import domain.card.Card;
-import domain.card.CardShape;
 import domain.player.Name;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.stream.Stream;
-
-import static domain.card.CardValue.SEVEN;
+import static domain.card.CardShape.CLOVER;
+import static domain.card.CardShape.SPADE;
+import static domain.card.CardValue.ACE;
 import static domain.card.CardValue.TEN;
-import static domain.card.CardValue.TWO;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SuppressWarnings("NonAsciiCharacters")
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("Participant 은")
 class ParticipantTest {
 
     final CardArea cardArea = new CardArea(
-            new Card(CardShape.CLOVER, TEN),
-            new Card(CardShape.CLOVER, SEVEN)
+            new Card(CLOVER, TEN),
+            new Card(SPADE, TEN)
     );
 
     @Test
-    void 참가자는_상태를_바꿀_수_있다() {
+    @DisplayName("canHit() : 참여자는 21점 미만일 경우 카드를 더 받을 수 있다.")
+    void test_canHit_underScore21() {
         // given
         final Participant participant = new Participant(new Name("player1"), cardArea);
-
-        // when
-        assertDoesNotThrow(() -> participant.changeState(State.HIT));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = "HIT")
-    @NullSource
-    void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final State state) {
-        // given
-        final Participant participant = new Participant(new Name("player1"), cardArea);
-
-        participant.changeState(state);
 
         // when & then
         assertTrue(participant.canHit());
     }
 
-    @ParameterizedTest
-    @MethodSource("canNotMoreCard")
-    void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final State state) {
+    @Test
+    @DisplayName("canHit() : 참여자는 21점 이상일 경우 카드를 더 받을 수 없다.")
+    void test_canHit_overScore21() {
         // given
         final Participant participant = new Participant(new Name("player1"), cardArea);
-        participant.changeState(state);
+        cardArea.addCard(new Card(CLOVER, ACE));
 
         // when & then
         assertFalse(participant.canHit());
-    }
-
-    static Stream<Arguments> canNotMoreCard() {
-
-        final CardArea under21CardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
-
-        final CardArea over21CardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
-
-        over21CardArea.addCard(new Card(CardShape.SPADE, TWO));
-
-        return Stream.of(
-                Arguments.of(under21CardArea, State.STAY),
-                Arguments.of(over21CardArea, null),
-                Arguments.of(over21CardArea, State.STAY),
-                Arguments.of(over21CardArea, State.HIT)
-        );
     }
 }

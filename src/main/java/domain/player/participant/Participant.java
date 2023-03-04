@@ -4,11 +4,7 @@ import domain.area.CardArea;
 import domain.player.Name;
 import domain.player.Player;
 
-import java.util.Objects;
-
 public class Participant extends Player {
-
-    private State state;
 
     public Participant(final Name name, final CardArea cardArea) {
         super(name, cardArea);
@@ -16,15 +12,6 @@ public class Participant extends Player {
 
     @Override
     public boolean canHit() {
-        return cardArea.canMoreCard() &&
-                (Objects.isNull(state) || wantHit());
-    }
-
-    public boolean wantHit() {
-        return state.isHit();
-    }
-
-    public void changeState(final State state) {
-        this.state = state;
+        return cardArea.canMoreCard();
     }
 }

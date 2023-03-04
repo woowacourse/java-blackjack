@@ -2,12 +2,11 @@ package controller;
 
 import domain.area.CardArea;
 import domain.deck.CardDeck;
+import domain.player.Name;
 import domain.player.dealer.Dealer;
 import domain.player.dealer.DealerResult;
-import domain.player.Name;
 import domain.player.participant.Participant;
 import domain.player.participant.ParticipantResult;
-import domain.player.participant.State;
 import view.InputView;
 import view.OutputView;
 
@@ -90,24 +89,14 @@ public class BlackJackController {
     }
 
     private void hitForParticipant(final CardDeck cardDeck, final Participant participant) {
-        while (participant.canHit()) {
-            participant.changeState(inputHitOrStay(participant));
-            determineHitForParticipant(cardDeck, participant);
-        }
-    }
-
-    private void determineHitForParticipant(final CardDeck cardDeck, final Participant participant) {
-        if (participant.wantHit()) {
+        while (participant.canHit() && inputHitOrStay(participant)) {
             participant.hit(cardDeck.draw());
+            OutputView.showStateOf(participant);
         }
-        OutputView.showStateOf(participant);
     }
 
-    private State inputHitOrStay(final Participant participant) {
-        if (InputView.readMoreCard(participant).equals("y")) {
-            return State.HIT;
-        }
-        return State.STAY;
+    private boolean inputHitOrStay(final Participant participant) {
+        return InputView.readMoreCard(participant).equals("y");
     }
 
     private Dealer dealDealerCards(final CardDeck cardDeck) {
