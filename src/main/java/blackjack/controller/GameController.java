@@ -30,7 +30,7 @@ public class GameController {
 
     public void run() {
         List<Player> players = initializedPlayers();
-        Dealer dealer = new Dealer(new InitialState(new HandCard()));
+        Dealer dealer = new Dealer(new DealerInitialState(new HandCard()));
         CardDeck cardDeck = new CardDeck();
 
         distributeFirstCards(players, dealer, cardDeck);
