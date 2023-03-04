@@ -74,7 +74,7 @@ public class BlackJackController {
         while (isContinueToAsk(command, score)) {
             command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
             hitByCommand(player, command);
-            OutputView.printParticipantCardDeck(player);
+            OutputView.printPlayerCardDeck(player);
             score = calculateScore(referee, player);
         }
     }
