@@ -15,7 +15,7 @@ public class BlackJackApplication {
         initializedBlackjackGame(blackJack);
 
         giveCardToPlayers(blackJack);
-        blackJack.battle2();
+        blackJack.battle();
         OutputView.printPlayersGameResults(blackJack.getGameResult());
     }
 
@@ -26,13 +26,13 @@ public class BlackJackApplication {
 
     private void initializedBlackjackGame(BlackJack blackJack) {
         blackJack.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJack.getPlayers2());
+        OutputView.printPlayersInformation(blackJack.getPlayers());
     }
 
     private void giveCardToPlayers(BlackJack blackJack) {
         giveCardToParticipants(blackJack);
         giveCardToDealer(blackJack);
-        OutputView.printPlayersFinalInformation(blackJack.getPlayers2());
+        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
     }
 
     private void giveCardToParticipants(BlackJack blackJack) {
@@ -45,7 +45,7 @@ public class BlackJackApplication {
     private void giveCardToParticipant(BlackJack blackJack, PlayerReadOnly participant) {
         Command command = getCommand(participant.getName());
         if (command.isYes()) {
-            blackJack.giveCard(participant.getName());
+            blackJack.giveCard(participant);
             OutputView.printParticipantCardCondition(List.of(participant));
         }
 
@@ -74,7 +74,7 @@ public class BlackJackApplication {
 
     private void giveCardToDealer(BlackJack blackJack) {
         if (blackJack.shouldDealerGetCard()) {
-            blackJack.giveDealerCard();
+            blackJack.giveCardToDealer();
             OutputView.printGiveDealerCardMessage();
         }
     }

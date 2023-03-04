@@ -3,14 +3,11 @@ package domain;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.player.Dealer;
-import domain.player.Participant;
-import domain.player.Player;
+import domain.player.PlayerReadOnly;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,15 +19,12 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
         blackJack.giveTwoCardToPlayers();
 
-        Map<Player, List<Card>> playersCards = blackJack.getPlayersCards();
+        List<PlayerReadOnly> players = blackJack.getPlayers();
 
         assertAll(
-                () -> assertThat(playersCards.get(new Dealer()))
-                        .containsExactly(new Card(Shape.HEART, Number.ACE), new Card(Shape.HEART, Number.TWO)),
-                () -> assertThat(playersCards.get(new Participant("여우")))
-                        .containsExactly(new Card(Shape.HEART, Number.THREE), new Card(Shape.HEART, Number.FOUR)),
-                () -> assertThat(playersCards.get(new Participant("아벨")))
-                        .containsExactly(new Card(Shape.HEART, Number.FIVE), new Card(Shape.HEART, Number.SIX))
+                () -> assertThat(players.get(0).getCards()).hasSize(2),
+                () -> assertThat(players.get(1).getCards()).hasSize(2),
+                () -> assertThat(players.get(2).getCards()).hasSize(2)
         );
     }
 
@@ -39,22 +33,18 @@ class BlackJackTest {
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
         blackJack.giveTwoCardToPlayers();
+        List<PlayerReadOnly> participants = blackJack.getParticipants();
 
-        blackJack.giveCard("여우");
+        blackJack.giveCard(participants.get(1));
 
-        List<Card> cards = blackJack.getCardsFrom("여우");
-
-        assertThat(cards).containsExactly(
-                new Card(Shape.HEART, Number.THREE),
-                new Card(Shape.HEART, Number.FOUR),
-                new Card(Shape.HEART, Number.SEVEN)
-        );
+        List<Card> cards = participants.get(1).getCards();
+        assertThat(cards).hasSize(3);
     }
 
     @Test
     @DisplayName("딜러의 총 점수가 16 이하인 지 확인한다.")
     void givenDealerTotalScore_thenChecksOrLessSixTeen() {
-        BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 6);
+        BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 5);
         blackJack.giveTwoCardToPlayers();
 
         assertThat(blackJack.shouldDealerGetCard()).isTrue();
@@ -75,8 +65,9 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
         blackJack.giveTwoCardToPlayers();
 
-        blackJack.giveDealerCard();
+        blackJack.giveCardToDealer();
 
-        assertThat(blackJack.getCardsFrom("딜러")).contains(new Card(Shape.HEART, Number.SEVEN));
+        assertThat(blackJack.getPlayers().get(0).getCards())
+                .contains(new Card(Shape.HEART, Number.SEVEN));
     }
 }

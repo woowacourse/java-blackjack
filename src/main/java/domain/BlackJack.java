@@ -1,123 +1,62 @@
 package domain;
 
-import domain.card.Card;
 import domain.card.CardRepository;
 import domain.gameresult.GameResult;
-import domain.player.Dealer;
-import domain.player.Participant;
-import domain.player.Player;
 import domain.gameresult.GameResultReadOnly;
-import domain.strategy.IndexGenerator;
 import domain.player.PlayerReadOnly;
+import domain.player.Players;
+import domain.strategy.IndexGenerator;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJack {
-    private final CardRepository cardRepository;
-    private final List<Player> players;
+    private final Players players;
     private final GameResult gameResult;
+    private final CardRepository cardRepository;
 
     public BlackJack(String participantNames, IndexGenerator indexGenerator) {
-        this.cardRepository = CardRepository.create(indexGenerator);
-        this.players = initPlayers(participantNames);
+        this.players = Players.with(initParticipantNames(participantNames));
         this.gameResult = new GameResult();
+        this.cardRepository = CardRepository.create(indexGenerator);
     }
 
-    private List<Player> initPlayers(String playerNames) {
-        List<Player> players = new ArrayList<>(List.of(new Dealer()));
-        players.addAll(initParticipants(playerNames));
-        return players;
-    }
-
-    private List<Participant> initParticipants(String playerNames) {
-        return Arrays.stream(playerNames.split(","))
-                .map(Participant::new)
+    private List<String> initParticipantNames(String participantNames) {
+        return Arrays.stream(participantNames.split(","))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public void giveTwoCardToPlayers() {
-        for (Player player : players) {
-            giveTwoCardToPerPlayer(player);
-        }
+        players.giveCardToAll(cardRepository);
+        players.giveCardToAll(cardRepository);
     }
 
-    private void giveTwoCardToPerPlayer(Player player) {
-        for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
-            player.addCard(findAnyOneCard());
-        }
-    }
-
-    private Card findAnyOneCard() {
-        return cardRepository.findAnyOneCard();
-    }
-
-    public Map<Player, List<Card>> getPlayersCards() {
-        HashMap<Player, List<Card>> cardsPerPlayer = new HashMap<>();
-        putPlayerCards(cardsPerPlayer);
-        return cardsPerPlayer;
-    }
-
-    private void putPlayerCards(HashMap<Player, List<Card>> cardsPerPlayer) {
-        players.forEach(player -> cardsPerPlayer.put(player, player.getCards()));
-    }
-
-    public void giveCard(String playerName) {
-        players.stream()
-                .filter(player -> player.isNameEqualTo(playerName))
-                .forEach(player -> player.addCard(cardRepository.findAnyOneCard()));
-    }
-
-    public List<Card> getCardsFrom(String playerName) {
-        return players.stream()
-                .filter(player -> player.isNameEqualTo(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이름입니다."))
-                .getCards();
+    public void giveCard(PlayerReadOnly participant) {
+        players.giveCardByName(participant.getName(), cardRepository.findAnyOneCard());
     }
 
     public boolean shouldDealerGetCard() {
-        return getDealer().getTotalScore() <= 16;
+        return players.shouldDealerGetCard();
     }
 
-    public void giveDealerCard() {
-        getDealer().addCard(findAnyOneCard());
+    public void giveCardToDealer() {
+        players.giveCardToDealer(cardRepository);
     }
 
-    public Dealer getDealer() {
-        return (Dealer) players.get(0);
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(this.players);
-    }
-
-    public List<PlayerReadOnly> getPlayers2() {
-        return this.players
-                .stream().map(PlayerReadOnly::from)
-                .collect(Collectors.toUnmodifiableList());
+    public List<PlayerReadOnly> getPlayers() {
+        return players.getAllPlayers();
     }
 
     public List<PlayerReadOnly> getParticipants() {
-        List<Player> players = new ArrayList<>(getPlayers());
-        players.remove(0);
-        return players.stream().map(PlayerReadOnly::from)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public List<Player> getParticipants2() {
-        List<Player> players = new ArrayList<>(getPlayers());
-        players.remove(0);
-        return players;
-    }
-
-    public void battle2() {
-        for (Player participant : getParticipants2()) {
-            getDealer().battle2(participant, gameResult);
-        }
+        return players.getParticipants();
     }
 
     public GameResultReadOnly getGameResult() {
         return GameResultReadOnly.from(gameResult);
+    }
+
+    public void battle() {
+        players.battleAll(gameResult);
     }
 }
