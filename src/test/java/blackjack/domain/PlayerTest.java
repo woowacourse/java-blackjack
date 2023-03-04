@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
@@ -112,16 +110,6 @@ class PlayerTest {
                 .isTrue();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {" ", "  ", "", "\n"})
-    @DisplayName("이름이 공백이면 예외가 발생해야 한다.")
-    void validateBlankName(String input) {
-        // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Player(input);
-        }).withMessage("[ERROR] 이름은 공백일 수 없습니다.");
-    }
-
     @Test
     @DisplayName("이름이 딜러면 예외가 발생해야 한다.")
     void validateBlacklist() {
@@ -129,15 +117,6 @@ class PlayerTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Player("딜러");
         }).withMessage("[ERROR] 딜러는 사용할 수 없는 이름입니다.");
-    }
-
-    @Test
-    @DisplayName("이름이 5글자를 초과하면 예외가 발생해야 한다.")
-    void validateNameLength() {
-        // expect
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Player("123456");
-        }).withMessage("[ERROR] 이름은 5글자를 넘을 수 없습니다.");
     }
 
     @Test

@@ -1,16 +1,15 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Person {
     protected static final int MAX_SCORE = 21;
 
-    protected final String name;
+    protected final Name name;
     protected final Cards cards;
 
     protected Person(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.cards = new Cards();
     }
 
@@ -42,7 +41,7 @@ public abstract class Person {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public List<Card> getCards() {
@@ -50,7 +49,7 @@ public abstract class Person {
     }
 
     public boolean isNameMatch(String name) {
-        return Objects.equals(this.name, name);
+        return this.name.isNameMatch(name);
     }
 
     public abstract boolean isPlayer();
