@@ -32,6 +32,6 @@ public class Deck {
     }
 
     public Card serve() {
-        return cards.get(numberGenerator.generate(cards.size()));
+        return cards.remove(numberGenerator.generate(cards.size()));
     }
 }
