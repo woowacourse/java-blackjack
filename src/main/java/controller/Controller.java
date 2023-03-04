@@ -62,29 +62,20 @@ public class Controller {
     }
 
     private void playerHitOrStand(Player player) {
-        boolean isHit;
+        boolean canHit;
         do {
-            isHit = getIsHit(player);
-            playerHit(player, isHit);
-            OutputView.printSingleGambler(player);
-            isHit = isPickAble(player, isHit);
-        } while (isHit);
-    }
-
-    private boolean isPickAble(Player player, boolean isHit) {
-        if (player.isBustedGambler(player.getScore())) {
-            isHit = false;
-        }
-        return isHit;
+            canHit = getIsHit(player);
+            playerHit(player, canHit);
+            printSinglePlayer(player);
+        } while (canHit && !isBustedPlayer(player));
     }
 
     private boolean getIsHit(Player player) {
-        boolean isHit;
         try {
-            isHit = readIsHit(player);
+            return readIsHit(player);
         } catch (RuntimeException exception) {
-            InputView.printErrorMessage(exception);
-            isHit = getIsHit(player);
+            printErrorMessage(exception);
+            return getIsHit(player);
         }
         return isHit;
     }
@@ -93,6 +84,11 @@ public class Controller {
         if (isHit) {
             player.pickCard();
         }
+    }
+
+    private boolean isBustedPlayer(Player player) {
+        return player.getScore()
+                .isBusted();
     }
 
     private void dealerHitOrStand(Dealer dealer) {
