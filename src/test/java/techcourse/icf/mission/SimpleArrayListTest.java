@@ -35,6 +35,19 @@ class SimpleArrayListTest {
         for (int i = 0; i < arrays.length; i++) {
             Assertions.assertThat(values.get(i)).isEqualTo(values2.get(i));
         }
+    }
+
+    @Test
+    @DisplayName("미션3")
+    void boundedParameter() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
+
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+
+        Assertions.assertThat(doubleTotal).isEqualTo(1.2);
+        Assertions.assertThat(intTotal).isEqualTo(3);
 
     }
 }

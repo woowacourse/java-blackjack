@@ -18,6 +18,12 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         values = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
+    public SimpleArrayList(T v, T v1) {
+        this();
+        add(v);
+        add(v1);
+    }
+
     private void add(int index, T value, int s) {
         if (s == capacity) {
             capacity += capacity / 2;
