@@ -31,8 +31,7 @@ public class BlackJackController {
 
         init(players, dealer);
         askPlayers(players, referee);
-
-        //개행 넣는 output추가
+        OutputView.println();
         hitCardByDealer(dealer, referee);
 
         List<Result> results = referee.judgeResult(dealer, players);
@@ -106,4 +105,3 @@ public class BlackJackController {
         return Command.toCommand(InputView.inputReply(player.getName().getValue()));
     }
 }
-
