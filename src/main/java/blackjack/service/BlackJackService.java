@@ -63,9 +63,9 @@ public class BlackJackService {
                 .collect(toList());
     }
 
-    public List<PersonStatusResponse> getInitStatusResponse() {
+    public List<PersonStatusResponse> getStartStatusResponse() {
         return people.getPeople().stream()
-                .map(PersonStatusResponse::ofInit)
+                .map(PersonStatusResponse::ofStart)
                 .collect(toList());
     }
 

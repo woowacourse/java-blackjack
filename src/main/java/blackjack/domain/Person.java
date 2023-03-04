@@ -56,7 +56,7 @@ public abstract class Person {
 
     public abstract boolean isDealer();
 
-    public abstract List<Card> getInitCards();
+    public abstract List<Card> getStartCards();
 
     public abstract boolean canDrawCard();
 }

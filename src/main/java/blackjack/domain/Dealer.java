@@ -27,7 +27,7 @@ public class Dealer extends Person {
     }
 
     @Override
-    public List<Card> getInitCards() {
+    public List<Card> getStartCards() {
         return getCards().stream()
                 .limit(1)
                 .collect(toList());

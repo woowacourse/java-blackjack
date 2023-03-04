@@ -44,7 +44,7 @@ class DealerTest {
         dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
 
         // when
-        List<Card> cards = dealer.getInitCards();
+        List<Card> cards = dealer.getStartCards();
 
         // then
         assertThat(cards)

@@ -19,8 +19,8 @@ public class PersonStatusResponse {
         return new PersonStatusResponse(person.getName(), getCardsStatus(person.getCards()));
     }
 
-    public static PersonStatusResponse ofInit(Person person) {
-        return new PersonStatusResponse(person.getName(), getCardsStatus(person.getInitCards()));
+    public static PersonStatusResponse ofStart(Person person) {
+        return new PersonStatusResponse(person.getName(), getCardsStatus(person.getStartCards()));
     }
 
     private static List<String> getCardsStatus(List<Card> cards) {
