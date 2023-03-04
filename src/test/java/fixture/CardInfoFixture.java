@@ -1,4 +1,6 @@
-package domain;
+package fixture;
+
+import domain.CardInfo;
 
 /**
  * @author 우가

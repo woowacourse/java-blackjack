@@ -1,7 +1,10 @@
-package domain;
+package fixture;
 
-import static domain.CardFixture.*;
+import static fixture.CardFixture.*;
 
+import domain.Cards;
+import domain.Name;
+import domain.Player;
 import java.util.List;
 
 /**

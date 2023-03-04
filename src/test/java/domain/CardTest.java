@@ -1,7 +1,7 @@
 package domain;
 
-import static domain.CardInfoFixture.에이스;
-import static domain.ShapeFixture.하트;
+import static fixture.CardInfoFixture.에이스;
+import static fixture.ShapeFixture.하트;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayNameGeneration;

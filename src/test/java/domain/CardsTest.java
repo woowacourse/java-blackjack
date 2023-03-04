@@ -1,6 +1,6 @@
 package domain;
 
-import static domain.CardFixture.*;
+import static fixture.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

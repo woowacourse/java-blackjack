@@ -1,4 +1,6 @@
-package domain;
+package fixture;
+
+import domain.Shape;
 
 /**
  * @author 우가

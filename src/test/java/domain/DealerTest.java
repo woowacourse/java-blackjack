@@ -1,7 +1,7 @@
 package domain;
 
-import static domain.CardFixture.*;
-import static domain.ShapeFixture.하트;
+import static fixture.CardFixture.*;
+import static fixture.ShapeFixture.하트;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
