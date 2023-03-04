@@ -1,7 +1,6 @@
 package controller;
 
 import domain.BlackJack;
-import domain.player.Player;
 import domain.player.PlayerReadOnly;
 import domain.strategy.RandomBasedIndexGenerator;
 import view.Command;
@@ -37,8 +36,8 @@ public class BlackJackApplication {
     }
 
     private void giveCardToParticipants(BlackJack blackJack) {
-        List<Player> participants = blackJack.getParticipants2();
-        for (Player participant : participants) {
+        List<PlayerReadOnly> participants = blackJack.getParticipants();
+        for (PlayerReadOnly participant : participants) {
             giveCardToParticipant(blackJack, participant);
         }
     }

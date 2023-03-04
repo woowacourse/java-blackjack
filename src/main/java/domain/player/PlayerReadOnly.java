@@ -28,4 +28,8 @@ public class PlayerReadOnly {
     public String getName() {
         return player.getName();
     }
+
+    public boolean isBurst() {
+        return player.isBurst();
+    }
 }
