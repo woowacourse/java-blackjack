@@ -83,12 +83,12 @@ public class OutputView {
     }
 
     public static void showStateOf(final Dealer dealer) {
-        final Card dealerFistCard = dealer.cardArea().firstCard();
+        final Card card = dealer.faceUpFirstCard();
 
         System.out.println(getPlayerName(dealer)
                                    + COLON
-                                   + VALUE_MESSAGE_MAP.get(dealerFistCard.cardValue())
-                                   + SHAPE_MESSAGE_MAP.get(dealerFistCard.cardShape())
+                                   + VALUE_MESSAGE_MAP.get(card.cardValue())
+                                   + SHAPE_MESSAGE_MAP.get(card.cardShape())
         );
     }
 

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import static domain.card.CardValue.SEVEN;
 import static domain.card.CardValue.SIX;
 import static domain.card.CardValue.TEN;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,5 +47,21 @@ class DealerTest {
 
         // when & then
         assertFalse(dealer.canHit());
+    }
+
+    @Test
+    @DisplayName("faceUpFirstCard() : 딜러는 첫 번째 카드만을 보여줍니다.")
+    void test_faceUpFirstCard() throws Exception {
+        //given
+        final CardArea cardArea = new CardArea(
+                new Card(CardShape.CLOVER, TEN),
+                new Card(CardShape.CLOVER, SEVEN)
+        );
+
+        //when
+        final Dealer dealer = new Dealer(cardArea);
+
+        //then
+        assertEquals(dealer.faceUpFirstCard(), new Card(CardShape.CLOVER, TEN));
     }
 }
