@@ -47,7 +47,7 @@ public class HandTest {
                 Arguments.of(List.of(JACK, SEVEN), List.of(JACK, JACK), Result.LOSE),
                 Arguments.of(List.of(JACK, SEVEN), List.of(JACK, SIX, JACK), Result.WIN),
                 Arguments.of(List.of(JACK, SEVEN, KING), List.of(JACK, SEVEN), Result.LOSE),
-                Arguments.of(List.of(JACK, SIX, KING), List.of(JACK, SIX, KING), Result.DRAW)
+                Arguments.of(List.of(JACK, SIX, KING), List.of(JACK, SIX, KING), Result.LOSE)
         );
     }
 

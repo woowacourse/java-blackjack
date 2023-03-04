@@ -21,7 +21,7 @@ public class Hand {
             return playWithBlackjack(other);
         }
         if (state.isBust()) {
-            return playWithBust(other);
+            return Result.LOSE;
         }
         return playWithScore(other);
     }
@@ -33,13 +33,6 @@ public class Hand {
         return Result.WIN;
     }
 
-    private Result playWithBust(final Hand other) {
-        if (other.state.isBust()) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
-    }
-
     private Result playWithScore(final Hand other) {
         if (cards.calculateTotalScore() > other.cards.calculateTotalScore() || other.state.isBust()) {
             return Result.WIN;
@@ -49,7 +42,7 @@ public class Hand {
         }
         return Result.DRAW;
     }
-    
+
     public boolean isPlayable() {
         return state.isPlayable();
     }
