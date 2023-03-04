@@ -3,8 +3,8 @@ package blackjack.domain;
 import java.util.Arrays;
 
 public enum Command {
-    YES("y"),
-    NO("n");
+    CONTINUE("y"),
+    END("n");
 
     private final String value;
 
@@ -19,4 +19,7 @@ public enum Command {
             });
     }
 
+    public static boolean isContinue(Command command) {
+        return command == CONTINUE;
+    }
 }

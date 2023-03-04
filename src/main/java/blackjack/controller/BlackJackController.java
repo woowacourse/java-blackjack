@@ -30,6 +30,7 @@ public class BlackJackController {
         final Referee referee = new Referee();
 
         init(players, dealer);
+        askPlayers(players, referee);
 
         for (Player player : players.getPlayers()) {
             askPlayer(referee, player);
@@ -46,6 +47,12 @@ public class BlackJackController {
             results);
     }
 
+    private void askPlayers(Players players, Referee referee) {
+        for (Player player : players.getPlayers()) {
+            askPlayer(referee, player);
+        }
+    }
+
     private void init(Players players, Dealer dealer) {
         dealer.initHit(cardPicker);
         players.initHit(cardPicker);
@@ -53,21 +60,34 @@ public class BlackJackController {
     }
 
     private void askPlayer(Referee referee, Player player) {
-        Command command;
-        while (true) {
-            command = Repeater.repeatIfError(() -> inputCommand(player),
-                OutputView::printErrorMessage);
-            if (command == Command.NO) {
-                break;
-            }
-            player.hit(cardPicker);
+        Command command = Command.CONTINUE;
+        int score = 0;
+
+        while (isContinueToAsk(command, score)) {
+            command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
+            hitByCommand(player, command);
             OutputView.printParticipantCardDeck(player);
-            int score = referee.calculateDeckScore(player.getCardDeck());
-            if (score == BURST_CODE) {
-                OutputView.printBurstMessage();
-                break;
-            }
+            score = calculateScore(referee, player);
         }
+    }
+
+    private static int calculateScore(Referee referee, Player player) {
+        int score = referee.calculateDeckScore(player.getCardDeck());
+
+        if (BURST_CODE == score) {
+            OutputView.printBurstMessage();
+        }
+        return score;
+    }
+
+    private void hitByCommand(Player player, Command command) {
+        if (Command.isContinue(command)) {
+            player.hit(cardPicker);
+        }
+    }
+
+    private static boolean isContinueToAsk(Command command, int score) {
+        return Command.isContinue(command) && BURST_CODE != score;
     }
 
     private Players inputPlayerNames() {
