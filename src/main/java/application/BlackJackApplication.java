@@ -71,22 +71,22 @@ public class BlackJackApplication {
     }
 
     private void drawPlayerCards(final CardDeck cardDeck, final Player player) {
-        DrawCommand drawCommand;
-        do {
-            drawCommand = getRawCommand(player.getName());
-            DrawnCardsInfo drawnCardsInfo = blackJackService.drawCardByCommand(cardDeck, player, drawCommand);
+        while (getDrawCommand(player).isDraw()) {
+            DrawnCardsInfo drawnCardsInfo = blackJackService.drawPlayerCard(cardDeck, player);
             outputView.printPlayerCardInfo(drawnCardsInfo);
-        } while (blackJackService.canPlayerDrawMore(player, drawCommand));
+
+            if (!blackJackService.canPlayerDrawMore(player)) break;
+        }
     }
 
-    private DrawCommand getRawCommand(final String name) {
+    private DrawCommand getDrawCommand(final Player player) {
         try {
-            String rawCommand = inputView.readChoiceOfDrawCard(name);
+            String rawCommand = inputView.readChoiceOfDrawCard(player.getName());
             DrawCommand drawCommand = new DrawCommand(rawCommand);
             return drawCommand;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return getRawCommand(name);
+            return getDrawCommand(player);
         }
     }
 

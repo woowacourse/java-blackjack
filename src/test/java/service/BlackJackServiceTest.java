@@ -11,7 +11,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.request.DrawCommand;
 import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +62,7 @@ class BlackJackServiceTest {
         assertThat(actualCards).containsExactly(expectedFirst, expectedSecond);
     }
 
-    @DisplayName("카드를 뽑는 커맨드면 카드를 뽑는다.")
+    @DisplayName("플레이어가 카드를 뽑는다.")
     @Test
     void draw_card_if_command_true() {
         // given
@@ -71,32 +70,14 @@ class BlackJackServiceTest {
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         List<Card> emptyCards = new ArrayList<>();
         Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
-        DrawCommand drawCommand = new DrawCommand("y");
         Card expectedCard = cards.get(0);
         // when
-        blackJackService.drawCardByCommand(cardDeck, player, drawCommand);
+        blackJackService.drawPlayerCard(cardDeck, player);
         List<Card> actualCards = player.getDrawnCards();
         // then
         assertThat(actualCards).containsExactly(expectedCard);
     }
 
-    @DisplayName("카드를 뽑는 커맨드가 아니면 카드를 뽑지않는다..")
-    @Test
-    void draw_card_if_command_false() {
-        // given
-        List<Card> cards = createFillCards();
-        CardDeck cardDeck = CardDeck.createShuffled(cards);
-        List<Card> emptyCards = new ArrayList<>();
-        Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
-        DrawCommand drawCommand = new DrawCommand("n");
-
-        int expectedSize = 0;
-        // when
-        blackJackService.drawCardByCommand(cardDeck, player, drawCommand);
-        int actualSize = player.getDrawnCards().size();
-        // then
-        assertThat(actualSize).isEqualTo(expectedSize);
-    }
 
     @DisplayName("플레이어가 조건을 만족하면 카드를 더 뽑을 수 있다.")
     @Test
@@ -105,29 +86,14 @@ class BlackJackServiceTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         Player player = new Player(new Name("ori"), new DrawnCards(cards));
-        DrawCommand drawCommand = new DrawCommand("y");
 
         boolean expected = true;
         // when
-        boolean actual = blackJackService.canPlayerDrawMore(player, drawCommand);
+        boolean actual = blackJackService.canPlayerDrawMore(player);
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("커맨드가 false면 카드를 더 뽑지 못한다.")
-    @Test
-    void player_stop_draw_card_if_command_false() {
-        // given
-        List<Card> emptyCards = new ArrayList<>();
-        Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
-        DrawCommand drawCommand = new DrawCommand("n");
-
-        boolean expected = false;
-        // when
-        boolean actual = blackJackService.canPlayerDrawMore(player, drawCommand);
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
 
     @DisplayName("플레이어의 점수가 버스트 넘버를 넘어가면 카드를 더 뽑지 못한다.")
     @Test
@@ -138,11 +104,10 @@ class BlackJackServiceTest {
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         cards.add(new Card(CardType.DIAMOND, CardValue.JACK));
         Player player = new Player(new Name("ori"), new DrawnCards(cards));
-        DrawCommand drawCommand = new DrawCommand("y");
 
         boolean expected = false;
         // when
-        boolean actual = blackJackService.canPlayerDrawMore(player, drawCommand);
+        boolean actual = blackJackService.canPlayerDrawMore(player);
         // then
         assertThat(actual).isEqualTo(expected);
     }

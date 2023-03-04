@@ -29,8 +29,8 @@ class DealerTest {
         Dealer dealer = new Dealer(drawnCards);
 
         // when
-        dealer.pickCard(cardA);
-        dealer.pickCard(cardB);
+        dealer.drawCard(cardA);
+        dealer.drawCard(cardB);
 
         // then
         assertThat(drawnCards.getCards()).containsExactly(cardA, cardB);

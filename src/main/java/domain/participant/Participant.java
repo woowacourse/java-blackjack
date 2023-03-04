@@ -17,7 +17,7 @@ public abstract class Participant {
         this.drawnCards = drawnCards;
     }
 
-    public void pickCard(final Card card) {
+    public void drawCard(final Card card) {
         drawnCards.add(card);
     }
 

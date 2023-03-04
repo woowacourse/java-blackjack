@@ -7,7 +7,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.request.DrawCommand;
 import dto.response.DealerWinLoseResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
@@ -31,7 +30,7 @@ public class BlackJackService {
 
     private void splitCards(final Participant participant, final CardDeck cardDeck) {
         for (int i = 0; i < NUMBER_OF_SPLIT_CARDS; i++) {
-            participant.pickCard(cardDeck.draw());
+            participant.drawCard(cardDeck.draw());
         }
     }
 
@@ -46,26 +45,19 @@ public class BlackJackService {
         return cardInfos;
     }
 
-    public DrawnCardsInfo drawCardByCommand(final CardDeck cardDeck,
-                                            final Player player,
-                                            final DrawCommand drawCommand) {
-        if (drawCommand.isDraw()) {
-            player.pickCard(cardDeck.draw());
-        }
+    public DrawnCardsInfo drawPlayerCard(final CardDeck cardDeck,
+                                         final Player player) {
 
+        player.drawCard(cardDeck.draw());
         return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }
 
-    public boolean canPlayerDrawMore(final Player player, final DrawCommand drawCommand) {
-        if (!player.isDrawable() || drawCommand.isStop()) {
-            return false;
-        }
-
-        return true;
+    public boolean canPlayerDrawMore(final Player player) {
+        return player.isDrawable();
     }
 
     public void drawDealerCard(final CardDeck cardDeck, final Dealer dealer) {
-        dealer.pickCard(cardDeck.draw());
+        dealer.drawCard(cardDeck.draw());
     }
 
     public boolean canDealerDrawMore(final Dealer dealer) {
@@ -78,8 +70,7 @@ public class BlackJackService {
         participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateCardScore()));
 
         players.stream()
-                .forEach(
-                        player -> participantResults.add(ParticipantResult.toDto(player, player.calculateCardScore())));
+                .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateCardScore())));
 
         return participantResults;
     }

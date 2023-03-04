@@ -29,8 +29,8 @@ class PlayerTest {
         Player player = new Player(name, drawnCards);
 
         // when
-        player.pickCard(cardA);
-        player.pickCard(cardB);
+        player.drawCard(cardA);
+        player.drawCard(cardB);
 
         // then
         assertThat(drawnCards.getCards()).containsExactly(cardA, cardB);
