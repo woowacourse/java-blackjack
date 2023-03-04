@@ -32,7 +32,7 @@ public class InputView {
         if (inputWhetherDraw.equals(YES_COMMAND) || inputWhetherDraw.equals(NO_COMMAND)) {
             return;
         }
-        throw new IllegalStateException(String.format(
+        throw new IllegalArgumentException(String.format(
                 "%s 또는 %s를 입력하세요.", YES_COMMAND, NO_COMMAND
         ));
     }
