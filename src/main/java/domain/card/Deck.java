@@ -1,14 +1,12 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Deck {
     private static final String KOREAN_REGEX = "[가-힣]+";
     public static final int TOP_OF_DECK_CARD = 0;
 
-    public final List<Card> cards;
+    public final Queue<Card> cards;
 
     public static List<String> cards1 = new ArrayList<>(List.of(
             "A스페이드", "2스페이드", "3스페이드", "4스페이드", "5스페이드", "6스페이드", "7스페이드", "8스페이드", "9스페이드", "10스페이드", "J스페이드", "Q스페이드", "K스페이드",
@@ -18,7 +16,7 @@ public class Deck {
     );
 
     public Deck(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = new LinkedList<>(cards);
     }
 
     public static int extractCardNumber(String card) {
@@ -29,13 +27,8 @@ public class Deck {
         return Integer.parseInt(cardValue);
     }
 
-    public static String drawCard() {
-        shuffle();
-        return cards1.remove(TOP_OF_DECK_CARD);
-    }
-
-    private static void shuffle() {
-        Collections.shuffle(cards1);
+    public Card drawCard() {
+        return cards.poll();
     }
 
     public List<Card> getCards() {
