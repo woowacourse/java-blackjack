@@ -12,6 +12,8 @@ import static view.OutputView.*;
 public class Controller {
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
+    private final Deck deck = new Deck();
+
     public void blackjack() {
         Players players = getPlayers();
         Dealer dealer = new Dealer(new Cards());
