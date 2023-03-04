@@ -17,7 +17,7 @@ public class Card {
     }
 
     public boolean isACE() {
-        return this.cardInfo.isACE("A");
+        return this.cardInfo.isACE();
     }
 
     @Override

@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author 우가
  * @version 1.0.0
@@ -18,10 +15,6 @@ public enum Shape {
 
     Shape(final String shape) {
         this.shape = shape;
-    }
-
-    public static List<Shape> toList() {
-        return Arrays.asList(values());
     }
 
     public String getShape() {

@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
+    private static final int BLACKJACK_CONDITION = 21;
+
     private final List<Card> cards;
-    private boolean blackJack;
+    private final boolean blackJack;
 
     public Cards(final List<Card> cards) {
         validateDuplicated(cards);
@@ -28,7 +30,7 @@ public class Cards {
     }
 
     private int checkOver21AndContainsA(final int sum) {
-        if (sum > 21 && containsA()) {
+        if (sum > BLACKJACK_CONDITION && containsA()) {
             return sum - 10;
         }
         return sum;
@@ -71,7 +73,7 @@ public class Cards {
     }
 
     public boolean isTwentyOne() {
-        return sumOfCards() == 21;
+        return sumOfCards() == BLACKJACK_CONDITION;
     }
 
     public boolean isBlackJack() {

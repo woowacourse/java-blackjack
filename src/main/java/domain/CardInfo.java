@@ -20,6 +20,8 @@ public enum CardInfo {
     Q("Q", 10),
     K("K", 10);
 
+    private static final String ACE = "A";
+
     private final String name;
     private final int value;
 
@@ -36,8 +38,8 @@ public enum CardInfo {
         return this.value + other.value;
     }
 
-    public boolean isACE(final String ace) {
-        return name.equals(ace);
+    public boolean isACE() {
+        return name.equals(ACE);
     }
 
     public int getValue() {
