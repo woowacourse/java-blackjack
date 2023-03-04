@@ -35,8 +35,8 @@ class HandCardsTest {
     }
 
     @Test
-    @DisplayName("손패의 카드 합을 반환한다.")
-    void getSumCardValue() {
-        Assertions.assertThat(handCards.getSumCardValue()).isEqualTo(12);
+    @DisplayName("손패의 카드 값들을 반환한다.")
+    void getCardValues() {
+        Assertions.assertThat(handCards.getValues()).contains(2, 10);
     }
 }

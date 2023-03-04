@@ -2,6 +2,7 @@ package domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import domain.card.Card;
 
@@ -17,10 +18,10 @@ public class HandCards {
         cards.add(card);
     }
 
-    public int getSumCardValue() {
+    public List<Integer> getValues() {
         return cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
+                .map(Card::getValue)
+                .collect(Collectors.toList());
     }
 
     public List<Card> getCards() {
