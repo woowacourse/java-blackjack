@@ -2,16 +2,16 @@ package service;
 
 import static java.util.stream.Collectors.toList;
 
-import domain.CardDeck;
-import domain.Dealer;
-import domain.DrawCommand;
-import domain.Participant;
-import domain.Player;
-import domain.Players;
-import dto.DealerWinLoseResult;
-import dto.DrawnCardsInfo;
-import dto.ParticipantResult;
-import dto.WinLoseResult;
+import domain.card.CardDeck;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
+import dto.request.DrawCommand;
+import dto.response.DealerWinLoseResult;
+import dto.response.DrawnCardsInfo;
+import dto.response.ParticipantResult;
+import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 

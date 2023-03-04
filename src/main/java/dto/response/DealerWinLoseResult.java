@@ -1,6 +1,6 @@
-package dto;
+package dto.response;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 
 public class DealerWinLoseResult {
 

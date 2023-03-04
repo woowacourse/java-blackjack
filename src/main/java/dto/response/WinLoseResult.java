@@ -1,6 +1,6 @@
-package dto;
+package dto.response;
 
-import domain.Player;
+import domain.participant.Player;
 
 public class WinLoseResult {
 

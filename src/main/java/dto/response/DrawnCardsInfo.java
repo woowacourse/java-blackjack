@@ -1,7 +1,7 @@
-package dto;
+package dto.response;
 
-import domain.Card;
-import domain.Participant;
+import domain.card.Card;
+import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,17 +2,17 @@ package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.CardDeck;
-import domain.CardType;
-import domain.CardValue;
-import domain.Dealer;
-import domain.DrawCommand;
-import domain.DrawnCards;
-import domain.Name;
-import domain.Player;
-import domain.Players;
-import dto.WinLoseResult;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardType;
+import domain.card.CardValue;
+import domain.card.DrawnCards;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
+import dto.request.DrawCommand;
+import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,9 +1,9 @@
 package view;
 
-import dto.DealerWinLoseResult;
-import dto.DrawnCardsInfo;
-import dto.ParticipantResult;
-import dto.WinLoseResult;
+import dto.response.DealerWinLoseResult;
+import dto.response.DrawnCardsInfo;
+import dto.response.ParticipantResult;
+import dto.response.WinLoseResult;
 import java.util.List;
 import java.util.stream.Collectors;
 

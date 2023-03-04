@@ -1,4 +1,4 @@
-package domain;
+package dto.request;
 
 public class DrawCommand {
 

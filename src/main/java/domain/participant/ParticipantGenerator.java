@@ -1,8 +1,10 @@
-package domain;
+package domain.participant;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
+import domain.card.Card;
+import domain.card.DrawnCards;
 import java.util.ArrayList;
 import java.util.List;
 
