@@ -1,6 +1,6 @@
 package domain;
 
-import domain.user.AbstractUser;
+import domain.user.User;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -22,7 +22,7 @@ public class BlackjackGame {
         players.getPlayers().forEach(player -> addInitialCards(player, deck));
     }
 
-    private void addInitialCards(AbstractUser user, Deck deck) {
+    private void addInitialCards(User user, Deck deck) {
         for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
             user.addCard(deck.draw());
         }
@@ -45,17 +45,14 @@ public class BlackjackGame {
     }
 
     private Result calculateResult(Player player) {
-        if (player.isOverBlackjack()) {
+        if (player.isBust()) {
             return Result.LOSE;
         }
-        if (dealer.isOverBlackjack()) {
+        if (dealer.isBust() || player.calculateScore() > dealer.calculateScore()) {
             return Result.WIN;
         }
         if (player.calculateScore() == dealer.calculateScore()) {
             return Result.DRAW;
-        }
-        if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
         }
         return Result.LOSE;
     }

@@ -2,7 +2,7 @@ package domain.user;
 
 import domain.CardHand;
 
-public class Dealer extends AbstractUser{
+public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
     private static final int UPPER_LIMIT_TO_DRAW = 16;
 

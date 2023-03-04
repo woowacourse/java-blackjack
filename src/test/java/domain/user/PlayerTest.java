@@ -100,7 +100,7 @@ class PlayerTest {
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.TWO));
         Player player = new Player("name", cardHand);
-        assertThat(player.isOverBlackjack()).isTrue();
+        assertThat(player.isBust()).isTrue();
     }
 
     @Test
@@ -111,6 +111,6 @@ class PlayerTest {
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.ACE));
         Player player = new Player("name", cardHand);
-        assertThat(player.isOverBlackjack()).isFalse();
+        assertThat(player.isBust()).isFalse();
     }
 }

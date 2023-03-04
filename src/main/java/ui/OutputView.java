@@ -1,9 +1,8 @@
 package ui;
 
 import domain.Card;
-import domain.PlayerResultRepository;
 import domain.Result;
-import domain.user.AbstractUser;
+import domain.user.User;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     public static void printCardsStatus(Dealer dealer, List<Player> players) {
         List<String> nameValues = players.stream()
-                .map(AbstractUser::getNameValue)
+                .map(User::getNameValue)
                 .collect(Collectors.toList());
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", nameValues));
@@ -23,7 +22,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCardsStatusOfUser(AbstractUser user) {
+    public static void printCardsStatusOfUser(User user) {
         List<String> cardTexts = user.getCards().stream()
                 .map(Card::getText)
                 .collect(Collectors.toList());
@@ -31,7 +30,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCardsStatusAndScoreOfUser(AbstractUser user) {
+    public static void printCardsStatusAndScoreOfUser(User user) {
         List<String> cardTexts = user.getCards().stream()
                 .map(Card::getText)
                 .collect(Collectors.toList());

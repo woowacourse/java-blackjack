@@ -5,18 +5,18 @@ import domain.CardHand;
 import domain.Name;
 import java.util.List;
 
-abstract public class AbstractUser {
+abstract public class User {
     protected static final int BLACKJACK_SCORE = 21;
 
     protected final Name name;
     protected final CardHand cardHand;
 
-    public AbstractUser(String nameValue) {
+    public User(String nameValue) {
         this.name = new Name(nameValue);
         this.cardHand = new CardHand();
     }
 
-    public AbstractUser(String nameValue, CardHand cardHand) {
+    public User(String nameValue, CardHand cardHand) {
         this.name = new Name(nameValue);
         this.cardHand = cardHand;
     }
@@ -47,7 +47,7 @@ abstract public class AbstractUser {
         return this.cardHand.getCards();
     }
 
-    public boolean isOverBlackjack() {
+    public boolean isBust() {
         return this.calculateScore() > BLACKJACK_SCORE;
     }
 }

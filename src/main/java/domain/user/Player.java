@@ -2,7 +2,7 @@ package domain.user;
 
 import domain.CardHand;
 
-public class Player extends AbstractUser {
+public class Player extends User {
 
     public Player(String nameValue) {
         super(nameValue);
