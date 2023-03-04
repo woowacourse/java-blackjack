@@ -22,11 +22,18 @@ public class Hand {
     public int sumCardNumbers() {
         int sum = 0;
         for (Card card : cards) {
-            sum += card.getNumber().getValue();
+            sum += card.getNumber().value();
         }
 
-        if (sum > GameRule.BLACKJACK.getNumber() && containsAce()) {
-            sum -= GameRule.BLACKJACK.getNumber() - Denomination.ACE.getValue();
+        sum = decideAceNumber(sum, countAce());
+
+        return sum;
+    }
+
+    private int decideAceNumber(int sum, int unDecidedAceCount) {
+        if (sum > GameRule.BLACKJACK.getNumber() && unDecidedAceCount > 0) {
+            sum = sum - (Denomination.ACE.value() - GameRule.MIN_ACE.getNumber());
+            return decideAceNumber(sum, unDecidedAceCount - 1);
         }
         return sum;
     }
@@ -35,9 +42,10 @@ public class Hand {
         return sumCardNumbers() > GameRule.BLACKJACK.getNumber();
     }
 
-    private boolean containsAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getNumber() == Denomination.ACE);
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(card -> card.getNumber() == Denomination.ACE)
+                .count();
     }
 
     public List<Card> getCards() {

@@ -101,6 +101,22 @@ class HandTest {
     }
 
     @Test
+    @DisplayName("에이스가 2장 이상일 때 카드의 합은 21을 넘지 않는 가장 큰 수로 결정된다.")
+    void decideDoubleAceSumUnder() {
+        List<Card> cards = List.of(
+                new Card(Suit.CLOVER, Denomination.ACE),
+                new Card(Suit.SPADE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.FOUR),
+                new Card(Suit.HEART, Denomination.FOUR)
+        );
+
+        Hand hand = new Hand(cards);
+
+        assertThat(hand.sumCardNumbers())
+                .isEqualTo(20);
+    }
+
+    @Test
     @DisplayName("카드가 잘 들어가는지 테스트한다.")
     void addTest() {
         Hand hand = new Hand(Collections.emptyList());
