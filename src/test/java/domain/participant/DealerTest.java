@@ -104,7 +104,7 @@ class DealerTest {
         cards.forEach(dealer::addCard);
 
         // when, then
-        assertThat(dealer.canGiveCard())
+        assertThat(dealer.canDraw())
                 .isSameAs(expected);
     }
 

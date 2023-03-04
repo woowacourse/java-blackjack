@@ -43,7 +43,8 @@ public class Dealer extends Participant {
                 || dealerCard.calculateScore() < playerCard.calculateScore();
     }
 
-    public boolean canGiveCard() {
+    @Override
+    public boolean canDraw() {
         return participantCard.calculateScore() <= STANDARD_GIVEN_SCORE;
     }
 

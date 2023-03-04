@@ -20,13 +20,11 @@ public abstract class Participant {
         participantCard.addCard(card);
     }
 
-    public List<Card> getCard() {
-        return List.copyOf(participantCard.getCards());
-    }
-
     public int calculateScore() {
         return participantCard.calculateScore();
     }
+
+    public abstract boolean canDraw();
 
     public boolean isBust() {
         return participantCard.isBust();
@@ -34,6 +32,10 @@ public abstract class Participant {
 
     public boolean isBlackJack() {
         return participantCard.isBlackJack();
+    }
+
+    public List<Card> getCard() {
+        return List.copyOf(participantCard.getCards());
     }
 
     public String getName() {

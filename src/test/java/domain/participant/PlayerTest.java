@@ -100,4 +100,18 @@ class PlayerTest {
         assertThat(actual)
                 .isSameAs(expected);
     }
+
+    @MethodSource(value = "domain.helper.ParticipantArguments#makePlayerCards")
+    @ParameterizedTest(name = "canDraw()는 호출하면 플레이어가 카드를 더 뽑을 수 있는지 여부를 반환한다")
+    void canDraw_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
+        // given
+        cards.forEach(player::addCard);
+
+        // when
+        final boolean actual = player.canDraw();
+
+        // then
+        assertThat(actual)
+                .isSameAs(expected);
+    }
 }

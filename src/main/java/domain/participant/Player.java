@@ -16,4 +16,9 @@ public class Player extends Participant {
             throw new IllegalArgumentException("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
         }
     }
+
+    @Override
+    public boolean canDraw() {
+        return !participantCard.isBust();
+    }
 }

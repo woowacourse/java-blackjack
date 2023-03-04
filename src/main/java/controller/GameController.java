@@ -114,7 +114,7 @@ public class GameController {
     }
 
     private boolean canDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
-        return !isBust(player) && !isBlackJack(player) && drawCardCommand.isDrawAgain();
+        return player.canDraw() && drawCardCommand.isDrawAgain();
     }
 
     private boolean isBust(final Participant player) {
@@ -143,7 +143,7 @@ public class GameController {
     private void handleDealerCards(final Participants participants, final GameManager gameManager) {
         Dealer dealer = (Dealer) participants.getDealer();
         OutputView.print(System.lineSeparator().trim());
-        while (dealer.canGiveCard()) {
+        while (dealer.canDraw()) {
             gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
             OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()));
         }
