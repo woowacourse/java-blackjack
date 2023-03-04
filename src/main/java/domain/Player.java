@@ -25,7 +25,7 @@ public class Player {
         return scoreSum;
     }
 
-    public Result competeWith(Player other) {
+    Result competeWith(Player other) {
         if ((isBusted() && other.isBusted()) || getScore() == other.getScore()) {
             return Result.DRAW;
         }
@@ -35,7 +35,7 @@ public class Player {
         return Result.LOSE;
     }
 
-    public void addCard(Card card) {
+    void addCard(Card card) {
         cards.add(card);
     }
 
@@ -54,11 +54,11 @@ public class Player {
         return score + 10 <= 21;
     }
 
-    public boolean canHit() {
+    boolean canHit() {
         return getScore() < 21;
     }
 
-    public boolean isBusted() {
+    boolean isBusted() {
         return getScore() > 21;
     }
 

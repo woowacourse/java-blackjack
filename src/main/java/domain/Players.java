@@ -13,14 +13,14 @@ public class Players {
         this.dealer = dealer;
     }
 
-    public Player findUserByName(String name) {
+    Player findUserByName(String name) {
         return users.stream()
                 .filter(user -> user.hasName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다"));
     }
 
-    public void dealCardsFrom(Deck deck) {
+    void dealCardsFrom(Deck deck) {
         for (Player user : users) {
             user.addCard(deck.draw());
         }
