@@ -10,7 +10,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.ResultCalculator;
 import view.InputView;
-import view.OutputVIew;
+import view.OutputView;
 import view.ResultView;
 
 public class BlackJackController {
@@ -32,11 +32,11 @@ public class BlackJackController {
 
     private List<String> initPlayerNames() {
         try {
-            OutputVIew.printInputPlayerNameMessage();
+            OutputView.printInputPlayerNameMessage();
             List<String> playerNames = InputView.inputPlayerNames();
             return playerNames;
         } catch (IllegalArgumentException e) {
-            OutputVIew.printMessage(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             return initPlayerNames();
         }
     }
@@ -59,7 +59,7 @@ public class BlackJackController {
             ResultView.printInitMessage(playerNames);
             return players;
         } catch (IllegalArgumentException e) {
-            OutputVIew.printMessage(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             return generatePlayers();
         }
     }
@@ -75,14 +75,14 @@ public class BlackJackController {
         try {
             checkAdditionalDistribute(player);
         } catch (IllegalArgumentException e) {
-            OutputVIew.printMessage(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             askPlayerDistribute(player);
         }
     }
 
     private void checkAdditionalDistribute(Player player) {
         do {
-            OutputVIew.printInputReceiveYesOrNotMessage(player.getName());
+            OutputView.printInputReceiveYesOrNotMessage(player.getName());
             ResultView.printParticipantResult(player.getName(), player.getCardNames());
         } while (player.checkCardsCondition() && isReceivable(player));
     }
@@ -99,7 +99,7 @@ public class BlackJackController {
     private void dealerDistributeOrNot() {
         while (dealer.checkCardsCondition()) {
             BlackJackGame.distributeCard(dealer, 1);
-            OutputVIew.printDealerReceivedMessage();
+            OutputView.printDealerReceivedMessage();
         }
     }
 
