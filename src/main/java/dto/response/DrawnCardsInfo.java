@@ -15,12 +15,10 @@ public class DrawnCardsInfo {
         this.drawnCards = drawnCards;
     }
 
-    public static DrawnCardsInfo toDto(final Participant participant) {
+    public static DrawnCardsInfo toDto(final Participant participant, List<Card> drawnCards) {
         List<String> cardInfos = new ArrayList<>();
 
-        List<Card> cards = participant.openDrawnCards();
-
-        for (Card drawnCard : cards) {
+        for (Card drawnCard : drawnCards) {
             cardInfos.add(drawnCard.getValue().getName() + drawnCard.getType().getName());
         }
 

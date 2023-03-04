@@ -38,10 +38,10 @@ public class BlackJackService {
     private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer,
                                                     final Players players) {
         List<DrawnCardsInfo> cardInfos = new ArrayList<>();
-        addDealerCardInfo(dealer, cardInfos);
+        cardInfos.add(DrawnCardsInfo.toDto(dealer, dealer.openDrawnCards()));
 
         players.stream()
-                .forEach(player -> cardInfos.add(DrawnCardsInfo.toDto(player)));
+                .forEach(player -> cardInfos.add(DrawnCardsInfo.toDto(player, player.openDrawnCards())));
 
         return cardInfos;
     }
@@ -53,7 +53,7 @@ public class BlackJackService {
             player.pickCard(cardDeck.draw());
         }
 
-        return DrawnCardsInfo.toDto(player);
+        return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }
 
     public boolean canPlayerDrawMore(final Player player, final DrawCommand drawCommand) {
@@ -82,11 +82,6 @@ public class BlackJackService {
                         player -> participantResults.add(ParticipantResult.toDto(player, player.calculateCardScore())));
 
         return participantResults;
-    }
-
-    private void addDealerCardInfo(final Dealer dealer,
-                                   final List<DrawnCardsInfo> cardInfos) {
-        cardInfos.add(DrawnCardsInfo.toDto(dealer));
     }
 
     public List<WinLoseResult> getWinLoseResults(final Dealer dealer, final Players players) {
