@@ -15,9 +15,14 @@ public class BlackJackGameController {
     private static final int DEALER_DRAWING_BOUNDARY = 16;
     private static final int PLAYER_BUST_BOUNDARY = 21;
 
+    private final ShufflingMachine shufflingMachine;
+
+    public BlackJackGameController(final ShufflingMachine shufflingMachine) {
+        this.shufflingMachine = shufflingMachine;
+    }
+
     public void run() {
         final BlackJackGame blackJackGame = generateBlackJackGame();
-        final ShufflingMachine shufflingMachine = new ShufflingMachine();
 
         blackJackGame.handOutInitCards(shufflingMachine);
         final Dealer dealer = blackJackGame.getDealer();
@@ -25,40 +30,37 @@ public class BlackJackGameController {
 
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
 
-        handOutCardToPlayers(blackJackGame, shufflingMachine, players);
-        handOutCardToDealer(blackJackGame, shufflingMachine, dealer);
+        handOutCardToDealer(blackJackGame, dealer);
+        handOutCardToPlayers(blackJackGame, players);
 
         blackJackGame.findWinner();
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
     }
 
-    private static void handOutCardToDealer(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
-                                            final Dealer dealer) {
+    private void handOutCardToDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
         while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
             blackJackGame.handOutCardTo(shufflingMachine, dealer);
             OutputView.printDealerReceiveOneMoreCard();
         }
     }
 
-    private void handOutCardToPlayers(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
-                                      final Players players) {
+    private void handOutCardToPlayers(final BlackJackGame blackJackGame, final Players players) {
         for (final Player player : players.getPlayers()) {
-            handOutCardToEachPlayer(blackJackGame, shufflingMachine, player);
+            handOutCardToEachPlayer(blackJackGame, player);
         }
     }
 
-    private void handOutCardToEachPlayer(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
-                                         final Player player) {
+    private void handOutCardToEachPlayer(final BlackJackGame blackJackGame, final Player player) {
         String playerAnswer = inputGameCommandToGetOneMoreCard(player);
         while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) &&
-                handOutCardByCommand(blackJackGame, shufflingMachine, player, playerAnswer)) {
+                handOutCardByCommand(blackJackGame, player, playerAnswer)) {
             playerAnswer = inputGameCommandToGetOneMoreCard(player);
         }
     }
 
-    private static boolean handOutCardByCommand(final BlackJackGame blackJackGame, final ShufflingMachine shufflingMachine,
-                                                final Player player, final String playerAnswer) {
+    private boolean handOutCardByCommand(final BlackJackGame blackJackGame, final Player player,
+                                         final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.handOutCardTo(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
@@ -91,7 +93,7 @@ public class BlackJackGameController {
         }
     }
 
-    private static void validateCorrectCommand(final String gameCommand) {
+    private void validateCorrectCommand(final String gameCommand) {
         if (!(gameCommand.equals(YES_COMMAND) || gameCommand.equals(NO_COMMAND))) {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
