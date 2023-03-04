@@ -5,7 +5,7 @@ import domain.card.Card;
 
 public abstract class Player {
 
-    protected final Name name;
+    private final Name name;
     protected final CardArea cardArea;
 
     protected Player(final Name name, final CardArea cardArea) {

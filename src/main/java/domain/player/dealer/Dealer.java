@@ -15,6 +15,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return cardArea.calculate() <= DEALER_LIMIT_SCORE;
+        return score() <= DEALER_LIMIT_SCORE;
     }
 }
