@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    private static final int BURST_NUMBER = 21;
+
     public Player(final Name name, final DrawnCards drawnCards) {
         super(name, drawnCards);
     }
@@ -14,5 +16,10 @@ public class Player extends Participant {
     @Override
     public List<Card> openDrawnCards() {
         return Collections.unmodifiableList(drawnCards.getCards());
+    }
+
+    @Override
+    public boolean isDrawable() {
+        return calculateCardScore() < BURST_NUMBER;
     }
 }

@@ -18,9 +18,6 @@ import java.util.List;
 public class BlackJackService {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
-    private static final int BURST_NUMBER = 21;
-    private static final int DEALER_DRAW_LIMIT_SCORE = 16;
-
 
     public List<DrawnCardsInfo> splitCards(final Dealer dealer,
                                            final Players players,
@@ -60,7 +57,7 @@ public class BlackJackService {
     }
 
     public boolean canPlayerDrawMore(final Player player, final DrawCommand drawCommand) {
-        if (player.calculateCardScore() > BURST_NUMBER || drawCommand.isStop()) {
+        if (!player.isDrawable() || drawCommand.isStop()) {
             return false;
         }
 
@@ -68,17 +65,13 @@ public class BlackJackService {
     }
 
     public void drawDealerCard(final CardDeck cardDeck, final Dealer dealer) {
-        if (dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE) {
+        if (dealer.isDrawable()) {
             dealer.pickCard(cardDeck.draw());
         }
     }
 
     public boolean canDealerDrawMore(final Dealer dealer) {
-        if (dealer.calculateCardScore() > DEALER_DRAW_LIMIT_SCORE) {
-            return false;
-        }
-
-        return true;
+        return dealer.isDrawable();
     }
 
     public List<ParticipantResult> getParticipantResults(final Dealer dealer,
@@ -99,28 +92,23 @@ public class BlackJackService {
     }
 
     public List<WinLoseResult> getWinLoseResults(final Dealer dealer, final Players players) {
-        int dealerScore = dealer.calculateCardScore();
-        boolean isDealerBurst = dealerScore > BURST_NUMBER;
-
         return players.stream()
-                .map(player -> calculateWinLose(player, dealerScore, isDealerBurst))
+                .map(player -> calculateWinLose(player, dealer))
                 .collect(toList());
     }
 
     private WinLoseResult calculateWinLose(final Player player,
-                                           final int dealerScore,
-                                           final boolean isDealerBurst) {
-        int playerScore = player.calculateCardScore();
-        if (playerScore > BURST_NUMBER) {
+                                           final Dealer dealer) {
+        if (player.isBurst()) {
             return WinLoseResult.toDto(player, false);
         }
 
-        if (isDealerBurst) {
+        if (dealer.isBurst()) {
             return WinLoseResult.toDto(player, true);
 
         }
 
-        boolean isPlayerWin = playerScore > dealerScore;
+        boolean isPlayerWin = player.calculateCardScore() > dealer.calculateCardScore();
         return WinLoseResult.toDto(player, isPlayerWin);
     }
 

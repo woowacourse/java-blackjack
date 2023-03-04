@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BURST_NUMBER = 21;
+
     protected final Name name;
     protected final DrawnCards drawnCards;
 
@@ -23,7 +25,13 @@ public abstract class Participant {
         return drawnCards.calculateScore();
     }
 
+    public boolean isBurst() {
+        return calculateCardScore() > BURST_NUMBER;
+    }
+
     public abstract List<Card> openDrawnCards();
+
+    public abstract boolean isDrawable();
 
     public String getName() {
         return name.getName();
