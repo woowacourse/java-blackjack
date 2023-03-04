@@ -23,7 +23,7 @@ public class PersonStatusResponse {
         return new PersonStatusResponse(person.getName(), getCardsStatus(person.getInitCards()));
     }
 
-    protected static List<String> getCardsStatus(List<Card> cards) {
+    private static List<String> getCardsStatus(List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getRank() + card.getSuit())
                 .collect(toList());
