@@ -8,8 +8,8 @@ public class OutputView {
 
     public void printPlayerNames(List<String> names) {
         System.out.print(names.get(0) + "와 ");
-        String nameMessage = IntStream.range(1, names.size()).mapToObj(i -> names.get(i) + ", ")
-                .collect(Collectors.joining());
+        String nameMessage = IntStream.range(1, names.size()).mapToObj(names::get)
+                .collect(Collectors.joining(", "));
         System.out.println(nameMessage + "에게 2장을 나누었습니다.");
     }
 
