@@ -32,19 +32,27 @@ public class BlackJackController {
         init(players, dealer);
         askPlayers(players, referee);
 
-        for (Player player : players.getPlayers()) {
-            askPlayer(referee, player);
-        }
-        System.out.println();
-        while (referee.calculateDeckScore(dealer.getCardDeck()) <= DEALER_HIT_NUMBER
-            && referee.calculateDeckScore(dealer.getCardDeck()) != BURST_CODE) {
-            dealer.hit(cardPicker);
-            OutputView.printDealerPickMessage(dealer);
-        }
+        //개행 넣는 output추가
+        hitCardByDealer(dealer, referee);
+
         List<Result> results = referee.judgeResult(dealer, players);
         OutputView.printFinalCardDeck(dealer, players, referee);
         OutputView.printResult(referee.countDealerResult(results), dealer, players,
             results);
+    }
+
+    private void hitCardByDealer(Dealer dealer, Referee referee) {
+        int dealerScore = referee.calculateDeckScore(dealer.getCardDeck());
+
+        while (isContinueToHit(dealerScore)) {
+            dealer.hit(cardPicker);
+            dealerScore = referee.calculateDeckScore(dealer.getCardDeck());
+            OutputView.printDealerPickMessage(dealer);
+        }
+    }
+
+    private static boolean isContinueToHit(int dealerScore) {
+        return dealerScore <= DEALER_HIT_NUMBER && dealerScore != BURST_CODE;
     }
 
     private void askPlayers(Players players, Referee referee) {
