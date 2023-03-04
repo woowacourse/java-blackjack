@@ -9,9 +9,4 @@ public class Participant extends Player {
     public boolean isNameEqualTo(String playerName) {
         return getName().equals(playerName);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }

@@ -52,9 +52,4 @@ public class Dealer extends Player {
     public boolean isNameEqualTo(String name) {
         return getName().equals(name);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }
