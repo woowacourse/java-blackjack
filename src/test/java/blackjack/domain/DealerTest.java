@@ -39,7 +39,7 @@ class DealerTest {
 
     @Test
     @DisplayName("처음에 딜러는 2장의 카드 중 1장의 카드만 보여줘야 한다.")
-    void getInitCard_success() {
+    void getStartCard_success() {
         // given
         Dealer dealer = new Dealer(List.of(
                 new Card(Suit.DIAMOND, Rank.KING),
