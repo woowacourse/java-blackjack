@@ -88,7 +88,7 @@ public class BlackjackController {
     }
 
     private void stopServingCard(Player player) {
-        if (player.isUnderLimit()) {
+        if (!player.isUnderLimit()) {
             OutputView.printScoreUnderLimit();
         }
         OutputView.printPlayerCurrentCards(player);
