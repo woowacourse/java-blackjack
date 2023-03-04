@@ -2,6 +2,7 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class DrawnCards {
 
@@ -39,6 +40,10 @@ public class DrawnCards {
 
     public void add(final Card card) {
         this.cards.add(card);
+    }
+
+    public Stream<Card> stream() {
+        return cards.stream();
     }
 
     public List<Card> getCards() {

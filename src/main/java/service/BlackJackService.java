@@ -46,7 +46,6 @@ public class BlackJackService {
 
     public DrawnCardsInfo drawPlayerCard(final CardDeck cardDeck,
                                          final Player player) {
-
         player.drawCard(cardDeck.draw());
         return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }

@@ -18,8 +18,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> openDrawnCards() {
-        List<Card> openCards = drawnCards.getCards()
-                .stream()
+        List<Card> openCards = drawnCards.stream()
                 .skip(1)
                 .collect(toList());
 
