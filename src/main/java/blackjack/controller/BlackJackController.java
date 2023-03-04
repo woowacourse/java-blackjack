@@ -13,17 +13,16 @@ public class BlackJackController {
     private BlackJackGame blackJackGame;
 
     public void run() {
-        List<String> playerNames = InputView.askPlayerNames();
-        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), playerNames);
-
+        initialize();
         startGame();
         hitOrStayForAvailablePlayers(blackJackGame.findAvailablePlayerNames());
-        int hitCount = blackJackGame.hitOrStayForDealer();
-        OutputView.showDealerHitResult(hitCount);
-        OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
-                blackJackGame.computePlayerGameResults());
+        hitUntilDealerAvailable();
+        totalUp();
+    }
 
-        OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
+    private void initialize() {
+        List<String> playerNames = InputView.askPlayerNames();
+        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), playerNames);
     }
 
     private void startGame() {
@@ -47,5 +46,16 @@ public class BlackJackController {
         if (keepGoing) {
             hitOrStay(playerName);
         }
+    }
+
+    private void hitUntilDealerAvailable() {
+        int hitCount = blackJackGame.hitOrStayForDealer();
+        OutputView.showDealerHitResult(hitCount);
+    }
+
+    private void totalUp() {
+        OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
+                blackJackGame.computePlayerGameResults());
+        OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
     }
 }
