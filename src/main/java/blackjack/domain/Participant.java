@@ -24,29 +24,28 @@ public class Participant {
                 .map(Card::getNumberValue)
                 .reduce(0, Integer::sum);
 
-        if (isBust(sum) && hasACE()) {
+        if ((sum > BLACK_JACK) && hasACE()) {
             return (sum - ACE_ADDITIONAL_VALUE);
         }
 
         return sum;
     }
 
-    public boolean isAvailable() {
-        int sum = computeSumOfCards();
-        return !isBlackJack(sum) && !isBust(sum);
-    }
-
-    public boolean isBust(int sum) {
-        return sum > BLACK_JACK;
-    }
-
-    public boolean isBlackJack(int sum) {
-        return sum == BLACK_JACK;
-    }
-
     private boolean hasACE() {
         return cards.stream()
                 .anyMatch(Card::isACE);
+    }
+
+    public boolean isBust() {
+        return computeSumOfCards() > BLACK_JACK;
+    }
+
+    public boolean isAvailable() {
+        return !(isBlackJack()) && !(isBust());
+    }
+
+    private boolean isBlackJack() {
+        return computeSumOfCards() == BLACK_JACK;
     }
 
     public List<Card> getCards() {
