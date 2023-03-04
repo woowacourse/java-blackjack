@@ -27,7 +27,8 @@ public class OutputView {
 
     private static void printPlayerNames(List<String> playerNames) {
         playerNames = new ArrayList<>(playerNames);
-        System.out.printf("%n%s와 %s에게 2장을 나누어주었습니다.%n",
+        printEmptyLine();
+        System.out.printf("%s와 %s에게 2장을 나누어주었습니다.%n",
                 playerNames.remove(0),
                 String.join(", ", playerNames));
     }
@@ -67,7 +68,8 @@ public class OutputView {
     }
 
     public static void printAddCardGuide(String name) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        printEmptyLine();
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
     }
 
     public static void printBurstMessage(String name) {
@@ -75,11 +77,12 @@ public class OutputView {
     }
 
     public static void printGiveDealerCardMessage() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        printEmptyLine();
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printPlayersFinalInformation(List<Player> players) {
-        println("");
+        printEmptyLine();
         for (Player player : players) {
             printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore());
@@ -88,7 +91,8 @@ public class OutputView {
 
     public static void printPlayersGameResults(List<Player> players) {
         players = new ArrayList<>(players);
-        println("\n## 최종 승패");
+        printEmptyLine();
+        println("## 최종 승패");
         printDealerGameResult(players.remove(0));
         printParticipantsGameResult(players);
     }
@@ -124,5 +128,9 @@ public class OutputView {
 
     public static void println(String message) {
         System.out.println(message);
+    }
+
+    private static void printEmptyLine() {
+        println("");
     }
 }
