@@ -9,12 +9,12 @@ public class BlackJackResults {
     private final Map<Name, BlackJackResult> participants = new LinkedHashMap<>();
 
     public BlackJackResults(final Dealer dealer, final List<Player> players) {
-        List<ResultType> dealerResults = createDealerResults(dealer, players);
+        final List<ResultType> dealerResults = createDealerResults(dealer, players);
         participants.put(dealer.getName(), new BlackJackResult(dealerResults));
         for (int index = 0; index < dealerResults.size(); index++) {
-            Name playerName = players.get(index).getName();
-            ResultType dealerResult = dealerResults.get(index);
-            ResultType reverseType = ResultType.getReverseType(dealerResult);
+            final Name playerName = players.get(index).getName();
+            final ResultType dealerResult = dealerResults.get(index);
+            final ResultType reverseType = ResultType.getReverseType(dealerResult);
             participants.put(playerName, new BlackJackResult(reverseType));
         }
     }

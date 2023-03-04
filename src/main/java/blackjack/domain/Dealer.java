@@ -16,8 +16,8 @@ public class Dealer extends Participant {
     }
 
     public ResultType judgeResult(final Participant participant) {
-        int dealerPoint = getTotalPoint();
-        int participantPoint = participant.getTotalPoint();
+        final int dealerPoint = getTotalPoint();
+        final int participantPoint = participant.getTotalPoint();
 
         if (participantPoint > 21) {
             return WIN;

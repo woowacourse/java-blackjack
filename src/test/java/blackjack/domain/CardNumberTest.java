@@ -37,6 +37,6 @@ class CardNumberTest {
                         CardNumber.JACK,
                         CardNumber.ACE,
                         CardNumber.ACE), 22)
-                );
+        );
     }
 }

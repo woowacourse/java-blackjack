@@ -17,23 +17,21 @@ public class OutputView {
 
     public static void printParticipantsInitCards(final Dealer dealer, final List<Player> players) {
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().getValue(), getPlayerNames(players)));
-        String dealerInitCards = getParticipantCards(dealer, dealer.open(1));
-        String playersInitCards = players.stream()
-                .map(player -> getParticipantCards(player, player.open(2)))
-                .collect(Collectors.joining(System.lineSeparator()));
+        final String dealerInitCards = getParticipantCards(dealer, dealer.open(1));
+        final String playersInitCards = getParticipantsInitCards(players);
 
         System.out.println(dealerInitCards);
         System.out.println(playersInitCards);
     }
 
     public static void printParticipantCardWithResult(final Participant participant, final int totalPoint) {
-        String playerCards = getParticipantCards(participant, participant.openAll());
-        String playerTotalPoint = String.format(" - 결과: %d", totalPoint);
+        final String playerCards = getParticipantCards(participant, participant.openAll());
+        final String playerTotalPoint = String.format(" - 결과: %d", totalPoint);
         System.out.println(playerCards + playerTotalPoint);
     }
 
     public static void printParticipantsCards(final Participant participant) {
-        String playerCards = getParticipantCards(participant, participant.openAll());
+        final String playerCards = getParticipantCards(participant, participant.openAll());
 
         System.out.println(playerCards);
     }
@@ -42,12 +40,18 @@ public class OutputView {
         System.out.println(String.format("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", hitCount));
     }
 
+    private static String getParticipantsInitCards(final List<Player> players) {
+        return players.stream()
+                .map(player -> getParticipantCards(player, player.open(2)))
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
     private static String createBlackJackResult(BlackJackResults blackJackResults) {
-        Map<Name, BlackJackResult> participants = blackJackResults.getParticipants();
-        StringBuilder stringBuilder = new StringBuilder();
+        final Map<Name, BlackJackResult> participants = blackJackResults.getParticipants();
+        final StringBuilder stringBuilder = new StringBuilder();
 
         for (final Name name : participants.keySet()) {
-            Map<ResultType, Integer> results = participants.get(name).getResults();
+            final Map<ResultType, Integer> results = participants.get(name).getResults();
             stringBuilder.append(getParticipantResult(name, results));
         }
 
@@ -61,7 +65,7 @@ public class OutputView {
     }
 
     private static String getParticipantCards(final Participant participant, final List<Card> participantCards) {
-        StringBuilder messageBuilder = new StringBuilder();
+        final StringBuilder messageBuilder = new StringBuilder();
         messageBuilder.append(participant.getName().getValue())
                 .append(": ")
                 .append(participantCards.stream()
@@ -71,7 +75,7 @@ public class OutputView {
     }
 
     private static String getParticipantResult(final Name name, final Map<ResultType, Integer> results) {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name.getValue()).append(": ");
         results.entrySet()
                 .stream()

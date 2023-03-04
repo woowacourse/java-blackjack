@@ -10,11 +10,11 @@ public class BlackJackManager {
     private final Deck deck = new Deck();
 
     public void run() {
-        Dealer dealer = new Dealer(initCards());
-        List<Player> players = createPlayers();
+        final Dealer dealer = new Dealer(initCards());
+        final List<Player> players = createPlayers();
         OutputView.printParticipantsInitCards(dealer, players);
 
-        for (Player player : players) {
+        for (final Player player : players) {
             hitBy(player);
         }
         hitBy(dealer);
@@ -29,7 +29,7 @@ public class BlackJackManager {
     }
 
     private static void showGameResult(final Dealer dealer, final List<Player> players) {
-        BlackJackResults blackJackResults = new BlackJackResults(dealer, players);
+        final BlackJackResults blackJackResults = new BlackJackResults(dealer, players);
         OutputView.printBlackJackResults(blackJackResults);
     }
 
@@ -40,7 +40,7 @@ public class BlackJackManager {
             hitCount++;
         }
 
-        if(hitCount > 0) {
+        if (hitCount > 0) {
             OutputView.printDealerHit(hitCount);
         }
     }
@@ -56,8 +56,8 @@ public class BlackJackManager {
     }
 
     private List<Player> createPlayers() {
-        List<String> names = InputView.readNames();
-        List<Player> players = new ArrayList<>();
+        final List<String> names = InputView.readNames();
+        final List<Player> players = new ArrayList<>();
         for (final String name : names) {
             players.add(new Player(initCards(), name));
         }

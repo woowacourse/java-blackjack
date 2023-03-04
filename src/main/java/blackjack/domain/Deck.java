@@ -10,7 +10,7 @@ public class Deck {
     private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
-        for (CardShape shape : CardShape.values()) {
+        for (final CardShape shape : CardShape.values()) {
             Arrays.stream(CardNumber.values())
                     .forEach(number -> cards.add(new Card(shape, number)));
         }
