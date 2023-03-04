@@ -4,11 +4,12 @@ import domain.CardSelector;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.game.GameManager;
-import domain.game.GameResult;
 import domain.participant.Result;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -132,9 +133,14 @@ public class GameController {
     }
 
     private void printFinalGameResult(final Participants participants) {
-        GameResult gameResult = GameResult.create(participants);
-        Map<String, Result> playerGameResults = gameResult.getPlayerGameResults();
-        Participant dealer = participants.getDealer();
+        Dealer dealer = (Dealer) participants.getDealer();
+        Map<String, Result> playerGameResults = makeFinalGameResult(participants, dealer);
         outputView.printFinalGameResult(dealer.getName(), playerGameResults);
+    }
+
+    private Map<String, Result> makeFinalGameResult(final Participants participants, final Dealer dealer) {
+        return participants.getPlayer().stream()
+                .collect(Collectors.toMap(Participant::getName, dealer::calculateResult,
+                (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }
