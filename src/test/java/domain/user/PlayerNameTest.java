@@ -1,6 +1,5 @@
-package domain;
+package domain.user;
 
-import domain.user.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

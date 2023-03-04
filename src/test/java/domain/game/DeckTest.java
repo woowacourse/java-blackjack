@@ -1,9 +1,8 @@
-package domain;
+package domain.game;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.game.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -27,10 +27,10 @@ public class InputView {
         return trimList(List.of(splitNames));
     }
 
-    private List<String> trimList(List<String> targets) {
+    private List<String> trimList(List<String> list) {
         List<String> trimmedList = new ArrayList<>();
-        for (String target : targets) {
-            trimmedList.add(target.trim());
+        for (String element : list) {
+            trimmedList.add(element.trim());
         }
 
         return trimmedList;

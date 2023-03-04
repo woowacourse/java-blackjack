@@ -1,10 +1,8 @@
-package domain;
+package domain.user;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.user.Hand;
-import domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
