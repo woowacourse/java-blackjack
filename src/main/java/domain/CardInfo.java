@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author 우가
  * @version 1.0.0
