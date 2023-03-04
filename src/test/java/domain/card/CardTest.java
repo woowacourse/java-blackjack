@@ -17,7 +17,7 @@ class CardTest {
                 .isExactlyInstanceOf(Card.class);
     }
 
-    @ParameterizedTest(name = "checkAce()는 호출하면, 에이스인지 여부를 반환한다")
+    @ParameterizedTest(name = "checkAce()는 호출하면 에이스인지 여부를 반환한다")
     @CsvSource(value = {"ACE:true", "TWO:false", "KING:false"}, delimiter = ':')
     void checkAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
         // given
@@ -26,6 +26,7 @@ class CardTest {
         // when
         final boolean actual = card.checkAce();
 
+        // then
         assertThat(actual)
                 .isSameAs(expected);
     }

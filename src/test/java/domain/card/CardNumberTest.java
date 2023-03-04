@@ -32,8 +32,10 @@ class CardNumberTest {
     @ParameterizedTest(name = "checkAce()는 호출하면, 에이스인지 여부를 반환한다")
     @CsvSource(value = {"ACE:true", "TWO:false", "KING:false"}, delimiter = ':')
     void checkAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
+        // when
         final boolean actual = cardNumber.checkAce();
 
+        // then
         assertThat(actual)
                 .isSameAs(expected);
     }

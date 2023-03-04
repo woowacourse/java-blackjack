@@ -17,28 +17,24 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayerTest {
 
-    private String playerName;
-    private Card card;
     private Player player;
 
     @BeforeEach
     void init() {
-        playerName = "pobi";
-        card = Card.create(CardPattern.HEART, CardNumber.ACE);
-        player = Player.create(playerName);
+        player = Player.create("a");
     }
 
     @Test
     @DisplayName("create()를 호출하면 Player가 생성된다")
     void create_whenCall_thenSuccess() {
-        final Player player = assertDoesNotThrow(() -> Player.create(playerName));
+        final Player player = assertDoesNotThrow(() -> Player.create("b"));
 
         assertThat(player)
                 .isExactlyInstanceOf(Player.class);
     }
 
     @Test
-    @DisplayName("isDealerName()은 파라미터로 입력된 name이 '딜러'인지 판단한다")
+    @DisplayName("isDealerName()은 파라미터로 입력된 name이 '딜러'라면 예외가 발생한다")
     void create_givenInvalidName_thenFail() {
         assertThatThrownBy(() -> Player.create("딜러"))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -49,6 +45,7 @@ class PlayerTest {
     @DisplayName("addCard()는 카드를 건네주면 참가자의 카드에 추가한다")
     void addCard_givenCard_thenSuccess() {
         // when
+        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
         player.addCard(card);
 
         // then

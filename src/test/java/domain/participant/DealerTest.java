@@ -72,7 +72,7 @@ class DealerTest {
             .isSameAs(expected);
     }
 
-    @ParameterizedTest(name = "canGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
+    @ParameterizedTest(name = "canDraw()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
     void canGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
         // given
@@ -83,7 +83,7 @@ class DealerTest {
                 .isSameAs(expected);
     }
 
-    @ParameterizedTest(name = "calculate()는 플레이어를 건네주면 게임 결과를 반환한다")
+    @ParameterizedTest(name = "calculateResult()는 플레이어를 건네주면 게임 결과를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeParticipantsCards")
     void calculateResult_givenPlayer_thenReturnGameResult(final List<Card> dealerCards,
             final List<Card> playerCards, final Result expected) {

@@ -46,7 +46,7 @@ class ParticipantCardTest {
     }
 
     @Test
-    @DisplayName("getFirst()는 호출하면, 참가자의 첫 번째 카드를 조회한다")
+    @DisplayName("getFirst()는 호출하면 참가자의 첫 번째 카드를 조회한다")
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
         final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
@@ -88,7 +88,7 @@ class ParticipantCardTest {
                 .isSameAs(expected);
     }
 
-    @ParameterizedTest(name = "checkBlackJack()은 호출하면 블랙잭인지 여부를 반환난다")
+    @ParameterizedTest(name = "checkBlackJack()은 호출하면 블랙잭인지 여부를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
     void checkBlackJack_whenCall_thenReturnIsBlackJack(final List<Card> cards, final boolean expected) {
         // given
