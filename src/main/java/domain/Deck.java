@@ -10,7 +10,7 @@ public class Deck {
 
     private final List<Card> deck;
 
-    private static int index;
+    private int index;
 
     public Deck() {
         this.deck = createDeck();
