@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.*;
 
 class SimpleArrayListTest {
@@ -56,19 +58,21 @@ class SimpleArrayListTest {
         assertThat(doubleTotal).isEqualTo(1.2);
         assertThat(intTotal).isEqualTo(3);
     }
-//
-//    @Test
-//    @DisplayName("미션4")
-//    void mission4() {
-//        //given
-//        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
-//        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
-//
-//        //when
-//        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
-//        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
-//
-//        //then
-//    }
 
+    @Test
+    @DisplayName("미션4")
+    void mission4() {
+        //given
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
+
+        //when
+        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+
+        //then
+        assertThat(filteredDoubleValues.size()).isEqualTo(2);
+
+        assertThat(filteredIntValues.size()).isEqualTo(2);
+    }
 }

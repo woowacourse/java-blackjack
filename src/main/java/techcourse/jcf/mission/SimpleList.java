@@ -1,5 +1,8 @@
 package techcourse.jcf.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface SimpleList<T> {
 
 
@@ -32,16 +35,15 @@ public interface SimpleList<T> {
         }
         return number;
     }
-//
-//    static SimpleList<? extends Number> filterNegative(SimpleList<? extends Number> list) {
-//        SimpleList<? extends Number> result = new SimpleArrayList<>();
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).intValue() >= 0) {
-//                result.add(list.get(i));
-//            }
-//        }
-//        return result;
-//    }
 
+    static <T> SimpleList<T> filterNegative(SimpleList<? extends Number> list) {
+        SimpleList<Number> result = new SimpleArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).doubleValue() >= 0) {
+                result.add(list.get(i));
+            }
+        }
+        return (SimpleList<T>) result;
+    }
 
 }
