@@ -26,13 +26,6 @@ public enum Letter {
         this.score = score;
     }
 
-    public static Letter of(String letter) {
-        return Arrays.stream(values())
-                .filter(letter1 -> letter1.getLetter().equals(letter))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 글자입니다"));
-    }
-
     public boolean isA() {
         return this == LETTER_A;
     }

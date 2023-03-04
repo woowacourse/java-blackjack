@@ -5,11 +5,6 @@ public class Card {
     private final Face face;
     private final Letter letter;
 
-    public Card(Face face, String letter) {
-        this.face = face;
-        this.letter = Letter.of(letter);
-    }
-
     public Card(Face face, Letter letter) {
         this.face = face;
         this.letter = letter;
