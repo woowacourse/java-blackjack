@@ -29,10 +29,7 @@ public class OutputView {
 
     public void printParticipantMessage(final Participants participants) {
         final List<String> participantNames = participants.getParticipantNames();
-        final String participantNamesMessage = String.join(", ", participantNames)
-                .replace(",", "와");
-        final String participantNameMessage = String.format(System.lineSeparator() + DRAW_MESSAGE.getMessage(),
-                participantNamesMessage);
+        final String participantNameMessage = mapToParticipantNameMessage(participantNames);
 
         print(participantNameMessage);
     }
@@ -49,6 +46,7 @@ public class OutputView {
                                 final int participantScore) {
         final String cardsResultMessage = String.format(PARTICIPANT_CARD_RESULT.getMessage(),
                 participantName, getCardsMessage(participantCards), participantScore);
+
         print(cardsResultMessage);
     }
 
@@ -56,6 +54,12 @@ public class OutputView {
         print(System.lineSeparator() + FINAL_GAME_RESULT.getMessage());
         printDealerGameResult(dealerName, playerGameResults);
         printPlayerGameResult(playerGameResults);
+    }
+
+    private String mapToParticipantNameMessage(final List<String> participantNames) {
+        final String namesMessage = String.join(", ", participantNames).replace(",", "와");
+
+        return String.format(System.lineSeparator() + DRAW_MESSAGE.getMessage(), namesMessage);
     }
 
     private String getCardMessage(final Card participantCard) {
@@ -84,12 +88,12 @@ public class OutputView {
     }
 
     private void printPlayerGameResult(final Map<String, Result> playerGameResults) {
-        playerGameResults.keySet().forEach(playerName -> {
-            final Result playerResult = playerGameResults.get(playerName);
-            final String playerGameResultMessage = String.format(PLAYER_GAME_RESULT.getMessage(),
-                    playerName, GameResultMessage.findMessage(playerResult));
+        playerGameResults.keySet().forEach(playerName ->
+            print(mapToPlayerGameResultMessage(playerName, playerGameResults.get(playerName))));
+    }
 
-            print(playerGameResultMessage);
-        });
+    private String mapToPlayerGameResultMessage(final String playerName, final Result playerResult) {
+        return String.format(PLAYER_GAME_RESULT.getMessage(), playerName,
+                GameResultMessage.findMessage(playerResult));
     }
 }
