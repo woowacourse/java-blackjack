@@ -61,7 +61,6 @@ public class CardsTest {
     void 카드의_수가_홀수일_때_총합을_반환한다() {
         List<Card> cards = new ArrayList<>();
 
-        // 21 이 넘을 경우 A 는 1로 대체된다
         cards.add(하트2);
         cards.add(하트3);
         cards.add(하트10);
