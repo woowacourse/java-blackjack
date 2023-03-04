@@ -65,9 +65,7 @@ public class BlackJackService {
     }
 
     public void drawDealerCard(final CardDeck cardDeck, final Dealer dealer) {
-        if (dealer.isDrawable()) {
-            dealer.pickCard(cardDeck.draw());
-        }
+        dealer.pickCard(cardDeck.draw());
     }
 
     public boolean canDealerDrawMore(final Dealer dealer) {

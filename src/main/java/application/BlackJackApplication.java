@@ -91,10 +91,10 @@ public class BlackJackApplication {
     }
 
     private void drawDealerCards(final CardDeck cardDeck, final Dealer dealer) {
-        do {
+        while (blackJackService.canDealerDrawMore(dealer)) {
             blackJackService.drawDealerCard(cardDeck, dealer);
             outputView.printDealerCardPickMessage();
-        } while (blackJackService.canDealerDrawMore(dealer));
+        }
     }
 
     private void printParticipantResults(final Dealer dealer, final Players players) {

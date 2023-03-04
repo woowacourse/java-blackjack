@@ -170,32 +170,6 @@ class BlackJackServiceTest {
                 .containsExactly(givenCard, expectedCard);
     }
 
-    @DisplayName("딜러가 조건을 만족하지못하면 카드를 뽑지 못한다.")
-    @Test
-    void dealer_not_draw_card_if_not_satisfied() {
-        // given
-        List<Card> cards = new ArrayList<>();
-        Card givenCardFirst = new Card(CardType.SPADE, CardValue.JACK);
-        Card givenCardSecond = new Card(CardType.HEART, CardValue.JACK);
-        Card givenCardThird = new Card(CardType.CLUB, CardValue.JACK);
-
-        cards.add(givenCardFirst);
-        cards.add(givenCardSecond);
-        cards.add(givenCardThird);
-
-        Dealer dealer = new Dealer(new DrawnCards(cards));
-        List<Card> rawDeck = createFillCards();
-        CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
-        // when
-
-        blackJackService.drawDealerCard(cardDeck, dealer);
-        List<Card> drawnCards = dealer.getDrawnCards();
-
-        // then
-        assertThat(drawnCards)
-                .containsExactly(givenCardFirst, givenCardSecond, givenCardThird);
-    }
-
     @DisplayName("딜러가 조건을 만족하면 카드를 더 뽑을 수 있다.")
     @Test
     void dealer_can_draw_card() {
