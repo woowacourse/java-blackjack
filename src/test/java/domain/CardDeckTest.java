@@ -25,8 +25,8 @@ class CardDeckTest {
     private List<Card> createFillCards() {
         List<Card> cards = new ArrayList<>();
 
-        for (Type type : Type.values()) {
-            for (Value value : Value.values()) {
+        for (CardType type : CardType.values()) {
+            for (CardValue value : CardValue.values()) {
                 cards.add(new Card(type, value));
             }
         }
@@ -61,7 +61,7 @@ class CardDeckTest {
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < 52; i++) {
-            cards.add(new Card(Type.CLUB, Value.ACE));
+            cards.add(new Card(CardType.CLUB, CardValue.ACE));
         }
         return cards;
     }

@@ -12,9 +12,9 @@ public class CardDeckGenerator {
     public static CardDeck create() {
         List<Card> cards = new ArrayList<>();
 
-        for (Type type : Type.values()) {
-            for (Value value : Value.values()) {
-                cards.add(new Card(type, value));
+        for (CardType cardType : CardType.values()) {
+            for (CardValue cardValue : CardValue.values()) {
+                cards.add(new Card(cardType, cardValue));
             }
         }
 

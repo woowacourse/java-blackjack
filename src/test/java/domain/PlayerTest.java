@@ -13,8 +13,8 @@ class PlayerTest {
     @Test
     void drawn_cards_contains_when_player_pick() {
         // given
-        Card cardA = new Card(Type.CLUB, Value.KING);
-        Card cardB = new Card(Type.SPADE, Value.QUEEN);
+        Card cardA = new Card(CardType.CLUB, CardValue.KING);
+        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
 
         Name name = new Name("pobi");
         List<Card> emptyCards = new ArrayList<>();
@@ -34,11 +34,11 @@ class PlayerTest {
     @Test
     void calculate_players_drawn_cards_score() {
         // given
-        Value king = Value.KING;
-        Value queen = Value.QUEEN;
+        CardValue king = CardValue.KING;
+        CardValue queen = CardValue.QUEEN;
 
-        Card cardA = new Card(Type.CLUB, king);
-        Card cardB = new Card(Type.SPADE, queen);
+        Card cardA = new Card(CardType.CLUB, king);
+        Card cardB = new Card(CardType.SPADE, queen);
 
         Name name = new Name("pobi");
         List<Card> givenCards = List.of(cardA, cardB);
@@ -57,8 +57,8 @@ class PlayerTest {
     @Test
     void returns_player_drawn_cards() {
         // given
-        Card cardA = new Card(Type.CLUB, Value.KING);
-        Card cardB = new Card(Type.SPADE, Value.QUEEN);
+        Card cardA = new Card(CardType.CLUB, CardValue.KING);
+        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
 
         Name name = new Name("pobi");
         List<Card> givenCards = List.of(cardA, cardB);

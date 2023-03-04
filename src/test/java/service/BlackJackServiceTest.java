@@ -4,14 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Card;
 import domain.CardDeck;
+import domain.CardType;
+import domain.CardValue;
 import domain.Dealer;
 import domain.DrawCommand;
 import domain.DrawnCards;
 import domain.Name;
 import domain.Player;
 import domain.Players;
-import domain.Type;
-import domain.Value;
 import dto.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ class BlackJackServiceTest {
     void player_can_draw_card_if_command_false() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Type.HEART, Value.JACK));
+        cards.add(new Card(CardType.HEART, CardValue.JACK));
         Player player = new Player(new Name("ori"), new DrawnCards(cards));
         DrawCommand drawCommand = new DrawCommand("y");
 
@@ -134,9 +134,9 @@ class BlackJackServiceTest {
     void player_stop_draw_card_if_over_burst_number() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Type.SPADE, Value.JACK));
-        cards.add(new Card(Type.HEART, Value.JACK));
-        cards.add(new Card(Type.DIAMOND, Value.JACK));
+        cards.add(new Card(CardType.SPADE, CardValue.JACK));
+        cards.add(new Card(CardType.HEART, CardValue.JACK));
+        cards.add(new Card(CardType.DIAMOND, CardValue.JACK));
         Player player = new Player(new Name("ori"), new DrawnCards(cards));
         DrawCommand drawCommand = new DrawCommand("y");
 
@@ -152,7 +152,7 @@ class BlackJackServiceTest {
     void dealer__draw_card() {
         // given
         List<Card> cards = new ArrayList<>();
-        Card givenCard = new Card(Type.SPADE, Value.JACK);
+        Card givenCard = new Card(CardType.SPADE, CardValue.JACK);
         cards.add(givenCard);
 
         Dealer dealer = new Dealer(new DrawnCards(cards));
@@ -175,9 +175,9 @@ class BlackJackServiceTest {
     void dealer_not_draw_card_if_not_satisfied() {
         // given
         List<Card> cards = new ArrayList<>();
-        Card givenCardFirst = new Card(Type.SPADE, Value.JACK);
-        Card givenCardSecond = new Card(Type.HEART, Value.JACK);
-        Card givenCardThird = new Card(Type.CLUB, Value.JACK);
+        Card givenCardFirst = new Card(CardType.SPADE, CardValue.JACK);
+        Card givenCardSecond = new Card(CardType.HEART, CardValue.JACK);
+        Card givenCardThird = new Card(CardType.CLUB, CardValue.JACK);
 
         cards.add(givenCardFirst);
         cards.add(givenCardSecond);
@@ -201,7 +201,7 @@ class BlackJackServiceTest {
     void dealer_can_draw_card() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Type.SPADE, Value.JACK));
+        cards.add(new Card(CardType.SPADE, CardValue.JACK));
         Dealer dealer = new Dealer(new DrawnCards(cards));
 
         boolean expected = true;
@@ -216,8 +216,8 @@ class BlackJackServiceTest {
     void dealer_can_draw_card_if_score_over_limit() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Type.SPADE, Value.JACK));
-        cards.add(new Card(Type.HEART, Value.JACK));
+        cards.add(new Card(CardType.SPADE, CardValue.JACK));
+        cards.add(new Card(CardType.HEART, CardValue.JACK));
         Dealer dealer = new Dealer(new DrawnCards(cards));
 
         boolean expected = false;
@@ -232,13 +232,13 @@ class BlackJackServiceTest {
     void get_win_loss_result() {
         // given
         List<Card> playerCards = new ArrayList<>();
-        playerCards.add(new Card(Type.SPADE, Value.EIGHT));
+        playerCards.add(new Card(CardType.SPADE, CardValue.EIGHT));
         Player player = new Player(new Name("pobi"), new DrawnCards(playerCards));
 
         Players players = new Players(List.of(player));
 
         List<Card> dealerCard = new ArrayList<>();
-        dealerCard.add(new Card(Type.SPADE, Value.TWO));
+        dealerCard.add(new Card(CardType.SPADE, CardValue.TWO));
         Dealer dealer = new Dealer(new DrawnCards(dealerCard));
 
         boolean expected = true;
@@ -253,8 +253,8 @@ class BlackJackServiceTest {
     private List<Card> createFillCards() {
         List<Card> cards = new ArrayList<>();
 
-        for (Type type : Type.values()) {
-            for (Value value : Value.values()) {
+        for (CardType type : CardType.values()) {
+            for (CardValue value : CardValue.values()) {
                 cards.add(new Card(type, value));
             }
         }

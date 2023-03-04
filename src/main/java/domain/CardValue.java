@@ -1,6 +1,6 @@
 package domain;
 
-public enum Value {
+public enum CardValue {
 
     ONE(1, "1"),
     TWO(2, "2"),
@@ -19,7 +19,7 @@ public enum Value {
     private final int score;
     private final String name;
 
-    Value(final int score, final String name) {
+    CardValue(final int score, final String name) {
         this.score = score;
         this.name = name;
     }

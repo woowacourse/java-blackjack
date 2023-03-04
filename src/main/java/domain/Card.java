@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Type type;
-    private final Value value;
+    private final CardType type;
+    private final CardValue value;
 
-    public Card(final Type type, final Value value) {
+    public Card(final CardType type, final CardValue value) {
         this.type = type;
         this.value = value;
     }
@@ -20,11 +20,11 @@ public class Card {
         return value.getScore();
     }
 
-    public Type getType() {
+    public CardType getType() {
         return type;
     }
 
-    public Value getValue() {
+    public CardValue getValue() {
         return value;
     }
 

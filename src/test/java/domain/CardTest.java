@@ -14,8 +14,8 @@ class CardTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void return_true_when_is_ace(int index) {
         // given
-        Type[] types = Type.values();
-        Card card = new Card(types[index], Value.ACE);
+        CardType[] types = CardType.values();
+        Card card = new Card(types[index], CardValue.ACE);
 
         // when
         boolean result = card.isAce();
@@ -28,7 +28,7 @@ class CardTest {
     @Test
     void return_false_when_is_not_ace() {
         // given
-        Card card = new Card(Type.CLUB, Value.FIVE);
+        Card card = new Card(CardType.CLUB, CardValue.FIVE);
 
         // when
         boolean result = card.isAce();

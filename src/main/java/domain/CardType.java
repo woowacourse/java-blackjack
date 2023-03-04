@@ -1,6 +1,6 @@
 package domain;
 
-public enum Type {
+public enum CardType {
 
     HEART("하트"),
     SPADE("스페이드"),
@@ -9,7 +9,7 @@ public enum Type {
 
     private final String name;
 
-    Type(final String name) {
+    CardType(final String name) {
         this.name = name;
     }
 

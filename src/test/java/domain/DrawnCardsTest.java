@@ -15,8 +15,8 @@ class DrawnCardsTest {
         // given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(Type.SPADE, Value.TWO));
-        cards.add(new Card(Type.SPADE, Value.THREE));
+        cards.add(new Card(CardType.SPADE, CardValue.TWO));
+        cards.add(new Card(CardType.SPADE, CardValue.THREE));
 
         DrawnCards drawnCards = new DrawnCards(cards);
 
@@ -33,8 +33,8 @@ class DrawnCardsTest {
         // given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(Type.SPADE, Value.TWO));
-        cards.add(new Card(Type.SPADE, Value.ACE));
+        cards.add(new Card(CardType.SPADE, CardValue.TWO));
+        cards.add(new Card(CardType.SPADE, CardValue.ACE));
 
         DrawnCards drawnCards = new DrawnCards(cards);
 
@@ -52,9 +52,9 @@ class DrawnCardsTest {
         // given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(Type.SPADE, Value.QUEEN));
-        cards.add(new Card(Type.SPADE, Value.FIVE));
-        cards.add(new Card(Type.SPADE, Value.ACE));
+        cards.add(new Card(CardType.SPADE, CardValue.QUEEN));
+        cards.add(new Card(CardType.SPADE, CardValue.FIVE));
+        cards.add(new Card(CardType.SPADE, CardValue.ACE));
 
         DrawnCards drawnCards = new DrawnCards(cards);
 
