@@ -7,10 +7,19 @@ import ui.OutputView;
 
 public class BlackjackController {
     public void run() {
-        BlackjackGame blackjackGame = new BlackjackGame(InputView.readPlayersName());
+        BlackjackGame blackjackGame = generateGame();
         initialize(blackjackGame);
         play(blackjackGame);
         announceResult(blackjackGame);
+    }
+
+    private static BlackjackGame generateGame() {
+        try {
+            return new BlackjackGame(InputView.readPlayersName());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return generateGame();
+        }
     }
 
     private static void announceResult(BlackjackGame blackjackGame) {

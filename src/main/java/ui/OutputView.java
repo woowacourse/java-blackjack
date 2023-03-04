@@ -68,4 +68,8 @@ public class OutputView {
         System.out.println();
         resultsOfPlayers.forEach((player, result) -> System.out.println(player.getNameValue()+ ": " + result.getKoreanText()));
     }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
