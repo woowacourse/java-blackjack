@@ -1,4 +1,4 @@
-package domain;
+package domain.box;
 
 import java.util.Objects;
 

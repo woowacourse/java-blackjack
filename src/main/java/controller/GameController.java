@@ -1,8 +1,8 @@
 package controller;
 
 import domain.BlackJackGame;
-import domain.BoxResult;
 import domain.TurnAction;
+import domain.box.BoxResult;
 import domain.user.Player;
 import java.util.List;
 import java.util.stream.Collectors;

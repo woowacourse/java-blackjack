@@ -1,5 +1,8 @@
 package domain;
 
+import domain.box.BoxResult;
+import domain.box.Boxes;
+import domain.card.Deck;
 import domain.user.Player;
 import java.util.ArrayList;
 import java.util.List;

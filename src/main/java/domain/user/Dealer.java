@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.Card;
+import domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Player {

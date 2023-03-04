@@ -1,8 +1,8 @@
 package view;
 
-import domain.BoxResult;
-import domain.Card;
-import domain.Suit;
+import domain.box.BoxResult;
+import domain.card.Card;
+import domain.card.Suit;
 import java.util.List;
 import java.util.stream.Collectors;
 

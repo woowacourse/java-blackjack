@@ -1,5 +1,11 @@
 package domain;
 
+import domain.box.BoxStatus;
+import domain.box.Boxes;
+import domain.box.PlayResult;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.stream.Stream;

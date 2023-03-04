@@ -1,7 +1,7 @@
 package domain.user;
 
-import domain.Card;
-import domain.Denomination;
+import domain.card.Card;
+import domain.card.Denomination;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

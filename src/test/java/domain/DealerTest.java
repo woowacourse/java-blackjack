@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.user.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

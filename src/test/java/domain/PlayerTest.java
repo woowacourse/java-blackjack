@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.user.Player;
 import java.util.List;
 import org.assertj.core.api.Assertions;
