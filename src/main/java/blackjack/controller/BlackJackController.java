@@ -24,8 +24,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Players players = Repeater.repeatIfError(this::inputPlayerNames,
-            OutputView::printErrorMessage);
+        final Players players = Repeater.repeatIfError(this::inputPlayerNames, OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
         final Referee referee = new Referee();
 
@@ -35,9 +34,8 @@ public class BlackJackController {
         hitCardByDealer(dealer, referee);
 
         List<Result> results = referee.judgeResult(dealer, players);
-        OutputView.printFinalCardDeck(dealer, players, referee);
-        OutputView.printResult(referee.countDealerResult(results), dealer, players,
-            results);
+        OutputView.printFinalCardDeckAndScore(dealer, players, referee);
+        OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
     }
 
     private void hitCardByDealer(Dealer dealer, Referee referee) {

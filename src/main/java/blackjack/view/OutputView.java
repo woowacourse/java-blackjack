@@ -11,7 +11,10 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static final int DEALER_DISPLAY_COUNT = 1;
+    private static final int DEALER_DISPLAY_COUNT = 1;
+    private static final String BURST_NAME = "BURST";
+    private static final String BURST_CODE = "-1";
+    private static final String DELIMITER = ", ";
 
     private OutputView() {
     }
@@ -20,10 +23,10 @@ public class OutputView {
         System.out.println();
         final List<String> playerNames = players.getPlayerNames();
         final String dealerName = dealer.getName().getValue();
-        final String processedPlayernames = String.join(", ", playerNames);
+        final String processedPlayernames = String.join(DELIMITER, playerNames);
         final List<String> displayCards = dealer.getCardDeck().getCardsInfo().subList(0,
             DEALER_DISPLAY_COUNT);
-        final String processedDisplayCards = String.join(", ", displayCards);
+        final String processedDisplayCards = String.join(DELIMITER, displayCards);
 
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayernames));
         System.out.println(String.format("%s: %s", dealerName, processedDisplayCards));
@@ -35,15 +38,15 @@ public class OutputView {
     }
 
     public static void printParticipantCardDeck(Player player) {
-        final String cards = String.join(", ", player.getCardDeck().getCardsInfo());
+        final String cards = String.join(DELIMITER, player.getCardDeck().getCardsInfo());
 
         System.out.println(String.format("%s카드 %s", player.getName().getValue(), cards));
     }
 
     public static void printParticipantCardDeck(Player player, int rawScore) {
-        final String cards = String.join(", ", player.getCardDeck().getCardsInfo());
-        String score = convertScoreToString(rawScore);
-        System.out.println(player.getName().getValue() + "카드: " + cards + " - 결과: " + score);
+        List<String> cards = player.getCardDeck().getCardsInfo();
+
+        System.out.println(formatFinalCardDeckAndScore(player, cards, convertToBurst(rawScore)));
     }
 
     public static void printDealerPickMessage(Dealer dealer) {
@@ -51,29 +54,34 @@ public class OutputView {
             String.format("%s는 16 이하라 한장의 카드를 더 받았습니다.", dealer.getName().getValue()));
     }
 
-    public static void printFinalCardDeck(Participant dealer, Players players, Referee referee) {
+    public static void printFinalCardDeckAndScore(Participant dealer, Players players, Referee referee) {
         System.out.println();
         final List<String> playerNames = players.getPlayerNames();
         final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();
 
-        String score = convertScoreToString(referee.calculateDeckScore(dealer.getCardDeck()));
-
-        System.out.println(
-            String.format("%s카드: %s - 결과: %s", dealer.getName().getValue(),
-                String.join(", ", dealerCards),
-                score));
-
-        for (int index = 0; index < playerNames.size(); index++) {
-            printParticipantCardDeck(players.getPlayers().get(index),
-                referee.calculateDeckScore(players.getPlayers().get(index).getCardDeck()));
-        }
+        String dealerScore = convertToBurst(referee.calculateDeckScore(dealer.getCardDeck()));
+        System.out.println(formatFinalCardDeckAndScore(dealer, dealerCards, dealerScore));
+        printFinalPlayerCardDeck(players, referee, playerNames);
         System.out.println();
     }
 
-    private static String convertScoreToString(int number) {
+    private static void printFinalPlayerCardDeck(Players players, Referee referee, List<String> playerNames) {
+        for (int index = 0; index < playerNames.size(); index++) {
+            printParticipantCardDeck(players.getPlayers().get(index),
+                    referee.calculateDeckScore(players.getPlayers().get(index).getCardDeck()));
+        }
+    }
+
+    private static String formatFinalCardDeckAndScore(Participant player, List<String> cards, String score) {
+        return String.format("%s카드: %s - 결과: %s", player.getName().getValue(),
+                String.join(DELIMITER, cards), score);
+    }
+
+    private static String convertToBurst(int number) {
         String score = String.valueOf(number);
-        if (score.equals("-1")) {
-            score = "Burst";
+
+        if (score.equals(BURST_CODE)) {
+            score = BURST_NAME;
         }
         return score;
     }
