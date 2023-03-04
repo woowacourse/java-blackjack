@@ -1,76 +1,51 @@
 package domain.player;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import domain.gameresult.GameResult;
 
 public class Dealer extends Player {
-    private final Map<GameResult, Integer> gameResults;
 
     public Dealer() {
         super("딜러");
-        gameResults = new EnumMap<>(GameResult.class);
-        initGameResult();
     }
 
-    private void initGameResult() {
-        for (GameResult gameResult : GameResult.values()) {
-            gameResults.put(gameResult, 0);
-        }
-    }
-
-    @Override
-    public void battle(Player player) {
-        if (isBurst() || player.isBurst()) {
-            decideGameResultOnBurst(player);
+    public void battle2(Player participant, GameResult gameResult) {
+        if (isBurst() || participant.isBurst()) {
+            decideGameResultOnBurst2(participant, gameResult);
             return;
         }
-
-        int totalScore = getTotalScore();
-        int totalScoreOfOtherPlayer = player.getTotalScore();
-        decideGameResultOnScore(totalScore, totalScoreOfOtherPlayer);
+        decideGameResultOnScore2(participant, gameResult);
     }
 
-    private void decideGameResultOnBurst(Player player) {
-        if (isBurst() && player.isBurst()) {
-            putGameResult(GameResult.DRAW);
+    private void decideGameResultOnBurst2(Player participant, GameResult gameResult) {
+        if (isBurst() && participant.isBurst()) {
+            gameResult.addDrawCount(participant);
             return;
-        }
+        } // 둘 다 버스트
 
         if (isBurst()) {
-            putGameResult(GameResult.LOSE);
+            gameResult.addParticipantWinningCase(participant);
+            return;
+        } // 딜러가 버스트
+
+        gameResult.addParticipantLosingCase(participant);
+        // 참가자가 버스트
+    }
+
+    private void decideGameResultOnScore2(Player participant, GameResult gameResult) {
+        int dealerScore = getTotalScore();
+        int participantScore = participant.getTotalScore();
+
+        if (dealerScore > participantScore) {
+            gameResult.addParticipantLosingCase(participant);
             return;
         }
 
-        putGameResult(GameResult.WIN);
-    }
-
-    private void decideGameResultOnScore(int totalScore, int totalScoreOfOtherPlayer) {
-        if (totalScore > totalScoreOfOtherPlayer) {
-            putGameResult(GameResult.WIN);
+        if (dealerScore < participantScore) {
+            gameResult.addParticipantWinningCase(participant);
             return;
         }
 
-        if (totalScore < totalScoreOfOtherPlayer) {
-            putGameResult(GameResult.LOSE);
-            return;
-        }
-
-        putGameResult(GameResult.DRAW);
-    }
-
-    private void putGameResult(GameResult gameResult) {
-        gameResults.put(gameResult, getGameResultCount(gameResult) + 1);
-    }
-
-    private int getGameResultCount(GameResult gameResult) {
-        return gameResults.getOrDefault(gameResult, 0);
-    }
-
-    @Override
-    public List<Integer> getGameResult() {
-        return Arrays.stream(GameResult.values())
-                .map(this.gameResults::get)
-                .collect(Collectors.toUnmodifiableList());
+        gameResult.addDrawCount(participant);
     }
 
     @Override
@@ -79,15 +54,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Dealer dealer = (Dealer) o;
-        return Objects.equals(gameResults, dealer.gameResults);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(gameResults);
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

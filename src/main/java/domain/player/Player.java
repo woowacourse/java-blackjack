@@ -30,10 +30,6 @@ public abstract class Player {
         return cards.getCards();
     }
 
-    public abstract void battle(Player player);
-
-    public abstract List<Integer> getGameResult();
-
     public abstract boolean isNameEqualTo(String playerName);
 
     public String getName() {

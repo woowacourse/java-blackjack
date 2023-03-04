@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardRepository;
+import domain.gameresult.GameResult;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 public class BlackJack {
     private final CardRepository cardRepository;
     private final List<Player> players;
+    private final GameResult gameResult;
 
     public BlackJack(String participantNames, IndexGenerator indexGenerator) {
         this.cardRepository = CardRepository.create(indexGenerator);
         this.players = initPlayers(participantNames);
+        this.gameResult = new GameResult();
     }
 
     private List<Player> initPlayers(String playerNames) {
@@ -79,8 +82,8 @@ public class BlackJack {
         getDealer().addCard(findAnyOneCard());
     }
 
-    public Player getDealer() {
-        return players.get(0);
+    public Dealer getDealer() {
+        return (Dealer) players.get(0);
     }
 
     public List<Player> getPlayers() {
@@ -93,10 +96,9 @@ public class BlackJack {
         return players;
     }
 
-    public void battle() {
+    public void battle2() {
         for (Player participant : getParticipants()) {
-            participant.battle(getDealer());
-            getDealer().battle(participant);
+            getDealer().battle2(participant, gameResult);
         }
     }
 }

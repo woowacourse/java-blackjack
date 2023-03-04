@@ -8,13 +8,13 @@ import view.OutputView;
 
 import java.util.List;
 
-public class BlackJackController {
+public class BlackJackApplication {
     public void startGame() {
         BlackJack blackJack = new BlackJack(getParticipantNames(), new RandomBasedIndexGenerator());
         initializedBlackjackGame(blackJack);
 
         giveCardToPlayers(blackJack);
-        blackJack.battle();
+        blackJack.battle2();
         OutputView.printPlayersGameResults(blackJack.getPlayers());
     }
 
