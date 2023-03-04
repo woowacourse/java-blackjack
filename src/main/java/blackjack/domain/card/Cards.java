@@ -20,7 +20,7 @@ public class Cards {
         return new Cards(new ArrayList<>());
     }
 
-    public int calculateTotalScore() {
+    public int calculateScoreForBlackjack() {
         int score = preCalculate();
 
         if (containsAce()) {
@@ -33,7 +33,7 @@ public class Cards {
     private int preCalculate() {
         int score = 0;
         for (Card card : cards) {
-            score += card.convertToScore();
+            score += card.convertToBlackjackScore();
         }
 
         return score;
@@ -58,11 +58,11 @@ public class Cards {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_SIZE_CONDITION
-                && calculateTotalScore() == BLACKJACK_SCORE_CONDITION;
+                && calculateScoreForBlackjack() == BLACKJACK_SCORE_CONDITION;
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > BLACKJACK_SCORE_CONDITION;
+        return calculateScoreForBlackjack() > BLACKJACK_SCORE_CONDITION;
     }
 
     public List<Card> getCards() {

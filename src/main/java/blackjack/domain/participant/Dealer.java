@@ -48,7 +48,7 @@ public class Dealer extends Participant {
     }
 
     public Map<Player, Result> decideResult() {
-        return players.decideResults(cards.calculateTotalScore());
+        return players.decideResults(cards.calculateScoreForBlackjack());
     }
 
     public List<Integer> decideSelfResult() {
@@ -79,7 +79,7 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.calculateTotalScore() <= SPECIFIC_SCORE_OF_DEALER;
+        return cards.calculateScoreForBlackjack() <= SPECIFIC_SCORE_OF_DEALER;
     }
 
     public void drawOneMoreCard() {

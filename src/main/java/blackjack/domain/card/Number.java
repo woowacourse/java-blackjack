@@ -27,11 +27,11 @@ public enum Number {
         this.state = state;
     }
 
-    public static int convertNumberToScore(Number number) {
-        if (number == J || number == Q || number == K) {
+    public int convertNumberToBlackjackScore() {
+        if (number == J.number || number == Q.number || number == K.number) {
             return 10;
         }
-        return number.number;
+        return number;
     }
 
     public static Number pickRandomNumber() {

@@ -12,8 +12,8 @@ public class Card {
         this.pattern = pattern;
     }
 
-    public int convertToScore() {
-        return Number.convertNumberToScore(number);
+    public int convertToBlackjackScore() {
+        return number.convertNumberToBlackjackScore();
     }
 
     public boolean isAce() {

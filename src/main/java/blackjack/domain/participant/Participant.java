@@ -16,7 +16,7 @@ public class Participant {
     }
 
     public int calculateTotalScore() {
-        return this.cards.calculateTotalScore();
+        return this.cards.calculateScoreForBlackjack();
     }
 
     public Cards getCards() {
