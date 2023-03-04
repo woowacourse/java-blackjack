@@ -1,38 +1,38 @@
 package domain.card;
 
-import domain.Number;
+import domain.CardNumber;
 import domain.Pattern;
 
 public enum CloverCard implements Card {
-    CLOVER_ACE(Pattern.CLOVER, Number.ACE),
-    CLOVER_TWO(Pattern.CLOVER, Number.TWO),
-    CLOVER_THREE(Pattern.CLOVER, Number.THREE),
-    CLOVER_FOUR(Pattern.CLOVER, Number.FOUR),
-    CLOVER_FIVE(Pattern.CLOVER, Number.FIVE),
-    CLOVER_SIX(Pattern.CLOVER, Number.SIX),
-    CLOVER_SEVEN(Pattern.CLOVER, Number.SEVEN),
-    CLOVER_EIGHT(Pattern.CLOVER, Number.EIGHT),
-    CLOVER_NINE(Pattern.CLOVER, Number.NINE),
-    CLOVER_TEN(Pattern.CLOVER, Number.TEN),
-    CLOVER_JACK(Pattern.CLOVER, Number.JACK),
-    CLOVER_QUEEN(Pattern.CLOVER, Number.QUEEN),
-    CLOVER_KING(Pattern.CLOVER, Number.KING);
+    CLOVER_ACE(Pattern.CLOVER, CardNumber.ACE),
+    CLOVER_TWO(Pattern.CLOVER, CardNumber.TWO),
+    CLOVER_THREE(Pattern.CLOVER, CardNumber.THREE),
+    CLOVER_FOUR(Pattern.CLOVER, CardNumber.FOUR),
+    CLOVER_FIVE(Pattern.CLOVER, CardNumber.FIVE),
+    CLOVER_SIX(Pattern.CLOVER, CardNumber.SIX),
+    CLOVER_SEVEN(Pattern.CLOVER, CardNumber.SEVEN),
+    CLOVER_EIGHT(Pattern.CLOVER, CardNumber.EIGHT),
+    CLOVER_NINE(Pattern.CLOVER, CardNumber.NINE),
+    CLOVER_TEN(Pattern.CLOVER, CardNumber.TEN),
+    CLOVER_JACK(Pattern.CLOVER, CardNumber.JACK),
+    CLOVER_QUEEN(Pattern.CLOVER, CardNumber.QUEEN),
+    CLOVER_KING(Pattern.CLOVER, CardNumber.KING);
 
     private final Pattern pattern;
-    private final Number number;
+    private final CardNumber cardNumber;
 
-    CloverCard(Pattern pattern, Number number) {
+    CloverCard(Pattern pattern, CardNumber cardNumber) {
         this.pattern = pattern;
-        this.number = number;
+        this.cardNumber = cardNumber;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
+        return cardNumber.getNumber() + pattern.getPattern();
     }
 
     @Override
     public int getScore() {
-        return number.getScore();
+        return cardNumber.getScore();
     }
 }

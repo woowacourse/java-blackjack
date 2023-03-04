@@ -1,38 +1,38 @@
 package domain.card;
 
-import domain.Number;
+import domain.CardNumber;
 import domain.Pattern;
 
 public enum DiamondCard implements Card {
-    DIAMOND_ACE(Pattern.DIAMOND, Number.ACE),
-    DIAMOND_TWO(Pattern.DIAMOND, Number.TWO),
-    DIAMOND_THREE(Pattern.DIAMOND, Number.THREE),
-    DIAMOND_FOUR(Pattern.DIAMOND, Number.FOUR),
-    DIAMOND_FIVE(Pattern.DIAMOND, Number.FIVE),
-    DIAMOND_SIX(Pattern.DIAMOND, Number.SIX),
-    DIAMOND_SEVEN(Pattern.DIAMOND, Number.SEVEN),
-    DIAMOND_EIGHT(Pattern.DIAMOND, Number.EIGHT),
-    DIAMOND_NINE(Pattern.DIAMOND, Number.NINE),
-    DIAMOND_TEN(Pattern.DIAMOND, Number.TEN),
-    DIAMOND_JACK(Pattern.DIAMOND, Number.JACK),
-    DIAMOND_QUEEN(Pattern.DIAMOND, Number.QUEEN),
-    DIAMOND_KING(Pattern.DIAMOND, Number.KING);
+    DIAMOND_ACE(Pattern.DIAMOND, CardNumber.ACE),
+    DIAMOND_TWO(Pattern.DIAMOND, CardNumber.TWO),
+    DIAMOND_THREE(Pattern.DIAMOND, CardNumber.THREE),
+    DIAMOND_FOUR(Pattern.DIAMOND, CardNumber.FOUR),
+    DIAMOND_FIVE(Pattern.DIAMOND, CardNumber.FIVE),
+    DIAMOND_SIX(Pattern.DIAMOND, CardNumber.SIX),
+    DIAMOND_SEVEN(Pattern.DIAMOND, CardNumber.SEVEN),
+    DIAMOND_EIGHT(Pattern.DIAMOND, CardNumber.EIGHT),
+    DIAMOND_NINE(Pattern.DIAMOND, CardNumber.NINE),
+    DIAMOND_TEN(Pattern.DIAMOND, CardNumber.TEN),
+    DIAMOND_JACK(Pattern.DIAMOND, CardNumber.JACK),
+    DIAMOND_QUEEN(Pattern.DIAMOND, CardNumber.QUEEN),
+    DIAMOND_KING(Pattern.DIAMOND, CardNumber.KING);
 
     private final Pattern pattern;
-    private final Number number;
+    private final CardNumber cardNumber;
 
-    DiamondCard(Pattern pattern, Number number) {
+    DiamondCard(Pattern pattern, CardNumber cardNumber) {
         this.pattern = pattern;
-        this.number = number;
+        this.cardNumber = cardNumber;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
+        return cardNumber.getNumber() + pattern.getPattern();
     }
 
     @Override
     public int getScore() {
-        return number.getScore();
+        return cardNumber.getScore();
     }
 }

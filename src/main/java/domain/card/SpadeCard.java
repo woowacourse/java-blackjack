@@ -1,38 +1,38 @@
 package domain.card;
 
-import domain.Number;
+import domain.CardNumber;
 import domain.Pattern;
 
 public enum SpadeCard implements Card {
-    SPADE_ACE(Pattern.SPADE, Number.ACE),
-    SPADE_TWO(Pattern.SPADE, Number.TWO),
-    SPADE_THREE(Pattern.SPADE, Number.THREE),
-    SPADE_FOUR(Pattern.SPADE, Number.FOUR),
-    SPADE_FIVE(Pattern.SPADE, Number.FIVE),
-    SPADE_SIX(Pattern.SPADE, Number.SIX),
-    SPADE_SEVEN(Pattern.SPADE, Number.SEVEN),
-    SPADE_EIGHT(Pattern.SPADE, Number.EIGHT),
-    SPADE_NINE(Pattern.SPADE, Number.NINE),
-    SPADE_TEN(Pattern.SPADE, Number.TEN),
-    SPADE_JACK(Pattern.SPADE, Number.JACK),
-    SPADE_QUEEN(Pattern.SPADE, Number.QUEEN),
-    SPADE_KING(Pattern.SPADE, Number.KING);
+    SPADE_ACE(Pattern.SPADE, CardNumber.ACE),
+    SPADE_TWO(Pattern.SPADE, CardNumber.TWO),
+    SPADE_THREE(Pattern.SPADE, CardNumber.THREE),
+    SPADE_FOUR(Pattern.SPADE, CardNumber.FOUR),
+    SPADE_FIVE(Pattern.SPADE, CardNumber.FIVE),
+    SPADE_SIX(Pattern.SPADE, CardNumber.SIX),
+    SPADE_SEVEN(Pattern.SPADE, CardNumber.SEVEN),
+    SPADE_EIGHT(Pattern.SPADE, CardNumber.EIGHT),
+    SPADE_NINE(Pattern.SPADE, CardNumber.NINE),
+    SPADE_TEN(Pattern.SPADE, CardNumber.TEN),
+    SPADE_JACK(Pattern.SPADE, CardNumber.JACK),
+    SPADE_QUEEN(Pattern.SPADE, CardNumber.QUEEN),
+    SPADE_KING(Pattern.SPADE, CardNumber.KING);
 
     private final Pattern pattern;
-    private final Number number;
+    private final CardNumber cardNumber;
 
-    SpadeCard(Pattern pattern, Number number) {
+    SpadeCard(Pattern pattern, CardNumber cardNumber) {
         this.pattern = pattern;
-        this.number = number;
+        this.cardNumber = cardNumber;
     }
 
     @Override
     public String getSymbol() {
-        return number.getNumber() + pattern.getPattern();
+        return cardNumber.getNumber() + pattern.getPattern();
     }
 
     @Override
     public int getScore() {
-        return number.getScore();
+        return cardNumber.getScore();
     }
 }
