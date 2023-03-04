@@ -26,14 +26,6 @@ public abstract class Participant {
 
     public abstract boolean canDraw();
 
-    public boolean isBust() {
-        return participantCard.isBust();
-    }
-
-    public boolean isBlackJack() {
-        return participantCard.isBlackJack();
-    }
-
     public List<Card> getCard() {
         return List.copyOf(participantCard.getCards());
     }

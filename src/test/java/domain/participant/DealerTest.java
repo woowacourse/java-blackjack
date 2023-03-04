@@ -69,34 +69,6 @@ class DealerTest {
             .isSameAs(expected);
     }
 
-    @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
-    void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(dealer::addCard);
-
-        // when
-        final boolean actual = dealer.isBust();
-
-        // then
-        assertThat(actual)
-                .isSameAs(expected);
-    }
-
-    @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
-    void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(dealer::addCard);
-
-        // when
-        final boolean actual = dealer.isBlackJack();
-
-        // then
-        assertThat(actual)
-                .isSameAs(expected);
-    }
-
     @ParameterizedTest(name = "canGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
     void canGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {

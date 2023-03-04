@@ -87,18 +87,4 @@ class ParticipantCardTest {
         assertThat(actual)
                 .isSameAs(expected);
     }
-
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
-    @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
-    void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(participantCard::addCard);
-
-        // when
-        final boolean actual = participantCard.isBlackJack();
-
-        // then
-        assertThat(actual)
-                .isSameAs(expected);
-    }
 }

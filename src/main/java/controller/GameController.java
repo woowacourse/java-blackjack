@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static view.message.Message.BLACKJACK_MESSAGE;
-import static view.message.Message.BUST_MESSAGE;
 import static view.message.Message.DEALER_DRAW_MESSAGE;
 
 public class GameController {
@@ -115,22 +113,6 @@ public class GameController {
 
     private boolean canDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
         return player.canDraw() && drawCardCommand.isDrawAgain();
-    }
-
-    private boolean isBust(final Participant player) {
-        boolean isBust = player.isBust();
-        if (isBust) {
-            OutputView.print(BUST_MESSAGE.getMessage());
-        }
-        return isBust;
-    }
-
-    private boolean isBlackJack(final Participant player) {
-        boolean isBlackJack = player.isBlackJack();
-        if (isBlackJack) {
-            OutputView.print(BLACKJACK_MESSAGE.getMessage());
-        }
-        return isBlackJack;
     }
 
     private DrawCardCommand getDrawCardCommand(final Participant player) {

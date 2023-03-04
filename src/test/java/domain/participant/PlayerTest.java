@@ -73,34 +73,6 @@ class PlayerTest {
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
-    @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
-    void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(player::addCard);
-
-        // when
-        final boolean actual = player.isBust();
-
-        // then
-        assertThat(actual)
-                .isSameAs(expected);
-    }
-
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
-    @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
-    void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
-        // given
-        cards.forEach(player::addCard);
-
-        // when
-        final boolean actual = player.isBlackJack();
-
-        // then
-        assertThat(actual)
-                .isSameAs(expected);
-    }
-
     @MethodSource(value = "domain.helper.ParticipantArguments#makePlayerCards")
     @ParameterizedTest(name = "canDraw()는 호출하면 플레이어가 카드를 더 뽑을 수 있는지 여부를 반환한다")
     void canDraw_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {

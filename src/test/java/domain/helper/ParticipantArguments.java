@@ -1,8 +1,18 @@
 package domain.helper;
 
-import static domain.card.CardNumber.*;
-import static domain.card.CardPattern.*;
-import static domain.participant.Result.*;
+import static domain.card.CardNumber.ACE;
+import static domain.card.CardNumber.FOUR;
+import static domain.card.CardNumber.QUEEN;
+import static domain.card.CardNumber.TEN;
+import static domain.card.CardNumber.THREE;
+import static domain.card.CardNumber.TWO;
+import static domain.card.CardPattern.CLOVER;
+import static domain.card.CardPattern.DIAMOND;
+import static domain.card.CardPattern.HEART;
+import static domain.card.CardPattern.SPADE;
+import static domain.participant.Result.DRAW;
+import static domain.participant.Result.LOSE;
+import static domain.participant.Result.WIN;
 
 import domain.card.Card;
 import org.junit.jupiter.params.provider.Arguments;
@@ -52,13 +62,6 @@ public final class ParticipantArguments {
                         Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), true),
                 Arguments.of(List.of(Card.create(HEART, QUEEN), Card.create(DIAMOND, TWO),
                         Card.create(CLOVER, TEN), Card.create(SPADE, TWO)), false)
-        );
-    }
-
-    private static Stream<Arguments> makeBlackJackCard() {
-        return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(SPADE, TWO)), false),
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, QUEEN)), true)
         );
     }
 
