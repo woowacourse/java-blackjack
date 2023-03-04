@@ -17,7 +17,7 @@ public class OutputView {
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", nameValues));
         System.out.println();
-        printCardsStatusOfUser(dealer);
+        printCardsStatusOfDealer(dealer);
         players.forEach(OutputView::printCardsStatusOfUser);
         System.out.println();
     }
@@ -27,6 +27,12 @@ public class OutputView {
                 .map(Card::getText)
                 .collect(Collectors.toList());
         System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
+        System.out.println();
+    }
+
+    private static void printCardsStatusOfDealer(Dealer dealer) {
+        Card firstCard = dealer.getCards().get(0);
+        System.out.printf("%s: %s", dealer.getNameValue(), String.join(", ", firstCard.getText()));
         System.out.println();
     }
 
