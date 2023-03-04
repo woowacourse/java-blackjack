@@ -37,30 +37,30 @@ public class OutputView {
         return playerNames;
     }
 
-    public static void printGamblersCards(Players players, Dealer dealer) {
+    public static void printPlayersCards(Dealer dealer, Players players) {
         printDealerCards(dealer);
         printPlayersCards(players);
     }
 
     private static void printDealerCards(Dealer dealer) {
-        printGamblerName(dealer);
-        printGamblerCards(dealer);
+        printPlayerName(dealer);
+        printPlayerCards(dealer);
         printNewLine();
     }
 
-    private static void printGamblerName(Gambler gambler) {
-        String name = gambler.getName();
+    private static void printPlayerName(Player player) {
+        String name = player.getName();
         System.out.print(name + NAME_FORMAT);
     }
 
-    private static void printGamblerCards(Gambler gambler) {
-        List<String> output = getPlayerCards(gambler);
+    private static void printPlayerCards(Player player) {
+        List<String> output = getPlayerCards(player);
         System.out.print(String.join(DELIMITER, output));
     }
 
-    public static List<String> getPlayerCards(Gambler gambler) {
+    public static List<String> getPlayerCards(Player player) {
         List<String> output = new ArrayList<>();
-        for (Card card : gambler.getCards()) {
+        for (Card card : player.getCards()) {
             output.add(card.getName() + card.getSuit());
         }
         return output;
@@ -68,48 +68,48 @@ public class OutputView {
 
     private static void printPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
-            printSingleGambler(player);
+            printSinglePlayer(player);
         }
     }
 
-    public static void printSingleGambler(Gambler gambler) {
-        printGamblerName(gambler);
-        printGamblerCards(gambler);
+    public static void printSinglePlayer(Player player) {
+        printPlayerName(player);
+        printPlayerCards(player);
         printNewLine();
     }
 
-    public static void printScore(Gambler gambler) {
+    public static void printScore(Player player) {
         printNewLine();
-        printGamblerName(gambler);
-        printGamblerCards(gambler);
-        System.out.print(SCORE_GUIDE_MESSAGE + gambler.getScore());
+        printPlayerName(player);
+        printPlayerCards(player);
+        System.out.print(SCORE_GUIDE_MESSAGE + player.getScore().getValue());
     }
 
-    public static void printResult(Map<Gambler, Integer> result) {
+    public static void printResult(Map<Player, Integer> result) {
         System.out.println(NEW_LINE + RESULT_GUIDE_MESSAGE);
 
-        for (Map.Entry<Gambler, Integer> resultEntry : result.entrySet()) {
+        for (Map.Entry<Player, Integer> resultEntry : result.entrySet()) {
             printDealerResult(resultEntry, result.size());
             printPlayersResult(resultEntry);
         }
     }
 
-    public static void printDealerResult(Map.Entry<Gambler, Integer> gamblerEntry, int size) {
-        if (isDealer(gamblerEntry)) {
-            int winCount = gamblerEntry.getValue();
+    public static void printDealerResult(Map.Entry<Player, Integer> playerEntry, int size) {
+        if (isDealer(playerEntry)) {
+            int winCount = playerEntry.getValue();
             int loseCount = size - winCount - 1;
             System.out.printf(DEALER_RESULT_FORMAT + NEW_LINE, winCount, loseCount);
         }
     }
 
-    private static boolean isDealer(Map.Entry<Gambler, Integer> gamblerEntry) {
-        return gamblerEntry.getKey().getName().equals("딜러");
+    private static boolean isDealer(Map.Entry<Player, Integer> playerEntry) {
+        return playerEntry.getKey().getName().equals("딜러");
     }
 
-    public static void printPlayersResult(Map.Entry<Gambler, Integer> gamblerEntry) {
-        if (!isDealer(gamblerEntry)) {
-            int winCount = gamblerEntry.getValue();
-            System.out.print(gamblerEntry.getKey().getName() + COLON);
+    public static void printPlayersResult(Map.Entry<Player, Integer> playerEntry) {
+        if (!isDealer(playerEntry)) {
+            int winCount = playerEntry.getValue();
+            System.out.print(playerEntry.getKey().getName() + COLON);
             System.out.println(resolveOutcome(winCount));
         }
     }
