@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class Boxes {
 
+    private static final int BLACK_JACK = 21;
+    private static final int BLACK_JACK_ABLE = 11;
     private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayResult.NOT_BUST, 0);
     private final LinkedHashMap<Player, BoxStatus> boxes = new LinkedHashMap<>();
 
@@ -25,7 +27,8 @@ public class Boxes {
     }
 
     public static Boxes of(String playerNamesInput) {
-        String[] playerNames = playerNamesInput.split(",");
+        final String nameDelimiter = ",";
+        String[] playerNames = playerNamesInput.split(nameDelimiter);
         List<Player> players = Arrays.stream(playerNames).map(Player::new).collect(Collectors.toList());
         return new Boxes(players);
     }
@@ -37,8 +40,8 @@ public class Boxes {
         if (oldBoxStatus.equals(newBoxStatus)) {
             newBoxStatus = new BoxStatus(PlayResult.STAND, point);
         }
-        if (player.hasAce() && point == 11) {
-            boxes.put(player, new BoxStatus(PlayResult.BLACK_JACK, 21));
+        if (point == BLACK_JACK_ABLE && player.hasAce()) {
+            boxes.put(player, new BoxStatus(PlayResult.BLACK_JACK, BLACK_JACK));
         }
         boxes.put(player, newBoxStatus);
     }
@@ -48,10 +51,10 @@ public class Boxes {
     }
 
     public PlayResult getResultByScore(int score) {
-        if (score > 21) {
+        if (score > BLACK_JACK) {
             return PlayResult.BUST;
         }
-        if (score == 21) {
+        if (score == BLACK_JACK) {
             return PlayResult.BLACK_JACK;
         }
         return PlayResult.NOT_BUST;

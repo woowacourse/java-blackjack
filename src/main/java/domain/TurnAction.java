@@ -10,7 +10,7 @@ public enum TurnAction {
         if (!isValid(input)) {
             throw new IllegalArgumentException("y나 n으로 입력해 주세요.");
         }
-        if (input.equals("y")) {
+        if (input.equals(YES)) {
             return HIT;
         }
         return STAND;
