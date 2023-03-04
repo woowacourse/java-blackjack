@@ -24,7 +24,7 @@ class CardsTest {
 
         //then
         int expectedScore = 15;
-        assertThat(cards.calculateScore()).isEqualTo(expectedScore);
+        assertThat(cards.calculateScore().getValue()).isEqualTo(expectedScore);
     }
 
     @Test
@@ -40,7 +40,7 @@ class CardsTest {
 
         //then
         int expectedScore = 16;
-        assertThat(cards.calculateScore()).isEqualTo(expectedScore);
+        assertThat(cards.calculateScore().getValue()).isEqualTo(expectedScore);
     }
     @Test
     void A가_1점으로_계산되는_케이스() {
@@ -57,6 +57,6 @@ class CardsTest {
 
         //then
         int expectedScore = 16;
-        assertThat(cards.calculateScore()).isEqualTo(expectedScore);
+        assertThat(cards.calculateScore().getValue()).isEqualTo(expectedScore);
     }
 }

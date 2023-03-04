@@ -25,10 +25,11 @@ public class Player {
     }
 
     public Score getScore() {
-        return Score.from(cards.calculateScore());
+        return cards.calculateScore();
     }
 
-    public boolean isBustedPlayer(int sum) {
-        return this.cards.isBusted(sum);
+    public boolean isBustedPlayer() {
+        return getScore().isBusted();
     }
+
 }

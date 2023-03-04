@@ -18,25 +18,19 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        int sum = 0;
-
-        for (Card card : cards) {
-            sum += card.getScore();
-        }
-        if (notBustedWhenHasAce(sum + BIGGER_A_SCORE)) {
+    public Score calculateScore() {
+        int sum = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+        if (canUseBiggerAce(sum)) {
             sum += BIGGER_A_SCORE;
         }
 
-        return sum;
+        return Score.from(sum);
     }
 
-    private boolean notBustedWhenHasAce(int sum) {
-        return isContainAce() && !isBusted(sum);
-    }
-
-    public boolean isBusted(int sum) {
-        return sum > BOUNDARY;
+    private boolean canUseBiggerAce(int sum) {
+        return sum + BIGGER_A_SCORE <= BOUNDARY && isContainAce();
     }
 
     private boolean isContainAce() {
