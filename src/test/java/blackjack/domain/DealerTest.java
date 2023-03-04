@@ -12,9 +12,10 @@ class DealerTest {
     @DisplayName("딜러가 카드를 더 뽑을 수 있으면 참을 반환해야 한다.")
     void canDrawCard_true() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.ACE));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.FIVE)
+        ));
 
         // expect
         assertThat(dealer.canDrawCard())
@@ -25,10 +26,11 @@ class DealerTest {
     @DisplayName("딜러가 카드를 더 뽑을 수 없으면 거짓을 반환해야 한다.")
     void canDrawCard_false() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.FIVE),
+                new Card(Suit.DIAMOND, Rank.QUEEN)
+        ));
 
         // expect
         assertThat(dealer.canDrawCard())
@@ -39,9 +41,10 @@ class DealerTest {
     @DisplayName("처음에 딜러는 2장의 카드 중 1장의 카드만 보여줘야 한다.")
     void getInitCard_success() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.FIVE)
+        ));
 
         // when
         List<Card> cards = dealer.getStartCards();

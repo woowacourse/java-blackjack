@@ -11,6 +11,10 @@ public class Player extends Person {
         validateBlacklist(name);
     }
 
+    public Player(String name, List<Card> cards) {
+        super(name, cards);
+    }
+
     private void validateBlacklist(String name) {
         if (BLACKLIST.contains(name)) {
             throw new IllegalArgumentException("[ERROR] " + name + "는 사용할 수 없는 이름입니다.");

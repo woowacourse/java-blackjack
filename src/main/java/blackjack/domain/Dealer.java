@@ -11,6 +11,10 @@ public class Dealer extends Person {
         super("딜러");
     }
 
+    public Dealer(List<Card> cards) {
+        super("딜러", cards);
+    }
+
     @Override
     public boolean canDrawCard() {
         return getScore() <= DRAW_CARD_BOUNDARY;

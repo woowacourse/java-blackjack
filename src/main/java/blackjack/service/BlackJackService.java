@@ -16,8 +16,10 @@ import blackjack.dto.PlayerGameResultResponse;
 import java.util.List;
 
 public class BlackJackService {
-    private People people;
+    private static final int START_DRAW_COUNT = 2;
+
     private final Deck deck;
+    private People people;
 
     public BlackJackService(DeckGenerator deckGenerator) {
         this.deck = deckGenerator.generate();
@@ -25,16 +27,10 @@ public class BlackJackService {
 
     public void createPeople(List<String> names) {
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, deck.drawCards(START_DRAW_COUNT)))
                 .collect(toList());
-        this.people = new People(new Dealer(), players);
-    }
-
-    public void initDrawCard() {
-        for (Person person : people.getPeople()) {
-            person.addCard(deck.drawCard());
-            person.addCard(deck.drawCard());
-        }
+        Dealer dealer = new Dealer(deck.drawCards(START_DRAW_COUNT));
+        this.people = new People(dealer, players);
     }
 
     public void drawMoreCardByName(String playerName) {

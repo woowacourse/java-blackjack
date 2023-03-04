@@ -13,6 +13,11 @@ public abstract class Person {
         this.cards = new Cards();
     }
 
+    protected Person(String name, List<Card> cards) {
+        this.name = new Name(name);
+        this.cards = new Cards(cards);
+    }
+
     public void addCard(Card card) {
         this.cards.addCard(card);
     }

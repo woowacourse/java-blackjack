@@ -17,7 +17,6 @@ public class BlackJackController {
 
     public void run() {
         repeat(() -> blackJackService.createPeople(InputView.readPlayerNames()));
-        blackJackService.initDrawCard();
         OutputView.printInitDrawCardMessage(blackJackService.getPlayersName());
         printPersonStatues(blackJackService.getStartStatusResponse());
         drawMoreCardForPlayers();

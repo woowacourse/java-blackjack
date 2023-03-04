@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,9 @@ class PlayerTest {
     @DisplayName("딜러의 점수가 내 점수보다 낮으면 승리해야 한다.")
     void matchGame_win() {
         // given
-        Player player = new Player("glen");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Player player = new Player("glen", List.of(
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
         Dealer dealer = new Dealer();
 
         // when
@@ -29,8 +31,9 @@ class PlayerTest {
     void matchGame_lose() {
         // given
         Player player = new Player("glen");
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -44,10 +47,12 @@ class PlayerTest {
     @DisplayName("딜러의 점수가 나와 같으면 무승부여야 한다.")
     void matchGame_draw() {
         // given
-        Player player = new Player("glen");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Player player = new Player("glen", List.of(
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -61,10 +66,11 @@ class PlayerTest {
     @DisplayName("나의 점수가 21점을 넘으면 패배해야 한다.")
     void matchGame_overScore() {
         // given
-        Player player = new Player("glen");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Player player = new Player("glen", List.of(
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
         Dealer dealer = new Dealer();
 
         // when
@@ -80,10 +86,11 @@ class PlayerTest {
     void matchGame_otherOverScore() {
         // given
         Player player = new Player("glen");
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -97,14 +104,16 @@ class PlayerTest {
     @DisplayName("딜러와 나의 점수가 21점을 넘으면 패배해야 한다.")
     void matchGame_sameOverScore() {
         // given
-        Player player = new Player("glen");
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Player player = new Player("glen", List.of(
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING)
+        ));
 
         // when
         GameResult gameResult = player.matchGame(dealer);

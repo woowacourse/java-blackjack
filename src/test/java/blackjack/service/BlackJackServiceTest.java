@@ -37,6 +37,20 @@ class BlackJackServiceTest {
     }
 
     @Test
+    @DisplayName("참여자가 생성되면 카드를 2장 소지하고 있어야 한다.")
+    void createPeople_haveTwoCard() {
+        // given
+        List<String> names = List.of("glen");
+
+        // when
+        blackJackService.createPeople(names);
+
+        // then
+        assertThat(blackJackService.getPersonStatusResponseByName("glen").getCards())
+                .hasSize(2);
+    }
+
+    @Test
     @DisplayName("참여자의 이름으로 카드를 뽑을 수 있어야 한다.")
     void drawMoreCardByName_success() {
         // given
@@ -48,7 +62,7 @@ class BlackJackServiceTest {
         // then
         PersonStatusResponse response = blackJackService.getPersonStatusResponseByName("glen");
         assertThat(response.getCards())
-                .hasSize(1);
+                .hasSize(3);
     }
 
     @Test
@@ -58,8 +72,6 @@ class BlackJackServiceTest {
         blackJackService.createPeople(List.of("glen", "pobi"));
 
         // when
-        blackJackService.drawMoreCardByName("glen");
-        blackJackService.drawMoreCardByName("glen");
         blackJackService.drawMoreCardByName("glen");
 
         // then
