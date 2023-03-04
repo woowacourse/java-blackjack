@@ -6,9 +6,17 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     private int capacity = 10;
     private Object[] array;
 
-    public SimpleArrayList() {
+    public SimpleArrayList(){
         this.array = new Object[capacity];
         this.size = 0;
+    }
+
+    public SimpleArrayList(T... values){
+        this.array = new Object[values.length];
+        for (int i = 0; i < values.length; i++) {
+            this.array[i] = values[i];
+        }
+        this.size = values.length;
     }
 
     @Override
