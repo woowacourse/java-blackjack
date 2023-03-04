@@ -3,19 +3,16 @@ package domain;
 public class Score {
 
     private final int value;
-    private final boolean isBusted;
 
-    private Score(int value, boolean isBusted) {
+    private Score(final int value) {
         this.value = value;
-        this.isBusted = isBusted;
     }
 
     public static Score from(final int value) {
-        return new Score(value, setBustStatus(value));
-    }
-
-    private static boolean setBustStatus(final int value) {
-        return value > 21;
+        if (value > 21) {
+            return new Score(-1);
+        }
+        return new Score(value);
     }
 
     public int getValue() {
@@ -23,6 +20,6 @@ public class Score {
     }
 
     public boolean isBusted() {
-        return isBusted;
+        return value < 0;
     }
 }
