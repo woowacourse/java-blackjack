@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BlackJackTest {
     @Test
@@ -22,12 +23,18 @@ class BlackJackTest {
         blackJack.giveTwoCardToPlayers();
 
         Map<Player, List<Card>> playersCards = blackJack.getPlayersCards();
-        assertThat(playersCards.get(new Dealer()))
-                .containsExactly(new Card(Shape.HEART, Number.ACE), new Card(Shape.HEART, Number.TWO));
-        assertThat(playersCards.get(new Participant("여우")))
-                .containsExactly(new Card(Shape.HEART, Number.THREE), new Card(Shape.HEART, Number.FOUR));
-        assertThat(playersCards.get(new Participant("아벨")))
-                .containsExactly(new Card(Shape.HEART, Number.FIVE), new Card(Shape.HEART, Number.SIX));
+
+        assertAll(
+                () -> assertThat(playersCards.get(new Dealer()))
+                        .containsExactly(new Card(Shape.HEART, Number.ACE), new Card(Shape.HEART, Number.TWO)),
+                () -> assertThat(playersCards.get(new Participant("여우")))
+                        .containsExactly(new Card(Shape.HEART, Number.THREE), new Card(Shape.HEART, Number.FOUR)),
+                () -> assertThat(playersCards.get(new Participant("아벨")))
+                        .containsExactly(new Card(Shape.HEART, Number.FIVE), new Card(Shape.HEART, Number.SIX))
+        );
+
+
+
     }
 
     @Test

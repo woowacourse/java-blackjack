@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardRepositoryTest {
     private CardRepository cardRepository;
@@ -29,7 +30,9 @@ class CardRepositoryTest {
     void findCardByIndex() {
         Card card = cardRepository.findAnyOneCard();
 
-        assertThat(card).isEqualTo(new Card(Shape.HEART, Number.FOUR));
-        assertThat(cardRepository.size()).isEqualTo(51);
+        assertAll(
+                () -> assertThat(card).isEqualTo(new Card(Shape.HEART, Number.FOUR)),
+                () -> assertThat(cardRepository.size()).isEqualTo(51)
+        );
     }
 }
