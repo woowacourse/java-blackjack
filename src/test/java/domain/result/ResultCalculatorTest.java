@@ -1,13 +1,15 @@
 package domain.result;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import org.assertj.core.api.Assertions;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +30,10 @@ public class ResultCalculatorTest {
         List<Integer> playerResults = resultCalculator.getResultsByName("dino");
         List<Integer> dealerResults = resultCalculator.getResultsByName("딜러");
 
-        Assertions.assertThat(playerResults).isEqualTo(List.of(1, 0, 0));
-        Assertions.assertThat(dealerResults).isEqualTo(List.of(0, 0, 1));
+        assertAll(
+                () -> assertThat(playerResults).isEqualTo(List.of(1, 0, 0)),
+                () -> assertThat(dealerResults).isEqualTo(List.of(0, 0, 1))
+        );
     }
 
     @Test
@@ -47,7 +51,9 @@ public class ResultCalculatorTest {
         List<Integer> playerResults = resultCalculator.getResultsByName("dino");
         List<Integer> dealerResults = resultCalculator.getResultsByName("딜러");
 
-        Assertions.assertThat(playerResults).isEqualTo(List.of(0, 1, 0));
-        Assertions.assertThat(dealerResults).isEqualTo(List.of(0, 1, 0));
+        assertSoftly(softly -> {
+            softly.assertThat(playerResults).isEqualTo(List.of(0, 1, 0));
+            softly.assertThat(dealerResults).isEqualTo(List.of(0, 1, 0));
+        });
     }
 }
