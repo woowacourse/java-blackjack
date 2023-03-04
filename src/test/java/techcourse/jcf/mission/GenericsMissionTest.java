@@ -37,4 +37,23 @@ public class GenericsMissionTest {
          assertThat(doubleTotal).isEqualTo(1.2);
          assertThat(intTotal).isEqualTo(3);
       }
+
+      @Test
+      @DisplayName("mission 4")
+      void mission_four() {
+          // given
+          final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+          final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
+
+          // when
+          final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+          final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+
+          // then
+          assertThat(filteredDoubleValues.size()).isEqualTo(2);
+          assertThat(filteredDoubleValues.contains(-0.1)).isFalse();
+
+          assertThat(filteredIntValues.size()).isEqualTo(2);
+          assertThat(filteredIntValues.contains(-10)).isFalse();
+       }
 }

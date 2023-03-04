@@ -48,4 +48,21 @@ public interface SimpleList<T> {
         }
         return sum;
     }
+
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> list) {
+        SimpleList<T> result = new SimpleArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            T value = list.get(i);
+
+            if (!(value instanceof Number)) {
+                throw new IllegalArgumentException("숫자만 가능합니다.");
+            }
+
+            if (value.doubleValue() >= 0) {
+                result.add(value);
+            }
+        }
+        return result;
+    }
 }
