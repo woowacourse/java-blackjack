@@ -1,31 +1,26 @@
 package domain.card;
 
-import domain.CardShuffler;
+import domain.CardSelector;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final Queue<Card> deck;
+    private final List<Card> deck;
+    private final CardSelector cardSelector;
 
-    private Deck(final Queue<Card> cards) {
-        this.deck = cards;
+    private Deck(final List<Card> deck, final CardSelector cardSelector) {
+        this.deck = deck;
+        this.cardSelector = cardSelector;
     }
 
-    public static Deck create(final CardShuffler cardShuffler) {
+    public static Deck create(final CardSelector cardSelector) {
         final List<CardPattern> cardPatterns = CardPattern.getAll();
         final List<CardNumber> cardNumbers = CardNumber.getAll();
-        final List<Card> cards = makeCards(cardPatterns, cardNumbers);
-        final List<Card> shuffledCards = cardShuffler.shuffle(cards);
+        final List<Card> deck = makeCards(cardPatterns, cardNumbers);
 
-        return new Deck(new LinkedList<>(shuffledCards));
-    }
-
-    public Card draw() {
-        return deck.poll();
+        return new Deck(deck, cardSelector);
     }
 
     private static List<Card> makeCards(final List<CardPattern> cardPatterns, final List<CardNumber> cardNumbers) {
@@ -33,5 +28,11 @@ public class Deck {
                 .flatMap(pattern -> cardNumbers.stream()
                         .map(number -> Card.create(pattern, number)))
                 .collect(Collectors.toList());
+    }
+
+    public Card draw() {
+        int cardOrder = cardSelector.selectCardOrder(deck.size());
+
+        return deck.get(cardOrder);
     }
 }

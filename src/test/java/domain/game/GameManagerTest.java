@@ -1,6 +1,8 @@
 package domain.game;
 
+import domain.CardSelector;
 import domain.card.Deck;
+import domain.card.RandomUniqueCardSelector;
 import domain.participant.Participants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +23,8 @@ class GameManagerTest {
     @BeforeEach
     void init() {
         final List<String> playerNames = List.of("pobi", "conan");
-        deck = Deck.create(targetCard -> targetCard);
+        final CardSelector cardSelector = new RandomUniqueCardSelector();
+        deck = Deck.create(cardSelector);
         participants = Participants.create(playerNames);
         gameManager = GameManager.create(deck, participants);
     }

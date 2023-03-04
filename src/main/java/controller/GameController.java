@@ -1,6 +1,6 @@
 package controller;
 
-import domain.CardShuffler;
+import domain.CardSelector;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.game.GameManager;
@@ -35,9 +35,9 @@ public class GameController {
         this.outputView = outputView;
     }
 
-    public void start(final CardShuffler cardShuffler) {
+    public void start(final CardSelector cardSelector) {
         Participants participants = makeParticipants();
-        Deck deck = Deck.create(cardShuffler);
+        Deck deck = Deck.create(cardSelector);
         GameManager gameManager = GameManager.create(deck, participants);
         handCards(participants, gameManager);
         printParticipantCards(participants);
