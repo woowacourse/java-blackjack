@@ -1,24 +1,30 @@
 package domain.user;
 
+import java.util.List;
+
 import domain.Card;
 import domain.Cards;
-import java.util.List;
 
 public abstract class User {
 
-    protected final Cards cards = new Cards();
+	final Cards cards = new Cards();
+	String name;
 
-    public void hit(Card card) {
-        cards.addCard(card);
-    }
+	public String getName() {
+		return name;
+	}
 
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
+	public void hit(Card card) {
+		cards.addCard(card);
+	}
 
-    abstract public boolean isHittable();
+	public List<Card> getCards() {
+		return cards.getCards();
+	}
 
-    public int getScore() {
-        return cards.getSumOfScores();
-    }
+	abstract public boolean isHittable();
+
+	public int getScore() {
+		return cards.getSumOfScores();
+	}
 }

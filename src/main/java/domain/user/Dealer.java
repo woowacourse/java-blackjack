@@ -2,10 +2,14 @@ package domain.user;
 
 public class Dealer extends User {
 
-    private static final int UNDER_OVER_SCORE = 17;
+	private static final int UNDER_OVER_SCORE = 17;
 
-    @Override
-    public boolean isHittable() {
-        return cards.isUnder(UNDER_OVER_SCORE);
-    }
+	public Dealer(final String name) {
+		this.name = name;
+	}
+
+	@Override
+	public boolean isHittable() {
+		return cards.isUnder(UNDER_OVER_SCORE);
+	}
 }

@@ -4,9 +4,7 @@ public class Player extends User {
 
     private static final int NAME_MAX_LENGTH = 5;
     private static final int BLACK_JACK_SCORE = 21;
-    private static final String ILLEGAL_NAME = "딜러";
-
-    private final String name;
+    private static final String DEALER_NAME = "딜러";
 
     public Player(final String name) {
         validateName(name);
@@ -20,7 +18,7 @@ public class Player extends User {
     }
 
     private void validateNotProperName(final String name) {
-        if (name.equals(ILLEGAL_NAME)) {
+        if (name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException("딜러라는 이름은 사용할 수 없습니다.");
         }
     }
