@@ -8,5 +8,4 @@ public class Dealer extends User {
     public boolean isUnderLimit() {
         return playerCards.getTotalScore() < MINIMUM_SCORE;
     }
-
 }

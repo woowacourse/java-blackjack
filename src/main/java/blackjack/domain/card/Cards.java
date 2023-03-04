@@ -9,6 +9,7 @@ public class Cards {
     private static final int CARD_TOTAL_SIZE = 48;
     private static final int FIRST_CARD = 0;
     private static final int MIN_CARD_SIZE = 1;
+
     private static List<Card> cards = new ArrayList<>();
 
     public static void init() {
