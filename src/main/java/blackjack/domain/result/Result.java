@@ -5,6 +5,9 @@ public enum Result {
     TIE("무"),
     LOSE("패");
 
+    private static final int SCORE_LIMIT = 21;
+    private static final int INITIALIZED_SCORE = 0;
+
     private final String playerResult;
 
     Result(String playerResult) {
@@ -12,12 +15,8 @@ public enum Result {
     }
 
     public static Result calculateResult(int playerScore, int dealerScore) {
-        if (playerScore > 21) {
-            playerScore = 0;
-        }
-        if (dealerScore > 21) {
-            dealerScore = 0;
-        }
+        playerScore = setScore(playerScore);
+        dealerScore = setScore(dealerScore);
         if (playerScore < dealerScore) {
             return LOSE;
         }
@@ -25,6 +24,13 @@ public enum Result {
             return WIN;
         }
         return TIE;
+    }
+
+    private static int setScore(int score) {
+        if (score > SCORE_LIMIT) {
+            return INITIALIZED_SCORE;
+        }
+        return score;
     }
 
     public Result ofOppositeResult() {
