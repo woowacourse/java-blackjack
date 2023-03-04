@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.CardFixture.하트3;
+import static domain.CardFixture.하트에이스;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -34,8 +36,8 @@ public class PlayerTest {
 
     private static Cards getCards() {
         List<Card> cardsByCardBox = new ArrayList<>();
-        cardsByCardBox.add(new Card("A하트", 11));
-        cardsByCardBox.add(new Card("3하트", 3));
+        cardsByCardBox.add(하트에이스);
+        cardsByCardBox.add(하트3);
         return new Cards(cardsByCardBox);
     }
 

@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class Card {
 
-    private final String name;
-    private final int value;
+    private final Shape shape;
+    private final CardInfo cardInfo;
 
-    public Card(final String name, final int value) {
-        this.name = name;
-        this.value = value;
+    public Card(final Shape shape, final CardInfo info) {
+        this.shape = shape;
+        this.cardInfo = info;
     }
 
     public int sum(final Card otherCard) {
-        return this.value + otherCard.value;
+        return this.cardInfo.sum(otherCard.cardInfo);
     }
 
-    public boolean isA() {
-        return name.charAt(0) == 'A';
+    public boolean isACE() {
+        return this.cardInfo.isACE("A");
     }
 
     @Override
@@ -29,15 +29,19 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return value == card.value && Objects.equals(name, card.name);
+        return shape == card.shape && cardInfo == card.cardInfo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value);
+        return Objects.hash(shape, cardInfo);
     }
 
     public String getName() {
-        return name;
+        return cardInfo.getName() + shape.getShape();
+    }
+
+    public int getValue() {
+        return cardInfo.getValue();
     }
 }

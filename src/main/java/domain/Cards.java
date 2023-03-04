@@ -36,11 +36,11 @@ public class Cards {
 
     private boolean containsA() {
         return cards.stream()
-                .anyMatch(Card::isA);
+                .anyMatch(Card::isACE);
     }
 
     private int calculateOddCardsSum() {
-        int sum = cards.get(0).sum(new Card("조커", 0));
+        int sum = cards.get(0).getValue();
         for (int i = 1; i < cards.size(); i += 2) {
             sum += cards.get(i).sum(cards.get(i + 1));
         }

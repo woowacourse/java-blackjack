@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,7 +18,7 @@ public class CardsTest {
 
     @Test
     void 카드뭉치_안에는_같은_카드가_두개일_수_없다() {
-        List<Card> cards = List.of(new Card("A하트", 11), new Card("A하트", 11));
+        List<Card> cards = List.of(하트에이스, 하트에이스);
         assertThatThrownBy(() -> new Cards(cards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -25,8 +26,8 @@ public class CardsTest {
     @Test
     void 카드뭉치는_가진_카드의_총합을_반환한다() {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card("A하트", 11));
-        cards.add(new Card("3하트", 3));
+        cards.add(하트에이스);
+        cards.add(하트3);
         Cards actual = new Cards(cards);
 
         assertThat(actual.sumOfCards()).isEqualTo(14);
@@ -34,23 +35,23 @@ public class CardsTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "A하트,11,false",
-            "A클로버,11,true"
+            "HEART,A,false",
+            "CLOVER,A,true"
     })
-    void 카드뭉치는_카드를_추가할_경우_성공하면_True를_실패하면_False를_반환한다(String cardName, int cardValue, boolean expected) {
+    void 카드뭉치는_카드를_추가할_경우_성공하면_True를_실패하면_False를_반환한다(Shape shape, CardInfo cardInfo, boolean expected) {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card("A하트", 11));
-        cards.add(new Card("3하트", 3));
+        cards.add(하트에이스);
+        cards.add(하트3);
         Cards actual = new Cards(cards);
 
-        assertThat(actual.addCard(new Card(cardName, cardValue))).isEqualTo(expected);
+        assertThat(actual.addCard(new Card(shape, cardInfo))).isEqualTo(expected);
     }
 
     @Test
     void 블랙잭인지_확인할_수_있다() {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card("A하트", 11));
-        cards.add(new Card("10하트", 10));
+        cards.add(하트에이스);
+        cards.add(하트10);
         Cards actual = new Cards(cards);
 
         assertThat(actual.isBlackJack()).isTrue();
@@ -61,9 +62,9 @@ public class CardsTest {
         List<Card> cards = new ArrayList<>();
 
         // 21 이 넘을 경우 A 는 1로 대체된다
-        cards.add(new Card("2하트", 2));
-        cards.add(new Card("3하트", 3));
-        cards.add(new Card("10하트", 10));
+        cards.add(하트2);
+        cards.add(하트3);
+        cards.add(하트10);
         Cards actual = new Cards(cards);
 
         assertThat(actual.sumOfCards()).isEqualTo(15);
@@ -74,9 +75,9 @@ public class CardsTest {
         List<Card> cards = new ArrayList<>();
 
         // 21 이 넘을 경우 A 는 1로 대체된다
-        cards.add(new Card("A하트", 11));
-        cards.add(new Card("2하트", 2));
-        cards.add(new Card("10하트", 10));
+        cards.add(하트에이스);
+        cards.add(하트2);
+        cards.add(하트10);
         Cards actual = new Cards(cards);
 
         assertThat(actual.sumOfCards()).isEqualTo(13);
