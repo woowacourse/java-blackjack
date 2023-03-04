@@ -12,12 +12,12 @@ public class Player {
         this.cards = cards;
     }
 
-    public boolean selectToPickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
-        return pickOtherCard(cardBox, generator);
+    public boolean selectToPickOtherCard(final CardBox cardBox) {
+        return pickOtherCard(cardBox);
     }
 
-    protected boolean pickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
-        return cards.addCard(cardBox.get(generator.generateIndex()));
+    protected boolean pickOtherCard(final CardBox cardBox) {
+        return cards.addCard(cardBox.get());
     }
 
     public int sumOfPlayerCards() {

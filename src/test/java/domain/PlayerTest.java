@@ -29,7 +29,7 @@ public class PlayerTest {
 
         Player player = new Player(name, cards);
 
-        assertThat(player.selectToPickOtherCard(new CardBox(), () -> 0)).isTrue();
+        assertThat(player.selectToPickOtherCard(new CardBox())).isTrue();
     }
 
     private static Cards getCards() {
