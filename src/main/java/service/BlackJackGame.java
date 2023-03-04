@@ -14,6 +14,8 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackGame {
+    private static final String DEALER_NAME = "딜러";
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -34,45 +36,43 @@ public class BlackJackGame {
         printWinningResult(dealer, players);
     }
 
-    private void printInitialCardResult(final List<Cards> randomBoxedCars, final Players players) {
-        List<List<String>> copiedBoxedCards = copiedBoxedCards(randomBoxedCars);
-        printPlayerNamesAndCardsPerPlayer(players, copiedBoxedCards);
+    private List<Name> getNames() {
+        List<String> playerNames = inputView.getPlayer();
+        return readNames(playerNames);
+    }
+
+    private List<Name> readNames(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 
     private List<Cards> getRandomCards(final List<Name> names,
                                        final CardBox cardBox) {
-        return randomCards(names, cardBox);
+        return IntStream.range(0, names.size() + 1)
+                .mapToObj(i -> IntStream.range(0, 2)
+                        .mapToObj(j -> cardBox.get())
+                        .collect(Collectors.toList()))
+                .map(Cards::new)
+                .collect(Collectors.toList());
     }
 
-    private void printWinningResult(final Dealer dealer, final Players players) {
-        List<Integer> winningResult = getWinningResult(dealer, players);
-        outputView.printWinningResult(winningResult, players.getNames());
+    private Dealer readDealer(final List<Cards> cardsCards) {
+        return new Dealer(new Name(DEALER_NAME), cardsCards.get(0));
     }
 
-    private List<Integer> getWinningResult(final Dealer dealer, final Players players) {
-        List<Integer> winningResult = new ArrayList<>();
-        for (int index = 1; index < players.size(); index++) {
-            winningResult.add(dealer.checkWinningResult(players.getPlayer(index)));
+    private Players readPlayers(final List<Name> names, final List<Cards> cardsCards, final Dealer dealer) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        for (int i = 0; i < names.size(); i++) {
+            players.add(new Player(names.get(i), cardsCards.get(i + 1)));
         }
-        return winningResult;
+        return new Players(players);
     }
 
-    private void printFinalCardResult(final Players players) {
-        System.out.println();
-        for (int index = 0; index < players.size(); index++) {
-            outputView.printAllCardResult(players.getNameOfPlayer(index), players.getCardsOfPlayer(index),
-                    players.getCardsSum(index));
-        }
-    }
-
-    private void printPlayerNamesAndCardsPerPlayer(final Players players, final List<List<String>> boxedCards) {
+    private void printInitialCardResult(final List<Cards> randomBoxedCars, final Players players) {
         outputView.printPlayerNames(players.getNames());
-        outputView.printCardsPerPlayer(players.getNames(), boxedCards);
-    }
-
-    private List<Name> getNames() {
-        List<String> playerNames = inputView.getPlayer();
-        return readNames(playerNames);
+        outputView.printCardsPerPlayer(players.getNames(), copiedBoxedCards(randomBoxedCars));
     }
 
     private List<List<String>> copiedBoxedCards(final List<Cards> cardsCards) {
@@ -114,32 +114,24 @@ public class BlackJackGame {
         }
     }
 
-    private Players readPlayers(final List<Name> names, final List<Cards> cardsCards, final Dealer dealer) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        for (int i = 0; i < names.size(); i++) {
-            players.add(new Player(names.get(i), cardsCards.get(i + 1)));
+    private void printFinalCardResult(final Players players) {
+        System.out.println();
+        for (int index = 0; index < players.size(); index++) {
+            outputView.printAllCardResult(players.getNameOfPlayer(index), players.getCardsOfPlayer(index),
+                    players.getCardsSum(index));
         }
-        return new Players(players);
     }
 
-    private Dealer readDealer(final List<Cards> cardsCards) {
-        return new Dealer(new Name("딜러"), cardsCards.get(0));
+    private void printWinningResult(final Dealer dealer, final Players players) {
+        List<Integer> winningResult = getWinningResult(dealer, players);
+        outputView.printWinningResult(winningResult, players.getNames());
     }
 
-    private List<Name> readNames(final List<String> playerNames) {
-        return playerNames.stream()
-                .map(Name::new)
-                .collect(Collectors.toList());
-    }
-
-    private List<Cards> randomCards(final List<Name> names,
-                                    final CardBox cardBox) {
-        return IntStream.range(0, names.size() + 1)
-                .mapToObj(i -> IntStream.range(0, 2)
-                        .mapToObj(j -> cardBox.get())
-                        .collect(Collectors.toList()))
-                .map(Cards::new)
-                .collect(Collectors.toList());
+    private List<Integer> getWinningResult(final Dealer dealer, final Players players) {
+        List<Integer> winningResult = new ArrayList<>();
+        for (int index = 1; index < players.size(); index++) {
+            winningResult.add(dealer.checkWinningResult(players.getPlayer(index)));
+        }
+        return winningResult;
     }
 }

@@ -1,27 +1,29 @@
 package domain;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 public class CardBox {
 
-    private Queue<Card> cardBox = new ArrayDeque<>();
+    private final Queue<Card> cardBox;
 
     public CardBox() {
+        List<Card> list = new ArrayList<>();
         Arrays.stream(Shape.values())
-                .forEach(this::initCards);
+                .forEach(cardShape -> initCards(cardShape, list));
+        Collections.shuffle(list);
+
+        this.cardBox = new ArrayDeque<>(list);
     }
 
-    private void initCards(final Shape cardShape) {
-        List<Card> list = Arrays.stream(CardInfo.values())
+    private void initCards(final Shape cardShape, final List<Card> list) {
+        Arrays.stream(CardInfo.values())
                 .map(cardInfo -> new Card(cardShape, cardInfo))
-                .collect(Collectors.toList());
-        Collections.shuffle(list);
-        cardBox = new ArrayDeque<>(list);
+                .forEach(list::add);
     }
 
     public Card get() {
