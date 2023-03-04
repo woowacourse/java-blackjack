@@ -34,9 +34,9 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK;
     }
 
-    abstract public boolean isStand();
+    public abstract boolean isStand();
 
-    abstract public void stand();
+    public abstract void stand();
 
     public String getName() {
         return name;

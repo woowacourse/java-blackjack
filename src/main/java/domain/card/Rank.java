@@ -22,7 +22,7 @@ public enum Rank {
     }
 
     public boolean isAce() {
-        return this == ACE;
+        return this.equals(ACE);
     }
 
     public int getScore() {

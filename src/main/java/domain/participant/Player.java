@@ -8,11 +8,13 @@ public class Player extends Participant {
     private boolean isStand = false;
 
     private Player(String name) {
-        super(name.trim());
+        super(name);
     }
 
     public static Player from(String name) {
+        name = name.trim();
         validate(name);
+
         return new Player(name);
     }
 
