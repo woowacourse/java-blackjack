@@ -10,7 +10,6 @@ import domain.participant.ParticipantGenerator;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.request.DrawCommand;
-import dto.response.DealerWinLoseResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import dto.response.WinLoseResult;
@@ -104,7 +103,6 @@ public class BlackJackApplication {
 
     private void printWinLoseResult(final Dealer dealer, final Players players) {
         List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
-        DealerWinLoseResult dealerWinLoseResult = blackJackService.getDealerResult(winLoseResults, dealer);
-        outputView.printWinLoseResult(winLoseResults, dealerWinLoseResult);
+        outputView.printWinLoseResult(dealer.getName(),winLoseResults);
     }
 }

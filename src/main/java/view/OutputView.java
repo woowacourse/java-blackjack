@@ -1,6 +1,5 @@
 package view;
 
-import dto.response.DealerWinLoseResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import dto.response.WinLoseResult;
@@ -48,15 +47,21 @@ public class OutputView {
                                 + result.getScore()));
     }
 
-    public void printWinLoseResult(final List<WinLoseResult> winLoseResults,
-                                   final DealerWinLoseResult dealerWinLoseResult) {
+    public void printWinLoseResult(final String dealerName,
+                                   final List<WinLoseResult> winLoseResults) {
         System.out.println(NEW_LINE + "## 최종 승패");
 
-        System.out.println(
-                dealerWinLoseResult.getName() + ": " + dealerWinLoseResult.getWinCount() + "승 " + dealerWinLoseResult.getLoseCount() + "패");
+        int dealerLoseCount = (int) winLoseResults.stream()
+                .filter(WinLoseResult::isWin)
+                .count();
+        int dealerWinCount = winLoseResults.size() - dealerLoseCount;
 
-        winLoseResults.forEach(
-                result -> System.out.println(result.getName() + ": " + getWinLoseFormat(result.isWin())));
+        System.out.println(dealerName + ": " + dealerWinCount + "승 " + dealerLoseCount + "패");
+        winLoseResults.forEach(result -> printPlayerWinLoseResult(result));
+    }
+
+    private void printPlayerWinLoseResult(WinLoseResult result) {
+        System.out.println(result.getName() + ": " + getWinLoseFormat(result.isWin()));
     }
 
     private String getWinLoseFormat(boolean isWin) {

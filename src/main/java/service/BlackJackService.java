@@ -7,7 +7,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.response.DealerWinLoseResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import dto.response.WinLoseResult;
@@ -94,14 +93,5 @@ public class BlackJackService {
 
         boolean isPlayerWin = player.calculateCardScore() > dealer.calculateCardScore();
         return WinLoseResult.toDto(player, isPlayerWin);
-    }
-
-    public DealerWinLoseResult getDealerResult(final List<WinLoseResult> winLoseResults, final Dealer dealer) {
-        int dealerLoseCount = (int) winLoseResults.stream()
-                .filter(WinLoseResult::isWin)
-                .count();
-        int dealerWinCount = winLoseResults.size() - dealerLoseCount;
-
-        return DealerWinLoseResult.toDto(dealer, dealerWinCount, dealerLoseCount);
     }
 }
