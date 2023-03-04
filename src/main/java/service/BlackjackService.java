@@ -49,6 +49,7 @@ public class BlackjackService {
 
         if (hit.equals(HIT)) {
             nextPlayer.addCard(deck.pollAvailableCard());
+            return;
         }
 
         throw new IllegalArgumentException(ERROR_HIT_OPERATION);
