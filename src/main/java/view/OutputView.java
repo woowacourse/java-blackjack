@@ -1,14 +1,14 @@
 package view;
 
+import domain.BoxResult;
 import domain.Card;
-import domain.CardShape;
-import domain.GameResult;
+import domain.Suit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printNameCardsScore(String name, List<Card> cards, int score) {
+    public static void printNameHandScore(String name, List<Card> cards, int score) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name);
         stringBuilder.append(": ");
@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printNameAndCards(String name, List<Card> cards) {
+    public static void printNameAndHand(String name, List<Card> cards) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name);
         stringBuilder.append(": ");
@@ -29,19 +29,19 @@ public class OutputView {
 
     private static String formatCard(Card card) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(card.getCardNumber().getName());
-        stringBuilder.append(formatCardShape(card.getCardShape()));
+        stringBuilder.append(card.getDenomination().getName());
+        stringBuilder.append(formatCardShape(card.getSuit()));
         return stringBuilder.toString();
     }
 
-    private static String formatCardShape(CardShape cardShape) {
-        if (cardShape == CardShape.SPADE) {
+    private static String formatCardShape(Suit cardShape) {
+        if (cardShape == Suit.SPADE) {
             return "스페이드";
         }
-        if (cardShape == CardShape.CLOVER) {
+        if (cardShape == Suit.CLOVER) {
             return "클로버";
         }
-        if (cardShape == CardShape.HEART) {
+        if (cardShape == Suit.HEART) {
             return "하트";
         }
         return "다이야몬드";
@@ -51,7 +51,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerGameResult(GameResult dealerResult, int playerCount) {
+    public static void printDealerGameResult(BoxResult dealerResult, int playerCount) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
         int winCount = dealerResult.getWinCount();
         int loseCount = dealerResult.getLoseCount();
@@ -70,7 +70,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printPlayerResult(String name, GameResult gameResult) {
+    public static void printPlayerResult(String name, BoxResult gameResult) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name);
         stringBuilder.append(": ");

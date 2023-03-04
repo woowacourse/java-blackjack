@@ -1,5 +1,5 @@
 package domain;
 
-public enum ParticipantStatus {
+public enum PlayResult {
     BUST, BLACK_JACK, STAND, NOT_BUST
 }

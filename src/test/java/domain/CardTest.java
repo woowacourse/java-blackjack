@@ -9,10 +9,10 @@ class CardTest {
     @Test
     @DisplayName("카드는 자신의 점수를 반환한다.")
     void getScore() {
-        Card card = new Card(CardNumber.KING, CardShape.SPADE);
-        CardNumber cardNumber = card.getCardNumber();
-        CardShape shape = card.getCardShape();
-        Assertions.assertThat(cardNumber).isEqualTo(CardNumber.KING);
-        Assertions.assertThat(shape).isEqualTo(CardShape.SPADE);
+        Card card = new Card(Denomination.KING, Suit.SPADE);
+        Denomination denomination = card.getDenomination();
+        Suit suit = card.getSuit();
+        Assertions.assertThat(denomination).isEqualTo(Denomination.KING);
+        Assertions.assertThat(suit).isEqualTo(Suit.SPADE);
     }
 }

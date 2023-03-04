@@ -4,21 +4,20 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardNumber number;
+    private final Denomination denomination;
+    private final Suit suit;
 
-    private final CardShape shape;
-
-    public Card(CardNumber number, CardShape shape) {
-        this.number = number;
-        this.shape = shape;
+    public Card(Denomination denomination, Suit suit) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
-    public CardNumber getCardNumber() {
-        return number;
+    public Denomination getDenomination() {
+        return denomination;
     }
 
-    public CardShape getCardShape() {
-        return shape;
+    public Suit getSuit() {
+        return suit;
     }
 
     @Override
@@ -30,11 +29,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return number == card.number && shape == card.shape;
+        return denomination == card.denomination && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, shape);
+        return Objects.hash(denomination, suit);
     }
 }

@@ -1,6 +1,6 @@
 package domain;
 
-public enum CardShape {
+public enum Suit {
     SPADE,
     HEART,
     CLOVER,

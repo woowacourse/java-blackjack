@@ -1,9 +1,9 @@
 package controller;
 
-import domain.BlackJackAction;
-import domain.Game;
-import domain.GameResult;
-import domain.user.Participant;
+import domain.BlackJackGame;
+import domain.BoxResult;
+import domain.TurnAction;
+import domain.user.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
@@ -11,48 +11,48 @@ import view.OutputView;
 
 public class GameController {
 
-    private final Game game;
+    private final BlackJackGame blackJackGame;
 
-    public GameController(Game game) {
-        this.game = game;
+    public GameController(BlackJackGame game) {
+        this.blackJackGame = game;
     }
 
     public void ready() {
-        game.ready();
-        List<Participant> allParticipant = game.getAllParticipant();
-        OutputView.printReady(allParticipant.stream().map(Participant::getName).collect(Collectors.toList()));
+        blackJackGame.dealInitialHand();
+        List<Player> allParticipant = blackJackGame.getPlayersAndDealerAtFirst();
+        OutputView.printReady(allParticipant.stream().map(Player::getName).collect(Collectors.toList()));
         allParticipant.forEach(
-            (participant) -> OutputView.printNameAndCards(participant.getName(), participant.getReadyCards()));
+            (participant) -> OutputView.printNameAndHand(participant.getName(), participant.faceUpInitialHand()));
     }
 
     public void play() {
-        Participant current = game.getCurrentParticipant();
+        Player current = blackJackGame.getCurrentPlayer();
         while (current.isPlayer()) {
             String input = InputView.inputNeedMoreCard(current.getName());
-            BlackJackAction action = BlackJackAction.getActionByInput(input);
-            game.run(current, action);
-            OutputView.printNameAndCards(current.getName(), current.getCards());
-            current = game.getCurrentParticipant();
+            TurnAction action = TurnAction.getActionByInput(input);
+            blackJackGame.progressTurn(current, action);
+            OutputView.printNameAndHand(current.getName(), current.showHand());
+            current = blackJackGame.getCurrentPlayer();
         }
-        while (game.isDealerNeedCard(current)) {
+        while (blackJackGame.isDealerUnderThresholds(current)) {
             OutputView.printDealerReceivedCard();
-            game.run(current, BlackJackAction.HIT);
+            blackJackGame.progressTurn(current, TurnAction.HIT);
         }
     }
 
     public void printFinalGameResult() {
-        List<Participant> allPlayers = game.getAllParticipant();
-        printAllParticipantsStatus(allPlayers);
-        List<GameResult> finalGameResults = game.getFinalGameResults();
-        OutputView.printDealerGameResult(finalGameResults.get(0), finalGameResults.size() - 1);
-        for (int i = 1; i < allPlayers.size(); i++) {
-            OutputView.printPlayerResult(allPlayers.get(i).getName(), finalGameResults.get(i));
+        List<Player> dealerAndPlayers = blackJackGame.getPlayersAndDealerAtFirst();
+        printAllParticipantsStatus(dealerAndPlayers);
+        List<BoxResult> gameResult = blackJackGame.showResult();
+        OutputView.printDealerGameResult(gameResult.get(0), gameResult.size() - 1);
+        for (int i = 1; i < dealerAndPlayers.size(); i++) {
+            OutputView.printPlayerResult(dealerAndPlayers.get(i).getName(), gameResult.get(i));
         }
     }
 
-    private void printAllParticipantsStatus(List<Participant> allPlayers) {
+    private void printAllParticipantsStatus(List<Player> allPlayers) {
         allPlayers.forEach(
-            (participant) -> OutputView.printNameCardsScore(participant.getName(), participant.getCards(),
-                participant.calculateScore()));
+            (participant) -> OutputView.printNameHandScore(participant.getName(), participant.showHand(),
+                participant.calculatePoint()));
     }
 }

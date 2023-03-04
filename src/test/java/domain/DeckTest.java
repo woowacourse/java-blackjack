@@ -10,6 +10,6 @@ class DeckTest {
     @Test
     void getSize() {
         Deck deck = new Deck();
-        Assertions.assertThat(deck.getSize()).isEqualTo(52);
+        Assertions.assertThat(deck.getCurrentSize()).isEqualTo(52);
     }
 }

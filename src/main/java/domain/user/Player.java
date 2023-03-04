@@ -1,43 +1,43 @@
 package domain.user;
 
 import domain.Card;
-import domain.CardNumber;
+import domain.Denomination;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Participant {
+public class Player {
 
     protected static final String DEALER_NAME = "딜러";
     protected final String name;
-    protected final List<Card> cards = new ArrayList<>();
+    protected final List<Card> hand = new ArrayList<>();
 
-    public Participant(String name) {
+    public Player(String name) {
         this.name = name;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void dealt(Card card) {
+        hand.add(card);
     }
 
-    public List<Card> getReadyCards() {
-        if (cards.size() < 2) {
+    public List<Card> faceUpInitialHand() {
+        if (hand.size() < 2) {
             throw new IllegalStateException("모든 플레이어는 카드 두장을 받고 시작해야 합니다.");
         }
-        return List.of(cards.get(0), cards.get(1));
+        return List.of(hand.get(0), hand.get(1));
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> showHand() {
+        return Collections.unmodifiableList(hand);
     }
 
-    public int calculateScore() {
-        int score = 0;
-        for (Card card : cards) {
-            score += card.getCardNumber().getScore();
+    public int calculatePoint() {
+        int point = 0;
+        for (Card card : hand) {
+            point += card.getDenomination().getPoint();
         }
-        return score;
+        return point;
     }
 
     public String getName() {
@@ -49,7 +49,7 @@ public class Participant {
     }
 
     public boolean hasAce() {
-        return cards.stream().anyMatch((card) -> card.getCardNumber() == CardNumber.ACE);
+        return hand.stream().anyMatch((card) -> card.getDenomination() == Denomination.ACE);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Participant {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Participant that = (Participant) o;
+        Player that = (Player) o;
         return name.equals(that.name);
     }
 
