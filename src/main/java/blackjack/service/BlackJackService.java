@@ -5,14 +5,13 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.People;
 import blackjack.domain.Person;
 import blackjack.domain.Player;
-import blackjack.dto.DealerGameResultResponse;
 import blackjack.dto.PersonStatusResponse;
 import blackjack.dto.PersonTotalStatusResponse;
-import blackjack.dto.PlayerGameResultResponse;
+import blackjack.dto.PlayerGameResult;
+import blackjack.dto.TotalGameResult;
 import java.util.List;
 
 public class BlackJackService {
@@ -77,19 +76,11 @@ public class BlackJackService {
         return PersonStatusResponse.of(person);
     }
 
-    public DealerGameResultResponse getDealerGameResults() {
+    public TotalGameResult getTotalGameResult() {
         Dealer dealer = people.getDealer();
         return people.getPlayers()
                 .stream()
-                .map(player -> player.matchGame(dealer))
-                .map(GameResult::getAntonym)
-                .collect(collectingAndThen(toList(), DealerGameResultResponse::new));
-    }
-
-    public List<PlayerGameResultResponse> getAllPlayersGameResult() {
-        Dealer dealer = people.getDealer();
-        return people.getPlayers().stream()
-                .map(player -> new PlayerGameResultResponse(player.getName(), player.matchGame(dealer)))
-                .collect(toList());
+                .map(player -> new PlayerGameResult(player.getName(), player.matchGame(dealer)))
+                .collect(collectingAndThen(toList(), TotalGameResult::of));
     }
 }

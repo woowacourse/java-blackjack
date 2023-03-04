@@ -4,10 +4,10 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.dto.DealerGameResultResponse;
 import blackjack.dto.PersonStatusResponse;
 import blackjack.dto.PersonTotalStatusResponse;
-import blackjack.dto.PlayerGameResultResponse;
+import blackjack.dto.PlayerGameResult;
+import blackjack.dto.TotalGameResult;
 import java.util.List;
 
 public class OutputView {
@@ -44,25 +44,24 @@ public class OutputView {
         System.out.println("딜러는 " + DEALER_DRAW_BOUNDARY + "초과라 카드를 받지 않았습니다." + LINE_SEPARATOR);
     }
 
-    public static void printGameEndMessage() {
-        System.out.println(LINE_SEPARATOR + "## 최종 승패");
+    public static void printExceptionMessage(final String message) {
+        System.out.println(message);
     }
 
-    public static void printDealerResult(final DealerGameResultResponse response) {
-        final String dealerResult = response.getResults().stream()
+    public static void printTotalGameResult(TotalGameResult totalGameResult) {
+        System.out.println(LINE_SEPARATOR + "## 최종 승패");
+        System.out.println("딜러 카드: " + getDealerResult(totalGameResult.getDealerGameResult()));
+        for (PlayerGameResult playerGameResult : totalGameResult.getPlayerGameResults()) {
+            System.out.println(playerGameResult.getName() + ": " + playerGameResult.getResult().getName());
+        }
+    }
+
+    private static String getDealerResult(final List<String> dealerResult) {
+        return dealerResult.stream()
                 .collect(groupingBy(result -> result, counting()))
                 .entrySet()
                 .stream()
                 .map(entry -> entry.getValue() + entry.getKey())
                 .collect(joining(" "));
-        System.out.println("딜러: " + dealerResult);
-    }
-
-    public static void printPlayerResult(final PlayerGameResultResponse response) {
-        System.out.println(response.getName() + ": " + response.getGameResult());
-    }
-
-    public static void printExceptionMessage(final String message) {
-        System.out.println(message);
     }
 }

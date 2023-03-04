@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.dto.PersonStatusResponse;
 import blackjack.dto.PersonTotalStatusResponse;
-import blackjack.dto.PlayerGameResultResponse;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -22,7 +21,7 @@ public class BlackJackController {
         drawMoreCardForPlayers();
         OutputView.printDealerDrawCardMessage(blackJackService.drawMoreCardForDealer());
         printPersonTotalStatues(blackJackService.getAllPersonTotalResponse());
-        printGameResult();
+        OutputView.printTotalGameResult(blackJackService.getTotalGameResult());
     }
 
     private void repeat(Runnable runnable) {
@@ -61,14 +60,6 @@ public class BlackJackController {
     private void printPersonTotalStatues(List<PersonTotalStatusResponse> responses) {
         for (PersonTotalStatusResponse response : responses) {
             OutputView.printPersonTotalStatus(response);
-        }
-    }
-
-    private void printGameResult() {
-        OutputView.printGameEndMessage();
-        OutputView.printDealerResult(blackJackService.getDealerGameResults());
-        for (PlayerGameResultResponse response : blackJackService.getAllPlayersGameResult()) {
-            OutputView.printPlayerResult(response);
         }
     }
 }
