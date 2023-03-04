@@ -2,19 +2,11 @@ package domain.card;
 
 public class Card {
 
-    private final String name;
-    private final int value;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(final String name, final int value) {
-        this.name = name;
-        this.value = value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getValue() {
-        return value;
+    public Card(final Suit suit, final Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 }
