@@ -9,7 +9,6 @@ import domain.user.Name;
 import domain.user.Player;
 import domain.user.PlayerStatus;
 import domain.user.User;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class BlackJackGameController {
     }
 
     private void printSetUpResult(Dealer dealer, List<Player> players) {
-        HashMap<String, List<Card>> setUpResult = new LinkedHashMap<>();
+        Map<String, List<Card>> setUpResult = new LinkedHashMap<>();
         setUpResult.put(dealer.getName(), dealer.getCards().subList(0, 1));
         players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
         outputView.printSetUpResult(setUpResult);

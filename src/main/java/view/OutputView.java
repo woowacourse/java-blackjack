@@ -3,7 +3,6 @@ package view;
 import domain.card.Card;
 import domain.user.User;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,7 +28,7 @@ public class OutputView {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
     }
 
-    public void printSetUpResult(HashMap<String, List<Card>> setUpResult) {
+    public void printSetUpResult(Map<String, List<Card>> setUpResult) {
         printSetUpCompleteMessage(setUpResult);
         printUserCards(setUpResult);
     }
@@ -46,14 +45,14 @@ public class OutputView {
         System.out.println(name + NAME_CARD_DELIMITER + cardSymbols);
     }
 
-    private void printSetUpCompleteMessage(HashMap<String, List<Card>> setUpResult) {
+    private void printSetUpCompleteMessage(Map<String, List<Card>> setUpResult) {
         String playerNames = String.join(DRAW_RESULT_DELIMITER,
                 new ArrayList<>(setUpResult.keySet()).subList(1, setUpResult.size()));
 
         System.out.printf(SETUP_COMPLETE_MESSAGE, playerNames);
     }
 
-    private void printUserCards(HashMap<String, List<Card>> setUpResult) {
+    private void printUserCards(Map<String, List<Card>> setUpResult) {
         for (Entry<String, List<Card>> cardsByUser : setUpResult.entrySet()) {
             String name = cardsByUser.getKey();
             String cards = cardsByUser.getValue().stream()
