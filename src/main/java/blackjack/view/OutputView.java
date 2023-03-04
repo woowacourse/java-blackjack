@@ -53,7 +53,7 @@ public class OutputView {
         System.out.print("딜러: ");
         for (Result result : dealerResults.keySet()) {
             if (dealerResults.get(result) > 0) {
-                System.out.print(dealerResults.get(result) + result.getResult() + " ");
+                System.out.println(dealerResults.get(result) + result.getResult() + " ");
             }
         }
         for (Player player : playerResults.keySet()) {
