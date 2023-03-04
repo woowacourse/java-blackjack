@@ -63,4 +63,20 @@ public class SimpleArrayListTest {
         assertThat(doubleTotal).isEqualTo(1.2);
         assertThat(intTotal).isEqualTo(3);
     }
+
+    @Test
+    void mission4() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
+
+        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+
+        assertThat(filteredDoubleValues.contains(-0.1)).isFalse();
+        assertThat(filteredDoubleValues.contains(0.5)).isTrue();
+        assertThat(filteredDoubleValues.contains(0.7)).isTrue();
+        assertThat(filteredIntValues.contains(-10)).isFalse();
+        assertThat(filteredIntValues.contains(1)).isTrue();
+        assertThat(filteredIntValues.contains(2)).isTrue();
+    }
 }

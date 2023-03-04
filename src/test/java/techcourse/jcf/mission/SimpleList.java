@@ -19,6 +19,17 @@ public interface SimpleList<T> {
         return total;
     }
 
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> doubleValues) {
+        SimpleList<T> filter = new SimpleArrayList<>();
+        while (doubleValues.size() != 0) {
+            Number remove = doubleValues.remove(0);
+            if (remove.doubleValue() >= 0) {
+                filter.add((T) remove);
+            }
+        }
+        return filter;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);
