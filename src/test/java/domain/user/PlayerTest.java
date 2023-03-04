@@ -91,4 +91,26 @@ class PlayerTest {
         Player player = new Player("name", cardHand);
         assertThat(player.isBlackjack()).isFalse();
     }
+
+    @Test
+    @DisplayName("갖고 있는 카드의 점수가 블랙잭 점수를 초과하면 true를 반환한다.")
+    void 블랙잭_초과() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.TWO));
+        Player player = new Player("name", cardHand);
+        assertThat(player.isOverBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("갖고 있는 카드의 점수가 블랙잭 점수를 초과하지 않으면 false를 반환한다.")
+    void 블랙잭_이하() {
+        CardHand cardHand = new CardHand();
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
+        cardHand.add(new Card(Symbol.CLOVER, CardNumber.ACE));
+        Player player = new Player("name", cardHand);
+        assertThat(player.isOverBlackjack()).isFalse();
+    }
 }

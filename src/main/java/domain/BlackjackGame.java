@@ -45,10 +45,10 @@ public class BlackjackGame {
     }
 
     private Result calculateResult(Player player) {
-        if (player.calculateScore() > 21) {
+        if (player.isOverBlackjack()) {
             return Result.LOSE;
         }
-        if (dealer.calculateScore() > 21) {
+        if (dealer.isOverBlackjack()) {
             return Result.WIN;
         }
         if (player.calculateScore() == dealer.calculateScore()) {
