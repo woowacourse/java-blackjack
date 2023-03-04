@@ -103,11 +103,15 @@ public class BlackJackGame {
 
     private void playerDrawIfSelectToAddCard(final List<Player> players, final int index,
                                              final CardBox cardBox) {
+        drawCard(players.get(index), cardBox);
+        outputView.printCurrentPlayerResult(players.get(index).getName(), players.get(index).getCards());
+    }
+
+    private static void drawCard(final Player players, final CardBox cardBox) {
         boolean flag = true;
         while (flag) {
-            flag = !players.get(index).selectToPickOtherCard(cardBox);
+            flag = !players.selectToPickOtherCard(cardBox);
         }
-        outputView.printCurrentPlayerResult(players.get(index).getName(), players.get(index).getCards());
     }
 
     private void dealerDrawIfUnderStandard(final Dealer dealer,
@@ -119,10 +123,7 @@ public class BlackJackGame {
     }
 
     private void dealerDrawCard(final Dealer dealer, final CardBox cardBox) {
-        boolean flag = true;
-        while (flag) {
-            flag = !dealer.selectToPickOtherCard(cardBox);
-        }
+        drawCard(dealer, cardBox);
     }
 
     private void readPlayers(final List<Name> names, final List<Cards> cardsCards, final Dealer dealer) {
