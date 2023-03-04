@@ -1,10 +1,13 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 
 public class Player extends Person {
     private static final List<String> BLACKLIST = List.of("딜러");
     private static final int BUST_SCORE = -1;
+    private static final int PLAYER_START_SHOW_COUNT = 2;
 
     public Player(String name) {
         super(name);
@@ -52,7 +55,9 @@ public class Player extends Person {
 
     @Override
     public List<Card> getStartCards() {
-        return getCards();
+        return getCards().stream()
+                .limit(PLAYER_START_SHOW_COUNT)
+                .collect(toList());
     }
 
     @Override

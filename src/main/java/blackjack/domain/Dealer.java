@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Dealer extends Person {
     private static final int DRAW_CARD_BOUNDARY = 16;
+    private static final int DEALER_START_SHOW_COUNT = 1;
 
     public Dealer() {
         super("딜러");
@@ -33,7 +34,7 @@ public class Dealer extends Person {
     @Override
     public List<Card> getStartCards() {
         return getCards().stream()
-                .limit(1)
+                .limit(DEALER_START_SHOW_COUNT)
                 .collect(toList());
     }
 }
