@@ -1,6 +1,5 @@
 package controller;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
 import domain.card.CardManager;
@@ -16,8 +15,6 @@ import view.OutputView;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
-
-import static view.message.Message.DEALER_DRAW_MESSAGE;
 
 public class GameController {
 
@@ -46,29 +43,17 @@ public class GameController {
         printFinalGameResult(participants);
     }
 
-    private void printGameResult(final Participants participants) {
-        OutputView.print(System.lineSeparator().trim());
-
-        final Participant dealer = participants.findDealer();
-        final List<Participant> players = participants.findPlayers();
-
-        printParticipantCardResult(dealer);
-        players.forEach(this::printParticipantCardResult);
-    }
-
-    private void printParticipantCardResult(final Participant participant) {
-        final List<Card> participantCards = participant.getCard();
-        final int participantScore = participant.calculateScore();
-
-        outputView.printCardResult(participant.getName(), participantCards, participantScore);
-    }
-
     private Participants makeParticipants() {
-        return inputView.getInputWithRetry(() -> {
-            final List<String> participantNames = inputView.getParticipantNames();
+        return ExceptionHandler.repeat(inputView::readParticipantNames,
+                outputView::guideParticipantsName,
+                Participants::create,
+                outputView::printExceptionMessage);
+    }
 
-            return Participants.create(participantNames);
-        });
+    private void printGameResult(final Participants participants) {
+        final List<Participant> totalParticipants = participants.getParticipants();
+
+        outputView.printCardResult(totalParticipants);
     }
 
     private void handCards(final Participants participants, final CardManager cardManager) {
@@ -84,14 +69,10 @@ public class GameController {
     }
 
     private void printAllParticipantCards(final Participants participants) {
-        final List<Participant> allParticipants = participants.getParticipants();
+        final Participant dealer = participants.findDealer();
+        final List<Participant> players = participants.findPlayers();
 
-        for (Participant participant : allParticipants) {
-            final List<Card> participantCards = participant.getStartCard();
-            final String participantName = participant.getName();
-
-            outputView.printParticipantCards(participantName, participantCards);
-        }
+        outputView.printTotalParticipantCards(dealer, players);
     }
 
     private void drawPlayersCard(final Participants participants, final CardManager cardManager) {
@@ -99,6 +80,7 @@ public class GameController {
 
         for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
             final Participant player = players.get(playerIndex);
+
             handleDrawCard(cardManager, playerIndex, player);
         }
     }
@@ -108,9 +90,14 @@ public class GameController {
 
         while (canDrawCard(player, drawCardCommand)) {
             drawCardCommand = inputDrawCardCommand(player);
+
             processDrawCard(cardManager, playerIndex, drawCardCommand);
             outputView.printParticipantCards(player.getName(), player.getCard());
         }
+    }
+
+    private boolean canDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
+        return player.canDraw() && drawCardCommand.isDrawAgain();
     }
 
     private void processDrawCard(final CardManager cardManager, final int playerIndex,
@@ -120,33 +107,32 @@ public class GameController {
         }
     }
 
-    private boolean canDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
-        return player.canDraw() && drawCardCommand.isDrawAgain();
-    }
-
     private DrawCardCommand inputDrawCardCommand(final Participant player) {
-        return inputView.getInputWithRetry(() -> {
-            final String command = inputView.getDrawCardCommand(player.getName());
+        final String playerName = player.getName();
 
-            return DrawCardCommand.findCardCommand(command);
-        });
+        return ExceptionHandler.repeat(inputView::readDrawCardCommand,
+                () -> outputView.guideDrawCard(playerName),
+                DrawCardCommand::findCardCommand,
+                outputView::printExceptionMessage);
     }
 
     private void handleDealerCards(final Participants participants, final CardManager cardManager) {
         final Dealer dealer = (Dealer) participants.findDealer();
+        final String name = dealer.getName();
 
-        OutputView.print(System.lineSeparator().trim());
         while (dealer.canDraw()) {
             cardManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
-            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(), dealer.getName()));
+            outputView.guideDealerGivenCard(name);
         }
     }
 
     private void printFinalGameResult(final Participants participants) {
         final Dealer dealer = (Dealer) participants.findDealer();
         final Map<String, Result> playerGameResults = makeFinalGameResult(participants, dealer);
+        final String dealerName = dealer.getName();
 
-        outputView.printFinalGameResult(dealer.getName(), playerGameResults);
+        outputView.guideFinalGameResult();
+        outputView.printFinalGameResult(dealerName, playerGameResults);
     }
 
     private Map<String, Result> makeFinalGameResult(final Participants participants, final Dealer dealer) {

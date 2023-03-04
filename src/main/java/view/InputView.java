@@ -5,12 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
-
-import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
-import static controller.DrawCardCommand.CARD_DRAW_STOP;
-import static view.message.MessageFormatter.DRAW_CARD_CARD_MESSAGE;
-import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
 
 public class InputView {
 
@@ -22,27 +16,20 @@ public class InputView {
         this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public <T> T getInputWithRetry(Supplier<T> inputReader) {
-        try {
-            return inputReader.get();
-        } catch (IllegalArgumentException e) {
-            OutputView.print(e.getMessage());
-            return getInputWithRetry(inputReader);
-        }
+    public List<String> readParticipantNames() {
+        String participantsName = readConsole();
+
+        validateBlank(participantsName);
+
+        return Arrays.asList(participantsName.split(DELIMITER));
     }
 
-    public List<String> getParticipantNames() {
-        OutputView.print(PARTICIPANT_NAME_INPUT_MESSAGE.format());
+    public String readDrawCardCommand() {
+        String command = readConsole();
 
-        return Arrays.asList(readConsole().split(DELIMITER));
-    }
+        validateBlank(command);
 
-    public String getDrawCardCommand(final String name) {
-        final String drawCardMessage = System.lineSeparator() +
-                DRAW_CARD_CARD_MESSAGE.format(name, CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
-
-        OutputView.print(drawCardMessage);
-        return readConsole();
+        return command.trim();
     }
 
     private String readConsole() {
@@ -50,6 +37,12 @@ public class InputView {
             return bufferedReader.readLine();
         } catch (IOException e) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+    }
+
+    private void validateBlank(String input) {
+        if (input.isBlank()) {
+            throw new IllegalArgumentException("공백은 입력할 수 없습니다.");
         }
     }
 }

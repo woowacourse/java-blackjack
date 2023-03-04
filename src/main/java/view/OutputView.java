@@ -3,6 +3,7 @@ package view;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import domain.participant.Participant;
 import domain.participant.Result;
 import domain.participant.Participants;
 import view.message.GameResultMessage;
@@ -14,25 +15,69 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
+import static controller.DrawCardCommand.CARD_DRAW_STOP;
 import static view.message.MessageFormatter.CARD_MESSAGE;
+import static view.message.MessageFormatter.DEALER_DRAW_MESSAGE;
 import static view.message.MessageFormatter.DEALER_GAME_RESULT;
+import static view.message.MessageFormatter.DRAW_CARD_CARD_MESSAGE;
 import static view.message.MessageFormatter.DRAW_MESSAGE;
 import static view.message.MessageFormatter.EXCEPTION_MESSAGE;
 import static view.message.MessageFormatter.FINAL_GAME_RESULT;
 import static view.message.MessageFormatter.PARTICIPANT_CARD_RESULT;
+import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
 import static view.message.MessageFormatter.PLAYER_GAME_RESULT;
+import static view.message.MessageFormatter.START_CARD_MESSAGE;
 
 public class OutputView {
 
-    public static void print(final String message) {
-        System.out.println(message);
+    private static final String LINE_FEED = System.lineSeparator();
+
+    public void guideParticipantsName() {
+        print(PARTICIPANT_NAME_INPUT_MESSAGE.format());
+        print(LINE_FEED);
+    }
+
+    public void guideDrawCard(final String name) {
+        final String drawCardMessage = DRAW_CARD_CARD_MESSAGE.format(name,
+                CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+
+        print(drawCardMessage);
+        print(LINE_FEED);
+    }
+
+    public void guideDealerGivenCard(final String name) {
+        print(LINE_FEED);
+        print(DEALER_DRAW_MESSAGE.format(name));
+        print(LINE_FEED);
+    }
+
+    public void guideFinalGameResult() {
+        print(LINE_FEED);
+        print(FINAL_GAME_RESULT.format());
+        print(LINE_FEED);
     }
 
     public void printParticipantMessage(final Participants participants) {
         final List<String> participantNames = participants.getParticipantNames();
         final String participantNameMessage = mapToParticipantNameMessage(participantNames);
 
+        print(LINE_FEED);
         print(participantNameMessage);
+        print(LINE_FEED);
+    }
+
+    public void printTotalParticipantCards(final Participant dealer, final List<Participant> players) {
+        final String dealerStartCardMessage = mapToDealerStartCardMessage(dealer);
+
+        print(dealerStartCardMessage);
+        print(LINE_FEED);
+
+        final String totalPlayerStartCardsMessage = mapToTotalPlayerStartCardsMessage(players);
+
+        print(totalPlayerStartCardsMessage);
+        print(LINE_FEED);
+        print(LINE_FEED);
     }
 
     public void printParticipantCards(final String playerName, final List<Card> playerCards) {
@@ -40,46 +85,69 @@ public class OutputView {
         final String playerCardMessage = CARD_MESSAGE.format(playerName, cardsMessage);
 
         print(playerCardMessage);
+        print(LINE_FEED);
     }
 
-    public void printCardResult(final String participantName,
-                                final List<Card> participantCards,
-                                final int participantScore) {
-        final String cardsResultMessage = PARTICIPANT_CARD_RESULT
-                .format(participantName, getCardsMessage(participantCards), participantScore);
+    public void printCardResult(final List<Participant> totalParticipants) {
+        final String cardsResultMessage = totalParticipants.stream()
+            .map(participant -> PARTICIPANT_CARD_RESULT
+                .format(participant.getName(), getCardsMessage(participant.getCard()),
+                    participant.calculateScore()))
+            .collect(Collectors.joining(LINE_FEED));
 
+        print(LINE_FEED);
         print(cardsResultMessage);
+        print(LINE_FEED);
     }
 
     public void printFinalGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
-        print(System.lineSeparator() + FINAL_GAME_RESULT.format());
         printDealerGameResult(dealerName, playerGameResults);
-        printPlayerGameResult(playerGameResults);
+        print(LINE_FEED);
+
+        final String playerGameResultMessage = mapToPlayerGameResultMessage(playerGameResults);
+
+        print(playerGameResultMessage);
     }
 
     public void printExceptionMessage(final String message) {
         print(EXCEPTION_MESSAGE.format(message));
+        print(LINE_FEED);
     }
 
     private String mapToParticipantNameMessage(final List<String> participantNames) {
-        final String namesMessage = String.join(", ", participantNames).replace(",", "와");
+        final String namesMessage = String.join(", ", participantNames)
+                .replace(",", "와");
 
-        return System.lineSeparator() + DRAW_MESSAGE.format(namesMessage);
+        return DRAW_MESSAGE.format(namesMessage);
+    }
+
+    private String mapToDealerStartCardMessage(final Participant dealer) {
+        final String dealerName = dealer.getName();
+        final String dealerCardsMessage = getCardsMessage(dealer.getStartCard());
+
+        return CARD_MESSAGE.format(dealerName, dealerCardsMessage);
+    }
+
+    private String mapToTotalPlayerStartCardsMessage(final List<Participant> players) {
+        return players.stream()
+            .map(player -> START_CARD_MESSAGE.format(player.getName(),
+                getCardsMessage(player.getStartCard())))
+            .collect(Collectors.joining(LINE_FEED));
+    }
+
+    private String getCardsMessage(final List<Card> participantCards) {
+        return participantCards.stream()
+            .map(this::getCardMessage)
+            .collect(Collectors.joining(", "));
     }
 
     private String getCardMessage(final Card participantCard) {
         final CardNumber cardNumber = participantCard.getCardNumber();
         final CardPattern cardPattern = participantCard.getCardPattern();
-
         final String numberMessage = NumberMessage.findMessage(cardNumber);
         final String patternMessage = PatternMessage.findMessage(cardPattern);
 
-        return numberMessage + patternMessage;
-    }
-
-    private String getCardsMessage(final List<Card> participantCards) {
-        return participantCards.stream().map(this::getCardMessage)
-                .collect(Collectors.joining(", "));
+        return numberMessage.concat(patternMessage);
     }
 
     private void printDealerGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
@@ -92,12 +160,17 @@ public class OutputView {
         print(dealerGameResultMessage);
     }
 
-    private void printPlayerGameResult(final Map<String, Result> playerGameResults) {
-        playerGameResults.keySet().forEach(playerName ->
-                print(mapToPlayerGameResultMessage(playerName, playerGameResults.get(playerName))));
+    private String mapToPlayerGameResultMessage(final Map<String, Result> playerGameResults) {
+        return playerGameResults.keySet().stream()
+                .map(playerName -> mapToPlayerGameResultMessage(playerName, playerGameResults.get(playerName)))
+                .collect(Collectors.joining(LINE_FEED));
     }
 
     private String mapToPlayerGameResultMessage(final String playerName, final Result playerResult) {
         return PLAYER_GAME_RESULT.format(playerName, GameResultMessage.findMessage(playerResult));
+    }
+
+    private void print(final String message) {
+        System.out.print(message);
     }
 }
