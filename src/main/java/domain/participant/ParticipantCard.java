@@ -35,7 +35,7 @@ public class ParticipantCard {
     int calculateScore() {
         int score = sumCards();
         if (score <= ACE_HIGH_POINTS && hasAce()) {
-            score += (ACE_HIGH_POINTS - ACE.getNumber());
+            score += (ACE_HIGH_POINTS - ACE.findNumber());
         }
         return score;
     }
@@ -55,7 +55,7 @@ public class ParticipantCard {
     }
 
     private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.stream().anyMatch(Card::checkAce);
     }
 
     List<Card> getCards() {

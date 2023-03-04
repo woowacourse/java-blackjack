@@ -11,13 +11,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class CardPatternTest {
 
     @Test
-    @DisplayName("getAll()은 호출하면 모든 CardPattern을 반환한다")
-    void getAll_whenCall_thenReturnCardPatterns() {
+    @DisplayName("findAllCardPattern()은 호출하면 모든 CardPattern을 반환한다")
+    void findAllCardPattern_whenCall_thenReturnCardPatterns() {
         // given
         final List<CardPattern> expected = Arrays.asList(CardPattern.values());
 
         // when
-        final List<CardPattern> actual = CardPattern.getAll();
+        final List<CardPattern> actual = CardPattern.findAllCardPattern();
 
         // then
         assertThat(actual.size())

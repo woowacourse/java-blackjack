@@ -7,7 +7,7 @@ public enum CardPattern {
 
     HEART, SPADE, DIAMOND, CLOVER;
 
-    static List<CardPattern> getAll() {
+    static List<CardPattern> findAllCardPattern() {
         return Arrays.asList(values());
     }
 }

@@ -25,15 +25,15 @@ public enum CardNumber {
         this.number = number;
     }
 
-    public static List<CardNumber> getAll() {
+    static List<CardNumber> findTotalCardNumber() {
         return Arrays.asList(values());
     }
 
-    boolean isAce() {
-        return this == ACE;
+    public int findNumber() {
+        return number;
     }
 
-    public int getNumber() {
-        return number;
+    boolean checkAce() {
+        return this == ACE;
     }
 }

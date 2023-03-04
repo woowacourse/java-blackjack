@@ -13,13 +13,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class CardNumberTest {
 
     @Test
-    @DisplayName("getAll()은 호출하면 모든 CardNumber을 반환한다")
-    void getAll_whenCall_thenReturnCardNumbers() {
+    @DisplayName("findTotalCardNumber()은 호출하면 모든 CardNumber을 반환한다")
+    void findTotalCardNumber_whenCall_thenReturnCardNumbers() {
         // given
         final List<CardNumber> expected = Arrays.asList(CardNumber.values());
 
         // when
-        final List<CardNumber> actual = CardNumber.getAll();
+        final List<CardNumber> actual = CardNumber.findTotalCardNumber();
 
         // then
         assertThat(actual.size())
@@ -29,10 +29,10 @@ class CardNumberTest {
                 .isEqualTo(expected);
     }
 
-    @ParameterizedTest(name = "isAce()는 호출하면, 에이스인지 여부를 반환한다")
+    @ParameterizedTest(name = "checkAce()는 호출하면, 에이스인지 여부를 반환한다")
     @CsvSource(value = {"ACE:true", "TWO:false", "KING:false"}, delimiter = ':')
-    void isAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
-        final boolean actual = cardNumber.isAce();
+    void checkAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
+        final boolean actual = cardNumber.checkAce();
 
         assertThat(actual)
                 .isSameAs(expected);

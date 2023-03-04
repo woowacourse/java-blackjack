@@ -17,14 +17,14 @@ class CardTest {
                 .isExactlyInstanceOf(Card.class);
     }
 
-    @ParameterizedTest(name = "isAce()는 호출하면, 에이스인지 여부를 반환한다")
+    @ParameterizedTest(name = "checkAce()는 호출하면, 에이스인지 여부를 반환한다")
     @CsvSource(value = {"ACE:true", "TWO:false", "KING:false"}, delimiter = ':')
-    void isAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
+    void checkAce_whenCall_thenReturnIsAce(final CardNumber cardNumber, final boolean expected) {
         // given
         final Card card = Card.create(CardPattern.HEART, cardNumber);
 
         // when
-        final boolean actual = card.isAce();
+        final boolean actual = card.checkAce();
 
         assertThat(actual)
                 .isSameAs(expected);

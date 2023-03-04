@@ -16,8 +16,8 @@ public class Deck {
     }
 
     public static Deck create(final CardSelector cardSelector) {
-        final List<CardPattern> cardPatterns = CardPattern.getAll();
-        final List<CardNumber> cardNumbers = CardNumber.getAll();
+        final List<CardPattern> cardPatterns = CardPattern.findAllCardPattern();
+        final List<CardNumber> cardNumbers = CardNumber.findTotalCardNumber();
         final List<Card> deck = makeCards(cardPatterns, cardNumbers);
 
         return new Deck(deck, cardSelector);

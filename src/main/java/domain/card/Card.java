@@ -16,12 +16,20 @@ public class Card {
         return new Card(pattern, number);
     }
 
-    public boolean isAce() {
-        return number.isAce();
+    public int findCardNumber() {
+        return number.findNumber();
     }
 
-    public int findCardNumber() {
-        return number.getNumber();
+    public boolean checkAce() {
+        return number.checkAce();
+    }
+
+    public CardPattern getCardPattern() {
+        return pattern;
+    }
+
+    public CardNumber getCardNumber() {
+        return number;
     }
 
     @Override
@@ -39,13 +47,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(pattern, number);
-    }
-
-    public CardPattern getCardPattern() {
-        return pattern;
-    }
-
-    public CardNumber getCardNumber() {
-        return number;
     }
 }
