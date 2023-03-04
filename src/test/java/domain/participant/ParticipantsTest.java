@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Deck;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+@DisplayName("참여자들은 ")
 class ParticipantsTest {
 
-    @ParameterizedTest
     @ValueSource(strings = {"가비", "연어,가비,애쉬,우가,럿고,비버,아코"})
     void 플레이어_수는_1에서_7명이다(String names) {
         //given

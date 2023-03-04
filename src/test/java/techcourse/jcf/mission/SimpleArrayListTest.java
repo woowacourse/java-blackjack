@@ -41,4 +41,14 @@ public class SimpleArrayListTest {
         values.add(0, "eight");
         System.out.println(values);
     }
+
+    @Test
+    void mission2(){
+        final String[] arrays = {"first", "second"};
+
+        final SimpleList<String> values = SimpleList.fromArrayToList(arrays);
+
+        assertThat(values.contains("first")).isTrue();
+        assertThat(values.contains("second")).isTrue();
+    }
 }
