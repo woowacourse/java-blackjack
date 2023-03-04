@@ -62,7 +62,7 @@ public class People {
         return GameResult.makeDealerRecord(record);
     }
 
-    public boolean isBurst(String playerName, int blackJackNumber) {
+    public boolean isBust(String playerName, int blackJackNumber) {
         return playerByName(playerName).sumCardPool() > blackJackNumber;
     }
 

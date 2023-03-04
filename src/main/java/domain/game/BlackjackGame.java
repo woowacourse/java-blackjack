@@ -34,8 +34,8 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isBurst(String playerName) {
-        return people.isBurst(playerName, BLACK_JACK_NUMBER);
+    public boolean isBust(String playerName) {
+        return people.isBust(playerName, BLACK_JACK_NUMBER);
     }
 
     public Map<Player, GameResult> getGameResultForAllPlayer() {

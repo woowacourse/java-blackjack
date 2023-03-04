@@ -57,7 +57,7 @@ public class BlackJackController {
     }
 
     private boolean needToQuit(Player player) {
-        if (blackjackGame.isBurst(player.getPlayerName().getValue())) {
+        if (blackjackGame.isBust(player.getPlayerName().getValue())) {
             return true;
         }
         String choice = inputView.inputCardCommand(player.getPlayerName().getValue());
