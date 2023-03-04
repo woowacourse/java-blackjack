@@ -1,15 +1,21 @@
 package techcourse.jcf.mission;
 
-public class SimpleArrayList<T> implements SimpleList<T> {
+public class SimpleArrayList<T extends Number> implements SimpleList<T> {
 
     private static final int STORE_SIZE = 10;
 
     private T[] data;
     private int size;
 
-    public SimpleArrayList() {
-        data = (T[]) new Object[STORE_SIZE];
+    public SimpleArrayList(T... values) {
+        data = (T[]) new Number[STORE_SIZE];
         size = 0;
+        for (T value : values) {
+            if (!(value instanceof Number)) {
+                throw new IllegalArgumentException("숫자만 가능합니다.");
+            }
+            add(value);
+        }
     }
 
     @Override
@@ -105,7 +111,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     private void checkRealloc(int nextIndex) {
         if (nextIndex > data.length) {
             int newSize = data.length * 2;
-            T[] newData = (T[]) new Object[newSize];
+            T[] newData = (T[]) new Number[newSize];
             for (int i = 0; i < size; i++) {
                 newData[i] = data[i];
             }

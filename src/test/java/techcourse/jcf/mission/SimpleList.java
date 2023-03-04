@@ -26,9 +26,26 @@ public interface SimpleList<T> {
 
     static <T> SimpleList<T> fromArrayToList(T[] array) {
         SimpleList<T> list = new SimpleLinkedList<>();
+
         for (T value : array) {
             list.add(value);
+
         }
         return list;
+    }
+
+    static <T extends Number> double sum(SimpleList<T> list) {
+        double sum = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            T value = list.get(i);
+
+            if (!(value instanceof Number)) {
+                throw new IllegalArgumentException("숫자만 가능합니다.");
+            }
+
+            sum += ((Number) value).doubleValue();
+        }
+        return sum;
     }
 }
