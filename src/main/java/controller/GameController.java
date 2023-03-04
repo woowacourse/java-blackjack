@@ -80,23 +80,17 @@ public class GameController {
 
     private void printParticipantCards(final Participants participants) {
         outputView.printParticipantMessage(participants);
-        printDealerCard(participants);
-        printPlayerCards(participants);
+        printAllParticipantCards(participants);
     }
 
-    private void printDealerCard(final Participants participants) {
-        final Dealer dealer = (Dealer) participants.findDealer();
-        final Card dealerFirstCard = dealer.getFirstCard();
+    private void printAllParticipantCards(final Participants participants) {
+        final List<Participant> allParticipants = participants.getParticipants();
 
-        outputView.printDealerCard(dealer.getName(), dealerFirstCard);
-    }
+        for (Participant participant : allParticipants) {
+            final List<Card> participantCards = participant.getStartCard();
+            final String participantName = participant.getName();
 
-    private void printPlayerCards(final Participants participants) {
-        final List<Participant> players = participants.findPlayers();
-
-        for (Participant player : players) {
-            final List<Card> playerCards = player.getCard();
-            outputView.printPlayerCard(player.getName(), playerCards);
+            outputView.printParticipantCards(participantName, participantCards);
         }
     }
 
@@ -115,7 +109,7 @@ public class GameController {
         while (canDrawCard(player, drawCardCommand)) {
             drawCardCommand = inputDrawCardCommand(player);
             processDrawCard(gameManager, playerIndex, drawCardCommand);
-            outputView.printPlayerCard(player.getName(), player.getCard());
+            outputView.printParticipantCards(player.getName(), player.getCard());
         }
     }
 

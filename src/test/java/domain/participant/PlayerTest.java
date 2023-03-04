@@ -86,4 +86,21 @@ class PlayerTest {
         assertThat(actual)
                 .isSameAs(expected);
     }
+
+    @Test
+    @DisplayName("getStartCard()는 호출하면 딜러의 첫 번째 카드를 조회한다")
+    void getStartCard_whenCall_thenReturnStartCard() {
+        // given
+        final Card firstCard = Card.create(CardPattern.HEART, CardNumber.ACE);
+        final Card secondCard = Card.create(CardPattern.HEART, CardNumber.TWO);
+        player.addCard(firstCard);
+        player.addCard(secondCard);
+
+        // when
+        final List<Card> actual = player.getStartCard();
+
+        // then
+        assertThat(actual.size())
+                .isSameAs(2);
+    }
 }

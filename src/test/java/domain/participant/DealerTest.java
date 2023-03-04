@@ -41,17 +41,20 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("getFirst()는 호출하면 딜러의 첫 번째 카드를 조회한다")
-    void getFirst_whenCall_thenReturnFirstCard() {
+    @DisplayName("getStartCard()는 호출하면 딜러의 첫 번째 카드를 조회한다")
+    void getStartCard_whenCall_thenReturnFirstCard() {
         // given
         final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
         dealer.addCard(card);
 
         // when
-        final Card actual = dealer.getFirstCard();
+        final List<Card> actual = dealer.getStartCard();
 
         // then
-        assertThat(actual)
+        assertThat(actual.size())
+                .isSameAs(1);
+
+        assertThat(actual.get(0))
                 .isEqualTo(card);
     }
 

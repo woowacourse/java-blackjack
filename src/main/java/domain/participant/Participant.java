@@ -27,6 +27,8 @@ public abstract class Participant {
 
     public abstract boolean canDraw();
 
+    public abstract List<Card> getStartCard();
+
     public List<Card> getCard() {
         return List.copyOf(participantCard.getCards());
     }

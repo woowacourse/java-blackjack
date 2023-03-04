@@ -84,6 +84,10 @@ public class Participants {
         return participants.size();
     }
 
+    public List<Participant> getParticipants() {
+        return List.copyOf(participants);
+    }
+
     public List<String> getParticipantNames() {
         return participants.stream()
                 .map(Participant::getName)

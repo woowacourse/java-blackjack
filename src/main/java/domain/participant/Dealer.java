@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -48,7 +49,8 @@ public class Dealer extends Participant {
                 || dealerCard.calculateScore() < playerCard.calculateScore();
     }
 
-    public Card getFirstCard() {
-        return participantCard.getFirstCard();
+    @Override
+    public List<Card> getStartCard() {
+        return List.of(participantCard.getFirstCard());
     }
 }

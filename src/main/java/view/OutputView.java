@@ -33,18 +33,14 @@ public class OutputView {
                 .replace(",", "와");
         final String participantNameMessage = String.format(System.lineSeparator() + DRAW_MESSAGE.getMessage(),
                 participantNamesMessage);
+
         print(participantNameMessage);
     }
 
-    public void printDealerCard(final String dealerName, final Card dealerFirstCard) {
-        final String dealerCardMessage = String.format(CARD_MESSAGE.getMessage(),
-                dealerName, getCardMessage(dealerFirstCard));
-        print(dealerCardMessage);
-    }
-
-    public void printPlayerCard(final String playerName, final List<Card> playerCards) {
+    public void printParticipantCards(final String playerName, final List<Card> playerCards) {
         final String cardsMessage = getCardsMessage(playerCards);
         final String playerCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
+
         print(playerCardMessage);
     }
 
@@ -92,6 +88,7 @@ public class OutputView {
             final Result playerResult = playerGameResults.get(playerName);
             final String playerGameResultMessage = String.format(PLAYER_GAME_RESULT.getMessage(),
                     playerName, GameResultMessage.findMessage(playerResult));
+
             print(playerGameResultMessage);
         });
     }

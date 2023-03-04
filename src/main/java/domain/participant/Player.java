@@ -1,5 +1,8 @@
 package domain.participant;
 
+import domain.card.Card;
+import java.util.List;
+
 public class Player extends Participant {
 
     private Player(final String name) {
@@ -20,5 +23,10 @@ public class Player extends Participant {
     @Override
     public boolean canDraw() {
         return !participantCard.checkBust();
+    }
+
+    @Override
+    public List<Card> getStartCard() {
+        return getCard();
     }
 }
