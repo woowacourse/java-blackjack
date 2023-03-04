@@ -13,13 +13,15 @@ import java.util.List;
 
 public class OutputView {
     private static final int DEALER_DRAW_BOUNDARY = 16;
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
     }
 
     public static void printInitDrawCardMessage(final List<String> playerNames) {
         final String names = String.join(", ", playerNames);
-        System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
+        System.out.print(LINE_SEPARATOR);
+        System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
     public static void printPersonStatus(final PersonStatusResponse response) {
@@ -36,15 +38,18 @@ public class OutputView {
     }
 
     public static void printDealerDrawCardMessage(final boolean isDraw) {
+        System.out.print(LINE_SEPARATOR);
         if (isDraw) {
-            System.out.println("\n딜러는 " + DEALER_DRAW_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.\n");
+            System.out.println("딜러는 " + DEALER_DRAW_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("\n딜러는 " + DEALER_DRAW_BOUNDARY + "초과라 카드를 받지 않았습니다.\n");
+        System.out.println("딜러는 " + DEALER_DRAW_BOUNDARY + "초과라 카드를 받지 않았습니다.");
+        System.out.print(LINE_SEPARATOR);
     }
 
     public static void printGameEndMessage() {
-        System.out.println("\n## 최종 승패");
+        System.out.print(LINE_SEPARATOR);
+        System.out.println("## 최종 승패");
     }
 
     public static void printDealerResult(final DealerGameResultResponse response) {
