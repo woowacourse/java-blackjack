@@ -23,7 +23,7 @@ public class GameResult {
         if (compareResult == LOSE) {
             return new GameResult(0, 1);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("올바르지 않은 비교값입니다.");
     }
 
     public GameResult add(GameResult result) {

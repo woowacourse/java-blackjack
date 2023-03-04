@@ -8,7 +8,7 @@ public enum BlackJackAction {
 
     public static BlackJackAction getActionByInput(String input) {
         if (!isValid(input)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("y나 n으로 입력해 주세요.");
         }
         if (input.equals("y")) {
             return HIT;

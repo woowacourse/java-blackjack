@@ -69,7 +69,7 @@ public class Participants {
             .filter((entry) -> entry.getValue().isAbleToHit())
             .findFirst();
         if (currentParticipantEntry.isEmpty()) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("더 이상 게임을 진행할 참가자가 없습니다.");
         }
         return currentParticipantEntry.get().getKey();
     }

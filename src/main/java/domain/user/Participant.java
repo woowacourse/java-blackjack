@@ -23,7 +23,7 @@ public class Participant {
 
     public List<Card> getReadyCards() {
         if (cards.size() < 2) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("모든 플레이어는 카드 두장을 받고 시작해야 합니다.");
         }
         return List.of(cards.get(0), cards.get(1));
     }
