@@ -8,12 +8,24 @@ import ui.OutputView;
 public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.readPlayersName());
-        blackjackGame.initializeGame();
-        OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        blackjackGame.getPlayers().forEach(player -> giveCardUntilImpossible(player, blackjackGame));
-        addCardToDealerIfPossible(blackjackGame);
+        initialize(blackjackGame);
+        play(blackjackGame);
+        announceResult(blackjackGame);
+    }
+
+    private static void announceResult(BlackjackGame blackjackGame) {
         OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
         OutputView.printResults(blackjackGame.calculateAllResults());
+    }
+
+    private void play(BlackjackGame blackjackGame) {
+        blackjackGame.getPlayers().forEach(player -> giveCardUntilImpossible(player, blackjackGame));
+        addCardToDealerIfPossible(blackjackGame);
+    }
+
+    private static void initialize(BlackjackGame blackjackGame) {
+        blackjackGame.initializeGame();
+        OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private void addCardToDealerIfPossible(BlackjackGame blackjackGame) {
