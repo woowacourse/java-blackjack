@@ -7,11 +7,11 @@ import java.util.stream.Stream;
 
 import domain.card.Card;
 
-public class Participant {
+public abstract class Participant {
     private static final int MIN_BUST_NUMBER = 22;
 
-    Name name;
-    List<Card> cards;
+    protected Name name;
+    protected List<Card> cards;
 
     public Participant(Name name) {
         this.name = name;
