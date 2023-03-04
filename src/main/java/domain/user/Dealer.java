@@ -25,6 +25,10 @@ public class Dealer extends User {
         winningRecord.put(false, RECORD_INITIAL_VALUE);
     }
 
+    public Card getFirstCard() {
+        return getCards().get(0);
+    }
+
     @Override
     public void win() {
         winningRecord.put(true, winningRecord.getOrDefault(true, RECORD_INITIAL_VALUE) + 1);

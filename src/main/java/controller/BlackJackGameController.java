@@ -53,7 +53,7 @@ public class BlackJackGameController {
 
     private void printSetUpResult(Dealer dealer, List<Player> players) {
         Map<String, List<Card>> setUpResult = new LinkedHashMap<>();
-        setUpResult.put(dealer.getName(), dealer.getCards().subList(0, 1));
+        setUpResult.put(dealer.getName(), List.of(dealer.getFirstCard()));
         players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
         outputView.printSetUpResult(setUpResult);
     }
