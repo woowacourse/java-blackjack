@@ -18,7 +18,7 @@ class BlackJackServiceTest {
 
     @BeforeEach
     void setUp() {
-        blackJackService = new BlackJackService(new MockCardsGenerator(new Card(Suit.DIAMOND, Rank.KING)));
+        blackJackService = new BlackJackService(new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52));
     }
 
     @Test

@@ -3,7 +3,7 @@ package blackjack.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
-import java.util.List;
+import java.util.Collection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +13,10 @@ class ShuffledCardsGeneratorTest {
     @DisplayName("생성된 카드에 중복이 없어야 한다.")
     void generate_success() {
         // given
-        CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
+        DeckGenerator deckGenerator = new ShuffledDeckGenerator();
 
         // when
-        List<Card> cards = cardsGenerator.generate().getCards();
+        Collection<Card> cards = deckGenerator.generate().getCards();
         long uniqueCardsCount = cards.stream()
                 .distinct()
                 .count();

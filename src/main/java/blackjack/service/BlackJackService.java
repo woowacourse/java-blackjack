@@ -3,8 +3,8 @@ package blackjack.service;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
 import blackjack.domain.GameResult;
 import blackjack.domain.People;
 import blackjack.domain.Person;
@@ -17,10 +17,10 @@ import java.util.List;
 
 public class BlackJackService {
     private People people;
-    private final Cards deck;
+    private final Deck deck;
 
-    public BlackJackService(CardsGenerator cardsGenerator) {
-        this.deck = cardsGenerator.generate();
+    public BlackJackService(DeckGenerator deckGenerator) {
+        this.deck = deckGenerator.generate();
     }
 
     public void createPeople(List<String> names) {

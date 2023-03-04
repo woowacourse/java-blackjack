@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -46,34 +45,5 @@ class CardsTest {
         // then
         assertThat(score)
                 .isEqualTo(expect);
-    }
-
-    @Test
-    @DisplayName("카드를 뽑을 때 첫 번째 카드를 뽑아서 반환한다.")
-    void drawCard_success() {
-        // given
-        Cards cards = new Cards();
-        cards.addCard(new Card(Suit.DIAMOND, Rank.THREE));
-        cards.addCard(new Card(Suit.HEART, Rank.FOUR));
-        cards.addCard(new Card(Suit.SPADE, Rank.SIX));
-
-        // when
-        Card card = cards.drawCard();
-
-        // then
-        assertThat(card)
-                .isEqualTo(new Card(Suit.DIAMOND, Rank.THREE));
-    }
-
-    @Test
-    @DisplayName("카드를 뽑을 때 카드가 없으면 예외가 발생해야 한다.")
-    void drawCard_empty() {
-        // given
-        Cards cards = new Cards();
-
-        // expect
-        assertThatIllegalStateException()
-                .isThrownBy(cards::drawCard)
-                .withMessage("[ERROR] 남은 카드가 없습니다.");
     }
 }
