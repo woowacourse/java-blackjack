@@ -64,11 +64,12 @@ public class Participants {
     }
 
     private void judgeBust(Map<Participant, String> scores, Participant participant) {
-        if (participant.getHandValue() > BUST_BOUNDARY_VALUE) {
+        int handValue = participant.getHandValue();
+        if (handValue > BUST_BOUNDARY_VALUE) {
             scores.put(participant, BUST);
             return;
         }
-        scores.put(participant, String.valueOf(participant.getHandValue()));
+        scores.put(participant, String.valueOf(handValue));
     }
 
     public Map<Result, Integer> getDealerResults(Map<String, Result> results) {
@@ -107,7 +108,8 @@ public class Participants {
         int playerHandValue = getParticipantHandValue(player);
 
         if (playerHandValue != dealerHandValue) {
-            playerResults.put(player.getName(), Result.compareHandValue(playerHandValue, dealerHandValue));
+            Result result = Result.compareHandValue(playerHandValue, dealerHandValue);
+            playerResults.put(player.getName(), result);
             return;
         }
         compareAtTieValue(dealer, playerResults, player, playerHandValue);
@@ -133,7 +135,8 @@ public class Participants {
         int playerHandCount = player.getCardNames().size();
         int dealerHandCount = dealer.getCardNames().size();
         if (playerHandCount != dealerHandCount) {
-            playerResults.put(player.getName(), Result.compareHandCount(playerHandCount, dealerHandCount));
+            Result result = Result.compareHandCount(playerHandCount, dealerHandCount);
+            playerResults.put(player.getName(), result);
             return;
         }
         playerResults.put(player.getName(), Result.TIE);

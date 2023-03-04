@@ -35,7 +35,8 @@ public class BlackJackController {
 
     private Participants makeParticipants() {
         try {
-            return settingService.createParticipants(InputView.requestNames());
+            List<String> names = InputView.requestNames();
+            return settingService.createParticipants(names);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
             return makeParticipants();
@@ -51,8 +52,8 @@ public class BlackJackController {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             gameService.dealCardsToParticipants();
         }
-
-        OutputView.printInitializingFinishMessage(gameService.getParticipantsNames());
+        List<String> participantsNames = gameService.getParticipantsNames();
+        OutputView.printInitializingFinishMessage(participantsNames);
     }
 
     private void printInitHands(GameService gameService) {
@@ -68,7 +69,8 @@ public class BlackJackController {
     }
 
     private void hitOrStayForEachPlayer(Participants participants, GameService gameService) {
-        for (Player player : participants.findPlayers()) {
+        List<Player> players = participants.findPlayers();
+        for (Player player : players) {
             keepHitOrStay(gameService, player);
         }
     }
@@ -83,7 +85,8 @@ public class BlackJackController {
     }
 
     private void hitOrStay(GameService gameService, Player player) {
-        while (gameService.isHit(InputView.requestDrawingCard(player.getName()))) {
+        String hitRequest = InputView.requestDrawingCard(player.getName());
+        while (gameService.isHit(hitRequest)) {
             gameService.hit(player);
             printIfPoolDoesNotContainsHand(player, gameService);
         }
@@ -91,9 +94,10 @@ public class BlackJackController {
     }
 
     private void printIfPoolDoesNotContainsHand(Player player, GameService gameService) {
-        if (!gameService.existHandInPool(player.getCardNames())) {
-            gameService.addHandToPool(player.getCardNames());
-            OutputView.printParticipantCard(player.getName(), player.getCardNames());
+        List<String> cardNames = player.getCardNames();
+        if (!gameService.existHandInPool(cardNames)) {
+            gameService.addHandToPool(cardNames);
+            OutputView.printParticipantCard(player.getName(), cardNames);
         }
     }
 

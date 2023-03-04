@@ -37,17 +37,30 @@ public class GameService {
 
     public Map<String, List<String>> getParticipantsInitHands() {
         Map<String, List<String>> participantsHands = getParticipantsHands();
-        participantsHands.replace("딜러", participantsHands.get("딜러").subList(0, 1));
+        List<String> dealerFirstCard = participantsHands.get("딜러").subList(0, 1);
+        participantsHands.replace("딜러", dealerFirstCard);
         return participantsHands;
     }
 
     public Map<String, List<String>> getParticipantsHands() {
         Map<String, List<String>> participantsHands = new LinkedHashMap<>();
-        participantsHands.put(participants.findDealer().getName(), participants.findDealer().getCardNames());
-        for (Participant participant : participants.findPlayers()) {
-            participantsHands.put(participant.getName(), participant.getCardNames());
-        }
+        getDealerHand(participantsHands);
+        getPlayersHand(participantsHands);
         return participantsHands;
+    }
+
+    private void getPlayersHand(Map<String, List<String>> participantsHands) {
+        for (Participant participant : participants.findPlayers()) {
+            String playerName = participant.getName();
+            List<String> playerHand = participant.getCardNames();
+            participantsHands.put(playerName, playerHand);
+        }
+    }
+
+    private void getDealerHand(Map<String, List<String>> participantsHands) {
+        String dealerName = participants.findDealer().getName();
+        List<String> dealerHand = participants.findDealer().getCardNames();
+        participantsHands.put(dealerName, dealerHand);
     }
 
     public boolean isHit(String drawingInput) {
@@ -59,7 +72,8 @@ public class GameService {
     }
 
     public boolean isDealerHandValueUnderStandard() {
-        return participants.findDealer().getHandValue() < DEALER_MINIMUM_VALUE;
+        int dealerHandValue = participants.findDealer().getHandValue();
+        return dealerHandValue < DEALER_MINIMUM_VALUE;
     }
 
     public void dealerHit() {

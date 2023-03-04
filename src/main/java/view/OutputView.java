@@ -45,24 +45,26 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerResult(Map<Result, Integer> dealerResult) {
-        StringBuilder result = new StringBuilder();
-        result.append(DEALER_TAG).append(RESULT_FORMAT);
-        if (dealerResult.getOrDefault(Result.WIN, 0) > 0) {
-            result.append(dealerResult.get(Result.WIN)).append(Result.WIN.getResult()).append(BLANK);
-        }
-        if (dealerResult.getOrDefault(Result.TIE, 0) > 0) {
-            result.append(dealerResult.get(Result.TIE)).append(Result.TIE.getResult()).append(BLANK);
-        }
-        if (dealerResult.getOrDefault(Result.LOSE, 0) > 0) {
-            result.append(dealerResult.get(Result.LOSE)).append(Result.LOSE.getResult()).append(BLANK);
-        }
+    public static void printDealerResult(Map<Result, Integer> results) {
+        StringBuilder dealerResult = new StringBuilder();
+        dealerResult.append(DEALER_TAG).append(RESULT_FORMAT);
+        countTargetResult(results, Result.WIN, dealerResult);
+        countTargetResult(results, Result.TIE, dealerResult);
+        countTargetResult(results, Result.LOSE, dealerResult);
 
-        System.out.println(result);
+        System.out.println(dealerResult);
+    }
+
+    private static void countTargetResult(Map<Result, Integer> results, Result result, StringBuilder dealerResult) {
+        int count = results.getOrDefault(result, 0);
+        if (count > 0) {
+            dealerResult.append(results.get(result)).append(result.getResult()).append(BLANK);
+        }
     }
 
     public static void printPlayerResult(String name, Result result) {
-        System.out.println(name + RESULT_FORMAT + result.getResult());
+        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println(stringBuilder.append(name).append(RESULT_FORMAT).append(result.getResult()));
     }
 
     public static void printResultInfo() {
