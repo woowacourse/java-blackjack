@@ -18,6 +18,11 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         values = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
+    public SimpleArrayList(T v) {
+        this();
+        add(v);
+    }
+
     public SimpleArrayList(T v, T v1) {
         this();
         add(v);

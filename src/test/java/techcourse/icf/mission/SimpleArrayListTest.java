@@ -67,4 +67,17 @@ class SimpleArrayListTest {
             Assertions.assertThat(filteredIntValues.get(i) >= 0).isTrue();
         }
     }
+    @Test
+    @DisplayName("미션5")
+    void copy(){
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        SimpleList.copy(laserPrinters, printers);
+
+        Assertions.assertThat(printers.get(0) == laserPrinter).isTrue();
+    }
+
 }
