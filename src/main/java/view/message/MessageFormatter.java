@@ -1,6 +1,6 @@
 package view.message;
 
-public enum Message {
+public enum MessageFormatter {
 
     PARTICIPANT_NAME_INPUT_MESSAGE("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"),
     DRAW_MESSAGE("%s에게 2장을 나누었습니다."),
@@ -10,15 +10,16 @@ public enum Message {
     PARTICIPANT_CARD_RESULT("%s 카드: %s - 결과: %d"),
     FINAL_GAME_RESULT("## 최종 승패"),
     DEALER_GAME_RESULT("%s: %d승 %d패 %d무"),
-    PLAYER_GAME_RESULT("%s: %s");
+    PLAYER_GAME_RESULT("%s: %s"),
+    EXCEPTION_MESSAGE("[ERROR] %s");
 
     private final String message;
 
-    Message(final String message) {
+    MessageFormatter(final String message) {
         this.message = message;
     }
 
-    public String getMessage() {
-        return message;
+    public String format(Object... messages) {
+        return String.format(this.message, messages);
     }
 }

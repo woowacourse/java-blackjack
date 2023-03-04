@@ -9,8 +9,8 @@ import java.util.function.Supplier;
 
 import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
 import static controller.DrawCardCommand.CARD_DRAW_STOP;
-import static view.message.Message.DRAW_CARD_CARD_MESSAGE;
-import static view.message.Message.PARTICIPANT_NAME_INPUT_MESSAGE;
+import static view.message.MessageFormatter.DRAW_CARD_CARD_MESSAGE;
+import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
 
 public class InputView {
 
@@ -32,14 +32,15 @@ public class InputView {
     }
 
     public List<String> getParticipantNames() {
-        OutputView.print(PARTICIPANT_NAME_INPUT_MESSAGE.getMessage());
+        OutputView.print(PARTICIPANT_NAME_INPUT_MESSAGE.format());
 
         return Arrays.asList(readConsole().split(DELIMITER));
     }
 
     public String getDrawCardCommand(final String name) {
-        final String drawCardMessage = System.lineSeparator() + String.format(DRAW_CARD_CARD_MESSAGE.getMessage(),
-                name, CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+        final String drawCardMessage = System.lineSeparator() +
+                DRAW_CARD_CARD_MESSAGE.format(name, CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+
         OutputView.print(drawCardMessage);
         return readConsole();
     }
