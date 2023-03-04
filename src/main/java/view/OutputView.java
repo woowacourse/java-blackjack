@@ -19,6 +19,7 @@ public class OutputView {
     private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "\n딜러와 ";
     private static final String COLON = ": ";
     private static final String NEW_LINE = "\n";
+    private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     private OutputView() {
     }
@@ -83,6 +84,10 @@ public class OutputView {
         printPlayerName(player);
         printPlayerCards(player);
         System.out.print(SCORE_GUIDE_MESSAGE + player.getScore().getValue());
+    }
+
+    public static void printDealerDrawMessage() {
+        System.out.println(DEALER_DRAW_MESSAGE);
     }
 
     public static void printResult(Map<Player, Integer> result) {
