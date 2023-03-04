@@ -7,14 +7,15 @@ public class Cards {
 
     private static final int BOUNDARY = 21;
     private static final int BIGGER_A_SCORE = 10;
+
     private final List<Card> cards;
 
     public Cards() {
         this.cards = new ArrayList<>();
     }
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public int calculateScore() {
@@ -42,10 +43,6 @@ public class Cards {
         return cards.stream()
                 .map(Card::getName)
                 .anyMatch(name -> name.equals(Denomination.ACE.getName()));
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
     }
 
     public List<Card> getCards() {

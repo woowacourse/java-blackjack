@@ -13,23 +13,50 @@ class CardsTest {
 
     @Test
     void calculateScore_메서드_테스트() {
-        //given, when
-        List<Card> cards = List.of(new Card(Suit.CLOVER, Denomination.FIVE),
-                new Card(Suit.HEART, Denomination.QUEEN));
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Suit.HEART, Denomination.FIVE);
+        Card card2 = new Card(Suit.HEART, Denomination.QUEEN);
+
+        //when
+        cards.addCard(card1);
+        cards.addCard(card2);
 
         //then
         int expectedScore = 15;
-        assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
+        assertThat(cards.calculateScore()).isEqualTo(expectedScore);
     }
 
     @Test
-    void A가_나오면_10_혹은_1중에_고른다() {
-        //given, when
-        List<Card> cards = List.of(new Card(Suit.CLOVER, Denomination.QUEEN),
-                new Card(Suit.HEART, Denomination.QUEEN), new Card(Suit.HEART, Denomination.ACE));
+    void A가_11점으로_계산되는_케이스() {
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Suit.HEART, Denomination.ACE);
+        Card card2 = new Card(Suit.HEART, Denomination.FIVE);
+
+        //when
+        cards.addCard(card1);
+        cards.addCard(card2);
 
         //then
-        int expectedScore = 21;
-        assertThat(new Cards(cards).calculateScore()).isEqualTo(expectedScore);
+        int expectedScore = 16;
+        assertThat(cards.calculateScore()).isEqualTo(expectedScore);
+    }
+    @Test
+    void A가_1점으로_계산되는_케이스() {
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Suit.HEART, Denomination.ACE);
+        Card card2 = new Card(Suit.HEART, Denomination.QUEEN);
+        Card card3 = new Card(Suit.HEART, Denomination.FIVE);
+
+        //when
+        cards.addCard(card1);
+        cards.addCard(card2);
+        cards.addCard(card3);
+
+        //then
+        int expectedScore = 16;
+        assertThat(cards.calculateScore()).isEqualTo(expectedScore);
     }
 }
