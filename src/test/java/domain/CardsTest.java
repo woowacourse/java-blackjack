@@ -1,11 +1,11 @@
 package domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -58,5 +58,19 @@ class CardsTest {
         //then
         int expectedScore = 16;
         assertThat(cards.calculateScore().getValue()).isEqualTo(expectedScore);
+    }
+
+    @Test
+    @DisplayName("카드 두장으로 21점일때 blackjack이다")
+    void blackJackTest() {
+        //given
+        Cards cards = new Cards();
+        Card card1 = new Card(Suit.HEART, Denomination.ACE);
+        Card card2 = new Card(Suit.HEART, Denomination.JACK);
+        //when
+        cards.addCard(card1);
+        cards.addCard(card2);
+        //then
+        assertThat(cards.isBlackJack()).isTrue();
     }
 }

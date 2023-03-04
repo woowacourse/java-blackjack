@@ -39,6 +39,10 @@ public class Cards {
                 .anyMatch(name -> name.equals(Denomination.ACE.getName()));
     }
 
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateScore().getValue() == 21;
+    }
+
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }

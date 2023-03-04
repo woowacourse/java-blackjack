@@ -16,20 +16,24 @@ public class Player {
         cards.addCard(card);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
-    public String getName() {
-        return playerName.getName();
-    }
-
     public Score getScore() {
         return cards.calculateScore();
     }
 
     public boolean isBustedPlayer() {
         return getScore().isBusted();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
+    public String getName() {
+        return playerName.getName();
     }
 
 }
