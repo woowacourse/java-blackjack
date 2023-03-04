@@ -50,4 +50,8 @@ public class GameResult {
     public Result getResultByParticipant(Participant participant) {
         return this.resultOfParticipants.get(participant);
     }
+
+    protected Map<Player, Result> getAllParticipantResults() {
+        return resultOfParticipants;
+    }
 }

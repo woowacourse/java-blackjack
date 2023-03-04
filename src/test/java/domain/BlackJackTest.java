@@ -32,9 +32,6 @@ class BlackJackTest {
                 () -> assertThat(playersCards.get(new Participant("아벨")))
                         .containsExactly(new Card(Shape.HEART, Number.FIVE), new Card(Shape.HEART, Number.SIX))
         );
-
-
-
     }
 
     @Test

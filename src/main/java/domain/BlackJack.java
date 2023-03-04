@@ -6,7 +6,9 @@ import domain.gameresult.GameResult;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
+import domain.gameresult.GameResultReadOnly;
 import domain.strategy.IndexGenerator;
+import domain.player.PlayerReadOnly;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -90,15 +92,32 @@ public class BlackJack {
         return Collections.unmodifiableList(this.players);
     }
 
-    public List<Player> getParticipants() {
+    public List<PlayerReadOnly> getPlayers2() {
+        return this.players
+                .stream().map(PlayerReadOnly::from)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<PlayerReadOnly> getParticipants() {
+        List<Player> players = new ArrayList<>(getPlayers());
+        players.remove(0);
+        return players.stream().map(PlayerReadOnly::from)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Player> getParticipants2() {
         List<Player> players = new ArrayList<>(getPlayers());
         players.remove(0);
         return players;
     }
 
     public void battle2() {
-        for (Player participant : getParticipants()) {
+        for (Player participant : getParticipants2()) {
             getDealer().battle2(participant, gameResult);
         }
+    }
+
+    public GameResultReadOnly getGameResult() {
+        return GameResultReadOnly.from(gameResult);
     }
 }

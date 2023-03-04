@@ -1,12 +1,14 @@
 package view;
 
 import domain.card.Card;
-import domain.player.Player;
+import domain.gameresult.GameResultReadOnly;
+import domain.gameresult.Result;
+import domain.player.PlayerReadOnly;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -17,9 +19,9 @@ public class OutputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printPlayersInformation(List<Player> players) {
+    public static void printPlayersInformation(List<PlayerReadOnly> players) {
         List<String> playerNames = players.stream()
-                .map(Player::getName)
+                .map(PlayerReadOnly::getName)
                 .collect(Collectors.toUnmodifiableList());
         printPlayerNames(playerNames);
         printPlayerCardConditions(players);
@@ -33,20 +35,20 @@ public class OutputView {
                 String.join(", ", playerNames));
     }
 
-    private static void printPlayerCardConditions(List<Player> players) {
+    private static void printPlayerCardConditions(List<PlayerReadOnly> players) {
         players = new ArrayList<>(players);
-        Player dealer = players.remove(0);
+        PlayerReadOnly dealer = players.remove(0);
         printDealerCardCondition(dealer);
         printParticipantCardCondition(players);
     }
 
-    private static void printDealerCardCondition(Player dealer) {
+    private static void printDealerCardCondition(PlayerReadOnly dealer) {
         Card card = dealer.getCards().get(0);
         printPlayerCardCondition(dealer, DEALER_CARD_CONDITION_FORMAT, parseCardInformation(card));
     }
 
-    public static void printParticipantCardCondition(List<Player> participants) {
-        for (Player participant : participants) {
+    public static void printParticipantCardCondition(List<PlayerReadOnly> participants) {
+        for (PlayerReadOnly participant : participants) {
             printPlayerCardCondition(participant, PARTICIPANT_CARD_CONDITION_FORMAT, parseCardsInformation(participant.getCards()));
         }
     }
@@ -63,7 +65,7 @@ public class OutputView {
         return numberDescription.concat(shapeDescription);
     }
 
-    private static void printPlayerCardCondition(Player player, String format, String cardsDisplay) {
+    private static void printPlayerCardCondition(PlayerReadOnly player, String format, String cardsDisplay) {
         System.out.printf(format, player.getName(), cardsDisplay);
     }
 
@@ -81,49 +83,56 @@ public class OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printPlayersFinalInformation(List<Player> players) {
+    public static void printPlayersFinalInformation(List<PlayerReadOnly> players) {
         printEmptyLine();
-        for (Player player : players) {
+
+        for (PlayerReadOnly player : players) {
             printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore());
         }
     }
 
-    public static void printPlayersGameResults(List<Player> players) {
-        players = new ArrayList<>(players);
+    public static void printPlayersGameResults(GameResultReadOnly gameResult) {
         printEmptyLine();
         println("## 최종 승패");
-        printDealerGameResult(players.remove(0));
-        printParticipantsGameResult(players);
+        printDealerGameResult(gameResult.getDealerResult());
+        printParticipantsGameResult(gameResult.getParticipantsResult());
     }
 
-    private static void printDealerGameResult(Player dealer) {
-        System.out.printf("딜러: %s%n", parsePlayerGameResultDisplay(dealer));
+    private static void printDealerGameResult(Map<Result, Integer> gameResult) {
+        System.out.printf("딜러: %s%n", parsePlayerGameResultDisplay(gameResult));
     }
 
-    private static String parsePlayerGameResultDisplay(Player dealer) {
-        List<String> strings = List.of("승", "패", "무");
-        List<Integer> gameResults = dealer.getGameResult();
+    private static String parsePlayerGameResultDisplay(Map<Result, Integer> gameResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        parseResultToMessage(stringBuilder, gameResult.get(Result.WIN), Result.WIN);
+        parseResultToMessage(stringBuilder, gameResult.get(Result.DRAW), Result.DRAW);
+        parseResultToMessage(stringBuilder, gameResult.get(Result.LOSE), Result.LOSE);
+        return stringBuilder.toString();
+    }
 
-        return IntStream.range(0, gameResults.size())
-                .filter(dealerGameResultIndex -> !OutputView.isGameResultCountZero(gameResults, dealerGameResultIndex))
-                .mapToObj(dealerGameResultIndex -> gameResults.get(dealerGameResultIndex) + strings.get(dealerGameResultIndex))
-                .collect(Collectors.joining(" "));
+    private static void parseResultToMessage(StringBuilder stringBuilder, Integer winningCount, Result result) {
+        if (winningCount > 0) {
+            stringBuilder.append(String.format("%d%s ", winningCount, parseResultToMessage(result)));
+        }
+    }
+
+    private static void printParticipantsGameResult(Map<String, Result> participantResults) {
+        participantResults
+                .forEach(
+                        (name, result) -> println(String.format("%s: %s", name, parseResultToMessage(result)))
+                );
 
     }
 
-    private static boolean isGameResultCountZero(List<Integer> gameResults, int dealerGameResultIndex) {
-        return gameResults.get(dealerGameResultIndex) == 0;
-    }
-
-    private static void printParticipantsGameResult(List<Player> participants) {
-        participants.stream()
-                .map(OutputView::parseParticipantGameResultDisplay)
-                .forEach(OutputView::println);
-    }
-
-    private static String parseParticipantGameResultDisplay(Player player) {
-        return String.format("%s: %s", player.getName(), parsePlayerGameResultDisplay(player));
+    private static String parseResultToMessage(Result result) {
+        if (result == Result.WIN) {
+            return "승";
+        }
+        if (result == Result.LOSE) {
+            return "패";
+        }
+        return "무";
     }
 
     public static void println(String message) {

@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackJack;
 import domain.player.Player;
+import domain.player.PlayerReadOnly;
 import domain.strategy.RandomBasedIndexGenerator;
 import view.InputView;
 import view.OutputView;
@@ -15,7 +16,7 @@ public class BlackJackApplication {
 
         giveCardToPlayers(blackJack);
         blackJack.battle2();
-        OutputView.printPlayersGameResults(blackJack.getPlayers());
+        OutputView.printPlayersGameResults(blackJack.getGameResult());
     }
 
     private String getParticipantNames() {
@@ -25,17 +26,17 @@ public class BlackJackApplication {
 
     private void initializedBlackjackGame(BlackJack blackJack) {
         blackJack.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJack.getPlayers());
+        OutputView.printPlayersInformation(blackJack.getPlayers2());
     }
 
     private void giveCardToPlayers(BlackJack blackJack) {
         giveCardToParticipants(blackJack);
         giveCardToDealer(blackJack);
-        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
+        OutputView.printPlayersFinalInformation(blackJack.getPlayers2());
     }
 
     private void giveCardToParticipants(BlackJack blackJack) {
-        List<Player> participants = blackJack.getParticipants();
+        List<Player> participants = blackJack.getParticipants2();
         for (Player participant : participants) {
             giveCardToParticipant(blackJack, participant);
         }
@@ -45,7 +46,7 @@ public class BlackJackApplication {
         String command = getCommand(participant);
         if ("y".equals(command)) {
             blackJack.giveCard(participant.getName());
-            OutputView.printParticipantCardCondition(List.of(participant));
+            OutputView.printParticipantCardCondition(List.of(PlayerReadOnly.from(participant)));
         }
 
         if ("n".equals(command) || participant.isBurst()) {
@@ -62,7 +63,7 @@ public class BlackJackApplication {
 
     private void stopGivingCard(Player participant, String command) {
         if ("n".equals(command)) {
-            OutputView.printParticipantCardCondition(List.of(participant));
+            OutputView.printParticipantCardCondition(List.of(PlayerReadOnly.from(participant)));
             return;
         }
 
