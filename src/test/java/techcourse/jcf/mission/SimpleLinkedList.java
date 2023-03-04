@@ -1,30 +1,30 @@
 package techcourse.jcf.mission;
 
-public class SimpleLinkedList implements SimpleList {
+public class SimpleLinkedList<T> implements SimpleList<T> {
 
-    private Node head;
+    private Node<T> head;
     private int size;
 
-    private class Node {
-        String data;
-        Node next;
+    private class Node<T> {
+        T data;
+        Node<T> next;
 
-        public Node(final String data) {
+        public Node(final T data) {
             this.data = data;
             this.next = null;
         }
     }
 
     @Override
-    public boolean add(final String value) {
-        Node node = new Node(value);
+    public boolean add(final T value) {
+        Node<T> node = new Node<>(value);
 
         if (head == null) {
             head = node;
             return true;
         }
 
-        Node headNode = head;
+        Node<T> headNode = head;
         while (headNode.next != null) {
             headNode = headNode.next;
         }
@@ -35,12 +35,12 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public void add(final int index, final String value) {
+    public void add(final int index, final T value) {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("index가 올바른지 확인하세요.");
+            throw new IndexOutOfBoundsException("Index out of bounds.");
         }
 
-        Node node = new Node(value);
+        Node<T> node = new Node<>(value);
 
         if (index == 0) {
             node.next = head;
@@ -48,7 +48,7 @@ public class SimpleLinkedList implements SimpleList {
             return;
         }
 
-        Node headNode = head;
+        Node<T> headNode = head;
         for (int i = 0; i < index - 1; i++) {
             headNode = headNode.next;
         }
@@ -59,29 +59,29 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String set(final int index, final String value) {
+    public T set(final int index, final T value) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("index가 올바른지 확인하세요.");
+            throw new IndexOutOfBoundsException("Index out of bounds.");
         }
 
-        Node currentNode = head;
+        Node<T> currentNode = head;
         for (int i = 0; i < index; i++) {
             currentNode = currentNode.next;
         }
 
-        String oldValue = currentNode.data;
+        T oldValue = currentNode.data;
         currentNode.data = value;
 
         return oldValue;
     }
 
     @Override
-    public String get(final int index) {
+    public T get(final int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("index에 해당하는 값이 없습니다.");
+            throw new IndexOutOfBoundsException("Index out of bounds.");
         }
 
-        Node headNode = head;
+        Node<T> headNode = head;
         for (int i = 0; i < index; i++) {
             headNode = headNode.next;
         }
@@ -90,8 +90,8 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean contains(final String value) {
-        Node headNode = head;
+    public boolean contains(final T value) {
+        Node<T> headNode = head;
 
         while (headNode != null) {
             if (headNode.data.equals(value)) {
@@ -104,9 +104,9 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public int indexOf(final String value) {
+    public int indexOf(final T value) {
         int index = 0;
-        Node headNode = head;
+        Node<T> headNode = head;
 
         while (headNode != null) {
             if (headNode.data.equals(value)) {
@@ -116,7 +116,7 @@ public class SimpleLinkedList implements SimpleList {
             index++;
         }
 
-        throw new IndexOutOfBoundsException("해당하는 값이 없습니다.");
+        throw new IndexOutOfBoundsException("Value not found.");
     }
 
     @Override
@@ -130,7 +130,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean remove(final String value) {
+    public boolean remove(final T value) {
         if (head == null) {
             return false;
         }
@@ -141,7 +141,7 @@ public class SimpleLinkedList implements SimpleList {
             return true;
         }
 
-        Node headNode = head;
+        Node<T> headNode = head;
         while (headNode.next != null) {
             if (headNode.next.data.equals(value)) {
                 headNode.next = headNode.next.next;
@@ -155,19 +155,19 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(final int index) {
+    public T remove(final int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("index가 올바른지 확인하세요.");
         }
 
-        String valueOfDeleting;
+        T valueOfDeleting;
         if (index == 0) {
             valueOfDeleting = head.data;
             head = head.next;
             return valueOfDeleting;
         }
 
-        Node headNode = head;
+        Node<T> headNode = head;
         for (int i = 0; i < index - 1; i++) {
             headNode = headNode.next;
         }

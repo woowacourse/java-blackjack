@@ -1,26 +1,26 @@
 package techcourse.jcf.mission;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<T> implements SimpleList<T> {
 
     private static final int STORE_SIZE = 10;
 
-    private String[] data;
+    private T[] data;
     private int size;
 
     public SimpleArrayList() {
-        data = new String[STORE_SIZE];
+        data = (T[]) new Object[STORE_SIZE];
         size = 0;
     }
 
     @Override
-    public boolean add(final String value) {
+    public boolean add(final T value) {
         checkRealloc(size + 1);
         data[size++] = value;
         return true;
     }
 
     @Override
-    public void add(final int index, final String value) {
+    public void add(final int index, final T value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index를 확인해주세요 : " + index);
         }
@@ -35,26 +35,26 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(final int index, final String value) {
+    public T set(final int index, final T value) {
         validateIndex(index);
-        String oldValue = data[index];
+        T oldValue = data[index];
         data[index] = value;
         return oldValue;
     }
 
     @Override
-    public String get(final int index) {
+    public T get(final int index) {
         validateIndex(index);
         return data[index];
     }
 
     @Override
-    public boolean contains(final String value) {
+    public boolean contains(final T value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(final String value) {
+    public int indexOf(final T value) {
         for (int i = 0; i < size; i++) {
             if (value.equals(data[i])) {
                 return i;
@@ -74,7 +74,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(final String value) {
+    public boolean remove(final T value) {
         int index = indexOf(value);
         if (index != -1) {
             remove(index);
@@ -84,9 +84,9 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(final int index) {
+    public T remove(final int index) {
         validateIndex(index);
-        String oldValue = data[index];
+        T oldValue = data[index];
         for (int i = index; i < size - 1; i++) {
             data[i] = data[i + 1];
         }
@@ -105,7 +105,7 @@ public class SimpleArrayList implements SimpleList {
     private void checkRealloc(int nextIndex) {
         if (nextIndex > data.length) {
             int newSize = data.length * 2;
-            String[] newData = new String[newSize];
+            T[] newData = (T[]) new Object[newSize];
             for (int i = 0; i < size; i++) {
                 newData[i] = data[i];
             }
