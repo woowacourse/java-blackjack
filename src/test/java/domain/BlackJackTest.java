@@ -33,7 +33,7 @@ public class BlackJackTest {
     @Test
     void calculateGameResults() {
         users = Users.from(List.of("hongo", "kiara"));
-
+        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
         // 카드 현황
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
