@@ -2,7 +2,6 @@ package view;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class InputView {
 
     private final BufferedReader bufferedReader;
 
-    public InputView() {
-        this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public InputView(final BufferedReader bufferedReader) {
+        this.bufferedReader = bufferedReader;
     }
 
     public List<String> readParticipantNames() {
