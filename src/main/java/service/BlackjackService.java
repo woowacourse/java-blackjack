@@ -18,13 +18,13 @@ public class BlackjackService {
     private final Deck deck;
     private final Participants participants;
 
-    private BlackjackService(Deck deck, Participants participants) {
-        this.deck = deck;
+    private BlackjackService(Participants participants) {
+        this.deck = Deck.create();
         this.participants = participants;
     }
 
     public static BlackjackService of(List<String> playersName) {
-        return new BlackjackService(Deck.create(), Participants.of(playersName));
+        return new BlackjackService(Participants.of(playersName));
     }
 
     public void start() {
