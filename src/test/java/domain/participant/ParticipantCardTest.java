@@ -60,8 +60,8 @@ class ParticipantCardTest {
                 .isSameAs(card);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
     @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
     void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
         // given
         cards.forEach(participantCard::addCard);
@@ -74,14 +74,28 @@ class ParticipantCardTest {
                 .isSameAs(expected);
     }
 
+    @ParameterizedTest(name = "checkBust()는 호출하면 버스트인지 여부를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
-    @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
-    void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
+    void checkBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(participantCard::addCard);
 
         // when
-        final boolean actual = participantCard.isBust();
+        final boolean actual = participantCard.checkBust();
+
+        // then
+        assertThat(actual)
+                .isSameAs(expected);
+    }
+
+    @ParameterizedTest(name = "checkBlackJack()은 호출하면 블랙잭인지 여부를 반환난다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
+    void checkBlackJack_whenCall_thenReturnIsBlackJack(final List<Card> cards, final boolean expected) {
+        // given
+        cards.forEach(participantCard::addCard);
+
+        // when
+        final boolean actual = participantCard.checkBlackJack();
 
         // then
         assertThat(actual)

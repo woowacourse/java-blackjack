@@ -48,9 +48,9 @@ public class GameController {
 
     private void printGameResult(final Participants participants) {
         OutputView.print(System.lineSeparator().trim());
-        Participant dealer = participants.getDealer();
+        Participant dealer = participants.findDealer();
         printParticipantCardResult(dealer);
-        List<Participant> players = participants.getPlayer();
+        List<Participant> players = participants.findPlayers();
         players.forEach(this::printParticipantCardResult);
     }
 
@@ -80,13 +80,13 @@ public class GameController {
     }
 
     private void printDealerCard(final Participants participants) {
-        Dealer dealer = (Dealer) participants.getDealer();
+        Dealer dealer = (Dealer) participants.findDealer();
         Card dealerFirstCard = dealer.getFirstCard();
         outputView.printDealerCard(dealer.getName(), dealerFirstCard);
     }
 
     private void printPlayerCards(final Participants participants) {
-        List<Participant> players = participants.getPlayer();
+        List<Participant> players = participants.findPlayers();
         for (Participant player : players) {
             List<Card> playerCards = player.getCard();
             outputView.printPlayerCard(player.getName(), playerCards);
@@ -94,7 +94,7 @@ public class GameController {
     }
 
     private void drawPlayersCard(final Participants participants, final GameManager gameManager) {
-        List<Participant> players = participants.getPlayer();
+        List<Participant> players = participants.findPlayers();
         for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
             Participant player = players.get(playerIndex);
             handleDrawCard(gameManager, playerIndex, player);
@@ -124,7 +124,7 @@ public class GameController {
     }
 
     private void handleDealerCards(final Participants participants, final GameManager gameManager) {
-        Dealer dealer = (Dealer) participants.getDealer();
+        Dealer dealer = (Dealer) participants.findDealer();
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canDraw()) {
             gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
@@ -133,13 +133,13 @@ public class GameController {
     }
 
     private void printFinalGameResult(final Participants participants) {
-        Dealer dealer = (Dealer) participants.getDealer();
+        Dealer dealer = (Dealer) participants.findDealer();
         Map<String, Result> playerGameResults = makeFinalGameResult(participants, dealer);
         outputView.printFinalGameResult(dealer.getName(), playerGameResults);
     }
 
     private Map<String, Result> makeFinalGameResult(final Participants participants, final Dealer dealer) {
-        return participants.getPlayer().stream()
+        return participants.findPlayers().stream()
                 .collect(Collectors.toMap(Participant::getName, dealer::calculateResult,
                 (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }

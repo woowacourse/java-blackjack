@@ -34,17 +34,18 @@ public class ParticipantCard {
 
     int calculateScore() {
         int score = sumCards();
+
         if (score <= ACE_HIGH_POINTS && hasAce()) {
             score += (ACE_HIGH_POINTS - ACE.findNumber());
         }
         return score;
     }
 
-    boolean isBust() {
+    boolean checkBust() {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
-    boolean isBlackJack() {
+    boolean checkBlackJack() {
         return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 

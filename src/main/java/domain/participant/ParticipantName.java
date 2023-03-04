@@ -11,11 +11,13 @@ public class ParticipantName {
     private ParticipantName(final String name) {
         validateBlankName(name);
         validateNameLength(name);
+
         this.name = name;
     }
 
     public static ParticipantName create(final String name) {
         validateNullName(name);
+
         return new ParticipantName(name);
     }
 

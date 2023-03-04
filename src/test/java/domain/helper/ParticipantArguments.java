@@ -56,6 +56,13 @@ public final class ParticipantArguments {
         );
     }
 
+    private static Stream<Arguments> makeBlackJackCard() {
+        return Stream.of(
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(SPADE, TWO)), false),
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, QUEEN)), true)
+        );
+    }
+
     private static Stream<Arguments> makePlayerCards() {
         return Stream.of(
                 Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),

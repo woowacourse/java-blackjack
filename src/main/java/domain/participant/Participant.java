@@ -13,6 +13,7 @@ public abstract class Participant {
 
     protected Participant(final String name) {
         this.name = ParticipantName.create(name);
+
         participantCard = ParticipantCard.create();
     }
 

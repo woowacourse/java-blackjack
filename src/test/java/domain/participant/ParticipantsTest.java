@@ -19,12 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantsTest {
 
-    private List<String> playerNames;
     private Participants participants;
 
     @BeforeEach
     void init() {
-        playerNames = List.of("a", "b", "c", "d", "e");
+        final List<String> playerNames = List.of("a", "b", "c", "d", "e");
         participants = Participants.create(playerNames);
     }
 
@@ -64,6 +63,23 @@ class ParticipantsTest {
         // when, then
         assertThatCode(() -> participants.addCard(participantOrder, card))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("findDealer()는 호출하면 참가자들 중 딜러를 찾아 반환한다")
+    void findDealer_whenCall_thenReturnDealer() {
+        Participant dealer = participants.findDealer();
+
+        assertThat(dealer).isExactlyInstanceOf(Dealer.class);
+    }
+
+    @Test
+    @DisplayName("findPlayers()는 호출하면 참가자들 중 플레이어를 찾아 반환한다")
+    void findPlayers_whenCall_thenReturnPlayers() {
+        List<Participant> players = participants.findPlayers();
+
+        players.forEach(player -> assertThat(player)
+                .isExactlyInstanceOf(Player.class));
     }
 
     @Test

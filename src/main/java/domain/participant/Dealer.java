@@ -17,35 +17,35 @@ public class Dealer extends Participant {
     public Result calculateResult(Participant player) {
         final ParticipantCard playerCard = player.participantCard;
 
-        if (isDealerWin(playerCard)) {
+        if (checkDealerWin(playerCard)) {
             return Result.LOSE;
         }
-        if (isPlayerWin(playerCard)) {
+        if (checkPlayerWin(playerCard)) {
             return Result.WIN;
         }
         return Result.DRAW;
     }
 
-    private boolean isDealerWin(final ParticipantCard playerCard) {
-        final ParticipantCard dealerCard = this.participantCard;
-
-        return playerCard.isBust()
-                || dealerCard.isBlackJack()
-                || dealerCard.isBust() && playerCard.isBust()
-                || !dealerCard.isBust() && dealerCard.calculateScore() > playerCard.calculateScore();
-    }
-
-    private boolean isPlayerWin(final ParticipantCard playerCard) {
-        final ParticipantCard dealerCard = this.participantCard;
-
-        return dealerCard.isBust()
-                || playerCard.isBlackJack()
-                || dealerCard.calculateScore() < playerCard.calculateScore();
-    }
-
     @Override
     public boolean canDraw() {
         return participantCard.calculateScore() <= STANDARD_GIVEN_SCORE;
+    }
+
+    private boolean checkDealerWin(final ParticipantCard playerCard) {
+        final ParticipantCard dealerCard = this.participantCard;
+
+        return playerCard.checkBust()
+                || dealerCard.checkBlackJack()
+                || dealerCard.checkBust() && playerCard.checkBust()
+                || !dealerCard.checkBust() && dealerCard.calculateScore() > playerCard.calculateScore();
+    }
+
+    private boolean checkPlayerWin(final ParticipantCard playerCard) {
+        final ParticipantCard dealerCard = this.participantCard;
+
+        return dealerCard.checkBust()
+                || playerCard.checkBlackJack()
+                || dealerCard.calculateScore() < playerCard.calculateScore();
     }
 
     public Card getFirstCard() {
