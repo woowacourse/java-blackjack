@@ -2,9 +2,9 @@ package domain;
 
 public class GameResult {
 
-    public static final int WIN = 1;
-    public static final int DRAW = 0;
-    public static final int LOSE = -1;
+    private static final int WIN = 1;
+    private static final int DRAW = 0;
+    private static final int LOSE = -1;
     private final int winCount;
     private final int loseCount;
 

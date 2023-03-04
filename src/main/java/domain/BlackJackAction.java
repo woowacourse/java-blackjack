@@ -3,8 +3,8 @@ package domain;
 public enum BlackJackAction {
     HIT, STAND;
 
-    public static final String YES = "y";
-    public static final String NO = "n";
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     public static BlackJackAction getActionByInput(String input) {
         if (!isValid(input)) {

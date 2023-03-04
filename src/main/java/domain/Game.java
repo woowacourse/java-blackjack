@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Game {
 
-    public static final int DEALER_THRESHOLDS = 16;
+    private static final int DEALER_THRESHOLDS = 16;
     private final Deck deck = new Deck();
     private final Participants participants;
 
