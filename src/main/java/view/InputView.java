@@ -35,11 +35,11 @@ public class InputView {
         }
     }
 
-    public static String inputAddCardCommand() {
+    public static Command inputAddCardCommand() {
         try {
-            String inputAddCardCommand = BUFFERED_READER.readLine();
-            validateInputAddCardCommand(inputAddCardCommand);
-            return inputAddCardCommand;
+            String input = BUFFERED_READER.readLine();
+            validateInputAddCardCommand(input);
+            return Command.of(input);
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
             return inputAddCardCommand();

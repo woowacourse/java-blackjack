@@ -4,6 +4,7 @@ import domain.BlackJack;
 import domain.player.Player;
 import domain.player.PlayerReadOnly;
 import domain.strategy.RandomBasedIndexGenerator;
+import view.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -42,28 +43,28 @@ public class BlackJackApplication {
         }
     }
 
-    private void giveCardToParticipant(BlackJack blackJack, Player participant) {
-        String command = getCommand(participant);
-        if ("y".equals(command)) {
+    private void giveCardToParticipant(BlackJack blackJack, PlayerReadOnly participant) {
+        Command command = getCommand(participant.getName());
+        if (command.isYes()) {
             blackJack.giveCard(participant.getName());
-            OutputView.printParticipantCardCondition(List.of(PlayerReadOnly.from(participant)));
+            OutputView.printParticipantCardCondition(List.of(participant));
         }
 
-        if ("n".equals(command) || participant.isBurst()) {
+        if (command.isNo() || participant.isBurst()) {
             stopGivingCard(participant, command);
             return;
         }
         giveCardToParticipant(blackJack, participant);
     }
 
-    private String getCommand(Player participant) {
-        OutputView.printAddCardGuide(participant.getName());
+    private Command getCommand(String participantName) {
+        OutputView.printAddCardGuide(participantName);
         return InputView.repeat(InputView::inputAddCardCommand);
     }
 
-    private void stopGivingCard(Player participant, String command) {
-        if ("n".equals(command)) {
-            OutputView.printParticipantCardCondition(List.of(PlayerReadOnly.from(participant)));
+    private void stopGivingCard(PlayerReadOnly participant, Command command) {
+        if (command.isNo()) {
+            OutputView.printParticipantCardCondition(List.of(participant));
             return;
         }
 
