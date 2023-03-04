@@ -19,19 +19,19 @@ public class PlayerWinResults {
         results.put(playerName, playerResult);
     }
 
-    public int computeDealerWinCount() {
-        return computeDealerResultCount(LOSE);
+    public int countDealerWins() {
+        return computeWinResultCount(LOSE);
     }
 
-    public int computeDealerPushCount() {
-        return computeDealerResultCount(PUSH);
+    public int countDealerPushes() {
+        return computeWinResultCount(PUSH);
     }
 
-    public int computeDealerLoseCount() {
-        return computeDealerResultCount(WIN);
+    public int countDealerLoses() {
+        return computeWinResultCount(WIN);
     }
 
-    private int computeDealerResultCount(WinResult winResult) {
+    private int computeWinResultCount(WinResult winResult) {
         return (int) results.values()
                 .stream()
                 .filter(result -> result == winResult)

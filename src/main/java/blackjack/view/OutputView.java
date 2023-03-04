@@ -81,9 +81,9 @@ public class OutputView {
     }
 
     private static void showDealerWinResult(PlayerWinResults playerWinResults) {
-        int winCount = playerWinResults.computeDealerWinCount();
-        int pushCount = playerWinResults.computeDealerPushCount();
-        int loseCount = playerWinResults.computeDealerLoseCount();
+        int winCount = playerWinResults.countDealerWins();
+        int pushCount = playerWinResults.countDealerPushes();
+        int loseCount = playerWinResults.countDealerLoses();
         System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toDealerWinResult(winCount, pushCount, loseCount));
     }
 
