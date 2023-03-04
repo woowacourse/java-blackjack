@@ -62,11 +62,9 @@ public class OutputView {
     public static void printResults(HashMap<Player, Result> playerResults, HashMap<Result, Integer> dealerResults) {
         System.out.println(RESULT_TITLE);
         System.out.print(DEALER);
-        for (Result result : dealerResults.keySet()) {
-            if (dealerResults.get(result) > 0) {
-                System.out.print(dealerResults.get(result) + result.getResult() + BLANK);
-            }
-        }
+        dealerResults.keySet().stream()
+                .filter(result -> dealerResults.get(result) > 0)
+                .forEach(result -> System.out.print(dealerResults.get(result) + result.getResult() + BLANK));
         System.out.println();
         for (Player player : playerResults.keySet()) {
             System.out.println(player.getPlayerName() + CARD_USER_DELIMITER + playerResults.get(player).getResult());
