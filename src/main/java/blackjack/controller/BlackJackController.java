@@ -32,7 +32,10 @@ public class BlackJackController {
         askPlayers(players, referee);
         OutputView.println();
         hitCardByDealer(dealer, referee);
+        printFinal(players, dealer, referee);
+    }
 
+    private void printFinal(Players players, Dealer dealer, Referee referee) {
         List<Result> results = referee.judgeResult(dealer, players);
         OutputView.printFinalCardDeckAndScore(dealer, players, referee);
         OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
@@ -48,7 +51,7 @@ public class BlackJackController {
         }
     }
 
-    private static boolean isContinueToHit(int dealerScore) {
+    private boolean isContinueToHit(int dealerScore) {
         return dealerScore <= DEALER_HIT_NUMBER && dealerScore != BURST_CODE;
     }
 
@@ -76,7 +79,7 @@ public class BlackJackController {
         }
     }
 
-    private static int calculateScore(Referee referee, Player player) {
+    private int calculateScore(Referee referee, Player player) {
         int score = referee.calculateDeckScore(player.getCardDeck());
 
         if (BURST_CODE == score) {
@@ -91,7 +94,7 @@ public class BlackJackController {
         }
     }
 
-    private static boolean isContinueToAsk(Command command, int score) {
+    private boolean isContinueToAsk(Command command, int score) {
         return Command.isContinue(command) && BURST_CODE != score;
     }
 

@@ -86,26 +86,33 @@ public class OutputView {
         return score;
     }
 
-    public static void printResult(Map<String, Long> dealerResult, Dealer dealer, Players players,
-        List<Result> results) {
+    public static void printResult(Map<String, Long> dealerResult, Dealer dealer,
+                                   Players players, List<Result> results) {
         System.out.println("## 최종 승패");
         List<String> names = players.getPlayerNames();
 
         printDealerResult(dealerResult, dealer);
-        System.out.println();
+        printPlayerResult(results, names);
+    }
 
-        for (int i = 0; i < names.size(); i++) {
-            System.out.println(String.format("%s: %s", names.get(i), results.get(i).getResult()));
+    private static void printPlayerResult(List<Result> results, List<String> names) {
+        for (int index = 0; index < names.size(); index++) {
+            System.out.println(String.format("%s: %s", names.get(index), results.get(index).getResult()));
         }
     }
 
     private static void printDealerResult(Map<String, Long> dealerResult, Dealer dealer) {
         System.out.print(String.format("%s: ", dealer.getName().getValue()));
         for (Result result : Result.values()) {
-            if (dealerResult.containsKey(result.getResult())) {
-                Long count = dealerResult.get(result.getResult());
-                System.out.print(String.format("%d%s ", count, reverse(result)));
-            }
+            printExistResult(dealerResult, result);
+        }
+        System.out.println();
+    }
+
+    private static void printExistResult(Map<String, Long> dealerResult, Result result) {
+        if (dealerResult.containsKey(result.getResult())) {
+            Long count = dealerResult.get(result.getResult());
+            System.out.print(String.format("%d%s ", count, reverse(result)));
         }
     }
 
