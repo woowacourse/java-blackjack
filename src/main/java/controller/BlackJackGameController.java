@@ -29,7 +29,11 @@ public class BlackJackGameController {
 
     public void run() {
         BlackJackGame blackJackGame = generateBlackJackGame();
-        playGame(blackJackGame);
+        progressPlayersTurn(blackJackGame);
+        progressDealerTurn(blackJackGame);
+        printUsersCardResult(blackJackGame);
+        blackJackGame.judgeWinner();
+        printFinalResult(blackJackGame);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -56,14 +60,6 @@ public class BlackJackGameController {
         setUpResult.put(dealer.getName(), List.of(dealer.getFirstCard()));
         players.forEach(player -> setUpResult.put(player.getName(), player.getCards()));
         outputView.printSetUpResult(setUpResult);
-    }
-
-    private void playGame(BlackJackGame blackJackGame) {
-        progressPlayersTurn(blackJackGame);
-        progressDealerTurn(blackJackGame);
-        printUsersCardResult(blackJackGame);
-        blackJackGame.judgeWinner();
-        printFinalResult(blackJackGame);
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
