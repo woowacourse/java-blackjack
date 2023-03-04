@@ -43,6 +43,16 @@ public class Controller {
         OutputView.printResult(result);
     }
 
+    private void drawInitialCards(final Players players, final Dealer dealer) {
+        printInitialPickGuideMessage(players);
+        for (Player player : players.getPlayers()) {
+            player.drawCard(deck.pickCard());
+            player.drawCard(deck.pickCard());
+        }
+        dealer.drawCard(deck.pickCard());
+        printPlayersCards(players, dealer);
+    }
+
     private void playersHitOrStand(Players players) {
         for (Player player : players.getPlayers()) {
             playerHitOrStand(player);
