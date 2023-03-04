@@ -35,13 +35,16 @@ public class BlackjackController {
     }
 
     private void giveCardUntilImpossible(Player player) {
-        String whetherDrawCard = "y";
-        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player)).equals("y")){
+        while (judgeWhetherDrawCard(player)){
             player.addCard(this.deck.draw());
             OutputView.printCardsStatusOfUser(player);
         }
-        if (whetherDrawCard.equals("n")) {
+        if (player.canAdd()) {
             OutputView.printCardsStatusOfUser(player);
         }
+    }
+
+    private static boolean judgeWhetherDrawCard(Player player) {
+        return player.canAdd() && InputView.readWhetherDrawCardOrNot(player);
     }
 }
