@@ -25,14 +25,15 @@ public class People {
         }
     }
 
-    public List<Person> getPlayers() {
+    public List<Player> getPlayers() {
         return people.stream()
                 .filter(Person::isPlayer)
+                .map(Player.class::cast)
                 .collect(toList());
     }
 
-    public Person getDealer() {
-        return people.stream()
+    public Dealer getDealer() {
+        return (Dealer) people.stream()
                 .filter(Person::isDealer)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 딜러가 없습니다."));

@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.GameResult;
 import blackjack.dto.DealerGameResultResponse;
 import blackjack.dto.PersonStatusResponse;
 import blackjack.dto.PersonTotalStatusResponse;
@@ -53,13 +52,13 @@ public class OutputView {
     }
 
     public static void printDealerResult(final DealerGameResultResponse response) {
-        final String result = response.getResults().stream()
-                .collect(groupingBy(GameResult::getName, counting()))
+        final String dealerResult = response.getResults().stream()
+                .collect(groupingBy(result -> result, counting()))
                 .entrySet()
                 .stream()
                 .map(entry -> entry.getValue() + entry.getKey())
                 .collect(joining(" "));
-        System.out.println("딜러: " + result);
+        System.out.println("딜러: " + dealerResult);
     }
 
     public static void printPlayerResult(final PlayerGameResultResponse response) {

@@ -1,16 +1,15 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
 import java.util.List;
 
 public class DealerGameResultResponse {
-    private final List<GameResult> results;
+    private final List<String> results;
 
-    public DealerGameResultResponse(List<GameResult> results) {
+    public DealerGameResultResponse(List<String> results) {
         this.results = results;
     }
 
-    public List<GameResult> getResults() {
+    public List<String> getResults() {
         return results;
     }
 }

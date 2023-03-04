@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
 import blackjack.domain.People;
 import blackjack.domain.Person;
 import blackjack.domain.Player;
@@ -81,15 +82,16 @@ public class BlackJackService {
     }
 
     public DealerGameResultResponse getDealerGameResults() {
-        Person dealer = people.getDealer();
+        Dealer dealer = people.getDealer();
         return people.getPlayers()
                 .stream()
-                .map(dealer::matchGame)
+                .map(player -> player.matchGame(dealer))
+                .map(GameResult::getAntonym)
                 .collect(collectingAndThen(toList(), DealerGameResultResponse::new));
     }
 
     public List<PlayerGameResultResponse> getAllPlayersGameResult() {
-        Person dealer = people.getDealer();
+        Dealer dealer = people.getDealer();
         return people.getPlayers().stream()
                 .map(player -> new PlayerGameResultResponse(player.getName(), player.matchGame(dealer)))
                 .collect(toList());

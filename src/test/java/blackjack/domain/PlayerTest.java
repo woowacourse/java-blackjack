@@ -9,16 +9,15 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     @Test
-    @DisplayName("상대의 점수가 내 점수보다 낮으면 승리해야 한다.")
+    @DisplayName("딜러의 점수가 내 점수보다 낮으면 승리해야 한다.")
     void matchGame_win() {
         // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+        Player player = new Player("glen");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Dealer dealer = new Dealer();
 
         // when
-        GameResult gameResult = player1.matchGame(player2);
+        GameResult gameResult = player.matchGame(dealer);
 
         // then
         assertThat(gameResult)
@@ -26,16 +25,15 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("상대의 점수가 내 점수보다 높으면 패배해야 한다.")
+    @DisplayName("딜러의 점수가 내 점수보다 높으면 패배해야 한다.")
     void matchGame_lose() {
         // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.ACE));
+        Player player = new Player("glen");
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
 
         // when
-        GameResult gameResult = player1.matchGame(player2);
+        GameResult gameResult = player.matchGame(dealer);
 
         // then
         assertThat(gameResult)
@@ -43,16 +41,16 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("상대의 점수가 나와 같으면 무승부여야 한다.")
+    @DisplayName("딜러의 점수가 나와 같으면 무승부여야 한다.")
     void matchGame_draw() {
         // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.FIVE));
+        Player player = new Player("glen");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
 
         // when
-        GameResult gameResult = player1.matchGame(player2);
+        GameResult gameResult = player.matchGame(dealer);
 
         // then
         assertThat(gameResult)
@@ -60,43 +58,60 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("상대의 점수와 나의 점수가 21점을 넘으면 무승부여야 한다.")
-    void matchGame_sameOverScore() {
+    @DisplayName("나의 점수가 21점을 넘으면 패배해야 한다.")
+    void matchGame_overScore() {
         // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player1.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Player player = new Player("glen");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Dealer dealer = new Dealer();
 
         // when
-        GameResult gameResult = player1.matchGame(player2);
+        GameResult gameResult = player.matchGame(dealer);
 
         // then
         assertThat(gameResult)
-                .isEqualTo(GameResult.DRAW);
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test
-    @DisplayName("상대의 점수가 21점을 넘고 내가 넘지 않으면 승리해야 한다.")
+    @DisplayName("딜러의 점수가 21점을 넘고 내가 넘지 않으면 승리해야 한다.")
     void matchGame_otherOverScore() {
         // given
-        Player player1 = new Player("glen");
-        Player player2 = new Player("encho");
-        player1.addCard(new Card(Suit.DIAMOND, Rank.TWO));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
-        player2.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Player player = new Player("glen");
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
 
         // when
-        GameResult gameResult = player1.matchGame(player2);
+        GameResult gameResult = player.matchGame(dealer);
 
         // then
         assertThat(gameResult)
                 .isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("딜러와 나의 점수가 21점을 넘으면 패배해야 한다.")
+    void matchGame_sameOverScore() {
+        // given
+        Player player = new Player("glen");
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        player.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+        dealer.addCard(new Card(Suit.DIAMOND, Rank.KING));
+
+        // when
+        GameResult gameResult = player.matchGame(dealer);
+
+        // then
+        assertThat(gameResult)
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test
