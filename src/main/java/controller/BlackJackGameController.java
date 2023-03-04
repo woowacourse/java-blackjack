@@ -70,11 +70,11 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (player.getStatus().equals(PlayerStatus.NORMAL) && readDrawCommand(player).equals(DrawCommand.DRAW)) {
+        while (PlayerStatus.NORMAL == player.getStatus() && DrawCommand.DRAW == readDrawCommand(player)) {
             blackJackGame.drawOneMoreCardForPlayer(player);
             printDrawResult(player);
         }
-        if (player.getStatus().equals(PlayerStatus.NORMAL)) {
+        if (PlayerStatus.NORMAL == player.getStatus()) {
             printDrawResult(player);
         }
     }
