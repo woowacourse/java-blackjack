@@ -19,32 +19,33 @@ public class OutputView {
 
     private static final String BLANK = " ";
 
-    public void printInitializingFinishMessage(List<String> participantNames) {
+    public static void printInitializingFinishMessage(List<String> participantNames) {
         printEmptyLine();
         String participants = String.join(DELIMITER, participantNames);
         System.out.printf(INIT_FINISHIED_MESSAGE, participants);
     }
 
-    public void printParticipantCard(String name, List<String> participantsHand) {
+    public static void printParticipantCard(String name, List<String> participantsHand) {
         String cards = String.join(DELIMITER, participantsHand);
         System.out.printf((PARTICIPANT_CARD_FORMAT), name, cards);
     }
 
-    public void printDealerPickCardMessage() {
+    public static void printDealerPickCardMessage() {
         System.out.println(DEALER_HIT_MESSAGE);
         printEmptyLine();
     }
 
-    public void printParticipantHandValue(String participantName, List<String> participantCards, String handValue) {
+    public static void printParticipantHandValue(String participantName, List<String> participantCards,
+        String handValue) {
         String cards = String.join(DELIMITER, participantCards);
         System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, handValue);
     }
 
-    public void printEmptyLine() {
+    public static void printEmptyLine() {
         System.out.println();
     }
 
-    public void printDealerResult(Map<Result, Integer> dealerResult) {
+    public static void printDealerResult(Map<Result, Integer> dealerResult) {
         StringBuilder result = new StringBuilder();
         result.append(DEALER_TAG).append(RESULT_FORMAT);
         if (dealerResult.getOrDefault(Result.WIN, 0) > 0) {
@@ -60,16 +61,16 @@ public class OutputView {
         System.out.println(result);
     }
 
-    public void printPlayerResult(String name, Result result) {
+    public static void printPlayerResult(String name, Result result) {
         System.out.println(name + RESULT_FORMAT + result.getResult());
     }
 
-    public void printResultInfo() {
+    public static void printResultInfo() {
         printEmptyLine();
         System.out.println(RESULT_TAG);
     }
 
-    public void printExceptionMessage(IllegalArgumentException e) {
+    public static void printExceptionMessage(IllegalArgumentException e) {
         System.out.println(e.getMessage());
     }
 }

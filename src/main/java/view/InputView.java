@@ -15,46 +15,46 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final Scanner scanner = new Scanner(System.in);
 
-    private void askInputNames() {
+    private static void askInputNames() {
         System.out.println(ASK_INPUT_NAMES_MESSAGE);
     }
 
-    public List<String> requestNames() {
+    public static List<String> requestNames() {
         askInputNames();
         List<String> names = Arrays.asList(scanner.nextLine().split(DELIMITER, -1));
         validate(names);
         return names;
     }
 
-    private void validate(List<String> names) {
+    private static void validate(List<String> names) {
         validateNumberOfNames(names);
         validateNoDuplication(names);
     }
 
-    private void validateNumberOfNames(List<String> names) {
+    private static void validateNumberOfNames(List<String> names) {
         if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_OF_PLAYER.getMessage());
         }
     }
 
-    private void validateNoDuplication(List<String> names) {
+    private static void validateNoDuplication(List<String> names) {
         if (names.stream().distinct().count() != names.size()) {
             throw new IllegalArgumentException(ErrorMessage.NAME_IS_DUPLICATED.getMessage());
         }
     }
 
-    private void askDrawingCard(String name) {
+    private static void askDrawingCard(String name) {
         System.out.printf(HIT_OR_STAY_REQUEST_MESSAGE, name);
     }
 
-    public String requestDrawingCard(String name) {
+    public static String requestDrawingCard(String name) {
         askDrawingCard(name);
         String drawingCardRequest = scanner.nextLine();
         validateDrawingCardRequest(drawingCardRequest);
         return drawingCardRequest;
     }
 
-    private void validateDrawingCardRequest(String drawingCardRequest) {
+    private static void validateDrawingCardRequest(String drawingCardRequest) {
         if (!drawingCardRequest.equals(HIT_REQUEST) && !drawingCardRequest.equals(STAY_REQUEST)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DRAWING_CARD_REQUEST.getMessage());
         }
