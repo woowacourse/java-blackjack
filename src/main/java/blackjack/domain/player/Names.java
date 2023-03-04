@@ -1,7 +1,9 @@
 package blackjack.domain.player;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Names {
@@ -13,7 +15,7 @@ public class Names {
 
     public Names(String names) {
         List<Name> splitNames = splitNames(names);
-        validateDuplicateNames(splitNames);
+        validateDuplication(splitNames);
         validateRange(splitNames);
         this.names = splitNames;
     }
@@ -28,16 +30,15 @@ public class Names {
         return names;
     }
 
-    private void validateDuplicateNames(List<Name> names) {
-        if (getDistinctNames(names) != names.size()) {
+    private static void validateDuplication(List<Name> names) {
+        if (getRemoveDuplication(names) != names.size()) {
             throw new IllegalArgumentException("중복된 이름은 입력할 수 없습니다.");
         }
     }
 
-    private int getDistinctNames(List<Name> splitNames) {
-        return (int) splitNames.stream()
-                .distinct()
-                .count();
+    private static int getRemoveDuplication(List<Name> names) {
+        Set<Name> setNames = new HashSet<>(names);
+        return setNames.size();
     }
 
     private void validateRange(List<Name> names) {
@@ -45,5 +46,4 @@ public class Names {
             throw new IllegalArgumentException("이름의 수가 1이상 20이하여야 합니다.");
         }
     }
-
 }

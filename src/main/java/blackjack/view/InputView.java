@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.validator.CommonValidator;
 
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 public class InputView {
     private static final Scanner sc = new Scanner(System.in);
@@ -25,4 +26,14 @@ public class InputView {
         CommonValidator.validateBlank(input);
         return input;
     }
+
+    public static <T> T repeat(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.out.println(illegalArgumentException.getMessage());
+            return repeat(supplier);
+        }
+    }
+
 }
