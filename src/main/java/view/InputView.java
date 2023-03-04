@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
@@ -14,6 +13,8 @@ import static view.message.Message.DRAW_CARD_CARD_MESSAGE;
 import static view.message.Message.PARTICIPANT_NAME_INPUT_MESSAGE;
 
 public class InputView {
+
+    private static final String DELIMITER = ",";
 
     private final BufferedReader bufferedReader;
 
@@ -32,7 +33,8 @@ public class InputView {
 
     public List<String> getParticipantNames() {
         OutputView.print(PARTICIPANT_NAME_INPUT_MESSAGE.getMessage());
-        return Arrays.asList(Objects.requireNonNull(readConsole()).split(","));
+
+        return Arrays.asList(readConsole().split(DELIMITER));
     }
 
     public String getDrawCardCommand(final String name) {
@@ -46,8 +48,7 @@ public class InputView {
         try {
             return bufferedReader.readLine();
         } catch (IOException e) {
-            OutputView.print(e.getMessage());
+            throw new IllegalArgumentException("잘못된 입력입니다.");
         }
-        return null;
     }
 }
