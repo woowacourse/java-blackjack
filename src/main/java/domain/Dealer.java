@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Dealer extends Player {
 
     private static final int PICK_BOUNDARY = 16;
@@ -11,12 +9,7 @@ public class Dealer extends Player {
         super(new PlayerName(DEALER_NAME));
     }
 
-    @Override
-    public void initialPick() {
-        pickCard();
-    }
-
-    public int getPickBoundary() {
-        return PICK_BOUNDARY;
+    public boolean isHittable() {
+        return getScore().getValue() <= PICK_BOUNDARY;
     }
 }

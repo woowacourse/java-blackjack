@@ -1,40 +1,47 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@DisplayName("dealer는 점수가 ")
 class DealerTest {
 
     @Test
-    void 점수가_16이하면_카드를_뽑는다() {
-        //given,when
-        Dealer dealer = new Dealer(new Cards());
-        int expected = 1;
-        int actual = dealer.getCardsSize();
-
+    @DisplayName("16점 이하일때 뽑을 수 있다.")
+    void dealerHittableTest() {
+        //given
+        Dealer dealer = new Dealer();
         //then
-        assertEquals(expected, actual);
+        assertThat(dealer.isHittable()).isTrue();
     }
 
     @Test
-    void 점수가_17이상이면_카드를_뽑지_않는다() {
+    @DisplayName("16점 일때 뽑을 수 있다.")
+    void dealerHittableTest2() {
         //given
-        Dealer dealer = new Dealer(
-                new Cards(List.of(
-                        new Card(Suit.CLOVER, Denomination.KING),
-                        new Card(Suit.CLOVER, Denomination.SEVEN))
-                ));
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(Suit.HEART, Denomination.SIX);
+        Card card2 = new Card(Suit.HEART, Denomination.QUEEN);
         //when
-        int expected = 2;
-        int actual = dealer.getCardsSize();
-
+        dealer.drawCard(card1);
+        dealer.drawCard(card2);
         //then
-        assertEquals(expected, actual);
+        assertThat(dealer.isHittable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("17점 이상이면 뽑을 수 없다.")
+    void dealerHittableTest3() {
+        //given
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(Suit.HEART, Denomination.SEVEN);
+        Card card2 = new Card(Suit.HEART, Denomination.QUEEN);
+        //when
+        dealer.drawCard(card1);
+        dealer.drawCard(card2);
+        //then
+        assertThat(dealer.isHittable()).isFalse();
     }
 }
