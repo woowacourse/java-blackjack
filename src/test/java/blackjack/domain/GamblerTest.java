@@ -8,6 +8,7 @@ import static blackjack.domain.Rank.SEVEN;
 import static blackjack.domain.Rank.SIX;
 import static blackjack.domain.Rank.THREE;
 import static blackjack.domain.Shape.CLOVER;
+import static blackjack.domain.Shape.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.util.FixedDeck;
@@ -35,8 +36,8 @@ public class GamblerTest {
     void 게임_시작_시_카드를_뽑는다() {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, Shape.DIAMOND),
-                new Card(JACK, Shape.DIAMOND)
+                new Card(ACE, DIAMOND),
+                new Card(JACK, DIAMOND)
         ));
 
         gambler.initialDraw(deck);
@@ -67,7 +68,7 @@ public class GamblerTest {
     void 카드를_뽑는다() {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, Shape.DIAMOND)
+                new Card(ACE, DIAMOND)
         ));
 
         gambler.draw(deck);
@@ -86,7 +87,7 @@ public class GamblerTest {
     void 점수를_반환한다() {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, Shape.DIAMOND)
+                new Card(ACE, DIAMOND)
         ));
         gambler.draw(deck);
 
@@ -106,14 +107,13 @@ public class GamblerTest {
     void 게임의_결과를_반환한다() {
         final Gambler gambler = new Gambler("허브");
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, Shape.DIAMOND),
-                new Card(KING, Shape.DIAMOND)
+                new Card(ACE, DIAMOND)
         ));
         gambler.draw(deck);
-        final Dealer dealer = Dealer.create();
-        dealer.draw(deck);
+        final Hand hand = new Hand();
+        hand.add(new Card(KING, DIAMOND));
 
-        final Result result = gambler.play(dealer.getHand());
+        final Result result = gambler.play(hand);
 
         assertThat(result).isEqualTo(Result.WIN);
     }
