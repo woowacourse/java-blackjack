@@ -42,8 +42,8 @@ class ParticipantResultTest {
     }
 
     @Test
-    @DisplayName("matchBetween() : 참여자가 burst 일 경우에는 참여자가 무조건 게임에서 진다.")
-    void test_matchBetween_burst_participant_must_lose_participant() throws Exception {
+    @DisplayName("matchBetween() : 참여자가 bust 일 경우에는 참여자가 무조건 게임에서 진다.")
+    void test_matchBetween_bust_participant_must_lose_participant() throws Exception {
         //given
         participantCardArea.addCard(new Card(SPADE, TEN));
         final Participant participant = new Participant(new Name("name"), participantCardArea);
@@ -57,8 +57,8 @@ class ParticipantResultTest {
     }
 
     @Test
-    @DisplayName("matchBetween() : 딜러는 burst 이면서 참여자가 burst 가 아니면 참여자가 무조건 게임에서 이긴다.")
-    void test_matchBetween_burst_dealer_must_lose_dealer() throws Exception {
+    @DisplayName("matchBetween() : 딜러는 bust 이면서 참여자가 bust 가 아니면 참여자가 무조건 게임에서 이긴다.")
+    void test_matchBetween_bust_dealer_must_lose_dealer() throws Exception {
         //given
         final Participant participant = new Participant(new Name("name"), participantCardArea);
         final Dealer dealer = new Dealer(dealerCardArea);
@@ -72,9 +72,9 @@ class ParticipantResultTest {
     }
 
     @ParameterizedTest
-    @MethodSource("makeBothNotBurst")
+    @MethodSource("makeBothNotbust")
     @DisplayName("matchBetween() : 딜러, 참여자 모두 버스트가 아닐 때 점수가 높은 쪽이 이기고, 같으면 무승부이다.")
-    void test_matchBetween_not_burst_win_higher_score_or_draw_same_score(
+    void test_matchBetween_not_bust_win_higher_score_or_draw_same_score(
             final CardArea participantCardArea, final CardArea dealerCardArea,
             final ParticipantResult participantResult) throws Exception {
 
@@ -86,7 +86,7 @@ class ParticipantResultTest {
         assertEquals(ParticipantResult.matchBetween(participant, dealer), participantResult);
     }
 
-    static Stream<Arguments> makeBothNotBurst() {
+    static Stream<Arguments> makeBothNotbust() {
 
         //무승부
         final CardArea participantDrawCardArea = new CardArea(

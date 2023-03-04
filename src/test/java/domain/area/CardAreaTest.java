@@ -161,7 +161,7 @@ class CardAreaTest {
         cardArea.addCard(new Card(CardShape.DIAMOND, TEN));
 
         // when & then
-        assertTrue(cardArea.isBurst());
+        assertTrue(cardArea.isBust());
     }
 
     @Test
@@ -170,7 +170,7 @@ class CardAreaTest {
         final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
 
         // when & then
-        assertFalse(cardArea.isBurst());
+        assertFalse(cardArea.isBust());
     }
 
     @Test

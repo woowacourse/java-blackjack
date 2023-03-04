@@ -9,10 +9,10 @@ public enum ParticipantResult {
     DRAWER;
 
     public static ParticipantResult matchBetween(final Participant participant, final Dealer dealer) {
-        if (participant.isBurst()) {
+        if (participant.isBust()) {
             return ParticipantResult.LOSER;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return ParticipantResult.WINNER;
         }
         if (participant.score() > dealer.score()) {

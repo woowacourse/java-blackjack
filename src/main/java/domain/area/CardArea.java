@@ -50,7 +50,7 @@ public class CardArea {
         return calculate() < 21;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculate() > 21;
     }
 

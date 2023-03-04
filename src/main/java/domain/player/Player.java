@@ -21,8 +21,8 @@ public abstract class Player {
         return cardArea;
     }
 
-    public boolean isBurst() {
-        return cardArea.isBurst();
+    public boolean isBust() {
+        return cardArea.isBust();
     }
 
     public void hit(final Card card) {
