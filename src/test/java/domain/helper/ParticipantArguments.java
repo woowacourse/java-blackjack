@@ -1,8 +1,10 @@
 package domain.helper;
 
+import static domain.card.CardNumber.*;
+import static domain.card.CardPattern.*;
+import static domain.participant.Result.*;
+
 import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardPattern;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.List;
@@ -28,35 +30,46 @@ public final class ParticipantArguments {
 
     private static Stream<Arguments> makeCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
-                        Card.create(CardPattern.CLOVER, CardNumber.THREE), Card.create(CardPattern.SPADE, CardNumber.QUEEN)), 16)
-                , Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
-                        Card.create(CardPattern.CLOVER, CardNumber.TWO), Card.create(CardPattern.SPADE, CardNumber.TWO)), 17)
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
+                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), 16),
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
+                        Card.create(CLOVER, TWO), Card.create(SPADE, TWO)), 17)
         );
     }
 
     private static Stream<Arguments> makeBustCard() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
-                        Card.create(CardPattern.CLOVER, CardNumber.THREE), Card.create(CardPattern.SPADE, CardNumber.QUEEN)), false)
-                , Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.QUEEN), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
-                        Card.create(CardPattern.CLOVER, CardNumber.TEN), Card.create(CardPattern.SPADE, CardNumber.TWO)), true)
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
+                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), false),
+                Arguments.of(List.of(Card.create(HEART, QUEEN), Card.create(DIAMOND, TWO),
+                        Card.create(CLOVER, TEN), Card.create(SPADE, TWO)), true)
         );
     }
 
     private static Stream<Arguments> makeBlackJackCard() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.SPADE, CardNumber.TWO)), false)
-                , Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.QUEEN)), true)
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(SPADE, TWO)), false),
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, QUEEN)), true)
         );
     }
 
     private static Stream<Arguments> makeDealerCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
-                        Card.create(CardPattern.CLOVER, CardNumber.THREE), Card.create(CardPattern.SPADE, CardNumber.QUEEN)), true)
-                , Arguments.of(List.of(Card.create(CardPattern.HEART, CardNumber.ACE), Card.create(CardPattern.DIAMOND, CardNumber.TWO),
-                        Card.create(CardPattern.CLOVER, CardNumber.TWO), Card.create(CardPattern.SPADE, CardNumber.TWO)), false)
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
+                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), true),
+                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
+                        Card.create(CLOVER, TWO), Card.create(SPADE, TWO)), false)
+        );
+    }
+
+    private static Stream<Arguments> makeParticipantsCards() {
+        return Stream.of(
+                Arguments.of(List.of(Card.create(HEART, FOUR), Card.create(HEART, THREE)),
+                        List.of(Card.create(DIAMOND, THREE), Card.create(DIAMOND, TWO)), LOSE),
+                Arguments.of(List.of(Card.create(HEART, TWO), Card.create(HEART, THREE)),
+                        List.of(Card.create(DIAMOND, TWO), Card.create(DIAMOND, THREE)), DRAW),
+                Arguments.of(List.of(Card.create(HEART, TWO), Card.create(HEART, THREE)),
+                        List.of(Card.create(DIAMOND, FOUR), Card.create(DIAMOND, THREE)), WIN)
         );
     }
 }

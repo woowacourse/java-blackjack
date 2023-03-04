@@ -5,7 +5,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.game.GameManager;
 import domain.game.GameResult;
-import domain.game.Result;
+import domain.participant.Result;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;

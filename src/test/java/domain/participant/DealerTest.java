@@ -41,7 +41,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("getFirst()는 호출하면, 딜러의 첫 번째 카드를 조회한다")
+    @DisplayName("getFirst()는 호출하면 딜러의 첫 번째 카드를 조회한다")
     void getFirst_whenCall_thenReturnFirstCard() {
         // given
         final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
@@ -55,8 +55,8 @@ class DealerTest {
                 .isEqualTo(card);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
     @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
     void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
         // given
         cards.forEach(dealer::addCard);
@@ -66,11 +66,11 @@ class DealerTest {
 
         // then
         assertThat(score)
-                .isSameAs(expected);
+            .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
     @ParameterizedTest(name = "isBust()는 호출하면 버스트인지 확인한다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")
     void isBust_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(dealer::addCard);
@@ -83,8 +83,8 @@ class DealerTest {
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
     @ParameterizedTest(name = "isBlackJack()은 호출하면 블랙잭인지 확인한다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeBlackJackCard")
     void isBlackJack_whenCall_thenReturnIsBust(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(dealer::addCard);
@@ -97,14 +97,32 @@ class DealerTest {
                 .isSameAs(expected);
     }
 
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
     @ParameterizedTest(name = "canGiveCard()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeDealerCards")
     void canGiveCard_whenCall_thenReturnCanGiveCard(final List<Card> cards, final boolean expected) {
         // given
         cards.forEach(dealer::addCard);
 
         // when, then
         assertThat(dealer.canGiveCard())
+                .isSameAs(expected);
+    }
+
+    @ParameterizedTest(name = "calculate()는 플레이어를 건네주면 게임 결과를 반환한다")
+    @MethodSource(value = "domain.helper.ParticipantArguments#makeParticipantsCards")
+    void calculateResult_givenPlayer_thenReturnGameResult(final List<Card> dealerCards,
+            final List<Card> playerCards, final Result expected) {
+        // given
+        final Dealer dealer = Dealer.create();
+        final Player player = Player.create("a");
+        dealerCards.forEach(dealer::addCard);
+        playerCards.forEach(player::addCard);
+
+        // when
+        Result actual = dealer.calculateResult(player);
+
+        // then
+        assertThat(actual)
                 .isSameAs(expected);
     }
 }

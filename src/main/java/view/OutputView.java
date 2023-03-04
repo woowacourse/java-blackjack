@@ -3,7 +3,7 @@ package view;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
-import domain.game.Result;
+import domain.participant.Result;
 import domain.participant.Participants;
 import view.message.GameResultMessage;
 import view.message.NumberMessage;
