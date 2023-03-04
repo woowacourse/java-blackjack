@@ -18,7 +18,7 @@ public enum HitCommand {
         return Arrays.stream(HitCommand.values())
                 .filter(hitCommand -> command.equals(hitCommand.command))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("y또는 n만 입력할 수 있습니다."));
     }
 
     public boolean isHit() {
