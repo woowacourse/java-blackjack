@@ -29,11 +29,11 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        BlackJackGame blackJackGame = setUp();
+        BlackJackGame blackJackGame = generateBlackJackGame();
         playGame(blackJackGame);
     }
 
-    private BlackJackGame setUp() {
+    private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards();
         Dealer dealer = new Dealer(cards.drawForFirstTurn());
         List<Player> players = setUpPlayers(cards);
