@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 public class Boxes {
 
     private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayResult.NOT_BUST, 0);
-    private final Map<Player, BoxStatus> boxes = new LinkedHashMap<>();
+    private final LinkedHashMap<Player, BoxStatus> boxes = new LinkedHashMap<>();
 
     private Boxes(List<Player> participants) {
         generateBoxes(participants);
