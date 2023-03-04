@@ -1,3 +1,5 @@
+package service;
+
 import domain.CardBox;
 import domain.CardNumberGenerator;
 import domain.Cards;

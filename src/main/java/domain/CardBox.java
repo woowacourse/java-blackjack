@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardBox {
@@ -23,6 +24,7 @@ public class CardBox {
     }
 
     public Card get(final int index) {
+        Collections.shuffle(cardBox);
         Card card = cardBox.get(index);
         cardBox.remove(card);
         return card;
