@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
-
-
     @DisplayName("플레이어와 딜러가 둘 다 버스트가 아니고, 플레이어의 점수가 더 크면 이긴다")
     @Test
     void player_dealer_neither_bust_WIN() {
