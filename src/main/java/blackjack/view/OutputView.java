@@ -43,6 +43,7 @@ public class OutputView {
     public static void printPlayerCurrentCards(Player player) {
         String playerCards = getPlayerCards(player);
         System.out.println(player.getPlayerName() + CARD_DELIMITER + playerCards);
+        printEmptyLine();
     }
 
     private static String getPlayerCards(User user) {
