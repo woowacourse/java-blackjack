@@ -1,4 +1,4 @@
-package service;
+package domain;
 
 import domain.CardBox;
 import domain.Player;
