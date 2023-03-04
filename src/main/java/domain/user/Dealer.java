@@ -1,14 +1,14 @@
 package domain.user;
 
-public class Dealer extends Player {
+import domain.game.GameRule;
 
-    private static final int DEALER_THRESHOLD = 16;
+public class Dealer extends Player {
 
     public Dealer(String playerName, Hand hand) {
         super(playerName, hand);
     }
 
     public boolean isHit() {
-        return sumCardPool() <= DEALER_THRESHOLD;
+        return sumCardPool() <= GameRule.DEALER_HIT_LIMIT.getNumber();
     }
 }

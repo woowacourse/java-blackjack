@@ -2,13 +2,12 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Denomination;
+import domain.game.GameRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-
-    private static final int CARD_POINT_LIMIT = 21;
 
     private final List<Card> cards;
 
@@ -26,14 +25,14 @@ public class Hand {
             sum += card.getNumber().getValue();
         }
 
-        if (sum > CARD_POINT_LIMIT && containsAce()) {
-            sum -= CARD_POINT_LIMIT - Denomination.ACE.getValue();
+        if (sum > GameRule.BLACKJACK.getNumber() && containsAce()) {
+            sum -= GameRule.BLACKJACK.getNumber() - Denomination.ACE.getValue();
         }
         return sum;
     }
 
-    public boolean isOverCardPointLimit() {
-        return sumCardNumbers() > CARD_POINT_LIMIT;
+    public boolean isOverBlackjack() {
+        return sumCardNumbers() > GameRule.BLACKJACK.getNumber();
     }
 
     private boolean containsAce() {

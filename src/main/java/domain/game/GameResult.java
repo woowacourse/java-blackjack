@@ -22,13 +22,17 @@ public enum GameResult {
 
     public static GameResult getResult(Player player, Dealer dealer) {
         return Arrays.stream(GameResult.values())
-                .filter(it -> it.function.apply(getPlayerPoint(player), getPlayerPoint(dealer)))
+                .filter(it -> it.function.apply(
+                        getPlayerPoint(player),
+                        getPlayerPoint(dealer)
+                        )
+                )
                 .findAny()
                 .orElseThrow();
     }
 
     private static int getPlayerPoint(Player player) {
-        if (player.isOverCardPointLimit()) {
+        if (player.isOverBlackjack()) {
             return 0;
         }
         return player.sumCardPool();

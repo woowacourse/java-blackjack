@@ -24,8 +24,8 @@ public class Player {
         return hand.sumCardNumbers();
     }
 
-    public boolean isOverCardPointLimit() {
-        return hand.isOverCardPointLimit();
+    public boolean isOverBlackjack() {
+        return hand.isOverBlackjack();
     }
 
     public PlayerName getPlayerName() {

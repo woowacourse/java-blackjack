@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.game.Deck;
 import domain.game.GameResult;
+import domain.game.GameRule;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -62,8 +63,8 @@ public class People {
         return GameResult.makeDealerRecord(record);
     }
 
-    public boolean isBust(String playerName, int blackJackNumber) {
-        return playerByName(playerName).sumCardPool() > blackJackNumber;
+    public boolean isBust(String playerName) {
+        return playerByName(playerName).sumCardPool() > GameRule.BLACKJACK.getNumber();
     }
 
     public boolean dealerNeedsHit() {
