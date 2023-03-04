@@ -17,6 +17,12 @@ public class HandCards {
         cards.add(card);
     }
 
+    public int getSumCardValue() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
