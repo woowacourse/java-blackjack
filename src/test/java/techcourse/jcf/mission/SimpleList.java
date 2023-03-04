@@ -65,4 +65,13 @@ public interface SimpleList<T> {
         }
         return result;
     }
+
+    static void copy(SimpleList copied, SimpleList copy) {
+        copied.clear();
+
+        for (int i = 0; i < copy.size(); i++) {
+            copied.add(copy.get(i));
+        }
+    }
+
 }

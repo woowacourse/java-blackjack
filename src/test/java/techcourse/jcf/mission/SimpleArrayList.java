@@ -18,6 +18,7 @@ public class SimpleArrayList<T extends Number> implements SimpleList<T> {
         }
     }
 
+
     @Override
     public boolean add(final T value) {
         checkRealloc(size + 1);
