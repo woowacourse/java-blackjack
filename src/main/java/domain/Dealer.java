@@ -15,7 +15,7 @@ public class Dealer extends Player {
         return dealerCompareToPlayer(sumOfDealerCards, sumOfPlayerCards);
     }
 
-    private static int dealerCompareToPlayer(final int sumOfDealerCards, final int sumOfPlayerCards) {
+    private int dealerCompareToPlayer(final int sumOfDealerCards, final int sumOfPlayerCards) {
         if (sumOfDealerCards > 21 && sumOfPlayerCards > 21) {
             return 0;
         }
