@@ -1,36 +1,36 @@
 package view.mapper;
 
-import domain.card.CardNumber;
+import domain.card.Denomination;
 
 import java.util.Arrays;
 
 public enum CardNumberMapper {
 
-    ACE(CardNumber.ACE, "A"),
-    TWO(CardNumber.TWO, "2"),
-    THREE(CardNumber.THREE, "3"),
-    FOUR(CardNumber.FOUR, "4"),
-    FIVE(CardNumber.FIVE, "5"),
-    SIX(CardNumber.SIX, "6"),
-    SEVEN(CardNumber.SEVEN, "7"),
-    EIGHT(CardNumber.EIGHT, "8"),
-    NINE(CardNumber.NINE, "9"),
-    TEN(CardNumber.TEN, "10"),
-    JACK(CardNumber.JACK, "J"),
-    QUEEN(CardNumber.QUEEN, "Q"),
-    KING(CardNumber.KING, "K");
+    ACE(Denomination.ACE, "A"),
+    TWO(Denomination.TWO, "2"),
+    THREE(Denomination.THREE, "3"),
+    FOUR(Denomination.FOUR, "4"),
+    FIVE(Denomination.FIVE, "5"),
+    SIX(Denomination.SIX, "6"),
+    SEVEN(Denomination.SEVEN, "7"),
+    EIGHT(Denomination.EIGHT, "8"),
+    NINE(Denomination.NINE, "9"),
+    TEN(Denomination.TEN, "10"),
+    JACK(Denomination.JACK, "J"),
+    QUEEN(Denomination.QUEEN, "Q"),
+    KING(Denomination.KING, "K");
 
-    private final CardNumber cardNumber;
+    private final Denomination denomination;
     private final String value;
 
-    CardNumberMapper(CardNumber cardNumber, String value) {
-        this.cardNumber = cardNumber;
+    CardNumberMapper(Denomination denomination, String value) {
+        this.denomination = denomination;
         this.value = value;
     }
 
-    public static String getCardNumber(CardNumber cardNumber) {
+    public static String getCardNumber(Denomination denomination) {
         return Arrays.stream(CardNumberMapper.values())
-                .filter(it -> it.cardNumber == cardNumber)
+                .filter(it -> it.denomination == denomination)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 타입이 없습니다."))
                 .value;

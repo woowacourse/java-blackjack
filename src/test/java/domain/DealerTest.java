@@ -1,8 +1,8 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardType;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.user.CardPool;
 import domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +18,8 @@ class DealerTest {
     @DisplayName("17이면 히트가 아니다")
     void notHit() {
         Dealer dealer = new Dealer("deal", new CardPool(List.of(
-                new Card(CardType.HEART, CardNumber.SIX),
-                new Card(CardType.HEART, CardNumber.ACE)
+                new Card(Suit.HEART, Denomination.SIX),
+                new Card(Suit.HEART, Denomination.ACE)
         )));
 
         assertThat(dealer.isHit()).isFalse();
@@ -29,8 +29,8 @@ class DealerTest {
     @DisplayName("16이면 히트다")
     void isHit() {
         Dealer dealer = new Dealer("deal", new CardPool(List.of(
-                new Card(CardType.HEART, CardNumber.FIVE),
-                new Card(CardType.HEART, CardNumber.ACE)
+                new Card(Suit.HEART, Denomination.FIVE),
+                new Card(Suit.HEART, Denomination.ACE)
         )));
 
         assertThat(dealer.isHit()).isTrue();

@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.CardNumber;
+import domain.card.Denomination;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class CardPool {
         }
 
         if (sum > CARD_POINT_LIMIT && containsAce()) {
-            sum -= CARD_POINT_LIMIT - CardNumber.ACE.getValue();
+            sum -= CARD_POINT_LIMIT - Denomination.ACE.getValue();
         }
         return sum;
     }
@@ -38,7 +38,7 @@ public class CardPool {
 
     private boolean containsAce() {
         return cards.stream()
-                .anyMatch(card -> card.getNumber() == CardNumber.ACE);
+                .anyMatch(card -> card.getNumber() == Denomination.ACE);
     }
 
     public List<Card> getCards() {

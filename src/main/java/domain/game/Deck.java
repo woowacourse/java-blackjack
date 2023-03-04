@@ -1,8 +1,8 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardType;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.strategy.NumberGenerator;
 
 import java.util.ArrayList;
@@ -20,14 +20,14 @@ public class Deck {
     }
 
     private void initializeCards() {
-        for (CardType cardType : CardType.values()) {
-            mapCardNumbers(cardType);
+        for (Suit suit : Suit.values()) {
+            mapCardNumbers(suit);
         }
     }
 
-    private void mapCardNumbers(CardType cardType) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(cardType, cardNumber));
+    private void mapCardNumbers(Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(suit, denomination));
         }
     }
 

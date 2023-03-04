@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum CardNumber {
+public enum Denomination {
 
     ACE(11),
     TWO(2),
@@ -18,7 +18,7 @@ public enum CardNumber {
 
     private final int value;
 
-    CardNumber(int value) {
+    Denomination(int value) {
         this.value = value;
     }
 

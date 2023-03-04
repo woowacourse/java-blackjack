@@ -1,26 +1,26 @@
 package view.mapper;
 
-import domain.card.CardType;
+import domain.card.Suit;
 
 import java.util.Arrays;
 
 public enum CardTypeMapper {
-    HEART(CardType.HEART, "하트"),
-    SPADE(CardType.SPADE, "스페이드"),
-    CLOVER(CardType.CLOVER, "클로버"),
-    DIAMOND(CardType.DIAMOND, "다이아몬드");
+    HEART(Suit.HEART, "하트"),
+    SPADE(Suit.SPADE, "스페이드"),
+    CLOVER(Suit.CLOVER, "클로버"),
+    DIAMOND(Suit.DIAMOND, "다이아몬드");
 
-    private final CardType cardType;
+    private final Suit suit;
     private final String cardName;
 
-    CardTypeMapper(CardType cardType, String cardName) {
-        this.cardType = cardType;
+    CardTypeMapper(Suit suit, String cardName) {
+        this.suit = suit;
         this.cardName = cardName;
     }
 
-    public static String getCardName(CardType cardType) {
+    public static String getCardName(Suit suit) {
         return Arrays.stream(CardTypeMapper.values())
-                .filter(it -> it.cardType == cardType)
+                .filter(it -> it.suit == suit)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 타입이 없습니다."))
                 .cardName;

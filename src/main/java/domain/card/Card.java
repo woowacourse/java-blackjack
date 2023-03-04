@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardType type;
-    private final CardNumber number;
+    private final Suit type;
+    private final Denomination number;
 
-    public Card(final CardType type, final CardNumber number) {
+    public Card(final Suit type, final Denomination number) {
         this.type = type;
         this.number = number;
     }
 
-    public CardType getType() {
+    public Suit getType() {
         return type;
     }
 
@@ -24,7 +24,7 @@ public class Card {
         return type == card.type && number == card.number;
     }
 
-    public CardNumber getNumber() {
+    public Denomination getNumber() {
         return number;
     }
 
