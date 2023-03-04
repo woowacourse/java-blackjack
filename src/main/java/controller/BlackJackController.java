@@ -1,3 +1,5 @@
+package controller;
+
 import domain.BlackJack;
 import domain.HitCommand;
 import domain.Users;
@@ -7,7 +9,7 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class Controller {
+public class BlackJackController {
     private BlackJack blackJack;
 
     public void run() {
