@@ -84,10 +84,11 @@ public class BlackJackService {
     public List<ParticipantResult> getParticipantResults(final Dealer dealer,
                                                          final Players players) {
         List<ParticipantResult> participantResults = new ArrayList<>();
-        participantResults.add(ParticipantResult.toDto(dealer));
+        participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateCardScore()));
 
         players.stream()
-                .forEach(player -> participantResults.add(ParticipantResult.toDto(player)));
+                .forEach(
+                        player -> participantResults.add(ParticipantResult.toDto(player, player.calculateCardScore())));
 
         return participantResults;
     }
