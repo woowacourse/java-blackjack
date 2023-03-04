@@ -12,13 +12,8 @@ public class Player {
         this.cards = new Cards();
     }
 
-    public void initialPick() {
-        pickCard();
-        pickCard();
-    }
-
-    public void pickCard() {
-        cards.addCard(Deck.pickCard());
+    public void drawCard(Card card) {
+        cards.addCard(card);
     }
 
     public List<Card> getCards() {
@@ -29,11 +24,11 @@ public class Player {
         return playerName.getName();
     }
 
-    public int getScore() {
-        return cards.calculateScore();
+    public Score getScore() {
+        return Score.from(cards.calculateScore());
     }
 
-    public boolean isBustedGambler(int sum) {
+    public boolean isBustedPlayer(int sum) {
         return this.cards.isBusted(sum);
     }
 }
