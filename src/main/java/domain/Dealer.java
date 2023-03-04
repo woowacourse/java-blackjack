@@ -15,7 +15,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return getScore() > 16;
+        return getScore() <= 16;
     }
 }
 
