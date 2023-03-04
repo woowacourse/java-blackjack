@@ -13,10 +13,6 @@ public class Player {
     }
 
     public boolean selectToPickOtherCard(final CardBox cardBox) {
-        return pickOtherCard(cardBox);
-    }
-
-    protected boolean pickOtherCard(final CardBox cardBox) {
         return cards.addCard(cardBox.get());
     }
 
