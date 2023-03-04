@@ -17,7 +17,7 @@ public enum GameResult {
         if ((playerScore == dealerScore) || (isBust(playerScore) && isBust(dealerScore))) {
             return PUSH;
         }
-        if (playerScore < dealerScore || isBust(playerScore)) {
+        if ((!isBust(dealerScore) && playerScore < dealerScore) || isBust(playerScore)) {
             return LOSE;
         }
         return WIN;

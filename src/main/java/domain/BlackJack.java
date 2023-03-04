@@ -5,6 +5,7 @@ import static domain.GameResult.PUSH;
 import static domain.GameResult.WIN;
 import static domain.GameResult.comparePlayerWithDealer;
 
+import domain.deck.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -24,8 +25,7 @@ public class BlackJack {
         this.deck = deck;
     }
 
-    public static BlackJack of(final Users users, final CardIndexGenerator cardIndexGenerator) {
-        Deck deck = Deck.from(cardIndexGenerator);
+    public static BlackJack of(final Users users, final Deck deck) {
         initCards(users, deck);
         return new BlackJack(users, deck);
     }

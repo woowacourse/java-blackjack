@@ -1,7 +1,7 @@
 import domain.BlackJack;
 import domain.HitCommand;
-import domain.RandomCardIndexGenerator;
 import domain.Users;
+import domain.deck.RandomDeckGenerator;
 import domain.user.Player;
 import java.util.List;
 import view.InputView;
@@ -23,7 +23,7 @@ public class Controller {
     private void ready() {
         List<String> playerNames = InputView.askPlayerNames();
         Users users = Users.from(playerNames);
-        blackJack = BlackJack.of(users, new RandomCardIndexGenerator());
+        blackJack = BlackJack.of(users, new RandomDeckGenerator().generateDeck());
         OutputView.printInitMessage(playerNames);
         OutputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
         OutputView.printPlayerCards(blackJack.getPlayerToCard());

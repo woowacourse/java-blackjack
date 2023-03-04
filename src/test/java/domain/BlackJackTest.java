@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.deck.DefaultDeckGenerator;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
@@ -11,29 +12,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackTest {
-
-    private static class ZeroIndexGenerator implements CardIndexGenerator {
-
-        @Override
-        public int chooseIndex(int deckSize) {
-            return 0;
-        }
-    }
-
     private Users users;
     private BlackJack blackJack;
 
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        blackJack = BlackJack.of(users, new DefaultDeckGenerator().generateDeck());
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
     @Test
     void calculateGameResults() {
         users = Users.from(List.of("hongo", "kiara"));
-        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        //blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+
+        BlackJack blackJack = BlackJack.of(users, new DefaultDeckGenerator().generateDeck());
+
         // 카드 현황
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
