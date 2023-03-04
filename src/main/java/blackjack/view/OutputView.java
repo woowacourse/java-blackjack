@@ -49,13 +49,25 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerWinningResult(List<Integer> result) {
-        System.out.println("딜러: " + result.get(0) + "승 " + result.get(1) + "무 " + result.get(2) + "패");
+    public void printDealerWinningResult(int win, int draw, int lose) {
+        System.out.println("딜러: " + win + "승 " + draw + "무 " + lose + "패");
     }
 
-    public void printPlayersWinningResult(Map<String, String> playerResult) {
-        for(Map.Entry entry : playerResult.entrySet()){
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+    public void printPlayersWinningResult(Map<String, List<Integer>> playerResult) {
+        for(Map.Entry<String, List<Integer>> entry : playerResult.entrySet()){
+            List<Integer> winDrawLose = entry.getValue();
+            System.out.println(entry.getKey() + ": " + winningResult(winDrawLose));
         }
+    }
+
+    private String winningResult(List<Integer> result) {
+
+        if (result.get(0) > 0) {
+            return "승";
+        }
+        if (result.get(1) > 0) {
+            return  "무";
+        }
+        return "패";
     }
 }

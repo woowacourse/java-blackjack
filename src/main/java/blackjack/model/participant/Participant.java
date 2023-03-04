@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.model.ResultState;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
@@ -28,20 +29,18 @@ public abstract class Participant {
         return currentState.isBust();
     }
 
-    public boolean isStand(){
-        return currentState.isStand();
-    }
-
     public boolean isFinished() {
         return currentState.isFinished();
     }
 
     public CardScore cardScore() {
-        return currentState.getScore();
+        return currentState.getScore(resultState());
     }
 
+    abstract public ResultState resultState();
+
     public int getScore() {
-        if (isBust()) {
+        if (isBust() || cardScore().bigScore() > 21) {
             return cardScore().smallScore();
         }
         return cardScore().bigScore();
