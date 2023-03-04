@@ -32,7 +32,8 @@ public class Controller {
         Users users = Users.from(playerNames);
         blackJack = BlackJack.of(users, new RandomCardIndexGenerator());
         outputView.printInitMessage(playerNames);
-        outputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
+        // outputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
+        outputView.printDealerCardHidden(blackJack.getDealerCard());
         outputView.printPlayerCards(blackJack.getPlayerToCard());
     }
 
@@ -69,8 +70,8 @@ public class Controller {
     }
 
     private void end() {
-        outputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
-        outputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
+        outputView.printDealerCards(blackJack.getDealerCards(), blackJack.getDealerScore());
+        outputView.printPlayerCards(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
         outputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
     }
 }

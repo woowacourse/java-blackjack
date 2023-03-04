@@ -80,7 +80,7 @@ public class BlackJack {
         dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
     }
 
-    public Card getDealerCardWithHidden() {
+    public Card getDealerCard() {
         Dealer dealer = users.getDealer();
         return dealer.getCards().get(0);
     }

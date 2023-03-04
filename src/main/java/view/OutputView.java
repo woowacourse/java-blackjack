@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class OutputView {
 
-    public void printDealerCardWithHidden(final Card card) {
+    public void printDealerCardHidden(final Card card) {
         System.out.println("딜러: " + getCardName(card));
     }
 
@@ -17,11 +17,11 @@ public class OutputView {
             System.out.println(getEachPlayerCards(playerName, cards)));
     }
 
-    public void printDealerCardWithScore(final List<Card> cards, final int score) {
+    public void printDealerCards(final List<Card> cards, final int score) {
         printCardWithScore("딜러 ", cards, score);
     }
 
-    public void printPlayerCardWithScore(final Map<String, List<Card>> playerToCard,
+    public void printPlayerCards(final Map<String, List<Card>> playerToCard,
         final Map<String, Integer> playerToScore) {
         playerToCard.forEach((playerName, cards) -> {
             int score = playerToScore.get(playerName);
