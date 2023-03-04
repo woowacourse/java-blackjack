@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DeckGenerator {
@@ -14,6 +15,7 @@ public class DeckGenerator {
         for (Suit suit : Suit.values()) {
             addCardBySuit(cards, suit);
         }
+        shuffle(cards);
         return cards;
     }
 
@@ -21,5 +23,9 @@ public class DeckGenerator {
         for (Denomination denomination : Denomination.values()) {
             cards.add(new Card(suit, denomination));
         }
+    }
+
+    private void shuffle(List<Card> cards) {
+        Collections.shuffle(cards);
     }
 }
