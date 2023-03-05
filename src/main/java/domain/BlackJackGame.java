@@ -31,4 +31,8 @@ public class BlackJackGame {
     public Player findPlayerByPlayerName(String playerName) {
         return participants.findPlayerByPlayerName(playerName);
     }
+
+    public void distributeCard(Participant participant) {
+        participant.takeCard(deck.drawCard());
+    }
 }
