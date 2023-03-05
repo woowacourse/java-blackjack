@@ -22,10 +22,7 @@ public class Application {
     private static void start(Game game) {
         Players players = game.getPlayers();
         game.dealTwoCards();
-
-        outputView.printDealCards(players.getUsers());
-        outputView.printFirstPlayerCard(players.getDealer());
-        outputView.printPlayersCards(players.getUsers());
+        outputView.printCardsFrom(players);
     }
 
     private static void play(List<String> playerNames, Game game) {

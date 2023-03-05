@@ -8,7 +8,13 @@ import java.util.stream.Collectors;
 import static domain.Result.*;
 
 public class OutputView {
-    public void printDealCards(List<Player> players) {
+    public void printCardsFrom(Players players) {
+        printDealCardsNotice(players.getUsers());
+        printFirstPlayerCard(players.getDealer());
+        printPlayersCards(players.getUsers());
+    }
+
+    private void printDealCardsNotice(List<Player> players) {
         String joinedPlayerNames = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
@@ -16,7 +22,7 @@ public class OutputView {
         System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
     }
 
-    public void printPlayersCards(List<Player> players) {
+    private void printPlayersCards(List<Player> players) {
         for (Player player : players) {
             String name = player.getName();
             printPlayerCards(name, player.getCards());
