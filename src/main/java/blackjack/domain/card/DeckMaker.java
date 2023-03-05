@@ -1,14 +1,20 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DeckMaker {
     public List<Card> makeDeck() {
-        return Stream.of(Shape.values())
-                .flatMap(shape -> Stream.of(Letter.values())
-                        .map(letter -> new Card(shape, letter)))
-                .collect(Collectors.toList());
+        final List<Card> newDeck = new ArrayList<>();
+        for(Letter letter:Letter.values()){
+            makeNewDeck(newDeck, letter);
+        }
+        return newDeck;
+    }
+
+    private static void makeNewDeck(List<Card> newDeck, Letter letter) {
+        for(Shape shape:Shape.values()){
+            newDeck.add(new Card(shape, letter));
+        }
     }
 }
