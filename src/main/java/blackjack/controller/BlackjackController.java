@@ -42,7 +42,7 @@ public class BlackjackController {
 
     private Participants makeParticipants() {
         final Dealer dealer = new Dealer();
-        final String playerNames = inputView.inputPlayers();
+        final List<String> playerNames = inputView.readPlayers();
         return new Participants(dealer, playerNames);
     }
 
@@ -88,7 +88,7 @@ public class BlackjackController {
     }
 
     private boolean isMoreHit(final Player player) {
-        final Order order = Order.from(inputView.inputOrderCard(player.getName()));
+        final Order order = Order.from(inputView.readOrderCard(player.getName()));
         return order.isYES();
     }
 

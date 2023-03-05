@@ -13,20 +13,16 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(final Dealer dealer, final String playerNames) {
+    public Participants(final Dealer dealer, final List<String> playerNames) {
         validate(playerNames);
 
         this.dealer = dealer;
         this.players = makePlayers(playerNames);
     }
 
-    private void validate(final String playerNames) {
-        final List<String> names = Arrays.stream(playerNames.split(COMMA))
-                .map(String::strip)
-                .collect(Collectors.toList());
-
-        validateEmptyNames(names);
-        validateDuplicateName(names);
+    private void validate(final List<String> playerNames) {
+        validateEmptyNames(playerNames);
+        validateDuplicateName(playerNames);
     }
 
     private void validateEmptyNames(final List<String> names) {
