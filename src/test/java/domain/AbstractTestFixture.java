@@ -22,4 +22,7 @@ public abstract class AbstractTestFixture {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 글자입니다"));
     }
 
+    Participants createParticipantsFrom(Dealer dealer, User... users) {
+        return new Participants(dealer, Arrays.asList(users));
+    }
 }
