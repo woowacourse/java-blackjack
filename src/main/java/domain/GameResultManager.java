@@ -4,7 +4,6 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// TODO: 2023/03/06  플레이어 승패
 public class GameResultManager {
     private static final int BUST_HAND_VALUE = 0;
     private final Map<Participant, Integer> gameResult;
