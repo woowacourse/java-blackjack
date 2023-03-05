@@ -15,14 +15,15 @@ public class Players {
     }
 
     public static Players of(List<String> playerNames, List<CardDeck> cardDecks) {
-        playerNames = playerNames.stream()
+        List<Name> names = playerNames.stream()
                 .map(String::trim)
+                .map(Name::new)
                 .collect(Collectors.toList());
-        validateDuplicateName(playerNames);
-        return new Players(initializePlayers(playerNames, cardDecks));
+        validateDuplicateName(names);
+        return new Players(initializePlayers(names, cardDecks));
     }
 
-    private static void validateDuplicateName(List<String> playerNames) {
+    private static void validateDuplicateName(List<Name> playerNames) {
         long deduplicatedNameCount = playerNames.stream()
                 .distinct()
                 .count();
@@ -32,16 +33,12 @@ public class Players {
         }
     }
 
-    private static List<Player> initializePlayers(List<String> playerNames, List<CardDeck> cardDecks) {
+    private static List<Player> initializePlayers(List<Name> playerNames, List<CardDeck> cardDecks) {
         List<Player> players = new ArrayList<>();
         for (int index = 0; index < playerNames.size(); index++) {
-            players.add(createPlayer(playerNames.get(index), cardDecks.get(index)));
+            players.add(Player.of(playerNames.get(index), cardDecks.get(index)));
         }
         return players;
-    }
-
-    private static Player createPlayer(String playerName, CardDeck cardDeck) {
-        return new Player(new Name(playerName), cardDeck);
     }
 
     public List<Player> getPlayers() {
