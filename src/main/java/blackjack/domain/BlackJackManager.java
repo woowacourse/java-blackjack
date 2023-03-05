@@ -1,41 +1,27 @@
 package blackjack.domain;
 
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
+import java.util.function.Predicate;
 
-import static blackjack.util.ExceptionTemplate.*;
+import static blackjack.util.ExceptionTemplate.repeatAndPrintCause;
 
 public class BlackJackManager {
     private final Deck deck = new Deck();
+    private final BlackJackParticipants participants;
 
-    public void run() {
-        final Dealer dealer = new Dealer(initCards());
-        final List<Player> players = createPlayers();
-        OutputView.printParticipantsInitCards(dealer, players);
-
-        for (final Player player : players) {
-            hitBy(player);
-        }
-        hitBy(dealer);
-
-        showParticipantStatus(dealer, players);
-        showGameResult(dealer, players);
+    public BlackJackManager(final List<String> names) {
+        this.participants = new BlackJackParticipants(deck, names);
     }
 
-    private static void showParticipantStatus(final Dealer dealer, final List<Player> players) {
-        OutputView.printParticipantCardWithResult(dealer, dealer.getTotalPoint());
-        players.forEach(player -> OutputView.printParticipantCardWithResult(player, player.getTotalPoint()));
+    public void hitByPlayer(final Predicate<String> checkHitCondition, final Consumer<Player> printPlayerCards) {
+        participants.getPlayers()
+                .forEach(player -> hitBy(player, checkHitCondition, printPlayerCards));
     }
 
-    private static void showGameResult(final Dealer dealer, final List<Player> players) {
-        final BlackJackResults blackJackResults = new BlackJackResults(dealer, players);
-        OutputView.printBlackJackResults(blackJackResults);
-    }
-
-    private void hitBy(final Dealer dealer) {
+    public void hitByDealer(final IntConsumer printHitCount) {
+        final Dealer dealer = participants.getDealer();
         int hitCount = 0;
         while (dealer.isHittable()) {
             dealer.hit(deck.draw());
@@ -43,32 +29,34 @@ public class BlackJackManager {
         }
 
         if (hitCount > 0) {
-            OutputView.printDealerHit(hitCount);
+            printHitCount.accept(hitCount);
         }
     }
 
-    private void hitBy(final Player player) {
-        while (player.isHittable()
-                && repeatAndPrintCause(() -> InputView.checkPlayerAdditionalHit(player.getName().getValue()))
-        ) {
+    private void hitBy(
+            final Player player,
+            final Predicate<String> checkHitCondition,
+            final Consumer<Player> printPlayerCards
+    ) {
+        final String name = player.getName().getValue();
+        while (player.isHittable() && repeatAndPrintCause(() -> checkHitCondition.test(name))) {
             player.hit(deck.draw());
-            OutputView.printParticipantsCards(player);
+            printPlayerCards.accept(player);
         }
         if (player.isHittable()) {
-            OutputView.printParticipantsCards(player);
+            printPlayerCards.accept(player);
         }
     }
 
-    private List<Player> createPlayers() {
-        final List<String> names = repeatAndPrintCause(InputView::readNames);
-        final List<Player> players = new ArrayList<>();
-        for (final String name : names) {
-            players.add(new Player(initCards(), name));
-        }
-        return players;
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 
-    private ParticipantCards initCards() {
-        return new ParticipantCards(List.of(deck.draw(), deck.draw()));
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
+    }
+
+    public BlackJackResults getBlackJackResults() {
+        return participants.createBlackJackResults();
     }
 }
