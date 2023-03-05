@@ -12,4 +12,16 @@ public class Dealer extends Player {
     public boolean isHittable() {
         return getScore().getValue() <= PICK_BOUNDARY;
     }
+
+    public Status getDealerStats(final Player player) {
+        Score playerScore = player.getScore();
+        Score dealerScore = getScore();
+        if (player.isBustedPlayer() && this.isBustedPlayer()) {
+            return Status.DRAW;
+        }
+        if (player.isBlackJack()) {
+            return Status.LOSE;
+        }
+        return dealerScore.compareScore(playerScore);
+    }
 }

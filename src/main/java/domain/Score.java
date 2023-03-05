@@ -15,6 +15,13 @@ public class Score {
         return new Score(value);
     }
 
+    public Status compareScore(final Score score) {
+        if (this.value > score.value) {
+            return Status.WIN;
+        }
+        return Status.LOSE;
+    }
+
     public int getValue() {
         return value;
     }
