@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

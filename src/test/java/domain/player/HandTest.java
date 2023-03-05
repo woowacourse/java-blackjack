@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import domain.deck.Card;
 import domain.deck.Rank;

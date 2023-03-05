@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
