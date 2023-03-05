@@ -30,7 +30,7 @@ public interface SimpleList<E> {
         return result;
     }
 
-    static <T> void copy(SimpleList<? extends T> laserPrinters, SimpleList<T> printers) {
+    static <T> void copy(SimpleList<? extends T> laserPrinters, SimpleList<? super T> printers) {
         for (int i = 0; i < laserPrinters.size(); i++) {
             printers.add(laserPrinters.get(i));
         }
