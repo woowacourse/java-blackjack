@@ -30,8 +30,8 @@ public class OutputView {
 
     public void printParticipantsCard(final Dealer dealer, final List<Player> players) {
         printFirstDealerCards(dealer);
-        for (int i = 0; i < players.size(); i++) {
-            printFirstPlayersCards(players.get(i));
+        for (Player player : players) {
+            printFirstPlayersCards(player);
         }
     }
 
@@ -67,8 +67,8 @@ public class OutputView {
     public void printDealerWinORLose(final List<WinningResult> dealerResult) {
         System.out.print("딜러: ");
         System.out.print(WinningResult.WIN.getWinCount(dealerResult) + WinningResult.WIN.getName());
-        System.out.print(WinningResult.PUSH.getLoseCount(dealerResult) + WinningResult.PUSH.getName());
-        System.out.println(WinningResult.LOSE.getPushCount(dealerResult) + WinningResult.LOSE.getName());
+        System.out.print(WinningResult.PUSH.getPushCount(dealerResult) + WinningResult.PUSH.getName());
+        System.out.println(WinningResult.LOSE.getLoseCount(dealerResult) + WinningResult.LOSE.getName());
     }
 
     public void printPlayerWinORLose(final Map<Player, WinningResult> playerResult) {

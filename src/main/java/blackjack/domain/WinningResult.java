@@ -39,9 +39,9 @@ public enum WinningResult {
             return PUSH;
         }
         if (playerValue > WIN_MAX_NUMBER) {
-            return LOSE;
+            return WIN;
         }
-        return WIN;
+        return LOSE;
     }
 
     public static WinningResult calculateByBlackjack(boolean isPlayerBlackjack, boolean isDealerBlackjack) {
