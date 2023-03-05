@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
