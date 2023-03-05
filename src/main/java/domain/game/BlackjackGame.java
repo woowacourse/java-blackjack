@@ -10,13 +10,14 @@ import java.util.Map;
 public class BlackjackGame {
 
     private static final int START_HIT_COUNT = 2;
+    private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
     private final People people;
 
-    public BlackjackGame(List<String> playerNames, String dealerName, NumberGenerator numberGenerator) {
+    public BlackjackGame(List<String> playerNames, NumberGenerator numberGenerator) {
         this.deck = new Deck(numberGenerator);
-        this.people = new People(playerNames, dealerName);
+        this.people = new People(playerNames, DEALER_NAME);
     }
 
     public void letDealerHitUntilThreshold() {

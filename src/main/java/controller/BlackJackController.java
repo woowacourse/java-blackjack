@@ -36,7 +36,7 @@ public class BlackJackController {
 
     private void initializeGame() {
         List<String> playersName = inputView.inputParticipantsName();
-        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomNumberGenerator());
+        blackjackGame = new BlackjackGame(playersName, new RandomNumberGenerator());
     }
 
     private void letPlayersHit(List<Player> players) {
