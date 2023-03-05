@@ -1,17 +1,16 @@
 package domain.deck;
 
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
 
 public class Deck {
-    private final Stack<Card> cards;
+    private Deque<Card> cards;
 
     public Deck() {
         cards = initCards();
     }
 
-    private Stack<Card> initCards() {
-        Stack<Card> cards = new Stack<>();
+    private Deque<Card> initCards() {
+        Deque<Card> cards = new ArrayDeque<>();
 
         for (Suit suit : Suit.values()) {
             pushCards(cards, suit);
@@ -21,10 +20,12 @@ public class Deck {
     }
 
     public void shuffleDeck() {
+        List<Card> cards = new ArrayList<>(this.cards);
         Collections.shuffle(cards);
+        this.cards = new ArrayDeque<>(cards);
     }
 
-    private void pushCards(final Stack<Card> cards, final Suit suit) {
+    private void pushCards(final Deque<Card> cards, final Suit suit) {
         for (Rank rank : Rank.values()) {
             cards.push(new Card(suit, rank));
         }
