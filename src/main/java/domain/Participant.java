@@ -15,6 +15,8 @@ public class Participant {
         hand.addCard(card);
     }
 
+
+
     public int getHandValue() {
         return hand.calculateValue();
     }
@@ -25,5 +27,9 @@ public class Participant {
 
     public String getName() {
         return name;
+    }
+
+    boolean isBust() {
+        return hand.calculateValue() > 21;
     }
 }
