@@ -1,12 +1,16 @@
 package domain;
 
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import type.Letter;
+import type.Shape;
 import util.CardDeckMaker;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardDistributorTest {
 
@@ -29,6 +33,19 @@ public class CardDistributorTest {
         List<Card> cards = cardDistributor.distributeInitialCard();
 
         assertThat(cards.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("초기 분배할 수 있는 카드가 남아있지 않다면 예외가 발생한다")
+    void exceptionWhenNoMoreCardToRun() {
+        ArrayList<Card> cards = new ArrayList<>() {{
+            add(new Card(Shape.CLOVER, Letter.ACE));
+        }};
+        CardDistributor cardDistributor = new CardDistributor(cards);
+
+        assertThatThrownBy(cardDistributor::distributeInitialCard)
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("모든 참여자에게 카드를 분배할 수 없습니다.");
     }
 
 }

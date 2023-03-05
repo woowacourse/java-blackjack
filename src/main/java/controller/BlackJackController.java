@@ -8,14 +8,14 @@ import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Result;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import util.CardDeckMaker;
 import util.CardStatusConverter;
 import view.InputView;
 import view.OutputView;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -33,7 +33,7 @@ public class BlackJackController {
     public void run() {
         List<String> playerNames = requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
-        Players players = Players.of(playerNames, cardDistributor);
+        Players players = Players.of(playerNames, distributeCardsForPlayers(playerNames.size(), cardDistributor));
         Dealer dealer = new Dealer(new CardDeck(cardDistributor.distributeInitialCard()));
         printInitialDistribution(players, dealer);
         progress(players, cardDistributor, dealer);
@@ -45,7 +45,7 @@ public class BlackJackController {
             requestPlayerMoreCard(cardDistributor, player);
         }
         int dealerMoreCardCount = 0;
-        while (dealer.isMoreCardAble()) {
+        while (dealer.isMoreCardAble() && cardDistributor.isCardLeft()) {
             dealer.pick(cardDistributor.distribute());
             dealerMoreCardCount++;
         }
@@ -99,16 +99,23 @@ public class BlackJackController {
     }
 
     private boolean isNoStop(CardDistributor cardDistributor, Player player, String answer) {
-        if (answer.equals(MORE_CARD)) {
+        if (answer.equals(MORE_CARD) && cardDistributor.isCardLeft()) {
             player.pick(cardDistributor.distribute());
         }
-
         outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
         return answer.equals(MORE_CARD);
     }
 
     private List<String> requestPlayerName() {
         return Arrays.asList(inputView.requestPlayerName().split(DELIMITER, LIMIT_REMOVED));
+    }
+
+    private List<CardDeck> distributeCardsForPlayers(int count, CardDistributor cardDistributor) {
+        List<CardDeck> cardDecks = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            cardDecks.add(new CardDeck(cardDistributor.distributeInitialCard()));
+        }
+        return cardDecks;
     }
 
 }
