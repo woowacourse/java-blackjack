@@ -17,10 +17,11 @@ class ScoreTest {
     @DisplayName("카드 숫자 값들이 주어지면 단순 합산으로 계산할 수 있다.")
     void calculateScoreTest() {
         //given
+        Score score = new Score();
         List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE);
 
         //when
-        Score score = new Score(cards);
+        score.calculate(cards);
 
         //then
         Assertions.assertThat(score.getScore()).isEqualTo(14);
@@ -30,7 +31,8 @@ class ScoreTest {
     @MethodSource("calculateScoreWithAceCase")
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
     void calculateScoreWithAceTest(List<Card> cards, int expected) {
-        Score score = new Score(cards);
+        Score score = new Score();
+        score.calculate(cards);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
