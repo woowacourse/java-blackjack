@@ -1,12 +1,12 @@
 import application.BlackJackApplication;
-import service.BlackJackService;
+import domain.BlackJackGame;
 import view.InputView;
 import view.OutputView;
 
 public class main {
 
     public static void main(String[] args) {
-        BlackJackApplication blackJackApplication = new BlackJackApplication(new InputView(), new OutputView(), new BlackJackService());
+        BlackJackApplication blackJackApplication = new BlackJackApplication(new InputView(), new OutputView(), new BlackJackGame());
         blackJackApplication.run();
     }
 }

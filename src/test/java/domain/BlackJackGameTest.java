@@ -1,4 +1,4 @@
-package service;
+package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackServiceTest {
+class BlackJackGameTest {
 
-    private final BlackJackService blackJackService = new BlackJackService();
+    private final BlackJackGame blackJackGame = new BlackJackGame();
 
 
     @DisplayName("카드를 딜러에게 우선적으로 2장 분배한다.")
@@ -35,7 +35,7 @@ class BlackJackServiceTest {
         Card expectedFirst = cards.get(0);
         Card expectedSecond = cards.get(1);
         // when
-        blackJackService.splitCards(dealer, players, cardDeck);
+        blackJackGame.splitCards(dealer, players, cardDeck);
         List<Card> actual = dealer.getDrawnCards();
         // then
         assertThat(actual).containsExactly(expectedFirst, expectedSecond);
@@ -53,7 +53,7 @@ class BlackJackServiceTest {
         Card expectedFirst = cards.get(4);
         Card expectedSecond = cards.get(5);
         // when
-        blackJackService.splitCards(dealer, players, cardDeck);
+        blackJackGame.splitCards(dealer, players, cardDeck);
         Player player = players.stream()
                 .collect(Collectors.toList())
                 .get(1);
@@ -72,7 +72,7 @@ class BlackJackServiceTest {
         Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
         Card expectedCard = cards.get(0);
         // when
-        blackJackService.drawPlayerCard(cardDeck, player);
+        blackJackGame.drawPlayerCard(cardDeck, player);
         List<Card> actualCards = player.getDrawnCards();
         // then
         assertThat(actualCards).containsExactly(expectedCard);
@@ -89,7 +89,7 @@ class BlackJackServiceTest {
 
         boolean expected = true;
         // when
-        boolean actual = blackJackService.canPlayerDrawMore(player);
+        boolean actual = blackJackGame.canPlayerDrawMore(player);
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -107,7 +107,7 @@ class BlackJackServiceTest {
 
         boolean expected = false;
         // when
-        boolean actual = blackJackService.canPlayerDrawMore(player);
+        boolean actual = blackJackGame.canPlayerDrawMore(player);
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -127,7 +127,7 @@ class BlackJackServiceTest {
         Card expectedCard = rawDeck.get(0);
         // when
 
-        blackJackService.drawDealerCard(cardDeck, dealer);
+        blackJackGame.drawDealerCard(cardDeck, dealer);
         List<Card> drawnCards = dealer.getDrawnCards();
 
         // then
@@ -145,7 +145,7 @@ class BlackJackServiceTest {
 
         boolean expected = true;
         // when
-        boolean actual = blackJackService.canDealerDrawMore(dealer);
+        boolean actual = blackJackGame.canDealerDrawMore(dealer);
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -161,7 +161,7 @@ class BlackJackServiceTest {
 
         boolean expected = false;
         // when
-        boolean actual = blackJackService.canDealerDrawMore(dealer);
+        boolean actual = blackJackGame.canDealerDrawMore(dealer);
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -182,7 +182,7 @@ class BlackJackServiceTest {
 
         boolean expected = true;
         // when
-        List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
+        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults(dealer, players);
         boolean actual = winLoseResults.get(0)
                 .isWin();
         // then

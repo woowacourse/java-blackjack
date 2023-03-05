@@ -1,4 +1,4 @@
-package service;
+package domain;
 
 import static java.util.stream.Collectors.toList;
 
@@ -13,7 +13,7 @@ import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackService {
+public class BlackJackGame {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
 

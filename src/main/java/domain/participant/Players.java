@@ -20,7 +20,6 @@ public class Players {
         if (hasDuplicateName(players)) {
             throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
         }
-
     }
 
     private boolean isNotSatisfiedSize(List<Player> players) {

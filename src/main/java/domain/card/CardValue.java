@@ -1,5 +1,7 @@
 package domain.card;
 
+
+//TODO: 도메인이 뷰에 의존하지 않도록 변경 & Ace 값 추가
 public enum CardValue {
 
     ONE(1, "1"),
