@@ -14,7 +14,7 @@ public class OutputView {
 
     public void printFirstDrawMessage(List<String> names) {
         String joinedNames = String.join(", ", names);
-        System.out.printf("%n 딜러와 %s에게 2장을 나누었습니다.%n", joinedNames);
+        System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", joinedNames);
     }
 
     public void printFirstOpenCards(DealerFirstCardDto dealerFirstOpen, List<ParticipantCardsDto> playersCards) {
@@ -48,7 +48,7 @@ public class OutputView {
 
     private void printFinalResult(ParticipantResultDto result) {
         System.out.println(
-                result.getName().getValue() + " 카드:" + result.getCards().stream().map(Card::toString).collect(
+                result.getName().getValue() + " 카드: " + result.getCards().stream().map(Card::toString).collect(
                         Collectors.joining(", ")) + " - 결과: " + result.getScore());
     }
 
