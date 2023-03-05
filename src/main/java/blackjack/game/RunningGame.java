@@ -44,7 +44,7 @@ public class RunningGame {
 
     private void giveCardOrNotForPlayer(BlackJackGame blackJackGame, Player player) {
         while (player.isUnderLimit() &&
-                Command.of(InputView.repeat(() -> InputView.askAdditionalCard(player.getPlayerName()))).isYes()) {
+                InputView.repeat(() -> Command.of(InputView.askAdditionalCard(player.getPlayerName()))).isYes()) {
             blackJackGame.giveOneMoreCard(player);
             OutputView.printPlayerCurrentCards(player);
         }
