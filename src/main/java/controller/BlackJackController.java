@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackJack;
 import domain.Deck;
+import domain.user.User;
 import template.Repeater;
 import domain.user.Name;
 import view.InputView;
@@ -21,41 +22,26 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void run() {
+    public void process() {
         final List<Name> userNames = userNameRequest();
-        this.blackJack = new BlackJack(userNames, new Deck());
+        this.blackJack = BlackJack.getInstance(userNames, new Deck());
+
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
-        divideCardTo(userNames);
+
+        for (User user : blackJack.getUserList()) {
+            boolean wantCard = Repeater.repeat(() -> getCardWantFromConsole(user.getName()));
+            while (wantCard) {
+                blackJack.drawCard(user);
+                outputView.printCardsOf(user, blackJack.getCardsFrom(user));
+                if (blackJack.isBusted(user)) {
+                    break;
+                }
+                wantCard = Repeater.repeat(() -> getCardWantFromConsole(user.getName()));
+            }
+        }
         finalizeDealerCardStatus();
         outputView.printTotalPlayersStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
         outputView.printResult(blackJack.getGameResult());
-    }
-
-    private void finalizeDealerCardStatus() {
-        final int cardCount = blackJack.finalizeDealer();
-        outputView.printAdditionalCardCountOfDealer(cardCount);
-    }
-
-    private void divideCardTo(final List<Name> namesByView) {
-        for (Name name : namesByView) {
-            checkCardWanted(name);
-        }
-    }
-
-    private void checkCardWanted(final Name name) {
-        boolean wantCard = Repeater.repeat(() -> getCardWantFromConsole(name));
-        while (wantCard) {
-            blackJack.drawCard(name);
-            outputView.printCardsOf(name, blackJack.getUserCard(name));
-            if (blackJack.isBusted(name)) {
-                break;
-            }
-            wantCard = Repeater.repeat(() -> getCardWantFromConsole(name));
-        }
-    }
-
-    private boolean getCardWantFromConsole(Name name) {
-        return inputView.cardRequest(name.getValue());
     }
 
     private List<Name> userNameRequest() {
@@ -64,5 +50,14 @@ public class BlackJackController {
                 .stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
+    }
+
+    private void finalizeDealerCardStatus() {
+        final int cardCount = blackJack.finalizeDealer();
+        outputView.printAdditionalCardCountOfDealer(cardCount);
+    }
+
+    private boolean getCardWantFromConsole(Name name) {
+        return inputView.cardRequest(name.getValue());
     }
 }

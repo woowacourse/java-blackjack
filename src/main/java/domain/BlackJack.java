@@ -16,7 +16,7 @@ public final class BlackJack {
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackJack(List<Name> userNames, Deck deck) {
+    private BlackJack(List<Name> userNames, Deck deck) {
         final List<User> userList = userNames.stream()
                 .map(User::of)
                 .collect(Collectors.toList());
@@ -26,17 +26,21 @@ public final class BlackJack {
         initGame();
     }
 
+    public static BlackJack getInstance(List<Name> userNames, Deck deck) {
+        return new BlackJack(userNames, deck);
+    }
+
     private void initGame() {
         users.giveEachUser(deck, INITIAL_DRAW_CARD_COUNT);
         dealer.give(deck, INITIAL_DRAW_CARD_COUNT);
     }
 
-    public void drawCard(Name user) {
+    public void drawCard(User user) {
         users.findUserAndGive(user, deck.drawCard());
     }
 
 
-    public List<Card> getUserCard(Name user) {
+    public List<Card> getCardsFrom(User user) {
         return users.getCardsOf(user);
     }
 
@@ -72,7 +76,11 @@ public final class BlackJack {
         return users;
     }
 
-    public boolean isBusted(final Name name) {
-        return users.isBusted(name);
+    public List<User> getUserList() {
+        return users.getUsers();
+    }
+
+    public boolean isBusted(final User user) {
+        return users.isBusted(user);
     }
 }

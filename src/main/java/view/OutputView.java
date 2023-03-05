@@ -28,25 +28,36 @@ public class OutputView {
                 getNameString(dealer.getName()),
                 makeUsersNameList(users));
         System.out.print(System.lineSeparator());
-        printCardsOf(dealer.getName(), dealer.getFirstCard());
+        printCardsOfForDealer(dealer, dealer.getFirstCard());
         printUsersCards(users);
     }
 
     private void printUsersCards(final Users users) {
         for (User user : users.getUsers()) {
-            printCardsOf(user.getName(), user.openCards());
+            printCardsOf(user, user.openCards());
         }
         System.out.print(System.lineSeparator());
     }
 
-    public void printCardsOf(final Name name, final List<Card> cards) {
-        System.out.printf(getPlayerCards(name, cards));
+    public void printCardsOf(final User user, final List<Card> cards) {
+        System.out.printf(getPlayerCards(user, cards));
         System.out.print(System.lineSeparator());
     }
 
-    private String getPlayerCards(final Name name, final List<Card> cards) {
+    public void printCardsOfForDealer(final Dealer dealer, final List<Card> cards) {
+        System.out.printf(getPlayerCardsForDealer(dealer, cards));
+        System.out.print(System.lineSeparator());
+    }
+
+    private String getPlayerCards(final User user, final List<Card> cards) {
         return String.format(PRINT_FORMAT,
-                getNameString(name),
+                getNameString(user.getName()),
+                getCardStringOf(cards));
+    }
+
+    private String getPlayerCardsForDealer(final Dealer dealer, final List<Card> cards) {
+        return String.format(PRINT_FORMAT,
+                getNameString(dealer.getName()),
                 getCardStringOf(cards));
     }
 
@@ -123,15 +134,22 @@ public class OutputView {
     }
 
     public void printTotalPlayersStatus(final Dealer dealer, final List<User> users) {
-        printPlayerResult(dealer.getName(), dealer.getCards());
+        printPlayerResultForDealer(dealer, dealer.getCards());
         for (User user : users) {
-            printPlayerResult(user.getName(), user.getCards());
+            printPlayerResult(user, user.getCards());
         }
     }
 
-    private void printPlayerResult(final Name name, final Cards cards) {
+    private void printPlayerResult(final User user, final Cards cards) {
         System.out.printf("%s - 결과: %s",
-                getPlayerCards(name, cards.getCards())
+                getPlayerCards(user, cards.getCards())
+                , printGamePoint(cards.getPoint()));
+        System.out.print(System.lineSeparator());
+    }
+
+    private void printPlayerResultForDealer(final Dealer dealer, final Cards cards) {
+        System.out.printf("%s - 결과: %s",
+                getPlayerCardsForDealer(dealer, cards.getCards())
                 , printGamePoint(cards.getPoint()));
         System.out.print(System.lineSeparator());
     }

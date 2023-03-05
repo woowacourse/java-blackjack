@@ -21,12 +21,17 @@ public final class User implements Player {
         this.cards = cards;
     }
 
+    private User(Name name) {
+        this.name = name;
+        this.cards = new Cards(Collections.emptyList());
+    }
+
     public static User create(Name name, Cards cards) {
         return new User(name, cards);
     }
 
     public static User of(Name name) {
-        return new User(name, new Cards(Collections.emptyList()));
+        return new User(name);
     }
 
     private void validateCardsSize(final int size) {
@@ -68,8 +73,8 @@ public final class User implements Player {
         return cards.isLowerThan(point);
     }
 
-    public boolean isNameOf(final Name userName) {
-        return this.name.equals(userName);
+    public boolean hasSameName(final User user) {
+        return this.name.equals(user.getName());
     }
 
     public Name getName() {
