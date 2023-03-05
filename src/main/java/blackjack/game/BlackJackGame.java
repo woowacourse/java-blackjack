@@ -5,16 +5,16 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.player.*;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
     private static final int INIT_FIRST_CARD = 2;
-    private static final int FIRST_CARD = 0;
     private static final int MIN_CARD_SIZE = 1;
 
     private final Players players;
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
     public BlackJackGame(List<Name> names, Dealer dealer) {
         Cards shuffledCards = Cards.initializeCards();
@@ -53,6 +53,6 @@ public class BlackJackGame {
         if (cards.size() < MIN_CARD_SIZE) {
             throw new IndexOutOfBoundsException("뽑을 수 있는 카드가 없습니다.");
         }
-        return cards.remove(FIRST_CARD);
+        return cards.remove();
     }
 }
