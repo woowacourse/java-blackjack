@@ -42,10 +42,10 @@ public class Participants {
         return uniqueNames.size() != names.size();
     }
 
-    private List<Player> makePlayers(final String playerNames) {
-        return Arrays.stream(playerNames.split(","))
-                .map(name -> new Player(new Name(name.strip())))
-                .collect(Collectors.toList());
+    private List<Player> makePlayers(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(name -> new Player(new Name(name)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public Dealer getDealer() {
