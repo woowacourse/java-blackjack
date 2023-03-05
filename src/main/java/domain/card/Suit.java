@@ -6,9 +6,13 @@ public enum Suit {
     CLOVER("클로버"),
     SPADE("스페이드");
 
-    private final String alias;
+    private final String shape;
 
-    Suit(final String alias) {
-        this.alias = alias;
+    Suit(final String shape) {
+        this.shape = shape;
+    }
+
+    public String getShape() {
+        return shape;
     }
 }

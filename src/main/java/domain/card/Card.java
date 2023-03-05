@@ -9,4 +9,16 @@ public class Card {
         this.suit = suit;
         this.denomination = denomination;
     }
+
+    public String getShape() {
+        return suit.getShape();
+    }
+
+    public int getValue() {
+        return denomination.getValue();
+    }
+
+    public String getAlias() {
+        return denomination.getAlias();
+    }
 }
