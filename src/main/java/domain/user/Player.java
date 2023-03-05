@@ -43,6 +43,10 @@ public class Player {
         return point;
     }
 
+    public boolean hasAce() {
+        return hand.stream().anyMatch((card) -> card.getDenomination() == Denomination.ACE);
+    }
+
     protected int calculateAce(int point) {
         if (point + 10 <= 21) {
             return point + 10;
@@ -50,16 +54,12 @@ public class Player {
         return point;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public boolean isPlayer() {
         return !name.equals(DEALER_NAME);
     }
 
-    public boolean hasAce() {
-        return hand.stream().anyMatch((card) -> card.getDenomination() == Denomination.ACE);
+    public String getName() {
+        return name;
     }
 
     @Override
