@@ -1,11 +1,13 @@
 package view;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class InputView {
 
+    private static final String DEALER_NAME = "딜러";
     private static final List<String> VOWEL = List.of("a", "e", "i", "o", "u");
     private static final String DELIMITER = ",";
     private static final String END_VOWEL = "는";
@@ -16,8 +18,28 @@ public class InputView {
     public List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String playerNames = scanner.nextLine();
-        String[] splitNames = playerNames.split(DELIMITER);
-        return Arrays.asList(splitNames);
+        List<String> splitNames = List.of(playerNames.split(DELIMITER));
+        validatePlayerNames(splitNames);
+        return splitNames;
+    }
+
+    private void validatePlayerNames(final List<String> playerNames) {
+        validateNameNotDealer(playerNames);
+        validateNameDuplicated(playerNames);
+    }
+
+    private void validateNameNotDealer(final List<String> playerNames) {
+        if (playerNames.contains(DEALER_NAME)) {
+            throw new IllegalArgumentException("참여자의 이름은 '" + DEALER_NAME + "'가 되면 안됩니다.");
+        }
+    }
+
+    private void validateNameDuplicated(final List<String> playerNames) {
+        Set<String> notDuplicatedPlayerNames = new HashSet<>(playerNames);
+
+        if (playerNames.size() != notDuplicatedPlayerNames.size()) {
+            throw new IllegalArgumentException("참여자의 이름은 중복이 되면 안됩니다.");
+        }
     }
 
     public String readChoiceOfDrawCard(final String name) {
