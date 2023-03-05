@@ -2,6 +2,8 @@ package domain.card;
 
 import java.util.Stack;
 
+import view.ErrorMessage;
+
 public class Deck {
     private final Stack<Card> deck;
 
@@ -25,6 +27,9 @@ public class Deck {
     }
 
     public Card draw() {
+        if (deck.empty()) {
+            throw new IllegalArgumentException(ErrorMessage.DECK_IS_EMPTY.getMessage());
+        }
         return deck.pop();
     }
 }
