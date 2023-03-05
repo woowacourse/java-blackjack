@@ -18,11 +18,11 @@ public class Participants {
     }
 
     public void drawInitialCardsEachParticipant(Deck deck) {
-        addInitialCards(dealer, deck);
-        players.getPlayers().forEach(player -> addInitialCards(player, deck));
+        drawInitialCardsBy(dealer, deck);
+        players.getPlayers().forEach(player -> drawInitialCardsBy(player, deck));
     }
 
-    private void addInitialCards(User user, Deck deck) {
+    private void drawInitialCardsBy(User user, Deck deck) {
         for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
             user.addCard(deck.draw());
         }
@@ -47,7 +47,7 @@ public class Participants {
         return Result.LOSE;
     }
 
-    public boolean addCardToDealerIfPossible(Deck deck) {
+    public boolean hitOrStayByDealer(Deck deck) {
         if (this.dealer.canAdd()) {
             this.dealer.addCard(deck.draw());
             return true;

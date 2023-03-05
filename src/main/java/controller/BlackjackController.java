@@ -22,24 +22,24 @@ public class BlackjackController {
         }
     }
 
-    private static void announceResult(BlackjackGame blackjackGame) {
-        OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        OutputView.printResults(blackjackGame.calculateAllResults());
-    }
-
-    private void play(BlackjackGame blackjackGame) {
-        blackjackGame.getPlayers().forEach(player -> giveCardUntilImpossible(player, blackjackGame));
-        OutputView.announceAddCardToDealerIfHit(blackjackGame.addCardToDealerIfPossible());
-    }
-
     private static void initialize(BlackjackGame blackjackGame) {
         blackjackGame.initializeGame();
         OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
+    private void play(BlackjackGame blackjackGame) {
+        blackjackGame.getPlayers().forEach(player -> giveCardUntilImpossible(player, blackjackGame));
+        OutputView.announceAddCardToDealerIfHit(blackjackGame.hitOrStayByDealer());
+    }
+
+    private static void announceResult(BlackjackGame blackjackGame) {
+        OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        OutputView.printResults(blackjackGame.calculateAllResults());
+    }
+
     private void giveCardUntilImpossible(Player player, BlackjackGame blackjackGame) {
         while (judgeWhetherDrawCard(player)){
-            blackjackGame.addCardTo(player);
+            blackjackGame.hitBy(player);
             OutputView.printCardsStatusOfUser(player);
         }
         if (player.canAdd()) {

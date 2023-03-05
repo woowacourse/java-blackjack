@@ -27,15 +27,15 @@ public class BlackjackGame {
         return this.participants.getPlayers();
     }
 
-    public boolean addCardToDealerIfPossible() {
-        return this.participants.addCardToDealerIfPossible(this.deck);
+    public boolean hitOrStayByDealer() {
+        return this.participants.hitOrStayByDealer(this.deck);
     }
 
     public Map<Player, Result> calculateAllResults() {
         return this.participants.calculateAllResults();
     }
 
-    public void addCardTo(Player player) {
+    public void hitBy(Player player) {
         player.addCard(this.deck.draw());
     }
 }
