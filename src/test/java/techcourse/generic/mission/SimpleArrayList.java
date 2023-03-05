@@ -30,6 +30,19 @@ public class SimpleArrayList<T> implements SimpleList<T>{
         return list;
     }
 
+    public SimpleArrayList(final T... values) {
+        data = values;
+        size = values.length;
+    }
+
+    public static <T extends Number> Double sum(SimpleArrayList<T> list) {
+        Double sum = Double.valueOf(0);
+        for (int i = 0; i < list.size; i++) {
+            sum += list.get(i).doubleValue();
+        }
+        return sum;
+    }
+
     @Override
     public boolean add(T value) {
         resize();
