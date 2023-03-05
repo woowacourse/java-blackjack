@@ -9,11 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import card.Card;
-import deck.CardsGenerator;
 import deck.ShuffledCardsGenerator;
 
-class CardsGeneratorTest {
-    CardsGenerator cardsGenerator;
+class ShuffledCardsGeneratorTest {
+    ShuffledCardsGenerator cardsGenerator;
 
     @BeforeEach
     void setUp() {
