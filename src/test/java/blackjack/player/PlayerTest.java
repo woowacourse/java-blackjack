@@ -3,7 +3,16 @@ package blackjack.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.controller.AddCardOrNot;
+import blackjack.domain.deck.CardsGenerator;
+import blackjack.domain.deck.Deck;
+import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
+import java.util.List;
+import java.util.Stack;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
@@ -69,5 +78,57 @@ class PlayerTest {
         player.hit(new Card(CardNumber.KING, Pattern.SPADE));
 
         assertThat(player.isBust()).isTrue();
+    }
+
+
+    @DisplayName("추가 카드를 받는 기능")
+    @Nested
+    class HitAdditionalCardTest {
+        @DisplayName("버스트가 아니고, 카드를 받겠다고 결정하면 카드를 받는다.")
+        @Test
+        void hitCardWhenNotBust() {
+            //given
+            Player soni = new Player(new Name("소니"));
+            soni.hit(List.of(new Card(CardNumber.KING, Pattern.DIAMOND), new Card(CardNumber.KING, Pattern.CLOVER)));
+            Card twoHeart = new Card(CardNumber.TWO, Pattern.HEART);
+            Deck deck = new Deck(() -> {
+                Stack<Card> cards = new Stack<>();
+                cards.push(twoHeart);
+                return cards;
+            });
+            Function<Name, AddCardOrNot> decideAddCardOrNot = (name) -> AddCardOrNot.YES;
+            //when
+            soni.hitAdditionalCardFrom(deck, decideAddCardOrNot, (player) -> {
+            });
+            //then
+            assertThat(soni.showCards()).contains(twoHeart);
+        }
+
+        @DisplayName("버스트가 아니고, 카드를 받지 않겠다 결정하면 카드를 받지 않는다.")
+        @Test
+        void dontHitWhenDecisionIsNo() {
+            //given
+            Player polo = new Player(new Name("폴로"));
+            //when
+            polo.hitAdditionalCardFrom(new Deck(new FixedCardsGenerator()), (name)-> AddCardOrNot.NO, (player) -> {});
+            //then
+            assertThat(polo.showCards()).isEmpty();
+        }
+
+        @DisplayName("버스트이면 카드를 받지 않는다.")
+        @Test
+        void dontHitWhenPlayerIsBust() {
+            //given
+            Player rosie = new Player(new Name("로지"));
+            List<Card> already = List.of(new Card(CardNumber.KING, Pattern.DIAMOND),
+                    new Card(CardNumber.KING, Pattern.CLOVER),
+                    new Card(CardNumber.KING, Pattern.HEART));
+            rosie.hit(already);
+            //when
+            rosie.hitAdditionalCardFrom(new Deck(new FixedCardsGenerator()), (name) -> AddCardOrNot.YES, (player) -> {
+            });
+            //then
+            assertThat(rosie.showCards()).containsExactlyElementsOf(already);
+        }
     }
 }
