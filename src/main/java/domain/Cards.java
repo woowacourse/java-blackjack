@@ -46,4 +46,12 @@ public class Cards {
 	public boolean isUnder(int score) {
 		return calculateScore() < score;
 	}
+
+	public List<String> getCardNames() {
+		List<String> cardNames = new ArrayList<>();
+		for (Card card : cards) {
+			cardNames.add(card.getCardName());
+		}
+		return cardNames;
+	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import domain.Card;
 import domain.GameResult;
 import domain.User;
 import domain.Users;
@@ -28,49 +27,39 @@ public class OutputView {
 		System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
 	}
 
-	public static void printDealerCardHidden(final Card card) {
-		System.out.println("딜러: " + getCardName(card));
+	public static void printDealerCardHidden(final String dealerCard) {
+		System.out.println("딜러: " + dealerCard);
 	}
 
-	public static void printPlayerCards(final Map<String, List<Card>> playerToCard) {
-		playerToCard.forEach((playerName, cards) ->
-			System.out.println(getEachPlayerCards(playerName, cards)));
+	public static void printPlayerCards(final Map<String, List<String>> playerToCard) {
+		playerToCard.forEach((name, cards) ->
+			System.out.println(getEachPlayerCards(name, cards)));
 	}
 
-	public static void printDealerCards(final List<Card> cards, final int score) {
+	public static void printDealerCards(final List<String> cards, final int score) {
 		printCardWithScore("딜러 ", cards, score);
 	}
 
-	public static void printPlayerCards(final Map<String, List<Card>> playerToCard,
+	public static void printPlayerCards(final Map<String, List<String>> playerToCard,
 		final Map<String, Integer> playerToScore) {
-		playerToCard.forEach((playerName, cards) -> {
-			int score = playerToScore.get(playerName);
-			printCardWithScore(playerName, cards, score);
+		playerToCard.forEach((name, cards) -> {
+			int score = playerToScore.get(name);
+			printCardWithScore(name, cards, score);
 		});
 	}
 
-	public static void printEachPlayerCards(final String playerName, final List<Card> cards) {
-		System.out.println(getEachPlayerCards(playerName, cards));
+	public static void printEachPlayerCards(final String name, final List<String> cards) {
+		System.out.println(getEachPlayerCards(name, cards));
 	}
 
-	private static void printCardWithScore(final String playerName, final List<Card> cards, final int score) {
-		System.out.println(getEachPlayerCards(playerName, cards) + " - 결과: " + score);
+	private static void printCardWithScore(final String name, final List<String> cards, final int score) {
+		System.out.println(getEachPlayerCards(name, cards) + " - 결과: " + score);
 	}
 
-	private static String getEachPlayerCards(final String playerName, final List<Card> cards) {
-		StringBuilder stringBuilder = new StringBuilder(playerName);
-		stringBuilder.append("카드: ");
-		List<String> cardNames = new ArrayList<>();
-		for (Card card : cards) {
-			cardNames.add(getCardName(card));
-		}
-		stringBuilder.append(String.join(", ", cardNames));
-		return stringBuilder.toString();
-	}
-
-	private static String getCardName(final Card card) {
-		List<String> cardName = card.getCardName();
-		return cardName.get(0) + cardName.get(1);
+	private static String getEachPlayerCards(final String name, final List<String> cards) {
+		List<String> cardNames = new ArrayList<>(cards);
+		return name + "카드: "
+			+ String.join(", ", cardNames);
 	}
 
 	public static void printGameResult(final Map<GameResult, Integer> dealerResult,

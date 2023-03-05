@@ -24,4 +24,8 @@ public abstract class User {
 	public int getScore() {
 		return cards.calculateScore();
 	}
+
+	public List<String> getCardNames() {
+		return cards.getCardNames();
+	}
 }

@@ -46,11 +46,9 @@ public class BlackJack {
 		Dealer dealer = users.getDealer();
 		int dealerScore = dealer.getScore();
 		return players.stream()
-			.collect(Collectors.toMap
-				(Player::getName,
-					player -> comparePlayerWithDealer(player.getScore(), dealerScore),
-					(oldValue, newValue) -> newValue,
-					LinkedHashMap::new));
+			.collect(
+				Collectors.toMap(Player::getName, player -> comparePlayerWithDealer(player.getScore(), dealerScore),
+					(oldValue, newValue) -> newValue, LinkedHashMap::new));
 	}
 
 	public Map<GameResult, Integer> calculateDealerResult() {
@@ -70,19 +68,18 @@ public class BlackJack {
 		dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
 	}
 
-	public Card getDealerCard() {
-		Dealer dealer = users.getDealer();
-		return dealer.getCards().get(0);
+	public String getDealerCardHidden() {
+		Card dealerCard = users.getDealer().getCards().get(0);
+		return dealerCard.getCardName();
 	}
 
-	public Map<String, List<Card>> getPlayerToCard() {
+	public Map<String, List<String>> getPlayerToCard() {
+		Map<String, List<String>> playerWithCards = new HashMap<>();
 		List<Player> players = users.getPlayers();
-		return players.stream().collect(Collectors.toMap(
-			Player::getName,
-			Player::getCards,
-			(oldValue, newValue) -> newValue,
-			LinkedHashMap::new
-		));
+		for (Player player : players) {
+			playerWithCards.put(player.getName(), player.getCardNames());
+		}
+		return playerWithCards;
 	}
 
 	public Map<String, Integer> getPlayerToScore() {
@@ -99,8 +96,8 @@ public class BlackJack {
 		return users.getHittablePlayers();
 	}
 
-	public List<Card> getDealerCards() {
-		return users.getDealer().getCards();
+	public List<String> getDealerCards() {
+		return users.getDealer().getCardNames();
 	}
 
 	public int getDealerScore() {

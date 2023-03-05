@@ -28,7 +28,7 @@ public class Controller {
 		Users players = Users.from(playerNames);
 		blackJack = BlackJack.of(players);
 		printInitMessage(players);
-		printDealerCardHidden(blackJack.getDealerCard());
+		printDealerCardHidden(blackJack.getDealerCardHidden());
 		printPlayerCards(blackJack.getPlayerToCard());
 	}
 
@@ -43,7 +43,7 @@ public class Controller {
 	private void askPlayerHit(final Player player) {
 		while (player.isHittable()) {
 			giveCardIfWanted(player);
-			printEachPlayerCards(player.getName(), player.getCards());
+			printEachPlayerCards(player.getName(), player.getCardNames());
 		}
 	}
 
