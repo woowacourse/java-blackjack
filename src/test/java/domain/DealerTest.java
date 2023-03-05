@@ -16,7 +16,6 @@ class DealerTest {
         Card cardA = new Card(Type.CLUB, Value.KING);
         Card cardB = new Card(Type.SPADE, Value.QUEEN);
 
-        Name name = new Name("pobi");
         List<Card> emptyCards = new ArrayList<>();
         DrawnCards drawnCards = new DrawnCards(emptyCards);
 
@@ -40,7 +39,6 @@ class DealerTest {
         Card cardA = new Card(Type.CLUB, king);
         Card cardB = new Card(Type.SPADE, queen);
 
-        Name name = new Name("pobi");
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
@@ -60,7 +58,6 @@ class DealerTest {
         Card cardA = new Card(Type.CLUB, Value.KING);
         Card cardB = new Card(Type.SPADE, Value.QUEEN);
 
-        Name name = new Name("pobi");
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
