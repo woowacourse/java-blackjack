@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class CardDeck {
 
+    public static String DELIMITER = ", ";
+
     private final List<Card> cards;
 
     public CardDeck() {
@@ -22,13 +24,6 @@ public class CardDeck {
             throw new IllegalArgumentException("아무런 카드도 입력되지 않았습니다.");
         }
     }
-
-    public List<String> getCardsInfo() {
-        return cards.stream()
-            .map(Card::getCardInfo)
-            .collect(Collectors.toList());
-    }
-
 
     public List<Card> getCards() {
         return cards;

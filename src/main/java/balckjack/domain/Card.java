@@ -34,7 +34,8 @@ abstract public class Card {
         return Objects.hash(pattern, symbol);
     }
 
-    public String getCardInfo() {
+    @Override
+    public String toString() {
         return symbol + pattern.getName();
     }
 }
