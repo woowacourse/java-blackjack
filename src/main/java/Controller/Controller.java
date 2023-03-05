@@ -1,3 +1,5 @@
+package Controller;
+
 import static view.InputView.*;
 import static view.OutputView.*;
 
