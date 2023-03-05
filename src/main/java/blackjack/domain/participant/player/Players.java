@@ -29,14 +29,6 @@ public class Players {
         players.forEach(player -> player.hit(deck.drawCards(size)));
     }
 
-    public int count() {
-        return players.size();
-    }
-
-    public boolean isBust(int playerIndex) {
-        return players.get(playerIndex).isBust();
-    }
-
     public List<ParticipantResultDto> getPlayerResults() {
         return players.stream()
                 .map(ParticipantResultDto::from)

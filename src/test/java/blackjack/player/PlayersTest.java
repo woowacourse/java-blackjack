@@ -52,33 +52,6 @@ class PlayersTest {
         assertThat(player.showCards()).hasSize(2);
     }
 
-    @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
-    @Test
-    void count() {
-        Players players = new Players();
-        Player player1 = new Player(new Name("폴로"));
-        Player player2 = new Player(new Name("로지"));
-        Player player3 = new Player(new Name("연어"));
-        players.add(player1);
-        players.add(player2);
-        players.add(player3);
-
-        assertThat(players.count()).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("인덱스에 해당하는 플레이어의 버스트 여부를 알 수 있다")
-    void isBust() {
-        Players players = new Players();
-        Player player1 = new Player(new Name("폴로"));
-        players.add(player1);
-        player1.hit(new Card(CardNumber.KING, Pattern.HEART));
-        player1.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
-        player1.hit(new Card(CardNumber.KING, Pattern.SPADE));
-
-        assertThat(players.isBust(0)).isTrue();
-    }
-
     @Test
     @DisplayName("플레이어의 이름과 승패결과를 가져올 수 있다.")
     void getWinningResult() {

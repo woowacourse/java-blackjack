@@ -45,10 +45,6 @@ public class BlackjackGame {
         players.hitAdditionalCard(deck, decideAddCardOrNot, showPlayerCards);
     }
 
-    public int countPlayer() {
-        return players.count();
-    }
-
     public boolean canDealerHit() {
         return !dealer.isBust() && dealer.isUnderScore();
     }

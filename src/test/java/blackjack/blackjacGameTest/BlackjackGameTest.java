@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -45,10 +46,12 @@ class BlackjackGameTest {
     @Test
     @DisplayName("플레이어를 만들고 플레이어즈에 추가할 수 있다")
     void addPlayer() {
-        blackjackGame.addPlayer(new Player(new Name("폴로")));
-        blackjackGame.addPlayer(new Player(new Name("로지")));
+        Player polo = new Player(new Name("폴로"));
+        blackjackGame.addPlayer(polo);
 
-        assertThat(players.count()).isEqualTo(2);
+        assertThat(players)
+                .extracting("players", InstanceOfAssertFactories.list(Player.class))
+                .contains(polo);
     }
 
     @Test
@@ -75,18 +78,6 @@ class BlackjackGameTest {
         assertThat(player2.showCards()).contains(new Card(CardNumber.ACE, Pattern.CLOVER),
                 new Card(CardNumber.ACE, Pattern.HEART));
 
-    }
-
-
-    @Test
-    @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
-    void countPlayers() {
-        Player player1 = new Player(new Name("폴로"));
-        Player player2 = new Player(new Name("로지"));
-        blackjackGame.addPlayer(player1);
-        blackjackGame.addPlayer(player2);
-
-        assertThat(blackjackGame.countPlayer()).isEqualTo(2);
     }
 
     @Test
