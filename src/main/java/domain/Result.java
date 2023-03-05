@@ -1,15 +1,9 @@
 package domain;
 
 public enum Result {
-    WIN("승"),
-    LOSE("패"),
-    TIE("무");
-
-    private final String result;
-
-    Result(String result) {
-        this.result = result;
-    }
+    WIN(),
+    LOSE(),
+    TIE();
 
     public static Result isHigherPlayerHandValue(int playerHandValue, int dealerHandValue) {
         if (playerHandValue > dealerHandValue) {
@@ -26,9 +20,5 @@ public enum Result {
             return LOSE;
         }
         return WIN;
-    }
-
-    public String getResult() {
-        return result;
     }
 }
