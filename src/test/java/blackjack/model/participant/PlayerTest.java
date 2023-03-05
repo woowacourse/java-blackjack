@@ -28,7 +28,7 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        player.play(cardDeck);
+        player.draw(cardDeck);
 
         //then
         Assertions.assertThat(player.getCards()).containsExactly(card2, card1);
@@ -48,10 +48,10 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        player.play(cardDeck);
+        player.draw(cardDeck);
 
         //then
-        Assertions.assertThatThrownBy(() -> player.play(cardDeck))
+        Assertions.assertThatThrownBy(() -> player.draw(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("버스트 상태에서는 카드를 더 뽑을 수 없습니다.");
     }
@@ -69,10 +69,10 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        player.play(cardDeck);
+        player.draw(cardDeck);
 
         //then
-        Assertions.assertThatThrownBy(() -> player.play(cardDeck))
+        Assertions.assertThatThrownBy(() -> player.draw(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("블랙잭 상태에서는 카드를 더 뽑을 수 없습니다.");
     }

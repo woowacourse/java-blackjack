@@ -14,7 +14,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public void play(CardDeck cardDeck) {
+    public void draw(CardDeck cardDeck) {
         this.currentState = currentState.draw(cardDeck);
     }
 

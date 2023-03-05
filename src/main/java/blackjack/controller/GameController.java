@@ -43,6 +43,27 @@ public class GameController {
         printWinningResult(players, dealer);
     }
 
+    private void distributeFirstCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
+        distributeCards(players, dealer, cardDeck);
+        printCardDistribution(players, dealer);
+    }
+
+    private void distributeCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
+        dealer.draw(cardDeck);
+        for (Player player : players) {
+            player.draw(cardDeck);
+        }
+    }
+
+    private void printCardDistribution(List<Player> players, Dealer dealer) {
+        List<String> names = players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+        outputView.printDistributionMessage(names);
+        outputView.printNameAndHand(dealerNameAndHand(dealer));
+        outputView.printNameAndHand(playerNamesAndHands(players));
+    }
+
     private void printWinningResult(List<Player> players, Dealer dealer) {
         outputView.printWinningResultMessage();
         Map<String, WinningResult> results = dealer.winningResults(players);
@@ -76,26 +97,6 @@ public class GameController {
         hitOrStandByDealer(cardDeck, dealer);
     }
 
-    private void distributeFirstCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-        distributeCards(players, dealer, cardDeck);
-        printCardDistribution(players, dealer);
-    }
-
-    private void distributeCards(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-        dealer.play(cardDeck);
-        for (Player player : players) {
-            player.play(cardDeck);
-        }
-    }
-
-    private void printCardDistribution(List<Player> players, Dealer dealer) {
-        List<String> names = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-        outputView.printDistributionMessage(names);
-        outputView.printNameAndHand(dealerNameAndHand(dealer));
-        outputView.printNameAndHand(playerNamesAndHands(players));
-    }
 
     private void hitOrStandByPlayer(CardDeck cardDeck, Player player) {
         while (!player.isFinished()) {
@@ -107,7 +108,7 @@ public class GameController {
 
     private void hitOrStand(CardDeck cardDeck, Player player, boolean isHit) {
         if (isHit) {
-            player.play(cardDeck);
+            player.draw(cardDeck);
             return;
         }
         player.changeToStand();
@@ -115,7 +116,7 @@ public class GameController {
 
     private void hitOrStandByDealer(CardDeck cardDeck, Dealer dealer) {
         while (!dealer.isFinished()) {
-            dealer.play(cardDeck);
+            dealer.draw(cardDeck);
             outputView.printDealerHitMessage();
         }
     }

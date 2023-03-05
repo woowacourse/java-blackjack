@@ -29,10 +29,10 @@ class DealerTest {
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        dealer.play(cardDeck);
+        dealer.draw(cardDeck);
 
         //then
-        Assertions.assertThatThrownBy(() -> dealer.play(cardDeck))
+        Assertions.assertThatThrownBy(() -> dealer.draw(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("스탠드 상태에서는 카드를 더 뽑을 수 없습니다.");
     }

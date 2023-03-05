@@ -17,7 +17,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void play(CardDeck cardDeck) {
+    public void draw(CardDeck cardDeck) {
         if (currentState instanceof DrawState) {
             this.currentState = ((DrawState) currentState).turnDealerDrawState();
         }

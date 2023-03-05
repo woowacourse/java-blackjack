@@ -17,7 +17,7 @@ public abstract class Participant {
         this.currentState = currentState;
     }
 
-    abstract public void play(CardDeck cardDeck);
+    abstract public void draw(CardDeck cardDeck);
 
     abstract public void changeToStand();
 
