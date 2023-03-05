@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.Deck;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.GamePoint;
@@ -12,6 +13,9 @@ public class Dealer implements Player {
     public static final String DEALER_NAME = "딜러";
     private final Name name = new Name(DEALER_NAME);
     private Cards cards;
+
+    public Dealer() {
+    }
 
     public Dealer(List<Card> cards) {
         validateCardsSize(cards.size());
@@ -67,5 +71,11 @@ public class Dealer implements Player {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public void give(final Deck deck, final int count) {
+        for (int i = 0; i < count; i++) {
+            cards = cards.add(deck.drawCard());
+        }
     }
 }

@@ -8,43 +8,34 @@ import domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJack {
 
+    public static final int INITIAL_DRAW_CARD_COUNT = 2;
     private final Users users;
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackJack(List<Name> usersName, Deck deck) {
-        this.users = makeUsersBy(usersName, deck);
-        this.dealer = new Dealer(getInitialCards(deck));
+    public BlackJack(List<Name> userNames, Deck deck) {
+        final List<User> userList = userNames.stream()
+                .map(User::new)
+                .collect(Collectors.toList());
+        this.users = new Users(userList);
+        this.dealer = new Dealer();
         this.deck = deck;
+        initGame();
     }
 
-    private Users makeUsersBy(final List<Name> usersName, final Deck deck) {
-        List<User> users = new ArrayList<>();
-        for (Name name : usersName) {
-            List<Card> cards = getInitialCards(deck);
-            final User user = new User(name, new Cards(cards));
-            users.add(user);
-        }
-        return new Users(users);
-    }
-
-    private List<Card> getInitialCards(final Deck deck) {
-        List<Card> cards = new ArrayList<>();
-        cards.add(deck.drawCard());
-        cards.add(deck.drawCard());
-        return cards;
+    private void initGame() {
+        users.giveEachUser(deck, INITIAL_DRAW_CARD_COUNT);
+        dealer.give(deck, INITIAL_DRAW_CARD_COUNT);
     }
 
     public void drawCard(Name user) {
         users.findUserAndGive(user, deck.drawCard());
     }
 
-    public List<Card> getDealerCard() {
-        return dealer.openCards();
-    }
 
     public List<Card> getUserCard(Name user) {
         return users.getCardsOf(user);

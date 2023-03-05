@@ -22,10 +22,10 @@ public class BlackJackController {
     }
 
     public void run() {
-        final List<Name> namesByView = Repeater.repeat(this::getNamesByView);
-        this.blackJack = new BlackJack(namesByView, new Deck());
+        final List<Name> userNames = userNameRequest();
+        this.blackJack = new BlackJack(userNames, new Deck());
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
-        divideCardTo(namesByView);
+        divideCardTo(userNames);
         finalizeDealerCardStatus();
         outputView.printTotalPlayersStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
         outputView.printResult(blackJack.getGameResult());
@@ -58,8 +58,9 @@ public class BlackJackController {
         return inputView.cardRequest(name.getValue());
     }
 
-    private List<Name> getNamesByView() {
-        return inputView.userNameRequest()
+    private List<Name> userNameRequest() {
+        final List<String> strings = Repeater.repeat(inputView::userNameRequest);
+        return strings
                 .stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
