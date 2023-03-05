@@ -17,11 +17,11 @@ public abstract class Participant {
         this.drawnCards = drawnCards;
     }
 
-    public void drawCard(final Card card) {
+    public final void drawCard(final Card card) {
         drawnCards.add(card);
     }
 
-    public int calculateScore() {
+    public final int calculateScore() {
         return drawnCards.calculateScore();
     }
 
@@ -29,7 +29,7 @@ public abstract class Participant {
 
     public abstract boolean isDrawable();
 
-    protected boolean isBurst() {
+    protected final boolean isBurst() {
         return calculateScore() > BURST_NUMBER;
     }
 
