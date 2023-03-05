@@ -34,8 +34,8 @@ public class BlackJackController {
         deck.shuffle();
         dealCards(participants, deck);
 
-        cardDraw(participants.getPlayers(), deck);
-        cardDraw(participants.getDealer(), deck);
+        drawCard(participants.getPlayers(), deck);
+        drawCard(participants.getDealer(), deck);
 
         printResult(participants);
     }
@@ -62,20 +62,20 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private void cardDraw(final List<Player> players, final Deck deck) {
+    private void drawCard(final List<Player> players, final Deck deck) {
         for (final Player player : players) {
-            cardDraw(player, deck);
+            drawCard(player, deck);
         }
     }
 
-    private void cardDraw(final Player player, final Deck deck) {
+    private void drawCard(final Player player, final Deck deck) {
         while (player.isDrawable() && inputView.readMoreDraw(player.getName())) {
             player.drawCard(deck.draw());
             outputView.printHandedCardsWithoutScore(ParticipantResponse.from(player));
         }
     }
 
-    private void cardDraw(final Dealer dealer, final Deck deck) {
+    private void drawCard(final Dealer dealer, final Deck deck) {
         if (dealer.isDrawable()) {
             dealer.drawCard(deck.draw());
             outputView.printDealerDrawn(new DealerStateResponse(true, Dealer.MAXIMUM_DRAWABLE_SCORE));
