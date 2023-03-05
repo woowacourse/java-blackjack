@@ -11,8 +11,7 @@ import dto.PlayerWinningDto;
 
 public class Players {
     private final List<Player> players = new ArrayList<>();
-
-
+    
     public void add(Player player) {
         players.add(player);
     }
