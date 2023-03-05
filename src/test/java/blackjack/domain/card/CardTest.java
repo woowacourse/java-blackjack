@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,19 +17,29 @@ public class CardTest {
         boolean result = card.isAce();
 
         // then
-        Assertions.assertThat(result).isTrue();
-     }
+        assertThat(result).isTrue();
+    }
 
-     @Test
-     @DisplayName("Ace가 아닌 경우 isAce() 테스트")
-     void isAceTest_notAce() {
-         // given
-         Card card = new Card(Number.K, Pattern.HEART);
+    @Test
+    @DisplayName("Ace가 아닌 경우 isAce() 테스트")
+    void isAceTest_notAce() {
+        // given
+        Card card = new Card(Number.K, Pattern.HEART);
 
-         // when
-         boolean result = card.isAce();
+        // when
+        boolean result = card.isAce();
 
-         // then
-         Assertions.assertThat(result).isFalse();
-      }
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드를 블랙잭 점수로 변환 테스트")
+    void convertToBlackjackScore() {
+        // given
+        Card card = new Card(Number.Q, Pattern.HEART);
+
+        // expect
+        assertThat(card.convertToBlackjackScore()).isEqualTo(10);
+    }
 }
