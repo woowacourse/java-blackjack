@@ -49,12 +49,15 @@ public class BlackJackApplication {
             blackJack.giveCard(participant);
             OutputView.printParticipantCardCondition(List.of(participant));
         }
-
-        if (command.isNo() || participant.isBust()) {
+        if (isStoppingGivingCardCondition(participant, command)) {
             stopGivingCard(participant, command);
             return;
         }
         giveCardToParticipant(blackJack, participant);
+    }
+
+    private static boolean isStoppingGivingCardCondition(PlayerReadOnly participant, Command command) {
+        return command.isNo() || participant.isBust();
     }
 
     private Command getCommand(String participantName) {
