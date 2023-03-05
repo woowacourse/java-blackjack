@@ -5,11 +5,13 @@ import domain.CardHand;
 public class Player extends User {
 
     public Player(String nameValue) {
-        super(nameValue);
+        super.userName = new PlayerName(nameValue);
+        super.cardHand = new CardHand();
     }
 
     public Player(String nameValue, CardHand cardHand) {
-        super(nameValue, cardHand);
+        super.userName = new PlayerName(nameValue);
+        super.cardHand = cardHand;
     }
 
     @Override

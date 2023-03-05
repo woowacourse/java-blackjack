@@ -2,29 +2,18 @@ package domain.user;
 
 import domain.Card;
 import domain.CardHand;
-import domain.Name;
 import java.util.List;
 
 abstract public class User {
     protected static final int BLACKJACK_SCORE = 21;
 
-    protected final Name name;
-    protected final CardHand cardHand;
-
-    public User(String nameValue) {
-        this.name = new Name(nameValue);
-        this.cardHand = new CardHand();
-    }
-
-    public User(String nameValue, CardHand cardHand) {
-        this.name = new Name(nameValue);
-        this.cardHand = cardHand;
-    }
+    protected UserName userName;
+    protected CardHand cardHand;
 
     abstract public boolean canAdd();
 
     public String getNameValue() {
-        return this.name.getValue();
+        return this.userName.getValue();
     }
 
     public int calculateScore() {

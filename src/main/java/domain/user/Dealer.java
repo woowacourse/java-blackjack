@@ -7,11 +7,13 @@ public class Dealer extends User {
     private static final int UPPER_LIMIT_TO_DRAW = 16;
 
     public Dealer() {
-        super(DEALER_NAME);
+        super.userName = new DealerName(DEALER_NAME);
+        super.cardHand = new CardHand();
     }
 
     public Dealer(CardHand cardHand) {
-        super(DEALER_NAME, cardHand);
+        super.userName = new DealerName(DEALER_NAME);
+        super.cardHand = cardHand;
     }
 
     @Override

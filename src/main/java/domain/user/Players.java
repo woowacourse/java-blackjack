@@ -7,9 +7,18 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<String> nameValues) {
-        this.players = nameValues.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        this.players = generatePlayers(nameValues);
+    }
+
+    private List<Player> generatePlayers(List<String> nameValues) {
+        try {
+            return nameValues.stream()
+                    .map(Player::new)
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("플레이어 생성에 실패했습니다" + System.lineSeparator()
+                    + "사유: " + e.getMessage());
+        }
     }
 
     public List<Player> getPlayers() {
