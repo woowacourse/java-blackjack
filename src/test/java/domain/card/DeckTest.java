@@ -1,9 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Denomination;
-import domain.card.Suit;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
