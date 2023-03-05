@@ -1,6 +1,8 @@
 package balckjack.domain;
 
-class AceCard extends Card{
+class AceCard extends Card {
+
+    private static final int DEFAULT_ACE_VALUE = 11;
 
     public AceCard(Pattern pattern) {
         super(pattern, "A");
@@ -8,6 +10,6 @@ class AceCard extends Card{
 
     @Override
     protected int getValue() {
-        return 11;
+        return DEFAULT_ACE_VALUE;
     }
 }
