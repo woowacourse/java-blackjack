@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.stream.IntStream;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
@@ -33,8 +35,10 @@ public class BlackJackGame {
     }
 
     private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
+        int count = 0;
+        while (count != NUMBER_OF_INITIAL_CARD) {
             handOutCardTo(shufflingMachine, participant);
+            count++;
         }
     }
 
