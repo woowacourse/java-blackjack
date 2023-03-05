@@ -13,12 +13,10 @@ import java.util.stream.Collectors;
 
 public class BlackJack {
     private final Players players;
-    private final GameResult gameResult;
     private final CardRepository cardRepository;
 
     public BlackJack(String participantNames, IndexGenerator indexGenerator) {
         this.players = Players.with(initParticipantNames(participantNames));
-        this.gameResult = new GameResult();
         this.cardRepository = CardRepository.create(indexGenerator);
     }
 
@@ -52,11 +50,9 @@ public class BlackJack {
         return players.getParticipants();
     }
 
-    public GameResultReadOnly getGameResult() {
-        return GameResultReadOnly.from(gameResult);
-    }
-
-    public void battle() {
+    public GameResultReadOnly battle() {
+        GameResult gameResult = new GameResult();
         players.battleAll(gameResult);
+        return GameResultReadOnly.from(gameResult);
     }
 }

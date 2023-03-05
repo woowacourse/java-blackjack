@@ -1,6 +1,7 @@
 package controller;
 
 import domain.BlackJack;
+import domain.gameresult.GameResultReadOnly;
 import domain.player.PlayerReadOnly;
 import domain.strategy.RandomBasedIndexGenerator;
 import view.Command;
@@ -15,8 +16,8 @@ public class BlackJackApplication {
         initializeBlackjackGame(blackJack);
 
         giveCardToPlayers(blackJack);
-        blackJack.battle();
-        OutputView.printPlayersGameResults(blackJack.getGameResult());
+        GameResultReadOnly gameResult = blackJack.battle();
+        OutputView.printPlayersGameResults(gameResult);
     }
 
     private String getParticipantNames() {
