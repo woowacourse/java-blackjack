@@ -38,6 +38,6 @@ public class Dealer extends Participant {
     }
 
     public Map<Result, Integer> getDealerResult() {
-        return dealerResult.getDealerResult();
+        return dealerResult.getResultToCount();
     }
 }

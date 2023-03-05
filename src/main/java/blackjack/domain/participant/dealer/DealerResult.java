@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DealerResult {
-    private final EnumMap<Result, Integer> dealerResult = new EnumMap<>(Result.class) {
+    private final EnumMap<Result, Integer> resultToCount = new EnumMap<>(Result.class) {
         {
             put(Result.WIN, 0);
             put(Result.TIE, 0);
@@ -15,19 +15,19 @@ public class DealerResult {
     };
 
     public void addWin() {
-        dealerResult.put(Result.WIN, dealerResult.get(Result.WIN) + 1);
+        resultToCount.put(Result.WIN, resultToCount.get(Result.WIN) + 1);
     }
 
     public void addTie() {
-        dealerResult.put(Result.TIE, dealerResult.get(Result.TIE) + 1);
+        resultToCount.put(Result.TIE, resultToCount.get(Result.TIE) + 1);
     }
 
     public void addLose() {
-        dealerResult.put(Result.LOSE, dealerResult.get(Result.LOSE) + 1);
+        resultToCount.put(Result.LOSE, resultToCount.get(Result.LOSE) + 1);
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        Map<Result, Integer> newMap = new HashMap<>(dealerResult);
+    public Map<Result, Integer> getResultToCount() {
+        Map<Result, Integer> newMap = new HashMap<>(resultToCount);
         return Map.copyOf(newMap);
     }
 }
