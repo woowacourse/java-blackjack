@@ -41,6 +41,10 @@ public class Participants {
         return alias + shape;
     }
 
+    public Player findPlayerByPlayerName(String playerName) {
+        return players.findPlayerByPlayerName(playerName);
+    }
+
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
     }

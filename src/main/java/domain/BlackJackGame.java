@@ -27,4 +27,8 @@ public class BlackJackGame {
     public List<String> findCardNamesByParticipantName(String participantName) {
         return participants.findCardNamesByParticipantName(participantName);
     }
+
+    public Player findPlayerByPlayerName(String playerName) {
+        return participants.findPlayerByPlayerName(playerName);
+    }
 }
