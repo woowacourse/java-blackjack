@@ -75,9 +75,9 @@ public class OutputView {
     private static String generateDealerResultMessage(final BlackjackGameResult result) {
         return String.format(
                 GAME_RESULT_DEALER_MESSAGE_FORMAT,
-                result.calculateDealerWinCount(),
-                result.calculateDealerDrawCount(),
-                result.calculateDealerLoseCount()
+                result.getDealerWinCount(),
+                result.getDealerDrawCount(),
+                result.getDealerLoseCount()
         );
     }
 

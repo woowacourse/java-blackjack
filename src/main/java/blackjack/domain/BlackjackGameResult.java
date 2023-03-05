@@ -11,15 +11,15 @@ public class BlackjackGameResult {
         this.result = result;
     }
 
-    public int calculateDealerWinCount() {
+    public int getDealerWinCount() {
         return Collections.frequency(result.values(), Result.LOSE);
     }
 
-    public int calculateDealerDrawCount() {
+    public int getDealerDrawCount() {
         return Collections.frequency(result.values(), Result.DRAW);
     }
 
-    public int calculateDealerLoseCount() {
+    public int getDealerLoseCount() {
         return Collections.frequency(result.values(), Result.WIN);
     }
 
