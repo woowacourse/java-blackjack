@@ -1,14 +1,16 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.EIGHT;
-import static blackjack.domain.card.Rank.JACK;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Rank.SIX;
-import static blackjack.domain.card.Rank.TWO;
-import static blackjack.domain.card.Shape.HEART;
 import static blackjack.domain.card.Shape.SPADE;
+import static blackjack.util.CardFixtures.ACE_SPADE;
+import static blackjack.util.CardFixtures.EIGHT_SPADE;
+import static blackjack.util.CardFixtures.JACK_CLOVER;
+import static blackjack.util.CardFixtures.JACK_HEART;
+import static blackjack.util.CardFixtures.JACK_SPADE;
+import static blackjack.util.CardFixtures.KING_SPADE;
+import static blackjack.util.CardFixtures.SEVEN_SPADE;
+import static blackjack.util.CardFixtures.SIX_SPADE;
+import static blackjack.util.CardFixtures.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.Result;
@@ -25,11 +27,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 @SuppressWarnings("NonAsciiCharacters")
 public class HandTest {
 
+    @Test
+    void 카드를_입력받아_핸드를_생성한다() {
+        final List<Card> cards = List.of(ACE_SPADE, JACK_SPADE);
+
+        final Hand hand = new Hand(cards);
+
+        assertThat(hand.calculateScore()).isEqualTo(21);
+    }
+
     @ParameterizedTest(name = "승패를 구한다. 갬블러: {0}, 딜러: {1}, 결과값: {2}")
     @MethodSource("playBlackjackSource")
-    void 승패를_구한다(final List<Rank> ranks, final List<Rank> dealerRanks, final Result expectedResult) {
-        final Hand hand = generateHand(ranks);
-        final Hand dealerHand = generateHand(dealerRanks);
+    void 승패를_구한다(final List<Card> cards, final List<Card> dealerCards, final Result expectedResult) {
+        final Hand hand = new Hand(cards);
+        final Hand dealerHand = new Hand(dealerCards);
 
         final Result result = hand.play(dealerHand);
 
@@ -38,26 +49,20 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE, JACK), List.of(ACE, JACK), Result.DRAW),
-                Arguments.of(List.of(ACE, JACK), List.of(JACK, JACK), Result.WIN),
-                Arguments.of(List.of(ACE, JACK), List.of(JACK, SIX, JACK), Result.WIN),
-                Arguments.of(List.of(JACK, JACK), List.of(JACK, ACE), Result.LOSE),
-                Arguments.of(List.of(JACK, JACK, JACK), List.of(JACK, ACE), Result.LOSE),
-                Arguments.of(List.of(JACK, JACK), List.of(JACK, EIGHT), Result.WIN),
-                Arguments.of(List.of(JACK, JACK), List.of(JACK, JACK), Result.DRAW),
-                Arguments.of(List.of(JACK, SEVEN), List.of(JACK, JACK), Result.LOSE),
-                Arguments.of(List.of(JACK, SEVEN), List.of(JACK, SIX, JACK), Result.WIN),
-                Arguments.of(List.of(JACK, SEVEN, KING), List.of(JACK, SEVEN), Result.LOSE),
-                Arguments.of(List.of(JACK, SIX, KING), List.of(JACK, SIX, KING), Result.LOSE)
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_SPADE, JACK_SPADE), Result.DRAW),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, JACK_HEART), Result.WIN),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), Result.WIN),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, ACE_SPADE), Result.LOSE),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), List.of(JACK_SPADE, ACE_SPADE), Result.LOSE),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, EIGHT_SPADE), Result.WIN),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, JACK_HEART), Result.DRAW),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, JACK_HEART), Result.LOSE),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), Result.WIN),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(JACK_SPADE, SEVEN_SPADE),
+                        Result.LOSE),
+                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(JACK_SPADE, SIX_SPADE, KING_SPADE),
+                        Result.LOSE)
         );
-    }
-
-    private Hand generateHand(List<Rank> ranks) {
-        final Hand hand = new Hand();
-        for (Rank rank : ranks) {
-            hand.add(new Card(rank, SPADE));
-        }
-        return hand;
     }
 
     @Test
@@ -71,27 +76,26 @@ public class HandTest {
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력값: {0}, 결과값: {1}")
     @MethodSource("isPlayableSource")
-    void 카드를_뽑을_수_있는지_확인한다(final List<Rank> ranks, final boolean result) {
-        final Hand hand = generateHand(ranks);
+    void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
+        final Hand hand = new Hand(cards);
 
         assertThat(hand.isPlayable()).isEqualTo(result);
     }
 
     static Stream<Arguments> isPlayableSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE, JACK), false),
-                Arguments.of(List.of(JACK, JACK, TWO), false),
-                Arguments.of(List.of(JACK, JACK), true)
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), false),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART, TWO_SPADE), false),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), true)
         );
     }
 
     @Test
     void 점수_산정에_들어갈_결과값을_반환한다() {
-        final Hand hand = new Hand();
-        hand.add(new Card(ACE, HEART));
+        final Hand hand = new Hand(List.of(ACE_SPADE));
 
         final int result = hand.calculateScore();
-        
+
         assertThat(result).isEqualTo(11);
     }
 

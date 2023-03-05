@@ -14,7 +14,7 @@ public class Hand {
 
     public Hand(final List<Card> cards) {
         this.cards = new Cards(cards);
-        this.state = State.PLAY;
+        this.state = State.calculateState(this.cards);
     }
 
     public void add(final Card card) {

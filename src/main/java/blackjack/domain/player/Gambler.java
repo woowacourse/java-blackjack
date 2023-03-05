@@ -1,7 +1,9 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import java.util.List;
 
 public class Gambler extends AbstractPlayer {
     private static final int DRAW_COUNT = 2;
@@ -12,6 +14,11 @@ public class Gambler extends AbstractPlayer {
 
     public static Gambler create(final String name) {
         return new Gambler(Name.from(name), new Hand());
+    }
+
+    public static Gambler create(final String name, final Deck deck) {
+        final List<Card> initialDraw = List.of(deck.draw(), deck.draw());
+        return new Gambler(Name.from(name), new Hand(initialDraw));
     }
 
     @Override

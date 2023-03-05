@@ -6,7 +6,9 @@ import static blackjack.domain.card.Rank.SEVEN;
 import static blackjack.domain.card.Rank.SIX;
 import static blackjack.domain.card.Shape.CLOVER;
 import static blackjack.domain.card.Shape.DIAMOND;
+import static blackjack.util.CardFixtures.ACE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -31,6 +33,18 @@ public class DealerTest {
         final Dealer dealer = Dealer.create();
 
         assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+    @Test
+    void 덱을_입력받아_딜러를_생성한다() {
+        final Deck deck = new FixedDeck(ACE_SPADE);
+
+        final Dealer dealer = Dealer.create(deck);
+
+        assertAll(
+                () -> assertThat(dealer.getName()).isEqualTo("딜러"),
+                () -> assertThat(dealer.getCardCount()).isEqualTo(1)
+        );
     }
 
     @Test

@@ -18,7 +18,7 @@ public class Cards {
     }
 
     public Cards(final List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public void add(final Card card) {

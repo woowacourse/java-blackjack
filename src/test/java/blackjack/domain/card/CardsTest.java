@@ -1,5 +1,19 @@
 package blackjack.domain.card;
 
+import static blackjack.util.CardFixtures.ACE_CLOVER;
+import static blackjack.util.CardFixtures.ACE_DIAMOND;
+import static blackjack.util.CardFixtures.ACE_HEART;
+import static blackjack.util.CardFixtures.ACE_SPADE;
+import static blackjack.util.CardFixtures.EIGHT_SPADE;
+import static blackjack.util.CardFixtures.FIVE_SPADE;
+import static blackjack.util.CardFixtures.FOUR_SPADE;
+import static blackjack.util.CardFixtures.JACK_SPADE;
+import static blackjack.util.CardFixtures.KING_HEART;
+import static blackjack.util.CardFixtures.KING_SPADE;
+import static blackjack.util.CardFixtures.NINE_SPADE;
+import static blackjack.util.CardFixtures.QUEEN_SPADE;
+import static blackjack.util.CardFixtures.SEVEN_SPADE;
+import static blackjack.util.CardFixtures.SIX_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -17,35 +31,29 @@ public class CardsTest {
 
     @ParameterizedTest(name = "점수 산정에 들어갈 결과값을 반환한다. 입력: {0}, 점수: {1}")
     @MethodSource("calculateTotalScoreSource")
-    void 점수_산정에_들어갈_결과값을_반환한다(final List<Rank> ranks, final int result) {
-        final Cards cards = new Cards();
+    void 점수_산정에_들어갈_결과값을_반환한다(final List<Card> cards, final int result) {
+        final Cards sut = new Cards(cards);
 
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, Shape.SPADE));
-        }
-
-        assertThat(cards.calculateTotalScore()).isEqualTo(result);
+        assertThat(sut.calculateTotalScore()).isEqualTo(result);
     }
 
     static Stream<Arguments> calculateTotalScoreSource() {
         return Stream.of(
-                Arguments.of(List.of(Rank.FIVE, Rank.ACE), 16),
-                Arguments.of(List.of(Rank.ACE, Rank.ACE), 12),
-                Arguments.of(List.of(Rank.ACE, Rank.KING), 21),
-                Arguments.of(List.of(Rank.FOUR, Rank.ACE, Rank.NINE), 14),
-                Arguments.of(List.of(Rank.JACK, Rank.ACE, Rank.KING), 21),
-                Arguments.of(List.of(Rank.ACE, Rank.ACE, Rank.ACE, Rank.ACE), 14),
-                Arguments.of(List.of(Rank.JACK, Rank.ACE, Rank.ACE), 12),
-                Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), 22),
-                Arguments.of(List.of(Rank.JACK, Rank.ACE, Rank.KING, Rank.NINE), 30)
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), 16),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART), 12),
+                Arguments.of(List.of(ACE_SPADE, KING_SPADE), 21),
+                Arguments.of(List.of(FOUR_SPADE, ACE_SPADE, NINE_SPADE), 14),
+                Arguments.of(List.of(JACK_SPADE, ACE_SPADE, KING_SPADE), 21),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART, ACE_CLOVER, ACE_DIAMOND), 14),
+                Arguments.of(List.of(JACK_SPADE, ACE_SPADE, ACE_HEART), 12),
+                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), 22),
+                Arguments.of(List.of(JACK_SPADE, ACE_SPADE, KING_SPADE, NINE_SPADE), 30)
         );
     }
 
     @Test
     void 점수_최솟값을_반환한다() {
-        final Cards cards = new Cards();
-        cards.add(new Card(Rank.FIVE, Shape.DIAMOND));
-        cards.add(new Card(Rank.ACE, Shape.CLOVER));
+        final Cards cards = new Cards(List.of(FIVE_SPADE, ACE_SPADE));
 
         assertThat(cards.calculateMinScore()).isEqualTo(6);
     }
@@ -61,9 +69,10 @@ public class CardsTest {
 
     @Test
     void 모든_카드의_정보를_반환한다() {
-        final Cards cards = new Cards();
-        cards.add(new Card(Rank.FIVE, Shape.DIAMOND));
-        cards.add(new Card(Rank.ACE, Shape.CLOVER));
+        final Cards cards = new Cards(List.of(
+                new Card(Rank.FIVE, Shape.DIAMOND),
+                new Card(Rank.ACE, Shape.CLOVER))
+        );
 
         final List<String> result = cards.getCardLetters();
 
@@ -72,65 +81,53 @@ public class CardsTest {
 
     @ParameterizedTest(name = "블랙잭인지 확인한다. 입력값: {0}, 결과값: {1}")
     @MethodSource("isBlackjackSource")
-    void 블랙잭인지_확인한다(final List<Rank> ranks, final boolean result) {
-        final Cards cards = new Cards();
+    void 블랙잭인지_확인한다(final List<Card> cards, final boolean result) {
+        final Cards sut = new Cards(cards);
 
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, Shape.SPADE));
-        }
-
-        assertThat(cards.isBlackjack()).isEqualTo(result);
+        assertThat(sut.isBlackjack()).isEqualTo(result);
     }
 
     static Stream<Arguments> isBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(Rank.FIVE, Rank.ACE), false),
-                Arguments.of(List.of(Rank.ACE, Rank.ACE), false),
-                Arguments.of(List.of(Rank.ACE, Rank.KING), true),
-                Arguments.of(List.of(Rank.FIVE, Rank.KING, Rank.SIX), false),
-                Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), false)
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART), false),
+                Arguments.of(List.of(ACE_SPADE, KING_SPADE), true),
+                Arguments.of(List.of(FIVE_SPADE, KING_SPADE, SIX_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), false)
         );
     }
 
     @ParameterizedTest(name = "버스트인지 확인한다. 입력값: {0}, 결과값: {1}")
     @MethodSource("isBustSource")
-    void 버스트인지_확인한다(final List<Rank> ranks, final boolean result) {
-        final Cards cards = new Cards();
+    void 버스트인지_확인한다(final List<Card> cards, final boolean result) {
+        final Cards sut = new Cards(cards);
 
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, Shape.SPADE));
-        }
-
-        assertThat(cards.isBust()).isEqualTo(result);
+        assertThat(sut.isBust()).isEqualTo(result);
     }
 
     static Stream<Arguments> isBustSource() {
         return Stream.of(
-                Arguments.of(List.of(Rank.FIVE, Rank.ACE), false),
-                Arguments.of(List.of(Rank.ACE, Rank.ACE), false),
-                Arguments.of(List.of(Rank.ACE, Rank.KING), false),
-                Arguments.of(List.of(Rank.ACE, Rank.QUEEN, Rank.FOUR, Rank.SEVEN), true)
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART), false),
+                Arguments.of(List.of(ACE_SPADE, KING_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, QUEEN_SPADE, FOUR_SPADE, SEVEN_SPADE), true)
         );
     }
 
     @ParameterizedTest(name = "결과값이 블랙잭 점수인지 확인한다. 입력값: {0}, 결과값: {1}")
     @MethodSource("isBlackjackScoreSource")
-    void 결과값이_블랙잭_점수인지_확인한다(final List<Rank> ranks, final boolean result) {
-        final Cards cards = new Cards();
+    void 결과값이_블랙잭_점수인지_확인한다(final List<Card> cards, final boolean result) {
+        final Cards sut = new Cards(cards);
 
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, Shape.SPADE));
-        }
-
-        assertThat(cards.isBlackjackScore()).isEqualTo(result);
+        assertThat(sut.isBlackjackScore()).isEqualTo(result);
     }
 
     static Stream<Arguments> isBlackjackScoreSource() {
         return Stream.of(
-                Arguments.of(List.of(Rank.FIVE, Rank.ACE, Rank.FIVE), true),
-                Arguments.of(List.of(Rank.ACE, Rank.JACK), false),
-                Arguments.of(List.of(Rank.ACE, Rank.ACE, Rank.EIGHT), false),
-                Arguments.of(List.of(Rank.KING, Rank.KING, Rank.JACK), false)
+                Arguments.of(List.of(FIVE_SPADE, ACE_SPADE, FIVE_SPADE), true),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), false),
+                Arguments.of(List.of(ACE_SPADE, ACE_HEART, EIGHT_SPADE), false),
+                Arguments.of(List.of(KING_SPADE, KING_HEART, JACK_SPADE), false)
         );
     }
 }

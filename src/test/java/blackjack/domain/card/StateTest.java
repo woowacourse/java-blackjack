@@ -1,15 +1,17 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.FOUR;
-import static blackjack.domain.card.Rank.JACK;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.SIX;
-import static blackjack.domain.card.Shape.SPADE;
 import static blackjack.domain.card.State.BLACKJACK;
 import static blackjack.domain.card.State.BUST;
 import static blackjack.domain.card.State.PLAY;
 import static blackjack.domain.card.State.STOP;
+import static blackjack.util.CardFixtures.ACE_SPADE;
+import static blackjack.util.CardFixtures.FOUR_SPADE;
+import static blackjack.util.CardFixtures.JACK_CLOVER;
+import static blackjack.util.CardFixtures.JACK_HEART;
+import static blackjack.util.CardFixtures.JACK_SPADE;
+import static blackjack.util.CardFixtures.KING_HEART;
+import static blackjack.util.CardFixtures.KING_SPADE;
+import static blackjack.util.CardFixtures.SIX_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -51,21 +53,18 @@ public class StateTest {
 
     @ParameterizedTest
     @MethodSource("calculateStateSource")
-    void Cards를_받아_상태를_반환한다(final List<Rank> ranks, final State state) {
-        final Cards cards = new Cards();
-        for (Rank rank : ranks) {
-            cards.add(new Card(rank, SPADE));
-        }
+    void Cards를_받아_상태를_반환한다(final List<Card> cards, final State state) {
+        final Cards sut = new Cards(cards);
 
-        assertThat(State.calculateState(cards)).isEqualTo(state);
+        assertThat(State.calculateState(sut)).isEqualTo(state);
     }
 
     static Stream<Arguments> calculateStateSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE, JACK), BLACKJACK),
-                Arguments.of(List.of(JACK, JACK, JACK), BUST),
-                Arguments.of(List.of(ACE, FOUR, SIX), STOP),
-                Arguments.of(List.of(KING, KING), PLAY)
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), BLACKJACK),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), BUST),
+                Arguments.of(List.of(ACE_SPADE, FOUR_SPADE, SIX_SPADE), STOP),
+                Arguments.of(List.of(KING_SPADE, KING_HEART), PLAY)
         );
     }
 }

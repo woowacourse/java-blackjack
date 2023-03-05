@@ -1,15 +1,18 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.FOUR;
-import static blackjack.domain.card.Rank.JACK;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Rank.SIX;
-import static blackjack.domain.card.Rank.THREE;
-import static blackjack.domain.card.Shape.CLOVER;
-import static blackjack.domain.card.Shape.DIAMOND;
+import static blackjack.util.CardFixtures.ACE_DIAMOND;
+import static blackjack.util.CardFixtures.ACE_SPADE;
+import static blackjack.util.CardFixtures.FOUR_SPADE;
+import static blackjack.util.CardFixtures.JACK_CLOVER;
+import static blackjack.util.CardFixtures.JACK_SPADE;
+import static blackjack.util.CardFixtures.KING_HEART;
+import static blackjack.util.CardFixtures.KING_SPADE;
+import static blackjack.util.CardFixtures.SEVEN_SPADE;
+import static blackjack.util.CardFixtures.SIX_HEART;
+import static blackjack.util.CardFixtures.SIX_SPADE;
+import static blackjack.util.CardFixtures.THREE_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -36,43 +39,51 @@ public class GamblerTest {
     }
 
     @Test
+    void 덱을_입력받아_딜러를_생성한다() {
+        final Deck deck = new FixedDeck(ACE_SPADE, KING_HEART);
+
+        final Gambler gambler = Gambler.create("허브", deck);
+
+        assertAll(
+                () -> assertThat(gambler.getName()).isEqualTo("허브"),
+                () -> assertThat(gambler.getCardLetters()).containsExactly("A스페이드", "K하트")
+        );
+    }
+
+    @Test
     void 게임_시작_시_카드를_뽑는다() {
         final Gambler gambler = Gambler.create("허브");
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, DIAMOND)
-        ));
+        final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER);
 
         gambler.initialDraw(deck);
 
-        assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드", "J다이아몬드");
+        assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드", "J클로버");
     }
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isDrawableSource")
     void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
-        final Gambler gambler = Gambler.create("허브");
         final Deck deck = new FixedDeck(cards);
-        gambler.initialDraw(deck);
+        final Gambler gambler = Gambler.create("허브", deck);
         gambler.draw(deck);
 
-        assertThat(gambler.isDrawable()).isEqualTo(result);
+        final boolean drawable = gambler.isDrawable();
+        
+        assertThat(drawable).isEqualTo(result);
     }
 
     static Stream<Arguments> isDrawableSource() {
         return Stream.of(
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER), new Card(SIX, CLOVER)), false),
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SEVEN, CLOVER), new Card(FOUR, CLOVER)), false),
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SEVEN, CLOVER), new Card(THREE, CLOVER)), true)
+                Arguments.of(List.of(JACK_SPADE, SIX_SPADE, SIX_HEART), false),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, FOUR_SPADE), false),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, THREE_SPADE), true)
         );
     }
 
     @Test
     void 카드를_뽑는다() {
         final Gambler gambler = Gambler.create("허브");
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND)
-        ));
+        final Deck deck = new FixedDeck(ACE_DIAMOND);
 
         gambler.draw(deck);
 
@@ -88,18 +99,14 @@ public class GamblerTest {
 
     @Test
     void 점수를_반환한다() {
-        final Gambler gambler = Gambler.create("허브");
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND)
-        ));
-        gambler.draw(deck);
+        final Gambler gambler = Gambler.create("허브", new FixedDeck(ACE_DIAMOND, KING_HEART));
 
-        assertThat(gambler.calculateScore()).isEqualTo(11);
+        assertThat(gambler.calculateScore()).isEqualTo(21);
     }
 
     @Test
     void 카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Gambler gambler = Gambler.create("허브");
+        final Gambler gambler = Gambler.create("허브", new FixedDeck(ACE_DIAMOND, KING_HEART));
 
         gambler.stay();
 
@@ -108,13 +115,8 @@ public class GamblerTest {
 
     @Test
     void 게임의_결과를_반환한다() {
-        final Gambler gambler = Gambler.create("허브");
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND)
-        ));
-        gambler.draw(deck);
-        final Hand hand = new Hand();
-        hand.add(new Card(KING, DIAMOND));
+        final Gambler gambler = Gambler.create("허브", new FixedDeck(ACE_DIAMOND, KING_HEART));
+        final Hand hand = new Hand(List.of(KING_SPADE));
 
         final Result result = gambler.play(hand);
 

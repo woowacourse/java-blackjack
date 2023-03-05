@@ -17,7 +17,6 @@ public class Card {
     public String toString() {
         return "Card{" +
                 "rank=" + rank +
-                ", shape=" + shape +
                 '}';
     }
 
