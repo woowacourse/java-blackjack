@@ -18,22 +18,7 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int score = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-        if (canAddTen(score)) {
-            score += 10;
-        }
-        return score;
-    }
-
-    private boolean canAddTen(int score) {
-        return containAce() && score <= 11;
-    }
-
-    private boolean containAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+        return Score.from(cards).getValue();
     }
 
     public Card pickFirstCard() {
