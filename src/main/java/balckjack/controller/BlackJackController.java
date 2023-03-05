@@ -17,13 +17,7 @@ public class BlackJackController {
     private static final int BURST_CODE = -1;
     private static final int DEALER_HIT_NUMBER = 16;
 
-    private final CardPicker cardPicker;
-
-    public BlackJackController(CardPicker cardPicker) {
-        this.cardPicker = cardPicker;
-    }
-
-    public void run() {
+    public void run(CardPicker cardPicker) {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames,
             OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
@@ -33,7 +27,7 @@ public class BlackJackController {
         OutputView.printInitCardDeck(dealer, players);
 
         for (Player player : players.getPlayers()) {
-            askPlayer(referee, player);
+            askPlayer(referee, player, cardPicker);
         }
         System.out.println();
         while (referee.calculateDeckScore(dealer.getCardDeck()) <= DEALER_HIT_NUMBER
@@ -47,7 +41,7 @@ public class BlackJackController {
             results);
     }
 
-    private void askPlayer(Referee referee, Player player) {
+    private void askPlayer(Referee referee, Player player, CardPicker cardPicker) {
         Command command;
         while (true) {
             command = Repeater.repeatIfError(() -> inputCommand(player),

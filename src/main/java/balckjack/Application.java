@@ -7,8 +7,8 @@ public class Application {
 
     public static void main(String[] args) {
         final RandomCardPicker picker = new RandomCardPicker();
-        final BlackJackController blackJackController = new BlackJackController(picker);
+        final BlackJackController blackJackController = new BlackJackController();
 
-        blackJackController.run();
+        blackJackController.run(picker);
     }
 }
