@@ -38,19 +38,6 @@ class PlayersTest {
         players.add(player);
     }
 
-    @DisplayName("인덱스에 해당하는 플레이어가 카드를 받을 수 있다.")
-    @Test
-    void takeCard() {
-        Players players = new Players();
-        Player player = new Player(new Name("폴로"));
-        players.add(player);
-        Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
-
-        players.takeCard(0, card);
-
-        assertThat(player.showCards()).contains(card);
-    }
-
     @DisplayName("플레이어들이 알아서 덱에서 카드를 받는다.")
     @Test
     void takeCardOnce() {

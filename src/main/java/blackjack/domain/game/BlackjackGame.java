@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.controller.AddCardOrNot;
 import java.util.List;
 
 import blackjack.domain.deck.Deck;
@@ -12,6 +13,8 @@ import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.player.PlayerResultDto;
 import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.domain.participant.player.Players;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BlackjackGame {
     public static final int FIRST_DRAW_COUNT = 2;
@@ -37,12 +40,8 @@ public class BlackjackGame {
         players.takeCard(deck, FIRST_DRAW_COUNT);
     }
 
-    public void supplyAdditionalCard(int playerIndex) {
-        players.takeCard(playerIndex, deck.drawCard());
-    }
-
-    public boolean isBust(int playerIndex) {
-        return players.isBust(playerIndex);
+    public void supplyCardToPlayerNameOf(Function<Name, AddCardOrNot> decideAddCardOrNot, Consumer<Player> showPlayerCards) {
+        players.hitAdditionalCard(deck, decideAddCardOrNot, showPlayerCards);
     }
 
     public int countPlayer() {
@@ -83,13 +82,5 @@ public class BlackjackGame {
 
     public List<ParticipantCardsDto> getPlayersCards() {
         return players.getPlayerCards();
-    }
-
-    public ParticipantCardsDto getPlayerCardsByIndex(int playerIndex) {
-        return getPlayersCards().get(playerIndex);
-    }
-
-    public Name findUserNameByIndex(int playerIndex) {
-        return players.findPlayer(playerIndex);
     }
 }
