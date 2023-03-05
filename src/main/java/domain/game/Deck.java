@@ -10,25 +10,32 @@ import java.util.List;
 
 public class Deck {
 
+    private static final List<Card> cards;
+
     private final NumberGenerator numberGenerator;
-    private final List<Card> cards;
+
+    static {
+        cards = makeCards();
+    }
 
     public Deck(NumberGenerator numberGenerator) {
         this.numberGenerator = numberGenerator;
-        this.cards = new ArrayList<>();
-        initializeCards();
     }
 
-    private void initializeCards() {
+    private static List<Card> makeCards() {
+        List<Card> cardsOfAllCardType = new ArrayList<>();
         for (CardType cardType : CardType.values()) {
-            mapCardNumbers(cardType);
+            cardsOfAllCardType.addAll(makeCardsOfOneCardType(cardType));
         }
+        return cardsOfAllCardType;
     }
 
-    private void mapCardNumbers(CardType cardType) {
+    private static List<Card> makeCardsOfOneCardType(CardType cardType) {
+        List<Card> cardsOfOneCardType = new ArrayList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(cardType, cardNumber));
+            cardsOfOneCardType.add(new Card(cardType, cardNumber));
         }
+        return cardsOfOneCardType;
     }
 
     public Card serve() {
