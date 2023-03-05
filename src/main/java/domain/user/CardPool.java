@@ -33,7 +33,7 @@ public class CardPool {
         return sum;
     }
 
-    public boolean isOverCardPointLimit() {
+    public boolean hasSumGreaterThanLimit() {
         return sumCardNumbers() > CARD_POINT_LIMIT;
     }
 
