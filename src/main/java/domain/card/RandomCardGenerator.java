@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class RandomCardGenerator implements CardGenerator {
 
-    static List<Card> cards;
+    private static final List<Card> cards;
 
     static {
         cards = CardGenerator.generate();
