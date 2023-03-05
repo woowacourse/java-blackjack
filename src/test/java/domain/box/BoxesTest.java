@@ -44,7 +44,7 @@ class BoxesTest {
     @DisplayName("현재 턴의 박스의 참가자를 반환하고 업데이트 한다.")
     @TestFactory
     Stream<DynamicTest> getCurrentParticipant() {
-        Boxes boxes = Boxes.of("firstPlayer,secondPlayer,thirdPlayer");
+        Boxes boxes = Boxes.of("firstPlayer,secondPlayer");
         return Stream.of(
             DynamicTest.dynamicTest("처음에 첫 참가자를 반환한다.", () -> {
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("firstPlayer"));
@@ -57,19 +57,16 @@ class BoxesTest {
                     .isEqualTo(new BoxStatus(PlayResult.BLACK_JACK, 21));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("secondPlayer"));
             }),
-            DynamicTest.dynamicTest("두번째 참가자 턴이 끝난 세번째 참가자를 반환한다.(스탠드)", () -> {
+            DynamicTest.dynamicTest("모든 참가자 턴이 끝나면 딜러를 반환한다.(스탠드)", () -> {
                 Player secondPlayer = boxes.getCurrentTurnPlayer();
                 boxes.updatePlayerBox(secondPlayer);
                 Assertions.assertThat(boxes.getBoxStatusByParticipant(secondPlayer))
                     .isEqualTo(new BoxStatus(PlayResult.STAND, 0));
-                Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("thirdPlayer"));
+                Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Dealer());
             }),
-            DynamicTest.dynamicTest("세번쨰 참가자 턴이 끝나고 다음 참가자가 없는 경우 오류를 던진다.(버스트)", () -> {
-                Player thirdPlayer = boxes.getCurrentTurnPlayer();
-                makeBustByTwentyTwo(thirdPlayer);
-                boxes.updatePlayerBox(thirdPlayer);
-                Assertions.assertThat(boxes.getBoxStatusByParticipant(thirdPlayer))
-                    .isEqualTo(new BoxStatus(PlayResult.BUST, 22));
+            DynamicTest.dynamicTest("딜러턴 모두 종료된 후 다음 턴을 조회할 경우 오류를 던진다.", () -> {
+                Player dealer = boxes.getCurrentTurnPlayer();
+                boxes.updatePlayerBox(dealer);
                 Assertions.assertThatThrownBy(boxes::getCurrentTurnPlayer)
                     .isExactlyInstanceOf(IllegalStateException.class)
                     .hasMessage("더 이상 게임을 진행할 박스가 없습니다.");
