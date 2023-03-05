@@ -29,5 +29,3 @@ public enum Order {
         return this.equals(Order.YES);
     }
 }
-
-
