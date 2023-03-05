@@ -36,6 +36,10 @@ public class OutputView {
 
     public void printAllCardResult(final String name, final List<String> cards, final int cardSum) {
         String cardsMessage = String.join(", ", cards);
+        if (cardSum > 21) {
+            System.out.println(name + "카드: " + cardsMessage + " - 결과 : 버스트");
+            return;
+        }
         System.out.println(name + "카드: " + cardsMessage + " - 결과 : " + cardSum);
     }
 

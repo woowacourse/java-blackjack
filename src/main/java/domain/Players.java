@@ -55,4 +55,8 @@ public class Players {
     public int getCardsSum(final int index) {
         return players.get(index).sumOfPlayerCards();
     }
+
+    public boolean isNotBurst(final int index) {
+        return players.get(index).isNotBurst();
+    }
 }

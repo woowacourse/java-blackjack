@@ -77,12 +77,16 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return blackJack;
+        return cards.size() == 2 && blackJack;
     }
 
     public List<String> getCards() {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isNotBurst() {
+        return sumOfCards() < 22;
     }
 }

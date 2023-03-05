@@ -88,7 +88,7 @@ public class BlackJackGame {
     }
 
     private void playerSelectAddCard(final Players players, final int index, final CardBox cardBox) {
-        while (inputView.addOrStop(players.getNameOfPlayer(index))) {
+        while (inputView.addOrStop(players.getNameOfPlayer(index)) && players.isNotBurst(index)) {
             players.playerDrawAddCard(index, cardBox);
             outputView.printCurrentPlayerResult(players.getNameOfPlayer(index), players.getCardsOfPlayer(index));
         }

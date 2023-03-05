@@ -27,4 +27,8 @@ public class Player {
     public List<String> getCards() {
         return cards.getCards();
     }
+
+    public boolean isNotBurst() {
+        return cards.isNotBurst();
+    }
 }
