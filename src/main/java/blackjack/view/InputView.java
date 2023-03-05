@@ -20,7 +20,7 @@ public class InputView {
         return validateInput(scanner.nextLine());
     }
 
-    private static String validateInput(String input) {
+    private static String validateInput(final String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("공백은 입력이 불가능합니다.");
         }
