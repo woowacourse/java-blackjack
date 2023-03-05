@@ -6,6 +6,8 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static blackjack.util.ExceptionTemplate.*;
+
 public class BlackJackManager {
     private final Deck deck = new Deck();
 
@@ -46,7 +48,9 @@ public class BlackJackManager {
     }
 
     private void hitBy(final Player player) {
-        while (player.isHittable() && InputView.checkPlayerAdditionalHit(player.getName().getValue())) {
+        while (player.isHittable()
+                && repeatAndPrintCause(() -> InputView.checkPlayerAdditionalHit(player.getName().getValue()))
+        ) {
             player.hit(deck.draw());
             OutputView.printParticipantsCards(player);
         }
@@ -56,7 +60,7 @@ public class BlackJackManager {
     }
 
     private List<Player> createPlayers() {
-        final List<String> names = InputView.readNames();
+        final List<String> names = repeatAndPrintCause(InputView::readNames);
         final List<Player> players = new ArrayList<>();
         for (final String name : names) {
             players.add(new Player(initCards(), name));
