@@ -25,4 +25,16 @@ class CardTest {
         assertThat(card.getShape())
                 .isEqualTo(shape);
     }
+
+    @Test
+    void 카드의_점수를_반환한다() {
+        assertThat(card.getScore())
+                .isEqualTo(symbol.getScore());
+    }
+
+    @Test
+    void 카드가_Ace인지_확인한다() {
+        assertThat(card.isAce())
+                .isEqualTo(symbol.isAce());
+    }
 }
