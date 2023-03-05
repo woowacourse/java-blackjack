@@ -1,12 +1,6 @@
 package controller;
 
-import domain.Player;
-import domain.Deck;
-import domain.Participants;
-import domain.Result;
-import domain.RandomShuffleStrategy;
-import domain.Participant;
-
+import domain.*;
 import service.GameService;
 import view.InputView;
 import view.OutputView;
@@ -71,12 +65,12 @@ public class BlackJackController {
     }
 
     private void hitOrStayForEachPlayer(Participants participants, GameService gameService) {
-        for (Player player : participants.findPlayers()) {
+        for (Participant player : participants.findPlayers()) {
             keepHitOrStay(gameService, player);
         }
     }
 
-    private void keepHitOrStay(GameService gameService, Player player) {
+    private void keepHitOrStay(GameService gameService, Participant player) {
         try {
             hitOrStay(gameService, player);
         } catch (IllegalArgumentException e) {
@@ -85,7 +79,7 @@ public class BlackJackController {
         }
     }
 
-    private void hitOrStay(GameService gameService, Player player) {
+    private void hitOrStay(GameService gameService, Participant player) {
         while (gameService.isHit(inputView.requestDrawingCard(player.getName()))) {
             gameService.hit(player);
             printIfPoolDoesNotContainsHand(player, gameService);
@@ -93,7 +87,7 @@ public class BlackJackController {
         printIfPoolDoesNotContainsHand(player, gameService);
     }
 
-    private void printIfPoolDoesNotContainsHand(Player player, GameService gameService) {
+    private void printIfPoolDoesNotContainsHand(Participant player, GameService gameService) {
         if (!gameService.existHandInPool(player.getCardNames())) {
             gameService.addHandToPool(player.getCardNames());
             outputView.printParticipantCard(player.getName(), player.getCardNames());

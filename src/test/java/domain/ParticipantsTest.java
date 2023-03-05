@@ -31,8 +31,8 @@ class ParticipantsTest {
     @DisplayName("참가자들에게 카드를 한 장씩 나누어준다.")
     void participantsDealTest() {
         participants.deal(Deck.from(new RandomShuffleStrategy()));
-        List<Player> players = participants.findPlayers();
-        for (Player player : players) {
+        List<Participant> players = participants.findPlayers();
+        for (Participant player : players) {
             assertThat(player.getCardNames().size()).isEqualTo(1);
         }
     }
@@ -65,7 +65,7 @@ class ParticipantsTest {
     void NoBustResultTest() {
         //given
         Participants participant = Participants.from(List.of("abc"));
-        for (Player player : participant.findPlayers()) {
+        for (Participant player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
         }
 
@@ -85,7 +85,7 @@ class ParticipantsTest {
     void BothBustTest() {
         //given
         Participants participant = Participants.from(List.of("abc"));
-        for (Player player : participant.findPlayers()) {
+        for (Participant player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
             player.receiveCard(new Card("Q하트", 10));
             player.receiveCard(new Card("2클로버", 2));
@@ -109,7 +109,7 @@ class ParticipantsTest {
     void playerWinWhenDealerBust() {
         //given
         Participants participant = Participants.from(List.of("abc"));
-        for (Player player : participant.findPlayers()) {
+        for (Participant player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
             player.receiveCard(new Card("Q하트", 10));
         }
@@ -132,7 +132,7 @@ class ParticipantsTest {
     void dealerWinWhenPlayerBust() {
         //given
         Participants participant = Participants.from(List.of("abc"));
-        for (Player player : participant.findPlayers()) {
+        for (Participant player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
             player.receiveCard(new Card("Q하트", 10));
             player.receiveCard(new Card("3스페이드", 3));
@@ -155,7 +155,7 @@ class ParticipantsTest {
     void sameHandValueBothNoBust() {
         //given
         Participants participant = Participants.from(List.of("abc"));
-        for (Player player : participant.findPlayers()) {
+        for (Participant player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
             player.receiveCard(new Card("Q하트", 10));
         }

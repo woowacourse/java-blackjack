@@ -22,7 +22,7 @@ public class GameService {
 
     public List<String> getParticipantsNames() {
         return participants.findPlayers().stream()
-            .map(Player::getName)
+            .map(Participant::getName)
             .collect(Collectors.toList());
     }
 
