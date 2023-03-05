@@ -15,39 +15,22 @@ public final class GamePoint {
     private final int gamePoint;
 
     public GamePoint(final List<Card> cards) {
-        int point = calculateMaxPoint(cards);
-        if (isBust(point) && containAceInCards(cards)) {
-            this.gamePoint = getPoint(point, getCountOfAce(cards));
-            return;
-        }
+        int point = getPoint(calculateMaxPoint(cards), getCountOfAce(cards));
         this.gamePoint = calculateBust(point);
     }
 
+    private int getPoint(int point, int aceCount) {
+        while (point > BLACK_JACK && aceCount > 0) {
+            point -= 10;
+            aceCount -= 1;
+        }
+        return calculateBust(point);
+    }
+
     private int calculateMaxPoint(final List<Card> cards) {
-        int point = 0;
-        for (Card card : cards) {
-            point += transform(card);
-        }
-        return point;
-    }
-
-    private boolean containAceInCards(List<Card> cards) {
-        return getCountOfAce(cards) != 0;
-    }
-
-    private boolean isBust(final int point) {
-        return calculateBust(point) == BUST;
-    }
-
-    private int getPoint(final int point, final int aceCount) {
-        int optimizedPoint = point;
-        int remainAce = aceCount;
-        while (optimizedPoint > BLACK_JACK && remainAce > 0) {
-            optimizedPoint -= 10;
-            remainAce -= 1;
-        }
-
-        return calculateBust(optimizedPoint);
+        return cards.stream()
+                .mapToInt(this::transform)
+                .sum();
     }
 
     private int getCountOfAce(final List<Card> cards) {
