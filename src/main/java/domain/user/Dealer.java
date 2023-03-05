@@ -31,7 +31,7 @@ public class Dealer extends Player {
 
     @Override
     public List<Card> faceUpInitialHand() {
-        if (hand.size() < 1) {
+        if (hand.size() < 2) {
             throw new IllegalStateException("딜러는 카드 두장을 받고 시작해야 합니다.");
         }
         return List.of(hand.get(0));
