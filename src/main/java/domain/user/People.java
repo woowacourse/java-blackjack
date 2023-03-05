@@ -55,7 +55,7 @@ public class People {
     }
 
     private void recordGameResult(Map<Player, GameResult> record) {
-        players.forEach(player -> record.put(player, GameResult.getResult(player, dealer)));
+        players.forEach(player -> record.put(player, GameResult.makePlayerRecord(player, dealer)));
     }
 
     public Map<GameResult, Integer> getDealerRecord(Map<Player, GameResult> record) {

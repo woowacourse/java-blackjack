@@ -20,8 +20,8 @@ public enum GameResult {
         this.criteria = criteria;
     }
 
-    public static GameResult getResult(Player player, Dealer dealer) {
-        return Arrays.stream(GameResult.values())
+    public static GameResult makePlayerRecord(Player player, Dealer dealer) {
+        return Arrays.stream(values())
                 .filter(it -> it.criteria.apply(getPlayerPoint(player), getPlayerPoint(dealer)))
                 .findAny()
                 .orElseThrow();
@@ -36,21 +36,17 @@ public enum GameResult {
 
     public static Map<GameResult, Integer> makeDealerRecord(Map<Player, GameResult> record) {
         Map<GameResult, Integer> dealerRecord = new HashMap<>();
-        int win = calculateGameResult(record.values(), LOSE);
-        int draw = calculateGameResult(record.values(), DRAW);
-        int lose = calculateGameResult(record.values(), WIN);
 
-        dealerRecord.put(WIN, win);
-        dealerRecord.put(DRAW, draw);
-        dealerRecord.put(LOSE, lose);
+        dealerRecord.put(LOSE, countGameResult(record.values(), WIN));
+        dealerRecord.put(WIN, countGameResult(record.values(), LOSE));
+        dealerRecord.put(DRAW, countGameResult(record.values(), DRAW));
 
         return dealerRecord;
     }
 
-    private static int calculateGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
+    private static int countGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
         return (int) gameResults.stream()
-                .filter(gameResult -> gameResult == gameResultType)
+                .filter(gameResult -> gameResult.equals(gameResultType))
                 .count();
-
     }
 }
