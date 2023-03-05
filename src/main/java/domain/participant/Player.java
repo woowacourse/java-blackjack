@@ -9,6 +9,6 @@ public class Player extends Participant {
     }
 
     public boolean checkCardsCondition() {
-        return getOptimalSumValue() <= LIMIT_TAKE_CARD_VALUE;
+        return getCardValueSum() <= LIMIT_TAKE_CARD_VALUE;
     }
 }

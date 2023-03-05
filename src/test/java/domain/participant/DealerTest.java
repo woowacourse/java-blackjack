@@ -58,7 +58,6 @@ public class DealerTest {
     void isTrueWhenDoubleAce() {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
-        System.out.println(dealer.getOptimalSumValue());
         assertThat(dealer.checkCardsCondition()).isTrue();
     }
 
@@ -68,7 +67,6 @@ public class DealerTest {
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
-        System.out.println(dealer.getOptimalSumValue());
         assertThat(dealer.checkCardsCondition()).isTrue();
     }
 }
