@@ -28,18 +28,18 @@ public class BlackjackController {
 
         gameSetting(participants, cardPickerGenerator, blackjackGame);
 
-        playersHitCard(participants, cards, cardPickerGenerator);
+        playersHitCard(blackjackGame, cards, cardPickerGenerator);
 
-        dealerHitCard(participants, cards, cardPickerGenerator);
+        dealerHitCard(blackjackGame, cards, cardPickerGenerator);
 
         printResult(participants, blackjackGame);
 
     }
 
-    private void playersHitCard(final Participants participants, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
-        for(int i = 1, end =  participants.getParticipants().size(); i < end; i++) {
-            Player player = (Player) participants.getParticipants().get(i);
-            hitCard(player, cards, cardPickerGenerator);
+    private void playersHitCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+        List<Player> players = blackjackGame.findPlayers();
+        for(int i = 0, end =players.size(); i < end; i++) {
+            hitCard(players.get(i), cards, cardPickerGenerator);
         }
     }
 
@@ -51,8 +51,8 @@ public class BlackjackController {
         outputView.printPlayerWinORLose(blackjackGame.generatePlayersResult());
     }
 
-    private void dealerHitCard(final Participants participants, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
-        Dealer dealer = (Dealer) participants.getParticipants().get(0);
+    private void dealerHitCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+        Dealer dealer = blackjackGame.findDealer();
         while (dealer.decideHit()) {
             outputView.dealerHitMessage();
             dealer.hit(cards.pick(cardPickerGenerator));
@@ -72,6 +72,6 @@ public class BlackjackController {
     private void gameSetting(final Participants participants, final CardPickerGenerator cardPickerGenerator, final BlackjackGame blackjackGame) {
         blackjackGame.initFirstHit(cardPickerGenerator);
         outputView.printParticipants(participants.getParticipantsName());
-        outputView.printParticipantsCard(participants);
+        outputView.printParticipantsCard(blackjackGame.findDealer(), blackjackGame.findPlayers());
     }
 }

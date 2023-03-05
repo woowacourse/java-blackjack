@@ -2,10 +2,8 @@ package blackjack.domain;
 
 import blackjack.util.CardPickerGenerator;
 import blackjack.util.WinningResult;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -21,11 +19,11 @@ public class BlackjackGame {
         this.cards = cards;
     }
 
-    public Map<Participant, WinningResult> generatePlayersResult() {
-        Map<Participant, WinningResult> playersResult = new LinkedHashMap<>();
+    public Map<Player, WinningResult> generatePlayersResult() {
+        Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
         Dealer dealer = findDealer();
-        List<Participant> players = findPlayers();
-        for (Participant player : players) {
+        List<Player> players = findPlayers();
+        for (Player player : players) {
             WinningResult dealerResult = dealer.judgeWinOrLose(player);
             initPlayerResult(playersResult, player, dealerResult);
         }
@@ -35,7 +33,7 @@ public class BlackjackGame {
     public List<WinningResult> generateDealerResult() {
         List<WinningResult> dealerResult = new ArrayList<>();
         Dealer dealer = findDealer();
-        List<Participant> players = findPlayers();
+        List<Player> players = findPlayers();
         for (Participant player : players) {
             dealerResult.add(dealer.judgeWinOrLose(player));
         }
@@ -48,7 +46,7 @@ public class BlackjackGame {
         }
     }
 
-    private void initPlayerResult(final Map<Participant, WinningResult> playersResult, final Participant player, final WinningResult dealerResult) {
+    private void initPlayerResult(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
         if (dealerResult == WinningResult.WIN) {
             playersResult.put(player, WinningResult.LOSE);
         }
@@ -60,19 +58,18 @@ public class BlackjackGame {
         }
     }
 
-    private List<Participant> findPlayers() {
-        List<Participant> players = participants.getParticipants().stream()
-            .filter(participant -> !participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
-            .collect(Collectors.toList());
-        return players;
+    public List<Player> findPlayers() {
+        return participants.getParticipants().stream()
+                .filter(participant -> !participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
+                .map(it -> (Player) it)
+                .collect(Collectors.toList());
     }
 
-    private Dealer findDealer() {
-        Dealer dealer = (Dealer) participants.getParticipants().stream()
+    public Dealer findDealer() {
+        return (Dealer) participants.getParticipants().stream()
             .filter(participant -> participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
             .findFirst()
             .get();
-        return dealer;
     }
 
     private void firstHitRule(final CardPickerGenerator cardPickerGenerator, final Participant participant) {

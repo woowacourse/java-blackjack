@@ -1,7 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import blackjack.util.CardNumber;
 import blackjack.util.CardSuit;
 import blackjack.util.WinningResult;
@@ -25,10 +27,10 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void printParticipantsCard(final Participants participants) {
-        printFirstDealerCards(participants.getParticipants().get(DEALER_INDEX));
-        for (int i = 1; i < participants.getParticipants().size(); i++) {
-            printFirstPlayersCards(participants.getParticipants().get(i));
+    public void printParticipantsCard(final Dealer dealer, final List<Player> players) {
+        printFirstDealerCards(dealer);
+        for (int i = 0; i < players.size(); i++) {
+            printFirstPlayersCards(players.get(i));
         }
     }
 
@@ -68,18 +70,16 @@ public class OutputView {
         System.out.println(WinningResult.LOSE.getPushCount(dealerResult) + WinningResult.LOSE.getName());
     }
 
-    public void printPlayerWinORLose(final Map<Participant, WinningResult> playerResult) {
-        for (Participant player : playerResult.keySet()) {
+    public void printPlayerWinORLose(final Map<Player, WinningResult> playerResult) {
+        for (Player player : playerResult.keySet()) {
             System.out.println(player.getName() + " : " + playerResult.get(player).getName());
         }
     }
 
-    private void printFirstDealerCards(final Participant participant) {
-        if (participant.isDealer()) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(FIRST_CARD));
-            CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(FIRST_CARD));
-            System.out.println(participant.getName() + " : " + cardNumber.getName() + cardSuit.getCardSuitName());
-        }
+    private void printFirstDealerCards(final Dealer dealer) {
+        CardNumber cardNumber = CardNumber.getCardNumber(dealer.getCardNumber(FIRST_CARD));
+        CardSuit cardSuit = CardSuit.getCardSuit(dealer.getCardSuit(FIRST_CARD));
+        System.out.println(dealer.getName() + " : " + cardNumber.getName() + cardSuit.getCardSuitName());
     }
 
     private void printFirstPlayersCards(final Participant participant) {

@@ -23,7 +23,7 @@ class BlackjackGameTest {
         BlackjackGame game = new BlackjackGame(participants, Cards.generator());
 
         //when
-        game.settingGame(testCardPickerGenerator);
+        game.initFirstHit(testCardPickerGenerator);
 
         //then
         for (Participant participant : participants.getParticipants()) {
@@ -44,13 +44,13 @@ class BlackjackGameTest {
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"));
         BlackjackGame game = new BlackjackGame(participants, Cards.generator());
-        game.settingGame(testCardPickerGenerator);
+        game.initFirstHit(testCardPickerGenerator);
 
         //when
-        Map<Participant, WinningResult> result = game.generatePlayersResult();
+        Map<Player, WinningResult> result = game.generatePlayersResult();
 
         //then
-        Set<Participant> players = result.keySet();
+        Set<Player> players = result.keySet();
         for(Participant participant : players) {
             String playername = participant.getParticipantName().getName();
             if (playername.equals("pobi")){
@@ -70,7 +70,7 @@ class BlackjackGameTest {
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"));
         BlackjackGame game = new BlackjackGame(participants, Cards.generator());
-        game.settingGame(testCardPickerGenerator);
+        game.initFirstHit(testCardPickerGenerator);
 
         //when
         List<WinningResult> result = game.generateDealerResult();
