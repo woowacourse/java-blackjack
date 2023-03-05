@@ -55,7 +55,7 @@ public class Players {
         final List<Player> players = new ArrayList<>();
         players.add(Dealer.create());
         for (String name : names) {
-            players.add(new Gambler(name));
+            players.add(Gambler.create(name));
         }
         return players;
     }

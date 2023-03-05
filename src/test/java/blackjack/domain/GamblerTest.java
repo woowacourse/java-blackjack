@@ -27,14 +27,14 @@ public class GamblerTest {
 
     @Test
     void 겜블러가_정상_생성된다() {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
 
         assertThat(gambler.getName()).isEqualTo("허브");
     }
 
     @Test
     void 게임_시작_시_카드를_뽑는다() {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND),
                 new Card(JACK, DIAMOND)
@@ -48,7 +48,7 @@ public class GamblerTest {
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isDrawableSource")
     void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
         final Deck deck = new FixedDeck(cards);
         gambler.initialDraw(deck);
         gambler.draw(deck);
@@ -66,7 +66,7 @@ public class GamblerTest {
 
     @Test
     void 카드를_뽑는다() {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND)
         ));
@@ -78,14 +78,14 @@ public class GamblerTest {
 
     @Test
     void 딜러가_아닌지_확인한다() {
-        final Gambler gambler = new Gambler("후추");
+        final Gambler gambler = Gambler.create("후추");
 
         assertThat(gambler.isDealer()).isFalse();
     }
 
     @Test
     void 점수를_반환한다() {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND)
         ));
@@ -96,7 +96,7 @@ public class GamblerTest {
 
     @Test
     void 상태를_STOP으로_바꾼다() {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
 
         gambler.stay();
 
@@ -105,7 +105,7 @@ public class GamblerTest {
 
     @Test
     void 게임의_결과를_반환한다() {
-        final Gambler gambler = new Gambler("허브");
+        final Gambler gambler = Gambler.create("허브");
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND)
         ));

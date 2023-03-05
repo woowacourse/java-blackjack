@@ -1,16 +1,14 @@
 package blackjack.domain;
 
-import java.util.List;
-
-public class Gambler implements Player {
+public class Gambler extends AbstractPlayer {
     private static final int DRAW_COUNT = 2;
 
-    private final Name name;
-    private final Hand hand;
+    private Gambler(final Name name, final Hand hand) {
+        super(name, hand);
+    }
 
-    public Gambler(final String name) {
-        this.name = Name.from(name);
-        this.hand = new Hand();
+    public static Gambler create(final String name) {
+        return new Gambler(Name.from(name), new Hand());
     }
 
     @Override
@@ -21,11 +19,6 @@ public class Gambler implements Player {
     }
 
     @Override
-    public void draw(final Deck deck) {
-        hand.add(deck.draw());
-    }
-
-    @Override
     public boolean isDrawable() {
         return hand.isPlayable();
     }
@@ -33,30 +26,5 @@ public class Gambler implements Player {
     @Override
     public boolean isDealer() {
         return false;
-    }
-
-    @Override
-    public int calculateScore() {
-        return hand.calculateScore();
-    }
-
-    @Override
-    public void stay() {
-        hand.stay();
-    }
-
-    @Override
-    public Result play(final Hand hand) {
-        return this.hand.play(hand);
-    }
-
-    @Override
-    public String getName() {
-        return name.getValue();
-    }
-
-    @Override
-    public List<String> getCardLetters() {
-        return hand.getCardLetters();
     }
 }

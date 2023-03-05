@@ -1,16 +1,10 @@
 package blackjack.domain;
 
-import java.util.List;
-
-public class Dealer implements Player {
+public class Dealer extends AbstractPlayer {
     private static final int SCORE_LOWER_BOUND = 16;
 
-    private final Name name;
-    private final Hand hand;
-
     private Dealer(final Name name, final Hand hand) {
-        this.name = name;
-        this.hand = hand;
+        super(name, hand);
     }
 
     public static Dealer create() {
@@ -19,11 +13,6 @@ public class Dealer implements Player {
 
     @Override
     public void initialDraw(final Deck deck) {
-        hand.add(deck.draw());
-    }
-
-    @Override
-    public void draw(final Deck deck) {
         hand.add(deck.draw());
     }
 
@@ -37,33 +26,8 @@ public class Dealer implements Player {
         return true;
     }
 
-    @Override
-    public int calculateScore() {
-        return hand.calculateScore();
-    }
-
-    @Override
-    public void stay() {
-        hand.stay();
-    }
-
-    @Override
-    public Result play(final Hand hand) {
-        throw new UnsupportedOperationException();
-    }
-
     public Hand getHand() {
         return hand;
-    }
-
-    @Override
-    public String getName() {
-        return name.getValue();
-    }
-
-    @Override
-    public List<String> getCardLetters() {
-        return hand.getCardLetters();
     }
 
     public int getCardCount() {

@@ -120,7 +120,7 @@ public class PlayersTest {
     }
 
     @Test
-    void 게임_결과를_반반환다() {
+    void 게임_결과를_반환한다() {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
@@ -133,7 +133,7 @@ public class PlayersTest {
         ));
         players.initialDraw(deck);
         players.drawByDealer(deck);
-        
+
         Map<Player, Result> result = players.play();
 
         assertThat(result.values()).containsExactly(WIN, DRAW);
