@@ -1,11 +1,6 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.as;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +10,7 @@ class ScoreTest {
     @DisplayName("생성테스트")
     @Test
     void create() {
-        assertThatCode(()-> new Score(0))
+        assertThatCode(() -> new Score(0))
                 .doesNotThrowAnyException();
     }
 
@@ -29,5 +24,17 @@ class ScoreTest {
         int actual = score.getValue();
         //then
         assertThat(actual).isEqualTo(value);
+    }
+
+    @DisplayName("같은 값을 가진 객체는 같다.")
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 21})
+    void equals() {
+        //given
+        Score score1 = new Score(1);
+        Score score2 = new Score(1);
+        //when
+        //then
+        assertThat(score2).isEqualTo(score1);
     }
 }
