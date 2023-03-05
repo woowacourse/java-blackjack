@@ -63,7 +63,7 @@ public class OutputView {
     private static String getParticipantCards(final Participant participant, final List<Card> participantCards) {
         StringBuilder messageBuilder = new StringBuilder();
         messageBuilder.append(participant.getName().getValue())
-                .append(": ")
+                .append(" 카드: ")
                 .append(participantCards.stream()
                         .map(Card::toString)
                         .collect(Collectors.joining(", ")));
