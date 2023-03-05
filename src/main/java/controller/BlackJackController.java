@@ -1,6 +1,6 @@
 package controller;
 
-import domain.area.CardArea;
+import domain.cardtable.CardTable;
 import domain.deck.CardDeck;
 import domain.player.Name;
 import domain.player.dealer.Dealer;
@@ -22,9 +22,10 @@ public class BlackJackController {
     public void run() {
 
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+        final CardTable cardTable = CardTable.readyToPlayBlackjack(cardDeck);
 
-        final List<Participant> participants = dealParticipantsCards(cardDeck);
-        final Dealer dealer = dealDealerCards(cardDeck);
+        final List<Participant> participants = dealParticipantsCards(cardTable);
+        final Dealer dealer = dealDealerCards(cardTable);
 
         printStateAfterDealtCard(participants, dealer);
         hittingPlayer(cardDeck, participants, dealer);
@@ -99,15 +100,16 @@ public class BlackJackController {
         return InputView.readMoreCard(participant).equals("y");
     }
 
-    private Dealer dealDealerCards(final CardDeck cardDeck) {
-        return new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
+    private Dealer dealDealerCards(final CardTable cardTable) {
+        return new Dealer(cardTable.createCardArea());
     }
 
-    private List<Participant> dealParticipantsCards(final CardDeck cardDeck) {
+    private List<Participant> dealParticipantsCards(final CardTable cardTable) {
         return InputView.readParticipantsName()
                         .stream()
                         .map(Name::new)
-                        .map(name -> new Participant(name, new CardArea(cardDeck.draw(), cardDeck.draw())))
+                        .map(name -> new Participant(name, cardTable.createCardArea()))
                         .collect(Collectors.toList());
+
     }
 }
