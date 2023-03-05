@@ -22,8 +22,6 @@ public abstract class Participant {
         cards.receive(card);
     }
 
-    protected abstract boolean isHittable();
-
     public List<Card> open(final int cardCount) {
         return cards.open(cardCount);
     }
@@ -35,4 +33,6 @@ public abstract class Participant {
     public Name getName() {
         return name;
     }
+
+    protected abstract boolean isHittable();
 }
