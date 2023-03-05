@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
@@ -9,65 +8,38 @@ import blackjack.domain.card.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 class DealerTest {
 
-    private Player player1;
-    private Player player2;
-    private Dealer dealer;
+    private final Dealer dealer = new Dealer();
 
     @BeforeEach
     void setUp() {
-        player1 = new Player("1");
-        player2 = new Player("2");
-        dealer = new Dealer(new Players(List.of(player1, player2)));
+        dealer.receiveCard(new Card(Number.Q, Pattern.CLUB));
+        dealer.receiveCard(new Card(Number.SIX, Pattern.CLUB));
     }
 
     @Test
-    @DisplayName("참가자들에게 2장의 카드를 나눠준다.")
-    void distributeTwoCards() {
-        dealer.distributeTwoCards();
-
-        assertAll(
-                () -> assertThat(player1.getCards().getCards().size()).isEqualTo(2),
-                () -> assertThat(player2.getCards().getCards().size()).isEqualTo(2)
-        );
+    @DisplayName("딜러의 카드가 16점 이하이면 true 반환")
+    void canDraw_true() {
+        // expect
+        assertThat(dealer.canDraw()).isTrue();
     }
 
     @Test
-    @DisplayName("딜러가 자신의 카드 2장을 가져온다.")
-    void drawSelfCards() {
-        dealer.drawSelfInitCards();
-
-        assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("플레이어에게 카드 한 장을 더 준다.")
-    void giveOneMoreCard() {
-        dealer.giveOneMoreCard(player1);
-
-        assertThat(player1.getCards().getCards().size()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("딜러의 점수가 16점 이하이면 16점을 초과할 때까지 계속해서 카드를 뽑는다.")
-    void canDrawTest() {
+    @DisplayName("딜러의 카드가 16점 초과이면 false 반환")
+    void canDraw_false() {
         // given
-        dealer.receiveCard(new Card(Number.TWO, Pattern.HEART));
-        dealer.receiveCard(new Card(Number.THREE, Pattern.HEART));
-        int initSize = dealer.getCards().getCards().size();
+        dealer.receiveCard(new Card(Number.ACE, Pattern.CLUB));
 
-        // when
-        while (dealer.canDraw()) {
-            dealer.drawOneMoreCard();
-        }
+        // expect
+        assertThat(dealer.canDraw()).isFalse();
+    }
 
-        // then
-        assertAll(
-                () -> assertThat(initSize).isNotEqualTo(dealer.getCards().getCards().size()),
-                () -> assertThat(dealer.calculateTotalScore()).isGreaterThan(16)
-        );
+    @Test
+    @DisplayName("딜러가 갖고 있는 카드 중 하나 반환")
+    void getOneCardToShow() {
+        // expect
+        assertThat(dealer.getOneCardToShow()).isEqualTo(new Card(Number.Q, Pattern.CLUB));
     }
 }
