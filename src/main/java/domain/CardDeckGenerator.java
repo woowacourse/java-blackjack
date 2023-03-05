@@ -1,7 +1,8 @@
 package domain;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardDeckGenerator {
 
@@ -10,13 +11,10 @@ public class CardDeckGenerator {
     }
 
     public static CardDeck create() {
-        List<Card> cards = new ArrayList<>();
-
-        for (Type type : Type.values()) {
-            for (Value value : Value.values()) {
-                cards.add(new Card(type, value));
-            }
-        }
+        List<Card> cards = Arrays.stream(Type.values())
+                .flatMap(type -> Arrays.stream(Value.values())
+                        .map(value -> new Card(type, value)))
+                .collect(Collectors.toList());
 
         return CardDeck.createShuffled(cards);
     }
