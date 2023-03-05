@@ -47,10 +47,6 @@ public class Users {
 		}
 	}
 
-	public boolean isDealerHittable() {
-		return getDealer().isHittable();
-	}
-
 	public Dealer getDealer() {
 		User dealer = users.stream()
 			.filter(user -> user instanceof Dealer)

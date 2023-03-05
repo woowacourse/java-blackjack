@@ -54,8 +54,8 @@ public class BlackJack {
 		dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
 	}
 
-	public boolean isDealerHittable() {
-		return users.isDealerHittable();
+	public boolean isDealerHittable(){
+		return users.getDealer().isHittable();
 	}
 
 	public String getDealerCardHidden() {
