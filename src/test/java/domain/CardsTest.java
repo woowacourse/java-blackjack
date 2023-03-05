@@ -7,11 +7,11 @@ import domain.card.CardShape;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardsTest {
@@ -36,15 +36,15 @@ public class CardsTest {
                 Card.create(CardShape.HEART, CardNumber.of(3))
         );
         final Cards cards = Cards.create(data);
-        assertThat(cards).extracting("cards", InstanceOfAssertFactories.collection(List.class))
-                .size().isEqualTo(3);
+        assertThat(cards).extracting("cards", collection(List.class))
+                .size().isSameAs(3);
 
         final Card card = Card.create(CardShape.HEART, CardNumber.of(1));
-        assertThat(cards.add(card)).extracting("cards", InstanceOfAssertFactories.collection(List.class))
-                .size().isEqualTo(4);
+        assertThat(cards.add(card)).extracting("cards", collection(List.class))
+                .size().isSameAs(4);
     }
 
-    /*@Test
+    @Test
     @DisplayName("Cards에 Card를 추가하면 Point도 업데이트 된다.")
     void addCardPointUpdateTest() {
         final List<Card> data = List.of(
@@ -52,19 +52,19 @@ public class CardsTest {
                 Card.create(CardShape.DIAMOND, CardNumber.of(2)),
                 Card.create(CardShape.HEART, CardNumber.of(3))
         );
-        final Cards cards = new Cards(data);
+        final Cards cards = Cards.create(data);
         assertThat(cards)
-                .extracting("point")
                 .extracting("gamePoint")
-                .isEqualTo(16);
+                .extracting("gamePoint")
+                .isSameAs(16);
 
         final Card card = Card.create(CardShape.HEART, CardNumber.of(5));
 
         assertThat(cards.add(card))
-                .extracting("point")
                 .extracting("gamePoint")
-                .isEqualTo(21);
-    }*/
+                .extracting("gamePoint")
+                .isSameAs(21);
+    }
 
     @Test
     @DisplayName("cards의 bust 상태 테스트")
