@@ -60,4 +60,8 @@ public class Participants {
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
     }
+
+    public int getDealerCardValueSum() {
+        return dealer.getCardValueSum();
+    }
 }

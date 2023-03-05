@@ -43,4 +43,13 @@ public class BlackJackGame {
     public Dealer findDealerByDealerName(String dealerName) {
         return participants.findDealerByDealerName(dealerName);
     }
+
+    public int getDealerCardValueSum() {
+        return participants.getDealerCardValueSum();
+    }
+
+    public int findPlayerCardValueSumByPlayerName(String playerName) {
+        Player findPlayer = participants.findPlayerByPlayerName(playerName);
+        return findPlayer.getCardValueSum();
+    }
 }
