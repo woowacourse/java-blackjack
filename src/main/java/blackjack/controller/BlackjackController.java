@@ -1,9 +1,13 @@
 package blackjack.controller;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.PlayersFactory;
@@ -18,114 +22,151 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private Dealer dealer;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
+        Participants participants = makeParticipants();
+        Deck deck = new Deck();
+
+        setInitCards(deck, participants);
+
+        turnOfPlayers(participants.getPlayers(), deck);
+        turnOfDealer(participants.getDealer(), deck);
+
+        finishGame(participants);
+    }
+
+    private Participants makeParticipants() {
         List<String> playersName = inputView.receivePlayersName();
         Players players = PlayersFactory.from(playersName);
-        dealer = new Dealer(players);
-        setting();
-        for (Player player : dealer.getPlayers().getPlayers()) {
-            play(player);
-        }
-        turnOfDealer();
-        finishGame();
+
+        return new Participants(new Dealer(), players);
     }
 
-    private void setting() {
-        dealer.drawSelfInitCards();
-        dealer.distributeTwoCards();
+    private void setInitCards(final Deck deck, final Participants participants) {
+        for (Participant participant : participants.getPlayers()) {
+            distributeTwoCards(deck, participant);
+        }
+        distributeTwoCards(deck, participants.getDealer());
 
-        outputView.printDistributeCardsMessage(getPlayerNames(dealer.getPlayers()));
+        printParticipantsInitCards(participants);
+    }
 
-        Card card = dealer.getCards().getCards().get(0);
+    private void distributeTwoCards(final Deck deck, final Participant participant) {
+        for (int i = 0; i < 2; i++) {
+            Card drawnCard = deck.drawCard();
+            participant.receiveCard(drawnCard);
+        }
+    }
+
+    private void printParticipantsInitCards(final Participants participants) {
+        outputView.printDistributeCardsMessage(getPlayerNames(participants.getPlayers()));
+
+        Card card = participants.getDealer().getOneCardToShow();
         outputView.printDealerInitCards(card.toString());
 
-        outputView.printPlayersInitCards(getPlayersCards(dealer));
+        outputView.printPlayersInitCards(getPlayersCards(participants.getPlayers()));
     }
 
-    private List<String> getPlayerNames(final Players players) {
-        List<String> playerNames = players.getPlayers().stream()
+    private List<String> getPlayerNames(final List<Player> players) {
+        return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
-        return playerNames;
     }
 
-    private void play(Player player) {
-        boolean proceed = true;
-        while (proceed && !player.isBust()) {
-            proceed = ask(player);
+    private void turnOfPlayers(final List<Player> players, final Deck deck) {
+        for (Player player : players) {
+            play(player, deck);
         }
     }
 
-    private boolean ask(Player player) {
+    private void play(final Player player, final Deck deck) {
+        boolean proceed = true;
+
+        while (proceed && !player.isBust()) {
+            proceed = ask(player, deck);
+        }
+    }
+
+    private boolean ask(final Player player, final Deck deck) {
         String answer = inputView.askReceiveMoreCard(player.getName());
 
         if (answer.equals("n")) {
             outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
             return false;
         }
-        dealer.giveOneMoreCard(player);
+
+        giveOneMoreCard(player, deck);
         outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
         return true;
     }
 
-    private void turnOfDealer() {
+    private void turnOfDealer(final Dealer dealer, final Deck deck) {
         while (dealer.canDraw()) {
-            dealer.drawOneMoreCard();
+            giveOneMoreCard(dealer, deck);
             outputView.printDealerDrawOneMoreCard();
         }
     }
 
-    private void finishGame() {
-        List<Player> players = dealer.getPlayers().getPlayers();
+    private void giveOneMoreCard(final Participant participant, final Deck deck) {
+        participant.receiveCard(deck.drawCard());
+    }
+
+    private void finishGame(final Participants participants) {
+        List<Player> players = participants.getPlayers();
         List<Integer> scores = getPlayersScore(players);
+        Dealer dealer = participants.getDealer();
 
         outputView.printDealerFinalCards(getCurrentCards(dealer.getCards()), dealer.calculateTotalScore());
-        outputView.printPlayerFinalCards(getPlayersCards(dealer), scores);
+        outputView.printPlayerFinalCards(getPlayersCards(players), scores);
 
-        Map<Player, Result> playerResultMap = dealer.decideResult();
-        List<Integer> dealerResult = dealer.decideSelfResult();
-
-        Map<String, String> playerResult = getPlayerResult(playerResultMap);
-
-        outputView.printGameResult(dealerResult, playerResult);
+        showResult(participants);
     }
 
-    private List<Integer> getPlayersScore(final List<Player> players) {
-        List<Integer> scores = players.stream()
-                .map(Player::calculateTotalScore)
-                .collect(Collectors.toList());
-        return scores;
+    private void showResult(final Participants participants) {
+        GameResult gameResult = new GameResult(participants);
+        Map<Player, Result> playerResult = gameResult.decidePlayersResult();
+        List<Integer> dealerResult = gameResult.getDealerResult();
+
+        Map<String, String> playerResultWithName = getPlayerResult(playerResult);
+
+        outputView.printGameResult(dealerResult, playerResultWithName);
     }
 
-    private List<String> getCurrentCards(Cards cards) {
-        return cards.getCards().stream()
-                .map(Card::toString)
-                .collect(Collectors.toList());
-    }
-
-    private Map<String, List<String>> getPlayersCards(final Dealer dealer) {
-        List<Player> players = dealer.getPlayers().getPlayers();
+    private Map<String, List<String>> getPlayersCards(final List<Player> players) {
         Map<String, List<String>> playersCards = new HashMap<>();
+
         for (Player player : players) {
             playersCards.put(player.getName(), player.getCards().getCards().stream()
                     .map(Card::toString)
                     .collect(Collectors.toList()));
         }
+
         return playersCards;
     }
 
-    private Map<String, String> getPlayerResult(final Map<Player, Result> playerResultMap) {
-        Map<String, String> playerResult = new HashMap<>();
-        for(Player player: playerResultMap.keySet()) {
-            playerResult.put(player.getName(), playerResultMap.get(player).getState());
+    private List<Integer> getPlayersScore(final List<Player> players) {
+        return players.stream()
+                .map(Player::calculateTotalScore)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getCurrentCards(final Cards cards) {
+        return cards.getCards().stream()
+                .map(Card::toString)
+                .collect(Collectors.toList());
+    }
+
+    private Map<String, String> getPlayerResult(final Map<Player, Result> playerResult) {
+        Map<String, String> playerResultWithName = new HashMap<>();
+
+        for(Player player: playerResult.keySet()) {
+            playerResultWithName.put(player.getName(), playerResult.get(player).getState());
         }
-        return playerResult;
+        return playerResultWithName;
     }
 }
