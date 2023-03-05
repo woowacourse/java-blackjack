@@ -14,11 +14,13 @@ class ParticipantsTest {
 
     private Participants participants;
     private Deck deck;
+    private Participant leo;
 
     @BeforeEach
     void setUp() {
         participants = Participants.from(List.of("leo", "reo", "reoleo"));
         deck = Deck.from((orderedDeck) -> orderedDeck);
+        leo = participants.findPlayers().get(0);
     }
 
     @Test
@@ -53,7 +55,9 @@ class ParticipantsTest {
     @DisplayName("플레이어의 게임 결과를 반환한다.")
     void getPlayerResult() {
         participants.deal(deck);
-        Map<String, Result> playerResults = participants.getPlayerStatus();
+        final GameResultManager gameResultManager = new GameResultManager(participants.makePlayerFinalHandValue(),
+                participants.findDealer());
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
         for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
             assertThat(playerResult.getValue()).isEqualTo(Result.LOSE);
         }
@@ -64,126 +68,105 @@ class ParticipantsTest {
     @DisplayName("딜러와 참가자가 버스트가 아니면, 더 높은 점수의 참가자가 승리한다.")
     void NoBustResultTest() {
         //given
-        Participants participant = Participants.from(List.of("abc"));
-        for (Participant player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-        }
-        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
+        leo.receiveCard(new Card("Q클로버", 10));
+        participants.findDealer().receiveCard(new Card("A스페이드", 11));
+
+        final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, participants.findDealer());
+
         //when
-        participant.findDealer().receiveCard(new Card("A스페이드", 11));
-
-        Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
-
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
         //then
-        assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
-        assertThat(dealerResults.get(Result.WIN)).isEqualTo(1);
+        assertThat(playerResults.get("leo")).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("딜러와 참가자가 둘 다 버스트인 경우 무승부를 반환한다.")
     void BothBustTest() {
         //given
-        Participants participant = Participants.from(List.of("abc"));
-        for (Participant player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
-            player.receiveCard(new Card("2클로버", 2));
-        }
-        Participant dealer = participant.findDealer();
+        leo.receiveCard(new Card("Q클로버", 10));
+        leo.receiveCard(new Card("Q하트", 10));
+        leo.receiveCard(new Card("2클로버", 2));
+
+        Participant dealer = participants.findDealer();
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
 
-        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
-
         //when
-        Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
+        final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, dealer);
+
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
 
         //then
-        assertThat(playerResults.get("abc")).isEqualTo(Result.TIE);
-        assertThat(dealerResults.get(Result.TIE)).isEqualTo(1);
+        assertThat(playerResults.get("leo")).isEqualTo(Result.TIE);
     }
 
     @Test
     @DisplayName("딜러가 버스트이고 참가자가 버스트가 아닌 경우 참가자가 승리한다.")
     void playerWinWhenDealerBust() {
         //given
-        Participants participant = Participants.from(List.of("abc"));
-        for (Participant player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
-        }
-        Participant dealer = participant.findDealer();
+        leo.receiveCard(new Card("Q클로버", 10));
+        leo.receiveCard(new Card("Q하트", 10));
+
+        Participant dealer = participants.findDealer();
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
 
-        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
-
         //when
-        Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
+        final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, dealer);
+
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
 
         //then
-        assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
-        assertThat(dealerResults.get(Result.LOSE)).isEqualTo(1);
+        assertThat(playerResults.get("leo")).isEqualTo(Result.WIN);
     }
 
     @Test
     @DisplayName("딜러가 버스트가 아니고 참가자가 버스트가 아닌 경우 딜러가 승리한다.")
     void dealerWinWhenPlayerBust() {
         //given
-        Participants participant = Participants.from(List.of("abc"));
-        for (Participant player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
-            player.receiveCard(new Card("3스페이드", 3));
-        }
-        Participant dealer = participant.findDealer();
+        leo.receiveCard(new Card("Q클로버", 10));
+        leo.receiveCard(new Card("Q하트", 10));
+        leo.receiveCard(new Card("3스페이드", 3));
+
+        Participant dealer = participants.findDealer();
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
 
-        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
-
         //when
-        Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
+        final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, dealer);
+
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
 
         //then
-        assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
-        assertThat(dealerResults.get(Result.WIN)).isEqualTo(1);
+        assertThat(playerResults.get("leo")).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("딜러와 참가자가 버스트가 아니고, 동점인 경우 카드 개수가 적은 사람이 승리한다.")
     void sameHandValueBothNoBust() {
         //given
-        Participants participant = Participants.from(List.of("abc"));
-        for (Participant player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
-        }
-        Participant dealer = participant.findDealer();
+        leo.receiveCard(new Card("Q클로버", 10));
+        leo.receiveCard(new Card("Q하트", 10));
+
+        Participant dealer = participants.findDealer();
         dealer.receiveCard(new Card("4스페이드", 4));
         dealer.receiveCard(new Card("6스페이드", 6));
         dealer.receiveCard(new Card("K스페이드", 10));
 
-        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
-
         //when
-        Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
+        final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, dealer);
+
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
 
         //then
-        assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
-        assertThat(dealerResults.get(Result.LOSE)).isEqualTo(1);
+        assertThat(playerResults.get("leo")).isEqualTo(Result.WIN);
     }
 
 }

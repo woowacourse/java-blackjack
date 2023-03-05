@@ -29,9 +29,9 @@ public class BlackJackController {
         showParticipantsInitCardsStatus(participants);
 
         play(deck, participants);
-        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
-        showResults(participants, gameResultManager);
+        final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, participants.findDealer());
+        showResults(gameResultManager);
     }
 
     private Participants makeParticipants() {
@@ -106,10 +106,10 @@ public class BlackJackController {
         }
     }
 
-    private void showResults(final Participants participants, GameResultManager gameResultManager) {
+    private void showResults(GameResultManager gameResultManager) {
         showParticipantsScore(gameResultManager);
         outputView.printResultInfo();
-        showParticipantsWinningStatus(participants, gameResultManager);
+        showParticipantsWinningStatus(gameResultManager);
     }
 
     private void showParticipantsScore(final GameResultManager gameResultManager) {
@@ -119,8 +119,8 @@ public class BlackJackController {
         }
     }
 
-    private void showParticipantsWinningStatus(final Participants participants, final GameResultManager gameResultManager) {
-        Map<String, Result> playerResults = participants.getPlayerStatus();
+    private void showParticipantsWinningStatus(final GameResultManager gameResultManager) {
+        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
         Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
         outputView.printDealerResult(dealerResults);
         for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {

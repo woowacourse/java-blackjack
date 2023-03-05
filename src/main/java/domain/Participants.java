@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Participants {
     private static final int MINIMUM_PLAYER_COUNT = 1;
     private static final int MAXIMUM_PLAYER_COUNT = 7;
-    private static final int BUST_HAND_VALUE = 0;
+
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
@@ -50,22 +50,12 @@ public class Participants {
         return dealer.shouldHit();
     }
 
-    public Map<Participant, Integer> makeParticipantFinalHandValue() {
+    public Map<Participant, Integer> makePlayerFinalHandValue() {
         final LinkedHashMap<Participant, Integer> participantsHandValue = new LinkedHashMap<>();
-        for (Participant participant : participants) {
+        for (Participant participant : findPlayers()) {
             participantsHandValue.put(participant, participant.getHandValue());
         }
         return participantsHandValue;
-    }
-
-    public Map<String, Result> getPlayerStatus() {
-        Participant dealer = findDealer();
-        Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (Participant player : findPlayers()) {
-            compareHandValue(dealer, playerResults, player);
-        }
-
-        return playerResults;
     }
 
     private static void validate(List<String> names) {
@@ -91,36 +81,36 @@ public class Participants {
         }
     }
 
-    private void compareHandValue(Participant dealer, Map<String, Result> playerResults, Participant player) {
-        int dealerHandValue = getParticipantHandValue(dealer);
-        int playerHandValue = getParticipantHandValue(player);
+//    private void compareHandValue(Participant dealer, Map<String, Result> playerResults, Participant player) {
+//        int dealerHandValue = getParticipantHandValue(dealer);
+//        int playerHandValue = getParticipantHandValue(player);
+//
+//        if (playerHandValue != dealerHandValue) {
+//            playerResults.put(player.getName(), Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue));
+//            return;
+//        }
+//        compareAtTieValue(dealer, playerResults, player, playerHandValue);
+//    }
 
-        if (playerHandValue != dealerHandValue) {
-            playerResults.put(player.getName(), Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue));
-            return;
-        }
-        compareAtTieValue(dealer, playerResults, player, playerHandValue);
-    }
+//    private int getParticipantHandValue(Participant participant) {
+//        if (participant.isBust()) {
+//            return 0;
+//        }
+//        return participant.getHandValue();
+//    }
 
-    private int getParticipantHandValue(Participant participant) {
-        if (participant.isBust()) {
-            return 0;
-        }
-        return participant.getHandValue();
-    }
-
-    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
-        if (playerHandValue == BUST_HAND_VALUE) {
-            playerResults.put(player.getName(), Result.TIE);
-            return;
-        }
-        playerResults.put(player.getName(), compareHandCount(dealer, player));
-    }
-    private Result compareHandCount(Participant dealer, Participant player) {
-        int playerHandCount = player.getCardNames().size();
-        int dealerHandCount = dealer.getCardNames().size();
-        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
-    }
+//    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
+//        if (playerHandValue == BUST_HAND_VALUE) {
+//            playerResults.put(player.getName(), Result.TIE);
+//            return;
+//        }
+//        playerResults.put(player.getName(), compareHandCount(dealer, player));
+//    }
+//    private Result compareHandCount(Participant dealer, Participant player) {
+//        int playerHandCount = player.getCardNames().size();
+//        int dealerHandCount = dealer.getCardNames().size();
+//        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
+//    }
 
     public List<String> getPlayersName() {
         return findPlayers().stream()

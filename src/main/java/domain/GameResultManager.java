@@ -4,19 +4,21 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// TODO: 2023/03/06 딜러 승패
 // TODO: 2023/03/06  플레이어 승패
 public class GameResultManager {
+    private static final int BUST_HAND_VALUE = 0;
     private final Map<Participant, Integer> gameResult;
+    private final Participant dealer;
 
-    public GameResultManager(final Map<Participant, Integer> gameResult) {
+    public GameResultManager(final Map<Participant, Integer> gameResult, final Participant dealer) {
         this.gameResult = gameResult;
+        this.dealer = dealer;
     }
 
     public Map<Participant, Boolean> getParticipantsBustStatus() {
         Map<Participant, Boolean> scores = new LinkedHashMap<>();
+        scores.put(dealer, dealer.isBust());
         for (Participant participant : gameResult.keySet()) {
-            System.out.println(participant.getName() + " " + participant.getHandValue());
             scores.put(participant, participant.isBust());
         }
 
@@ -32,6 +34,15 @@ public class GameResultManager {
         return DealerWinningStatus;
     }
 
+    public Map<String, Result> getPlayerStatus() {
+        Map<String, Result> playerResults = new LinkedHashMap<>();
+        for (Participant player : gameResult.keySet()) {
+            compareHandValue(playerResults, player);
+        }
+
+        return playerResults;
+    }
+
     private void judgeResult(EnumMap<Result, Integer> result, Result playerResult) {
         if (playerResult.equals(Result.WIN)) {
             result.put(Result.LOSE, result.getOrDefault(Result.LOSE, 0) + 1);
@@ -42,5 +53,36 @@ public class GameResultManager {
         if (playerResult.equals(Result.LOSE)) {
             result.put(Result.WIN, result.getOrDefault(Result.WIN, 0) + 1);
         }
+    }
+
+    private void compareHandValue(Map<String, Result> playerResults, Participant player) {
+        int dealerHandValue = getParticipantHandValue(dealer);
+        int playerHandValue = getParticipantHandValue(player);
+
+        if (playerHandValue != dealerHandValue) {
+            playerResults.put(player.getName(), Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue));
+            return;
+        }
+        compareAtTieValue(dealer, playerResults, player, playerHandValue);
+    }
+
+    private int getParticipantHandValue(Participant participant) {
+        if (participant.isBust()) {
+            return 0;
+        }
+        return participant.getHandValue();
+    }
+
+    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
+        if (playerHandValue == BUST_HAND_VALUE) {
+            playerResults.put(player.getName(), Result.TIE);
+            return;
+        }
+        playerResults.put(player.getName(), compareHandCount(dealer, player));
+    }
+    private Result compareHandCount(Participant dealer, Participant player) {
+        int playerHandCount = player.getCardNames().size();
+        int dealerHandCount = dealer.getCardNames().size();
+        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
     }
 }
