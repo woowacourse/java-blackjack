@@ -12,7 +12,7 @@ public class ParticipantName {
 
     private final String name;
 
-    public ParticipantName(String name) {
+    public ParticipantName(final String name) {
         validateName(name);
         this.name = name;
     }
@@ -21,19 +21,19 @@ public class ParticipantName {
         return name;
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         checkNull(name);
         checkName(name);
     }
 
-    private void checkName(String name) {
+    private void checkName(final String name) {
         Matcher nameMatcher = pattern.matcher(name);
         if (!nameMatcher.matches()) {
             throw new IllegalArgumentException(PLAYER_NAME_ERROR_MESSAGE);
         }
     }
 
-    private void checkNull(String name) {
+    private void checkNull(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NULL_OR_BLANK_ERROR_MESSAGE);
         }

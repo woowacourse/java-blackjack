@@ -1,15 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.Cards;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.*;
 import blackjack.util.CardPickerGenerator;
 import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.List;
 
 public class BlackjackController {
@@ -17,7 +13,7 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

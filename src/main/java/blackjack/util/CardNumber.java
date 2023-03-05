@@ -21,16 +21,16 @@ public enum CardNumber {
     final int value;
     final String name;
 
-    CardNumber(String name , int value) {
+    CardNumber(final String name, final int value) {
         this.name = name;
         this.value = value;
     }
 
-    public static CardNumber getCardNumber(CardNumber cardNumber) {
+    public static CardNumber getCardNumber(final CardNumber cardNumber) {
         return Stream.of(CardNumber.values())
-            .filter(number -> number.equals(cardNumber))
-            .findFirst()
-            .get();
+                .filter(number -> number.equals(cardNumber))
+                .findFirst()
+                .get();
     }
 
     public String getName() {

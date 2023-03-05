@@ -11,15 +11,15 @@ public enum CardSuit {
 
     final String cardSuitName;
 
-    CardSuit(String cardSuitName) {
+    CardSuit(final String cardSuitName) {
         this.cardSuitName = cardSuitName;
     }
 
-    public static CardSuit getCardSuit(CardSuit cardSuit) {
+    public static CardSuit getCardSuit(final CardSuit cardSuit) {
         return Stream.of(CardSuit.values())
-            .filter(suit -> suit.equals(cardSuit))
-            .findFirst()
-            .get();
+                .filter(suit -> suit.equals(cardSuit))
+                .findFirst()
+                .get();
     }
 
     public String getCardSuitName() {

@@ -35,7 +35,7 @@ public class Cards {
         }
     }
 
-    public Card pick(CardPickerGenerator cardPickerGenerator) {
+    public Card pick(final CardPickerGenerator cardPickerGenerator) {
         return cards.remove(cardPickerGenerator.generator(cards.size()));
     }
 }

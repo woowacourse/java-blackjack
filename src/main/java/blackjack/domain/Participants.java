@@ -8,11 +8,11 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    private Participants(List<Participant> participants) {
+    private Participants(final List<Participant> participants) {
         this.participants = participants;
     }
 
-    public static Participants generate(List<String> playersName) {
+    public static Participants generate(final List<String> playersName) {
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer(new ParticipantName("딜러")));
         for (String playerName : playersName) {

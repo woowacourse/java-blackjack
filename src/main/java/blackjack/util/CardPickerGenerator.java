@@ -2,5 +2,5 @@ package blackjack.util;
 
 public interface CardPickerGenerator {
 
-    int generator(int number);
+    int generator(final int number);
 }

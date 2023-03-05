@@ -7,7 +7,7 @@ public class RandomCardPickerGenerator implements CardPickerGenerator {
     Random random = new Random();
 
     @Override
-    public int generator(int cardSize) {
+    public int generator(final int cardSize) {
         return random.nextInt(cardSize);
     }
 }

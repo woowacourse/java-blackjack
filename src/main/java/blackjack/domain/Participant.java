@@ -17,7 +17,7 @@ public abstract class Participant {
         this.participantName = participantName;
     }
 
-    public void hit(Card card) {
+    public void hit(final Card card) {
         receivedCards.add(card);
     }
 
@@ -55,11 +55,11 @@ public abstract class Participant {
     public String getName() {
         return participantName.getName();
     }
-    public CardNumber getCardNumber(int index) {
+    public CardNumber getCardNumber(final int index) {
         return receivedCards.get(index).getCardNumber();
     }
 
-    public CardSuit getCardSuit(int index) {
+    public CardSuit getCardSuit(final int index) {
         return receivedCards.get(index).getCardSuit();
     }
 

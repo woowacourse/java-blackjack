@@ -11,26 +11,26 @@ public enum WinningResult {
 
     final String name;
 
-    WinningResult(String name) {
+    WinningResult(final String name) {
         this.name = name;
     }
 
-    public int winCount(List<WinningResult> dealerResult) {
+    public int winCount(final List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
-            .filter(result -> result.equals(WIN))
-            .count();
+                .filter(result -> result.equals(WIN))
+                .count();
     }
 
-    public int loseCount(List<WinningResult> dealerResult) {
+    public int loseCount(final List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
-            .filter(result -> result.equals(LOSE))
-            .count();
+                .filter(result -> result.equals(LOSE))
+                .count();
     }
 
-    public int pushCount(List<WinningResult> dealerResult) {
+    public int pushCount(final List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
-            .filter(result -> result.equals(PUSH))
-            .count();
+                .filter(result -> result.equals(PUSH))
+                .count();
     }
 
     public String getName() {
