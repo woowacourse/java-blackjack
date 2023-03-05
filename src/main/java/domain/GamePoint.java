@@ -76,7 +76,7 @@ public final class GamePoint {
         return gamePoint > point.gamePoint;
     }
 
-    public boolean isEqualTo(final GamePoint point) {
-        return this.gamePoint == point.gamePoint;
+    public boolean isSameAs(final GamePoint point) {
+        return gamePoint == point.gamePoint;
     }
 }

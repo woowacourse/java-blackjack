@@ -1,11 +1,12 @@
 package domain.participant;
 
 import domain.Deck;
+import domain.GamePoint;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public final class Players {
 
     public static final int MIN_COUNT = 2;
 
@@ -37,5 +38,23 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public List<Player> findPlayersLowerThan(final GamePoint gamePoint) {
+        return players.stream()
+                .filter(player -> player.hasLowerThan(gamePoint))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Player> findPlayerSameAs(final GamePoint gamePoint) {
+        return players.stream()
+                .filter(player -> player.hasSameAs(gamePoint))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Player> findPlayerGreaterThan(final GamePoint gamePoint) {
+        return players.stream()
+                .filter(player -> player.hasGreaterThan(gamePoint))
+                .collect(Collectors.toUnmodifiableList());
     }
 }

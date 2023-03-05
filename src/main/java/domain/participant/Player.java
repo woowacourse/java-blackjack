@@ -1,8 +1,9 @@
 package domain.participant;
 
+import domain.GamePoint;
 import domain.card.Cards;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private Player(final Name name) {
         super(name);
@@ -26,5 +27,17 @@ public class Player extends Participant {
         if (name.getValue().equals(DEALER_NAME)) {
             throw new IllegalArgumentException("'딜러'라는 이름을 가질 수 없습니다.");
         }
+    }
+
+    public boolean hasLowerThan(final GamePoint gamePoint) {
+        return calculatePoint().isLowerThan(gamePoint);
+    }
+
+    public boolean hasSameAs(final GamePoint gamePoint) {
+        return calculatePoint().isSameAs(gamePoint);
+    }
+
+    public boolean hasGreaterThan(final GamePoint gamePoint) {
+        return calculatePoint().isGreaterThan(gamePoint);
     }
 }

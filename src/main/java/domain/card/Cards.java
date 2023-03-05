@@ -50,7 +50,7 @@ public final class Cards {
     }
 
     public boolean havePointOf(final GamePoint point) {
-        return this.gamePoint.isEqualTo(point);
+        return this.gamePoint.isSameAs(point);
     }
 
     public List<Card> getCards() {

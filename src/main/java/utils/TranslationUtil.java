@@ -1,5 +1,6 @@
 package utils;
 
+import domain.Result;
 import domain.card.CardShape;
 
 public final class TranslationUtil {
@@ -45,5 +46,18 @@ public final class TranslationUtil {
             return "버스트";
         }
         return String.valueOf(point);
+    }
+
+    public static String translateResult(final Result result) {
+        if (result == Result.WIN) {
+            return "승";
+        }
+        if (result == Result.DRAW) {
+            return "무";
+        }
+        if (result == Result.LOSE) {
+            return "패";
+        }
+        throw new AssertionError();
     }
 }

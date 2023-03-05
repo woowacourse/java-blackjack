@@ -4,7 +4,7 @@ import domain.card.Cards;
 
 import java.util.List;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     public static final int STANDARD_OF_NEED_MORE_CARD = 16;
 

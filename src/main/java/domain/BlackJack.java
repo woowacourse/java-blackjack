@@ -55,4 +55,8 @@ public final class BlackJack {
     public Players getPlayers() {
         return players;
     }
+
+    public GameResult getGameResult() {
+        return GameResult.create(dealer, players);
+    }
 }

@@ -12,7 +12,7 @@ import view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackController {
+public final class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -29,7 +29,10 @@ public class BlackJackController {
         getPlayersDecision();
         getDealerResult();
         outputView.printStatus(blackJack.getDealer(), blackJack.getPlayers());
-//        outputView.printFinalResult(blackJack.getGameResult());
+        outputView.printFinalResult(
+                blackJack.getDealer(),
+                blackJack.getGameResult()
+        );
     }
 
     private List<Name> userNameRequest() {
