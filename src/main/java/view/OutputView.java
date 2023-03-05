@@ -1,17 +1,20 @@
 package view;
 
+import domain.GamePoint;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import utils.TranslationUtil;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final String PRINT_FORMAT = "%s 카드: %s%n";
+    private static final String PRINT_FORMAT = "%s 카드: %s";
 
     public void printInitialStatus(final Dealer dealer, final Players players) {
         System.out.print(System.lineSeparator());
@@ -19,13 +22,25 @@ public final class OutputView {
                 dealer.getName().getValue(),
                 getPlayerNames(players));
 
-        System.out.printf(PRINT_FORMAT, dealer.getName().getValue(), getCardStringOf(dealer.getFirstCard()));
+        System.out.println(getInitialDealerStatus(dealer));
 
         for (Player player : players.getPlayers()) {
-            System.out.printf(PRINT_FORMAT,
-                    player.getName().getValue(),
-                    getCardStringOf(player.getCards().getCards()));
+            System.out.println(getParticipantStatus(player));
         }
+    }
+
+    private String getInitialDealerStatus(final Dealer dealer) {
+        return String.format(
+                PRINT_FORMAT,
+                dealer.getName().getValue(),
+                getCardStringOf(dealer.getFirstCard()));
+    }
+
+    private String getParticipantStatus(final Participant participant) {
+        return String.format(
+                PRINT_FORMAT,
+                participant.getName().getValue(),
+                getCardStringOf(participant.getCards()));
     }
 
     private String getPlayerNames(final Players players) {
@@ -35,16 +50,16 @@ public final class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private String getCardStringOf(final List<Card> cards) {
-        return cards.stream()
+    private String getCardStringOf(final Cards cards) {
+        return cards.getCards().stream()
                 .map(this::makeCardString)
                 .collect(Collectors.joining(DELIMITER));
     }
 
     private String makeCardString(final Card card) {
         return String.format("%s%s",
-                TranslationUtil.translate(card.getCardNumberValue()),
-                TranslationUtil.translate(card.getShape()));
+                TranslationUtil.translateFaceNumber(card.getCardNumberValue()),
+                TranslationUtil.translateShape(card.getShape()));
     }
 
     public void printPlayerCards(final Player player) {
@@ -52,50 +67,44 @@ public final class OutputView {
         System.out.printf(
                 PRINT_FORMAT,
                 player.getName().getValue(),
-                getCardStringOf(cards.getCards())
+                getCardStringOf(cards)
         );
+        System.out.print(System.lineSeparator());
     }
 
     public void printAdditionalCardCountOfDealer(final int cardCount) {
-        System.out.print(System.lineSeparator());
         if (cardCount == 0) {
-            System.out.println("딜러는 17 이상이라 카드를 받지 못했습니다.");
+            System.out.println("\n딜러는 17 이상이라 카드를 받지 못했습니다.\n");
         }
         if (cardCount > 0) {
-            System.out.printf("딜러는 16 이하라 %d장의 카드를 더 받았습니다.", cardCount);
-            System.out.print(System.lineSeparator());
+            System.out.printf("\n딜러는 16 이하라 %d장의 카드를 더 받았습니다.\n", cardCount);
         }
-        System.out.print(System.lineSeparator());
-
     }
+
+    public void printStatus(final Dealer dealer, final Players players) {
+        printParticipantResult(dealer);
+        for (Player player : players.getPlayers()) {
+            printParticipantResult(player);
+        }
+    }
+
+    private void printParticipantResult(final Participant participant) {
+        System.out.printf("%s - 결과: %s\n",
+                getParticipantStatus(participant),
+                printGamePoint(participant.calculatePoint()));
+    }
+
+    private String printGamePoint(final GamePoint gamePoint) {
+        final int point = gamePoint.getPoint();
+        return TranslationUtil.translatePoint(point);
+    }
+
    /*
-    public void printStatus(final Dealer dealer, final List<Player> players) {
-        printPlayerResultForDealer(dealer, dealer.getCards());
-        for (Player player : players) {
-            printPlayerResult(player, player.getCards());
-        }
-    }
-
     private void printPlayerResult(final Player player, final Cards cards) {
         System.out.printf("%s - 결과: %s",
                 getPlayerCards(player, cards.getCards())
                 , printGamePoint(cards.getGamePoint()));
         System.out.print(System.lineSeparator());
-    }
-
-    private void printPlayerResultForDealer(final Dealer dealer, final Cards cards) {
-        System.out.printf("%s - 결과: %s",
-                getPlayerCardsForDealer(dealer, cards.getCards())
-                , printGamePoint(cards.getGamePoint()));
-        System.out.print(System.lineSeparator());
-    }
-
-    private String printGamePoint(final GamePoint gamePoint) {
-        final int point = gamePoint.getPoint();
-        if (point == 0) {
-            return "버스트";
-        }
-        return String.valueOf(point);
     }
 
     public void printFinalResult(GameResult gameResult) {

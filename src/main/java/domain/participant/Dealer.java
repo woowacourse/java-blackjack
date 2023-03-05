@@ -1,11 +1,13 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.Cards;
 
 import java.util.List;
 
 public class Dealer extends Participant {
+
+    public static final int STANDARD_OF_NEED_MORE_CARD = 16;
+
     private Dealer(final Name name) {
         super(name);
     }
@@ -18,7 +20,11 @@ public class Dealer extends Participant {
         return new Dealer(Name.of(DEALER_NAME));
     }
 
-    public List<Card> getFirstCard() {
-        return List.of(cards.getFirstCard());
+    public boolean needMoreCard() {
+        return cards.isLowerThan(STANDARD_OF_NEED_MORE_CARD) && this.isBusted();
+    }
+
+    public Cards getFirstCard() {
+        return Cards.create(List.of(cards.getFirstCard()));
     }
 }

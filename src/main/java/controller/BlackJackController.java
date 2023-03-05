@@ -28,7 +28,7 @@ public class BlackJackController {
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getPlayers());
         getPlayersDecision();
         getDealerResult();
-//        outputView.printStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
+        outputView.printStatus(blackJack.getDealer(), blackJack.getPlayers());
 //        outputView.printFinalResult(blackJack.getGameResult());
     }
 
@@ -64,7 +64,7 @@ public class BlackJackController {
     }
 
     private void getDealerResult() {
-//        final int cardCount = blackJack.finalizeDealer();
-//        outputView.printAdditionalCardCountOfDealer(cardCount);
+        final int cardCount = blackJack.finalizeDealerAndGetAdditionalCount();
+        outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 }

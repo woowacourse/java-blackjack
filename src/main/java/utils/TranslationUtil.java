@@ -8,7 +8,7 @@ public final class TranslationUtil {
         throw new AssertionError();
     }
 
-    public static String translate(final int cardNumberValue) {
+    public static String translateFaceNumber(final int cardNumberValue) {
         if (cardNumberValue == 1) {
             return "A";
         }
@@ -24,7 +24,7 @@ public final class TranslationUtil {
         return String.valueOf(cardNumberValue);
     }
 
-    public static String translate(final CardShape cardShape) {
+    public static String translateShape(final CardShape cardShape) {
         if (cardShape == CardShape.HEART) {
             return "하트";
         }
@@ -38,5 +38,12 @@ public final class TranslationUtil {
             return "스페이드";
         }
         throw new AssertionError();
+    }
+
+    public static String translatePoint(final int point) {
+        if (point == 0) {
+            return "버스트";
+        }
+        return String.valueOf(point);
     }
 }

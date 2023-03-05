@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.Cards;
 
 import java.util.Collections;
-import java.util.List;
 
 public abstract class Participant {
 
@@ -50,7 +49,7 @@ public abstract class Participant {
         return cards.getGamePoint();
     }
 
-    public boolean isBust() {
+    public boolean isBusted() {
         return cards.isBusted();
     }
 

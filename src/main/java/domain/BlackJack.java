@@ -32,12 +32,20 @@ public final class BlackJack {
     }
 
     public boolean isBusted(Participant participant) {
-        return participant.isBust();
+        return participant.isBusted();
     }
-
 
     public void drawCard(final Participant player) {
         player.takeCard(deck.drawCard());
+    }
+
+    public int finalizeDealerAndGetAdditionalCount() {
+        int additionalCardCount = 0;
+        while (dealer.needMoreCard()) {
+            dealer.takeCard(deck.drawCard());
+            additionalCardCount += 1;
+        }
+        return additionalCardCount;
     }
 
     public Dealer getDealer() {
