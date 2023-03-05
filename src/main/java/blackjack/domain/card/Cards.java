@@ -11,11 +11,14 @@ public class Cards {
 
     private static List<Card> cards;
 
+    private Cards() {
+    }
+
+    private static final Cards CARDS = new Cards();
     public static Cards initializeCards() {
-        Cards cards = new Cards();
-        cards.createCards();
-        cards.shuffleCards();
-        return cards;
+        CARDS.createCards();
+        CARDS.shuffleCards();
+        return CARDS;
     }
 
     private void createCards(){
