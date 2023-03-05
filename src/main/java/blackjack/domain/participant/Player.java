@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final Name name;
+    private final PlayerName name;
 
     public Player(final String name) {
         this(name, new Cards());
@@ -13,7 +13,7 @@ public class Player extends Participant {
 
     public Player(final String name, final Cards cards) {
         super(cards);
-        this.name = new Name(name);
+        this.name = new PlayerName(name);
     }
 
     @Override

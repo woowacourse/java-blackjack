@@ -2,14 +2,14 @@ package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class Name {
+public class PlayerName {
 
     private static final String RESTRICT = "딜러";
     private static final int MAXIMUM_LENGTH = 10;
 
     private final String value;
 
-    public Name(final String value) {
+    public PlayerName(final String value) {
         validate(value);
         this.value = value;
     }
@@ -50,8 +50,8 @@ public class Name {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Name name = (Name) o;
-        return Objects.equals(value, name.value);
+        PlayerName playerName = (PlayerName) o;
+        return Objects.equals(value, playerName.value);
     }
 
     @Override
