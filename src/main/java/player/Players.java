@@ -11,7 +11,7 @@ import dto.PlayerWinningDto;
 
 public class Players {
     private final List<Player> players = new ArrayList<>();
-    
+
     public void add(Player player) {
         players.add(player);
     }
@@ -37,11 +37,38 @@ public class Players {
 
     public void calculateWinning(Dealer dealer) {
         for (Player player : players) {
-            combat(dealer, player);
+            compareScore(dealer, player);
         }
     }
 
-    private void combat(Dealer dealer, Player player) {
+    private void compareScore(Dealer dealer, Player player) {
+        winPlayer(dealer, player);
+        winDealer(dealer, player);
+        draw(dealer, player);
+    }
+
+    private void draw(Dealer dealer, Player player) {
+        boolean playerBust = player.isBust();
+        int playerScore = player.calculateScore();
+        int dealerScore = dealer.calculateScore();
+        if (!playerBust && (playerScore == dealerScore)) {
+            player.tie();
+            dealer.tie();
+        }
+    }
+
+    private void winDealer(Dealer dealer, Player player) {
+        boolean playerBust = player.isBust();
+        int playerScore = player.calculateScore();
+        boolean dealerBust = dealer.isBust();
+        int dealerScore = dealer.calculateScore();
+        if (playerBust || (isPlayerLower(playerScore, dealerScore) && !dealerBust)) {
+            player.lose();
+            dealer.win();
+        }
+    }
+
+    private void winPlayer(Dealer dealer, Player player) {
         boolean playerBust = player.isBust();
         int playerScore = player.calculateScore();
         boolean dealerBust = dealer.isBust();
@@ -49,14 +76,6 @@ public class Players {
         if ((!playerBust && dealerBust) || (!dealerBust && isPlayerHigher(playerScore, dealerScore))) {
             player.win();
             dealer.lose();
-        }
-        if (playerBust || (isPlayerLower(playerScore, dealerScore) && !dealerBust)) {
-            player.lose();
-            dealer.win();
-        }
-        if (!playerBust && (playerScore == dealerScore)) {
-            player.tie();
-            dealer.tie();
         }
     }
 
