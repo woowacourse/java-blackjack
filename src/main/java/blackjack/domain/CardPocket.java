@@ -40,14 +40,13 @@ public class CardPocket {
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> card.getSymbol() == Symbol.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
     private int calculateMinimumScore() {
         return cards.stream()
-                .map(Card::getSymbol)
-                .mapToInt(Symbol::getScore)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 

@@ -13,6 +13,14 @@ public class Card {
         this.symbol = symbol;
     }
 
+    public boolean isAce() {
+        return symbol.isAce();
+    }
+
+    public int getScore() {
+        return symbol.getScore();
+    }
+
     public Symbol getSymbol() {
         return symbol;
     }
