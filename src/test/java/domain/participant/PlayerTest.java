@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 
 class PlayerTest {
@@ -28,6 +29,14 @@ class PlayerTest {
                 Card.create(CardShape.HEART, CardNumber.of(2))
         );
         player = Player.create(Name.of("HK"), Cards.create(initialData));
+    }
+
+    @DisplayName("플레이어는 '딜러'라는 이름을 가지면 예외가 발생한다.")
+    @Test
+    void invalidNameTest() {
+        assertThatThrownBy(() -> Player.of(Name.of("딜러")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("'딜러'라는 이름을 가질 수 없습니다.");
     }
 
     @DisplayName("플레이어는 한 장의 카드를 받을 수 있다.")
