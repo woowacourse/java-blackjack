@@ -76,7 +76,7 @@ public class BlackJackController {
         do {
             OutputView.printInputReceiveYesOrNotMessage(player.getName());
             ResultView.printParticipantResult(player.getName(), player.getCardNames());
-        } while (player.checkCardsCondition() && isReceivable(player));
+        } while (player.isAbleToDraw() && isReceivable(player));
     }
 
     private boolean isReceivable(Player player) {
@@ -88,7 +88,7 @@ public class BlackJackController {
     }
 
     private void dealerDistributeOrNot() {
-        while (dealer.checkCardsCondition()) {
+        while (dealer.isAbleToDraw()) {
             BlackJackGame.distributeCard(dealer, 1);
             OutputView.printDealerReceivedMessage();
         }

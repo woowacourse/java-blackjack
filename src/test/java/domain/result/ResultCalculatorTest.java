@@ -21,10 +21,10 @@ public class ResultCalculatorTest {
         Player player = new Player(new Name("dino"));
         Dealer dealer = new Dealer();
         ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of("dino")), dealer);
-        player.takeCard(new Card("5다이아몬드", 5));
-        player.takeCard(new Card("10다이아몬드", 10));
-        dealer.takeCard(new Card("3하트", 3));
-        dealer.takeCard(new Card("8클로버", 8));
+        player.drawCard(new Card("5다이아몬드", 5));
+        player.drawCard(new Card("10다이아몬드", 10));
+        dealer.drawCard(new Card("3하트", 3));
+        dealer.drawCard(new Card("8클로버", 8));
         resultCalculator.fight(player, dealer);
 
         List<Integer> playerResults = resultCalculator.getResultsByName("dino");
@@ -42,10 +42,10 @@ public class ResultCalculatorTest {
         Player player = new Player(new Name("dino"));
         Dealer dealer = new Dealer();
         ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of("dino")), dealer);
-        player.takeCard(new Card("5다이아몬드", 5));
-        player.takeCard(new Card("10다이아몬드", 10));
-        dealer.takeCard(new Card("10하트", 10));
-        dealer.takeCard(new Card("5클로버", 5));
+        player.drawCard(new Card("5다이아몬드", 5));
+        player.drawCard(new Card("10다이아몬드", 10));
+        dealer.drawCard(new Card("10하트", 10));
+        dealer.drawCard(new Card("5클로버", 5));
         resultCalculator.fight(player, dealer);
 
         List<Integer> playerResults = resultCalculator.getResultsByName("dino");

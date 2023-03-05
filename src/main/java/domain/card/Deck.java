@@ -24,11 +24,10 @@ public class Deck {
     }
 
     public static String drawCard() {
-        shuffle();
         return cards.remove(TOP_OF_DECK_CARD);
     }
 
-    private static void shuffle() {
+    public static void shuffle() {
         Collections.shuffle(cards);
     }
 }

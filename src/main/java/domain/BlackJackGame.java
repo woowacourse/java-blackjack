@@ -10,6 +10,7 @@ import domain.participant.Players;
 public class BlackJackGame {
 
     public static void initSettingCards(Players players, Dealer dealer) {
+        Deck.shuffle();
         distributeCard(dealer, 2);
         for (Player player : players.getPlayers()) {
             distributeCard(player, 2);
@@ -18,7 +19,7 @@ public class BlackJackGame {
 
     public static void distributeCard(Participant participant, int num) {
         for (int generateIndex = 0; generateIndex < num; generateIndex++) {
-            participant.takeCard(generateCard());
+            participant.drawCard(generateCard());
         }
     }
 
