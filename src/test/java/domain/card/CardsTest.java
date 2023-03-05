@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 class CardsTest {
@@ -12,9 +14,12 @@ class CardsTest {
     void givenCards_thenSumScore() {
         //given
         final Cards cards = new Cards();
-        cards.takeCard(Card.of(Suit.SPADE, Rank.EIGHT));
-        cards.takeCard(Card.of(Suit.HEARTS, Rank.SIX));
-        cards.takeCard(Card.of(Suit.DIAMOND, Rank.SEVEN));
+        final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
+        final Deck deck = Deck.from(TestCardGenerator.from(ranks));
+
+        for (int i = 0; i < ranks.size(); i++) {
+            cards.takeCard(deck.dealCard());
+        }
 
         //when
         int score = cards.getScore();
@@ -24,15 +29,18 @@ class CardsTest {
     }
 
     @Nested
-    class SumScoreTest {
+    class IsSoftTest {
         @Test
         @DisplayName("점수 총합이 11이하면 ACE의 값을 11로 계산한다")
         void givenAceAndUnderElevenScore_thenAceScoreEleven() {
             //given
             final Cards cards = new Cards();
-            cards.takeCard(Card.of(Suit.SPADE, Rank.ACE));
-            cards.takeCard(Card.of(Suit.HEARTS, Rank.TWO));
-            cards.takeCard(Card.of(Suit.DIAMOND, Rank.SEVEN));
+            final List<Rank> ranks = List.of(Rank.ACE, Rank.TWO, Rank.SEVEN);
+            final Deck deck = Deck.from(TestCardGenerator.from(ranks));
+
+            for (int i = 0; i < ranks.size(); i++) {
+                cards.takeCard(deck.dealCard());
+            }
 
             //when
             final int score = cards.getScore();
@@ -46,9 +54,13 @@ class CardsTest {
         void givenAceAndOverTwelveScore_thenAceScoreOne() {
             //given
             final Cards cards = new Cards();
-            cards.takeCard(Card.of(Suit.SPADE, Rank.ACE));
-            cards.takeCard(Card.of(Suit.HEARTS, Rank.FIVE));
-            cards.takeCard(Card.of(Suit.DIAMOND, Rank.SEVEN));
+
+            final List<Rank> ranks = List.of(Rank.ACE, Rank.FIVE, Rank.SEVEN);
+            final Deck deck = Deck.from(TestCardGenerator.from(ranks));
+
+            for (int i = 0; i < ranks.size(); i++) {
+                cards.takeCard(deck.dealCard());
+            }
 
             //when
             final int score = cards.getScore();

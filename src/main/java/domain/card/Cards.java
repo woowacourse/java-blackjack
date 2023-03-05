@@ -5,8 +5,8 @@ import java.util.List;
 
 public final class Cards {
 
-    private static final int ACE_ELEVEN = 10;
-    private static final int ACE_CONDITION = 21 - ACE_ELEVEN;
+    private static final int SOFT_ADD = 10;
+    private static final int SOFT_CONDITION = 21 - SOFT_ADD;
     private final List<Card> cards;
 
     public Cards() {
@@ -23,8 +23,8 @@ public final class Cards {
                 .sum();
     }
 
-    private static boolean isUnderTwentyOne(final int sum) {
-        return sum <= ACE_CONDITION;
+    private static boolean isHard(final int sum) {
+        return sum <= SOFT_CONDITION;
     }
 
     private boolean hasAce() {
@@ -43,8 +43,8 @@ public final class Cards {
     public int getScore() {
         final int score = sumScore();
 
-        if (hasAce() && isUnderTwentyOne(score)) {
-            return score + ACE_ELEVEN;
+        if (hasAce() && isHard(score)) {
+            return score + SOFT_ADD;
         }
         return score;
     }
