@@ -1,7 +1,8 @@
 package view;
 
-import domain.Card;
-import domain.Results;
+import domain.card.Card;
+import domain.game.Results;
+import domain.player.Participant;
 
 import java.util.List;
 
@@ -12,44 +13,55 @@ public final class OutputView {
     private static final String DELIMITER = ", ";
     private static final int DEALER_HIT_CONDITION = 16;
 
-    public static void printPlayerCards(final String name, final List<Card> cards) {
-        final String playerCards = convertCardsFormat(cards);
-        System.out.printf("%s 카드: %s%n", name, playerCards);
-    }
-
-    public static void printSetupGame(final List<String> names) {
+    public void printSetupGame(final List<String> names) {
         final String participants = String.join(DELIMITER, names);
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", participants);
     }
 
-    public static void printHitOrStay(final int dealerScore) {
+    public void printDealerCard(Card card) {
+        System.out.printf("딜러 : %s%s%n", card.getRank().getSymbol(), card.getSuit());
+    }
+
+    public void printPlayerCards(final List<Participant> participants) {
+        participants.forEach(
+                participant -> System.out.printf(
+                        "%s 카드: %s%n", participant.getName(), convertCardsFormat(participant.getCards())
+                ));
+    }
+
+    public void printPlayerCard(final Participant participant) {
+        System.out.printf(
+                "%s 카드: %s%n", participant.getName(), convertCardsFormat(participant.getCards())
+        );
+    }
+
+    public void printHitOrStay(final int dealerScore) {
         System.out.println(hitOrStay(dealerScore));
     }
 
-    public static void printPlayerScore(final String name, final List<Card> cards, final int playerScore) {
+    public void printPlayerScore(final String name, final List<Card> cards, final int playerScore) {
         final String playerCards = convertCardsFormat(cards);
         System.out.printf("%s 카드: %s - 결과: %d%n", name, playerCards, playerScore);
 
     }
+//
+//    public static void printGameResult(final Results results) {
+//        System.out.println("## 최종 승패");
+//        System.out.printf("딜러: %d승 %d패%n", results.countLosers(), results.countWinners());
+//
+//        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner));
+//        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser));
+//    }
 
-    public static void printGameResult(final Results results) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패%n", results.countLosers(), results.countWinners());
-        
-        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner));
-        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser));
-    }
-
-    public static void printExceptionMessage(final String message) {
+    public void printExceptionMessage(final String message) {
         System.out.println(message);
     }
 
-    private static String convertCardsFormat(final List<Card> cards) {
-        return cards.stream().map(card -> String.format("%s%s", card.getNumber().getSymbol(), card.getShape()))
-                .collect(joining(DELIMITER));
+    private String convertCardsFormat(final List<Card> cards) {
+        return cards.stream().map(card -> String.format("%s%s", card.getRank().getSymbol(), card.getSuit())).collect(joining(DELIMITER));
     }
 
-    private static String hitOrStay(final int dealerScore) {
+    private String hitOrStay(final int dealerScore) {
         if (dealerScore > DEALER_HIT_CONDITION) {
             return "딜러의 총점은 17 이상입니다. 게임을 종료합니다." + System.lineSeparator();
         }
