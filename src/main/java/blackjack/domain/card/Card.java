@@ -3,10 +3,10 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final CardShape shape;
+    private final Suit shape;
     private final CardNumber number;
 
-    public Card(final CardShape shape, final CardNumber number) {
+    public Card(final Suit shape, final CardNumber number) {
         this.shape = shape;
         this.number = number;
     }

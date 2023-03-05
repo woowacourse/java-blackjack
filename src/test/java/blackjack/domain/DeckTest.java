@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 import blackjack.domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class DeckTest {
     @DisplayName("덱이 비어있을 때 카드를 뽑으면 예외가 발생한다.")
     void throwExceptionWhenDeckIsEmpty() {
         final int cardNumberSize = CardNumber.values().length;
-        final int cardShapeSize = CardShape.values().length;
+        final int cardShapeSize = Suit.values().length;
         final int deckSize = cardNumberSize * cardShapeSize;
         final Deck deck = new Deck();
         for (int count = 0; count < deckSize; count++) {

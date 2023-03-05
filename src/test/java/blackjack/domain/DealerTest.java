@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 import blackjack.domain.card.ParticipantCards;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
@@ -50,29 +50,29 @@ class DealerTest {
         return Stream.of(
                 Arguments.arguments(
                         // 히트 가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.THREE),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.THREE),
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.THREE),
-                                new Card(CardShape.HEART, CardNumber.EIGHT)
+                                new Card(Suit.SPADE, CardNumber.THREE),
+                                new Card(Suit.HEART, CardNumber.EIGHT)
                         ), true),
                 Arguments.arguments(
                         // 히트 불가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.THREE),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.THREE),
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.ACE),
-                                new Card(CardShape.CLOVER, CardNumber.FOUR)
+                                new Card(Suit.SPADE, CardNumber.ACE),
+                                new Card(Suit.CLOVER, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
                         // 히트 불가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FOUR),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.ACE),
-                                new Card(CardShape.CLOVER, CardNumber.QUEEN),
-                                new Card(CardShape.HEART, CardNumber.JACK),
-                                new Card(CardShape.DIAMOND, CardNumber.THREE)
+                                new Card(Suit.SPADE, CardNumber.ACE),
+                                new Card(Suit.CLOVER, CardNumber.QUEEN),
+                                new Card(Suit.HEART, CardNumber.JACK),
+                                new Card(Suit.DIAMOND, CardNumber.THREE)
                         ), false)
         );
     }
@@ -82,75 +82,75 @@ class DealerTest {
                 Arguments.arguments(
                         // 플레이어 딜러 모두 버스트하는 경우
                         // 플레이어
-                        new Card(CardShape.DIAMOND, CardNumber.NINE),
-                        new Card(CardShape.DIAMOND, CardNumber.QUEEN),
-                        List.of(new Card(CardShape.SPADE, CardNumber.JACK),
-                                new Card(CardShape.HEART, CardNumber.KING)),
+                        new Card(Suit.DIAMOND, CardNumber.NINE),
+                        new Card(Suit.DIAMOND, CardNumber.QUEEN),
+                        List.of(new Card(Suit.SPADE, CardNumber.JACK),
+                                new Card(Suit.HEART, CardNumber.KING)),
                         // 딜러
-                        new Card(CardShape.HEART, CardNumber.TWO),
-                        new Card(CardShape.HEART, CardNumber.QUEEN),
-                        List.of(new Card(CardShape.CLOVER, CardNumber.JACK),
-                                new Card(CardShape.CLOVER, CardNumber.KING)),
+                        new Card(Suit.HEART, CardNumber.TWO),
+                        new Card(Suit.HEART, CardNumber.QUEEN),
+                        List.of(new Card(Suit.CLOVER, CardNumber.JACK),
+                                new Card(Suit.CLOVER, CardNumber.KING)),
                         // 딜러 승리
                         ResultType.WIN
                 ),
                 Arguments.arguments(
                         // 플레이어만 버스트하는 경우
                         // 플레이어
-                        new Card(CardShape.DIAMOND, CardNumber.NINE),
-                        new Card(CardShape.DIAMOND, CardNumber.QUEEN),
-                        List.of(new Card(CardShape.SPADE, CardNumber.JACK),
-                                new Card(CardShape.HEART, CardNumber.KING)),
+                        new Card(Suit.DIAMOND, CardNumber.NINE),
+                        new Card(Suit.DIAMOND, CardNumber.QUEEN),
+                        List.of(new Card(Suit.SPADE, CardNumber.JACK),
+                                new Card(Suit.HEART, CardNumber.KING)),
                         // 딜러
-                        new Card(CardShape.HEART, CardNumber.TWO),
-                        new Card(CardShape.HEART, CardNumber.FIVE),
-                        List.of(new Card(CardShape.CLOVER, CardNumber.THREE),
-                                new Card(CardShape.CLOVER, CardNumber.KING)),
+                        new Card(Suit.HEART, CardNumber.TWO),
+                        new Card(Suit.HEART, CardNumber.FIVE),
+                        List.of(new Card(Suit.CLOVER, CardNumber.THREE),
+                                new Card(Suit.CLOVER, CardNumber.KING)),
                         // 딜러 승리
                         ResultType.WIN
                 ),
                 Arguments.arguments(
                         // 플레이어가 승리한다.
                         // 플레이어
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FIVE),
-                        List.of(new Card(CardShape.SPADE, CardNumber.THREE),
-                                new Card(CardShape.HEART, CardNumber.QUEEN)),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.FIVE),
+                        List.of(new Card(Suit.SPADE, CardNumber.THREE),
+                                new Card(Suit.HEART, CardNumber.QUEEN)),
                         // 딜러
-                        new Card(CardShape.HEART, CardNumber.TWO),
-                        new Card(CardShape.HEART, CardNumber.FIVE),
-                        List.of(new Card(CardShape.CLOVER, CardNumber.TWO),
-                                new Card(CardShape.CLOVER, CardNumber.KING)),
+                        new Card(Suit.HEART, CardNumber.TWO),
+                        new Card(Suit.HEART, CardNumber.FIVE),
+                        List.of(new Card(Suit.CLOVER, CardNumber.TWO),
+                                new Card(Suit.CLOVER, CardNumber.KING)),
                         // 딜러 패배
                         ResultType.LOSE
                 ),
                 Arguments.arguments(
                         // 플레이어가 패배한다.
                         // 플레이어
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FIVE),
-                        List.of(new Card(CardShape.SPADE, CardNumber.TWO),
-                                new Card(CardShape.HEART, CardNumber.QUEEN)),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.FIVE),
+                        List.of(new Card(Suit.SPADE, CardNumber.TWO),
+                                new Card(Suit.HEART, CardNumber.QUEEN)),
                         // 딜러
-                        new Card(CardShape.HEART, CardNumber.TWO),
-                        new Card(CardShape.HEART, CardNumber.FIVE),
-                        List.of(new Card(CardShape.CLOVER, CardNumber.THREE),
-                                new Card(CardShape.CLOVER, CardNumber.KING)),
+                        new Card(Suit.HEART, CardNumber.TWO),
+                        new Card(Suit.HEART, CardNumber.FIVE),
+                        List.of(new Card(Suit.CLOVER, CardNumber.THREE),
+                                new Card(Suit.CLOVER, CardNumber.KING)),
                         // 딜러 승리
                         ResultType.WIN
                 ),
                 Arguments.arguments(
                         // 플레이어 딜러 모두 무승부한다.
                         // 플레이어
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FIVE),
-                        List.of(new Card(CardShape.SPADE, CardNumber.TWO),
-                                new Card(CardShape.HEART, CardNumber.QUEEN)),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.FIVE),
+                        List.of(new Card(Suit.SPADE, CardNumber.TWO),
+                                new Card(Suit.HEART, CardNumber.QUEEN)),
                         // 딜러
-                        new Card(CardShape.HEART, CardNumber.TWO),
-                        new Card(CardShape.HEART, CardNumber.FIVE),
-                        List.of(new Card(CardShape.CLOVER, CardNumber.TWO),
-                                new Card(CardShape.CLOVER, CardNumber.KING)),
+                        new Card(Suit.HEART, CardNumber.TWO),
+                        new Card(Suit.HEART, CardNumber.FIVE),
+                        List.of(new Card(Suit.CLOVER, CardNumber.TWO),
+                                new Card(Suit.CLOVER, CardNumber.KING)),
                         // 딜러 무승부
                         ResultType.PUSH
                 )

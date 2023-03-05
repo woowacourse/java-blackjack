@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Suit;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,29 +28,29 @@ class PlayerTest {
         return Stream.of(
                 Arguments.arguments(
                         // 히트 가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FOUR),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(CardShape.DIAMOND, CardNumber.THREE),
-                                new Card(CardShape.HEART, CardNumber.FOUR)
+                                new Card(Suit.DIAMOND, CardNumber.THREE),
+                                new Card(Suit.HEART, CardNumber.FOUR)
                         ), true),
                 Arguments.arguments(
                         // 히트 가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.THREE),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.THREE),
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.ACE),
-                                new Card(CardShape.CLOVER, CardNumber.FOUR)
+                                new Card(Suit.SPADE, CardNumber.ACE),
+                                new Card(Suit.CLOVER, CardNumber.FOUR)
                         ), true),
                 Arguments.arguments(
                         // 히트 불가능
-                        new Card(CardShape.DIAMOND, CardNumber.TWO),
-                        new Card(CardShape.DIAMOND, CardNumber.FOUR),
+                        new Card(Suit.DIAMOND, CardNumber.TWO),
+                        new Card(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(CardShape.SPADE, CardNumber.ACE),
-                                new Card(CardShape.CLOVER, CardNumber.QUEEN),
-                                new Card(CardShape.HEART, CardNumber.JACK),
-                                new Card(CardShape.DIAMOND, CardNumber.THREE)
+                                new Card(Suit.SPADE, CardNumber.ACE),
+                                new Card(Suit.CLOVER, CardNumber.QUEEN),
+                                new Card(Suit.HEART, CardNumber.JACK),
+                                new Card(Suit.DIAMOND, CardNumber.THREE)
                         ), false)
         );
     }
