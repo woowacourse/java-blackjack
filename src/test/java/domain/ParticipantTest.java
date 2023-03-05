@@ -18,8 +18,8 @@ class ParticipantTest {
 
     private static Stream<Arguments> cardProvider() {
         return Stream.of(
-                Arguments.of(new Card("10클로버", 10), true),
-                Arguments.of(new Card("9하트", 9), false)
+                Arguments.of(new Card(Suit.CLOVER, Rank.TEN), true),
+                Arguments.of(new Card(Suit.HEART, Rank.NINE), false)
         );
     }
 
@@ -27,14 +27,14 @@ class ParticipantTest {
     void setUp() {
         participant = new Participant(
                 new ArrayList<>(List.of(
-                        new Card("2하트", 2),
-                        new Card("K다이아", 10))),
+                        new Card(Suit.HEART, Rank.TWO),
+                        new Card(Suit.DIAMOND, Rank.KING))),
                 "Leo");
     }
 
     @Test
     void receiveCard() {
-        participant.receiveCard(new Card("10클로버", 10));
+        participant.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
         assertThat(participant.getCardNames().size()).isEqualTo(3);
     }
 

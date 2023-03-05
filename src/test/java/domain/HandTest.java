@@ -21,15 +21,15 @@ class HandTest {
     void setUp() {
         hand = new Hand(new ArrayList<>(
                 List.of(
-                        new Card("4하트", 4),
-                        new Card("A다이아", 11)
+                        new Card(Suit.CLOVER, Rank.FOUR),
+                        new Card(Suit.CLOVER, Rank.ACE)
                 ))
         );
     }
 
     @Test
     void addCard() {
-        hand.addCard(new Card("5클로버", 5));
+        hand.addCard(new Card(Suit.CLOVER, Rank.FIVE));
         assertThat(hand.getCardNames().size()).isEqualTo(3);
     }
 
@@ -49,15 +49,15 @@ class HandTest {
 
     private static Stream<Arguments> cardProvider() {
         return Stream.of(
-                Arguments.of(new Card("A클로버", 11), 16),
-                Arguments.of(new Card("6하트", 6), 21)
+                Arguments.of(new Card(Suit.CLOVER, Rank.ACE), 16),
+                Arguments.of(new Card(Suit.CLOVER, Rank.SIX), 21)
         );
     }
 
     private static Stream<Arguments> isAceProvider() {
         return Stream.of(
-                Arguments.of(new Card("A클로버", 11), true),
-                Arguments.of(new Card("9하트", 9), false)
+                Arguments.of(new Card(Suit.CLOVER, Rank.ACE), true),
+                Arguments.of(new Card(Suit.CLOVER, Rank.NINE), false)
         );
     }
 }

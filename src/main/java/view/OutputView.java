@@ -52,8 +52,8 @@ public class OutputView {
     private int summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
         int playerHandValue = 0;
         for (Card participantCard : participantCards) {
-            cardNames.add(participantCard.getName());
-            playerHandValue += participantCard.getValue();
+            cardNames.add(participantCard.getRank().getName() + participantCard.getSuit().getShape());
+            playerHandValue += participantCard.getRank().getValue();
         }
         return playerHandValue;
     }

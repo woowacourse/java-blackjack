@@ -23,7 +23,7 @@ public class Hand {
         int aceCount = 0;
 
         for (Card card : hand) {
-            value += card.getValue();
+            value += card.getRank().getValue();
             aceCount += isAce(card);
         }
         value = exchangeAceLowValueWhenBust(value, aceCount);
@@ -48,7 +48,7 @@ public class Hand {
     public List<String> getCardNames() {
         List<String> cards = new ArrayList<>();
         for (Card card : hand) {
-            cards.add(card.getName());
+            cards.add(card.getRank().getName() + card.getSuit().getShape());
         }
         return cards;
     }

@@ -3,40 +3,36 @@ package domain;
 import java.util.Objects;
 
 public class Card {
-    private final String name;
-    private final int value;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card(final String name, final int value) {
-        this.name = name;
-        this.value = value;
+    public Card(final Suit suit, final Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
     public boolean isAce() {
-        return this.value == 11;
+        return rank.equals(Rank.ACE);
     }
 
-    public String getName() {
-        return name;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public int getValue() {
-        return value;
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Card card = (Card)o;
-        return value == card.value && Objects.equals(name, card.name);
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Card card = (Card) o;
+        return suit == card.suit && rank == card.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value);
+        return Objects.hash(suit, rank);
     }
-
-
 }

@@ -1,13 +1,13 @@
 package domain;
 
-import java.util.ArrayList;
-
 import view.ErrorMessage;
+
+import java.util.ArrayList;
 
 public class Player extends Participant {
     private static final int MAX_PLAYER_NAME_LENGTH = 10;
     private static final String INVALID_NAME = "딜러";
-    private static final String COMMA = ",";
+    private static final String INVALID_NAME_CHARACTER = ",";
     private final String name;
 
     public Player(String name) {
@@ -43,7 +43,7 @@ public class Player extends Participant {
     }
 
     private void validateDoesNotContainComma(String name) {
-        if (name.contains(COMMA)) {
+        if (name.contains(INVALID_NAME_CHARACTER)) {
             throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
         }
     }

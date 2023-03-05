@@ -120,11 +120,11 @@ public class BlackJackController {
     }
 
     private void showParticipantsWinningStatus(final GameResultManager gameResultManager) {
-        Map<String, Result> playerResults = gameResultManager.getPlayerStatus();
+        Map<Participant, Result> playerResults = gameResultManager.getPlayerStatus();
         Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
         outputView.printDealerResult(dealerResults);
-        for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
+        for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
+            outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
         }
     }
 }

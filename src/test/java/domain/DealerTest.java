@@ -15,9 +15,9 @@ class DealerTest {
     @MethodSource("cardProvider")
     @DisplayName("딜러는 패 합이 16이하면 카드를 한 장 받아야한다.")
     void shouldHit(Card card, boolean shouldHit) {
-        dealer.receiveCard(new Card("6하트", 6));
-        dealer.receiveCard(new Card("2클로버", 2));
-        dealer.receiveCard(new Card("6다이아", 6));
+        dealer.receiveCard(new Card(Suit.HEART, Rank.SIX));
+        dealer.receiveCard(new Card(Suit.CLOVER, Rank.TWO));
+        dealer.receiveCard(new Card(Suit.DIAMOND, Rank.SIX));
 
         dealer.receiveCard(card);
 
@@ -26,8 +26,8 @@ class DealerTest {
 
     private static Stream<Arguments> cardProvider() {
         return Stream.of(
-                Arguments.of(new Card("A클로버", 11), true),
-                Arguments.of(new Card("9하트", 9), false)
+                Arguments.of(new Card(Suit.CLOVER, Rank.ACE), true),
+                Arguments.of(new Card(Suit.HEART, Rank.NINE), false)
         );
     }
 }

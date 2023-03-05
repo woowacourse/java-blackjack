@@ -19,7 +19,7 @@ public class Deck {
 
     private static void makeCard(Stack<Card> deck, Suit suit) {
         for (Rank rank : Rank.values()) {
-            deck.add(new Card(rank.getName() + suit.getShape(), rank.getValue()));
+            deck.add(new Card(suit, rank));
         }
     }
 
