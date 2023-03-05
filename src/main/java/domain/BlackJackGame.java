@@ -19,4 +19,8 @@ public class BlackJackGame {
         Dealer dealer = InitGameSetter.generateDealer(deck);
         this.participants = new Participants(players, dealer);
     }
+
+    public List<String> getPlayerNames() {
+        return participants.getPlayerNames();
+    }
 }
