@@ -50,6 +50,18 @@ class PlayersTest {
                 .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
     }
 
+    @DisplayName("플레이어의 이름이 중복되면 예외를 반환한다.")
+    @Test
+    void create_fail_by_duplicated_name() {
+        //given
+        List<Player> players = createPlayers("pobi", "pobi");
+
+        //when && then
+        assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
+    }
+
     public List<Player> createPlayers(String... names) {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
