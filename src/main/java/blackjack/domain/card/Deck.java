@@ -7,7 +7,7 @@ public class Deck {
 
     private final Set<Card> drawnCards = new HashSet<>();
 
-    public void addCard(Card card) {
+    public void addDrawnCard(final Card card) {
         validateContains(card);
         drawnCards.add(card);
     }
@@ -30,7 +30,7 @@ public class Deck {
 
             card = new Card(number, pattern);
         } while (containsCard(card));
-        addCard(card);
+        addDrawnCard(card);
 
         return card;
     }
