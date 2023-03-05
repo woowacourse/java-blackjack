@@ -55,11 +55,11 @@ public class BlackjackController {
         }
     }
 
-    private static boolean isDrawable(final Player player) {
+    private boolean isDrawable(final Player player) {
         return player.isDrawable() && !player.isDealer();
     }
 
-    private static void drawOnce(final Player player, final BlackjackCommand command) {
+    private void drawOnce(final Player player, final BlackjackCommand command) {
         if (command.isHit()) {
             player.draw(ShuffledDeck.getInstance());
             return;
