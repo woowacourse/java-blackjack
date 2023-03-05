@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.CardShape;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,15 +13,15 @@ public class Deck {
     private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
-        for (Shape shape : Shape.values()) {
-            getMakeCardsOf(shape);
+        for (CardShape cardShape : CardShape.values()) {
+            getMakeCardsOf(cardShape);
         }
         Collections.shuffle(cards);
     }
 
-    private void getMakeCardsOf(final Shape shape) {
+    private void getMakeCardsOf(final CardShape cardShape) {
         for (int i = CardNumber.getMinValue(); i <= CardNumber.getMaxValue(); i++) {
-            cards.add(new Card(shape, CardNumber.of(i)));
+            cards.add(new Card(cardShape, CardNumber.of(i)));
         }
     }
 

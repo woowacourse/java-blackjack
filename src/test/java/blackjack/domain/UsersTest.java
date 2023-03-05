@@ -29,8 +29,8 @@ public class UsersTest {
     void validUsersCountTest() {
         final Cards cards = new Cards(
                 List.of(
-                        new Card(Shape.HEART, CardNumber.of(10)),
-                        new Card(Shape.HEART, CardNumber.of(10))
+                        new Card(CardShape.HEART, CardNumber.of(10)),
+                        new Card(CardShape.HEART, CardNumber.of(10))
                 )
         );
         final User 헙크 = new User(new Name("헙크"), cards);
@@ -40,9 +40,9 @@ public class UsersTest {
     @Test
     @DisplayName("Users 중 해당 게임 결과 값보다 큰 유저들의 리스트를 얻을 수 있다.")
     void findUsersGreaterThanGamePoint() {
-        final Card card10 = new Card(Shape.HEART, CardNumber.of(10));
-        final Card card9 = new Card(Shape.HEART, CardNumber.of(9));
-        final Card card8 = new Card(Shape.HEART, CardNumber.of(8));
+        final Card card10 = new Card(CardShape.HEART, CardNumber.of(10));
+        final Card card9 = new Card(CardShape.HEART, CardNumber.of(9));
+        final Card card8 = new Card(CardShape.HEART, CardNumber.of(8));
 
         final User user18 = new User(new Name("a"), new Cards(List.of(card10, card8)));
         final User user19 = new User(new Name("a"), new Cards(List.of(card10, card9)));
@@ -58,9 +58,9 @@ public class UsersTest {
     @Test
     @DisplayName("Users 중 해당 게임 결과 값과 같은 유저들의 리스트를 얻을 수 있다.")
     void findUsersEqualGamePoint() {
-        final Card card10 = new Card(Shape.HEART, CardNumber.of(10));
-        final Card card9 = new Card(Shape.HEART, CardNumber.of(9));
-        final Card card8 = new Card(Shape.HEART, CardNumber.of(8));
+        final Card card10 = new Card(CardShape.HEART, CardNumber.of(10));
+        final Card card9 = new Card(CardShape.HEART, CardNumber.of(9));
+        final Card card8 = new Card(CardShape.HEART, CardNumber.of(8));
 
         final User user18 = new User(new Name("a"), new Cards(List.of(card10, card8)));
         final User user19 = new User(new Name("a"), new Cards(List.of(card10, card9)));
@@ -76,9 +76,9 @@ public class UsersTest {
     @Test
     @DisplayName("Users 중 해당 게임 결과 값보다 작은 유저들의 리스트를 얻을 수 있다.")
     void findUserLowerThanGamePoint() {
-        final Card card10 = new Card(Shape.HEART, CardNumber.of(10));
-        final Card card9 = new Card(Shape.HEART, CardNumber.of(9));
-        final Card card8 = new Card(Shape.HEART, CardNumber.of(8));
+        final Card card10 = new Card(CardShape.HEART, CardNumber.of(10));
+        final Card card9 = new Card(CardShape.HEART, CardNumber.of(9));
+        final Card card8 = new Card(CardShape.HEART, CardNumber.of(8));
 
         final User user18 = new User(new Name("a"), new Cards(List.of(card10, card8)));
         final User user19 = new User(new Name("a"), new Cards(List.of(card10, card9)));

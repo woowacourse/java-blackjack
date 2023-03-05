@@ -6,7 +6,7 @@ import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.GamePoint;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
@@ -78,17 +78,17 @@ public class OutputView {
         return String.valueOf(cardNumberValue);
     }
 
-    private String translate(final Shape shape) {
-        if (shape == Shape.HEART) {
+    private String translate(final CardShape cardShape) {
+        if (cardShape == CardShape.HEART) {
             return "하트";
         }
-        if (shape == Shape.DIAMOND) {
+        if (cardShape == CardShape.DIAMOND) {
             return "다이아몬드";
         }
-        if (shape == Shape.CLOVER) {
+        if (cardShape == CardShape.CLOVER) {
             return "클로버";
         }
-        if (shape == Shape.SPADE) {
+        if (cardShape == CardShape.SPADE) {
             return "스페이드";
         }
         throw new AssertionError();
