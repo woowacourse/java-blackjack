@@ -1,12 +1,6 @@
 package view;
 
-import domain.card.Card;
-import domain.game.GameResult;
-import domain.user.Dealer;
-import domain.user.Player;
-import view.mapper.CardNumberMapper;
-import view.mapper.CardTypeMapper;
-import view.mapper.GameResultMapper;
+import view.dto.PlayerParameter;
 
 import java.util.List;
 import java.util.Map;
@@ -14,27 +8,27 @@ import java.util.StringJoiner;
 
 public class OutputView {
 
-    public void printPlayersInfoWhenGameStarted(Dealer dealer, List<Player> players) {
+    public void printPlayersInfoWhenGameStarted(PlayerParameter dealer, List<PlayerParameter> players) {
         StringJoiner stringJoiner = new StringJoiner(", ");
-        players.forEach(player -> stringJoiner.add(player.getPlayerName().getValue()));
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName().getValue(), stringJoiner);
+        players.forEach(player -> stringJoiner.add(player.getPlayerName()));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName(), stringJoiner);
 
         printPlayerCardWithName(dealer);
-        for (Player player : players) {
+        for (PlayerParameter player : players) {
             printPlayerCardWithName(player);
         }
     }
 
-    public void printPlayerCardWithName(Player player) {
+    public void printPlayerCardWithName(PlayerParameter player) {
         System.out.println(makePlayerCardMessageWithName(player));
     }
 
-    public String makePlayerCardMessageWithName(Player player) {
-        String cardStr = player.getPlayerName().getValue() + "카드: ";
+    public String makePlayerCardMessageWithName(PlayerParameter player) {
+        String cardStr = player.getPlayerName() + "카드: ";
         StringJoiner stringJoiner = new StringJoiner(", ");
-        for (Card card : player.getCardPool().getCards()) {
-            stringJoiner.add(CardNumberMapper.getCardNumber(card.getNumber()) + CardTypeMapper.getCardName(card.getType()));
-        }
+
+        player.getCards().forEach(stringJoiner::add);
+
         return cardStr + stringJoiner;
     }
 
@@ -42,32 +36,32 @@ public class OutputView {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerRecord(Dealer dealer, Map<GameResult, Integer> dealerRecord) {
+    public void printDealerRecord(PlayerParameter dealer, Map<String, Integer> dealerRecord) {
         System.out.println("## 최종 승패");
-        System.out.print(dealer.getPlayerName().getValue() + " : ");
+        System.out.print(dealer.getPlayerName() + " : ");
 
-        for (GameResult gameResult : dealerRecord.keySet()) {
+        for (String gameResult : dealerRecord.keySet()) {
             if (dealerRecord.get(gameResult) != 0) {
-                System.out.print(dealerRecord.get(gameResult) + GameResultMapper.getGameResult(gameResult));
+                System.out.print(dealerRecord.get(gameResult) + gameResult);
             }
         }
         System.out.println();
     }
 
-    public void printPlayerRecord(Map<Player, GameResult> gameResultMap) {
-        for (Player player : gameResultMap.keySet()) {
-            System.out.println(player.getPlayerName().getValue() + " : " + GameResultMapper.getGameResult(gameResultMap.get(player)));
+    public void printPlayerRecord(Map<String, String> gameResultMap) {
+        for (String player : gameResultMap.keySet()) {
+            System.out.println(player + " : " + gameResultMap.get(player));
         }
     }
 
-    public void printGameScore(Dealer dealer, List<Player> players) {
-        printScore(dealer);
-        for (Player player : players) {
-            printScore(player);
+    public void printGameScore(PlayerParameter dealerParameter, List<PlayerParameter> playersParameter) {
+        printScore(dealerParameter);
+        for (PlayerParameter playerParameter : playersParameter) {
+            printScore(playerParameter);
         }
     }
 
-    private void printScore(Player player) {
-        System.out.println(makePlayerCardMessageWithName(player) + " - 결과 : " + player.sumCardPool());
+    private void printScore(PlayerParameter playerParameter) {
+        System.out.println(makePlayerCardMessageWithName(playerParameter) + " - 결과 : " + playerParameter.getResult());
     }
 }

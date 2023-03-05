@@ -9,6 +9,6 @@ public class Dealer extends Player {
     }
 
     public boolean isHit() {
-        return sumCardPool() <= GameRule.DEALER_HIT_LIMIT.getNumber();
+        return sumHand() <= GameRule.DEALER_HIT_LIMIT.getNumber();
     }
 }

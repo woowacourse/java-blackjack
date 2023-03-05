@@ -35,7 +35,7 @@ public enum GameResult {
         if (player.isOverBlackjack()) {
             return 0;
         }
-        return player.sumCardPool();
+        return player.sumHand();
     }
 
     public static Map<GameResult, Integer> makeDealerRecord(Map<Player, GameResult> record) {

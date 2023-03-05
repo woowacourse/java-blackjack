@@ -20,7 +20,7 @@ public class Player {
         return playerName.isSameWith(name);
     }
 
-    public int sumCardPool() {
+    public int sumHand() {
         return hand.sumCardNumbers();
     }
 
@@ -32,7 +32,7 @@ public class Player {
         return playerName;
     }
 
-    public Hand getCardPool() {
+    public Hand getHand() {
         return hand;
     }
 }

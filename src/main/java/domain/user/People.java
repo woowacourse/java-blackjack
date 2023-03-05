@@ -64,7 +64,7 @@ public class People {
     }
 
     public boolean isBust(String playerName) {
-        return playerByName(playerName).sumCardPool() > GameRule.BLACKJACK.getNumber();
+        return playerByName(playerName).sumHand() > GameRule.BLACKJACK.getNumber();
     }
 
     public boolean dealerNeedsHit() {
