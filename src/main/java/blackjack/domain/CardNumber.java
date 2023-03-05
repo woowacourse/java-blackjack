@@ -18,7 +18,7 @@ public enum CardNumber {
     QUEEN(10, "Q"),
     JACK(10, "J");
 
-    public static final int ACE_CONVERT_NUMBER = 10;
+    private static final int ACE_CONVERT_NUMBER = 10;
     private final int value;
     private final String number;
 
