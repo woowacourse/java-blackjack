@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackJack {
 
@@ -26,13 +25,15 @@ public class BlackJack {
 	}
 
 	public Map<String, GameResult> calculatePlayerResults() {
+		Map<String, GameResult> playerResult = new LinkedHashMap<>();
 		List<Player> players = users.getPlayers();
 		Dealer dealer = users.getDealer();
 		int dealerScore = dealer.getScore();
-		return players.stream()
-			.collect(
-				Collectors.toMap(Player::getName, player -> comparePlayerWithDealer(player.getScore(), dealerScore),
-					(oldValue, newValue) -> newValue, LinkedHashMap::new));
+		for (Player player : players) {
+			playerResult.put(player.getName(), comparePlayerWithDealer(player.getScore(), dealerScore));
+		}
+
+		return playerResult;
 	}
 
 	public Map<GameResult, Integer> calculateDealerResult() {
@@ -51,6 +52,10 @@ public class BlackJack {
 		);
 		GameResult convertedResult = converter.get(playerResult);
 		dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
+	}
+
+	public boolean isDealerHittable() {
+		return users.isDealerHittable();
 	}
 
 	public String getDealerCardHidden() {
@@ -86,9 +91,5 @@ public class BlackJack {
 
 	public int getDealerScore() {
 		return users.getDealer().getScore();
-	}
-
-	public boolean isDealerHittable() {
-		return users.isDealerHittable();
 	}
 }
