@@ -1,12 +1,11 @@
 package blackjack.blackjacGameTest;
 
-import static blackjack.domain.game.Result.LOSE;
-import static blackjack.domain.game.Result.TIE;
-import static blackjack.domain.game.Result.WIN;
+import static blackjack.domain.game.WinningResult.LOSE;
+import static blackjack.domain.game.WinningResult.TIE;
+import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
-import java.util.Stack;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.Result;
+import blackjack.domain.game.WinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
@@ -110,7 +109,7 @@ class BlackjackGameTest {
 
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         Name name = dealerWinningResult.getName();
-        Map<Result, Integer> dealerResult = dealerWinningResult.getResultToCount();
+        Map<WinningResult, Integer> dealerResult = dealerWinningResult.getResultToCount();
 
         assertThat(name.getValue()).isEqualTo("딜러");
         assertThat(dealerResult.get(WIN)).isEqualTo(2);

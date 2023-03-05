@@ -1,14 +1,14 @@
 package blackjack.domain.participant.dealer;
 
-import blackjack.domain.game.Result;
+import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Name;
 import java.util.Map;
 
 public class DealerWinningDto {
     private final Name name;
-    private final Map<Result, Integer> resultToCount;
+    private final Map<WinningResult, Integer> resultToCount;
 
-    private DealerWinningDto(Name name, Map<Result, Integer> resultToCount) {
+    private DealerWinningDto(Name name, Map<WinningResult, Integer> resultToCount) {
         this.name = name;
         this.resultToCount = resultToCount;
     }
@@ -21,7 +21,7 @@ public class DealerWinningDto {
         return name;
     }
 
-    public Map<Result, Integer> getResultToCount() {
+    public Map<WinningResult, Integer> getResultToCount() {
         return resultToCount;
     }
 }

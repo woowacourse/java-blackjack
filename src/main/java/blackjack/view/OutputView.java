@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.ParticipantCardsDto;
-import blackjack.domain.participant.player.PlayerResultDto;
+import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.player.PlayerWinningDto;
 
 public class OutputView {
@@ -38,15 +38,15 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalResults(PlayerResultDto dealerResult, List<PlayerResultDto> playerResults) {
+    public void printFinalResults(ParticipantResultDto dealerResult, List<ParticipantResultDto> playerResults) {
         System.out.println();
         printFinalResult(dealerResult);
-        for (PlayerResultDto result : playerResults) {
+        for (ParticipantResultDto result : playerResults) {
             printFinalResult(result);
         }
     }
 
-    private void printFinalResult(PlayerResultDto result) {
+    private void printFinalResult(ParticipantResultDto result) {
         System.out.println(
                 result.getName().getValue() + " 카드:" + result.getCards().stream().map(Card::toString).collect(
                         Collectors.joining(", ")) + " - 결과: " + result.getScore());

@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.game.Result.LOSE;
-import static blackjack.domain.game.Result.TIE;
-import static blackjack.domain.game.Result.WIN;
+import static blackjack.domain.game.WinningResult.LOSE;
+import static blackjack.domain.game.WinningResult.TIE;
+import static blackjack.domain.game.WinningResult.WIN;
 
-import blackjack.domain.game.Result;
+import blackjack.domain.game.WinningResult;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -43,11 +43,11 @@ public abstract class Participant {
     }
 
     public void combat(Participant other) {
-        Result result = decideResultByComparingWith(other);
-        result.applyTo(this, other);
+        WinningResult winningResult = decideResultByComparingWith(other);
+        winningResult.applyTo(this, other);
     }
 
-    private Result decideResultByComparingWith(Participant other) {
+    private WinningResult decideResultByComparingWith(Participant other) {
         int score = calculateScore();
         int otherScore = other.calculateScore();
         if (isBust()) {

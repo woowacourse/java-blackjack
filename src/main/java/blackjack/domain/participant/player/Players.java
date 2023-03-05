@@ -4,6 +4,7 @@ import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.ParticipantCardsDto;
+import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.Dealer;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,8 @@ public class Players {
         players.add(player);
     }
 
-    public void hitAdditionalCard(Deck deck, Function<Name, AddCardOrNot> decideAddCardOrNot, Consumer<Player> showPlayerCards) {
+    public void hitAdditionalCard(Deck deck, Function<Name, AddCardOrNot> decideAddCardOrNot,
+                                  Consumer<Player> showPlayerCards) {
         players.forEach(player -> player.hitAdditionalCardFrom(deck, decideAddCardOrNot, showPlayerCards));
     }
 
@@ -35,9 +37,9 @@ public class Players {
         return players.get(playerIndex).isBust();
     }
 
-    public List<PlayerResultDto> getPlayerResults() {
+    public List<ParticipantResultDto> getPlayerResults() {
         return players.stream()
-                .map(PlayerResultDto::from)
+                .map(ParticipantResultDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 

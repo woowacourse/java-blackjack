@@ -3,7 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.participant.Participant;
 import java.util.function.BiConsumer;
 
-public enum Result {
+public enum WinningResult {
     WIN("승", (participant, other) -> {
         participant.win();
         other.lose();
@@ -20,7 +20,7 @@ public enum Result {
     private final String label;
     private final BiConsumer<Participant, Participant> recordResult;
 
-    Result(String label, BiConsumer<Participant, Participant> recordResult) {
+    WinningResult(String label, BiConsumer<Participant, Participant> recordResult) {
         this.label = label;
         this.recordResult = recordResult;
     }

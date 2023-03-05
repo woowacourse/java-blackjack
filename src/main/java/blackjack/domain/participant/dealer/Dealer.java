@@ -1,6 +1,6 @@
 package blackjack.domain.participant.dealer;
 
-import blackjack.domain.game.Result;
+import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import java.util.Map;
@@ -10,7 +10,7 @@ import blackjack.domain.participant.Hand;
 
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
-    private final DealerResult dealerResult = new DealerResult();
+    private final DealerWinningResult dealerWinningResult = new DealerWinningResult();
 
 
     public Dealer() {
@@ -26,18 +26,18 @@ public class Dealer extends Participant {
     }
 
     public void lose() {
-        dealerResult.addLose();
+        dealerWinningResult.addLose();
     }
 
     public void win() {
-        dealerResult.addWin();
+        dealerWinningResult.addWin();
     }
 
     public void tie() {
-        dealerResult.addTie();
+        dealerWinningResult.addTie();
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        return dealerResult.getResultToCount();
+    public Map<WinningResult, Integer> getDealerResult() {
+        return dealerWinningResult.getResultToCount();
     }
 }

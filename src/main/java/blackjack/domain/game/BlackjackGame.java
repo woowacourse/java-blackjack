@@ -10,7 +10,7 @@ import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.ParticipantCardsDto;
-import blackjack.domain.participant.player.PlayerResultDto;
+import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.domain.participant.player.Players;
 import java.util.function.Consumer;
@@ -40,7 +40,8 @@ public class BlackjackGame {
         players.takeCard(deck, FIRST_DRAW_COUNT);
     }
 
-    public void supplyCardToPlayerNameOf(Function<Name, AddCardOrNot> decideAddCardOrNot, Consumer<Player> showPlayerCards) {
+    public void supplyCardToPlayerNameOf(Function<Name, AddCardOrNot> decideAddCardOrNot,
+                                         Consumer<Player> showPlayerCards) {
         players.hitAdditionalCard(deck, decideAddCardOrNot, showPlayerCards);
     }
 
@@ -56,11 +57,11 @@ public class BlackjackGame {
         dealer.hit(deck.drawCard());
     }
 
-    public PlayerResultDto getDealerResult() {
-        return PlayerResultDto.fromDealer(dealer);
+    public ParticipantResultDto getDealerResult() {
+        return ParticipantResultDto.from(dealer);
     }
 
-    public List<PlayerResultDto> getPlayerResults() {
+    public List<ParticipantResultDto> getPlayerResults() {
         return players.getPlayerResults();
     }
 

@@ -8,7 +8,7 @@ import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.ParticipantCardsDto;
-import blackjack.domain.participant.player.PlayerResultDto;
+import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -72,8 +72,8 @@ public class Controller {
     }
 
     private void printFinalCards() {
-        PlayerResultDto dealerResult = blackjackGame.getDealerResult();
-        List<PlayerResultDto> playerResults = blackjackGame.getPlayerResults();
+        ParticipantResultDto dealerResult = blackjackGame.getDealerResult();
+        List<ParticipantResultDto> playerResults = blackjackGame.getPlayerResults();
 
         outputView.printFinalResults(dealerResult, playerResults);
     }

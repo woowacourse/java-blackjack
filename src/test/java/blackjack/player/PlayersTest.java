@@ -1,8 +1,8 @@
 package blackjack.player;
 
-import static blackjack.domain.game.Result.LOSE;
-import static blackjack.domain.game.Result.TIE;
-import static blackjack.domain.game.Result.WIN;
+import static blackjack.domain.game.WinningResult.LOSE;
+import static blackjack.domain.game.WinningResult.TIE;
+import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
