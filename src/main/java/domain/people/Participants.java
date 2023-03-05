@@ -1,4 +1,4 @@
-package domain;
+package domain.people;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import domain.card.Deck;
+import domain.Result;
 import view.ErrorMessage;
 
 public class Participants {
@@ -21,7 +23,10 @@ public class Participants {
     public static Participants from(List<String> names) {
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
-        names.forEach(name -> participants.add(new Player(name)));
+
+        for (String name : names) {
+            participants.add(new Player(name));
+        }
         return new Participants(participants);
     }
 
@@ -115,7 +120,8 @@ public class Participants {
         compareAtTieValue(dealer, playerResults, player, playerHandValue);
     }
 
-    private void compareAtTieValue(Dealer dealer, Map<String, Result> playerResults, Player player, int playerHandValue) {
+    private void compareAtTieValue(Dealer dealer, Map<String, Result> playerResults, Player player,
+        int playerHandValue) {
         if (playerHandValue == BUST_HAND_VALUE) {
             playerResults.put(player.getName(), Result.TIE);
             return;
