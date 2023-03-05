@@ -59,8 +59,8 @@ public class Players {
 
     public void distributeInitialCards(final Deck deck) {
         for (final Player player : players) {
-            player.drawCard(deck.popCard());
-            player.drawCard(deck.popCard());
+            player.drawCard(deck.removeCard());
+            player.drawCard(deck.removeCard());
         }
     }
 
@@ -87,7 +87,7 @@ public class Players {
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
-        targetPlayer.drawCard(deck.popCard());
+        targetPlayer.drawCard(deck.removeCard());
     }
 
     public List<Card> findCardsByPlayerName(final String playerName) {

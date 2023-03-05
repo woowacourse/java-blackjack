@@ -47,8 +47,8 @@ public class BlackJackController {
 
     private void distributeInitialCard(final Players players, final Dealer dealer, final Deck deck) {
         players.distributeInitialCards(deck);
-        dealer.drawCard(deck.popCard());
-        dealer.drawCard(deck.popCard());
+        dealer.drawCard(deck.removeCard());
+        dealer.drawCard(deck.removeCard());
     }
 
 
@@ -92,7 +92,7 @@ public class BlackJackController {
 
     private void drawDealerCards(final Dealer dealer, final Deck deck) {
         while (dealer.isDrawable()) {
-            dealer.drawCard(deck.popCard());
+            dealer.drawCard(deck.removeCard());
             outputView.printDealerCardDrawMessage();
         }
     }
