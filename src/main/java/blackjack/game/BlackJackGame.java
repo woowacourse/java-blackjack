@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class BlackJackGame {
 
     public BlackJackGame(List<Name> names, Dealer dealer) {
         Cards shuffledCards = Cards.initializeCards();
-        cards = shuffledCards.getCards();
+        cards = new LinkedList<>(shuffledCards.getCards());
         players = initializePlayers(names);
         giveFirstCards(dealer);
     }

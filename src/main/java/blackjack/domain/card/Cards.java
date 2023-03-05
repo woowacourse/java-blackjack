@@ -1,13 +1,15 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
 
     private static final int CARD_TOTAL_SIZE = 48;
 
-    private static Queue<Card> cards;
+    private static List<Card> cards;
 
     private Cards() {
     }
@@ -20,27 +22,25 @@ public class Cards {
     }
 
     private void createCards() {
-        Queue<Card> createCards = Arrays.stream(CardSymbol.values())
+        List<Card> createCards = Arrays.stream(CardSymbol.values())
                 .flatMap(cardSymbol -> Arrays.stream(CardNumber.values())
                         .map(cardNumber -> new Card(cardNumber, cardSymbol)))
-                .collect(Collectors.toCollection(ArrayDeque::new));
+                .collect(Collectors.toList());
         validate(createCards);
         cards = createCards;
     }
 
-    private void validate(Queue<Card> cards) {
+    private void validate(List<Card> cards) {
         if (cards.size() != CARD_TOTAL_SIZE) {
             throw new IllegalArgumentException("카드의 개수는 총 48개여야 합니다.");
         }
     }
 
     private void shuffleCards() {
-        List<Card> list = new ArrayList<>(cards);
-        Collections.shuffle(list);
-        cards = new LinkedList<>(list);
+        Collections.shuffle(cards);
     }
 
-    public Queue<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 }
