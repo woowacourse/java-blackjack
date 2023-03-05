@@ -1,4 +1,4 @@
-package domain.user;
+package domain.participant;
 
 import domain.Deck;
 import domain.card.Card;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Dealer implements Player {
+public final class Dealer implements Participant {
 
     private static final int INITIAL_CARD_COUNT = 2;
     public static final String DEALER_NAME = "딜러";

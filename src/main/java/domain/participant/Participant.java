@@ -1,9 +1,9 @@
-package domain.user;
+package domain.participant;
 
 import domain.card.Card;
 import domain.GamePoint;
 
-public interface Player {
+public interface Participant {
 
     void draw(Card card);
 

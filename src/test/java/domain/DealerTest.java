@@ -3,7 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.user.Dealer;
+import domain.participant.Dealer;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

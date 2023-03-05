@@ -1,8 +1,8 @@
 package domain;
 
-import domain.user.Dealer;
-import domain.user.Name;
-import domain.user.User;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +25,9 @@ public final class GameResult {
         enrollUser(users.getUsersLowerThan(gamePoint), Result.LOSE);
     }
 
-    private void enrollUser(final List<User> winningUsers, Result rs) {
-        for (User user : winningUsers) {
-            final Name name = user.getName();
+    private void enrollUser(final List<Player> winningPlayers, Result rs) {
+        for (Player player : winningPlayers) {
+            final Name name = player.getName();
             userResult.put(name, Arrays.asList(rs));
             addResultToDealer(getDealerResultOf(rs));
         }

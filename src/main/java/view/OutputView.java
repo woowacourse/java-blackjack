@@ -7,9 +7,9 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.GamePoint;
 import domain.card.CardShape;
-import domain.user.Dealer;
-import domain.user.Name;
-import domain.user.User;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -33,14 +33,14 @@ public final class OutputView {
     }
 
     private void printUsersCards(final Users users) {
-        for (User user : users.getUsers()) {
-            printCardsOf(user, user.openCards());
+        for (Player player : users.getUsers()) {
+            printCardsOf(player, player.openCards());
         }
         System.out.print(System.lineSeparator());
     }
 
-    public void printCardsOf(final User user, final List<Card> cards) {
-        System.out.printf(getPlayerCards(user, cards));
+    public void printCardsOf(final Player player, final List<Card> cards) {
+        System.out.printf(getPlayerCards(player, cards));
         System.out.print(System.lineSeparator());
     }
 
@@ -49,9 +49,9 @@ public final class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    private String getPlayerCards(final User user, final List<Card> cards) {
+    private String getPlayerCards(final Player player, final List<Card> cards) {
         return String.format(PRINT_FORMAT,
-                getNameString(user.getName()),
+                getNameString(player.getName()),
                 getCardStringOf(cards));
     }
 
@@ -133,16 +133,16 @@ public final class OutputView {
 
     }
 
-    public void printStatus(final Dealer dealer, final List<User> users) {
+    public void printStatus(final Dealer dealer, final List<Player> players) {
         printPlayerResultForDealer(dealer, dealer.getCards());
-        for (User user : users) {
-            printPlayerResult(user, user.getCards());
+        for (Player player : players) {
+            printPlayerResult(player, player.getCards());
         }
     }
 
-    private void printPlayerResult(final User user, final Cards cards) {
+    private void printPlayerResult(final Player player, final Cards cards) {
         System.out.printf("%s - 결과: %s",
-                getPlayerCards(user, cards.getCards())
+                getPlayerCards(player, cards.getCards())
                 , printGamePoint(cards.getPoint()));
         System.out.print(System.lineSeparator());
     }

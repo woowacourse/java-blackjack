@@ -1,4 +1,4 @@
-package domain.user;
+package domain.participant;
 
 import domain.Deck;
 import domain.card.Card;
@@ -8,30 +8,30 @@ import domain.GamePoint;
 import java.util.Collections;
 import java.util.List;
 
-public final class User implements Player {
+public final class Player implements Participant {
 
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final Name name;
     private Cards cards;
 
-    private User(Name name, Cards cards) {
+    private Player(Name name, Cards cards) {
         validateCardsSize(cards.size());
         this.name = name;
         this.cards = cards;
     }
 
-    private User(Name name) {
+    private Player(Name name) {
         this.name = name;
         this.cards = new Cards(Collections.emptyList());
     }
 
-    public static User create(Name name, Cards cards) {
-        return new User(name, cards);
+    public static Player create(Name name, Cards cards) {
+        return new Player(name, cards);
     }
 
-    public static User of(Name name) {
-        return new User(name);
+    public static Player of(Name name) {
+        return new Player(name);
     }
 
     private void validateCardsSize(final int size) {
@@ -73,8 +73,8 @@ public final class User implements Player {
         return cards.isLowerThan(point);
     }
 
-    public boolean hasSameName(final User user) {
-        return this.name.equals(user.getName());
+    public boolean hasSameName(final Player player) {
+        return this.name.equals(player.getName());
     }
 
     public Name getName() {

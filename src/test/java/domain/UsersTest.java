@@ -1,8 +1,8 @@
 package domain;
 
 import domain.card.*;
-import domain.user.Name;
-import domain.user.User;
+import domain.participant.Name;
+import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ public class UsersTest {
     @Test
     @DisplayName("Users가 한 명도 없으면 예외가 발생한다.")
     void invalidUsersCountTest() {
-        List<User> data = new ArrayList<>();
+        List<Player> data = new ArrayList<>();
         assertThatThrownBy(() -> new Users(data))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 최소 한 명 이상이여야 합니다.");
@@ -33,7 +33,7 @@ public class UsersTest {
                         Card.create(CardShape.HEART, CardNumber.of(10))
                 )
         );
-        final User 헙크 = User.create((new Name("헙크")), cards);
+        final Player 헙크 = Player.create((new Name("헙크")), cards);
         assertDoesNotThrow(() -> new Users(List.of(헙크)));
     }
 
@@ -44,15 +44,15 @@ public class UsersTest {
         final Card card9 = Card.create(CardShape.HEART, CardNumber.of(9));
         final Card card8 = Card.create(CardShape.HEART, CardNumber.of(8));
 
-        final User user18 = User.create((new Name("a")), new Cards(List.of(card10, card8)));
-        final User user19 = User.create((new Name("a")), new Cards(List.of(card10, card9)));
-        final User user20 = User.create((new Name("a")), new Cards(List.of(card10, card10)));
+        final Player player18 = Player.create((new Name("a")), new Cards(List.of(card10, card8)));
+        final Player player19 = Player.create((new Name("a")), new Cards(List.of(card10, card9)));
+        final Player player20 = Player.create((new Name("a")), new Cards(List.of(card10, card10)));
 
         final GamePoint gamePoint = new GamePoint(List.of(card10, card9));
 
-        final Users users = new Users(List.of(user18, user19, user20));
+        final Users users = new Users(List.of(player18, player19, player20));
 
-        assertThat(users.getUsersGreaterThan(gamePoint)).containsExactly(user20);
+        assertThat(users.getUsersGreaterThan(gamePoint)).containsExactly(player20);
     }
 
     @Test
@@ -62,15 +62,15 @@ public class UsersTest {
         final Card card9 = Card.create(CardShape.HEART, CardNumber.of(9));
         final Card card8 = Card.create(CardShape.HEART, CardNumber.of(8));
 
-        final User user18 = User.create((new Name("a")), new Cards(List.of(card10, card8)));
-        final User user19 = User.create((new Name("a")), new Cards(List.of(card10, card9)));
-        final User user20 = User.create((new Name("a")), new Cards(List.of(card10, card10)));
+        final Player player18 = Player.create((new Name("a")), new Cards(List.of(card10, card8)));
+        final Player player19 = Player.create((new Name("a")), new Cards(List.of(card10, card9)));
+        final Player player20 = Player.create((new Name("a")), new Cards(List.of(card10, card10)));
 
         final GamePoint gamePoint = new GamePoint(List.of(card10, card9));
 
-        final Users users = new Users(List.of(user18, user19, user20));
+        final Users users = new Users(List.of(player18, player19, player20));
 
-        assertThat(users.getUsersEqualTo(gamePoint)).containsExactly(user19);
+        assertThat(users.getUsersEqualTo(gamePoint)).containsExactly(player19);
     }
 
     @Test
@@ -80,14 +80,14 @@ public class UsersTest {
         final Card card9 = Card.create(CardShape.HEART, CardNumber.of(9));
         final Card card8 = Card.create(CardShape.HEART, CardNumber.of(8));
 
-        final User user18 = User.create((new Name("a")), new Cards(List.of(card10, card8)));
-        final User user19 = User.create((new Name("a")), new Cards(List.of(card10, card9)));
-        final User user20 = User.create((new Name("a")), new Cards(List.of(card10, card10)));
+        final Player player18 = Player.create((new Name("a")), new Cards(List.of(card10, card8)));
+        final Player player19 = Player.create((new Name("a")), new Cards(List.of(card10, card9)));
+        final Player player20 = Player.create((new Name("a")), new Cards(List.of(card10, card10)));
 
         final GamePoint gamePoint = new GamePoint(List.of(card10, card9));
 
-        final Users users = new Users(List.of(user18, user19, user20));
+        final Users users = new Users(List.of(player18, player19, player20));
 
-        assertThat(users.getUsersLowerThan(gamePoint)).containsExactly(user18);
+        assertThat(users.getUsersLowerThan(gamePoint)).containsExactly(player18);
     }
 }

@@ -1,9 +1,9 @@
 package domain;
 
 import domain.card.Card;
-import domain.user.Dealer;
-import domain.user.Name;
-import domain.user.User;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +17,10 @@ public final class BlackJack {
     private final Deck deck;
 
     private BlackJack(List<Name> userNames, Deck deck) {
-        final List<User> userList = userNames.stream()
-                .map(User::of)
+        final List<Player> playerList = userNames.stream()
+                .map(Player::of)
                 .collect(Collectors.toList());
-        this.users = new Users(userList);
+        this.users = new Users(playerList);
         this.dealer = new Dealer();
         this.deck = deck;
         initGame();
@@ -35,13 +35,13 @@ public final class BlackJack {
         dealer.give(deck, INITIAL_DRAW_CARD_COUNT);
     }
 
-    public void drawCard(User user) {
-        users.findUserAndGive(user, deck.drawCard());
+    public void drawCard(Player player) {
+        users.findUserAndGive(player, deck.drawCard());
     }
 
 
-    public List<Card> getCardsFrom(User user) {
-        return users.getCardsOf(user);
+    public List<Card> getCardsFrom(Player player) {
+        return users.getCardsOf(player);
     }
 
     public Dealer getDealer() {
@@ -57,7 +57,7 @@ public final class BlackJack {
         return additionalCardCount;
     }
 
-    public List<User> getUsersStatus() {
+    public List<Player> getUsersStatus() {
         return users.getUsers();
     }
 
@@ -76,11 +76,11 @@ public final class BlackJack {
         return users;
     }
 
-    public List<User> getUserList() {
+    public List<Player> getUserList() {
         return users.getUsers();
     }
 
-    public boolean isBusted(final User user) {
-        return users.isBusted(user);
+    public boolean isBusted(final Player player) {
+        return users.isBusted(player);
     }
 }

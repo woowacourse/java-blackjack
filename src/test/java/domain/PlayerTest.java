@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.Cards;
 import domain.card.CardShape;
-import domain.user.Name;
-import domain.user.User;
+import domain.participant.Name;
+import domain.participant.Player;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,12 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class UserTest {
-    private User 푸우;
+class PlayerTest {
+    private Player 푸우;
 
     @BeforeEach
     void setting() {
-        푸우 = User.create(new Name("푸우"), new Cards(List.of(
+        푸우 = Player.create(new Name("푸우"), new Cards(List.of(
                 Card.create(CardShape.HEART, CardNumber.of(1)),
                 Card.create(CardShape.HEART, CardNumber.of(1))
         )));
