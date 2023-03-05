@@ -38,7 +38,7 @@ class HandTest {
     @DisplayName("패에 카드를 추가한다.")
     void addCard() {
         hand.addCard(Card.of(Suit.CLOVER, Rank.FIVE));
-        assertThat(hand.getCards().size()).isEqualTo(3);
+        assertThat(hand.getCardNames().size()).isEqualTo(3);
     }
 
     @ParameterizedTest(name = "handValue를 계산한다.")

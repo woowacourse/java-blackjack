@@ -1,7 +1,7 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
     private static final int HIGH_ACE_VALUE = 11;
@@ -60,11 +60,9 @@ public class Hand {
         return value;
     }
 
-    public List<String> getCards() {
-        List<String> cards = new ArrayList<>();
-        for (Card card : hand) {
-            cards.add(card.getName());
-        }
-        return cards;
+    public List<String> getCardNames() {
+        return hand.stream()
+            .map(Card::getName)
+            .collect(Collectors.toList());
     }
 }
