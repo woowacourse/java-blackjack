@@ -1,7 +1,5 @@
 package balckjack.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,5 +20,12 @@ class PlayersTest {
         Assertions.assertThatThrownBy(() -> new Players(input))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름이 형식과 맞지 않습니다");
+    }
+
+    @Test
+    void validateDuplicateName() {
+        Assertions.assertThatThrownBy(() -> new Players("아마란스,무민,아마란스,프리지아"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("중복되는 이름이 존재합니다. : 아마란스");
     }
 }

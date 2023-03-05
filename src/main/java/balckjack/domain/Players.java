@@ -2,7 +2,10 @@ package balckjack.domain;
 
 import balckjack.strategy.CardPicker;
 import balckjack.util.StringUtil;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -13,8 +16,9 @@ public class Players {
 
     public Players(String names) {
         validatePlayerNames(names);
-
-        players = StringUtil.split(names, ",")
+        List<String> splitNames = StringUtil.split(names, ",");
+        validateDuplicateName(splitNames);
+        players = splitNames
             .stream()
             .map(Player::new)
             .collect(Collectors.toList());
@@ -35,6 +39,17 @@ public class Players {
 
     private boolean isFormat(String names) {
         return !NAMES_FORMAT.matcher(names).matches();
+    }
+
+    private void validateDuplicateName(List<String> names) {
+        List<String> duplicateNames = names.stream()
+            .filter(i -> Collections.frequency(names, i) > 1)
+            .distinct()
+            .collect(Collectors.toList());
+        if (duplicateNames.size() > 0) {
+            throw new IllegalArgumentException(
+                String.format("중복되는 이름이 존재합니다. : %s", String.join(", ", duplicateNames)));
+        }
     }
 
     public List<String> getPlayerNames() {
