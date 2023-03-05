@@ -1,8 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Number;
-import domain.card.Shape;
 import domain.player.PlayerReadOnly;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,7 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack("여우,아벨", cardSize -> 0);
         blackJack.giveTwoCardToPlayers();
 
-        List<PlayerReadOnly> players = blackJack.getPlayers();
+        List<PlayerReadOnly> players = blackJack.getPlayers().getAllPlayers();
 
         assertAll(
                 () -> assertThat(players.get(0).getCards()).hasSize(2),
@@ -67,7 +65,6 @@ class BlackJackTest {
 
         blackJack.giveCardToDealer();
 
-        assertThat(blackJack.getPlayers().get(0).getCards())
-                .contains(new Card(Shape.HEART, Number.SEVEN));
+        assertThat(blackJack.getPlayers().getDealer().getCards()).hasSize(3);
     }
 }
