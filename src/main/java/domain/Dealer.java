@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Dealer extends Player {
 
     private static final int PICK_BOUNDARY = 16;
@@ -13,15 +16,19 @@ public class Dealer extends Player {
         return getScore().getValue() <= PICK_BOUNDARY;
     }
 
-    public Status getDealerStats(final Player player) {
-        Score playerScore = player.getScore();
-        Score dealerScore = getScore();
-        if (player.isBustedPlayer() && this.isBustedPlayer()) {
-            return Status.DRAW;
-        }
+    public List<Status> getDealerStats(final Players players) {
+        return players.getPlayers().stream()
+                .map(this::compareWithPlayer)
+                .collect(Collectors.toList());
+    }
+
+    private Status compareWithPlayer(final Player player) {
         if (player.isBlackJack()) {
             return Status.LOSE;
         }
-        return dealerScore.compareScore(playerScore);
+        if (player.isBustedPlayer() && this.isBustedPlayer()) {
+            return Status.DRAW;
+        }
+        return this.getScore().compareScore(player.getScore());
     }
 }
