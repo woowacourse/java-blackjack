@@ -11,37 +11,34 @@ import java.util.stream.Collectors;
 public class BlackJack {
 
 	private final Users users;
-	private final Deck deck;
 
-	private BlackJack(final Users users, final Deck deck) {
+	private BlackJack(final Users users) {
 		this.users = users;
-		this.deck = deck;
 	}
 
 	public static BlackJack of(final Users users) {
-		Deck deck = new Deck();
-		initCards(users, deck);
-		return new BlackJack(users, deck);
+		initCards(users);
+		return new BlackJack(users);
 	}
 
-	private static void initCards(Users users, Deck deck) {
+	private static void initCards(Users users) {
 		for (User user : users.getUsers()) {
-			hitTwoCards(user, deck);
+			hitTwoCards(user);
 		}
 	}
 
-	private static void hitTwoCards(User user, Deck deck) {
-		user.hit(deck.pickCard());
-		user.hit(deck.pickCard());
+	private static void hitTwoCards(User user) {
+		user.hit(Deck.pickCard());
+		user.hit(Deck.pickCard());
 	}
 
 	public void giveCard(String playerName) {
-		users.hitCardByName(playerName, deck.pickCard());
+		users.hitCardByName(playerName, Deck.pickCard());
 	}
 
 	public void giveCardToDealer() {
 		Dealer dealer = users.getDealer();
-		dealer.hit(deck.pickCard());
+		dealer.hit(Deck.pickCard());
 	}
 
 	public Map<String, GameResult> calculatePlayerResults() {
