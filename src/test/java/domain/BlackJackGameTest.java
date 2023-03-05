@@ -124,15 +124,13 @@ class BlackJackGameTest {
         List<Card> rawDeck = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
 
-        Card expectedCard = rawDeck.get(0);
+        Card expected = rawDeck.get(0);
         // when
-
         blackJackGame.drawDealerCard(cardDeck, dealer);
-        List<Card> drawnCards = dealer.getDrawnCards();
-
+        List<Card> actual = dealer.getDrawnCards();
         // then
-        assertThat(drawnCards)
-                .containsExactly(givenCard, expectedCard);
+        assertThat(actual)
+                .containsExactly(givenCard, expected);
     }
 
     @DisplayName("딜러가 조건을 만족하면 카드를 더 뽑을 수 있다.")

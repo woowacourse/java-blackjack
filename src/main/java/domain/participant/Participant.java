@@ -40,4 +40,5 @@ public abstract class Participant {
     public List<Card> getDrawnCards() {
         return Collections.unmodifiableList(drawnCards.getCards());
     }
+
 }

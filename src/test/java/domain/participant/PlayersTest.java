@@ -16,21 +16,19 @@ class PlayersTest {
     @Test
     void create_success() {
         // given
-        List<Player> players = createPlayers("pobi", "neo", "ori", "jay");
-
+        List<Player> expected = createPlayers("pobi", "neo", "ori", "jay");
         // when && then
         assertThatNoException()
-                .isThrownBy(() -> new Players(players));
+                .isThrownBy(() -> new Players(expected));
     }
 
     @DisplayName("플레이어의 수가 4명 초과하면 예외를 반환한다.")
     @Test
     void create_fail_by_players_size_over() {
         // given
-        List<Player> players = createPlayers("pobi", "neo", "ori", "jay", "odo");
-
+        List<Player> expected = createPlayers("pobi", "neo", "ori", "jay", "odo");
         // when && then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(expected))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
      }
@@ -39,10 +37,9 @@ class PlayersTest {
     @Test
     void create_fail_by_players_size_under() {
         // given
-        List<Player> players = createPlayers();
-
+        List<Player> expected = createPlayers();
         // when && then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(expected))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
     }
@@ -51,10 +48,9 @@ class PlayersTest {
     @Test
     void create_fail_by_duplicated_name() {
         //given
-        List<Player> players = createPlayers("pobi", "pobi");
-
+        List<Player> expected = createPlayers("pobi", "pobi");
         //when && then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(expected))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
     }

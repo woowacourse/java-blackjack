@@ -17,64 +17,60 @@ class PlayerTest {
     @Test
     void drawn_cards_contains_when_player_pick() {
         // given
-        Card cardA = new Card(CardType.CLUB, CardValue.KING);
-        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
+        Card expectedA = new Card(CardType.CLUB, CardValue.KING);
+        Card expectedB = new Card(CardType.SPADE, CardValue.QUEEN);
 
         Name name = new Name("pobi");
         List<Card> emptyCards = new ArrayList<>();
         DrawnCards drawnCards = new DrawnCards(emptyCards);
 
         Player player = new Player(name, drawnCards);
-
         // when
-        player.drawCard(cardA);
-        player.drawCard(cardB);
+        player.drawCard(expectedA);
+        player.drawCard(expectedB);
 
+        List<Card> actual = drawnCards.getCards();
         // then
-        assertThat(drawnCards.getCards()).containsExactly(cardA, cardB);
+        assertThat(actual).containsExactly(expectedA, expectedB);
     }
 
     @DisplayName("플레이어가 뽑은 카드의 점수 총합을 반환한다.")
     @Test
     void calculate_players_drawn_cards_score() {
         // given
-        CardValue king = CardValue.KING;
-        CardValue queen = CardValue.QUEEN;
+        CardValue expectedA = CardValue.KING;
+        CardValue expectedB = CardValue.QUEEN;
 
-        Card cardA = new Card(CardType.CLUB, king);
-        Card cardB = new Card(CardType.SPADE, queen);
+        Card cardA = new Card(CardType.CLUB, expectedA);
+        Card cardB = new Card(CardType.SPADE, expectedB);
 
         Name name = new Name("pobi");
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
         Player player = new Player(name, drawnCards);
-
         // when
-        int expectedCardScore = player.calculateScore();
-
+        int actual = player.calculateScore();
         // then
-        assertThat(expectedCardScore).isEqualTo(king.getScore() + queen.getScore());
+        assertThat(actual).isEqualTo(expectedA.getScore() + expectedB.getScore());
     }
 
     @DisplayName("플레이어가 뽑은 카드들을 반환하다.")
     @Test
     void returns_player_drawn_cards() {
         // given
-        Card cardA = new Card(CardType.CLUB, CardValue.KING);
-        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
+        Card expectedA = new Card(CardType.CLUB, CardValue.KING);
+        Card expectedB = new Card(CardType.SPADE, CardValue.QUEEN);
 
         Name name = new Name("pobi");
-        List<Card> givenCards = List.of(cardA, cardB);
+        List<Card> givenCards = List.of(expectedA, expectedB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
         Player player = new Player(name, drawnCards);
-
         // when
-        List<Card> expectedDrawnCards = player.openDrawnCards();
-
+        List<Card> actual = player.openDrawnCards();
         // then
-        assertThat(expectedDrawnCards).containsExactly(cardA, cardB);
+        assertThat(actual).containsExactly(expectedA, expectedB);
     }
 
     @DisplayName("플레이어가 burst라면 반드시 패배한다.")
@@ -94,10 +90,8 @@ class PlayerTest {
         Dealer dealer = new Dealer(new DrawnCards(givenNotBurstCards));
 
         boolean expected = false;
-
         // when
         boolean actual = player.isWin(dealer);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -121,7 +115,6 @@ class PlayerTest {
         boolean expected = true;
         // when
         boolean actual = player.isWin(dealer);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -144,7 +137,6 @@ class PlayerTest {
         boolean expected = true;
         // when
         boolean actual = player.isWin(dealer);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -166,7 +158,6 @@ class PlayerTest {
         boolean expected = false;
         // when
         boolean actual = player.isWin(dealer);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }

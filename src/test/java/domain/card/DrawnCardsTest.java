@@ -14,17 +14,19 @@ class DrawnCardsTest {
     void calculate_drawn_cards_number() {
         // given
         List<Card> cards = new ArrayList<>();
+        CardValue expectedA = CardValue.TWO;
+        CardValue expectedB = CardValue.THREE;
 
-        cards.add(new Card(CardType.SPADE, CardValue.TWO));
-        cards.add(new Card(CardType.SPADE, CardValue.THREE));
+        cards.add(new Card(CardType.SPADE, expectedA));
+        cards.add(new Card(CardType.SPADE, expectedB));
 
         DrawnCards drawnCards = new DrawnCards(cards);
 
+        int expected = expectedA.getScore() + expectedB.getScore();
         // when
-        int expectedScore = drawnCards.calculateScore();
-
+        int actual = drawnCards.calculateScore();
         // then
-        assertThat(expectedScore).isEqualTo(5);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("카드의 점수 총합이 21이 넘지않는다면 에이스는 11로 계산된다")
@@ -33,16 +35,19 @@ class DrawnCardsTest {
         // given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(CardType.SPADE, CardValue.TWO));
-        cards.add(new Card(CardType.SPADE, CardValue.ACE));
+        CardValue expectedA = CardValue.TWO;
+        CardValue expectedB = CardValue.ACE;
+
+        cards.add(new Card(CardType.SPADE, expectedA));
+        cards.add(new Card(CardType.SPADE, expectedB));
 
         DrawnCards drawnCards = new DrawnCards(cards);
 
+        int expected = expectedA.getScore() + expectedB.getScore();
         // when
-        int expectedScore = drawnCards.calculateScore();
-
+        int actual = drawnCards.calculateScore();
         // then
-        assertThat(expectedScore).isEqualTo(13);
+        assertThat(actual).isEqualTo(expected);
     }
 
 
@@ -52,16 +57,20 @@ class DrawnCardsTest {
         // given
         List<Card> cards = new ArrayList<>();
 
-        cards.add(new Card(CardType.SPADE, CardValue.QUEEN));
-        cards.add(new Card(CardType.SPADE, CardValue.FIVE));
-        cards.add(new Card(CardType.SPADE, CardValue.ACE));
+        CardValue expectedA = CardValue.TWO;
+        CardValue expectedB = CardValue.TEN;
+        CardValue expectedC = CardValue.ACE;
+
+        cards.add(new Card(CardType.SPADE, expectedA));
+        cards.add(new Card(CardType.SPADE, expectedB));
+        cards.add(new Card(CardType.SPADE, expectedC));
 
         DrawnCards drawnCards = new DrawnCards(cards);
 
+        int expected = expectedA.getScore() + expectedB.getScore() + expectedC.getExtraScore();
         // when
-        int expectedScore = drawnCards.calculateScore();
-
+        int actual = drawnCards.calculateScore();
         // then
-        assertThat(expectedScore).isEqualTo(16);
+        assertThat(actual).isEqualTo(expected);
     }
 }

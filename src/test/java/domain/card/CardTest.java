@@ -16,12 +16,10 @@ class CardTest {
         // given
         CardType[] types = CardType.values();
         Card card = new Card(types[index], CardValue.ACE);
-
         // when
-        boolean result = card.isAce();
-
+        boolean actual = card.isAce();
         // then
-        assertThat(result).isTrue();
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("카드가 에이스라면 false를 반환한다.")
@@ -29,11 +27,9 @@ class CardTest {
     void return_false_when_is_not_ace() {
         // given
         Card card = new Card(CardType.CLUB, CardValue.FIVE);
-
         // when
-        boolean result = card.isAce();
-
+        boolean actual = card.isAce();
         // then
-        assertThat(result).isFalse();
+        assertThat(actual).isFalse();
     }
 }
