@@ -17,7 +17,7 @@ public class Hand {
     }
 
     public void addCard(Card card) {
-        if (card.getValue() == HIGH_ACE_VALUE) {
+        if (card.isAce()) {
             aceCount += 1;
         }
         hand.add(card);

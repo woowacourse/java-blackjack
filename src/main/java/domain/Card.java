@@ -11,6 +11,10 @@ public class Card {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return this.value == 11;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,4 +37,6 @@ public class Card {
     public int hashCode() {
         return Objects.hash(name, value);
     }
+
+
 }
