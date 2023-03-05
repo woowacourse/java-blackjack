@@ -2,6 +2,7 @@ package balckjack.domain;
 
 import balckjack.strategy.CardPicker;
 import balckjack.util.StringUtil;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ public class Players {
 
     public Players(String names) {
         validatePlayerNames(names);
-        List<String> splitNames = StringUtil.split(names, ",");
+        List<String> splitNames = Arrays.stream(names.split(",")).collect(Collectors.toList());
         validateDuplicateName(splitNames);
         players = splitNames
             .stream()
