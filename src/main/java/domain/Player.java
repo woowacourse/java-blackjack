@@ -17,12 +17,6 @@ public class Player extends User {
         validateNotProperName(name);
     }
 
-    private void validateNotProperName(final String name) {
-        if (name.equals(DEALER_NAME)) {
-            throw new IllegalArgumentException("딜러라는 이름은 사용할 수 없습니다.");
-        }
-    }
-
     private void validateBlank(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException("플레이어의 이름은 공백으로만 이루어질 수 없습니다.");
@@ -32,6 +26,12 @@ public class Player extends User {
     private void validateLength(final String name) {
         if (name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException(String.format("플레이어의 이름은 %d보다 길 수 없습니다.", NAME_MAX_LENGTH));
+        }
+    }
+
+    private void validateNotProperName(final String name) {
+        if (name.equals(DEALER_NAME)) {
+            throw new IllegalArgumentException("딜러라는 이름은 사용할 수 없습니다.");
         }
     }
 
