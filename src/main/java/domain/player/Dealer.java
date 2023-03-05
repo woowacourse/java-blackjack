@@ -1,7 +1,7 @@
 package domain.player;
 
 public class Dealer extends Player {
-    public static final int STOP_LOWER_BOUND = 17;
+    private static final int STOP_LOWER_BOUND = 17;
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
