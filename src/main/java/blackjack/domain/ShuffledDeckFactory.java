@@ -1,9 +1,10 @@
 package blackjack.domain;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShuffledDeckFactory implements DeckFactory {
 
@@ -17,17 +18,9 @@ public class ShuffledDeckFactory implements DeckFactory {
     }
 
     private List<Card> generateCards() {
-        final List<Card> cards = new ArrayList<>();
-
-        for (final Shape shape : Shape.values()) {
-            generateSameShapeCards(cards, shape);
-        }
-        return cards;
-    }
-
-    private void generateSameShapeCards(final List<Card> cards, final Shape shape) {
-        for (final Symbol symbol : Symbol.values()) {
-            cards.add(new Card(shape, symbol));
-        }
+        return Arrays.stream(Shape.values())
+                .flatMap(shape -> Arrays.stream(Symbol.values())
+                        .map(symbol -> new Card(shape, symbol)))
+                .collect(Collectors.toList());
     }
 }
