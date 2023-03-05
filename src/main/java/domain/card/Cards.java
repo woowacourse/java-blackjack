@@ -54,10 +54,14 @@ public final class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 
     public boolean isEmpty() {
         return cards.isEmpty();
+    }
+
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 }

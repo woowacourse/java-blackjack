@@ -1,10 +1,9 @@
 package domain;
 
-import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
-import domain.participant.Participants;
-import domain.participant.Player;
+import domain.participant.Participant;
+import domain.participant.Players;
 
 import java.util.List;
 
@@ -12,18 +11,39 @@ public final class BlackJack {
 
     public static final int INITIAL_DRAW_CARD_COUNT = 2;
 
-    private final Participants participants;
+    private final Dealer dealer;
+    private final Players players;
     private final Deck deck;
 
-    private BlackJack(List<Name> userNames, Deck deck) {
-        this.participants = Participants.create(userNames);
+    private BlackJack(List<Name> playerNames, Deck deck) {
+        this.dealer = Dealer.create();
+        this.players = Players.create(playerNames);
         this.deck = deck;
-        participants.initGame(deck);
+        initGame(deck, INITIAL_DRAW_CARD_COUNT);
+    }
+
+    private void initGame(final Deck deck, final int count) {
+        dealer.takeCard(deck, count);
     }
 
     public static BlackJack getInstance(List<Name> userNames, Deck deck) {
         return new BlackJack(userNames, deck);
     }
 
+    public boolean isBusted(Participant participant) {
+        return participant.isBust();
+    }
 
+
+    public void drawCard(final Participant player) {
+        player.takeCard(deck.drawCard());
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
 }

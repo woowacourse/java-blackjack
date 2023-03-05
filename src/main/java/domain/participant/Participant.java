@@ -42,8 +42,8 @@ public abstract class Participant {
         }
     }
 
-    public List<Card> getCard() {
-        return List.copyOf(cards.getCards());
+    public Cards getCards() {
+        return cards;
     }
 
     public GamePoint calculatePoint() {

@@ -1,119 +1,56 @@
-/*
 package view;
 
-import domain.Result;
 import domain.card.Card;
-import domain.card.Cards;
-import domain.GamePoint;
 import domain.card.CardShape;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Player;
+import domain.participant.*;
+import utils.TranslationUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public final class OutputView {
 
-    private static final String PRINT_FORMAT = "%s 카드: %s";
     private static final String DELIMITER = ", ";
+    private static final String PRINT_FORMAT = "%s 카드: %s%n";
     private static final String ERROR_HEAD = "[ERROR] ";
 
-    public void printInitialStatus(Dealer dealer, Users users) {
+    public void printInitialStatus(final Dealer dealer, final Players players) {
         System.out.print(System.lineSeparator());
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.",
-                getNameString(dealer.getName()),
-                makeUsersNameList(users));
-        System.out.print(System.lineSeparator());
-        printCardsOfForDealer(dealer, dealer.getFirstCard());
-        printUsersCards(users);
-    }
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n",
+                dealer.getName(),
+                getPlayerNames(players));
 
-    private void printUsersCards(final Users users) {
-        for (Player player : users.getUsers()) {
-            printCardsOf(player, player.openCards());
+        System.out.printf(PRINT_FORMAT, dealer.getName(), getCardStringOf(dealer.getFirstCard()));
+
+        for (Player player : players.getPlayers()) {
+            System.out.printf(PRINT_FORMAT,
+                    player.getName(),
+                    getCardStringOf(player.getCards().getCards()));
         }
-        System.out.print(System.lineSeparator());
     }
 
-    public void printCardsOf(final Player player, final List<Card> cards) {
-        System.out.printf(getPlayerCards(player, cards));
-        System.out.print(System.lineSeparator());
-    }
-
-    public void printCardsOfForDealer(final Dealer dealer, final List<Card> cards) {
-        System.out.printf(getPlayerCardsForDealer(dealer, cards));
-        System.out.print(System.lineSeparator());
-    }
-
-    private String getPlayerCards(final Player player, final List<Card> cards) {
-        return String.format(PRINT_FORMAT,
-                getNameString(player.getName()),
-                getCardStringOf(cards));
-    }
-
-    private String getPlayerCardsForDealer(final Dealer dealer, final List<Card> cards) {
-        return String.format(PRINT_FORMAT,
-                getNameString(dealer.getName()),
-                getCardStringOf(cards));
-    }
-
-    private String getCardStringOf(final List<Card> cards) {
-        return cards.stream()
-                .map(card -> makeCardString(card))
-                .collect(Collectors.joining(DELIMITER));
-    }
-
-    private String makeCardString(final Card card) {
-        return String.format("%s%s",
-                translate(card.getCardNumberValue()),
-                translate(card.getShape()));
-    }
-
-    private String translate(final int cardNumberValue) {
-        if (cardNumberValue == 1) {
-            return "A";
-        }
-        if (cardNumberValue == 11) {
-            return "J";
-        }
-        if (cardNumberValue == 12) {
-            return "Q";
-        }
-        if (cardNumberValue == 13) {
-            return "K";
-        }
-        return String.valueOf(cardNumberValue);
-    }
-
-    private String translate(final CardShape cardShape) {
-        if (cardShape == CardShape.HEART) {
-            return "하트";
-        }
-        if (cardShape == CardShape.DIAMOND) {
-            return "다이아몬드";
-        }
-        if (cardShape == CardShape.CLOVER) {
-            return "클로버";
-        }
-        if (cardShape == CardShape.SPADE) {
-            return "스페이드";
-        }
-        throw new AssertionError();
-    }
-
-    private String makeUsersNameList(Users users) {
-        return users.getUsers()
+    private String getPlayerNames(final Players players) {
+        return players.getPlayers()
                 .stream()
                 .map(user -> user.getName().getValue())
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private String getNameString(final Name name) {
-        return name.getValue();
+    private String getCardStringOf(final List<Card> cards) {
+        return cards.stream()
+                .map(this::makeCardString)
+                .collect(Collectors.joining(DELIMITER));
     }
+
+    private String makeCardString(final Card card) {
+        return String.format("%s%s",
+                TranslationUtil.translate(card.getCardNumberValue()),
+                TranslationUtil.translate(card.getShape()));
+    }
+
+
+   /*
+
 
     public void printException(final Exception exception) {
         System.out.println(ERROR_HEAD + exception.getMessage());
@@ -229,7 +166,6 @@ public final class OutputView {
             stringBuilder.append(String.format("%d패 ", loseCount));
         }
         return stringBuilder.toString();
-    }
+    }*/
 
 }
-*/
