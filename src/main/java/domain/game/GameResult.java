@@ -12,22 +12,24 @@ public enum GameResult {
     LOSE((playerPoint, dealerPoint) -> playerPoint < dealerPoint),
     DRAW(Integer::equals);
 
-    private final BiFunction<Integer, Integer, Boolean> function;
+    private static final int OUT_OF_GAME_POINT = 0;
 
-    GameResult(BiFunction<Integer, Integer, Boolean> function) {
-        this.function = function;
+    private final BiFunction<Integer, Integer, Boolean> criteria;
+
+    GameResult(BiFunction<Integer, Integer, Boolean> criteria) {
+        this.criteria = criteria;
     }
 
     public static GameResult getResult(Player player, Dealer dealer) {
         return Arrays.stream(GameResult.values())
-                .filter(it -> it.function.apply(getPlayerPoint(player), getPlayerPoint(dealer)))
+                .filter(it -> it.criteria.apply(getPlayerPoint(player), getPlayerPoint(dealer)))
                 .findAny()
                 .orElseThrow();
     }
 
     private static int getPlayerPoint(Player player) {
         if (player.isBurst()) {
-            return 0;
+            return OUT_OF_GAME_POINT;
         }
         return player.sumCardPool();
     }
