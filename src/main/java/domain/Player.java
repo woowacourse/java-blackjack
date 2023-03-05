@@ -31,6 +31,10 @@ public abstract class Player {
     abstract public List<Card> revealCards();
     abstract public boolean isInPlaying(boolean isHit);
 
+    public boolean isBust(){
+        return HandsState.from(cards.calculateScore()) == HandsState.BUST;
+    }
+
     public List<Card> showCards() {
         return cards.getCards();
     }

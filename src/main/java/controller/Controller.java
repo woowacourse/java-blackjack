@@ -63,7 +63,7 @@ public final class Controller {
     }
 
     private boolean isHit(final Participant participant) {
-        return retryOnError(() -> InputView.readCommand(participant.getName()).isValue());
+        return retryOnError(InputView.readCommand(participant.getName())::isValue);
     }
 
     private void playDealerTurn(final Dealer dealer) {
@@ -74,15 +74,19 @@ public final class Controller {
     }
 
     private void printResult(final Participants participants, final Dealer dealer) {
-        OutputView.printPlayerScore(dealer.getName(), dealer.showCards(), dealer.getScore());
+        OutputView.printPlayerScore(dealer.getName(),
+                dealer.showCards(),
+                dealer.getScore());
 
-        participants.getParticipants().forEach(this::printPlayerScore);
+        participants.getParticipants()
+                .forEach(this::printPlayerScore);
 
-        final Result result = Result.of(dealer.getScore(), participants.getParticipants());
-        OutputView.printGameResult(result);
+        OutputView.printGameResult(participants.getResult(dealer));
     }
 
     private void printPlayerScore(final Participant participant) {
-        OutputView.printPlayerScore(participant.getName(), participant.showCards(), participant.getScore());
+        OutputView.printPlayerScore(participant.getName(),
+                participant.showCards(),
+                participant.getScore());
     }
 }

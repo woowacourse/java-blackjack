@@ -17,8 +17,12 @@ class GameResultTest {
         final Deck deck = Deck.from(TestCardGenerator.from(numbers));
         participants.drawCard(deck);
 
+        final Dealer dealer = Dealer.create();
+        dealer.takeCard(Card.of(Shape.CLUBS, Number.SIX));
+        dealer.takeCard(Card.of(Shape.CLUBS, Number.SIX));
+
         //when
-        final Result result = Result.of(12, participants.getParticipants());
+        Result result = participants.getResult(dealer);
 
         //then
         Assertions.assertThat(result.getLosers()).isEqualTo(List.of("파워", "범블비"));
@@ -34,8 +38,13 @@ class GameResultTest {
         participants.drawCard(deck);
         participants.drawCard(deck);
 
+        final Dealer dealer = Dealer.create();
+        dealer.takeCard(Card.of(Shape.CLUBS, Number.TEN));
+        dealer.takeCard(Card.of(Shape.CLUBS, Number.TEN));
+        dealer.takeCard(Card.of(Shape.CLUBS, Number.THREE));
+
         //when
-        final Result result = Result.of(23, participants.getParticipants());
+        Result result = participants.getResult(dealer);
 
         //then
         Assertions.assertThat(result.getLosers()).isEqualTo(List.of("준팍"));
