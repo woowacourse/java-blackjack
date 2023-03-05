@@ -27,7 +27,7 @@ public class Deck {
 
     private void pushCards(final Deque<Card> cards, final Suit suit) {
         for (Rank rank : Rank.values()) {
-            cards.push(new Card(suit, rank));
+            cards.push(Card.getCard(suit, rank));
         }
     }
 

@@ -1,24 +1,25 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Suit;
 import domain.player.Hand;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class HandTest {
     @DisplayName("카드가 패에 처음 추가되면 패의 크기가 1이다.")
     @Test
     void addCardTest() {
         Hand hand = new Hand();
-        final Card card = new Card(Suit.DIAMOND, Rank.ACE);
+        final Card card = Card.getCard(Suit.DIAMOND, Rank.ACE);
 
         assertEquals(0, hand.getCards().size());
         hand.addCard(card);
@@ -41,8 +42,8 @@ public class HandTest {
 
     private static Stream<Arguments> addAceCardTestProvider() {
         return Stream.of(
-                Arguments.of(new Card(Suit.DIAMOND, Rank.ACE), new Card(Suit.DIAMOND, Rank.SIX)),
-                Arguments.of(new Card(Suit.CLOVER, Rank.ACE), new Card(Suit.HEART, Rank.SEVEN))
+                Arguments.of(Card.getCard(Suit.DIAMOND, Rank.ACE), Card.getCard(Suit.DIAMOND, Rank.SIX)),
+                Arguments.of(Card.getCard(Suit.CLOVER, Rank.ACE), Card.getCard(Suit.HEART, Rank.SEVEN))
         );
     }
 
@@ -62,21 +63,21 @@ public class HandTest {
 
     private static Stream<Arguments> calculateScoreTestProvider() {
         return Stream.of(
-                Arguments.of(new Card(Suit.DIAMOND, Rank.SEVEN),
-                        new Card(Suit.DIAMOND, Rank.KING),
-                        new Card(Suit.DIAMOND, Rank.TWO),
+                Arguments.of(Card.getCard(Suit.DIAMOND, Rank.SEVEN),
+                        Card.getCard(Suit.DIAMOND, Rank.KING),
+                        Card.getCard(Suit.DIAMOND, Rank.TWO),
                         19),
-                Arguments.of(new Card(Suit.CLOVER, Rank.ACE),
-                        new Card(Suit.HEART, Rank.JACK),
-                        new Card(Suit.DIAMOND, Rank.SEVEN),
+                Arguments.of(Card.getCard(Suit.CLOVER, Rank.ACE),
+                        Card.getCard(Suit.HEART, Rank.JACK),
+                        Card.getCard(Suit.DIAMOND, Rank.SEVEN),
                         18),
-                Arguments.of(new Card(Suit.CLOVER, Rank.ACE),
-                        new Card(Suit.HEART, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.SEVEN),
+                Arguments.of(Card.getCard(Suit.CLOVER, Rank.ACE),
+                        Card.getCard(Suit.HEART, Rank.ACE),
+                        Card.getCard(Suit.DIAMOND, Rank.SEVEN),
                         19),
-                Arguments.of(new Card(Suit.CLOVER, Rank.KING),
-                        new Card(Suit.HEART, Rank.QUEEN),
-                        new Card(Suit.DIAMOND, Rank.JACK),
+                Arguments.of(Card.getCard(Suit.CLOVER, Rank.KING),
+                        Card.getCard(Suit.HEART, Rank.QUEEN),
+                        Card.getCard(Suit.DIAMOND, Rank.JACK),
                         30)
         );
     }
