@@ -59,7 +59,7 @@ public class UsersTest {
         Users users = Users.from(List.of("hongo", "ash", "kiara"));
 
         Player player = users.getPlayers().get(0);
-        users.hitCard(player, new Card(Denomination.JACK, Suits.HEART));
+        player.hit(new Card(Denomination.JACK, Suits.HEART));
         assertThat(player.getScore()).isEqualTo(10);
     }
 }

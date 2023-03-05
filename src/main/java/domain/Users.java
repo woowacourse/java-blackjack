@@ -47,10 +47,6 @@ public class Users {
 		}
 	}
 
-	public void hitCard(final Player player, final Card card) {
-		player.hit(card);
-	}
-
 	public boolean isDealerHittable() {
 		return getDealer().isHittable();
 	}
