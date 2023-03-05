@@ -13,6 +13,14 @@ import blackjack.view.OutputView;
 public class Application {
     public static void main(String[] args) {
 
+        BlackjackGame blackjackGame = createGame();
+        InputView inputView = new InputView();
+        OutputView outputView = new OutputView();
+
+        run(blackjackGame, inputView, outputView);
+    }
+
+    private static BlackjackGame createGame() {
         CardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
 
         Players players = new Players();
@@ -20,11 +28,15 @@ public class Application {
         Deck deck = new Deck(shuffledCardsGenerator);
 
         BlackjackGame blackjackGame = new BlackjackGame(players, dealer, deck);
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
+        return blackjackGame;
+    }
 
-        Controller controller = new Controller(inputView, outputView, blackjackGame);
-
-        controller.run();
+    private static void run(BlackjackGame blackjackGame, InputView inputView, OutputView outputView) {
+        try {
+            Controller controller = new Controller(inputView, outputView, blackjackGame);
+            controller.run();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
