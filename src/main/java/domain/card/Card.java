@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.Objects;
-
 public final class Card {
 
     private final CardShape cardShape;

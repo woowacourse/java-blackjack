@@ -1,15 +1,17 @@
 package domain;
 
 import domain.card.Card;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.*;
 
 public class DeckTest {
     private Deck deck;
@@ -20,32 +22,30 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("덱이 생성된다.")
+    @DisplayName("덱에서 한 장 뽑으면 카드가 나온다.")
     void createDeck() {
-        final Deck deck = new Deck();
         assertThat(deck.drawCard()).isInstanceOf(Card.class);
     }
 
     @Test
     @DisplayName("카드를 가져오면 해당 덱에서는 카드가 한장 사라진다.")
     void drawCardTest() {
-        Card card = deck.drawCard();
-        assertThat(deck).extracting("cards", InstanceOfAssertFactories.collection(List.class))
+        deck.drawCard();
+        assertThat(deck).extracting("cards", collection(List.class))
                 .size()
-                .isEqualTo(51);
-
+                .isSameAs(51);
     }
 
     @Test
     @DisplayName("Deck은 52개의 다른 카드를 반환한다")
     void returnDifferentCardTest() {
-        final HashSet<Card> cards = new HashSet<>();
+        final Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
             cards.add(deck.drawCard());
         }
         assertThat(cards)
                 .size()
-                .isEqualTo(52);
+                .isSameAs(52);
     }
 
     @Test
