@@ -5,22 +5,22 @@ import strategy.ShuffleStrategy;
 import java.util.*;
 
 public class CardGenerator {
+    private final List<Card> cards = new ArrayList<>();
+
     public Queue<Card> generate(ShuffleStrategy shuffleStrategy) {
-        Queue<Card> cardDeck = new LinkedList<>();
-        List<Card> cards = new ArrayList<>();
-        makeCards(cards);
+        makeCards();
         shuffleStrategy.shuffle(cards);
-        cardDeck.addAll(cards);
-        return cardDeck;
+
+        return new LinkedList<>(cards);
     }
 
-    private void makeCards(List<Card> cards) {
+    private void makeCards() {
         for (CardPattern cardPattern : CardPattern.values()) {
-            addNumbersOfPattern(cards, cardPattern);
+            addNumbersOfPattern(cardPattern);
         }
     }
 
-    private void addNumbersOfPattern(List<Card> cards, CardPattern cardPattern) {
+    private void addNumbersOfPattern(CardPattern cardPattern) {
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardNumber, cardPattern));
         }
