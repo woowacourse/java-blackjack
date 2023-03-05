@@ -18,7 +18,7 @@ public final class BlackJack {
 
     public BlackJack(List<Name> userNames, Deck deck) {
         final List<User> userList = userNames.stream()
-                .map(User::new)
+                .map(User::of)
                 .collect(Collectors.toList());
         this.users = new Users(userList);
         this.dealer = new Dealer();

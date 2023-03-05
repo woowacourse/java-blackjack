@@ -33,7 +33,7 @@ public class UsersTest {
                         Card.create(CardShape.HEART, CardNumber.of(10))
                 )
         );
-        final User 헙크 = new User(new Name("헙크"), cards);
+        final User 헙크 = User.create((new Name("헙크")), cards);
         assertDoesNotThrow(() -> new Users(List.of(헙크)));
     }
 
@@ -44,9 +44,9 @@ public class UsersTest {
         final Card card9 = Card.create(CardShape.HEART, CardNumber.of(9));
         final Card card8 = Card.create(CardShape.HEART, CardNumber.of(8));
 
-        final User user18 = new User(new Name("a"), new Cards(List.of(card10, card8)));
-        final User user19 = new User(new Name("a"), new Cards(List.of(card10, card9)));
-        final User user20 = new User(new Name("a"), new Cards(List.of(card10, card10)));
+        final User user18 = User.create((new Name("a")), new Cards(List.of(card10, card8)));
+        final User user19 = User.create((new Name("a")), new Cards(List.of(card10, card9)));
+        final User user20 = User.create((new Name("a")), new Cards(List.of(card10, card10)));
 
         final GamePoint gamePoint = new GamePoint(List.of(card10, card9));
 
@@ -62,9 +62,9 @@ public class UsersTest {
         final Card card9 = Card.create(CardShape.HEART, CardNumber.of(9));
         final Card card8 = Card.create(CardShape.HEART, CardNumber.of(8));
 
-        final User user18 = new User(new Name("a"), new Cards(List.of(card10, card8)));
-        final User user19 = new User(new Name("a"), new Cards(List.of(card10, card9)));
-        final User user20 = new User(new Name("a"), new Cards(List.of(card10, card10)));
+        final User user18 = User.create((new Name("a")), new Cards(List.of(card10, card8)));
+        final User user19 = User.create((new Name("a")), new Cards(List.of(card10, card9)));
+        final User user20 = User.create((new Name("a")), new Cards(List.of(card10, card10)));
 
         final GamePoint gamePoint = new GamePoint(List.of(card10, card9));
 
@@ -80,9 +80,9 @@ public class UsersTest {
         final Card card9 = Card.create(CardShape.HEART, CardNumber.of(9));
         final Card card8 = Card.create(CardShape.HEART, CardNumber.of(8));
 
-        final User user18 = new User(new Name("a"), new Cards(List.of(card10, card8)));
-        final User user19 = new User(new Name("a"), new Cards(List.of(card10, card9)));
-        final User user20 = new User(new Name("a"), new Cards(List.of(card10, card10)));
+        final User user18 = User.create((new Name("a")), new Cards(List.of(card10, card8)));
+        final User user19 = User.create((new Name("a")), new Cards(List.of(card10, card9)));
+        final User user20 = User.create((new Name("a")), new Cards(List.of(card10, card10)));
 
         final GamePoint gamePoint = new GamePoint(List.of(card10, card9));
 

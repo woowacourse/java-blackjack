@@ -9,19 +9,29 @@ import java.util.Collections;
 import java.util.List;
 
 public final class User implements Player {
+
     private static final int INITIAL_CARD_COUNT = 2;
+
     private final Name name;
     private Cards cards;
 
-    public User(Name name, Cards cards) {
+    private User(Name name, Cards cards) {
         validateCardsSize(cards.size());
         this.name = name;
         this.cards = cards;
     }
 
-    public User(final Name name) {
+    private User(final Name name) {
         this.name = name;
         this.cards = new Cards(Collections.emptyList());
+    }
+
+    public static User create(Name name, Cards cards) {
+        return new User(name, cards);
+    }
+
+    public static User of(Name name) {
+        return new User(name);
     }
 
     private void validateCardsSize(final int size) {
@@ -32,9 +42,9 @@ public final class User implements Player {
 
     @Override
     public void draw(final Card card) {
-        /*if (!canReceive()) {
+        if (!canReceive()) {
             throw new IllegalStateException("버스트 후에는 카드를 받을 수 없습니다.");
-        }*/
+        }
         this.cards = cards.add(card);
     }
 

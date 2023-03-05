@@ -22,7 +22,7 @@ class UserTest {
 
     @BeforeEach
     void setting() {
-        푸우 = new User(new Name("푸우"), new Cards(List.of(
+        푸우 = User.create(new Name("푸우"), new Cards(List.of(
                 Card.create(CardShape.HEART, CardNumber.of(1)),
                 Card.create(CardShape.HEART, CardNumber.of(1))
         )));
