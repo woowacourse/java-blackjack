@@ -109,7 +109,7 @@ public class BlackJackController {
     private void showResults(final Participants participants, GameResultManager gameResultManager) {
         showParticipantsScore(gameResultManager);
         outputView.printResultInfo();
-        showParticipantsWinningStatus(participants);
+        showParticipantsWinningStatus(participants, gameResultManager);
     }
 
     private void showParticipantsScore(final GameResultManager gameResultManager) {
@@ -119,9 +119,9 @@ public class BlackJackController {
         }
     }
 
-    private void showParticipantsWinningStatus(final Participants participants) {
+    private void showParticipantsWinningStatus(final Participants participants, final GameResultManager gameResultManager) {
         Map<String, Result> playerResults = participants.getPlayerStatus();
-        Map<Result, Integer> dealerResults = participants.getDealerStatus(playerResults);
+        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
         outputView.printDealerResult(dealerResults);
         for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
             outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());

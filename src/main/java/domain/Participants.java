@@ -58,15 +58,6 @@ public class Participants {
         return participantsHandValue;
     }
 
-    public Map<Result, Integer> getDealerStatus(Map<String, Result> results) {
-        EnumMap<Result, Integer> DealerWinningStatus = new EnumMap<>(Result.class);
-
-        for (Result playerResult : results.values()) {
-            judgeResult(DealerWinningStatus, playerResult);
-        }
-        return DealerWinningStatus;
-    }
-
     public Map<String, Result> getPlayerStatus() {
         Participant dealer = findDealer();
         Map<String, Result> playerResults = new LinkedHashMap<>();
@@ -97,18 +88,6 @@ public class Participants {
     private void addParticipantIfPlayer(ArrayList<Participant> players, Participant participant) {
         if (participant.getClass().equals(Player.class)) {
             players.add(participant);
-        }
-    }
-
-    private void judgeResult(EnumMap<Result, Integer> result, Result playerResult) {
-        if (playerResult.equals(Result.WIN)) {
-            result.put(Result.LOSE, result.getOrDefault(Result.LOSE, 0) + 1);
-        }
-        if (playerResult.equals(Result.TIE)) {
-            result.put(Result.TIE, result.getOrDefault(Result.TIE, 0) + 1);
-        }
-        if (playerResult.equals(Result.LOSE)) {
-            result.put(Result.WIN, result.getOrDefault(Result.WIN, 0) + 1);
         }
     }
 

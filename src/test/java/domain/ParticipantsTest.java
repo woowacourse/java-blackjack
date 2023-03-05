@@ -68,12 +68,13 @@ class ParticipantsTest {
         for (Participant player : participant.findPlayers()) {
             player.receiveCard(new Card("Q클로버", 10));
         }
-
+        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
         //when
         participant.findDealer().receiveCard(new Card("A스페이드", 11));
 
         Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
+        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
@@ -95,9 +96,12 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
 
+        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
+
         //when
         Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
+        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.TIE);
@@ -118,9 +122,12 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
 
+        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
+
         //when
         Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
+        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
@@ -141,9 +148,12 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
 
+        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
+
         //when
         Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
+        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
@@ -164,9 +174,12 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("6스페이드", 6));
         dealer.receiveCard(new Card("K스페이드", 10));
 
+        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
+
         //when
         Map<String, Result> playerResults = participant.getPlayerStatus();
-        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
+        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
