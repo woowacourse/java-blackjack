@@ -25,10 +25,12 @@ public class CardFixtures {
     public static final Card ACE_HEART = new Card(Rank.ACE, Shape.HEART);
     public static final Card TWO_HEART = new Card(Rank.TWO, Shape.HEART);
     public static final Card SIX_HEART = new Card(Rank.SIX, Shape.HEART);
+    public static final Card NINE_HEART = new Card(Rank.NINE, Shape.HEART);
     public static final Card JACK_HEART = new Card(Rank.JACK, Shape.HEART);
     public static final Card KING_HEART = new Card(Rank.KING, Shape.HEART);
 
     public static final Card ACE_CLOVER = new Card(Rank.ACE, Shape.CLOVER);
+    public static final Card NINE_CLOVER = new Card(Rank.NINE, Shape.CLOVER);
     public static final Card JACK_CLOVER = new Card(Rank.JACK, Shape.CLOVER);
 
     public static final Card ACE_DIAMOND = new Card(Rank.ACE, Shape.DIAMOND);

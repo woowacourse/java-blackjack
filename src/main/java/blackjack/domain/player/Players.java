@@ -33,6 +33,12 @@ public class Players {
         return new Players(generate(names));
     }
 
+    public static Players from(final List<String> names, final Deck deck) {
+        validateDuplicate(names);
+        validateNameCount(names);
+        return new Players(generate(names, deck));
+    }
+
     private static void validateDuplicate(final List<String> names) {
         if (isNameDuplicate(names)) {
             throw new IllegalArgumentException(DUPLICATE_NAMES_MESSAGE + names);
@@ -58,6 +64,15 @@ public class Players {
         players.add(Dealer.create());
         for (String name : names) {
             players.add(Gambler.create(name));
+        }
+        return players;
+    }
+
+    private static List<Player> generate(final List<String> names, final Deck deck) {
+        final List<Player> players = new ArrayList<>();
+        players.add(Dealer.create(deck));
+        for (String name : names) {
+            players.add(Gambler.create(name, deck));
         }
         return players;
     }

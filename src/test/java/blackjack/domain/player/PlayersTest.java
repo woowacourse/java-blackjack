@@ -1,23 +1,22 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.EIGHT;
-import static blackjack.domain.card.Rank.JACK;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.NINE;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Rank.TWO;
-import static blackjack.domain.card.Shape.CLOVER;
-import static blackjack.domain.card.Shape.DIAMOND;
-import static blackjack.domain.card.Shape.HEART;
-import static blackjack.domain.card.Shape.SPADE;
 import static blackjack.domain.player.Players.from;
 import static blackjack.domain.player.Result.DRAW;
 import static blackjack.domain.player.Result.WIN;
+import static blackjack.util.CardFixtures.ACE_DIAMOND;
+import static blackjack.util.CardFixtures.ACE_SPADE;
+import static blackjack.util.CardFixtures.EIGHT_SPADE;
+import static blackjack.util.CardFixtures.JACK_CLOVER;
+import static blackjack.util.CardFixtures.JACK_SPADE;
+import static blackjack.util.CardFixtures.KING_HEART;
+import static blackjack.util.CardFixtures.NINE_CLOVER;
+import static blackjack.util.CardFixtures.NINE_HEART;
+import static blackjack.util.CardFixtures.NINE_SPADE;
+import static blackjack.util.CardFixtures.SEVEN_SPADE;
+import static blackjack.util.CardFixtures.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.util.FixedDeck;
 import java.util.List;
@@ -38,7 +37,7 @@ public class PlayersTest {
     void 입력받은_플레이어의_이름이_중복되는_경우_예외를_던진다() {
         final List<String> names = List.of("name", "name");
 
-        assertThatThrownBy(() -> from(names))
+        assertThatThrownBy(() -> from(names, FixedDeck.getFullDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.DUPLICATE_NAMES_MESSAGE + names);
     }
@@ -50,7 +49,7 @@ public class PlayersTest {
                 .mapToObj(String::valueOf)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> from(names))
+        assertThatThrownBy(() -> from(names, FixedDeck.getFullDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.INVALID_NAME_COUNT + count);
     }
@@ -59,7 +58,7 @@ public class PlayersTest {
     void 플레이어들이_정상_생성된다() {
         final List<String> names = List.of("후추", "허브");
 
-        final Players players = from(names);
+        final Players players = from(names, FixedDeck.getFullDeck());
 
         assertThat(players.getNames()).containsExactly("딜러", "후추", "허브");
     }
@@ -67,16 +66,8 @@ public class PlayersTest {
     @Test
     void 플레이어들이_게임_시작_시_카드를_뽑는다() {
         final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER),
-                new Card(TWO, CLOVER),
-                new Card(EIGHT, SPADE),
-                new Card(KING, HEART)
-        ));
-
-        players.initialDraw(deck);
+        final Deck deck = new FixedDeck(ACE_SPADE, JACK_SPADE, TWO_SPADE, EIGHT_SPADE, KING_HEART);
+        final Players players = from(names, deck);
 
         assertThat(players.getPlayers())
                 .extracting(Player::calculateScore)
@@ -86,7 +77,7 @@ public class PlayersTest {
     @Test
     void 플레이어들을_반환한다() {
         final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = from(names, FixedDeck.getFullDeck());
 
         List<Player> result = players.getPlayers();
 
@@ -97,7 +88,7 @@ public class PlayersTest {
     @Test
     void 딜러를_반환한다() {
         final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = from(names, FixedDeck.getFullDeck());
 
         final Player player = players.getDealer();
 
@@ -107,14 +98,8 @@ public class PlayersTest {
     @Test
     void 딜러가_카드를_가능할_때_까지_뽑는다() {
         final List<String> names = List.of("후추");
-        final Players players = from(names);
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER),
-                new Card(TWO, CLOVER),
-                new Card(EIGHT, SPADE)
-        ));
-        players.initialDraw(deck);
+        final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER, TWO_SPADE, EIGHT_SPADE);
+        final Players players = from(names, deck);
 
         players.drawByDealer(deck);
 
@@ -124,16 +109,8 @@ public class PlayersTest {
     @Test
     void 게임_결과를_반환한다() {
         final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
-        final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER),
-                new Card(NINE, CLOVER),
-                new Card(NINE, SPADE),
-                new Card(NINE, HEART),
-                new Card(SEVEN, SPADE)
-        ));
-        players.initialDraw(deck);
+        final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER, SEVEN_SPADE);
+        final Players players = from(names, deck);
         players.drawByDealer(deck);
 
         Map<Player, Result> result = players.play();
