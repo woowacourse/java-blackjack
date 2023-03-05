@@ -39,27 +39,13 @@ public final class Users {
 
     public void giveEachUser(final Deck deck, final int count) {
         for (User user : users) {
-            letUserDrawFromDeck(deck, user, count);
-        }
-    }
-
-    private void letUserDrawFromDeck(final Deck deck, final User user, final int count) {
-        for (int i = 0; i < count; i++) {
-            user.draw(deck.drawCard());
+            user.give(deck, count);
         }
     }
 
     public List<Card> getCardsOf(final Name user) {
         final User targetUser = finUserByName(user);
         return targetUser.openCards();
-    }
-
-    private int getUserIndexOf(final User user) {
-        int targetUserIndex = users.indexOf(user);
-        if (targetUserIndex == -1) {
-            throw new IllegalArgumentException("없는 유저 입니다.");
-        }
-        return targetUserIndex;
     }
 
     public void findUserAndGive(final Name userName, final Card card) {

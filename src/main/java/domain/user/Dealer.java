@@ -6,6 +6,7 @@ import domain.card.Cards;
 import domain.GamePoint;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class Dealer implements Player {
@@ -17,6 +18,7 @@ public final class Dealer implements Player {
     private Cards cards;
 
     public Dealer() {
+        this.cards = new Cards(Collections.emptyList());
     }
 
     public Dealer(List<Card> cards) {

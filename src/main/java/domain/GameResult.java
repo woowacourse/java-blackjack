@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-final class GameResult {
+public final class GameResult {
     private final Map<Name, List<Result>> userResult;
     private final List<Result> dealerResult = new ArrayList<>();
 

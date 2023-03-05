@@ -1,9 +1,11 @@
 package domain.user;
 
+import domain.Deck;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.GamePoint;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class User implements Player {
@@ -19,6 +21,7 @@ public final class User implements Player {
 
     public User(final Name name) {
         this.name = name;
+        this.cards = new Cards(Collections.emptyList());
     }
 
     private void validateCardsSize(final int size) {
@@ -29,15 +32,15 @@ public final class User implements Player {
 
     @Override
     public void draw(final Card card) {
-        if (!canReceive()) {
+        /*if (!canReceive()) {
             throw new IllegalStateException("버스트 후에는 카드를 받을 수 없습니다.");
-        }
+        }*/
         this.cards = cards.add(card);
     }
 
     @Override
     public boolean canReceive() {
-        return !cards.isBust();
+        return cards != null && !cards.isBust();
     }
 
     @Override
@@ -75,5 +78,11 @@ public final class User implements Player {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public void give(final Deck deck, final int count) {
+        for (int i = 0; i < count; i++) {
+            draw(deck.drawCard());
+        }
     }
 }
