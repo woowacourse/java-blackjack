@@ -18,7 +18,7 @@ class DeckTest {
     void 카드를_뽑는다() {
         final Stack<Card> cards = new Stack<>();
         final Card card = new Card(ACE, SPADE);
-        cards.add(card);
+        cards.push(card);
 
         final Deck deck = new Deck(cards);
 

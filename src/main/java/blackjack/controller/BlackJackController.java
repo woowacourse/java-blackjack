@@ -31,7 +31,6 @@ public class BlackJackController {
         final Participants participants = Participants.of(new Dealer(), gatherPlayers());
         final Deck deck = DeckFactory.createWithCount(Deck.TRUMP, 1);
 
-        deck.shuffle();
         dealCards(participants, deck);
 
         drawCard(participants.getPlayers(), deck);
