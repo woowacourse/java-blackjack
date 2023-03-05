@@ -1,10 +1,10 @@
 package controller;
 
 import domain.*;
-import service.GameService;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +23,57 @@ public class BlackJackController {
     public void run() {
         Deck deck = Deck.from(new RandomShuffleStrategy());
         Participants participants = makeParticipants();
-        GameService gameService = new GameService(deck, participants);
 
-        initGameStatus(gameService);
-        play(participants, gameService);
-        showResults(gameService);
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            participants.deal(deck);
+        }
+
+//        final List<String> playerNames = participants.findPlayers().stream()
+//                .map(Participant::getName)
+//                .collect(Collectors.toList());
+        outputView.printInitializingFinishMessage(participants.getPlayersName());
+
+        Map<String, List<String>> participantsHands = new LinkedHashMap<>();
+        participantsHands.put(participants.findDealer().getName(), participants.findDealer().getCardNames());
+        for (Participant participant : participants.findPlayers()) {
+            participantsHands.put(participant.getName(), participant.getCardNames());
+        }
+
+        participantsHands.put(participants.findDealer().getName(), participants.findDealer().getCardNames());
+        participantsHands.replace("딜러", participantsHands.get("딜러").subList(0, 1));
+        for (Participant participant : participants.findPlayers()) {
+            participantsHands.put(participant.getName(), participant.getCardNames());
+        }
+
+        for (Map.Entry<String, List<String>> participantHand : participantsHands.entrySet()) {
+            outputView.printParticipantCard(participantHand.getKey(), participantHand.getValue());
+        }
+        outputView.printEmptyLine();
+
+        //play
+        for (Participant player : participants.findPlayers()) {
+            keepHitOrStay(player, deck);
+        }
+
+        while (participants.findDealer().getHandValue() < 17) {
+            participants.findDealer().receiveCard(deck.draw());
+            outputView.printDealerPickCardMessage();
+        }
+
+        //showResults
+        for (Map.Entry<Participant, Boolean> participantScore : participants.getIsBust().entrySet()) {
+            outputView.printParticipantHandValue(participantScore.getKey().getName(),
+                    participantScore.getKey().getCards(), participantScore.getValue());
+        }
+
+        outputView.printResultInfo();
+
+        Map<String, Result> playerResults = participants.getPlayerResults();
+        Map<Result, Integer> dealerResults = participants.getDealerResults(playerResults);
+        outputView.printDealerResult(dealerResults);
+        for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
+            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
+        }
     }
 
     private Participants makeParticipants() {
@@ -38,89 +84,23 @@ public class BlackJackController {
             return makeParticipants();
         }
     }
-
-    private void initGameStatus(GameService gameService) {
-        init(gameService);
-        printInitHands(gameService);
-    }
-
-    private void init(GameService gameService) {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            gameService.dealCardsToParticipants();
-        }
-
-        outputView.printInitializingFinishMessage(gameService.getParticipantsNames());
-    }
-
-    private void printInitHands(GameService gameService) {
-        for (Map.Entry<String, List<String>> participantHand : gameService.getParticipantsInitHands().entrySet()) {
-            outputView.printParticipantCard(participantHand.getKey(), participantHand.getValue());
-        }
-        outputView.printEmptyLine();
-    }
-
-    private void play(Participants participants, GameService gameService) {
-        hitOrStayForEachPlayer(participants, gameService);
-        hitOrStayForDealer(gameService);
-    }
-
-    private void hitOrStayForEachPlayer(Participants participants, GameService gameService) {
-        for (Participant player : participants.findPlayers()) {
-            keepHitOrStay(gameService, player);
-        }
-    }
-
-    private void keepHitOrStay(GameService gameService, Participant player) {
+    private void keepHitOrStay(Participant player, Deck deck) {
         try {
-            hitOrStay(gameService, player);
+            hitOrStay(player, deck);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
-            keepHitOrStay(gameService, player);
+            keepHitOrStay(player, deck);
         }
     }
 
-    private void hitOrStay(GameService gameService, Participant player) {
-        while (gameService.isHit(inputView.requestDrawingCard(player.getName()))) {
-            gameService.hit(player);
-            printIfPoolDoesNotContainsHand(player, gameService);
-        }
-        printIfPoolDoesNotContainsHand(player, gameService);
-    }
-
-    private void printIfPoolDoesNotContainsHand(Participant player, GameService gameService) {
-        if (!gameService.existHandInPool(player.getCardNames())) {
-            gameService.addHandToPool(player.getCardNames());
+    private void hitOrStay(Participant player, Deck deck) {
+        while (isHit(inputView.requestDrawingCard(player.getName()))) {
+            player.receiveCard(deck.draw());
             outputView.printParticipantCard(player.getName(), player.getCardNames());
         }
     }
 
-    private void hitOrStayForDealer(GameService gameService) {
-        while (gameService.isDealerHandValueUnderStandard()) {
-            gameService.dealerHit();
-            outputView.printDealerPickCardMessage();
-        }
-    }
-
-    private void showResults(GameService gameService) {
-        printScores(gameService);
-        printResults(gameService);
-    }
-
-    private void printScores(GameService gameService) {
-        for (Map.Entry<Participant, Boolean> participantScore : gameService.getParticipantIsBust().entrySet()) {
-            outputView.printParticipantHandValue(participantScore.getKey().getName(),
-                participantScore.getKey().getCards(), participantScore.getValue());
-        }
-    }
-
-    private void printResults(GameService gameService) {
-        outputView.printResultInfo();
-
-        Map<String, Result> playerResults = gameService.calculatePlayerResults();
-        Map<Result, Integer> dealerResults = gameService.calculateDealerResults(playerResults);
-        outputView.printDealerResult(dealerResults);
-        for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
-        }
+    private boolean isHit(String drawingInput) {
+        return drawingInput.equals("y");
     }
 }

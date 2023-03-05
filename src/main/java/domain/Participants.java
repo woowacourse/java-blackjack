@@ -3,6 +3,7 @@ package domain;
 import view.ErrorMessage;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Participants {
     private static final int BUST_HAND_VALUE = 0;
@@ -117,5 +118,11 @@ public class Participants {
         int playerHandCount = player.getCardNames().size();
         int dealerHandCount = dealer.getCardNames().size();
         return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
+    }
+
+    public List<String> getPlayersName() {
+        return findPlayers().stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
     }
 }

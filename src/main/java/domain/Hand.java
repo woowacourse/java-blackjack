@@ -37,7 +37,7 @@ public class Hand {
         return value;
     }
 
-    private static int countAce(int aceCount, final Card card) {
+    private int countAce(int aceCount, final Card card) {
         if (card.isAce()) {
             aceCount += 1;
         }
