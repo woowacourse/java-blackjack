@@ -1,16 +1,16 @@
 package blackjack.view;
 
-import static blackjack.domain.result.Result.DRAW;
-import static blackjack.domain.result.Result.LOSE;
-import static blackjack.domain.result.Result.WIN;
+import static blackjack.domain.participant.Result.DRAW;
+import static blackjack.domain.participant.Result.LOSE;
+import static blackjack.domain.participant.Result.WIN;
 import static java.text.MessageFormat.format;
 
-import blackjack.domain.result.Result;
+import blackjack.domain.participant.Result;
 import blackjack.view.dto.CardsResponse;
+import blackjack.view.dto.DealerResultResponse;
 import blackjack.view.dto.DealerStateResponse;
 import blackjack.view.dto.ParticipantResponse;
 import blackjack.view.dto.PlayerResultResponse;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -77,28 +77,14 @@ public class OutputView {
         return format("결과: {0}", totalScore);
     }
 
-    public void printFinalResult(final String dealerName, final List<PlayerResultResponse> players) {
+    public void printFinalResult(final DealerResultResponse dealer, final List<PlayerResultResponse> players) {
         System.out.println(LINE_SEPARATOR + "## 최종 승패");
-        System.out.println(format(RESULT_FORMAT, dealerName, getDealerResult(players)));
+        System.out.println(format(RESULT_FORMAT, dealer.getName(), getDealerResult(dealer.getResult())));
         players.forEach(this::printPlayerResult);
     }
 
-    private String getDealerResult(final List<PlayerResultResponse> players) {
-        final Map<Result, Integer> playerResult = initPlayerResult();
-        for (PlayerResultResponse player : players) {
-            final Result result = player.getResult();
-            playerResult.put(result, playerResult.getOrDefault(result, 0) + 1);
-        }
-
-        return format("{0}승 {1}무 {2}패", playerResult.get(LOSE), playerResult.get(DRAW), playerResult.get(WIN));
-    }
-
-    private Map<Result, Integer> initPlayerResult() {
-        final Map<Result, Integer> playerResult = new HashMap<>();
-        for (final Result result : Result.values()) {
-            playerResult.put(result, 0);
-        }
-        return playerResult;
+    private String getDealerResult(final Map<Result, Integer> result) {
+        return format("{0}승 {1}무 {2}패", result.get(WIN), result.get(DRAW), result.get(LOSE));
     }
 
     private void printPlayerResult(final PlayerResultResponse player) {

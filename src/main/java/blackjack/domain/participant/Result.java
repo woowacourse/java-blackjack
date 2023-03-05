@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.participant;
 
 public enum Result {
 
@@ -10,6 +10,16 @@ public enum Result {
 
     Result(final String name) {
         this.name = name;
+    }
+
+    public Result reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
     }
 
     public String getName() {

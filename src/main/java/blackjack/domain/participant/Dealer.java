@@ -4,8 +4,8 @@ import blackjack.domain.card.Cards;
 
 public class Dealer extends Participant {
 
-    public static final int MAXIMUM_DRAWABLE_SCORE = 16;
     private static final String NAME = "딜러";
+    private static final int MAXIMUM_DRAWABLE_SCORE = 16;
     private static final int MAXIMUM_DRAWABLE_CARD_COUNT = 2;
 
     private final String name = NAME;
@@ -39,5 +39,23 @@ public class Dealer extends Participant {
     @Override
     public String getName() {
         return name;
+    }
+
+    public Result showResult(final int score) {
+        final int dealerScore = getScore();
+        if (score > BLACK_JACK_SCORE) {
+            return Result.LOSE;
+        }
+        if (dealerScore > BLACK_JACK_SCORE || score > dealerScore) {
+            return Result.WIN;
+        }
+        if (score < dealerScore) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
+    }
+
+    public int getMaximumDrawableScore() {
+        return MAXIMUM_DRAWABLE_SCORE;
     }
 }

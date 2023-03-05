@@ -1,13 +1,14 @@
 package blackjack.view.dto;
 
 import blackjack.domain.participant.Result;
+import java.util.Map;
 
-public class PlayerResultResponse {
+public class DealerResultResponse {
 
     private final String name;
-    private final Result result;
+    private final Map<Result, Integer> result;
 
-    public PlayerResultResponse(final String name, final Result result) {
+    public DealerResultResponse(final String name, final Map<Result, Integer> result) {
         this.name = name;
         this.result = result;
     }
@@ -16,7 +17,7 @@ public class PlayerResultResponse {
         return name;
     }
 
-    public Result getResult() {
+    public Map<Result, Integer> getResult() {
         return result;
     }
 }

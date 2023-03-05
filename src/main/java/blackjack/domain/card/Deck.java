@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-    public static final Stack<Card> TRUMP;
+    private static final Stack<Card> TRUMP;
 
     static {
         final Stack<Card> pack = new Stack<>();

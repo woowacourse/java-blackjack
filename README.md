@@ -19,6 +19,19 @@
     - 딜러는 최대 3장의 카드만 받을 수 있다.
 - 게임이 완료되면, 각 플레이어의 승패를 출력한다.
 
+## 블랙잭 규칙
+
+- `승`, `무`, `패`는 플레이어에 결과를 나타낸다.
+- 플레이어 점수가 21점 초과일 때
+    - 딜러 점수 상관없이 `패`
+- 플레이어 점수가 21점 이하일 때
+    - 딜러 점수가 21점 초과일 떄
+        - 플레이어 `승`
+    - 딜러 점수가 21점 이하일 때
+        - 플레이어 점수가 높으면 `승`
+        - 플레이어 점수가 낮으면 `패`
+        - 플레어어 점수와 같으면 `무`
+
 ## 도메인 다이어그램
 
 ```mermaid
@@ -27,12 +40,13 @@ graph TD
     BlackJackController --> OutputView
     BlackJackController --> Participants
     BlackJackController --> Deck
+    InputView --> Parser
     Participants --> Participant
     Participant --> Player
     Participant --> Dealer
     Participant --> Cards
-    Player --> Name
-    DeckFactory --> Deck
+    Player --> PlayerName
+    Dealer --> Result
     Cards --> Card
     Card --> Suit
     Card --> Number
@@ -71,7 +85,6 @@ graph TD
 ### 덱
 
 - [x] 카드 목록을 가진다.
-- [x] 카드를 섞는다.
 - [x] 카드를 뽑는다.
     - [x] 카드가 없으면 뽑을 수 없다.
 
@@ -84,6 +97,6 @@ graph TD
 ### 출력
 
 - [x] 딜러와 플레이어의 카드 현황을 출력한다.
-- [x] 딜러 카드 추현가 여부를 출력한다.
+- [x] 딜러 카드 추가 여부를 출력한다.
 - [x] 최종 결과를 출력한다.
 - [x] 최종 승패를 출력한다.

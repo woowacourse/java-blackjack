@@ -2,11 +2,11 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.Score;
 import java.util.List;
 
 public abstract class Participant {
+
+    protected static final int BLACK_JACK_SCORE = 21;
 
     protected final Cards cards;
 
@@ -25,12 +25,8 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public Score getScore() {
-        return new Score(cards.calculateTotalScore());
-    }
-
-    public Result getWinningStatus(final Score score) {
-        return getScore().compare(score);
+    public int getScore() {
+        return cards.calculateTotalScore();
     }
 
     public List<Card> getCards() {
