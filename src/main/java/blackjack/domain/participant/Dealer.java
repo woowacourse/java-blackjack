@@ -43,14 +43,11 @@ public class Dealer extends Participant {
 
     public Result showResult(final int score) {
         final int dealerScore = getScore();
-        if (score > BLACK_JACK_SCORE) {
+        if (score > BLACK_JACK_SCORE || score < dealerScore) {
             return Result.LOSE;
         }
-        if (dealerScore > BLACK_JACK_SCORE || score > dealerScore) {
+        if (dealerScore > BLACK_JACK_SCORE || dealerScore < score) {
             return Result.WIN;
-        }
-        if (score < dealerScore) {
-            return Result.LOSE;
         }
         return Result.DRAW;
     }
