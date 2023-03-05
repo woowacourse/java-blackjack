@@ -32,20 +32,4 @@ public final class Card {
         return cardShape;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Card card = (Card) o;
-        return cardShape == card.cardShape && Objects.equals(cardNumber, card.cardNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
-    }
 }
