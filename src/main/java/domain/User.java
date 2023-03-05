@@ -4,8 +4,8 @@ import java.util.List;
 
 public abstract class User {
 
-	Cards cards;
-	String name;
+	protected Cards cards;
+	protected String name;
 
 	public User() {
 		cards = new Cards();
