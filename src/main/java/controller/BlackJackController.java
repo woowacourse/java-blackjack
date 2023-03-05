@@ -1,8 +1,13 @@
 package controller;
 
-import domain.*;
+import domain.Player;
+import domain.Deck;
+import domain.Participants;
+import domain.Result;
+import domain.RandomShuffleStrategy;
+import domain.Participant;
+
 import service.GameService;
-import service.SettingService;
 import view.InputView;
 import view.OutputView;
 
@@ -15,16 +20,14 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final SettingService settingService;
 
     public BlackJackController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.settingService = new SettingService();
     }
 
     public void run() {
-        Deck deck = settingService.createDeck();
+        Deck deck = Deck.from(new RandomShuffleStrategy());
         Participants participants = makeParticipants();
         GameService gameService = new GameService(deck, participants);
 
@@ -35,7 +38,7 @@ public class BlackJackController {
 
     private Participants makeParticipants() {
         try {
-            return settingService.createParticipants(inputView.requestNames());
+            return Participants.from(inputView.requestNames());
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
             return makeParticipants();
