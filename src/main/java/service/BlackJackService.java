@@ -59,11 +59,7 @@ public class BlackJackService {
     }
 
     public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
-        if (player.calculateCardScore() > BURST_NUMBER || drawCommand.isStop()) {
-            return false;
-        }
-
-        return true;
+        return player.calculateCardScore() > BURST_NUMBER || drawCommand.isStop();
     }
 
     public void pickDealerCard(final CardDeck cardDeck, final Dealer dealer) {
@@ -73,11 +69,7 @@ public class BlackJackService {
     }
 
     public boolean canDealerDrawMore(final Dealer dealer) {
-        if (dealer.calculateCardScore() > DEALER_DRAW_LIMIT_SCORE) {
-            return false;
-        }
-
-        return true;
+        return dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE;
     }
 
     public List<ParticipantResult> getParticipantResults(final Dealer dealer,
