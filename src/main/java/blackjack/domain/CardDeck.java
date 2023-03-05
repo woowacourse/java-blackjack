@@ -27,11 +27,4 @@ public class CardDeck {
     public Card pick() {
         return cards.remove(0);
     }
-
-    public List<Card> pickTwice() {
-        List<Card> pick = new ArrayList<>();
-        pick.add(pick());
-        pick.add(pick());
-        return pick;
-    }
 }

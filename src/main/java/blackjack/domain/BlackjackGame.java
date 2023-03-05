@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,20 @@ public class BlackjackGame {
     }
 
     public void dealOutCard() {
-        for (Participant participant : participants.toList()) {
-            List<Card> cards = cardDeck.pickTwice();
-            participant.addCards(cards);
+        for (Player player : participants.getPlayers()) {
+            List<Card> cards = pickTwice();
+            player.addCards(cards);
         }
+        List<Card> cards = pickTwice();
+        Dealer dealer = participants.getDealer();
+        dealer.addCards(cards);
+    }
+
+    private List<Card> pickTwice() {
+        List<Card> pick = new ArrayList<>();
+        pick.add(cardDeck.pick());
+        pick.add(cardDeck.pick());
+        return pick;
     }
 
     public Map<Participant, GameResult> getResult() {

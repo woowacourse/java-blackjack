@@ -1,14 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.CardSuit;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class CardDeckTest {
 
@@ -25,18 +20,8 @@ class CardDeckTest {
     void pickCardTest() {
         CardDeck cardDeck = new CardDeck();
 
-        Card card = cardDeck.pick();
+        cardDeck.pick();
 
-        assertThat(CardSuit.values()).contains(card.getSuit());
-    }
-
-    @Test
-    @DisplayName("카드 두 장을 나눠준다")
-    void pickTwiceCardTest() {
-        CardDeck cardDeck = new CardDeck();
-
-        List<Card> cards = cardDeck.pickTwice();
-
-        assertThat(cards).hasSize(2);
+        assertThat(cardDeck.getCards()).hasSize(51);
     }
 }
