@@ -1,5 +1,7 @@
 package controller;
 
+import static controller.AddCardOrNot.YES;
+
 import java.util.List;
 
 import blackjackGame.BlackjackGame;
@@ -57,20 +59,20 @@ public class Controller {
     private void playersHit() {
         for (int i = 0; i < blackjackGame.countPlayer(); i++) {
             Name userName = blackjackGame.findUserNameByIndex(i);
-            String hitCommand = inputView.readHitCommand(userName);
-            AddCardOrNot command = AddCardOrNot.of(hitCommand);
-            playerHit(i, userName, command);
+            playerHit(i, userName);
         }
     }
-    private void playerHit(int i, Name userName, AddCardOrNot addCardOrNot) {
-        while (addCardOrNot.equals(AddCardOrNot.YES) && !blackjackGame.isBust(i)) {
+    private void playerHit(int i, Name userName) {
+        String command = inputView.readCommandToAddCardOrNot(userName);
+
+        while (AddCardOrNot.of(command).equals(YES) && !blackjackGame.isBust(i)) {
             blackjackGame.supplyAdditionalCard(i);
             PlayerOpenDto playerCard = blackjackGame.getPlayerCardsByIndex(i);
             outputView.printPlayerCard(playerCard);
             if (blackjackGame.isBust(i)) {
                 break;
             }
-            addCardOrNot = AddCardOrNot.of(inputView.readHitCommand(userName));
+            command = inputView.readCommandToAddCardOrNot(userName);
         }
     }
     private void showFirstDraw() {
