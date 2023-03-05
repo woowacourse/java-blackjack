@@ -8,13 +8,14 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
+    private static final int INIT_INDEX = 0;
     private final List<Card> deck;
 
     private int index;
 
     public Deck() {
         this.deck = createDeck();
-        index = 0;
+        index = INIT_INDEX;
         Collections.shuffle(deck);
     }
 

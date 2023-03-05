@@ -4,6 +4,8 @@ import domain.player.DealerStatus;
 
 public class Score {
 
+    private static final int BUSTED_SCORE = -1;
+    private static final int MAX_SCORE = 21;
     private final int value;
 
     private Score(final int value) {
@@ -11,8 +13,8 @@ public class Score {
     }
 
     public static Score from(final int value) {
-        if (value > 21) {
-            return new Score(-1);
+        if (value > MAX_SCORE) {
+            return new Score(BUSTED_SCORE);
         }
         return new Score(value);
     }
@@ -29,6 +31,6 @@ public class Score {
     }
 
     public boolean isBusted() {
-        return value < 0;
+        return value == BUSTED_SCORE;
     }
 }

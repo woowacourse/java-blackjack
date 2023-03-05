@@ -16,8 +16,12 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String NAME_FORMAT = "카드: ";
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
+    private static final String DEALER_WIN = "승";
+    private static final String DEALER_LOSE = "패";
+    private static final String DEALER_DRAW = "무";
+    private static final String PLAYER_WIN = "승";
+    private static final String PLAYER_LOSE = "패";
+    private static final String PLAYER_DRAW = "무";
     private static final String RESULT_GUIDE_MESSAGE = "## 최종 승패";
     private static final String SCORE_GUIDE_MESSAGE = " - 결과: ";
     private static final String POSTFIX_INITIAL_PICK_GUIDE_MESSAGE = "에게 2장을 나누었습니다.";
@@ -127,13 +131,13 @@ public class OutputView {
         Long drawCount = dealerResult.get(DealerStatus.DRAW);
         Long loseCount = dealerResult.get(DealerStatus.LOSE);
         if (winCount != null) {
-            dealerStatView.append(winCount).append("승");
+            dealerStatView.append(winCount).append(DEALER_WIN);
         }
         if (drawCount != null) {
-            dealerStatView.append(drawCount).append("무");
+            dealerStatView.append(drawCount).append(DEALER_DRAW);
         }
         if (loseCount != null) {
-            dealerStatView.append(loseCount).append("패");
+            dealerStatView.append(loseCount).append(DEALER_LOSE);
         }
     }
 
@@ -148,15 +152,15 @@ public class OutputView {
 
     private static void parsePlayerStatus(final List<DealerStatus> dealerStats, final int index) {
         if (dealerStats.get(index).equals(DealerStatus.WIN)) {
-            System.out.println("패");
+            System.out.println(PLAYER_LOSE);
             return;
         }
         if (dealerStats.get(index).equals(DealerStatus.DRAW)) {
-            System.out.println("무");
+            System.out.println(PLAYER_DRAW);
             return;
         }
         if (dealerStats.get(index).equals(DealerStatus.LOSE)) {
-            System.out.println("승");
+            System.out.println(PLAYER_WIN);
         }
     }
 

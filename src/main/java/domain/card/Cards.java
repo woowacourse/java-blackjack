@@ -7,8 +7,9 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BOUNDARY = 21;
+    private static final int MAX_SCORE = 21;
     private static final int BIGGER_A_SCORE = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -32,7 +33,7 @@ public class Cards {
     }
 
     private boolean canUseBiggerAce(int sum) {
-        return sum + BIGGER_A_SCORE <= BOUNDARY && isContainAce();
+        return sum + BIGGER_A_SCORE <= MAX_SCORE && isContainAce();
     }
 
     private boolean isContainAce() {
@@ -42,7 +43,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && calculateScore().getValue() == 21;
+        return cards.size() == BLACKJACK_SIZE && calculateScore().getValue() == MAX_SCORE;
     }
 
     public List<Card> getCards() {
