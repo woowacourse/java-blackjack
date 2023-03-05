@@ -1,14 +1,11 @@
 package controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import domain.BlackJackGame;
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.ResultCalculator;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 import view.ResultView;
@@ -30,15 +27,18 @@ public class BlackJackController {
         printFinalFightResult();
     }
 
-    private List<String> initPlayerNames() {
+    private Players generatePlayers() {
         try {
-            OutputView.printInputPlayerNameMessage();
-            List<String> playerNames = InputView.inputPlayerNames();
-            return playerNames;
+            return new Players(initPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            return initPlayerNames();
+            return generatePlayers();
         }
+    }
+
+    private List<String> initPlayerNames() {
+        OutputView.printInputPlayerNameMessage();
+        return InputView.inputPlayerNames();
     }
 
     private void initSetting() {
@@ -49,20 +49,6 @@ public class BlackJackController {
         }
     }
 
-    private Players generatePlayers() {
-        try {
-            List<String> playerNames = initPlayerNames();
-            Players players = new Players(playerNames.stream()
-                    .map(Name::new)
-                    .map(Player::new)
-                    .collect(Collectors.toUnmodifiableList()));
-            ResultView.printInitMessage(playerNames);
-            return players;
-        } catch (IllegalArgumentException e) {
-            OutputView.printMessage(e.getMessage());
-            return generatePlayers();
-        }
-    }
 
     private void askEachPlayers() {
         System.out.println();

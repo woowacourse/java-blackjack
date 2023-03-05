@@ -20,7 +20,7 @@ public class ResultCalculatorTest {
     void shouldSuccessSaveFightWinOrLoseResult() {
         Player player = new Player(new Name("dino"));
         Dealer dealer = new Dealer();
-        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of(player)), dealer);
+        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of("dino")), dealer);
         player.takeCard(new Card("5다이아몬드", 5));
         player.takeCard(new Card("10다이아몬드", 10));
         dealer.takeCard(new Card("3하트", 3));
@@ -41,7 +41,7 @@ public class ResultCalculatorTest {
     void shouldSuccessSaveFightDrawResult() {
         Player player = new Player(new Name("dino"));
         Dealer dealer = new Dealer();
-        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of(player)), dealer);
+        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of("dino")), dealer);
         player.takeCard(new Card("5다이아몬드", 5));
         player.takeCard(new Card("10다이아몬드", 10));
         dealer.takeCard(new Card("10하트", 10));
