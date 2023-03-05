@@ -26,7 +26,7 @@ public class Name {
         return name.replaceAll("\\s", "").length() != name.length();
     }
 
-    public String getRawName() {
+    public String getValue() {
         return name;
     }
 }

@@ -1,10 +1,7 @@
 package domain.participant;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import view.ResultView;
 
 public class Players {
 
@@ -15,15 +12,15 @@ public class Players {
                 .map(Name::new)
                 .map(Player::new)
                 .collect(Collectors.toUnmodifiableList());
-
-//        this.players = new ArrayList<>();
-//        for (String playerName : playerNames) {
-//            this.players.add(new Player(new Name(playerName)));
-//        }
-        ResultView.printInitMessage(playerNames);
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players;
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

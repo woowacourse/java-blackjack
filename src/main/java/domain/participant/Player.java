@@ -1,9 +1,8 @@
 package domain.participant;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
-
-import domain.card.Card;
 
 public class Player extends Participant {
 
@@ -19,5 +18,9 @@ public class Player extends Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 }

@@ -70,7 +70,7 @@ public class Participant {
 
 
     public String getName() {
-        return name.getRawName();
+        return name.getValue();
     }
 
     public List<String> getCardNames() {

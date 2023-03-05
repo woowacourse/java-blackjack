@@ -43,6 +43,12 @@ public class BlackJackController {
 
     private void initSetting() {
         BlackJackGame.initSettingCards(players, dealer);
+        ResultView.printInitMessage(players.getPlayerNames());
+
+        printInitMemberCards();
+    }
+
+    private void printInitMemberCards() {
         ResultView.printParticipantResult(dealer.getName(), dealer.getCardNames());
         for (Player player : players.getPlayers()) {
             ResultView.printParticipantResult(player.getName(), player.getCardNames());
