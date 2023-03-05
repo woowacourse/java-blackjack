@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.LOSE;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
