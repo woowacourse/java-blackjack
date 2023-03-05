@@ -56,8 +56,9 @@ public class Players {
 
     public void distributeInitialCards(final Deck deck) {
         for (final Player player : players) {
-            player.drawCard(deck.removeCard());
-            player.drawCard(deck.removeCard());
+            final Card firstCard = deck.removeCard();
+            final Card secondCard = deck.removeCard();
+            player.drawInitialCard(firstCard, secondCard);
         }
     }
 
@@ -106,5 +107,9 @@ public class Players {
                 .findFirst()
                 .map(Participant::currentScore)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다"));
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
