@@ -16,14 +16,15 @@ public class OutputView {
     }
 
     public static void printParticipantsInitCards(final Dealer dealer, final List<Player> players) {
-        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().getValue(), getPlayerNames(players)));
+        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().getValue(), getPlayerNames(players))
+                + System.lineSeparator());
         String dealerInitCards = getParticipantCards(dealer, dealer.open(1));
         String playersInitCards = players.stream()
                 .map(player -> getParticipantCards(player, player.open(2)))
                 .collect(Collectors.joining(System.lineSeparator()));
 
         System.out.println(dealerInitCards);
-        System.out.println(playersInitCards);
+        System.out.println(playersInitCards + System.lineSeparator());
     }
 
     public static void printParticipantCardWithResult(final Participant participant, final int totalPoint) {
@@ -35,11 +36,11 @@ public class OutputView {
     public static void printParticipantsCards(final Participant participant) {
         String playerCards = getParticipantCards(participant, participant.openAll());
 
-        System.out.println(playerCards);
+        System.out.println(playerCards + System.lineSeparator());
     }
 
     public static void printDealerHit(final int hitCount) {
-        System.out.println(String.format("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", hitCount));
+        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n" + System.lineSeparator(), hitCount);
     }
 
     private static String createBlackJackResult(BlackJackResults blackJackResults) {
@@ -61,13 +62,11 @@ public class OutputView {
     }
 
     private static String getParticipantCards(final Participant participant, final List<Card> participantCards) {
-        StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append(participant.getName().getValue())
-                .append(" 카드: ")
-                .append(participantCards.stream()
-                        .map(Card::toString)
-                        .collect(Collectors.joining(", ")));
-        return messageBuilder.toString();
+        return participant.getName().getValue()
+                + " 카드: "
+                + participantCards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
     }
 
     private static String getParticipantResult(final Name name, final Map<ResultType, Integer> results) {
