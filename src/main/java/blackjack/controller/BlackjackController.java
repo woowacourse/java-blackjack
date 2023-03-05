@@ -11,7 +11,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
-import blackjack.view.Order;
+import blackjack.domain.game.Order;
 import blackjack.view.OutputView;
 
 import java.util.List;
