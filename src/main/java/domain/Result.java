@@ -11,14 +11,17 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result compareHandValue(int playerHandValue, int dealerHandValue) {
+    public static Result isHigherPlayerHandValue(int playerHandValue, int dealerHandValue) {
         if (playerHandValue > dealerHandValue) {
             return WIN;
         }
         return LOSE;
     }
 
-    public static Result compareHandCount(int playerHandCount, int dealerHandCount) {
+    public static Result isGreaterPlayerHandCount(int playerHandCount, int dealerHandCount) {
+        if (playerHandCount == dealerHandCount) {
+            return TIE;
+        }
         if (playerHandCount > dealerHandCount) {
             return LOSE;
         }
