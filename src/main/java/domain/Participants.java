@@ -1,12 +1,8 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import view.ErrorMessage;
+
+import java.util.*;
 
 public class Participants {
     private static final int BUST_BOUNDARY_VALUE = 21;
@@ -122,11 +118,10 @@ public class Participants {
     }
 
     private int getParticipantHandValue(Participant participant) {
-        int participantHandValue = participant.getHandValue();
-        if (participantHandValue > BUST_BOUNDARY_VALUE) {
-            participantHandValue = BUST_HAND_VALUE;
+        if (participant.isBust()) {
+            return 0;
         }
-        return participantHandValue;
+        return participant.getHandValue();
     }
 
     private void compareHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
