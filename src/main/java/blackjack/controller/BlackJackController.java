@@ -82,15 +82,19 @@ public class BlackJackController {
 
     private void checkChoice(Player player) {
         try {
-            inputChoice(player);
+            boolean choice = inputChoice(player);
+            pickCard(player, choice);
         } catch (CustomException e) {
             OutputView.printErrorMessage(e);
             checkChoice(player);
         }
     }
 
-    private void inputChoice(Player player) {
-        boolean choice = InputView.inputPlayerChoice(player.getName());
+    private boolean inputChoice(Player player) {
+        return InputView.inputPlayerChoice(player.getName());
+    }
+
+    private void pickCard(Player player, boolean choice)  {
         if (choice) {
             blackJackGame.pick(player);
             OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
