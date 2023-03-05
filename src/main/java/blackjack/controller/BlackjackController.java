@@ -98,7 +98,7 @@ public class BlackjackController {
         outputView.printAllCardsAndScores(participants);
     }
 
-    private void showAllResult(Participants participants, ResultGame resultGame) {
+    private void showAllResult(final Participants participants, final ResultGame resultGame) {
         outputView.printResult(participants, resultGame);
     }
 }

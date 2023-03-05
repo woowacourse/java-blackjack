@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participants {
+
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 이름이 존재합니다.";
     private static final String COMMA = ",";

@@ -3,6 +3,7 @@ package blackjack.domain.cardPicker;
 import java.util.Random;
 
 public class RandomCardPicker implements CardPicker {
+
     public static final Random RANDOM = new Random();
 
     @Override

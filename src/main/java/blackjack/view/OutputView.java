@@ -10,6 +10,7 @@ import blackjack.domain.participant.Player;
 import java.util.List;
 
 public class OutputView {
+
     private static final String NEW_LINE = "\n";
     private static final String COMMA = ", ";
     private static final String COLON = " : ";
@@ -77,7 +78,7 @@ public class OutputView {
 
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerResult(dealer, resultGame);
-        for(Player player: players) {
+        for (Player player : players) {
             printPlayerResult(player, resultGame);
         }
     }
@@ -106,7 +107,7 @@ public class OutputView {
         final List<Player> players = participants.getPlayers();
 
         printParticipantCardsAndScores(dealer);
-        for(Player player: players) {
+        for (Player player : players) {
             printParticipantCardsAndScores(player);
         }
     }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ResultGame {
+
     private final HashMap<Player, WinTieLose> playersResult;
     private final Dealer dealer;
     private final List<Player> players;
@@ -20,7 +21,9 @@ public class ResultGame {
     }
 
     public void calculateResult() {
-        players.forEach(this::compareScore);
+        for (Player player : players) {
+            compareScore(player);
+        }
     }
 
     private void compareScore(final Player player) {

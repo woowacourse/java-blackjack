@@ -26,14 +26,14 @@ public class BlackjackGame {
 
     public void giveTwoCardEveryone() {
         final Dealer dealer = participants.getDealer();
-        giveTwoCard(dealer);
-
         final List<Player> players = participants.getPlayers();
+
+        giveTwoCard(dealer);
         players.forEach(this::giveTwoCard);
     }
 
     private void giveTwoCard(final Participant participant) {
-        for(int i = 0; i < INITIAL_CARD_SIZE; i++) {
+        for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
             participant.drawCard(deck.drawCard());
         }
     }

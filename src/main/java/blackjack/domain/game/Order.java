@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import java.util.Arrays;
 
 public enum Order {
+
     YES("y"),
     NO("n");
 

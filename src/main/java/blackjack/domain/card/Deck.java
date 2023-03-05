@@ -5,6 +5,7 @@ import blackjack.domain.cardPicker.CardPicker;
 import java.util.List;
 
 public class Deck {
+
     private final List<Card> cards;
     private final CardPicker cardPicker;
 

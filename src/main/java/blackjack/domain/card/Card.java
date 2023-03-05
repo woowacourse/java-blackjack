@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 public class Card {
+
     final private Shape shape;
     final private Letter letter;
 

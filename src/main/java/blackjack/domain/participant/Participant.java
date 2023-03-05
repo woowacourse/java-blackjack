@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participant {
+
     private final Name name;
     private final Cards cards;
 

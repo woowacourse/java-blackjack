@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 public enum Letter {
+
     ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ZERO = 0;
     private static final int ACE_NUMBER_DIFFERENCE = 10;
@@ -37,12 +38,14 @@ public class Cards {
     }
 
     private int countAce() {
-        return (int) cards.stream().filter(Card::isAce).count();
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     private int makeTotalScore() {
-        return cards.stream().
-                map(Card::getValue).
-                reduce(ZERO, Integer::sum);
+        return cards.stream()
+                .map(Card::getValue)
+                .reduce(ZERO, Integer::sum);
     }
 }

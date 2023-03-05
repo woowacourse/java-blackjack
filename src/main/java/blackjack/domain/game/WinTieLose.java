@@ -2,9 +2,9 @@ package blackjack.domain.game;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public enum WinTieLose {
+
     WIN("승"),
     TIE("무"),
     LOSE("패");
