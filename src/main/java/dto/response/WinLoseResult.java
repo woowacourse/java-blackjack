@@ -11,7 +11,6 @@ public class WinLoseResult {
         this.isWin = isWin;
     }
 
-
     public String getName() {
         return name;
     }

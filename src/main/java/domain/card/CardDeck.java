@@ -1,26 +1,27 @@
 package domain.card;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class CardDeck {
 
     private static final int SIZE_OF_CARD_DECK = 52;
 
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
-    private CardDeck(final List<Card> cards) {
+    private CardDeck(final Deque<Card> cards) {
         validate(cards);
-        this.cards = new ArrayList<>(cards);
+        this.cards = cards;
     }
 
     public static CardDeck createShuffled(List<Card> cards) {
         Collections.shuffle(cards);
-        return new CardDeck(cards);
+        return new CardDeck(new ArrayDeque<>(cards));
     }
 
-    private void validate(final List<Card> cards) {
+    private void validate(final Deque<Card> cards) {
         if (cards.size() != SIZE_OF_CARD_DECK) {
             throw new IllegalArgumentException("전체 카드의 수는 52장이어야 합니다.");
         }
@@ -30,14 +31,13 @@ public class CardDeck {
         }
     }
 
-    private boolean isDuplicate(final List<Card> cards) {
+    private boolean isDuplicate(final Deque<Card> cards) {
         return cards.stream()
                 .distinct()
                 .count() != SIZE_OF_CARD_DECK;
     }
 
-    //TODO 다른 자료 구조 사용해보기
     public Card draw() {
-        return cards.remove(0);
+        return cards.pop();
     }
 }
