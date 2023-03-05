@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckFactory;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -29,7 +28,7 @@ public class BlackJackController {
 
     public void run() {
         final Participants participants = new Participants(new Dealer(), gatherPlayers());
-        final Deck deck = DeckFactory.createWithCount(Deck.TRUMP, 1);
+        final Deck deck = Deck.createUsingTrump(1);
 
         dealCards(participants, deck);
 

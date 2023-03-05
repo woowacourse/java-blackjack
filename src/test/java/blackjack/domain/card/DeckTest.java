@@ -8,30 +8,35 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.Stack;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DeckTest {
 
-    @Test
-    void 카드를_뽑는다() {
-        final Stack<Card> cards = new Stack<>();
-        final Card card = new Card(ACE, SPADE);
-        cards.push(card);
+    @Nested
+    class draw_메서드는 {
 
-        final Deck deck = new Deck(cards);
+        @Test
+        void 카드가_남아있으면_카드를_뽑는다() {
+            final Stack<Card> cards = new Stack<>();
+            final Card card = new Card(ACE, SPADE);
+            cards.push(card);
 
-        assertThat(deck.draw()).isEqualTo(card);
-    }
+            final Deck deck = new Deck(cards);
 
-    @Test
-    void 카드가_존재하지_않으면_예외를_던진다() {
-        final Stack<Card> cards = new Stack<>();
+            assertThat(deck.draw()).isEqualTo(card);
+        }
 
-        final Deck deck = new Deck(cards);
+        @Test
+        void 카드가_남아있지_않으면_예외를_던진다() {
+            final Stack<Card> cards = new Stack<>();
 
-        assertThatThrownBy(deck::draw)
-                .isInstanceOf(IllegalStateException.class);
+            final Deck deck = new Deck(cards);
+
+            assertThatThrownBy(deck::draw)
+                    .isInstanceOf(IllegalStateException.class);
+        }
     }
 }
