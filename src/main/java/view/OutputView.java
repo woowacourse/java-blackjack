@@ -31,6 +31,7 @@ public final class OutputView {
         for (Player player : players.getPlayers()) {
             System.out.println(getParticipantStatus(player));
         }
+        System.out.print(System.lineSeparator());
     }
 
     private String getInitialDealerStatus(final Dealer dealer) {
@@ -83,6 +84,7 @@ public final class OutputView {
         if (cardCount > 0) {
             System.out.printf("\n딜러는 16 이하라 %d장의 카드를 더 받았습니다.\n", cardCount);
         }
+        System.out.print(System.lineSeparator());
     }
 
     public void printStatus(final Dealer dealer, final Players players) {
