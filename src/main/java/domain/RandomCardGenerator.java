@@ -5,11 +5,7 @@ import java.util.List;
 
 public final class RandomCardGenerator implements CardGenerator {
 
-    static List<Card> cards;
-
-    static {
-        cards = CardGenerator.generate();
-    }
+    private final static List<Card> cards = CardGenerator.generate();
 
     @Override
     public List<Card> shuffle() {
