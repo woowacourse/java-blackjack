@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,9 +15,9 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public String inputPlayers() {
+    public List<String> inputPlayers() {
         System.out.println(INPUT_PLAYERS_MESSAGE);
-        return scanner.nextLine();
+        return List.of(scanner.nextLine().split(" "));
     }
 
     public String inputOrderCard(final String name) {

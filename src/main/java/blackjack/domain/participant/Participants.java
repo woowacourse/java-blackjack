@@ -7,51 +7,32 @@ import java.util.stream.Collectors;
 
 public class Participants {
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
-    private static final String DUPLICATE_ERROR_MESSAGE = "중복된 이름이 존재합니다.";
-    private static final String COMMA = ",";
 
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(final Dealer dealer, final String playerNames) {
-        validate(playerNames);
+    public Participants(final Dealer dealer, List<String> players) {
+        validateEmptyNames(players);
 
         this.dealer = dealer;
-        this.players = makePlayers(playerNames);
+        this.players = makePlayer(players);
     }
 
-    private void validate(final String playerNames) {
-        final List<String> names = Arrays.stream(playerNames.split(COMMA))
-                .map(String::strip)
-                .collect(Collectors.toList());
-
-        validateEmptyNames(names);
-        validateDuplicateName(names);
+    private void validateEmptyNames(final List<String> players) {
+        players.forEach(player->{
+            checkNameIsEmpty(player);
+        });
     }
 
-    private void validateEmptyNames(final List<String> names) {
-        if (names.isEmpty()) {
+    private static void checkNameIsEmpty(String player) {
+        if(player.length()==0){
             throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
         }
     }
 
-    private void validateDuplicateName(final List<String> names) {
-        if (isDuplicateName(names)) {
-            throw new IllegalArgumentException(DUPLICATE_ERROR_MESSAGE);
-        }
+    private List<Player> makePlayer(List<String> players){
+        return players.stream().map(name->new Player(new Name(name))).collect(Collectors.toList());
     }
-
-    private boolean isDuplicateName(final List<String> names) {
-        final HashSet<String> uniqueNames = new HashSet<>(names);
-        return uniqueNames.size() != names.size();
-    }
-
-    private List<Player> makePlayers(final String playerNames) {
-        return Arrays.stream(playerNames.split(","))
-                .map(name -> new Player(new Name(name.strip())))
-                .collect(Collectors.toList());
-    }
-
     public Dealer getDealer() {
         return this.dealer;
     }

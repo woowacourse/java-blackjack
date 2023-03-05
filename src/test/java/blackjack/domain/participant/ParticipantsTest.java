@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
@@ -15,35 +17,16 @@ public class ParticipantsTest {
     void throwExceptionWhenEmptyNames() {
         String names = ",,";
 
-        Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), names))
+        Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), List.of("")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자들이 존재하지 않습니다.");
-    }
-
-    @Test
-    @DisplayName("중복된 이름이 없을 경우 참여자들이 정상적으로 생성되는지 테스트")
-    void nonDuplicateNameTest() {
-        String names = "pobi, crong, eddy ";
-
-        assertThatNoException().isThrownBy(() -> new Participants(new Dealer(), names));
-    }
-
-    @Test
-    @DisplayName("중복된 이름이 존재하는 경우 예외를 던지는지 테스트")
-    void throwExceptionWhenExistDuplicateName() {
-        String names = "pobi, crong, crong ";
-
-        Assertions.assertThatThrownBy(() -> new Participants(new Dealer(), names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중복된 이름이 존재합니다.");
     }
 
     @Test
     @DisplayName("딜러를 반환하는 테스트")
     void getDealerTest() {
         Dealer dealer = new Dealer();
-        String playerNames = "pobi, crong";
-        Participants participants = new Participants(dealer, playerNames);
+        Participants participants = new Participants(dealer, List.of("pobi","crong"));
 
         assertThat(participants.getDealer()).isEqualTo(dealer);
     }
@@ -52,8 +35,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어들을 반환하는 테스트")
     void getPlayersTest() {
         Dealer dealer = new Dealer();
-        String playerNames = "pobi, crong";
-        Participants participants = new Participants(dealer, playerNames);
+        Participants participants = new Participants(dealer, List.of("pobi","crong"));
         Player expected = new Player(new Name("pobi"));
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(expected.getClass());
         assertThat(participants.getPlayers().size()).isEqualTo(2);
@@ -63,8 +45,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어들의 이름을 반환하는 테스트")
     void getPlayerNames() {
         Dealer dealer = new Dealer();
-        String playerNames = "pobi, crong";
-        Participants participants = new Participants(dealer, playerNames);
+        Participants participants = new Participants(dealer, List.of("pobi","crong"));
 
         Assertions.assertThat(participants.getPlayerNames()).contains("pobi", "crong");
     }
