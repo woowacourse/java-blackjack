@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CardDeck {
 
-    public static final int SIZE_OF_CARD_DECK = 52;
+    private static final int SIZE_OF_CARD_DECK = 52;
 
     private final List<Card> cards;
 
