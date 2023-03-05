@@ -25,7 +25,7 @@ public class PlayerCards {
     private int calculateTotalScore() {
         int totalScore = 0;
         for (Card card : playerCards) {
-            totalScore += card.getNumber().getValue();
+            totalScore += card.getCardNumber().getValue();
         }
         return updateAceScore(totalScore);
     }
