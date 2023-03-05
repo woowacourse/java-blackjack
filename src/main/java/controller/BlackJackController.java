@@ -118,8 +118,8 @@ public class BlackJackController {
     }
 
     private void showParticipantsWinningStatus(final Participants participants) {
-        Map<String, Result> playerResults = participants.getPlayerResults();
-        Map<Result, Integer> dealerResults = participants.getDealerResults(playerResults);
+        Map<String, Result> playerResults = participants.getPlayerStatus();
+        Map<Result, Integer> dealerResults = participants.getDealerStatus(playerResults);
         outputView.printDealerResult(dealerResults);
         for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
             outputView.printPlayerResult(playerResult.getKey(), playerResult.getValue());
