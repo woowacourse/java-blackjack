@@ -2,19 +2,19 @@ package blackjack.domain.player;
 
 import java.util.Arrays;
 
-public enum Answer {
+public enum Command {
     YES("y"),
     STAY("n");
 
-    private final String answer;
+    private final String command;
 
-    Answer(String answer) {
-        this.answer = answer;
+    Command(String command) {
+        this.command = command;
     }
 
-    public static Answer of(String inputAnswer) {
-        return Arrays.stream(Answer.values())
-                .filter(answer -> answer.answer.equals(inputAnswer))
+    public static Command of(String inputAnswer) {
+        return Arrays.stream(Command.values())
+                .filter(command -> command.command.equals(inputAnswer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y 또는 n 으로 입력해주세요."));
     }
