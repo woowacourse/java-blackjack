@@ -30,9 +30,10 @@ public class Hand {
         return value;
     }
 
-    private int exchangeAceLowValueWhenBust(int value, final int aceCount) {
+    private int exchangeAceLowValueWhenBust(int value, int aceCount) {
         while (value > BUST_BOUNDARY_VALUE && aceCount > 0) {
             value -= HIGH_ACE_VALUE - LOW_ACE_VALUE;
+            aceCount -= 1;
         }
         return value;
     }
