@@ -23,14 +23,14 @@ class ParticipantTest {
         participant = new Participant(
             new ArrayList<>(
                 List.of(
-                    Card.of(Suit.HEART, Rank.TWO),
-                    Card.of(Suit.DIAMOND, Rank.KING))), "Leo");
+                    Card.from(Suit.HEART, Rank.TWO),
+                    Card.from(Suit.DIAMOND, Rank.KING))), "Leo");
     }
 
     @Test
     @DisplayName("참가자가 카드를 받는다.")
     void receiveCard() {
-        participant.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+        participant.receiveCard(Card.from(Suit.SPADE, Rank.TEN));
         assertThat(participant.getCardNames().size()).isEqualTo(3);
     }
 
@@ -52,13 +52,13 @@ class ParticipantTest {
         assertThat(
             new Participant(
                 new ArrayList<>(
-                    List.of(Card.of(Suit.HEART, Rank.TWO),
-                        Card.of(Suit.DIAMOND, Rank.KING))), "Leo")
+                    List.of(Card.from(Suit.HEART, Rank.TWO),
+                        Card.from(Suit.DIAMOND, Rank.KING))), "Leo")
                 .equals(
                     new Participant(
                         new ArrayList<>(
-                            List.of(Card.of(Suit.HEART, Rank.FOUR),
-                                Card.of(Suit.DIAMOND, Rank.TWO))), "Leo")))
+                            List.of(Card.from(Suit.HEART, Rank.FOUR),
+                                Card.from(Suit.DIAMOND, Rank.TWO))), "Leo")))
             .isTrue();
     }
 }

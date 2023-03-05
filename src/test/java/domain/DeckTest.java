@@ -23,6 +23,6 @@ class DeckTest {
     @DisplayName("카드 덱에서 한 장 뽑는 메서드 테스트")
     void DeckDrawTest() {
         Deck deck = Deck.from((orderedDeck) -> orderedDeck);
-        Assertions.assertThat(deck.draw()).isEqualTo(Card.of(Suit.CLOVER, Rank.ACE));
+        Assertions.assertThat(deck.draw()).isEqualTo(Card.from(Suit.CLOVER, Rank.ACE));
     }
 }

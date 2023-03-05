@@ -21,7 +21,7 @@ public class Deck {
 
     private static void makeCard(Stack<Card> deck, Suit suit) {
         for (Rank rank : Rank.values()) {
-            Card card = Card.of(suit, rank);
+            Card card = Card.from(suit, rank);
             deck.add(card);
         }
     }

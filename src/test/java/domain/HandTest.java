@@ -24,8 +24,8 @@ class HandTest {
 
     private static Stream<Arguments> cardProvider() {
         return Stream.of(
-            Arguments.of(Card.of(Suit.HEART, Rank.ACE), 13),
-            Arguments.of(Card.of(Suit.HEART, Rank.NINE), 21)
+            Arguments.of(Card.from(Suit.HEART, Rank.ACE), 13),
+            Arguments.of(Card.from(Suit.HEART, Rank.NINE), 21)
         );
     }
 
@@ -33,8 +33,8 @@ class HandTest {
     void setUp() {
         hand = new Hand(new ArrayList<>(
             List.of(
-                Card.of(Suit.HEART, Rank.TWO),
-                Card.of(Suit.DIAMOND, Rank.KING)
+                Card.from(Suit.HEART, Rank.TWO),
+                Card.from(Suit.DIAMOND, Rank.KING)
             ))
         );
     }
@@ -42,7 +42,7 @@ class HandTest {
     @Test
     @DisplayName("패에 카드를 추가한다.")
     void addCard() {
-        hand.addCard(Card.of(Suit.CLOVER, Rank.FIVE));
+        hand.addCard(Card.from(Suit.CLOVER, Rank.FIVE));
         assertThat(hand.getCardNames().size()).isEqualTo(3);
     }
 

@@ -11,7 +11,7 @@ public class Card {
         this.value = value;
     }
 
-    public static Card of(Suit suit, Rank rank) {
+    public static Card from(Suit suit, Rank rank) {
         String name = rank.getName() + suit.getShape();
         int value = rank.getValue();
         return new Card(name, value);

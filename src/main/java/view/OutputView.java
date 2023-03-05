@@ -19,7 +19,7 @@ public class OutputView {
 
     private static final String BLANK = " ";
 
-    public static void printInitializingFinishMessage(List<String> participantNames) {
+    public static void printDealFinishMessage(List<String> participantNames) {
         printEmptyLine();
         String participants = String.join(DELIMITER, participantNames);
         System.out.printf(INIT_FINISHIED_MESSAGE, participants);
@@ -31,6 +31,7 @@ public class OutputView {
     }
 
     public static void printDealerPickCardMessage() {
+        printEmptyLine();
         System.out.println(DEALER_HIT_MESSAGE);
         printEmptyLine();
     }
