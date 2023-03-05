@@ -24,7 +24,7 @@ class BlackJackGameTest {
     @Test
     void checkCardSizeOfParticipantsAfterInitialHandOut() {
         // given
-        BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), "pobi,crong");
         ShufflingMachine shufflingMachine = new ShufflingMachine();
 
         // when
@@ -46,7 +46,7 @@ class BlackJackGameTest {
     @Test
     void handOutCardTo() {
         // given
-        BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), "pobi,crong");
         ShufflingMachine shufflingMachine = new ShufflingMachine();
         Dealer dealer = blackJackGame.getDealer();
 
@@ -62,7 +62,7 @@ class BlackJackGameTest {
     @Test
     void findResultForEachParticipant() {
         // given
-        BlackJackGame blackJackGame = new BlackJackGame("pobi,crong");
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), "pobi,crong");
 
         // when
         Card dealerCard1 = new Card(Rank.KING, Suit.CLOVER);

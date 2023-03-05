@@ -75,7 +75,7 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         try {
             final String inputNames = InputView.readNames();
-            return new BlackJackGame(inputNames);
+            return new BlackJackGame(new Dealer(), inputNames);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return generateBlackJackGame();
