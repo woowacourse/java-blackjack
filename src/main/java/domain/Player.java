@@ -24,7 +24,7 @@ public class Player {
         return getScore().isBusted();
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return cards.isBlackJack();
     }
 

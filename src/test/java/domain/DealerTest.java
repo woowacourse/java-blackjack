@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
@@ -58,9 +57,9 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.NINE));
         players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        List<Status> dealerStats = dealer.getDealerStats(players);
+        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(Status.WIN, Status.LOSE);
+        assertThat(dealerStats).containsExactly(DealerStatus.WIN, DealerStatus.LOSE);
     }
 
     @Test
@@ -74,9 +73,9 @@ class DealerTest {
         dealer.drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.ACE));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        List<Status> dealerStats = dealer.getDealerStats(players);
+        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(Status.LOSE);
+        assertThat(dealerStats).containsExactly(DealerStatus.LOSE);
     }
 
     @Test
@@ -92,8 +91,8 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        List<Status> dealerStats = dealer.getDealerStats(players);
+        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(Status.DRAW);
+        assertThat(dealerStats).containsExactly(DealerStatus.DRAW);
     }
 }
