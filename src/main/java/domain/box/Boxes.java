@@ -15,22 +15,24 @@ public class Boxes {
     private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_ABLE = 11;
     private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayResult.NOT_BUST, 0);
-    private final LinkedHashMap<Player, BoxStatus> boxes = new LinkedHashMap<>();
+    private final LinkedHashMap<Player, BoxStatus> boxes;
 
-    private Boxes(List<Player> participants) {
-        generateBoxes(participants);
-    }
-
-    private void generateBoxes(List<Player> participants) {
-        participants.forEach((participant) -> boxes.put(participant, INITIAL_BOX_STATUS));
-        boxes.put(new Dealer(), INITIAL_BOX_STATUS);
+    private Boxes(LinkedHashMap<Player, BoxStatus> boxes) {
+        this.boxes = boxes;
     }
 
     public static Boxes of(String playerNamesInput) {
         final String nameDelimiter = ",";
         String[] playerNames = playerNamesInput.split(nameDelimiter);
         List<Player> players = Arrays.stream(playerNames).map(Player::new).collect(Collectors.toList());
-        return new Boxes(players);
+        return of(players);
+    }
+
+    private static Boxes of(List<Player> participants) {
+        LinkedHashMap<Player, BoxStatus> boxes = new LinkedHashMap<>();
+        participants.forEach((participant) -> boxes.put(participant, INITIAL_BOX_STATUS));
+        boxes.put(new Dealer(), INITIAL_BOX_STATUS);
+        return new Boxes(boxes);
     }
 
     public void updatePlayerBox(Player player) {
@@ -51,10 +53,10 @@ public class Boxes {
     }
 
     public PlayResult getResultByScore(int score) {
-        if (score > BLACK_JACK) {
+        if (score > BLACK_JACK_POINT) {
             return PlayResult.BUST;
         }
-        if (score == BLACK_JACK) {
+        if (score == BLACK_JACK_POINT) {
             return PlayResult.BLACK_JACK;
         }
         return PlayResult.NOT_BUST;
