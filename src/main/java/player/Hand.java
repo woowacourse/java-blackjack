@@ -6,6 +6,7 @@ import java.util.List;
 import card.Card;
 
 public class Hand {
+    public static final int FIRST_CARD_INDEX = 0;
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -36,6 +37,6 @@ public class Hand {
     }
 
     public Card pickFirstCard() {
-        return cards.get(0);
+        return cards.get(FIRST_CARD_INDEX);
     }
 }
