@@ -16,6 +16,7 @@ public class CardDeck {
     public static CardDeck create() {
         List<Card> cards = new ArrayList<>();
         addShapeSets(cards);
+        Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
@@ -29,10 +30,6 @@ public class CardDeck {
         for (Number number : Number.values()) {
             cards.add(new Card(shape, number));
         }
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 
     public Card pick() {

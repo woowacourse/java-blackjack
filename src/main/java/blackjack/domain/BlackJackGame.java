@@ -23,7 +23,6 @@ public class BlackJackGame {
     }
 
     public void handOutStartCards() {
-        cardDeck.shuffle();
         players.pickStartCards(cardDeck);
     }
 
