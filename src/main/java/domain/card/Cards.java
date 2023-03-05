@@ -52,4 +52,8 @@ public final class Cards {
     public List<Card> getCards() {
         return cards;
     }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
 }
