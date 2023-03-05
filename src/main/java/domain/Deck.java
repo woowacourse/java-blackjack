@@ -2,15 +2,15 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Deck {
-	private static final List<Card> deck;
-	private static int index = 0;
+	private static final Queue<Card> deck;
 
 	static {
-		deck = makeDeck();
-		Collections.shuffle(deck);
+		deck = new LinkedList<>(makeDeck());
 	}
 
 	private Deck() {
@@ -21,6 +21,7 @@ public class Deck {
 		for (Denomination denomination : Denomination.values()) {
 			makeCard(cards, denomination);
 		}
+		Collections.shuffle(cards);
 		return cards;
 	}
 
@@ -31,10 +32,10 @@ public class Deck {
 	}
 
 	public static Card pickCard() {
-		return deck.get(index++);
+		return deck.poll();
 	}
 
-	public static List<Card> getDeck() {
-		return new ArrayList<>(deck);
+	public static Queue<Card> getDeck() {
+		return new LinkedList<>(deck);
 	}
 }
