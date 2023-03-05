@@ -3,6 +3,7 @@ package controller;
 import domain.BlackJackGame;
 import domain.TurnAction;
 import domain.box.BoxResult;
+import domain.user.Dealer;
 import domain.user.Player;
 import dto.ParticipantDTO;
 import java.util.List;
@@ -43,7 +44,10 @@ public class GameController {
         OutputView.printNameAndHand(player.getName(), player.showHand());
     }
 
-    private void dealerTurn(Player dealer) {
+    private void dealerTurn() {
+        ParticipantDTO participantDTO = new ParticipantDTO();
+        blackJackGame.makeParticipants(participantDTO);
+        Dealer dealer = participantDTO.getDealer();
         while (blackJackGame.isDealerUnderThresholds(dealer)) {
             OutputView.printDealerReceivedCard();
             blackJackGame.playTurn(dealer, TurnAction.HIT);
@@ -62,8 +66,9 @@ public class GameController {
         }
     }
 
-    private void printAllStatus(Player dealer, List<Player> players) {
-        OutputView.printNameHandScore(dealer.getName(), dealer.showHand(), dealer.calculatePoint());
+    private void printAllStatus(Dealer dealer, List<Player> players) {
+        OutputView.printLineSeparator();
+        OutputView.printNameAndHandAndPoint(dealer.getName(), dealer.showHand(), dealer.calculatePoint());
         players.forEach(
             (participant) -> OutputView.printNameHandScore(participant.getName(), participant.showHand(),
                 participant.calculatePoint()));

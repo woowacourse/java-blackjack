@@ -11,7 +11,7 @@ public class ParticipantDTO {
     private Dealer dealer = new Dealer();
 
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
