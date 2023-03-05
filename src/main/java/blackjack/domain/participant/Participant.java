@@ -20,7 +20,7 @@ public class Participant {
     }
 
     public int getTotalScore() {
-        return this.cards.calculateTotalScore();
+        return cards.calculateTotalScore();
     }
 
     public boolean isBust() {
@@ -32,7 +32,7 @@ public class Participant {
     }
 
     public List<Card> getCards() {
-        return this.cards.getCards();
+        return cards.getCards();
     }
 
     public List<String> getCardNames() {

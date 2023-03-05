@@ -13,6 +13,6 @@ public enum Shape {
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 }

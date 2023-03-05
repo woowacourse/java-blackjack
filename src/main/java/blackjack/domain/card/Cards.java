@@ -18,7 +18,7 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return this.cards;
+        return cards;
     }
 
     public int calculateTotalScore() {
@@ -41,7 +41,7 @@ public class Cards {
     }
 
     private int makeTotalScore() {
-        return this.cards.stream().
+        return cards.stream().
                 map(Card::getValue).
                 reduce(ZERO, Integer::sum);
     }

@@ -49,7 +49,7 @@ public class Participants {
     }
 
     public Dealer getDealer() {
-        return this.dealer;
+        return dealer;
     }
 
     public List<Player> getPlayers() {

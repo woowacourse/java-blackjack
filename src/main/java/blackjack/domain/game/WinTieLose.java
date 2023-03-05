@@ -24,7 +24,7 @@ public enum WinTieLose {
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public WinTieLose reverseValue() {
