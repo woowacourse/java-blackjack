@@ -43,35 +43,8 @@ public class Players {
 
     public void calculateWinning(Dealer dealer) {
         for (Player player : players) {
-            combat(dealer, player);
+            player.combat(dealer);
         }
-    }
-
-    private void combat(Dealer dealer, Player player) {
-        boolean playerBust = player.isBust();
-        int playerScore = player.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        int dealerScore = dealer.calculateScore();
-        if (!playerBust && (dealerBust || isPlayerHigher(playerScore, dealerScore))) {
-            player.win();
-            dealer.lose();
-        }
-        if (!dealerBust && (playerBust || isPlayerLower(playerScore, dealerScore))) {
-            player.lose();
-            dealer.win();
-        }
-        if (!playerBust && (playerScore == dealerScore)) {
-            player.tie();
-            dealer.tie();
-        }
-    }
-
-    private boolean isPlayerLower(int playerScore, int dealerScore) {
-        return playerScore < dealerScore;
-    }
-
-    private boolean isPlayerHigher(int playerScore, int dealerScore) {
-        return playerScore > dealerScore;
     }
 
     public List<PlayerWinningDto> getWinningResults() {

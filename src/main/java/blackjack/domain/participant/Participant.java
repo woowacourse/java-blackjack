@@ -37,6 +37,25 @@ public abstract class Participant {
         return name;
     }
 
+    public void combat(Participant other) {
+        boolean isBust = isBust();
+        boolean isOtherBust = other.isBust();
+        int score = calculateScore();
+        int otherScore = other.calculateScore();
+        if (!isBust && (isOtherBust || score > otherScore)) {
+            this.win();
+            other.lose();
+        }
+        if (!isOtherBust && (isBust || score < otherScore)) {
+            this.lose();
+            other.win();
+        }
+        if (!isBust && (score == otherScore)) {
+            this.tie();
+            other.tie();
+        }
+    }
+
     public abstract void win();
 
     public abstract void lose();
