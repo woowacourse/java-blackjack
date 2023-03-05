@@ -11,7 +11,6 @@ import java.util.List;
 
 public class BlackJack {
 
-    private static final int INITIAL_CARD_COUNT = 2;
     private final Users users;
     private final Dealer dealer;
     private final Deck deck;

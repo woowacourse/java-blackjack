@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.Deck;
+import blackjack.domain.Repeater;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,7 +22,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final List<Name> namesByView = getNamesByView();
+        final List<Name> namesByView = Repeater.repeat(this::getNamesByView);
         this.blackJack = new BlackJack(namesByView, new Deck());
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
         divideCardTo(namesByView);
@@ -42,35 +43,25 @@ public class BlackJackController {
     }
 
     private void checkCardWanted(final Name name) {
-        boolean wantCard = getCardWantFromConsole(name);
+        boolean wantCard = Repeater.repeat(() -> getCardWantFromConsole(name));
         while (wantCard) {
             blackJack.drawCard(name);
             outputView.printCardsOf(name, blackJack.getUserCard(name));
             if (blackJack.isBusted(name)) {
                 break;
             }
-            wantCard = getCardWantFromConsole(name);
+            wantCard = Repeater.repeat(() -> getCardWantFromConsole(name));
         }
     }
 
     private boolean getCardWantFromConsole(Name name) {
-        try {
-            return inputView.cardRequest(name.getValue());
-        } catch (IllegalStateException e) {
-            outputView.printException(e);
-            return getCardWantFromConsole(name);
-        }
+        return inputView.cardRequest(name.getValue());
     }
 
     private List<Name> getNamesByView() {
-        try {
-            return inputView.userNameRequest()
-                    .stream()
-                    .map(Name::new)
-                    .collect(Collectors.toList());
-        } catch (IllegalArgumentException exception) {
-            outputView.printException(exception);
-            return getNamesByView();
-        }
+        return inputView.userNameRequest()
+                .stream()
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 }
