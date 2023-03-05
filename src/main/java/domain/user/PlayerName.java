@@ -7,6 +7,7 @@ public class PlayerName implements UserName {
     private static final List<String> PROHIBITED_NAMES = new ArrayList<>() {{
         add("딜러");
     }};
+    private static final int MAXIMUM_NAME_LENGTH = 100;
 
     private final String value;
 
@@ -18,6 +19,7 @@ public class PlayerName implements UserName {
     private void validate(String nameValue) {
         validateNullAndBlank(nameValue);
         validateWrongName(nameValue);
+        validateLength(nameValue);
     }
 
     private static void validateNullAndBlank(String nameValue) {
@@ -29,6 +31,12 @@ public class PlayerName implements UserName {
     private void validateWrongName(String nameValue) {
         if (PROHIBITED_NAMES.contains(nameValue)) {
             throw new IllegalArgumentException("사용이 금지된 이름입니다.");
+        }
+    }
+
+    private void validateLength(String nameValue) {
+        if (nameValue.length() > MAXIMUM_NAME_LENGTH) {
+            throw new IllegalArgumentException("너무 긴 이름입니다.");
         }
     }
 

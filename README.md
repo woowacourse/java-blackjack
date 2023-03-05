@@ -51,9 +51,22 @@
 - Player를 감싸는 일급 컬렉션
 - [x] Player들을 반환한다.
 
-### UserName
-- 유저의 이름 정보를 가지고 있는 객체
+### UserName (Interface)
+- 유저의 이름 정보를 가지고 있는 객체의 규격
+
+### PlayerName (implements UserName)
+- Player의 이름 정보를 가지고 있는 객체
 - [x] 유효한 이름인지 검증한다.
+  - [x] 예외 처리) 빈 이름
+  - [x] 예외 처리) 사용이 금지된 이름
+  - [x] 예외 처리) 너무 긴 이름
+- [x] 이름 값을 반환한다.
+
+### DealerName (implements UserName)
+- Dealer의 이름 정보를 가지고 있는 객체
+- [x] 딜러의 기본 이름으로 생성한다.
+- [x] 유효한 이름인지 검증한다.
+  - [x] 예외 처리) 빈 이름
 - [x] 이름 값을 반환한다.
 
 ### Deck
