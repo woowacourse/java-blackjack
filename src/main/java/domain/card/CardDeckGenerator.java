@@ -1,6 +1,8 @@
 package domain.card;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class CardDeckGenerator {
@@ -10,13 +12,11 @@ public class CardDeckGenerator {
     }
 
     public static CardDeck create() {
-        List<Card> cards = new ArrayList<>();
-
-        for (CardType cardType : CardType.values()) {
-            for (CardValue cardValue : CardValue.values()) {
-                cards.add(new Card(cardType, cardValue));
-            }
-        }
+        List<Card> cards = Arrays.stream(CardType.values())
+                .flatMap(cardType ->
+                        Arrays.stream(CardValue.values())
+                                .map(cardValue -> new Card(cardType, cardValue)))
+                .collect(toList());
 
         return CardDeck.createShuffled(cards);
     }
