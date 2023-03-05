@@ -9,6 +9,7 @@ import domain.player.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -45,11 +46,9 @@ public class OutputView {
     }
 
     private static List<String> getPlayerNames(Players players) {
-        List<String> playerNames = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerNames.add(player.getName());
-        }
-        return playerNames;
+        return players.getPlayers().stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
     public static void printInitialCards(Dealer dealer, Players players) {
@@ -83,9 +82,8 @@ public class OutputView {
     }
 
     private static void printInitialCards(Players players) {
-        for (Player player : players.getPlayers()) {
-            printSinglePlayer(player);
-        }
+        players.getPlayers()
+                .forEach(OutputView::printSinglePlayer);
     }
 
     public static void printSinglePlayer(Player player) {
