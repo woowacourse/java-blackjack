@@ -23,8 +23,8 @@ public abstract class Player {
         return cards.getTotalScore();
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public List<Card> getCards() {

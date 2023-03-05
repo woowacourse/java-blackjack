@@ -3,6 +3,8 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
+    public static final int BUST_DEADLINE = 21;
+
     private final Shape shape;
     private final Number number;
 

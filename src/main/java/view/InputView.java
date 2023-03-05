@@ -28,6 +28,12 @@ public class InputView {
         validateInputParticipantNamesFormat(inputParticipantNames);
     }
 
+    private static void validateNullOrBlank(String input) {
+        if (Objects.isNull(input) || input.isBlank()) {
+            throw new IllegalArgumentException("Null 또는 빈 문자열을 입력할 수 없습니다.");
+        }
+    }
+
     private static void validateInputParticipantNamesFormat(String inputParticipantNames) {
         Matcher matcher = INPUT_PARTICIPANT_NAMES_FORMAT.matcher(inputParticipantNames);
         if (!matcher.matches()) {
@@ -38,28 +44,10 @@ public class InputView {
     public static Command inputAddCardCommand() {
         try {
             String input = BUFFERED_READER.readLine();
-            validateInputAddCardCommand(input);
             return Command.of(input);
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
             return inputAddCardCommand();
-        }
-    }
-
-    private static void validateInputAddCardCommand(String inputAddCardCommand) {
-        validateNullOrBlank(inputAddCardCommand);
-        validateInputAddCardCommandFormat(inputAddCardCommand);
-    }
-
-    private static void validateInputAddCardCommandFormat(String inputAddCardCommand) {
-        if (!("y".equals(inputAddCardCommand) || "n".equals(inputAddCardCommand))) {
-            throw new IllegalArgumentException("카드를 더 받는 여부의 입력은 y 또는 n 만 입력할 수 있습니다.");
-        }
-    }
-
-    private static void validateNullOrBlank(String input) {
-        if (Objects.isNull(input) || input.isBlank()) {
-            throw new IllegalArgumentException("Null 또는 빈 문자열을 입력할 수 없습니다.");
         }
     }
 

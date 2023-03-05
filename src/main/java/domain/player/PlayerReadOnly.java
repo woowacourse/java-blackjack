@@ -3,7 +3,6 @@ package domain.player;
 import domain.card.Card;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerReadOnly {
     private final Player player;
@@ -21,15 +20,14 @@ public class PlayerReadOnly {
     }
 
     public List<Card> getCards() {
-        return player.getCards()
-                .stream().collect(Collectors.toUnmodifiableList());
+        return player.getCards();
     }
 
     public String getName() {
         return player.getName();
     }
 
-    public boolean isBurst() {
-        return player.isBurst();
+    public boolean isBust() {
+        return player.isBust();
     }
 }

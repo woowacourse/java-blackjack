@@ -38,7 +38,7 @@ public class Players {
     }
 
     public void battleAll(GameResult gameResult) {
-        participants.forEach(participant -> dealer.battle2(participant, gameResult));
+        participants.forEach(participant -> dealer.battle(participant, gameResult));
     }
 
     public List<PlayerReadOnly> getParticipants() {

@@ -12,7 +12,7 @@ import java.util.List;
 public class BlackJackApplication {
     public void startGame() {
         BlackJack blackJack = new BlackJack(getParticipantNames(), new RandomBasedIndexGenerator());
-        initializedBlackjackGame(blackJack);
+        initializeBlackjackGame(blackJack);
 
         giveCardToPlayers(blackJack);
         blackJack.battle();
@@ -24,7 +24,7 @@ public class BlackJackApplication {
         return InputView.repeat(InputView::inputParticipantNames);
     }
 
-    private void initializedBlackjackGame(BlackJack blackJack) {
+    private void initializeBlackjackGame(BlackJack blackJack) {
         blackJack.giveTwoCardToPlayers();
         OutputView.printPlayersInformation(blackJack.getPlayers());
     }
@@ -49,7 +49,7 @@ public class BlackJackApplication {
             OutputView.printParticipantCardCondition(List.of(participant));
         }
 
-        if (command.isNo() || participant.isBurst()) {
+        if (command.isNo() || participant.isBust()) {
             stopGivingCard(participant, command);
             return;
         }
@@ -67,7 +67,7 @@ public class BlackJackApplication {
             return;
         }
 
-        if (participant.isBurst()) {
+        if (participant.isBust()) {
             OutputView.printBurstMessage(participant.getName());
         }
     }

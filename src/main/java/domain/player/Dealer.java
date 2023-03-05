@@ -8,21 +8,21 @@ public class Dealer extends Player {
         super("딜러");
     }
 
-    public void battle2(Player participant, GameResult gameResult) {
-        if (isBurst() || participant.isBurst()) {
-            decideGameResultOnBurst2(participant, gameResult);
+    public void battle(Player participant, GameResult gameResult) {
+        if (isBust() || participant.isBust()) {
+            decideGameResultOnBurst(participant, gameResult);
             return;
         }
-        decideGameResultOnScore2(participant, gameResult);
+        decideGameResultOnScore(participant, gameResult);
     }
 
-    private void decideGameResultOnBurst2(Player participant, GameResult gameResult) {
-        if (isBurst() && participant.isBurst()) {
+    private void decideGameResultOnBurst(Player participant, GameResult gameResult) {
+        if (isBust() && participant.isBust()) {
             gameResult.addDrawCount(participant);
             return;
         } // 둘 다 버스트
 
-        if (isBurst()) {
+        if (isBust()) {
             gameResult.addParticipantWinningCase(participant);
             return;
         } // 딜러가 버스트
@@ -31,7 +31,7 @@ public class Dealer extends Player {
         // 참가자가 버스트
     }
 
-    private void decideGameResultOnScore2(Player participant, GameResult gameResult) {
+    private void decideGameResultOnScore(Player participant, GameResult gameResult) {
         int dealerScore = getTotalScore();
         int participantScore = participant.getTotalScore();
 

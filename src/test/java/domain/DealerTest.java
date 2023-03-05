@@ -32,7 +32,7 @@ class DealerTest {
         dealer.addCard(new Card(Shape.DIAMOND, Number.KING)); // 딜러 : 20
         participant.addCard(new Card(Shape.DIAMOND, Number.NINE)); // 참가자 : 19
 
-        dealer.battle2(participant, gameResult);
+        dealer.battle(participant, gameResult);
 
         Assertions.assertAll(
                 () -> assertThat(gameResult.getWinningCountOfDealer()).isEqualTo(1),
@@ -46,7 +46,7 @@ class DealerTest {
         dealer.addCard(new Card(Shape.DIAMOND, Number.NINE)); // 딜러 : 19
         participant.addCard(new Card(Shape.DIAMOND, Number.ACE)); // 참가자 : 21
 
-        dealer.battle2(participant, gameResult);
+        dealer.battle(participant, gameResult);
 
         Assertions.assertAll(
                 () -> assertThat(gameResult.getLosingCountOfDealer()).isEqualTo(1),
@@ -60,7 +60,7 @@ class DealerTest {
         dealer.addCard(new Card(Shape.DIAMOND, Number.NINE)); // 딜러 : 19
         participant.addCard(new Card(Shape.DIAMOND, Number.NINE)); // 참가자 : 19
 
-        dealer.battle2(participant, gameResult);
+        dealer.battle(participant, gameResult);
 
         Assertions.assertAll(
                 () -> assertThat(gameResult.getDrawingCountOfDealer()).isEqualTo(1),
