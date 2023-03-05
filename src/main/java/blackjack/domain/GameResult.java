@@ -1,14 +1,8 @@
 package blackjack.domain;
 
 public enum GameResult {
-    WIN("승"),
-    LOSE("패");
-
-    private final String value;
-
-    GameResult(String value) {
-        this.value = value;
-    }
+    WIN,
+    LOSE;
 
     public static GameResult of(Player player, Dealer dealer) {
         if (player.getState().isBust()) {
@@ -25,9 +19,5 @@ public enum GameResult {
 
     public boolean isWin() {
         return this == WIN;
-    }
-
-    public String getValue() {
-        return value;
     }
 }

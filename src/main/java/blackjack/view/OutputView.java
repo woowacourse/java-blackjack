@@ -1,12 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
-
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,6 +19,7 @@ public class OutputView {
     private static final String RESULT_MESSAGE = "## 최종 승패";
     private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d패" + LINE_SEPARATOR;
     private static final String PLAYER_RESULT_FORMAT = "%s: %s" + LINE_SEPARATOR;
+    private static final String DELIMITER = ", ";
 
     public void printInitCards(Participants participants) {
         System.out.printf(INIT_FORMAT, String.join(", ", participants.getPlayerNames()));
@@ -33,14 +32,7 @@ public class OutputView {
 
     private void printDealerInitCard(Dealer dealer) {
         System.out.printf(DEARER_CARDS_FORMAT, dealer.getName(),
-                convertCard(dealer.getCards()
-                                  .get(0)));
-    }
-
-    private String convertCard(Card card) {
-        return card.getNumber()
-                   .getValue() + card.getSuit()
-                                     .getValue();
+                CardMessageConvertor.convert(dealer.getCards().get(0)));
     }
 
     public void printPlayerCards(Player player) {
@@ -69,9 +61,9 @@ public class OutputView {
 
     private String getParticipantCardsView(Participant participant) {
         return participant.getCards()
-                          .stream()
-                          .map(this::convertCard)
-                          .collect(Collectors.joining(", "));
+                .stream()
+                .map(CardMessageConvertor::convert)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     public void printGameResult(Map<Participant, GameResult> result) {
@@ -79,16 +71,19 @@ public class OutputView {
         long loseCount = getPlayerWinCount(result);
         System.out.printf(DEALER_RESULT_FORMAT, (result.size() - loseCount), loseCount);
         for (Participant participant : result.keySet()) {
-            System.out.printf(PLAYER_RESULT_FORMAT,
-                    participant.getName(), result.get(participant)
-                                                 .getValue());
+            GameResult gameResult = result.get(participant);
+            System.out.printf(PLAYER_RESULT_FORMAT, participant.getName(), getGameResultMessage(gameResult));
         }
+    }
+
+    private String getGameResultMessage(GameResult gameResult) {
+        return GameResultMessage.from(gameResult).getMessage();
     }
 
     private long getPlayerWinCount(Map<Participant, GameResult> result) {
         return result.values()
-                     .stream()
-                     .filter(GameResult::isWin)
-                     .count();
+                .stream()
+                .filter(GameResult::isWin)
+                .count();
     }
 }
