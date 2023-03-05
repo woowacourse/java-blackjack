@@ -23,11 +23,11 @@ public class CardPool {
     public int sumCardNumbers() {
         int sum = 0;
         for (Card card : cards) {
-            sum += card.getNumber().getValue();
+            sum += card.getNumber().getPoint();
         }
 
         if (sum > CARD_POINT_LIMIT && containsAce()) {
-            sum -= CARD_POINT_LIMIT - CardNumber.ACE.getValue();
+            sum -= CARD_POINT_LIMIT - CardNumber.ACE.getPoint();
         }
         return sum;
     }

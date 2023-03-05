@@ -16,13 +16,13 @@ public enum CardNumber {
     QUEEN(10),
     KING(10);
 
-    private final int value;
+    private final int point;
 
-    CardNumber(int value) {
-        this.value = value;
+    CardNumber(int point) {
+        this.point = point;
     }
 
-    public int getValue() {
-        return value;
+    public int getPoint() {
+        return point;
     }
 }
