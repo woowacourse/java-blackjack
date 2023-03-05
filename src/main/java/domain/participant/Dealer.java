@@ -8,14 +8,4 @@ public class Dealer extends Participant {
     public Dealer() {
         super(DEALER_NAME);
     }
-
-    @Override
-    public boolean isStand() {
-        return calculateScore() > STAY_LOWER_BOUND;
-    }
-
-    @Override
-    public void stand() {
-        throw new UnsupportedOperationException();
-    }
 }

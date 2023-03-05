@@ -8,8 +8,6 @@ public class Player extends Participant {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
 
-    private boolean isStand = false;
-
     private Player(String name) {
         super(name.trim());
     }
@@ -30,15 +28,5 @@ public class Player extends Participant {
         if (DEALER_NAME.equals(name)) {
             throw new IllegalArgumentException(ERROR_PROHIBIT_NAME);
         }
-    }
-
-    @Override
-    public boolean isStand() {
-        return isStand;
-    }
-
-    @Override
-    public void stand() {
-        this.isStand = true;
     }
 }

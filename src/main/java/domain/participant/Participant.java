@@ -2,12 +2,11 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hand;
-
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-
+    private static final int STAY_LOWER_BOUND = 16;
     private static final int BLACKJACK = 21;
 
     private final String name;
@@ -34,9 +33,9 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK;
     }
 
-    abstract public boolean isStand();
-
-    abstract public void stand();
+    public boolean canHit() {
+        return calculateScore() <= STAY_LOWER_BOUND;
+    }
 
     public String getName() {
         return name;

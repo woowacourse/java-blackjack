@@ -1,14 +1,11 @@
 package domain.participant;
 
 import domain.PlayerGameResult;
-import domain.card.Card;
 import domain.card.Deck;
-
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -21,8 +18,8 @@ public class Participants {
     private final Participant dealer;
     private final List<Participant> players;
 
-    private Participants(Participant dealer, List<Participant> players) {
-        this.dealer = dealer;
+    private Participants(List<Participant> players) {
+        this.dealer = new Dealer();
         this.players = players;
     }
 
@@ -33,7 +30,7 @@ public class Participants {
                 .map(Player::from)
                 .collect(Collectors.toList());
 
-        return new Participants(new Dealer(), players);
+        return new Participants(players);
     }
 
     private static void validate(List<String> names) {
@@ -63,20 +60,12 @@ public class Participants {
         players.forEach(player -> player.initHand(deck.pollTwoCards()));
     }
 
-    public Optional<Participant> getNextTurnPlayer() {
-        return players.stream()
-                .filter(player -> !player.isStand() && !player.isBust())
-                .findFirst();
-    }
-
     public void playDealerTurn(Deck deck) {
-        while (!dealer.isStand() && !dealer.isBust()) {
-            dealer.addCard(deck.pollAvailableCard());
-        }
+        dealer.addCard(deck.pollAvailableCard());
     }
 
-    public boolean isDealerStand() {
-        return dealer.isStand() || dealer.isBust();
+    public boolean canDealerHit() {
+        return dealer.canHit();
     }
 
     public Map<String, PlayerGameResult> getResult() {
