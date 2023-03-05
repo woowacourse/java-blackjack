@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private static final int INIT_DRAW_COUNT = 2;
+    private static final int INITIAL_DRAW_COUNT = 2;
     private static final int DEALER_LIMIT = 16;
 
     private final InputView inputView;
@@ -59,12 +59,12 @@ public class BlackJackController {
     }
 
     private void dealCards(Participants participants, Deck deck) {
-        participants.drawCard(deck, INIT_DRAW_COUNT);
+        participants.drawCard(deck, INITIAL_DRAW_COUNT);
 
         final ParticipantResponse dealerResponse = ParticipantResponse.from(participants.getDealer());
         final List<ParticipantResponse> playerResponse = getPlayerResponse(participants.getPlayers());
 
-        outputView.printDealCards(dealerResponse, playerResponse, INIT_DRAW_COUNT);
+        outputView.printDealCards(dealerResponse, playerResponse, INITIAL_DRAW_COUNT);
     }
 
     private List<ParticipantResponse> getPlayerResponse(final List<Player> players) {
