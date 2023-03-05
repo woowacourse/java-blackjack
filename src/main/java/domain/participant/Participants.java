@@ -45,6 +45,10 @@ public class Participants {
         return players.findPlayerByPlayerName(playerName);
     }
 
+    public boolean canDealerDrawCard() {
+        return dealer.checkCardsCondition();
+    }
+
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
     }

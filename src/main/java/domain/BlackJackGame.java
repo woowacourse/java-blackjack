@@ -35,4 +35,8 @@ public class BlackJackGame {
     public void distributeCard(Participant participant) {
         participant.takeCard(deck.drawCard());
     }
+
+    public boolean canDealerDrawCard() {
+        return participants.canDealerDrawCard();
+    }
 }
