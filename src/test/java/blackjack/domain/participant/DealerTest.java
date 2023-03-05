@@ -118,4 +118,11 @@ class DealerTest {
 
         assertThat(dealer.getScore().getValue()).isEqualTo(15);
     }
+
+    @Test
+    void 딜러는_딜러이다() {
+        final Dealer dealer = new Dealer();
+
+        assertThat(dealer.isDealer()).isTrue();
+    }
 }

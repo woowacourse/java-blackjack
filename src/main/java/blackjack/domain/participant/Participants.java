@@ -54,7 +54,7 @@ public class Participants {
 
     public Dealer getDealer() {
         return participants.stream()
-                .filter(Dealer.class::isInstance)
+                .filter(Participant::isDealer)
                 .map(Dealer.class::cast)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러는 존재해야 합니다."));
@@ -62,7 +62,7 @@ public class Participants {
 
     public List<Player> getPlayers() {
         return participants.stream()
-                .filter(Player.class::isInstance)
+                .filter(participant -> !participant.isDealer())
                 .map(Player.class::cast)
                 .collect(Collectors.toList());
     }

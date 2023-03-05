@@ -39,5 +39,7 @@ public abstract class Participant {
 
     public abstract boolean isDrawable();
 
+    public abstract boolean isDealer();
+
     public abstract String getName();
 }

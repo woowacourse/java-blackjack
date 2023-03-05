@@ -102,4 +102,11 @@ class PlayerTest {
 
         assertThat(player.getScore().getValue()).isEqualTo(20);
     }
+
+    @Test
+    void 플레이어는_딜러가_아니다() {
+        final Player player = new Player("toney");
+
+        assertThat(player.isDealer()).isFalse();
+    }
 }

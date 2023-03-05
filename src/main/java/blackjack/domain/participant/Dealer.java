@@ -32,6 +32,11 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return name;
     }

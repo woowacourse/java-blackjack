@@ -22,6 +22,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return name.getValue();
     }
