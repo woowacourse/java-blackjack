@@ -93,6 +93,20 @@ class DealerTest {
     }
 
     @Test
+    @DisplayName("딜러의 점수합계가 16점 초과이면 false를 반환한다")
+    void isUnderScoreFalse() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.EIGHT, Suit.DIAMOND);
+        dealer.hit(card1);
+        dealer.hit(card2);
+        dealer.hit(card3);
+
+        Assertions.assertThat(dealer.isUnderScore()).isFalse();
+    }
+
+    @Test
     @DisplayName("딜러가 버스트인지 확인할 수 있다.")
     void isBust() {
         Dealer dealer = new Dealer();
@@ -104,6 +118,18 @@ class DealerTest {
         dealer.hit(card3);
 
         Assertions.assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트가 아니라면 false를 반환한다.")
+    void isBustFalse() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(Rank.KING, Suit.SPADE);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        dealer.hit(card1);
+        dealer.hit(card2);
+
+        Assertions.assertThat(dealer.isBust()).isFalse();
     }
 
     @Test
