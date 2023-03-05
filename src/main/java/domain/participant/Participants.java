@@ -9,6 +9,7 @@ import domain.card.Card;
 public class Participants {
 
     private static final String DEALER_NAME = "딜러";
+    private static final String NOT_MATCH_DEALER_NAME = "[ERROR] 딜러 이름이 일치하지 않습니다.";
 
     private final Players players;
     private final Dealer dealer;
@@ -47,6 +48,13 @@ public class Participants {
 
     public boolean canDealerDrawCard() {
         return dealer.checkCardsCondition();
+    }
+
+    public Dealer findDealerByDealerName(String dealerName) {
+        if (dealerName.equals(DEALER_NAME)) {
+            return dealer;
+        }
+        throw new IllegalArgumentException(NOT_MATCH_DEALER_NAME);
     }
 
     public List<String> getPlayerNames() {

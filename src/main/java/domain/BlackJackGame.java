@@ -39,4 +39,8 @@ public class BlackJackGame {
     public boolean canDealerDrawCard() {
         return participants.canDealerDrawCard();
     }
+
+    public Dealer findDealerByDealerName(String dealerName) {
+        return participants.findDealerByDealerName(dealerName);
+    }
 }
