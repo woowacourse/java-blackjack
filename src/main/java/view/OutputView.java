@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String PRINT_FORMAT = "%s 카드: %s";
     private static final String DELIMITER = ", ";

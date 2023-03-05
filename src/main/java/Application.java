@@ -2,10 +2,17 @@ import controller.BlackJackController;
 import view.InputView;
 import view.OutputView;
 
+import java.util.Scanner;
+
 public class Application {
 
     public static void main(String[] args) {
-        final BlackJackController blackJackController = new BlackJackController(new InputView(), new OutputView());
-        blackJackController.process();
+        try (Scanner scanner = new Scanner(System.in)) {
+            final BlackJackController blackJackController = new BlackJackController(
+                    new InputView(scanner),
+                    new OutputView());
+
+            blackJackController.process();
+        }
     }
 }

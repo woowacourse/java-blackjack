@@ -1,6 +1,6 @@
 package template;
 
-public class Repeater {
+public final class Repeater {
 
     public static <T> T repeat(InputRepeater<T> inputRepeater) {
         T result = null;

@@ -1,15 +1,22 @@
 package view;
 
+import domain.user.Name;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
-    private static final Scanner scanner = new Scanner(System.in);
     private static final String YES = "y";
     private static final String NO = "n";
+
+    private final Scanner scanner;
+
+    public InputView(final Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public List<String> userNameRequest() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -17,8 +24,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public boolean cardRequest(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
+    public boolean cardRequest(Name name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.getValue());
         System.out.print(System.lineSeparator());
         final String input = readLine();
         return isValid(input);

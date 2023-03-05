@@ -29,14 +29,14 @@ public class BlackJackController {
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
 
         for (User user : blackJack.getUserList()) {
-            boolean wantCard = Repeater.repeat(() -> getCardWantFromConsole(user.getName()));
+            boolean wantCard = Repeater.repeat(() -> cardRequest(user.getName()));
             while (wantCard) {
                 blackJack.drawCard(user);
                 outputView.printCardsOf(user, blackJack.getCardsFrom(user));
                 if (blackJack.isBusted(user)) {
                     break;
                 }
-                wantCard = Repeater.repeat(() -> getCardWantFromConsole(user.getName()));
+                wantCard = Repeater.repeat(() -> cardRequest(user.getName()));
             }
         }
         finalizeDealerCardStatus();
@@ -57,7 +57,7 @@ public class BlackJackController {
         outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 
-    private boolean getCardWantFromConsole(Name name) {
-        return inputView.cardRequest(name.getValue());
+    private boolean cardRequest(Name name) {
+        return inputView.cardRequest(name);
     }
 }
