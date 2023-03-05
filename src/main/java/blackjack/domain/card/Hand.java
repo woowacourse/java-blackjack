@@ -40,10 +40,10 @@ public class Hand {
     }
 
     private Result playWithScore(final Hand other) {
-        if (cards.calculateTotalScore() > other.cards.calculateTotalScore() || other.state.isBust()) {
+        if (other.state.isBust() || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
             return Result.WIN;
         }
-        if (cards.calculateTotalScore() < other.cards.calculateTotalScore() && other.state.isNotBust()) {
+        if (other.state.isNotBust() && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
             return Result.LOSE;
         }
         return Result.DRAW;
