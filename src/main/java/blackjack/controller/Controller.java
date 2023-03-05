@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.controller.AddCardOrNot.YES;
-
 import java.util.List;
 
 import blackjack.domain.game.BlackjackGame;
@@ -31,11 +29,11 @@ public class Controller {
     public void run() {
         setGame();
         showFirstDraw();
-        supplyAdditionalCard();
-        dealerHit();
+        supplyAdditionalCards();
         printFinalCards();
         printWinningResult();
     }
+
     private void setGame() {
         List<String> names = inputView.readPlayerNames();
         for (String name : names) {
@@ -52,7 +50,12 @@ public class Controller {
         outputView.printFirstOpenCards(dealerFirstOpen, playersCards);
     }
 
-    private void supplyAdditionalCard() {
+    private void supplyAdditionalCards() {
+        supplyAdditionalCardToPlayers();
+        supplyAdditionalCardToDealer();
+    }
+
+    private void supplyAdditionalCardToPlayers() {
         Function<Name, AddCardOrNot> decideAddCardOrNot = (Name name) -> {
             String command = inputView.readCommandToAddCardOrNot(name);
             return AddCardOrNot.of(command);
@@ -61,7 +64,7 @@ public class Controller {
         blackjackGame.supplyCardToPlayerNameOf(decideAddCardOrNot, showPlayerCards);
     }
 
-    private void dealerHit() {
+    private void supplyAdditionalCardToDealer() {
         while (blackjackGame.canDealerHit()) {
             blackjackGame.supplyAdditionalCardToDealer();
             outputView.printDealerHitMessage();
