@@ -30,6 +30,14 @@ public interface SimpleList<T> {
         return filter;
     }
 
+    static <T> void copy(SimpleList<? extends T> copy, SimpleList<? super T> paste) {
+        while (copy.size() != 0) {
+            T value = copy.remove(0);
+            paste.add(value);
+        }
+        return;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);
