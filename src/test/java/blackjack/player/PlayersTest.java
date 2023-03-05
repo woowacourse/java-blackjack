@@ -29,14 +29,14 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어 한 명을 추가할 수 있다.")
+    @DisplayName("플레이어 한 명을 추가한다.")
     void addPlayer() {
         Players players = new Players();
         Player player = new Player(new Name("로지"));
         players.add(player);
     }
 
-    @DisplayName("인덱스에 해당하는 플레이어가 카드를 받을 수 있다.")
+    @DisplayName("인덱스에 해당하는 플레이어가 카드를 받는다.")
     @Test
     void takeCard() {
         Players players = new Players();
@@ -49,7 +49,7 @@ class PlayersTest {
         assertThat(player.showCards()).contains(card);
     }
 
-    @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
+    @DisplayName("현재 플레이어의 인원수를 반환한다.")
     @Test
     void count() {
         Players players = new Players();
@@ -64,7 +64,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("인덱스에 해당하는 플레이어의 버스트 여부를 알 수 있다")
+    @DisplayName("인덱스에 해당하는 플레이어가 버스트인 경우 true를 반환한다.")
     void isBust() {
         Players players = new Players();
         Player player1 = new Player(new Name("폴로"));
@@ -77,7 +77,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어의 이름과 승패결과를 가져올 수 있다.")
+    @DisplayName("플레이어의 이름과 승패결과를 가져온다.")
     void getWinningResult() {
         Players players = new Players();
         Player player = new Player(new Name("폴로"));

@@ -23,23 +23,12 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("Hand는 카드를 받을 수 있다.")
+    @DisplayName("Hand는 카드를 받는다.")
     void add() {
         hand = new Hand();
 
         assertThatCode(() -> hand.add(new Card(Rank.ACE, Suit.CLOVER)))
                 .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("Hand에 들어있는 카드들을 가져올 수 있다.")
-    void getCards() {
-        hand = new Hand();
-        Card card = new Card(Rank.ACE, Suit.DIAMOND);
-
-        hand.add(card);
-        
-        assertThat(hand.getCards()).contains(card);
     }
 
     @Test
@@ -53,7 +42,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("카드들의 점수를 계산할 수 있다.")
+    @DisplayName("카드들의 점수를 계산한다.")
     void calculateScore() {
         hand = new Hand();
         Card card = new Card(Rank.TWO, Suit.CLOVER);
@@ -67,7 +56,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("첫번째 카드를 가져올 수 있다")
+    @DisplayName("첫번째 카드를 가져온다")
     void pickFirstCard() {
         hand = new Hand();
         Card card = new Card(Rank.ACE, Suit.HEART);

@@ -31,7 +31,7 @@ class DeckTest {
         deck = new Deck(fixedCardsGenerator);
     }
 
-    @DisplayName("Deck을 생성할 수 있다.")
+    @DisplayName("Deck을 생성한다.")
     @Test
     void create() {
         List<Card> cards = List.of(
@@ -45,7 +45,7 @@ class DeckTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("맨 위의 카드를 뽑아줄 수 있다.")
+    @DisplayName("맨 위의 카드를 뽑아온다.")
     @Test
     void drawCard() {
         Card card = deck.drawCard();

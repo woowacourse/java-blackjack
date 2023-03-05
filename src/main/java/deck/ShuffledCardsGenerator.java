@@ -23,8 +23,8 @@ public class ShuffledCardsGenerator implements CardsGenerator {
 
     private List<Card> createCards() {
         return Arrays.stream(Rank.values())
-                .flatMap(this::createCardByNumber).
-                collect(Collectors.toList());
+                .flatMap(this::createCardByNumber)
+                .collect(Collectors.toList());
     }
 
     private Stream<Card> createCardByNumber(Rank cardNumber) {

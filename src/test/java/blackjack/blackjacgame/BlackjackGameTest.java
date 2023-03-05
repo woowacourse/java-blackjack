@@ -49,7 +49,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어를 만들고 플레이어즈에 추가할 수 있다")
+    @DisplayName("플레이어를 만들고 플레이어즈에 추가한다.")
     void addPlayer() {
         blackjackGame.addPlayer(new Player(new Name("폴로")));
         blackjackGame.addPlayer(new Player(new Name("로지")));
@@ -58,7 +58,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("딜러에게 카드를 두 장 줄 수 있다.")
+    @DisplayName("딜러에게 카드를 두 장 준다.")
     void supplyCardsToDealer() {
         blackjackGame.supplyCardsToDealer();
 
@@ -67,7 +67,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어들에게 카드를 두 장씩 줄 수 있다.")
+    @DisplayName("플레이어들에게 카드를 두 장씩 준다.")
     void supplyCardsToPlayers() {
         Player player1 = new Player(new Name("폴로"));
         Player player2 = new Player(new Name("로지"));
@@ -84,7 +84,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("인덱스에 해당하는 플레이어는 카드를 한장 추가로 받을 수 있다.")
+    @DisplayName("인덱스에 해당하는 플레이어는 카드를 한장 추가로 받는다.")
     void supplyAdditionalCard() {
         Player player1 = new Player(new Name("폴로"));
         blackjackGame.addPlayer(player1);
@@ -130,7 +130,7 @@ class BlackjackGameTest {
 
 
     @Test
-    @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
+    @DisplayName("현재 플레이어의 인원수를 반환한다.")
     void countPlayers() {
         Player player1 = new Player(new Name("폴로"));
         Player player2 = new Player(new Name("로지"));
@@ -141,7 +141,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("딜러에게 추가카드를 줄 수 있다.")
+    @DisplayName("딜러에게 추가카드를 준다.")
     void supplyAdditionalCardToDealer() {
         int beforeSize = dealer.showCards().size();
         blackjackGame.supplyAdditionalCardToDealer();
@@ -151,7 +151,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("딜러의 게임 결과를 반환할 수 있다.")
+    @DisplayName("딜러의 게임 결과를 반환한다.")
     void getDealerWinningResult() {
         dealer.win();
         dealer.win();

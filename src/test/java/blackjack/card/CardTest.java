@@ -12,14 +12,14 @@ import card.Card;
 
 class CardTest {
     @Test
-    @DisplayName("카드를 생성할 수 있다.")
+    @DisplayName("카드를 생성한다.")
     void create() {
         assertThatCode(() -> new Card(ACE, HEART))
                 .doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("생성된 카드의 이름을 가져올 수 있다.")
+    @DisplayName("생성된 카드의 이름을 가져온다.")
     void getName() {
         Card card = new Card(ACE, HEART);
 
@@ -27,7 +27,7 @@ class CardTest {
     }
 
     @Test
-    @DisplayName("카드의 점수를 가져올 수 있다.")
+    @DisplayName("카드의 점수를 가져온다.")
     void getScore() {
         Card card = new Card(ACE, HEART);
         int score = card.getScore();
@@ -35,7 +35,7 @@ class CardTest {
     }
 
     @Test
-    @DisplayName("카드가 A인지 아닌지 확인할 수 있다.")
+    @DisplayName("카드가 A인 경우 true를 반환한다")
     void isAce() {
         Card card = new Card(ACE, HEART);
 

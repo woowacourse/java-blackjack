@@ -33,7 +33,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 받은 카드의 점수 합계를 구할 수 있다")
+    @DisplayName("플레이어는 받은 카드의 점수 합계를 계산한다.")
     void calculateScore() {
         Player player = new Player(new Name("폴로"));
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -47,7 +47,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 현재 가지고 있는 카드를 반환할수 있다.")
+    @DisplayName("플레이어는 현재 가지고 있는 카드를 반환한다.")
     void showCards() {
         Player player = new Player(new Name("폴로"));
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -61,7 +61,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 자신의 버스트 여부를 반환할 수 있다.")
+    @DisplayName("플레이어는 버스트인 경우 true를 반환한다.")
     void isBust() {
         Player player = new Player(new Name("폴로"));
         player.hit(new Card(Rank.KING, Suit.HEART));

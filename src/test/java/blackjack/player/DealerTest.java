@@ -27,7 +27,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 카드를 받을 수 있다")
+    @DisplayName("딜러는 카드를 받는다.")
     void hit() {
         Dealer dealer = new Dealer();
         Card card = new Card(Rank.ACE, Suit.HEART);
@@ -37,7 +37,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 받은 카드의 점수 합계를 구할 수 있다")
+    @DisplayName("딜러는 받은 카드의 점수 합계를 구한다")
     void calculateScore() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -51,7 +51,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 현재 가지고 있는 카드를 반환할수 있다.")
+    @DisplayName("딜러는 현재 가지고 있는 카드를 반환한다.")
     void showCards() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -65,7 +65,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 현재 가지고 있는 카드중 첫번째 카드를 반환할 수 있다.")
+    @DisplayName("딜러는 현재 가지고 있는 카드중 첫번째 카드를 반환한다.")
     void showOneCard() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -79,7 +79,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 점수합계가 16점 이하인지 확인할 수 있다.")
+    @DisplayName("딜러의 점수합계가 16점 이하이면 true를 반환한다.")
     void isUnderScore() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -107,7 +107,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 버스트인지 확인할 수 있다.")
+    @DisplayName("딜러가 버스트인 경우 true를 반환한다.")
     void isBust() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.KING, Suit.SPADE);
