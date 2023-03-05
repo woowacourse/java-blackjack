@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +17,10 @@ public final class Cards {
         cards.add(card);
     }
 
-
-    public int getScore() {
-        final int score = sumScore();
-
-        if (hasAce() && isUnderTwentyOne(score)) {
-            return score + ACE_ELEVEN;
-        }
-        return score;
-    }
-
     private int sumScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-    }
-
-    public List<Card> displayCards() {
-        return List.copyOf(cards);
     }
 
     private static boolean isUnderTwentyOne(final int sum) {
@@ -47,6 +33,19 @@ public final class Cards {
     }
 
     private boolean isAce(Card card) {
-        return card.getNumber() == Number.ACE;
+        return card.getRank() == Rank.ACE;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
+    public int getScore() {
+        final int score = sumScore();
+
+        if (hasAce() && isUnderTwentyOne(score)) {
+            return score + ACE_ELEVEN;
+        }
+        return score;
     }
 }

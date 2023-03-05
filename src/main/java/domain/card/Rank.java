@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-public enum Number {
+public enum Rank {
 
     ACE("A", 1),
     TWO("2", 2),
@@ -19,7 +19,7 @@ public enum Number {
     private final String symbol;
     private final int score;
 
-    Number(final String symbol, final int score) {
+    Rank(final String symbol, final int score) {
         this.symbol = symbol;
         this.score = score;
     }

@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.player.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,17 +39,17 @@ class ParticipantTest {
     void createParticipant_thenDisplayCards() {
         //given
         Participant participant = Participant.from("power");
-        participant.takeCard(Card.of(Shape.DIAMOND, Number.FIVE));
-        participant.takeCard(Card.of(Shape.SPADE, Number.TWO));
-        participant.takeCard(Card.of(Shape.CLUBS, Number.SIX));
+        participant.takeCard(Card.of(Suit.DIAMOND, Rank.FIVE));
+        participant.takeCard(Card.of(Suit.SPADE, Rank.TWO));
+        participant.takeCard(Card.of(Suit.CLUBS, Rank.SIX));
 
         //when
-        List<Card> cards = participant.displayCards();
+        List<Card> cards = participant.getCards();
 
         //then
         assertThat(cards)
-                .isEqualTo(List.of(Card.of(Shape.DIAMOND, Number.FIVE)
-                        , Card.of(Shape.SPADE, Number.TWO)
-                        , Card.of(Shape.CLUBS, Number.SIX)));
+                .isEqualTo(List.of(Card.of(Suit.DIAMOND, Rank.FIVE)
+                        , Card.of(Suit.SPADE, Rank.TWO)
+                        , Card.of(Suit.CLUBS, Rank.SIX)));
     }
 }

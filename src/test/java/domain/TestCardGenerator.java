@@ -1,5 +1,10 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardGenerator;
+import domain.card.Rank;
+import domain.card.Suit;
+
 import java.util.List;
 
 import static java.util.stream.Collectors.*;
@@ -12,9 +17,9 @@ public class TestCardGenerator implements CardGenerator {
         this.cards = cards;
     }
 
-    public static TestCardGenerator from(List<Number> numbers) {
-        final List<Card> cards = numbers.stream()
-                .map(number -> Card.of(Shape.CLUBS, number))
+    public static TestCardGenerator from(List<Rank> ranks) {
+        final List<Card> cards = ranks.stream()
+                .map(number -> Card.of(Suit.CLUBS, number))
                 .collect(toList());
 
         return new TestCardGenerator(cards);

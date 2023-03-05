@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-public enum Shape {
+public enum Suit {
 
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
@@ -9,7 +9,7 @@ public enum Shape {
 
     private final String name;
 
-    Shape(final String name) {
+    Suit(final String name) {
         this.name = name;
     }
 

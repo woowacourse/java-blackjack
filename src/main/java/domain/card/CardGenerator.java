@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,17 +12,17 @@ public interface CardGenerator {
     List<Card> shuffle();
 
     static List<Card> generate() {
-        return Arrays.stream(Shape.values())
+        return Arrays.stream(Suit.values())
                 .flatMap(CardGenerator::giveNumber)
                 .collect(Collectors.toList());
     }
 
-    private static Stream<Card> giveNumber(final Shape shape) {
-        return Arrays.stream(Number.values())
-                .map(createCard(shape));
+    private static Stream<Card> giveNumber(final Suit suit) {
+        return Arrays.stream(Rank.values())
+                .map(createCard(suit));
     }
 
-    private static Function<Number, Card> createCard(final Shape shape) {
-        return number -> Card.of(shape, number);
+    private static Function<Rank, Card> createCard(final Suit suit) {
+        return number -> Card.of(suit, number);
     }
 }

@@ -1,5 +1,9 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,9 +16,9 @@ class CardsTest {
     void givenCards_thenSumScore() {
         //given
         final Cards cards = new Cards();
-        cards.takeCard(Card.of(Shape.SPADE, Number.EIGHT));
-        cards.takeCard(Card.of(Shape.HEARTS, Number.SIX));
-        cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
+        cards.takeCard(Card.of(Suit.SPADE, Rank.EIGHT));
+        cards.takeCard(Card.of(Suit.HEARTS, Rank.SIX));
+        cards.takeCard(Card.of(Suit.DIAMOND, Rank.SEVEN));
 
         //when
         int score = cards.getScore();
@@ -30,9 +34,9 @@ class CardsTest {
         void givenAceAndUnderElevenScore_thenAceScoreEleven() {
             //given
             final Cards cards = new Cards();
-            cards.takeCard(Card.of(Shape.SPADE, Number.ACE));
-            cards.takeCard(Card.of(Shape.HEARTS, Number.TWO));
-            cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
+            cards.takeCard(Card.of(Suit.SPADE, Rank.ACE));
+            cards.takeCard(Card.of(Suit.HEARTS, Rank.TWO));
+            cards.takeCard(Card.of(Suit.DIAMOND, Rank.SEVEN));
 
             //when
             final int score = cards.getScore();
@@ -46,9 +50,9 @@ class CardsTest {
         void givenAceAndOverTwelveScore_thenAceScoreOne() {
             //given
             final Cards cards = new Cards();
-            cards.takeCard(Card.of(Shape.SPADE, Number.ACE));
-            cards.takeCard(Card.of(Shape.HEARTS, Number.FIVE));
-            cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
+            cards.takeCard(Card.of(Suit.SPADE, Rank.ACE));
+            cards.takeCard(Card.of(Suit.HEARTS, Rank.FIVE));
+            cards.takeCard(Card.of(Suit.DIAMOND, Rank.SEVEN));
 
             //when
             final int score = cards.getScore();
