@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class Boxes {
 
-    private static final int BLACK_JACK = 21;
-    private static final int BLACK_JACK_ABLE = 11;
+    private static final int BLACK_JACK_POINT = 21;
+    private static final int NEED_TEN_POINT = 11;
     private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayResult.NOT_BUST, 0);
     private final LinkedHashMap<Player, BoxStatus> boxes;
 
@@ -37,13 +37,12 @@ public class Boxes {
 
     public void updatePlayerBox(Player player) {
         int point = player.calculatePoint();
-        BoxStatus oldBoxStatus = boxes.get(player);
         BoxStatus newBoxStatus = new BoxStatus(getResultByScore(point), point);
-        if (oldBoxStatus.equals(newBoxStatus)) {
+        if (boxes.get(player).equals(newBoxStatus)) {
             newBoxStatus = new BoxStatus(PlayResult.STAND, point);
         }
-        if (point == BLACK_JACK_ABLE && player.hasAce()) {
-            boxes.put(player, new BoxStatus(PlayResult.BLACK_JACK, BLACK_JACK));
+        if (point == NEED_TEN_POINT && player.hasAce()) {
+            newBoxStatus = new BoxStatus(PlayResult.BLACK_JACK, BLACK_JACK_POINT);
         }
         boxes.put(player, newBoxStatus);
     }
@@ -69,7 +68,8 @@ public class Boxes {
     public Player getCurrentTurnPlayer() {
         Optional<Entry<Player, BoxStatus>> currentTurnBox = boxes.entrySet()
             .stream()
-            .filter(this::isOnTurn)
+            .filter(this::isOnTurnPlayer)
+            .filter((entry) -> entry.getKey().isPlayer())
             .findFirst();
         if (currentTurnBox.isEmpty()) {
             throw new IllegalStateException("더 이상 게임을 진행할 박스가 없습니다.");
@@ -77,13 +77,13 @@ public class Boxes {
         return currentTurnBox.get().getKey();
     }
 
-    private boolean isOnTurn(Entry<Player, BoxStatus> box) {
-        return box.getValue().isOnTurn();
+    private boolean isOnTurnPlayer(Entry<Player, BoxStatus> box) {
+        return box.getValue().isOnTurn() && box.getKey().isPlayer();
     }
 
     public BoxResult getBoxResult(Player participant) {
-        BoxStatus dealerGameStatus = boxes.get(new Dealer());
-        BoxStatus playerGameStatus = boxes.get(participant);
-        return BoxResult.from(playerGameStatus.compareTo(dealerGameStatus));
+        BoxStatus dealerBoxStatus = boxes.get(new Dealer());
+        BoxStatus playerBoxStatus = boxes.get(participant);
+        return BoxResult.from(playerBoxStatus.compareTo(dealerBoxStatus));
     }
 }
