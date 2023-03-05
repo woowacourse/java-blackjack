@@ -20,24 +20,18 @@ public class InputView {
     }
 
     public static boolean readWhetherDrawCardOrNot(Player player) {
-        try {
-            System.out.println(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-            String inputWhetherDraw = SCANNER.nextLine();
-            validateInputWhetherDraw(inputWhetherDraw);
-            return inputWhetherDraw.equals(YES_COMMAND);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readWhetherDrawCardOrNot(player);
-        }
+        System.out.println(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String inputWhetherDraw = readWhetherDrawUntilInputCorrectly();
+        return inputWhetherDraw.equals(YES_COMMAND);
     }
 
-    private static void validateInputWhetherDraw(String inputWhetherDraw) {
+    private static String readWhetherDrawUntilInputCorrectly() {
+        String inputWhetherDraw = SCANNER.nextLine();
         if (inputWhetherDraw.equals(YES_COMMAND) || inputWhetherDraw.equals(NO_COMMAND)) {
-            return;
+            return inputWhetherDraw;
         }
         ExceptionCounter.addCountHandledException();
-        throw new IllegalArgumentException(String.format(
-                "%s 또는 %s를 입력하세요.", YES_COMMAND, NO_COMMAND
-        ));
+        System.out.printf("%s 또는 %s를 입력하세요.%n", YES_COMMAND, NO_COMMAND);
+        return readWhetherDrawUntilInputCorrectly();
     }
 }
