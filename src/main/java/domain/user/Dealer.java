@@ -28,8 +28,9 @@ public class Dealer extends User {
     }
 
     @Override
-    public void win() {
+    public void win(User player) {
         winningRecord.put(true, winningRecord.getOrDefault(true, RECORD_INITIAL_VALUE) + 1);
+        player.lose();
     }
 
     @Override

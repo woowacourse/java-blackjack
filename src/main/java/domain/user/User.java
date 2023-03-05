@@ -29,7 +29,7 @@ public abstract class User {
 
     protected abstract void checkBustByScore();
 
-    public abstract void win();
+    public abstract void win(User opponent);
 
     public abstract void lose();
 

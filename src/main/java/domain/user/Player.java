@@ -13,8 +13,9 @@ public class Player extends User {
     }
 
     @Override
-    public void win() {
+    public void win(User dealer) {
         isWinner = true;
+        dealer.lose();
     }
 
     @Override
