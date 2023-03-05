@@ -1,30 +1,44 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.user.Dealer;
-import org.assertj.core.api.Assertions;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
 
 class DealerTest {
 
-    @Test
-    @DisplayName("처음에 카드를 지급받지 않은 경우 카드 조회시 오류를 던진다.")
-    void getReadyCardsTestFailed() {
+    @DisplayName("딜러 테스트.")
+    @TestFactory
+    Stream<DynamicTest> getSizeDynamicTest() {
         Dealer dealer = new Dealer();
-        Assertions.assertThatThrownBy(dealer::faceUpInitialHand)
-            .isExactlyInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
-    @DisplayName("처음에 지급받은 카드를 반환한다.")
-    void getReadyCardsTestSuccess() {
-        Dealer dealer = new Dealer();
-        dealer.dealt(new Card(Denomination.ACE, Suit.SPADE));
-        dealer.dealt(new Card(Denomination.THREE, Suit.HEART));
-        Assertions.assertThat(dealer.faceUpInitialHand())
-            .containsExactly(new Card(Denomination.ACE, Suit.SPADE));
+        Card firstCardSixSpade = new Card(Denomination.ACE, Suit.SPADE);
+        Card secondSixSpade = new Card(Denomination.SIX, Suit.SPADE);
+        return Stream.of(
+            dynamicTest("이름과 딜러 여부를 확인한다.", () -> {
+                assertThat(dealer.getName()).isEqualTo("딜러");
+                assertThat(dealer.isPlayer()).isFalse();
+            }),
+            dynamicTest("게임할 준비가 되지 않은 채 게임할 카드를 조회하면 오류를 던진다.", () -> {
+                dealer.dealt(firstCardSixSpade);
+                assertThatThrownBy(dealer::faceUpInitialHand)
+                    .isExactlyInstanceOf(IllegalStateException.class)
+                    .hasMessage("딜러는 카드 두장을 받고 시작해야 합니다.");
+            }),
+            dynamicTest("준비가 완료되면 딜러는 1장의 카드를 오픈한다.", () -> {
+                dealer.dealt(secondSixSpade);
+                assertThat(dealer.faceUpInitialHand()).containsExactly(firstCardSixSpade);
+            }),
+            dynamicTest("가지고 있는 카드의 점수를 반환한다.(ACE가 11로 계산되어 17이상이 되면 11로 계산된다.)", () -> {
+                assertThat(dealer.calculatePoint()).isEqualTo(17);
+            })
+        );
     }
 }
