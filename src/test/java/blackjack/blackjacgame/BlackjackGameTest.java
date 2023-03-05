@@ -91,7 +91,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("인덱스에 해당하는 플레이어의 버스트를 확인할 수 있다.")
+    @DisplayName("인덱스에 해당하는 플레이어가 버스트인 경우 true를 반환한다.")
     void isBust() {
         CardsGenerator fixedGenerator = () -> {
             Stack<Card> cards = new Stack<>();
@@ -111,6 +111,29 @@ class BlackjackGameTest {
         blackjackGame.supplyAdditionalCard(0);
 
         assertThat(blackjackGame.isBust(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("인덱스에 해당하는 플레이어가 버스트가 아닌경우 false를 반환한다.")
+    void isBustFalse() {
+        CardsGenerator fixedGenerator = () -> {
+            Stack<Card> cards = new Stack<>();
+            cards.push(new Card(Rank.ACE, Suit.HEART));
+            cards.push(new Card(Rank.ACE, Suit.CLOVER));
+            cards.push(new Card(Rank.FIVE, Suit.DIAMOND));
+            cards.push(new Card(Rank.KING, Suit.SPADE));
+            return cards;
+        };
+
+        Deck fixedDeck = new Deck(fixedGenerator);
+        blackjackGame = new BlackjackGame(players, dealer, fixedDeck);
+
+        Player player1 = new Player(new Name("폴로"));
+        blackjackGame.addPlayer(player1);
+        blackjackGame.supplyCardsToPlayers();
+        blackjackGame.supplyAdditionalCard(0);
+
+        assertThat(blackjackGame.isBust(0)).isFalse();
     }
 
 
