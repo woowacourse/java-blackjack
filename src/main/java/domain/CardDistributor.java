@@ -24,7 +24,7 @@ public class CardDistributor {
         return cards.remove(cards.size() - 1);
     }
 
-    public List<Card> distributeInitialCard() {
+    public CardDeck distributeInitialCard() {
         if (cards.size() < INITIAL_CARD_SIZE) {
             throw new IllegalArgumentException(CARD_RUN_OUT_ERROR_MESSAGE);
         }
@@ -32,7 +32,7 @@ public class CardDistributor {
         for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
             cards.add(distribute());
         }
-        return cards;
+        return new CardDeck(cards);
     }
 
     public int getDeckSize() {

@@ -34,7 +34,7 @@ public class BlackJackController {
         List<String> playerNames = requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
         Players players = Players.of(playerNames, distributeCardsForPlayers(playerNames.size(), cardDistributor));
-        Dealer dealer = new Dealer(new CardDeck(cardDistributor.distributeInitialCard()));
+        Dealer dealer = new Dealer(cardDistributor.distributeInitialCard());
         printInitialDistribution(players, dealer);
         progress(players, cardDistributor, dealer);
         end(players, dealer);
@@ -113,7 +113,7 @@ public class BlackJackController {
     private List<CardDeck> distributeCardsForPlayers(int count, CardDistributor cardDistributor) {
         List<CardDeck> cardDecks = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            cardDecks.add(new CardDeck(cardDistributor.distributeInitialCard()));
+            cardDecks.add(cardDistributor.distributeInitialCard());
         }
         return cardDecks;
     }

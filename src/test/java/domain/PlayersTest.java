@@ -32,7 +32,7 @@ public class PlayersTest {
     private List<CardDeck> distributeCardDecks(int count) {
         List<CardDeck> cardDecks = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            cardDecks.add(new CardDeck(distributor.distributeInitialCard()));
+            cardDecks.add(distributor.distributeInitialCard());
         }
         return cardDecks;
     }

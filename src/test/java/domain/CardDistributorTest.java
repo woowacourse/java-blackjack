@@ -1,16 +1,14 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import type.Letter;
 import type.Shape;
 import util.CardDeckMaker;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardDistributorTest {
 
@@ -30,9 +28,9 @@ public class CardDistributorTest {
     void distributeTwoCardWhenStartGame() {
         CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
 
-        List<Card> cards = cardDistributor.distributeInitialCard();
+        CardDeck cardDeck = cardDistributor.distributeInitialCard();
 
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(cardDeck.getSize()).isEqualTo(2);
     }
 
     @Test
@@ -44,8 +42,8 @@ public class CardDistributorTest {
         CardDistributor cardDistributor = new CardDistributor(cards);
 
         assertThatThrownBy(cardDistributor::distributeInitialCard)
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("모든 참여자에게 카드를 분배할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("모든 참여자에게 카드를 분배할 수 없습니다.");
     }
 
 }
