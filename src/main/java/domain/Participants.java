@@ -16,7 +16,7 @@ public class Participants {
 
     public Participants(List<String> nameValues) {
         this.dealer = new Dealer();
-        this.players = new Players(nameValues);
+        this.players = Players.of(nameValues);
     }
 
     public void drawInitialCardsEachParticipant(Deck deck) {

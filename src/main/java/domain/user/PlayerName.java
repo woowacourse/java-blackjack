@@ -28,8 +28,6 @@ public class PlayerName implements UserName {
 
     private void validateWrongName(String nameValue) {
         if (PROHIBITED_NAMES.contains(nameValue)) {
-            System.out.println("nameValue: " + nameValue);
-            System.out.println("check in validateWrongName");
             throw new IllegalArgumentException("사용이 금지된 이름입니다.");
         }
     }

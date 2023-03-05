@@ -6,11 +6,15 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<String> nameValues) {
-        this.players = generatePlayers(nameValues);
+    public Players(List<Player> players) {
+        this.players = players;
     }
 
-    private List<Player> generatePlayers(List<String> nameValues) {
+    public static Players of(List<String> nameValues) {
+        return new Players(generatePlayers(nameValues));
+    }
+
+    private static List<Player> generatePlayers(List<String> nameValues) {
         try {
             return nameValues.stream()
                     .map(Player::new)
