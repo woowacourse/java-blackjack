@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final int NOT_EXIST_MATCH_RESULT = 0;
+
     private OutputView() {
     }
 
@@ -75,7 +78,7 @@ public class OutputView {
         stringBuilder.append(name.getValue()).append(": ");
         results.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue() != 0)
+                .filter(entry -> entry.getValue() > NOT_EXIST_MATCH_RESULT)
                 .forEach(entry -> {
                     int resultTypeCount = entry.getValue();
                     String resultType = entry.getKey().getType();
