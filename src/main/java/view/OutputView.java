@@ -8,89 +8,89 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String WIN = "승 ";
+    private static final String DRAW = "무 ";
+    private static final String LOSE = "패";
+    private static final String SPADE = "스페이드";
+    private static final String CLOVER = "클로버";
+    private static final String HEART = "하트";
+    private static final String DIAMOND = "다이아몬드";
+    private static final String DEALER = "딜러";
+    private static final String AND = "와 ";
+    private static final String CARD = "카드";
+    private static final String RESULT = " - 결과";
+    private static final String FINAL_RESULT = "## 최종 승패";
+    private static final String DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String INITIALIZE_HAND = "에게 2장을 나누었습니다.";
     private static final String COLON = ": ";
     private static final String DIVIDE_DELIMITER = ", ";
-    private static final String RESULT_MESSAGE = "결과";
-    private static final String SCORE_DELIMITER = " - ";
-    private static final String WIN_MESSAGE = "승 ";
-    private static final String DRAW_MESSAGE = "무 ";
-    private static final String LOSE_MESSAGE = "패";
-    private static final String DEALER_NAME = "딜러";
-    private static final String AND_MESSAGE = "와 ";
-    private static final String DEALER_GET_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
-    private static final String GAME_READY_MESSAGE = "에게 2장을 나누었습니다.";
-    private static final String SPADE_MESSAGE = "스페이드";
-    private static final String CLOVER_MESSAGE = "클로버";
-    private static final String HEART_MESSAGE = "하트";
-    private static final String DIAMOND_MESSAGE = "다이아몬드";
     private static final StringBuilder message = new StringBuilder();
 
-    public static void printNameHandScore(String name, List<Card> cards, int score) {
+    public static void printReady(List<String> playerNames) {
         resetMessage();
-        message.append(name).append(COLON);
-        message.append(cards.stream().map(OutputView::formatCard).collect(Collectors.joining(DIVIDE_DELIMITER)));
-        message.append(SCORE_DELIMITER);
-        message.append(RESULT_MESSAGE).append(COLON);
-        message.append(score);
+        String printablePlayerNames = String.join(DIVIDE_DELIMITER, playerNames);
+        message.append(System.lineSeparator()).append(DEALER).append(AND);
+        message.append(printablePlayerNames).append(INITIALIZE_HAND);
         System.out.println(message);
     }
 
-    public static void printNameAndHand(String name, List<Card> cards) {
+    public static void printNameAndHand(String name, List<Card> hand) {
         resetMessage();
-        message.append(name).append(COLON);
-        message.append(cards.stream().map(OutputView::formatCard).collect(Collectors.joining(DIVIDE_DELIMITER)));
+        String printableHand = hand.stream()
+            .map(OutputView::formatCard)
+            .collect(Collectors.joining(DIVIDE_DELIMITER));
+        message.append(name).append(COLON).append(printableHand);
+        System.out.println(message);
+    }
+
+    public static void printNameAndHandAndPoint(String name, List<Card> hand, int point) {
+        resetMessage();
+        String printableHand = hand.stream()
+            .map(OutputView::formatCard)
+            .collect(Collectors.joining(DIVIDE_DELIMITER));
+        message.append(name).append(CARD).append(COLON).append(printableHand);
+        message.append(RESULT + COLON).append(point);
         System.out.println(message);
     }
 
     private static String formatCard(Card card) {
-        String printCards = "";
-        printCards += card.getDenomination().getName();
-        printCards += getSuitMessage(card.getSuit());
-        return printCards;
+        String denominationName = card.getDenomination().getName();
+        String suitName = getSuitName(card.getSuit());
+        return denominationName + suitName;
     }
 
-    private static String getSuitMessage(Suit cardShape) {
+    private static String getSuitName(Suit cardShape) {
         if (cardShape == Suit.SPADE) {
-            return SPADE_MESSAGE;
+            return SPADE;
         }
         if (cardShape == Suit.CLOVER) {
-            return CLOVER_MESSAGE;
+            return CLOVER;
         }
         if (cardShape == Suit.HEART) {
-            return HEART_MESSAGE;
+            return HEART;
         }
-        return DIAMOND_MESSAGE;
+        return DIAMOND;
     }
 
     public static void printDealerReceivedCard() {
-        System.out.println(System.lineSeparator() + DEALER_GET_CARD_MESSAGE);
+        System.out.println(System.lineSeparator() + DEALER_GET_CARD);
     }
 
     public static void printDealerGameResult(BoxResult dealerResult, int playerCount) {
-        System.out.println(System.lineSeparator() + FINAL_RESULT_MESSAGE);
         int winCount = dealerResult.getWinCount();
         int loseCount = dealerResult.getLoseCount();
         int drawCount = playerCount - winCount - loseCount;
         resetMessage();
-        message.append(DEALER_NAME + COLON);
+        message.append(System.lineSeparator()).append(FINAL_RESULT).append(System.lineSeparator());
+        message.append(DEALER + COLON);
         message.append(addDealerResultMessage(winCount, drawCount, loseCount));
         System.out.println(message);
     }
 
-    public static void printPlayerResult(String name, BoxResult gameResult) {
+    public static void printPlayerBoxResult(String name, BoxResult gameResult) {
         resetMessage();
         message.append(name).append(COLON);
         message.append(addPlayerResultMessage(gameResult.getWinCount(), gameResult.getLoseCount()));
-        System.out.println(message);
-    }
-
-    public static void printReady(List<String> participantNames) {
-        resetMessage();
-        message.append(DEALER_NAME + AND_MESSAGE);
-        List<String> playerNames = participantNames.subList(1, participantNames.size());
-        message.append(String.join(DIVIDE_DELIMITER, playerNames));
-        message.append(GAME_READY_MESSAGE).append(System.lineSeparator());
         System.out.println(message);
     }
 
@@ -100,25 +100,29 @@ public class OutputView {
 
     private static String addPlayerResultMessage(int winCount, int loseCount) {
         if (winCount == 1) {
-            return WIN_MESSAGE;
+            return WIN;
         }
         if (loseCount == 1) {
-            return LOSE_MESSAGE;
+            return LOSE;
         }
-        return DRAW_MESSAGE;
+        return DRAW;
     }
 
     private static String addDealerResultMessage(int winCount, int drawCount, int loseCount) {
         String printResult = "";
         if (winCount > 0) {
-            printResult += winCount + WIN_MESSAGE;
+            printResult += winCount + WIN;
         }
         if (drawCount > 0) {
-            printResult += drawCount + DRAW_MESSAGE;
+            printResult += drawCount + DRAW;
         }
         if (loseCount > 0) {
-            printResult += loseCount + LOSE_MESSAGE;
+            printResult += loseCount + LOSE;
         }
         return printResult;
+    }
+
+    public static void printLineSeparator() {
+        System.out.print(System.lineSeparator());
     }
 }
