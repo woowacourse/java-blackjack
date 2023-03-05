@@ -7,7 +7,7 @@ public abstract class Player {
     private static final int MAX_NAME_LENGTH = 10;
 
     private final String name;
-    private final Cards cards;
+    protected final Cards cards;
 
     Player(final String name, final Cards cards) {
         validateBlank(name);
@@ -27,6 +27,8 @@ public abstract class Player {
             throw new IllegalArgumentException("10자 이하의 이름만 입력해 주세요");
         }
     }
+
+    abstract List<Card> revealCards();
 
     public List<Card> showCards() {
         return cards.getCards();
