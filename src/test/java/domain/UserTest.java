@@ -23,8 +23,8 @@ class UserTest {
     @BeforeEach
     void setting() {
         푸우 = new User(new Name("푸우"), new Cards(List.of(
-                new Card(CardShape.HEART, CardNumber.of(1)),
-                new Card(CardShape.HEART, CardNumber.of(1))
+                Card.create(CardShape.HEART, CardNumber.of(1)),
+                Card.create(CardShape.HEART, CardNumber.of(1))
         )));
     }
 
@@ -38,7 +38,7 @@ class UserTest {
                 .size()
                 .isEqualTo(2);
 
-        final Card card3 = new Card(CardShape.HEART, CardNumber.of(3));
+        final Card card3 = Card.create(CardShape.HEART, CardNumber.of(3));
         푸우.draw(card3);
 
         assertThat(푸우)
@@ -57,8 +57,8 @@ class UserTest {
     @Test
     @DisplayName("21 이상의 카드를 가진 유저는 더 이상 카드를 받을 수 없다.")
     void cantReceiveTest() {
-        final Card card3 = new Card(CardShape.HEART, CardNumber.of(10));
-        final Card card4 = new Card(CardShape.HEART, CardNumber.of(10));
+        final Card card3 = Card.create(CardShape.HEART, CardNumber.of(10));
+        final Card card4 = Card.create(CardShape.HEART, CardNumber.of(10));
         푸우.draw(card3);
         푸우.draw(card4);
 
@@ -70,7 +70,7 @@ class UserTest {
     void canDrawUntilBustTest() {
         assertDoesNotThrow(() -> {
             for (int i = 0; i < 17; i++) {
-                푸우.draw(new Card(CardShape.HEART, CardNumber.of(1)));
+                푸우.draw(Card.create(CardShape.HEART, CardNumber.of(1)));
             }
         });
     }
@@ -80,7 +80,7 @@ class UserTest {
     void cantDrawWhenBustTest() {
         assertThatThrownBy(() -> {
             for (int i = 0; i < 22; i++) {
-                푸우.draw(new Card(CardShape.HEART, CardNumber.of(1)));
+                푸우.draw(Card.create(CardShape.HEART, CardNumber.of(1)));
             }
         }).isInstanceOf(IllegalStateException.class)
                 .hasMessage("버스트 후에는 카드를 받을 수 없습니다.");
@@ -90,7 +90,7 @@ class UserTest {
     @DisplayName("유저 게임 포인트 반환 테스트")
     void userGamePointTest() {
         for (int i = 0; i < 12; i++) {
-            푸우.draw(new Card(CardShape.HEART, CardNumber.of(1)));
+            푸우.draw(Card.create(CardShape.HEART, CardNumber.of(1)));
         }
         assertThat(푸우.getGamePoint())
                 .extracting("point")

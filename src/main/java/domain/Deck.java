@@ -5,6 +5,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Deck {
 
     private void getMakeCardsOf(final CardShape cardShape) {
         for (int i = CardNumber.getMinValue(); i <= CardNumber.getMaxValue(); i++) {
-            cards.add(new Card(cardShape, CardNumber.of(i)));
+            cards.add(Card.create(cardShape, CardNumber.of(i)));
         }
     }
 
