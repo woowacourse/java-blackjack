@@ -1,4 +1,4 @@
-package controller;
+package blackjackcontroller;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import player.Name;
 import view.InputView;
 import view.OutputView;
 
-public class Controller {
+public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
     private final BlackjackGame blackjackGame;
 
-    public Controller(InputView inputView, OutputView outputView, BlackjackGame blackjackGame) {
+    public BlackjackController(InputView inputView, OutputView outputView, BlackjackGame blackjackGame) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.blackjackGame = blackjackGame;

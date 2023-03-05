@@ -1,4 +1,4 @@
-package controller;
+package blackjackcontroller;
 
 import java.util.Arrays;
 
