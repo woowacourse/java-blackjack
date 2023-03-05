@@ -22,22 +22,21 @@ public class OutputView {
         System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
     }
 
-    private void printPlayersCards(List<Player> players) {
-        for (Player player : players) {
-            String name = player.getName();
-            printPlayerCards(name, player.getCards());
-        }
-    }
-
-    public void printPlayerCards(String playerName, List<Card> cards) {
-        System.out.println(playerName + "카드: " + getCardDisplays(cards));
-    }
-
-    public void printFirstPlayerCard(Player player) {
+    private void printFirstPlayerCard(Player player) {
         String name = player.getName();
         Card card = player.getCards().get(0);
 
         System.out.println(name + ": " + getCardDisplay(card));
+    }
+
+    private void printPlayersCards(List<Player> players) {
+        for (Player player : players) {
+            printPlayerCards(player);
+        }
+    }
+
+    public void printPlayerCards(Player player) {
+        System.out.println(player.getName() + "카드: " + getCardDisplays(player.getCards()));
     }
 
     public void noticeDealerAccept() {

@@ -19,21 +19,16 @@ public class Game {
         }
     }
 
-    public Result getResult(String name) {
-        return players.getUserResult(name);
+    public Result getResult(Player player) {
+        return players.getUserResult(player);
     }
 
-    public List<Result> getDealerResults() {
-        return players.getDealerResults();
-    }
-
-    public void dealCard(String name) {
-        Player player = players.findUserByName(name);
+    public void dealCard(Player player) {
         player.addCard(deck.drawCard());
     }
 
-    public boolean canHit(String name) {
-        return players.findUserByName(name).canHit();
+    public boolean canHit(Player player) {
+        return player.canHit();
     }
 
     public boolean dealCardToDealer() {
@@ -51,4 +46,5 @@ public class Game {
     public Players getPlayers() {
         return players;
     }
+
 }

@@ -15,7 +15,7 @@ public class Application {
         Game game = new Game(players, new Deck(), new Dealer());
 
         start(game);
-        play(playerNames, game);
+        play(game);
         printResult(game);
     }
 
@@ -25,9 +25,10 @@ public class Application {
         outputView.printCardsFrom(players);
     }
 
-    private static void play(List<String> playerNames, Game game) {
-        for (String playerName : playerNames) {
-            selectHitAndStand(game, playerName);
+    private static void play(Game game) {
+
+        for (Player user : game.getUsers()) {
+            selectHitAndStand(game, user);
         }
         dealCardToDealer(game);
     }
@@ -39,7 +40,7 @@ public class Application {
         outputView.printDealerResults(players.getDealerResults());
         for (Player user : players.getUsers()) {
             String name = user.getName();
-            outputView.printResult(name, players.getUserResult(name));
+            outputView.printResult(name, players.getUserResult(user));
         }
     }
 
@@ -51,17 +52,17 @@ public class Application {
         outputView.noticeDealerDecline();
     }
 
-    private static void selectHitAndStand(Game game, String playerName) {
+    private static void selectHitAndStand(Game game, Player player) {
         boolean hit = true;
-        while (hit && game.canHit(playerName)) {
-            hit = dealAnotherCardIfHit(game, playerName);
+        while (hit && game.canHit(player)) {
+            hit = dealAnotherCardIfHit(game, player);
         }
     }
 
-    private static boolean dealAnotherCardIfHit(Game game, String playerName) {
-        if (inputView.askForAnotherCard(playerName)) {
-            game.dealCard(playerName);
-            outputView.printPlayerCards(playerName, game.getCards(playerName));
+    private static boolean dealAnotherCardIfHit(Game game, Player player) {
+        if (inputView.askForAnotherCard(player.getName())) {
+            game.dealCard(player);
+            outputView.printPlayerCards(player);
             return true;
         }
         return false;

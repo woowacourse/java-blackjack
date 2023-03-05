@@ -37,8 +37,8 @@ public class GameTest {
     }
 
     @ParameterizedTest(name = "딜러와 플레이어중에 21에 가까운 사람이 이긴다.")
-    @CsvSource({"조이,LOSE", "땡칠,WIN"})
-    void test_21_win(String name, Result result) {
+    @CsvSource({"0,LOSE", "1,WIN"})
+    void test_21_win(int index, Result result) {
         var players = List.of(
                 new Player("조이", createCards("9")),
                 new Player("땡칠", createCards("A"))
@@ -46,7 +46,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
 
-        assertThat(game.getResult(name)).isEqualTo(result);
+        assertThat(game.getResult(players.get(index))).isEqualTo(result);
     }
 
     @DisplayName("점수가 동일하면 무승부로 한다")
@@ -58,7 +58,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
 
-        assertThat(game.getResult("땡칠")).isEqualTo(Result.DRAW);
+        assertThat(game.getResult(players.get(0))).isEqualTo(Result.DRAW);
     }
 
     @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
@@ -70,7 +70,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K", "9", "9")));
 
-        assertThat(game.getResult("땡칠")).isEqualTo(Result.DRAW);
+        assertThat(game.getResult(players.get(0))).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class GameTest {
         );
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
-        game.dealCard("조이");
+        game.dealCard(players.get(0));
 
         var player = game.getUsers().get(0);
         assertThat(player.getCards()).hasSize(3);
@@ -92,4 +92,5 @@ public class GameTest {
                 .map(letter -> new Card(SPADE, letter))
                 .collect(Collectors.toList());
     }
+
 }

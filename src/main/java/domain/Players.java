@@ -27,8 +27,7 @@ public class Players {
         dealer.addCard(deck.drawCard());
     }
 
-    public Result getUserResult(String name) {
-        Player player = findUserByName(name);
+    public Result getUserResult(Player player) {
         return player.compare(dealer);
     }
 
