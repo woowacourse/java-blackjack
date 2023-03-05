@@ -9,11 +9,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
-import card.Card;
-import card.CardNumber;
-import card.Pattern;
-import deck.CardsGenerator;
-import deck.Deck;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Pattern;
+import blackjack.domain.deck.CardsGenerator;
+import blackjack.domain.deck.Deck;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

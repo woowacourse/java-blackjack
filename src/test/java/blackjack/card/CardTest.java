@@ -1,14 +1,14 @@
 package blackjack.card;
 
-import static card.CardNumber.ACE;
-import static card.Pattern.HEART;
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.Pattern.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import card.Card;
+import blackjack.domain.card.Card;
 
 class CardTest {
     @Test

@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import card.Card;
-import deck.CardsGenerator;
-import deck.ShuffledCardsGenerator;
+import blackjack.domain.card.Card;
+import blackjack.domain.deck.CardsGenerator;
+import blackjack.domain.deck.ShuffledCardsGenerator;
 
 class CardsGeneratorTest {
     CardsGenerator cardsGenerator;

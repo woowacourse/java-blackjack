@@ -9,10 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import card.Card;
-import card.CardNumber;
-import card.Pattern;
-import player.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Pattern;
+import blackjack.domain.participant.Hand;
 
 class HandTest {
     Hand hand;

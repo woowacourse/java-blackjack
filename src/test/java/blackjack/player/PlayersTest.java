@@ -1,27 +1,27 @@
 package blackjack.player;
 
-import static blackjackGame.Result.LOSE;
-import static blackjackGame.Result.TIE;
-import static blackjackGame.Result.WIN;
+import static blackjack.domain.game.Result.LOSE;
+import static blackjack.domain.game.Result.TIE;
+import static blackjack.domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import deck.Deck;
-import deck.ShuffledCardsGenerator;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.ShuffledCardsGenerator;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import card.Card;
-import card.CardNumber;
-import card.Pattern;
-import player.Dealer;
-import player.Name;
-import player.Player;
-import player.PlayerWinningDto;
-import player.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Pattern;
+import blackjack.domain.participant.dealer.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.player.Player;
+import blackjack.domain.participant.player.PlayerWinningDto;
+import blackjack.domain.participant.player.Players;
 
 class PlayersTest {
     @DisplayName("생성할 수 있다")

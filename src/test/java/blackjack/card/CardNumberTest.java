@@ -1,7 +1,7 @@
 package blackjack.card;
 
-import static card.CardNumber.ACE;
-import static card.CardNumber.TWO;
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.CardNumber.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;

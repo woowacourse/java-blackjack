@@ -6,11 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import card.Card;
-import card.CardNumber;
-import card.Pattern;
-import player.Name;
-import player.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Pattern;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.player.Player;
 
 class PlayerTest {
     @Test
