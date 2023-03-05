@@ -23,7 +23,6 @@ public class BlackjackController {
     }
 
     private Players getPlayers() {
-
         try {
             return new Players(readPlayersName());
         } catch (RuntimeException exception) {
