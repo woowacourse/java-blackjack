@@ -6,7 +6,7 @@ public enum BlackjackCommand {
     HIT("y"),
     STAY("n");
 
-    static final String INVALID_COMMAND_MESSAGE = "y 또는 n을 입력해야 합니다. 입력값:";
+    static final String INVALID_COMMAND_MESSAGE = HIT.command + " 또는 " + STAY.command + "을 입력해야 합니다. 입력값:";
 
     private final String command;
 
@@ -22,7 +22,7 @@ public enum BlackjackCommand {
     }
 
     private boolean isSameCommand(final String command) {
-        return this.command.equals(command) || this.command.toUpperCase().equals(command);
+        return this.command.equalsIgnoreCase(command);
     }
 
     public boolean isHit() {
