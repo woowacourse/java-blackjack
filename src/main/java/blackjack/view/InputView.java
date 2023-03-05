@@ -17,7 +17,7 @@ public class InputView {
 
     public List<String> inputPlayers() {
         System.out.println(INPUT_PLAYERS_MESSAGE);
-        return List.of(scanner.nextLine().split(" "));
+        return List.of(scanner.nextLine().replace(" ","").split(","));
     }
 
     public String inputOrderCard(final String name) {

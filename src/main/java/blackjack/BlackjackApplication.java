@@ -15,9 +15,8 @@ public class BlackjackApplication {
 
         InputView inputView = new InputView(scanner);
         OutputView outputView = new OutputView();
-        CardPicker cardPicker = new RandomCardPicker();
 
-        BlackjackController blackjackController = new BlackjackController(inputView, outputView, cardPicker);
+        BlackjackController blackjackController = new BlackjackController(inputView, outputView);
         blackjackController.run();
     }
 }
