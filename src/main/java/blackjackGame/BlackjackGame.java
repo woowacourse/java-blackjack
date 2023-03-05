@@ -30,22 +30,11 @@ public class BlackjackGame {
     }
 
     public void supplyCardsToDealer() {
-        for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
-            dealer.hit(deck.drawCard());
-        }
+        dealer.hit(deck.drawCards(FIRST_DRAW_COUNT));
     }
 
     public void supplyCardsToPlayers() {
-        int playerCount = players.count();
-        for (int i = 0; i < playerCount; i++) {
-            supplyCardToPlayer(i);
-        }
-    }
-
-    private void supplyCardToPlayer(int i) {
-        for (int j = 0; j < FIRST_DRAW_COUNT; j++) {
-            players.takeCard(i, deck.drawCard());
-        }
+        players.takeCard(deck, FIRST_DRAW_COUNT);
     }
 
     public void supplyAdditionalCard(int playerIndex) {
