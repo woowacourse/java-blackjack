@@ -60,6 +60,10 @@ public class Participants {
         return players;
     }
 
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
     public List<String> getPlayerNames() {
         return players.stream()
                 .map(Participant::getName)
