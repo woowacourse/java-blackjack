@@ -1,5 +1,5 @@
 import controller.Controller;
-import domain.RandomCardGenerator;
+import domain.card.RandomCardGenerator;
 
 public final class Application {
 

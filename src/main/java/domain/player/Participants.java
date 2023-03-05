@@ -1,4 +1,8 @@
-package domain;
+package domain.player;
+
+import domain.card.Deck;
+import domain.result.GameResult;
+import domain.result.Result;
 
 import java.util.ArrayList;
 import java.util.HashSet;

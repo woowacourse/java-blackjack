@@ -1,5 +1,10 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardGenerator;
+import domain.card.Number;
+import domain.card.Shape;
+
 import java.util.List;
 
 import static java.util.stream.Collectors.*;

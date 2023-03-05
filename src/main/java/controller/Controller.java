@@ -1,6 +1,10 @@
 package controller;
 
-import domain.*;
+import domain.card.CardGenerator;
+import domain.card.Deck;
+import domain.player.Dealer;
+import domain.player.Participant;
+import domain.player.Participants;
 import view.InputView;
 import view.OutputView;
 
