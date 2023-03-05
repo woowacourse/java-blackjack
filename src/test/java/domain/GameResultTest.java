@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class ResultsTest {
+class GameResultTest {
 
     @Test
     @DisplayName("딜러와 플레이어가 버스트되지 않았을때")
@@ -18,10 +18,10 @@ class ResultsTest {
         participants.drawCard(deck);
 
         //when
-        final Results results = Results.of(12, participants.getParticipants());
+        final Result result = Result.of(12, participants.getParticipants());
 
         //then
-        Assertions.assertThat(results.getLosers()).isEqualTo(List.of("파워", "범블비"));
+        Assertions.assertThat(result.getLosers()).isEqualTo(List.of("파워", "범블비"));
     }
 
     @Test
@@ -35,9 +35,9 @@ class ResultsTest {
         participants.drawCard(deck);
 
         //when
-        final Results results = Results.of(23, participants.getParticipants());
+        final Result result = Result.of(23, participants.getParticipants());
 
         //then
-        Assertions.assertThat(results.getLosers()).isEqualTo(List.of("준팍"));
+        Assertions.assertThat(result.getLosers()).isEqualTo(List.of("준팍"));
     }
 }

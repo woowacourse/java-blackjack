@@ -40,7 +40,7 @@ class ParticipantTest {
         participant.takeCard(Card.of(Shape.CLUBS, Number.SIX));
 
         //when
-        List<Card> cards = participant.displayCards();
+        List<Card> cards = participant.showCards();
 
         //then
         assertThat(cards)

@@ -6,26 +6,26 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
-public final class Results {
+public final class Result {
 
     private static final int BUST_NUMBER = 22;
 
     private final List<String> winners;
     private final List<String> losers;
 
-    private Results(final List<String> winners, final List<String> losers) {
+    private Result(final List<String> winners, final List<String> losers) {
         this.winners = winners;
         this.losers = losers;
     }
 
-    public static Results of(final int dealerScore, final List<Participant> participants) {
-        Map<Result, List<Participant>> result = participants.stream()
+    public static domain.Result of(final int dealerScore, final List<Participant> participants) {
+        Map<GameResult, List<Participant>> result = participants.stream()
                 .collect(groupingBy(participant -> isWinner(dealerScore, participant)));
 
-        List<String> winners = classifyParticipants(result.get(Result.VICTORY));
-        List<String> losers = classifyParticipants(result.get(Result.DEFEAT));
+        List<String> winners = classifyParticipants(result.get(GameResult.VICTORY));
+        List<String> losers = classifyParticipants(result.get(GameResult.DEFEAT));
 
-        return new Results(winners, losers);
+        return new domain.Result(winners, losers);
     }
 
     private static List<String> classifyParticipants(final List<Participant> result) {
@@ -37,11 +37,11 @@ public final class Results {
                 .collect(toList());
     }
 
-    private static Result isWinner(final int dealerScore, final Participant participant) {
+    private static GameResult isWinner(final int dealerScore, final Participant participant) {
         if (isParticipantBusted(participant) || isParticipantDefeated(dealerScore, participant)) {
-            return Result.DEFEAT;
+            return GameResult.DEFEAT;
         }
-        return Result.VICTORY;
+        return GameResult.VICTORY;
     }
 
     private static boolean isParticipantDefeated(final int dealerScore, final Participant participant) {
@@ -68,7 +68,7 @@ public final class Results {
         return List.copyOf(losers);
     }
 
-    private enum Result {
+    private enum GameResult {
         VICTORY,
         DEFEAT
     }

@@ -5,8 +5,9 @@ import java.util.List;
 
 public final class Cards {
 
-    private static final int ACE_ELEVEN = 10;
-    private static final int ACE_CONDITION = 21 - ACE_ELEVEN;
+    private static final int ACE_ADDITIONAL_VALUE = 10;
+    private static final int ACE_MAX_VALUE = 11;
+
     private final List<Card> cards;
 
     public Cards() {
@@ -17,12 +18,11 @@ public final class Cards {
         cards.add(card);
     }
 
-
-    public int getScore() {
+    public int calculateScore() {
         final int score = sumScore();
 
-        if (hasAce() && isUnderTwentyOne(score)) {
-            return score + ACE_ELEVEN;
+        if (hasAce() && isAceValueEleven(score)) {
+            return score + ACE_ADDITIONAL_VALUE;
         }
         return score;
     }
@@ -33,14 +33,6 @@ public final class Cards {
                 .sum();
     }
 
-    public List<Card> displayCards() {
-        return List.copyOf(cards);
-    }
-
-    private static boolean isUnderTwentyOne(final int sum) {
-        return sum <= ACE_CONDITION;
-    }
-
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(this::isAce);
@@ -48,5 +40,13 @@ public final class Cards {
 
     private boolean isAce(Card card) {
         return card.getNumber() == Number.ACE;
+    }
+
+    private boolean isAceValueEleven(final int sum) {
+        return sum <= ACE_MAX_VALUE;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

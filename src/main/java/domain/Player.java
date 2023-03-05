@@ -28,8 +28,8 @@ public abstract class Player {
         }
     }
 
-    public List<Card> displayCards() {
-        return cards.displayCards();
+    public List<Card> showCards() {
+        return cards.getCards();
     }
 
     public void takeCard(final Card card) {
@@ -37,7 +37,7 @@ public abstract class Player {
     }
 
     public int getScore() {
-        return cards.getScore();
+        return cards.calculateScore();
     }
 
     public String getName() {

@@ -41,13 +41,13 @@ public final class Controller {
 
         participants.drawCard(deck);
 
-        OutputView.printPlayerCards(dealer.getName(), dealer.displayCards());
+        OutputView.printPlayerCards(dealer.getName(), dealer.showCards());
         participants.getParticipants()
                 .forEach(this::printPlayerCards);
     }
 
     private void printPlayerCards(final Participant participant) {
-        OutputView.printPlayerCards(participant.getName(), participant.displayCards());
+        OutputView.printPlayerCards(participant.getName(), participant.showCards());
     }
 
     private void playGame(final Participants participants, final Dealer dealer) {
@@ -61,7 +61,7 @@ public final class Controller {
         while (isKeepPlaying(participant)) {
             participant.takeCard(deck.dealCard());
 
-            OutputView.printPlayerCards(participant.getName(), participant.displayCards());
+            OutputView.printPlayerCards(participant.getName(), participant.showCards());
         }
     }
 
@@ -84,15 +84,15 @@ public final class Controller {
     }
 
     private void printResult(final Participants participants, final Dealer dealer) {
-        OutputView.printPlayerScore(dealer.getName(), dealer.displayCards(), dealer.getScore());
+        OutputView.printPlayerScore(dealer.getName(), dealer.showCards(), dealer.getScore());
 
         participants.getParticipants().forEach(this::printPlayerScore);
 
-        final Results results = Results.of(dealer.getScore(), participants.getParticipants());
-        OutputView.printGameResult(results);
+        final Result result = Result.of(dealer.getScore(), participants.getParticipants());
+        OutputView.printGameResult(result);
     }
 
     private void printPlayerScore(final Participant participant) {
-        OutputView.printPlayerScore(participant.getName(), participant.displayCards(), participant.getScore());
+        OutputView.printPlayerScore(participant.getName(), participant.showCards(), participant.getScore());
     }
 }

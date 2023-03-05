@@ -1,7 +1,7 @@
 package view;
 
 import domain.Card;
-import domain.Results;
+import domain.Result;
 
 import java.util.List;
 
@@ -32,12 +32,12 @@ public final class OutputView {
 
     }
 
-    public static void printGameResult(final Results results) {
+    public static void printGameResult(final Result result) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패%n", results.countLosers(), results.countWinners());
+        System.out.printf("딜러: %d승 %d패%n", result.countLosers(), result.countWinners());
         
-        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner));
-        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser));
+        result.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner));
+        result.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser));
     }
 
     public static void printExceptionMessage(final String message) {

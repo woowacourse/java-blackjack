@@ -17,7 +17,7 @@ class CardsTest {
         cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
 
         //when
-        int score = cards.getScore();
+        int score = cards.calculateScore();
 
         //then
         assertThat(score).isEqualTo(21);
@@ -35,7 +35,7 @@ class CardsTest {
             cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
 
             //when
-            final int score = cards.getScore();
+            final int score = cards.calculateScore();
 
             //then
             assertThat(score).isEqualTo(20);
@@ -51,7 +51,7 @@ class CardsTest {
             cards.takeCard(Card.of(Shape.DIAMOND, Number.SEVEN));
 
             //when
-            final int score = cards.getScore();
+            final int score = cards.calculateScore();
 
             //then
             assertThat(score).isEqualTo(13);
