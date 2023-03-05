@@ -1,10 +1,23 @@
 package blackjack.domain.game;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 public enum WinTieLose {
     WIN("승"),
     TIE("무"),
     LOSE("패");
+
+    private static final Map<WinTieLose, WinTieLose> reverse = new HashMap<>();
+
     private final String value;
+
+    static {
+        reverse.put(WIN, LOSE);
+        reverse.put(TIE, TIE);
+        reverse.put(LOSE, WIN);
+    }
 
     WinTieLose(final String value) {
         this.value = value;
@@ -15,12 +28,6 @@ public enum WinTieLose {
     }
 
     public WinTieLose reverseValue() {
-        if (this.equals(WIN)) {
-            return LOSE;
-        }
-        if (this.equals(LOSE)) {
-            return WIN;
-        }
-        return TIE;
+        return reverse.get(this);
     }
 }
