@@ -34,17 +34,17 @@ public class Participants {
         return (Dealer)dealer;
     }
 
-    public List<Player> findPlayers() {
-        ArrayList<Player> players = new ArrayList<>();
+    public List<Participant> findPlayers() {
+        ArrayList<Participant> players = new ArrayList<>();
         for (Participant participant : participants) {
             addParticipantIfPlayer(players, participant);
         }
         return players;
     }
 
-    private void addParticipantIfPlayer(ArrayList<Player> players, Participant participant) {
+    private void addParticipantIfPlayer(ArrayList<Participant> players, Participant participant) {
         if (participant.getClass().equals(Player.class)) {
-            players.add((Player)participant);
+            players.add(participant);
         }
     }
 
@@ -79,16 +79,16 @@ public class Participants {
     }
 
     public Map<String, Result> getPlayerResults() {
-        Dealer dealer = findDealer();
+        Participant dealer = findDealer();
         Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (Player player : findPlayers()) {
+        for (Participant player : findPlayers()) {
             compareHandValue(dealer, playerResults, player);
         }
 
         return playerResults;
     }
 
-    private void compareHandValue(Dealer dealer, Map<String, Result> playerResults, Player player) {
+    private void compareHandValue(Participant dealer, Map<String, Result> playerResults, Participant player) {
         int dealerHandValue = getParticipantHandValue(dealer);
         int playerHandValue = getParticipantHandValue(player);
 
@@ -99,7 +99,7 @@ public class Participants {
         compareAtTieValue(dealer, playerResults, player, playerHandValue);
     }
 
-    private void compareAtTieValue(Dealer dealer, Map<String, Result> playerResults, Player player, int playerHandValue) {
+    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
         if (playerHandValue == BUST_HAND_VALUE) {
             playerResults.put(player.getName(), Result.TIE);
             return;
@@ -114,7 +114,7 @@ public class Participants {
         return participant.getHandValue();
     }
 
-    private Result compareHandCount(Dealer dealer, Player player) {
+    private Result compareHandCount(Participant dealer, Participant player) {
         int playerHandCount = player.getCardNames().size();
         int dealerHandCount = dealer.getCardNames().size();
         return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
