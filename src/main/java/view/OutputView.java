@@ -60,8 +60,8 @@ public class OutputView {
     }
 
     private static String parseCardInformation(Card card) {
-        String numberDescription = NumberDisplayMatcher.displayMessage(card.getNumber());
-        String shapeDescription = ShapeDisplayMatcher.displayName(card.getShape());
+        String numberDescription = card.getNumberDescription();
+        String shapeDescription = card.getShapeDescription();
         return numberDescription.concat(shapeDescription);
     }
 

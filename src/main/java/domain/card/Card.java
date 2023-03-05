@@ -42,11 +42,11 @@ public class Card {
                 '}';
     }
 
-    public Number getNumber() {
-        return number;
+    public String getNumberDescription() {
+        return number.getDescription();
     }
 
-    public Shape getShape() {
-        return shape;
+    public String getShapeDescription() {
+        return shape.getDescription();
     }
 }
