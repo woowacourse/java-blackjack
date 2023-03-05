@@ -23,4 +23,8 @@ public class BlackJackGame {
     public List<String> getPlayerNames() {
         return participants.getPlayerNames();
     }
+
+    public List<String> findCardNamesByParticipantName(String participantName) {
+        return participants.findCardNamesByParticipantName(participantName);
+    }
 }
