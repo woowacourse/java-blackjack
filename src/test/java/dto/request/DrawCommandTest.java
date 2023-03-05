@@ -17,7 +17,7 @@ class DrawCommandTest {
     void create_success(final String command) {
         // when & then
         assertThatNoException()
-                .isThrownBy(() -> new DrawCommand(command));
+                .isThrownBy(() -> DrawCommand.from(command));
     }
 
     @DisplayName("입력 값이 정상적이지 않은 경우 예외를 발생시킨다.")
@@ -25,7 +25,7 @@ class DrawCommandTest {
     @ValueSource(strings = {"a", "b", " "})
     void create_fail(final String command) {
         // when & then
-        assertThatThrownBy(() -> new DrawCommand(command))
+        assertThatThrownBy(() -> DrawCommand.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("y혹은 n을 입력해주세요.");
     }
@@ -35,7 +35,7 @@ class DrawCommandTest {
     void returns_true_when_input_is_draw_command() {
         // given
         String givenInput = "y";
-        DrawCommand drawCommand = new DrawCommand(givenInput);
+        DrawCommand drawCommand = DrawCommand.from(givenInput);
 
         // when
         boolean expectedResult = drawCommand.isDraw();
@@ -49,7 +49,7 @@ class DrawCommandTest {
     void returns_true_when_input_is_stop_command() {
         // given
         String givenInput = "n";
-        DrawCommand drawCommand = new DrawCommand(givenInput);
+        DrawCommand drawCommand = DrawCommand.from(givenInput);
 
         // when
         boolean expectedResult = drawCommand.isStop();

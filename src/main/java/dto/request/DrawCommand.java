@@ -1,30 +1,31 @@
 package dto.request;
 
 
-//TODO: Enum으로 리팩토링
-public class DrawCommand {
+import java.util.Arrays;
 
-    private static final String DRAW_COMMAND = "y";
-    private static final String STOP_COMMAND = "n";
+public enum DrawCommand {
+    DRAW("y"),
+    STOP("n");
 
     private final String command;
 
-    public DrawCommand(final String command) {
-        validate(command);
+
+    DrawCommand(String command) {
         this.command = command;
     }
 
-    private void validate(final String command) {
-        if (!(command.equals(DRAW_COMMAND) || command.equals(STOP_COMMAND))) {
-            throw new IllegalArgumentException("y혹은 n을 입력해주세요.");
-        }
+    public static DrawCommand from(String command) {
+        return Arrays.stream(DrawCommand.values())
+                .filter(drawCommand -> drawCommand.command.equals(command))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("y혹은 n을 입력해주세요."));
     }
 
     public boolean isDraw() {
-        return command.equals(DRAW_COMMAND);
+        return this == DRAW;
     }
 
     public boolean isStop() {
-        return command.equals(STOP_COMMAND);
+        return this == STOP;
     }
 }

@@ -81,7 +81,7 @@ public class BlackJackApplication {
     private DrawCommand getDrawCommand(final Player player) {
         try {
             String rawCommand = inputView.readChoiceOfDrawCard(player.getName());
-            DrawCommand drawCommand = new DrawCommand(rawCommand);
+            DrawCommand drawCommand = DrawCommand.from(rawCommand);
             return drawCommand;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
