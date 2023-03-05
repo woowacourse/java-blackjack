@@ -20,7 +20,7 @@ public class FinalStatus {
 
     public FinalStatus(final Dealer dealer, final Users users) {
         this.dealerCards = dealer.openCards();
-        this.dealerPoint = dealer.getGamePoint().getGamePoint();
+        this.dealerPoint = dealer.getGamePoint().optimizeValue();
         this.usersNames = getListStringBy(users.getUsers());
         this.userCardsData = makeCardStatusOf(users);
         this.userScores = makeScoreOf(users);
@@ -45,7 +45,7 @@ public class FinalStatus {
         final HashMap<String, Integer> scoreData = new HashMap<>();
         for (User user : users.getUsers()) {
             final Name name = user.getName();
-            scoreData.put(name.getValue(), user.getGamePoint().getGamePoint());
+            scoreData.put(name.getValue(), user.getGamePoint().optimizeValue());
         }
         return scoreData;
     }

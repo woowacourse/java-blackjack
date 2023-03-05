@@ -7,6 +7,7 @@ public class GamePoint implements Comparable<GamePoint> {
     private static final int BUST = 0;
     private static final CardNumber ACE = CardNumber.of(1);
     private static final CardNumber TEN = CardNumber.of(10);
+    private static final int MAX_GAME_POINT_VALUE = 21;
     private final int gamePoint;
 
     public GamePoint(final List<Card> cards) {
@@ -16,7 +17,7 @@ public class GamePoint implements Comparable<GamePoint> {
     private Integer getOptimizeValueOf(final List<Card> cards) {
         int point = calculateMaxPoint(cards);
         if (canOptimize(cards, point)) {
-            return getGamePoint(point, getCountOfAce(cards));
+            return optimizeValue(point, getCountOfAce(cards));
         }
         return calculateWithBust(point);
     }
@@ -71,21 +72,26 @@ public class GamePoint implements Comparable<GamePoint> {
                 .count();
     }
 
-    private int getGamePoint(final int point, final int aceCount) {
-        int optimizedPoint = point;
+    private int optimizeValue(final int point, final int aceCount) {
+        int optimizedPoint = calculateAceToOnePoint(point, aceCount);
+        return calculateWithBust(optimizedPoint);
+    }
+
+    private int calculateAceToOnePoint(final int value, final int aceCount) {
         int remainAce = aceCount;
-        while (optimizedPoint > 21 && remainAce > 0) {
+        int optimizedPoint = value;
+        while (optimizedPoint > MAX_GAME_POINT_VALUE && remainAce > 0) {
             optimizedPoint -= 10;
             remainAce -= 1;
         }
-        return calculateWithBust(optimizedPoint);
+        return optimizedPoint;
     }
 
     public boolean isBusted() {
         return gamePoint == BUST;
     }
 
-    public int getGamePoint() {
+    public int optimizeValue() {
         return gamePoint;
     }
 
