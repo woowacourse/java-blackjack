@@ -18,18 +18,18 @@ public class Cards {
     public static Cards generator() {
         List<Card> deck = new ArrayList<>();
         for (int count = 0; count < MAX_DECK_SIZE; count++) {
-            numberEngrave(deck);
+            initCardNumber(deck);
         }
         return new Cards(deck);
     }
 
-    private static void numberEngrave(final List<Card> deck) {
+    private static void initCardNumber(final List<Card> deck) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            suitEngrave(deck, cardNumber);
+            initCardSuit(deck, cardNumber);
         }
     }
 
-    private static void suitEngrave(final List<Card> deck, final CardNumber cardNumber) {
+    private static void initCardSuit(final List<Card> deck, final CardNumber cardNumber) {
         for (CardSuit cardSuit : CardSuit.values()) {
             deck.add(new Card(cardNumber, cardSuit));
         }

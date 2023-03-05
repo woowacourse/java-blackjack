@@ -63,9 +63,9 @@ public class OutputView {
 
     public void printDealerWinORLose(final List<WinningResult> dealerResult) {
         System.out.print("딜러: ");
-        System.out.print(WinningResult.WIN.winCount(dealerResult) + WinningResult.WIN.getName());
-        System.out.print(WinningResult.PUSH.pushCount(dealerResult) + WinningResult.PUSH.getName());
-        System.out.println(WinningResult.LOSE.loseCount(dealerResult) + WinningResult.LOSE.getName());
+        System.out.print(WinningResult.WIN.getWinCount(dealerResult) + WinningResult.WIN.getName());
+        System.out.print(WinningResult.PUSH.getLoseCount(dealerResult) + WinningResult.PUSH.getName());
+        System.out.println(WinningResult.LOSE.getPushCount(dealerResult) + WinningResult.LOSE.getName());
     }
 
     public void printPlayerWinORLose(final Map<Participant, WinningResult> playerResult) {

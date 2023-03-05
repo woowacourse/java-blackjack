@@ -30,6 +30,4 @@ public class Participants {
     public List<Participant> getParticipants() {
         return participants;
     }
-
-    //todo : 바로 이름을 가져오는 기능 추가
 }

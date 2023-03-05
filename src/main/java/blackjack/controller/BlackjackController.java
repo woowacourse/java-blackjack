@@ -70,7 +70,7 @@ public class BlackjackController {
     }
 
     private void gameSetting(final Participants participants, final CardPickerGenerator cardPickerGenerator, final BlackjackGame blackjackGame) {
-        blackjackGame.settingGame(cardPickerGenerator);
+        blackjackGame.initFirstHit(cardPickerGenerator);
         outputView.printParticipants(participants.getParticipantsName());
         outputView.printParticipantsCard(participants);
     }

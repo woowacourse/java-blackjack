@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.util.CardNumber;
 import blackjack.util.CardSuit;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public abstract class Participant {
         return receivedCards;
     }
 
-    public boolean participantHasAceCard() {
+    public boolean hasAceCard() {
         return receivedCards.stream()
-            .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+                .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
     }
 
     public int calculateCardNumberAceCardValueOne() {
@@ -42,7 +43,7 @@ public abstract class Participant {
 
     public int calculateCardNumber() {
         int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
-        if (participantHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
+        if (hasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
             return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
         }
         return totalSumAceCardValueOne;

@@ -23,32 +23,32 @@ public class BlackjackGame {
 
     public Map<Participant, WinningResult> generatePlayersResult() {
         Map<Participant, WinningResult> playersResult = new LinkedHashMap<>();
-        Dealer dealer = extractDealer();
-        List<Participant> players = extractPlayers();
+        Dealer dealer = findDealer();
+        List<Participant> players = findPlayers();
         for (Participant player : players) {
             WinningResult dealerResult = dealer.judgeWinOrLose(player);
-            playerResultSave(playersResult, player, dealerResult);
+            initPlayerResult(playersResult, player, dealerResult);
         }
         return playersResult;
     }
 
     public List<WinningResult> generateDealerResult() {
         List<WinningResult> dealerResult = new ArrayList<>();
-        Dealer dealer = extractDealer();
-        List<Participant> players = extractPlayers();
+        Dealer dealer = findDealer();
+        List<Participant> players = findPlayers();
         for (Participant player : players) {
             dealerResult.add(dealer.judgeWinOrLose(player));
         }
         return dealerResult;
     }
 
-    public void settingGame(CardPickerGenerator cardPickerGenerator) {
+    public void initFirstHit(CardPickerGenerator cardPickerGenerator) {
         for (Participant participant : participants.getParticipants()) {
             firstHitRule(cardPickerGenerator, participant);
         }
     }
 
-    private void playerResultSave(final Map<Participant, WinningResult> playersResult, final Participant player, final WinningResult dealerResult) {
+    private void initPlayerResult(final Map<Participant, WinningResult> playersResult, final Participant player, final WinningResult dealerResult) {
         if (dealerResult == WinningResult.WIN) {
             playersResult.put(player, WinningResult.LOSE);
         }
@@ -60,14 +60,14 @@ public class BlackjackGame {
         }
     }
 
-    private List<Participant> extractPlayers() {
+    private List<Participant> findPlayers() {
         List<Participant> players = participants.getParticipants().stream()
             .filter(participant -> !participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
             .collect(Collectors.toList());
         return players;
     }
 
-    private Dealer extractDealer() {
+    private Dealer findDealer() {
         Dealer dealer = (Dealer) participants.getParticipants().stream()
             .filter(participant -> participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
             .findFirst()
