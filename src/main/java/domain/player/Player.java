@@ -4,6 +4,8 @@ import domain.deck.Card;
 import java.util.List;
 
 public class Player {
+    private static final int BLACK_JACK_NUMBER = 21;
+
     private final Name name;
     private final Hand hand;
 
@@ -14,6 +16,20 @@ public class Player {
 
     public void drawCard(final Card card) {
         hand.addCard(card);
+    }
+
+    public boolean isWin(final int dealerScore) {
+        if (dealerScore > BLACK_JACK_NUMBER && hand.score() <= BLACK_JACK_NUMBER) {
+            return true;
+        }
+        return hand.score() <= BLACK_JACK_NUMBER && hand.score() > dealerScore;
+    }
+
+    public boolean isDraw(final int dealerScore) {
+        if (dealerScore > BLACK_JACK_NUMBER && hand.score() > BLACK_JACK_NUMBER) {
+            return true;
+        }
+        return dealerScore == hand.score();
     }
 
     public List<Card> getCards() {
