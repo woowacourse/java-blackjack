@@ -28,4 +28,11 @@ class PlayersTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("중복되는 이름이 존재합니다. : 아마란스");
     }
+
+    @Test
+    void validateBlankName() {
+        Assertions.assertThatThrownBy(() -> new Players("아마란스, ,무민,프리지아"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이름은 공백이 될 수 없습니다.");
+    }
 }
