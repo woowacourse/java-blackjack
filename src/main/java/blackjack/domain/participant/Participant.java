@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Cards cards;
 
