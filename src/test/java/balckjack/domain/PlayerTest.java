@@ -16,11 +16,11 @@ class PlayerTest {
     void testHit() {
         Participant p1 = new Player("무민");
         Card card = new StandardCard(Pattern.CLUB, "4");
-        Assertions.assertThat(p1.getCardDeck().getCardCount()).isEqualTo(0);
+        Assertions.assertThat(p1.getCardDeck().getCards().size()).isEqualTo(0);
 
         p1.hit(new StubCardPicker(card));
 
-        Assertions.assertThat(p1.getCardDeck().getCardCount()).isEqualTo(1);
+        Assertions.assertThat(p1.getCardDeck().getCards().size()).isEqualTo(1);
         Assertions.assertThat(p1.getCardDeck().getCards().contains(card)).isTrue();
     }
 }

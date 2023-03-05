@@ -23,7 +23,7 @@ class CardDeckTest {
     void findCardCount() {
         deck.addCard(new CourtCard(Pattern.SPADE, "K"));
         deck.addCard(new StandardCard(Pattern.SPADE, "4"));
-        Assertions.assertThat(deck.getCardCount()).isEqualTo(2);
+        Assertions.assertThat(deck.getCards().size()).isEqualTo(2);
     }
 
 }

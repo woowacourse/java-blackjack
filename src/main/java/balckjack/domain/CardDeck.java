@@ -23,11 +23,6 @@ public class CardDeck {
         }
     }
 
-    public int getCardCount() {
-        return cards.size();
-    }
-
-
     public List<String> getCardsInfo() {
         return cards.stream()
             .map(Card::getCardInfo)

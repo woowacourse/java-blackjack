@@ -1,7 +1,6 @@
 package balckjack.domain;
 
 import balckjack.strategy.CardPicker;
-import balckjack.util.StringUtil;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
