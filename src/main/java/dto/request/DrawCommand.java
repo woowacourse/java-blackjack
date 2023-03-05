@@ -9,7 +9,6 @@ public enum DrawCommand {
 
     private final String command;
 
-
     DrawCommand(String command) {
         this.command = command;
     }

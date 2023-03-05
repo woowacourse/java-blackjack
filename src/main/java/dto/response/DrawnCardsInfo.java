@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
+import view.CardNameRender;
 
 public class DrawnCardsInfo {
 
@@ -19,10 +20,14 @@ public class DrawnCardsInfo {
         List<String> cardInfos = new ArrayList<>();
 
         for (Card drawnCard : drawnCards) {
-            cardInfos.add(drawnCard.getValue().getName() + drawnCard.getType().getName());
+            cardInfos.add(renderCardName(drawnCard));
         }
 
         return new DrawnCardsInfo(participant.getName(), cardInfos);
+    }
+
+    private static String renderCardName(Card drawnCard) {
+        return CardNameRender.renderValue(drawnCard.getValue()) + CardNameRender.renderType(drawnCard.getType());
     }
 
     public String getName() {
