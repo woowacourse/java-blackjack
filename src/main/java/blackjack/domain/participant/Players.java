@@ -8,23 +8,22 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final String COMMA = ",";
     private static final int NUMBER_OF_MINIMUM_PLAYER = 1;
     private static final int NUMBER_OF_MAXIMUM_PLAYER = 7;
 
     private final List<Player> players;
 
     public Players(final String input) {
-        this.players = makePlayers(input);
-    }
-
-    private List<Player> makePlayers(final String input) {
-        final List<Player> names = Arrays.stream(input.split(COMMA))
+        final List<Player> players = Arrays.stream(input.split(","))
                 .map(Player::new)
                 .collect(Collectors.toList());
-        validateNumberOfPlayers(names);
-        validateDuplicatedNames(names);
-        return names;
+        validate(players);
+        this.players = players;
+    }
+
+    private void validate(final List<Player> players) {
+        validateNumberOfPlayers(players);
+        validateDuplicatedNames(players);
     }
 
     private void validateNumberOfPlayers(final List<Player> names) {
