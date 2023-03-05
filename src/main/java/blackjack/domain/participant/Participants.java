@@ -1,38 +1,48 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Participants {
 
-    private static final int MAXIMUM_PARTICIPANT_COUNT = 6;
+    private static final int MAXIMUM_PLAYER_COUNT = 5;
 
     private final List<Participant> participants;
 
-    public Participants(final List<Participant> participants) {
-        validate(participants);
-        this.participants = List.copyOf(participants);
+    private Participants(final List<Participant> participants) {
+        this.participants = participants;
     }
 
-    private void validate(final List<Participant> participants) {
-        validateCount(participants);
-        validateDuplicate(participants);
+    public static Participants of(final Dealer dealer, final List<Player> players) {
+        validate(players);
+
+        final List<Participant> recruits = new ArrayList<>();
+        recruits.add(dealer);
+        recruits.addAll(players);
+
+        return new Participants(recruits);
     }
 
-    private void validateCount(final List<Participant> participants) {
-        if (participants.size() > MAXIMUM_PARTICIPANT_COUNT) {
-            throw new IllegalArgumentException("참가자는 " + MAXIMUM_PARTICIPANT_COUNT + "명을 초과할 수 없습니다");
+    private static void validate(final List<Player> players) {
+        validateCount(players);
+        validateDuplicate(players);
+    }
+
+    private static void validateCount(final List<Player> players) {
+        if (players.size() > MAXIMUM_PLAYER_COUNT) {
+            throw new IllegalArgumentException("플레이어는 " + MAXIMUM_PLAYER_COUNT + "명을 초과할 수 없습니다");
         }
     }
 
-    private void validateDuplicate(final List<Participant> participants) {
-        final Set<Participant> uniqueParticipants = new HashSet<>(participants);
+    private static void validateDuplicate(final List<Player> players) {
+        final HashSet<Player> uniquePlayers = new HashSet<>(players);
 
-        if (uniqueParticipants.size() != participants.size()) {
-            throw new IllegalArgumentException("참가자 이름은 중복될 수 없습니다.");
+        if (players.size() != uniquePlayers.size()) {
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 
@@ -58,6 +68,6 @@ public class Participants {
     }
 
     public List<Participant> getParticipants() {
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
 }

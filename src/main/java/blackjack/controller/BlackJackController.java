@@ -12,7 +12,6 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerStateResponse;
 import blackjack.view.dto.ParticipantResponse;
 import blackjack.view.dto.PlayerResultResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +28,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Participants participants = gatherParticipants();
+        final Participants participants = Participants.of(new Dealer(), gatherPlayers());
         final Deck deck = DeckFactory.createWithCount(Deck.TRUMP, 1);
 
         deck.shuffle();
@@ -41,16 +40,7 @@ public class BlackJackController {
         printResult(participants);
     }
 
-    private Participants gatherParticipants() {
-        final List<Participant> participants = new ArrayList<>();
-
-        participants.add(new Dealer());
-        participants.addAll(createPlayers());
-
-        return new Participants(participants);
-    }
-
-    private List<Player> createPlayers() {
+    private List<Player> gatherPlayers() {
         final List<String> playerNames = inputView.readPlayerNames();
         return playerNames.stream()
                 .map(Player::new)

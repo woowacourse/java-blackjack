@@ -12,30 +12,29 @@ import org.junit.jupiter.api.Test;
 class ParticipantsTest {
 
     @Test
-    void 중복되는_이름이_존재하면_예외를_던진다() {
-        final List<Participant> participants = List.of(
-                new Dealer(),
-                new Player("dazzle"),
-                new Player("dazzle"),
-                new Player("kokodak"));
+    void 중복된_플레이어_이름이_존재하면_예외를_던진다() {
+        final Dealer dealer = new Dealer();
+        final List<Player> players = List.of(
+                new Player("toney"),
+                new Player("toney"));
 
-        assertThatThrownBy(() -> new Participants(participants))
+        assertThatThrownBy(() -> Participants.of(dealer, players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void 딜러_포함_참여자가_6명_초과라면_예외를_던진다() {
-        final List<Participant> participants = List.of(
-                new Dealer(),
+    void 플레이어가_5명_초과라면_예외를_던진다() {
+        final Dealer dealer = new Dealer();
+        final List<Player> players = List.of(
                 new Player("dazzle"),
                 new Player("kokodak"),
-                new Player("odo"),
-                new Player("hoi"),
-                new Player("gray"),
-                new Player("pobi")
+                new Player("toney"),
+                new Player("pobi"),
+                new Player("crong"),
+                new Player("jason")
         );
 
-        assertThatThrownBy(() -> new Participants(participants))
+        assertThatThrownBy(() -> Participants.of(dealer, players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
