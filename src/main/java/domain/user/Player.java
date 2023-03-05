@@ -37,6 +37,16 @@ public class Player {
         for (Card card : hand) {
             point += card.getDenomination().getPoint();
         }
+        if (hasAce()) {
+            return calculateAce(point);
+        }
+        return point;
+    }
+
+    protected int calculateAce(int point) {
+        if (point + 10 <= 21) {
+            return point + 10;
+        }
         return point;
     }
 
