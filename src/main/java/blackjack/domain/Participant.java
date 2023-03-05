@@ -46,11 +46,11 @@ public abstract class Participant {
             return false;
         }
         Participant that = (Participant) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(playerCards, that.playerCards) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(playerCards, name);
     }
 }
