@@ -1,6 +1,6 @@
 package template;
 
 @FunctionalInterface
-public interface ExceptionHandler<T> {
+public interface InputRepeater<T> {
     T execute();
 }

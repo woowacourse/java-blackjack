@@ -2,11 +2,11 @@ package template;
 
 public class Repeater {
 
-    public static <T> T repeat(ExceptionHandler<T> exceptionHandler) {
+    public static <T> T repeat(InputRepeater<T> inputRepeater) {
         T result = null;
         while (result == null) {
             try {
-                result = exceptionHandler.execute();
+                result = inputRepeater.execute();
             } catch (Exception exception) {
                 System.out.println(exception.getMessage());
             }
