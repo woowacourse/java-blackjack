@@ -25,14 +25,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CardsTest {
 
-    private static Stream<Arguments> generateCardsWithoutACE() {
+    private static Stream<Arguments> generateCardsWithoutAce() {
         return Stream.of(
                 Arguments.of(List.of(new Card(TWO, SPADE), new Card(JACK, HEART)), 12),
                 Arguments.of(List.of(), 0)
         );
     }
 
-    private static Stream<Arguments> generateCardsWithACE() {
+    private static Stream<Arguments> generateCardsWithAce() {
         return Stream.of(
                 Arguments.of(List.of(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
                 Arguments.of(List.of(new Card(ACE, SPADE), new Card(ACE, HEART), new Card(TEN, CLOVER)), 12),
@@ -42,7 +42,7 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateCardsWithoutACE")
+    @MethodSource("generateCardsWithoutAce")
     void 점수를_계산한다(final List<Card> cardPack, final int totalScore) {
         final Cards cards = new Cards(cardPack);
 
@@ -50,7 +50,7 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateCardsWithACE")
+    @MethodSource("generateCardsWithAce")
     void 에이스가_포함된_경우_최적의_점수를_계산한다(final List<Card> cardPack, final int totalScore) {
         final Cards cards = new Cards(cardPack);
 
