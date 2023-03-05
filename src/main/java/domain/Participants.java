@@ -119,10 +119,16 @@ public class Participants {
         int dealerHandCount = dealer.getCardNames().size();
         return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
     }
+    //------
 
     public List<String> getPlayersName() {
         return findPlayers().stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
+    }
+
+    public boolean shouldDealerHit() {
+        final Dealer dealer = (Dealer) findDealer();
+        return dealer.shouldHit();
     }
 }
