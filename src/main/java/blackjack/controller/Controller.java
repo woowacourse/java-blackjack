@@ -30,8 +30,8 @@ public class Controller {
         setGame();
         showFirstDraw();
         supplyAdditionalCards();
-        printFinalCards();
-        printWinningResult();
+        showFinalCards();
+        showWinningResult();
     }
 
     private void setGame() {
@@ -71,14 +71,14 @@ public class Controller {
         }
     }
 
-    private void printFinalCards() {
+    private void showFinalCards() {
         ParticipantResultDto dealerResult = blackjackGame.getDealerResult();
         List<ParticipantResultDto> playerResults = blackjackGame.getPlayerResults();
 
         outputView.printFinalResults(dealerResult, playerResults);
     }
 
-    private void printWinningResult() {
+    private void showWinningResult() {
         blackjackGame.calculateWinning();
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         List<PlayerWinningDto> playerWinningResults = blackjackGame.getPlayerWinningResults();
