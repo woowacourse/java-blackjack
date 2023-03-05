@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Name {
 
-    private static final int UPPER_BOUND = 10;
     private static final String RESTRICT = "딜러";
+    private static final int MAXIMUM_LENGTH = 10;
 
     private final String value;
 
@@ -17,23 +17,23 @@ public class Name {
     private void validate(final String value) {
         validateBlank(value);
         validateLength(value);
-        validateRestrictWord(value);
+        validateRestrict(value);
     }
 
     private void validateBlank(final String value) {
         if (value.isBlank()) {
-            throw new IllegalArgumentException("이름은 존재해야 합니다. 현재 이름: " + value);
+            throw new IllegalArgumentException("이름은 공백일 수 없습니다. 현재 이름: " + value);
         }
     }
 
     private void validateLength(final String value) {
-        if (value.length() > UPPER_BOUND) {
-            throw new IllegalArgumentException("이름은 " + UPPER_BOUND + "글자 이하여야 합니다. 현재 이름: " + value);
+        if (value.length() > MAXIMUM_LENGTH) {
+            throw new IllegalArgumentException("이름은 " + MAXIMUM_LENGTH + "글자 이하여야 합니다. 현재 이름: " + value);
         }
     }
 
-    private void validateRestrictWord(final String value) {
-        if (value.equals(RESTRICT)) {
+    private void validateRestrict(final String value) {
+        if (Objects.equals(RESTRICT, value)) {
             throw new IllegalArgumentException("이름은 " + RESTRICT + "일 수 없습니다. 현재 이름: " + value);
         }
     }

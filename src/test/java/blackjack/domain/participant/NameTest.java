@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class NameTest {
 
     @Test
-    void 이름이_공백이면_예외를_던실진다() {
+    void 이름이_공백이면_예외를_던진다() {
         final String input = "   ";
 
         assertThatThrownBy(() -> new Name(input))
@@ -28,7 +28,7 @@ class NameTest {
     }
 
     @Test
-    void 이름이_딜러_라면_예외를_던진다() {
+    void 이름이_딜러라면_예외를_던진다() {
         final String input = "딜러";
 
         assertThatThrownBy(() -> new Name(input))
