@@ -25,13 +25,12 @@ public class Participants {
         }
     }
 
-    public Dealer findDealer() {
-        Participant dealer = participants.stream()
+    public Participant findDealer() {
+        return participants.stream()
             .filter(participant -> participant.getClass().equals(Dealer.class))
             .findFirst()
             .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_DEALER.getMessage())
             );
-        return (Dealer)dealer;
     }
 
     public List<Participant> findPlayers() {
