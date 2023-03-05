@@ -21,8 +21,7 @@ public class OutputView {
 
         System.out.println(NEW_LINE + "딜러와 " + names + "에게 2장을 나누었습니다.");
 
-        infos.stream()
-                .forEach(info -> System.out.println(info.getName() + ": " + getCardsInfo(info.getDrawnCards())));
+        infos.forEach(info -> System.out.println(info.getName() + ": " + getCardsInfo(info.getDrawnCards())));
         System.out.println();
     }
 
