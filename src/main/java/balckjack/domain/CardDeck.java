@@ -28,4 +28,10 @@ public class CardDeck {
     public List<Card> getCards() {
         return cards;
     }
+    public List<AceCard> extractAceCards(){
+        return cards.stream()
+            .filter((card) -> card.getValue() == Referee.MAX_ACE_VALUE)
+            .map((card) -> (AceCard) card).collect(
+                Collectors.toList());
+    }
 }

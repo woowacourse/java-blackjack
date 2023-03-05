@@ -11,9 +11,9 @@ public class Referee {
 
     public static final int BURST_CODE = -1;
     public static final int DEALER_HIT_NUMBER = 16;
+    public static final int MAX_ACE_VALUE = 11;
 
     private static final int MIN_ACE_VALUE = 1;
-    private static final int MAX_ACE_VALUE = 11;
     private static final int BLACKJACK_SCORE = 21;
 
     /**
@@ -24,7 +24,7 @@ public class Referee {
      */
     public int calculateDeckScore(CardDeck deck) {
         int commonSum = calculateCommonCardScore(deck);
-        List<AceCard> aceCards = extractAceCards(deck);
+        List<AceCard> aceCards = deck.extractAceCards();
         int aceCardCount = aceCards.size();
 
         if (isBurst(commonSum, aceCardCount)) {
@@ -34,18 +34,10 @@ public class Referee {
         return commonSum + aceSum;
     }
 
-
     private int calculateCommonCardScore(CardDeck deck) {
         return deck.getCards().stream().filter(
             (card) -> card.getValue() != MAX_ACE_VALUE
         ).mapToInt(Card::getValue).sum();
-    }
-
-    private List<AceCard> extractAceCards(CardDeck deck) {
-        return deck.getCards().stream()
-            .filter((card) -> card.getValue() == MAX_ACE_VALUE)
-            .map((card) -> (AceCard) card).collect(
-                Collectors.toList());
     }
 
     private boolean isBurst(int sum, int aceCardCount) {
