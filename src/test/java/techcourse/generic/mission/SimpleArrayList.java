@@ -22,6 +22,14 @@ public class SimpleArrayList<T> implements SimpleList<T>{
         data = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
+    public static <T> SimpleArrayList<T> fromArrayToList(T[] objects) {
+        SimpleArrayList<T> list = new SimpleArrayList<>();
+        for (T object : objects) {
+            list.add(object);
+        }
+        return list;
+    }
+
     @Override
     public boolean add(T value) {
         resize();

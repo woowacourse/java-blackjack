@@ -3,10 +3,10 @@ package techcourse.generic.mission;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class Mission1 {
+public class Mission {
 
     @Test
-    void test() {
+    void mission1() {
         SimpleArrayList<Integer> list = new SimpleArrayList<>();
         list.add(1);
         list.add(2);
@@ -17,4 +17,15 @@ public class Mission1 {
         Assertions.assertThat(first).isEqualTo(1);
         Assertions.assertThat(second).isEqualTo(2);
     }
+
+    @Test
+    void mission2() {
+        final String[] arrays = {"first", "second"};
+
+        SimpleArrayList<String> list = SimpleArrayList.<String>fromArrayToList(arrays);
+
+        Assertions.assertThat(list.get(0)).isEqualTo("first");
+        Assertions.assertThat(list.get(1)).isEqualTo("second");
+    }
+
 }
