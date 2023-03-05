@@ -93,7 +93,7 @@ public class Participants {
         int playerHandValue = getParticipantHandValue(player);
 
         if (playerHandValue != dealerHandValue) {
-            playerResults.put(player.getName(), Result.compareHandValue(playerHandValue, dealerHandValue));
+            playerResults.put(player.getName(), Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue));
             return;
         }
         compareAtTieValue(dealer, playerResults, player, playerHandValue);
@@ -104,7 +104,7 @@ public class Participants {
             playerResults.put(player.getName(), Result.TIE);
             return;
         }
-        compareHandCount(dealer, playerResults, player);
+        playerResults.put(player.getName(), compareHandCount(dealer, player));
     }
 
     private int getParticipantHandValue(Participant participant) {
@@ -114,13 +114,9 @@ public class Participants {
         return participant.getHandValue();
     }
 
-    private void compareHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
+    private Result compareHandCount(Dealer dealer, Player player) {
         int playerHandCount = player.getCardNames().size();
         int dealerHandCount = dealer.getCardNames().size();
-        if (playerHandCount != dealerHandCount) {
-            playerResults.put(player.getName(), Result.compareHandCount(playerHandCount, dealerHandCount));
-            return;
-        }
-        playerResults.put(player.getName(), Result.TIE);
+        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
     }
 }
