@@ -1,6 +1,7 @@
 package controller;
 
 import domain.game.BlackjackGame;
+import domain.game.Command;
 import domain.game.GameResult;
 import domain.strategy.RandomNumberGenerator;
 import domain.user.People;
@@ -36,7 +37,11 @@ public class BlackjackController {
                 PlayerParameter.from(people.getDealer()),
                 makePlayersParameter(people));
 
-        letPlayersHit(people.getPlayers());
+
+        blackjackGame.hitByCommand((name) -> Command.getCommand(inputView.inputCardCommand(name)),
+                outputView::printPlayerCardWithName);
+        hitByDealer();
+
 
         outputView.printGameScore(
                 PlayerParameter.of(people.getDealer(), people.getDealer().sumHand()),
@@ -75,31 +80,6 @@ public class BlackjackController {
     private void initializeGame() {
         List<String> playersName = inputView.inputParticipantsName();
         blackjackGame = new BlackjackGame(playersName, new RandomNumberGenerator());
-    }
-
-    private void letPlayersHit(List<Player> players) {
-        for (Player player : players) {
-            hitByPlayerChoice(player);
-        }
-        hitByDealer();
-    }
-
-    private void hitByPlayerChoice(Player player) {
-        if (needToQuit(player)) {
-            return;
-        }
-        blackjackGame.hitFor(player.getPlayerName().getValue());
-        outputView.printPlayerCardWithName(PlayerParameter.from(player));
-
-        hitByPlayerChoice(player);
-    }
-
-    private boolean needToQuit(Player player) {
-        if (blackjackGame.isBust(player.getPlayerName().getValue())) {
-            return true;
-        }
-        String choice = inputView.inputCardCommand(player.getPlayerName().getValue());
-        return choice.equals("n");
     }
 
     private void hitByDealer() {

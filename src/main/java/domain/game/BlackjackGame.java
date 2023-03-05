@@ -3,9 +3,12 @@ package domain.game;
 import domain.strategy.NumberGenerator;
 import domain.user.People;
 import domain.user.Player;
+import view.dto.PlayerParameter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BlackjackGame {
 
@@ -34,10 +37,6 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isBust(String playerName) {
-        return people.isBust(playerName);
-    }
-
     public Map<Player, GameResult> getGameResultForAllPlayer() {
         return people.makeGameResultForAllPlayer();
     }
@@ -46,11 +45,11 @@ public class BlackjackGame {
         return people.getDealerRecord(people.makeGameResultForAllPlayer());
     }
 
-    public void hitFor(String playerName) {
-        people.letPlayerToHit(playerName, deck);
-    }
-
     public People getPeople() {
         return people;
+    }
+
+    public void hitByCommand(Function<String, Command> function, Consumer<PlayerParameter> consumer) {
+        people.hitByCommandAllPlayers(function, consumer, deck);
     }
 }

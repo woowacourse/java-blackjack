@@ -1,13 +1,16 @@
 package domain.user;
 
+import domain.game.Command;
 import domain.game.Deck;
 import domain.game.GameResult;
-import domain.game.GameRule;
+import view.dto.PlayerParameter;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class People {
@@ -37,11 +40,6 @@ public class People {
         dealer.draw(deck.serve());
     }
 
-    public void letPlayerToHit(String playerName, Deck deck) {
-        Player player = playerByName(playerName);
-        player.draw(deck.serve());
-    }
-
     public void letDealerHitUntilThreshold(Deck deck) {
         while (dealer.isHit()) {
             dealer.draw(deck.serve());
@@ -63,19 +61,8 @@ public class People {
         return GameResult.makeDealerRecord(record);
     }
 
-    public boolean isBust(String playerName) {
-        return playerByName(playerName).sumHand() > GameRule.BLACKJACK.getNumber();
-    }
-
     public boolean dealerNeedsHit() {
         return dealer.isHit();
-    }
-
-    private Player playerByName(String playerName) {
-        return players.stream()
-                .filter(it -> it.hasSameNameWith(playerName))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 플레이어가 존재하지 않습니다"));
     }
 
     public List<Player> getPlayers() {
@@ -84,5 +71,20 @@ public class People {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public void hitByCommandAllPlayers(Function<String, Command> function, Consumer<PlayerParameter> consumer, Deck deck) {
+        for (Player player : players) {
+            hitByCommand(function, consumer,deck, player);
+        }
+
+    }
+
+    private void hitByCommand(Function<String, Command> function, Consumer<PlayerParameter> consumer, Deck deck, Player player) {
+        Command command;
+        do{
+            command = function.apply(player.getPlayerName().getValue());
+            command = command.apply(player, deck, consumer);
+        } while(command == Command.y);
     }
 }

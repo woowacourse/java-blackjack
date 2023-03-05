@@ -38,8 +38,8 @@ public class InputView {
 
     public String inputCardCommand(String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
-        String line = scanner.nextLine();
-        validator.validateNotBlank(line);
-        return line;
+        String command = scanner.nextLine();
+        validator.validateNotBlank(command);
+        return command;
     }
 }
