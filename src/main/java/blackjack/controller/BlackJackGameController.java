@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import java.util.Optional;
+
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.participant.Dealer;
@@ -29,19 +31,30 @@ public class BlackJackGameController {
         final Players players = blackJackGame.getPlayers();
 
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
+        handOutCardToPlayers(blackJackGame, players);
 
         handOutCardToDealer(blackJackGame, dealer);
-        handOutCardToPlayers(blackJackGame, players);
 
         blackJackGame.findWinner();
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
     }
 
-    private void handOutCardToDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
-        while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
-            blackJackGame.handOutCardTo(shufflingMachine, dealer);
-            OutputView.printDealerReceiveOneMoreCard();
+    private BlackJackGame generateBlackJackGame() {
+        Optional<BlackJackGame> blackJackGame;
+        do {
+            blackJackGame = checkNames();
+        } while (blackJackGame.isEmpty());
+        return blackJackGame.get();
+    }
+
+    private Optional<BlackJackGame> checkNames() {
+        try {
+            final String inputNames = InputView.readNames();
+            return Optional.of(new BlackJackGame(new Dealer(), inputNames));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
         }
     }
 
@@ -59,37 +72,40 @@ public class BlackJackGameController {
         }
     }
 
+    private String inputGameCommandToGetOneMoreCard(final Player player) {
+        Optional<String> gameCommand;
+        do {
+            gameCommand = checkGameCommand(player);
+        } while (gameCommand.isEmpty());
+        return gameCommand.get();
+    }
+
+    private Optional<String> checkGameCommand(final Player player) {
+        try {
+            final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
+            validateCorrectCommand(gameCommand);
+            return Optional.of(gameCommand);
+        } catch (final IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
+    }
+
     private boolean handOutCardByCommand(final BlackJackGame blackJackGame, final Player player,
                                          final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.handOutCardTo(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
-        }
-        if (playerAnswer.equals(NO_COMMAND)) {
-            OutputView.printParticipantCards(player.getName(), player.getCards());
             return true;
         }
+        OutputView.printParticipantCards(player.getName(), player.getCards());
         return false;
     }
 
-    private BlackJackGame generateBlackJackGame() {
-        try {
-            final String inputNames = InputView.readNames();
-            return new BlackJackGame(new Dealer(), inputNames);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return generateBlackJackGame();
-        }
-    }
-
-    private String inputGameCommandToGetOneMoreCard(final Player player) {
-        try {
-            final String gameCommand = InputView.readGameCommandToGetOneMoreCard(player.getName());
-            validateCorrectCommand(gameCommand);
-            return gameCommand;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return inputGameCommandToGetOneMoreCard(player);
+    private void handOutCardToDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
+        while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
+            blackJackGame.handOutCardTo(shufflingMachine, dealer);
+            OutputView.printDealerReceiveOneMoreCard();
         }
     }
 

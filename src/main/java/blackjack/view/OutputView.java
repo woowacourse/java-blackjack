@@ -57,9 +57,9 @@ public class OutputView {
 
     public static void printCardsWithSum(final List<Player> players, final Dealer dealer) {
         System.out.println();
-        printParticipantCards("딜ç러", dealer.getCards());
+        printParticipantCards("딜러", dealer.getCards());
         System.out.println(" - 결과: " + dealer.calculateSumOfRank());
-        for (Player player : players) {
+        for (final Player player : players) {
             printParticipantCards(player.getName(), player.getCards());
             System.out.println(" - 결과: " + player.calculateSumOfRank());
         }
@@ -78,7 +78,9 @@ public class OutputView {
 
     private static void generateDealerResult(final Map<Result, Integer> dealerResult, final Result result) {
         if (dealerResult.get(result) != 0) {
-            finalResult.append(dealerResult.get(result)).append(result.getValue());
+            finalResult.append(dealerResult.get(result))
+                    .append(result.getValue())
+                    .append(" ");
         }
     }
 }
