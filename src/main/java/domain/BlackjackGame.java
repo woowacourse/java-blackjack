@@ -1,6 +1,5 @@
 package domain;
 
-import domain.user.Participants;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
@@ -19,14 +18,6 @@ public class BlackjackGame {
         participants.drawInitialCardsEachParticipant(deck);
     }
 
-    public Dealer getDealer() {
-        return this.participants.getDealer();
-    }
-
-    public List<Player> getPlayers() {
-        return this.participants.getPlayers();
-    }
-
     public boolean hitOrStayByDealer() {
         return this.participants.hitOrStayByDealer(this.deck);
     }
@@ -37,5 +28,13 @@ public class BlackjackGame {
 
     public void hitBy(Player player) {
         player.addCard(this.deck.draw());
+    }
+
+    public Dealer getDealer() {
+        return this.participants.getDealer();
+    }
+
+    public List<Player> getPlayers() {
+        return this.participants.getPlayers();
     }
 }

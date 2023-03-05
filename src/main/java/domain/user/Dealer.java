@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.CardHand;
+import domain.Hand;
 
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
@@ -8,12 +8,12 @@ public class Dealer extends User {
 
     public Dealer() {
         super.userName = new DealerName(DEALER_NAME);
-        super.cardHand = new CardHand();
+        super.hand = new Hand();
     }
 
-    public Dealer(CardHand cardHand) {
+    public Dealer(Hand hand) {
         super.userName = new DealerName(DEALER_NAME);
-        super.cardHand = cardHand;
+        super.hand = hand;
     }
 
     @Override

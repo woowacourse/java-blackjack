@@ -27,11 +27,11 @@ public enum Rank {
         return numberToPrint;
     }
 
-    public int getScore(){
-        return score;
-    }
-
     public boolean isAce() {
         return this.equals(ACE);
+    }
+
+    public int getScore(){
+        return score;
     }
 }

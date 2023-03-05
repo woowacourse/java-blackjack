@@ -1,5 +1,5 @@
 package domain.user;
 
 public interface UserName {
-    public String getValue();
+    String getValue();
 }
