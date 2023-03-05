@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SimpleListTest {
-    SimpleList list;
+class SimpleListStringTest {
+    SimpleList<String> list;
 
     @BeforeEach
     void initList() {
         // 구현한 구현체로 바꾸기
-        list = new SimpleLinkedList(new String[]{"0", "1"});
+        list = new SimpleArrayList<>(new String[]{"0", "1"});
     }
 
     @Test
