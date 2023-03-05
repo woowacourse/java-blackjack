@@ -23,8 +23,8 @@ public enum GameResult {
     public static GameResult getResult(Player player, Dealer dealer) {
         return Arrays.stream(GameResult.values())
                 .filter(it -> it.function.apply(
-                        getPlayerPoint(player),
-                        getPlayerPoint(dealer)
+                                getPlayerPoint(player),
+                                getPlayerPoint(dealer)
                         )
                 )
                 .findAny()

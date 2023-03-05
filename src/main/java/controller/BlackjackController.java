@@ -62,8 +62,8 @@ public class BlackjackController {
 
     private List<PlayerParameter> makePlayersParameterWithResult(People people) {
         return people.getPlayers().stream()
-                        .map(it -> PlayerParameter.of(it, it.sumHand()))
-                        .collect(Collectors.toList());
+                .map(it -> PlayerParameter.of(it, it.sumHand()))
+                .collect(Collectors.toList());
     }
 
     private List<PlayerParameter> makePlayersParameter(People people) {
