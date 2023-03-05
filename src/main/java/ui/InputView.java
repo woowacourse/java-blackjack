@@ -1,5 +1,6 @@
 package ui;
 
+import util.ExceptionCounter;
 import domain.user.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,7 @@ public class InputView {
         if (inputWhetherDraw.equals(YES_COMMAND) || inputWhetherDraw.equals(NO_COMMAND)) {
             return;
         }
+        ExceptionCounter.addCountHandledException();
         throw new IllegalArgumentException(String.format(
                 "%s 또는 %s를 입력하세요.", YES_COMMAND, NO_COMMAND
         ));
