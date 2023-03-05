@@ -12,4 +12,8 @@ public class Dealer extends User {
 	public boolean isHittable() {
 		return cards.isUnder(UNDER_OVER_SCORE);
 	}
+
+	public Card getOneDealerCard(){
+		return cards.getCards().get(0);
+	}
 }

@@ -59,7 +59,7 @@ public class BlackJack {
 	}
 
 	public String getDealerCardHidden() {
-		Card dealerCard = users.getDealer().getCards().get(0);
+		Card dealerCard = users.getDealer().getOneDealerCard();
 		return dealerCard.getCardName();
 	}
 
