@@ -49,4 +49,19 @@ public class PlayerTest {
         // then
         assertThat(player.calculateTotalScore()).isEqualTo(20);
     }
+
+    @Test
+    @DisplayName("갖고 있는 카드가 버스트인지 확인")
+    void isBust() {
+        // given
+        Player player = new Player("doggy");
+
+        // when
+        player.receiveCard(new Card(Number.Q, Pattern.CLUB));
+        player.receiveCard(new Card(Number.K, Pattern.CLUB));
+        player.receiveCard(new Card(Number.K, Pattern.HEART));
+
+        // then
+        assertThat(player.isBust()).isTrue();
+    }
 }
