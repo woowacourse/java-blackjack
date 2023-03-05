@@ -15,9 +15,6 @@ public class BlackjackGame {
         this.cardDeck = cardDeck;
     }
 
-    public void shuffleCardDeck() {
-        cardDeck.shuffle();
-    }
 
     public void distributeInitialCard() {
         for (int i = 0; i < INITIAL_CARD_SET; i++) {

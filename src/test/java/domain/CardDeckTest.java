@@ -1,6 +1,8 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
+
+import domain.strategy.NoShuffleCardsStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,7 @@ public class CardDeckTest {
         CardGenerator generator = new CardGenerator();
 
         Assertions.assertDoesNotThrow(
-                () -> new CardDeck(generator.generate()));
+                () -> new CardDeck(generator.generate(new NoShuffleCardsStrategy())));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.*;
+import strategy.ShuffleCardsStrategy;
 import view.InputView;
 import view.OutputView;
 
@@ -17,14 +18,24 @@ public class Controller {
 
     public void run() {
         Dealer dealer = new Dealer();
-        Players players = new Players(inputView.readPlayerNames());
-        BlackjackGame game = new BlackjackGame(dealer, players, new CardDeck(new CardGenerator().generate()));
-        game.shuffleCardDeck();
+        Players players = setPlayers();
+        BlackjackGame game = new BlackjackGame(dealer, players,
+                new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
+
         distributeInitialCard(dealer, players, game);
         selectAdditionalCard(players, game);
         addWhenUnderStandard(dealer, game);
         outputView.printCardsResult(dealer, players);
         outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
+    }
+
+    private Players setPlayers(){
+        try {
+            return new Players(inputView.readPlayerNames());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return setPlayers();
+        }
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {

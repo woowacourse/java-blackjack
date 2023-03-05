@@ -1,5 +1,6 @@
 package domain;
 
+import domain.strategy.NoShuffleCardsStrategy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ public class BlackjackGameTest {
         dealer = new Dealer();
         players = new Players("pobi,jason");
         CardGenerator cardGenerator = new CardGenerator();
-        cardDeck = new CardDeck(cardGenerator.generate());
+        cardDeck = new CardDeck(cardGenerator.generate(new NoShuffleCardsStrategy()));
     }
 
     @Test

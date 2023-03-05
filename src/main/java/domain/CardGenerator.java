@@ -1,12 +1,15 @@
 package domain;
 
+import strategy.ShuffleStrategy;
+
 import java.util.*;
 
 public class CardGenerator {
-    public Queue<Card> generate() {
+    public Queue<Card> generate(ShuffleStrategy shuffleStrategy) {
         Queue<Card> cardDeck = new LinkedList<>();
         List<Card> cards = new ArrayList<>();
         makeCards(cards);
+        shuffleStrategy.shuffle(cards);
         cardDeck.addAll(cards);
         return cardDeck;
     }
@@ -22,5 +25,4 @@ public class CardGenerator {
             cards.add(new Card(cardNumber, cardPattern));
         }
     }
-
 }

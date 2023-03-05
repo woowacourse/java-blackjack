@@ -2,11 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.strategy.NoShuffleCardsStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Queue;
 
 public class CardGeneratorTest {
@@ -15,7 +15,7 @@ public class CardGeneratorTest {
     @BeforeEach
     void beforeEach(){
         cardGenerator = new CardGenerator();
-        cards = cardGenerator.generate();
+        cards = cardGenerator.generate(new NoShuffleCardsStrategy());
     }
 
     @Test
