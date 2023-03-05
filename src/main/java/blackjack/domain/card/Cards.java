@@ -7,8 +7,8 @@ import java.util.List;
 public class Cards {
 
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
-    private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
+    private static final int BLACKJACK_SIZE_CONDITION = 2;
 
     private final List<Card> cards;
 
@@ -21,27 +21,20 @@ public class Cards {
     }
 
     public int calculateScoreForBlackjack() {
-        int score = preCalculate();
+        int score = calculate();
 
         if (containsAce()) {
-            score = plusScoreIfNotBust(score);
+            score = reCalculateIfSoftHand(score);
         }
 
         return score;
     }
 
-    private int preCalculate() {
+    private int calculate() {
         int score = 0;
+
         for (Card card : cards) {
             score += card.convertToBlackjackScore();
-        }
-
-        return score;
-    }
-
-    private int plusScoreIfNotBust(int score) {
-        if (score + MAKE_ACE_BIGGER_SCORE <= BLACKJACK_SCORE_CONDITION) {
-            score += MAKE_ACE_BIGGER_SCORE;
         }
 
         return score;
@@ -50,6 +43,14 @@ public class Cards {
     private boolean containsAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private int reCalculateIfSoftHand(int score) {
+        if (score + MAKE_ACE_BIGGER_SCORE <= BLACKJACK_SCORE_CONDITION) {
+            return score + MAKE_ACE_BIGGER_SCORE;
+        }
+
+        return score;
     }
 
     public void add(Card card) {
