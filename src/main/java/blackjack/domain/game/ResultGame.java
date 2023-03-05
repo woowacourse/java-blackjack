@@ -28,13 +28,21 @@ public class ResultGame {
             return;
         }
         if (player.isBust()) {
-            compareScoreWithBustedPlayer(player);
+            compareScoreWithBustPlayer(player);
             return;
         }
         compareScoreWithNotBustDealer(player);
     }
 
-    private void compareScoreWithBustedPlayer(final Player player) {
+    private void compareScoreWithBustDealer(final Player player) {
+        if (player.isBust()) {
+            playersResult.put(player, WinTieLose.TIE);
+            return;
+        }
+        playersResult.put(player, WinTieLose.WIN);
+    }
+
+    private void compareScoreWithBustPlayer(final Player player) {
         if (dealer.isBust()) {
             playersResult.put(player, WinTieLose.TIE);
             return;
@@ -54,14 +62,6 @@ public class ResultGame {
         if (dealerScore > player.getTotalScore()) {
             playersResult.put(player, WinTieLose.LOSE);
         }
-    }
-
-    private void compareScoreWithBustDealer(final Player player) {
-        if (player.isBust()) {
-            playersResult.put(player, WinTieLose.TIE);
-            return;
-        }
-        playersResult.put(player, WinTieLose.WIN);
     }
 
     public int getDealerCount(final WinTieLose expected) {

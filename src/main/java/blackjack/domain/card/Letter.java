@@ -24,7 +24,7 @@ public enum Letter {
         this.value = value;
     }
 
-    public boolean isLetterAce(){
+    public boolean isLetterAce() {
         return this.name.equals("A");
     }
 

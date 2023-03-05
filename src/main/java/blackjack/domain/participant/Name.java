@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.regex.Pattern;
-
 public class Name {
 
     private final String value;
