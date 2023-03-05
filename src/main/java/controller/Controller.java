@@ -55,11 +55,11 @@ public final class Controller {
     }
 
     private void playParticipantTurn(final Participant participant) {
-        do{
+        while (participant.isInPlaying(isHit(participant))) {
             participant.takeCard(deck.dealCard());
 
             OutputView.printPlayerCards(participant.getName(), participant.showCards());
-        }while (participant.isInPlaying(isHit(participant)));
+        }
     }
 
     private boolean isHit(final Participant participant) {
@@ -67,7 +67,7 @@ public final class Controller {
     }
 
     private void playDealerTurn(final Dealer dealer) {
-        if(dealer.isInPlaying(dealer.dealerIsHit())){
+        if (dealer.isInPlaying(dealer.dealerIsHit())) {
             dealer.takeCard(deck.dealCard());
             OutputView.printDealerHit();
         }
