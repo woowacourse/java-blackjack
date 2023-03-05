@@ -65,7 +65,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 현재 가지고 있는 카드중 한장만 반환할 수 있다.")
+    @DisplayName("딜러는 현재 가지고 있는 카드중 첫번째 카드를 반환할 수 있다.")
     void showOneCard() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);
