@@ -5,14 +5,13 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.game.BlackJackGame;
 import domain.user.Dealer;
-import domain.user.Name;
 import domain.user.Player;
 import domain.user.PlayerStatus;
+import domain.user.Players;
 import domain.user.User;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -41,14 +40,12 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards();
         Dealer dealer = new Dealer();
-        List<Player> players = setUpPlayers();
+        Players players = setUpPlayers();
         return new BlackJackGame(players, dealer, cards);
     }
 
-    private List<Player> setUpPlayers() {
-        return readUsersName().stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList());
+    private Players setUpPlayers() {
+        return new Players(readUsersName());
     }
 
     private List<String> readUsersName() {
@@ -102,7 +99,7 @@ public class BlackJackGameController {
 
     private void printFinalResult(BlackJackGame blackJackGame) {
         Map<Boolean, Integer> dealerWinningRecord = blackJackGame.getDealer().getWinningRecord();
-        Map<String, Boolean> userFinalResult = blackJackGame.getUserFinalResult();
+        Map<String, Boolean> userFinalResult = blackJackGame.getPlayerFinalResult();
         outputView.printFinalResult(dealerWinningRecord, userFinalResult);
     }
 }

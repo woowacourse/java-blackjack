@@ -6,19 +6,19 @@ import domain.user.Dealer;
 import domain.user.DealerStatus;
 import domain.user.Player;
 import domain.user.PlayerStatus;
+import domain.user.Players;
 import domain.user.UserStatus;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
-    private final List<Player> players;
+    private final Players players;
     private final Dealer dealer;
     private final Cards cards;
 
-    public BlackJackGame(List<Player> players, Dealer dealer, Cards cards) {
-        this.players = new ArrayList<>(players);
+    public BlackJackGame(Players players, Dealer dealer, Cards cards) {
+        this.players = players;
         this.dealer = dealer;
         this.cards = cards;
     }
@@ -30,7 +30,7 @@ public class BlackJackGame {
 
     // TODO: 2023/03/06 Players 컬렉션에서 동작해도 좋을 것 같다.
     private void drawPlayersDefaultCard() {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             player.receiveCards(cards.drawTwoCards());
         }
     }
@@ -46,7 +46,7 @@ public class BlackJackGame {
     }
 
     public void judgeWinner() {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             compareDealerWithPlayer(player);
         }
     }
@@ -86,21 +86,15 @@ public class BlackJackGame {
 
         setUpResult.put(dealer.getName(), List.of(dealer.getFirstCard()));
 
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             setUpResult.put(player.getName(), player.getCards());
         }
 
         return setUpResult;
     }
 
-    public Map<String, Boolean> getUserFinalResult() {
-        Map<String, Boolean> userFinalResult = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            userFinalResult.put(player.getName(), player.isWinner());
-        }
-
-        return userFinalResult;
+    public Map<String, Boolean> getPlayerFinalResult() {
+        return players.getPlayerFinalResult();
     }
 
     public Dealer getDealer() {
@@ -108,6 +102,6 @@ public class BlackJackGame {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return players.getPlayers();
     }
 }
