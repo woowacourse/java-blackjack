@@ -5,8 +5,8 @@ import static blackjackgame.Result.TIE;
 import static blackjackgame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +35,13 @@ class BlackjackGameTest {
 
     @BeforeEach
     void setUp() {
-        CardsGenerator fixedCardsGenerator = new FixedCardsGenerator();
+        List<Card> cards = List.of(
+                new Card(Rank.ACE, Suit.HEART),
+                new Card(Rank.ACE, Suit.CLOVER),
+                new Card(Rank.ACE, Suit.SPADE),
+                new Card(Rank.ACE, Suit.DIAMOND)
+        );
+        CardsGenerator fixedCardsGenerator = new FixedCardsGenerator(cards);
         deck = new Deck(fixedCardsGenerator);
         players = new Players();
         dealer = new Dealer();
@@ -93,16 +99,14 @@ class BlackjackGameTest {
     @Test
     @DisplayName("인덱스에 해당하는 플레이어가 버스트인 경우 true를 반환한다.")
     void isBust() {
-        CardsGenerator fixedGenerator = () -> {
-            Stack<Card> cards = new Stack<>();
-            cards.push(new Card(Rank.KING, Suit.HEART));
-            cards.push(new Card(Rank.KING, Suit.CLOVER));
-            cards.push(new Card(Rank.KING, Suit.DIAMOND));
-            cards.push(new Card(Rank.KING, Suit.SPADE));
-            return cards;
-        };
+        List<Card> cards = List.of(
+                new Card(Rank.KING, Suit.HEART),
+                new Card(Rank.KING, Suit.DIAMOND),
+                new Card(Rank.KING, Suit.SPADE),
+                new Card(Rank.KING, Suit.CLOVER)
+        );
 
-        Deck fixedDeck = new Deck(fixedGenerator);
+        Deck fixedDeck = new Deck(new FixedCardsGenerator(cards));
         blackjackGame = new BlackjackGame(players, dealer, fixedDeck);
 
         Player player1 = new Player(new Name("폴로"));
@@ -116,18 +120,6 @@ class BlackjackGameTest {
     @Test
     @DisplayName("인덱스에 해당하는 플레이어가 버스트가 아닌경우 false를 반환한다.")
     void isBustFalse() {
-        CardsGenerator fixedGenerator = () -> {
-            Stack<Card> cards = new Stack<>();
-            cards.push(new Card(Rank.ACE, Suit.HEART));
-            cards.push(new Card(Rank.ACE, Suit.CLOVER));
-            cards.push(new Card(Rank.FIVE, Suit.DIAMOND));
-            cards.push(new Card(Rank.KING, Suit.SPADE));
-            return cards;
-        };
-
-        Deck fixedDeck = new Deck(fixedGenerator);
-        blackjackGame = new BlackjackGame(players, dealer, fixedDeck);
-
         Player player1 = new Player(new Name("폴로"));
         blackjackGame.addPlayer(player1);
         blackjackGame.supplyCardsToPlayers();

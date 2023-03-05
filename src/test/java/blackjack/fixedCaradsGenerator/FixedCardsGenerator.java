@@ -1,20 +1,22 @@
 package blackjack.fixedCaradsGenerator;
 
+import java.util.List;
 import java.util.Stack;
 
 import card.Card;
-import card.Rank;
-import card.Suit;
 import deck.CardsGenerator;
 
 public class FixedCardsGenerator implements CardsGenerator {
+    private final List<Card> cardCandidates;
+
+    public FixedCardsGenerator(List<Card> cardCandidates) {
+        this.cardCandidates = cardCandidates;
+    }
+
     @Override
     public Stack<Card> generate() {
         Stack<Card> cards = new Stack<>();
-        cards.push(new Card(Rank.ACE, Suit.HEART));
-        cards.push(new Card(Rank.ACE, Suit.CLOVER));
-        cards.push(new Card(Rank.ACE, Suit.DIAMOND));
-        cards.push(new Card(Rank.ACE, Suit.SPADE));
+        cards.addAll(cardCandidates);
         return cards;
     }
 }
