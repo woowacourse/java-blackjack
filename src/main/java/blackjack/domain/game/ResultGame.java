@@ -16,6 +16,7 @@ public class ResultGame {
         this.dealer = participants.getDealer();
         this.players = participants.getPlayers();
         this.playersResult = new HashMap<>();
+        calculateResult();
     }
 
     public void calculateResult() {

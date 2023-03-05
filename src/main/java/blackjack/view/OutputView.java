@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.game.ResultGame;
+import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -22,13 +23,28 @@ public class OutputView {
     private static final String TIE_MESSAGE = "무";
     private static final String LOSE_MESSAGE = "패";
 
-    public void printSplitMessage(final Participants participants) {
+    public void printHandOutStart(final Participants participants) {
+        printSplitMessage(participants);
+        printAllParticipantCard(participants);
+    }
+
+    private void printSplitMessage(final Participants participants) {
         final String dealerName = participants.getDealerName();
         final List<String> playerNames = participants.getPlayerNames();
 
         String message = dealerName + DEALER_AND_PLAYER_DELIMITER +
                 String.join(COMMA, playerNames) + GIVE_TWO_CARD_MESSAGE;
         System.out.println(NEW_LINE + message);
+    }
+
+    public void printAllParticipantCard(final Participants participants) {
+        final Dealer dealer = participants.getDealer();
+        final List<Player> players = participants.getPlayers();
+
+        printParticipantCard(dealer, dealer.getOneCard());
+        for (final Player player : players) {
+            printParticipantCard(player);
+        }
     }
 
     public void printParticipantCard(final Participant participant) {
@@ -55,12 +71,22 @@ public class OutputView {
         System.out.printf(RESULT_DELIMITER + score);
     }
 
-    public void printResult() {
+    public void printResult(final Participants participants, final ResultGame resultGame) {
+        final Dealer dealer = participants.getDealer();
+        final List<Player> players = participants.getPlayers();
+
         System.out.println(FINAL_RESULT_MESSAGE);
+        printDealerResult(dealer, resultGame);
+        for(Player player: players) {
+            printPlayerResult(player, resultGame);
+        }
     }
 
-    public void printDealerResult(final Dealer dealer, final int win, final int tie, final int lose) {
+    private void printDealerResult(final Dealer dealer, final ResultGame resultGame) {
         final String dealerName = dealer.getName();
+        final int win = resultGame.getDealerCount(WinTieLose.WIN);
+        final int tie = resultGame.getDealerCount(WinTieLose.TIE);
+        final int lose = resultGame.getDealerCount(WinTieLose.LOSE);
 
         System.out.println(dealerName + COLON
                 + win + WIN_MESSAGE + BLANK
@@ -68,10 +94,25 @@ public class OutputView {
                 + lose + LOSE_MESSAGE);
     }
 
-    public void printPlayerResult(final Player player, final ResultGame resultGame) {
+    private void printPlayerResult(final Player player, final ResultGame resultGame) {
         final String playerName = player.getName();
         final String result = resultGame.getPlayerResult(player).getValue();
 
         System.out.println(playerName + COLON + result);
+    }
+
+    public void printAllCardsAndScores(final Participants participants) {
+        final Dealer dealer = participants.getDealer();
+        final List<Player> players = participants.getPlayers();
+
+        printParticipantCardsAndScores(dealer);
+        for(Player player: players) {
+            printParticipantCardsAndScores(player);
+        }
+    }
+
+    private void printParticipantCardsAndScores(final Participant participant) {
+        printParticipantCard(participant);
+        printScore(participant);
     }
 }
