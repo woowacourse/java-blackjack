@@ -27,6 +27,6 @@ public final class Participant extends Player {
     }
 
     private boolean isBurst() {
-        return getScore() < BURST_NUMBER;
+        return getScore() > BURST_NUMBER;
     }
 }

@@ -20,30 +20,29 @@ public final class Controller {
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = initGame();
+        final BlackjackGame blackjackGame = startGame();
+        initGame(blackjackGame);
         playGame(blackjackGame);
 
     }
 
-
-    private BlackjackGame initGame() {
-        final List<String> participantNames = InputView.readPlayerNames();
+    private BlackjackGame startGame() {
+        final List<String> participantNames = this.inputView.readPlayerNames();
         this.outputView.printSetupGame(participantNames);
 
-        final BlackjackGame blackjackGame = BlackjackGame.from(participantNames, new RandomCardGenerator());
-        blackjackGame.drawCard();
+        return BlackjackGame.from(participantNames, new RandomCardGenerator());
+    }
 
+    private void initGame(final BlackjackGame blackjackGame) {
+        blackjackGame.drawCard();
         this.outputView.printDealerCard(blackjackGame.getDealerCard());
         this.outputView.printPlayerCards(blackjackGame.getParticipants());
-
-        return blackjackGame;
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
         blackjackGame.playParticipantsTurn(this::isHit, outputView::printPlayerCard);
         blackjackGame.playDealerTurn(outputView::printHitOrStay);
     }
-
 
     private <T> T retryOnError(Supplier<T> supplier) {
         try {
@@ -55,6 +54,6 @@ public final class Controller {
     }
 
     private boolean isHit(final Participant participant) {
-        return retryOnError(() -> InputView.readCommand(participant.getName()).isValue());
+        return retryOnError(() -> this.inputView.readCommand(participant.getName()).isValue());
     }
 }

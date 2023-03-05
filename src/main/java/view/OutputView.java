@@ -11,7 +11,6 @@ import static java.util.stream.Collectors.*;
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final int DEALER_HIT_CONDITION = 16;
 
     public void printSetupGame(final List<String> names) {
         final String participants = String.join(DELIMITER, names);
@@ -35,8 +34,8 @@ public final class OutputView {
         );
     }
 
-    public void printHitOrStay(final int dealerScore) {
-        System.out.println(hitOrStay(dealerScore));
+    public void printHitOrStay(final boolean isHit) {
+        System.out.println(hitOrStay(isHit));
     }
 
     public void printPlayerScore(final String name, final List<Card> cards, final int playerScore) {
@@ -61,10 +60,10 @@ public final class OutputView {
         return cards.stream().map(card -> String.format("%s%s", card.getRank().getSymbol(), card.getSuit())).collect(joining(DELIMITER));
     }
 
-    private String hitOrStay(final int dealerScore) {
-        if (dealerScore > DEALER_HIT_CONDITION) {
-            return "딜러의 총점은 17 이상입니다. 게임을 종료합니다." + System.lineSeparator();
+    private String hitOrStay(final boolean isHit) {
+        if (isHit) {
+            return "딜러의 총점은 16 이하라 한장의 카드를 더 받았습니다.";
         }
-        return "딜러의 총점은 16 이하라 한장의 카드를 더 받았습니다.";
+        return "딜러의 총점은 17 이상입니다. 게임을 종료합니다." + System.lineSeparator();
     }
 }

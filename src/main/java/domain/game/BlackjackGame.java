@@ -48,18 +48,16 @@ public final class BlackjackGame {
     }
 
     public void playParticipantsTurn(Predicate<Participant> isHit, Consumer<Participant> consumer) {
-        this.getParticipants().forEach(participant -> {
-            playParticipantTurn(participant, isHit, consumer);
-        });
+        this.getParticipants().forEach(participant -> playParticipantTurn(participant, isHit, consumer));
     }
 
-    public void playDealerTurn(Consumer<Integer> consumer) {
+    public void playDealerTurn(Consumer<Boolean> consumer) {
         final Dealer dealer = getDealer();
         while (dealer.isHit()) {
-            consumer.accept(dealer.getScore());
+            consumer.accept(dealer.isHit());
             dealer.takeCard(this.deck.dealCard());
         }
-        consumer.accept(dealer.getScore());
+        consumer.accept(dealer.isHit());
     }
 
     private static void validateDuplicate(final List<String> participantNames) {
