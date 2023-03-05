@@ -53,13 +53,13 @@ public class UsersTest {
             .hasMessage("플레이어 이름은 중복될 수 없습니다.");
     }
 
-    @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
+    @DisplayName("해당 플레이어에게 카드를 추가한다")
     @Test
     void hitCardByName() {
         Users users = Users.from(List.of("hongo", "ash", "kiara"));
 
-        users.hitCardByName("hongo", new Card(Denomination.JACK, Suits.HEART));
         Player player = users.getPlayers().get(0);
+        users.hitCard(player, new Card(Denomination.JACK, Suits.HEART));
         assertThat(player.getScore()).isEqualTo(10);
     }
 }

@@ -47,15 +47,8 @@ public class Users {
         }
     }
 
-    public void hitCardByName(final String name, final Card card) {
-        findByName(name).hit(card);
-    }
-
-    private Player findByName(final String name) {
-        return getPlayers().stream()
-            .filter(player -> player.isRightName(name))
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+	public void hitCard(final Player player, final Card card) {
+        player.hit(card);
     }
 
     public boolean isDealerHittable() {

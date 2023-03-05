@@ -33,18 +33,21 @@ public class Controller {
 	private void play() {
 		List<Player> hittablePlayers = blackJack.getHittablePlayers();
 		for (Player player : hittablePlayers) {
-			askPlayerHitCommand(player);
+			askPlayerHit(player);
 		}
 		giveCardToDealer();
 	}
 
-	private void askPlayerHitCommand(final Player player) {
+	private void askPlayerHit(final Player player) {
 		while (player.isHittable()) {
-			boolean isHit = askIfHit(player);
-			if (isHit) {
-				blackJack.giveCard(player.getName());
-			}
+			giveCardIfWanted(player);
 			printEachPlayerCards(player.getName(), player.getCards());
+		}
+	}
+
+	private void giveCardIfWanted(Player player) {
+		if (askIfHit(player)) {
+			blackJack.giveCard(player);
 		}
 	}
 

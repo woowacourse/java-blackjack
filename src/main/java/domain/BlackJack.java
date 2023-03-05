@@ -32,8 +32,8 @@ public class BlackJack {
 		user.hit(Deck.pickCard());
 	}
 
-	public void giveCard(String playerName) {
-		users.hitCardByName(playerName, Deck.pickCard());
+	public void giveCard(Player player) {
+		users.hitCard(player, Deck.pickCard());
 	}
 
 	public void giveCardToDealer() {
