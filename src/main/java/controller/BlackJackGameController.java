@@ -38,7 +38,7 @@ public class BlackJackGameController {
 
     private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards();
-        Dealer dealer = new Dealer(cards.drawForFirstTurn());
+        Dealer dealer = new Dealer(cards.drawTwoCards());
         List<Player> players = setUpPlayers(cards);
         printSetUpResult(dealer, players);
         return new BlackJackGame(players, dealer, cards);
@@ -46,7 +46,7 @@ public class BlackJackGameController {
 
     private List<Player> setUpPlayers(Cards cards) {
         return readUsersName().stream()
-                .map(name -> new Player(new Name(name), cards.drawForFirstTurn()))
+                .map(name -> new Player(new Name(name), cards.drawTwoCards()))
                 .collect(Collectors.toList());
     }
 

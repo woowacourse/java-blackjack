@@ -28,7 +28,7 @@ class CardsTest {
     void drawForFirstTurnTest() {
         Cards cards = new Cards();
 
-        List<Card> firstTurnCards = cards.drawForFirstTurn();
+        List<Card> firstTurnCards = cards.drawTwoCards();
 
         assertThat(firstTurnCards.size()).isEqualTo(2);
     }

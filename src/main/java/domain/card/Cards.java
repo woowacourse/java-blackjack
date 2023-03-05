@@ -30,7 +30,7 @@ public class Cards {
         return cards.remove(CARD_ON_TOP_INDEX);
     }
 
-    public List<Card> drawForFirstTurn() {
+    public List<Card> drawTwoCards() {
         List<Card> firstTurnCards = new ArrayList<>();
         firstTurnCards.add(drawCard());
         firstTurnCards.add(drawCard());
