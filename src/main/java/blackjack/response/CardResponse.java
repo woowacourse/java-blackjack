@@ -19,14 +19,6 @@ public class CardResponse {
         return new CardResponse(card.getSymbol().name(), card.getShape().name());
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public String getShape() {
-        return shape;
-    }
-
     public String getSymbol(final CardConvertStrategy cardConvertStrategy) {
         return cardConvertStrategy.convertSymbol(symbol);
     }
