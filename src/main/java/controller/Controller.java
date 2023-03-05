@@ -1,3 +1,5 @@
+package controller;
+
 import java.util.List;
 
 import blackjackGame.BlackjackGame;
@@ -22,7 +24,7 @@ public class Controller {
         this.blackjackGame = blackjackGame;
     }
 
-    void run() {
+    public void run() {
         setGame();
         showFirstDraw();
         playersHit();
@@ -56,22 +58,21 @@ public class Controller {
         for (int i = 0; i < blackjackGame.countPlayer(); i++) {
             Name userName = blackjackGame.findUserNameByIndex(i);
             String hitCommand = inputView.readHitCommand(userName);
-            playerHit(i, userName, hitCommand);
+            AddCardOrNot command = AddCardOrNot.of(hitCommand);
+            playerHit(i, userName, command);
         }
     }
-
-    private void playerHit(int i, Name userName, String hitCommand) {
-        while (hitCommand.equals("y") && !blackjackGame.isBust(i)) {
+    private void playerHit(int i, Name userName, AddCardOrNot addCardOrNot) {
+        while (addCardOrNot.equals(AddCardOrNot.YES) && !blackjackGame.isBust(i)) {
             blackjackGame.supplyAdditionalCard(i);
             PlayerOpenDto playerCard = blackjackGame.getPlayerCardsByIndex(i);
             outputView.printPlayerCard(playerCard);
             if (blackjackGame.isBust(i)) {
                 break;
             }
-            hitCommand = inputView.readHitCommand(userName);
+            addCardOrNot = AddCardOrNot.of(inputView.readHitCommand(userName));
         }
     }
-
     private void showFirstDraw() {
         DealerFirstOpenDto dealerFirstOpen = blackjackGame.getDealerFirstOpen();
         List<PlayerOpenDto> playersCards = blackjackGame.getPlayersCards();
