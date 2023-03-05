@@ -17,17 +17,17 @@ public class PlayerCards {
         this.totalScore = 0;
     }
 
-    public void updateCardScore(Card card) {
+    public void addCard(Card card) {
         this.playerCards.add(card);
-        totalScore = calculateTotalScore();
     }
 
-    private int calculateTotalScore() {
-        int totalScore = 0;
+    public void updateTotalScore() {
+        int newTotalScore = 0;
         for (Card card : playerCards) {
-            totalScore += card.getCardNumber().getValue();
+            newTotalScore += card.getCardNumber().getValue();
         }
-        return updateAceScore(totalScore);
+        newTotalScore = updateAceScore(newTotalScore);
+        this.totalScore = newTotalScore;
     }
 
     private int updateAceScore(int totalScore) {

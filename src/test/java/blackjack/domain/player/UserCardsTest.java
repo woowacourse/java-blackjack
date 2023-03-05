@@ -16,14 +16,14 @@ import java.util.stream.Stream;
 class UserCardsTest {
 
     @Test
-    @DisplayName("updateCardScore()는 카드를 하나씩 추가한다.")
+    @DisplayName("addCard()는 카드를 하나씩 추가한다.")
     void test_() {
         // given
         PlayerCards playerCards = new PlayerCards();
 
         // when
         Card card = new Card(CardNumber.FIVE, CardSymbol.HEART);
-        playerCards.updateCardScore(card);
+        playerCards.addCard(card);
 
         // then
         Assertions.assertThat(playerCards.getPlayerCards()).hasSize(1);
@@ -35,8 +35,8 @@ class UserCardsTest {
     void calculate_player_cards_score(List<Card> cards, int expectedTotalScore) {
         // given & when
         PlayerCards playerCards = new PlayerCards();
-        cards.forEach(playerCards::updateCardScore);
-
+        cards.forEach(playerCards::addCard);
+        playerCards.updateTotalScore();
         // then
         Assertions.assertThat(playerCards.getTotalScore()).isEqualTo(expectedTotalScore);
     }
@@ -58,10 +58,10 @@ class UserCardsTest {
     void calculate_player_cards_score_with_ace(List<Card> cards, int expectedTotalScore) {
         // given & when
         PlayerCards playerCards = new PlayerCards();
-        cards.forEach(playerCards::updateCardScore);
+        cards.forEach(playerCards::addCard);
+        playerCards.updateTotalScore();
 
         // then
         Assertions.assertThat(playerCards.getTotalScore()).isEqualTo(expectedTotalScore);
     }
-
 }
