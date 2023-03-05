@@ -24,7 +24,7 @@ public class Cards {
     }
 
     public Card drawCard() {
-        if (isEmpty()) {
+        if (cards.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.NO_MORE_CARD.getMessage());
         }
         return cards.remove(CARD_ON_TOP_INDEX);
@@ -36,9 +36,5 @@ public class Cards {
         firstTurnCards.add(drawCard());
 
         return firstTurnCards;
-    }
-
-    private boolean isEmpty() {
-        return cards.isEmpty();
     }
 }
