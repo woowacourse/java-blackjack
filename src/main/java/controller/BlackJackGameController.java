@@ -62,7 +62,7 @@ public class BlackJackGameController {
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
         while (PlayerStatus.NORMAL == player.getStatus() && DrawCommand.DRAW == readDrawCommand(player)) {
-            blackJackGame.drawOneMoreCardForPlayer(player);
+            blackJackGame.drawOneMoreCard(player);
             printDrawResult(player);
         }
         if (PlayerStatus.NORMAL == player.getStatus()) {
@@ -80,7 +80,7 @@ public class BlackJackGameController {
     }
 
     private void progressDealerTurn(BlackJackGame blackJackGame) {
-        blackJackGame.drawCardUntilOverSixteen();
+        blackJackGame.drawDealerCardUntilSatisfyingCondition();
 
         Dealer dealer = blackJackGame.getDealer();
         int dealerDrawCount = dealer.getCards().size() - INITIAL_CARD_COUNT;

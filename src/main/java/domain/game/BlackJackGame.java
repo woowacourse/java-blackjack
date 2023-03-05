@@ -28,18 +28,17 @@ public class BlackJackGame {
         dealer.receiveCards(cards.drawTwoCards());
     }
 
-    // TODO: 2023/03/06 Players 컬렉션에서 동작해도 좋을 것 같다.
     private void drawPlayersDefaultCard() {
         for (Player player : players.getPlayers()) {
             player.receiveCards(cards.drawTwoCards());
         }
     }
 
-    public void drawOneMoreCardForPlayer(Player player) {
+    public void drawOneMoreCard(Player player) {
         player.receiveCard(cards.drawCard());
     }
 
-    public void drawCardUntilOverSixteen() {
+    public void drawDealerCardUntilSatisfyingCondition() {
         while (dealer.getStatus().equals(DealerStatus.UNDER_SEVENTEEN)) {
             dealer.receiveCard(cards.drawCard());
         }
@@ -47,38 +46,29 @@ public class BlackJackGame {
 
     public void judgeWinner() {
         for (Player player : players.getPlayers()) {
-            compareDealerWithPlayer(player);
+            judgeWinnerBetweenDealer(player);
         }
     }
 
-    private void compareDealerWithPlayer(Player player) {
+    private void judgeWinnerBetweenDealer(Player player) {
         UserStatus playerStatus = player.getStatus();
         if (playerStatus.equals(PlayerStatus.BUST)) {
-            dealerWin(player);
+            dealer.win(player);
             return;
         }
         if (playerStatus.equals(PlayerStatus.NORMAL) && dealer.getStatus().equals(DealerStatus.BUST)) {
-            playerWin(player);
+            player.win(dealer);
             return;
         }
-        compareScore(player);
+        judgeWinnerByScore(player);
     }
 
-    private void playerWin(Player player) {
-        dealer.lose();
-        player.win();
-    }
-
-    private void dealerWin(Player player) {
-        dealer.win();
-        player.lose();
-    }
-
-    private void compareScore(Player player) {
+    private void judgeWinnerByScore(Player player) {
         if (dealer.getScore() >= player.getScore()) {
-            dealerWin(player);
+            dealer.win(player);
+            return;
         }
-        playerWin(player);
+        player.win(dealer);
     }
 
     public Map<String, List<Card>> getSetUpResult() {
