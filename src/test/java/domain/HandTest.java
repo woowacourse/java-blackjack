@@ -17,12 +17,19 @@ class HandTest {
 
     private Hand hand;
 
+    private static Stream<Arguments> cardProvider() {
+        return Stream.of(
+            Arguments.of(Card.of(Suit.HEART, Rank.ACE), 13),
+            Arguments.of(Card.of(Suit.HEART, Rank.NINE), 21)
+        );
+    }
+
     @BeforeEach
     void setUp() {
         hand = new Hand(new ArrayList<>(
             List.of(
-                new Card("2하트", 2),
-                new Card("K다이아", 10)
+                Card.of(Suit.HEART, Rank.TWO),
+                Card.of(Suit.DIAMOND, Rank.KING)
             ))
         );
     }
@@ -30,7 +37,7 @@ class HandTest {
     @Test
     @DisplayName("패에 카드를 추가한다.")
     void addCard() {
-        hand.addCard(new Card("5클로버", 5));
+        hand.addCard(Card.of(Suit.CLOVER, Rank.FIVE));
         assertThat(hand.getCards().size()).isEqualTo(3);
     }
 
@@ -39,12 +46,5 @@ class HandTest {
     void calculateValue(Card card, int handValue) {
         hand.addCard(card);
         assertThat(hand.calculateValue()).isEqualTo(handValue);
-    }
-
-    private static Stream<Arguments> cardProvider() {
-        return Stream.of(
-            Arguments.of(new Card("A클로버", 11), 13),
-            Arguments.of(new Card("9하트", 9), 21)
-        );
     }
 }

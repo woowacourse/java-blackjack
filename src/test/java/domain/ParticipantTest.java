@@ -14,13 +14,17 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        participant = new Participant(new ArrayList<>(List.of(new Card("2하트", 2), new Card("K다이아", 10))), "Leo");
+        participant = new Participant(
+            new ArrayList<>(
+                List.of(
+                    Card.of(Suit.HEART, Rank.TWO),
+                    Card.of(Suit.DIAMOND, Rank.KING))), "Leo");
     }
 
     @Test
     @DisplayName("참가자가 카드를 받는다.")
     void receiveCard() {
-        participant.receiveCard(new Card("10클로버", 10));
+        participant.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
         assertThat(participant.getCardNames().size()).isEqualTo(3);
     }
 
@@ -39,7 +43,16 @@ class ParticipantTest {
     @Test
     @DisplayName("같은 이름의 참가자는 하나만 존재한다.")
     void eqaulsTestWhenDifferentHand() {
-        assertThat(new Participant(new ArrayList<>(List.of(new Card("2하트", 2), new Card("K다이아", 10))), "Leo").equals(
-            new Participant(new ArrayList<>(List.of(new Card("4하트", 4), new Card("2다이아", 2))), "Leo"))).isTrue();
+        assertThat(
+            new Participant(
+                new ArrayList<>(
+                    List.of(Card.of(Suit.HEART, Rank.TWO),
+                        Card.of(Suit.DIAMOND, Rank.KING))), "Leo")
+                .equals(
+                    new Participant(
+                        new ArrayList<>(
+                            List.of(Card.of(Suit.HEART, Rank.FOUR),
+                                Card.of(Suit.DIAMOND, Rank.TWO))), "Leo")))
+            .isTrue();
     }
 }

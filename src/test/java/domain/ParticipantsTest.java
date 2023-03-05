@@ -76,11 +76,11 @@ class ParticipantsTest {
         //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
+            player.receiveCard(Card.of(Suit.CLOVER, Rank.TEN));
         }
 
         //when
-        participant.findDealer().receiveCard(new Card("A스페이드", 11));
+        participant.findDealer().receiveCard(Card.of(Suit.SPADE, Rank.ACE));
 
         Map<String, Result> playerResults = participant.getPlayerResults();
         Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
@@ -96,14 +96,14 @@ class ParticipantsTest {
         //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
-            player.receiveCard(new Card("2클로버", 2));
+            player.receiveCard(Card.of(Suit.CLOVER, Rank.QUEEN));
+            player.receiveCard(Card.of(Suit.HEART, Rank.TEN));
+            player.receiveCard(Card.of(Suit.CLOVER, Rank.TWO));
         }
         Dealer dealer = participant.findDealer();
-        dealer.receiveCard(new Card("Q스페이드", 10));
-        dealer.receiveCard(new Card("K스페이드", 10));
-        dealer.receiveCard(new Card("3스페이드", 3));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.THREE));
 
         //when
         Map<String, Result> playerResults = participant.getPlayerResults();
@@ -120,13 +120,13 @@ class ParticipantsTest {
         //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
+            player.receiveCard(Card.of(Suit.CLOVER, Rank.QUEEN));
+            player.receiveCard(Card.of(Suit.HEART, Rank.QUEEN));
         }
         Dealer dealer = participant.findDealer();
-        dealer.receiveCard(new Card("Q스페이드", 10));
-        dealer.receiveCard(new Card("K스페이드", 10));
-        dealer.receiveCard(new Card("3스페이드", 3));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.THREE));
 
         //when
         Map<String, Result> playerResults = participant.getPlayerResults();
@@ -143,13 +143,13 @@ class ParticipantsTest {
         //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
-            player.receiveCard(new Card("3스페이드", 3));
+            player.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+            player.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
+            player.receiveCard(Card.of(Suit.SPADE, Rank.THREE));
         }
         Dealer dealer = participant.findDealer();
-        dealer.receiveCard(new Card("Q스페이드", 10));
-        dealer.receiveCard(new Card("K스페이드", 10));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.QUEEN));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.KING));
 
         //when
         Map<String, Result> playerResults = participant.getPlayerResults();
@@ -166,13 +166,13 @@ class ParticipantsTest {
         //given
         Participants participant = Participants.from(List.of("abc"));
         for (Player player : participant.findPlayers()) {
-            player.receiveCard(new Card("Q클로버", 10));
-            player.receiveCard(new Card("Q하트", 10));
+            player.receiveCard(Card.of(Suit.CLOVER, Rank.QUEEN));
+            player.receiveCard(Card.of(Suit.HEART, Rank.QUEEN));
         }
         Dealer dealer = participant.findDealer();
-        dealer.receiveCard(new Card("4스페이드", 4));
-        dealer.receiveCard(new Card("6스페이드", 6));
-        dealer.receiveCard(new Card("K스페이드", 10));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.FOUR));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.SIX));
+        dealer.receiveCard(Card.of(Suit.SPADE, Rank.TEN));
 
         //when
         Map<String, Result> playerResults = participant.getPlayerResults();
