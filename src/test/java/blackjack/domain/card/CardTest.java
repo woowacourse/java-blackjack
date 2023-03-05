@@ -43,14 +43,18 @@ public class CardTest {
     @Test
     @DisplayName("카드가 에이스 아닌지 확인하는 테스트")
     void isNotAceTest() {
-        Card card;
         for (Shape shape : Shape.values()) {
-            for (Letter letter : Letter.values()) {
-                card = new Card(shape, letter);
+            checkLetterIstAce(shape);
+        }
+    }
 
-                if (!letter.equals(Letter.ACE)) assertThat(card.isAce()).isFalse();
-                if (letter.equals(Letter.ACE)) assertThat(card.isAce()).isTrue();
-            }
+    private void checkLetterIstAce(Shape shape) {
+        Card card;
+        for (Letter letter : Letter.values()) {
+            card = new Card(shape, letter);
+
+            if (!letter.equals(Letter.ACE)) assertThat(card.isAce()).isFalse();
+            if (letter.equals(Letter.ACE)) assertThat(card.isAce()).isTrue();
         }
     }
 }

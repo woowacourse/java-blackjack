@@ -18,6 +18,6 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.letter.isAce();
+        return this.letter.isLetterAce();
     }
 }
