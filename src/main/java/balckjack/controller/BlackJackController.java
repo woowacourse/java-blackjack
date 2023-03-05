@@ -14,9 +14,6 @@ import java.util.List;
 
 public class BlackJackController {
 
-    private static final int BURST_CODE = -1;
-    private static final int DEALER_HIT_NUMBER = 16;
-
     public void run(CardPicker cardPicker) {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames,
             OutputView::printErrorMessage);
@@ -68,7 +65,7 @@ public class BlackJackController {
 
     private boolean isBurst(Referee referee, Player player) {
         int score = referee.calculateDeckScore(player.getCardDeck());
-        if (score == BURST_CODE) {
+        if (score == Referee.BURST_CODE) {
             OutputView.printBurstMessage();
             return true;
         }
@@ -85,8 +82,8 @@ public class BlackJackController {
     }
 
     private void tryDealerTurn(CardPicker cardPicker, Dealer dealer, Referee referee) {
-        while (referee.calculateDeckScore(dealer.getCardDeck()) <= DEALER_HIT_NUMBER
-            && referee.calculateDeckScore(dealer.getCardDeck()) != BURST_CODE) {
+        while (referee.calculateDeckScore(dealer.getCardDeck()) <= Referee.DEALER_HIT_NUMBER
+            && referee.calculateDeckScore(dealer.getCardDeck()) != Referee.BURST_CODE) {
             dealer.hit(cardPicker);
             OutputView.printDealerPickMessage(dealer);
         }
