@@ -9,13 +9,13 @@ import view.OutputView;
 
 import java.util.List;
 
-public class BlackJackController {
+public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
     private BlackjackGame blackjackGame;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
