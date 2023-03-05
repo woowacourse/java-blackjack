@@ -15,7 +15,12 @@ public final class Participant extends Player {
     }
 
     @Override
-    List<Card> revealCards() {
+    public boolean isInPlaying(boolean isHit){
+        return isHit && HandsState.from(cards.calculateScore()) == HandsState.IN_PLAY;
+    }
+
+    @Override
+    public List<Card> revealCards() {
         return cards.getCards().subList(0, CARD_RENEWAL_COUNT);
     }
 }

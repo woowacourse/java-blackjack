@@ -8,9 +8,6 @@ import java.util.function.Supplier;
 
 public final class Controller {
 
-    private static final int BUST_NUMBER = 22;
-    private static final int DEALER_STAY_NUMBER = 17;
-
     private final Deck deck;
 
     public Controller(final CardGenerator cardGenerator) {
@@ -41,13 +38,13 @@ public final class Controller {
 
         participants.drawCard(deck);
 
-        OutputView.printPlayerCards(dealer.getName(), dealer.showCards());
+        OutputView.printPlayerCards(dealer.getName(), dealer.revealCards());
         participants.getParticipants()
                 .forEach(this::printPlayerCards);
     }
 
     private void printPlayerCards(final Participant participant) {
-        OutputView.printPlayerCards(participant.getName(), participant.showCards());
+        OutputView.printPlayerCards(participant.getName(), participant.revealCards());
     }
 
     private void playGame(final Participants participants, final Dealer dealer) {
@@ -58,15 +55,11 @@ public final class Controller {
     }
 
     private void playParticipantTurn(final Participant participant) {
-        while (isKeepPlaying(participant)) {
+        do{
             participant.takeCard(deck.dealCard());
 
             OutputView.printPlayerCards(participant.getName(), participant.showCards());
-        }
-    }
-
-    private boolean isKeepPlaying(final Participant participant) {
-        return participant.getScore() < BUST_NUMBER && isHit(participant);
+        }while (participant.isInPlaying(isHit(participant)));
     }
 
     private boolean isHit(final Participant participant) {
@@ -74,13 +67,10 @@ public final class Controller {
     }
 
     private void playDealerTurn(final Dealer dealer) {
-        int score = dealer.getScore();
-        while (score < DEALER_STAY_NUMBER) {
-            OutputView.printHitOrStay(score);
+        if(dealer.isInPlaying(dealer.dealerIsHit())){
             dealer.takeCard(deck.dealCard());
-            score = dealer.getScore();
+            OutputView.printDealerHit();
         }
-        OutputView.printHitOrStay(score);
     }
 
     private void printResult(final Participants participants, final Dealer dealer) {

@@ -28,7 +28,8 @@ public abstract class Player {
         }
     }
 
-    abstract List<Card> revealCards();
+    abstract public List<Card> revealCards();
+    abstract public boolean isInPlaying(boolean isHit);
 
     public List<Card> showCards() {
         return cards.getCards();
