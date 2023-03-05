@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.Deck;
-import domain.GamePoint;
+import domain.game.Deck;
+import domain.game.GamePoint;
 import domain.card.Card;
 import domain.card.Cards;
 

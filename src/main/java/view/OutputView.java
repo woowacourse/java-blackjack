@@ -1,15 +1,14 @@
 package view;
 
-import domain.GamePoint;
-import domain.GameResult;
-import domain.Result;
+import domain.game.GamePoint;
+import domain.game.GameResult;
+import domain.game.Result;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import utils.TranslationUtil;
 
 import java.util.List;
 import java.util.Map;

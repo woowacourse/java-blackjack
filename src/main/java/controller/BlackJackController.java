@@ -1,7 +1,7 @@
 package controller;
 
-import domain.BlackJack;
-import domain.Deck;
+import domain.game.BlackJack;
+import domain.game.Deck;
 import domain.participant.Player;
 import domain.participant.Players;
 import template.Repeater;

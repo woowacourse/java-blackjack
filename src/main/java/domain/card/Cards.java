@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.GamePoint;
+import domain.game.GamePoint;
 
 import java.util.ArrayList;
 import java.util.List;

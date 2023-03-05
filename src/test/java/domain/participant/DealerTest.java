@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Deck;
+import domain.game.Deck;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;

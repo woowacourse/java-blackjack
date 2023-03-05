@@ -1,6 +1,6 @@
-package utils;
+package view;
 
-import domain.Result;
+import domain.game.Result;
 import domain.card.CardShape;
 
 public final class TranslationUtil {
