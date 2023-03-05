@@ -15,11 +15,11 @@ public class Score {
         return new Score(value);
     }
 
-    public Status compareScore(final Score score) {
+    public DealerStatus compareScore(final Score score) {
         if (this.value > score.value) {
-            return Status.WIN;
+            return DealerStatus.WIN;
         }
-        return Status.LOSE;
+        return DealerStatus.LOSE;
     }
 
     public int getValue() {

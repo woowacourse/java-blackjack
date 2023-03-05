@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
@@ -28,9 +27,9 @@ class ScoreTest {
         Score score = Score.from(20);
         //when
         Score opponent = Score.from(19);
-        Status status = score.compareScore(opponent);
+        DealerStatus dealerStatus = score.compareScore(opponent);
         //then
-        assertThat(status).isEqualTo(Status.WIN);
+        assertThat(dealerStatus).isEqualTo(DealerStatus.WIN);
     }
 
     @Test
@@ -40,9 +39,9 @@ class ScoreTest {
         Score score = Score.from(10);
         //when
         Score opponent = Score.from(19);
-        Status status = score.compareScore(opponent);
+        DealerStatus dealerStatus = score.compareScore(opponent);
         //then
-        assertThat(status).isEqualTo(Status.LOSE);
+        assertThat(dealerStatus).isEqualTo(DealerStatus.LOSE);
     }
 
 }
