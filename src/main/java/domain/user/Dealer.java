@@ -23,10 +23,7 @@ public class Dealer extends Player {
 
     @Override
     protected int calculateAce(int point) {
-        if (point < 7) {
-            return point + 10;
-        }
-        if (point == 11) {
+        if (point > 6) {
             return point + 10;
         }
         return point;
