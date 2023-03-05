@@ -4,7 +4,6 @@ import static blackjack.domain.BlackJackConstant.BLACKJACK;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CardPocket {
 
@@ -57,23 +56,6 @@ public class CardPocket {
             return score;
         }
         return score + VALUE_ACE;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final CardPocket that = (CardPocket) o;
-        return Objects.equals(cards, that.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards);
     }
 
     List<Card> getCards() {
