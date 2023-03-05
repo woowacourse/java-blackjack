@@ -35,13 +35,12 @@ public class OutputView {
     }
 
     private static void printPlayerCardConditions(PlayersReadOnly players) {
-        PlayerReadOnly dealer = players.getDealer();
-        printDealerCardCondition(dealer);
+        printDealerCardCondition(players.getDealer());
         printParticipantCardCondition(players.getParticipants());
     }
 
     private static void printDealerCardCondition(PlayerReadOnly dealer) {
-        Card card = dealer.getCards().get(0);
+        Card card = dealer.getCardIndexOf(0);
         printPlayerCardCondition(dealer, DEALER_CARD_CONDITION_FORMAT, parseCardInformation(card));
     }
 

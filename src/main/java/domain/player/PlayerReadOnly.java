@@ -30,4 +30,8 @@ public class PlayerReadOnly {
     public boolean isBust() {
         return player.isBust();
     }
+
+    public Card getCardIndexOf(int index) {
+        return player.getCardIndexOf(index);
+    }
 }

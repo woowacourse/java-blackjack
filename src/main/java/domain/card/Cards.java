@@ -54,4 +54,8 @@ public class Cards {
         return cards.stream()
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public Card getCardIndexOf(int index) {
+        return cards.get(index);
+    }
 }
