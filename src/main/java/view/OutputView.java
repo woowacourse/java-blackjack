@@ -12,8 +12,8 @@ public class OutputView {
     private static final String NAME_DELIMITER = ", ";
     private static final String RESULT_DELIMITER = ": ";
     private static final String NEW_LINE = System.getProperty("line.separator");
-    public static final String WIN = "승";
-    public static final String LOSE = "패";
+    private static final String WIN = "승";
+    private static final String LOSE = "패";
 
     public void printCardSplitMessage(final List<DrawnCardsInfo> infos) {
         String names = infos.stream()
