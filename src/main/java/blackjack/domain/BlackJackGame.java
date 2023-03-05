@@ -26,7 +26,7 @@ public class BlackJackGame {
         participant.receiveCard(card);
     }
 
-    public void handOutInitCards(final ShufflingMachine shufflingMachine) {
+    public void handOutCards(final ShufflingMachine shufflingMachine) {
         handOutInitCardsTo(shufflingMachine, dealer);
         players.getPlayers()
                 .forEach(player -> handOutInitCardsTo(shufflingMachine, player));
@@ -34,8 +34,7 @@ public class BlackJackGame {
 
     private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
         for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
-            final Card card = Deck.from(shufflingMachine.draw());
-            participant.receiveCard(card);
+            handOutCardTo(shufflingMachine, participant);
         }
     }
 

@@ -24,7 +24,7 @@ public class BlackJackGameController {
     public void run() {
         final BlackJackGame blackJackGame = generateBlackJackGame();
 
-        blackJackGame.handOutInitCards(shufflingMachine);
+        blackJackGame.handOutCards(shufflingMachine);
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
 

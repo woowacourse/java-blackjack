@@ -28,7 +28,7 @@ class BlackJackGameTest {
         ShufflingMachine shufflingMachine = new ShufflingMachine();
 
         // when
-        blackJackGame.handOutInitCards(shufflingMachine);
+        blackJackGame.handOutCards(shufflingMachine);
 
         Players players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
