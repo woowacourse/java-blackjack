@@ -5,10 +5,11 @@ import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
 import domain.game.Outcome;
-import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+import java.util.Map;
 
 public class MainController {
     private static final String DEALER_NAME = "딜러";
@@ -56,11 +57,9 @@ public class MainController {
     }
 
     private void drawWhileYes(final String playerName) {
-        boolean answer = true;
-        while (answer) {
+        do {
             OutputView.printOneMoreCard(playerName);
-            answer = isOneMore(playerName);
-        }
+        } while (isOneMore(playerName));
     }
 
     private boolean isOneMore(final String playerName) {
