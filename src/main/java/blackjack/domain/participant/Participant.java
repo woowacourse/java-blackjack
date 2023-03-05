@@ -44,7 +44,7 @@ public abstract class Participant {
 
     public void combat(Participant other) {
         Result result = decideResultByComparingWith(other);
-        result.accept(this, other);
+        result.applyTo(this, other);
     }
 
     private Result decideResultByComparingWith(Participant other) {

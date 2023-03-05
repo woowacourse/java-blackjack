@@ -29,7 +29,7 @@ public enum Result {
         return label;
     }
 
-    public void accept(Participant participant, Participant other) {
+    public void applyTo(Participant participant, Participant other) {
         this.recordResult.accept(participant, other);
     }
 }
