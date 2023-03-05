@@ -14,6 +14,7 @@ import blackjack.view.InputView;
 import blackjack.view.Order;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BlackjackController {
@@ -32,12 +33,18 @@ public class BlackjackController {
         final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
 
         startGame(blackjackGame);
-        showAllParticipantCards(participants);
+        outputView.outputParticipantCards(makeParticipantsList(participants));
+        //showAllParticipantCards(participants);
         hitParticipants(blackjackGame);
         showAllCardsAndScore(blackjackGame);
         showAllResult(blackjackGame);
     }
-
+    private HashMap<String, List<String>> makeParticipantsList(Participants participants){
+        HashMap<String, List<String>> participantsMap = new HashMap<>();
+        participantsMap.put("딜러",participants.getDealer().getOneCard());
+        participants.getPlayers().forEach(player -> participantsMap.put(player.getName(),player.getCardNames()));
+        return participantsMap;
+    }
     private Participants makeParticipants() {
         final Dealer dealer = new Dealer();
         return new Participants(dealer, inputView.inputPlayers());
