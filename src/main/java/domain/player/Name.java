@@ -13,7 +13,7 @@ public class Name {
 
     private static void validateLength(final String name) {
         if (name.length() < MIN_LENGTH || name.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR]: 이름은 1자이상 15자이하로 입력해주세요.");
         }
     }
 
