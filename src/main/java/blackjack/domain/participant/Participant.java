@@ -19,6 +19,10 @@ public abstract class Participant {
         return this.cards.calculateScoreForBlackjack();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public Cards getCards() {
         return cards;
     }

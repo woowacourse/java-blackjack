@@ -21,10 +21,6 @@ public class Player extends Participant {
         }
     }
 
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
     public String getName() {
         return name;
     }
