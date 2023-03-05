@@ -4,9 +4,13 @@ import domain.user.Dealer;
 import domain.user.Name;
 import domain.user.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-public class GameResult {
+final class GameResult {
     private final Map<Name, List<Result>> userResult;
     private final List<Result> dealerResult = new ArrayList<>();
 

@@ -1,12 +1,15 @@
 package domain.card;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-public class CardNumber implements Comparable<CardNumber> {
-    private static final int MAX_RANGE = 13;
+public final class CardNumber implements Comparable<CardNumber> {
+
     private static final int MIN_RANGE = 1;
-
+    private static final int MAX_RANGE = 13;
     private static final Map<Integer, CardNumber> cache;
+
     private final int value;
 
     static {

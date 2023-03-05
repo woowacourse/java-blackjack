@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Users {
+public final class Users {
+
     private final List<User> users;
 
     public Users(final List<User> users) {

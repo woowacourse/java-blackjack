@@ -6,7 +6,7 @@ import domain.GamePoint;
 
 import java.util.List;
 
-public class User implements Player {
+public final class User implements Player {
     private static final int INITIAL_CARD_COUNT = 2;
     private final Name name;
     private Cards cards;

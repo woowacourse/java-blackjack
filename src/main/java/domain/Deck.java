@@ -5,11 +5,10 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+public final class Deck {
 
     private final List<Card> cards = new ArrayList<>();
 

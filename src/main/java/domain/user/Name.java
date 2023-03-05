@@ -2,7 +2,7 @@ package domain.user;
 
 import java.util.Objects;
 
-public class Name {
+public final class Name {
     private static final int MIN = 1;
     private static final int MAX = 5;
     private final String value;

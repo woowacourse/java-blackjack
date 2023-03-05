@@ -1,18 +1,17 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.user.Dealer;
 import domain.user.Name;
 import domain.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJack {
+public final class BlackJack {
 
     public static final int INITIAL_DRAW_CARD_COUNT = 2;
+
     private final Users users;
     private final Dealer dealer;
     private final Deck deck;
