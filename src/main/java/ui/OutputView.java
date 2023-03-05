@@ -44,9 +44,11 @@ public class OutputView {
         System.out.println(" - 결과: " + user.calculateScore());
     }
 
-    public static void announceAddCardToDealer() {
-        System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public static void announceAddCardToDealerIfHit(boolean isHitByDealer) {
+        if (isHitByDealer) {
+            System.out.println();
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
     }
 
     public static void printCardsStatusWithScore(Dealer dealer, List<Player> players) {

@@ -1,10 +1,8 @@
 package domain;
 
 import domain.user.Participants;
-import domain.user.User;
 import domain.user.Dealer;
 import domain.user.Player;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +27,8 @@ public class BlackjackGame {
         return this.participants.getPlayers();
     }
 
-    public void addCardToDealerIfPossible() {
-        this.participants.addCardToDealerIfPossible(this.deck);
+    public boolean addCardToDealerIfPossible() {
+        return this.participants.addCardToDealerIfPossible(this.deck);
     }
 
     public Map<Player, Result> calculateAllResults() {

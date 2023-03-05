@@ -29,19 +29,12 @@ public class BlackjackController {
 
     private void play(BlackjackGame blackjackGame) {
         blackjackGame.getPlayers().forEach(player -> giveCardUntilImpossible(player, blackjackGame));
-        addCardToDealerIfPossible(blackjackGame);
+        OutputView.announceAddCardToDealerIfHit(blackjackGame.addCardToDealerIfPossible());
     }
 
     private static void initialize(BlackjackGame blackjackGame) {
         blackjackGame.initializeGame();
         OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
-    }
-
-    private void addCardToDealerIfPossible(BlackjackGame blackjackGame) {
-        if (blackjackGame.getDealer().canAdd()) {
-            OutputView.announceAddCardToDealer();
-            blackjackGame.addCardToDealerIfPossible();
-        }
     }
 
     private void giveCardUntilImpossible(Player player, BlackjackGame blackjackGame) {

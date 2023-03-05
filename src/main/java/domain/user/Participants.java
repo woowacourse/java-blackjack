@@ -47,10 +47,12 @@ public class Participants {
         return Result.LOSE;
     }
 
-    public void addCardToDealerIfPossible(Deck deck) {
+    public boolean addCardToDealerIfPossible(Deck deck) {
         if (this.dealer.canAdd()) {
             this.dealer.addCard(deck.draw());
+            return true;
         }
+        return false;
     }
 
     public Dealer getDealer() {
