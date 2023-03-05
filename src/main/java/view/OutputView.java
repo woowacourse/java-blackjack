@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import java.util.Map;
 
-import domain.Result;
+import domain.game.Result;
 
 public class OutputView {
     private static final String PARTICIPANT_CARD_FORMAT = "%s : %s\n";

@@ -4,6 +4,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.card.RandomShuffleStrategy;
+
 class DeckTest {
 
     @Test

@@ -2,9 +2,9 @@ package service;
 
 import java.util.List;
 
-import domain.Deck;
-import domain.Participants;
-import domain.RandomShuffleStrategy;
+import domain.card.Deck;
+import domain.people.Participants;
+import domain.card.RandomShuffleStrategy;
 
 public class SettingService {
     public Deck createDeck() {

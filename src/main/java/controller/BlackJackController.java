@@ -3,11 +3,11 @@ package controller;
 import java.util.List;
 import java.util.Map;
 
-import domain.Deck;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
-import domain.Result;
+import domain.card.Deck;
+import domain.people.Participant;
+import domain.people.Participants;
+import domain.people.Player;
+import domain.game.Result;
 import service.GameService;
 import service.SettingService;
 import view.InputView;

@@ -1,7 +1,10 @@
-package domain;
+package domain.card;
 
 import java.util.Collections;
 import java.util.Stack;
+
+import domain.card.Card;
+import domain.card.ShuffleStrategy;
 
 public class RandomShuffleStrategy implements ShuffleStrategy {
     @Override

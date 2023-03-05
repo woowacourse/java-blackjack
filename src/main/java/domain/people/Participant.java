@@ -1,7 +1,10 @@
-package domain;
+package domain.people;
 
 import java.util.List;
 import java.util.Objects;
+
+import domain.card.Card;
+import domain.card.Hand;
 
 public class Participant {
     private final Hand hand;

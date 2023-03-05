@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.card.Deck;
-import domain.Result;
+import domain.game.Result;
 import view.ErrorMessage;
 
 public class Participants {

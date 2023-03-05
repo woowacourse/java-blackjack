@@ -1,4 +1,4 @@
-package domain;
+package domain.people;
 
 import java.util.ArrayList;
 
