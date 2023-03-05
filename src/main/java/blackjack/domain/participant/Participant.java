@@ -40,4 +40,8 @@ public class Participant {
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
     }
+
+    public boolean canHit() {
+        return getTotalScore() <= 21;
+    }
 }

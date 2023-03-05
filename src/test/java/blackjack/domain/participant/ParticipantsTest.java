@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 public class ParticipantsTest {
 
@@ -26,7 +25,7 @@ public class ParticipantsTest {
     @DisplayName("딜러를 반환하는 테스트")
     void getDealerTest() {
         Dealer dealer = new Dealer();
-        Participants participants = new Participants(dealer, List.of("pobi","crong"));
+        Participants participants = new Participants(dealer, List.of("pobi", "crong"));
 
         assertThat(participants.getDealer()).isEqualTo(dealer);
     }
@@ -35,7 +34,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어들을 반환하는 테스트")
     void getPlayersTest() {
         Dealer dealer = new Dealer();
-        Participants participants = new Participants(dealer, List.of("pobi","crong"));
+        Participants participants = new Participants(dealer, List.of("pobi", "crong"));
         Player expected = new Player(new Name("pobi"));
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(expected.getClass());
         assertThat(participants.getPlayers().size()).isEqualTo(2);
@@ -45,7 +44,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어들의 이름을 반환하는 테스트")
     void getPlayerNames() {
         Dealer dealer = new Dealer();
-        Participants participants = new Participants(dealer, List.of("pobi","crong"));
+        Participants participants = new Participants(dealer, List.of("pobi", "crong"));
 
         Assertions.assertThat(participants.getPlayerNames()).contains("pobi", "crong");
     }

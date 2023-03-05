@@ -23,7 +23,7 @@ public class ResultGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        participants = new Participants(dealer, List.of("pobi","crong","dali"));
+        participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
     }
 
     @Test

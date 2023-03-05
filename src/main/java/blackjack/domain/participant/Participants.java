@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,20 +17,19 @@ public class Participants {
     }
 
     private void validateEmptyNames(final List<String> players) {
-        players.forEach(player->{
-            checkNameIsEmpty(player);
-        });
+        players.forEach(Participants::checkNameIsEmpty);
     }
 
     private static void checkNameIsEmpty(String player) {
-        if(player.length()==0){
+        if (player.length() == 0) {
             throw new IllegalArgumentException(EMPTY_ERROR_MESSAGE);
         }
     }
 
-    private List<Player> makePlayer(List<String> players){
-        return players.stream().map(name->new Player(new Name(name))).collect(Collectors.toList());
+    private List<Player> makePlayer(List<String> players) {
+        return players.stream().map(name -> new Player(new Name(name))).collect(Collectors.toList());
     }
+
     public Dealer getDealer() {
         return this.dealer;
     }

@@ -23,7 +23,7 @@ public class BlackjackGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer();
-        participants = new Participants(dealer, List.of("pobi","crong"));
+        participants = new Participants(dealer, List.of("pobi", "crong"));
         deck = new Deck(DECK_MAKER.makeDeck(), new TestCardPicker());
     }
 

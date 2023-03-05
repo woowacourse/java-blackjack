@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckMaker;
-import blackjack.domain.cardPicker.CardPicker;
 import blackjack.domain.cardPicker.RandomCardPicker;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultGame;
@@ -19,6 +18,7 @@ import java.util.List;
 
 public class BlackjackController {
 
+    private static final String DEALER_NAME = "딜러";
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -34,17 +34,18 @@ public class BlackjackController {
 
         startGame(blackjackGame);
         outputView.outputParticipantCards(makeParticipantsList(participants));
-        //showAllParticipantCards(participants);
         hitParticipants(blackjackGame);
         showAllCardsAndScore(blackjackGame);
         showAllResult(blackjackGame);
     }
-    private HashMap<String, List<String>> makeParticipantsList(Participants participants){
+
+    private HashMap<String, List<String>> makeParticipantsList(Participants participants) {
         HashMap<String, List<String>> participantsMap = new HashMap<>();
-        participantsMap.put("딜러",participants.getDealer().getOneCard());
-        participants.getPlayers().forEach(player -> participantsMap.put(player.getName(),player.getCardNames()));
+        participantsMap.put(DEALER_NAME, participants.getDealer().getOneCard());
+        participants.getPlayers().forEach(player -> participantsMap.put(player.getName(), player.getCardNames()));
         return participantsMap;
     }
+
     private Participants makeParticipants() {
         final Dealer dealer = new Dealer();
         return new Participants(dealer, inputView.inputPlayers());
@@ -57,23 +58,12 @@ public class BlackjackController {
 
     private void startGame(final BlackjackGame blackjackGame) {
         final Participants participants = blackjackGame.getParticipants();
-        final Dealer dealer = participants.getDealer();
         final List<String> playerNames = participants.getPlayerNames();
 
         outputView.outputSplitMessage(playerNames);
         blackjackGame.giveTwoCardEveryone();
     }
 
-    private void showAllParticipantCards(final Participants participants) {
-        final Dealer dealer = participants.getDealer();
-        outputView.outputPlayerCard(dealer.getName(), dealer.getOneCard());
-        outputView.changeLine();
-        final List<Player> players = participants.getPlayers();
-        for (final Player player : players) {
-            outputView.outputPlayerCard(player.getName(), player.getCardNames());
-            outputView.changeLine();
-        }
-    }
 
     private void hitParticipants(final BlackjackGame blackjackGame) {
         hitPlayers(blackjackGame);
@@ -90,7 +80,7 @@ public class BlackjackController {
     }
 
     private void hitEachPlayer(final BlackjackGame blackjackGame, final Player player) {
-        while (!player.isBust() && isMoreHit(player)) {
+        while (player.canHit() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
         }

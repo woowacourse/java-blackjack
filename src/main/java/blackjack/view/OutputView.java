@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Dealer;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,19 +19,21 @@ public class OutputView {
     private static final String PLAYER_DELIMITER = ", ";
     private static final String DEALER_NAME = "딜러";
 
-    public void outputSplitMessage( final List<String> players) {
+    public void outputSplitMessage(final List<String> players) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(CHANGE_LINE + DEALER_NAME + DEALER_ANDE_PLAYER_DELIMITER);
         stringBuilder.append(String.join(PLAYERS_DELIMITER, players) + GIVE_TWO_CARD_MASSAGE);
         System.out.println(stringBuilder);
     }
-    public void outputParticipantCards(HashMap<String,List<String>> playerCards){
-        outputPlayerCard(DEALER_NAME,playerCards.get(DEALER_NAME));
+
+    public void outputParticipantCards(HashMap<String, List<String>> playerCards) {
+        outputPlayerCard(DEALER_NAME, playerCards.get(DEALER_NAME));
         changeLine();
-        for(final String name:playerCards.keySet()){
-            outputPlayerCard(name,playerCards.get(name));
+        for (final String name : playerCards.keySet()) {
+            outputPlayerCard(name, playerCards.get(name));
         }
     }
+
     public void outputPlayerCard(final String name, final List<String> cards) {
         System.out.print(name + PLAYER_SCORE_DELIMITER + String.join(PLAYER_DELIMITER, cards));
     }

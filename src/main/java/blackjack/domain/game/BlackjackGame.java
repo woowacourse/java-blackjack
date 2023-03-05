@@ -39,4 +39,8 @@ public class BlackjackGame {
     public void drawCard(final Participant participant) {
         participant.drawCard(deck.drawCard());
     }
+
+    public boolean isPlayerCanPlay(final Participant participant) {
+        return participant.canHit();
+    }
 }
