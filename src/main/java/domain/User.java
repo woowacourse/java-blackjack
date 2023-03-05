@@ -21,7 +21,7 @@ public abstract class User {
 		cards.addCard(card);
 	}
 
-	abstract public boolean isHittable();
+	public abstract boolean isHittable();
 
 	public String getName() {
 		return name;
