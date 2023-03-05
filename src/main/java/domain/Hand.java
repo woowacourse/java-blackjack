@@ -7,6 +7,7 @@ public class Hand {
     private static final int HIGH_ACE_VALUE = 11;
     private static final int LOW_ACE_VALUE = 1;
     private static final int BUST_BOUNDARY_VALUE = 21;
+
     private final List<Card> hand;
 
     public Hand(List<Card> cards) {
