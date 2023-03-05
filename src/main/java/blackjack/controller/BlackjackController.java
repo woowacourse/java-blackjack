@@ -31,7 +31,6 @@ public class BlackjackController {
         hitParticipantsCard(blackjackGame, cards, cardPickerGenerator);
 
         printResult(participants, blackjackGame);
-
     }
 
     private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
