@@ -6,13 +6,13 @@ import blackjack.domain.player.Player;
 import blackjack.domain.result.Result;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.DealerResultDto;
-import blackjack.dto.DealerStatusDto;
-import blackjack.dto.DealerStatusWithPointDto;
 import blackjack.dto.PlayerStatusDto;
+import blackjack.dto.PlayerStatusWithPointDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -42,24 +42,21 @@ public class BlackJackController {
     }
 
     private void showStartStatus() {
-        DealerStatusDto dealerStatus = makeDealerStatus();
-        List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
+        PlayerStatusDto dealerStatus = makeDealerStatus();
+        List<PlayerStatusDto> challengersStatus = makeChallengersStartStatus();
         OutputView.printStartStatus(dealerStatus, challengersStatus);
     }
 
-    private DealerStatusDto makeDealerStatus() {
+    private PlayerStatusDto makeDealerStatus() {
         Player dealer = blackJackGame.getDealer();
-        return DealerStatusDto.from(dealer);
+        return PlayerStatusDto.from(dealer);
     }
 
-    private List<PlayerStatusDto> makeChallengersStatus() {
-        List<Player> players = blackJackGame.getChallengers();
-        List<PlayerStatusDto> gameStatus = new ArrayList<>();
-        for (Player player : players) {
-            PlayerStatusDto playerStatusDto = new PlayerStatusDto(player);
-            gameStatus.add(playerStatusDto);
-        }
-        return gameStatus;
+    private List<PlayerStatusDto> makeChallengersStartStatus() {
+        List<Player> challengers = blackJackGame.getChallengers();
+        return challengers.stream()
+                .map(PlayerStatusDto::from)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void takeTurn() {
@@ -96,7 +93,7 @@ public class BlackJackController {
         boolean choice = InputView.inputPlayerChoice(player.getName());
         if (choice) {
             blackJackGame.pick(player);
-            OutputView.printChallengerStatusInGame(new PlayerStatusDto(player));
+            OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
             takeEachChallengerTurn(player);
         }
     }
@@ -116,14 +113,21 @@ public class BlackJackController {
     }
 
     private void showPoint() {
-        DealerStatusWithPointDto dealerStatus = makeDealerWithPointStatus();
-        List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
+        PlayerStatusWithPointDto dealerStatus = makeDealerWithPointStatus();
+        List<PlayerStatusWithPointDto> challengersStatus = makeChallengersWithPointStatus();
         OutputView.printEndStatus(dealerStatus, challengersStatus);
     }
 
-    private DealerStatusWithPointDto makeDealerWithPointStatus() {
+    private PlayerStatusWithPointDto makeDealerWithPointStatus() {
         Player dealer = blackJackGame.getDealer();
-        return DealerStatusWithPointDto.from(dealer);
+        return PlayerStatusWithPointDto.from(dealer);
+    }
+
+    private List<PlayerStatusWithPointDto> makeChallengersWithPointStatus() {
+        List<Player> challengers = blackJackGame.getChallengers();
+        return challengers.stream()
+                .map(PlayerStatusWithPointDto::from)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void showRank() {

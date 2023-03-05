@@ -2,9 +2,8 @@ package blackjack.view;
 
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.DealerResultDto;
-import blackjack.dto.DealerStatusDto;
-import blackjack.dto.DealerStatusWithPointDto;
 import blackjack.dto.PlayerStatusDto;
+import blackjack.dto.PlayerStatusWithPointDto;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class OutputView {
         System.out.println(exception.getMessage());
     }
 
-    public static void printStartStatus(DealerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
+    public static void printStartStatus(PlayerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
         System.out.println();
         printGivenMessage(dealerStatus, challengersStatus);
         printDealerOpenedStatus(dealerStatus);
@@ -33,14 +32,14 @@ public class OutputView {
         printChallengersStatus(challengersStatus);
     }
 
-    private static void printGivenMessage(DealerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
+    private static void printGivenMessage(PlayerStatusDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
         System.out.print(dealerStatus.getName() + "와 ");
         String challengerNames = String.join(ITEM_DELIMITER, toChallengerNames(challengersStatus));
         System.out.print(challengerNames);
         System.out.println(GIVE_START_CARD_COMPLETE_MESSAGE);
     }
 
-    private static void printDealerOpenedStatus(DealerStatusDto dealerStatus) {
+    private static void printDealerOpenedStatus(PlayerStatusDto dealerStatus) {
         printDealerName(dealerStatus.getName());
         printOneCardFromDealer(dealerStatus.getOneCard());
     }
@@ -89,15 +88,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printEndStatus(DealerStatusWithPointDto dealerStatus, List<PlayerStatusDto> challengersStatus) {
+    public static void printEndStatus(PlayerStatusWithPointDto dealerStatus, List<PlayerStatusWithPointDto> challengersStatus) {
         printDealerFinalStatus(dealerStatus);
-        for (PlayerStatusDto challenger : challengersStatus) {
+        for (PlayerStatusWithPointDto challenger : challengersStatus) {
             printChallengerStatus(challenger);
             printPoint(challenger.getPoint());
         }
     }
 
-    private static void printDealerFinalStatus(DealerStatusWithPointDto dealerStatusDto) {
+    private static void printDealerFinalStatus(PlayerStatusWithPointDto dealerStatusDto) {
         printDealerName(dealerStatusDto.getName());
         printDealerCards(dealerStatusDto.getCards());
         printPoint(dealerStatusDto.getPoint());

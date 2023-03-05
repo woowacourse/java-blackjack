@@ -1,40 +1,44 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.HoldingCards;
 import blackjack.domain.player.Player;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerStatusDto {
 
     private final String name;
     private final List<String> cards;
-    private final int point;
 
-    public PlayerStatusDto(Player player) {
-        this.name = player.getName();
-        this.cards = extractCardInfo(player);
-        this.point = player.getTotalPoint();
+    protected PlayerStatusDto(String name, List<String> cards) {
+        this.name = name;
+        this.cards = cards;
     }
 
-    private List<String> extractCardInfo(Player player) {
-        List<String> cardInfo = new ArrayList<>();
-        List<Card> inputCards = player.getHoldingCards().getCards();
-        for (Card card : inputCards) {
-            cardInfo.add(card.getNumber().getName() + card.getShape().getName());
-        }
-        return cardInfo;
+    public static PlayerStatusDto from(Player player) {
+        String name = player.getName();
+        HoldingCards holdingCards = player.getHoldingCards();
+        List<String> cards = extractCardInfo(holdingCards.getCards());
+        return new PlayerStatusDto(name, cards);
+    }
+
+    protected static List<String> extractCardInfo(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getShape().getName() + card.getNumber().getName())
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public String getName() {
         return name;
     }
 
-    public List<String> getCards() {
-        return cards;
+    public String getOneCard() {
+        return cards.get(0);
     }
 
-    public int getPoint() {
-        return point;
+    public List<String> getCards() {
+        return cards;
     }
 }
