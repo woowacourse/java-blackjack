@@ -2,11 +2,28 @@ package view;
 
 import domain.Card;
 import domain.GameResult;
+import domain.Users;
+import domain.user.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+    public void printInitMessage(Users players) {
+        List<String> playerNames = getPlayerNames(players);
+        System.out.println();
+        System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
+    }
+
+    private static List<String> getPlayerNames(Users players) {
+        List<String> playerNames = new ArrayList<>();
+        for (User player : players.getPlayers()) {
+            playerNames.add(player.getName());
+        }
+        return playerNames;
+    }
 
     public void printDealerCardHidden(final Card card) {
         System.out.println("딜러: " + getCardName(card));
@@ -85,11 +102,6 @@ public class OutputView {
     public void printDealerHitMessage() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public void printInitMessage(List<String> playerNames) {
-        System.out.println();
-        System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
     public void printErrorMessage(String message) {

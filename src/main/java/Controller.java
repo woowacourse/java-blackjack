@@ -29,10 +29,9 @@ public class Controller {
 
     private void ready() {
         List<String> playerNames = inputView.askPlayerNames();
-        Users users = Users.from(playerNames);
-        blackJack = BlackJack.of(users, new RandomCardIndexGenerator());
-        outputView.printInitMessage(playerNames);
-        // outputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
+        Users players = Users.from(playerNames);
+        blackJack = BlackJack.of(players, new RandomCardIndexGenerator());
+        outputView.printInitMessage(players);
         outputView.printDealerCardHidden(blackJack.getDealerCard());
         outputView.printPlayerCards(blackJack.getPlayerToCard());
     }
