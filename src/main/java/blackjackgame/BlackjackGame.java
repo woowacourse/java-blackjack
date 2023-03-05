@@ -29,8 +29,15 @@ public class BlackjackGame {
 
     public void addPlayers(List<String> names) {
         validateDuplicatedName(names);
+        validateMaxPlayer(names);
         for (String name : names) {
             addPlayer(new Player(new Name(name)));
+        }
+    }
+
+    private void validateMaxPlayer(List<String> names) {
+        if (names.size() > 6) {
+            throw new IllegalArgumentException("참가인원은 최대 6명입니다.");
         }
     }
 

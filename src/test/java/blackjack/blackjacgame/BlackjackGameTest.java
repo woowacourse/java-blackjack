@@ -4,6 +4,7 @@ import static blackjackgame.Result.LOSE;
 import static blackjackgame.Result.TIE;
 import static blackjackgame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,26 @@ class BlackjackGameTest {
         blackjackGame.addPlayer(new Player(new Name("로지")));
 
         assertThat(players.count()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("참가인원중 중복된 이름이 있으면 예외가 발생한다.")
+    void validateDuplicateName() {
+        List<String> names = List.of("폴로", "로지", "폴로", "에단", "아코", "주노", "리오");
+
+        assertThatThrownBy(() -> blackjackGame.addPlayers(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름은 사용할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("참가인원이 6명을 초과하면 예외를 발생한다")
+    void validateMaxPlayer() {
+        List<String> names = List.of("폴로", "로지", "마코", "에단", "아코", "주노", "리오");
+
+        assertThatThrownBy(() -> blackjackGame.addPlayers(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가인원은 최대 6명입니다.");
     }
 
     @Test
