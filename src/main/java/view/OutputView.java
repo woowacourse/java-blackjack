@@ -3,7 +3,7 @@ package view;
 import domain.Card;
 import domain.GameResult;
 import domain.Users;
-import domain.user.User;
+import domain.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,6 @@
-package domain.user;
+package domain;
 
 import java.util.List;
-
-import domain.Card;
-import domain.Cards;
 
 public abstract class User {
 

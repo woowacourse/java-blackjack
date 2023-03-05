@@ -1,7 +1,7 @@
 import domain.BlackJack;
 import domain.RandomCardIndexGenerator;
 import domain.Users;
-import domain.user.Player;
+import domain.Player;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

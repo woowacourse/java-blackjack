@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import domain.user.Player;
+import domain.Player;
 
 public class InputView {
 

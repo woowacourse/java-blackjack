@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
-
 public class BlackJack {
 
 	private final Users users;
