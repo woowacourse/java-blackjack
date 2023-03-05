@@ -37,6 +37,10 @@ public class Card {
         return Objects.hash(suit, number);
     }
 
+    public String cardUnit() {
+        return number.getSymbol() + suit.getSuit();
+    }
+
     public CardSuit getSuit() {
         return suit;
     }

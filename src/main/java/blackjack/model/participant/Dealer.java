@@ -1,7 +1,9 @@
 package blackjack.model.participant;
 
+import blackjack.model.Players;
 import blackjack.model.ResultState;
 import blackjack.model.WinningResult;
+import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.State;
@@ -43,18 +45,23 @@ public class Dealer extends Participant {
     }
 
 
-    public Map<String, WinningResult> winningResults(List<Player> players) {
+    public Map<String, WinningResult> winningResults(Players players) {
         Map<String, WinningResult> results = new HashMap<>();
         WinningResult totalResult = new WinningResult();
 
-        for (Player player : players) {
-            WinningResult playerResult = player.winningResult(this.cardScore());
-            results.put(player.getName(), playerResult);
+        for (int i = 0; i < players.getPlayerCount(); i++) {
+            WinningResult playerResult = players.getWinningResultById(i, this.cardScore());
+            results.put(players.getNameById(i), playerResult);
             totalResult = totalResult.merge(playerResult);
         }
 
         WinningResult dealerResult = new WinningResult(totalResult.getLose(), totalResult.getDraw(), totalResult.getWin());
         results.put(this.getName(), dealerResult);
         return results;
+    }
+
+    @Override
+    public List<Card> firstDistributedCard() {
+        return List.of(currentState.getHand().get(0));
     }
 }

@@ -34,4 +34,5 @@ public abstract class State {
     public List<Card> getHand() {
         return handCard.getCards();
     }
+
 }

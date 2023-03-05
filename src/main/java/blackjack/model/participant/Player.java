@@ -2,10 +2,13 @@ package blackjack.model.participant;
 
 import blackjack.model.ResultState;
 import blackjack.model.WinningResult;
+import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.State;
+
+import java.util.List;
 
 public class Player extends Participant {
 
@@ -34,6 +37,12 @@ public class Player extends Participant {
             return ResultState.PLAYER_BUST;
         }
         return ResultState.STAND;
+    }
+
+    @Override
+    public List<Card> firstDistributedCard() {
+        List<Card> handCards = currentState.getHand();
+        return List.of(handCards.get(0), handCards.get(1));
     }
 
     public WinningResult winningResult(CardScore dealerScore) {
