@@ -4,8 +4,6 @@ import domain.card.Cards;
 
 public final class Participant extends Player {
 
-    private static final int BURST_NUMBER = 22;
-
     private Participant(final Name name, final Cards cards) {
         super(name, cards);
     }
@@ -24,9 +22,5 @@ public final class Participant extends Player {
 
     public boolean isKeepGaming(boolean isHit) {
         return isBurst() && isHit;
-    }
-
-    private boolean isBurst() {
-        return getScore() > BURST_NUMBER;
     }
 }
