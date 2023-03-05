@@ -2,7 +2,10 @@ package fixture;
 
 import domain.Card;
 import domain.CardInfo;
+import domain.Cards;
 import domain.Shape;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 우가
@@ -20,4 +23,8 @@ public class CardFixture {
     public static final Card 하트8 = new Card(Shape.HEART, CardInfo.EIGHT);
     public static final Card 하트9 = new Card(Shape.HEART, CardInfo.NINE);
     public static final Card 하트10 = new Card(Shape.HEART, CardInfo.TEN);
+
+    public static final Cards 하트에이스하트2 = new Cards(new ArrayList<>(List.of(하트에이스, 하트2)));
+    public static final Cards 하트9하트3 = new Cards(new ArrayList<>(List.of(하트9, 하트3)));
+    public static final Cards 하트10하트4 = new Cards(new ArrayList<>(List.of(하트10, 하트4)));
 }
