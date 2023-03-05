@@ -20,15 +20,8 @@ public class Players {
     }
 
     private void validatePlayers(List<String> playerNames) {
-        validateNameFormat(playerNames);
         validateNameDuplication(playerNames);
         validateSize(playerNames);
-    }
-
-    private void validateNameFormat(List<String> playerNames) {
-        if (playerNames.stream().anyMatch(name -> name.equals("딜러"))) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYER_NAME_FORMAT.getMessage());
-        }
     }
 
     private void validateNameDuplication(List<String> playerNames) {
