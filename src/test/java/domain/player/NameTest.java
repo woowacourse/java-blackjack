@@ -12,6 +12,7 @@ public class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "1234567890123456", "12345678901234567"})
     void validateLengthTest(String name) {
-        assertThrows(IllegalArgumentException.class, () -> new Name(name));
+        assertThrows(IllegalArgumentException.class, () -> new Name(name))
+                .getMessage().equals("[ERROR]: 이름은 1자이상 15자이하로 입력해주세요.");
     }
 }
