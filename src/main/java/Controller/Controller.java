@@ -41,15 +41,9 @@ public class Controller {
 	}
 
 	private void askPlayerHit(final Player player) {
-		while (player.isHittable()) {
-			giveCardIfWanted(player);
-			printEachPlayerCards(player.getName(), player.getCardNames());
-		}
-	}
-
-	private void giveCardIfWanted(Player player) {
-		if (askIfHit(player)) {
+		while (player.isHittable() && askIfHit(player)) {
 			blackJack.giveCard(player);
+			printEachPlayerCards(player.getName(), player.getCardNames());
 		}
 	}
 
