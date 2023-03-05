@@ -56,11 +56,9 @@ public class MainController {
     }
 
     private void drawWhileYes(final String playerName) {
-        boolean answer = true;
-        while (answer) {
+        do {
             OutputView.printOneMoreCard(playerName);
-            answer = isOneMore(playerName);
-        }
+        } while (isOneMore(playerName));
     }
 
     private boolean isOneMore(final String playerName) {
