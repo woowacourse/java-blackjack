@@ -10,6 +10,11 @@ public abstract class Participant {
         cardPocket = CardPocket.empty();
     }
 
+    public void drawInitialCard(Card first, Card second) {
+        cardPocket.addCard(first);
+        cardPocket.addCard(second);
+    }
+
     public void drawCard(final Card card) {
         cardPocket.addCard(card);
     }
