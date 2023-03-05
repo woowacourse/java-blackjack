@@ -55,6 +55,7 @@ public class BlackJack {
 		Map<GameResult, Integer> dealerResult = new HashMap<>();
 		Map<String, GameResult> playerResults = calculatePlayerResults();
 		playerResults.values().forEach(result -> convertResult(result, dealerResult));
+
 		return dealerResult;
 	}
 
@@ -75,21 +76,20 @@ public class BlackJack {
 
 	public Map<String, List<String>> getPlayerToCard() {
 		Map<String, List<String>> playerWithCards = new HashMap<>();
-		List<Player> players = users.getPlayers();
-		for (Player player : players) {
+		for (Player player : users.getPlayers()) {
 			playerWithCards.put(player.getName(), player.getCardNames());
 		}
+
 		return playerWithCards;
 	}
 
 	public Map<String, Integer> getPlayerToScore() {
-		List<Player> players = users.getPlayers();
-		return players.stream().collect(Collectors.toMap(
-			Player::getName,
-			Player::getScore,
-			(oldValue, newValue) -> newValue,
-			LinkedHashMap::new
-		));
+		Map<String, Integer> playerWithScore = new LinkedHashMap<>();
+		for (Player player : users.getPlayers()) {
+			playerWithScore.put(player.getName(), player.getScore());
+		}
+
+		return playerWithScore;
 	}
 
 	public List<Player> getHittablePlayers() {
