@@ -1,12 +1,11 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.ArrayDeque;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayDeque;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -24,5 +23,16 @@ class DeckTest {
         assertThatThrownBy(() -> new Deck(new ArrayDeque<>()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 숫자가 52장이 아닙니다");
+    }
+
+    @Test
+    void 제거_시도를_52번보다_많이_하면_예외() {
+        Deck deck = new ShuffledDeckFactory().generate();
+        for (int i = 0; i < 52; i++) {
+            deck.removeCard();
+        }
+        assertThatThrownBy(deck::removeCard)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 카드가 없습니다");
     }
 }

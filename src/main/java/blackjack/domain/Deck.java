@@ -22,7 +22,10 @@ public class Deck {
         }
     }
 
-    public Card popCard() {
+    public Card removeCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("덱에 카드가 없습니다");
+        }
         return cards.remove();
     }
 }
