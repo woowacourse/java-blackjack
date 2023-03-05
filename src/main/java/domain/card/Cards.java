@@ -7,7 +7,7 @@ import java.util.List;
 import view.ErrorMessage;
 
 public class Cards {
-    private static final int CARD_ON_TOP = 0;
+    private static final int CARD_ON_TOP_INDEX = 0;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class Cards {
         if (isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.NO_MORE_CARD.getMessage());
         }
-        return cards.remove(CARD_ON_TOP);
+        return cards.remove(CARD_ON_TOP_INDEX);
     }
 
     public List<Card> drawForFirstTurn() {
