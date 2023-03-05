@@ -16,12 +16,11 @@ public class Card {
         return denomination.getScore();
     }
 
-    public Denomination getDenomination() {
-        return denomination;
+    public String getPoint(){
+        return denomination.getPoint();
     }
-
-    public Suits getSuit() {
-        return suit;
+    public String getSuit() {
+        return suit.getName();
     }
 
     public List<String> getCardName() {
