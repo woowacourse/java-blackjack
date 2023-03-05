@@ -19,6 +19,7 @@ public enum CardNumber {
     JACK(10, "J");
 
     private static final int ACE_CONVERT_NUMBER = 10;
+
     private final int value;
     private final String number;
 
