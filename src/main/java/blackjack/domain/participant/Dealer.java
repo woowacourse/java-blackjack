@@ -11,31 +11,8 @@ public class Dealer extends Participant {
         super(Cards.generateEmptyCards());
     }
 
-    public List<Integer> decideSelfResult() {
-        Map<Result, Integer> dealerResult = new LinkedHashMap<>() {{
-            put(WIN, 0);
-            put(DRAW, 0);
-            put(LOSE, 0);
-        }};
-        Map<Player, Result> playerResultMap = decideResult();
-
-        for (Result playerResult : playerResultMap.values()) {
-            decideResult(playerResult, dealerResult);
-        }
-
-        return new ArrayList<>(dealerResult.values());
-    }
-
-    private void decideResult(Result playerResult, Map<Result, Integer> dealerResult) {
-        if (playerResult == WIN) {
-            dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
-            return;
-        }
-        if (playerResult == DRAW) {
-            dealerResult.put(DRAW, dealerResult.get(DRAW) + 1);
-            return;
-        }
-        dealerResult.put(WIN, dealerResult.get(WIN) + 1);
+    public Card getOneCardToShow() {
+        return cards.getCards().get(0);
     }
 
     public boolean canDraw() {
