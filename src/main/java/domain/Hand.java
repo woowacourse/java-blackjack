@@ -24,7 +24,7 @@ public class Hand {
 
         for (Card card : hand) {
             value += card.getValue();
-            aceCount = countAce(aceCount, card);
+            aceCount += isAce(card);
         }
         value = exchangeAceLowValueWhenBust(value, aceCount);
         return value;
@@ -38,11 +38,11 @@ public class Hand {
         return value;
     }
 
-    private int countAce(int aceCount, final Card card) {
+    private int isAce(final Card card) {
         if (card.isAce()) {
-            aceCount += 1;
+            return 1;
         }
-        return aceCount;
+        return 0;
     }
 
     public List<String> getCardNames() {
