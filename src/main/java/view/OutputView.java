@@ -93,7 +93,7 @@ public class OutputView {
 
 	public static void printDealerHitMessage() {
 		System.out.println();
-		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
 	}
 
 	public static void printErrorMessage(String message) {
