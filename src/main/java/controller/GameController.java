@@ -4,8 +4,8 @@ import domain.BlackJackGame;
 import domain.TurnAction;
 import domain.box.BoxResult;
 import domain.user.Player;
+import dto.ParticipantDTO;
 import java.util.List;
-import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -18,40 +18,53 @@ public class GameController {
     }
 
     public void ready() {
-        blackJackGame.dealInitialHand();
-        List<Player> allParticipant = blackJackGame.getPlayersAndDealerAtFirst();
-        OutputView.printReady(allParticipant.stream().map(Player::getName).collect(Collectors.toList()));
-        allParticipant.forEach(
-            (participant) -> OutputView.printNameAndHand(participant.getName(), participant.faceUpInitialHand()));
+        ParticipantDTO participantDTO = new ParticipantDTO();
+        blackJackGame.initializeHand();
+        blackJackGame.makeParticipants(participantDTO);
+        List<Player> players = participantDTO.getPlayers();
+        Player dealer = participantDTO.getDealer();
+        OutputView.printNameAndHand(dealer.getName(), dealer.faceUpInitialHand());
+        players.forEach((player) -> OutputView.printNameAndHand(player.getName(), player.faceUpInitialHand()));
     }
 
     public void play() {
         Player current = blackJackGame.getCurrentPlayer();
         while (current.isPlayer()) {
-            String input = InputView.inputNeedMoreCard(current.getName());
-            TurnAction action = TurnAction.getActionByInput(input);
-            blackJackGame.progressTurn(current, action);
-            OutputView.printNameAndHand(current.getName(), current.showHand());
+            playersTurn(current);
             current = blackJackGame.getCurrentPlayer();
         }
-        while (blackJackGame.isDealerUnderThresholds(current)) {
+        dealerTurn(current);
+    }
+
+    private void playersTurn(Player player) {
+        String input = InputView.inputNeedMoreCard(player.getName());
+        TurnAction action = TurnAction.getActionByInput(input);
+        blackJackGame.playTurn(player, action);
+        OutputView.printNameAndHand(player.getName(), player.showHand());
+    }
+
+    private void dealerTurn(Player dealer) {
+        while (blackJackGame.isDealerUnderThresholds(dealer)) {
             OutputView.printDealerReceivedCard();
-            blackJackGame.progressTurn(current, TurnAction.HIT);
+            blackJackGame.playTurn(dealer, TurnAction.HIT);
         }
     }
 
     public void printFinalGameResult() {
-        List<Player> dealerAndPlayers = blackJackGame.getPlayersAndDealerAtFirst();
-        printAllParticipantsStatus(dealerAndPlayers);
-        List<BoxResult> gameResult = blackJackGame.showResult();
-        OutputView.printDealerGameResult(gameResult.get(0), gameResult.size() - 1);
-        for (int i = 1; i < dealerAndPlayers.size(); i++) {
-            OutputView.printPlayerResult(dealerAndPlayers.get(i).getName(), gameResult.get(i));
+        ParticipantDTO participantDTO = new ParticipantDTO();
+        blackJackGame.makeParticipants(participantDTO);
+        List<Player> players = participantDTO.getPlayers();
+        printAllStatus(participantDTO.getDealer(), players);
+        List<BoxResult> playerBoxResults = blackJackGame.getPlayerBoxResults(players);
+        OutputView.printDealerGameResult(blackJackGame.getDealerBoxResult(playerBoxResults), players.size());
+        for (int index = 0; index < players.size(); index++) {
+            OutputView.printPlayerBoxResult(players.get(index).getName(), playerBoxResults.get(index));
         }
     }
 
-    private void printAllParticipantsStatus(List<Player> allPlayers) {
-        allPlayers.forEach(
+    private void printAllStatus(Player dealer, List<Player> players) {
+        OutputView.printNameHandScore(dealer.getName(), dealer.showHand(), dealer.calculatePoint());
+        players.forEach(
             (participant) -> OutputView.printNameHandScore(participant.getName(), participant.showHand(),
                 participant.calculatePoint()));
     }

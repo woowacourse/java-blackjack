@@ -4,14 +4,13 @@ import domain.box.BoxResult;
 import domain.box.Boxes;
 import domain.card.Deck;
 import domain.user.Player;
-import java.util.ArrayList;
+import dto.ParticipantDTO;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
     private static final int DEALER_THRESHOLDS = 16;
-    private static final int FIRST_PLAYER_INDEX = 1;
-    private static final int DEALER_INDEX = 0;
     private final Deck deck = new Deck();
     private final Boxes boxes;
 
@@ -19,23 +18,23 @@ public class BlackJackGame {
         this.boxes = Boxes.of(participantNames);
     }
 
+    public void initializeHand() {
+        deck.shuffle();
+        List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
+        dealToAll(playersAndDealerAtLast);
+        dealToAll(playersAndDealerAtLast);
+    }
+
+    private void dealToAll(List<Player> targets) {
+        targets.forEach(this::dealTo);
+        targets.forEach(boxes::updatePlayerBox);
+    }
+
     private void dealTo(Player participant) {
         participant.dealt(deck.draw());
     }
 
-    public void dealInitialHand() {
-        deck.shuffle();
-        List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
-        dealOnceTo(playersAndDealerAtLast);
-        dealOnceTo(playersAndDealerAtLast);
-        playersAndDealerAtLast.forEach(boxes::updatePlayerBox);
-    }
-
-    private void dealOnceTo(List<Player> targets) {
-        targets.forEach(this::dealTo);
-    }
-
-    public void progressTurn(Player player, TurnAction turnAction) {
+    public void playTurn(Player player, TurnAction turnAction) {
         if (turnAction == TurnAction.HIT) {
             dealTo(player);
         }
@@ -50,24 +49,19 @@ public class BlackJackGame {
         return dealer.calculatePoint() <= DEALER_THRESHOLDS;
     }
 
-    public List<BoxResult> showResult() {
-        List<Player> dealerAndPlayers = getPlayersAndDealerAtFirst();
-        List<BoxResult> boxResults = new ArrayList<>();
-        boxResults.add(new BoxResult(0, 0));
-        for (int index = FIRST_PLAYER_INDEX; index < dealerAndPlayers.size(); index++) {
-            BoxResult playerResult = boxes.getBoxResult(dealerAndPlayers.get(index));
-            boxResults.add(playerResult);
-            BoxResult updatedDealerResult = boxResults.get(DEALER_INDEX).addReversed(playerResult);
-            boxResults.set(DEALER_INDEX, updatedDealerResult);
-        }
-        return boxResults;
+    public void makeParticipants(ParticipantDTO participantDTO) {
+        boxes.setParticipantDTO(participantDTO);
     }
 
-    public List<Player> getPlayersAndDealerAtFirst() {
-        List<Player> playersAndDealer = boxes.getPlayersAndDealerAtLast();
-        final int dealerIndex = playersAndDealer.size() - 1;
-        Player dealer = playersAndDealer.remove(dealerIndex);
-        playersAndDealer.add(0, dealer);
-        return playersAndDealer;
+    public BoxResult getDealerBoxResult(List<BoxResult> playerBoxResults) {
+        BoxResult dealerBoxResult = new BoxResult(0, 0);
+        for (BoxResult playerBoxResult : playerBoxResults) {
+            dealerBoxResult = dealerBoxResult.addReversed(playerBoxResult);
+        }
+        return dealerBoxResult;
+    }
+
+    public List<BoxResult> getPlayerBoxResults(List<Player> players) {
+        return players.stream().map(boxes::getBoxResult).collect(Collectors.toList());
     }
 }

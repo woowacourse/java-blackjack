@@ -2,6 +2,7 @@ package domain.box;
 
 import domain.user.Dealer;
 import domain.user.Player;
+import dto.ParticipantDTO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -59,6 +60,12 @@ public class Boxes {
             return PlayResult.BLACK_JACK;
         }
         return PlayResult.NOT_BUST;
+    }
+
+    public void setParticipantDTO(ParticipantDTO participantDTO) {
+        List<Player> playersAndDealerAtLast = getPlayersAndDealerAtLast();
+        participantDTO.setDealer(playersAndDealerAtLast.get(boxes.size() - 1));
+        participantDTO.setPlayers(playersAndDealerAtLast.subList(0, boxes.size() - 1));
     }
 
     public List<Player> getPlayersAndDealerAtLast() {
