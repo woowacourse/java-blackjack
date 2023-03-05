@@ -26,7 +26,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        String[] playersName = inputView.receivePlayersName();
+        List<String> playersName = inputView.receivePlayersName();
         Players players = PlayersFactory.from(playersName);
         dealer = new Dealer(players);
         setting();
