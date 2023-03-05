@@ -1,8 +1,8 @@
 package domain.player;
 
-import domain.score.Score;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.score.Score;
 
 import java.util.List;
 
