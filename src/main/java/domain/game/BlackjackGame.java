@@ -7,6 +7,7 @@ import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,6 +61,10 @@ public final class BlackjackGame {
         consumer.accept(dealer.isHit());
     }
 
+    public Results judgeResult() {
+        return Results.of(getDealer(), getParticipants());
+    }
+
     private static void validateDuplicate(final List<String> participantNames) {
         if (isDuplicate(participantNames)) {
             throw new IllegalArgumentException("중복되지 않은 이름만 입력해주세요");
@@ -84,12 +89,8 @@ public final class BlackjackGame {
         }
     }
 
-    public Card getDealerCard() {
-        return getDealer().getFirstCard();
-    }
-
     public List<Participant> getParticipants() {
-        final String dealerName = players.get(DEALER_INDEX).getName();
+        final String dealerName = getDealer().getName();
 
         return players.stream()
                 .dropWhile(player -> player.getName().equals(dealerName))
@@ -97,8 +98,15 @@ public final class BlackjackGame {
                 .collect(toUnmodifiableList());
     }
 
-    private Dealer getDealer() {
+    public Dealer getDealer() {
         return (Dealer) players.get(DEALER_INDEX);
     }
 
+    public Card getDealerCard() {
+        return getDealer().getFirstCard();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }

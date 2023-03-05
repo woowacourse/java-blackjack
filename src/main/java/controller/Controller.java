@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.RandomCardGenerator;
 import domain.game.BlackjackGame;
+
 import domain.player.Participant;
 import view.InputView;
 import view.OutputView;
@@ -20,10 +21,10 @@ public final class Controller {
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = startGame();
+        final BlackjackGame blackjackGame = retryOnError(this::startGame);
         initGame(blackjackGame);
         playGame(blackjackGame);
-
+        judgeGameResult(blackjackGame);
     }
 
     private BlackjackGame startGame() {
@@ -42,6 +43,11 @@ public final class Controller {
     private void playGame(final BlackjackGame blackjackGame) {
         blackjackGame.playParticipantsTurn(this::isHit, outputView::printPlayerCard);
         blackjackGame.playDealerTurn(outputView::printHitOrStay);
+    }
+
+    private void judgeGameResult(final BlackjackGame blackjackGame) {
+        this.outputView.printPlayerScore(blackjackGame.getPlayers());
+        this.outputView.printGameResult(blackjackGame.judgeResult());
     }
 
     private <T> T retryOnError(Supplier<T> supplier) {
