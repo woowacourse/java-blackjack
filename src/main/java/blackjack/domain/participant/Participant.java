@@ -10,6 +10,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 
 public abstract class Participant {
+    public static final int BLACK_JACK_NUMBER = 21;
     protected final Name name;
     protected final Hand hand;
 
@@ -34,8 +35,12 @@ public abstract class Participant {
         return hand.getCards();
     }
 
+    public boolean isBlackJack() {
+        return hand.calculateScore() == BLACK_JACK_NUMBER;
+    }
+
     public boolean isBust() {
-        return hand.calculateScore() >= 22;
+        return hand.calculateScore() > BLACK_JACK_NUMBER;
     }
 
     public Name getName() {

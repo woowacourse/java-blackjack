@@ -36,7 +36,7 @@ public class Player extends Participant {
 
     public void hitAdditionalCardFrom(Deck deck, Function<Name, AddCardOrNot> decideAddCardOrNot,
                                       Consumer<Player> showPlayerCards) {
-        while (!isBust()) {
+        while (!isBlackJack() && !isBust()) {
             AddCardOrNot addCardOrNot = decideAddCardOrNot.apply(name);
             if (addCardOrNot.equals(NO)) {
                 break;
