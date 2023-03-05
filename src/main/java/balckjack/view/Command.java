@@ -1,4 +1,4 @@
-package balckjack.domain;
+package balckjack.view;
 
 import java.util.Arrays;
 
