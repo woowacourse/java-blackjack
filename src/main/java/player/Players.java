@@ -42,49 +42,42 @@ public class Players {
     }
 
     private void compareScore(Dealer dealer, Player player) {
-        winPlayer(dealer, player);
-        winDealer(dealer, player);
-        draw(dealer, player);
-    }
-
-    private void draw(Dealer dealer, Player player) {
-        boolean playerBust = player.isBust();
-        int playerScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
-        if (!playerBust && (playerScore == dealerScore)) {
+        if (isPlayerWinDealer(dealer, player)) {
+            player.win();
+            dealer.lose();
+        }
+        if (isDealerWinPlayer(dealer, player)) {
+            player.lose();
+            dealer.win();
+        }
+        if (isDraw(dealer, player)) {
             player.tie();
             dealer.tie();
         }
     }
 
-    private void winDealer(Dealer dealer, Player player) {
-        boolean playerBust = player.isBust();
-        int playerScore = player.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        int dealerScore = dealer.calculateScore();
-        if (playerBust || (isPlayerLower(playerScore, dealerScore) && !dealerBust)) {
-            player.lose();
-            dealer.win();
+    private boolean isDraw(Dealer dealer, Player player) {
+        return dealer.calculateScore() == player.calculateScore();
+    }
+
+    private boolean isDealerWinPlayer(Dealer dealer, Player player) {
+        if (player.isBust()) {
+            return true;
         }
-    }
-
-    private void winPlayer(Dealer dealer, Player player) {
-        boolean playerBust = player.isBust();
-        int playerScore = player.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        int dealerScore = dealer.calculateScore();
-        if ((!playerBust && dealerBust) || (!dealerBust && isPlayerHigher(playerScore, dealerScore))) {
-            player.win();
-            dealer.lose();
+        if (dealer.isBust()) {
+            return false;
         }
+        return dealer.calculateScore() > player.calculateScore();
     }
 
-    private boolean isPlayerLower(int playerScore, int dealerScore) {
-        return playerScore < dealerScore;
-    }
-
-    private boolean isPlayerHigher(int playerScore, int dealerScore) {
-        return playerScore > dealerScore;
+    private boolean isPlayerWinDealer(Dealer dealer, Player player) {
+        if (player.isBust()) {
+            return false;
+        }
+        if (dealer.isBust()) {
+            return true;
+        }
+        return player.calculateScore() > dealer.calculateScore();
     }
 
     public List<PlayerWinningDto> getWinningResults() {
