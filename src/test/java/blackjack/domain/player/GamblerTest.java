@@ -98,7 +98,7 @@ public class GamblerTest {
     }
 
     @Test
-    void 상태를_STOP으로_바꾼다() {
+    void 카드를_더_뽑을_수_없는_상태로_변경한다() {
         final Gambler gambler = Gambler.create("허브");
 
         gambler.stay();

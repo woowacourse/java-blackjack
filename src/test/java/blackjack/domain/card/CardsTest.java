@@ -51,7 +51,7 @@ public class CardsTest {
     }
 
     @Test
-    void 카드를_추가한다() {
+    void 카드가_추가된다() {
         final Cards cards = new Cards();
 
         cards.add(new Card(Rank.FIVE, Shape.DIAMOND));

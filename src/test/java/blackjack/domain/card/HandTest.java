@@ -61,7 +61,7 @@ public class HandTest {
     }
 
     @Test
-    void 카드를_넣는다() {
+    void 카드가_추가된다() {
         final Hand hand = new Hand();
 
         hand.add(new Card(ACE, SPADE));
@@ -90,11 +90,13 @@ public class HandTest {
         final Hand hand = new Hand();
         hand.add(new Card(ACE, HEART));
 
-        assertThat(hand.calculateScore()).isEqualTo(11);
+        final int result = hand.calculateScore();
+        
+        assertThat(result).isEqualTo(11);
     }
 
     @Test
-    void 상태를_STOP으로_바꾼다() {
+    void 카드를_더_뽑을_수_없는_상태로_변경한다() {
         final Hand hand = new Hand();
 
         hand.stay();
