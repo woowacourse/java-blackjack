@@ -52,7 +52,7 @@ public class RunningGame {
 
     private void giveCardOrNotForDealer(BlackJackGame blackJackGame, Dealer dealer) {
         while (dealer.isUnderLimit()) {
-            OutputView.printDealerOneMore();
+            OutputView.printMessageDealerOneMore();
             blackJackGame.giveOneMoreCard(dealer);
         }
     }

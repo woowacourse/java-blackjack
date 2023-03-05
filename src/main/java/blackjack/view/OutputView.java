@@ -24,7 +24,6 @@ public class OutputView {
         System.out.println("\n딜러와 " + allName + "에게 2장을 나누었습니다.");
     }
 
-    // 플레이어의 현재 카드 상태를 출력한다.
     public static void printPlayerCurrentCards(Player player) {
         System.out.println(player.getPlayerName() + CARD_STRING + OutViewHelper.getUserCards(player));
     }
@@ -35,7 +34,6 @@ public class OutputView {
         System.out.println(dealer.getDealerName() + CARD_STRING + firstCard.getCardNumber().getNumber() + firstCard.getSymbol());
     }
 
-    // 딜러와 플레이어의 카드와 최종 결과를 출력한다.
     public static void printResults(Dealer dealer, List<Player> players) {
         System.out.println();
         System.out.println(dealer.getDealerName() + CARD_STRING + OutViewHelper.getUserCards(dealer) + RESULT_STRING + dealer.getTotalScore());
@@ -44,7 +42,6 @@ public class OutputView {
         }
     }
 
-    // 최종 결과를 통한 최종 승패를 출력한다.
     public static void printScore(Map<Player, ResultMatcher> playersScore, EnumMap<ResultMatcher, Integer> dealerScore) {
         System.out.println("\n## 최종 승패");
         System.out.print("딜러: ");
@@ -59,8 +56,7 @@ public class OutputView {
         }
     }
 
-    // 딜러가 카드를 추가로 받았다는 메세지를 출력한다.
-    public static void printDealerOneMore() {
+    public static void printMessageDealerOneMore() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
