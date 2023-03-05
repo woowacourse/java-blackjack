@@ -43,7 +43,7 @@ public class BlackJackController {
             keepHitOrStay(player, deck);
         }
 
-        while (participants.findDealer().getHandValue() < 17) {
+        while (participants.shouldDealerHit()) {
             participants.findDealer().receiveCard(deck.draw());
             outputView.printDealerPickCardMessage();
         }
