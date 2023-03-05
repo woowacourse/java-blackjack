@@ -146,7 +146,7 @@ class BlackjackGameTest {
 
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         Name name = dealerWinningResult.getName();
-        Map<Result, Integer> dealerResult = dealerWinningResult.getWinningMap();
+        Map<Result, Integer> dealerResult = dealerWinningResult.getResultToCount();
 
         assertThat(name.getValue()).isEqualTo("딜러");
         assertThat(dealerResult.get(WIN)).isEqualTo(2);

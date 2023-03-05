@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.dealer.DealerFirstOpenDto;
+import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.player.PlayerResultDto;
@@ -17,7 +17,7 @@ public class OutputView {
         System.out.printf("%n 딜러와 %s에게 2장을 나누었습니다.%n", joinedNames);
     }
 
-    public void printFirstOpenCards(DealerFirstOpenDto dealerFirstOpen, List<ParticipantCardsDto> playersCards) {
+    public void printFirstOpenCards(DealerFirstCardDto dealerFirstOpen, List<ParticipantCardsDto> playersCards) {
         System.out.println(dealerFirstOpen.getName().getValue() + ": " + dealerFirstOpen.getCard());
         playersCards.forEach(this::printPlayerCard);
         System.out.println();
@@ -63,8 +63,8 @@ public class OutputView {
     }
 
     private String parseDealerWinningResult(DealerWinningDto dealerWinningResult) {
-        return dealerWinningResult.getWinningMap().keySet().stream()
-                .map(result -> dealerWinningResult.getWinningMap().get(result) + result.getLabel()).collect(
+        return dealerWinningResult.getResultToCount().keySet().stream()
+                .map(result -> dealerWinningResult.getResultToCount().get(result) + result.getLabel()).collect(
                         Collectors.joining(" "));
     }
 }

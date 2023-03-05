@@ -4,7 +4,7 @@ import java.util.List;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.dealer.Dealer;
-import blackjack.domain.participant.dealer.DealerFirstOpenDto;
+import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
@@ -77,8 +77,8 @@ public class BlackjackGame {
         return players.getWinningResults();
     }
 
-    public DealerFirstOpenDto getDealerFirstOpen() {
-        return DealerFirstOpenDto.from(dealer);
+    public DealerFirstCardDto getDealerFirstOpen() {
+        return DealerFirstCardDto.from(dealer);
     }
 
     public List<ParticipantCardsDto> getPlayersCards() {

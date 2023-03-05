@@ -6,11 +6,11 @@ import java.util.Map;
 
 public class DealerWinningDto {
     private final Name name;
-    private final Map<Result, Integer> winningMap;
+    private final Map<Result, Integer> resultToCount;
 
-    private DealerWinningDto(Name name, Map<Result, Integer> winningMap) {
+    private DealerWinningDto(Name name, Map<Result, Integer> resultToCount) {
         this.name = name;
-        this.winningMap = winningMap;
+        this.resultToCount = resultToCount;
     }
 
     public static DealerWinningDto from(Dealer dealer) {
@@ -21,7 +21,7 @@ public class DealerWinningDto {
         return name;
     }
 
-    public Map<Result, Integer> getWinningMap() {
-        return winningMap;
+    public Map<Result, Integer> getResultToCount() {
+        return resultToCount;
     }
 }

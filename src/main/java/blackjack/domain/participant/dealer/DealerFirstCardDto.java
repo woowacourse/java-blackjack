@@ -3,17 +3,17 @@ package blackjack.domain.participant.dealer;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Name;
 
-public class DealerFirstOpenDto {
+public class DealerFirstCardDto {
     private final Name name;
     private final Card card;
 
-    private DealerFirstOpenDto(Name name, Card card) {
+    private DealerFirstCardDto(Name name, Card card) {
         this.name = name;
         this.card = card;
     }
 
-    public static DealerFirstOpenDto from(Dealer dealer) {
-        return new DealerFirstOpenDto(dealer.getName(), dealer.showOneCard());
+    public static DealerFirstCardDto from(Dealer dealer) {
+        return new DealerFirstCardDto(dealer.getName(), dealer.showOneCard());
     }
 
     public Name getName() {

@@ -5,7 +5,7 @@ import static blackjack.controller.AddCardOrNot.YES;
 import java.util.List;
 
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.participant.dealer.DealerFirstOpenDto;
+import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.dealer.DealerWinningDto;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
@@ -76,7 +76,7 @@ public class Controller {
         }
     }
     private void showFirstDraw() {
-        DealerFirstOpenDto dealerFirstOpen = blackjackGame.getDealerFirstOpen();
+        DealerFirstCardDto dealerFirstOpen = blackjackGame.getDealerFirstOpen();
         List<ParticipantCardsDto> playersCards = blackjackGame.getPlayersCards();
         outputView.printFirstOpenCards(dealerFirstOpen, playersCards);
     }
