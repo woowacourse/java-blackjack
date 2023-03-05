@@ -32,7 +32,7 @@ public enum GameResult {
     }
 
     private static int getPlayerPoint(Player player) {
-        if (player.isOverBlackjack()) {
+        if (player.isBust()) {
             return 0;
         }
         return player.sumHand();

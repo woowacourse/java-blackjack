@@ -27,10 +27,10 @@ public enum Command {
                 .orElseThrow();
     }
 
-    public Command apply(Player p, Deck d, Consumer<PlayerParameter> consumer) {
-        function.accept(p,d.serve());
-        consumer.accept(PlayerParameter.from(p));
-        if(p.isOverBlackjack()) {
+    public Command apply(Player player, Deck deck, Consumer<PlayerParameter> consumer) {
+        function.accept(player,deck.serve());
+        consumer.accept(PlayerParameter.from(player));
+        if(player.isBust()) {
             return n;
         }
 

@@ -16,15 +16,11 @@ public class Player {
         hand.add(card);
     }
 
-    public boolean hasSameNameWith(String name) {
-        return playerName.isSameWith(name);
-    }
-
     public int sumHand() {
         return hand.sumCardNumbers();
     }
 
-    public boolean isOverBlackjack() {
+    public boolean isBust() {
         return hand.isOverBlackjack();
     }
 
