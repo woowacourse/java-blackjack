@@ -16,18 +16,21 @@ public class Dealer extends Player {
         return getScore().getValue() <= PICK_BOUNDARY;
     }
 
-    public List<Status> getDealerStats(final Players players) {
+    public List<DealerStatus> getDealerStats(final Players players) {
         return players.getPlayers().stream()
                 .map(this::compareWithPlayer)
                 .collect(Collectors.toList());
     }
 
-    private Status compareWithPlayer(final Player player) {
+    private DealerStatus compareWithPlayer(final Player player) {
         if (player.isBlackJack()) {
-            return Status.LOSE;
+            return DealerStatus.LOSE;
+        }
+        if (this.isBlackJack()) {
+            return DealerStatus.WIN;
         }
         if (player.isBustedPlayer() && this.isBustedPlayer()) {
-            return Status.DRAW;
+            return DealerStatus.DRAW;
         }
         return this.getScore().compareScore(player.getScore());
     }
