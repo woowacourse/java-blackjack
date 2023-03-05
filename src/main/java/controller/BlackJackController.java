@@ -80,8 +80,7 @@ public class BlackJackController {
     }
 
     private boolean isReceivable(Player player) {
-        String receiveOrNot = InputView.inputReceiveOrNot();
-        if (receiveOrNot.equals("y")) {
+        if (InputView.inputReceiveOrNot()) {
             BlackJackGame.distributeCard(player, 1);
             return true;
         }

@@ -13,9 +13,7 @@ public class InputView {
         return List.of(playerNames.split(SPLITTER, -1));
     }
 
-    public static String inputReceiveOrNot() {
-        String receiveOrNot = SCANNER.nextLine();
-        InputValidator.validateReceiveOrNot(receiveOrNot);
-        return receiveOrNot;
+    public static boolean inputReceiveOrNot() {
+        return ReceiveValidate.checkReceivable(SCANNER.nextLine());
     }
 }
