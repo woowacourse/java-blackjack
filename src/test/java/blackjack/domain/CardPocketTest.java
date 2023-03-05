@@ -53,4 +53,18 @@ class CardPocketTest {
         assertThat(cardPocket.getCards())
                 .isEqualTo(cards);
     }
+
+    @Test
+    void 카드_포켓에서_Ace_의_점수_계산이_11_과_1로_잘_계산된다() {
+        CardPocket cardPocket = CardPocket.empty();
+        cardPocket.addCard(new Card(Shape.DIAMOND, Symbol.ACE));
+        cardPocket.addCard(new Card(Shape.DIAMOND, Symbol.TEN));
+
+        assertThat(cardPocket.calculateScore())
+                .isEqualTo(21);
+
+        cardPocket.addCard(new Card(Shape.DIAMOND, Symbol.ACE));
+        assertThat(cardPocket.calculateScore())
+                .isEqualTo(12);
+    }
 }
