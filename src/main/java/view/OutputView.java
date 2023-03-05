@@ -1,9 +1,11 @@
 package view;
 
+import domain.Card;
+import domain.Result;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import domain.Result;
 
 public class OutputView {
     private static final String PARTICIPANT_CARD_FORMAT = "%s : %s\n";
@@ -35,9 +37,24 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public void printParticipantHandValue(String participantName, List<String> participantCards, String handValue) {
-        String cards = String.join(DELIMITER, participantCards);
-        System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, handValue);
+    public void printParticipantHandValue(String participantName, List<Card> participantCards, boolean isBust) {
+        List<String> cardNames = new ArrayList<>();
+        int playerHandValue = summariseParticipantHand(participantCards, cardNames);
+        String cards = String.join(DELIMITER, cardNames);
+        if (isBust) {
+            System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, "버스트");
+            return;
+        }
+        System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, playerHandValue);
+    }
+
+    private int summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
+        int playerHandValue = 0;
+        for (Card participantCard : participantCards) {
+            cardNames.add(participantCard.getName());
+            playerHandValue += participantCard.getValue();
+        }
+        return playerHandValue;
     }
 
     public void printEmptyLine() {

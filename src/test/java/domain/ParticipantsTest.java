@@ -1,13 +1,14 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ParticipantsTest {
 
@@ -46,17 +47,6 @@ class ParticipantsTest {
     @DisplayName("딜러를 반환한다.")
     void findDealerTest() {
         assertThat(participants.findDealer()).isInstanceOf(Dealer.class);
-    }
-
-    @Test
-    @DisplayName("참가자들의 handValue를 계산한다.")
-    void getScores() {
-        participants.deal(deck);
-
-        Map<Participant, String> scores = participants.getScores();
-        for (Player player : participants.findPlayers()) {
-            assertThat(scores.get(player)).isEqualTo("10");
-        }
     }
 
     @Test

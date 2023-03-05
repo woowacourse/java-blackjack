@@ -1,16 +1,11 @@
 package service;
 
+import domain.*;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import domain.Deck;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
-import domain.PrintedHandPool;
-import domain.Result;
 
 public class GameService {
     private static final int DEALER_MINIMUM_VALUE= 17;
@@ -66,8 +61,8 @@ public class GameService {
         hit(participants.findDealer());
     }
 
-    public Map<Participant, String> getParticipantScores() {
-        return participants.getScores();
+    public Map<Participant, Boolean> getParticipantIsBust() {
+        return participants.getIsBust();
     }
 
     public Map<String, Result> calculatePlayerResults() {

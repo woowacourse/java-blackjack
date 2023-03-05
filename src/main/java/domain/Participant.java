@@ -22,6 +22,10 @@ public class Participant {
     }
 
     public List<String> getCardNames() {
+        return hand.getCardNames();
+    }
+
+    public List<Card> getCards() {
         return hand.getCards();
     }
 

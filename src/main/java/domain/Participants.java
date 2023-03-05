@@ -5,9 +5,7 @@ import view.ErrorMessage;
 import java.util.*;
 
 public class Participants {
-    private static final int BUST_BOUNDARY_VALUE = 21;
     private static final int BUST_HAND_VALUE = 0;
-    private static final String BUST = "버스트";
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
@@ -50,21 +48,13 @@ public class Participants {
         }
     }
 
-    public Map<Participant, String> getScores() {
-        Map<Participant, String> scores = new LinkedHashMap<>();
+    public Map<Participant, Boolean> getIsBust() {
+        Map<Participant, Boolean> scores = new LinkedHashMap<>();
         for (Participant participant : participants) {
-            judgeBust(scores, participant);
+            scores.put(participant, participant.isBust());
         }
 
         return scores;
-    }
-
-    private void judgeBust(Map<Participant, String> scores, Participant participant) {
-        if (participant.getHandValue() > BUST_BOUNDARY_VALUE) {
-            scores.put(participant, BUST);
-            return;
-        }
-        scores.put(participant, String.valueOf(participant.getHandValue()));
     }
 
     public Map<Result, Integer> getDealerResults(Map<String, Result> results) {

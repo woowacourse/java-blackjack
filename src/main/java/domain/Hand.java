@@ -37,11 +37,15 @@ public class Hand {
         return value;
     }
 
-    public List<String> getCards() {
+    public List<String> getCardNames() {
         List<String> cards = new ArrayList<>();
         for (Card card : hand) {
             cards.add(card.getName());
         }
         return cards;
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(hand);
     }
 }

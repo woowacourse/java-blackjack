@@ -1,17 +1,13 @@
 package controller;
 
-import java.util.List;
-import java.util.Map;
-
-import domain.Deck;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
-import domain.Result;
+import domain.*;
 import service.GameService;
 import service.SettingService;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
 
@@ -114,9 +110,9 @@ public class BlackJackController {
     }
 
     private void printScores(GameService gameService) {
-        for (Map.Entry<Participant, String> participantScore : gameService.getParticipantScores().entrySet()) {
+        for (Map.Entry<Participant, Boolean> participantScore : gameService.getParticipantIsBust().entrySet()) {
             outputView.printParticipantHandValue(participantScore.getKey().getName(),
-                participantScore.getKey().getCardNames(), participantScore.getValue());
+                participantScore.getKey().getCards(), participantScore.getValue());
         }
     }
 
