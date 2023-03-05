@@ -3,10 +3,9 @@ package blackjack.domain.player;
 public class Player extends User {
 
     private static final int SCORE_LIMIT = 21;
-    private final Name name;
 
     public Player(Name name) {
-        this.name = name;
+        super(name);
     }
 
     public String getPlayerName() {

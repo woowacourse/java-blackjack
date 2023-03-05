@@ -28,10 +28,10 @@ public enum ResultMatcher {
     }
 
     public static ResultMatcher ofOppositeResult(ResultMatcher resultMatcher) {
-        if (resultMatcher.equals(WIN)) {
+        if (resultMatcher == WIN) {
             return LOSE;
         }
-        if (resultMatcher.equals(LOSE)) {
+        if (resultMatcher == LOSE) {
             return WIN;
         }
         return TIE;

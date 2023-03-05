@@ -14,8 +14,8 @@ class DealerTest {
     void total_score_over_17() {
         // given & when
         PlayerCards playerCards = new PlayerCards();
-        playerCards.updateCardScore(new Card(CardNumber.ACE, CardSymbol.HEART));
-        playerCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
+        playerCards.addCard(new Card(CardNumber.ACE, CardSymbol.HEART));
+        playerCards.addCard(new Card(CardNumber.FIVE, CardSymbol.HEART));
         Dealer dealer = new Dealer();
 
         // then

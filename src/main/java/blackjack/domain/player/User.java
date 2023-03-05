@@ -5,10 +5,12 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class User {
-    PlayerCards playerCards;
+    protected PlayerCards playerCards;
+    protected Name name;
 
-    public User() {
+    public User(Name name) {
         this.playerCards = new PlayerCards();
+        this.name = name;
     }
 
     public List<Card> getPlayerCards() {
@@ -20,7 +22,8 @@ public abstract class User {
     }
 
     public void updateCardScore(Card card) {
-        playerCards.updateCardScore(card);
+        playerCards.addCard(card);
+        playerCards.updateTotalScore();
     }
 
     public abstract boolean isUnderLimit();
