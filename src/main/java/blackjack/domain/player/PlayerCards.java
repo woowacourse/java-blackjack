@@ -10,11 +10,11 @@ public class PlayerCards {
     private static final int LIMIT_SCORE = 21;
 
     private final List<Card> playerCards;
-    private int totalScore;
+    private TotalScore totalScore;
 
     public PlayerCards() {
         this.playerCards = new ArrayList<>();
-        this.totalScore = 0;
+        this.totalScore = new TotalScore(0);
     }
 
     public void addCard(Card card) {
@@ -27,11 +27,11 @@ public class PlayerCards {
             newTotalScore += card.getCardNumber().getValue();
         }
         newTotalScore = updateAceScore(newTotalScore);
-        this.totalScore = newTotalScore;
+        this.totalScore = new TotalScore(newTotalScore);
     }
 
     private int updateAceScore(int totalScore) {
-        int aceSize = getAceCardsSize();
+        int aceSize = calculateCardSize();
         while (aceSize > 0 && totalScore > LIMIT_SCORE) {
             totalScore -= ACE_VALUE_GAP;
             aceSize--;
@@ -39,7 +39,7 @@ public class PlayerCards {
         return totalScore;
     }
 
-    private int getAceCardsSize() {
+    private int calculateCardSize() {
         return (int) playerCards.stream()
                 .filter(Card::isAce)
                 .count();
@@ -50,6 +50,6 @@ public class PlayerCards {
     }
 
     public int getTotalScore() {
-        return totalScore;
+        return totalScore.getTotalScore();
     }
 }
