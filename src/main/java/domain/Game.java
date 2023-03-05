@@ -35,10 +35,6 @@ public class Game {
         return players.getDealer().drawCardIfNecessary(deck);
     }
 
-    public List<Card> getCards(String name) {
-        return players.findUserByName(name).getCards();
-    }
-
     public List<Player> getUsers() {
         return players.getUsers();
     }

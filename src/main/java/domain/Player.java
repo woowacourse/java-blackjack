@@ -98,9 +98,6 @@ public class Player {
         return name;
     }
 
-    public boolean hasName(String name) {
-        return this.name.equals(name);
-    }
 }
 
 
