@@ -28,7 +28,7 @@ public class Dealer extends Participant {
         return getWinningResult(player, myValue, otherPlayer);
     }
 
-    private WinningResult getWinningResult(final Participant player, final int myValue, final int otherPlayer) {
+    private WinningResult getWinningResult(final Player player, final int myValue, final int otherPlayer) {
         if (otherPlayer > WIN_MAX_NUMBER && myValue > WIN_MAX_NUMBER) {
             return WinningResult.PUSH;
         }
@@ -49,7 +49,7 @@ public class Dealer extends Participant {
         return calculateCardNumber() <= DEALER_HIT_BASED_NUMBER;
     }
 
-    private WinningResult includeBlackjackWinOrLose(final Participant player) {
+    private WinningResult includeBlackjackWinOrLose(final Player player) {
         if (judgeBlackjack() && player.judgeBlackjack()) {
             return WinningResult.PUSH;
         }
