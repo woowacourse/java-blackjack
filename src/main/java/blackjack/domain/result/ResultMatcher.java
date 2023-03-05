@@ -1,17 +1,17 @@
 package blackjack.domain.result;
 
-public enum Result {
+public enum ResultMatcher {
     WIN("승"),
     TIE("무"),
     LOSE("패");
 
     private final String playerResult;
 
-    Result(String playerResult) {
+    ResultMatcher(String playerResult) {
         this.playerResult = playerResult;
     }
 
-    public static Result calculateResult(int playerScore, int dealerScore) {
+    public static ResultMatcher calculateResult(int playerScore, int dealerScore) {
         if (playerScore > 21) {
             playerScore = 0;
         }
@@ -27,11 +27,11 @@ public enum Result {
         return TIE;
     }
 
-    public Result ofOppositeResult() {
-        if (this.equals(WIN)) {
+    public static ResultMatcher ofOppositeResult(ResultMatcher resultMatcher) {
+        if (resultMatcher.equals(WIN)) {
             return LOSE;
         }
-        if (this.equals(LOSE)) {
+        if (resultMatcher.equals(LOSE)) {
             return WIN;
         }
         return TIE;
