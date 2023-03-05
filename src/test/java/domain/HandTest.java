@@ -17,27 +17,13 @@ class HandTest {
 
     private Hand hand;
 
-    private static Stream<Arguments> cardProvider() {
-        return Stream.of(
-            Arguments.of(new Card("A클로버", 11), 13),
-            Arguments.of(new Card("9하트", 9), 21)
-        );
-    }
-
-    private static Stream<Arguments> isAceProvider() {
-        return Stream.of(
-                Arguments.of(new Card("A클로버", 11), true),
-                Arguments.of(new Card("9하트", 9), false)
-        );
-    }
-
     @BeforeEach
     void setUp() {
         hand = new Hand(new ArrayList<>(
-            List.of(
-                new Card("2하트", 2),
-                new Card("K다이아", 10)
-            ))
+                List.of(
+                        new Card("4하트", 4),
+                        new Card("A다이아", 11)
+                ))
         );
     }
 
@@ -59,5 +45,19 @@ class HandTest {
     void calculateValue(Card card, int handValue) {
         hand.addCard(card);
         assertThat(hand.calculateValue()).isEqualTo(handValue);
+    }
+
+    private static Stream<Arguments> cardProvider() {
+        return Stream.of(
+                Arguments.of(new Card("A클로버", 11), 16),
+                Arguments.of(new Card("6하트", 6), 21)
+        );
+    }
+
+    private static Stream<Arguments> isAceProvider() {
+        return Stream.of(
+                Arguments.of(new Card("A클로버", 11), true),
+                Arguments.of(new Card("9하트", 9), false)
+        );
     }
 }
