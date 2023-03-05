@@ -24,7 +24,7 @@ public class Player {
         return cardPool.sumCardNumbers();
     }
 
-    public boolean isOverCardPointLimit() {
+    public boolean isBurst() {
         return cardPool.isOverCardPointLimit();
     }
 

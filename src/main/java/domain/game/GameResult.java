@@ -26,7 +26,7 @@ public enum GameResult {
     }
 
     private static int getPlayerPoint(Player player) {
-        if (player.isOverCardPointLimit()) {
+        if (player.isBurst()) {
             return 0;
         }
         return player.sumCardPool();

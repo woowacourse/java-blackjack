@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class BlackjackGame {
 
-    private static final int BLACK_JACK_NUMBER = 21;
     private static final int START_HIT_COUNT = 2;
 
     private final Deck deck;
@@ -35,7 +34,7 @@ public class BlackjackGame {
     }
 
     public boolean isBurst(String playerName) {
-        return people.isBurst(playerName, BLACK_JACK_NUMBER);
+        return people.isBurst(playerName);
     }
 
     public Map<Player, GameResult> getGameResultForAllPlayer() {
