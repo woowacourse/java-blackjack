@@ -30,7 +30,9 @@ public class RunningGame {
 
     private void printUserFirstCards(List<Player> players, Dealer dealer) {
         OutputView.printDealerFirstCard(dealer);
-        OutputView.printPlayersCurrentCards(players);
+        for (Player player : players) {
+            OutputView.printPlayerCurrentCards(player);
+        }
         System.out.println();
     }
 
@@ -42,7 +44,7 @@ public class RunningGame {
 
     private void giveCardOrNotForPlayer(BlackJackGame blackJackGame, Player player) {
         while (player.isUnderLimit() &&
-                Answer.of(InputView.repeat(() -> InputView.askAdditionalCard(player.getPlayerName()))).isYes()) {
+                Command.of(InputView.repeat(() -> InputView.askAdditionalCard(player.getPlayerName()))).isYes()) {
             blackJackGame.giveOneMoreCard(player);
             OutputView.printPlayerCurrentCards(player);
         }
