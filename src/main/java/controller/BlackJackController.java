@@ -15,21 +15,20 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private BlackJack blackJack;
+    private final BlackJack blackJack;
 
     public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackJack = BlackJack.getInstance(userNameRequest(), new Deck());
     }
 
     public void process() {
-        final List<Name> userNames = userNameRequest();
-        this.blackJack = BlackJack.getInstance(userNames, new Deck());
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
         getUsersDecision();
         getDealerResult();
-        outputView.printTotalPlayersStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
-        outputView.printResult(blackJack.getGameResult());
+        outputView.printStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
+        outputView.printFinalResult(blackJack.getGameResult());
     }
 
     private List<Name> userNameRequest() {

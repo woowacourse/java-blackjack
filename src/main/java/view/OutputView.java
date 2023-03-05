@@ -133,7 +133,7 @@ public final class OutputView {
 
     }
 
-    public void printTotalPlayersStatus(final Dealer dealer, final List<User> users) {
+    public void printStatus(final Dealer dealer, final List<User> users) {
         printPlayerResultForDealer(dealer, dealer.getCards());
         for (User user : users) {
             printPlayerResult(user, user.getCards());
@@ -162,7 +162,7 @@ public final class OutputView {
         return String.valueOf(point);
     }
 
-    public void printResult(GameResult gameResult) {
+    public void printFinalResult(GameResult gameResult) {
         System.out.print(System.lineSeparator());
         System.out.println("## 최종 승패");
         printDealerResult(gameResult);
