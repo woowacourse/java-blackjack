@@ -79,7 +79,7 @@ public class Participants {
         int dealerScore = dealer.calculateScore();
         int playerScore = player.calculateScore();
 
-        if (playerScore < dealerScore && !dealer.isBust() || player.isBust()) {
+        if (isPlayerLose(player, dealerScore, playerScore)) {
             return PlayerGameResult.LOSE;
         }
         if (playerScore == dealerScore) {
@@ -87,6 +87,10 @@ public class Participants {
         }
 
         return PlayerGameResult.WIN;
+    }
+
+    private boolean isPlayerLose(Participant player, int dealerScore, int playerScore) {
+        return (playerScore < dealerScore && !dealer.isBust()) || player.isBust();
     }
 
     public Participant getDealer() {
