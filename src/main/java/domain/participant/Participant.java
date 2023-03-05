@@ -54,4 +54,7 @@ public abstract class Participant {
         return cards.isBusted();
     }
 
+    public Name getName() {
+        return name;
+    }
 }
