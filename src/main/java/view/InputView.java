@@ -8,7 +8,7 @@ import java.util.Set;
 public class InputView {
 
     private static final String DEALER_NAME = "딜러";
-    private static final List<String> VOWEL = List.of("a", "e", "i", "o", "u");
+    private static final List<String> VOWELS = List.of("a", "e", "i", "o", "u");
     private static final String DELIMITER = ",";
     private static final String END_VOWEL = "는";
     private static final String END_CONSONANT = "은";
@@ -58,7 +58,7 @@ public class InputView {
     }
 
     private boolean isEndWithVowel(final String lowerCaseName) {
-        return VOWEL.stream()
-                .anyMatch(i -> lowerCaseName.endsWith(i));
+        return VOWELS.stream()
+                .anyMatch(vowel -> lowerCaseName.endsWith(vowel));
     }
 }
