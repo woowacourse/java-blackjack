@@ -12,6 +12,9 @@ public class Deck {
     }
 
     public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드 덱이 비어있습니다.");
+        }
         return cards.pop();
     }
 }
