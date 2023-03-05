@@ -10,11 +10,11 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
+    private static final InputView INPUT_VIEW = new InputView();
+    private static final OutputView OUTPUT_VIEW = new OutputView();
 
     public static void main(String[] args) {
-        List<Player> players = createPlayersWith(inputView.readNames());
+        List<Player> players = createPlayersWith(INPUT_VIEW.readNames());
         Game game = new Game(players, new Deck(), new Dealer());
 
         start(game);
@@ -26,9 +26,9 @@ public class Application {
         Players players = game.getPlayers();
         game.dealCardsTwice();
 
-        outputView.printDealStatus(players.getUsers());
-        outputView.printFirstCardOf(players.getDealer());
-        outputView.printPlayersStatus(players.getUsers());
+        OUTPUT_VIEW.printDealStatus(players.getUsers());
+        OUTPUT_VIEW.printFirstCardOf(players.getDealer());
+        OUTPUT_VIEW.printPlayersStatus(players.getUsers());
     }
 
     private static void play(Game game) {
@@ -40,20 +40,20 @@ public class Application {
 
     private static void printResult(Game game) {
         Players players = game.getPlayers();
-        outputView.printCardsAndScores(players.getDealer(), game.getUsers());
-        outputView.printDealerResults(game.getDealerResults());
+        OUTPUT_VIEW.printCardsAndScores(players.getDealer(), game.getUsers());
+        OUTPUT_VIEW.printDealerResults(game.getDealerResults());
         for (Player user : game.getUsers()) {
             String name = user.getName();
-            outputView.printResult(name, game.getResult(name));
+            OUTPUT_VIEW.printResult(name, game.getResult(name));
         }
     }
 
     private static void dealCardToDealer(Game game) {
         if (game.dealCardToDealer()) {
-            outputView.noticeDealerHit();
+            OUTPUT_VIEW.noticeDealerHit();
             return;
         }
-        outputView.noticeDealerStand();
+        OUTPUT_VIEW.noticeDealerStand();
     }
 
     private static void selectHitOrStand(Game game, Player player) {
@@ -64,9 +64,9 @@ public class Application {
     }
 
     private static boolean dealCardIfHit(Game game, Player player) {
-        if (inputView.askForHit(player.getName())) {
+        if (INPUT_VIEW.askForHit(player.getName())) {
             game.dealCardTo(player.getName());
-            outputView.printPlayerCards(player.getName(), player.getCards());
+            OUTPUT_VIEW.printPlayerCards(player.getName(), player.getCards());
             return true;
         }
         return false;
