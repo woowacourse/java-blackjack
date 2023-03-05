@@ -20,7 +20,7 @@ public class CardTest {
         // given
         Card card = new Card(Shape.DIAMOND, Letter.ACE);
         String actual = card.getCardName();
-        String expected = Letter.ACE.getValue() + Shape.DIAMOND.getValue();
+        String expected = Letter.ACE.getName() + Shape.DIAMOND.getValue();
 
         // then
         assertThat(actual).isEqualTo(expected);
