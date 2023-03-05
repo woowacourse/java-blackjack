@@ -4,8 +4,18 @@ import java.util.List;
 
 public abstract class User {
 
-	final Cards cards = new Cards();
+	Cards cards;
 	String name;
+
+	public User(){
+		cards = new Cards();
+		hitTwoCards();
+	}
+
+	private void hitTwoCards() {
+		hit(Deck.pickCard());
+		hit(Deck.pickCard());
+	}
 
 	public String getName() {
 		return name;

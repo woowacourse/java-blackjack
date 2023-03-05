@@ -16,22 +16,6 @@ public class BlackJack {
 		this.users = users;
 	}
 
-	public static BlackJack of(final Users users) {
-		initCards(users);
-		return new BlackJack(users);
-	}
-
-	private static void initCards(Users users) {
-		for (User user : users.getUsers()) {
-			hitTwoCards(user);
-		}
-	}
-
-	private static void hitTwoCards(User user) {
-		user.hit(Deck.pickCard());
-		user.hit(Deck.pickCard());
-	}
-
 	public void giveCard(Player player) {
 		users.hitCard(player, Deck.pickCard());
 	}
