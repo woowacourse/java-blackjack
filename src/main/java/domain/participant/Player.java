@@ -22,4 +22,17 @@ public class Player extends Participant {
     public boolean isDrawable() {
         return calculateScore() < BURST_NUMBER;
     }
+
+    public boolean isWin(Dealer dealer) {
+        if (isBurst()) {
+            return false;
+        }
+
+        if (dealer.isBurst()) {
+            return true;
+
+        }
+
+        return this.calculateScore() > dealer.calculateScore();
+    }
 }

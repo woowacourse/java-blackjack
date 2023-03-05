@@ -76,4 +76,98 @@ class PlayerTest {
         // then
         assertThat(expectedDrawnCards).containsExactly(cardA, cardB);
     }
+
+    @DisplayName("플레이어가 burst라면 반드시 패배한다.")
+    @Test
+    void lose_if_player_burst() {
+        // given
+        Card cardA = new Card(CardType.CLUB, CardValue.KING);
+        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.QUEEN);
+
+        Name name = new Name("pobi");
+        List<Card> givenBurstCards = List.of(cardA, cardB, cardC);
+        List<Card> givenNotBurstCards = List.of(cardA, cardB);
+
+
+        Player player = new Player(name, new DrawnCards(givenBurstCards));
+        Dealer dealer = new Dealer(new DrawnCards(givenNotBurstCards));
+
+        boolean expected = false;
+
+        // when
+        boolean actual = player.isWin(dealer);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("플레이어가 burst가 아니고 딜러가 burst라면 반드시 승리한다.")
+    @Test
+    void win_if_player_not_burst_and_dealer_burst() {
+        // given
+        Card cardA = new Card(CardType.CLUB, CardValue.KING);
+        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.QUEEN);
+
+        Name name = new Name("pobi");
+        List<Card> givenBurstCards = List.of(cardA, cardB, cardC);
+        List<Card> givenNotBurstCards = List.of(cardA, cardB);
+
+
+        Player player = new Player(name, new DrawnCards(givenNotBurstCards));
+        Dealer dealer = new Dealer(new DrawnCards(givenBurstCards));
+
+        boolean expected = true;
+        // when
+        boolean actual = player.isWin(dealer);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("둘 다 burst가 아니라면 점수가 더 높아야 승리한다.")
+    @Test
+    void win_if_player_high_score() {
+        // given
+        Card cardA = new Card(CardType.CLUB, CardValue.KING);
+        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
+
+        Name name = new Name("pobi");
+        List<Card> givenHighScore = List.of(cardA, cardB);
+        List<Card> givenLowScore = List.of(cardA);
+
+
+        Player player = new Player(name, new DrawnCards(givenHighScore));
+        Dealer dealer = new Dealer(new DrawnCards(givenLowScore));
+
+        boolean expected = true;
+        // when
+        boolean actual = player.isWin(dealer);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("점수가 같다면 딜러가 승리한다.")
+    @Test
+    void lose_if_player_same_score_with_dealer() {
+        // given
+        Card cardA = new Card(CardType.CLUB, CardValue.KING);
+        Card cardB = new Card(CardType.SPADE, CardValue.QUEEN);
+
+        Name name = new Name("pobi");
+        List<Card> givenCard = List.of(cardA, cardB);
+
+
+        Player player = new Player(name, new DrawnCards(givenCard));
+        Dealer dealer = new Dealer(new DrawnCards(givenCard));
+
+        boolean expected = false;
+        // when
+        boolean actual = player.isWin(dealer);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }

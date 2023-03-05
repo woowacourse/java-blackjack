@@ -25,13 +25,13 @@ public abstract class Participant {
         return drawnCards.calculateScore();
     }
 
-    public boolean isBurst() {
-        return calculateScore() > BURST_NUMBER;
-    }
-
     public abstract List<Card> openDrawnCards();
 
     public abstract boolean isDrawable();
+
+    protected boolean isBurst() {
+        return calculateScore() > BURST_NUMBER;
+    }
 
     public String getName() {
         return name.getName();

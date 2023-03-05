@@ -36,6 +36,7 @@ public class CardDeck {
                 .count() != SIZE_OF_CARD_DECK;
     }
 
+    //TODO 다른 자료 구조 사용해보기
     public Card draw() {
         return cards.remove(0);
     }

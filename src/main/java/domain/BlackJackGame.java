@@ -81,16 +81,6 @@ public class BlackJackGame {
 
     private WinLoseResult calculateWinLose(final Player player,
                                            final Dealer dealer) {
-        if (player.isBurst()) {
-            return WinLoseResult.toDto(player, false);
-        }
-
-        if (dealer.isBurst()) {
-            return WinLoseResult.toDto(player, true);
-
-        }
-
-        boolean isPlayerWin = player.calculateScore() > dealer.calculateScore();
-        return WinLoseResult.toDto(player, isPlayerWin);
+        return new WinLoseResult(player.getName(), player.isWin(dealer));
     }
 }

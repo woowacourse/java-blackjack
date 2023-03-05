@@ -1,20 +1,16 @@
 package dto.response;
 
-import domain.participant.Player;
 
 public class WinLoseResult {
 
     private final String name;
     private final boolean isWin;
 
-    private WinLoseResult(final String name, final boolean isWin) {
+    public WinLoseResult(final String name, final boolean isWin) {
         this.name = name;
         this.isWin = isWin;
     }
 
-    public static WinLoseResult toDto(final Player player, final boolean isWin) {
-        return new WinLoseResult(player.getName(), isWin);
-    }
 
     public String getName() {
         return name;
