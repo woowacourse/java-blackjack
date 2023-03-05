@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class RunningGame {
     public void run() {
+        Dealer dealer = new Dealer();
         List<Name> names = (InputView.repeat(() -> new Names(InputView.inputPeopleNames()))).getNames();
-        BlackJackGame blackJackGame = new BlackJackGame(names);
+        BlackJackGame blackJackGame = new BlackJackGame(names, dealer);
 
         Players players = blackJackGame.getPlayers();
-        Dealer dealer = blackJackGame.getDealer();
 
         OutputView.printReadyMessage(names);
         printUserFirstCards(players.getPlayers(), dealer);

@@ -16,7 +16,7 @@ class DealerTest {
         PlayerCards playerCards = new PlayerCards();
         playerCards.updateCardScore(new Card(CardNumber.ACE, CardSymbol.HEART));
         playerCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
 
         // then
         Assertions.assertThat(dealer.isUnderLimit()).isTrue();

@@ -1,5 +1,6 @@
 package blackjack.game;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.*;
 
@@ -9,15 +10,17 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     private static final int INIT_FIRST_CARD = 2;
+    private static final int FIRST_CARD = 0;
+    private static final int MIN_CARD_SIZE = 1;
 
     private final Players players;
-    private final Dealer dealer;
+    private final List<Card> cards;
 
-    public BlackJackGame(List<Name> names) {
-        Cards.init();
+    public BlackJackGame(List<Name> names, Dealer dealer) {
+        Cards shuffledCards = Cards.initializeCards();
+        cards = shuffledCards.getCards();
         players = initializePlayers(names);
-        dealer = new Dealer(new Name("딜러"));
-        giveFirstCards();
+        giveFirstCards(dealer);
     }
 
     private Players initializePlayers(List<Name> names) {
@@ -25,7 +28,7 @@ public class BlackJackGame {
                 .collect(Collectors.toUnmodifiableList()));
     }
 
-    private void giveFirstCards() {
+    private void giveFirstCards(Dealer dealer) {
         for (Player player : players.getPlayers()) {
             giveFirstCard(player);
         }
@@ -34,19 +37,22 @@ public class BlackJackGame {
 
     private void giveFirstCard(User user) {
         for (int i = 0; i < INIT_FIRST_CARD; i++) {
-            user.updateCardScore(Cards.giveFirstCard());
+            user.updateCardScore(giveFirstCard());
         }
     }
 
     public void giveOneMoreCard(User user) {
-        user.updateCardScore(Cards.giveFirstCard());
-    }
-
-    public Dealer getDealer() {
-        return this.dealer;
+        user.updateCardScore(giveFirstCard());
     }
 
     public Players getPlayers() {
         return this.players;
+    }
+
+    private Card giveFirstCard() {
+        if (cards.size() < MIN_CARD_SIZE) {
+            throw new IndexOutOfBoundsException("뽑을 수 있는 카드가 없습니다.");
+        }
+        return cards.remove(FIRST_CARD);
     }
 }

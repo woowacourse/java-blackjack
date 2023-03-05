@@ -9,8 +9,8 @@ class ResultMatcherTest {
 
     @ParameterizedTest
     @CsvSource(value = {"19:18:WIN", "18:19:LOSE", "18:18:TIE", "23:18:LOSE", "23:22:TIE", "14:22:WIN"}, delimiter = ':')
-    @DisplayName("calculateResult()는 플레이어의 결과를 반환한다.")
-    void test_(String playerScore, String dealerScore, String inputResult) {
+    @DisplayName("calculateResult()는 딜러와 플레이어의 점수를 받아 플레이어의 결과를 반환한다.")
+    void test_calculateResult(String playerScore, String dealerScore, String inputResult) {
         // given & when
         ResultMatcher resultMatcher = ResultMatcher.calculateResult(Integer.parseInt(playerScore), Integer.parseInt(dealerScore));
         ResultMatcher expectedResultMatcher = ResultMatcher.valueOf(inputResult);
@@ -21,8 +21,8 @@ class ResultMatcherTest {
 
     @ParameterizedTest
     @CsvSource(value = {"LOSE:WIN", "WIN:LOSE", "TIE:TIE"}, delimiter = ':')
-    @DisplayName("calculateResult()는 플레이어의 결과를 반환한다.")
-    void test_2(String inputPlayerResult, String inputDealerResult) {
+    @DisplayName("ofOppositeResult()는 ResultMatcher 을 인자로 받아 그의 반대 되는 이넘을 반환한다.")
+    void test_ofOppositeResult(String inputPlayerResult, String inputDealerResult) {
         // given & when
         ResultMatcher playerResultMatcher = ResultMatcher.valueOf(inputPlayerResult);
         ResultMatcher expectedResultMatcher = ResultMatcher.valueOf(inputDealerResult);

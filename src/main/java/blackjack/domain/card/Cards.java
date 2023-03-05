@@ -1,38 +1,43 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
     private static final int CARD_TOTAL_SIZE = 48;
-    private static final int FIRST_CARD = 0;
-    private static final int MIN_CARD_SIZE = 1;
 
-    private static List<Card> cards = new ArrayList<>();
+    private static List<Card> cards;
 
-    public static void init() {
-        List<Card> createdCards = CardFactory.of();
-        validate(createdCards);
-        cards = createdCards;
-        shuffleCards();
+    public static Cards initializeCards() {
+        Cards cards = new Cards();
+        cards.createCards();
+        cards.shuffleCards();
+        return cards;
     }
 
-    private static void validate(List<Card> cards) {
+    private void createCards(){
+        List<Card> createCards = Arrays.stream(CardSymbol.values())
+                .flatMap(cardSymbol -> Arrays.stream(CardNumber.values())
+                        .map(cardNumber -> new Card(cardNumber, cardSymbol)))
+                .collect(Collectors.toList());
+        validate(createCards);
+        cards = createCards;
+    }
+
+    private void validate(List<Card> cards) {
         if (cards.size() != CARD_TOTAL_SIZE) {
             throw new IllegalArgumentException("카드의 개수는 총 48개여야 합니다.");
         }
     }
 
-    public static void shuffleCards() {
+    private void shuffleCards() {
         Collections.shuffle(cards);
     }
 
-    public static Card giveFirstCard() {
-        if (cards.size() < MIN_CARD_SIZE) {
-            throw new IndexOutOfBoundsException("뽑을 수 있는 카드가 없습니다.");
-        }
-        return cards.remove(FIRST_CARD);
+    public List<Card> getCards(){
+        return cards;
     }
 }

@@ -6,8 +6,8 @@ public class Dealer extends User {
 
     private final Name name;
 
-    public Dealer(Name name) {
-        this.name = name;
+    public Dealer() {
+        this.name = new Name("딜러");
     }
 
     public String getDealerName() {

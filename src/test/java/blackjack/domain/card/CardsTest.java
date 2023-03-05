@@ -1,37 +1,22 @@
 package blackjack.domain.card;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class CardsTest {
 
-    @BeforeEach
-    void init() {
-        Cards.init();
-    }
-
-    // TODO : factory 리팩토링시 변경?
-//    @Test
-//    @DisplayName("giveFirstCard()는 첫번째 카드를 반환한다")
-//    void give_first_card_test() {
-//        // then
-//        Assertions.assertThat(Cards.giveFirstCard().getNumber()).isEqualTo(CardNumber.ACE);
-//        Assertions.assertThat(Cards.giveFirstCard().getSymbol()).isEqualTo(CardSymbol.HEART);
-//    }
-
     @Test
-    @DisplayName("giveFirstCard()는 카드가 비어있으면 예외를 발생시킨다.")
-    void give_first_card_empty_test() {
+    @DisplayName("of()는 48개의 카드를 생성하여 반환한다.")
+    void test_initialize_cards() {
         // given & when
-        for(int i=0;i<48;i++){
-            Cards.giveFirstCard();
-        }
-        // then
-        Assertions.assertThatThrownBy(Cards::giveFirstCard)
-                .isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessage("뽑을 수 있는 카드가 없습니다.");
-    }
+        List<Card> cards = Cards.initializeCards().getCards();
+        int expectedSize = 48;
 
+        // then
+        Assertions.assertThat(cards).hasSize(expectedSize);
+
+    }
 }
