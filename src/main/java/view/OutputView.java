@@ -22,7 +22,7 @@ public final class OutputView {
     }
 
     public static void printDealerHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
     }
 
     public static void printPlayerScore(final String name, final List<Card> cards, final int playerScore) {
@@ -32,9 +32,9 @@ public final class OutputView {
     }
 
     public static void printGameResult(final Result result) {
-        System.out.println("## 최종 승패");
+        System.out.println(System.lineSeparator() + "## 최종 승패");
         System.out.printf("딜러: %d승 %d패%n", result.countLosers(), result.countWinners());
-        
+
         result.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner));
         result.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser));
     }
