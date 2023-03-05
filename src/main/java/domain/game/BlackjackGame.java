@@ -41,7 +41,7 @@ public final class BlackjackGame {
         return new BlackjackGame(players, Deck.from(cardGenerator));
     }
 
-    public void drawCard() {
+    public void drawCards() {
         this.players.forEach(player -> {
             player.takeCard(this.deck.dealCard());
             player.takeCard(this.deck.dealCard());

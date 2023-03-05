@@ -27,7 +27,7 @@ class ResultsTest {
 
         final BlackjackGame blackjackGame = BlackjackGame.from(participantNames, testCardGenerator);
 
-        blackjackGame.drawCard();
+        blackjackGame.drawCards();
         results = Results.of(blackjackGame.getDealer(), blackjackGame.getParticipants());
     }
 

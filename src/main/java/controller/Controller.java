@@ -35,7 +35,7 @@ public final class Controller {
     }
 
     private void initGame(final BlackjackGame blackjackGame) {
-        blackjackGame.drawCard();
+        blackjackGame.drawCards();
         this.outputView.printDealerCard(blackjackGame.getDealerCard());
         this.outputView.printPlayerCards(blackjackGame.getParticipants());
     }

@@ -36,7 +36,7 @@ class BlackjackGameTest {
         //given
         final BlackjackGame blackjackGame = BlackjackGame.from(List.of("준팍", "파워", "범블비", "서브웨이"), new RandomCardGenerator());
         //when
-        blackjackGame.drawCard();
+        blackjackGame.drawCards();
 
         //then
         assertThat(blackjackGame)
