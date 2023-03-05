@@ -24,8 +24,12 @@ public class Player {
         return cards.calculateScore();
     }
 
-    public boolean isBustedPlayer() {
+    public boolean isBusted() {
         return getScore().isBusted();
+    }
+
+    public boolean isNotBusted() {
+        return !getScore().isBusted();
     }
 
     public boolean isBlackjack() {

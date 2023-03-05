@@ -29,7 +29,7 @@ public class Dealer extends Player {
         if (this.isBlackjack()) {
             return DealerStatus.WIN;
         }
-        if (player.isBustedPlayer() && this.isBustedPlayer()) {
+        if (player.isBusted() && this.isBusted()) {
             return DealerStatus.DRAW;
         }
         return this.getScore().compareScore(player.getScore());

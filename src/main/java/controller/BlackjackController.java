@@ -49,6 +49,7 @@ public class BlackjackController {
             player.drawCard(deck.pickCard());
         }
         dealer.drawCard(deck.pickCard());
+        dealer.drawCard(deck.pickCard());
         printPlayersCards(dealer, players);
     }
 
@@ -64,7 +65,7 @@ public class BlackjackController {
             canHit = getIsHit(player);
             playerHit(player, canHit);
             printSinglePlayer(player);
-        } while (canHit && !player.isBustedPlayer());
+        } while (canHit && player.isNotBusted());
     }
 
     private boolean getIsHit(Player player) {
@@ -83,7 +84,7 @@ public class BlackjackController {
     }
 
     private void dealerHitOrStand(Dealer dealer) {
-        while (dealer.isHittable() && !dealer.isBustedPlayer()) {
+        while (dealer.isHittable() && dealer.isNotBusted()) {
             dealerHit(dealer);
         }
     }

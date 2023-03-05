@@ -91,7 +91,7 @@ public class OutputView {
         printPlayerName(player);
         printPlayerCards(player);
         System.out.print(SCORE_GUIDE_MESSAGE);
-        if (player.isBustedPlayer()) {
+        if (player.isBusted()) {
             System.out.println(BUSTED_RESULT_GUIDE_MESSAGE);
             return;
         }
