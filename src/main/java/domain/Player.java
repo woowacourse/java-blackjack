@@ -1,53 +1,27 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
 
     private final String name;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Player(String name, List<Card> cards) {
         this.name = name;
-        this.cards = new ArrayList<>(cards);
-    }
-
-    public int getScore() {
-        int scoreSum = getScoreSumOf(cards);
-        if (hasAIn(cards) && canAddTenTo(scoreSum)) {
-            scoreSum = scoreSum + 10;
-        }
-        return scoreSum;
-    }
-
-    Result competeWith(Player other) {
-        if ((isBusted() && other.isBusted()) || getScore() == other.getScore()) {
-            return Result.DRAW;
-        }
-        if (!isBusted() && (other.isBusted() || getScore() > other.getScore())) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
+        this.cards = new Cards(cards);
     }
 
     void addCard(Card card) {
         cards.add(card);
     }
 
-    private int getScoreSumOf(List<Card> cards) {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public int getScore() {
+        return cards.getScore();
     }
 
-    private boolean hasAIn(List<Card> cards) {
-        return cards.stream()
-                .anyMatch(Card::isA);
-    }
-
-    private boolean canAddTenTo(int score) {
-        return score + 10 <= 21;
+    Result competeWith(Player other) {
+        return cards.competeWith(other.cards);
     }
 
     public abstract boolean canHit();
@@ -57,7 +31,7 @@ public abstract class Player {
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return cards.getCards();
     }
 
     public String getName() {
