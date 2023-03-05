@@ -4,7 +4,6 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +13,12 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final GameResultManager gameResultManager;
 
     public BlackJackController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.gameResultManager = new GameResultManager();
     }
 
     public void run() {
@@ -28,24 +29,11 @@ public class BlackJackController {
             participants.deal(deck);
         }
 
-//        final List<String> playerNames = participants.findPlayers().stream()
-//                .map(Participant::getName)
-//                .collect(Collectors.toList());
         outputView.printInitializingFinishMessage(participants.getPlayersName());
 
-        Map<String, List<String>> participantsHands = new LinkedHashMap<>();
-        participantsHands.put(participants.findDealer().getName(), participants.findDealer().getCardNames());
-        for (Participant participant : participants.findPlayers()) {
-            participantsHands.put(participant.getName(), participant.getCardNames());
-        }
+        final Map<String, List<String>> participantsCard = gameResultManager.getParticipantsCard(participants);
 
-        participantsHands.put(participants.findDealer().getName(), participants.findDealer().getCardNames());
-        participantsHands.replace("딜러", participantsHands.get("딜러").subList(0, 1));
-        for (Participant participant : participants.findPlayers()) {
-            participantsHands.put(participant.getName(), participant.getCardNames());
-        }
-
-        for (Map.Entry<String, List<String>> participantHand : participantsHands.entrySet()) {
+        for (Map.Entry<String, List<String>> participantHand : participantsCard.entrySet()) {
             outputView.printParticipantCard(participantHand.getKey(), participantHand.getValue());
         }
         outputView.printEmptyLine();
