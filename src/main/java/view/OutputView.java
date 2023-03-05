@@ -62,13 +62,13 @@ public class OutputView {
     }
 
     private static String makeSuitView(Suit suit) {
-        if (suit.equals(Suit.DIAMOND)) {
+        if (Suit.DIAMOND.equals(suit)) {
             return DIAMOND;
         }
-        if (suit.equals(Suit.HEART)) {
+        if (Suit.HEART.equals(suit)) {
             return HEART;
         }
-        if (suit.equals(Suit.SPADE)) {
+        if (Suit.SPADE.equals(suit)) {
             return SPADE;
         }
 
@@ -76,16 +76,16 @@ public class OutputView {
     }
 
     private static String makeDenominationView(Denomination denomination) {
-        if (denomination.equals(Denomination.ACE)) {
+        if (Denomination.ACE.equals(denomination)) {
             return ACE;
         }
-        if (denomination.equals(Denomination.JACK)) {
+        if (Denomination.JACK.equals(denomination)) {
             return JACK;
         }
-        if (denomination.equals(Denomination.QUEEN)) {
+        if (Denomination.QUEEN.equals(denomination)) {
             return QUEEN;
         }
-        if (denomination.equals(Denomination.KING)) {
+        if (Denomination.KING.equals(denomination)) {
             return KING;
         }
 

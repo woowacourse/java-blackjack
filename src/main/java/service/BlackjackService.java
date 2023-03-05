@@ -39,14 +39,14 @@ public class BlackjackService {
         return participants.getNextTurnPlayer().get();
     }
 
-    public void nextTurn(String hit) {
+    public void nextTurn(String target) {
         Participant nextPlayer = participants.getNextTurnPlayer().get();
 
-        if (hit.equals(STAND)) {
+        if (STAND.equals(target)) {
             nextPlayer.stand();
             return;
         }
-        if (hit.equals(HIT)) {
+        if (HIT.equals(target)) {
             nextPlayer.addCard(deck.pollAvailableCard());
             return;
         }

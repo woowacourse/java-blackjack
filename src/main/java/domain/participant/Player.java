@@ -27,7 +27,7 @@ public class Player extends Participant {
     }
 
     private static void validateProhibitName(String name) {
-        if (name.equals(DEALER_NAME)) {
+        if (DEALER_NAME.equals(name)) {
             throw new IllegalArgumentException(ERROR_PROHIBIT_NAME);
         }
     }
