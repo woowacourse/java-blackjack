@@ -20,7 +20,7 @@ class DeckTest {
     @DisplayName("카드를 포함하는지 확인")
     void containsCard() {
         //given
-        deck.addCard(new Card(Number.FIVE, Pattern.CLUB));
+        deck.addDrawnCard(new Card(Number.FIVE, Pattern.CLUB));
 
         //expect
         assertThat(deck.containsCard(new Card(Number.FIVE, Pattern.CLUB))).isTrue();
@@ -30,11 +30,11 @@ class DeckTest {
     @DisplayName("뽑은 카드 추가시 예외 발생")
     void addCard() {
         // given
-        deck.addCard(new Card(Number.FIVE, Pattern.CLUB));
+        deck.addDrawnCard(new Card(Number.FIVE, Pattern.CLUB));
 
         // expect
         assertThatIllegalArgumentException().isThrownBy(
-                () -> deck.addCard(new Card(Number.FIVE, Pattern.CLUB))
+                () -> deck.addDrawnCard(new Card(Number.FIVE, Pattern.CLUB))
         ).withMessage("[ERROR] 이미 뽑힌 카드입니다.");
     }
 }
