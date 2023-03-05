@@ -53,7 +53,7 @@ class ParticipantsTest {
     @DisplayName("플레이어의 게임 결과를 반환한다.")
     void getPlayerResult() {
         participants.deal(deck);
-        Map<String, Result> playerResults = participants.getPlayerResults();
+        Map<String, Result> playerResults = participants.getPlayerStatus();
         for (Map.Entry<String, Result> playerResult : playerResults.entrySet()) {
             assertThat(playerResult.getValue()).isEqualTo(Result.LOSE);
         }
@@ -72,8 +72,8 @@ class ParticipantsTest {
         //when
         participant.findDealer().receiveCard(new Card("A스페이드", 11));
 
-        Map<String, Result> playerResults = participant.getPlayerResults();
-        Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
+        Map<String, Result> playerResults = participant.getPlayerStatus();
+        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
@@ -96,8 +96,8 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("3스페이드", 3));
 
         //when
-        Map<String, Result> playerResults = participant.getPlayerResults();
-        Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
+        Map<String, Result> playerResults = participant.getPlayerStatus();
+        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.TIE);
@@ -119,8 +119,8 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("3스페이드", 3));
 
         //when
-        Map<String, Result> playerResults = participant.getPlayerResults();
-        Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
+        Map<String, Result> playerResults = participant.getPlayerStatus();
+        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);
@@ -142,8 +142,8 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("K스페이드", 10));
 
         //when
-        Map<String, Result> playerResults = participant.getPlayerResults();
-        Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
+        Map<String, Result> playerResults = participant.getPlayerStatus();
+        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.LOSE);
@@ -165,8 +165,8 @@ class ParticipantsTest {
         dealer.receiveCard(new Card("K스페이드", 10));
 
         //when
-        Map<String, Result> playerResults = participant.getPlayerResults();
-        Map<Result, Integer> dealerResults = participant.getDealerResults(playerResults);
+        Map<String, Result> playerResults = participant.getPlayerStatus();
+        Map<Result, Integer> dealerResults = participant.getDealerStatus(playerResults);
 
         //then
         assertThat(playerResults.get("abc")).isEqualTo(Result.WIN);

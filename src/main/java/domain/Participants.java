@@ -42,12 +42,6 @@ public class Participants {
         return players;
     }
 
-    private void addParticipantIfPlayer(ArrayList<Participant> players, Participant participant) {
-        if (participant.getClass().equals(Player.class)) {
-            players.add(participant);
-        }
-    }
-
     public Map<Participant, Boolean> getParticipantsBustStatus() {
         Map<Participant, Boolean> scores = new LinkedHashMap<>();
         for (Participant participant : participants) {
@@ -57,13 +51,34 @@ public class Participants {
         return scores;
     }
 
-    public Map<Result, Integer> getDealerResults(Map<String, Result> results) {
-        EnumMap<Result, Integer> result = new EnumMap<>(Result.class);
+    public boolean shouldDealerHit() {
+        final Dealer dealer = (Dealer) findDealer();
+        return dealer.shouldHit();
+    }
+
+    public Map<Result, Integer> getDealerStatus(Map<String, Result> results) {
+        EnumMap<Result, Integer> DealerWinningStatus = new EnumMap<>(Result.class);
 
         for (Result playerResult : results.values()) {
-            judgeResult(result, playerResult);
+            judgeResult(DealerWinningStatus, playerResult);
         }
-        return result;
+        return DealerWinningStatus;
+    }
+
+    public Map<String, Result> getPlayerStatus() {
+        Participant dealer = findDealer();
+        Map<String, Result> playerResults = new LinkedHashMap<>();
+        for (Participant player : findPlayers()) {
+            compareHandValue(dealer, playerResults, player);
+        }
+
+        return playerResults;
+    }
+
+    private void addParticipantIfPlayer(ArrayList<Participant> players, Participant participant) {
+        if (participant.getClass().equals(Player.class)) {
+            players.add(participant);
+        }
     }
 
     private void judgeResult(EnumMap<Result, Integer> result, Result playerResult) {
@@ -78,16 +93,6 @@ public class Participants {
         }
     }
 
-    public Map<String, Result> getPlayerResults() {
-        Participant dealer = findDealer();
-        Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (Participant player : findPlayers()) {
-            compareHandValue(dealer, playerResults, player);
-        }
-
-        return playerResults;
-    }
-
     private void compareHandValue(Participant dealer, Map<String, Result> playerResults, Participant player) {
         int dealerHandValue = getParticipantHandValue(dealer);
         int playerHandValue = getParticipantHandValue(player);
@@ -99,14 +104,6 @@ public class Participants {
         compareAtTieValue(dealer, playerResults, player, playerHandValue);
     }
 
-    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
-        if (playerHandValue == BUST_HAND_VALUE) {
-            playerResults.put(player.getName(), Result.TIE);
-            return;
-        }
-        playerResults.put(player.getName(), compareHandCount(dealer, player));
-    }
-
     private int getParticipantHandValue(Participant participant) {
         if (participant.isBust()) {
             return 0;
@@ -114,21 +111,22 @@ public class Participants {
         return participant.getHandValue();
     }
 
+    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
+        if (playerHandValue == BUST_HAND_VALUE) {
+            playerResults.put(player.getName(), Result.TIE);
+            return;
+        }
+        playerResults.put(player.getName(), compareHandCount(dealer, player));
+    }
     private Result compareHandCount(Participant dealer, Participant player) {
         int playerHandCount = player.getCardNames().size();
         int dealerHandCount = dealer.getCardNames().size();
         return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
     }
-    //------
 
     public List<String> getPlayersName() {
         return findPlayers().stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
-    }
-
-    public boolean shouldDealerHit() {
-        final Dealer dealer = (Dealer) findDealer();
-        return dealer.shouldHit();
     }
 }
