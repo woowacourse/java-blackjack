@@ -1,4 +1,4 @@
-package blackjack.blackjacGameTest;
+package blackjack.blackjacgame;
 
 import static blackjackgame.Result.LOSE;
 import static blackjackgame.Result.TIE;
@@ -35,7 +35,6 @@ class BlackjackGameTest {
 
     @BeforeEach
     void setUp() {
-
         CardsGenerator fixedCardsGenerator = new FixedCardsGenerator();
         deck = new Deck(fixedCardsGenerator);
         players = new Players();
