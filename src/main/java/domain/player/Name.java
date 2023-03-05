@@ -12,7 +12,7 @@ public class Name {
     }
 
     private static void validateLength(final String name) {
-        if (name.length() < MIN_LENGTH || name.length() > MAX_LENGTH) {
+        if (name.length() < MIN_LENGTH || MAX_LENGTH < name.length()) {
             throw new IllegalArgumentException();
         }
     }
