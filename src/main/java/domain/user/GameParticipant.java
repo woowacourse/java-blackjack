@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class People {
+public class GameParticipant {
 
     private final List<Player> players;
     private final Dealer dealer;
 
-    public People(List<String> playerNames, String dealerName) {
-        this.players = mapToPlayers(playerNames);
-        this.dealer = mapToDealer(dealerName);
+    public GameParticipant(List<String> playerNames, String dealerName) {
+        this.players = makePlayersWithName(playerNames);
+        this.dealer = makeDealerWithName(dealerName);
     }
 
-    private List<Player> mapToPlayers(List<String> playerNames) {
+    private List<Player> makePlayersWithName(List<String> playerNames) {
         return playerNames.stream()
                 .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList())))
                 .collect(Collectors.toList());
     }
 
-    private Dealer mapToDealer(String dealerName) {
+    private Dealer makeDealerWithName(String dealerName) {
         return new Dealer(dealerName, new CardPool(Collections.emptyList()));
     }
 
@@ -42,7 +42,7 @@ public class People {
     }
 
     public void letDealerHitUntilThreshold(Deck deck) {
-        while (dealer.isHit()) {
+        while (dealer.needsHit()) {
             dealer.draw(deck.serve());
         }
     }
@@ -74,7 +74,7 @@ public class People {
     }
 
     public boolean dealerNeedsHit() {
-        return dealer.isHit();
+        return dealer.needsHit();
     }
 
     public List<Player> getPlayers() {

@@ -4,8 +4,8 @@ import domain.card.Card;
 
 public class Player {
 
-    private PlayerName playerName;
-    private CardPool cardPool;
+    private final PlayerName playerName;
+    private final CardPool cardPool;
 
     public Player(String playerName, CardPool cardPool) {
         this.playerName = new PlayerName(playerName);

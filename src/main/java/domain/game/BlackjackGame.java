@@ -1,7 +1,7 @@
 package domain.game;
 
 import domain.strategy.ShuffleStrategy;
-import domain.user.People;
+import domain.user.GameParticipant;
 import domain.user.Player;
 
 import java.util.List;
@@ -12,44 +12,44 @@ public class BlackjackGame {
     private static final int START_HIT_COUNT = 2;
 
     private final Deck deck;
-    private final People people;
+    private final GameParticipant gameParticipant;
 
     public BlackjackGame(List<String> playerNames, String dealerName, ShuffleStrategy shuffleStrategy) {
         this.deck = new Deck(shuffleStrategy);
-        this.people = new People(playerNames, dealerName);
+        this.gameParticipant = new GameParticipant(playerNames, dealerName);
     }
 
     public void letDealerHitUntilThreshold() {
-        people.letDealerHitUntilThreshold(deck);
+        gameParticipant.letDealerHitUntilThreshold(deck);
     }
 
     public boolean dealerNeedsHit() {
-        return people.dealerNeedsHit();
+        return gameParticipant.dealerNeedsHit();
     }
 
     public void startHit() {
         for (int i = 0; i < START_HIT_COUNT; i++) {
-            people.letPlayersToHit(deck);
+            gameParticipant.letPlayersToHit(deck);
         }
     }
 
     public boolean isBurst(String playerName) {
-        return people.isBurst(playerName);
-    }
-
-    public Map<Player, GameResult> getGameResultForAllPlayer() {
-        return people.makeGameResultForAllPlayer();
-    }
-
-    public Map<GameResult, Integer> getDealerRecord() {
-        return people.getDealerRecord(people.makeGameResultForAllPlayer());
+        return gameParticipant.isBurst(playerName);
     }
 
     public void hitFor(String playerName) {
-        people.letPlayerToHit(playerName, deck);
+        gameParticipant.letPlayerToHit(playerName, deck);
     }
 
-    public People getPeople() {
-        return people;
+    public Map<Player, GameResult> getGameResultForAllPlayer() {
+        return gameParticipant.makeGameResultForAllPlayer();
+    }
+
+    public Map<GameResult, Integer> getDealerRecord() {
+        return gameParticipant.getDealerRecord(getGameResultForAllPlayer());
+    }
+
+    public GameParticipant getGameParticipant() {
+        return gameParticipant;
     }
 }

@@ -16,8 +16,8 @@ public class OutputView {
 
     public void printPlayersInfoWhenGameStarted(Dealer dealer, List<Player> players) {
         StringJoiner stringJoiner = new StringJoiner(", ");
-        players.forEach(player -> stringJoiner.add(player.getPlayerName().getValue()));
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName().getValue(), stringJoiner);
+        players.forEach(player -> stringJoiner.add(player.getPlayerName().getName()));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName().getName(), stringJoiner);
 
         printPlayerCardWithName(dealer);
         for (Player player : players) {
@@ -30,7 +30,7 @@ public class OutputView {
     }
 
     public String makePlayerCardMessageWithName(Player player) {
-        String cardStr = player.getPlayerName().getValue() + "카드: ";
+        String cardStr = player.getPlayerName().getName() + "카드: ";
         StringJoiner stringJoiner = new StringJoiner(", ");
         for (Card card : player.getCardPool().getCards()) {
             stringJoiner.add(CardNumberMapper.getCardNumber(card.getNumber()) + CardTypeMapper.getCardName(card.getType()));
@@ -44,7 +44,7 @@ public class OutputView {
 
     public void printDealerRecord(Dealer dealer, Map<GameResult, Integer> dealerRecord) {
         System.out.println("## 최종 승패");
-        System.out.print(dealer.getPlayerName().getValue() + " : ");
+        System.out.print(dealer.getPlayerName().getName() + " : ");
 
         for (GameResult gameResult : dealerRecord.keySet()) {
             if (dealerRecord.get(gameResult) != 0) {
@@ -56,7 +56,7 @@ public class OutputView {
 
     public void printPlayerRecord(Map<Player, GameResult> gameResultMap) {
         for (Player player : gameResultMap.keySet()) {
-            System.out.println(player.getPlayerName().getValue() + " : " + GameResultMapper.getGameResult(gameResultMap.get(player)));
+            System.out.println(player.getPlayerName().getName() + " : " + GameResultMapper.getGameResult(gameResultMap.get(player)));
         }
     }
 

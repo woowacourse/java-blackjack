@@ -2,7 +2,7 @@ package controller;
 
 import domain.game.BlackjackGame;
 import domain.strategy.RandomShuffleStrategy;
-import domain.user.People;
+import domain.user.GameParticipant;
 import domain.user.Player;
 import view.InputView;
 import view.OutputView;
@@ -23,13 +23,13 @@ public class BlackJackController {
         initializeGame();
         blackjackGame.startHit();
 
-        People people = blackjackGame.getPeople();
-        outputView.printPlayersInfoWhenGameStarted(people.getDealer(), people.getPlayers());
+        GameParticipant gameParticipant = blackjackGame.getGameParticipant();
+        outputView.printPlayersInfoWhenGameStarted(gameParticipant.getDealer(), gameParticipant.getPlayers());
 
-        letPlayersHit(people.getPlayers());
-        outputView.printGameScore(people.getDealer(), people.getPlayers());
+        letPlayersHit(gameParticipant.getPlayers());
+        outputView.printGameScore(gameParticipant.getDealer(), gameParticipant.getPlayers());
 
-        outputView.printDealerRecord(people.getDealer(), blackjackGame.getDealerRecord());
+        outputView.printDealerRecord(gameParticipant.getDealer(), blackjackGame.getDealerRecord());
         outputView.printPlayerRecord(blackjackGame.getGameResultForAllPlayer());
     }
 
@@ -49,17 +49,17 @@ public class BlackJackController {
         if (needToQuit(player)) {
             return;
         }
-        blackjackGame.hitFor(player.getPlayerName().getValue());
+        blackjackGame.hitFor(player.getPlayerName().getName());
         outputView.printPlayerCardWithName(player);
 
         hitByPlayerChoice(player);
     }
 
     private boolean needToQuit(Player player) {
-        if (blackjackGame.isBurst(player.getPlayerName().getValue())) {
+        if (blackjackGame.isBurst(player.getPlayerName().getName())) {
             return true;
         }
-        String choice = inputView.inputCardCommand(player.getPlayerName().getValue());
+        String choice = inputView.inputCardCommand(player.getPlayerName().getName());
         return choice.equals("n");
     }
 

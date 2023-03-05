@@ -2,11 +2,11 @@ package domain.user;
 
 public class PlayerName {
 
-    private final String value;
+    private final String name;
 
-    public PlayerName(String value) {
-        validate(value);
-        this.value = value;
+    public PlayerName(String name) {
+        validate(name);
+        this.name = name;
     }
 
     private void validate(String target) {
@@ -15,11 +15,11 @@ public class PlayerName {
         }
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
-    public boolean isSameWith(String name) {
-        return name.equals(value);
+    public boolean isSameWith(String otherName) {
+        return otherName.equals(this.name);
     }
 }

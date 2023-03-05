@@ -22,7 +22,7 @@ class DealerTest {
                 new Card(CardType.HEART, CardNumber.ACE)
         )));
 
-        assertThat(dealer.isHit()).isFalse();
+        assertThat(dealer.needsHit()).isFalse();
     }
 
     @Test
@@ -33,6 +33,6 @@ class DealerTest {
                 new Card(CardType.HEART, CardNumber.ACE)
         )));
 
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.needsHit()).isTrue();
     }
 }
