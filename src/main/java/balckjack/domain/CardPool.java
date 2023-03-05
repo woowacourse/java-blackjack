@@ -26,9 +26,7 @@ public class CardPool {
 
     private static void addAllCardByPattern(Pattern pattern) {
         cards.add(new AceCard(pattern));
-        for (int i = 2; i < 11; i++) {
-            cards.add(new StandardCard(pattern, String.valueOf(i)));
-        }
+        cards.addAll(StandardCard.createStandardCards(pattern));
         cards.addAll(CourtCard.createCourtCards(pattern));
     }
 
