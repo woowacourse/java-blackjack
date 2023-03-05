@@ -19,6 +19,9 @@ public abstract class Participant {
     }
 
     public void drawCard(final Card card) {
+        if (!isDrawable()) {
+            throw new IllegalStateException("더 이상 카드를 뽑을 수 없습니다.");
+        }
         cards.addCard(card);
     }
 

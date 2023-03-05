@@ -8,6 +8,7 @@ import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -59,18 +60,35 @@ class PlayerTest {
         }
     }
 
-    @Test
-    void 카드를_받는다() {
-        final List<Card> cardPack = new ArrayList<>(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(KING, HEART)
-        ));
-        final Cards cards = new Cards(cardPack);
-        final Player player = new Player("dazzle", cards);
+    @Nested
+    class drawCard_메서드는 {
 
-        player.drawCard(new Card(TWO, DIAMOND));
+        @Test
+        void 카드를_받을_수_없는_상태라면_예외를_던진다() {
+            final List<Card> cardPack = new ArrayList<>(List.of(
+                    new Card(QUEEN, CLOVER),
+                    new Card(ACE, HEART)
+            ));
+            final Cards cards = new Cards(cardPack);
+            final Player player = new Player("dazzle", cards);
 
-        assertThat(player.isDrawable()).isFalse();
+            assertThatThrownBy(() -> player.drawCard(new Card(TWO, DIAMOND)))
+                    .isInstanceOf(IllegalStateException.class);
+        }
+
+        @Test
+        void 카드를_받을_수_있는_상태라면_카드를_받는다() {
+            final List<Card> cardPack = new ArrayList<>(List.of(
+                    new Card(QUEEN, CLOVER),
+                    new Card(KING, HEART)
+            ));
+            final Cards cards = new Cards(cardPack);
+            final Player player = new Player("dazzle", cards);
+
+            player.drawCard(new Card(TWO, DIAMOND));
+
+            assertThat(player.isDrawable()).isFalse();
+        }
     }
 
     @Test
