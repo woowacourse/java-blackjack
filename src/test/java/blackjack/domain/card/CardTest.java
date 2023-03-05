@@ -17,7 +17,7 @@ class CardTest {
 
         final Card card = new Card(number, suit);
 
-        assertThat(card.getSuitName()).isEqualTo(suit.getName());
+        assertThat(card.getSuitName()).isEqualTo("스페이드");
     }
 
     @Test
@@ -27,7 +27,7 @@ class CardTest {
 
         final Card card = new Card(number, suit);
 
-        assertThat(card.getNumberName()).isEqualTo(number.getName());
+        assertThat(card.getNumberName()).isEqualTo("A");
     }
 
     @Test
@@ -37,7 +37,7 @@ class CardTest {
 
         final Card card = new Card(number, suit);
 
-        assertThat(card.getScore()).isEqualTo(number.getScore());
+        assertThat(card.getScore()).isEqualTo(1);
     }
 
     @Test
