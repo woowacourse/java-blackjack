@@ -58,7 +58,6 @@ class DealerTest {
 
     @Test
     void 카드를_받는다() {
-        //given
         final List<Card> cardPack = new ArrayList<>(List.of(
                 new Card(QUEEN, CLOVER),
                 new Card(SIX, HEART)
@@ -66,10 +65,8 @@ class DealerTest {
         final Cards cards = new Cards(cardPack);
         final Dealer dealer = new Dealer(cards);
 
-        //when
         dealer.drawCard(new Card(ACE, DIAMOND));
 
-        //then
         assertThat(dealer.isDrawable()).isFalse();
     }
 
