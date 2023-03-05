@@ -29,9 +29,7 @@ public class CardPool {
         for (int i = 2; i < 11; i++) {
             cards.add(new StandardCard(pattern, String.valueOf(i)));
         }
-        cards.add(new CourtCard(pattern, "J"));
-        cards.add(new CourtCard(pattern, "K"));
-        cards.add(new CourtCard(pattern, "Q"));
+        cards.addAll(CourtCard.createCourtCards(pattern));
     }
 
     public static int getSize() {

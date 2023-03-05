@@ -1,10 +1,16 @@
 package balckjack.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 class CourtCard extends Card {
 
     private static final List<String> symbols = List.of("J", "Q", "K");
+
+    public static List<CourtCard> createCourtCards(Pattern pattern) {
+        return symbols.stream().map((symbol) -> new CourtCard(pattern, symbol))
+            .collect(Collectors.toList());
+    }
 
     public CourtCard(Pattern pattern, String symbol) {
         super(pattern, symbol);
