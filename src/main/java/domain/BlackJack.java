@@ -12,7 +12,7 @@ public class BlackJack {
 
 	private final Users users;
 
-	private BlackJack(final Users users) {
+	public BlackJack(final Users users) {
 		this.users = users;
 	}
 

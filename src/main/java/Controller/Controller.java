@@ -26,7 +26,7 @@ public class Controller {
 	private void ready() {
 		List<String> playerNames = askPlayerNames();
 		Users players = Users.from(playerNames);
-		blackJack = BlackJack.of(players);
+		blackJack = new BlackJack(players);
 		printInitMessage(players);
 		printDealerCardHidden(blackJack.getDealerCardHidden());
 		printPlayerCards(blackJack.getPlayerToCard());

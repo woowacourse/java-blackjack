@@ -16,7 +16,7 @@ public class BlackJackTest {
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users);
+        blackJack = new BlackJack(users);
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
