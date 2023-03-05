@@ -29,4 +29,8 @@ public class Score {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    public Score plus(int increment) {
+        return new Score(value + increment);
+    }
 }
