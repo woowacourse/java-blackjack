@@ -12,15 +12,15 @@ public class Deck {
     }
 
     private void generateCards() {
-        for (Symbol symbol: Symbol.values()){
-            addCardsWithSymbolOf(symbol);
+        for (Suit suit : Suit.values()){
+            addCardsWithSymbolOf(suit);
         }
         Collections.shuffle(this.deck);
     }
 
-    private void addCardsWithSymbolOf(Symbol symbol){
-        for (CardNumber cardNumber: CardNumber.values()){
-            this.deck.add(new Card(symbol, cardNumber));
+    private void addCardsWithSymbolOf(Suit suit){
+        for (Rank rank : Rank.values()){
+            this.deck.add(new Card(suit, rank));
         }
     }
 

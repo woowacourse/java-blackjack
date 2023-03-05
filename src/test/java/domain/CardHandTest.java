@@ -2,10 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import domain.Card;
-import domain.CardHand;
-import domain.CardNumber;
-import domain.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +11,9 @@ class CardHandTest {
     void ACE가_없는_경우_카드_합() {
         CardHand cardHand = new CardHand();
 
-        cardHand.add(new Card(Symbol.DIAMOND, CardNumber.EIGHT));
-        cardHand.add(new Card(Symbol.CLOVER, CardNumber.JACK));
-        cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
+        cardHand.add(new Card(Suit.DIAMOND, Rank.EIGHT));
+        cardHand.add(new Card(Suit.CLOVER, Rank.JACK));
+        cardHand.add(new Card(Suit.SPADE, Rank.TWO));
 
         assertThat(cardHand.calculateScore()).isEqualTo(20);
     }
@@ -27,9 +23,9 @@ class CardHandTest {
     void ACE가_1로_사용되는_경우_카드_합() {
         CardHand cardHand = new CardHand();
 
-        cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
-        cardHand.add(new Card(Symbol.CLOVER, CardNumber.JACK));
-        cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
+        cardHand.add(new Card(Suit.DIAMOND, Rank.ACE));
+        cardHand.add(new Card(Suit.CLOVER, Rank.JACK));
+        cardHand.add(new Card(Suit.SPADE, Rank.TWO));
 
         assertThat(cardHand.calculateScore()).isEqualTo(13);
     }
@@ -39,9 +35,9 @@ class CardHandTest {
     void ACE가_11로_사용되는_경우_카드_합() {
         CardHand cardHand = new CardHand();
 
-        cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
-        cardHand.add(new Card(Symbol.CLOVER, CardNumber.EIGHT));
-        cardHand.add(new Card(Symbol.SPADE, CardNumber.TWO));
+        cardHand.add(new Card(Suit.DIAMOND, Rank.ACE));
+        cardHand.add(new Card(Suit.CLOVER, Rank.EIGHT));
+        cardHand.add(new Card(Suit.SPADE, Rank.TWO));
 
         assertThat(cardHand.calculateScore()).isEqualTo(21);
     }
@@ -51,9 +47,9 @@ class CardHandTest {
     void ACE가_2개인_경우_카드_합() {
         CardHand cardHand = new CardHand();
 
-        cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
-        cardHand.add(new Card(Symbol.SPADE, CardNumber.NINE));
-        cardHand.add(new Card(Symbol.CLOVER, CardNumber.ACE));
+        cardHand.add(new Card(Suit.DIAMOND, Rank.ACE));
+        cardHand.add(new Card(Suit.SPADE, Rank.NINE));
+        cardHand.add(new Card(Suit.CLOVER, Rank.ACE));
 
         assertThat(cardHand.calculateScore()).isEqualTo(21);
     }

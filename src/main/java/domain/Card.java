@@ -1,23 +1,23 @@
 package domain;
 
 public class Card {
-    private final Symbol symbol;
-    private final CardNumber cardNumber;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card(Symbol symbol, CardNumber cardNumber) {
-        this.symbol = symbol;
-        this.cardNumber = cardNumber;
+    public Card(Suit suit, Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
     public int getScore() {
-        return this.cardNumber.getScore();
+        return this.rank.getScore();
     }
 
     public String getText() {
-        return this.cardNumber.getNumberToPrint() + this.symbol.getName();
+        return this.rank.getNumberToPrint() + this.suit.getName();
     }
 
     public boolean isAce() {
-        return this.cardNumber.isAce();
+        return this.rank.isAce();
     }
 }

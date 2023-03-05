@@ -1,6 +1,6 @@
 package domain;
 
-public enum CardNumber {
+public enum Rank {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -18,7 +18,7 @@ public enum CardNumber {
     private final String numberToPrint;
     private final int score;
 
-    CardNumber(String numberToPrint, int score) {
+    Rank(String numberToPrint, int score) {
         this.numberToPrint = numberToPrint;
         this.score = score;
     }
