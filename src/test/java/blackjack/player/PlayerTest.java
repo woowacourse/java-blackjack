@@ -7,8 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 import player.Name;
 import player.Player;
 
@@ -26,7 +26,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     void hit() {
         Player player = new Player(new Name("폴로"));
-        Card card = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card = new Card(Rank.ACE, Suit.HEART);
 
         assertThatCode(() -> player.hit(card))
                 .doesNotThrowAnyException();
@@ -36,9 +36,9 @@ class PlayerTest {
     @DisplayName("플레이어는 받은 카드의 점수 합계를 구할 수 있다")
     void calculateScore() {
         Player player = new Player(new Name("폴로"));
-        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.SIX, Suit.HEART);
         player.hit(card1);
         player.hit(card2);
         player.hit(card3);
@@ -50,9 +50,9 @@ class PlayerTest {
     @DisplayName("플레이어는 현재 가지고 있는 카드를 반환할수 있다.")
     void showCards() {
         Player player = new Player(new Name("폴로"));
-        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.SIX, Suit.HEART);
         player.hit(card1);
         player.hit(card2);
         player.hit(card3);
@@ -64,9 +64,9 @@ class PlayerTest {
     @DisplayName("플레이어는 자신의 버스트 여부를 반환할 수 있다.")
     void isBust() {
         Player player = new Player(new Name("폴로"));
-        player.hit(new Card(CardNumber.KING, Pattern.HEART));
-        player.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
-        player.hit(new Card(CardNumber.KING, Pattern.SPADE));
+        player.hit(new Card(Rank.KING, Suit.HEART));
+        player.hit(new Card(Rank.KING, Suit.DIAMOND));
+        player.hit(new Card(Rank.KING, Suit.SPADE));
 
         assertThat(player.isBust()).isTrue();
     }

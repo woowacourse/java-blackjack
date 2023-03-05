@@ -1,6 +1,6 @@
 package card;
 
-public enum Pattern {
+public enum Suit {
     HEART("하트"),
     CLOVER("클로버"),
     SPADE("스페이드"),
@@ -8,7 +8,7 @@ public enum Pattern {
 
     private final String value;
 
-    Pattern(String value) {
+    Suit(String value) {
         this.value = value;
     }
 

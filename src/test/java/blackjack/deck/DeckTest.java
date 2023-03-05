@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 import deck.CardsGenerator;
 import deck.Deck;
 
@@ -35,6 +35,6 @@ class DeckTest {
     @Test
     void drawCard() {
         Card card = deck.drawCard();
-        assertThat(card).isEqualTo(new Card(CardNumber.ACE, Pattern.SPADE));
+        assertThat(card).isEqualTo(new Card(Rank.ACE, Suit.SPADE));
     }
 }

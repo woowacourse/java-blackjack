@@ -1,13 +1,13 @@
 package blackjack.card;
 
-import static card.CardNumber.ACE;
-import static card.CardNumber.TWO;
+import static card.Rank.ACE;
+import static card.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardNumberTest {
+class RankTest {
 
     @Test
     @DisplayName("ACE의 label A를 가져올 수 있다.")

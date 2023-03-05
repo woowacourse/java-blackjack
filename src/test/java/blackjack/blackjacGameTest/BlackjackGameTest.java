@@ -17,8 +17,8 @@ import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import blackjackgame.BlackjackGame;
 import blackjackgame.Result;
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 import deck.CardsGenerator;
 import deck.Deck;
 import dto.DealerWinningDto;
@@ -58,7 +58,7 @@ class BlackjackGameTest {
         blackjackGame.supplyCardsToDealer();
 
         assertThat(dealer.showCards())
-                .contains(new Card(CardNumber.ACE, Pattern.DIAMOND), new Card(CardNumber.ACE, Pattern.SPADE));
+                .contains(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.ACE, Suit.SPADE));
     }
 
     @Test
@@ -71,10 +71,10 @@ class BlackjackGameTest {
 
         blackjackGame.supplyCardsToPlayers();
 
-        assertThat(player1.showCards()).contains(new Card(CardNumber.ACE, Pattern.DIAMOND),
-                new Card(CardNumber.ACE, Pattern.SPADE));
-        assertThat(player2.showCards()).contains(new Card(CardNumber.ACE, Pattern.CLOVER),
-                new Card(CardNumber.ACE, Pattern.HEART));
+        assertThat(player1.showCards()).contains(new Card(Rank.ACE, Suit.DIAMOND),
+                new Card(Rank.ACE, Suit.SPADE));
+        assertThat(player2.showCards()).contains(new Card(Rank.ACE, Suit.CLOVER),
+                new Card(Rank.ACE, Suit.HEART));
 
     }
 
@@ -87,8 +87,8 @@ class BlackjackGameTest {
 
         blackjackGame.supplyAdditionalCard(0);
 
-        assertThat(player1.showCards()).contains(new Card(CardNumber.ACE, Pattern.DIAMOND),
-                new Card(CardNumber.ACE, Pattern.SPADE), new Card(CardNumber.ACE, Pattern.CLOVER));
+        assertThat(player1.showCards()).contains(new Card(Rank.ACE, Suit.DIAMOND),
+                new Card(Rank.ACE, Suit.SPADE), new Card(Rank.ACE, Suit.CLOVER));
     }
 
     @Test
@@ -96,10 +96,10 @@ class BlackjackGameTest {
     void isBust() {
         CardsGenerator fixedGenerator = () -> {
             Stack<Card> cards = new Stack<>();
-            cards.push(new Card(CardNumber.KING, Pattern.HEART));
-            cards.push(new Card(CardNumber.KING, Pattern.CLOVER));
-            cards.push(new Card(CardNumber.KING, Pattern.DIAMOND));
-            cards.push(new Card(CardNumber.KING, Pattern.SPADE));
+            cards.push(new Card(Rank.KING, Suit.HEART));
+            cards.push(new Card(Rank.KING, Suit.CLOVER));
+            cards.push(new Card(Rank.KING, Suit.DIAMOND));
+            cards.push(new Card(Rank.KING, Suit.SPADE));
             return cards;
         };
 
@@ -160,8 +160,8 @@ class BlackjackGameTest {
         @Test
         @DisplayName("딜러가 버스트가 아니고 언더스코어인 경우")
         void canDealerHitUnderScoreAndNotBust() {
-            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.TWO, Pattern.SPADE));
+            dealer.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.TWO, Suit.SPADE));
 
             assertThat(blackjackGame.canDealerHit()).isTrue();
         }
@@ -169,9 +169,9 @@ class BlackjackGameTest {
         @Test
         @DisplayName("딜러가 버스트인경우")
         void cantDealerHitCuzBust() {
-            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            dealer.hit(new Card(CardNumber.TWO, Pattern.SPADE));
+            dealer.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.KING, Suit.SPADE));
+            dealer.hit(new Card(Rank.TWO, Suit.SPADE));
 
             assertThat(blackjackGame.canDealerHit()).isFalse();
         }
@@ -179,8 +179,8 @@ class BlackjackGameTest {
         @Test
         @DisplayName("버스트가 아니고, 언더스코어가 아닌경우")
         void canDealerHit() {
-            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.EIGHT, Pattern.SPADE));
+            dealer.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.EIGHT, Suit.SPADE));
 
             assertThat(blackjackGame.canDealerHit()).isFalse();
         }

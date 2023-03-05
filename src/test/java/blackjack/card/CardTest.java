@@ -1,7 +1,7 @@
 package blackjack.card;
 
-import static card.CardNumber.ACE;
-import static card.Pattern.HEART;
+import static card.Rank.ACE;
+import static card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 

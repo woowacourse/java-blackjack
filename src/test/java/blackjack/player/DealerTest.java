@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import blackjackgame.Result;
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 import player.Dealer;
 
 class DealerTest {
@@ -30,7 +30,7 @@ class DealerTest {
     @DisplayName("딜러는 카드를 받을 수 있다")
     void hit() {
         Dealer dealer = new Dealer();
-        Card card = new Card(CardNumber.ACE, Pattern.HEART);
+        Card card = new Card(Rank.ACE, Suit.HEART);
 
         assertThatCode(() -> dealer.hit(card))
                 .doesNotThrowAnyException();
@@ -40,9 +40,9 @@ class DealerTest {
     @DisplayName("딜러는 받은 카드의 점수 합계를 구할 수 있다")
     void calculateScore() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.SIX, Suit.HEART);
         dealer.hit(card1);
         dealer.hit(card2);
         dealer.hit(card3);
@@ -54,9 +54,9 @@ class DealerTest {
     @DisplayName("딜러는 현재 가지고 있는 카드를 반환할수 있다.")
     void showCards() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.SIX, Suit.HEART);
         dealer.hit(card1);
         dealer.hit(card2);
         dealer.hit(card3);
@@ -68,9 +68,9 @@ class DealerTest {
     @DisplayName("딜러는 현재 가지고 있는 카드중 한장만 반환할 수 있다.")
     void showOneCard() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.SIX, Suit.HEART);
         dealer.hit(card1);
         dealer.hit(card2);
         dealer.hit(card3);
@@ -82,9 +82,9 @@ class DealerTest {
     @DisplayName("딜러의 점수합계가 16점 이하인지 확인할 수 있다.")
     void isUnderScore() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.SIX, Pattern.HEART);
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.SIX, Suit.HEART);
         dealer.hit(card1);
         dealer.hit(card2);
         dealer.hit(card3);
@@ -96,9 +96,9 @@ class DealerTest {
     @DisplayName("딜러가 버스트인지 확인할 수 있다.")
     void isBust() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardNumber.KING, Pattern.SPADE);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
-        Card card3 = new Card(CardNumber.KING, Pattern.HEART);
+        Card card1 = new Card(Rank.KING, Suit.SPADE);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
+        Card card3 = new Card(Rank.KING, Suit.HEART);
         dealer.hit(card1);
         dealer.hit(card2);
         dealer.hit(card3);

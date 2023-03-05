@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 
 public class ShuffledCardsGenerator implements CardsGenerator {
     @Override
@@ -22,13 +22,13 @@ public class ShuffledCardsGenerator implements CardsGenerator {
     }
 
     private List<Card> createCards() {
-        return Arrays.stream(CardNumber.values())
+        return Arrays.stream(Rank.values())
                 .flatMap(this::createCardByNumber).
                 collect(Collectors.toList());
     }
 
-    private Stream<Card> createCardByNumber(CardNumber cardNumber) {
-        return Arrays.stream(Pattern.values())
+    private Stream<Card> createCardByNumber(Rank cardNumber) {
+        return Arrays.stream(Suit.values())
                 .map(pattern -> new Card(cardNumber, pattern));
     }
 }

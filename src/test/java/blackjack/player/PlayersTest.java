@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 import dto.PlayerWinningDto;
 import player.Dealer;
 import player.Name;
@@ -42,7 +42,7 @@ class PlayersTest {
         Players players = new Players();
         Player player = new Player(new Name("폴로"));
         players.add(player);
-        Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
+        Card card = new Card(Rank.ACE, Suit.CLOVER);
 
         players.takeCard(0, card);
 
@@ -69,9 +69,9 @@ class PlayersTest {
         Players players = new Players();
         Player player1 = new Player(new Name("폴로"));
         players.add(player1);
-        player1.hit(new Card(CardNumber.KING, Pattern.HEART));
-        player1.hit(new Card(CardNumber.KING, Pattern.DIAMOND));
-        player1.hit(new Card(CardNumber.KING, Pattern.SPADE));
+        player1.hit(new Card(Rank.KING, Suit.HEART));
+        player1.hit(new Card(Rank.KING, Suit.DIAMOND));
+        player1.hit(new Card(Rank.KING, Suit.SPADE));
 
         assertThat(players.isBust(0)).isTrue();
     }
@@ -103,8 +103,8 @@ class PlayersTest {
             players.add(player);
 
             Dealer dealer = new Dealer();
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
 
             players.calculateWinning(dealer);
             assertThat(player.getResult()).isEqualTo(WIN);
@@ -118,10 +118,10 @@ class PlayersTest {
             players.add(player);
             Dealer dealer = new Dealer();
 
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            dealer.hit(new Card(CardNumber.KING, Pattern.CLOVER));
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+            dealer.hit(new Card(Rank.KING, Suit.SPADE));
+            dealer.hit(new Card(Rank.KING, Suit.CLOVER));
             players.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(WIN);
@@ -135,9 +135,9 @@ class PlayersTest {
             players.add(player);
             Dealer dealer = new Dealer();
 
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+            dealer.hit(new Card(Rank.KING, Suit.SPADE));
             players.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(LOSE);
@@ -151,11 +151,11 @@ class PlayersTest {
             players.add(player);
             Dealer dealer = new Dealer();
 
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            player.hit(new Card(CardNumber.JACK, Pattern.CLOVER));
-            player.hit(new Card(CardNumber.JACK, Pattern.DIAMOND));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            player.hit(new Card(Rank.JACK, Suit.CLOVER));
+            player.hit(new Card(Rank.JACK, Suit.DIAMOND));
+            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+            dealer.hit(new Card(Rank.KING, Suit.SPADE));
             players.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(LOSE);
@@ -169,8 +169,8 @@ class PlayersTest {
             players.add(player);
             Dealer dealer = new Dealer();
 
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            dealer.hit(new Card(Rank.KING, Suit.SPADE));
             players.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(TIE);
@@ -184,12 +184,12 @@ class PlayersTest {
             players.add(player);
             Dealer dealer = new Dealer();
 
-            player.hit(new Card(CardNumber.KING, Pattern.HEART));
-            player.hit(new Card(CardNumber.JACK, Pattern.CLOVER));
-            player.hit(new Card(CardNumber.JACK, Pattern.DIAMOND));
-            dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            dealer.hit(new Card(CardNumber.QUEEN, Pattern.SPADE));
+            player.hit(new Card(Rank.KING, Suit.HEART));
+            player.hit(new Card(Rank.JACK, Suit.CLOVER));
+            player.hit(new Card(Rank.JACK, Suit.DIAMOND));
+            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+            dealer.hit(new Card(Rank.KING, Suit.SPADE));
+            dealer.hit(new Card(Rank.QUEEN, Suit.SPADE));
             players.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(LOSE);

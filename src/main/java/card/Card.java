@@ -3,16 +3,16 @@ package card;
 import java.util.Objects;
 
 public class Card {
-    private final CardNumber cardNumber;
-    private final Pattern pattern;
+    private final Rank cardNumber;
+    private final Suit suit;
 
-    public Card(CardNumber cardNumber, Pattern pattern) {
+    public Card(Rank cardNumber, Suit suit) {
         this.cardNumber = cardNumber;
-        this.pattern = pattern;
+        this.suit = suit;
     }
 
     public String getName() {
-        return cardNumber.getLabel() + pattern.getValue();
+        return cardNumber.getLabel() + suit.getValue();
     }
 
     public int getScore() {
@@ -20,7 +20,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNumber.getLabel().equals(CardNumber.ACE.getLabel());
+        return cardNumber.getLabel().equals(Rank.ACE.getLabel());
     }
 
     @Override
@@ -32,16 +32,16 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardNumber == card.cardNumber && pattern == card.pattern;
+        return cardNumber == card.cardNumber && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardNumber, pattern);
+        return Objects.hash(cardNumber, suit);
     }
 
     @Override
     public String toString() {
-        return cardNumber.getLabel() + pattern.getValue();
+        return cardNumber.getLabel() + suit.getValue();
     }
 }

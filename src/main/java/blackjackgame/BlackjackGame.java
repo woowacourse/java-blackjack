@@ -16,7 +16,7 @@ import player.Player;
 import player.Players;
 
 public class BlackjackGame {
-    public static final int FIRST_DRAW_COUNT = 2;
+    private static final int FIRST_DRAW_COUNT = 2;
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;

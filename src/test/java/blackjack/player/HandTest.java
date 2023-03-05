@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import card.Card;
-import card.CardNumber;
-import card.Pattern;
+import card.Rank;
+import card.Suit;
 import player.Hand;
 
 class HandTest {
@@ -29,7 +29,7 @@ class HandTest {
     void add() {
         hand = new Hand();
 
-        assertThatCode(() -> hand.add(new Card(CardNumber.ACE, Pattern.CLOVER)))
+        assertThatCode(() -> hand.add(new Card(Rank.ACE, Suit.CLOVER)))
                 .doesNotThrowAnyException();
     }
 
@@ -45,7 +45,7 @@ class HandTest {
     @DisplayName("Hand에 추가한 카드가 카드리스트에 들어있다.")
     void saveCard() {
         hand = new Hand();
-        Card card = new Card(CardNumber.ACE, Pattern.CLOVER);
+        Card card = new Card(Rank.ACE, Suit.CLOVER);
         hand.add(card);
 
         assertThat(hand.getCards()).contains(card);
@@ -55,8 +55,8 @@ class HandTest {
     @DisplayName("카드들의 점수를 계산할 수 있다.")
     void calculateScore() {
         hand = new Hand();
-        Card card = new Card(CardNumber.TWO, Pattern.CLOVER);
-        Card card2 = new Card(CardNumber.EIGHT, Pattern.HEART);
+        Card card = new Card(Rank.TWO, Suit.CLOVER);
+        Card card2 = new Card(Rank.EIGHT, Suit.HEART);
         hand.add(card);
         hand.add(card2);
 
@@ -69,9 +69,9 @@ class HandTest {
     @DisplayName("첫번째 카드를 가져올 수 있다")
     void pickFirstCard() {
         hand = new Hand();
-        Card card = new Card(CardNumber.ACE, Pattern.HEART);
-        Card card1 = new Card(CardNumber.TEN, Pattern.HEART);
-        Card card2 = new Card(CardNumber.FIVE, Pattern.HEART);
+        Card card = new Card(Rank.ACE, Suit.HEART);
+        Card card1 = new Card(Rank.TEN, Suit.HEART);
+        Card card2 = new Card(Rank.FIVE, Suit.HEART);
         hand.add(card);
         hand.add(card1);
         hand.add(card2);
@@ -88,8 +88,8 @@ class HandTest {
         @Test
         void underEleven() {
             hand = new Hand();
-            Card card = new Card(CardNumber.ACE, Pattern.HEART);
-            Card card1 = new Card(CardNumber.TWO, Pattern.HEART);
+            Card card = new Card(Rank.ACE, Suit.HEART);
+            Card card1 = new Card(Rank.TWO, Suit.HEART);
             hand.add(card);
             hand.add(card1);
 
@@ -101,9 +101,9 @@ class HandTest {
         @Test
         void upperEleven() {
             hand = new Hand();
-            Card card = new Card(CardNumber.ACE, Pattern.HEART);
-            Card card1 = new Card(CardNumber.TEN, Pattern.HEART);
-            Card card2 = new Card(CardNumber.FIVE, Pattern.HEART);
+            Card card = new Card(Rank.ACE, Suit.HEART);
+            Card card1 = new Card(Rank.TEN, Suit.HEART);
+            Card card2 = new Card(Rank.FIVE, Suit.HEART);
             hand.add(card);
             hand.add(card1);
             hand.add(card2);

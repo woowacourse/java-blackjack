@@ -1,6 +1,6 @@
 package card;
 
-public enum CardNumber {
+public enum Rank {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -18,7 +18,7 @@ public enum CardNumber {
     private final String label;
     private final int value;
 
-    CardNumber(String label, int value) {
+    Rank(String label, int value) {
         this.label = label;
         this.value = value;
     }
