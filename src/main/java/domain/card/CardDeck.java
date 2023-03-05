@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class CardDeck {
 
     private CardDeck(final List<Card> cards) {
         validate(cards);
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public static CardDeck createShuffled(List<Card> cards) {

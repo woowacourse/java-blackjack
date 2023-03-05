@@ -21,12 +21,12 @@ public abstract class Participant {
         drawnCards.add(card);
     }
 
-    public int calculateCardScore() {
+    public int calculateScore() {
         return drawnCards.calculateScore();
     }
 
     public boolean isBurst() {
-        return calculateCardScore() > BURST_NUMBER;
+        return calculateScore() > BURST_NUMBER;
     }
 
     public abstract List<Card> openDrawnCards();

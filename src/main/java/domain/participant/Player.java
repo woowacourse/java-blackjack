@@ -20,6 +20,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return calculateCardScore() < BURST_NUMBER;
+        return calculateScore() < BURST_NUMBER;
     }
 }

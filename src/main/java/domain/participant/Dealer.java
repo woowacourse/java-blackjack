@@ -27,6 +27,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return calculateCardScore() <= DRAW_LIMIT_SCORE;
+        return calculateScore() <= DRAW_LIMIT_SCORE;
     }
 }

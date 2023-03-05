@@ -1,5 +1,7 @@
 package dto.request;
 
+
+//TODO: Enum으로 리팩토링
 public class DrawCommand {
 
     private static final String DRAW_COMMAND = "y";

@@ -65,10 +65,10 @@ public class BlackJackService {
     public List<ParticipantResult> getParticipantResults(final Dealer dealer,
                                                          final Players players) {
         List<ParticipantResult> participantResults = new ArrayList<>();
-        participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateCardScore()));
+        participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateScore()));
 
         players.stream()
-                .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateCardScore())));
+                .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateScore())));
 
         return participantResults;
     }
@@ -90,7 +90,7 @@ public class BlackJackService {
 
         }
 
-        boolean isPlayerWin = player.calculateCardScore() > dealer.calculateCardScore();
+        boolean isPlayerWin = player.calculateScore() > dealer.calculateScore();
         return WinLoseResult.toDto(player, isPlayerWin);
     }
 }

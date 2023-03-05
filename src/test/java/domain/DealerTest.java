@@ -53,7 +53,7 @@ class DealerTest {
         Dealer dealer = new Dealer(drawnCards);
 
         // when
-        int expectedCardScore = dealer.calculateCardScore();
+        int expectedCardScore = dealer.calculateScore();
 
         // then
         assertThat(expectedCardScore).isEqualTo(king.getScore() + queen.getScore());

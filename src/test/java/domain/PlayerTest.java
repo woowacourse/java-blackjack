@@ -53,7 +53,7 @@ class PlayerTest {
         Player player = new Player(name, drawnCards);
 
         // when
-        int expectedCardScore = player.calculateCardScore();
+        int expectedCardScore = player.calculateScore();
 
         // then
         assertThat(expectedCardScore).isEqualTo(king.getScore() + queen.getScore());
