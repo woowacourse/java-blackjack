@@ -4,6 +4,7 @@ import static blackjack.domain.ResultType.*;
 
 public class Dealer extends Participant {
     private static final int DEALER_MAX_HITTABLE_POINT = 16;
+    private static final int MAX_POINT_NOT_BUST = 21;
     private static final String DEFAULT_NAME = "딜러";
 
     protected Dealer(final ParticipantCards cards) {
@@ -19,10 +20,10 @@ public class Dealer extends Participant {
         int dealerPoint = getTotalPoint();
         int participantPoint = participant.getTotalPoint();
 
-        if (participantPoint > 21) {
+        if (participantPoint > MAX_POINT_NOT_BUST) {
             return WIN;
         }
-        if (dealerPoint > 21 || dealerPoint < participantPoint) {
+        if (dealerPoint > MAX_POINT_NOT_BUST || dealerPoint < participantPoint) {
             return LOSE;
         }
         if (dealerPoint > participantPoint) {
