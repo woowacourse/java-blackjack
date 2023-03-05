@@ -58,15 +58,6 @@ public class Participants {
         return participantsHandValue;
     }
 
-    public Map<Participant, Boolean> getParticipantsBustStatus() {
-        Map<Participant, Boolean> scores = new LinkedHashMap<>();
-        for (Participant participant : participants) {
-            scores.put(participant, participant.isBust());
-        }
-
-        return scores;
-    }
-
     public Map<Result, Integer> getDealerStatus(Map<String, Result> results) {
         EnumMap<Result, Integer> DealerWinningStatus = new EnumMap<>(Result.class);
 

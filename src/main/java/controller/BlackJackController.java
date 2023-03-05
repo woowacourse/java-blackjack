@@ -29,7 +29,9 @@ public class BlackJackController {
         showParticipantsInitCardsStatus(participants);
 
         play(deck, participants);
-        showResults(participants);
+        final Map<Participant, Integer> participantIntegerMap = participants.makeParticipantFinalHandValue();
+        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap);
+        showResults(participants, gameResultManager);
     }
 
     private Participants makeParticipants() {
@@ -104,14 +106,14 @@ public class BlackJackController {
         }
     }
 
-    private void showResults(final Participants participants) {
-        showParticipantsScore(participants);
+    private void showResults(final Participants participants, GameResultManager gameResultManager) {
+        showParticipantsScore(gameResultManager);
         outputView.printResultInfo();
         showParticipantsWinningStatus(participants);
     }
 
-    private void showParticipantsScore(final Participants participants) {
-        for (Map.Entry<Participant, Boolean> participantScore : participants.getParticipantsBustStatus().entrySet()) {
+    private void showParticipantsScore(final GameResultManager gameResultManager) {
+        for (Map.Entry<Participant, Boolean> participantScore : gameResultManager.getParticipantsBustStatus().entrySet()) {
             outputView.printParticipantHandValue(participantScore.getKey().getName(),
                     participantScore.getKey().getCards(), participantScore.getValue());
         }

@@ -1,19 +1,23 @@
 package domain;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
+// TODO: 2023/03/06 딜러 승패
+// TODO: 2023/03/06  플레이어 승패
 public class GameResultManager {
-    public Map<String, List<String>> getParticipantsCard(final Participants participants) {
-        final Participant dealer = participants.findDealer();
-        Map<String, List<String>> participantsHands = new LinkedHashMap<>();
+    private final Map<Participant, Integer> gameResult;
 
-        participantsHands.put(dealer.getName(), dealer.getCardNames().subList(0, 1));
+    public GameResultManager(final Map<Participant, Integer> gameResult) {
+        this.gameResult = gameResult;
+    }
 
-        for (Participant participant : participants.findPlayers()) {
-            participantsHands.put(participant.getName(), participant.getCardNames());
+    public Map<Participant, Boolean> getParticipantsBustStatus() {
+        Map<Participant, Boolean> scores = new LinkedHashMap<>();
+        for (Participant participant : gameResult.keySet()) {
+            scores.put(participant, participant.isBust());
         }
-        return participantsHands;
+
+        return scores;
     }
 }
