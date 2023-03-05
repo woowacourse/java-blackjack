@@ -10,9 +10,13 @@ public final class Cards {
     private final List<Card> cards;
     private final GamePoint gamePoint;
 
-    public Cards(final List<Card> cards) {
+    private Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
         this.gamePoint = new GamePoint(cards);
+    }
+
+    public static Cards create(final List<Card> cards) {
+        return new Cards(cards);
     }
 
     public Cards add(final Card card) {

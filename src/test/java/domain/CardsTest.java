@@ -7,6 +7,7 @@ import domain.card.CardShape;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
 
@@ -23,9 +24,7 @@ public class CardsTest {
                 Card.create(CardShape.DIAMOND, CardNumber.of(2)),
                 Card.create(CardShape.HEART, CardNumber.of(3))
         );
-        assertDoesNotThrow(()->{
-            final Cards cards = new Cards(data);
-        });
+        assertDoesNotThrow(() -> Cards.create(data));
     }
 
     @Test
@@ -36,7 +35,7 @@ public class CardsTest {
                 Card.create(CardShape.DIAMOND, CardNumber.of(2)),
                 Card.create(CardShape.HEART, CardNumber.of(3))
         );
-        final Cards cards = new Cards(data);
+        final Cards cards = Cards.create(data);
         assertThat(cards).extracting("cards", InstanceOfAssertFactories.collection(List.class))
                 .size().isEqualTo(3);
 
@@ -75,7 +74,7 @@ public class CardsTest {
                 Card.create(CardShape.HEART, CardNumber.of(10)),
                 Card.create(CardShape.HEART, CardNumber.of(10))
         );
-        final Cards cards = new Cards(data);
+        final Cards cards = Cards.create(data);
         assertThat(cards.isBusted()).isTrue();
     }
 }

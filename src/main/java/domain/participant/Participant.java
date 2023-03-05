@@ -17,7 +17,7 @@ public abstract class Participant {
 
     protected Participant(Name name) {
         this.name = name;
-        this.cards = new Cards(Collections.emptyList());
+        this.cards = Cards.create(Collections.emptyList());
     }
 
     protected Participant(Name name, Cards cards) {
@@ -45,7 +45,7 @@ public abstract class Participant {
         return List.copyOf(cards.getCards());
     }
 
-    public GamePoint calculateScore() {
+    public GamePoint calculatePoint() {
         return cards.getGamePoint();
     }
 
