@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class BlackJackController {
 
     private static final int INITIAL_DRAW_COUNT = 2;
-    private static final int DEALER_LIMIT = 16;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -89,19 +88,19 @@ public class BlackJackController {
     private void cardDraw(final Dealer dealer, final Deck deck) {
         if (dealer.isDrawable()) {
             dealer.drawCard(deck.draw());
-            outputView.printDealerCardDrawn(new DealerStateResponse(true, DEALER_LIMIT));
+            outputView.printDealerDrawn(new DealerStateResponse(true, Dealer.MAXIMUM_DRAWABLE_SCORE));
         }
     }
 
     private void printResult(final Participants participants) {
         final List<ParticipantResponse> participantResponses = getParticipantResponses(participants.getParticipants());
-        participantResponses.forEach(outputView::printHandedCardsWithScore);
+        outputView.printHandedCardsWithScore(participantResponses);
 
         final Dealer dealer = participants.getDealer();
 
         final List<PlayerResultResponse> playerResultResponses = getPlayerResultResponses(
                 dealer.getScore(), participants.getPlayers());
-        outputView.printResult(dealer.getName(), playerResultResponses);
+        outputView.printFinalResult(dealer.getName(), playerResultResponses);
     }
 
     private List<ParticipantResponse> getParticipantResponses(final List<Participant> participants) {
