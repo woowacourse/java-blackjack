@@ -1,5 +1,12 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Denomination;
+import domain.card.Suit;
+import domain.player.Player;
+import domain.player.PlayerName;
+import domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

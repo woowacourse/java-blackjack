@@ -1,5 +1,11 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
+import domain.player.Dealer;
+import domain.player.DealerStatus;
+import domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

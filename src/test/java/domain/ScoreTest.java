@@ -1,5 +1,7 @@
 package domain;
 
+import domain.player.DealerStatus;
+import domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

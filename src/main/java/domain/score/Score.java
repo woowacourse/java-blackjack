@@ -1,4 +1,6 @@
-package domain;
+package domain.score;
+
+import domain.player.DealerStatus;
 
 public class Score {
 
