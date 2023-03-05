@@ -25,7 +25,7 @@ public class Player {
     }
 
     public boolean isBurst() {
-        return cardPool.hasSumGreaterThanLimit();
+        return cardPool.isSumExceedLimit();
     }
 
     public PlayerName getPlayerName() {

@@ -22,18 +22,27 @@ public class CardPool {
     }
 
     public int sumCardNumbers() {
+        int sum = getSumOfCards();
+        sum = updateIfExceedLimitAndAceExists(sum);
+        return sum;
+    }
+
+    private int getSumOfCards() {
         int sum = 0;
         for (Card card : cards) {
             sum += card.getNumber().getPoint();
         }
+        return sum;
+    }
 
-        if (sum > CARD_POINT_LIMIT && containsAce()) {
+    private int updateIfExceedLimitAndAceExists(int sum) {
+        if (isSumExceedLimit() && containsAce()) {
             sum -= CARD_POINT_LIMIT - CardNumber.ACE.getPoint();
         }
         return sum;
     }
 
-    public boolean hasSumGreaterThanLimit() {
+    public boolean isSumExceedLimit() {
         return sumCardNumbers() > CARD_POINT_LIMIT;
     }
 
