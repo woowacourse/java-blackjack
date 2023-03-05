@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 
 public class DrawnCards {
 
-    private static final int GAP_OF_ACE_NUMBER = 10;
     private static final int BURST_NUMBER = 21;
 
     private final List<Card> cards;
@@ -33,7 +32,7 @@ public class DrawnCards {
                 .count();
 
         while (countOfAce-- > 0 && sum > BURST_NUMBER) {
-            sum -= GAP_OF_ACE_NUMBER;
+            sum -= CardValue.ACE.getScore() - CardValue.ACE.getExtraScore();
         }
         return sum;
     }
