@@ -16,7 +16,7 @@ public class Players {
     }
 
     private void validate(final List<Player> players) {
-        if (players.size() < MIN_PLAYERS_SIZE || players.size() > MAX_PLAYERS_NUMBER) {
+        if (players.size() < MIN_PLAYERS_SIZE || MAX_PLAYERS_NUMBER < players.size()) {
             throw new IllegalArgumentException("플레이어의 수는 최소 1명, 최대 4명입니다.");
         }
     }
