@@ -7,7 +7,6 @@ import blackjack.domain.Players;
 import blackjack.domain.ShuffledDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.function.Supplier;
 
 public class BlackjackController {
 
@@ -20,7 +19,8 @@ public class BlackjackController {
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = generateBlackjackGame();
+        final Players players = createPlayers(new Retry());
+        final BlackjackGame blackjackGame = new BlackjackGame(players);
 
         initialDraw(blackjackGame);
         draw(blackjackGame);
@@ -28,9 +28,16 @@ public class BlackjackController {
         play(blackjackGame);
     }
 
-    private BlackjackGame generateBlackjackGame() {
-        final Players players = repeatUntilGetValidInput(inputView::readPlayers);
-        return new BlackjackGame(players);
+    private Players createPlayers(final Retry retry) {
+        while (retry.isRepeatable()) {
+            try {
+                return inputView.readPlayers();
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+                retry.decrease();
+            }
+        }
+        throw new IllegalArgumentException(retry.getFailMessage());
     }
 
     private void initialDraw(final BlackjackGame blackjackGame) {
@@ -41,18 +48,30 @@ public class BlackjackController {
     private void draw(final BlackjackGame blackjackGame) {
         final Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
-            drawBy(player);
+            drawTo(player);
         }
         blackjackGame.drawByDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(players.getDealer());
     }
 
-    private void drawBy(final Player player) {
+    private void drawTo(final Player player) {
         while (isDrawable(player)) {
-            final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
+            final BlackjackCommand command = createCommand(player, new Retry());
             drawOnce(player, command);
             outputView.printDrawResult(player);
         }
+    }
+
+    private BlackjackCommand createCommand(final Player player, final Retry retry) {
+        while (retry.isRepeatable()) {
+            try {
+                return inputView.readCommand(player);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+                retry.decrease();
+            }
+        }
+        throw new IllegalArgumentException(retry.getFailMessage());
     }
 
     private boolean isDrawable(final Player player) {
@@ -77,14 +96,5 @@ public class BlackjackController {
     private void play(final BlackjackGame blackjackGame) {
         final BlackjackGameResult result = blackjackGame.play();
         outputView.printGameResult(result);
-    }
-
-    private <T> T repeatUntilGetValidInput(final Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return repeatUntilGetValidInput(supplier);
-        }
     }
 }
