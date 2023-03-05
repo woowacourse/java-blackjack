@@ -55,7 +55,7 @@ public class Controller {
             command = inputView.readCommand(player.getName().getName());
             distributeByCommand(game, player, command);
             outputView.printPlayerCardsInfo(player);
-        } while (!player.isOverBlackJack() && command.equals(Y_COMMAND));
+        } while (!player.isOverPlayerBlackJack() && command.equals(Y_COMMAND));
     }
 
     private void distributeByCommand(BlackjackGame game, Player player, String command) {
@@ -65,7 +65,7 @@ public class Controller {
     }
 
     private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {
-        while (!dealer.isOverStandard()) {
+        while (!dealer.isOverDealerStandard()) {
             game.distributeDealer();
             outputView.printDistributeDealer(dealer);
         }

@@ -33,7 +33,7 @@ public class DealerTest {
         dealer.addCard(card2);
         dealer.addCard(card3);
 
-        assertThat(dealer.isOverStandard()).isTrue();
+        assertThat(dealer.isOverDealerStandard()).isTrue();
     }
 
 

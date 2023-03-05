@@ -34,7 +34,7 @@ public class PlayerTest {
         player.addCard(card2);
         player.addCard(card3);
 
-        assertThat(player.isOverBlackJack()).isTrue();
+        assertThat(player.isOverPlayerBlackJack()).isTrue();
     }
 
 

@@ -12,14 +12,4 @@ public class CardDeck {
     public Card poll(){
         return cards.poll();
     }
-
-    public void shuffle(){
-        List<Card> shuffledCards = new ArrayList<>();
-        shuffledCards.addAll(cards);
-        Collections.shuffle(shuffledCards);
-
-        cards.clear();
-        cards.addAll(shuffledCards);
-    }
-
 }
