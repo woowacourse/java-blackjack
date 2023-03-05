@@ -11,6 +11,7 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    private static final int INITIAL_CARD_SIZE = 2;
     private final Participants participants;
     private final Deck deck;
 
@@ -32,8 +33,9 @@ public class BlackjackGame {
     }
 
     private void giveTwoCard(final Participant participant) {
-        participant.drawCard(deck.drawCard());
-        participant.drawCard(deck.drawCard());
+        for(int i = 0; i < INITIAL_CARD_SIZE; i++) {
+            participant.drawCard(deck.drawCard());
+        }
     }
 
     public void drawCard(final Participant participant) {
