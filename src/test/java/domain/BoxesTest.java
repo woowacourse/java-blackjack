@@ -1,5 +1,6 @@
 package domain;
 
+import domain.box.BoxResult;
 import domain.box.BoxStatus;
 import domain.box.Boxes;
 import domain.box.PlayResult;
@@ -8,9 +9,9 @@ import domain.card.Denomination;
 import domain.card.Suit;
 import domain.user.Dealer;
 import domain.user.Player;
+import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -20,70 +21,75 @@ class BoxesTest {
 
     @DisplayName("모든 박스 생성 테스트")
     @Test
-    void create() {
+    void createBoxes() {
         Boxes boxes = Boxes.of("echo,split");
-        Assertions.assertThat(boxes)
-            .extracting("boxes")
-            .asInstanceOf(InstanceOfAssertFactories.map(Player.class, BoxStatus.class))
-            .containsKeys(new Player("echo"), new Player("split"));
+        List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
+        Assertions.assertThat(playersAndDealerAtLast).containsExactly(
+            new Player("echo"), new Player("split"), new Dealer()
+        );
     }
 
-    @DisplayName("모든 박스의 상태 업데이트 기능 구현")
+    @DisplayName("게임 결과 반환 테스트")
     @Test
-    void updateTest() {
-        Player participant = new Player("echo");
-        Boxes boxes = Boxes.of("echo, split");
-        participant.dealt(new Card(Denomination.JACK, Suit.SPADE));
-        participant.dealt(new Card(Denomination.JACK, Suit.SPADE));
-        participant.dealt(new Card(Denomination.JACK, Suit.SPADE));
-        boxes.updatePlayerBox(participant);
-        BoxStatus boxStatus = boxes.getBoxStatusByParticipant(participant);
-        Assertions.assertThat(boxStatus)
-            .extracting("playResult")
-            .isEqualTo(PlayResult.BUST);
-        Assertions.assertThat(boxStatus)
-            .extracting("point")
-            .isEqualTo(30);
+    void getBoxResult() {
+        Boxes boxes = Boxes.of("echo");
+        List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
+        Player player = playersAndDealerAtLast.get(0);
+        Player dealer = playersAndDealerAtLast.get(1);
+        makeBlackJack(player);
+        boxes.updatePlayerBox(player);
+        makeBustByTwentyTwo(dealer);
+        boxes.updatePlayerBox(dealer);
+        BoxResult boxResult = boxes.getBoxResult(player);
+        Assertions.assertThat(boxResult.getWinCount()).isEqualTo(1);
+        Assertions.assertThat(boxResult.getLoseCount()).isEqualTo(0);
     }
 
-    @DisplayName("현재 턴의 박스의 참가자를 반환한다.")
+    @DisplayName("현재 턴의 박스의 참가자를 반환하고 업데이트 한다.")
     @TestFactory
     Stream<DynamicTest> getCurrentParticipant() {
         Boxes boxes = Boxes.of("firstPlayer,secondPlayer,thirdPlayer");
         return Stream.of(
-            DynamicTest.dynamicTest("처음에는 첫 참가자를 반환한다.",
-                () -> Assertions.assertThat(boxes.getCurrentTurnPlayer())
-                    .isEqualTo(new Player("firstPlayer"))),
-            DynamicTest.dynamicTest("앞에 참가자가 카드를 더 이상 못 뽑을 경우 다음 참가자를 반환한다.", () -> {
+            DynamicTest.dynamicTest("처음에 첫 참가자를 반환한다.", () -> {
+                Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("firstPlayer"));
+            }),
+            DynamicTest.dynamicTest("첫 참가자의 턴이 끝난 경우 두번째 참가자를 반환한다.(블랙잭)", () -> {
                 Player firstPlayer = boxes.getCurrentTurnPlayer();
-                firstPlayer.dealt(new Card(Denomination.JACK, Suit.SPADE));
-                firstPlayer.dealt(new Card(Denomination.QUEEN, Suit.HEART));
-                firstPlayer.dealt(new Card(Denomination.ACE, Suit.DIAMOND));
+                makeBlackJack(firstPlayer);
                 boxes.updatePlayerBox(firstPlayer);
+                Assertions.assertThat(boxes.getBoxStatusByParticipant(firstPlayer))
+                    .isEqualTo(new BoxStatus(PlayResult.BLACK_JACK, 21));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("secondPlayer"));
             }),
-            DynamicTest.dynamicTest("두번째 참가자가 아무 카드도 받지 않는 경우 다음 참가자를 반환한다.", () -> {
+            DynamicTest.dynamicTest("두번째 참가자 턴이 끝난 세번째 참가자를 반환한다.(스탠드)", () -> {
                 Player secondPlayer = boxes.getCurrentTurnPlayer();
                 boxes.updatePlayerBox(secondPlayer);
+                Assertions.assertThat(boxes.getBoxStatusByParticipant(secondPlayer))
+                    .isEqualTo(new BoxStatus(PlayResult.STAND, 0));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("thirdPlayer"));
             }),
-            DynamicTest.dynamicTest("반환할 플레이어가 없는 경우, 딜러를 반환한다.", () -> {
+            DynamicTest.dynamicTest("세번쨰 참가자 턴이 끝나고 다음 참가자가 없는 경우 오류를 던진다.(버스트)", () -> {
                 Player thirdPlayer = boxes.getCurrentTurnPlayer();
-                thirdPlayer.dealt(new Card(Denomination.JACK, Suit.SPADE));
-                thirdPlayer.dealt(new Card(Denomination.QUEEN, Suit.HEART));
-                thirdPlayer.dealt(new Card(Denomination.JACK, Suit.DIAMOND));
+                makeBustByTwentyTwo(thirdPlayer);
                 boxes.updatePlayerBox(thirdPlayer);
-                Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Dealer());
-            }),
-            DynamicTest.dynamicTest("반환할 참가자가 없는 경우, 예외를 발생시킨다.", () -> {
-                Player dealer = boxes.getCurrentTurnPlayer();
-                dealer.dealt(new Card(Denomination.JACK, Suit.SPADE));
-                dealer.dealt(new Card(Denomination.QUEEN, Suit.HEART));
-                dealer.dealt(new Card(Denomination.JACK, Suit.DIAMOND));
-                boxes.updatePlayerBox(dealer);
+                Assertions.assertThat(boxes.getBoxStatusByParticipant(thirdPlayer))
+                    .isEqualTo(new BoxStatus(PlayResult.BUST, 22));
                 Assertions.assertThatThrownBy(boxes::getCurrentTurnPlayer)
-                    .isExactlyInstanceOf(IllegalStateException.class);
+                    .isExactlyInstanceOf(IllegalStateException.class)
+                    .hasMessage("더 이상 게임을 진행할 박스가 없습니다.");
             })
         );
+    }
+
+    void makeBustByTwentyTwo(Player player) {
+        player.dealt(new Card(Denomination.JACK, Suit.SPADE));
+        player.dealt(new Card(Denomination.JACK, Suit.HEART));
+        player.dealt(new Card(Denomination.TWO, Suit.DIAMOND));
+    }
+
+    void makeBlackJack(Player player) {
+        player.dealt(new Card(Denomination.JACK, Suit.SPADE));
+        player.dealt(new Card(Denomination.JACK, Suit.HEART));
+        player.dealt(new Card(Denomination.ACE, Suit.DIAMOND));
     }
 }
