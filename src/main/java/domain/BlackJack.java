@@ -18,8 +18,8 @@ public class BlackJack {
 		this.deck = deck;
 	}
 
-	public static BlackJack of(final Users users, final CardIndexGenerator cardIndexGenerator) {
-		Deck deck = Deck.from(cardIndexGenerator);
+	public static BlackJack of(final Users users) {
+		Deck deck = new Deck();
 		initCards(users, deck);
 		return new BlackJack(users, deck);
 	}

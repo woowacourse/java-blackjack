@@ -1,5 +1,4 @@
 import domain.BlackJack;
-import domain.RandomCardIndexGenerator;
 import domain.Users;
 import domain.Player;
 import java.util.List;
@@ -30,7 +29,7 @@ public class Controller {
     private void ready() {
         List<String> playerNames = inputView.askPlayerNames();
         Users players = Users.from(playerNames);
-        blackJack = BlackJack.of(players, new RandomCardIndexGenerator());
+        blackJack = BlackJack.of(players);
         outputView.printInitMessage(players);
         outputView.printDealerCardHidden(blackJack.getDealerCard());
         outputView.printPlayerCards(blackJack.getPlayerToCard());

@@ -10,21 +10,13 @@ import org.junit.jupiter.api.Test;
 
 public class BlackJackTest {
 
-    private static class ZeroIndexGenerator implements CardIndexGenerator {
-
-        @Override
-        public int chooseIndex(int deckSize) {
-            return 0;
-        }
-    }
-
     private Users users;
     private BlackJack blackJack;
 
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        blackJack = BlackJack.of(users);
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
