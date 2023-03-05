@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import java.util.Arrays;
-
 public enum GameCommand {
     PLAY("y"),
     STOP("n");
@@ -12,11 +10,14 @@ public enum GameCommand {
         this.command = command;
     }
 
-    public static GameCommand from(String input) {
-        return Arrays.stream(GameCommand.values())
-                     .filter(command -> command.command.equals(input))
-                     .findFirst()
-                     .orElseThrow(() -> new IllegalArgumentException("y 또는 n를 입력해주세요."));
+    public static GameCommand from(String command) {
+        if (PLAY.command.equalsIgnoreCase(command)) {
+            return PLAY;
+        }
+        if (STOP.command.equalsIgnoreCase(command)) {
+            return STOP;
+        }
+        throw new IllegalArgumentException("y 또는 n를 입력해주세요.");
     }
 
     public boolean isPlay() {
