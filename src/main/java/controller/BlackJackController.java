@@ -25,21 +25,9 @@ public class BlackJackController {
     public void process() {
         final List<Name> userNames = userNameRequest();
         this.blackJack = BlackJack.getInstance(userNames, new Deck());
-
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
-
-        for (User user : blackJack.getUserList()) {
-            boolean wantCard = Repeater.repeat(() -> cardRequest(user.getName()));
-            while (wantCard) {
-                blackJack.drawCard(user);
-                outputView.printCardsOf(user, blackJack.getCardsFrom(user));
-                if (blackJack.isBusted(user)) {
-                    break;
-                }
-                wantCard = Repeater.repeat(() -> cardRequest(user.getName()));
-            }
-        }
-        finalizeDealerCardStatus();
+        getUsersDecision();
+        getDealerResult();
         outputView.printTotalPlayersStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
         outputView.printResult(blackJack.getGameResult());
     }
@@ -52,12 +40,27 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private void finalizeDealerCardStatus() {
-        final int cardCount = blackJack.finalizeDealer();
-        outputView.printAdditionalCardCountOfDealer(cardCount);
+    private void getUsersDecision() {
+        for (User user : blackJack.getUserList()) {
+            getUserDecision(user);
+        }
+    }
+
+    private void getUserDecision(final User user) {
+        boolean decision = Repeater.repeat(() -> cardRequest(user.getName()));
+        while (decision && !blackJack.isBusted(user)) {
+            blackJack.drawCard(user);
+            outputView.printCardsOf(user, blackJack.getCardsFrom(user));
+            decision = Repeater.repeat(() -> cardRequest(user.getName()));
+        }
     }
 
     private boolean cardRequest(Name name) {
         return inputView.cardRequest(name);
+    }
+
+    private void getDealerResult() {
+        final int cardCount = blackJack.finalizeDealer();
+        outputView.printAdditionalCardCountOfDealer(cardCount);
     }
 }

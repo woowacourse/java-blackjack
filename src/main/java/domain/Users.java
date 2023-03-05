@@ -44,8 +44,7 @@ public final class Users {
     }
 
     public List<Card> getCardsOf(final User user) {
-        final User targetUser = finUserByName(user);
-        return targetUser.openCards();
+        return finUserByName(user).openCards();
     }
 
     public void findUserAndGive(final User user, final Card card) {
