@@ -1,4 +1,4 @@
-package blackjack.fixedCaradsGenerator;
+package blackjack.fixedcaradsgenerator;
 
 import java.util.List;
 import java.util.Stack;

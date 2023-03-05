@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
+import blackjack.fixedcaradsgenerator.FixedCardsGenerator;
 import blackjackgame.BlackjackGame;
 import blackjackgame.Result;
 import card.Card;

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
+import blackjack.fixedcaradsgenerator.FixedCardsGenerator;
 import card.Card;
 import card.Rank;
 import card.Suit;
@@ -24,8 +24,8 @@ class DeckTest {
         List<Card> cards = List.of(
                 new Card(Rank.ACE, Suit.DIAMOND),
                 new Card(Rank.ACE, Suit.CLOVER),
-                new Card(Rank.ACE, Suit.SPADE),
-                new Card(Rank.ACE, Suit.HEART)
+                new Card(Rank.ACE, Suit.HEART),
+                new Card(Rank.ACE, Suit.SPADE)
         );
         CardsGenerator fixedCardsGenerator = new FixedCardsGenerator(cards);
         deck = new Deck(fixedCardsGenerator);
