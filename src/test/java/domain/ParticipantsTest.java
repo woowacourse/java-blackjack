@@ -90,7 +90,7 @@ class ParticipantsTest {
             player.receiveCard(new Card("Q하트", 10));
             player.receiveCard(new Card("2클로버", 2));
         }
-        Dealer dealer = participant.findDealer();
+        Participant dealer = participant.findDealer();
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
@@ -113,7 +113,7 @@ class ParticipantsTest {
             player.receiveCard(new Card("Q클로버", 10));
             player.receiveCard(new Card("Q하트", 10));
         }
-        Dealer dealer = participant.findDealer();
+        Participant dealer = participant.findDealer();
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
         dealer.receiveCard(new Card("3스페이드", 3));
@@ -137,7 +137,7 @@ class ParticipantsTest {
             player.receiveCard(new Card("Q하트", 10));
             player.receiveCard(new Card("3스페이드", 3));
         }
-        Dealer dealer = participant.findDealer();
+        Participant dealer = participant.findDealer();
         dealer.receiveCard(new Card("Q스페이드", 10));
         dealer.receiveCard(new Card("K스페이드", 10));
 
@@ -159,7 +159,7 @@ class ParticipantsTest {
             player.receiveCard(new Card("Q클로버", 10));
             player.receiveCard(new Card("Q하트", 10));
         }
-        Dealer dealer = participant.findDealer();
+        Participant dealer = participant.findDealer();
         dealer.receiveCard(new Card("4스페이드", 4));
         dealer.receiveCard(new Card("6스페이드", 6));
         dealer.receiveCard(new Card("K스페이드", 10));
