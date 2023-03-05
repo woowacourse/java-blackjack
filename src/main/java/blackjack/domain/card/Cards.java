@@ -11,9 +11,14 @@ public class Cards {
     private static final int BLACKJACK_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public Cards() {
+        this(new ArrayList<>());
+    }
+
+    public Cards(final List<Card> cards) {
+        this.cards = cards;
     }
 
     public void add(final Card card) {
