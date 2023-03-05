@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -50,11 +49,9 @@ public class Players {
     }
 
     private static void validateDuplicate(final List<String> playerNames) {
-        if (Set.copyOf(playerNames)
-                .size() != playerNames.size()) {
+        if (playerNames.stream().distinct().count() != playerNames.size()) {
             throw new IllegalArgumentException("사용자의 이름이 중복됩니다.");
         }
-
     }
 
     public void distributeInitialCards(final Deck deck) {
