@@ -22,7 +22,7 @@ public class Dealer extends Participant {
         return calculateCardNumber();
     }
 
-    public WinningResult judgeWinOrLose(final Participant player) {
+    public WinningResult judgeWinOrLose(final Player player) {
         int myValue = calculateDealerCardNumber();
         int otherPlayer = player.calculateCardNumber();
         return getWinningResult(player, myValue, otherPlayer);

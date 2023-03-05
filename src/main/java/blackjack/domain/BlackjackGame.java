@@ -34,7 +34,7 @@ public class BlackjackGame {
         List<WinningResult> dealerResult = new ArrayList<>();
         Dealer dealer = findDealer();
         List<Player> players = findPlayers();
-        for (Participant player : players) {
+        for (Player player : players) {
             dealerResult.add(dealer.judgeWinOrLose(player));
         }
         return dealerResult;
