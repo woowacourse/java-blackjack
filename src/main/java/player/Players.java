@@ -1,5 +1,6 @@
 package player;
 
+import deck.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,10 @@ public class Players {
     public void takeCard(int playerIndex, Card card) {
         Player player = players.get(playerIndex);
         player.hit(card);
+    }
+
+    public void takeCard(Deck deck, int size) {
+        players.forEach(player -> player.hit(deck.drawCards(size)));
     }
 
     public int count() {

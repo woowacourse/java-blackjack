@@ -6,6 +6,8 @@ import static blackjackGame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import deck.Deck;
+import deck.ShuffledCardsGenerator;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -47,6 +49,20 @@ class PlayersTest {
         players.takeCard(0, card);
 
         assertThat(player.showCards()).contains(card);
+    }
+
+    @DisplayName("플레이어들이 알아서 덱에서 카드를 받는다.")
+    @Test
+    void takeCardOnce() {
+        //given
+        Deck deck = new Deck(new ShuffledCardsGenerator());
+        Players players = new Players();
+        Player player = new Player(new Name("로지"));
+        players.add(player);
+        //when
+        players.takeCard(deck, 2);
+        //then
+        assertThat(player.showCards()).hasSize(2);
     }
 
     @DisplayName("현재 플레이어의 인원수를 반환할 수 있다.")
