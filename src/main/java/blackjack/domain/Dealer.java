@@ -7,7 +7,6 @@ public class Dealer extends Participant {
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
     private static final int DEALER_HIT_BASED_NUMBER = 16;
     private static final int FIRST_CARD_COUNT = 2;
-    private static final int WIN_MAX_NUMBER = 21;
 
 
     public Dealer(ParticipantName participantName) {
@@ -28,37 +27,18 @@ public class Dealer extends Participant {
         return getWinningResult(player, myValue, otherPlayer);
     }
 
-    private WinningResult getWinningResult(final Player player, final int myValue, final int otherPlayer) {
-        if (otherPlayer > WIN_MAX_NUMBER && myValue > WIN_MAX_NUMBER) {
-            return WinningResult.PUSH;
+    private WinningResult getWinningResult(final Player player, final int myValue, final int playerValue) {
+        if (playerValue > WinningResult.WIN_MAX_NUMBER || myValue > WinningResult.WIN_MAX_NUMBER) {
+            return WinningResult.calculateByBurst(playerValue, myValue);
         }
-        if (otherPlayer > WIN_MAX_NUMBER) {
-            return WinningResult.WIN;
+        if (judgeBlackjack() || player.judgeBlackjack()) {
+            return WinningResult.calculateByBlackjack(player.judgeBlackjack(), judgeBlackjack());
         }
-        if (myValue > WIN_MAX_NUMBER || myValue < otherPlayer) {
-            return WinningResult.LOSE;
-        }
-        if (myValue > otherPlayer) {
-            return WinningResult.WIN;
-        }
-        return includeBlackjackWinOrLose(player);
+        return WinningResult.calculateByNumber(playerValue, myValue);
     }
 
     @Override
     public boolean decideHit() {
         return calculateCardNumber() <= DEALER_HIT_BASED_NUMBER;
-    }
-
-    private WinningResult includeBlackjackWinOrLose(final Player player) {
-        if (judgeBlackjack() && player.judgeBlackjack()) {
-            return WinningResult.PUSH;
-        }
-        if (judgeBlackjack()) {
-            return WinningResult.WIN;
-        }
-        if (player.judgeBlackjack()) {
-            return WinningResult.LOSE;
-        }
-        return WinningResult.PUSH;
     }
 }
