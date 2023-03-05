@@ -16,16 +16,17 @@ public class OutputView {
     private static final String LOSE_COUNT_MASSAGE = "패";
     private static final String PLAYER_SCORE_DELIMITER = " : ";
     private static final String PLAYER_DELIMITER = ", ";
+    private static final String DEALER_NAME = "딜러";
 
-    public void outputSplitMessage(final String dealer, final List<String> players) {
+    public void outputSplitMessage( final List<String> players) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(CHANGE_LINE + dealer + DEALER_ANDE_PLAYER_DELIMITER);
+        stringBuilder.append(CHANGE_LINE + DEALER_NAME + DEALER_ANDE_PLAYER_DELIMITER);
         stringBuilder.append(String.join(PLAYERS_DELIMITER, players) + GIVE_TWO_CARD_MASSAGE);
         System.out.println(stringBuilder);
     }
 
     public void outputPlayerCard(final String name, final List<String> cards) {
-        System.out.print(name + " : " + String.join(PLAYER_DELIMITER, cards));
+        System.out.print(name + PLAYER_SCORE_DELIMITER + String.join(PLAYER_DELIMITER, cards));
     }
 
     public void outputDealerDrawCard(final String name) {

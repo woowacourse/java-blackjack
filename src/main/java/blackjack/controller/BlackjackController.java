@@ -54,7 +54,7 @@ public class BlackjackController {
         final Dealer dealer = participants.getDealer();
         final List<String> playerNames = participants.getPlayerNames();
 
-        outputView.outputSplitMessage(dealer.getName(), playerNames);
+        outputView.outputSplitMessage(playerNames);
         blackjackGame.giveTwoCardEveryone();
     }
 
