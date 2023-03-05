@@ -4,6 +4,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.view.CardConvertStrategyImpl;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class InitialCardResponse {
 
-    private final String dealerCard;
+    private final CardResponse dealerCard;
 
-    private final Map<String, List<String>> playerNameToCards;
+    private final Map<String, List<CardResponse>> playerNameToCards;
 
-    public InitialCardResponse(final String dealerCard, final Map<String, List<String>> playerNameToCards) {
+    public InitialCardResponse(final CardResponse dealerCard, final Map<String, List<CardResponse>> playerNameToCards) {
         this.dealerCard = dealerCard;
         this.playerNameToCards = playerNameToCards;
     }
@@ -24,38 +25,35 @@ public class InitialCardResponse {
             final Players players,
             final Dealer dealer) {
         final CardConvertStrategy cardConvertStrategy = new CardConvertStrategyImpl();
-        final String dealerCard = cardConvertStrategy.convert(dealer.getCards().get(0));
-        final Map<String, List<String>> playerNameToCards = generatePlayerNameToCards(
-                players.getPlayers(),
-                cardConvertStrategy);
+        final CardResponse dealerCard = CardResponse.from(dealer.getCards().get(0));
+        final Map<String, List<CardResponse>> playerNameToCards = generatePlayerNameToCards(
+                players.getPlayers());
         return new InitialCardResponse(dealerCard, playerNameToCards);
     }
 
-    private static Map<String, List<String>> generatePlayerNameToCards(
-            final List<Player> players,
-            final CardConvertStrategy cardConvertStrategy) {
+    private static Map<String, List<CardResponse>> generatePlayerNameToCards(
+            final List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(
                         Player::getName,
-                        player -> convertCards(player.getCards(), cardConvertStrategy),
+                        player -> convertCards(player.getCards()),
                         (x, y) -> y,
                         LinkedHashMap::new)
                 );
     }
 
-    private static List<String> convertCards(
-            final List<Card> cards,
-            final CardConvertStrategy cardConvertStrategy) {
+    private static List<CardResponse> convertCards(
+            final List<Card> cards) {
         return cards.stream()
-                .map(cardConvertStrategy::convert)
+                .map(CardResponse::from)
                 .collect(Collectors.toList());
     }
 
-    public String getDealerCard() {
+    public CardResponse getDealerCard() {
         return dealerCard;
     }
 
-    public Map<String, List<String>> getPlayerNameToCards() {
+    public Map<String, List<CardResponse>> getPlayerNameToCards() {
         return playerNameToCards;
     }
 }

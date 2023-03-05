@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 
 public class CardsScoreResponse {
 
-    private final List<String> cards;
+    private final List<CardResponse> cards;
     private final int score;
 
-    public CardsScoreResponse(final List<String> cards, final int score) {
+    public CardsScoreResponse(final List<CardResponse> cards, final int score) {
         this.cards = cards;
         this.score = score;
     }
@@ -18,15 +18,14 @@ public class CardsScoreResponse {
         return new CardsScoreResponse(convertCards(cards), score);
     }
 
-    private static List<String> convertCards(
+    private static List<CardResponse> convertCards(
             final List<Card> cards) {
-        final CardConvertStrategy cardConvertStrategy = new CardConvertStrategyImpl();
         return cards.stream()
-                .map(cardConvertStrategy::convert)
+                .map(CardResponse::from)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getCards() {
+    public List<CardResponse> getCards() {
         return cards;
     }
 
