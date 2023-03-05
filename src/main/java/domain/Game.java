@@ -5,26 +5,26 @@ import java.util.List;
 public class Game {
 
     private final Deck deck;
-    private final Players players;
+    private final Participants participants;
 
-    public Game(List<Player> players, Deck deck, Dealer dealer) {
-        this.players = new Players(players, dealer);
+    public Game(Participants participants, Deck deck) {
+        this.participants = participants;
         this.deck = deck;
     }
 
     public void dealCardsTwice() {
         for (int i = 0; i < 2; i++) {
-            players.dealCardsFrom(deck);
+            participants.dealCardsFrom(deck);
         }
     }
 
-    public void dealCardTo(String name) {
-        Player player = players.findUserByName(name);
-        player.addCard(deck.draw());
+    public void dealCardTo(User user) {
+        User foundUser = participants.find(user);
+        foundUser.addCard(deck.draw());
     }
 
     public boolean dealCardToDealer() {
-        Dealer dealer = players.getDealer();
+        Dealer dealer = participants.getDealer();
         if (dealer.canHit()) {
             dealer.addCard(deck.draw());
             return true;
@@ -32,21 +32,25 @@ public class Game {
         return false;
     }
 
-    public Result getResult(String name) {
-        Player player = players.findUserByName(name);
-        Dealer dealer = players.getDealer();
-        return player.competeWith(dealer);
+    public Result getResultOf(User user) {
+        User foundUser = participants.find(user);
+        Dealer dealer = participants.getDealer();
+        return foundUser.competeWith(dealer);
     }
 
     public List<Result> getDealerResults() {
-        return players.getDealerResults();
+        return participants.getDealerResults();
     }
 
-    public List<Player> getUsers() {
-        return players.getUsers();
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
     }
 
-    public Players getPlayers() {
-        return players;
+    public List<User> getUsers() {
+        return participants.getUsers();
+    }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 }

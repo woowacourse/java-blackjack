@@ -7,24 +7,22 @@ import static domain.Result.WIN;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.Player;
 import domain.Card;
 import domain.Dealer;
-import domain.Player;
 import domain.Result;
+import domain.User;
 
 public class OutputView {
-    public void printDealStatus(List<Player> players) {
-        String joinedPlayerNames = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
 
-        System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
+    public void printDealStatus(List<User> users) {
+        System.out.println("딜러와 " + joinNamesOf(users) + "에게 2장을 나누었습니다.");
     }
 
-    public void printPlayersStatus(List<Player> players) {
-        for (Player player : players) {
-            String name = player.getName();
-            printPlayerCards(name, player.getCards());
+    public void printUsersStatus(List<User> users) {
+        for (User user : users) {
+            String name = user.getName();
+            printPlayerCards(name, user.getCards());
         }
     }
 
@@ -32,9 +30,9 @@ public class OutputView {
         System.out.println(playerName + "카드: " + joinCardDisplays(cards));
     }
 
-    public void printFirstCardOf(Player player) {
-        String name = player.getName();
-        Card card = player.getCards().get(0);
+    public void printFirstCardOf(Dealer dealer) {
+        String name = dealer.getName();
+        Card card = dealer.getCards().get(0);
 
         System.out.println(name + ": " + getCardDisplay(card));
     }
@@ -49,10 +47,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printCardsAndScores(Dealer dealer, List<Player> users) {
-        printCardsAndScore(dealer);
-        for (Player user : users) {
-            printCardsAndScore(user);
+    public void printCardsAndScores(List<Player> players) {
+        for (Player player : players) {
+            printCardsAndScore(player);
         }
     }
 
@@ -63,8 +60,8 @@ public class OutputView {
         System.out.println(name + "카드: " + cardDisplays + " - 결과: " + player.getScore());
     }
 
-    public void printResult(String name, Result result) {
-        System.out.println(name + ": " + result.getResult());
+    public void printResult(User user, Result result) {
+        System.out.println(user.getName() + ": " + result.getResult());
     }
 
     public void printDealerResults(List<Result> results) {
@@ -85,6 +82,12 @@ public class OutputView {
     private String joinCardDisplays(List<Card> cards) {
         return cards.stream()
                 .map(this::getCardDisplay)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String joinNamesOf(List<User> users) {
+        return users.stream()
+                .map(User::getName)
                 .collect(Collectors.joining(", "));
     }
 

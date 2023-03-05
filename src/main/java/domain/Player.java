@@ -3,14 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public abstract class Player {
 
     private final String name;
     private final List<Card> cards;
-
-    public Player(String name) {
-        this(name, new ArrayList<>());
-    }
 
     public Player(String name, List<Card> cards) {
         this.name = name;
@@ -19,7 +15,7 @@ public class Player {
 
     public int getScore() {
         int scoreSum = getScoreSumOf(cards);
-        if (hasA(cards) && canAddTenTo(scoreSum)) {
+        if (hasAIn(cards) && canAddTenTo(scoreSum)) {
             scoreSum = scoreSum + 10;
         }
         return scoreSum;
@@ -45,7 +41,7 @@ public class Player {
                 .sum();
     }
 
-    private boolean hasA(List<Card> cards) {
+    private boolean hasAIn(List<Card> cards) {
         return cards.stream()
                 .anyMatch(Card::isA);
     }
@@ -54,23 +50,17 @@ public class Player {
         return score + 10 <= 21;
     }
 
-    public boolean canHit() {
-        return getScore() < 21;
-    }
+    public abstract boolean canHit();
 
     boolean isBusted() {
         return getScore() > 21;
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 
     public String getName() {
         return name;
-    }
-
-    public boolean hasName(String name) {
-        return this.name.equals(name);
     }
 }
