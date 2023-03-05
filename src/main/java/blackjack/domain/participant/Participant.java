@@ -1,5 +1,10 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.game.Result.LOSE;
+import static blackjack.domain.game.Result.TIE;
+import static blackjack.domain.game.Result.WIN;
+
+import blackjack.domain.game.Result;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -38,22 +43,23 @@ public abstract class Participant {
     }
 
     public void combat(Participant other) {
-        boolean isBust = isBust();
-        boolean isOtherBust = other.isBust();
+        Result result = decideResultByComparingWith(other);
+        result.accept(this, other);
+    }
+
+    private Result decideResultByComparingWith(Participant other) {
         int score = calculateScore();
         int otherScore = other.calculateScore();
-        if (!isBust && (isOtherBust || score > otherScore)) {
-            this.win();
-            other.lose();
+        if (isBust()) {
+            return LOSE;
         }
-        if (!isOtherBust && (isBust || score < otherScore)) {
-            this.lose();
-            other.win();
+        if (score > otherScore || other.isBust()) {
+            return WIN;
         }
-        if (!isBust && (score == otherScore)) {
-            this.tie();
-            other.tie();
+        if (score < otherScore) {
+            return LOSE;
         }
+        return TIE;
     }
 
     public abstract void win();
