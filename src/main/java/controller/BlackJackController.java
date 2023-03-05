@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import static java.util.stream.Collectors.toList;
 
@@ -19,15 +19,15 @@ import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackApplication {
+public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
     private final BlackJackService blackJackService;
 
-    public BlackJackApplication(final InputView inputView,
-                                final OutputView outputView,
-                                final BlackJackService blackJackService) {
+    public BlackJackController(final InputView inputView,
+                               final OutputView outputView,
+                               final BlackJackService blackJackService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.blackJackService = blackJackService;

@@ -1,4 +1,4 @@
-import application.BlackJackApplication;
+import controller.BlackJackController;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -6,7 +6,7 @@ import view.OutputView;
 public class main {
 
     public static void main(String[] args) {
-        BlackJackApplication blackJackApplication = new BlackJackApplication(new InputView(), new OutputView(), new BlackJackService());
-        blackJackApplication.run();
+        BlackJackController blackJackController = new BlackJackController(new InputView(), new OutputView(), new BlackJackService());
+        blackJackController.run();
     }
 }
