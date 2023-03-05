@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.strategy.NumberGenerator;
+import domain.strategy.ShuffleStrategy;
 import domain.user.People;
 import domain.user.Player;
 
@@ -14,8 +14,8 @@ public class BlackjackGame {
     private final Deck deck;
     private final People people;
 
-    public BlackjackGame(List<String> playerNames, String dealerName, NumberGenerator numberGenerator) {
-        this.deck = new Deck(numberGenerator);
+    public BlackjackGame(List<String> playerNames, String dealerName, ShuffleStrategy shuffleStrategy) {
+        this.deck = new Deck(shuffleStrategy);
         this.people = new People(playerNames, dealerName);
     }
 

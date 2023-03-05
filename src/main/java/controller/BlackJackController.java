@@ -1,7 +1,7 @@
 package controller;
 
 import domain.game.BlackjackGame;
-import domain.strategy.RandomNumberGenerator;
+import domain.strategy.RandomShuffleStrategy;
 import domain.user.People;
 import domain.user.Player;
 import view.InputView;
@@ -35,7 +35,7 @@ public class BlackJackController {
 
     private void initializeGame() {
         List<String> playersName = inputView.inputParticipantsName();
-        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomNumberGenerator());
+        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomShuffleStrategy());
     }
 
     private void letPlayersHit(List<Player> players) {

@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.strategy.NumberGenerator;
+import domain.strategy.ShuffleStrategy;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardType;
@@ -10,16 +10,18 @@ import java.util.List;
 
 public class Deck {
 
+    private static final int TOP_CARD = 0;
+
     private static final List<Card> cards;
 
-    private final NumberGenerator numberGenerator;
+    private final ShuffleStrategy shuffleStrategy;
 
     static {
         cards = makeCards();
     }
 
-    public Deck(NumberGenerator numberGenerator) {
-        this.numberGenerator = numberGenerator;
+    public Deck(ShuffleStrategy shuffleStrategy) {
+        this.shuffleStrategy = shuffleStrategy;
     }
 
     private static List<Card> makeCards() {
@@ -39,6 +41,7 @@ public class Deck {
     }
 
     public Card serve() {
-        return cards.get(numberGenerator.generate(cards.size()));
+        shuffleStrategy.shuffle(cards);
+        return cards.get(TOP_CARD);
     }
 }
