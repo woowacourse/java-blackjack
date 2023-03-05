@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.util.CardPickerGenerator;
-import blackjack.util.WinningResult;
 
 import java.util.*;
 import java.util.stream.Collectors;

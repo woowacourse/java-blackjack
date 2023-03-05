@@ -1,4 +1,4 @@
-package blackjack.util;
+package blackjack.domain;
 
 import java.util.stream.Stream;
 

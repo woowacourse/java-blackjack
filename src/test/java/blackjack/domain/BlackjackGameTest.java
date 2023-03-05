@@ -3,11 +3,11 @@ package blackjack.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.util.CardPickerGenerator;
-import blackjack.util.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,6 @@ class BlackjackGameTest {
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"));
         BlackjackGame game = new BlackjackGame(participants, Cards.generator());
-
         //when
         game.initFirstHit(testCardPickerGenerator);
 

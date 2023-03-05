@@ -2,9 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.util.CardNumber;
-import blackjack.util.CardSuit;
-import blackjack.util.WinningResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

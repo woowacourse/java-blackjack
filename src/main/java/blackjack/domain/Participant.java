@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import blackjack.util.CardNumber;
-import blackjack.util.CardSuit;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
@@ -11,7 +9,7 @@ public abstract class Participant {
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
 
     private final ParticipantName participantName;
-    private List<Card> receivedCards;
+    private final List<Card> receivedCards = new ArrayList<>();
 
     public Participant(final ParticipantName participantName) {
         this.participantName = participantName;
