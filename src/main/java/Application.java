@@ -1,21 +1,24 @@
-import domain.*;
-import view.InputView;
-import view.OutputView;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import domain.Dealer;
+import domain.Deck;
+import domain.Game;
+import domain.Player;
+import domain.Players;
+import view.InputView;
+import view.OutputView;
 
 public class Application {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
     public static void main(String[] args) {
-        List<String> playerNames = inputView.readNames();
-        List<Player> players = createPlayersWith(playerNames);
+        List<Player> players = createPlayersWith(inputView.readNames());
         Game game = new Game(players, new Deck(), new Dealer());
 
         start(game);
-        play(playerNames, game);
+        play(game);
         printResult(game);
     }
 
@@ -23,24 +26,23 @@ public class Application {
         Players players = game.getPlayers();
         game.dealCardsTwice();
 
-        outputView.printDealCards(players.getUsers());
-        outputView.printFirstPlayerCard(players.getDealer());
-        outputView.printPlayersCards(players.getUsers());
+        outputView.printDealStatus(players.getUsers());
+        outputView.printFirstCardOf(players.getDealer());
+        outputView.printPlayersStatus(players.getUsers());
     }
 
-    private static void play(List<String> playerNames, Game game) {
-        for (String playerName : playerNames) {
-            selectHitOrStand(game, playerName);
+    private static void play(Game game) {
+        for (Player user : game.getUsers()) {
+            selectHitOrStand(game, user);
         }
         dealCardToDealer(game);
     }
 
     private static void printResult(Game game) {
         Players players = game.getPlayers();
-        outputView.printCardsAndScores(players);
-        System.out.println("## 최종 승패");
+        outputView.printCardsAndScores(players.getDealer(), game.getUsers());
         outputView.printDealerResults(game.getDealerResults());
-        for (Player user : players.getUsers()) {
+        for (Player user : game.getUsers()) {
             String name = user.getName();
             outputView.printResult(name, game.getResult(name));
         }
@@ -48,23 +50,23 @@ public class Application {
 
     private static void dealCardToDealer(Game game) {
         if (game.dealCardToDealer()) {
-            outputView.noticeDealerAccept();
+            outputView.noticeDealerHit();
             return;
         }
-        outputView.noticeDealerDecline();
+        outputView.noticeDealerStand();
     }
 
-    private static void selectHitOrStand(Game game, String playerName) {
+    private static void selectHitOrStand(Game game, Player player) {
         boolean hit = true;
-        while (hit && game.canHit(playerName)) {
-            hit = dealCardIfHit(game, playerName);
+        while (hit && player.canHit()) {
+            hit = dealCardIfHit(game, player);
         }
     }
 
-    private static boolean dealCardIfHit(Game game, String playerName) {
-        if (inputView.askForHit(playerName)) {
-            game.dealCardTo(playerName);
-            outputView.printPlayerCards(playerName, game.getCards(playerName));
+    private static boolean dealCardIfHit(Game game, Player player) {
+        if (inputView.askForHit(player.getName())) {
+            game.dealCardTo(player.getName());
+            outputView.printPlayerCards(player.getName(), player.getCards());
             return true;
         }
         return false;

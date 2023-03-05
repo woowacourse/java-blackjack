@@ -10,8 +10,8 @@ public class Card {
         this.letter = letter;
     }
 
-    public String getLetter() {
-        return letter.getLetter();
+    public Letter getLetter() {
+        return letter;
     }
 
     public Face getFace() {

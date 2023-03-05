@@ -54,7 +54,7 @@ public class Player {
         return score + 10 <= 21;
     }
 
-    boolean canHit() {
+    public boolean canHit() {
         return getScore() < 21;
     }
 
@@ -74,5 +74,3 @@ public class Player {
         return this.name.equals(name);
     }
 }
-
-

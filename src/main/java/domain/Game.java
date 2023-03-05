@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -41,14 +40,6 @@ public class Game {
 
     public List<Result> getDealerResults() {
         return players.getDealerResults();
-    }
-
-    public boolean canHit(String name) {
-        return players.findUserByName(name).canHit();
-    }
-
-    public List<Card> getCards(String name) {
-        return players.findUserByName(name).getCards();
     }
 
     public List<Player> getUsers() {
