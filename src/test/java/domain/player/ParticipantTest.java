@@ -1,9 +1,9 @@
-package domain;
+package domain.player;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.player.Participant;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

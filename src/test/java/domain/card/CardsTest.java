@@ -1,9 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.card.Rank;
-import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

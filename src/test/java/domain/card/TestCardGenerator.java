@@ -1,9 +1,4 @@
-package domain;
-
-import domain.card.Card;
-import domain.card.CardGenerator;
-import domain.card.Rank;
-import domain.card.Suit;
+package domain.card;
 
 import java.util.List;
 

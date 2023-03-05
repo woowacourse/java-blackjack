@@ -1,7 +1,7 @@
-package domain;
+package domain.game;
 
 import domain.card.RandomCardGenerator;
-import domain.game.BlackjackGame;
+
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
