@@ -1,6 +1,6 @@
 package player;
 
-import blackjackGame.Result;
+import blackjackgame.Result;
 
 public class Player extends Participant {
     private Result result;

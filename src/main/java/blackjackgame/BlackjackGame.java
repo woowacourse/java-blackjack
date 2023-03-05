@@ -1,4 +1,4 @@
-package blackjackGame;
+package blackjackgame;
 
 import java.util.List;
 

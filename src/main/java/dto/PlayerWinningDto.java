@@ -1,6 +1,6 @@
 package dto;
 
-import blackjackGame.Result;
+import blackjackgame.Result;
 import player.Name;
 import player.Player;
 

@@ -2,7 +2,7 @@ package dto;
 
 import java.util.Map;
 
-import blackjackGame.Result;
+import blackjackgame.Result;
 import player.Dealer;
 import player.Name;
 

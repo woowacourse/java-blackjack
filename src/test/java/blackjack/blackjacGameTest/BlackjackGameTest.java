@@ -1,8 +1,8 @@
 package blackjack.blackjacGameTest;
 
-import static blackjackGame.Result.LOSE;
-import static blackjackGame.Result.TIE;
-import static blackjackGame.Result.WIN;
+import static blackjackgame.Result.LOSE;
+import static blackjackgame.Result.TIE;
+import static blackjackgame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
-import blackjackGame.BlackjackGame;
-import blackjackGame.Result;
+import blackjackgame.BlackjackGame;
+import blackjackgame.Result;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;

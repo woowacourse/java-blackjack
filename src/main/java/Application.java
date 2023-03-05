@@ -1,4 +1,4 @@
-import blackjackGame.BlackjackGame;
+import blackjackgame.BlackjackGame;
 import controller.Controller;
 import deck.CardsGenerator;
 import deck.Deck;

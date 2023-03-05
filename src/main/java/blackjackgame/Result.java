@@ -1,4 +1,4 @@
-package blackjackGame;
+package blackjackgame;
 
 public enum Result {
     WIN("승"),

@@ -1,14 +1,14 @@
 package player;
 
-import static blackjackGame.Result.LOSE;
-import static blackjackGame.Result.TIE;
-import static blackjackGame.Result.WIN;
+import static blackjackgame.Result.LOSE;
+import static blackjackgame.Result.TIE;
+import static blackjackgame.Result.WIN;
 
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import blackjackGame.Result;
+import blackjackgame.Result;
 
 public class DealerResult {
     private final EnumMap<Result, Integer> dealerResult = new EnumMap<>(Result.class) {

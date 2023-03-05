@@ -1,8 +1,8 @@
 package blackjack.player;
 
-import static blackjackGame.Result.LOSE;
-import static blackjackGame.Result.TIE;
-import static blackjackGame.Result.WIN;
+import static blackjackgame.Result.LOSE;
+import static blackjackgame.Result.TIE;
+import static blackjackgame.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjackGame.Result;
+import blackjackgame.Result;
 import card.Card;
 import card.CardNumber;
 import card.Pattern;

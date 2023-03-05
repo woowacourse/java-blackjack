@@ -2,7 +2,7 @@ package player;
 
 import java.util.Map;
 
-import blackjackGame.Result;
+import blackjackgame.Result;
 import card.Card;
 
 public class Dealer extends Participant {
