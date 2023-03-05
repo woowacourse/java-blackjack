@@ -1,8 +1,6 @@
 package controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import blackjackgame.BlackjackGame;
 import dto.DealerFirstOpenDto;
@@ -11,7 +9,6 @@ import dto.PlayerOpenDto;
 import dto.PlayerResultDto;
 import dto.PlayerWinningDto;
 import player.Name;
-import player.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -38,8 +35,7 @@ public class Controller {
     private void setGame() {
         try {
             List<String> names = inputView.readPlayerNames();
-            validateDuplicatedName(names);
-            addPlayer(names);
+            blackjackGame.addPlayers(names);
             blackjackGame.supplyCardsToDealer();
             blackjackGame.supplyCardsToPlayers();
             outputView.printFirstDrawMessage(names);
@@ -48,19 +44,6 @@ public class Controller {
             setGame();
         }
 
-    }
-
-    private void validateDuplicatedName(List<String> names) {
-        Set<String> namesWithoutDuplication = new HashSet<>(names);
-        if (namesWithoutDuplication.size() != names.size()) {
-            throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
-        }
-    }
-
-    private void addPlayer(List<String> names) {
-        for (String name : names) {
-            blackjackGame.addPlayer(new Player(new Name(name)));
-        }
     }
 
     private void showFirstDraw() {

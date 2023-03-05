@@ -1,6 +1,8 @@
 package blackjackgame;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import deck.Deck;
 import dto.DealerFirstOpenDto;
@@ -23,6 +25,20 @@ public class BlackjackGame {
         this.players = players;
         this.dealer = dealer;
         this.deck = deck;
+    }
+
+    public void addPlayers(List<String> names) {
+        validateDuplicatedName(names);
+        for (String name : names) {
+            addPlayer(new Player(new Name(name)));
+        }
+    }
+
+    private void validateDuplicatedName(List<String> names) {
+        Set<String> namesWithoutDuplication = new HashSet<>(names);
+        if (namesWithoutDuplication.size() != names.size()) {
+            throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
+        }
     }
 
     public void addPlayer(Player player) {
