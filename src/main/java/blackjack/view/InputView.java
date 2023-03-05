@@ -22,6 +22,7 @@ public class InputView {
         if (input.equals("y") || input.equals("n")) {
             return input.equals("y");
         }
-        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
+        System.out.println("[ERROR] y 또는 n만 입력 가능합니다.");
+        return readDrawCardDecision(playerName);
     }
 }
