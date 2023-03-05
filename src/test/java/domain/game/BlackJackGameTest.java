@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import domain.card.Cards;
 import domain.user.Dealer;
-import domain.user.Name;
 import domain.user.Player;
+import domain.user.Players;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,7 @@ class BlackJackGameTest {
 
     @BeforeEach
     void setUp() {
-        List<Player> players = List.of(new Player(new Name("유자")), new Player(new Name("민트")));
+        Players players = new Players(List.of("유자", "민트"));
         Dealer dealer = new Dealer();
         Cards cards = new Cards();
 
