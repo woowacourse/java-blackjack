@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    private static final CardNumber TEN = CardNumber.of(10);
 
     private final Shape shape;
     private final CardNumber cardNumber;
@@ -11,6 +10,22 @@ public class Card {
     public Card(final Shape shape, final CardNumber cardNumber) {
         this.shape = shape;
         this.cardNumber = cardNumber;
+    }
+
+    public boolean isSameAs(int value) {
+        return cardNumber.getValue() == value;
+    }
+
+    public boolean isOver(final int value) {
+        return cardNumber.getValue() > value;
+    }
+
+    public int getCardNumberValue() {
+        return cardNumber.getValue();
+    }
+
+    public Shape getShape() {
+        return shape;
     }
 
     @Override
@@ -28,21 +43,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(shape, cardNumber);
-    }
-
-    public boolean isAce() {
-        return cardNumber == CardNumber.of(1);
-    }
-
-    public boolean isOverTen() {
-        return TEN.compareTo(cardNumber) <= 0;
-    }
-
-    public int getCardNumberValue() {
-        return cardNumber.getValue();
-    }
-
-    public Shape getShape() {
-        return shape;
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.GamePoint;
+
 import java.util.ArrayList;
 import java.util.List;
 

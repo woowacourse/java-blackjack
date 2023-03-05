@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.GamePoint;
+import blackjack.domain.GamePoint;
 
 import java.util.ArrayList;
 import java.util.List;

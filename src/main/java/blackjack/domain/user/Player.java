@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.GamePoint;
+import blackjack.domain.GamePoint;
 
 public interface Player {
 
