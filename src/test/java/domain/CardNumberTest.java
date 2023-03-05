@@ -29,21 +29,6 @@ public class CardNumberTest {
         assertThatThrownBy(() -> CardNumber.of(value));
     }
 
-    @Test
-    @DisplayName("CardNumber는 Comparable을 구현한 비교가능한 객체이다.")
-    void cardNumberComparableTest() {
-        final CardNumber targetNumber = CardNumber.of(2);
-
-        final CardNumber smallNumber = CardNumber.of(1);
-        final CardNumber sameNumber = CardNumber.of(2);
-        final CardNumber largerNumber = CardNumber.of(3);
-
-        assertAll(
-                () -> assertThat(targetNumber.compareTo(smallNumber)).isGreaterThanOrEqualTo(1),
-                () -> assertThat(targetNumber.compareTo(sameNumber)).isEqualTo(0),
-                () -> assertThat(targetNumber.compareTo(largerNumber)).isLessThanOrEqualTo(-1)
-        );
-    }
 
     @Test
     @DisplayName("같은 값을 같는 CardNumber는 같은 주소값을 갖는 객체이다.")

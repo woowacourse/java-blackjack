@@ -15,7 +15,7 @@ public class DeckTest {
     private Deck deck;
 
     @BeforeEach
-    void setting(){
+    void setting() {
         deck = new Deck();
     }
 
@@ -56,6 +56,6 @@ public class DeckTest {
         }
         assertThatThrownBy(() -> deck.drawCard())
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드 업슝");
+                .hasMessage("덱에 더이상 카드가 남아있지 않습니다.");
     }
 }

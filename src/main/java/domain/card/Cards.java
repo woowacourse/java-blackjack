@@ -33,32 +33,8 @@ public final class Cards {
         return gamePoint;
     }
 
-    public int size() {
-        return cards.size();
-    }
-
-    public boolean isLowerThan(final int value) {
-        return gamePoint.isLowerThan(value);
-    }
-
-    public boolean isLowerThan(final GamePoint point) {
-        return this.gamePoint.isLowerThan(point);
-    }
-
-    public boolean isGreaterThan(final GamePoint point) {
-        return this.gamePoint.isGreaterThan(point);
-    }
-
-    public boolean havePointOf(final GamePoint point) {
-        return this.gamePoint.isSameAs(point);
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
-    }
-
-    public boolean isEmpty() {
-        return cards.isEmpty();
     }
 
     public Card getFirstCard() {

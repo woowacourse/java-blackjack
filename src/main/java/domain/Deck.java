@@ -29,7 +29,7 @@ public final class Deck {
         try {
             return cards.remove(0);
         } catch (IndexOutOfBoundsException exception) {
-            throw new IllegalStateException("카드 업슝", exception);
+            throw new IllegalStateException("덱에 더이상 카드가 남아있지 않습니다.", exception);
         }
     }
 

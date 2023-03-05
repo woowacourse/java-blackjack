@@ -12,16 +12,12 @@ public final class Dealer extends Participant {
         super(name);
     }
 
-    private Dealer(final Name name, final Cards cards) {
-        super(name, cards);
-    }
-
     public static Dealer create() {
         return new Dealer(Name.of(DEALER_NAME));
     }
 
     public boolean needMoreCard() {
-        return cards.isLowerThan(STANDARD_OF_NEED_MORE_CARD) && this.isBusted();
+        return calculatePoint().isLowerThan(STANDARD_OF_NEED_MORE_CARD) && !this.isBusted();
     }
 
     public Cards getFirstCard() {
