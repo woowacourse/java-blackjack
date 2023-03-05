@@ -8,7 +8,6 @@ import balckjack.domain.Player;
 import balckjack.domain.Players;
 import balckjack.domain.Referee;
 import balckjack.domain.Result;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,36 +23,35 @@ public class OutputView {
         System.out.println();
         final List<String> playerNames = players.getPlayerNames();
         final String dealerName = dealer.getName().getValue();
-        final String processedPlayernames = String.join(", ", playerNames);
-        final List<String> displayCards = Arrays.stream(
-                convertCardDeckString(dealer.getCardDeck()).split(CardDeck.DELIMITER))
-            .limit(DEALER_DISPLAY_COUNT).collect(
-                Collectors.toList());
+        final String processedPlayerNames = String.join(", ", playerNames);
+        final String displayCards = convertCardDeckString(dealer.getCardDeck(),
+            DEALER_DISPLAY_COUNT);
 
-        final String processedDisplayCards = String.join(CardDeck.DELIMITER, displayCards);
-
-        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayernames));
-        System.out.println(String.format("%s: %s", dealerName, processedDisplayCards));
-
-        for (int index = 0; index < playerNames.size(); index++) {
-            printParticipantCardDeck(players.getPlayers().get(index));
-        }
-        System.out.println();
+        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
+        printParticipantsCardDeck(players, playerNames, dealerName, displayCards);
     }
 
     private static String convertCardDeckString(CardDeck cardDeck) {
         return cardDeck.getCards().stream().map(Card::toString).collect(Collectors.joining(", "));
     }
 
+    private static String convertCardDeckString(CardDeck cardDeck, int displayCount) {
+        return cardDeck.getCards().stream().map(Card::toString).limit(displayCount)
+            .collect(Collectors.joining(", "));
+    }
+
+    private static void printParticipantsCardDeck(Players players, List<String> playerNames,
+        String dealerName, String displayCards) {
+        System.out.println(String.format("%s: %s", dealerName, displayCards));
+
+        for (int index = 0; index < playerNames.size(); index++) {
+            printParticipantCardDeck(players.getPlayers().get(index));
+        }
+    }
+
     public static void printParticipantCardDeck(Player player) {
         System.out.println(String.format("%s카드: %s", player.getName().getValue(),
             convertCardDeckString(player.getCardDeck())));
-    }
-
-    public static void printParticipantCardDeck(Player player, int rawScore) {
-        final String cards = convertCardDeckString(player.getCardDeck());
-        String score = convertScoreToString(rawScore);
-        System.out.println(player.getName().getValue() + "카드: " + cards + " - 결과: " + score);
     }
 
     public static void printDealerPickMessage(Dealer dealer) {
@@ -64,19 +62,20 @@ public class OutputView {
     public static void printFinalCardDeck(Participant dealer, Players players, Referee referee) {
         System.out.println();
         final List<String> playerNames = players.getPlayerNames();
-        final String dealerCards = convertCardDeckString(dealer.getCardDeck());
 
-        String score = convertScoreToString(referee.calculateDeckScore(dealer.getCardDeck()));
-
-        System.out.println(
-            String.format("%s카드: %s - 결과: %s", dealer.getName().getValue(),
-                dealerCards, score));
-
+        printParticipantCardDeck(dealer, referee.calculateDeckScore(dealer.getCardDeck()));
         for (int index = 0; index < playerNames.size(); index++) {
             printParticipantCardDeck(players.getPlayers().get(index),
                 referee.calculateDeckScore(players.getPlayers().get(index).getCardDeck()));
         }
         System.out.println();
+    }
+
+    private static void printParticipantCardDeck(Participant participant, int rawScore) {
+        final String cards = convertCardDeckString(participant.getCardDeck());
+        String score = convertScoreToString(rawScore);
+        System.out.println(
+            String.format("%s카드: %s - 결과 : %d", participant.getName().getValue(), cards, score));
     }
 
     private static String convertScoreToString(int number) {
