@@ -4,8 +4,8 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.controller.BlackjackCommand;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import java.util.Arrays;
 import java.util.Scanner;
 
