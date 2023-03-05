@@ -17,6 +17,10 @@ abstract class Participant {
         hand.add(card);
     }
 
+    public void hit(List<Card> cards) {
+        cards.forEach(hand::add);
+    }
+
     public int calculateScore() {
         return hand.calculateScore();
     }
