@@ -2,37 +2,39 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
+import java.util.List;
+
 import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    @Test
-    @DisplayName("요청한 카드 저장 확인 테스트")
-    void shouldSuccessTakeCard() {
-        Player player = new Player(new Name("seongha"));
-        player.takeCard(new Card("10다이아몬드", 10));
-        player.takeCard(new Card("3다이아몬드", 3));
-        assertThat(player.getCards().size()).isEqualTo(2);
+    private Player player;
+
+    @BeforeEach
+    void init() {
+        this.player = new Player(new Name("seongha"), new HandCards(Collections.emptyList()));
     }
 
     @Test
     @DisplayName("가지고 있는 카드의 합이 21 이하면 true를 반환한다.")
     void isCardValueBelow21() {
-        Player player = new Player(new Name("seongha"));
-        player.takeCard(new Card("10다이아몬드", 10));
-        player.takeCard(new Card("6다이아몬드", 6));
+        player.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        player.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
         assertThat(player.checkCardsCondition()).isTrue();
     }
 
     @Test
     @DisplayName("가지고 있는 카드의 합이 22 이상이면 false를 반환한다.")
     void isCardValueOver21() {
-        Player player = new Player(new Name("seongha"));
-        player.takeCard(new Card("10다이아몬드", 10));
-        player.takeCard(new Card("6다이아몬드", 6));
-        player.takeCard(new Card("8다이아몬드", 8));
+        player.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        player.takeCard(new Card(Suit.DIAMOND, Denomination.SIX));
+        player.takeCard(new Card(Suit.DIAMOND, Denomination.EIGHT));
         assertThat(player.checkCardsCondition()).isFalse();
     }
 }

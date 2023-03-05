@@ -3,12 +3,13 @@ package domain.participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import domain.card.Card;
 
 public abstract class Participant {
-    private static final int MIN_BUST_NUMBER = 22;
+    private static final int ACE_VALUE = 1;
+    private static final int ANOTHER_ACE_VALUE = 11;
+    private static final int MIN_BUST_VALUE = 22;
 
     protected Name name;
     protected HandCards handCards;
@@ -22,60 +23,62 @@ public abstract class Participant {
         handCards.addCard(card);
     }
 
-    public int getMaxSum() {
+    public int getOptimalSumValue() {
         List<Integer> totalValues = new ArrayList<>();
         totalValues.add(0);
-        for (Card card : cards) {
-            totalValues = setTotalValuesByAceExistence(totalValues, card);
+        for (Integer handValue : handCards.getValues()) {
+            addNotAceValueToTotalValues(totalValues, handValue);
+            addAceValueToTotalValues(totalValues, handValue);
         }
-        return calculateMaxSum(totalValues);
+        return getTotalValueMaxNoBust(totalValues);
     }
 
-    private Integer calculateMaxSum(List<Integer> totalValues) {
-        Integer maxSum = totalValues.stream()
-                .filter(value -> value < MIN_BUST_NUMBER)
+    private int getTotalValueMaxNoBust(List<Integer> totalValues) {
+        return totalValues.stream()
+                .filter(totalValue -> totalValue < MIN_BUST_VALUE)
                 .max(Integer::compare)
-                .orElse(totalValues.get(0));
-        return maxSum;
+                .orElse(MIN_BUST_VALUE);
     }
 
-    private List<Integer> setTotalValuesByAceExistence(List<Integer> totalValues, Card card) {
-        if (card.getValue() == 1) {
-            totalValues = getAceSituationValues(totalValues, card);
-        }
-        if (card.getValue() != 1) {
-            setCommonValues(totalValues, card);
-        }
-        return totalValues;
-    }
-
-    private static void setCommonValues(List<Integer> totalValues, Card card) {
-        for (int index = 0; index < totalValues.size(); index++) {
-            totalValues.set(index, totalValues.get(index) + card.getValue());
+    private void addNotAceValueToTotalValues(List<Integer> totalValues, Integer handValue) {
+        if (handValue != ACE_VALUE) {
+            List<Integer> sumValueWithoutAce = totalValues.stream()
+                    .map(value -> value + handValue)
+                    .collect(Collectors.toList());
+            totalValues.clear();
+            totalValues.addAll(sumValueWithoutAce);
         }
     }
-
-    private List<Integer> getAceSituationValues(List<Integer> totalValues, Card card) {
-        List<Integer> commonSituationValues = new ArrayList<>();
-        List<Integer> aceSituationValues = new ArrayList<>();
-
-        for (int index = 0; index < totalValues.size(); index++) {
-            commonSituationValues.add(totalValues.get(index) + card.getValue());
-            aceSituationValues.add(totalValues.get(index) + card.getValue() + 10);
+    
+    private void addAceValueToTotalValues(List<Integer> totalValues, Integer handValue) {
+        if (handValue == ACE_VALUE) {
+            List<Integer> aceValueSum = getAceValueSum(totalValues);
+            List<Integer> anotherAceValueSum = getAnotherAceValueSum(totalValues);
+            totalValues.clear();
+            totalValues.addAll(aceValueSum);
+            totalValues.addAll(anotherAceValueSum);
         }
-        totalValues = Stream.concat(commonSituationValues.stream(), aceSituationValues.stream())
+    }
+
+    private List<Integer> getAceValueSum(List<Integer> totalValues) {
+        return totalValues.stream()
+                .map(value -> value + ACE_VALUE)
+                .filter(value -> value < MIN_BUST_VALUE)
                 .collect(Collectors.toList());
-        return totalValues;
     }
 
+    private List<Integer> getAnotherAceValueSum(List<Integer> totalValues) {
+        return totalValues.stream()
+                .map(value -> value + ANOTHER_ACE_VALUE)
+                .filter(value -> value < MIN_BUST_VALUE)
+                .collect(Collectors.toList());
+    }
 
     public String getName() {
         return name.getValue();
     }
 
-    public List<String> getCardNames() {
-        return cards.stream()
-                .map(Card::getName)
-                .collect(Collectors.toUnmodifiableList());
+    public List<Card> getHandCards() {
+        return handCards.getCards();
     }
 }
