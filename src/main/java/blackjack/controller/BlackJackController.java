@@ -6,6 +6,8 @@ import blackjack.domain.player.Player;
 import blackjack.domain.result.Result;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.DealerResultDto;
+import blackjack.dto.DealerStatusDto;
+import blackjack.dto.DealerStatusWithPointDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -40,14 +42,14 @@ public class BlackJackController {
     }
 
     private void showStartStatus() {
-        PlayerStatusDto dealerStatus = makeDealerStatus();
+        DealerStatusDto dealerStatus = makeDealerStatus();
         List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
         OutputView.printStartStatus(dealerStatus, challengersStatus);
     }
 
-    private PlayerStatusDto makeDealerStatus() {
+    private DealerStatusDto makeDealerStatus() {
         Player dealer = blackJackGame.getDealer();
-        return new PlayerStatusDto(dealer);
+        return DealerStatusDto.from(dealer);
     }
 
     private List<PlayerStatusDto> makeChallengersStatus() {
@@ -114,9 +116,14 @@ public class BlackJackController {
     }
 
     private void showPoint() {
-        PlayerStatusDto dealerStatus = makeDealerStatus();
+        DealerStatusWithPointDto dealerStatus = makeDealerWithPointStatus();
         List<PlayerStatusDto> challengersStatus = makeChallengersStatus();
         OutputView.printEndStatus(dealerStatus, challengersStatus);
+    }
+
+    private DealerStatusWithPointDto makeDealerWithPointStatus() {
+        Player dealer = blackJackGame.getDealer();
+        return DealerStatusWithPointDto.from(dealer);
     }
 
     private void showRank() {
