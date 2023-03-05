@@ -92,8 +92,8 @@ public class BlackJack {
 		return playerWithScore;
 	}
 
-	public List<Player> getHittablePlayers() {
-		return users.getHittablePlayers();
+	public List<Player> getPlayers(){
+		return users.getPlayers();
 	}
 
 	public List<String> getDealerCards() {

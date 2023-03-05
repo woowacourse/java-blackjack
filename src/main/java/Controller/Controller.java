@@ -33,8 +33,7 @@ public class Controller {
 	}
 
 	private void play() {
-		List<Player> hittablePlayers = blackJack.getHittablePlayers();
-		for (Player player : hittablePlayers) {
+		for (Player player : blackJack.getPlayers()) {
 			askPlayerHit(player);
 		}
 		giveCardToDealer();
