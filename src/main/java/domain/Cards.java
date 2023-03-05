@@ -14,10 +14,6 @@ public class Cards {
 		this.cards = new ArrayList<>();
 	}
 
-	public Cards(List<Card> cards) {
-		this.cards = cards;
-	}
-
 	public void addCard(final Card card) {
 		cards.add(card);
 	}

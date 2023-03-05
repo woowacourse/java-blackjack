@@ -7,7 +7,7 @@ public abstract class User {
 	Cards cards;
 	String name;
 
-	public User(){
+	public User() {
 		cards = new Cards();
 		hitTwoCards();
 	}
@@ -17,19 +17,19 @@ public abstract class User {
 		hit(Deck.pickCard());
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void hit(Card card) {
 		cards.addCard(card);
+	}
+
+	abstract public boolean isHittable();
+
+	public String getName() {
+		return name;
 	}
 
 	public List<Card> getCards() {
 		return cards.getCards();
 	}
-
-	abstract public boolean isHittable();
 
 	public int getScore() {
 		return cards.calculateScore();
