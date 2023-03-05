@@ -1,3 +1,5 @@
+package controller;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +26,10 @@ public class Controller {
         this.blackjackGame = blackjackGame;
     }
 
-    void run() {
+    public void run() {
         setGame();
         showFirstDraw();
-        playersHit();
+        hitPlayers();
         dealerHit();
         printFinalCards();
         printWinningResult();
@@ -68,19 +70,19 @@ public class Controller {
     }
 
 
-    private void playersHit() {
+    private void hitPlayers() {
         for (int i = 0; i < blackjackGame.countPlayer(); i++) {
             Name userName = blackjackGame.findUserNameByIndex(i);
-            playerHit(i, userName);
+            hitPlayer(i, userName);
         }
     }
 
-    private void playerHit(int playerIndex, Name userName) {
+    private void hitPlayer(int playerIndex, Name userName) {
         try {
             hitByCommand(playerIndex, userName);
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception);
-            playerHit(playerIndex, userName);
+            hitPlayer(playerIndex, userName);
         }
     }
 
