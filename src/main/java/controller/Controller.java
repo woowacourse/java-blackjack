@@ -67,11 +67,14 @@ public final class Controller {
     }
 
     private boolean isHit(final Participant participant) {
+        if (participant.isBust() || participant.isBlackjack()) {
+            return false;
+        }
         return retryOnError(InputView.readCommand(participant.getName())::isValue);
     }
 
     private void playDealerTurn(final Dealer dealer) {
-        if (dealer.isInPlaying(dealer.dealerIsHit())) {
+        while (dealer.isInPlaying(dealer.dealerIsHit())) {
             dealer.takeCard(deck.dealCard());
             OutputView.printDealerHit();
         }

@@ -38,6 +38,10 @@ public abstract class Player {
         return HandsState.from(cards.calculateScore()) == HandsState.BUST;
     }
 
+    public boolean isBlackjack(){
+        return HandsState.from(cards.calculateScore()) == HandsState.BLACKJACK;
+    }
+
     public List<Card> showCards() {
         return cards.getCards();
     }
