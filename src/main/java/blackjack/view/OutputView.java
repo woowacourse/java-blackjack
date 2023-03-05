@@ -13,9 +13,10 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
     private static final int FIRST_CARD = 0;
     private static final int DEALER_INDEX = 0;
-    public static final String HIT_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final String HIT_DEALER_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     public static final int FIRST_CARD_COUNT = 2;
 
     public void printParticipants(final List<String> participants) {
