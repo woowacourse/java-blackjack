@@ -6,7 +6,6 @@ import domain.participant.Player;
 import template.Repeater;
 import domain.participant.Name;
 import view.InputView;
-import view.OutputView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,28 +13,28 @@ import java.util.stream.Collectors;
 public class BlackJackController {
 
     private final InputView inputView;
-    private final OutputView outputView;
-    private final BlackJack blackJack;
+//    private final OutputView outputView;
+//    private final BlackJack blackJack;
 
-    public BlackJackController(final InputView inputView, final OutputView outputView) {
+    public BlackJackController(final InputView inputView) {
         this.inputView = inputView;
-        this.outputView = outputView;
-        this.blackJack = BlackJack.getInstance(userNameRequest(), new Deck());
+//        this.outputView = outputView;
+//        this.blackJack = BlackJack.getInstance(userNameRequest(), new Deck());
     }
 
-    public void process() {
-        outputView.printInitialStatus(blackJack.getDealer(), blackJack.getUsers());
-        getUsersDecision();
-        getDealerResult();
-        outputView.printStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
-        outputView.printFinalResult(blackJack.getGameResult());
+  public void process() {
+//        outputView.printInitialStatus(blackJack.get);
+//        getUsersDecision();
+//        getDealerResult();
+//        outputView.printStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
+//        outputView.printFinalResult(blackJack.getGameResult());
     }
-
+ /*
     private List<Name> userNameRequest() {
         final List<String> strings = Repeater.repeat(inputView::userNameRequest);
         return strings
                 .stream()
-                .map(Name::new)
+                .map(Name::of)
                 .collect(Collectors.toList());
     }
 
@@ -61,5 +60,5 @@ public class BlackJackController {
     private void getDealerResult() {
         final int cardCount = blackJack.finalizeDealer();
         outputView.printAdditionalCardCountOfDealer(cardCount);
-    }
+    }*/
 }

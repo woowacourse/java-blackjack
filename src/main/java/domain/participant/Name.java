@@ -3,14 +3,20 @@ package domain.participant;
 import java.util.Objects;
 
 public final class Name {
+
     private static final int MIN = 1;
     private static final int MAX = 5;
+
     private final String value;
 
-    public Name(final String value) {
+    private Name(final String value) {
         final String trimmedValue = value.trim();
         validateLength(trimmedValue);
         this.value = trimmedValue;
+    }
+
+    public static Name of(final String value) {
+        return new Name(value);
     }
 
     private void validateLength(final String value) {

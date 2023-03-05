@@ -8,11 +8,11 @@ import java.util.List;
 public final class Cards {
 
     private final List<Card> cards;
-    private final GamePoint point;
+    private final GamePoint gamePoint;
 
     public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-        this.point = new GamePoint(cards);
+        this.gamePoint = new GamePoint(cards);
     }
 
     public Cards add(final Card card) {
@@ -21,12 +21,12 @@ public final class Cards {
         return new Cards(cardList);
     }
 
-    public boolean isBust() {
-        return point.isBusted();
+    public boolean isBusted() {
+        return gamePoint.isBusted();
     }
 
-    public GamePoint getPoint() {
-        return point;
+    public GamePoint getGamePoint() {
+        return gamePoint;
     }
 
     public int size() {
@@ -34,19 +34,19 @@ public final class Cards {
     }
 
     public boolean isLowerThan(final int value) {
-        return point.isLowerThan(value);
+        return gamePoint.isLowerThan(value);
     }
 
     public boolean isLowerThan(final GamePoint point) {
-        return this.point.isLowerThan(point);
+        return this.gamePoint.isLowerThan(point);
     }
 
     public boolean isGreaterThan(final GamePoint point) {
-        return this.point.isGreaterThan(point);
+        return this.gamePoint.isGreaterThan(point);
     }
 
     public boolean havePointOf(final GamePoint point) {
-        return this.point.isEqualTo(point);
+        return this.gamePoint.isEqualTo(point);
     }
 
     public List<Card> getCards() {

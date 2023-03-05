@@ -14,14 +14,14 @@ public class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {" 12345 ", "푸우", " 가 나 다 "})
     void validTest(String value) {
-        assertDoesNotThrow(() -> new Name(value));
+        assertDoesNotThrow(() -> Name.of(value));
     }
 
     @DisplayName("이름이 1자 미만 5자 초과이면 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"123456", " ", ""})
     void inValidTest(String value) {
-        assertThatThrownBy(() -> new Name(value))
+        assertThatThrownBy(() -> Name.of(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 1~5 글자만 허용합니다.");
     }

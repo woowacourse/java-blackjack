@@ -1,8 +1,7 @@
+/*
 package view;
 
-import domain.GameResult;
 import domain.Result;
-import domain.Users;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.GamePoint;
@@ -143,14 +142,14 @@ public final class OutputView {
     private void printPlayerResult(final Player player, final Cards cards) {
         System.out.printf("%s - 결과: %s",
                 getPlayerCards(player, cards.getCards())
-                , printGamePoint(cards.getPoint()));
+                , printGamePoint(cards.getGamePoint()));
         System.out.print(System.lineSeparator());
     }
 
     private void printPlayerResultForDealer(final Dealer dealer, final Cards cards) {
         System.out.printf("%s - 결과: %s",
                 getPlayerCardsForDealer(dealer, cards.getCards())
-                , printGamePoint(cards.getPoint()));
+                , printGamePoint(cards.getGamePoint()));
         System.out.print(System.lineSeparator());
     }
 
@@ -233,3 +232,4 @@ public final class OutputView {
     }
 
 }
+*/
