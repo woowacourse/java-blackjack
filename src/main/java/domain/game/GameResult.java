@@ -45,8 +45,6 @@ public enum GameResult {
     }
 
     private static int countGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
-        return (int) gameResults.stream()
-                .filter(gameResult -> gameResult.equals(gameResultType))
-                .count();
+        return Collections.frequency(gameResults, gameResultType);
     }
 }
