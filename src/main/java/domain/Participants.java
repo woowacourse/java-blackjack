@@ -48,7 +48,7 @@ public class Participants {
         }
     }
 
-    public Map<Participant, Boolean> getIsBust() {
+    public Map<Participant, Boolean> getParticipantsBustStatus() {
         Map<Participant, Boolean> scores = new LinkedHashMap<>();
         for (Participant participant : participants) {
             scores.put(participant, participant.isBust());

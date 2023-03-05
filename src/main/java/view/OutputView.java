@@ -22,7 +22,7 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public void printInitializingFinishMessage(List<String> participantNames) {
+    public void printPlayersName(List<String> participantNames) {
         printEmptyLine();
         String participants = String.join(DELIMITER, participantNames);
         System.out.printf(INIT_FINISHIED_MESSAGE, participants);
