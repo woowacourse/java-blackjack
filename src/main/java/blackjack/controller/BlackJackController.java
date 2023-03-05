@@ -28,7 +28,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Participants participants = Participants.of(new Dealer(), gatherPlayers());
+        final Participants participants = new Participants(new Dealer(), gatherPlayers());
         final Deck deck = DeckFactory.createWithCount(Deck.TRUMP, 1);
 
         dealCards(participants, deck);

@@ -13,32 +13,28 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    private Participants(final List<Participant> participants) {
-        this.participants = participants;
-    }
-
-    public static Participants of(final Dealer dealer, final List<Player> players) {
+    public Participants(final Dealer dealer, final List<Player> players) {
         validate(players);
 
         final List<Participant> recruits = new ArrayList<>();
         recruits.add(dealer);
         recruits.addAll(players);
 
-        return new Participants(recruits);
+        this.participants = recruits;
     }
 
-    private static void validate(final List<Player> players) {
+    private void validate(final List<Player> players) {
         validateCount(players);
         validateDuplicate(players);
     }
 
-    private static void validateCount(final List<Player> players) {
+    private void validateCount(final List<Player> players) {
         if (players.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException("플레이어는 " + MAXIMUM_PLAYER_COUNT + "명을 초과할 수 없습니다");
         }
     }
 
-    private static void validateDuplicate(final List<Player> players) {
+    private void validateDuplicate(final List<Player> players) {
         final HashSet<Player> uniquePlayers = new HashSet<>(players);
 
         if (players.size() != uniquePlayers.size()) {
@@ -46,8 +42,8 @@ public class Participants {
         }
     }
 
-    public void drawCard(final Deck deck, int count) {
-        while (count-- > 0) {
+    public void drawCard(final Deck deck, final int count) {
+        for (int i = 0; i < count; i++) {
             participants.forEach(participant -> participant.drawCard(deck.draw()));
         }
     }
