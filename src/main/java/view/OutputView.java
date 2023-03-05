@@ -44,10 +44,10 @@ public class OutputView {
     }
 
     private static String formatCard(Card card) {
-        resetMessage();
-        message.append(card.getDenomination().getName());
-        message.append(getSuitMessage(card.getSuit()));
-        return message.toString();
+        String printCards = "";
+        printCards += card.getDenomination().getName();
+        printCards += getSuitMessage(card.getSuit());
+        return printCards;
     }
 
     private static String getSuitMessage(Suit cardShape) {
@@ -74,14 +74,14 @@ public class OutputView {
         int drawCount = playerCount - winCount - loseCount;
         resetMessage();
         message.append(DEALER_NAME + COLON);
-        addDealerResultMessage(winCount, drawCount, loseCount);
+        message.append(addDealerResultMessage(winCount, drawCount, loseCount));
         System.out.println(message);
     }
 
     public static void printPlayerResult(String name, BoxResult gameResult) {
         resetMessage();
         message.append(name).append(COLON);
-        addPlayerResultMessage(gameResult.getWinCount(), gameResult.getLoseCount());
+        message.append(addPlayerResultMessage(gameResult.getWinCount(), gameResult.getLoseCount()));
         System.out.println(message);
     }
 
@@ -98,31 +98,27 @@ public class OutputView {
         message.setLength(0);
     }
 
-    private static void addPlayerResultMessage(int winCount, int loseCount) {
+    private static String addPlayerResultMessage(int winCount, int loseCount) {
         if (winCount == 1) {
-            message.append(WIN_MESSAGE);
+            return WIN_MESSAGE;
         }
         if (loseCount == 1) {
-            message.append(LOSE_MESSAGE);
+            return LOSE_MESSAGE;
         }
-        message.append(DRAW_MESSAGE);
+        return DRAW_MESSAGE;
     }
 
-    private static void addDealerResultMessage(int winCount, int drawCount, int loseCount) {
+    private static String addDealerResultMessage(int winCount, int drawCount, int loseCount) {
+        String printResult = "";
         if (winCount > 0) {
-            message.append(winCount).append(WIN_MESSAGE);
-        } else {
-            message.append(WIN_MESSAGE);
+            printResult += winCount + WIN_MESSAGE;
         }
         if (drawCount > 0) {
-            message.append(winCount).append(DRAW_MESSAGE);
-        } else {
-            message.append(DRAW_MESSAGE);
+            printResult += drawCount + DRAW_MESSAGE;
         }
         if (loseCount > 0) {
-            message.append(winCount).append(LOSE_MESSAGE);
-        } else {
-            message.append(LOSE_MESSAGE);
+            printResult += loseCount + LOSE_MESSAGE;
         }
+        return printResult;
     }
 }
