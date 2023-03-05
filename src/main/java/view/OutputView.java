@@ -12,7 +12,6 @@ public final class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String PRINT_FORMAT = "%s 카드: %s%n";
-    private static final String ERROR_HEAD = "[ERROR] ";
 
     public void printInitialStatus(final Dealer dealer, final Players players) {
         System.out.print(System.lineSeparator());
@@ -52,14 +51,9 @@ public final class OutputView {
         final Cards cards = player.getCards();
         System.out.printf(
                 PRINT_FORMAT,
+                player.getName().getValue(),
                 getCardStringOf(cards.getCards())
         );
-    }
-
-
-   /*
-    public void printException(final Exception exception) {
-        System.out.println(ERROR_HEAD + exception.getMessage());
     }
 
     public void printAdditionalCardCountOfDealer(final int cardCount) {
@@ -74,7 +68,7 @@ public final class OutputView {
         System.out.print(System.lineSeparator());
 
     }
-
+   /*
     public void printStatus(final Dealer dealer, final List<Player> players) {
         printPlayerResultForDealer(dealer, dealer.getCards());
         for (Player player : players) {

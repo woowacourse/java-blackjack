@@ -27,7 +27,7 @@ public class BlackJackController {
     public void process() {
         outputView.printInitialStatus(blackJack.getDealer(), blackJack.getPlayers());
         getPlayersDecision();
-//        getDealerResult();
+        getDealerResult();
 //        outputView.printStatus(blackJack.getDealerStatus(), blackJack.getUsersStatus());
 //        outputView.printFinalResult(blackJack.getGameResult());
     }
@@ -52,6 +52,9 @@ public class BlackJackController {
         while (decision && !blackJack.isBusted(player)) {
             blackJack.drawCard(player);
             outputView.printPlayerCards(player);
+            if (blackJack.isBusted(player)) {
+                break;
+            }
             decision = Repeater.repeat(() -> cardRequest(player.getName()));
         }
     }
@@ -60,8 +63,8 @@ public class BlackJackController {
         return inputView.cardRequest(name);
     }
 
-    /*private void getDealerResult() {
-        final int cardCount = blackJack.finalizeDealer();
-        outputView.printAdditionalCardCountOfDealer(cardCount);
-    }*/
+    private void getDealerResult() {
+//        final int cardCount = blackJack.finalizeDealer();
+//        outputView.printAdditionalCardCountOfDealer(cardCount);
+    }
 }
