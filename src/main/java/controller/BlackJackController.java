@@ -2,7 +2,6 @@ package controller;
 
 import domain.BlackJack;
 import domain.Deck;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import template.Repeater;
@@ -43,18 +42,16 @@ public class BlackJackController {
 
     private void getPlayersDecision() {
         final Players participants = blackJack.getPlayers();
-        for (Participant participant : participants.getPlayers()) {
-            if (participant instanceof Player) {
-                getPlayerDecision(participant);
-            }
+        for (Player participant : participants.getPlayers()) {
+            getPlayerDecision(participant);
         }
     }
 
-    private void getPlayerDecision(final Participant player) {
+    private void getPlayerDecision(final Player player) {
         boolean decision = Repeater.repeat(() -> cardRequest(player.getName()));
         while (decision && !blackJack.isBusted(player)) {
             blackJack.drawCard(player);
-//            outputView.printCardsOf(player, blackJack.getCardsFrom(player));
+            outputView.printPlayerCards(player);
             decision = Repeater.repeat(() -> cardRequest(player.getName()));
         }
     }

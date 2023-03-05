@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.card.CardShape;
+import domain.card.Cards;
 import domain.participant.*;
 import utils.TranslationUtil;
 
@@ -17,14 +17,14 @@ public final class OutputView {
     public void printInitialStatus(final Dealer dealer, final Players players) {
         System.out.print(System.lineSeparator());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n",
-                dealer.getName(),
+                dealer.getName().getValue(),
                 getPlayerNames(players));
 
-        System.out.printf(PRINT_FORMAT, dealer.getName(), getCardStringOf(dealer.getFirstCard()));
+        System.out.printf(PRINT_FORMAT, dealer.getName().getValue(), getCardStringOf(dealer.getFirstCard()));
 
         for (Player player : players.getPlayers()) {
             System.out.printf(PRINT_FORMAT,
-                    player.getName(),
+                    player.getName().getValue(),
                     getCardStringOf(player.getCards().getCards()));
         }
     }
@@ -48,10 +48,16 @@ public final class OutputView {
                 TranslationUtil.translate(card.getShape()));
     }
 
+    public void printPlayerCards(final Player player) {
+        final Cards cards = player.getCards();
+        System.out.printf(
+                PRINT_FORMAT,
+                getCardStringOf(cards.getCards())
+        );
+    }
+
 
    /*
-
-
     public void printException(final Exception exception) {
         System.out.println(ERROR_HEAD + exception.getMessage());
     }

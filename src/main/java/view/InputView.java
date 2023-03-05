@@ -25,8 +25,7 @@ public final class InputView {
     }
 
     public boolean cardRequest(Name name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.getValue());
-        System.out.print(System.lineSeparator());
+        System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.getValue());
         final String input = readLine();
         return isValid(input);
     }

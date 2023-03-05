@@ -24,6 +24,7 @@ public final class BlackJack {
 
     private void initGame(final Deck deck, final int count) {
         dealer.takeCard(deck, count);
+        players.takeCard(deck, count);
     }
 
     public static BlackJack getInstance(List<Name> userNames, Deck deck) {

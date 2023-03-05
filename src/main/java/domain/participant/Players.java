@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.Deck;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,5 +22,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public void takeCard(final Deck deck, final int count) {
+        for (Player player : players) {
+            player.takeCard(deck, count);
+        }
     }
 }
