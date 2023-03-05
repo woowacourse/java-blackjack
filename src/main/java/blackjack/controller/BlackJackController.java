@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.dto.PersonStatusResponse;
-import blackjack.dto.PersonTotalStatusResponse;
+import blackjack.dto.ParticipantStatusResponse;
+import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -15,12 +15,12 @@ public class BlackJackController {
     }
 
     public void run() {
-        repeat(() -> blackJackService.createPeople(InputView.readPlayerNames()));
+        repeat(() -> blackJackService.createParticipants(InputView.readPlayerNames()));
         OutputView.printStartDrawCardMessage(blackJackService.getPlayersName());
-        printPersonStatues(blackJackService.getStartStatusResponse());
+        printAllParticipantStatues(blackJackService.getStartStatusResponse());
         drawMoreCardForPlayers();
         OutputView.printDealerDrawCardMessage(blackJackService.drawMoreCardForDealer());
-        printPersonTotalStatues(blackJackService.getAllPersonTotalResponse());
+        printAllTotalStatues(blackJackService.getAllParticipantTotalResponse());
         OutputView.printTotalGameResult(blackJackService.getTotalGameResult());
     }
 
@@ -33,9 +33,9 @@ public class BlackJackController {
         }
     }
 
-    private void printPersonStatues(List<PersonStatusResponse> personStatusResponse) {
-        for (PersonStatusResponse response : personStatusResponse) {
-            OutputView.printPersonStatus(response);
+    private void printAllParticipantStatues(List<ParticipantStatusResponse> participantStatusResponse) {
+        for (ParticipantStatusResponse response : participantStatusResponse) {
+            OutputView.printParticipantStatus(response);
         }
     }
 
@@ -48,18 +48,18 @@ public class BlackJackController {
     private void drawMoreCard(String playerName) {
         while (decideDraw(playerName)) {
             blackJackService.drawMoreCardByName(playerName);
-            OutputView.printPersonStatus(blackJackService.getPersonStatusResponseByName(playerName));
+            OutputView.printParticipantStatus(blackJackService.getParticipantStatusResponseByName(playerName));
         }
-        OutputView.printPersonStatus(blackJackService.getPersonStatusResponseByName(playerName));
+        OutputView.printParticipantStatus(blackJackService.getParticipantStatusResponseByName(playerName));
     }
 
     private boolean decideDraw(String playerName) {
         return InputView.readDrawCardDecision(playerName);
     }
 
-    private void printPersonTotalStatues(List<PersonTotalStatusResponse> responses) {
-        for (PersonTotalStatusResponse response : responses) {
-            OutputView.printPersonTotalStatus(response);
+    private void printAllTotalStatues(List<ParticipantTotalStatusResponse> responses) {
+        for (ParticipantTotalStatusResponse response : responses) {
+            OutputView.printParticipantTotalStatus(response);
         }
     }
 }

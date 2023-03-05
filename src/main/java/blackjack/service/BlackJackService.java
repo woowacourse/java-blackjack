@@ -5,11 +5,11 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.People;
-import blackjack.domain.Person;
+import blackjack.domain.Participants;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
-import blackjack.dto.PersonStatusResponse;
-import blackjack.dto.PersonTotalStatusResponse;
+import blackjack.dto.ParticipantStatusResponse;
+import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.dto.PlayerGameResult;
 import blackjack.dto.TotalGameResult;
 import java.util.List;
@@ -18,34 +18,34 @@ public class BlackJackService {
     private static final int START_DRAW_COUNT = 2;
 
     private final Deck deck;
-    private People people;
+    private Participants participants;
 
     public BlackJackService(DeckGenerator deckGenerator) {
         this.deck = deckGenerator.generate();
     }
 
-    public void createPeople(List<String> names) {
+    public void createParticipants(List<String> names) {
         List<Player> players = names.stream()
                 .map(name -> new Player(name, deck.drawCards(START_DRAW_COUNT)))
                 .collect(toList());
         Dealer dealer = new Dealer(deck.drawCards(START_DRAW_COUNT));
-        this.people = new People(dealer, players);
+        this.participants = new Participants(dealer, players);
     }
 
     public void drawMoreCardByName(String playerName) {
-        Person person = people.findByName(playerName);
-        validateOverScore(person);
-        person.addCard(deck.drawCard());
+        Participant participant = participants.findByName(playerName);
+        validateOverScore(participant);
+        participant.addCard(deck.drawCard());
     }
 
-    private void validateOverScore(Person person) {
-        if (!person.canDrawCard()) {
+    private void validateOverScore(Participant participant) {
+        if (!participant.canDrawCard()) {
             throw new IllegalStateException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
         }
     }
 
     public boolean drawMoreCardForDealer() {
-        Person dealer = people.getDealer();
+        Participant dealer = participants.getDealer();
         if (dealer.canDrawCard()) {
             dealer.addCard(deck.drawCard());
             return true;
@@ -54,31 +54,31 @@ public class BlackJackService {
     }
 
     public List<String> getPlayersName() {
-        return people.getPlayers().stream()
-                .map(Person::getName)
+        return participants.getPlayers().stream()
+                .map(Participant::getName)
                 .collect(toList());
     }
 
-    public List<PersonStatusResponse> getStartStatusResponse() {
-        return people.getPeople().stream()
-                .map(PersonStatusResponse::ofStart)
+    public List<ParticipantStatusResponse> getStartStatusResponse() {
+        return participants.getParticipants().stream()
+                .map(ParticipantStatusResponse::ofStart)
                 .collect(toList());
     }
 
-    public List<PersonTotalStatusResponse> getAllPersonTotalResponse() {
-        return people.getPeople().stream()
-                .map(PersonTotalStatusResponse::of)
+    public List<ParticipantTotalStatusResponse> getAllParticipantTotalResponse() {
+        return participants.getParticipants().stream()
+                .map(ParticipantTotalStatusResponse::of)
                 .collect(toList());
     }
 
-    public PersonStatusResponse getPersonStatusResponseByName(String name) {
-        Person person = people.findByName(name);
-        return PersonStatusResponse.of(person);
+    public ParticipantStatusResponse getParticipantStatusResponseByName(String name) {
+        Participant participant = participants.findByName(name);
+        return ParticipantStatusResponse.of(participant);
     }
 
     public TotalGameResult getTotalGameResult() {
-        Dealer dealer = people.getDealer();
-        return people.getPlayers()
+        Dealer dealer = participants.getDealer();
+        return participants.getPlayers()
                 .stream()
                 .map(player -> new PlayerGameResult(player.getName(), player.matchGame(dealer)))
                 .collect(collectingAndThen(toList(), TotalGameResult::of));

@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import blackjack.domain.Card;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
-import blackjack.dto.PersonStatusResponse;
+import blackjack.dto.ParticipantStatusResponse;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,12 +23,12 @@ class BlackJackServiceTest {
 
     @Test
     @DisplayName("참여자가 정상적으로 생성되어야 한다.")
-    void createPeople_success() {
+    void createParticipants_success() {
         // given
         List<String> names = List.of("glen", "pobi", "encho");
 
         // when
-        blackJackService.createPeople(names);
+        blackJackService.createParticipants(names);
 
         // then
         assertThat(blackJackService.getPlayersName())
@@ -38,15 +38,15 @@ class BlackJackServiceTest {
 
     @Test
     @DisplayName("참여자가 생성되면 카드를 2장 소지하고 있어야 한다.")
-    void createPeople_haveTwoCard() {
+    void createParticipants_haveTwoCard() {
         // given
         List<String> names = List.of("glen");
 
         // when
-        blackJackService.createPeople(names);
+        blackJackService.createParticipants(names);
 
         // then
-        assertThat(blackJackService.getPersonStatusResponseByName("glen").getCards())
+        assertThat(blackJackService.getParticipantStatusResponseByName("glen").getCards())
                 .hasSize(2);
     }
 
@@ -54,13 +54,13 @@ class BlackJackServiceTest {
     @DisplayName("참여자의 이름으로 카드를 뽑을 수 있어야 한다.")
     void drawMoreCardByName_success() {
         // given
-        blackJackService.createPeople(List.of("glen", "pobi"));
+        blackJackService.createParticipants(List.of("glen", "pobi"));
 
         // when
         blackJackService.drawMoreCardByName("glen");
 
         // then
-        PersonStatusResponse response = blackJackService.getPersonStatusResponseByName("glen");
+        ParticipantStatusResponse response = blackJackService.getParticipantStatusResponseByName("glen");
         assertThat(response.getCards())
                 .hasSize(3);
     }
@@ -69,7 +69,7 @@ class BlackJackServiceTest {
     @DisplayName("참여자의 이름으로 카드를 뽑을 때 점수가 21을 초과하면 예외가 발생해야 한다.")
     void drawMoreCardByName_overScore() {
         // given
-        blackJackService.createPeople(List.of("glen", "pobi"));
+        blackJackService.createParticipants(List.of("glen", "pobi"));
 
         // when
         blackJackService.drawMoreCardByName("glen");

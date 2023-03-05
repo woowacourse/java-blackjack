@@ -2,18 +2,18 @@ package blackjack.domain;
 
 import java.util.List;
 
-public abstract class Person {
+public abstract class Participant {
     protected static final int MAX_SCORE = 21;
 
     protected final Name name;
     protected final Cards cards;
 
-    protected Person(String name) {
+    protected Participant(String name) {
         this.name = new Name(name);
         this.cards = new Cards();
     }
 
-    protected Person(String name, List<Card> cards) {
+    protected Participant(String name, List<Card> cards) {
         this.name = new Name(name);
         this.cards = new Cards(cards);
     }

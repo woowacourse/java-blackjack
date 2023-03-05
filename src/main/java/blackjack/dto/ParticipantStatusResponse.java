@@ -3,24 +3,24 @@ package blackjack.dto;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Card;
-import blackjack.domain.Person;
+import blackjack.domain.Participant;
 import java.util.List;
 
-public class PersonStatusResponse {
+public class ParticipantStatusResponse {
     private final String name;
     private final List<String> cards;
 
-    public PersonStatusResponse(String name, List<String> cards) {
+    public ParticipantStatusResponse(String name, List<String> cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public static PersonStatusResponse of(Person person) {
-        return new PersonStatusResponse(person.getName(), getCardsStatus(person.getCards()));
+    public static ParticipantStatusResponse of(Participant participant) {
+        return new ParticipantStatusResponse(participant.getName(), getCardsStatus(participant.getCards()));
     }
 
-    public static PersonStatusResponse ofStart(Person person) {
-        return new PersonStatusResponse(person.getName(), getCardsStatus(person.getStartCards()));
+    public static ParticipantStatusResponse ofStart(Participant participant) {
+        return new ParticipantStatusResponse(participant.getName(), getCardsStatus(participant.getStartCards()));
     }
 
     private static List<String> getCardsStatus(List<Card> cards) {

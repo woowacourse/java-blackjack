@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
-public class Player extends Person {
+public class Player extends Participant {
     private static final List<String> BLACKLIST = List.of("딜러");
     private static final int BUST_SCORE = -1;
     private static final int PLAYER_START_SHOW_COUNT = 2;

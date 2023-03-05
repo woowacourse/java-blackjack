@@ -4,8 +4,8 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.dto.PersonStatusResponse;
-import blackjack.dto.PersonTotalStatusResponse;
+import blackjack.dto.ParticipantStatusResponse;
+import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.dto.PlayerGameResult;
 import blackjack.dto.TotalGameResult;
 import java.util.List;
@@ -22,15 +22,15 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + "딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public static void printPersonStatus(final PersonStatusResponse response) {
-        System.out.println(getPersonStatus(response));
+    public static void printParticipantStatus(final ParticipantStatusResponse response) {
+        System.out.println(getParticipantStatus(response));
     }
 
-    public static void printPersonTotalStatus(final PersonTotalStatusResponse response) {
-        System.out.println(getPersonStatus(response.getPersonStatusResponse()) + " - 결과: " + response.getScore());
+    public static void printParticipantTotalStatus(final ParticipantTotalStatusResponse response) {
+        System.out.println(getParticipantStatus(response.getParticipantStatusResponse()) + " - 결과: " + response.getScore());
     }
 
-    private static String getPersonStatus(final PersonStatusResponse response) {
+    private static String getParticipantStatus(final ParticipantStatusResponse response) {
         final String allCards = String.join(", ", response.getCards());
         return response.getName() + " 카드: " + allCards;
     }

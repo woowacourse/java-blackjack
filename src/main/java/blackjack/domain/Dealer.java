@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
-public class Dealer extends Person {
+public class Dealer extends Participant {
     private static final int DRAW_CARD_BOUNDARY = 16;
     private static final int DEALER_START_SHOW_COUNT = 1;
 

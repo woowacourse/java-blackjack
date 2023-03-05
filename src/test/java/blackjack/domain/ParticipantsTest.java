@@ -8,16 +8,16 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PeopleTest {
+class ParticipantsTest {
 
     @Test
     @DisplayName("Player만 반환할 수 있어야 한다.")
     void getPlayers_success() {
         // given
-        People people = new People(new Dealer(), List.of(new Player("glen"), new Player("encho")));
+        Participants participants = new Participants(new Dealer(), List.of(new Player("glen"), new Player("encho")));
 
         // when
-        List<Player> players = people.getPlayers();
+        List<Player> players = participants.getPlayers();
 
         // then
         assertThat(players)
@@ -29,10 +29,10 @@ class PeopleTest {
     @DisplayName("Dealer만 반환할 수 있어야 한다.")
     void getDealer_success() {
         // given
-        People people = new People(new Dealer(), List.of(new Player("glen"), new Player("encho")));
+        Participants participants = new Participants(new Dealer(), List.of(new Player("glen"), new Player("encho")));
 
         // when
-        Person dealer = people.getDealer();
+        Participant dealer = participants.getDealer();
 
         // then
         assertThat(dealer)
@@ -50,7 +50,7 @@ class PeopleTest {
 
         // expect
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new People(new Dealer(), players);
+            new Participants(new Dealer(), players);
         }).withMessage("[ERROR] 중복된 이름이 있습니다.");
     }
 }
