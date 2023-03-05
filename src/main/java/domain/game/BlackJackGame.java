@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.card.Card;
 import domain.card.Cards;
 import domain.user.Dealer;
 import domain.user.DealerStatus;
@@ -20,6 +21,18 @@ public class BlackJackGame {
         this.players = new ArrayList<>(players);
         this.dealer = dealer;
         this.cards = cards;
+    }
+
+    public void drawDefaultCard() {
+        drawPlayersDefaultCard();
+        dealer.receiveCards(cards.drawTwoCards());
+    }
+
+    // TODO: 2023/03/06 Players 컬렉션에서 동작해도 좋을 것 같다.
+    private void drawPlayersDefaultCard() {
+        for (Player player : players) {
+            player.receiveCards(cards.drawTwoCards());
+        }
     }
 
     public void drawOneMoreCardForPlayer(Player player) {
@@ -66,6 +79,18 @@ public class BlackJackGame {
             dealerWin(player);
         }
         playerWin(player);
+    }
+
+    public Map<String, List<Card>> getSetUpResult() {
+        Map<String, List<Card>> setUpResult = new LinkedHashMap<>();
+
+        setUpResult.put(dealer.getName(), List.of(dealer.getFirstCard()));
+
+        for (Player player : players) {
+            setUpResult.put(player.getName(), player.getCards());
+        }
+
+        return setUpResult;
     }
 
     public Map<String, Boolean> getUserFinalResult() {

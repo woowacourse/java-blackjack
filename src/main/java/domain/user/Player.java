@@ -1,7 +1,5 @@
 package domain.user;
 
-import domain.card.Card;
-import java.util.List;
 import java.util.Objects;
 
 public class Player extends User {
@@ -9,8 +7,8 @@ public class Player extends User {
     private PlayerStatus status = PlayerStatus.NORMAL;
     private boolean isWinner = false;
 
-    public Player(Name name, List<Card> firstTurnCards) {
-        super(firstTurnCards);
+    public Player(Name name) {
+        super();
         this.name = name;
     }
 

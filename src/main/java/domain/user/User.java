@@ -10,13 +10,19 @@ public abstract class User {
     private final List<Card> cards;
     protected final Score score;
 
-    public User(List<Card> firstTurnCards) {
-        cards = new ArrayList<>(firstTurnCards);
-        score = new Score(firstTurnCards);
+    public User() {
+        cards = new ArrayList<>();
+        score = new Score();
     }
 
     public void receiveCard(Card card) {
         cards.add(card);
+        score.calculate(cards);
+        checkBustByScore();
+    }
+
+    public void receiveCards(List<Card> receivedCards) {
+        cards.addAll(receivedCards);
         score.calculate(cards);
         checkBustByScore();
     }

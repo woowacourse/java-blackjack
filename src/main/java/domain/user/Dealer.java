@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Card;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Dealer extends User {
@@ -13,10 +12,9 @@ public class Dealer extends User {
     private DealerStatus status;
     private Map<Boolean, Integer> winningRecord;
 
-    public Dealer(List<Card> firstTurnCards) {
-        super(firstTurnCards);
+    public Dealer() {
+        super();
         initWinningRecord();
-        checkBustByScore();
     }
 
     private void initWinningRecord() {

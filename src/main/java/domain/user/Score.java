@@ -12,8 +12,8 @@ public class Score {
 
     private int score;
 
-    public Score(List<Card> cards) {
-        calculate(cards);
+    public Score() {
+        this.score = 0;
     }
 
     public void calculate(List<Card> cards) {
