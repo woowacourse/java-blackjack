@@ -79,17 +79,21 @@ public class BlackJackGame {
     }
 
     private boolean isPlayerWin(final int dealerScore, final int playerScore) {
-        if (dealerScore > BLACK_JACK_NUMBER && playerScore <= BLACK_JACK_NUMBER) {
+        if (isBurst(dealerScore) && !isBurst(playerScore)) {
             return true;
         }
-        return playerScore <= BLACK_JACK_NUMBER && playerScore > dealerScore;
+        return !isBurst(playerScore) && playerScore > dealerScore;
     }
 
     private boolean isPlayerDraw(final int dealerScore, final int playerScore) {
-        if (dealerScore > BLACK_JACK_NUMBER && playerScore > BLACK_JACK_NUMBER) {
+        if (isBurst(dealerScore) && isBurst(playerScore)) {
             return true;
         }
         return dealerScore == playerScore;
+    }
+
+    private boolean isBurst(int score) {
+        return score > BLACK_JACK_NUMBER;
     }
 
     public List<Card> getCards(final String playerName) {
