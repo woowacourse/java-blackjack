@@ -6,8 +6,8 @@ import blackjack.service.ShuffledDeckGenerator;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackService blackJackService = new BlackJackService(new ShuffledDeckGenerator());
+        BlackJackService blackJackService = new BlackJackService();
         BlackJackController blackJackController = new BlackJackController(blackJackService);
-        blackJackController.run();
+        blackJackController.run(new ShuffledDeckGenerator());
     }
 }

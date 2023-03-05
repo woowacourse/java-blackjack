@@ -18,7 +18,7 @@ class BlackJackServiceTest {
 
     @BeforeEach
     void setUp() {
-        blackJackService = new BlackJackService(new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52));
+        blackJackService = new BlackJackService();
     }
 
     @Test
@@ -28,7 +28,7 @@ class BlackJackServiceTest {
         List<String> names = List.of("glen", "pobi", "encho");
 
         // when
-        blackJackService.createParticipants(names);
+        blackJackService.setupGame(new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52), names);
 
         // then
         assertThat(blackJackService.getPlayersName())
@@ -43,7 +43,7 @@ class BlackJackServiceTest {
         List<String> names = List.of("glen");
 
         // when
-        blackJackService.createParticipants(names);
+        blackJackService.setupGame(new ShuffledDeckGenerator(), names);
 
         // then
         assertThat(blackJackService.getParticipantStatusResponseByName("glen").getCards())
@@ -54,7 +54,7 @@ class BlackJackServiceTest {
     @DisplayName("참여자의 이름으로 카드를 뽑을 수 있어야 한다.")
     void drawMoreCardByName_success() {
         // given
-        blackJackService.createParticipants(List.of("glen", "pobi"));
+        blackJackService.setupGame(new ShuffledDeckGenerator(), List.of("glen", "pobi"));
 
         // when
         blackJackService.drawMoreCardByName("glen");
@@ -69,7 +69,7 @@ class BlackJackServiceTest {
     @DisplayName("참여자의 이름으로 카드를 뽑을 때 점수가 21을 초과하면 예외가 발생해야 한다.")
     void drawMoreCardByName_overScore() {
         // given
-        blackJackService.createParticipants(List.of("glen", "pobi"));
+        blackJackService.setupGame(new ShuffledDeckGenerator(), List.of("glen", "pobi"));
 
         // when
         blackJackService.drawMoreCardByName("glen");

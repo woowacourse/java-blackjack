@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.service.BlackJackService;
+import blackjack.service.DeckGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -14,8 +15,8 @@ public class BlackJackController {
         this.blackJackService = blackJackService;
     }
 
-    public void run() {
-        repeat(() -> blackJackService.createParticipants(InputView.readPlayerNames()));
+    public void run(DeckGenerator deckGenerator) {
+        repeat(() -> blackJackService.setupGame(deckGenerator, InputView.readPlayerNames()));
         OutputView.printStartDrawCardMessage(blackJackService.getPlayersName());
         printAllParticipantStatues(blackJackService.getStartStatusResponse());
         drawMoreCardForPlayers();

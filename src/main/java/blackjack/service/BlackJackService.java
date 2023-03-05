@@ -5,8 +5,8 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.Participants;
 import blackjack.domain.Participant;
+import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
@@ -17,14 +17,11 @@ import java.util.List;
 public class BlackJackService {
     private static final int START_DRAW_COUNT = 2;
 
-    private final Deck deck;
+    private Deck deck;
     private Participants participants;
 
-    public BlackJackService(DeckGenerator deckGenerator) {
+    public void setupGame(DeckGenerator deckGenerator, List<String> names) {
         this.deck = deckGenerator.generate();
-    }
-
-    public void createParticipants(List<String> names) {
         List<Player> players = names.stream()
                 .map(name -> new Player(name, deck.drawCards(START_DRAW_COUNT)))
                 .collect(toList());
