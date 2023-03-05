@@ -22,7 +22,7 @@ public class GamePointTest {
                 Card.create(CardShape.HEART, CardNumber.of(4))
         );
 
-        final GamePoint gamePoint = new GamePoint(data);
+        final GamePoint gamePoint = GamePoint.create(data);
         assertThat(gamePoint.getPoint()).isSameAs(9);
     }
 
@@ -35,7 +35,7 @@ public class GamePointTest {
                 Card.create(CardShape.HEART, CardNumber.of(3))
         );
 
-        final GamePoint gamePoint = new GamePoint(data);
+        final GamePoint gamePoint = GamePoint.create(data);
         assertThat(gamePoint.getPoint()).isSameAs(16);
     }
 
@@ -47,7 +47,7 @@ public class GamePointTest {
                 Card.create(CardShape.DIAMOND, CardNumber.of(13)),
                 Card.create(CardShape.HEART, CardNumber.of(2))
         );
-        final GamePoint gamePoint = new GamePoint(data);
+        final GamePoint gamePoint = GamePoint.create(data);
         assertThat(gamePoint.getPoint()).isSameAs(0);
     }
 
@@ -59,7 +59,7 @@ public class GamePointTest {
                 Card.create(CardShape.DIAMOND, CardNumber.of(13)),
                 Card.create(CardShape.HEART, CardNumber.of(1))
         );
-        final GamePoint gamePoint = new GamePoint(data);
+        final GamePoint gamePoint = GamePoint.create(data);
         assertThat(gamePoint.getPoint()).isSameAs(21);
     }
 
@@ -74,7 +74,7 @@ public class GamePointTest {
                 Card.create(CardShape.HEART, CardNumber.of(1)),
                 Card.create(CardShape.HEART, CardNumber.of(1))
         );
-        final GamePoint gamePoint = new GamePoint(data);
+        final GamePoint gamePoint = GamePoint.create(data);
         assertThat(gamePoint.getPoint()).isSameAs(16);
     }
 }

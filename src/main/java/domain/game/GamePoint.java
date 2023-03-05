@@ -14,12 +14,20 @@ public final class GamePoint {
 
     private final int gamePoint;
 
-    public GamePoint(final List<Card> cards) {
-        int point = getPoint(calculateMaxPoint(cards), getCountOfAce(cards));
-        this.gamePoint = calculateBust(point);
+    private GamePoint(final int gamePoint) {
+        this.gamePoint = gamePoint;
     }
 
-    private int getPoint(int point, int aceCount) {
+    public static GamePoint create(final List<Card> cards) {
+        int point = getPoint(calculateMaxPoint(cards), getCountOfAce(cards));
+        return new GamePoint(calculateBust(point));
+    }
+
+    public static GamePoint of(final int gamePoint) {
+        return new GamePoint(gamePoint);
+    }
+
+    private static int getPoint(int point, int aceCount) {
         while (point > BLACK_JACK && aceCount > 0) {
             point -= 10;
             aceCount -= 1;
@@ -27,26 +35,26 @@ public final class GamePoint {
         return calculateBust(point);
     }
 
-    private int calculateMaxPoint(final List<Card> cards) {
+    private static int calculateMaxPoint(final List<Card> cards) {
         return cards.stream()
-                .mapToInt(this::transform)
+                .mapToInt(GamePoint::transform)
                 .sum();
     }
 
-    private int getCountOfAce(final List<Card> cards) {
+    private static int getCountOfAce(final List<Card> cards) {
         return (int) cards.stream()
                 .filter(card -> card.isSameAs(ACE))
                 .count();
     }
 
-    private int calculateBust(final int point) {
+    private static int calculateBust(final int point) {
         if (point > BLACK_JACK) {
             return BUST;
         }
         return point;
     }
 
-    private int transform(Card card) {
+    private static int transform(Card card) {
         if (card.isSameAs(ACE)) {
             return ACE_UPPER;
         }
@@ -62,10 +70,6 @@ public final class GamePoint {
 
     public int getPoint() {
         return gamePoint;
-    }
-
-    public boolean isLowerThan(final int value) {
-        return gamePoint <= value;
     }
 
     public boolean isLowerThan(final GamePoint point) {

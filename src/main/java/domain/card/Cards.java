@@ -12,7 +12,7 @@ public final class Cards {
 
     private Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-        this.gamePoint = new GamePoint(cards);
+        this.gamePoint = GamePoint.create(cards);
     }
 
     public static Cards create(final List<Card> cards) {
