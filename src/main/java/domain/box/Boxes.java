@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -73,19 +72,14 @@ public class Boxes {
     }
 
     public Player getCurrentTurnPlayer() {
-        Optional<Entry<Player, BoxStatus>> currentTurnBox = boxes.entrySet()
-            .stream()
-            .filter(this::isOnTurnPlayer)
-            .filter((entry) -> entry.getKey().isPlayer())
+        ArrayList<Player> players = new ArrayList<>(boxes.keySet());
+        Optional<Player> currentTurnPlayer = players.stream()
+            .filter((player -> boxes.get(player).isOnTurn()))
             .findFirst();
-        if (currentTurnBox.isEmpty()) {
+        if (currentTurnPlayer.isEmpty()) {
             throw new IllegalStateException("더 이상 게임을 진행할 박스가 없습니다.");
         }
-        return currentTurnBox.get().getKey();
-    }
-
-    private boolean isOnTurnPlayer(Entry<Player, BoxStatus> box) {
-        return box.getValue().isOnTurn() && box.getKey().isPlayer();
+        return currentTurnPlayer.get();
     }
 
     public BoxResult getBoxResult(Player participant) {
