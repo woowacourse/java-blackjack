@@ -3,6 +3,8 @@ package domain;
 import java.util.List;
 
 public class Participant {
+    private static final int BUST_BOUNDARY_VALUE = 21;
+
     private final Hand hand;
     private final String name;
 
@@ -14,8 +16,6 @@ public class Participant {
     public void receiveCard(Card card) {
         hand.addCard(card);
     }
-
-
 
     public int getHandValue() {
         return hand.calculateValue();
@@ -34,6 +34,6 @@ public class Participant {
     }
 
     boolean isBust() {
-        return hand.calculateValue() > 21;
+        return hand.calculateValue() > BUST_BOUNDARY_VALUE;
     }
 }
