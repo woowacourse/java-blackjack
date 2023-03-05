@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
-import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.util.CardNumber;
 import blackjack.util.CardSuit;
@@ -14,9 +13,10 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final int FIRST_HIT_COUNT = 2;
     private static final int FIRST_CARD = 0;
     private static final int DEALER_INDEX = 0;
+    public static final String HIT_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final int FIRST_CARD_COUNT = 2;
 
     public void printParticipants(final List<String> participants) {
         System.out.println();
@@ -59,8 +59,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void dealerHitMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public void hitDealerCount(Dealer dealer) {
+        System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getReceivedCards().size() - FIRST_CARD_COUNT));
     }
 
     public void printDealerWinORLose(final List<WinningResult> dealerResult) {
@@ -85,7 +85,7 @@ public class OutputView {
     private void printFirstPlayersCards(final Participant participant) {
         System.out.print(participant.getName() + " : ");
         List<String> card = new ArrayList<>();
-        for (int i = 0; i < FIRST_HIT_COUNT; i++) {
+        for (int i = 0; i < FIRST_CARD_COUNT; i++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(i));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(i));
             card.add(cardNumber.getName() + cardSuit.getCardSuitName());

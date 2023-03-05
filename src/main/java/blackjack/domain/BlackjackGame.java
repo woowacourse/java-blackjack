@@ -45,6 +45,12 @@ public class BlackjackGame {
             firstHitRule(cardPickerGenerator, participant);
         }
     }
+    public void dealerHitCard(final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+        Dealer dealer = findDealer();
+        while (dealer.decideHit()) {
+            dealer.hit(cards.pick(cardPickerGenerator));
+        }
+    }
 
     private void initPlayerResult(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
         if (dealerResult == WinningResult.WIN) {

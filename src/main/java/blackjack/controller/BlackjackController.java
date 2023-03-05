@@ -28,19 +28,19 @@ public class BlackjackController {
 
         gameSetting(participants, cardPickerGenerator, blackjackGame);
 
-        playersHitCard(blackjackGame, cards, cardPickerGenerator);
-
-        dealerHitCard(blackjackGame, cards, cardPickerGenerator);
+        hitParticipantsCard(blackjackGame, cards, cardPickerGenerator);
 
         printResult(participants, blackjackGame);
 
     }
 
-    private void playersHitCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+    private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
         List<Player> players = blackjackGame.findPlayers();
-        for(int i = 0, end =players.size(); i < end; i++) {
-            hitCard(players.get(i), cards, cardPickerGenerator);
+        for (Player player : players) {
+            hitPlayerCard(player, cards, cardPickerGenerator);
         }
+        blackjackGame.dealerHitCard(cards,cardPickerGenerator);
+        outputView.hitDealerCount(blackjackGame.findDealer());
     }
 
     private void printResult(final Participants participants, final BlackjackGame blackjackGame) {
@@ -51,15 +51,7 @@ public class BlackjackController {
         outputView.printPlayerWinORLose(blackjackGame.generatePlayersResult());
     }
 
-    private void dealerHitCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
-        Dealer dealer = blackjackGame.findDealer();
-        while (dealer.decideHit()) {
-            outputView.dealerHitMessage();
-            dealer.hit(cards.pick(cardPickerGenerator));
-        }
-    }
-
-    private void hitCard(final Player player, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+    private void hitPlayerCard(final Player player, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
         while (player.decideHit() && inputView.readHitCommand(player.getName()).equals("y")) {
             player.hit(cards.pick(cardPickerGenerator));
             outputView.printCurrentCards(player);

@@ -64,9 +64,5 @@ public abstract class Participant {
         return receivedCards.get(index).getCardSuit();
     }
 
-    public boolean isDealer() {
-       return participantName.equals(new ParticipantName("딜러"));
-    }
-
     abstract boolean decideHit();
 }
