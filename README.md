@@ -9,31 +9,30 @@
 ### 의존성 다이어그램
 
 ```mermaid
-flowchart
-    Card --> Rank
-    Card --> Shape
-
-    Cards --> Card
-
-    Deck --> Card
-
-    BlackjackGame --> BlackjackGameResult
-
+flowchart TD
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView
     BlackjackController --> OutputView
 
-    Players --> Player
-    Player --> Gambler --> Hand
-    Player --> Dealer --> Hand
-
-    Hand --> Cards
-    Hand --> State
-
-    Gambler --> Name
-    Dealer --> Name
-
+    BlackjackGame --> BlackjackGameResult
     BlackjackGame --> Players
+
+    subgraph 카드
+        ShuffledDeck --> Card
+        Card --> Rank
+        Card --> Shape
+        Cards --> Card
+        Hand -- 사용자의 패 --> Cards
+        Hand -- 핸드의 상태 --> State
+    end
+
+    Players --> 플레이어 --> Hand
+
+    subgraph 플레이어
+        direction BT
+        Gambler -.-> Player
+        Dealer -.-> Player
+    end
 ```
 
 ### 블랙잭 게임 개요
