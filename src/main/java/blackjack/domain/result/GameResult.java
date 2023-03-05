@@ -24,6 +24,7 @@ public class GameResult {
 
     public EnumMap<ResultMatcher, Integer> calculateDealerScore(Map<Player, ResultMatcher> playerGameResults) {
         EnumMap<ResultMatcher, Integer> dealerScore = new EnumMap<>(ResultMatcher.class);
+
         Arrays.stream(ResultMatcher.values())
                 .forEach(resultMatcher->dealerScore.put(resultMatcher, 0));
         for (ResultMatcher playerResult : playerGameResults.values()) {
