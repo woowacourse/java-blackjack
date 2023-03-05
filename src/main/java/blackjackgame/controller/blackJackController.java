@@ -11,11 +11,11 @@ import blackjackgame.view.AddCardResponse;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
 
-public class blackJackController {
+public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public blackJackController(final InputView inputView, final OutputView outputView) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
