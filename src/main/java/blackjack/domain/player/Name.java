@@ -15,13 +15,13 @@ public class Name {
         this.value = value;
     }
 
-    private static void validate(final String value) {
+    private void validate(final String value) {
         if (isValidName(value)) {
             throw new IllegalArgumentException(INVALID_NAME_LENGTH_MESSAGE + value);
         }
     }
 
-    private static boolean isValidName(final String value) {
+    private boolean isValidName(final String value) {
         return value == null || value.length() < NAME_LENGTH_LOWER_BOUND || NAME_LENGTH_UPPER_BOUND < value.length();
     }
 
