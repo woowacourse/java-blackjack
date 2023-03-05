@@ -1,6 +1,6 @@
 package domain;
 
-public enum Status {
+public enum DealerStatus {
     WIN,
     DRAW,
     LOSE
