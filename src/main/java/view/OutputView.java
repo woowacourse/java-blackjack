@@ -27,6 +27,7 @@ public class OutputView {
     private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER = "딜러";
     private static final String BUSTED_RESULT_GUIDE_MESSAGE = "Busted";
+    private static final int FIRST_INDEX_CARD = 0;
 
     private OutputView() {
     }
@@ -45,15 +46,17 @@ public class OutputView {
         return playerNames;
     }
 
-    public static void printPlayersCards(Dealer dealer, Players players) {
+    public static void printInitialCards(Dealer dealer, Players players) {
         printDealerCards(dealer);
-        printPlayersCards(players);
+        printInitialCards(players);
     }
 
     private static void printDealerCards(Dealer dealer) {
-        printPlayerName(dealer);
-        printPlayerCards(dealer);
         System.out.println(NEW_LINE);
+        printPlayerName(dealer);
+        Card getOneCard = dealer.getCards()
+                .get(FIRST_INDEX_CARD);
+        System.out.println(getOneCard.getName() + getOneCard.getSuit());
     }
 
     private static void printPlayerName(Player player) {
@@ -74,7 +77,7 @@ public class OutputView {
         return output;
     }
 
-    private static void printPlayersCards(Players players) {
+    private static void printInitialCards(Players players) {
         for (Player player : players.getPlayers()) {
             printSinglePlayer(player);
         }

@@ -50,7 +50,7 @@ public class BlackjackController {
         }
         dealer.drawCard(deck.pickCard());
         dealer.drawCard(deck.pickCard());
-        printPlayersCards(dealer, players);
+        printInitialCards(dealer, players);
     }
 
     private void playersHitOrStand(Players players) {
