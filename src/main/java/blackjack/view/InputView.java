@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class InputView {
-    public static final String NAME_SPLIT = ",";
-    public static final String ADDITIONAL_HIT_APPROVE = "y";
+    private static final String NAME_SPLIT = ",";
+    private static final String ADDITIONAL_HIT_APPROVE = "y";
 
     private static final Pattern PLAYER_HIT_REGEX = Pattern.compile("[y|n]");
     private static final Scanner scanner = new Scanner(System.in);
