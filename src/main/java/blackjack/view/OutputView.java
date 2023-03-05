@@ -1,10 +1,15 @@
 package blackjack.view;
 
-import blackjack.domain.player.*;
-import blackjack.domain.result.Result;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.User;
+import blackjack.domain.result.ResultMatcher;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -13,55 +18,55 @@ public class OutputView {
 
     public static void printReadyMessage(List<Name> names) {
         String allName = names.stream().map(Name::getName).collect(Collectors.joining(", "));
-        System.out.println("딜러와 " + allName + "2장을 나누었습니다.");
+        System.out.println("\n딜러와 " + allName + "에게 2장을 나누었습니다.");
     }
 
-    public static void printPlayersCurrentCards(Players players) {
-        for (Player player : players.getPlayers()) {
+    public static void printPlayersCurrentCards(List<Player> players) {
+        for (Player player : players) {
             printPlayerCurrentCards(player);
         }
     }
 
     public static void printPlayerCurrentCards(Player player) {
-        String playerCards = getPlayerCards(player);
-        System.out.println(player.getPlayerName() + "카드: " + playerCards);
+        System.out.println(player.getPlayerName() + " 카드: " + getUserCards(player));
     }
 
-    private static String getPlayerCards(User user) {
+    public static void printDealerFirstCard(Dealer dealer) {
+        Card firstCard = dealer.getPlayerCards().get(0);
+        System.out.println(dealer.getDealerName() + " 카드: " + firstCard.getCardNumber().getNumber() + firstCard.getSymbol());
+    }
+
+    // 딜러와 플레이어의 카드와 최종 결과를 출력한다.
+    public static void printResults(Dealer dealer, List<Player> players) {
+        System.out.println();
+        System.out.println(dealer.getDealerName() + "카드: " + getUserCards(dealer) + " - 결과: " + dealer.getTotalScore());
+        for (Player player : players) {
+            System.out.println(player.getPlayerName() + "카드: " + getUserCards(player) + " - 결과: " + player.getTotalScore());
+        }
+    }
+
+    // 최종 결과를 통한 최종 승패를 출력한다.
+    public static void printScore(Map<Player, ResultMatcher> playersScore, EnumMap<ResultMatcher, Integer> dealerScore) {
+        System.out.println("\n## 최종 승패");
+        System.out.print("딜러: ");
+        for (Map.Entry<ResultMatcher, Integer> score : dealerScore.entrySet()) {
+            if (score.getValue() > 0) {
+                System.out.print(score.getKey().getResult() + score.getValue() + " ");
+            }
+        }
+        System.out.println();
+        for (Map.Entry<Player, ResultMatcher> score : playersScore.entrySet()) {
+            System.out.println(score.getKey().getPlayerName() + ": " + score.getValue().getResult());
+        }
+    }
+
+    private static String getUserCards(User user) {
         return user.getPlayerCards().stream()
-                .map(card -> card.getNumber().getNumber() + card.getSymbol().getSymbol())
+                .map(card -> card.getCardNumber().getNumber() + card.getSymbol())
                 .collect(Collectors.joining(", "));
     }
 
-    public static void printDealerCurrentCards(Dealer dealer) {
-        String dealerCards = dealer.getPlayerCards().stream()
-                .map(card -> card.getNumber().getNumber() + card.getSymbol().getSymbol())
-                .limit(1)
-                .collect(Collectors.joining(""));
-        System.out.println("딜러 카드: " + dealerCards);
-    }
-
-    public static void printScore(Dealer dealer, Players players) {
-        System.out.println("딜러 카드: " + getPlayerCards(dealer) + " - 결과: " + dealer.getTotalScore());
-        for (Player player : players.getPlayers()) {
-            System.out.println(getPlayerCards(player) + " - 결과: " + player.getTotalScore());
-        }
-    }
-
-    public static void printResults(HashMap<Player, Result> playerResults, HashMap<Result, Integer> dealerResults) {
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
-        for (Result result : dealerResults.keySet()) {
-            if (dealerResults.get(result) > 0) {
-                System.out.println(dealerResults.get(result) + result.getResult() + " ");
-            }
-        }
-        for (Player player : playerResults.keySet()) {
-            System.out.println(player.getPlayerName() + ": " + playerResults.get(player).getResult());
-        }
-    }
-
     public static void printDealerOneMore() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
