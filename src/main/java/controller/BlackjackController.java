@@ -15,11 +15,11 @@ public class BlackjackController {
 
     private final Deck deck = new Deck();
 
-    public void blackjack() {
+    public void runGame() {
         Players players = getPlayers();
         Dealer dealer = new Dealer();
 
-        run(players, dealer);
+        process(players, dealer);
     }
 
     private Players getPlayers() {
@@ -31,7 +31,7 @@ public class BlackjackController {
         }
     }
 
-    private void run(Players players, Dealer dealer) {
+    private void process(Players players, Dealer dealer) {
         drawInitialCards(players, dealer);
 
         playersHitOrStand(players);
