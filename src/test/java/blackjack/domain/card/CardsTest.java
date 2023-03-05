@@ -22,7 +22,7 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("갖고 있는 Cards 중 Ace가 있는 경우의 총점 계산")
+    @DisplayName("갖고 있는 Cards 중 Ace가 있는 경우의 총점 계산 - Ace의 점수가 11로 계산되는 경우")
     void calculateTotalScore_containsAce_11() {
         // given
         Cards cards = new Cards(List.of(
@@ -39,7 +39,7 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("갖고 있는 Cards 중 Ace가 있는 경우의 총점 계산")
+    @DisplayName("갖고 있는 Cards 중 Ace가 있는 경우의 총점 계산 - Ace의 점수가 1로 계산되는 경우")
     void calculateTotalScore_containsAce_1() {
         // given
         Cards cards = new Cards(List.of(
