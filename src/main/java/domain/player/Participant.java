@@ -21,6 +21,6 @@ public final class Participant extends Player {
     }
 
     public boolean isKeepGaming(boolean isHit) {
-        return isBurst() && isHit;
+        return !isBurst() && isHit;
     }
 }
