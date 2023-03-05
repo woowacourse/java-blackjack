@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.CardNumber;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardPool {
@@ -38,10 +39,10 @@ public class CardPool {
 
     private boolean containsAce() {
         return cards.stream()
-                .anyMatch(card -> card.getNumber() == CardNumber.ACE);
+                .anyMatch(card -> card.hasNumberOf(CardNumber.ACE));
     }
 
     public List<Card> getCards() {
-        return List.copyOf(cards);
+        return Collections.unmodifiableList(cards);
     }
 }

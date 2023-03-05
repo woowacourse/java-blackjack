@@ -10,6 +10,10 @@ public class Card {
         this.number = number;
     }
 
+    public boolean hasNumberOf(CardNumber otherNumber) {
+        return number.equals(otherNumber);
+    }
+
     public CardType getType() {
         return type;
     }
