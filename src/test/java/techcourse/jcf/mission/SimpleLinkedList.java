@@ -17,6 +17,7 @@ public class SimpleLinkedList<T> implements SimpleList<T> {
         }
     }
 
+
     @Override
     public T get(int index) {
         Node<T> pointer = getNodeOf(index);

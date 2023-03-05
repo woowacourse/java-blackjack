@@ -5,7 +5,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     private int capacity;
     private int pointerToNext;
-    private T[] values;
+    private Object[] values;
 
     public SimpleArrayList() {
         this.capacity = DEFAULT_CAPACITY;
@@ -24,7 +24,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     @Override
     public T get(int index) {
         checkIndexHaveValue(index);
-        return this.values[index];
+        return (T) this.values[index];
     }
 
     @Override
@@ -49,10 +49,11 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     @Override
     public T set(int index, T value) {
         checkIndexHaveValue(index);
-        T valueBeforeChange = this.values[index];
+        T valueBeforeChange = (T) this.values[index];
         this.values[index] = value;
         return valueBeforeChange;
     }
+
 
     @Override
     public boolean contains(T value) {
@@ -98,7 +99,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     @Override
     public T remove(int index) {
         checkIndexHaveValue(index);
-        T valueToRemove = this.values[index];
+        T valueToRemove = (T) this.values[index];
         moveToLeftFromIndexToEnd(index);
         return valueToRemove;
     }
@@ -125,7 +126,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         if (this.values.length < 10) {
             T[] newValues = (T[]) new Object[DEFAULT_CAPACITY];
             for (int i = 0; i < this.values.length; i++) {
-                newValues[i] = this.values[i];
+                newValues[i] = (T) this.values[i];
             }
             this.values = newValues;
         }
@@ -141,7 +142,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.capacity *= 2;
         T[] newValues = (T[]) new Object[this.capacity];
         for (int i = 0; i < this.values.length; i++) {
-            newValues[i] = this.values[i];
+            newValues[i] = (T) this.values[i];
         }
         this.values = newValues;
     }

@@ -23,4 +23,11 @@ class SimpleListIntegerTest {
         assertThat(simpleList.get(0)).isEqualTo(1);
         assertThat(simpleList.get(1)).isEqualTo(2);
     }
+
+    @Test
+    void fromArrayToList() {
+        SimpleList<Integer> simpleArrayList = SimpleList.<Integer>fromArrayToList(new Integer[]{1, 2});
+        assertThat(simpleArrayList.get(0)).isEqualTo(1);
+        assertThat(simpleArrayList.get(1)).isEqualTo(2);
+    }
 }
