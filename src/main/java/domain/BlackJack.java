@@ -5,6 +5,7 @@ import domain.gameresult.GameResult;
 import domain.gameresult.GameResultReadOnly;
 import domain.player.PlayerReadOnly;
 import domain.player.Players;
+import domain.player.PlayersReadOnly;
 import domain.strategy.IndexGenerator;
 
 import java.util.Arrays;
@@ -42,12 +43,13 @@ public class BlackJack {
         players.giveCardToDealer(cardRepository);
     }
 
-    public List<PlayerReadOnly> getPlayers() {
-        return players.getAllPlayers();
+    public PlayersReadOnly getPlayers() {
+        return PlayersReadOnly.from(players);
     }
 
     public List<PlayerReadOnly> getParticipants() {
-        return players.getParticipants();
+        return PlayersReadOnly.from(players)
+                .getParticipants();
     }
 
     public GameResultReadOnly battle() {

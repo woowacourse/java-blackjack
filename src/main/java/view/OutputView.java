@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.gameresult.GameResultReadOnly;
 import domain.gameresult.Result;
 import domain.player.PlayerReadOnly;
+import domain.player.PlayersReadOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,8 @@ public class OutputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printPlayersInformation(List<PlayerReadOnly> players) {
-        List<String> playerNames = players.stream()
-                .map(PlayerReadOnly::getName)
-                .collect(Collectors.toUnmodifiableList());
+    public static void printPlayersInformation(PlayersReadOnly players) {
+        List<String> playerNames = players.getAllNames();
         printPlayerNames(playerNames);
         printPlayerCardConditions(players);
     }
@@ -35,11 +34,10 @@ public class OutputView {
                 String.join(", ", playerNames));
     }
 
-    private static void printPlayerCardConditions(List<PlayerReadOnly> players) {
-        players = new ArrayList<>(players);
-        PlayerReadOnly dealer = players.remove(0);
+    private static void printPlayerCardConditions(PlayersReadOnly players) {
+        PlayerReadOnly dealer = players.getDealer();
         printDealerCardCondition(dealer);
-        printParticipantCardCondition(players);
+        printParticipantCardCondition(players.getParticipants());
     }
 
     private static void printDealerCardCondition(PlayerReadOnly dealer) {
@@ -83,10 +81,9 @@ public class OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printPlayersFinalInformation(List<PlayerReadOnly> players) {
+    public static void printPlayersFinalInformation(PlayersReadOnly players) {
         printEmptyLine();
-
-        for (PlayerReadOnly player : players) {
+        for (PlayerReadOnly player : players.getAllPlayers()) {
             printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
             System.out.printf(" - 결과: %d%n", player.getTotalScore());
         }

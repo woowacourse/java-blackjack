@@ -41,19 +41,17 @@ public class Players {
         participants.forEach(participant -> dealer.battle(participant, gameResult));
     }
 
-    public List<PlayerReadOnly> getParticipants() {
-        return participants.stream()
-                .map(PlayerReadOnly::from)
-                .collect(Collectors.toUnmodifiableList());
+    protected List<Participant> getParticipants() {
+        return participants;
     }
 
-    public List<PlayerReadOnly> getAllPlayers() {
+    public List<String> getAllPlayerNames() {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
         players.addAll(participants);
 
         return players.stream()
-                .map(PlayerReadOnly::from)
+                .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -67,5 +65,9 @@ public class Players {
     public void giveCardByName(String name, Card card) {
         Player player = findByName(name);
         player.addCard(card);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
