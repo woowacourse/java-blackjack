@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final String DELIMITER = "\\s*,\\s*";
-
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public List<String> readPlayerNames() {

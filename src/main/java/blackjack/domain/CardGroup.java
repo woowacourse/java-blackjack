@@ -26,7 +26,6 @@ public class CardGroup {
         return List.copyOf(cards);
     }
 
-
     public int getAceCount() {
         return (int) cards.stream()
                 .filter(card -> card.getNumber() == CardNumber.ACE)

@@ -3,8 +3,8 @@ package blackjack.controller;
 import java.util.Arrays;
 
 public enum DrawInput {
-    DRAW("y", true),
 
+    DRAW("y", true),
     STAY("n", false);
 
     static final String INPUT_FORM_EXCEPTION_MESSAGE = "'y'또는 'n'을 입력해 주세요;";
