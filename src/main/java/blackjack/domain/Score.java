@@ -26,4 +26,12 @@ public class Score {
     public int getValue() {
         return value;
     }
+
+    public boolean isBust() {
+        return value > BLACK_JACK_NUMBER;
+    }
+
+    public boolean isBlackJackScore() {
+        return value == BLACK_JACK_NUMBER;
+    }
 }
