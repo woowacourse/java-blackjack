@@ -54,7 +54,7 @@ public class Players {
         }
     }
 
-    public void distributeInitialCards(final Deck deck) {
+    void distributeInitialCards(final Deck deck) {
         for (final Player player : players) {
             final Card firstCard = deck.removeCard();
             final Card secondCard = deck.removeCard();
@@ -80,12 +80,12 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
     }
 
-    public void draw(final String playerName, final Deck deck) {
+    public void draw(final String playerName, final Card card) {
         final Player targetPlayer = players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
-        targetPlayer.drawCard(deck.removeCard());
+        targetPlayer.drawCard(card);
     }
 
     public List<Card> findCardsByPlayerName(final String playerName) {
