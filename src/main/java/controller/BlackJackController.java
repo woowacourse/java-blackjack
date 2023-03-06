@@ -39,9 +39,17 @@ public class BlackJackController {
     }
 
     private void progress(Players players, CardDistributor cardDistributor, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            requestPlayerMoreCard(cardDistributor, player);
-        }
+        progressPlayers(players, cardDistributor);
+        progressDealer(dealer, cardDistributor);
+    }
+
+    private void end(Players players, Dealer dealer) {
+        printFinalCard(dealer);
+        players.getPlayers().forEach(this::printFinalCard);
+        outputView.printFinalResult(dealer.getNameToValue(), new Result(dealer, players).getResult());
+    }
+
+    private void progressDealer(Dealer dealer, CardDistributor cardDistributor) {
         int dealerMoreCardCount = 0;
         while (dealer.isMoreCardAble() && cardDistributor.isCardLeft()) {
             dealer.pick(cardDistributor.distribute());
@@ -50,10 +58,10 @@ public class BlackJackController {
         outputView.printDealerMoreCard(dealer.getNameToValue(), dealerMoreCardCount);
     }
 
-    private void end(Players players, Dealer dealer) {
-        printFinalCard(dealer);
-        players.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(dealer.getNameToValue(), new Result(dealer, players).getResult());
+    private void progressPlayers(Players players, CardDistributor cardDistributor) {
+        for (Player player : players.getPlayers()) {
+            requestPlayerMoreCard(cardDistributor, player);
+        }
     }
 
     private void printFinalCard(Participant participant) {
@@ -64,9 +72,16 @@ public class BlackJackController {
 
     private void printInitialDistribution(Players players, Dealer dealer) {
         outputView.printFirstCardDistribution(dealer.getNameToValue(), players.getPlayerNamesToString());
+        printDealerInitialCard(dealer);
+        printPlayersInitialCard(players);
+    }
 
+    private void printDealerInitialCard(Dealer dealer) {
         outputView.printCardStatus(dealer.getNameToValue(),
                 CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
+    }
+
+    private void printPlayersInitialCard(Players players) {
         for (Participant player : players.getPlayers()) {
             outputView.printCardStatus(player.getNameToValue(),
                     CardStatusConverter.convertToCardStatus(player.getCardList()));
