@@ -13,20 +13,13 @@ public class Dealer extends Participant {
     }
 
     public JudgeResult judge(Player player) {
+        if (player.isBust()) {
+            return JudgeResult.LOSE;
+        }
         if (isBust()) {
             return JudgeResult.WIN;
         }
-
-        int dealerSum = computeCardsScore();
-        int playerSum = player.computeCardsScore();
-        // TODO Enum에서 조건에 따라 값 반환하도록 수정
-        if (playerSum == dealerSum) {
-            return JudgeResult.PUSH;
-        }
-        if (playerSum > dealerSum) {
-            return JudgeResult.WIN;
-        }
-        return JudgeResult.LOSE;
+        return JudgeResult.match(player.computeCardsScore(), computeCardsScore());
     }
 
     @Override
