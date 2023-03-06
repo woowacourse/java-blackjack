@@ -1,9 +1,8 @@
-package dto.request;
+package application;
 
 
 import java.util.Arrays;
 
-//TODO: 패키지 고민
 public enum DrawCommand {
     DRAW("y"),
     STOP("n");
