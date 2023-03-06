@@ -86,10 +86,8 @@ public class Participants {
 
     public Map<Name, Result> getPlayerResult() {
         Map<Name, Result> playerResult = new HashMap<>();
-        ResultChecker resultChecker = new ResultChecker();
         for (Player player : players) {
-            Result result = resultChecker.checkPlayerResult(player, dealer);
-            playerResult.put(player.getName(), result);
+            playerResult.put(player.getName(), player.getResult(dealer));
         }
         return playerResult;
     }
