@@ -1,8 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckMaker;
-import blackjack.domain.cardPicker.CardPicker;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
@@ -21,12 +19,10 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardPicker cardPicker;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView, final CardPicker cardPicker) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardPicker = cardPicker;
     }
 
     public void run() {
@@ -49,8 +45,7 @@ public class BlackjackController {
     }
 
     private Deck makeDeck() {
-        final DeckMaker deckMaker = new DeckMaker();
-        return new Deck(deckMaker.makeDeck(), cardPicker);
+        return new Deck();
     }
 
     private void startGame(final BlackjackGame blackjackGame) {

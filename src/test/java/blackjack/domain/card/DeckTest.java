@@ -16,28 +16,24 @@ public class DeckTest {
     @Test
     @DisplayName("덱을 생성한다.")
     void constructorDeckTest() {
-        List<Card> cards = List.of();
-        CardPicker cardPicker = new TestCardPicker();
+        List<Card> cards = List.of(new Card(Shape.CLOVER, Letter.EIGHT));
 
-        Assertions.assertThatNoException().isThrownBy(() -> new Deck(cards, cardPicker));
+        Assertions.assertThatNoException().isThrownBy(() -> new Deck(cards));
     }
 
     @Test
     @DisplayName("카드를 뽑는다")
     void drawCardTest() {
         //given
-        List<Card> cards = new ArrayList<>(
-                Arrays.asList(
-                        new Card(Shape.CLOVER, Letter.ACE),
-                        new Card(Shape.DIAMOND, Letter.JACK)));
-        CardPicker testCardPicker = new TestCardPicker();
-        Deck deck = new Deck(cards, testCardPicker);
+        List<Card> cards = List.of(new Card(Shape.DIAMOND, Letter.JACK));
+        Deck deck = new Deck(cards);
 
         //when
-        Card card = deck.drawCard();
+        Card actual = deck.drawCard();
+        Card expected = cards.get(0);
 
         //then
-        assertThat(card.getValue()).isEqualTo(Letter.ACE.getValue());
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -47,8 +43,7 @@ public class DeckTest {
                 Arrays.asList(
                         new Card(Shape.CLOVER, Letter.ACE),
                         new Card(Shape.DIAMOND, Letter.JACK)));
-        CardPicker testCardPicker = new TestCardPicker();
-        Deck deck = new Deck(cards, testCardPicker);
+        Deck deck = new Deck(cards);
 
         assertThat(deck.getCards()).isEqualTo(cards);
     }

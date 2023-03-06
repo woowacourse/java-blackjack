@@ -2,21 +2,40 @@ package blackjack.domain.card;
 
 import blackjack.domain.cardPicker.CardPicker;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Deck {
 
-    private final List<Card> cards;
-    private final CardPicker cardPicker;
+    public static final List<Card> CARDS;
 
-    public Deck(final List<Card> cards, final CardPicker cardPicker) {
-        this.cards = cards;
-        this.cardPicker = cardPicker;
+    private final Stack<Card> cards;
+
+    static {
+        CARDS = Stream.of(Shape.values())
+                .flatMap(shape -> Stream.of(Letter.values())
+                        .map(letter -> new Card(shape, letter)))
+                .collect(Collectors.toList());
+    }
+
+    public Deck() {
+        this.cards = new Stack<>();
+
+        Collections.shuffle(CARDS);
+        this.cards.addAll(CARDS);
+    }
+
+    public Deck(final List<Card> cards) {
+        this.cards = new Stack<>();
+
+        this.cards.addAll(cards);
     }
 
     public Card drawCard() {
-        final int index = cardPicker.pickIndex(cards.size());
-        return cards.remove(index);
+        return cards.pop();
     }
 
     public List<Card> getCards() {

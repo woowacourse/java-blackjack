@@ -1,8 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckMaker;
-import blackjack.domain.cardPicker.TestCardPicker;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +16,12 @@ public class BlackjackGameTest {
     private Dealer dealer;
     private Participants participants;
     private Deck deck;
-    private static final DeckMaker DECK_MAKER = new DeckMaker();
 
     @BeforeEach
     void setting() {
         dealer = new Dealer();
         participants = new Participants(dealer, List.of("pobi", "crong"));
-        deck = new Deck(DECK_MAKER.makeDeck(), new TestCardPicker());
+        deck = new Deck();
     }
 
     @Test
