@@ -4,11 +4,11 @@ import blackjack.domain.Card;
 import blackjack.domain.ResultType;
 import blackjack.dto.CardsScoreDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerCardDto;
 import blackjack.dto.PlayerCardsScoreDto;
 import blackjack.response.CardConvertStrategy;
 import blackjack.response.CardResponse;
 import blackjack.response.InitialCardResponse;
+import blackjack.response.PlayerCardsResponse;
 import blackjack.response.ResultConvertStrategy;
 import java.text.MessageFormat;
 import java.util.List;
@@ -69,9 +69,9 @@ public class OutputView {
     }
 
 
-    public void printCardStatusOfPlayer(final PlayerCardDto playerCardDto) {
-        final String name = playerCardDto.getName();
-        final String cards = playerCardDto.getCards()
+    public void printCardStatusOfPlayer(final PlayerCardsResponse playerCardsResponse) {
+        final String name = playerCardsResponse.getName();
+        final String cards = playerCardsResponse.getCards()
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));

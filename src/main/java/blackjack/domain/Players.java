@@ -109,6 +109,13 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다"));
     }
 
+    public Player findPlayerByName(final String name) {
+        return players.stream()
+                .filter(player -> player.hasName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다"));
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
