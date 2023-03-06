@@ -1,11 +1,9 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Letter;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +43,6 @@ public class ResultGameTest {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(dealer, List.of("pobi"));
         Map<Player, WinTieLose> playersResult = new HashMap<>();
-        ResultGame resultGame = new ResultGame(participants, playersResult);
         Player player;
 
         @BeforeEach
@@ -64,7 +61,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
 
@@ -75,7 +72,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
     }
@@ -86,7 +83,6 @@ public class ResultGameTest {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(dealer, List.of("pobi"));
         Map<Player, WinTieLose> playersResult = new HashMap<>();
-        ResultGame resultGame = new ResultGame(participants, playersResult);
         Player player;
 
         @BeforeEach
@@ -105,7 +101,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
 
@@ -116,7 +112,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
 
@@ -127,7 +123,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
     }
@@ -138,7 +134,6 @@ public class ResultGameTest {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(dealer, List.of("pobi"));
         Map<Player, WinTieLose> playersResult = new HashMap<>();
-        ResultGame resultGame = new ResultGame(participants, playersResult);
         Player player;
 
         @BeforeEach
@@ -157,7 +152,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
 
@@ -168,7 +163,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
 
@@ -179,7 +174,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
 
@@ -190,7 +185,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            resultGame.calculateResult();
+            ResultGame resultGame = new ResultGame(participants, playersResult);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
     }
@@ -199,13 +194,12 @@ public class ResultGameTest {
     @DisplayName("딜러의 승무패가 제대로 나오는지 테스트")
     void getDealerCountTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
         Player player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
-        resultGame.calculateResult();
+        ResultGame resultGame = new ResultGame(participants, playersResult);
 
         // then
         assertThat(resultGame.getDealerCount(WinTieLose.WIN)).isEqualTo(2);
@@ -215,13 +209,12 @@ public class ResultGameTest {
     @DisplayName("플레이어의 결과를 출력하는 테스트")
     void getPlayerResultTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
         Player player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
-        resultGame.calculateResult();
+        ResultGame resultGame = new ResultGame(participants, playersResult);
 
         // then
         assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);

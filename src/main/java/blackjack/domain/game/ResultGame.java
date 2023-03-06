@@ -19,9 +19,10 @@ public class ResultGame {
     public ResultGame(final Participants participants, final Map<Player, WinTieLose> playersResult) {
         this.participants = participants;
         this.playersResult = playersResult;
+        calculateResult();
     }
 
-    public void calculateResult() {
+    private void calculateResult() {
         final Dealer dealer = participants.getDealer();
         final int dealerScore = dealer.getTotalScore();
         final List<Player> players = participants.getPlayers();
@@ -43,7 +44,6 @@ public class ResultGame {
         if (isLessScore(playerScore, BLACKJACK_SCORE)) {
             return getResultWhenPlayerNormalScore(playerScore, dealerScore);
         }
-
         throw new IllegalArgumentException("점수에 해당하는 승무패를 구할 수 없습니다.");
     }
 
