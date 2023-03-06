@@ -71,16 +71,16 @@ public class BlackJackController {
         while (!participant.isBust()
             && (intent = ExecuteContext.workWithExecuteStrategy(() -> InputView.inputCardIntent(participant)))) {
             cardDistributor.giveCard(participant);
-            OutputView.printCard(participant);
+            OutputView.printCards(participant);
         }
         if (!intent) {
-            OutputView.printCard(participant);
+            OutputView.printCards(participant);
         }
     }
 
     private void getDealerAdditionalCard(final Dealer dealer) {
         while (dealer.canReceiveCard()) {
-            OutputView.printDealerReceiveNotice();
+            OutputView.printDealerReceptionNotice();
             cardDistributor.giveCard(dealer);
         }
     }
