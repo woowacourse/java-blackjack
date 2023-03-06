@@ -2,13 +2,14 @@ package blackjack.view;
 
 import blackjack.domain.Card;
 import blackjack.domain.ResultType;
-import blackjack.dto.CardsScoreDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerCardsScoreDto;
 import blackjack.response.CardConvertStrategy;
 import blackjack.response.CardResponse;
+import blackjack.response.CardsScoreResponse;
 import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
+import blackjack.response.PlayersCardsResponse;
+import blackjack.response.PlayersCardsResponse.CardsScore;
 import blackjack.response.ResultConvertStrategy;
 import java.text.MessageFormat;
 import java.util.List;
@@ -82,25 +83,25 @@ public class OutputView {
         System.out.println(OUTPUT_DEALER_STATUS_MESSAGE);
     }
 
-    public void printFinalStatusOfDealer(final CardsScoreDto dealer) {
-        final String cards = dealer.getCards()
+    public void printFinalStatusOfDealer(final CardsScoreResponse cardsScoreResponse) {
+        final String cards = cardsScoreResponse.getCards()
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + dealer.getScore());
+        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + cardsScoreResponse.getScore());
     }
 
-    public void printFinalStatusOfPlayers(final PlayerCardsScoreDto playerCardsScoreDto) {
-        playerCardsScoreDto.getPlayerNameToResult()
+    public void printFinalStatusOfPlayers(final PlayersCardsResponse playersCardsResponse) {
+        playersCardsResponse.getPlayerNameToResult()
                 .forEach(this::printFinalStatusOfPlayer);
     }
 
-    private void printFinalStatusOfPlayer(final String name, final CardsScoreDto cardsScoreDto) {
-        final String cards = cardsScoreDto.getCards()
+    private void printFinalStatusOfPlayer(final String name, final CardsScore cardsScore) {
+        final String cards = cardsScore.getCards()
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-        System.out.println(name + CARD + DELIMITER + cards + RESULT + cardsScoreDto.getScore());
+        System.out.println(name + CARD + DELIMITER + cards + RESULT + cardsScore.getScore());
     }
 
     public void printFinalResult(final FinalResultDto finalResultDto) {

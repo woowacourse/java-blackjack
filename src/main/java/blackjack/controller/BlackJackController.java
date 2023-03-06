@@ -6,16 +6,14 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.DeckFactory;
 import blackjack.domain.Players;
-import blackjack.dto.CardsScoreDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerCardsScoreDto;
+import blackjack.response.CardsScoreResponse;
 import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
+import blackjack.response.PlayersCardsResponse;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class BlackJackController {
 
@@ -101,22 +99,13 @@ public class BlackJackController {
     }
 
     private void printStatusOfGame(final Dealer dealer, final Players players) {
-        outputView.printFinalStatusOfDealer(
-                new CardsScoreDto(dealer.getCards(), dealer.currentScore()));
-        outputView.printFinalStatusOfPlayers(createPlayerCardDto(players));
+        outputView.printFinalStatusOfDealer(CardsScoreResponse.of(
+                dealer.getCards(),
+                dealer.currentScore()));
+        outputView.printFinalStatusOfPlayers(createPlayersCardsResponse(players));
     }
 
-    private PlayerCardsScoreDto createPlayerCardDto(final Players players) {
-        final Map<String, CardsScoreDto> playerNameToResult = new LinkedHashMap<>();
-
-        for (final String playerName : players.getPlayerNames()) {
-            final CardsScoreDto playerCardDto = new CardsScoreDto(
-                    players.findCardsByPlayerName(playerName),
-                    players.getPlayerScoreByName(playerName)
-            );
-            playerNameToResult.put(playerName, playerCardDto);
-        }
-
-        return new PlayerCardsScoreDto(playerNameToResult);
+    private PlayersCardsResponse createPlayersCardsResponse(final Players players) {
+        return PlayersCardsResponse.from(players);
     }
 }
