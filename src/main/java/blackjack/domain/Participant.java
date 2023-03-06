@@ -5,16 +5,13 @@ import java.util.List;
 
 abstract class Participant {
 
-    static final int SUM_MAXIMUM_BEFORE_BUST = 21;
-    static final int ACE_ADDITIONAL_VALUE = 10;
-
     private final String name;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Participant(String name) {
         this.name = name;
         validateName(name);
-        cards = new ArrayList<>();
+        cards = new Cards(new ArrayList<>());
     }
 
     private void validateName(String name) {
@@ -27,33 +24,24 @@ abstract class Participant {
         cards.add(card);
     }
 
-    public int computeSumOfCards() {
-        int sum = cards.stream()
-                .map(Card::getNumberValue)
-                .reduce(0, Integer::sum);
-
-        if ((sum > SUM_MAXIMUM_BEFORE_BUST) && hasACE()) {
-            return (sum - ACE_ADDITIONAL_VALUE);
-        }
-
-        return sum;
-    }
-
-    private boolean hasACE() {
-        return cards.stream()
-                .anyMatch(Card::isACE);
+    public int computeCardsScore() {
+        return cards.sumScore();
     }
 
     public boolean isBust() {
-        return computeSumOfCards() > SUM_MAXIMUM_BEFORE_BUST;
+        return cards.hasBustedScore();
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
+    public boolean isSafe() {
+        return cards.hasSafeScore();
     }
 
     public String getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return cards.cards();
     }
 
     abstract boolean isAvailable();

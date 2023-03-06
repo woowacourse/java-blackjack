@@ -79,10 +79,14 @@ public class Participants {
 
     public Map<String, FinalCards> openFinalCardsByName() {
         Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
-        finalCardsByPlayerName.put(dealer.getName(), FinalCards.from(dealer));
+        finalCardsByPlayerName.put(dealer.getName(), createFinalCards(dealer));
         players.players()
-                .forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.from(player)));
+                .forEach(player -> finalCardsByPlayerName.put(player.getName(), createFinalCards(player)));
         return finalCardsByPlayerName;
+    }
+
+    private FinalCards createFinalCards(Participant participant) {
+        return new FinalCards(participant.getCards(), participant.computeCardsScore());
     }
 
     // TODO 결과 계산 클래스 분리

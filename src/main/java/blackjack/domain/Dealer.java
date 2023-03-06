@@ -17,8 +17,8 @@ public class Dealer extends Participant {
             return JudgeResult.WIN;
         }
 
-        int dealerSum = computeSumOfCards();
-        int playerSum = player.computeSumOfCards();
+        int dealerSum = computeCardsScore();
+        int playerSum = player.computeCardsScore();
         // TODO Enum에서 조건에 따라 값 반환하도록 수정
         if (playerSum == dealerSum) {
             return JudgeResult.PUSH;
@@ -31,8 +31,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAvailable() {
-        int sum = computeSumOfCards();
-        return sum < CARD_TAKE_LIMIT;
+        return computeCardsScore() < CARD_TAKE_LIMIT;
     }
 
     public Card openFirstCard() {

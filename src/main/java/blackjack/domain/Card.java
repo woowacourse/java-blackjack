@@ -20,11 +20,11 @@ public class Card {
         return symbol;
     }
 
-    public Letter getNumber() {
+    public Letter getLetter() {
         return letter;
     }
 
-    public int getNumberValue() {
+    public int getLetterValue() {
         return letter.getValue();
     }
 

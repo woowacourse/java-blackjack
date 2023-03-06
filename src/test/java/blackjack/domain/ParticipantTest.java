@@ -1,10 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Letter.ACE;
 import static blackjack.domain.Letter.JACK;
-import static blackjack.domain.Letter.KING;
-import static blackjack.domain.Letter.QUEEN;
-import static blackjack.domain.Symbol.CLUB;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,33 +42,5 @@ class ParticipantTest {
         List<Card> cards = player.getCards();
         Card lastCard = cards.get(cards.size() - 1);
         assertThat(lastCard).isEqualTo(card);
-    }
-
-    @DisplayName("참가자가 가지고 있는 카드의 합을 반환한다.")
-    @Test
-    void should_ReturnSumOfCards() {
-        player.take(new Card(SPADE, JACK));
-        player.take(new Card(CLUB, QUEEN));
-
-        assertThat(player.computeSumOfCards()).isEqualTo(20);
-    }
-
-    @DisplayName("참가자 카드 중 ACE는 11을 기본값으로 한다.")
-    @Test
-    void should_defaultValueOfACE_Is_11() {
-        player.take(new Card(SPADE, ACE));
-        player.take(new Card(CLUB, QUEEN));
-
-        assertThat(player.computeSumOfCards()).isEqualTo(21);
-    }
-
-    @DisplayName("참가자 카드 합이 21을 초과하면 ACE의 값을 1로 계산한다.")
-    @Test
-    void should_valueOfAce_Is_1_WhenSumOfCardsOver21() {
-        player.take(new Card(SPADE, ACE));
-        player.take(new Card(SPADE, KING));
-        player.take(new Card(CLUB, QUEEN));
-
-        assertThat(player.computeSumOfCards()).isEqualTo(21);
     }
 }
