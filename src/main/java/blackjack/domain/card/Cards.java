@@ -31,27 +31,15 @@ public class Cards {
         return point.isLowerThan(value);
     }
 
-    public boolean haveLowerGamePointThan(final GamePoint point) {
-        return this.point.compareTo(point) == -1;
-    }
-
-    public boolean haveGreaterGamePointThan(final GamePoint point) {
-        return this.point.compareTo(point) == 1;
-    }
-
-    public boolean haveGamePointOf(final GamePoint point) {
-        return this.point.compareTo(point) == 0;
-    }
-
     public List<Card> getCards() {
         return cards;
     }
 
-    public GamePoint getPoint() {
-        return point;
-    }
-
     public Card getFirstCard() {
         return cards.get(0);
+    }
+
+    public GamePoint getPoint() {
+        return new GamePoint(cards);
     }
 }

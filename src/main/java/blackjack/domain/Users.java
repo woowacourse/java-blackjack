@@ -12,6 +12,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Users {
+    private static final int USER_HAVE_BIGGER_POINT = 1;
+    private static final int USER_HAVE_SAME_POINT = 0;
+    private static final int USER_HAVE_LOWER_POINT = -1;
     private final List<User> users;
 
     public Users(final List<Name> userNames, Deck deck) {
@@ -37,15 +40,15 @@ public class Users {
     }
 
     public List<User> getUsersGreaterThan(GamePoint point) {
-        return getUserOf(user -> user.isGreaterThan(point));
+        return getUserOf(user -> user.pointCompare(point) == USER_HAVE_BIGGER_POINT);
     }
 
     public List<User> getUsersEqualTo(final GamePoint point) {
-        return getUserOf(user -> user.isEqualTo(point));
+        return getUserOf(user -> user.pointCompare(point) == USER_HAVE_SAME_POINT);
     }
 
     public List<User> getUsersLowerThan(final GamePoint point) {
-        return getUserOf(user -> user.isLowerThan(point));
+        return getUserOf(user -> user.pointCompare(point) == USER_HAVE_LOWER_POINT);
     }
 
     private List<User> getUserOf(Predicate<User> method) {

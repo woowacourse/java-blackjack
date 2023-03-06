@@ -110,27 +110,14 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("유저가 해당 GamePoint보다 큰 값을 갖고 있는지 확인한다.")
+    @DisplayName("유저의 게임포인트를 해당 GamePoint와 비교하여 큰 경우 1 같은 경우 0 작을 경우 -1을 반환한다.")
     void isGreaterThanTest() {
         assertAll(
                 () -> {
-                    assertThat(USER_18.isGreaterThan(GAME_POINT_17)).isTrue();
+                    assertThat(USER_18.pointCompare(GAME_POINT_17)).isEqualTo(1);
                 },
                 () -> {
-                    assertThat(USER_16.isGreaterThan(GAME_POINT_17)).isFalse();
-                }
-        );
-    }
-
-    @Test
-    @DisplayName("유저가 해당 GamePoint보다 작은 값을 갖고 있는지 확인한다.")
-    void isLowerThanTest() {
-        assertAll(
-                () -> {
-                    assertThat(USER_16.isLowerThan(GAME_POINT_17)).isTrue();
-                },
-                () -> {
-                    assertThat(USER_18.isLowerThan(GAME_POINT_17)).isFalse();
+                    assertThat(USER_16.pointCompare(GAME_POINT_17)).isEqualTo(-1);
                 }
         );
     }
