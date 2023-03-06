@@ -11,9 +11,8 @@ import java.util.Arrays;
 
 public class BlackJackController {
 
-    private static final String RECEIVE_CARD_COMMAND = "y";
 
-    public void init(final Deck deck) {
+    public void start(final Deck deck) {
         final Participants participants = getParticipants(deck);
         final Dealer dealer = new Dealer();
         divideFirstCard(deck, participants);
@@ -51,7 +50,7 @@ public class BlackJackController {
     }
 
     private static boolean isInputEqualsReceiveCardCommand(Player player) {
-        return RECEIVE_CARD_COMMAND.equals(InputView.getPlayerInputGetMoreCard(player.getName()));
+        return InputView.getPlayerInputGetMoreCard(player.getName());
     }
 
 
