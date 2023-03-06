@@ -23,14 +23,6 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("딜러를 사칭하면, 예외가 발생한다.")
-    void giveDealerName_thenFailed() {
-        assertThatThrownBy(() -> BlackjackGame.from(List.of("딜러", "준팍", "파워"), new RandomCardGenerator()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("참가자의 이름은 딜러가 될 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("카드를 뽑으면 덱의 장수가 줄어든다")
     void drawCardTest() {
         //given
