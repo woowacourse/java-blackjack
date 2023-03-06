@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ParticipantCards;
 import blackjack.view.InputView;
@@ -9,10 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackManager {
-    private final Deck deck = new Deck();
+    private static final int INITIAL_CARD_COUNT = 2;
+
+    private final Deck deck;
+
+    public BlackJackManager() {
+        this.deck = new Deck();
+    }
 
     public void run() {
-        Dealer dealer = new Dealer(initCards());
+        Dealer dealer = new Dealer(makeInitialCards());
         List<Player> players = createPlayers();
         OutputView.printParticipantsInitCards(dealer, players);
 
@@ -22,15 +29,19 @@ public class BlackJackManager {
         showGameResult(dealer, players);
     }
 
-    private ParticipantCards initCards() {
-        return new ParticipantCards(List.of(deck.draw(), deck.draw()));
+    private ParticipantCards makeInitialCards() {
+        List<Card> initialCards = new ArrayList<>();
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            initialCards.add(deck.draw());
+        }
+        return new ParticipantCards(initialCards);
     }
 
     private List<Player> createPlayers() {
         List<String> names = InputView.readNames();
         List<Player> players = new ArrayList<>();
         for (final String name : names) {
-            players.add(new Player(initCards(), name));
+            players.add(new Player(makeInitialCards(), name));
         }
         return players;
     }
@@ -59,7 +70,7 @@ public class BlackJackManager {
             hitCount++;
         }
 
-        if(hitCount > 0) {
+        if (hitCount > 0) {
             OutputView.printDealerHit(hitCount);
         }
     }
