@@ -24,10 +24,12 @@ public class BlackJackController {
     private static final String DELIMITER = ",";
     private static final int LIMIT_REMOVED = -1;
     private static final String INVALID_MORE_CARD_ERROR_MESSAGE = "y 나 n 만을 입력해주세요.";
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
+    private final InputView inputView;
+    private final OutputView outputView;
 
     public BlackJackController() {
+        inputView = new InputView();
+        outputView = new OutputView();
     }
 
     public void run() {
