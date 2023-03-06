@@ -1,4 +1,5 @@
 import domain.BlackjackGame;
+import domain.Dealer;
 import domain.Participant;
 import domain.Player;
 import domain.PlayerNames;
@@ -25,9 +26,9 @@ class BlackjackGameTest {
     void giveCardToSuccessTest() {
         Player pobi = players.getPlayers().get(0);
 
-        blackjackGame.handOutCardTo(pobi);
+        blackjackGame.handOutCardTo(pobi, 2);
 
-        Assertions.assertThat(pobi.cardSize()).isEqualTo(1);
+        assertPlayerCardSize(pobi, 2);
     }
 
     @DisplayName("게임 시작 시, 모든 플레이어에게 두 장의 카드를 나눠준다.")
@@ -37,9 +38,18 @@ class BlackjackGameTest {
         Player crong = players.getPlayers().get(1);
 
         blackjackGame.handOutInitialCards();
+        Dealer dealer = blackjackGame.getDealer();
 
-        Assertions.assertThat(pobi.cardSize()).isEqualTo(2);
-        Assertions.assertThat(crong.cardSize()).isEqualTo(2);
+        assertPlayerCardSize(pobi, 2);
+        assertPlayerCardSize(crong, 2);
+        assertPlayerCardSize(dealer, 2);
+    }
+
+    private void assertPlayerCardSize(Participant player, int size) {
+        Assertions.assertThat(player)
+                .extracting("cards")
+                .asList()
+                .hasSize(size);
     }
 
     @DisplayName("딜러는 카드의 합이 17이 넘을때 까지 추가 카드를 받아야 한다.")
@@ -50,7 +60,7 @@ class BlackjackGameTest {
 
         Participant dealer = blackjackGame.getDealer();
 
-        Assertions.assertThat(dealer.calculateScore())
+        Assertions.assertThat(dealer.calculateBlackjackScore())
                 .isGreaterThanOrEqualTo(17);
     }
 

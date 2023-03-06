@@ -1,14 +1,22 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int FIRST_CARD_INDEX = 0;
     private static final int INIT_CARD_COUNT = 2;
+    private static final int MORE_CARD_LIMIT_SCORE = 17;
 
     private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
+
+    public Dealer(PlayerName playerName) {
+        super(playerName);
+    }
 
     public void decideDealerResultsAgainst(Players players) {
         for (Player player : players.getPlayers()) {
@@ -26,11 +34,11 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
 
-        return competeByScore(player.calculateScore());
+        return competeByScore(player.calculateBlackjackScore());
     }
 
     private Result competeByScore(int playerScore) {
-        int dealerScore = this.calculateScore();
+        int dealerScore = this.calculateBlackjackScore();
 
         if (playerScore > dealerScore) {
             return Result.LOSE;
@@ -42,12 +50,12 @@ public class Dealer extends Participant {
         return Result.DRAW;
     }
 
-    public Map<Player, Result> getPlayerResultMap() {
-        return Collections.unmodifiableMap(playerResultMap);
+    public boolean isAbleToReceiveCard() {
+        return calculateBlackjackScore() < MORE_CARD_LIMIT_SCORE;
     }
 
-    public Card getDealerFirstCard() {
-        return getCards().get(FIRST_CARD_INDEX);
+    public Map<Player, Result> getPlayerResultMap() {
+        return Collections.unmodifiableMap(playerResultMap);
     }
 
     public int getHitCardCount() {
@@ -58,5 +66,11 @@ public class Dealer extends Participant {
         return (int) playerResultMap.values().stream()
                 .filter(result::equals)
                 .count();
+    }
+
+    @Override
+    public List<Card> getInitialCards() {
+        Card card = cards.getCards().get(FIRST_CARD_INDEX);
+        return List.of(card);
     }
 }

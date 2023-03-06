@@ -1,36 +1,31 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
     private static final int BUST_LIMIT = 21;
-    private static final int ACE_GAP = 10;
-    private final List<Card> cards = new ArrayList<>();
 
-    public void receiveCard(Card card) {
+    protected final PlayerName playerName;
+    protected final Cards cards = new Cards();
+
+    public Participant(PlayerName playerName) {
+        this.playerName = playerName;
+    }
+
+    public void receive(Card card) {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        int countOfAce = countAce();
-        int score = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public int calculateBlackjackScore() {
+        int sumOfScore = cards.getSumOfScore();
 
-        return applyAce(score, countOfAce);
-    }
-
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+        return applyAce(sumOfScore, cards.countAce());
     }
 
     private int applyAce(int score, int aceCount) {
         while (score > BUST_LIMIT && aceCount > 0) {
-            score -= ACE_GAP;
+            score -= TrumpCardNumber.getAceGap();
             aceCount--;
         }
 
@@ -38,14 +33,16 @@ public class Participant {
     }
 
     public boolean isBusted() {
-        return calculateScore() > BUST_LIMIT;
-    }
-
-    public int cardSize() {
-        return cards.size();
+        return calculateBlackjackScore() > BUST_LIMIT;
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(cards.getCards());
     }
+
+    public String getName() {
+        return playerName.getName();
+    }
+
+    public abstract List<Card> getInitialCards();
 }

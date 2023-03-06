@@ -17,11 +17,11 @@ public class Card {
         return trumpCardNumber.getScore();
     }
 
-    public String getShapeName() {
+    public String getTypeName() {
         return trumpCardType.getName();
     }
 
-    public String getNumberName() {
+    public String getNumberSignature() {
         return trumpCardNumber.getSignature();
     }
 }

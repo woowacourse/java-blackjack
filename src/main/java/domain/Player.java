@@ -1,32 +1,16 @@
 package domain;
 
-import java.util.Objects;
+import java.util.List;
 
 public class Player extends Participant {
-    private final PlayerName name;
 
-    public Player(PlayerName name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name.getName();
+    public Player(PlayerName playerName) {
+        super(playerName);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(getName(), player.getName());
+    public List<Card> getInitialCards() {
+        return getCards();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName());
-    }
 }

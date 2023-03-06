@@ -1,7 +1,9 @@
 package domain;
 
 public class BlackjackGame {
-    private static final int STANDARD_OF_HIT = 17;
+    private static final int INITIAL_CARD_AMOUNT = 2;
+    private static final String DEALER_NAME_VALUE = "딜러";
+    private static final PlayerName DEALER_NAME = new PlayerName(DEALER_NAME_VALUE);
 
     private final Deck deck;
     private final Dealer dealer;
@@ -9,39 +11,37 @@ public class BlackjackGame {
 
     public BlackjackGame(Players players) {
         this.deck = new Deck();
-        this.dealer = new Dealer();
+        this.dealer = new Dealer(DEALER_NAME);
 
         this.players = players;
     }
 
     public void handOutInitialCards() {
-        giveCardsToDealer();
-        giveCardsToPlayers();
-    }
-    private void giveCardsToDealer() {
-        handOutCardTo(dealer);
-        handOutCardTo(dealer);
-    }
+        handOutCardTo(dealer, INITIAL_CARD_AMOUNT);
 
-    private void giveCardsToPlayers() {
         for (Player player : players.getPlayers()) {
-            handOutCardTo(player);
-            handOutCardTo(player);
+            handOutCardTo(player, INITIAL_CARD_AMOUNT);
         }
     }
 
     public void handOutCardTo(Participant participant) {
         Card card = deck.drawCard();
-        participant.receiveCard(card);
+        participant.receive(card);
+    }
+
+    public void handOutCardTo(Participant participant, int amount) {
+        for (int i = 0; i < amount; i++) {
+            handOutCardTo(participant);
+        }
     }
 
     public void handOutAdditionalCardToDealer() {
-        while (dealer.calculateScore() < STANDARD_OF_HIT) {
+        while (dealer.isAbleToReceiveCard()) {
             handOutCardTo(dealer);
         }
     }
 
-    public void result() {
+    public void decideBlackjackGameResults() {
         dealer.decideDealerResultsAgainst(players);
     }
 

@@ -20,7 +20,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
     void receiveCardSuccessTest() {
-        player.receiveCard(new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE));
 
         Assertions.assertThat(player).extracting("cards")
                 .asList()
@@ -31,10 +31,10 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTest() {
 
-        player.receiveCard(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.THREE));
+        player.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.THREE));
 
-        Assertions.assertThat(player.calculateScore())
+        Assertions.assertThat(player.calculateBlackjackScore())
                 .isEqualTo(14);
 
     }
@@ -43,11 +43,11 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTestWhenHasAce() {
 
-        player.receiveCard(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.THREE));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.TEN));
+        player.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.THREE));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.TEN));
 
-        Assertions.assertThat(player.calculateScore())
+        Assertions.assertThat(player.calculateBlackjackScore())
                 .isEqualTo(14);
 
     }
@@ -56,11 +56,11 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTestWhenHasAceUntilNotBusted() {
 
-        player.receiveCard(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.ACE));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.TEN));
+        player.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.TEN));
 
-        Assertions.assertThat(player.calculateScore())
+        Assertions.assertThat(player.calculateBlackjackScore())
                 .isEqualTo(12);
 
     }
@@ -69,9 +69,9 @@ class PlayerTest {
     @Test
     void isBustedSuccessTest() {
 
-        player.receiveCard(new Card(TrumpCardType.CLUB, TrumpCardNumber.JACK));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.TEN));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.QUEEN));
+        player.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.JACK));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.TEN));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.QUEEN));
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }
@@ -80,9 +80,9 @@ class PlayerTest {
     @Test
     void isNotBustedSuccessTest() {
 
-        player.receiveCard(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
-        player.receiveCard(new Card(TrumpCardType.HEART, TrumpCardNumber.ACE));
-        player.receiveCard(new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.HEART, TrumpCardNumber.ACE));
+        player.receive(new Card(TrumpCardType.SPADE, TrumpCardNumber.ACE));
 
         Assertions.assertThat(player.isBusted()).isFalse();
     }

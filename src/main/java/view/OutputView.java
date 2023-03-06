@@ -23,24 +23,21 @@ public class OutputView {
         breakLine();
         String format = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
         System.out.println(format);
-        printInitDealerCards(dealer);
-        printInitPlayerCards(players);
+        printParticipantsInitialCards(dealer);
+        printParticipantsInitialCards(players);
         breakLine();
     }
 
-    private void printInitDealerCards(Dealer dealer) {
-        Card dealerFirstCard = dealer.getDealerFirstCard();
-
+    private void printParticipantsInitialCards(Participant participant) {
+        List<Card> initialCards = participant.getInitialCards();
         String format = String.format(Format.CARDS.format,
-                DEALER_NAME, getCardFormat(dealerFirstCard));
+                participant.getName(), getCardsFormat(initialCards));
         System.out.println(format);
     }
 
-    private void printInitPlayerCards(Players players) {
+    private void printParticipantsInitialCards(Players players) {
         for (Player player : players.getPlayers()) {
-            String format = String.format(Format.CARDS.format,
-                    player.getName(), getCardsFormat(player.getCards()));
-            System.out.println(format);
+            printParticipantsInitialCards(player);
         }
     }
 
@@ -51,7 +48,7 @@ public class OutputView {
     }
 
     private String getCardFormat(Card card) {
-        return card.getNumberName() + card.getShapeName();
+        return card.getNumberSignature() + card.getTypeName();
     }
 
     public void printPlayerCards(Player player) {
@@ -94,7 +91,7 @@ public class OutputView {
 
     private String getCardsWithScoreFormat(Participant participant, String name) {
         return String.format(Format.CARDS_WITH_SCORE.format,
-                name, getCardsFormat(participant.getCards()), participant.calculateScore());
+                name, getCardsFormat(participant.getCards()), participant.calculateBlackjackScore());
     }
 
     public void printFinalResult(Dealer dealer) {

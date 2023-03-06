@@ -1,5 +1,6 @@
 import domain.Card;
 import domain.Dealer;
+import domain.PlayerName;
 import domain.TrumpCardNumber;
 import domain.Participant;
 import domain.Player;
@@ -21,7 +22,7 @@ class DealerTest {
     @DisplayName("딜러의 카드 합을 기준으로 플레이어의 승패를 결정한다.")
     @Test
     void resultSuccessTest() {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new PlayerName("딜러"));
         Players players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
         Player pobi = players.getPlayers().get(0);
         Player crong = players.getPlayers().get(1);
@@ -39,7 +40,7 @@ class DealerTest {
 
     public void giveCardsTo(Participant participant, List<Card> cards){
         for (Card card : cards) {
-            participant.receiveCard(card);
+            participant.receive(card);
         }
     }
 

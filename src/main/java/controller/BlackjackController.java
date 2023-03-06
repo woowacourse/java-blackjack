@@ -22,6 +22,8 @@ public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = createBlackjackGame();
+        blackjackGame.handOutInitialCards();
+        outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
 
         playPlayersTurn(blackjackGame);
         playDealerTurn(blackjackGame);
@@ -31,10 +33,7 @@ public class BlackjackController {
 
     private BlackjackGame createBlackjackGame() {
         Players players = retryOnInvalidUserInput(this::requestPlayers);
-        BlackjackGame blackjackGame = new BlackjackGame(players);
-        blackjackGame.handOutInitialCards();
-        outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        return blackjackGame;
+        return new BlackjackGame(players);
     }
 
     private Players requestPlayers() {
@@ -52,11 +51,9 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(BlackjackGame blackjackGame, Player player) {
-        if (player.isBusted()) {
-            return;
-        }
 
-        while (requestAction(player) == BlackjackAction.HIT) {
+        while (!player.isBusted()
+                && requestAction(player) == BlackjackAction.HIT) {
             blackjackGame.handOutCardTo(player);
             outputView.printPlayerCards(player);
         }
@@ -93,7 +90,7 @@ public class BlackjackController {
     private void printResults(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
 
-        blackjackGame.result();
+        blackjackGame.decideBlackjackGameResults();
         Dealer dealer = blackjackGame.getDealer();
         outputView.printCardsWithScore(dealer, players);
         outputView.printFinalResult(dealer);
