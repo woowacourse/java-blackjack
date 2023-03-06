@@ -25,7 +25,6 @@ class ViewRendererTest {
         assertThat(renderedStatus.get("홍실")).contains("A스페이드");
     }
 
-
     @Test
     @DisplayName("카드 렌더링 테스트")
     void renderCardToStringTest() {
