@@ -1,10 +1,10 @@
 package list;
 
-public class Node {
-    public String value;
-    public Node next;
+public class Node<T> {
+    public T value;
+    public Node<T> next;
 
-    public Node(String value) {
+    public Node(T value) {
         this.value = value;
     }
 }

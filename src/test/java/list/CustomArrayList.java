@@ -1,24 +1,24 @@
 package list;
 
-public class CustomArrayList implements SimpleList {
+public class CustomArrayList<T> implements SimpleList<T> {
     private static final int INITIAL_CAPACITY = 10;
-    private String[] array;
+    private T[] array;
     private int size;
 
     public CustomArrayList() {
-        array = new String[INITIAL_CAPACITY];
+        array = (T[]) new Object[INITIAL_CAPACITY];
         size = 0;
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(T value) {
         ensureCapacity(size + 1);
         array[size++] = value;
         return true;
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, T value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
@@ -29,17 +29,17 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public T set(int index, T value) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
-        String oldValue = array[index];
+        T oldValue = array[index];
         array[index] = value;
         return oldValue;
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
@@ -47,12 +47,12 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(T value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(T value) {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(value)) {
                 return i;
@@ -72,7 +72,7 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(T value) {
         int index = indexOf(value);
         if (index == -1) {
             return false;
@@ -82,11 +82,11 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
-        String removedValue = array[index];
+        T removedValue = array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         array[--size] = null;
         return removedValue;
@@ -106,7 +106,7 @@ public class CustomArrayList implements SimpleList {
             if (newCapacity < minCapacity) {
                 newCapacity = minCapacity;
             }
-            String[] newArray = new String[newCapacity];
+            T[] newArray = (T[]) new Object[newCapacity];
             System.arraycopy(array, 0, newArray, 0, size);
             array = newArray;
         }
