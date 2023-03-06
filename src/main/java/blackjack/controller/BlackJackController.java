@@ -43,7 +43,7 @@ public class BlackJackController {
             return;
         }
         boolean keepGoing = blackJackGame.handOneCard(playerName);
-        OutputView.showPlayerCard(playerName, blackJackGame.openPlayerCards(playerName));
+        OutputView.showPlayerCard(playerName, blackJackGame.openCardsByName(playerName));
         if (keepGoing) {
             hitOrStay(playerName);
         }

@@ -5,21 +5,20 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-// TODO 중복 로직 메서드 수정, 클래스 책임 검토
 public class Participants {
 
     private static final int INITIAL_HAND_OUT_COUNT = 2;
     private static final int INITIAL_DEALER_CARD_OPEN_INDEX = 0;
 
     private final Dealer dealer;
-    // TODO players 클래스 분리해서 player 반환받아 쓰기?
-    private final List<Player> players;
+    private final Players players;
 
     private Participants(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
-        this.players = players;
+        this.players = new Players(players);
     }
 
     public static Participants of(String dealerName, List<String> playerNames) {
@@ -40,13 +39,19 @@ public class Participants {
     }
 
     public void handOut(Deck deck) {
-        handOutToParticipant(dealer, deck.draw(INITIAL_HAND_OUT_COUNT));
-        for (Player player : players) {
-            handOutToParticipant(player, deck.draw(INITIAL_HAND_OUT_COUNT));
+        handCardsTo(dealer, deck.draw(INITIAL_HAND_OUT_COUNT));
+        for (Player player : players.players()) {
+            handCardsTo(player, deck.draw(INITIAL_HAND_OUT_COUNT));
         }
     }
 
-    private void handOutToParticipant(Participant participant, List<Card> cards) {
+    public boolean handCardsByPlayerName(String playerName, List<Card> cards) {
+        Player player = players.findPlayerBy(playerName);
+        handCardsTo(player, cards);
+        return player.isAvailable();
+    }
+
+    private void handCardsTo(Participant participant, List<Card> cards) {
         for (Card card : cards) {
             participant.take(card);
         }
@@ -55,58 +60,48 @@ public class Participants {
     public Map<String, List<Card>> openHandOutCardsByName() {
         Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
         cardsByParticipants.put(dealer.getName(), List.of(extractOneToOpenForDealer()));
-        players.forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
+        players.players()
+                .forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
         return cardsByParticipants;
     }
 
+    // TODO dealer에서 직접 반환, 카드를 뽑은 상태인지 검증
     private Card extractOneToOpenForDealer() {
         return dealer.getCards().get(INITIAL_DEALER_CARD_OPEN_INDEX);
     }
 
-    public Map<String, FinalCards> OpenFinalCardsByName() {
+    public List<String> findAvailablePlayerNames() {
+        return players.findAvailablePlayerNames();
+    }
+
+    public Map<String, FinalCards> openFinalCardsByName() {
         Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
         finalCardsByPlayerName.put(dealer.getName(), FinalCards.from(dealer));
-        players.forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.from(player)));
+        players.players()
+                .forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.from(player)));
         return finalCardsByPlayerName;
     }
 
+    // TODO 결과 계산 클래스 분리
     public PlayerJudgeResults computeJudgeResultsByPlayer() {
         PlayerJudgeResults playerJudgeResults = new PlayerJudgeResults();
-        for (Player player : players) {
+        for (Player player : players.players()) {
             playerJudgeResults.addResultByPlayerName(player.getName(), dealer.judge(player));
         }
         return playerJudgeResults;
     }
 
-    public List<String> findAvailablePlayerNames() {
-        List<String> availablePlayerNames = new ArrayList<>();
-        for (Player player : players) {
-            addAvailablePlayer(player, availablePlayerNames);
+    public List<Card> findHoldingCardsByName(String participantName) {
+        if (Objects.equals(participantName, dealer.getName())) {
+            return dealer.getCards();
         }
-        return availablePlayerNames;
+        Player player = players.findPlayerBy(participantName);
+        return player.getCards();
     }
 
-    private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
-        if (player.isAvailable()) {
-            availablePlayerNames.add(player.getName());
-        }
-    }
-
+    // TODO 불필요한 getter 삭제
     public List<Card> getDealerCards() {
         return new ArrayList<>(dealer.getCards());
-    }
-
-    public List<List<Card>> getPlayersCards() {
-        return players.stream()
-                .map(Player::getCards)
-                .collect(Collectors.toList());
-    }
-
-    public Player findPlayerBy(String playerName) {
-        return players.stream()
-                .filter(player -> player.getName().equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
     }
 
     public Dealer getDealer() {

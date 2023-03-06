@@ -18,10 +18,7 @@ public class BlackJackGame {
     }
 
     public boolean handOneCard(String playerName) {
-        Player player = participants.findPlayerBy(playerName);
-        List<Card> card = deck.draw(1);
-        player.take(card.get(0));
-        return player.isAvailable();
+        return participants.handCardsByPlayerName(playerName, deck.draw(1));
     }
 
     public Map<String, List<Card>> openHandOutCards() {
@@ -32,9 +29,8 @@ public class BlackJackGame {
         return participants.findAvailablePlayerNames();
     }
 
-    public List<Card> openPlayerCards(String playerName) {
-        Player player = participants.findPlayerBy(playerName);
-        return player.getCards();
+    public List<Card> openCardsByName(String participantName) {
+        return participants.findHoldingCardsByName(participantName);
     }
 
     public int hitOrStayForDealer() {
@@ -51,7 +47,7 @@ public class BlackJackGame {
     }
 
     public Map<String, FinalCards> openAllFinalCards() {
-        return participants.OpenFinalCardsByName();
+        return participants.openFinalCardsByName();
     }
 
     public PlayerJudgeResults computeJudgeResultsByPlayer() {

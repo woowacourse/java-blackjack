@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -40,7 +41,10 @@ class ParticipantsTest {
         participants.handOut(new BlackJackDeckGenerator().generate());
 
         assertThat(participants.getDealerCards()).hasSize(2);
-        List<List<Card>> playersCards = participants.getPlayersCards();
+        List<List<Card>> playersCards = participants.openFinalCardsByName()
+                .values()
+                .stream().map(FinalCards::getCards)
+                .collect(Collectors.toList());
         for (List<Card> cards : playersCards) {
             assertThat(cards).hasSize(2);
         }
