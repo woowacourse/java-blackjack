@@ -70,4 +70,8 @@ public class OutputView {
     private void printScore(final Player player) {
         System.out.println(makePlayerCardMessageWithName(player) + " - 결과 : " + player.sumCardPool());
     }
+
+    public void printExceptionMessage(String message) {
+        System.out.println(message);
+    }
 }

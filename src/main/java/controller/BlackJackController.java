@@ -21,8 +21,12 @@ public class BlackJackController {
     }
 
     public void run() {
-        initializeGame();
-        startGame();
+        try {
+            initializeGame();
+            startGame();
+        } catch (RuntimeException e) {
+            outputView.printExceptionMessage(e.getMessage());
+        }
     }
 
     private void initializeGame() {
