@@ -8,8 +8,8 @@ import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Result;
+import dto.CardStatusDto;
 import util.CardDeckMaker;
-import util.CardStatusConverter;
 import view.InputView;
 import view.OutputView;
 
@@ -62,15 +62,23 @@ public class BlackJackController {
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameValue(),
-                CardStatusConverter.convertToCardStatus(participant.getCardDeck().getCards()), participant.getTotalScore());
+                getCardStatus(participant), participant.getTotalScore());
+    }
+
+    private List<CardStatusDto> getCardStatus(Participant participant) {
+        return participant.getCardDeck()
+                .getCards()
+                .stream()
+                .map(CardStatusDto::new)
+                .collect(Collectors.toList());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
         outputView.printFirstCardDistribution(dealer.getNameValue(), getPlayerNames(players));
 
-        outputView.printCardStatus(dealer.getNameValue(), CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
+        outputView.printCardStatus(dealer.getNameValue(), getCardStatus(dealer));
         for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getNameValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
+            outputView.printCardStatus(player.getNameValue(), getCardStatus(player));
         }
     }
 
@@ -109,7 +117,7 @@ public class BlackJackController {
             player.pick(cardDistributor.distribute());
         }
 
-        outputView.printCardStatus(player.getNameValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
+        outputView.printCardStatus(player.getNameValue(), getCardStatus(player));
         return answer.equals(MORE_CARD);
     }
 

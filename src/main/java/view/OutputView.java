@@ -2,9 +2,12 @@ package view;
 
 import domain.GameResult;
 import domain.Name;
+import dto.CardStatusDto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OutputView {
     
@@ -24,8 +27,14 @@ public class OutputView {
         System.out.printf("\n" + INITIAL_CARD_DISTRIBUTION, dealerName, String.join(NAME_DELIMITER, playerNames));
     }
 
-    public void printCardStatus(String name, List<String> cards) {
-        System.out.printf("\n" + PARTICIPANT_CARD_STATUS_FORMAT, name, String.join(NAME_DELIMITER, cards));
+    public void printCardStatus(String name, List<CardStatusDto> cards) {
+        System.out.printf("\n" + PARTICIPANT_CARD_STATUS_FORMAT, name, String.join(NAME_DELIMITER, convertCardStatusToString(cards)));
+    }
+
+    private List<String> convertCardStatusToString(List<CardStatusDto> cards) {
+        return cards.stream()
+                .map(card -> card.getLetterExpression() + card.getShapeName())
+                .collect(Collectors.toList());
     }
 
     public void printDealerMoreCard(String dealerName, int cardCount) {
@@ -34,7 +43,7 @@ public class OutputView {
         }
     }
 
-    public void printCardAndScore(String playerName, List<String> cards, int totalScore) {
+    public void printCardAndScore(String playerName, List<CardStatusDto> cards, int totalScore) {
         printCardStatus(playerName, cards);
         System.out.printf(FINAL_SCORE, totalScore);
     }
