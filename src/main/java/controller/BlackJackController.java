@@ -7,13 +7,11 @@ import model.user.Player;
 import ui.input.InputView;
 import ui.output.OutputView;
 
-import java.util.Arrays;
-
 public class BlackJackController {
 
 
     public void start(final Deck deck) {
-        final Participants participants = getParticipants(deck);
+        final Participants participants = getParticipants();
         final Dealer dealer = new Dealer();
         divideFirstCard(deck, participants);
 
@@ -59,8 +57,8 @@ public class BlackJackController {
         participants.receiveInitialCards(deck);
     }
 
-    private Participants getParticipants(final Deck deck) {
-        return Participants.from(Arrays.asList(InputView.getPlayersName().split(",")));
+    private Participants getParticipants() {
+        return Participants.from(InputView.getPlayersName());
     }
 
 }

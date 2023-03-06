@@ -1,5 +1,7 @@
 package ui.input;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -11,10 +13,20 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String getPlayersName() {
+
+    public static List<String> getPlayersName() {
         System.out.println(INPUT_PLAYERS_NAME);
-        return SCANNER.next();
+        return treatSpace(SCANNER.nextLine());
     }
+
+    private static List<String> treatSpace(String input) {
+        List<String> names = Arrays.asList(input.split(","));
+        for (int i = 0, size = names.size(); i < size; i++) {
+            names.set(i, names.get(i).trim());
+        }
+        return names;
+    }
+
 
     public static boolean getPlayerInputGetMoreCard(final String playerName) {
         System.out.printf((RECEIVE_MORE_CARD) + "%n", playerName);
