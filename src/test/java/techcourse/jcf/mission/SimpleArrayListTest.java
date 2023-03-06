@@ -212,4 +212,12 @@ class SimpleArrayListTest {
         Assertions.assertEquals(0, arrayList.size());
         Assertions.assertEquals(false, arrayList.contains(beforeValue));
     }
+
+    @DisplayName("SimpleList 제네릭 메서드 테스트")
+    @Test
+    void SimpleList_제네릭_메서드_테스트() {
+        String[] array = {"hello", "bye"};
+        SimpleList<String> simpleList = SimpleList.<String>fromArrayToList(array);
+        Assertions.assertEquals(2, simpleList.size());
+    }
 }

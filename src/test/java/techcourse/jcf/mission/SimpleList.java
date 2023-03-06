@@ -23,5 +23,13 @@ public interface SimpleList<E> {
     boolean remove(E value);
 
     void clear();
+
+    public static <E> SimpleList<E> fromArrayToList(Object[] elements) {
+        SimpleList<E> list = new SimpleArrayList<>();
+        for (Object object: elements){
+            list.add((E) object);
+        }
+        return list;
+    }
 }
 
