@@ -63,4 +63,30 @@ public class UsersTest {
         Player player = users.getPlayers().get(0);
         assertThat(player.getScore()).isEqualTo(10);
     }
+
+    @DisplayName("카드를 더 받을 수 있는 플레이어 리스트를 반환한다")
+    @Test
+    void getHittablePlayers() {
+        Users users = Users.from(List.of("hongo", "ash", "kiara"));
+
+        // 카드 현황
+        // player1 : X          => 0
+        // player2 : 7          => 7
+        // player3 : 10, 10, 1  => 21
+        users.hitCardByName("ash", new Card(Denomination.SEVEN, Suits.DIAMOND));
+        users.hitCardByName("kiara", new Card(Denomination.JACK, Suits.DIAMOND));
+        users.hitCardByName("kiara", new Card(Denomination.QUEEN, Suits.DIAMOND));
+        users.hitCardByName("kiara", new Card(Denomination.ACE, Suits.DIAMOND));
+
+        List<Player> hittablePlayers = users.getHittablePlayers();
+        assertThat(hittablePlayers)
+            .satisfiesExactly(
+                player -> assertNameEquals(player, "hongo"),
+                player -> assertNameEquals(player, "ash"));
+    }
+
+    private void assertNameEquals(Player player, String name) {
+        assertThat(player.getName()).isEqualTo(name);
+    }
+
 }

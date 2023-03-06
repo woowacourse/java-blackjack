@@ -36,6 +36,13 @@ public class DealerTest {
         assertThat(dealer.isHittable()).isFalse();
     }
 
+    @DisplayName("플레이 중간에는 딜러의 제일 첫 번째 카드만 보여준다")
+    @Test
+    void getCardWithHidden() {
+        addCards(List.of(SIX, JACK));
+        assertThat(dealer.getCardWithHidden().getDenomination()).isEqualTo(SIX);
+    }
+
     private void addCards(List<Denomination> denominations) {
         for (Denomination denomination : denominations) {
             dealer.hit(new Card(denomination, Suits.HEART));
