@@ -49,7 +49,11 @@ public class CardTable {
         return ParticipantResult.LOSER;
     }
 
-    public void dealCardTo(Player player) {
-        player.hit(cardDeck.draw());
+    public boolean dealCardTo(Player player) {
+        if (player.canHit()) {
+            player.hit(cardDeck.draw());
+            return true;
+        }
+        return false;
     }
 }

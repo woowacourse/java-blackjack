@@ -29,6 +29,8 @@ import static domain.player.participant.ParticipantResult.LOSER;
 import static domain.player.participant.ParticipantResult.WINNER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CardTableTest {
 
@@ -145,12 +147,12 @@ class CardTableTest {
     @Test
     @DisplayName("dealCardTo() : Player에게 카드를 나눠줄 수 있다.")
     void test_dealCardTo() throws Exception {
-        //when
-        cardTable.dealCardTo(participant);
-        cardTable.dealCardTo(dealer);
-
-        //then
-        assertThat(participant.cardArea().cards()).hasSize(3);
-        assertThat(dealer.cardArea().cards()).hasSize(3);
+        //when & then
+        assertAll(
+                () -> assertTrue(cardTable.dealCardTo(participant)),
+                () -> assertFalse(cardTable.dealCardTo(dealer)),
+                () -> assertThat(participant.cardArea().cards()).hasSize(3),
+                () -> assertThat(dealer.cardArea().cards()).hasSize(2)
+        );
     }
 }
