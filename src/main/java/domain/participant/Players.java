@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public final class Players {
 
-    public static final int MIN_COUNT = 2;
+    public static final int MIN_COUNT = 1;
 
     private final List<Player> players;
 
