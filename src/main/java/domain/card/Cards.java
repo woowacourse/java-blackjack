@@ -38,8 +38,8 @@ public class Cards {
 
     private boolean isContainAce() {
         return cards.stream()
-                .map(Card::getName)
-                .anyMatch(name -> name.equals(Denomination.ACE.getName()));
+                .map(Card::getDenomination)
+                .anyMatch(denomination -> denomination.equals(Denomination.ACE));
     }
 
     public boolean isBlackJack() {

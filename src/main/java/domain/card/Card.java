@@ -14,11 +14,11 @@ public class Card {
         return denomination.getScore();
     }
 
-    public String getName() {
-        return denomination.getName();
+    public Suit getSuit() {
+        return suit;
     }
 
-    public String getSuit() {
-        return suit.getName();
+    public Denomination getDenomination() {
+        return denomination;
     }
 }

@@ -58,9 +58,9 @@ public class OutputView {
 
     private static void printDealerCard(Dealer dealer) {
         printPlayerName(dealer);
-        Card getOneCard = dealer.getCards()
+        Card oneCard = dealer.getCards()
                 .get(FIRST_INDEX_CARD);
-        System.out.println(getOneCard.getName() + getOneCard.getSuit());
+        System.out.println(CardParser.parse(oneCard));
     }
 
     private static void printPlayerName(Player player) {
@@ -76,7 +76,7 @@ public class OutputView {
     private static List<String> getPlayerCards(Player player) {
         List<String> output = new ArrayList<>();
         for (Card card : player.getCards()) {
-            output.add(card.getName() + card.getSuit());
+            output.add(CardParser.parse(card));
         }
         return output;
     }

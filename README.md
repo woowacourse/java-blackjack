@@ -62,3 +62,8 @@
   - [X] Dealer의 최종 승패를 출력한다.
   - [X] Player들의 승패를 출력한다.
 - [X] 게임 초반 2장 배부 가이드 메세지를 출력한다. 
+
+## CardParser
+
+- [X] Suit와 Denomination의 출력 메시지를 결정한다.
+- [X] enumMap 사용
