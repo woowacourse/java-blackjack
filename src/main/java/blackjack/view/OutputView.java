@@ -69,18 +69,18 @@ public class OutputView {
                           .collect(Collectors.joining(", "));
     }
 
-    public void printGameResult(Map<Participant, GameResult> result) {
+    public void printGameResult(Map<Player, GameResult> result) {
         System.out.println(RESULT_MESSAGE);
         long loseCount = getPlayerWinCount(result);
         System.out.printf(DEALER_RESULT_FORMAT, (result.size() - loseCount), loseCount);
-        for (Participant participant : result.keySet()) {
+        for (Player player : result.keySet()) {
             System.out.printf(PLAYER_RESULT_FORMAT,
-                    participant.getName(), result.get(participant)
-                                                 .getValue());
+                    player.getName(), result.get(player)
+                                            .getValue());
         }
     }
 
-    private long getPlayerWinCount(Map<Participant, GameResult> result) {
+    private long getPlayerWinCount(Map<Player, GameResult> result) {
         return result.values()
                      .stream()
                      .filter(GameResult::isWin)

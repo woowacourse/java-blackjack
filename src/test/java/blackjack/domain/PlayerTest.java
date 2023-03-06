@@ -10,7 +10,7 @@ public class PlayerTest {
     @Test
     @DisplayName("이름을 받아 플레이어를 생성한다")
     void createPlayerTest() {
-        Player player = new Player("boxster");
+        Player player = Player.from("boxster");
 
         assertThat(player.getName()).isEqualTo("boxster");
     }
@@ -18,7 +18,7 @@ public class PlayerTest {
     @Test
     @DisplayName("카드를 받아 플레이어 카드에 추가한다")
     void addPlayerCardsTest() {
-        Player player = new Player("jamie");
+        Player player = Player.from("jamie");
         Card card = new Card(CardSuit.HEART, CardNumber.ACE);
 
         player.addCard(card);

@@ -31,7 +31,7 @@ public class BlackjackController {
     }
 
     private void printResult(BlackjackGame blackjackGame) {
-        Map<Participant, GameResult> result = blackjackGame.getResult();
+        Map<Player, GameResult> result = blackjackGame.getResult();
         outputView.printGameResult(result);
     }
 

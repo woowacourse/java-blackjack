@@ -19,15 +19,22 @@ public class BlackjackGame {
     }
 
     public void dealOutCard() {
-        for (Participant participant : participants.toList()) {
+        for (Player player : participants.getPlayers()) {
             List<Card> cards = cardDeck.pickTwice();
-            participant.addCards(cards);
+            player.addCards(cards);
         }
+        dealOutCardToDealer();
     }
 
-    public Map<Participant, GameResult> getResult() {
-        Map<Participant, GameResult> result = new LinkedHashMap<>();
-        for (Participant player : participants.getPlayers()) {
+    private void dealOutCardToDealer() {
+        Dealer dealer = participants.getDealer();
+        List<Card> cards = cardDeck.pickTwice();
+        dealer.addCards(cards);
+    }
+
+    public Map<Player, GameResult> getResult() {
+        Map<Player, GameResult> result = new LinkedHashMap<>();
+        for (Player player : participants.getPlayers()) {
             result.put(player, GameResult.of(player, participants.getDealer()));
         }
         return result;

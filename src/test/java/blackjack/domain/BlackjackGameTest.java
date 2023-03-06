@@ -20,7 +20,7 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants);
         blackjackGame.dealOutCard();
 
-        Participant participant = participants.toList()
+        Participant participant = participants.getPlayers()
                                               .get(0);
         assertThat(participant.getCards()).hasSize(2);
     }
@@ -38,6 +38,6 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
 
-        assertThat(blackjackGame.getResult()).containsEntry(new Player("jamie"), GameResult.LOSE);
+        assertThat(blackjackGame.getResult()).containsEntry(Player.from("jamie"), GameResult.LOSE);
     }
 }
