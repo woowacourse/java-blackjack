@@ -23,27 +23,43 @@ public class Cards {
     }
 
     public int calculateTotalScore() {
-        int totalScore = makeTotalScore();
-        totalScore = makeTotalUnder21(totalScore);
+        final int aceCount = getAceCardCount();
+        int totalScore = checkTotalScore();
+
+        if (isNeedDowngradeScoreAceCard(aceCount, totalScore)) {
+            totalScore = checkTotalScoreWithDowngradeScoreAceCard(aceCount, totalScore);
+        }
+
         return totalScore;
     }
 
-    private int makeTotalUnder21(int totalScore) {
-        int aceCount = countAce();
-        while (totalScore > BLACKJACK_NUMBER && aceCount != ZERO) {
+    private int checkTotalScoreWithDowngradeScoreAceCard(int aceCount, int totalScore) {
+        while (isNeedDowngradeScoreAceCard(aceCount, totalScore)) {
             totalScore -= ACE_NUMBER_DIFFERENCE;
             aceCount--;
         }
         return totalScore;
     }
 
-    private int countAce() {
+    private boolean isNeedDowngradeScoreAceCard(final int aceCount, final int totalScore) {
+        return isExistAceCard(aceCount) && isExceedBlackjackScore(totalScore);
+    }
+
+    private boolean isExceedBlackjackScore(final int totalScore) {
+        return totalScore > BLACKJACK_NUMBER;
+    }
+
+    private boolean isExistAceCard(final int aceCount) {
+        return aceCount > ZERO;
+    }
+
+    private int getAceCardCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
-    private int makeTotalScore() {
+    private int checkTotalScore() {
         return cards.stream()
                 .map(Card::getValue)
                 .reduce(ZERO, Integer::sum);
