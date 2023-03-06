@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int FIRST_CARD_INDEX = 0;
-    private static final int INIT_CARD_COUNT = 2;
 
     private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
 
@@ -51,7 +50,7 @@ public class Dealer extends Participant {
     }
 
     public int getHitCardCount() {
-        return getCards().size() - INIT_CARD_COUNT;
+        return getCards().size() - BlackjackRule.INIT_CARD_COUNT.getValue();
     }
 
     public int getResultCount(Result result) {

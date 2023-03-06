@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Participant {
-    private static final int BUST_LIMIT = 21;
-    private static final int ACE_GAP = 10;
     private final List<Card> cards = new ArrayList<>();
 
     public void receiveCard(Card card) {
@@ -29,8 +27,8 @@ public class Participant {
     }
 
     private int applyAce(int score, int aceCount) {
-        while (score > BUST_LIMIT && aceCount > 0) {
-            score -= ACE_GAP;
+        while (score > BlackjackRule.BUST_LIMIT.getValue() && aceCount > 0) {
+            score -= BlackjackRule.ACE_GAP.getValue();
             aceCount--;
         }
 
@@ -38,7 +36,7 @@ public class Participant {
     }
 
     public boolean isBusted() {
-        return calculateScore() > BUST_LIMIT;
+        return calculateScore() > BlackjackRule.BUST_LIMIT.getValue();
     }
 
     public int cardSize() {
