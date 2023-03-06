@@ -95,7 +95,7 @@ public class BlackJackApplication {
     private void drawDealerCards(BlackJackGame blackJackGame) {
         while (blackJackGame.canDealerDrawMore()) {
             blackJackGame.drawDealerCard();
-            outputView.printDealerCardPickMessage();
+            outputView.printDealerCardPickMessage(blackJackGame.getDealerDrawLimitScore());
         }
     }
 

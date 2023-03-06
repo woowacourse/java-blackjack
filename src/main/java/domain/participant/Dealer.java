@@ -29,4 +29,8 @@ public class Dealer extends Participant {
     public boolean isDrawable() {
         return calculateScore() <= DRAW_LIMIT_SCORE;
     }
+
+    public int getDrawLimitScore() {
+        return DRAW_LIMIT_SCORE;
+    }
 }

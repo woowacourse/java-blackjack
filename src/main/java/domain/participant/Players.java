@@ -5,8 +5,8 @@ import java.util.stream.Stream;
 
 public class Players {
 
-    public static final int MIN_SIZE = 1;
-    public static final int MAX_SIZE = 4;
+    private static final int MIN_SIZE = 1;
+    private static final int MAX_SIZE = 4;
 
     private final List<Player> players;
 

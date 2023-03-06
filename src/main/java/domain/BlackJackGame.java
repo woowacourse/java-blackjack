@@ -95,4 +95,8 @@ public class BlackJackGame {
     public String getDealerName() {
         return dealer.getName();
     }
+
+    public int getDealerDrawLimitScore() {
+        return dealer.getDrawLimitScore();
+    }
 }
