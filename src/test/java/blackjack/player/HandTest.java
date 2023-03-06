@@ -2,6 +2,7 @@ package blackjack.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -69,6 +70,17 @@ class HandTest {
         Card card3 = hand.pickFirstCard();
 
         assertThat(card3).isEqualTo(card);
+    }
+
+    @Test
+    @DisplayName("첫번째 카드를 가져올 때 hand가 비어있으면 예외를 던진다.")
+    void pickFirstCardFail() {
+        hand = new Hand();
+
+        assertThatThrownBy(() -> hand.pickFirstCard())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("들고있는 카드가 없습니다.");
+
     }
 
     @DisplayName("에이스가 있을 때")

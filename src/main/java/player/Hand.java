@@ -38,6 +38,9 @@ public class Hand {
     }
 
     public Card pickFirstCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("들고있는 카드가 없습니다.");
+        }
         return cards.get(0);
     }
 }
