@@ -33,18 +33,18 @@ public class InputView {
         System.out.println();
         System.out.println(name + REQUEST_PLAYER_CHOICE);
         String choice = scanner.nextLine();
-        return validateChoice(choice);
+        validateChoice(choice);
+        return getChoice(choice);
     }
 
-    private static boolean validateChoice(String choice) {
-        String lowerCase = choice.toLowerCase();
-        if (lowerCase.equals(YES)) {
-            return true;
+    private static void validateChoice(String choice) {
+        if (!choice.equalsIgnoreCase(YES) && !choice.equalsIgnoreCase(NO)) {
+            throw new InvalidChoiceException();
         }
-        if (lowerCase.equals(NO)) {
-            return false;
-        }
-        throw new InvalidChoiceException();
+    }
+
+    private static boolean getChoice(String choice) {
+        return choice.equalsIgnoreCase(YES);
     }
 
     public static void terminate() {
