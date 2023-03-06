@@ -7,6 +7,9 @@ public class InputView {
     private static final InputView INSTANCE = new InputView();
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = ",";
+    public static final String HIT_COMMAND = "y";
+    public static final String STAY_COMMAND = "n";
+    private static final String PLAYER_INTENTION_ERROR_MESSAGE = "y 혹은 n 만 입력 가능 합니다.";
 
     private InputView() {}
 
@@ -23,7 +26,16 @@ public class InputView {
         return input.split(DELIMITER);
     }
 
-    public String readPlayerIntention() {
-        return scanner.nextLine();
+    public boolean readIsHit(String playerName){
+        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+
+        String input = scanner.nextLine();
+        if(input.equals(HIT_COMMAND)){
+            return true;
+        }
+        if(input.equals(STAY_COMMAND)){
+            return false;
+        }
+        throw new IllegalArgumentException(PLAYER_INTENTION_ERROR_MESSAGE);
     }
 }
