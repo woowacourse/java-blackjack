@@ -15,8 +15,7 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame from(Participants participants) {
-        Deck deck = new Deck();
+    public static BlackjackGame from(Participants participants, Deck deck) {
         Dealer dealer = new Dealer(DEALER_NAME);
         participants.addDealer(dealer);
 

@@ -1,5 +1,6 @@
 import domain.BlackjackGame;
 import domain.Dealer;
+import domain.DeckFactory;
 import domain.Participant;
 import domain.Player;
 import domain.PlayerNames;
@@ -18,7 +19,7 @@ class BlackjackGameTest {
     @BeforeEach
     void setUp() {
         participants = Participants.from(PlayerNames.from(List.of("pobi", "crong")));
-        blackjackGame = BlackjackGame.from(participants);
+        blackjackGame = BlackjackGame.from(participants, DeckFactory.getShuffledDeck());
     }
 
     @DisplayName("게임 참가자에게 카드를 나눠줄 수 있다.")

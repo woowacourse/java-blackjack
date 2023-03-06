@@ -3,6 +3,7 @@ package controller;
 import domain.BlackjackAction;
 import domain.BlackjackGame;
 import domain.BlackjackGameResult;
+import domain.DeckFactory;
 import domain.Participant;
 import domain.Participants;
 import domain.PlayerNames;
@@ -33,7 +34,7 @@ public class BlackjackController {
 
     private BlackjackGame createBlackjackGame() {
         Participants participants = retryOnInvalidUserInput(this::requestPlayers);
-        return BlackjackGame.from(participants);
+        return BlackjackGame.from(participants, DeckFactory.getShuffledDeck());
     }
 
     private Participants requestPlayers() {
