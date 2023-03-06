@@ -18,6 +18,12 @@ public class Name {
         return new Name(name);
     }
 
+    public static List<Name> of(List<String> names) {
+        return names.stream()
+                .map(Name::of)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     private static void validateName(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
@@ -26,12 +32,6 @@ public class Name {
         if (!NAME_FORMAT.matcher(name).matches()) {
             throw new IllegalArgumentException("한글, 영어 대/소문자와 숫자만 이름이 될 수 있습니다.");
         }
-    }
-
-    public static List<Name> of(List<String> names) {
-        return names.stream()
-                .map(Name::of)
-                .collect(Collectors.toUnmodifiableList());
     }
 
     public String getName() {
