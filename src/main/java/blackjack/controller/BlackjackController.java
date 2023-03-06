@@ -8,6 +8,7 @@ import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackjackController {
@@ -39,8 +40,8 @@ public class BlackjackController {
     }
 
     private void draw(final BlackjackGame blackjackGame) {
-        final Players players = blackjackGame.getPlayers();
-        for (Player player : players.getPlayers()) {
+        final List<Player> players = blackjackGame.getPlayers();
+        for (Player player : players) {
             drawBy(player);
         }
         blackjackGame.drawByDealer(ShuffledDeck.getInstance());
@@ -77,8 +78,8 @@ public class BlackjackController {
     }
 
     private void printPlayerResult(final BlackjackGame blackjackGame) {
-        final Players players = blackjackGame.getPlayers();
-        for (final Player player : players.getPlayers()) {
+        final List<Player> players = blackjackGame.getPlayers();
+        for (final Player player : players) {
             outputView.printPlayerResult(player);
         }
     }

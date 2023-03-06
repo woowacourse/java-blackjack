@@ -25,9 +25,9 @@ public class BlackjackGameTest {
     void 플레이어들을_반환한다() {
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
 
-        final Players players = blackjackGame.getPlayers();
+        final List<Player> players = blackjackGame.getPlayers();
 
-        assertThat(players.getPlayers())
+        assertThat(players)
                 .extracting(Player::getName)
                 .containsExactly("딜러", "허브", "후추");
     }
@@ -59,8 +59,8 @@ public class BlackjackGameTest {
 
         blackjackGame.initialDraw(deck);
 
-        final Players players = blackjackGame.getPlayers();
-        assertThat(players.getPlayers())
+        final List<Player> players = blackjackGame.getPlayers();
+        assertThat(players)
                 .extracting(Player::calculateScore)
                 .containsExactly(11, 12, 18);
     }
@@ -79,7 +79,7 @@ public class BlackjackGameTest {
 
         blackjackGame.drawByDealer(deck);
 
-        final Dealer dealer = blackjackGame.getPlayers().getDealer();
+        final Dealer dealer = blackjackGame.getDealer();
         assertThat(dealer.getCardCount()).isEqualTo(3);
     }
 
