@@ -1,6 +1,7 @@
 package blackjack.controller;
 
-import blackjack.model.Players;
+import blackjack.model.CardUnit;
+import blackjack.model.participant.Players;
 import blackjack.model.WinningResult;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.*;
@@ -12,7 +13,6 @@ import blackjack.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameController {
 
@@ -50,8 +50,9 @@ public class GameController {
 
         Map<String, List<Card>> dealerDistributedCards = new HashMap<>();
         dealerDistributedCards.put(dealer.getName(), dealer.firstDistributedCard());
-        outputView.printHandCardUnits(handCardUnits(dealerDistributedCards));
-        outputView.printHandCardUnits(handCardUnits(players.firstDistributedCards()));
+        outputView.printHandCardUnits(new CardUnit(dealerDistributedCards).getHandCardUnits());
+
+        outputView.printHandCardUnits(new CardUnit(players.firstDistributedCards()).getHandCardUnits());
     }
 
     private void playHitOrStand(Players players, Dealer dealer, CardDeck cardDeck) {
@@ -66,14 +67,11 @@ public class GameController {
     }
 
     private void playerHitOrStand(Players players, CardDeck cardDeck, int playerId) {
-        while (!players.isPlayerFinished(playerId) && inputView.readIsHit(players.getNameById(playerId))) {
+        while (!players.isPlayerFinished(playerId) && (inputView.readIsHit(players.getNameById(playerId)))) {
             players.hit(cardDeck, playerId);
-            Map<String, List<Card>> playerHandCards = players.getHandCardsById(playerId);
-            outputView.printHandCardUnits(handCardUnits(playerHandCards));
+            outputView.printHandCardUnits(new CardUnit(players.getHandCardsById(playerId)).getHandCardUnits());
         }
-        if (!players.isPlayerFinished(playerId)) {
-            players.changeToStand(playerId);
-        }
+        players.changeToStand(playerId);
     }
 
     private void printScoreResults(Players players, Dealer dealer) {
@@ -89,7 +87,7 @@ public class GameController {
         if (isBlackjack) {
             result += BLACKJACK_MESSAGE;
         }
-        outputView.printScoreResult(handCardUnits(handCards), result);
+        outputView.printScoreResult(new CardUnit(handCards).getHandCardUnits(), result);
     }
 
     private void printWinningResult(Players players, Dealer dealer) {
@@ -103,16 +101,5 @@ public class GameController {
             WinningResult playerWinning = playerResult.getValue();
             outputView.printPlayersWinningResult(playerResult.getKey(), playerWinning.getWin(), playerWinning.getDraw(), playerWinning.getLose());
         }
-    }
-
-    private Map<String, List<String>> handCardUnits(Map<String, List<Card>> handCards) {
-        Map<String, List<String>> handCardUnits = new HashMap<>();
-
-        for (Map.Entry<String, List<Card>> handCard : handCards.entrySet()) {
-            List<Card> cards = handCard.getValue();
-            List<String> cardUnits = cards.stream().map(Card::cardUnit).collect(Collectors.toList());
-            handCardUnits.put(handCard.getKey(), cardUnits);
-        }
-        return handCardUnits;
     }
 }

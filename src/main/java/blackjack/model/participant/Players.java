@@ -1,11 +1,10 @@
-package blackjack.model;
+package blackjack.model.participant;
 
+import blackjack.model.WinningResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
 import blackjack.model.card.HandCard;
-import blackjack.model.participant.Name;
-import blackjack.model.participant.Player;
 import blackjack.model.state.InitialState;
 
 import java.util.HashMap;
@@ -46,7 +45,10 @@ public class Players {
     }
 
     public void changeToStand(int playerId) {
-        getPlayerById(playerId).changeToStand();
+        Player player = getPlayerById(playerId);
+        if (!player.isFinished()) {
+            player.changeToStand();
+        }
     }
 
     public boolean isBlackjack(int playerId) {
