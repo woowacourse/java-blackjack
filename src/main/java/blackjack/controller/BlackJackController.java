@@ -1,13 +1,12 @@
 package blackjack.controller;
 
+import java.util.List;
+
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
 
@@ -34,16 +33,18 @@ public class BlackJackController {
     }
 
     private void openInitialCards() {
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        OutputView.showHandInitialCardsCompleteMessage(playerNames);
+
         Card dealerFirstCard = blackJackGame.openDealerFirstCard();
-        Map<String, List<Card>> playersCards = blackJackGame.openPlayersCards();
-        OutputView.showOpenCards(dealerFirstCard, playersCards);
+        OutputView.showDealerFirstCard(dealerFirstCard);
+
+        playerNames.forEach(this::openPlayerCards);
     }
 
-    private void showResult() {
-        OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
-                blackJackGame.computePlayerGameResults());
-
-        OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
+    private void openPlayerCards(String playerName) {
+        List<Card> playerCards = blackJackGame.openPlayerCards(playerName);
+        OutputView.showPlayerCard(playerName, playerCards);
     }
 
     private void hitOrStayForNotBustPlayers(List<String> playerNames) {
@@ -60,5 +61,12 @@ public class BlackJackController {
         if (keepGoing) {
             hitOrStay(playerName);
         }
+    }
+
+    private void showResult() {
+        OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
+                blackJackGame.computePlayerGameResults());
+
+        OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
     }
 }

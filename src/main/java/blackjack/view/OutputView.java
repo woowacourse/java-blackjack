@@ -1,16 +1,15 @@
 package blackjack.view;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+
 import blackjack.domain.Card;
 import blackjack.domain.GameResult;
 import blackjack.domain.PlayerWinResults;
 import blackjack.domain.WinResult;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -21,18 +20,16 @@ public class OutputView {
     private static final String LOSE = "패";
     private static final String KEY_VALUE_FORMAT = "%s : %s%n";
     private static final String GAME_RESULT_FORMAT = "%s카드: %s - 결과: %d%n";
-    private static final String OPEN_CARD_MESSAGE = "%n%s에게 2장을 나누었습니다.%n";
+    private static final String OPEN_CARD_MESSAGE = "%n딜러와 %s에게 2장을 나누었습니다.%n";
     private static final String DEALER_HIT_RESULT_MESSAGE = DEALER_NAME + "는 16 이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String FINAL_RESULT_HEADER = "%n## 최종 승패%n";
 
-    public static void showOpenCards(Card dealerFirstCard, Map<String, List<Card>> playersCards) {
-        Set<String> playerNames = playersCards.keySet();
+    public static void showHandInitialCardsCompleteMessage(List<String> playerNames) {
         System.out.printf(OPEN_CARD_MESSAGE, String.join(DELIMITER, playerNames));
-        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toCardName(dealerFirstCard));
-        for (String playerName : playerNames) {
-            List<Card> playerCard = playersCards.get(playerName);
-            showPlayerCard(playerName, playerCard);
-        }
+    }
+
+    public static void showDealerFirstCard(Card card) {
+        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toCardName(card));
     }
 
     public static void showPlayerCard(String playerName, List<Card> playerCard) {
