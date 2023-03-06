@@ -87,12 +87,12 @@ public class Participants {
         return playerWinResults;
     }
 
-    public List<String> findAvailablePlayerNames() {
-        List<String> availablePlayerNames = new ArrayList<>();
+    public List<String> findNotBustPlayerNames() {
+        List<String> notBustPlayerNames = new ArrayList<>();
         for (Player player : players) {
-            addAvailablePlayer(player, availablePlayerNames);
+            addAvailablePlayer(player, notBustPlayerNames);
         }
-        return availablePlayerNames;
+        return notBustPlayerNames;
     }
 
     private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
@@ -120,5 +120,11 @@ public class Participants {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 }

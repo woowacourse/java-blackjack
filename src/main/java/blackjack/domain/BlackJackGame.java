@@ -38,8 +38,8 @@ public class BlackJackGame {
         return participants.openDealerFirstCard();
     }
 
-    public List<String> findAvailablePlayerNames() {
-        return participants.findAvailablePlayerNames();
+    public List<String> findNotBustPlayerNames() {
+        return participants.findNotBustPlayerNames();
     }
 
     public List<Card> openPlayerCards(String playerName) {
@@ -70,5 +70,9 @@ public class BlackJackGame {
 
     public PlayerWinResults computePlayerWinResults() {
         return participants.computePlayerWinResults();
+    }
+
+    public List<String> getPlayerNames() {
+        return participants.getPlayerNames();
     }
 }

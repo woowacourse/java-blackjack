@@ -26,12 +26,17 @@ public class BlackJackController {
 
     private void startGame() {
         blackJackGame.handInitialCards();
+        openInitialCards();
+
+        hitOrStayForNotBustPlayers(blackJackGame.findNotBustPlayerNames());
+        int hitCount = blackJackGame.hitOrStayForDealer();
+        OutputView.showDealerHitResult(hitCount);
+    }
+
+    private void openInitialCards() {
         Card dealerFirstCard = blackJackGame.openDealerFirstCard();
         Map<String, List<Card>> playersCards = blackJackGame.openPlayersCards();
         OutputView.showOpenCards(dealerFirstCard, playersCards);
-        hitOrStayForAvailablePlayers(blackJackGame.findAvailablePlayerNames());
-        int hitCount = blackJackGame.hitOrStayForDealer();
-        OutputView.showDealerHitResult(hitCount);
     }
 
     private void showResult() {
@@ -41,7 +46,7 @@ public class BlackJackController {
         OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
     }
 
-    private void hitOrStayForAvailablePlayers(List<String> playerNames) {
+    private void hitOrStayForNotBustPlayers(List<String> playerNames) {
         playerNames.forEach(this::hitOrStay);
     }
 
