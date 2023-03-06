@@ -6,6 +6,8 @@ import domain.player.DealerStatus;
 import domain.player.Player;
 import domain.player.Players;
 import domain.stake.Stake;
+import view.InputView;
+import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -58,9 +60,18 @@ public class BlackjackController {
     private Map<Player, Stake> readStakes(final Players players) {
         Map<Player, Stake> playerStakes = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerStakes.put(player, new Stake(readBettingStake(player)));
+            repeatReadSingleStake(playerStakes, player);
         }
         return new LinkedHashMap<>(playerStakes);
+    }
+
+    private void repeatReadSingleStake(final Map<Player, Stake> playerStakes, final Player player) {
+        try {
+            playerStakes.put(player, new Stake(readBettingStake(player)));
+        } catch (RuntimeException e) {
+            InputView.printErrorMessage(e);
+            repeatReadSingleStake(playerStakes, player);
+        }
     }
 
     private void playersHitOrStand(Players players) {
