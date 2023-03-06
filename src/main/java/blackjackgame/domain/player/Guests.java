@@ -15,7 +15,6 @@ public class Guests {
 
     public Guests(final List<String> playerNames) {
         validateGuestNumbers(playerNames);
-
         this.guests = generateGuests(playerNames);
     }
 

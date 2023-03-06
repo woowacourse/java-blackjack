@@ -2,6 +2,7 @@ package blackjackgame.view;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public enum AddCardResponse {
@@ -18,14 +19,13 @@ public enum AddCardResponse {
             , YES.value, NO.value, System.lineSeparator());
     }
 
-    public static AddCardResponse validate(final String input) {
+    public static Optional<AddCardResponse> findAndCreate(final String input) {
         return Arrays.stream(AddCardResponse.values())
             .filter(cardResponse -> cardResponse.value.equalsIgnoreCase(input))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(getErrorPowerMsg()));
+            .findFirst();
     }
 
-    private static String getErrorPowerMsg() {
+    public static String getErrorPowerMsg() {
         List<String> values = Arrays.stream(AddCardResponse.values())
             .map(AddCardResponse::getValue)
             .collect(Collectors.toList());

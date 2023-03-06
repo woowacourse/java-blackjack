@@ -1,6 +1,7 @@
 package blackjackgame.view;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class InputView {
@@ -11,30 +12,35 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> readGuestsName() {
-        System.out.println(READ_GUEST_NAMES_MSG);
-        String guestsName = scanner.nextLine();
-        validateBlank(guestsName);
+        String guestsName;
+        do {
+            System.out.println(READ_GUEST_NAMES_MSG);
+            guestsName = scanner.nextLine();
+        } while (isBlank(guestsName));
         return List.of(guestsName.split(DELIMITER));
     }
 
-    private void validateBlank(final String guestsName) {
-        if (guestsName.isBlank()) {
+    private boolean isBlank(String guestsName) {
+        boolean isBlank = guestsName.isBlank();
+        if (isBlank) {
             printErrorMsg(ERROR_GUEST_NAMES_BLANK_MSG);
-            readGuestsName();
         }
+        return isBlank;
     }
 
     public AddCardResponse readWantMoreCard(final String playerName) {
-        System.out.printf(AddCardResponse.printAddCardResponse(playerName));
-        try {
-            return AddCardResponse.validate(scanner.nextLine());
-        } catch (IllegalArgumentException e) {
-            printErrorMsg(e.getMessage());
-            return readWantMoreCard(playerName);
-        }
+        Optional<AddCardResponse> addCardResponse;
+        do {
+            System.out.printf(AddCardResponse.printAddCardResponse(playerName));
+            addCardResponse = AddCardResponse.findAndCreate(scanner.nextLine());
+            if (addCardResponse.isEmpty()) {
+                printErrorMsg(AddCardResponse.getErrorPowerMsg());
+            }
+        } while (addCardResponse.isEmpty());
+        return addCardResponse.get();
     }
 
     public void printErrorMsg(final String message) {
-        System.out.println(message);
+        System.out.println("[ERROR] " + message);
     }
 }

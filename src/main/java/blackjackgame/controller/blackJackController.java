@@ -34,13 +34,16 @@ public class BlackJackController {
     }
 
     private Guests generateGuests() {
-        try {
+        Guests guests = null;
+        do {
             List<String> guestNames = inputView.readGuestsName();
-            return new Guests(guestNames);
-        } catch (IllegalArgumentException e) {
-            inputView.printErrorMsg(e.getMessage());
-            return generateGuests();
-        }
+            try {
+                guests = new Guests(guestNames);
+            } catch (IllegalArgumentException e) {
+                inputView.printErrorMsg(e.getMessage());
+            }
+        } while (guests == null);
+        return guests;
     }
 
     private void setGame(final Guests guests, final Dealer dealer, final Deck deck) {
