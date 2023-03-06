@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import java.util.List;
 
+import static blackjack.view.OutputView.DEALER_NAME;
+
 public class Dealer extends Participant {
 
     private static final int MAX_SCORE_TO_RECEIVE = 16;
@@ -17,6 +19,6 @@ public class Dealer extends Participant {
     }
 
     public String getName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 }

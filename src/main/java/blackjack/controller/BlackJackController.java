@@ -4,10 +4,6 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -22,7 +18,7 @@ public class BlackJackController {
             Deck deck = new Deck();
             Dealer dealer = new Dealer(deck.getTwoCards());
             Players players = generatePlayers(deck);
-            showInitialCards(dealer, players);
+            outputView.showInitialCards(dealer, players);
             playGame(deck, dealer, players);
             closeGame(dealer, players);
         } catch (IllegalArgumentException e) {
@@ -30,39 +26,9 @@ public class BlackJackController {
         }
     }
 
-
     private Players generatePlayers(final Deck deck) {
         outputView.printRequestPlayerNames();
         return Players.of(inputView.readPlayerNames(), deck);
-    }
-
-    private void showInitialCards(final Dealer dealer, final Players players) {
-        List<String> playerNames = players.getPlayers().stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-        outputView.printInitialCardDistribution(playerNames);
-        showDealerCards(dealer);
-        players.getPlayers().forEach(this::showEachPlayerCards);
-    }
-
-    private void showDealerCards(final Dealer dealer) {
-        Card openedDealerCard = dealer.getCards().get(0);
-        outputView.printDealerCard(makeCardName(openedDealerCard));
-    }
-
-    private void showEachPlayerCards(final Player player) {
-        List<String> cards = makeCardNames(player);
-        outputView.printEachPlayerCards(player.getName(), cards);
-    }
-
-    private List<String> makeCardNames(final Participant participant) {
-        return participant.getCards().stream()
-                .map(this::makeCardName)
-                .collect(Collectors.toList());
-    }
-
-    private String makeCardName(final Card card) {
-        return card.getCardLetter().getName() + card.getCardSuit().getShape();
     }
 
     private void playGame(final Deck deck, final Dealer dealer, final Players players) {
@@ -89,7 +55,7 @@ public class BlackJackController {
 
     private void hit(final Deck deck, final Player player) {
         player.receiveCard(deck.getCard());
-        showEachPlayerCards(player);
+        outputView.printPlayerCards(player);
     }
 
     private void playDealer(final Deck deck, final Dealer dealer) {
@@ -100,32 +66,10 @@ public class BlackJackController {
     }
 
     private void closeGame(final Dealer dealer, final Players players) {
-        showFinalCards(dealer, players);
-
+        outputView.printFinalCards(dealer, players);
         GameResult gameResult = new GameResult(dealer, players.getPlayers());
-
-        showDealerResult(gameResult.getDealerResults());
+        outputView.printDealerResults(gameResult.getDealerResults());
         players.getPlayers().forEach(
-                player -> showPlayerResult(player, gameResult.getPlayerResult(player)));
-    }
-
-    private void showFinalCards(final Dealer dealer, final Players players) {
-        outputView.printFinalCards(dealer.getName(), makeCardNames(dealer), dealer.getScore());
-        players.getPlayers().forEach(
-                player -> outputView.printFinalCards(player.getName(), makeCardNames(player), player.getScore()));
-    }
-
-    private void showDealerResult(final Map<Result, Integer> dealerResults) {
-        Map<String, Integer> convertedDealerResult = dealerResults.keySet().stream()
-                .collect(Collectors.toMap(
-                        Result::getTerm,
-                        dealerResults::get
-                ));
-
-        outputView.printDealerResults(convertedDealerResult);
-    }
-
-    private void showPlayerResult(final Player player, final Result playerResult) {
-        outputView.printPlayerResult(player.getName(), playerResult.getTerm());
+                player -> outputView.printPlayerResult(player, gameResult.getPlayerResult(player)));
     }
 }
