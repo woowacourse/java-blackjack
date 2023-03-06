@@ -16,27 +16,27 @@ public class Participant {
         participantCard = ParticipantCard.create();
     }
 
-    public void addCard(final Card card) {
+    public final void addCard(final Card card) {
         participantCard.addCard(card);
     }
 
-    public List<Card> getCard() {
+    public final List<Card> getCard() {
         return List.copyOf(participantCard.getCards());
     }
 
-    public int calculateScore() {
+    public final int calculateScore() {
         return participantCard.calculateScore();
     }
 
-    public boolean isBust() {
+    public final boolean isBust() {
         return participantCard.isBust();
     }
 
-    public boolean isBlackJack() {
+    public final boolean isBlackJack() {
         return participantCard.isBlackJack();
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getName();
     }
 }
