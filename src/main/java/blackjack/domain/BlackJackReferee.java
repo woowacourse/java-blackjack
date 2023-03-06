@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJackReferee {
@@ -24,5 +25,18 @@ public class BlackJackReferee {
 
     public Map<String, ResultType> getResult() {
         return participantResults.getPlayerNameToResultType();
+    }
+
+    private static class ParticipantResults {
+
+        private final Map<String, ResultType> playerNameToResultType = new HashMap<>();
+
+        public void addPlayerResult(final String playerName, final ResultType resultType) {
+            playerNameToResultType.put(playerName, resultType);
+        }
+
+        Map<String, ResultType> getPlayerNameToResultType() {
+            return playerNameToResultType;
+        }
     }
 }
