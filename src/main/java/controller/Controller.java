@@ -6,8 +6,6 @@ import view.InputView;
 import view.OutputView;
 
 public class Controller {
-    private static final String Y_COMMAND = "y";
-
     private final InputView inputView;
     private final OutputView outputView;
 

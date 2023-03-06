@@ -36,12 +36,17 @@ public class BlackjackGame {
         player.addCard(cardDeck.poll());
     }
 
+    public void distributeByCommand(Player player, String command) {
+        if (player.isCommandYes(command)) {
+            distributePlayer(player);
+        }
+    }
+
     public Map<String, List<Result>> getDealerResult() {
-        Map<String, Result> playerResult = getPlayersResult();
         Map<String, List<Result>> dealerResult = new LinkedHashMap<>();
         List<Result> dealerResults = new ArrayList<>();
-        for (String name : playerResult.keySet()) {
-            Result result = playerResult.get(name);
+        for (String name : getPlayersResult().keySet()) {
+            Result result = getPlayersResult().get(name);
             dealerResults.add(result);
         }
         dealerResult.put(players.findDealer().getName(), dealerResults);

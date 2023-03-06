@@ -21,10 +21,10 @@ public class OutputView {
 
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
-        System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName().getName(), players.getPlayersName()
+        System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName(), players.getPlayersName()
                 .stream()
                 .collect(Collectors.joining(SPLIT_DELIMITER)));
-        System.out.println(dealer.getName().getName() + ": " + dealer.getInfo().get(dealer.getName().getName()).get(0));
+        System.out.println(dealer.getName() + ": " + dealer.getInfo().get(dealer.getName()).get(0));
         for (String key : players.getInfo().keySet()) {
             List<String> value = players.getInfo().get(key);
             System.out.println(key + "카드: " + value.stream().collect(Collectors.joining(SPLIT_DELIMITER)));
@@ -32,19 +32,19 @@ public class OutputView {
     }
 
     public void printPlayerCardsInfo(Player player) {
-        System.out.println(player.getName().getName() + "카드: " +
+        System.out.println(player.getName() + "카드: " +
                 player.getCards().stream().collect(Collectors.joining(", ")));
 
     }
 
     public void printDistributeDealer(Dealer dealer) {
         System.out.println();
-        System.out.printf(DEALER_DISTRIBUTE_MESSAGE, dealer.getName().getName());
+        System.out.printf(DEALER_DISTRIBUTE_MESSAGE, dealer.getName());
     }
 
     public void printCardsResult(Dealer dealer, Players players) {
         System.out.println();
-        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName().getName(), dealer.getCards()
+        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), dealer.getCards()
                 .stream()
                 .collect(Collectors.joining(SPLIT_DELIMITER)), dealer.getCardsSum());
         for (String key : players.getInfo().keySet()) {
