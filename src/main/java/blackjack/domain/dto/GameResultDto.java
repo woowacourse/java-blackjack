@@ -7,14 +7,11 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResultDto {
-    private final Map<String, Result> userResult;
-    private final Map<Result, Integer> dealerResult = new HashMap<>();
+    private final Map<String, ResultDto> userResult;
+    private final Map<ResultDto, Integer> dealerResult = new HashMap<>();
 
     public GameResultDto(final Dealer dealer, final Users users) {
         userResult = new LinkedHashMap<>();
@@ -30,7 +27,7 @@ public class GameResultDto {
     private void enrollUser(final List<User> winningUsers, Result result) {
         for (User user : winningUsers) {
             final Name name = user.getName();
-            userResult.put(name.getValue(), result);
+            userResult.put(name.getValue(), new ResultDto(result));
             addResultToDealer(getDealerResultByUsers(result));
         }
     }
@@ -49,15 +46,15 @@ public class GameResultDto {
     }
 
     private void addResultToDealer(final Result result) {
-        dealerResult.computeIfPresent(result, (key, value) -> value + 1);
-        dealerResult.putIfAbsent(result, 1);
+        dealerResult.computeIfPresent(new ResultDto(result), (key, value) -> value + 1);
+        dealerResult.putIfAbsent(new ResultDto(result), 1);
     }
 
-    public Map<String, Result> getUserResult() {
+    public Map<String, ResultDto> getUserResult() {
         return userResult;
     }
 
-    public Map<Result, Integer> getDealerResult() {
+    public Map<ResultDto, Integer> getDealerResult() {
         return dealerResult;
     }
 }

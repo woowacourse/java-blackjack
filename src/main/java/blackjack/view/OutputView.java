@@ -1,10 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Result;
-import blackjack.domain.dto.CardDto;
-import blackjack.domain.dto.FinalStatusDto;
-import blackjack.domain.dto.GameResultDto;
-import blackjack.domain.dto.InitialStatusDto;
+import blackjack.domain.dto.*;
 import blackjack.domain.user.Dealer;
 
 import java.util.List;
@@ -113,21 +110,21 @@ public class OutputView {
         printDealer(gameResultDto.getDealerResult(), Dealer.DEALER_NAME);
     }
 
-    private void printDealer(final Map<Result, Integer> dealerResult, final String dealerName) {
+    private void printDealer(final Map<ResultDto, Integer> dealerResult, final String dealerName) {
         System.out.println(String.format("딜러: %s", makeResultStringOf(dealerResult)));
     }
 
-    private String makeResultStringOf(final Map<Result, Integer> dealerResult) {
+    private String makeResultStringOf(final Map<ResultDto, Integer> dealerResult) {
         final StringBuilder stringBuilder = new StringBuilder();
-        for (Result result : dealerResult.keySet()) {
+        for (ResultDto result : dealerResult.keySet()) {
             stringBuilder.append(makeStringOf(result, dealerResult.get(result)));
             stringBuilder.append(" ");
         }
         return stringBuilder.toString();
     }
 
-    private String makeStringOf(final Result result, final Integer count) {
-        return String.format("%d%s", count, getResultString(result));
+    private String makeStringOf(final ResultDto result, final Integer count) {
+        return String.format("%d%s", count, result.getResult());
     }
 
     private String getResultString(final Result result) {
@@ -144,13 +141,13 @@ public class OutputView {
     }
 
     private void printUsersResult(final GameResultDto gameResultDto) {
-        for (Map.Entry<String, Result> userData : gameResultDto.getUserResult().entrySet()) {
+        for (Map.Entry<String, ResultDto> userData : gameResultDto.getUserResult().entrySet()) {
             printUser(userData.getKey(), userData.getValue());
         }
     }
 
-    private void printUser(final String name, final Result result) {
-        System.out.printf("%s: %s", name, getResultString(result));
+    private void printUser(final String name, final ResultDto result) {
+        System.out.printf("%s: %s", name, result.getResult());
         System.out.print(System.lineSeparator());
     }
 
