@@ -57,12 +57,11 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE_CONDITION
-                && calculateTotalScore() == BLACKJACK_SCORE_CONDITION;
+        return cards.size() == BLACKJACK_SIZE_CONDITION && BLACKJACK_SCORE_CONDITION == calculateTotalScore();
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > BLACKJACK_SCORE_CONDITION;
+        return BLACKJACK_SCORE_CONDITION < calculateTotalScore();
     }
 
     public List<Card> getCards() {

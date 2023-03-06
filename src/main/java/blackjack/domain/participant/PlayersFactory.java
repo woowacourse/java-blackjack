@@ -30,7 +30,7 @@ public class PlayersFactory {
     }
 
     private static void validateLength(String[] names) {
-        if (names.length < MIN_PLAYER_COUNT || names.length > MAX_PLAYER_COUNT) {
+        if (MAX_PLAYER_COUNT < names.length || names.length < MIN_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
         }
     }
