@@ -39,25 +39,14 @@ public class InputView {
         }
     }
 
-    public static String inputAddCardCommand() {
+    public static AddCardCommand inputAddCardCommand() {
         try {
             String inputAddCardCommand = BUFFERED_READER.readLine();
-            validateInputAddCardCommand(inputAddCardCommand);
-            return inputAddCardCommand;
+            validateNullOrBlank(inputAddCardCommand);
+            return AddCardCommand.valueOfCommand(inputAddCardCommand);
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
             return inputAddCardCommand();
-        }
-    }
-
-    private static void validateInputAddCardCommand(String inputAddCardCommand) {
-        validateNullOrBlank(inputAddCardCommand);
-        validateInputAddCardCommandFormat(inputAddCardCommand);
-    }
-
-    private static void validateInputAddCardCommandFormat(String inputAddCardCommand) {
-        if (!("y".equals(inputAddCardCommand) || "n".equals(inputAddCardCommand))) {
-            throw new IllegalArgumentException("카드를 더 받는 여부의 입력은 y 또는 n 만 입력할 수 있습니다.");
         }
     }
 

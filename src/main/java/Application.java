@@ -2,6 +2,7 @@ import domain.game.BlackJackGame;
 import domain.game.Referee;
 import domain.player.Player;
 import domain.strategy.RandomBasedShuffleStrategy;
+import view.AddCardCommand;
 import view.InputView;
 import view.OutputView;
 
@@ -47,26 +48,26 @@ public class Application {
     }
     
     private void giveCardToParticipant(BlackJackGame blackJackGame, Player participant) {
-        String command = getCommand(participant);
-        if ("y".equals(command)) {
+        AddCardCommand command = getCommand(participant);
+        if (command.isAddCardCommand()) {
             blackJackGame.giveCard(participant.getName());
             OutputView.printParticipantCardCondition(List.of(participant));
         }
         
-        if ("n".equals(command) || participant.isBurst()) {
+        if (command.isNotAddCardCommand() || participant.isBurst()) {
             stopGivingCard(participant, command);
             return;
         }
         giveCardToParticipant(blackJackGame, participant);
     }
     
-    private String getCommand(Player participant) {
+    private AddCardCommand getCommand(Player participant) {
         OutputView.printAddCardGuide(participant.getName());
         return InputView.repeat(InputView::inputAddCardCommand);
     }
     
-    private void stopGivingCard(Player participant, String command) {
-        if ("n".equals(command)) {
+    private void stopGivingCard(Player participant, AddCardCommand command) {
+        if (command.isNotAddCardCommand()) {
             OutputView.printParticipantCardCondition(List.of(participant));
             return;
         }
