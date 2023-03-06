@@ -20,7 +20,7 @@ public class BlackjackController {
         BlackjackGame blackjackGame = createBlackjackGame();
 
         play(blackjackGame);
-        result(blackjackGame);
+        printResult(blackjackGame);
     }
 
     private BlackjackGame createBlackjackGame() {
@@ -76,7 +76,7 @@ public class BlackjackController {
         outputView.printPlayerCards(player);
     }
 
-    private void result(BlackjackGame blackjackGame) {
+    private void printResult(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
 
         blackjackGame.decideResult();
