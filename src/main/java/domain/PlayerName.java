@@ -13,11 +13,11 @@ public class PlayerName {
     }
 
     private void validate(String name) {
-        validateIsNull(name);
+        validateIsNotNull(name);
         validateLength(name);
     }
 
-    private void validateIsNull(String name) {
+    private void validateIsNotNull(String name) {
         if (name == null) {
             throw new NullPointerException(NAME_NULL);
         }
