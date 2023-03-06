@@ -35,7 +35,11 @@ public class Participants {
     }
 
     public Dealer getDealer() {
-        return (Dealer) participants.get(DEALER_ORDER);
+        Participant participant = participants.get(DEALER_ORDER);
+        if (participant instanceof Dealer) {
+            return (Dealer) participant;
+        }
+        throw new IllegalArgumentException("딜러가 존재하지 않습니다.");
     }
 
     public List<Participant> getPlayer() {
