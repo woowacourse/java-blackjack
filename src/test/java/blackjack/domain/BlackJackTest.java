@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -103,6 +102,33 @@ public class BlackJackTest {
         assertAll(
                 () -> assertThat(blackJack.isBust(푸우)).isTrue(),
                 () -> assertThat(blackJack.isBust(헙크)).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("BlackJack을 통해 승리한 유저, 무승부인 유저, 패배한 유저를 얻을 수 있다.")
+    void blackJackResultTest() {
+        final Name 승리자 = new Name("Win");
+        final Name 비긴자 = new Name("Draw");
+        final Name 패배자 = new Name("Lose");
+
+        Integer[] 승리자카드 = {1, 10};
+        Integer[] 비긴자카드 = {10, 10};
+        Integer[] 패배자카드 = {10, 9};
+        Integer[] 딜러카드 = {10, 10};
+
+        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(승리자카드));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(비긴자카드)));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(패배자카드)));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
+
+        final BlackJack blackJack = new BlackJack(List.of(승리자, 비긴자, 패배자), new TestDeck(테스트덱));
+
+
+        assertAll(
+                () -> assertThat(blackJack.getUserOf(Result.WIN)).allSatisfy((user) -> user.isNameOf(new Name("Win"))),
+                () -> assertThat(blackJack.getUserOf(Result.DRAW)).allSatisfy((user) -> user.isNameOf(new Name("Draw"))),
+                () -> assertThat(blackJack.getUserOf(Result.LOSE)).allSatisfy((user) -> user.isNameOf(new Name("Lose")))
         );
     }
 }
