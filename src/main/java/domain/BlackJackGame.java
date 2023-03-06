@@ -20,14 +20,14 @@ public class BlackJackGame {
     public List<DrawnCardsInfo> splitCards(final Dealer dealer,
                                            final Players players,
                                            final CardDeck cardDeck) {
-        splitCards(dealer, cardDeck);
+        splitEachParticipant(dealer, cardDeck);
         players.stream()
-                .forEach(player -> splitCards(player, cardDeck));
+                .forEach(player -> splitEachParticipant(player, cardDeck));
 
         return getDrawnCardsInfos(dealer, players);
     }
 
-    private void splitCards(final Participant participant, final CardDeck cardDeck) {
+    private void splitEachParticipant(final Participant participant, final CardDeck cardDeck) {
         for (int i = 0; i < NUMBER_OF_SPLIT_CARDS; i++) {
             participant.drawCard(cardDeck.draw());
         }

@@ -40,10 +40,8 @@ public class OutputView {
 
     public void printParticipantResults(final List<ParticipantResult> results) {
         System.out.println();
-        results.stream()
-                .forEach(result -> System.out.println(
-                        result.getName() + " 카드: " + getCardsInfo(result.getDrawnCards()) + " - 결과: "
-                                + result.getScore()));
+        results.forEach(result -> System.out.println(result.getName() + " 카드: " + getCardsInfo(result.getDrawnCards()) +
+                        " - 결과: " + result.getScore()));
     }
 
     public void printWinLoseResult(final String dealerName,

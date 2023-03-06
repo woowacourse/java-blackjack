@@ -58,6 +58,7 @@ public class BlackJackApplication {
         }
     }
 
+
     private void splitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         List<DrawnCardsInfo> drawnCardsInfos = blackJackGame.splitCards(dealer, players, cardDeck);
         outputView.printCardSplitMessage(drawnCardsInfos);
