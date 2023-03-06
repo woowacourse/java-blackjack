@@ -20,9 +20,6 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    private final BlackJackGame blackJackGame = new BlackJackGame();
-
-
     @DisplayName("카드를 딜러에게 우선적으로 2장 분배한다.")
     @Test
     void split_to_dealer() {
@@ -32,10 +29,12 @@ class BlackJackGameTest {
         Players players = new Players(createPlayers("pobi"));
         Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
 
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
+
         Card expectedFirst = cards.get(0);
         Card expectedSecond = cards.get(1);
         // when
-        blackJackGame.splitCards(dealer, players, cardDeck);
+        blackJackGame.splitCards();
         List<Card> actual = dealer.getDrawnCards();
         // then
         assertThat(actual).containsExactly(expectedFirst, expectedSecond);
@@ -50,10 +49,12 @@ class BlackJackGameTest {
         Players players = new Players(createPlayers("pobi", "ori"));
         Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
 
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
+
         Card expectedFirst = cards.get(4);
         Card expectedSecond = cards.get(5);
         // when
-        blackJackGame.splitCards(dealer, players, cardDeck);
+        blackJackGame.splitCards();
         Player player = players.stream()
                 .collect(Collectors.toList())
                 .get(1);
@@ -68,11 +69,15 @@ class BlackJackGameTest {
         // given
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
-        List<Card> emptyCards = new ArrayList<>();
-        Player player = new Player(new Name("ori"), new DrawnCards(emptyCards));
+        Players players = new Players(createPlayers("pobi", "ori"));
+        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
+        Player player = players.findPlayerByName("pobi");
+
         Card expectedCard = cards.get(0);
         // when
-        blackJackGame.drawPlayerCard(cardDeck, player);
+        blackJackGame.drawPlayerCardByName("pobi");
         List<Card> actualCards = player.getDrawnCards();
         // then
         assertThat(actualCards).containsExactly(expectedCard);
@@ -83,13 +88,16 @@ class BlackJackGameTest {
     @Test
     void player_can_draw_card_if_command_false() {
         // given
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardType.HEART, CardValue.JACK));
-        Player player = new Player(new Name("ori"), new DrawnCards(cards));
+        List<Card> cards = createFillCards();
+        CardDeck cardDeck = CardDeck.createShuffled(cards);
+        Players players = new Players(createPlayers("pobi", "ori"));
+        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
 
         boolean expected = true;
         // when
-        boolean actual = blackJackGame.canPlayerDrawMore(player);
+        boolean actual = blackJackGame.canPlayerDrawMore("pobi");
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -99,15 +107,23 @@ class BlackJackGameTest {
     @Test
     void player_stop_draw_card_if_over_burst_number() {
         // given
+        List<Card> deck = createFillCards();
+
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardType.SPADE, CardValue.JACK));
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         cards.add(new Card(CardType.DIAMOND, CardValue.JACK));
         Player player = new Player(new Name("ori"), new DrawnCards(cards));
 
+        List<Player> players = createPlayers("pobi");
+        players.add(player);
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Players(players), createEmptyCardDealer(),
+                CardDeck.createShuffled(deck));
+
         boolean expected = false;
         // when
-        boolean actual = blackJackGame.canPlayerDrawMore(player);
+        boolean actual = blackJackGame.canPlayerDrawMore("ori");
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -123,10 +139,12 @@ class BlackJackGameTest {
         Dealer dealer = new Dealer(new DrawnCards(cards));
         List<Card> rawDeck = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
+        List<Player> players = createPlayers("a", "b");
+        BlackJackGame blackJackGame = new BlackJackGame(new Players(players), dealer, cardDeck);
 
         Card expected = rawDeck.get(0);
         // when
-        blackJackGame.drawDealerCard(cardDeck, dealer);
+        blackJackGame.drawDealerCard();
         List<Card> actual = dealer.getDrawnCards();
         // then
         assertThat(actual)
@@ -141,9 +159,12 @@ class BlackJackGameTest {
         cards.add(new Card(CardType.SPADE, CardValue.JACK));
         Dealer dealer = new Dealer(new DrawnCards(cards));
 
+        BlackJackGame blackJackGame = new BlackJackGame(new Players(createPlayers("a", "b")),
+                dealer, CardDeck.createShuffled(createFillCards()));
+
         boolean expected = true;
         // when
-        boolean actual = blackJackGame.canDealerDrawMore(dealer);
+        boolean actual = blackJackGame.canDealerDrawMore();
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -157,9 +178,12 @@ class BlackJackGameTest {
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         Dealer dealer = new Dealer(new DrawnCards(cards));
 
+        BlackJackGame blackJackGame = new BlackJackGame(new Players(createPlayers("a", "b")),
+                dealer, CardDeck.createShuffled(createFillCards()));
+
         boolean expected = false;
         // when
-        boolean actual = blackJackGame.canDealerDrawMore(dealer);
+        boolean actual = blackJackGame.canDealerDrawMore();
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -178,9 +202,12 @@ class BlackJackGameTest {
         dealerCard.add(new Card(CardType.SPADE, CardValue.TWO));
         Dealer dealer = new Dealer(new DrawnCards(dealerCard));
 
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer,
+                CardDeck.createShuffled(createFillCards()));
+
         boolean expected = true;
         // when
-        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults(dealer, players);
+        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults();
         boolean actual = winLoseResults.get(0)
                 .isWin();
         // then
@@ -207,5 +234,9 @@ class BlackJackGameTest {
         }
 
         return players;
+    }
+
+    public Dealer createEmptyCardDealer() {
+        return new Dealer(new DrawnCards(new ArrayList<>()));
     }
 }

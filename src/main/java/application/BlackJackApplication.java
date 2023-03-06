@@ -8,7 +8,6 @@ import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.ParticipantGenerator;
-import domain.participant.Player;
 import domain.participant.Players;
 import dto.request.DrawCommand;
 import dto.response.DrawnCardsInfo;
@@ -22,25 +21,28 @@ public class BlackJackApplication {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final BlackJackGame blackJackGame;
 
     public BlackJackApplication(final InputView inputView,
-                                final OutputView outputView,
-                                final BlackJackGame blackJackGame) {
+                                final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackJackGame = blackJackGame;
     }
 
     public void run() {
+        BlackJackGame blackJackGame = createBlackJackGame();
+
+        splitCards(blackJackGame);
+        drawCards(blackJackGame);
+        printParticipantResults(blackJackGame);
+        printWinLoseResult(blackJackGame);
+    }
+
+    private BlackJackGame createBlackJackGame() {
         CardDeck cardDeck = CardDeckGenerator.create();
         Dealer dealer = ParticipantGenerator.createDealer();
         Players players = createPlayers();
 
-        splitCards(cardDeck, dealer, players);
-        drawCards(cardDeck, dealer, players);
-        printParticipantResults(dealer, players);
-        printWinLoseResult(dealer, players);
+        return new BlackJackGame(players, dealer, cardDeck);
     }
 
     private Players createPlayers() {
@@ -58,52 +60,52 @@ public class BlackJackApplication {
         }
     }
 
-
-    private void splitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        List<DrawnCardsInfo> drawnCardsInfos = blackJackGame.splitCards(dealer, players, cardDeck);
+    private void splitCards(BlackJackGame blackJackGame) {
+        List<DrawnCardsInfo> drawnCardsInfos = blackJackGame.splitCards();
         outputView.printCardSplitMessage(drawnCardsInfos);
     }
 
-    private void drawCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        players.stream()
-                .forEach(player -> drawPlayerCards(cardDeck, player));
-        drawDealerCards(cardDeck, dealer);
+    private void drawCards(BlackJackGame blackJackGame) {
+        for (String playerName : blackJackGame.getPlayersName()) {
+            drawPlayerCards(blackJackGame, playerName);
+        }
+        drawDealerCards(blackJackGame);
     }
 
-    private void drawPlayerCards(final CardDeck cardDeck, final Player player) {
-        while (getDrawCommand(player).isDraw()) {
-            DrawnCardsInfo drawnCardsInfo = blackJackGame.drawPlayerCard(cardDeck, player);
+    private void drawPlayerCards(BlackJackGame blackJackGame, String playerName) {
+        while (getDrawCommand(playerName).isDraw()) {
+            DrawnCardsInfo drawnCardsInfo = blackJackGame.drawPlayerCardByName(playerName);
             outputView.printPlayerCardInfo(drawnCardsInfo);
 
-            if (!blackJackGame.canPlayerDrawMore(player)) break;
+            if (!blackJackGame.canPlayerDrawMore(playerName)) break;
         }
     }
 
-    private DrawCommand getDrawCommand(final Player player) {
+    private DrawCommand getDrawCommand(final String playerName) {
         try {
-            String rawCommand = inputView.readChoiceOfDrawCard(player.getName());
+            String rawCommand = inputView.readChoiceOfDrawCard(playerName);
             DrawCommand drawCommand = DrawCommand.from(rawCommand);
             return drawCommand;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return getDrawCommand(player);
+            return getDrawCommand(playerName);
         }
     }
 
-    private void drawDealerCards(final CardDeck cardDeck, final Dealer dealer) {
-        while (blackJackGame.canDealerDrawMore(dealer)) {
-            blackJackGame.drawDealerCard(cardDeck, dealer);
+    private void drawDealerCards(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerDrawMore()) {
+            blackJackGame.drawDealerCard();
             outputView.printDealerCardPickMessage();
         }
     }
 
-    private void printParticipantResults(final Dealer dealer, final Players players) {
-        List<ParticipantResult> participantResults = blackJackGame.getParticipantResults(dealer, players);
+    private void printParticipantResults(BlackJackGame blackJackGame) {
+        List<ParticipantResult> participantResults = blackJackGame.getParticipantResults();
         outputView.printParticipantResults(participantResults);
     }
 
-    private void printWinLoseResult(final Dealer dealer, final Players players) {
-        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults(dealer, players);
-        outputView.printWinLoseResult(dealer.getName(),winLoseResults);
+    private void printWinLoseResult(BlackJackGame blackJackGame) {
+        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults();
+        outputView.printWinLoseResult(blackJackGame.getDealerName(), winLoseResults);
     }
 }

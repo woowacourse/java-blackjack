@@ -32,6 +32,13 @@ public class Players {
                 .count() != players.size();
     }
 
+    public Player findPlayerByName(String playerName) {
+        return players.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow();
+    }
+
     public Stream<Player> stream() {
         return players.stream();
     }

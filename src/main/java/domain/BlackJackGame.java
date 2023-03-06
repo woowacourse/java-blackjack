@@ -17,9 +17,17 @@ public class BlackJackGame {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
 
-    public List<DrawnCardsInfo> splitCards(final Dealer dealer,
-                                           final Players players,
-                                           final CardDeck cardDeck) {
+    private final Players players;
+    private final Dealer dealer;
+    private final CardDeck cardDeck;
+
+    public BlackJackGame(Players players, Dealer dealer, CardDeck cardDeck) {
+        this.players = players;
+        this.dealer = dealer;
+        this.cardDeck = cardDeck;
+    }
+
+    public List<DrawnCardsInfo> splitCards() {
         splitEachParticipant(dealer, cardDeck);
         players.stream()
                 .forEach(player -> splitEachParticipant(player, cardDeck));
@@ -44,26 +52,26 @@ public class BlackJackGame {
         return cardInfos;
     }
 
-    public DrawnCardsInfo drawPlayerCard(final CardDeck cardDeck,
-                                         final Player player) {
+    public DrawnCardsInfo drawPlayerCardByName(final String playerName) {
+        Player player = players.findPlayerByName(playerName);
         player.drawCard(cardDeck.draw());
         return DrawnCardsInfo.toDto(player, player.openDrawnCards());
     }
 
-    public boolean canPlayerDrawMore(final Player player) {
+    public boolean canPlayerDrawMore(final String playerName) {
+        Player player = players.findPlayerByName(playerName);
         return player.isDrawable();
     }
 
-    public void drawDealerCard(final CardDeck cardDeck, final Dealer dealer) {
+    public void drawDealerCard() {
         dealer.drawCard(cardDeck.draw());
     }
 
-    public boolean canDealerDrawMore(final Dealer dealer) {
+    public boolean canDealerDrawMore() {
         return dealer.isDrawable();
     }
 
-    public List<ParticipantResult> getParticipantResults(final Dealer dealer,
-                                                         final Players players) {
+    public List<ParticipantResult> getParticipantResults() {
         List<ParticipantResult> participantResults = new ArrayList<>();
         participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateScore()));
         players.stream()
@@ -72,14 +80,19 @@ public class BlackJackGame {
         return participantResults;
     }
 
-    public List<WinLoseResult> getWinLoseResults(final Dealer dealer, final Players players) {
+    public List<WinLoseResult> getWinLoseResults() {
         return players.stream()
-                .map(player -> calculateWinLose(player, dealer))
+                .map(player -> new WinLoseResult(player.getName(), player.isWin(dealer)))
                 .collect(toList());
     }
 
-    private WinLoseResult calculateWinLose(final Player player,
-                                           final Dealer dealer) {
-        return new WinLoseResult(player.getName(), player.isWin(dealer));
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(Participant::getName)
+                .collect(toList());
+    }
+
+    public String getDealerName() {
+        return dealer.getName();
     }
 }
