@@ -43,13 +43,21 @@ abstract public class User {
     }
 
     public Result compare(User other) {
-        if (getScore() == other.getScore() || (isBusted() && other.isBusted())) {
+        if (isDraw(other)) {
             return Result.DRAW;
         }
-        if (!isBusted() && (getScore() > other.getScore() || other.isBusted())) {
+        if (isWon(other)) {
             return Result.WIN;
         }
         return Result.LOSE;
+    }
+
+    private boolean isWon(User other) {
+        return !isBusted() && (getScore() > other.getScore() || other.isBusted());
+    }
+
+    private boolean isDraw(User other) {
+        return getScore() == other.getScore() || (isBusted() && other.isBusted());
     }
 
     public int getScore() {
