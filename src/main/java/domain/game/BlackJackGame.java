@@ -19,7 +19,7 @@ public class BlackJackGame {
     private final CardDeck cardDeck;
 
     BlackJackGame(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
-        this.players = new HashSet<>(players);
+        this.players = new LinkedHashSet<>(players);
         this.dealer = dealer;
         this.cardDeck = cardDeck;
     }
