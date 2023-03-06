@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Pattern;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.StandardCard;
 import org.assertj.core.api.Assertions;

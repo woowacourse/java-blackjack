@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.strategy.CardPicker;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;

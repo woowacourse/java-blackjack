@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Pattern;
-
 public class AceCard extends Card{
 
     private static final String ACE_SYMBOL = "A";

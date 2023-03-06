@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Pattern;
-import blackjack.domain.card.StandardCard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

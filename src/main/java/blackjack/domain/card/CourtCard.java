@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Pattern;
 import java.util.List;
 
 public class CourtCard extends Card {

@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Participant;
+
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 

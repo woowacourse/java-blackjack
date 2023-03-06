@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.strategy.CardPicker;
+import blackjack.domain.participant.Player;
 import blackjack.util.StringUtil;
 import java.util.List;
 import java.util.regex.Pattern;

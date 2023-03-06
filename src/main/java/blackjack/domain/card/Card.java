@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Pattern;
-
 import java.util.Objects;
 
 abstract public class Card {

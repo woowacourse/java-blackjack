@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Pattern;
-
 public class StandardCard extends Card {
 
     private static final int MIN_INCLUSIVE = 2;
