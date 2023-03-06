@@ -8,7 +8,6 @@ import domain.model.Dealer;
 import domain.model.Participant;
 import domain.model.Player;
 import domain.model.Result;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class BlackJackController {
 
     public void play() {
         final List<Participant> participants = getParticipants();
-        final Dealer dealer = new Dealer(makeEmptyCards());
+        final Dealer dealer = new Dealer(Cards.makeEmptyCards());
         giveInitialCards(dealer, participants);
         getPlayerAdditionalCard(participants);
         getDealerAdditionalCard(dealer);
@@ -39,13 +38,9 @@ public class BlackJackController {
         return ExecuteContext.workWithExecuteStrategy(() -> {
             List<String> names = InputView.inputNames();
             return names.stream()
-                .map(name -> new Player(makeEmptyCards(), name))
+                .map(name -> new Player(Cards.makeEmptyCards(), name))
                 .collect(Collectors.toList());
         });
-    }
-
-    private Cards makeEmptyCards() {
-        return new Cards(new HashSet<>());
     }
 
     private void giveInitialCards(final Dealer dealer, final List<Participant> participants) {

@@ -1,6 +1,7 @@
 package domain.model;
 
 import domain.type.Letter;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Cards {
@@ -9,6 +10,10 @@ public class Cards {
 
     public Cards(final Set<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Cards makeEmptyCards() {
+        return new Cards(new HashSet<>());
     }
 
     public int count(final Letter letter) {
