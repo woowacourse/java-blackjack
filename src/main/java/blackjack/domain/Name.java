@@ -7,7 +7,7 @@ public class Name {
 
     public Name(String value) {
         validateBlank(value);
-        this.value = value;
+        this.value = value.strip();
     }
 
     private void validateBlank(String name) {

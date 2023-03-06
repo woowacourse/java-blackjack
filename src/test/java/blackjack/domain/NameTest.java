@@ -11,7 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class NameTest {
     @Test
     @DisplayName("이름을 받아 플레이어를 생성한다")
-    void createPlayerTest() {
+    void createNameTest() {
         Name name = new Name("boxster");
 
         assertThat(name.getValue()).isEqualTo("boxster");
@@ -24,5 +24,13 @@ class NameTest {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 공백일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이름 앞뒤에 공백이 있는 경우 제거하고 저장한다")
+    void createNameWithStripBlank() {
+        Name name = new Name(" jamie ");
+
+        assertThat(name.getValue()).isEqualTo("jamie");
     }
 }

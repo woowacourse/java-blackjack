@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,16 +13,27 @@ public class Participants {
     }
 
     public static Participants from(List<String> names) {
-        validateDuplicate(names);
-        List<Participant> players = names.stream()
-                                         .map(Player::new)
-                                         .collect(Collectors.toList());
+        List<Participant> players = new ArrayList<>();
         players.add(new Dealer());
+        players.addAll(getParticipantsByNames(stripNames(names)));
+        validateDuplicate(players);
         return new Participants(players);
     }
 
-    private static void validateDuplicate(List<String> names) {
-        if (new HashSet<>(names).size() != names.size()) {
+    private static List<String> stripNames(List<String> names) {
+        return names.stream()
+                    .map(String::strip)
+                    .collect(Collectors.toList());
+    }
+
+    private static List<Participant> getParticipantsByNames(List<String> names) {
+        return names.stream()
+                    .map(Player::new)
+                    .collect(Collectors.toList());
+    }
+
+    private static void validateDuplicate(List<Participant> participants) {
+        if (new HashSet<>(participants).size() != participants.size()) {
             throw new IllegalArgumentException("중복인 이름은 입력하실 수 없습니다.");
         }
     }
