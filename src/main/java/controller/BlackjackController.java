@@ -16,6 +16,8 @@ import static view.OutputView.*;
 
 public class BlackjackController {
 
+    private final Deck deck = new Deck();
+
     public void runGame() {
         Players players = getPlayers();
         Dealer dealer = new Dealer();
@@ -46,11 +48,11 @@ public class BlackjackController {
     private void drawInitialCards(final Players players, final Dealer dealer) {
         printInitialPickGuideMessage(players);
         for (Player player : players.getPlayers()) {
-            player.drawCard(Deck.pickCard());
-            player.drawCard(Deck.pickCard());
+            player.drawCard(deck.pickCard());
+            player.drawCard(deck.pickCard());
         }
-        dealer.drawCard(Deck.pickCard());
-        dealer.drawCard(Deck.pickCard());
+        dealer.drawCard(deck.pickCard());
+        dealer.drawCard(deck.pickCard());
         printInitialCards(dealer, players);
     }
 
@@ -97,7 +99,7 @@ public class BlackjackController {
 
     private void playerHit(Player player, boolean canHit) {
         if (canHit) {
-            player.drawCard(Deck.pickCard());
+            player.drawCard(deck.pickCard());
         }
     }
 
@@ -108,7 +110,7 @@ public class BlackjackController {
     }
 
     private void dealerHit(Dealer dealer) {
-        dealer.drawCard(Deck.pickCard());
+        dealer.drawCard(deck.pickCard());
         printDealerDrawMessage();
     }
 

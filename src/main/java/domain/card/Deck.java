@@ -7,30 +7,30 @@ import java.util.stream.Stream;
 
 public class Deck {
 
-    private static final Queue<Card> deck;
+    private final Queue<Card> deck;
 
-    static {
+    public Deck() {
         LinkedList<Card> cards = createDeck();
         Collections.shuffle(cards);
         deck = cards;
     }
 
-    private static LinkedList<Card> createDeck() {
+    private LinkedList<Card> createDeck() {
         return Arrays.stream(Denomination.values())
                 .flatMap(generateCardForm())
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private static Function<Denomination, Stream<? extends Card>> generateCardForm() {
+    private Function<Denomination, Stream<? extends Card>> generateCardForm() {
         return denomination -> Arrays.stream(Suit.values())
                 .map(suit -> new Card(suit, denomination));
     }
 
-    public static Card pickCard() {
+    public Card pickCard() {
         return deck.poll();
     }
 
-    public static List<Card> getDeck() {
+    public List<Card> getDeck() {
         return new ArrayList<>(deck);
     }
 }
