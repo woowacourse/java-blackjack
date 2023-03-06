@@ -9,14 +9,14 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
+    private static final String NEWLINE = System.lineSeparator();
     private static final String INPUT_PLAYER_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String ASK_ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
-    private static final String SETUP_COMPLETE_MESSAGE = "\n딜러와 %s에게 2장을 나누었습니다.\n";
-    private static final String DEALER_DRAW_RESULT_MESSAGE = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n\n";
+    private static final String ASK_ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n) %n";
+    private static final String SETUP_COMPLETE_MESSAGE = "%n딜러와 %s에게 2장을 나누었습니다.%n";
+    private static final String DEALER_DRAW_RESULT_MESSAGE = "%n 딜러는 16이하라 %d장의 카드를 더 받았습니다.%n%n";
 
     private static final String FINAL_RESULT_NOTICE_MESSAGE = "## 최종 승패";
-    private static final String DEALER_FINAL_RESULT_MESSAGE = "딜러: %d승 %d패\n";
+    private static final String DEALER_FINAL_RESULT_MESSAGE = "딜러: %d승 %d패%n";
     private static final String WIN_COUNT_MESSAGE = ": 승";
     private static final String LOSE_COUNT_MESSAGE = ": 패";
 
@@ -61,7 +61,7 @@ public class OutputView {
 
             System.out.println(name + NAME_CARD_DELIMITER + cards);
         }
-        System.out.println();
+        System.out.print(NEWLINE);
     }
 
     public void printDealerDrawResult(int dealerDrawCount) {
@@ -78,7 +78,7 @@ public class OutputView {
 
             System.out.println(name + NAME_CARD_DELIMITER + cards + CARD_SCORE_DELIMITER + score);
         }
-        System.out.println();
+        System.out.print(NEWLINE);
     }
 
     public void printFinalResult(Map<Boolean, Integer> dealerResult, Map<String, Boolean> userResult) {
