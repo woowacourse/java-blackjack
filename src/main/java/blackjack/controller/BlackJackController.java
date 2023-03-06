@@ -31,13 +31,13 @@ public class BlackJackController {
 
 
     private BlackJackGame generateBlackJackGame(final DeckFactory deckFactory) {
-        return new BlackJackGame(createPlayers(), deckFactory);
+        return repeatUntilNoException(
+                () -> BlackJackGame.of(
+                        inputView.inputPlayerNames(),
+                        deckFactory),
+                outputView::printError);
     }
 
-    private Players createPlayers() {
-        return repeatUntilNoException(
-                () -> Players.from(inputView.inputPlayerNames()), outputView::printError);
-    }
 
     private void distributeInitialCard(final BlackJackGame blackJackGame) {
         blackJackGame.distributeInitialCard();

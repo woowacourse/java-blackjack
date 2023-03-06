@@ -5,15 +5,20 @@ import blackjack.response.FinalResultResponse;
 import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
 import blackjack.response.PlayersCardsResponse;
+import java.util.List;
 
 public class BlackJackGame {
 
     private final Participants participants;
     private final Deck deck;
 
-    public BlackJackGame(final Players players, final DeckFactory deckFactory) {
+    private BlackJackGame(final Players players, final DeckFactory deckFactory) {
         participants = new Participants(players, new Dealer());
         deck = deckFactory.generate();
+    }
+
+    public static BlackJackGame of(final List<String> playerNames, final DeckFactory deckFactory) {
+        return new BlackJackGame(Players.from(playerNames), deckFactory);
     }
 
     public void distributeInitialCard() {
