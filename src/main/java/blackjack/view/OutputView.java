@@ -43,8 +43,8 @@ public class OutputView {
                 , String.join(DELIMITER, playerNames)));
     }
 
-    public void printDrawCardRequestMessage(final String name) {
-        System.out.println(String.format(DRAW_CARD_REQUEST_MESSAGE, name));
+    public void printDrawCardRequestMessage(final String playerName) {
+        System.out.println(String.format(DRAW_CARD_REQUEST_MESSAGE, playerName));
         printLineBreak();
     }
 

@@ -28,9 +28,9 @@ public class BlackJackController {
 
     private BlackJackGame initBlackJackGame() {
         outputView.printPlayerNameRequestMessage();
-        final List<String> names = inputView.readPlayerNames();
+        final List<String> playerNames = inputView.readPlayerNames();
         outputView.printLineBreak();
-        return new BlackJackGame(names, new RandomDeckGenerator());
+        return new BlackJackGame(playerNames, new RandomDeckGenerator());
     }
 
     private void printInitialStatus(final BlackJackGame blackJackGame) {
@@ -39,25 +39,25 @@ public class BlackJackController {
 
     private void playPlayerTurn(final BlackJackGame blackJackGame) {
         final List<String> playerNames = blackJackGame.getPlayerNames();
-        for (final String name : playerNames) {
-            playFor(blackJackGame, name);
+        for (final String playerName : playerNames) {
+            playFor(blackJackGame, playerName);
             outputView.printLineBreak();
         }
     }
 
-    private void playFor(final BlackJackGame blackJackGame, final String name) {
-        while (isContinuous(name, blackJackGame)) {
-            blackJackGame.playPlayer(name);
-            List<Card> userCards = blackJackGame.getStatus().get(name);
-            outputView.printCards(name, ViewRenderer.renderCardsToString(userCards));
+    private void playFor(final BlackJackGame blackJackGame, final String playerName) {
+        while (isContinuous(playerName, blackJackGame)) {
+            blackJackGame.playPlayer(playerName);
+            List<Card> userCards = blackJackGame.getStatus().get(playerName);
+            outputView.printCards(playerName, ViewRenderer.renderCardsToString(userCards));
         }
     }
 
-    private boolean isContinuous(final String name, BlackJackGame blackJackGame) {
-        if (blackJackGame.isBlackJackScore(name) || blackJackGame.isBust(name)) {
+    private boolean isContinuous(final String playerName, BlackJackGame blackJackGame) {
+        if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isBust(playerName)) {
             return false;
         }
-        outputView.printDrawCardRequestMessage(name);
+        outputView.printDrawCardRequestMessage(playerName);
         return DrawInput.from(inputView.readDrawOrStay()).isDraw();
     }
 
