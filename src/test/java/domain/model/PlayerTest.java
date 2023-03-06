@@ -1,47 +1,48 @@
 package domain.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import domain.type.Letter;
 import domain.type.Suit;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
     @Test
-    @DisplayName("21 이하일 경우 카드 추가를 테스트")
-    public void testAddCardWhenUnder21() {
+    @DisplayName("21 이하의 점수에서의 bust 테스트")
+    public void testScore21NotBust() {
         //given
         Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.NINE));
+        cardSet.add(new Card(Suit.DIAMOND, Letter.NINE));
         Cards cards = new Cards(cardSet);
         Player player = new Player(cards, "player");
 
         //when
-        player.addCard(new Card(Suit.DIAMOND, Letter.NINE));
         player.addCard(new Card(Suit.SPADE, Letter.THREE));
 
         //then
-        assertThat(player.getScore().getValue()).isEqualTo(21);
+        assertFalse(player.isBust());
     }
 
     @Test
-    @DisplayName("21 초과일 경우 카드 추가를 테스트")
-    public void testAddCardWhenOver21() {
+    @DisplayName("22 이상의 점수에서의 bust 테스트")
+    public void testScore22Bust() {
         //given
         Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.TEN));
+        cardSet.add(new Card(Suit.DIAMOND, Letter.TEN));
         Cards cards = new Cards(cardSet);
         Player player = new Player(cards, "player");
 
         //when
-        player.addCard(new Card(Suit.SPADE, Letter.TEN));
-        player.addCard(new Card(Suit.SPADE, Letter.ACE));
+        player.addCard(new Card(Suit.SPADE, Letter.TWO));
 
         //then
-        assertThat(player.getScore().getValue()).isEqualTo(21);
+        assertTrue(player.isBust());
     }
 }
