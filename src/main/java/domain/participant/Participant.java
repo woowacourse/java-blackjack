@@ -1,14 +1,13 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.HandCards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import domain.card.Card;
-
-public class Participant {
+public abstract class Participant {
     public static final int MIN_BUST_NUMBER = 21;
 
     Name name;

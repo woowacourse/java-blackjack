@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.RandomCardMaker;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -28,14 +29,6 @@ public class BlackJackGame {
         printFinalFightResult();
     }
 
-    public static void initSettingCards(Players players, Dealer dealer) {
-        Deck.shuffle();
-        distributeCard(dealer, 2);
-        for (Player player : players.getPlayers()) {
-            distributeCard(player, 2);
-        }
-    }
-
     public static void distributeCard(Participant participant, int num) {
         for (int generateIndex = 0; generateIndex < num; generateIndex++) {
             participant.drawCard(generateCard());
@@ -43,16 +36,27 @@ public class BlackJackGame {
     }
 
     private static Card generateCard() {
-        String cardName = Deck.drawCard();
-        int cardValue = Deck.extractCardNumber(cardName);
-        return new Card(cardName, cardValue);
+//        String cardName = Deck.drawCard();
+//        int cardValue = Deck.extractCardNumber(cardName);
+//        return new Card(cardName, cardValue);
+        Deck deck = new Deck(new RandomCardMaker());
+        String s = deck.drawCard();
+        return new Card(s, deck.extractCardNumber(s));
     }
 
     private void initSetting() {
-        BlackJackGame.initSettingCards(players, dealer);
+        initSettingCards(players, dealer);
         ResultView.printInitMessage(players.getPlayerNames());
 
         printInitMemberCards();
+    }
+
+    private void initSettingCards(Players players, Dealer dealer) {
+//        Deck.shuffle();
+        distributeCard(dealer, 2);
+        for (Player player : players.getPlayers()) {
+            distributeCard(player, 2);
+        }
     }
 
     private void printInitMemberCards() {
