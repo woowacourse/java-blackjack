@@ -11,17 +11,17 @@ public class DrawState extends State {
     @Override
     public State draw(CardDeck cardDeck) {
         handCard.add(cardDeck.pick());
-        if(handCard.isSmallScoreOver(BLACKJACK_NUMBER) && handCard.isBigScoreOver(BLACKJACK_NUMBER)){
+        if (handCard.isSmallScoreOver(BLACKJACK_NUMBER) && handCard.isBigScoreOver(BLACKJACK_NUMBER)) {
             return new BustState(handCard);
         }
         return this;
     }
 
-    public State turnStandState(){
+    public State turnStandState() {
         return new StandState(handCard);
     }
 
-    public State turnDealerDrawState(){
+    public State turnDealerDrawState() {
         return new DealerDrawState(handCard);
     }
 

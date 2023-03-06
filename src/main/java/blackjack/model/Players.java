@@ -24,7 +24,7 @@ public class Players {
 
     public void distributeFirstCards(CardDeck cardDeck) {
         if (players.stream().anyMatch(Player::isFinished)) {
-            throw new IllegalStateException("첫 분배를 시작할 없는 상태입니다.");
+            throw new IllegalStateException("첫 분배를 시작할 수 없는 상태입니다.");
         }
         for (Player player : players) {
             player.draw(cardDeck);
@@ -35,8 +35,7 @@ public class Players {
         Map<String, List<Card>> distributedCards = new HashMap<>();
 
         for (Player player : players) {
-            List<Card> firstDistributed = player.firstDistributedCard();
-            distributedCards.put(player.getName(), firstDistributed);
+            distributedCards.put(player.getName(), player.firstDistributedCard());
         }
         return distributedCards;
     }

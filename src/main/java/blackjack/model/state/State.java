@@ -28,7 +28,7 @@ public abstract class State {
 
     public abstract boolean isStand();
 
-    public boolean isCardFirstDistributed() {
+    public boolean isCardDistributed() {
         return (handCard.size() >= FIRST_DISTRIBUTE_COUNT);
     }
 

@@ -29,9 +29,7 @@ public class GameController {
         Dealer dealer = new Dealer(new DealerInitialState(new HandCard()));
         CardDeck cardDeck = new CardDeck();
 
-        players.distributeFirstCards(cardDeck);
-        dealer.draw(cardDeck);
-
+        distributeFirstCards(players, dealer, cardDeck);
         printFirstCardDistribution(players, dealer);
 
         for (int playerId = 0; playerId < players.getPlayerCount(); playerId++) {
@@ -45,8 +43,15 @@ public class GameController {
         printWinningResult(players, dealer);
     }
 
+    private void distributeFirstCards(Players players, Dealer dealer, CardDeck cardDeck) {
+        players.distributeFirstCards(cardDeck);
+        dealer.draw(cardDeck);
+    }
+
     private void printFirstCardDistribution(Players players, Dealer dealer) {
-        List<String> dealerCards = dealer.firstDistributedCard().stream().map(Card::cardUnit).collect(Collectors.toList());
+        List<String> dealerCards = dealer.firstDistributedCard().stream()
+                .map(Card::cardUnit)
+                .collect(Collectors.toList());
         Map<String, List<String>> dealerDistributedCards = new HashMap<>();
         dealerDistributedCards.put(dealer.getName(), dealerCards);
         outputView.printDistributionMessage(players.getPlayerNames());

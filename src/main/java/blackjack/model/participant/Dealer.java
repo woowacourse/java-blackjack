@@ -46,7 +46,6 @@ public class Dealer extends Participant {
         return ResultState.STAND;
     }
 
-
     public Map<String, WinningResult> winningResults(Players players) {
         Map<String, WinningResult> results = new HashMap<>();
         WinningResult totalResult = new WinningResult();
@@ -64,7 +63,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> firstDistributedCard() {
-        if (!currentState.isCardFirstDistributed()) {
+        if (!currentState.isCardDistributed()) {
             throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
         }
         return List.of(currentState.getHand().get(FIRST_CARD));

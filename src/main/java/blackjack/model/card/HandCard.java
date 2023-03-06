@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import blackjack.model.ResultState;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,7 @@ public class HandCard {
         cards.add(card);
     }
 
-    public CardScore score(ResultState state){
+    public CardScore score(ResultState state) {
         List<CardNumber> ownedNumbers = cards.stream().map(Card::getNumber)
                 .collect(Collectors.toList());
         return new CardScore(ownedNumbers, state);
@@ -35,13 +36,13 @@ public class HandCard {
         return (bigScore(numbers) == throttle);
     }
 
-   public boolean isBigScoreOver(int throttle) {
-       List<CardNumber> numbers = cards.stream()
-               .map(Card::getNumber)
-               .collect(Collectors.toList());
+    public boolean isBigScoreOver(int throttle) {
+        List<CardNumber> numbers = cards.stream()
+                .map(Card::getNumber)
+                .collect(Collectors.toList());
 
-       return (bigScore(numbers) > throttle);
-   }
+        return (bigScore(numbers) > throttle);
+    }
 
     public boolean isSmallScoreOver(int throttle) {
         List<CardNumber> numbers = cards.stream()

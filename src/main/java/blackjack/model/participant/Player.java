@@ -33,7 +33,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> firstDistributedCard() {
-        if (!currentState.isCardFirstDistributed()) {
+        if (!currentState.isCardDistributed()) {
             throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
         }
         List<Card> handCards = currentState.getHand();
