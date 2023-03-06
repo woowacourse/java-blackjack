@@ -31,6 +31,17 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public static int readBettingStake(Player player) {
+        System.out.println(player.getName() + "의 베팅 금액은?");
+        String input = scanner.nextLine();
+        try {
+            Integer.parseInt(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] 숫자를 입력해야 합니다.");
+        }
+        return Integer.parseInt(input);
+    }
+
     public static boolean readIsHit(Player player) {
         printNewLine();
         System.out.println(player.getName() + STAND_GUIDE_MESSAGE);
