@@ -82,7 +82,7 @@ public class BlackJackController {
     }
 
     private String makeCardName(final Card card) {
-        return card.getTrumpNumber().getName() + card.getTrumpShape().getShape();
+        return card.getCardLetter().getName() + card.getCardSuit().getShape();
     }
 
     private void playGame(final Deck deck, final Dealer dealer, final Players players) {

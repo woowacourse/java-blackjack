@@ -22,7 +22,7 @@ public abstract class Participant {
 
     protected List<Letter> extractNumbers() {
         return cards.stream()
-                .map(Card::getTrumpNumber)
+                .map(Card::getCardLetter)
                 .collect(Collectors.toList());
     }
 

@@ -9,11 +9,11 @@ public class Card {
         this.letter = letter;
     }
 
-    public Suit getTrumpShape() {
+    public Suit getCardSuit() {
         return suit;
     }
 
-    public Letter getTrumpNumber() {
+    public Letter getCardLetter() {
         return letter;
     }
 }

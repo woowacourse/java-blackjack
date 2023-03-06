@@ -24,13 +24,13 @@ class DeckTest {
         Deck deck = new Deck(testNumberGenerator);
 
         Card card1 = deck.getCard();
-        Assertions.assertThat(card1.getTrumpShape()).isEqualTo(Suit.SPADE);
-        Assertions.assertThat(card1.getTrumpNumber()).isEqualTo(Letter.FOUR);
+        Assertions.assertThat(card1.getCardSuit()).isEqualTo(Suit.SPADE);
+        Assertions.assertThat(card1.getCardLetter()).isEqualTo(Letter.FOUR);
         Card card2 = deck.getCard();
-        Assertions.assertThat(card2.getTrumpShape()).isEqualTo(Suit.CLOVER);
-        Assertions.assertThat(card2.getTrumpNumber()).isEqualTo(Letter.KING);
+        Assertions.assertThat(card2.getCardSuit()).isEqualTo(Suit.CLOVER);
+        Assertions.assertThat(card2.getCardLetter()).isEqualTo(Letter.KING);
         Card card3 = deck.getCard();
-        Assertions.assertThat(card3.getTrumpShape()).isEqualTo(Suit.HEART);
-        Assertions.assertThat(card3.getTrumpNumber()).isEqualTo(Letter.SIX);
+        Assertions.assertThat(card3.getCardSuit()).isEqualTo(Suit.HEART);
+        Assertions.assertThat(card3.getCardLetter()).isEqualTo(Letter.SIX);
     }
 }

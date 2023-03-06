@@ -18,23 +18,23 @@ public class GameResult {
     }
 
     private void decideWinner(Dealer dealer, Player player) {
-        if (isBurst(player) || isBurst(dealer)) {
+        if (isBust(player) || isBust(dealer)) {
             compareBuster(dealer, player);
             return;
         }
         compareScore(dealer, player);
     }
 
-    private boolean isBurst(Participant participant) {
+    private boolean isBust(Participant participant) {
         return participant.getScore() > MAX_BLACKJACK_SCORE;
     }
 
     private void compareBuster(Dealer dealer, Player player) {
-        if (isBurst(player)) {
+        if (isBust(player)) {
             dealerWin(player);
             return;
         }
-        if (isBurst(dealer)) {
+        if (isBust(dealer)) {
             playerWin(player);
         }
     }
