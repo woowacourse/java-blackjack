@@ -108,5 +108,3 @@ public class BlackJackApplication {
         outputView.printWinLoseResult(blackJackGame.getDealerName(), winLoseResults);
     }
 }
-
-
