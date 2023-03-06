@@ -22,7 +22,7 @@ public class Name {
     }
 
     private boolean isNameOutOfRange(String name) {
-        return !(MIN_LENGTH <= name.length() && name.length() <= MAX_LENGTH);
+        return name.length() < MIN_LENGTH || name.length() > MAX_LENGTH;
     }
 
     public String getValue() {

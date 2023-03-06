@@ -93,9 +93,10 @@ public class BlackJackController {
     }
 
     private void validate(String answer) {
-        if (!(answer.equals(MORE_CARD) || answer.equals(CARD_STOP))) {
-            throw new IllegalArgumentException(INVALID_MORE_CARD_ERROR_MESSAGE);
+        if (answer.equals(MORE_CARD) || answer.equals(CARD_STOP)) {
+            return;
         }
+        throw new IllegalArgumentException(INVALID_MORE_CARD_ERROR_MESSAGE);
     }
 
     private boolean isNoStop(CardDistributor cardDistributor, Player player, String answer) {

@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Objects;
 import type.Letter;
 import type.Shape;
 
@@ -25,4 +26,20 @@ public class Card {
         return letter == Letter.ACE;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return shape == card.shape && letter == card.letter;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape, letter);
+    }
 }
