@@ -120,4 +120,26 @@ class SimpleArrayListGenericTest {
         assertThat(integerSimpleArrayList.get(1)).isEqualTo(2);
         assertThat(integerSimpleArrayList.get(2)).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("sum method를 통해 SimpleList<Integer>의 합계를 구한다.")
+    void sum() {
+        Integer[] integers = {1, 2, 3};
+        SimpleArrayList<Integer> integerSimpleArrayList = SimpleArrayList.fromArrayToList(integers);
+
+        double sum = SimpleArrayList.sum(integerSimpleArrayList);
+
+        assertThat(sum).isEqualTo(6);
+    }
+
+    @Test
+    @DisplayName("sum method를 통해 SimpleList<double>의 합계를 구한다.")
+    void sumDouble() {
+        Double[] integers = {0.5, 0.7};
+        SimpleArrayList<Double> integerSimpleArrayList = SimpleArrayList.fromArrayToList(integers);
+
+        double sum = SimpleArrayList.sum(integerSimpleArrayList);
+
+        assertThat(sum).isEqualTo(1.2);
+    }
 }

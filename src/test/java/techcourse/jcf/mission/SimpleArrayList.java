@@ -22,6 +22,14 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         return simpleArrayList;
     }
 
+    static <E extends Number> double sum(SimpleArrayList<E> numbers) {
+        double sum = 0;
+        for (int i = 0; i < numbers.size; i++) {
+            sum += numbers.get(i).doubleValue();
+        }
+        return sum;
+    }
+
     @Override
     public boolean add(E value) {
         expandArr();
