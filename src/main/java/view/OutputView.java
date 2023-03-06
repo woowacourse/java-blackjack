@@ -12,7 +12,11 @@ public class OutputView {
 
     public static final String DEALER_CARD_CONDITION_FORMAT = "%s: %s%n";
     public static final String PARTICIPANT_CARD_CONDITION_FORMAT = "%s카드: %s%n";
-
+    
+    private OutputView() {
+        throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
+    }
+    
     public static void printParticipantNamesGuide() {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }

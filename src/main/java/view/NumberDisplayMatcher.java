@@ -14,7 +14,9 @@ public class NumberDisplayMatcher {
         }
     }
 
-    private NumberDisplayMatcher() {}
+    private NumberDisplayMatcher() {
+        throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
+    }
 
     public static String displayMessage(Number number) {
         return messagesMapper.get(number);

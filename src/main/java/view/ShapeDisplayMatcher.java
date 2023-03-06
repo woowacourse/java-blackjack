@@ -14,7 +14,11 @@ public class ShapeDisplayMatcher {
             messagesMapper.put(shape, messages.remove(0));
         }
     }
-
+    
+    private ShapeDisplayMatcher() {
+        throw new IllegalArgumentException("인스턴스를 생성할 수 없는 클래스입니다.");
+    }
+    
     public static String displayName(Shape shape) {
         return messagesMapper.get(shape);
     }
