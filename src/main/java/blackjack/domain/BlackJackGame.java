@@ -1,5 +1,11 @@
 package blackjack.domain;
 
+import blackjack.response.DealerScoreResponse;
+import blackjack.response.FinalResultResponse;
+import blackjack.response.InitialCardResponse;
+import blackjack.response.PlayerCardsResponse;
+import blackjack.response.PlayersCardsResponse;
+
 public class BlackJackGame {
 
     private final Participants participants;
@@ -44,5 +50,25 @@ public class BlackJackGame {
 
     public void calculateFinalResult() {
         participants.calculateFinalResult();
+    }
+
+    public InitialCardResponse getInitialCardResponse() {
+        return InitialCardResponse.of(participants.getPlayers(), participants.getDealer());
+    }
+
+    public PlayerCardsResponse getPlayerCardsResponse(final String playerName) {
+        return PlayerCardsResponse.of(participants.findPlayerByName(playerName));
+    }
+
+    public DealerScoreResponse getDealerScoreResponse() {
+        return DealerScoreResponse.from(participants.getDealer());
+    }
+
+    public PlayersCardsResponse getPlayersCardsResponse() {
+        return PlayersCardsResponse.from(participants.getPlayers());
+    }
+
+    public FinalResultResponse getFinalResultResponse() {
+        return FinalResultResponse.from(participants.getDealer().getResult());
     }
 }

@@ -3,14 +3,8 @@ package blackjack.controller;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.Dealer;
 import blackjack.domain.DeckFactory;
 import blackjack.domain.Players;
-import blackjack.response.DealerScoreResponse;
-import blackjack.response.FinalResultResponse;
-import blackjack.response.InitialCardResponse;
-import blackjack.response.PlayerCardsResponse;
-import blackjack.response.PlayersCardsResponse;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -50,10 +44,7 @@ public class BlackJackController {
     }
 
     private void printInitialCards(final BlackJackGame blackJackGame) {
-        final InitialCardResponse initialCardResponse = InitialCardResponse.of(
-                blackJackGame.getPlayers(),
-                blackJackGame.getDealer());
-        outputView.printInitialCards(initialCardResponse);
+        outputView.printInitialCards(blackJackGame.getInitialCardResponse());
     }
 
     private void drawPlayersCards(final BlackJackGame blackJackGame) {
@@ -81,11 +72,7 @@ public class BlackJackController {
     }
 
     private void printPlayerResult(final String playerName, final BlackJackGame blackJackGame) {
-        final PlayerCardsResponse playerCardsResponse = PlayerCardsResponse.of(
-                playerName,
-                blackJackGame.findPlayerByName(playerName)
-        );
-        outputView.printCardStatusOfPlayer(playerCardsResponse);
+        outputView.printCardStatusOfPlayer(blackJackGame.getPlayerCardsResponse(playerName));
     }
 
     private void drawDealerCards(final BlackJackGame blackJackGame) {
@@ -100,14 +87,8 @@ public class BlackJackController {
     }
 
     private void printFinalResult(final BlackJackGame blackJackGame) {
-        final Players players = blackJackGame.getPlayers();
-        final Dealer dealer = blackJackGame.getDealer();
-        printResult(players, dealer);
-    }
-
-    private void printResult(final Players players, final Dealer dealer) {
-        outputView.printFinalStatusOfDealer(DealerScoreResponse.from(dealer));
-        outputView.printFinalStatusOfPlayers(PlayersCardsResponse.from(players));
-        outputView.printFinalResult(FinalResultResponse.from(dealer.getResult()));
+        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScoreResponse());
+        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCardsResponse());
+        outputView.printFinalResult(blackJackGame.getFinalResultResponse());
     }
 }

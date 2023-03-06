@@ -14,11 +14,11 @@ public class PlayerCardsResponse {
         this.cards = cards;
     }
 
-    public static PlayerCardsResponse of(final String playerName, final Player player) {
+    public static PlayerCardsResponse of(final Player player) {
         final List<CardResponse> cardResponses = player.getCards().stream()
                 .map(CardResponse::from)
                 .collect(Collectors.toList());
-        return new PlayerCardsResponse(playerName, cardResponses);
+        return new PlayerCardsResponse(player.getName(), cardResponses);
     }
 
     public String getName() {
