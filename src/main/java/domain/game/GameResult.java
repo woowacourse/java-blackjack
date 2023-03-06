@@ -12,16 +12,15 @@ public class GameResult {
 
     private final Map<Participant, Result> gameResults;
 
-    public GameResult(final Participants participants) {
+    private GameResult(Participant dealer, List<Participant> players) {
         this.gameResults = new LinkedHashMap<>();
-
-        final Participant dealer = participants.getDealer();
-        final List<Participant> players = participants.getPlayer();
         players.forEach(player -> calculateResult(dealer, player));
     }
 
     public static GameResult create(final Participants participants) {
-        return new GameResult(participants);
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayer();
+        return new GameResult(dealer, players);
     }
 
     public Map<String, Result> getPlayerGameResults() {
