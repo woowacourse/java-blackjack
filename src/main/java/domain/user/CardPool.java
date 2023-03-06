@@ -44,7 +44,7 @@ public class CardPool {
     }
 
     public boolean isSumExceedLimit() {
-        return sumCardNumbers() > CARD_POINT_LIMIT;
+        return getSumOfCards() > CARD_POINT_LIMIT;
     }
 
     private boolean containsAce() {
