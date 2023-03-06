@@ -1,7 +1,6 @@
 package controller;
 
 import domain.game.BlackjackGame;
-import domain.game.HitCommand;
 import domain.game.GameResult;
 import domain.strategy.RandomNumberGenerator;
 import domain.user.People;
@@ -36,12 +35,13 @@ public class BlackjackController {
                 makePlayersParameter(blackjackGame.getPeople()));
 
         blackjackGame.hitAllPlayersByCommand(
-                (name) -> HitCommand.findCommand(inputView.inputCardCommand(name)),
+                inputView::inputCardCommand,
                 outputView::printPlayerCardWithName);
         blackjackGame.letDealerHitUntilThreshold(outputView::printDealerHitMessage);
 
         outputView.printGameScore(
-                PlayerParameter.of(blackjackGame.getPeople().getDealer(), blackjackGame.getPeople().getDealer().sumHand()),
+                PlayerParameter.of(blackjackGame.getPeople().getDealer(),
+                        blackjackGame.getPeople().getDealer().sumHand()),
                 makePlayersParameterWithResult(blackjackGame.getPeople())
         );
 

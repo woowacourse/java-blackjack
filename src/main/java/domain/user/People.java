@@ -1,6 +1,5 @@
 package domain.user;
 
-import domain.game.HitCommand;
 import domain.game.Deck;
 import domain.game.GameResult;
 import view.dto.PlayerParameter;
@@ -61,23 +60,12 @@ public class People {
         return GameResult.makeDealerRecord(record);
     }
 
+    public void hitByCommandAllPlayers(Function<String, String> inputCommand, Consumer<PlayerParameter> outputPlayer, Deck deck) {
+        players.forEach(player -> player.hitByCommand(inputCommand, outputPlayer, deck));
+    }
+
     public boolean dealerCanHit() {
         return dealer.canHit();
-    }
-
-    public void hitByCommandAllPlayers(Function<String, HitCommand> function, Consumer<PlayerParameter> consumer, Deck deck) {
-        for (Player player : players) {
-            hitByCommand(function, consumer,deck, player);
-        }
-
-    }
-
-    private void hitByCommand(Function<String, HitCommand> inputCommand, Consumer<PlayerParameter> outputPlayer, Deck deck, Player player) {
-        HitCommand hitCommand;
-        do{
-            hitCommand = inputCommand.apply(player.getPlayerName().getValue());
-            hitCommand = hitCommand.hitByCommand(player, deck, outputPlayer);
-        } while(hitCommand == HitCommand.y);
     }
 
     public List<Player> getPlayers() {

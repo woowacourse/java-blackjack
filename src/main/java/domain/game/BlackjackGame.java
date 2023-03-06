@@ -49,7 +49,7 @@ public class BlackjackGame {
         return people;
     }
 
-    public void hitAllPlayersByCommand(Function<String, HitCommand> function, Consumer<PlayerParameter> consumer) {
-        people.hitByCommandAllPlayers(function, consumer, deck);
+    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerParameter> outputPlayer) {
+        people.hitByCommandAllPlayers(inputCommand, outputPlayer, deck);
     }
 }
