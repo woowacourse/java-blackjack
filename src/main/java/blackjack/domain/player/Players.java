@@ -37,9 +37,9 @@ public class Players {
 
     public void pickStartCards(CardDeck cardDeck) {
         for (Player player : players) {
-            Card card1 = cardDeck.pick();
-            Card card2 = cardDeck.pick();
-            player.pickStartCards(card1, card2);
+            Card firstCard = cardDeck.pick();
+            Card secondCard = cardDeck.pick();
+            player.pickStartCards(firstCard, secondCard);
         }
     }
 

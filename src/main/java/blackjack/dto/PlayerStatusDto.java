@@ -1,8 +1,5 @@
 package blackjack.dto;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.player.Player;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerStatusDto {
@@ -11,19 +8,10 @@ public class PlayerStatusDto {
     private final List<String> cards;
     private final int point;
 
-    public PlayerStatusDto(Player player) {
-        this.name = player.getName();
-        this.cards = extractCardInfo(player);
-        this.point = player.getTotalPoint();
-    }
-
-    private List<String> extractCardInfo(Player player) {
-        List<String> cardInfo = new ArrayList<>();
-        List<Card> inputCards = player.getHoldingCards().getCards();
-        for (Card card : inputCards) {
-            cardInfo.add(card.getNumber().getName() + card.getShape().getName());
-        }
-        return cardInfo;
+    public PlayerStatusDto(String name, List<String> cards, int point) {
+        this.name = name;
+        this.cards = cards;
+        this.point = point;
     }
 
     public String getName() {

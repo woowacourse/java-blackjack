@@ -2,15 +2,20 @@ package blackjack.controller;
 
 import blackjack.common.exception.CustomException;
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.Result;
+import blackjack.domain.result.Results;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -47,17 +52,14 @@ public class BlackJackController {
 
     private PlayerStatusDto makeDealerStatus() {
         Player dealer = blackJackGame.getDealer();
-        return new PlayerStatusDto(dealer);
+        return makePlayerStatusDto(dealer);
     }
 
     private List<PlayerStatusDto> makeChallengersStatus() {
-        List<Player> players = blackJackGame.getChallengers();
-        List<PlayerStatusDto> gameStatus = new ArrayList<>();
-        for (Player player : players) {
-            PlayerStatusDto playerStatusDto = new PlayerStatusDto(player);
-            gameStatus.add(playerStatusDto);
-        }
-        return gameStatus;
+        List<Player> challengers = blackJackGame.getChallengers();
+        return challengers.stream()
+                .map(challenger -> makePlayerStatusDto(challenger))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void takeTurn() {
@@ -94,7 +96,7 @@ public class BlackJackController {
         boolean choice = InputView.inputPlayerChoice(player.getName());
         if (choice) {
             blackJackGame.pick(player);
-            OutputView.printChallengerStatusInGame(new PlayerStatusDto(player));
+            OutputView.printChallengerStatusInGame(makePlayerStatusDto(player));
             takeEachChallengerTurn(player);
         }
     }
@@ -120,9 +122,43 @@ public class BlackJackController {
     }
 
     private void showRank() {
-        Result result = blackJackGame.makeResult();
-        ChallengerResultDto challengerResultDto = new ChallengerResultDto(result, blackJackGame.getChallengers());
-        DealerResultDto dealerResultDto = new DealerResultDto(result, blackJackGame.getDealer());
+        Results results = blackJackGame.makeResult();
+
+        ChallengerResultDto challengerResultDto = makeChallengerResultDto(results, blackJackGame.getChallengers());
+        DealerResultDto dealerResultDto = makeDealerResultDto(results, blackJackGame.getDealer());
         OutputView.printFinalRank(challengerResultDto, dealerResultDto);
+    }
+
+    private PlayerStatusDto makePlayerStatusDto(Player player) {
+        String playerName = player.getName();
+        List<Card> inputCards = player.getHoldingCards().getCards();
+        int playerPoint = player.getTotalPoint();
+        return new PlayerStatusDto(playerName, makeCardInfo(inputCards), playerPoint);
+    }
+
+    private static List<String> makeCardInfo(List<Card> inputCards) {
+        List<String> cardInfo = new ArrayList<>();
+        for (Card card : inputCards) {
+            cardInfo.add(card.getNumber().getName() + card.getShape().getName());
+        }
+        return cardInfo;
+    }
+
+    private ChallengerResultDto makeChallengerResultDto(Results results, List<Player> challengers) {
+        Map<String, String> nameAndRanks = new LinkedHashMap<>();
+        for (Player challenger : challengers) {
+            Result challengerResult = results.getChallengerResult(challenger);
+            nameAndRanks.put(challenger.getName(), challengerResult.getLabel());
+        }
+        return new ChallengerResultDto(nameAndRanks);
+    }
+
+    private DealerResultDto makeDealerResultDto(Results results, Player dealer) {
+        String dealerName = dealer.getName();
+        Map<Result, Integer> dealerResult = results.getDealerResult();
+        int winCount = dealerResult.getOrDefault(Result.WIN, 0);
+        int drawCount = dealerResult.getOrDefault(Result.DRAW, 0);
+        int loseCount = dealerResult.getOrDefault(Result.LOSE, 0);
+        return new DealerResultDto(dealerName, winCount, drawCount, loseCount);
     }
 }
