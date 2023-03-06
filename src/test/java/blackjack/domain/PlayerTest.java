@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -37,7 +38,7 @@ public class PlayerTest {
     void isDrawableTest(List<Card> cards, boolean expect) {
         Player player = new Player("박스터");
         player.addCards(cards);
-        
+
         boolean drawable = player.isDrawable();
 
         assertThat(drawable).isEqualTo(expect);
@@ -62,5 +63,13 @@ public class PlayerTest {
                                 new Card(CardSuit.SPADE, CardNumber.TWO)
                         ), false)
         );
+    }
+
+    @Test
+    @DisplayName("이름이 딜러인 경우 예외를 발생시킨다")
+    void reservedWordCreateException() {
+        assertThatThrownBy(() -> new Player("딜러"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 딜러일 수 없습니다.");
     }
 }
