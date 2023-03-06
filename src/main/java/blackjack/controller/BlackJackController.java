@@ -28,7 +28,7 @@ public class BlackJackController {
     }
 
     private void startGame() {
-        blackJackGame.handOut();
+        blackJackGame.handInitialCards();
         Card dealerFirstCard = blackJackGame.openDealerFirstCard();
         Map<String, List<Card>> playersCards = blackJackGame.openPlayersCards();
         OutputView.showOpenCards(dealerFirstCard, playersCards);

@@ -21,6 +21,10 @@ public class Deck {
         return drawnCards;
     }
 
+    public Card draw() {
+        return takeOutOneCard();
+    }
+
     private Card takeOutOneCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("더 이상 꺼낼 카드가 없습니다.");

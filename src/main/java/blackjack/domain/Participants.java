@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
+    private static final int NUMBER_OF_DEALER = 1;
     private static final int INITIAL_HAND_OUT_COUNT = 2;
 
     private final Dealer dealer = new Dealer();
@@ -32,16 +33,25 @@ public class Participants {
         }
     }
 
-    public void handOut(Deck deck) {
-        handOutToParticipant(dealer, deck.draw(INITIAL_HAND_OUT_COUNT));
+    public int getNeededNumberOfCards() {
+        return INITIAL_HAND_OUT_COUNT * getNumberOfParticipants();
+    }
+
+    private int getNumberOfParticipants() {
+        return NUMBER_OF_DEALER + players.size();
+    }
+
+    public void handInitialCards(Deck deck) {
+        handInitialCards(dealer, deck);
+
         for (Player player : players) {
-            handOutToParticipant(player, deck.draw(INITIAL_HAND_OUT_COUNT));
+            handInitialCards(player, deck);
         }
     }
 
-    private void handOutToParticipant(Participant participant, List<Card> cards) {
-        for (Card card : cards) {
-            participant.take(card);
+    private void handInitialCards(Participant participant, Deck deck) {
+        for (int i = 0; i < INITIAL_HAND_OUT_COUNT; i++) {
+            participant.take(deck.draw());
         }
     }
 

@@ -37,7 +37,7 @@ class ParticipantsTest {
         List<String> playerNames = List.of("pobi", "odo", "jason");
         Participants participants = Participants.of(playerNames);
 
-        participants.handOut(new BlackJackDeckGenerator().generate());
+        participants.handInitialCards(new BlackJackDeckGenerator().generate());
 
         assertThat(participants.getDealerCards()).hasSize(2);
         List<List<Card>> playersCards = participants.getPlayersCards();
@@ -57,7 +57,7 @@ class ParticipantsTest {
                 new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR),
                 new Card(HEART, THREE), new Card(HEART, FOUR)
         )));
-        participants.handOut(mockGenerator.generate());
+        participants.handInitialCards(mockGenerator.generate());
 
         Map<String, List<Card>> cardsByParticipants = participants.openPlayerCards();
         assertThat(cardsByParticipants)
