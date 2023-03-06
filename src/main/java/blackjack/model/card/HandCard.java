@@ -69,4 +69,8 @@ public class HandCard {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int size() {
+        return cards.size();
+    }
 }

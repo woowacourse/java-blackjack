@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    public static final int FIRST_CARD = 0;
+
     public Dealer(State currentState) {
         super(new Name("딜러"), currentState);
     }
@@ -62,6 +64,9 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> firstDistributedCard() {
-        return List.of(currentState.getHand().get(0));
+        if (!currentState.isCardFirstDistributed()) {
+            throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
+        }
+        return List.of(currentState.getHand().get(FIRST_CARD));
     }
 }

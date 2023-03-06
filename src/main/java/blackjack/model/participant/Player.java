@@ -12,6 +12,9 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    public static final int FIRST_CARD = 0;
+    public static final int SECOND_CARD = 1;
+
     public Player(Name name, State currentState) {
         super(name, currentState);
     }
@@ -29,6 +32,15 @@ public class Player extends Participant {
     }
 
     @Override
+    public List<Card> firstDistributedCard() {
+        if (!currentState.isCardFirstDistributed()) {
+            throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
+        }
+        List<Card> handCards = currentState.getHand();
+        return List.of(handCards.get(FIRST_CARD), handCards.get(SECOND_CARD));
+    }
+
+    @Override
     public ResultState resultState() {
         if (isBlackjack()) {
             return ResultState.BLACKJACK;
@@ -37,12 +49,6 @@ public class Player extends Participant {
             return ResultState.PLAYER_BUST;
         }
         return ResultState.STAND;
-    }
-
-    @Override
-    public List<Card> firstDistributedCard() {
-        List<Card> handCards = currentState.getHand();
-        return List.of(handCards.get(0), handCards.get(1));
     }
 
     public WinningResult winningResult(CardScore dealerScore) {
