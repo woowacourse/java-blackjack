@@ -35,7 +35,7 @@ public class GameController {
         hitOrStand(cardDeck, participants);
         printFinalCardStatus(participants);
 
-        printWinningResult(participants.playerResult());
+        printWinningResult(participants.getPlayerResult());
     }
 
     private Participants initializeParticipants() {
@@ -84,7 +84,7 @@ public class GameController {
 
     private void hitOrStand(CardDeck cardDeck, Participants participants) {
         while (participants.hasNextPlayer()) {
-            Player player = participants.nextPlayer();
+            Player player = participants.getNextPlayer();
             boolean isHit = inputView.readHitOrStand(player.getName().getName());
             participants.hitOrStandByPlayer(cardDeck, player, isHit);
             outputView.printNameAndHand(convertToParticipantNamesAndHands(player));
