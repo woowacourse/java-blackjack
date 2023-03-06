@@ -24,7 +24,6 @@ public class BlackJackController {
         printInitialCards(blackJackGame);
         drawPlayersCards(blackJackGame);
         drawDealerCards(blackJackGame);
-        calculateResult(blackJackGame);
         printFinalResult(blackJackGame);
     }
 
@@ -80,13 +79,9 @@ public class BlackJackController {
         }
     }
 
-    private void calculateResult(final BlackJackGame blackJackGame) {
-        blackJackGame.calculateFinalResult();
-    }
-
     private void printFinalResult(final BlackJackGame blackJackGame) {
         outputView.printFinalStatusOfDealer(blackJackGame.getDealerScoreResponse());
         outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCardsResponse());
-        outputView.printFinalResult(blackJackGame.getFinalResultResponse());
+        outputView.printFinalResult(blackJackGame.createFinalResultResponse());
     }
 }

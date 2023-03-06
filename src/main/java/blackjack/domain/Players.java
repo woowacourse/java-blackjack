@@ -61,8 +61,8 @@ public class Players {
         }
     }
 
-    public void calculateResult(final Dealer dealer) {
-        players.forEach(dealer::calculateResult);
+    public void calculateResult(final BlackJackReferee blackJackReferee) {
+        players.forEach(blackJackReferee::calculateResult);
     }
 
     public List<String> getPlayerNames() {

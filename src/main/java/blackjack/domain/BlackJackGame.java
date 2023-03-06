@@ -65,7 +65,7 @@ public class BlackJackGame {
         return PlayersCardsResponse.from(participants.getPlayers());
     }
 
-    public FinalResultResponse getFinalResultResponse() {
-        return FinalResultResponse.from(participants.getDealer().getResult());
+    public FinalResultResponse createFinalResultResponse() {
+        return FinalResultResponse.from(participants.calculateFinalResult());
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 
 class Participants {
 
@@ -46,8 +47,10 @@ class Participants {
         return players;
     }
 
-    void calculateFinalResult() {
-        players.calculateResult(dealer);
+    Map<String, ResultType> calculateFinalResult() {
+        final BlackJackReferee blackJackReferee = BlackJackReferee.from(dealer.currentScore());
+        players.calculateResult(blackJackReferee);
+        return blackJackReferee.getResult();
     }
 
     public List<String> getPlayerNames() {
