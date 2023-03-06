@@ -4,6 +4,7 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class Controller {
 
     public void start() {
         Players players = getPlayers();
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer(new Cards(new ArrayList<>()));
 
         startBlackjack(players, dealer);
     }
@@ -118,7 +119,6 @@ public class Controller {
     private void decideWinner(Dealer dealer, Map<Gambler, Integer> result, Player player) {
         if (isPlayerWin(dealer, player)) {
             result.put(player, 1);
-            return;
         }
 
         if (isDealerWin(dealer, player)) {
@@ -127,11 +127,11 @@ public class Controller {
         }
     }
 
-    //TODO: controller에서 getter 제거 하기
     private boolean isPlayerWin(Dealer dealer, Player player) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
-        return (dealerScore <= playerScore && !player.isBustedGambler(playerScore)) || dealer.isBustedGambler(dealerScore);
+        return (dealerScore <= playerScore && !player.isBustedGambler(playerScore))
+                || (dealer.isBustedGambler(dealerScore) && !player.isBustedGambler(playerScore));
     }
 
     private boolean isDealerWin(Dealer dealer, Player player) {
