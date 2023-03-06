@@ -1,6 +1,7 @@
 package domain.participant;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -34,5 +35,18 @@ class PlayersTest {
         assertThatThrownBy(() -> Players.create(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("두 명 이상일 때 게임을 실행할 수 있습니다.");
+    }
+
+    @DisplayName("플레이어의 이름이 중복되면 예외가 발생한다.")
+    @Test
+    void duplicatedPlayersTest() {
+        final List<Name> names = List.of(
+                Name.of("hi"),
+                Name.of("hi")
+        );
+
+        assertThatThrownBy(() -> Players.create(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름은 사용할 수 없습니다.");
     }
 }

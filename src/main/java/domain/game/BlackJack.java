@@ -27,8 +27,8 @@ public final class BlackJack {
         players.takeCard(deck, count);
     }
 
-    public static BlackJack getInstance(List<Name> userNames, Deck deck) {
-        return new BlackJack(userNames, deck);
+    public static BlackJack getInstance(List<Name> playerNames, Deck deck) {
+        return new BlackJack(playerNames, deck);
     }
 
     public boolean isBusted(Participant participant) {

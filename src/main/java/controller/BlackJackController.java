@@ -21,7 +21,11 @@ public final class BlackJackController {
     public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackJack = BlackJack.getInstance(userNameRequest(), new Deck());
+        this.blackJack = Repeater.repeat(this::createBlackJack);
+    }
+
+    private BlackJack createBlackJack() {
+        return BlackJack.getInstance(userNameRequest(), new Deck());
     }
 
     public void process() {
@@ -33,8 +37,7 @@ public final class BlackJackController {
     }
 
     private List<Name> userNameRequest() {
-        final List<String> strings = Repeater.repeat(inputView::userNameRequest);
-        return strings
+        return inputView.userNameRequest()
                 .stream()
                 .map(Name::of)
                 .collect(Collectors.toList());
