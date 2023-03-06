@@ -21,11 +21,6 @@ public class Card {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(number, shape);
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -35,5 +30,10 @@ public class Card {
         }
         final Card card = (Card) o;
         return number == card.number && shape == card.shape;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, shape);
     }
 }
