@@ -1,13 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Referee;
-import blackjack.domain.Result;
+import blackjack.domain.*;
+
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -20,14 +17,22 @@ public class OutputView {
 
     public static void printInitCardDeck(Participant dealer, Players players) {
         System.out.println();
-        final List<String> playerNames = players.getPlayerNames();
+        List<String> playerNames = getPlayerNames(players);
+        String processedPlayerNames = String.join(DELIMITER, playerNames);
         final String dealerName = dealer.getName().getValue();
-        final String processedPlayerNames = String.join(DELIMITER, playerNames);
         
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
         System.out.println(String.format("%s: %s", dealerName, dealer.getCardDeck().getCardsInfo().get(0)));
         printPlayersCardDeck(players, playerNames);
         System.out.println();
+    }
+
+    private static List<String> getPlayerNames(Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(Player::getName)
+                .map(Name::getValue)
+                .collect(Collectors.toList());
     }
 
     private static void printPlayersCardDeck(Players players, List<String> playerNames) {
@@ -55,7 +60,7 @@ public class OutputView {
 
     public static void printFinalCardDeckAndScore(Participant dealer, Players players, Referee referee) {
         System.out.println();
-        final List<String> playerNames = players.getPlayerNames();
+        final List<String> playerNames = getPlayerNames(players);
         final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();
 
         String dealerScore = convertToBurst(referee.calculateDeckScore(dealer.getCardDeck()));
@@ -88,7 +93,7 @@ public class OutputView {
     public static void printResult(Map<String, Long> dealerResult, Dealer dealer,
                                    Players players, List<Result> results) {
         System.out.println("## 최종 승패");
-        List<String> names = players.getPlayerNames();
+        List<String> names = getPlayerNames(players);
 
         printDealerResult(dealerResult, dealer);
         printPlayerResult(results, names);

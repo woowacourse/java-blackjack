@@ -37,13 +37,6 @@ public class Players {
         return !NAMES_FORMAT.matcher(names).matches();
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-            .map(Player::getName)
-            .map(Name::getValue)
-            .collect(Collectors.toList());
-    }
-
     public void initHit(CardPicker cardPicker) {
         players.forEach(player -> player.initHit(cardPicker));
     }
