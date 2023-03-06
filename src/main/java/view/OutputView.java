@@ -10,18 +10,17 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final String NEW_LINE = System.lineSeparator();
 
     public void printInitialCards(Dealer dealer, Players players) {
         String namesFormat = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
 
-        lineBreak();
         String format = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
-        System.out.println(format);
+        System.out.println(NEW_LINE + format);
         printInitialDealerCards(dealer);
         printInitialPlayerCards(players);
-        lineBreak();
     }
 
     private void printInitialDealerCards(Dealer dealer) {
@@ -36,7 +35,7 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             String format = String.format(Format.CARDS.format,
                     player.getName(), getCardsFormat(player.getCards()));
-            System.out.println(format);
+            System.out.println(format + NEW_LINE);
         }
     }
 
@@ -63,17 +62,15 @@ public class OutputView {
 
     public void printDealerHitCount(int hitCardCount) {
         if (hitCardCount == 0) {
-            System.out.println(DEALER_NO_MORE_CARD_MESSAGE);
+            System.out.println(NEW_LINE + DEALER_NO_MORE_CARD_MESSAGE + NEW_LINE);
             return;
         }
 
-        lineBreak();
         String format = String.format(Format.DEALER_MORE_CARDS.format, hitCardCount);
-        System.out.println(format);
+        System.out.println(NEW_LINE + format + NEW_LINE);
     }
 
     public void printCardsWithScore(Dealer dealer, Players players) {
-        lineBreak();
         printDealerCardsWithScore(dealer);
         printPlayersCardsWithScore(players);
     }
@@ -94,8 +91,7 @@ public class OutputView {
     }
 
     public void printFinalResult(Dealer dealer) {
-        lineBreak();
-        System.out.println(FINAL_RESULT_MESSAGE);
+        System.out.println(NEW_LINE + FINAL_RESULT_MESSAGE);
         System.out.println(getDealerResultFormat(dealer));
 
         dealer.getGameResult().forEach(
@@ -129,10 +125,6 @@ public class OutputView {
     public void printErrorMessage(String message) {
         String format = String.format(Format.ERROR.format, message);
         System.out.println(format);
-    }
-
-    private void lineBreak() {
-        System.out.println();
     }
 
     public enum Format {
