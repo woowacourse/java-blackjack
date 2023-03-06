@@ -30,7 +30,6 @@ public class BlackJackController {
         try {
             outputView.printPlayerNameRequestMessage();
             final List<String> playerNames = inputView.readPlayerNames();
-            outputView.printLineBreak();
             return new BlackJackGame(playerNames, new RandomDeckGenerator());
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
@@ -46,7 +45,6 @@ public class BlackJackController {
         final List<String> playerNames = blackJackGame.getPlayerNames();
         for (final String playerName : playerNames) {
             playFor(blackJackGame, playerName);
-            outputView.printLineBreak();
         }
     }
 
@@ -77,9 +75,9 @@ public class BlackJackController {
         while (dealerDrawCount-- > 0) {
             outputView.printDealerDrawInfoMessage();
         }
-        outputView.printLineBreak();
     }
 
+    //TODO: 해당 로직 view로 분리하게 변경
     private void printCardResult(BlackJackGame blackJackGame) {
         final Map<String, CardResult> cardResults = blackJackGame.getCardResult();
         for (final String name : cardResults.keySet()) {
@@ -87,7 +85,6 @@ public class BlackJackController {
             outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardResult.getCards()),
                     cardResult.getScore());
         }
-        outputView.printLineBreak();
     }
 
     private void printWinningResult(BlackJackGame blackJackGame) {

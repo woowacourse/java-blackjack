@@ -47,5 +47,5 @@
 - [ ] 결과를 반환하는 객체 만들기
 - [ ] Score라는 점수를 포장하는 객체를 만들어 점수에 대한 책임을 위임(정적 팩토리 메서드로 생성해 반환하는 것 생각)
 - [ ] 딜러와 플레이어를 구분하는 것에 대한 고민 하기
-- [ ] controller의 lineBreak를 view의 메서드로 옮기기
+- [x] controller의 lineBreak를 view의 메서드로 옮기기
 - [ ] 여유가 있으면 custom exception을 구현하여 에러 출력 메세지 또한 domain에서 분리하기
