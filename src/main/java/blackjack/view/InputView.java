@@ -20,6 +20,7 @@ public class InputView {
         printMessage(NAME_INPUT_MESSAGE);
         String names = input();
         return Arrays.stream(names.split(DELIMITER))
+                .map(String::trim)
                 .collect(Collectors.toList());
     }
 
