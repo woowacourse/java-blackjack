@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackJack;
 import domain.gameresult.GameResultReadOnly;
+import domain.player.Name;
 import domain.player.PlayerReadOnly;
 import domain.strategy.RandomBasedIndexGenerator;
 import view.Command;
@@ -20,7 +21,7 @@ public class BlackJackApplication {
         OutputView.printPlayersGameResults(gameResult);
     }
 
-    private String getParticipantNames() {
+    private List<Name> getParticipantNames() {
         OutputView.printParticipantNamesGuide();
         return InputView.repeat(InputView::inputParticipantNames);
     }

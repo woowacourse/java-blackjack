@@ -17,7 +17,7 @@ public class Players {
         this.participants = participants;
     }
 
-    public static Players with(List<String> participantNames) {
+    public static Players with(List<Name> participantNames) {
         List<Participant> participants = participantNames.stream()
                 .map(Participant::new)
                 .collect(Collectors.toUnmodifiableList());

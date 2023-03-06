@@ -5,7 +5,7 @@ import domain.gameresult.GameResult;
 public class Dealer extends Player {
 
     public Dealer() {
-        super("딜러");
+        super(Name.of("딜러"));
     }
 
     public void battle(Player participant, GameResult gameResult) {

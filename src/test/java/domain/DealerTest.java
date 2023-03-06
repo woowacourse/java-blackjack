@@ -6,6 +6,7 @@ import domain.card.Shape;
 import domain.gameresult.GameResult;
 import domain.gameresult.Result;
 import domain.player.Dealer;
+import domain.player.Name;
 import domain.player.Participant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        participant = new Participant("테스트");
+        participant = new Participant(Name.of("테스트"));
         gameResult = new GameResult();
     }
 

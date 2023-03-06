@@ -7,6 +7,6 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        participant = new Participant("test");
+        participant = new Participant(Name.of("test"));
     }
 }

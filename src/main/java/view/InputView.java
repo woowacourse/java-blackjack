@@ -1,43 +1,28 @@
 package view;
 
+import domain.player.Name;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
-    private static final Pattern INPUT_PARTICIPANT_NAMES_FORMAT = Pattern.compile("([가-힣|a-zA-Z0-9]+)(,[가-힣|a-zA-Z0-9]+)*");
 
-    public static String inputParticipantNames() {
+    public static List<Name> inputParticipantNames() {
         try {
-            String inputParticipantNames = BUFFERED_READER.readLine();
-            validateInputParticipantNames(inputParticipantNames);
-            return inputParticipantNames;
+            String input = BUFFERED_READER.readLine();
+            List<String> names = Arrays.stream(input.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toUnmodifiableList());
+            return Name.of(names);
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
             return inputParticipantNames();
-        }
-    }
-
-    private static void validateInputParticipantNames(String inputParticipantNames) {
-        validateNullOrBlank(inputParticipantNames);
-        validateInputParticipantNamesFormat(inputParticipantNames);
-    }
-
-    private static void validateNullOrBlank(String input) {
-        if (Objects.isNull(input) || input.isBlank()) {
-            throw new IllegalArgumentException("Null 또는 빈 문자열을 입력할 수 없습니다.");
-        }
-    }
-
-    private static void validateInputParticipantNamesFormat(String inputParticipantNames) {
-        Matcher matcher = INPUT_PARTICIPANT_NAMES_FORMAT.matcher(inputParticipantNames);
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException("참가자 이름 입력 형식이 잘못 되었습니다. 다시 입력해주세요.");
         }
     }
 

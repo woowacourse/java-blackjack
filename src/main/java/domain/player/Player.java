@@ -8,9 +8,9 @@ import java.util.Objects;
 
 public abstract class Player {
     private final Cards cards;
-    private final String name;
+    private final Name name;
 
-    public Player(String name) {
+    public Player(Name name) {
         this.cards = new Cards();
         this.name = name;
     }
@@ -34,7 +34,7 @@ public abstract class Player {
     public abstract boolean isNameEqualTo(String playerName);
 
     public String getName() {
-        return this.name;
+        return this.name.getName();
     }
 
     @Override
