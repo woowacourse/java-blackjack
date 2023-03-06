@@ -56,7 +56,7 @@ class PlayersTest {
     @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 있다.")
     void givenName_thenReturnsPlayer() {
         Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
-        Players players = new Players(null, List.of(participant));
+        Players players = new Players(new Dealer(CardHolder.makeEmptyHolder()), List.of(participant));
 
         Player findPlayer = players.findByName("테스트");
         assertThat(findPlayer).isEqualTo(participant);
@@ -66,7 +66,7 @@ class PlayersTest {
     @DisplayName("주어진 이름에 해당하는 플레이어를 찾을 수 있다.")
     void givenInvalidName_thenThrowsException() {
         Participant participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
-        Players players = new Players(null, List.of(participant));
+        Players players = new Players(new Dealer(CardHolder.makeEmptyHolder()), List.of(participant));
 
         assertThatThrownBy(() -> players.findByName("없는회원"))
                 .isInstanceOf(IllegalArgumentException.class);

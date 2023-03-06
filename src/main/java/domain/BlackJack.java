@@ -26,7 +26,7 @@ public class BlackJack {
 
     public void giveCardToAllPlayers() {
         for (String name : players.getAllPlayerNames()) {
-            players.addCardByName(name, cardRepository.findAnyOneCard());
+            players.giveCardByName(name, cardRepository.findAnyOneCard());
         }
     }
 
