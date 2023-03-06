@@ -4,7 +4,6 @@ import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.view.CardConvertStrategyImpl;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,8 @@ public class InitialCardResponse {
 
     private final Map<String, List<CardResponse>> playerNameToCards;
 
-    public InitialCardResponse(final CardResponse dealerCard, final Map<String, List<CardResponse>> playerNameToCards) {
+    private InitialCardResponse(final CardResponse dealerCard,
+            final Map<String, List<CardResponse>> playerNameToCards) {
         this.dealerCard = dealerCard;
         this.playerNameToCards = playerNameToCards;
     }
@@ -24,7 +24,7 @@ public class InitialCardResponse {
     public static InitialCardResponse of(
             final Players players,
             final Dealer dealer) {
-        final CardConvertStrategy cardConvertStrategy = new CardConvertStrategyImpl();
+
         final CardResponse dealerCard = CardResponse.from(dealer.getCards().get(0));
         final Map<String, List<CardResponse>> playerNameToCards = generatePlayerNameToCards(
                 players.getPlayers());
