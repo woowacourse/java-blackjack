@@ -2,6 +2,8 @@ package blackjack.domain.result;
 
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,8 +21,7 @@ public class Result {
     public static Result from(Players players) {
         Map<Player, Rank> results = new LinkedHashMap<>();
         int dealerPoint = players.getDealer().getTotalPoint();
-        List<Player> challengers = players.getChallengers();
-        for (Player challenger : challengers) {
+        for (Player challenger : players.getChallengers()) {
             Rank rank = makePlayerResult(dealerPoint, challenger);
             results.put(challenger, rank);
         }
@@ -67,12 +68,15 @@ public class Result {
         return results.get(player);
     }
 
-    public Map<Rank, Integer> getDealerResult() {
-        Map<Rank, Integer> dealerResult = new HashMap<>();
-        for (Rank rank : results.values()) {
-            Rank dealerRank = rank.getOpposite();
-            dealerResult.put(dealerRank, dealerResult.getOrDefault(dealerRank, 0) + 1);
-        }
-        return dealerResult;
+    public int getDealerWinCount() {
+        return Collections.frequency(results.values(), Rank.LOSE);
+    }
+
+    public int getDealerDrawCount() {
+        return Collections.frequency(results.values(), Rank.DRAW);
+    }
+
+    public int getDealerLoseCount() {
+        return Collections.frequency(results.values(), Rank.WIN);
     }
 }

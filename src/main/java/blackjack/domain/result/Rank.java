@@ -12,16 +12,6 @@ public enum Rank {
         this.label = label;
     }
 
-    public Rank getOpposite() {
-        if (this.equals(Rank.WIN)) {
-            return LOSE;
-        }
-        if (this.equals(Rank.LOSE)) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
     public String getLabel() {
         return label;
     }

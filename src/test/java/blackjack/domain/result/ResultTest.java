@@ -46,8 +46,8 @@ class ResultTest {
     @Test
     @DisplayName("딜러의 승패가 올바르게 계산되는지 확인한다")
     void check_dealer_result() {
-        Map<Rank, Integer> dealerResult = result.getDealerResult();
-        assertThat(dealerResult)
-                .containsOnly(entry(Rank.WIN, 1), entry(Rank.LOSE, 1));
+        assertThat(result.getDealerWinCount()).isEqualTo(1);
+        assertThat(result.getDealerDrawCount()).isZero();
+        assertThat(result.getDealerLoseCount()).isEqualTo(1);
     }
 }

@@ -3,6 +3,8 @@ package blackjack.dto;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.Rank;
 import blackjack.domain.result.Result;
+
+import java.util.Collections;
 import java.util.Map;
 
 public class DealerResultDto {
@@ -14,10 +16,9 @@ public class DealerResultDto {
 
     public DealerResultDto(Result result, Player dealer) {
         this.name = dealer.getName();
-        Map<Rank, Integer> dealerResult = result.getDealerResult();
-        this.winCount = dealerResult.getOrDefault(Rank.WIN, 0);
-        this.drawCount = dealerResult.getOrDefault(Rank.DRAW, 0);
-        this.loseCount = dealerResult.getOrDefault(Rank.LOSE, 0);
+        this.winCount = result.getDealerWinCount();
+        this.drawCount = result.getDealerDrawCount();
+        this.loseCount = result.getDealerLoseCount();
     }
 
     public String getName() {
