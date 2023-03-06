@@ -1,15 +1,12 @@
 package blackjack.domain;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
     public static final int MAX_BLACKJACK_SCORE = 21;
     public static final int INITIAL_SCORE = 0;
 
-    private final Map<Result, Integer> dealerResults = new HashMap<>();
+    private final Map<Result, Integer> dealerResults = new EnumMap<>(Result.class);
     private final Map<Player, Result> playersResults = new HashMap<>();
 
     public GameResult(Dealer dealer, List<Player> players) {

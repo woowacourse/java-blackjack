@@ -14,6 +14,7 @@
 - [x] 카드를 더 받을지 말지 로직 enum 으로 구현
 - [x] 플레이어의 의사(카드를 더 받을지 말지) + 더 받을 수 있는 상태를 판단하는 로직은 Player 에게 위임 
     - 플레이어 의사 판단은 controller 에 있게 함
+- [x] GameResult 딜러 결과 HashMap -> enumMap 변경 
 
 ### 요구 사항
 
