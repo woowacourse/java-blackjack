@@ -1,119 +1,93 @@
 package controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import domain.BlackJackGame;
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.ResultCalculator;
+import util.Constants;
 import view.InputView;
-import view.OutputVIew;
+import view.OutputView;
 import view.ResultView;
 
 public class BlackJackController {
-    private final Players players;
-    private final Dealer dealer;
-
-    public BlackJackController() {
-        this.players = generatePlayers();
-        this.dealer = new Dealer();
-        initSetting();
-    }
 
     public void run() {
-        askEachPlayers();
-        dealerDistributeOrNot();
-        printFinalGameStatus();
-        printFinalFightResult();
+        BlackJackGame blackJackGame = generateBlackJackGame();
+        printParticipantInitCardsStep(blackJackGame, blackJackGame.getPlayerNames());
+        playerDrawCardStep(blackJackGame, blackJackGame.getPlayers());
+        dealerDrawCardStep(blackJackGame);
+        printParticipantFinalCardsStep(blackJackGame, blackJackGame.getPlayerNames());
+        printFinalFightResultStep(blackJackGame);
+    }
+
+    private BlackJackGame generateBlackJackGame() {
+        List<String> playerNames = initPlayerNames();
+        return new BlackJackGame(playerNames);
     }
 
     private List<String> initPlayerNames() {
         try {
-            OutputVIew.printInputPlayerNameMessage();
+            OutputView.printInputPlayerNameMessage();
             List<String> playerNames = InputView.inputPlayerNames();
             return playerNames;
         } catch (IllegalArgumentException e) {
-            OutputVIew.printMessage(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             return initPlayerNames();
         }
     }
 
-    private void initSetting() {
-        BlackJackGame.initSettingCards(players, dealer);
-        ResultView.printParticipantResult(dealer.getName(), dealer.getCardNames());
+    private void printParticipantInitCardsStep(BlackJackGame blackJackGame, List<String> playerNames) {
+        ResultView.printInitMessage(playerNames);
+        ResultView.printParticipantResult(Constants.DEALER_NAME, blackJackGame.findCardNamesByParticipantName(Constants.DEALER_NAME));
+        for (String playerName : playerNames) {
+            List<String> findCardNames = blackJackGame.findCardNamesByParticipantName(playerName);
+            ResultView.printParticipantResult(playerName, findCardNames);
+        }
+    }
+
+    private void playerDrawCardStep(BlackJackGame blackJackGame, Players players) {
         for (Player player : players.getPlayers()) {
-            ResultView.printParticipantResult(player.getName(), player.getCardNames());
+            drawCard(blackJackGame, player);
         }
     }
 
-    private Players generatePlayers() {
-        try {
-            List<String> playerNames = initPlayerNames();
-            Players players = new Players(playerNames.stream()
-                    .map(Name::new)
-                    .map(Player::new)
-                    .collect(Collectors.toUnmodifiableList()));
-            ResultView.printInitMessage(playerNames);
-            return players;
-        } catch (IllegalArgumentException e) {
-            OutputVIew.printMessage(e.getMessage());
-            return generatePlayers();
+    // TODO : indent 1로 줄이기
+    private void drawCard(BlackJackGame blackJackGame, Player player) {
+        while (player.checkCardsCondition()) {
+            String playerName = player.getName();
+            OutputView.printInputReceiveYesOrNotMessage(playerName);
+            String receiveOrNot = InputView.inputReceiveOrNot();
+            if (receiveOrNot.equals("y")) {
+                blackJackGame.distributeCard(player);
+                ResultView.printParticipantResult(playerName, blackJackGame.findCardNamesByParticipantName(playerName));
+            }
+            if (receiveOrNot.equals("n")) {
+                break;
+            }
         }
     }
 
-    private void askEachPlayers() {
-        System.out.println();
-        for (Player player : players.getPlayers()) {
-            askPlayerDistribute(player);
+    private void dealerDrawCardStep(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerDrawCard()) {
+            OutputView.printDealerReceivedMessage();
+            Dealer dealer = blackJackGame.findDealerByDealerName(Constants.DEALER_NAME);
+            blackJackGame.distributeCard(dealer);
         }
     }
 
-    private void askPlayerDistribute(Player player) {
-        try {
-            checkAdditionalDistribute(player);
-        } catch (IllegalArgumentException e) {
-            OutputVIew.printMessage(e.getMessage());
-            askPlayerDistribute(player);
+    private void printParticipantFinalCardsStep(BlackJackGame blackJackGame, List<String> playerNames) {
+        ResultView.printParticipantFinalResult(Constants.DEALER_NAME, blackJackGame.findCardNamesByParticipantName(Constants.DEALER_NAME), blackJackGame.getDealerCardValueSum());
+        for (String playerName : playerNames) {
+            List<String> findCardNames = blackJackGame.findCardNamesByParticipantName(playerName);
+            ResultView.printParticipantFinalResult(playerName, findCardNames, blackJackGame.findPlayerCardValueSumByPlayerName(playerName));
         }
     }
 
-    private void checkAdditionalDistribute(Player player) {
-        do {
-            OutputVIew.printInputReceiveYesOrNotMessage(player.getName());
-            ResultView.printParticipantResult(player.getName(), player.getCardNames());
-        } while (player.checkCardsCondition() && isReceivable(player));
-    }
-
-    private boolean isReceivable(Player player) {
-        String receiveOrNot = InputView.inputReceiveOrNot();
-        if (receiveOrNot.equals("y")) {
-            BlackJackGame.distributeCard(player, 1);
-            return true;
-        }
-        return false;
-    }
-
-    private void dealerDistributeOrNot() {
-        while (dealer.checkCardsCondition()) {
-            BlackJackGame.distributeCard(dealer, 1);
-            OutputVIew.printDealerReceivedMessage();
-        }
-    }
-
-    private void printFinalGameStatus() {
-        System.out.println();
-        ResultView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.getMaxSum());
-        for (Player player : players.getPlayers()) {
-            ResultView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.getMaxSum());
-        }
-    }
-
-    private void printFinalFightResult() {
-        ResultCalculator resultCalculator = new ResultCalculator(players, dealer);
-        resultCalculator.executeGame(players, dealer);
-        ResultView.printFinalFightResult(resultCalculator.getFinalFightResults());
+    private void printFinalFightResultStep(BlackJackGame blackJackGame) {
+        Map<String, String> resultByPlayerName = blackJackGame.calculateResult();
+        ResultView.printFinalFightResult(resultByPlayerName);
     }
 }
