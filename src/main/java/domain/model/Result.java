@@ -24,14 +24,14 @@ public class Result {
         return new Result(0, 0, 1);
     }
 
-    private static boolean isDraw(final Score score, final Score comparedScore) {
-        return score.isBust() && comparedScore.isBust()
-            || score.getValue() == comparedScore.getValue();
-    }
-
     private static boolean isVictory(final Score score, final Score comparedScore) {
         return !score.isBust()
             && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
+    }
+
+    private static boolean isDraw(final Score score, final Score comparedScore) {
+        return score.isBust() && comparedScore.isBust()
+            || score.getValue() == comparedScore.getValue();
     }
 
     public static Result decide(final Score score, final List<Score> comparedScores) {
