@@ -1,14 +1,15 @@
 package blackjack.domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class UsersTest {
 
@@ -18,6 +19,19 @@ class UsersTest {
             new Card(CardShape.HEART, CardNumber.JACK),
             new Card(CardShape.HEART, CardNumber.NINE),
             new Card(CardShape.DIAMOND, CardNumber.FOUR));
+
+    @Test
+    @DisplayName("플레이어 이름으로 아무것도 오지 않는다면 에러를 반환하는 테스트")
+    void throwExceptionIfPlayerNamesIsEmpty() {
+        final List<String> playerNames = Collections.emptyList();
+
+        final Runnable throwException =
+                () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+
+        assertThatThrownBy(throwException::run)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Users.PLAYER_NAMES_IS_EMPTY);
+    }
 
     @Test
     @DisplayName("유저들의 현 패를 반환하는 기능 테스트")

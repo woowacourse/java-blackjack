@@ -9,16 +9,24 @@ public class Users {
 
     private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
     private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
+    static final String PLAYER_NAMES_IS_EMPTY = "쉼표만 입력할 수 없습니다.";
     private static final int DEALER_DRAW_LIMIT = 16;
 
     private final List<User> users;
 
-    public Users(List<String> playerNames, Deck deck) {
-        List<User> users = playerNames.stream()
+    public Users(final List<String> playerNames, final Deck deck) {
+        validatePlayerNames(playerNames);
+        final List<User> users = playerNames.stream()
                 .map(name -> new Player(name, initCardGroup(deck)))
                 .collect(Collectors.toList());
         users.add(new Dealer(initCardGroup(deck)));
         this.users = List.copyOf(users);
+    }
+
+    private void validatePlayerNames(final List<String> playerNames) {
+        if (playerNames.isEmpty()) {
+            throw new IllegalArgumentException(PLAYER_NAMES_IS_EMPTY);
+        }
     }
 
     private CardGroup initCardGroup(Deck deck) {
