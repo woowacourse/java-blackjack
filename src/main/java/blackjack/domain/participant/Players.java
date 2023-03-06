@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final String COMMA = ",";
+    private static final String SPLIT_DELIMITER = ",";
     private static final int NUMBER_OF_MINIMUM_PLAYER = 1;
     private static final int NUMBER_OF_MAXIMUM_PLAYER = 7;
 
@@ -19,7 +19,7 @@ public class Players {
     }
 
     private List<Player> makePlayers(final String input) {
-        final List<Player> names = Arrays.stream(input.split(COMMA))
+        final List<Player> names = Arrays.stream(input.split(SPLIT_DELIMITER))
                 .map(Player::new)
                 .collect(Collectors.toList());
         validateNumberOfPlayers(names);

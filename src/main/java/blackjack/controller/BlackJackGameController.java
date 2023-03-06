@@ -16,10 +16,11 @@ public class BlackJackGameController {
     private static final String HIT_COMMAND = "y";
     private static final String STAND_COMMAND = "n";
 
-    private final ShufflingMachine shufflingMachine = new ShufflingMachine();
+    private ShufflingMachine shufflingMachine;
 
     public void run() {
         final BlackJackGame blackJackGame = generateBlackJackGame();
+        shufflingMachine = new ShufflingMachine();
 
         blackJackGame.handOutInitCards(shufflingMachine);
         final Dealer dealer = blackJackGame.getDealer();
@@ -100,7 +101,7 @@ public class BlackJackGameController {
     }
 
     private void validateCorrectCommand(final String gameCommand) {
-        if (!(gameCommand.equals(HIT_COMMAND) || gameCommand.equals(STAND_COMMAND))) {
+        if (!(HIT_COMMAND.equals(gameCommand) || STAND_COMMAND.equals(gameCommand))) {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
     }
