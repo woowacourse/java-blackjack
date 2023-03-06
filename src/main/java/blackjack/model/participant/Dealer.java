@@ -6,7 +6,7 @@ import blackjack.model.WinningResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.state.DrawState;
-import blackjack.model.state.State;
+import blackjack.model.state.ParticipantState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ public class Dealer extends Participant {
 
     public static final int FIRST_CARD = 0;
 
-    public Dealer(State currentState) {
+    public Dealer(ParticipantState currentState) {
         super(new Name("딜러"), currentState);
     }
 

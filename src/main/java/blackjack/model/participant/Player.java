@@ -6,7 +6,7 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
 import blackjack.model.state.DrawState;
-import blackjack.model.state.State;
+import blackjack.model.state.ParticipantState;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class Player extends Participant {
     public static final int FIRST_CARD = 0;
     public static final int SECOND_CARD = 1;
 
-    public Player(Name name, State currentState) {
+    public Player(Name name, ParticipantState currentState) {
         super(name, currentState);
     }
 

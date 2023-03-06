@@ -4,7 +4,7 @@ import blackjack.model.ResultState;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
-import blackjack.model.state.State;
+import blackjack.model.state.ParticipantState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +15,9 @@ public abstract class Participant {
 
     private final int id;
     protected Name name;
-    protected State currentState;
+    protected ParticipantState currentState;
 
-    public Participant(Name name, State currentState) {
+    public Participant(Name name, ParticipantState currentState) {
         this.id = CURRENT_MAX_ID;
         this.name = name;
         this.currentState = currentState;

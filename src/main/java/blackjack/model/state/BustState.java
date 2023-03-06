@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
-public class BustState extends State {
+public class BustState extends ParticipantState {
 
     public static final int BUST_THROTTLE = 21;
 
@@ -13,7 +13,7 @@ public class BustState extends State {
     }
 
     @Override
-    public State draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck) {
         throw new IllegalStateException("버스트 상태에서는 카드를 더 뽑을 수 없습니다.");
     }
 

@@ -13,7 +13,7 @@ public class DealerInitialState extends InitialState {
     }
 
     @Override
-    public State draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck) {
         for (int i = 0; i < PICK_COUNT; i++) {
             Card picked = cardDeck.pick();
             handCard.add(picked);

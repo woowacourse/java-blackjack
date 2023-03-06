@@ -8,17 +8,17 @@ import blackjack.model.card.CardScore;
 
 import java.util.List;
 
-public abstract class State {
+public abstract class ParticipantState {
     protected static final int BLACKJACK_NUMBER = 21;
     private static final int FIRST_DISTRIBUTE_COUNT = 2;
 
     protected final HandCard handCard;
 
-    public State(HandCard handCard) {
+    public ParticipantState(HandCard handCard) {
         this.handCard = handCard;
     }
 
-    public abstract State draw(CardDeck cardDeck);
+    public abstract ParticipantState draw(CardDeck cardDeck);
 
     public abstract boolean isFinished();
 

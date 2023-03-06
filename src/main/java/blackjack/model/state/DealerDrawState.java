@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
-public class DealerDrawState extends State {
+public class DealerDrawState extends ParticipantState {
     private static final int DEALER_HIT_NUMBER = 16;
 
     public DealerDrawState(HandCard handCard) {
@@ -11,7 +11,7 @@ public class DealerDrawState extends State {
     }
 
     @Override
-    public State draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck) {
         handCard.add(cardDeck.pick());
 
         if (handCard.isBigScoreOver(BLACKJACK_NUMBER) && handCard.isSmallScoreOver(BLACKJACK_NUMBER)) {

@@ -3,13 +3,13 @@ package blackjack.model.state;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
-public class DrawState extends State {
+public class DrawState extends ParticipantState {
     public DrawState(HandCard handCard) {
         super(handCard);
     }
 
     @Override
-    public State draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck) {
         handCard.add(cardDeck.pick());
         if (handCard.isSmallScoreOver(BLACKJACK_NUMBER) && handCard.isBigScoreOver(BLACKJACK_NUMBER)) {
             return new BustState(handCard);
@@ -17,11 +17,11 @@ public class DrawState extends State {
         return this;
     }
 
-    public State turnStandState() {
+    public ParticipantState turnStandState() {
         return new StandState(handCard);
     }
 
-    public State turnDealerDrawState() {
+    public ParticipantState turnDealerDrawState() {
         return new DealerDrawState(handCard);
     }
 
