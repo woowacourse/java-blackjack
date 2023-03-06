@@ -24,8 +24,8 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("시작 직후 카드를 두 장씩 분배한다.")
-    void drawForFirstTurnTest() {
+    @DisplayName(" 카드를 두 장씩 뽑아서 반환할 수 있다.")
+    void drawTwoCardsTest() {
         Cards cards = new Cards();
 
         List<Card> firstTurnCards = cards.drawTwoCards();
