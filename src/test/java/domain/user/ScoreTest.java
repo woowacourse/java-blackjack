@@ -18,7 +18,8 @@ class ScoreTest {
     void calculateScoreTest() {
         //given
         Score score = new Score();
-        List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE);
+        List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR,
+                CloverCard.CLOVER_FIVE);
 
         //when
         score.setScore(cards);
@@ -28,16 +29,16 @@ class ScoreTest {
     }
 
     @ParameterizedTest
-    @MethodSource("calculateScoreWithAceCase")
+    @MethodSource("calculateScoreWithAceCase_greaterThan21")
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
-    void calculateScoreWithAceTest(List<Card> cards, int expected) {
+    void calculateScoreWithAceTest_greaterThan21(List<Card> cards, int expected) {
         Score score = new Score();
         score.setScore(cards);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
 
-    static Stream<Arguments> calculateScoreWithAceCase() {
+    static Stream<Arguments> calculateScoreWithAceCase_greaterThan21() {
         return Stream.of(
                 Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN,
                         CloverCard.CLOVER_EIGHT), 16),
@@ -45,6 +46,24 @@ class ScoreTest {
                         CloverCard.CLOVER_EIGHT), 20),
                 Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN,
                         CloverCard.CLOVER_NINE), 21)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("calculateScoreWithAceCase_lessThan22")
+    @DisplayName("에이스를 포함하며 22 미만 시 에이스를 11점으로 계산한다.")
+    void calculateScoreWithAceTest_lessThan22(List<Card> cards, int expected) {
+        Score score = new Score();
+        score.setScore(cards);
+
+        Assertions.assertThat(score.getScore()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> calculateScoreWithAceCase_lessThan22() {
+        return Stream.of(
+                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN), 18),
+                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN), 21),
+                Arguments.of(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_THREE), 14)
         );
     }
 }
