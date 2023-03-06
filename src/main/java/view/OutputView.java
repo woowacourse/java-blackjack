@@ -27,6 +27,10 @@ public class OutputView {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
     }
 
+    public void printErrorMessage(Exception e) {
+        System.out.println(e.getMessage() + NEWLINE);
+    }
+
     public void printSetUpResult(Map<String, List<Card>> setUpResult) {
         printSetUpCompleteMessage(setUpResult);
         printUserCards(setUpResult);

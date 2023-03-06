@@ -14,6 +14,7 @@ import domain.user.User;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
@@ -42,8 +43,17 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards(new ShuffledCardsGenerator());
         Dealer dealer = new Dealer();
-        Players players = setUpPlayers();
+        Players players = repeat(this::setUpPlayers);
         return new BlackJackGame(players, dealer, cards);
+    }
+
+    private <T> T repeat(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return repeat(supplier);
+        }
     }
 
     private Players setUpPlayers() {
@@ -63,13 +73,17 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (PlayerStatus.NORMAL == player.getStatus() && DrawCommand.DRAW == readDrawCommand(player)) {
+        while (isLessThanBustScore(player) && DrawCommand.DRAW == repeat(() -> readDrawCommand(player))) {
             blackJackGame.drawOneMoreCard(player);
             printDrawResult(player);
         }
-        if (PlayerStatus.NORMAL == player.getStatus()) {
+        if (isLessThanBustScore(player)) {
             printDrawResult(player);
         }
+    }
+
+    private boolean isLessThanBustScore(Player player) {
+        return PlayerStatus.NORMAL == player.getStatus();
     }
 
     private DrawCommand readDrawCommand(Player player) {
