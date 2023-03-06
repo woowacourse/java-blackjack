@@ -5,21 +5,29 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+    private static final int MAX_CARDS_NUMBER = 52;
     private final List<Card> cards;
     private int cursorIndex;
-
-    public Deck() {
-        this.cursorIndex = 0;
-        this.cards = generateCards();
-        Collections.shuffle(cards);
-    }
 
     public Deck(final List<Card> cards) {
         this.cursorIndex = 0;
         this.cards = cards;
     }
 
+    public Deck() {
+        this.cards = generateCards();
+        shuffle();
+    }
+
+    private void shuffle() {
+        this.cursorIndex = 0;
+        Collections.shuffle(cards);
+    }
+
     public Card pickOne() {
+        if (cursorIndex == MAX_CARDS_NUMBER) {
+            shuffle();
+        }
         return cards.get(cursorIndex++);
     }
 
