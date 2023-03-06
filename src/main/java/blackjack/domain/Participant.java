@@ -8,12 +8,7 @@ public class Participant {
     private static final int BLACK_JACK = 21;
     private static final int ACE_ADDITIONAL_VALUE = 10;
 
-    private final List<Card> cards;
-
-    public Participant() {
-        cards = new ArrayList<>();
-    }
-
+    private final List<Card> cards = new ArrayList<>();
 
     public void take(Card card) {
         cards.add(card);

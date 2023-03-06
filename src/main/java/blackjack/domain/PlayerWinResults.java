@@ -9,11 +9,7 @@ import java.util.Map;
 
 public class PlayerWinResults {
 
-    private final Map<String, WinResult> results;
-
-    public PlayerWinResults() {
-        this.results = new LinkedHashMap<>();
-    }
+    private final Map<String, WinResult> results = new LinkedHashMap<>();
 
     public void addResultByPlayerName(String playerName, WinResult playerResult) {
         results.put(playerName, playerResult);

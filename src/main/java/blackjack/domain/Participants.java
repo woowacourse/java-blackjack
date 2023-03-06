@@ -11,11 +11,10 @@ public class Participants {
 
     private static final int INITIAL_HAND_OUT_COUNT = 2;
 
-    private final Dealer dealer;
+    private final Dealer dealer = new Dealer();
     private final List<Player> players;
 
     private Participants(List<Player> players) {
-        this.dealer = new Dealer();
         this.players = players;
     }
 
