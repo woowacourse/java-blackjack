@@ -9,9 +9,9 @@ public abstract class Player {
     private final Name name;
     protected final CardArea cardArea;
 
-    protected Player(final Name name, final CardArea cardArea) {
+    protected Player(final Name name) {
         this.name = name;
-        this.cardArea = cardArea;
+        cardArea = new CardArea();
     }
 
     public Name name() {

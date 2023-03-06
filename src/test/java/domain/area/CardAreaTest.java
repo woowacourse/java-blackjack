@@ -22,10 +22,8 @@ import static domain.card.CardValue.SEVEN;
 import static domain.card.CardValue.SIX;
 import static domain.card.CardValue.TEN;
 import static domain.card.CardValue.THREE;
-import static domain.card.CardValue.TWO;
 import static domain.card.CardValue.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,21 +34,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CardAreaTest {
 
     @Test
-    void 카드를_두장만_받아서_생성된다() {
-        // when & then
-        assertDoesNotThrow(() -> new CardArea(
-                new Card(CardShape.CLOVER, ACE),
-                new Card(CardShape.CLOVER, TWO))
-        );
-    }
-
-    @Test
     void 카드를_추가할_수_있다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, THREE),
-                new Card(CardShape.CLOVER, TWO)
-        );
+        final CardArea cardArea = new CardArea();
 
         // when
         final int beforeSize = cardArea.cards().size();
@@ -70,10 +56,14 @@ class CardAreaTest {
     void 자신이_가진_카드의_합을_구할_수_있다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, valueOf(split[0])),
-                                               new Card(CardShape.CLOVER, valueOf(split[1])));
 
-        // when & then
+        final CardArea cardArea = new CardArea();
+
+        // when
+        cardArea.addCard(new Card(CardShape.CLOVER, valueOf(split[0])));
+        cardArea.addCard(new Card(CardShape.CLOVER, valueOf(split[1])));
+
+        // then
         assertThat(cardArea.calculate()).isEqualTo(new Score(totalScore));
     }
 
@@ -89,8 +79,10 @@ class CardAreaTest {
     void 킹_퀸_잭은_10으로_계산한다(final String values, final int totalScore) {
         // given
         final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, valueOf(split[0])),
-                                               new Card(CardShape.CLOVER, valueOf(split[1])));
+        final CardArea cardArea = new CardArea();
+
+        cardArea.addCard(new Card(CardShape.CLOVER, valueOf(split[0])));
+        cardArea.addCard(new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
         assertThat(cardArea.calculate()).isEqualTo(new Score(totalScore));
@@ -106,25 +98,41 @@ class CardAreaTest {
     static Stream<Arguments> containsAceCardArea() {
 
         // 10 + [11] = 21
-        final CardArea cardArea1 = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
+        final CardArea cardArea1 = new CardArea();
+        cardArea1.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea1.addCard(new Card(CardShape.CLOVER, ACE));
 
         // 10 + 10 + [1] = 21
-        final CardArea cardArea2 = new CardArea(new Card(CardShape.CLOVER, JACK), new Card(CardShape.CLOVER, TEN));
+        final CardArea cardArea2 = new CardArea();
+        cardArea2.addCard(new Card(CardShape.CLOVER, JACK));
+        cardArea2.addCard(new Card(CardShape.CLOVER, TEN));
+
         cardArea2.addCard(new Card(CardShape.CLOVER, ACE));
 
         // [11] + 9 + [1] = 21
-        final CardArea cardArea3 = new CardArea(new Card(CardShape.CLOVER, ACE), new Card(CardShape.CLOVER, NINE));
+        final CardArea cardArea3 = new CardArea();
+        cardArea3.addCard(new Card(CardShape.CLOVER, ACE));
+        cardArea3.addCard(new Card(CardShape.CLOVER, NINE));
+
         cardArea3.addCard(new Card(CardShape.CLOVER, ACE));
 
         // [11] + 6 + 3 = 20
-        final CardArea cardArea4 = new CardArea(new Card(CardShape.CLOVER, SIX), new Card(CardShape.CLOVER, THREE));
+        final CardArea cardArea4 = new CardArea();
+        cardArea4.addCard(new Card(CardShape.CLOVER, SIX));
+        cardArea4.addCard(new Card(CardShape.CLOVER, THREE));
+
         cardArea4.addCard(new Card(CardShape.CLOVER, ACE));
 
         // [11] + 10 = 21
-        final CardArea cardArea5 = new CardArea(new Card(CardShape.CLOVER, ACE), new Card(CardShape.CLOVER, TEN));
+        final CardArea cardArea5 = new CardArea();
+        cardArea5.addCard(new Card(CardShape.CLOVER, ACE));
+        cardArea5.addCard(new Card(CardShape.CLOVER, TEN));
 
         // 10 + [1] + 7 = 18
-        final CardArea cardArea6 = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
+        final CardArea cardArea6 = new CardArea();
+        cardArea6.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea6.addCard(new Card(CardShape.CLOVER, ACE));
+
         cardArea6.addCard(new Card(CardShape.SPADE, SEVEN));
 
         return Stream.of(
@@ -140,7 +148,9 @@ class CardAreaTest {
     @Test
     void 총합이_20_이하면_카드를_더_받을_수_있는_상태이다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, TEN));
+        final CardArea cardArea = new CardArea();
+        cardArea.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea.addCard(new Card(CardShape.CLOVER, TEN));
 
         // when & then
         assertTrue(cardArea.canMoreCard());
@@ -149,7 +159,9 @@ class CardAreaTest {
     @Test
     void 총합이_21_이상이면_카드를_더_받을_수_없는_상태이다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
+        final CardArea cardArea = new CardArea();
+        cardArea.addCard(new Card(CardShape.CLOVER, ACE));
+        cardArea.addCard(new Card(CardShape.SPADE, TEN));
 
         // when & then
         assertFalse(cardArea.canMoreCard());
@@ -158,7 +170,10 @@ class CardAreaTest {
     @Test
     void 총합이_21_초과이면_버스트_된다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, TEN));
+        final CardArea cardArea = new CardArea();
+        cardArea.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea.addCard(new Card(CardShape.SPADE, TEN));
+
         cardArea.addCard(new Card(CardShape.DIAMOND, TEN));
 
         // when & then
@@ -168,7 +183,9 @@ class CardAreaTest {
     @Test
     void 총합이_21_이하이면_버스트_아니다() {
         // given
-        final CardArea cardArea = new CardArea(new Card(CardShape.CLOVER, TEN), new Card(CardShape.CLOVER, ACE));
+        final CardArea cardArea = new CardArea();
+        cardArea.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea.addCard(new Card(CardShape.CLOVER, ACE));
 
         // when & then
         assertFalse(cardArea.isBust());
@@ -177,10 +194,10 @@ class CardAreaTest {
     @Test
     void 딜러는_첫_장만_보여줄_수_있다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN)
-        );
+        final CardArea cardArea = new CardArea();
+
+        cardArea.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea.addCard(new Card(CardShape.CLOVER, SEVEN));
 
         // when & then
         assertEquals(cardArea.firstCard(), new Card(CardShape.CLOVER, TEN));

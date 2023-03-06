@@ -2,6 +2,7 @@ package domain.cardtable;
 
 import domain.area.CardArea;
 import domain.deck.CardDeck;
+import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.participant.Participant;
 import domain.player.participant.ParticipantResult;
@@ -21,10 +22,6 @@ public class CardTable {
 
     public static CardTable readyToPlayBlackjack(final CardDeck cardDeck) {
         return new CardTable(cardDeck);
-    }
-
-    public CardArea createCardArea() {
-        return new CardArea(cardDeck.draw(), cardDeck.draw());
     }
 
     public Map<Participant, ParticipantResult> determineWinner(final List<Participant> participants,
@@ -50,5 +47,9 @@ public class CardTable {
             return ParticipantResult.DRAWER;
         }
         return ParticipantResult.LOSER;
+    }
+
+    public void dealCardTo(Player player) {
+        player.hit(cardDeck.draw());
     }
 }

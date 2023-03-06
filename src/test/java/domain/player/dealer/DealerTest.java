@@ -1,9 +1,7 @@
 package domain.player.dealer;
 
-import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
-import domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -24,12 +22,10 @@ class DealerTest {
     @Test
     void 딜러는_16이하면_카드를_더_받을_수_있다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SIX)
-        );
+        final Dealer dealer = new Dealer();
 
-        final Player dealer = new Dealer(cardArea);
+        dealer.hit(new Card(CardShape.CLOVER, SIX));
+        dealer.hit(new Card(CardShape.SPADE, TEN));
 
         // when & then
         assertTrue(dealer.canHit());
@@ -38,12 +34,10 @@ class DealerTest {
     @Test
     void 딜러는_16초과면_카드를_더_받을_수_없다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN)
-        );
+        final Dealer dealer = new Dealer();
 
-        final Player dealer = new Dealer(cardArea);
+        dealer.hit(new Card(CardShape.CLOVER, SEVEN));
+        dealer.hit(new Card(CardShape.SPADE, TEN));
 
         // when & then
         assertFalse(dealer.canHit());
@@ -53,15 +47,12 @@ class DealerTest {
     @DisplayName("faceUpFirstCard() : 딜러는 첫 번째 카드만을 보여줍니다.")
     void test_faceUpFirstCard() throws Exception {
         //given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN)
-        );
+        final Dealer dealer = new Dealer();
 
-        //when
-        final Dealer dealer = new Dealer(cardArea);
+        dealer.hit(new Card(CardShape.CLOVER, TEN));
+        dealer.hit(new Card(CardShape.CLOVER, SEVEN));
 
-        //then
+        // when & then
         assertEquals(dealer.faceUpFirstCard(), new Card(CardShape.CLOVER, TEN));
     }
 }

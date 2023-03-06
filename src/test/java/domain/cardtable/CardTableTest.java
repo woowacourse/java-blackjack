@@ -1,6 +1,5 @@
 package domain.cardtable;
 
-import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.deck.CardDeck;
@@ -33,41 +32,33 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardTableTest {
 
-    CardArea participantCardArea;
+    Participant participant;
 
-    CardArea dealerCardArea;
+    Dealer dealer;
 
     CardDeck cardDeck;
+
+    CardTable cardTable;
 
     @BeforeEach
     void initCardArea() {
         cardDeck = CardDeck.shuffledFullCardDeck();
-        participantCardArea = new CardArea(new Card(CLOVER, TEN), new Card(CLOVER, NINE));
-        dealerCardArea = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
-    }
+        cardTable = CardTable.readyToPlayBlackjack(cardDeck);
 
-    @Test
-    @DisplayName("createCardArea() : 각 player의 카드 영역을 생성해준다.")
-    void test_dealCard() throws Exception {
-        //given
-        final CardTable cardTable = CardTable.readyToPlayBlackjack(cardDeck);
+        participant = new Participant(new Name("name"));
+        participant.hit(new Card(CLOVER, TEN));
+        participant.hit(new Card(CLOVER, NINE));
 
-        //when
-        final CardArea cardArea = cardTable.createCardArea();
-
-        //then
-        assertThat(cardArea.cards()).hasSize(2);
+        dealer = new Dealer();
+        dealer.hit(new Card(DIAMOND, TEN));
+        dealer.hit(new Card(DIAMOND, NINE));
     }
 
     @Test
     @DisplayName("matchBetween() : 참여자가 bust 일 경우에는 참여자가 무조건 게임에서 진다.")
     void test_matchBetween_bust_participant_must_lose_participant() throws Exception {
         //given
-        participantCardArea.addCard(new Card(SPADE, TEN));
-        final Participant participant = new Participant(new Name("name"), participantCardArea);
-        final Dealer dealer = new Dealer(dealerCardArea);
-
-        final CardTable cardTable = CardTable.readyToPlayBlackjack(cardDeck);
+        participant.hit(new Card(SPADE, TEN));
 
         //when
         final Map<Participant, ParticipantResult> gameResult =
@@ -84,11 +75,7 @@ class CardTableTest {
     @DisplayName("matchBetween() : 딜러는 bust 이면서 참여자가 bust 가 아니면 참여자가 무조건 게임에서 이긴다.")
     void test_matchBetween_bust_dealer_must_lose_dealer() throws Exception {
         //given
-        final Participant participant = new Participant(new Name("name"), participantCardArea);
-        final Dealer dealer = new Dealer(dealerCardArea);
-        dealerCardArea.addCard(new Card(SPADE, TEN));
-
-        final CardTable cardTable = CardTable.readyToPlayBlackjack(cardDeck);
+        dealer.hit(new Card(SPADE, TEN));
 
         //when
         final Map<Participant, ParticipantResult> gameResult =
@@ -105,14 +92,8 @@ class CardTableTest {
     @MethodSource("makeBothNotBust")
     @DisplayName("matchBetween() : 딜러, 참여자 모두 버스트가 아닐 때 점수가 높은 쪽이 이기고, 같으면 무승부이다.")
     void test_matchBetween_not_bust_win_higher_score_or_draw_same_score(
-            final CardArea participantCardArea, final CardArea dealerCardArea,
+            final Participant participant, final Dealer dealer,
             final ParticipantResult participantResult) throws Exception {
-
-        //given
-        final Participant participant = new Participant(new Name("name"), participantCardArea);
-        final Dealer dealer = new Dealer(dealerCardArea);
-
-        final CardTable cardTable = CardTable.readyToPlayBlackjack(cardDeck);
 
         //when & then
         final Map<Participant, ParticipantResult> gameResult = cardTable.determineWinner(
@@ -128,42 +109,48 @@ class CardTableTest {
     static Stream<Arguments> makeBothNotBust() {
 
         //무승부
-        final CardArea participantDrawCardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
+        final Participant participant1 = new Participant(new Name("name1"));
+        participant1.hit(new Card(CardShape.DIAMOND, TEN));
+        participant1.hit(new Card(CardShape.SPADE, TEN));
 
-        final CardArea dealerDrawCardArea = new CardArea(
-                new Card(HEART, TEN),
-                new Card(CLOVER, TEN)
-        );
+        final Dealer dealer1 = new Dealer();
+        dealer1.hit(new Card(HEART, TEN));
+        dealer1.hit(new Card(CLOVER, TEN));
 
         //참여자가 이길 경우
-        final CardArea participantWinCardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, TEN)
-        );
+        final Participant participant2 = new Participant(new Name("name2"));
+        participant2.hit(new Card(CardShape.SPADE, TEN));
+        participant2.hit(new Card(CardShape.DIAMOND, TEN));
 
-        final CardArea dealerLoseCardArea = new CardArea(
-                new Card(HEART, TEN),
-                new Card(CLOVER, NINE)
-        );
+        final Dealer dealer2 = new Dealer();
+        dealer2.hit(new Card(HEART, TEN));
+        dealer2.hit(new Card(CLOVER, NINE));
 
         //딜러가 이길 경우
-        final CardArea participantLoseCardArea = new CardArea(
-                new Card(CardShape.SPADE, TEN),
-                new Card(CardShape.DIAMOND, NINE)
-        );
+        final Participant participant3 = new Participant(new Name("name3"));
+        participant3.hit(new Card(CardShape.SPADE, TEN));
+        participant3.hit(new Card(CardShape.DIAMOND, NINE));
 
-        final CardArea dealerWinCardArea = new CardArea(
-                new Card(HEART, TEN),
-                new Card(CLOVER, TEN)
-        );
+        final Dealer dealer3 = new Dealer();
+        dealer3.hit(new Card(HEART, TEN));
+        dealer3.hit(new Card(CLOVER, TEN));
 
         return Stream.of(
-                Arguments.of(participantDrawCardArea, dealerDrawCardArea, DRAWER),
-                Arguments.of(participantWinCardArea, dealerLoseCardArea, WINNER),
-                Arguments.of(participantLoseCardArea, dealerWinCardArea, LOSER)
+                Arguments.of(participant1, dealer1, DRAWER),
+                Arguments.of(participant2, dealer2, WINNER),
+                Arguments.of(participant3, dealer3, LOSER)
         );
+    }
+
+    @Test
+    @DisplayName("dealCardTo() : Player에게 카드를 나눠줄 수 있다.")
+    void test_dealCardTo() throws Exception {
+        //when
+        cardTable.dealCardTo(participant);
+        cardTable.dealCardTo(dealer);
+
+        //then
+        assertThat(participant.cardArea().cards()).hasSize(3);
+        assertThat(dealer.cardArea().cards()).hasSize(3);
     }
 }

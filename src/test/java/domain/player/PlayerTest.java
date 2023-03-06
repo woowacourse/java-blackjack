@@ -1,9 +1,7 @@
 package domain.player;
 
-import domain.area.CardArea;
 import domain.card.Card;
 import domain.card.CardShape;
-import domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,11 +18,7 @@ class PlayerTest {
 
     final Name name = new Name("name");
 
-    final CardArea cardArea = new CardArea(
-            new Card(CardShape.SPADE, CardValue.TEN),
-            new Card(CardShape.SPADE, CardValue.TEN));
-
-    final Player player = new Player(name, cardArea) {
+    final Player player = new Player(name) {
         @Override
         public boolean canHit() {
             return false;
@@ -40,7 +34,7 @@ class PlayerTest {
     @Test
     void 이름과_area_가진다() {
         // when & then
-        assertDoesNotThrow(() -> new Player(name, cardArea) {
+        assertDoesNotThrow(() -> new Player(name) {
             @Override
             public boolean canHit() {
                 return false;
@@ -51,10 +45,10 @@ class PlayerTest {
     @Test
     void 카드를_추가할_수_있다() {
         // when
-        final int beforeSize = cardArea.cards().size();
+        final int beforeSize = player.cardArea().cards().size();
         player.hit(new Card(CardShape.SPADE, TEN));
 
         // then
-        assertThat(cardArea.cards().size()).isEqualTo(beforeSize + 1);
+        assertThat(player.cardArea.cards()).hasSize(beforeSize + 1);
     }
 }
