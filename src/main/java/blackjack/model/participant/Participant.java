@@ -37,14 +37,14 @@ public abstract class Participant {
     }
 
     public CardScore cardScore() {
-        return currentState.getScore();
+        return currentState.getCardScore();
     }
 
     public int getScore() {
-        if (isBust() || cardScore().bigScore() > BLACKJACK_NUMBER) {
-            return cardScore().smallScore();
+        if (isBust() || cardScore().getBigScore() > BLACKJACK_NUMBER) {
+            return cardScore().getSmallScore();
         }
-        return cardScore().bigScore();
+        return cardScore().getBigScore();
     }
 
     public Name getName() {

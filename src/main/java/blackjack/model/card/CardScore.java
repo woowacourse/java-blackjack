@@ -9,7 +9,7 @@ public class CardScore {
         this.numbers = numbers;
     }
 
-    public int smallScore() {
+    public int getSmallScore() {
         int score = 0;
         for (CardNumber number : numbers) {
             score += number.getSmallScore();
@@ -17,7 +17,7 @@ public class CardScore {
         return score;
     }
 
-    public int bigScore() {
+    public int getBigScore() {
         int score = 0;
         for (CardNumber number : numbers) {
             score += number.getBigScore();

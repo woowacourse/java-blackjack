@@ -47,10 +47,10 @@ public class DealerDrawState extends State {
     }
 
     private boolean isScoreHigherThanBlackjackNumber() {
-        return hand.score().smallScore() > BLACKJACK_NUMBER;
+        return hand.getCardScore().getSmallScore() > BLACKJACK_NUMBER;
     }
 
     private boolean isScoreHigherThanDealerHitNumber() {
-        return hand.score().bigScore() > DEALER_HIT_NUMBER;
+        return hand.getCardScore().getBigScore() > DEALER_HIT_NUMBER;
     }
 }

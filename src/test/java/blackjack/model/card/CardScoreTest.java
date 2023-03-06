@@ -16,7 +16,7 @@ class CardScoreTest {
         CardScore score = new CardScore(numbers);
 
         //when
-        int smallScore = score.smallScore();
+        int smallScore = score.getSmallScore();
 
         //then
         Assertions.assertThat(smallScore).isEqualTo(1 + 4 + 10);
@@ -30,7 +30,7 @@ class CardScoreTest {
         CardScore score = new CardScore(numbers);
 
         //when
-        int bigScore = score.bigScore();
+        int bigScore = score.getBigScore();
 
         //then
         Assertions.assertThat(bigScore).isEqualTo(11 + 4 + 10);

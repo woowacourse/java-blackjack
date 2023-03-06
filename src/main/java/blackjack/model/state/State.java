@@ -1,11 +1,8 @@
 package blackjack.model.state;
 
 import blackjack.model.participant.Hand;
-import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
-
-import java.util.List;
 
 public abstract class State {
     protected static final int BLACKJACK_NUMBER = 21;
@@ -26,8 +23,8 @@ public abstract class State {
 
     public abstract boolean isStand();
 
-    public CardScore getScore() {
-        return hand.score();
+    public CardScore getCardScore() {
+        return hand.getCardScore();
     }
 
     public Hand getHand() {

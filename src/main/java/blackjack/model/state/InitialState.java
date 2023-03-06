@@ -18,7 +18,7 @@ public class InitialState extends State {
             Card picked = cardDeck.pick();
             hand.add(picked);
         }
-        if (hand.score().bigScore() == BLACKJACK_NUMBER) {
+        if (hand.getCardScore().getBigScore() == BLACKJACK_NUMBER) {
             return new BlackjackState(hand);
         }
         return new DrawState(hand);

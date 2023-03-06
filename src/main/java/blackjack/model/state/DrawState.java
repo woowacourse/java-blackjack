@@ -18,7 +18,7 @@ public class DrawState extends State {
     }
 
     private boolean isScoreHigherThanBlackjackNumber() {
-        return hand.score().smallScore() > BLACKJACK_NUMBER;
+        return hand.getCardScore().getSmallScore() > BLACKJACK_NUMBER;
     }
 
     public State turnStandState() {
