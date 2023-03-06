@@ -4,9 +4,7 @@ import domain.area.CardArea;
 import domain.deck.CardDeck;
 import domain.player.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
@@ -16,12 +14,12 @@ public class BlackJackGame {
 
     private static final int MAX_PARTICIPANT_COUNT_INCLUDE = 10;
 
-    private final List<Player> players;
+    private final Set<Player> players;
     private final Dealer dealer;
     private final CardDeck cardDeck;
 
     BlackJackGame(final List<Player> players, final Dealer dealer, final CardDeck cardDeck) {
-        this.players = players;
+        this.players = new HashSet<>(players);
         this.dealer = dealer;
         this.cardDeck = cardDeck;
     }
@@ -53,12 +51,17 @@ public class BlackJackGame {
     }
 
     public void hitOrStayForParticipant(final Player player, final HitState hitState) {
+        validatePlayerExist(player);
         player.changeState(hitState);
-        players.stream()
-                .filter(player::equals)
-                .filter(Player::wantHit)
-                .findAny()
-                .ifPresent(it -> it.hit(cardDeck.draw()));
+        if (player.wantHit()) {
+            player.hit(cardDeck.draw());
+        }
+    }
+
+    private void validatePlayerExist(final Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("해당 플레이어는 게임에 참여하지 않았습니다.");
+        }
     }
 
     public boolean isDealerShouldMoreHit() {
