@@ -37,4 +37,12 @@ public class Participant {
     public List<Card> getCards() {
         return cards;
     }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "name=" + getName() +
+                ", cards=" + getCards() +
+                '}';
+    }
 }

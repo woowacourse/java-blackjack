@@ -40,4 +40,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(value, shape);
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "value=" + value +
+                ", shape=" + shape +
+                '}';
+    }
 }
