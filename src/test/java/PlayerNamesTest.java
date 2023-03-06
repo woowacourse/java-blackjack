@@ -23,7 +23,7 @@ public class PlayerNamesTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    List<String> createPlayerNamesByCount(int count) {
+    private List<String> createPlayerNamesByCount(int count) {
         List<String> names = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {

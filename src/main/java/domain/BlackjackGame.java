@@ -1,7 +1,8 @@
 package domain;
 
 public class BlackjackGame {
-    public static final int STANDARD_OF_HIT = 17;
+    private static final int STANDARD_OF_HIT = 17;
+
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
