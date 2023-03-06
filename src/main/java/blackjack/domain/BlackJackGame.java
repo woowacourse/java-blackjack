@@ -12,6 +12,7 @@ import blackjack.domain.participant.Result;
 public class BlackJackGame {
 
     private static final int NUMBER_OF_INITIAL_CARD = 2;
+
     private final Dealer dealer;
     private final Players players;
 

@@ -16,6 +16,9 @@ public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final StringBuilder finalResult = new StringBuilder();
 
+    private OutputView() {
+    }
+
     public static void printInitCard(final List<Player> players, final Card firstCardOfDealer) {
         String playerNames = printPlayerNames(players);
         System.out.println(NEW_LINE + "딜러와 " + playerNames + "에게 2장을 나누었습니다.");
