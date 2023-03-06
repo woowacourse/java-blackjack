@@ -21,6 +21,10 @@ public abstract class Participant {
         return cardArea;
     }
 
+    public String nameValue() {
+        return name.value();
+    }
+
     public boolean isBurst() {
         return cardArea.isBurst();
     }

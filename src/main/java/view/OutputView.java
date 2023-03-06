@@ -66,9 +66,9 @@ public class OutputView {
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Player> players) {
         System.out.printf("\n%s와 %s 에게 2장을 나누었습니다.\n",
-                dealer.name().value(),
+                dealer.nameValue(),
                 players.stream()
-                        .map(it -> it.name().value())
+                        .map(Participant::nameValue)
                         .collect(Collectors.joining(DELIMITER))
         );
         showDealerCardAreaState(dealer);
@@ -78,7 +78,7 @@ public class OutputView {
     // ex: 딜러카드: 2 다이아
     private static void showDealerCardAreaState(final Dealer dealer) {
         System.out.printf("%s: %s\n",
-                dealer.name().value(),
+                dealer.nameValue(),
                 makeCardMessage(dealer.firstCard()));
     }
 
@@ -103,7 +103,7 @@ public class OutputView {
     private static String makeCardAreaStateMessage(final Participant participant) {
         return participant.cardArea().cards().stream()
                 .map(OutputView::makeCardMessage)
-                .collect(Collectors.joining(DELIMITER, participant.name().value() + " 카드: ", EMPTY));
+                .collect(Collectors.joining(DELIMITER, participant.nameValue() + " 카드: ", EMPTY));
     }
 
     /* ex: 2 다이아*/
@@ -151,7 +151,7 @@ public class OutputView {
     private static void showParticipantsCardAreaResultState(final Participant participant) {
         final String message = participant.cardArea().cards().stream()
                 .map(OutputView::makeCardMessage)
-                .collect(Collectors.joining(DELIMITER, participant.name().value() + "카드: ", String.format(" - 결과: %d", participant.cardArea().calculate())));
+                .collect(Collectors.joining(DELIMITER, participant.nameValue() + "카드: ", String.format(" - 결과: %d", participant.cardArea().calculate())));
         System.out.println(message);
     }
 
@@ -185,7 +185,7 @@ public class OutputView {
         final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
         final List<Player> players = statistic.players();
         players.stream()
-                .map(it -> it.name().value() + ": " + DEALER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
+                .map(it -> it.nameValue() + ": " + DEALER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
                 .forEach(System.out::println);
     }
 }

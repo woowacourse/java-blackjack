@@ -79,7 +79,7 @@ class DealerTest {
         // when
         assertAll(
                 () -> assertThat(dealer1.name()).isEqualTo(dealer2.name()),
-                () -> assertThat(dealer1.name().value()).isEqualTo("딜러")
+                () -> assertThat(dealer1.nameValue()).isEqualTo("딜러")
         );
     }
 

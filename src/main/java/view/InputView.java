@@ -21,7 +21,7 @@ public class InputView {
     }
 
     public static boolean readWantHit(final Player player) {
-        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", player.name().value());
+        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", player.nameValue());
         return parseHitCommand(scanner.nextLine());
     }
 
