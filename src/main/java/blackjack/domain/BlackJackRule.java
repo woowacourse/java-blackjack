@@ -35,5 +35,4 @@ public class BlackJackRule {
         }
         return dealerScore > playerScore;
     }
-
 }

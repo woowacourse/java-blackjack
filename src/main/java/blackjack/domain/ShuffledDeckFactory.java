@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class ShuffledDeckFactory implements DeckFactory {
 
-
     @Override
     public Deck generate() {
         final List<Card> cards = generateCards();

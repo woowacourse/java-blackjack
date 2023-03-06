@@ -27,7 +27,6 @@ public class BlackJackController {
         printFinalResult(blackJackGame);
     }
 
-
     private BlackJackGame generateBlackJackGame(final DeckFactory deckFactory) {
         return repeatUntilNoException(
                 () -> BlackJackGame.of(
@@ -35,7 +34,6 @@ public class BlackJackController {
                         deckFactory),
                 outputView::printError);
     }
-
 
     private void distributeInitialCard(final BlackJackGame blackJackGame) {
         blackJackGame.distributeInitialCard();

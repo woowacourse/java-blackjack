@@ -15,7 +15,6 @@ public class PlayersCardsResponse {
         this.playerNameToResult = playerNameToResult;
     }
 
-
     public static PlayersCardsResponse from(final Players players) {
         final Map<String, CardsScore> playerNameToResult = players.getPlayers().stream()
                 .collect(Collectors.toMap(

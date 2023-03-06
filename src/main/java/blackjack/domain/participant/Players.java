@@ -38,7 +38,6 @@ public class Players {
         validateDuplicate(playerNames);
     }
 
-
     private static void validateNull(final List<String> playerNames) {
         if (playerNames == null) {
             throw new IllegalArgumentException("사용자 이름이 입력되지 않았습니다");
@@ -90,7 +89,6 @@ public class Players {
                 .orElseThrow(PlayerNotFoundException::new);
         targetPlayer.drawCard(card);
     }
-
 
     public Player findPlayerByName(final String name) {
         return players.stream()

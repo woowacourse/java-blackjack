@@ -34,7 +34,6 @@ public class Participants {
         players.draw(playerName, card);
     }
 
-
     public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }

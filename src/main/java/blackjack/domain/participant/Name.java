@@ -16,7 +16,6 @@ public class Name {
         validateLength(name);
     }
 
-
     private void validateEmptyName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름을 입력하지 않았습니다");
