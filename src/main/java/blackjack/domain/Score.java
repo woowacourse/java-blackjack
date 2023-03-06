@@ -14,11 +14,11 @@ public class Score {
                 .sum();
 
         if (score > MAX_BLACKJACK_SCORE) {
-            handleBurst(letters);
+            handleBust(letters);
         }
     }
 
-    private void handleBurst(List<Letter> letters) {
+    private void handleBust(List<Letter> letters) {
         int aceCount = countAce(letters);
         while (score > MAX_BLACKJACK_SCORE && aceCount > 0) {
             score -= ACE_GAP;

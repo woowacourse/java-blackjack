@@ -37,11 +37,11 @@ public class GameResult {
 
     private void compareBuster(Dealer dealer, Player player) {
         if (isBust(player)) {
-            dealerWin(player);
+            addDealerWin(player);
             return;
         }
         if (isBust(dealer)) {
-            playerWin(player);
+            addPlayerWin(player);
         }
     }
 
@@ -51,18 +51,18 @@ public class GameResult {
             return;
         }
         if (player.getScore() > dealer.getScore()) {
-            playerWin(player);
+            addPlayerWin(player);
             return;
         }
-        dealerWin(player);
+        addDealerWin(player);
     }
 
-    private void dealerWin(Player player) {
+    private void addDealerWin(Player player) {
         playersResults.put(player, Result.LOSE);
         dealerResults.replace(Result.WIN, dealerResults.get(Result.WIN) + 1);
     }
 
-    private void playerWin(Player player) {
+    private void addPlayerWin(Player player) {
         playersResults.put(player, Result.WIN);
         dealerResults.replace(Result.LOSE, dealerResults.get(Result.LOSE) + 1);
     }

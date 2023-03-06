@@ -38,13 +38,9 @@ public class BlackJackController {
 
     private void playAllPlayer(final Deck deck, final Players players) {
         for (Player player : players.getPlayers()) {
-            playEachPlayer(deck, player);
-        }
-    }
-
-    private void playEachPlayer(final Deck deck, final Player player) {
-        while (player.isAbleToReceive() && wantHit(player.getName())) {
-            hit(deck, player);
+            while (player.isAbleToReceive() && wantHit(player.getName())) {
+                hit(deck, player);
+            }
         }
     }
 
