@@ -21,7 +21,7 @@ public class Blackjack {
 
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-    public void startGame(Players players, Dealer dealer) {
+    public void start(Players players, Dealer dealer) {
         playersHitOrStand(players);
         dealerHitOrStand(dealer);
         result = getResult(dealer, players);

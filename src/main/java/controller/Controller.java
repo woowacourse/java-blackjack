@@ -4,7 +4,6 @@ import Game.Blackjack;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import view.OutputView;
 
 import static view.OutputView.*;
 
@@ -19,7 +18,7 @@ public class Controller {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
-        blackjack.startGame(players,  dealer);
+        blackjack.start(players,  dealer);
 
         printScores(players, dealer);
         printResult(blackjack.getResult());

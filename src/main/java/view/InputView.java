@@ -21,7 +21,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> readPlayersName() {
+    public static List<String> readPlayerNames() {
         System.out.println(PLAYER_NAME_GUIDE_MESSAGE);
 
         String input = scanner.nextLine();
