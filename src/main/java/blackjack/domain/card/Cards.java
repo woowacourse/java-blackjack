@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int MAXIMUM_SCORE = 21;
     private static final int ACE_BONUS = 10;
+    private static final int MAXIMUM_UPDATABLE_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -45,15 +45,7 @@ public class Cards {
     }
 
     private boolean isScoreUpdatable(final int score) {
-        return score + ACE_BONUS <= MAXIMUM_SCORE;
-    }
-
-    public boolean isTotalScoreOver() {
-        return calculateTotalScore() > MAXIMUM_SCORE;
-    }
-
-    public boolean isMaximumScore() {
-        return calculateTotalScore() == MAXIMUM_SCORE;
+        return score + ACE_BONUS <= MAXIMUM_UPDATABLE_SCORE;
     }
 
     public int count() {

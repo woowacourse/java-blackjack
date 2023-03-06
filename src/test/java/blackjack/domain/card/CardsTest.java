@@ -58,48 +58,6 @@ class CardsTest {
     }
 
     @Test
-    void 점수_최댓값_초과라면_true_반환한다() {
-        final Cards cards = new Cards(
-                List.of(new Card(TEN, SPADE),
-                        new Card(JACK, HEART),
-                        new Card(QUEEN, CLOVER)
-                ));
-
-        assertThat(cards.isTotalScoreOver()).isTrue();
-    }
-
-    @Test
-    void 점수_최댓값_이하라면_false_반환한다() {
-        final Cards cards = new Cards(
-                List.of(new Card(TEN, SPADE),
-                        new Card(JACK, HEART)
-                ));
-
-        assertThat(cards.isTotalScoreOver()).isFalse();
-    }
-
-    @Test
-    void 최대_점수라면_true_반환한다() {
-        final Cards cards = new Cards(
-                List.of(new Card(TEN, SPADE),
-                        new Card(JACK, HEART),
-                        new Card(ACE, CLOVER)
-                ));
-
-        assertThat(cards.isMaximumScore()).isTrue();
-    }
-
-    @Test
-    void 최대_점수_아니라면_false_반환한다() {
-        final Cards cards = new Cards(
-                List.of(new Card(TEN, SPADE),
-                        new Card(JACK, HEART)
-                ));
-
-        assertThat(cards.isMaximumScore()).isFalse();
-    }
-
-    @Test
     void 카드를_추가한다() {
         final Cards cards = new Cards(new ArrayList<>());
 

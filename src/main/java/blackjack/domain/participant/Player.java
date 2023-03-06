@@ -18,7 +18,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return !cards.isMaximumScore() && !cards.isTotalScoreOver();
+        return cards.calculateTotalScore() < BLACK_JACK_SCORE;
     }
 
     @Override
