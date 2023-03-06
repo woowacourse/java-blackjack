@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.gameResult;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class ResultReader {
 

@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.CardNumber;
+import blackjack.domain.card.CardNumber;
 import java.util.Arrays;
 
 public enum ViewCardNumber {

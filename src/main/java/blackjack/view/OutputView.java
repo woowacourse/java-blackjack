@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.WinningResult;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.gameResult.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

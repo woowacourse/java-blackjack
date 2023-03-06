@@ -1,6 +1,4 @@
-package blackjack.domain;
-
-import java.util.List;
+package blackjack.domain.gameResult;
 
 public enum WinningResult {
 

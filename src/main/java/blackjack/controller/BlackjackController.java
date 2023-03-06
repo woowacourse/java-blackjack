@@ -1,17 +1,16 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.BlackjackResult;
-import blackjack.domain.Cards;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.gameResult.BlackjackResult;
+import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.util.CardPickerGenerator;
 import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 public class BlackjackController {
 
