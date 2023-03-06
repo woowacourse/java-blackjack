@@ -23,10 +23,10 @@ class CardsTest {
         ));
 
         // when
-        int score = cards.getScore();
+        Score score = cards.getScore();
 
         // then
-        assertThat(score)
+        assertThat(score.getValue())
                 .isEqualTo(12);
     }
 
@@ -40,10 +40,10 @@ class CardsTest {
                 .collect(collectingAndThen(toList(), Cards::new));
 
         // when
-        int score = cards.getScore();
+        Score score = cards.getScore();
 
         // then
-        assertThat(score)
+        assertThat(score.getValue())
                 .isEqualTo(expect);
     }
 }

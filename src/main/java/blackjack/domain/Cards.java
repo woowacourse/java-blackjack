@@ -17,14 +17,14 @@ public class Cards {
         cards.add(card);
     }
 
-    public int getScore() {
+    public Score getScore() {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
         if (hasAce()) {
             return calculateAce(score);
         }
-        return score;
+        return new Score(score);
     }
 
     private boolean hasAce() {
@@ -32,11 +32,11 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculateAce(int score) {
+    private Score calculateAce(int score) {
         if (score + ACE_BONUS_SCORE <= MAX_SCORE) {
-            return score + ACE_BONUS_SCORE;
+            return new Score(score + ACE_BONUS_SCORE);
         }
-        return score;
+        return new Score(score);
     }
 
     public List<Card> getCards() {

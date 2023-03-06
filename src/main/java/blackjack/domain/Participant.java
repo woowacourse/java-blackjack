@@ -3,8 +3,6 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Participant {
-    protected static final int MAX_SCORE = 21;
-
     protected final Name name;
     protected final Cards cards;
 
@@ -17,7 +15,7 @@ public abstract class Participant {
         this.cards.addCard(card);
     }
 
-    public int getScore() {
+    public Score getScore() {
         return cards.getScore();
     }
 
