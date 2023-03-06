@@ -2,39 +2,36 @@ package techcourse.jcf.mission;
 
 import java.util.Objects;
 
-public class Node {
-    private String value;
-    private Node next;
+public class Node<E> {
+    private E value;
+    private Node<E> next;
 
-    public Node(String value) {
+    public Node(E value) {
         this.value = value;
         this.next = null;
     }
 
-    public void appendNode(Node node) {
+    public void appendNode(Node<E> node) {
         this.next = node;
     }
 
     public boolean isNextNull() {
-        if (Objects.isNull(next)) {
-            return true;
-        }
-        return false;
+        return Objects.isNull(next);
     }
 
-    public Node getNext() {
+    public Node<E> getNext() {
         return next;
     }
 
-    public void setNext(Node node) {
+    public void setNext(Node<E> node) {
         next = node;
     }
 
-    public String getValue() {
+    public E getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(E value) {
         this.value = value;
     }
 }

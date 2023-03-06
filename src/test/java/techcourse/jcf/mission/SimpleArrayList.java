@@ -2,14 +2,14 @@ package techcourse.jcf.mission;
 
 import java.util.Arrays;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<E> implements SimpleList<E> {
 
-    private String[] values;
+    private Object[] values;
     private int size;
 
 
     public SimpleArrayList(int initSize) {
-        this.values = new String[initSize];
+        this.values = new Object[initSize];
         this.size = 0;
     }
 
@@ -18,7 +18,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(E value) {
         try {
             add(this.size, value);
             return true;
@@ -28,7 +28,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         realloc();
         if (!(index <= this.size)) {
             throw new IllegalArgumentException("원소를 추가할 위치는 현재 리스트 크기 이하여야 합니다.");
@@ -36,7 +36,7 @@ public class SimpleArrayList implements SimpleList {
         for (int i = this.size; i > index; i--) {
             values[i] = values[i - 1];
         }
-        values[index] = value;
+        values[index] = (E) value;
         ++this.size;
     }
 
@@ -44,7 +44,7 @@ public class SimpleArrayList implements SimpleList {
         if (this.size < this.values.length) {
             return;
         }
-        String[] newMemory = new String[this.values.length * 2];
+        Object[] newMemory = new Object[this.values.length * 2];
         for (int i = 0; i < this.size; i++) {
             newMemory[i] = this.values[i];
         }
@@ -52,30 +52,30 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public E set(int index, E value) {
         if (!(0 <= index && index < this.size)) {
             throw new IllegalArgumentException("값을 수정할 수 있는 인덱스의 범위를 벗어났습니다.");
         }
-        String beforeValue = values[index];
+        E beforeValue = (E) values[index];
         values[index] = value;
         return beforeValue;
     }
 
     @Override
-    public String get(int index) {
+    public E get(int index) {
         if (!(0 <= index && index < this.size)) {
             throw new IllegalArgumentException("값을 가져ㅇ 수 있는 인덱스의 범위를 벗어났습니다.");
         }
-        return values[index];
+        return (E) values[index];
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(E value) {
         return Arrays.asList(this.values).contains(value);
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         int index = 0;
         for (; (index < this.size) && !this.values[index].equals(value); index++)
             ;
@@ -92,26 +92,13 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public boolean isEmpty() {
-        if (this.size == 0) {
-            return true;
-        }
-        return false;
+        return this.size == 0;
     }
 
     @Override
-    public boolean remove(String value) {
-        int index = indexOf(value);
-        if (index == -1) {
-            return false;
-        }
-        remove(index);
-        return true;
-    }
-
-    @Override
-    public String remove(int index) {
+    public E remove(int index) {
         validateOutOfBound(index);
-        String oldValue = this.values[index];
+        E oldValue = (E) this.values[index];
         if (index == this.size - 1) {
             return removePostProcess(oldValue);
         }
@@ -121,7 +108,17 @@ public class SimpleArrayList implements SimpleList {
         return removePostProcess(oldValue);
     }
 
-    private String removePostProcess(String oldValue) {
+    @Override
+    public boolean remove(E value) {
+        int index = indexOf((E) value);
+        if (index == -1) {
+            return false;
+        }
+        remove(index);
+        return true;
+    }
+
+    private E removePostProcess(E oldValue) {
         this.values[--this.size] = null;
         return oldValue;
     }

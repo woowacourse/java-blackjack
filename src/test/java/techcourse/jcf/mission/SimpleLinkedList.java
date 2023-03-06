@@ -2,9 +2,9 @@ package techcourse.jcf.mission;
 
 import java.util.Objects;
 
-public class SimpleLinkedList implements SimpleList {
+public class SimpleLinkedList<E> implements SimpleList<E> {
 
-    private Node firstNode;
+    private Node<E> firstNode;
 
     private int size;
 
@@ -14,42 +14,42 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean add(String value) {
-        Node iterator = firstNode;
+    public boolean add(E value) {
+        Node<E> iterator = firstNode;
         if (Objects.isNull(iterator)) {
-            addFirstNode(new Node(value));
+            addFirstNode(new Node<E>(value));
             return true;
         }
         for (; !iterator.isNextNull(); iterator = iterator.getNext())
             ;
         ++size;
-        iterator.setNext(new Node(value));
+        iterator.setNext(new Node<E>(value));
         return true;
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         validateOutOfBoundForAdd(index);
         if (size == 0 && index == 0) {
-            addFirstNode(new Node(value));
+            addFirstNode(new Node<E>(value));
             return;
         }
-        Node beforeNode = firstNode;
-        Node iterator = firstNode;
+        Node<E> beforeNode = firstNode;
+        Node<E> iterator = firstNode;
         nodeMovingDestination(beforeNode, iterator, index);
-        nodeChaining(beforeNode, new Node(value), iterator);
+        nodeChaining(beforeNode, new Node<E>(value), iterator);
         ++size;
     }
 
-    private void nodeMovingDestination(Node before, Node iterator, Integer destination) {
+    private void nodeMovingDestination(Node<E> before, Node<E> iterator, Integer destination) {
         for (int i = 0; i < destination; i++) {
             before = iterator;
             iterator = iterator.getNext();
         }
     }
 
-    private Node findLastNode(Node first) {
-        Node iterator = first;
+    private Node<E> findLastNode(Node<E> first) {
+        Node<E> iterator = first;
         while (!Objects.isNull(iterator.getNext())){
             iterator = iterator.getNext();
         }
@@ -62,12 +62,12 @@ public class SimpleLinkedList implements SimpleList {
         }
     }
 
-    private void nodeChaining(Node first, Node second, Node third) {
+    private void nodeChaining(Node<E> first, Node<E> second, Node<E> third) {
         first.setNext(second);
         second.setNext(third);
     }
 
-    private void addFirstNode(Node node) {
+    private void addFirstNode(Node<E> node) {
         if (!(size == 0 && Objects.isNull(firstNode))) {
             throw new IllegalStateException("초기 노드 추가 함수 호출이 잘못되었습니다.");
         }
@@ -76,25 +76,25 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public E set(int index, E value) {
         if (!(0 <= index && index < this.size)) {
             throw new IllegalArgumentException("인덱스는 범위를 벗어날 수 없습니다.");
         }
-        Node iterator = firstNode;
+        Node<E> iterator = firstNode;
         for (int i = 0; i < index; i++) {
             iterator = iterator.getNext();
         }
-        String oldValue = iterator.getValue();
+        E oldValue = iterator.getValue();
         iterator.setValue(value);
         return oldValue;
     }
 
     @Override
-    public String get(int index) {
+    public E get(int index) {
         if (!(0 <= index && index < this.size)) {
             throw new IllegalArgumentException("인덱스는 범위를 벗어날 수 없습니다.");
         }
-        Node iterator = firstNode;
+        Node<E> iterator = firstNode;
         for (int i = 0; i < index; i++) {
             iterator = iterator.getNext();
         }
@@ -102,8 +102,8 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean contains(String value) {
-        Node iterator = firstNode;
+    public boolean contains(E value) {
+        Node<E> iterator = firstNode;
         for (int i = 0; i < size && !(iterator.getValue().equals(value)); i++) {
             iterator = iterator.getNext();
         }
@@ -114,9 +114,9 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         int index = 0;
-        Node iterator = firstNode;
+        Node<E> iterator = firstNode;
         for (; index < size && !(iterator.getValue().equals(value)); index++) {
             iterator = iterator.getNext();
         }
@@ -133,16 +133,13 @@ public class SimpleLinkedList implements SimpleList {
 
     @Override
     public boolean isEmpty() {
-        if(size == 0){
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
     @Override
-    public boolean remove(String value) {
-        Node before = firstNode;
-        Node iterator = firstNode;
+    public boolean remove(E value) {
+        Node<E> before = firstNode;
+        Node<E> iterator = firstNode;
         for (int i = 0; i < size && !(iterator.getValue().equals(value)); i++) {
             before = iterator;
             iterator = iterator.getNext();
@@ -156,17 +153,17 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public E remove(int index) {
         validateOutOfBoundForSearch(index);
-        Node before = firstNode;
-        Node iterator = firstNode;
+        Node<E> before = firstNode;
+        Node<E> iterator = firstNode;
         for (int i = 0; i < index; i++) {
             before = iterator;
             iterator = iterator.getNext();
         }
         before.setNext(iterator.getNext());
         --size;
-        return iterator.getValue();
+        return (E) iterator.getValue();
     }
 
     private void validateOutOfBoundForSearch(int index){

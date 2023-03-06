@@ -1,26 +1,26 @@
 package techcourse.jcf.mission;
 
-public interface SimpleList {
+public interface SimpleList<E> {
 
-    boolean add(String value);
+    boolean add(E value);
 
-    void add(int index, String value);
+    void add(int index, E value);
 
-    String set(int index, String value);
+    E set(int index, E value);
 
-    String get(int index);
+    E get(int index);
 
-    boolean contains(String value);
+    boolean contains(E value);
 
-    int indexOf(String value);
+    int indexOf(E value);
 
     int size();
 
     boolean isEmpty();
 
-    boolean remove(String value);
+    E remove(int index);
 
-    String remove(int index);
+    boolean remove(E value);
 
     void clear();
 }

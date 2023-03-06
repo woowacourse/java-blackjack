@@ -1,38 +1,39 @@
 package techcourse.jcf.mission;
 
+import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class SimpleArrayListTest {
+class SimpleArrayListIntegerTest {
     @DisplayName("SimpleArrayList 생성 테스트")
     @Test
     void SimpleArrayList_생성_테스트() {
         Assertions.assertDoesNotThrow(() -> {
-            new SimpleArrayList<String>();
+            new SimpleArrayList<Integer>();
         });
     }
 
     @DisplayName("SimpleArrayList 원소 추가 테스트")
     @Test
     void SimpleArrayList_원소_추가_테스트() {
-        Assertions.assertEquals(true, new SimpleArrayList<String>().add("hello"));
+        Assertions.assertEquals(true, new SimpleArrayList<Integer>().add(10));
     }
 
     @DisplayName("SimpleArrayList 특정 인덱스에 원소 추가 테스트")
     @Test
     void SimpleArrayList_특정_인덱스에_원소_추가_테스트() {
         Assertions.assertDoesNotThrow(() -> {
-            new SimpleArrayList<String>().add(0, "hello");
+            new SimpleArrayList<Integer>().add(0, 10);
         });
     }
 
     @DisplayName("SimpleArrayList 원소 추가 시 자동 크기 증가 테스트")
     @Test
     void SimpleArrayList_자동_크기_증가_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>(1);
-        arrayList.add("first");
-        arrayList.add("second");
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>(1);
+        arrayList.add(10);
+        arrayList.add(10);
 
         Assertions.assertEquals(2, arrayList.size());
     }
@@ -42,16 +43,16 @@ class SimpleArrayListTest {
     void SimpleArrayList_잘못된_범위의_특정_인덱스에_원소_추가_실패_테스트() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
-                    new SimpleArrayList<String>().add(1, "hello");
+                    new SimpleArrayList<Integer>().add(1, 10);
                 });
     }
 
     @DisplayName("SimpleArrayList 범위 내부의 원소 설정 테스트")
     @Test
     void SimpleArrayList_범위_내부의_원소_재설정_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
-        final String setValue = "after";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
+        final Integer setValue = 100;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(beforeValue, arrayList.set(0, setValue));
@@ -62,15 +63,15 @@ class SimpleArrayListTest {
     void SimpleArrayList_잘못된_범위_인덱스의_원소_설정_실패_테스트() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
-                    new SimpleArrayList<String>().set(1, "hello");
+                    new SimpleArrayList<Integer>().set(1, 10);
                 });
     }
 
     @DisplayName("SimpleArrayList 범위 내부의 원소 반환 테스트")
     @Test
     void SimpleArrayList_범위_내부의_원소_반환_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(beforeValue, arrayList.get(0));
@@ -81,15 +82,15 @@ class SimpleArrayListTest {
     void SimpleArrayList_잘못된_범위_인덱스의_원소_반환_실패_테스트() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
-                    new SimpleArrayList<String>().get(1);
+                    new SimpleArrayList<Integer>().get(1);
                 });
     }
 
     @DisplayName("SimpleArrayList 범위 내부의 원소 포함 여부 테스트")
     @Test
     void SimpleArrayList_범위_내부의_원소_포함_여부_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(true, arrayList.contains(beforeValue));
@@ -98,16 +99,16 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 범위 내부의 원소 불포함 여부 테스트")
     @Test
     void SimpleArrayList_범위_내부의_원소_불포함_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
 
-        Assertions.assertEquals(false, arrayList.contains("not contain"));
+        Assertions.assertEquals(false, arrayList.contains(10));
     }
 
     @DisplayName("SimpleArrayList 내부 원소 위치 반환 테스트")
     @Test
     void SimpleArrayList_범위_내부의_원소_위치_반환_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(0, arrayList.indexOf(beforeValue));
@@ -116,16 +117,16 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 범위 내부에 찾는 원소가 없는 경우 -1 반환 테스트")
     @Test
     void SimpleArrayList_범위_내부에_원소_없는_경우_위치_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
 
-        Assertions.assertEquals(-1, arrayList.indexOf("not contain"));
+        Assertions.assertEquals(-1, arrayList.indexOf(10));
     }
 
     @DisplayName("SimpleArrayList 내부 원소 개수 반환 테스트")
     @Test
     void SimpleArrayList_범위_내부의_원소_개수_반환_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(1, arrayList.size());
@@ -134,7 +135,7 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 범위 내부에 찾는 원소가 없는 경우 -1 반환 테스트")
     @Test
     void SimpleArrayList_범위_내부에_원소_없는_경우_개수_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
 
         Assertions.assertEquals(0, arrayList.size());
     }
@@ -142,7 +143,7 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 내부 비어있는지 테스트")
     @Test
     void SimpleArrayList_비어있는지_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
 
         Assertions.assertEquals(true, arrayList.isEmpty());
     }
@@ -150,8 +151,8 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 안 비어있는지 테스트")
     @Test
     void SimpleArrayList_내부가_비어있지_않은_경우_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(false, arrayList.isEmpty());
@@ -160,8 +161,8 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList에서 특정 값으로 삭제 테스트")
     @Test
     void SimpleArrayList_특정_값_삭제_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(true, arrayList.remove(beforeValue));
@@ -170,18 +171,18 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 특정 값 삭제 실패 테스트")
     @Test
     void SimpleArrayList_특정_값_삭제_실패_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
-        Assertions.assertEquals(false, arrayList.remove("not contain"));
+        Assertions.assertEquals(false, arrayList.remove((Integer) 100));
     }
 
     @DisplayName("SimpleArrayList에서 특정 인덱스로 삭제 테스트")
     @Test
     void SimpleArrayList_특정_인덱스로_삭제_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertEquals(beforeValue, arrayList.remove(0));
@@ -190,8 +191,8 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 특정 값 삭제 실패 테스트")
     @Test
     void SimpleArrayList_특정_인덱스로_삭제_실패_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -202,8 +203,8 @@ class SimpleArrayListTest {
     @DisplayName("SimpleArrayList 초기화 테스트")
     @Test
     void SimpleArrayList_초기화_테스트() {
-        SimpleArrayList<String> arrayList = new SimpleArrayList<String>();
-        final String beforeValue = "before";
+        SimpleArrayList<Integer> arrayList = new SimpleArrayList<Integer>();
+        final Integer beforeValue = 10;
         arrayList.add(beforeValue);
 
         arrayList.clear();
