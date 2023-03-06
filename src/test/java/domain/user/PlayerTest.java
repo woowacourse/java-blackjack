@@ -10,33 +10,27 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("플레이어는 ")
 class PlayerTest {
-    @Test
     @DisplayName("카드 한 장을 받아 패에 넣는다.")
+    @Test
     void receiveCardTest() {
-        //given
         Player player = new Player(new Name("플레이어"));
         List<Card> cards = player.getCards();
 
-        //when
         player.receiveCard(CloverCard.CLOVER_FOUR);
 
-        //then
         assertThat(cards.size()).isEqualTo(1);
     }
 
-    @Test
     @DisplayName("합산 점수가 21을 초과하면 Bust 상태가 된다.")
+    @Test
     void calculateStatusTest() {
-        //given
         Player player = new Player(new Name("플레이어"));
 
-        //when
         player.receiveCard(CloverCard.CLOVER_TEN);
         player.receiveCard(CloverCard.CLOVER_KING);
         player.receiveCard(CloverCard.CLOVER_QUEEN);
         UserStatus result = player.getStatus();
 
-        //then
         assertThat(player.getScore()).isGreaterThan(21);
         assertThat(result).isEqualTo(PlayerStatus.BUST);
     }
