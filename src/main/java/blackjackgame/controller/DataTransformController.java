@@ -3,34 +3,34 @@ package blackjackgame.controller;
 import blackjackgame.domain.Card;
 import blackjackgame.domain.GameOutcome;
 import blackjackgame.domain.Guest;
+import blackjackgame.dto.CardDto;
+import blackjackgame.dto.DealerResultDto;
+import blackjackgame.dto.GuestResultDto;
 
 import java.util.*;
 
 public class DataTransformController {
-    public static List<List<String>> transformCards(List<Card> cards) {
-        List<List<String>> playerCards = new ArrayList<>();
+    public static List<CardDto> transformCards(List<Card> cards) {
+        List<CardDto> playerCards = new ArrayList<>();
         for (final Card card : cards) {
-            List<String> playerCard = new ArrayList<>();
-            playerCard.add(card.getValue());
-            playerCard.add(card.getSymbol());
-            playerCards.add(playerCard);
+            playerCards.add(new CardDto(card.getSymbol(), card.getValue()));
         }
-        return Collections.unmodifiableList(playerCards);
+        return playerCards;
     }
 
-    public static Map<String, String> transformGuestsResult(Map<Guest, GameOutcome> guestsResult) {
-        Map<String, String> result = new LinkedHashMap<>();
+    public static List<GuestResultDto> transformGuestsResult(Map<Guest, GameOutcome> guestsResult) {
+        List<GuestResultDto> guestResults = new ArrayList<>();
         for (final Guest guest : guestsResult.keySet()) {
-            result.put(guest.getName(), guestsResult.get(guest).getOutcome());
+            guestResults.add(new GuestResultDto(guest.getName(), guestsResult.get(guest).getOutcome()));
         }
-        return Collections.unmodifiableMap(result);
+        return guestResults;
     }
 
-    public static Map<String, Integer> transformDealerResult(Map<GameOutcome, Integer> dealerResult) {
-        Map<String, Integer> result = new LinkedHashMap<>();
+    public static List<DealerResultDto> transformDealerResult(Map<GameOutcome, Integer> dealerResult) {
+        List<DealerResultDto> dealerResults = new ArrayList<>();
         for (final GameOutcome gameOutcome : dealerResult.keySet()) {
-            result.put(gameOutcome.getOutcome(), dealerResult.get(gameOutcome));
+            dealerResults.add(new DealerResultDto(gameOutcome.getOutcome(), dealerResult.get(gameOutcome)));
         }
-        return Collections.unmodifiableMap(result);
+        return dealerResults;
     }
 }

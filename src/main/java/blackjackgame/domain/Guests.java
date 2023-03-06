@@ -1,6 +1,5 @@
 package blackjackgame.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +36,6 @@ public class Guests {
     }
 
     public List<Guest> getGuests() {
-        return Collections.unmodifiableList(guests);
+        return List.copyOf(guests);
     }
 }

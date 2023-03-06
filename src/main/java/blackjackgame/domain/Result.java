@@ -18,14 +18,14 @@ public class Result {
     }
 
     private Map<GameOutcome, Integer> initDealerResult() {
-        return Arrays.stream(GameOutcome.values())
-                .collect(Collectors.toMap(value -> value, value -> 0));
+        return new HashMap<>(Arrays.stream(GameOutcome.values())
+                .collect(Collectors.toMap(value -> value, value -> 0)));
     }
 
     private Map<Guest, GameOutcome> generateGuestsResult(final Dealer dealer, final List<Guest> guests) {
         int dealerScore = dealer.getScore();
-        return guests.stream()
-                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealerScore, guest.getScore())));
+        return new HashMap<>(guests.stream()
+                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealerScore, guest.getScore()))));
     }
 
     private GameOutcome judgeGuestResult(final int dealerScore, final int guestScore) {
@@ -58,10 +58,10 @@ public class Result {
     }
 
     public Map<Guest, GameOutcome> getGuestsResult() {
-        return guestsResult;
+        return Map.copyOf(guestsResult);
     }
 
     public Map<GameOutcome, Integer> getDealerResult() {
-        return dealerResult;
+        return Map.copyOf(dealerResult);
     }
 }
