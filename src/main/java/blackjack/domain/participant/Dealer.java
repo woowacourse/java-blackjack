@@ -53,20 +53,15 @@ public class Dealer extends Participant {
         receiveCard(deck.drawCard());
     }
 
-    public Map<Player, Result> compareWithPlayers() {
+    public Map<Player, Result> makePlayerResults() {
         return players.makeResult(this.cards.calculateTotalScore());
     }
 
-    public List<Integer> makeSelfResult() {
-        Map<Player, Result> resultsFromPlayer = compareWithPlayers();
-        Map<Result, Integer> dealerResults = new LinkedHashMap<>() {{
-            put(WIN, 0);
-            put(DRAW, 0);
-            put(LOSE, 0);
-        }};
+    public List<Integer> countSelfResults(Map<Player, Result> playerResults) {
+        Map<Result, Integer> dealerResults = new LinkedHashMap<>();
 
-        for (Result resultOfPlayer : resultsFromPlayer.values()) {
-            compareToPlayerResult(dealerResults, resultOfPlayer);
+        for (Result playerResult : playerResults.values()) {
+            compareToPlayerResult(dealerResults, playerResult);
         }
 
         return new ArrayList<>(dealerResults.values());
@@ -74,14 +69,14 @@ public class Dealer extends Participant {
 
     private void compareToPlayerResult(Map<Result, Integer> dealerResult, Result playerResult) {
         if (playerResult == WIN) {
-            dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
+            dealerResult.put(LOSE, dealerResult.getOrDefault(LOSE, 0) + 1);
             return;
         }
         if (playerResult == DRAW) {
-            dealerResult.put(DRAW, dealerResult.get(DRAW) + 1);
+            dealerResult.put(DRAW, dealerResult.getOrDefault(DRAW, 0) + 1);
             return;
         }
-        dealerResult.put(WIN, dealerResult.get(WIN) + 1);
+        dealerResult.put(WIN, dealerResult.getOrDefault(WIN, 0) + 1);
     }
 
     public boolean canDraw() {

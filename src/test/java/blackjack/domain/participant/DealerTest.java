@@ -1,29 +1,37 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.Result.DRAW;
+import static blackjack.domain.Result.LOSE;
+import static blackjack.domain.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class DealerTest {
 
     private Player player1;
     private Player player2;
+    private Player player3;
     private Players players;
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        players = new Players(List.of("1", "2"));
+        players = new Players(List.of("1", "2", "3"));
         dealer = new Dealer(players);
         player1 = players.getPlayers().get(0);
         player2 = players.getPlayers().get(1);
+        player3 = players.getPlayers().get(2);
     }
 
     @Test
@@ -56,20 +64,35 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 점수가 16점 이하이면 16점을 초과할 때까지 계속해서 카드를 뽑는다.")
     void canDrawTest() {
-        // given
         dealer.receiveCard(new Card(Number.TWO, Pattern.HEART));
         dealer.receiveCard(new Card(Number.THREE, Pattern.HEART));
         int initSize = dealer.getCards().getCards().size();
 
-        // when
         while (dealer.canDraw()) {
             dealer.drawOneMoreCard();
         }
 
-        // then
         assertAll(
                 () -> assertThat(initSize).isNotEqualTo(dealer.getCards().getCards().size()),
                 () -> assertThat(dealer.calculateTotalScore()).isGreaterThan(16)
+        );
+    }
+
+    @Test
+    @DisplayName("플레이어의 결과를 이용하여 딜러의 승패를 결정한다.")
+    void makeSelfResultTest() {
+        Map<Player, Result> resultsFromPlayer = new HashMap<>() {{
+            put(player1, WIN);
+            put(player2, DRAW);
+            put(player3, LOSE);
+        }};
+
+        List<Integer> resultCountOfDealer = dealer.countSelfResults(resultsFromPlayer);
+
+        assertAll(
+                () -> assertThat(resultCountOfDealer.get(0)).isEqualTo(1),
+                () -> assertThat(resultCountOfDealer.get(1)).isEqualTo(1),
+                () -> assertThat(resultCountOfDealer.get(2)).isEqualTo(1)
         );
     }
 }
