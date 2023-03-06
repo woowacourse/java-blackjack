@@ -21,14 +21,13 @@ public class BlackjackGame {
 
     public BlackjackResult generateBlackjackResult() {
         Dealer dealer = participants.extractDealer();
-        List<Player> players = participants.extractPlayers();
         Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
         List<WinningResult> dealerResults = new ArrayList<>();
+        ResultReader resultReader = new ResultReader();
 
-        for (Player player : players) {
-            WinningResult dealerResult = dealer.judgeWinOrLose(player);
-            dealerResults.add(dealerResult);
-            playerResultSave(playersResult, player, dealerResult);
+        for (Player player : participants.extractPlayers()) {
+            dealerResults.add(resultReader.calulateDealerResult(dealer, player));
+            playersResult.put(player, resultReader.calulatePlayerResult(dealer, player));
         }
         return new BlackjackResult(playersResult, dealerResults);
     }
@@ -45,18 +44,6 @@ public class BlackjackGame {
 
     public Cards getCards() {
         return cards;
-    }
-
-    private void playerResultSave(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
-        if (dealerResult == WinningResult.WIN) {
-            playersResult.put(player, WinningResult.LOSE);
-        }
-        if (dealerResult == WinningResult.LOSE) {
-            playersResult.put(player, WinningResult.WIN);
-        }
-        if (dealerResult == WinningResult.PUSH) {
-            playersResult.put(player, WinningResult.PUSH);
-        }
     }
 
     private void firstHitRule(final Participant participant) {
