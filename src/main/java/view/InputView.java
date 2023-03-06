@@ -22,7 +22,7 @@ public class InputView {
 
     private void validatePlayersSize(List<String> players) {
         if (players.size() > MAX_PLAYER_SIZE) {
-            throw new IllegalArgumentException("플레이어는 최대 5명입니다.");
+            throw new IllegalArgumentException("[Error] 플레이어는 최대 5명입니다.");
         }
     }
 
