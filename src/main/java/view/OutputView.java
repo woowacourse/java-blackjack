@@ -9,9 +9,9 @@ import view.message.GameResultMessage;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static view.message.Message.CARD_MESSAGE;
@@ -78,9 +78,10 @@ public class OutputView {
     }
 
     private void printDealerGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
-        final int dealerWinCount = Collections.frequency(playerGameResults.values(), Result.LOSE);
-        final int dealerLoseCount = Collections.frequency(playerGameResults.values(), Result.WIN);
-        final int drawCount = Collections.frequency(playerGameResults.values(), Result.DRAW);
+        final Map<Result, Long> resultCounts = getResultCounts(playerGameResults);
+        final int dealerWinCount = getDealerResultCountByType(resultCounts, Result.LOSE);
+        final int dealerLoseCount = getDealerResultCountByType(resultCounts, Result.WIN);
+        final int drawCount = getDealerResultCountByType(resultCounts, Result.DRAW);
 
         final String dealerGameResultMessage = String.format(DEALER_GAME_RESULT.getMessage(),
                 dealerName, dealerWinCount, dealerLoseCount, drawCount);
@@ -94,5 +95,14 @@ public class OutputView {
                     playerName, GameResultMessage.findMessage(playerResult));
             print(playerGameResultMessage);
         });
+    }
+
+    private Map<Result, Long> getResultCounts(final Map<String, Result> playerGameResults) {
+        return playerGameResults.values().stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+    private int getDealerResultCountByType(final Map<Result, Long> resultCounts, final Result resultType) {
+        return resultCounts.getOrDefault(resultType, 0L).intValue();
     }
 }
