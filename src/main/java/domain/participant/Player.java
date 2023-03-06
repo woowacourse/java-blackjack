@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.DrawnCards;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Participant {
@@ -15,7 +15,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> openDrawnCards() {
-        return Collections.unmodifiableList(drawnCards.getCards());
+        return new ArrayList<>(drawnCards.getCards());
     }
 
     @Override

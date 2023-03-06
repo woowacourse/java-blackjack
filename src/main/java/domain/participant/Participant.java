@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.DrawnCards;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
@@ -38,7 +38,6 @@ public abstract class Participant {
     }
 
     public List<Card> getDrawnCards() {
-        return Collections.unmodifiableList(drawnCards.getCards());
+        return new ArrayList<>(drawnCards.getCards());
     }
-
 }

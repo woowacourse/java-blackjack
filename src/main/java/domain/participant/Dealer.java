@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import domain.card.Card;
 import domain.card.DrawnCards;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -22,7 +22,7 @@ public class Dealer extends Participant {
                 .skip(1)
                 .collect(toList());
 
-        return Collections.unmodifiableList(openCards);
+        return new ArrayList<>(openCards);
     }
 
     @Override
