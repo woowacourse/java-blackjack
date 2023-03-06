@@ -1,8 +1,6 @@
 package domain;
 
 public class BlackjackGame {
-    public static final int STANDARD_OF_HIT = 17;
-    
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -18,6 +16,7 @@ public class BlackjackGame {
         giveCardsToDealer();
         giveCardsToPlayers();
     }
+
     private void giveCardsToDealer() {
         giveCardTo(dealer);
         giveCardTo(dealer);
@@ -36,7 +35,7 @@ public class BlackjackGame {
     }
 
     public void giveAdditionalCardToDealer() {
-        while (dealer.calculateScore() < STANDARD_OF_HIT) {
+        while (dealer.calculateScore() < BlackjackRule.DEALER_STANDARD_OF_HIT.getValue()) {
             giveCardTo(dealer);
         }
     }
@@ -45,7 +44,7 @@ public class BlackjackGame {
         dealer.decideResults(players);
     }
 
-    public int getDealerHitCardCount(){
+    public int getDealerHitCardCount() {
         return dealer.getHitCardCount();
     }
 
