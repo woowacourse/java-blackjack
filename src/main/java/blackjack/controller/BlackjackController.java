@@ -88,6 +88,7 @@ public class BlackjackController {
 
         while (proceed && !player.isBust()) {
             proceed = ask(player, deck);
+            printBustMessage(player);
         }
     }
 
@@ -102,6 +103,12 @@ public class BlackjackController {
         giveOneMoreCard(player, deck);
         outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
         return true;
+    }
+
+    private void printBustMessage(Player player) {
+        if (player.isBust()) {
+            outputView.printBustMessage();
+        }
     }
 
     private void turnOfDealer(final Dealer dealer, final Deck deck) {
