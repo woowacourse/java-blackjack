@@ -31,7 +31,7 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
-     }
+    }
 
     @DisplayName("플레이어의 수가 1명 미만이면 예외를 반환한다.")
     @Test
@@ -45,7 +45,7 @@ class PlayersTest {
                 .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
     }
 
-    public List<Player> createPlayers(String... names) {
+    private List<Player> createPlayers(String... names) {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
@@ -53,5 +53,31 @@ class PlayersTest {
         }
 
         return players;
+    }
+
+    @DisplayName("플레이어의 이름이 중복이면 예외를 반환한다.")
+    @Test
+    void create_fail_when_player_names_duplicated() {
+        // given
+        String givenName = "춘식";
+        List<Player> players = createPlayers(givenName, givenName);
+
+        // when && then
+        assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참여자의 이름은 중복이 되면 안됩니다.");
+    }
+
+    @DisplayName("플레이어의 이름이 딜러와 같다면 예외를 반환한다.")
+    @Test
+    void create_fail_when_player_name_is_same_with_dealer() {
+        // given
+        String givenName = "딜러";
+        List<Player> players = createPlayers(givenName);
+
+        // when && then
+        assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참여자의 이름은 '딜러'가 되면 안됩니다.");
     }
 }
