@@ -1,3 +1,5 @@
+package controller;
+
 import domain.BlackJack;
 import domain.RandomCardIndexGenerator;
 import domain.Users;

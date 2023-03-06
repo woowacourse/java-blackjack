@@ -1,3 +1,5 @@
+package controller;
+
 import java.util.Arrays;
 
 public enum HitCommand {
