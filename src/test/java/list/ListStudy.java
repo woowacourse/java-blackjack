@@ -102,12 +102,14 @@ public class ListStudy {
             assertThat(integerValues.size()).isZero();
             assertThatCode(() -> integerValues.remove(100)).isInstanceOf(RuntimeException.class);
         }
-//
-//        // TODO values에 담긴 모든 값을 출력한다.
-//        values.printAll();
-//
-//        assertThatCode(values::clear).doesNotThrowAnyException(); // 리스트를 초기화한다.
-//        assertThat(values.isEmpty()).isTrue(); // 초기화되었는지 확인한다.
+
+        @Test
+        void clear_test() {
+            assertThatCode(stringValues::clear).doesNotThrowAnyException();
+            assertThat(stringValues.isEmpty()).isTrue();
+            assertThatCode(integerValues::clear).doesNotThrowAnyException();
+            assertThat(integerValues.isEmpty()).isTrue();
+        }
     }
 
     @Nested
@@ -201,6 +203,14 @@ public class ListStudy {
             assertThat(integerValues.remove(0)).isEqualTo(0);
             assertThat(integerValues.size()).isZero();
             assertThatCode(() -> integerValues.remove(100)).isInstanceOf(RuntimeException.class);
+        }
+
+        @Test
+        void clear_test() {
+            assertThatCode(stringValues::clear).doesNotThrowAnyException();
+            assertThat(stringValues.isEmpty()).isTrue();
+            assertThatCode(integerValues::clear).doesNotThrowAnyException();
+            assertThat(integerValues.isEmpty()).isTrue();
         }
     }
 }
