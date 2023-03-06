@@ -3,6 +3,8 @@ package domain;
 import type.Letter;
 import type.Shape;
 
+import java.util.Objects;
+
 public class Card {
 
     private final Shape shape;
@@ -27,6 +29,22 @@ public class Card {
 
     public boolean isAce() {
         return letter == Letter.ACE;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+
+        Card card = (Card) object;
+        return this.shape == card.shape
+                && this.letter == card.letter;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape, letter);
     }
 
 }
