@@ -16,13 +16,15 @@ public class BlackJackController {
     }
 
     public void run(DeckGenerator deckGenerator) {
+        setupGame(deckGenerator);
+        playGame();
+        finishGame();
+    }
+
+    private void setupGame(DeckGenerator deckGenerator) {
         repeat(() -> blackJackService.setupGame(deckGenerator, InputView.readPlayerNames()));
         OutputView.printStartDrawCardMessage(blackJackService.getPlayersName());
         printAllParticipantStatues(blackJackService.getStartStatusResponse());
-        drawMoreCardForPlayers();
-        OutputView.printDealerDrawCardMessage(blackJackService.drawMoreCardForDealer());
-        printAllTotalStatues(blackJackService.getAllParticipantTotalResponse());
-        OutputView.printTotalGameResult(blackJackService.getTotalGameResult());
     }
 
     private void repeat(Runnable runnable) {
@@ -32,6 +34,16 @@ public class BlackJackController {
             OutputView.printExceptionMessage(e.getMessage());
             repeat(runnable);
         }
+    }
+
+    private void playGame() {
+        drawMoreCardForPlayers();
+        OutputView.printDealerDrawCardMessage(blackJackService.drawMoreCardForDealer());
+    }
+
+    private void finishGame() {
+        printAllTotalStatues(blackJackService.getAllParticipantTotalResponse());
+        OutputView.printTotalGameResult(blackJackService.getTotalGameResult());
     }
 
     private void printAllParticipantStatues(List<ParticipantStatusResponse> participantStatusResponse) {
