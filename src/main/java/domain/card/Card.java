@@ -12,8 +12,8 @@ public class Card {
         this.shape = Shape.of(shape);
     }
 
-    public int getScore(final int totalScore) {
-        return value.assignScore(totalScore);
+    public int getDefaultScore() {
+        return value.getDefaultScore();
     }
 
     public String getValue() {
@@ -22,6 +22,10 @@ public class Card {
 
     public String getShape() {
         return shape.getShape();
+    }
+
+    public boolean isAce() {
+        return value.isAce();
     }
 
     @Override

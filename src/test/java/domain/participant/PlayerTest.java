@@ -3,10 +3,6 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Cards;
-import domain.card.shuffler.FixedCardsShuffler;
-import domain.participant.Name;
-import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,25 +11,37 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    private Player player;
+    private Player gitJjang;
+    private Player kyle;
 
     @BeforeEach
     void setUp() {
-        List<Card> cards = new ArrayList<>(List.of(new Card("K", "하트"), new Card("3", "스페이드")));
-        player = new Player(new Name("깃짱"), cards);
+        List<Card> gitJjangCards = new ArrayList<>(List.of(new Card("K", "하트"), new Card("3", "스페이드")));
+        List<Card> kyleCards = new ArrayList<>(List.of(new Card("4", "스페이드"), new Card("A", "클로버")));
+        gitJjang = new Player(new Name("깃짱"), gitJjangCards);
+        kyle = new Player(new Name("카일"), kyleCards);
     }
 
     @DisplayName("플레이어의 점수를 알 수 있다.")
     @Test
     void calculateScoreTest() {
-        assertThat(player.calculateScore()).isEqualTo(13);
+        assertThat(gitJjang.calculateScore()).isEqualTo(13);
+        assertThat(kyle.calculateScore()).isEqualTo(15);
     }
 
     @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
-        Cards cards = new Cards(new FixedCardsShuffler());
-        player.receiveCard(cards.getCard());
-        assertThat(player.calculateScore()).isEqualTo(23);
+        gitJjang.receiveCard(new Card("10", "하트"));
+        assertThat(gitJjang.calculateScore()).isEqualTo(23);
+
+        kyle.receiveCard(new Card("4", "하트"));
+        assertThat(kyle.calculateScore()).isEqualTo(19);
+
+        kyle.receiveCard(new Card("A", "다이아몬드"));
+        assertThat(kyle.calculateScore()).isEqualTo(20);
+
+        kyle.receiveCard(new Card("9", "스페이드"));
+        assertThat(kyle.calculateScore()).isEqualTo(19);
     }
 }
