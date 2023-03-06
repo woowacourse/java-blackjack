@@ -1,7 +1,6 @@
 package model.user;
 
 import model.card.Card;
-import model.card.Deck;
 
 public class Player implements Receivable {
 
@@ -18,19 +17,15 @@ public class Player implements Receivable {
         return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
     }
 
-    public int calculateTotalValue() {
+    private int calculateTotalValue() {
         return user.getCardTotalValue();
     }
 
-    public Result judgeResult(int dealerTotalValue) {
+    public boolean judgeResult(int dealerTotalValue) {
         return user.judgeResult(dealerTotalValue);
     }
 
-    public void receiveInitialCards(final Deck deck) {
-        user.receiveInitialCards(deck);
-    }
-
-    public void receiveCard(final Card card) {
+    public void receiveCard(Card card) {
         user.receiveCard(card);
     }
 

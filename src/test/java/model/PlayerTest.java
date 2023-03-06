@@ -1,8 +1,6 @@
 package model;
 
 import model.card.Card;
-import model.card.Deck;
-import model.card.RandomShuffleMaker;
 import model.user.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,9 +24,6 @@ import static model.card.Value.SIX;
 import static model.card.Value.TEN;
 import static model.card.Value.THREE;
 import static model.card.Value.TWO;
-import static model.user.Result.LOSE;
-import static model.user.Result.TIE;
-import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
@@ -75,7 +70,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 비긴 결과가 반환된다.")
+    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 이긴 결과가 반환된다.")
     void whenOverBurstNumberFindWinPlayer() {
         // given
         int dealerTotalValue = 23;
@@ -85,7 +80,7 @@ class PlayerTest {
         player.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(TIE);
+        assertThat(player.judgeResult(dealerTotalValue)).isTrue();
     }
 
     @Test
@@ -99,7 +94,7 @@ class PlayerTest {
         player.receiveCard(new Card(CLOVER, THREE));
 
         // when, then
-        assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(LOSE);
+        assertThat(player.judgeResult(dealerTotalValue)).isFalse();
     }
 
     @Test
@@ -111,16 +106,6 @@ class PlayerTest {
         player.receiveCard(new Card(SPADE, KING));
 
         // when, then
-        assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(WIN);
-    }
-
-    @DisplayName("receiveInitialCards가 두 장의 카드를 주는지 확인한다.")
-    @Test
-    void receiveInitialCards() {
-        // given
-        player.receiveInitialCards(Deck.create(new RandomShuffleMaker()));
-
-        // when, then
-        assertThat(player.getHand().getCards()).hasSize(2);
+        assertThat(player.judgeResult(dealerTotalValue)).isTrue();
     }
 }
