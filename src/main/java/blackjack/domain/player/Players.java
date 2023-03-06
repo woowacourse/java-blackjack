@@ -73,6 +73,14 @@ public class Players {
         }
     }
 
+    public void drawTo(final Player player, final Deck deck) {
+        player.draw(deck);
+    }
+
+    public void stay(final Player player) {
+        player.stay();
+    }
+
     public Map<Player, Result> play() {
         final Map<Player, Result> result = new LinkedHashMap<>();
         for (Player player : getGambler()) {

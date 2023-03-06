@@ -36,6 +36,30 @@ public class BlackjackGameTest {
     }
 
     @Test
+    void 플레이어에게_카드를_뽑게한다() {
+        final Players players = Players.from(List.of("허브"));
+        final BlackjackGame blackjackGame = new BlackjackGame(players);
+        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
+        blackjackGame.initialDraw(deck);
+        final Player player = players.getPlayers().get(1);
+
+        blackjackGame.drawTo(player, deck);
+
+        assertThat(player.getCardLetters()).containsExactly("8스페이드", "2하트", "K스페이드");
+    }
+
+    @Test
+    void 플레이어가_카드를_더_뽑을_수_없는_상태로_변경한다() {
+        final Players players = Players.from(List.of("허브"));
+        final BlackjackGame blackjackGame = new BlackjackGame(players);
+        final Player player = blackjackGame.getPlayers().get(1);
+
+        blackjackGame.stay(player);
+
+        assertThat(player.isDrawable()).isFalse();
+    }
+
+    @Test
     void 게임_결과를_반환한다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
         final Players players = Players.from(List.of("허브"));

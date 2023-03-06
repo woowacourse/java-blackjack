@@ -21,6 +21,14 @@ public class BlackjackGame {
         players.drawToDealer(deck);
     }
 
+    public void drawTo(final Player player, Deck deck) {
+        players.drawTo(player, deck);
+    }
+
+    public void stay(final Player player) {
+        players.stay(player);
+    }
+
     public BlackjackGameResult play() {
         return new BlackjackGameResult(players.play());
     }

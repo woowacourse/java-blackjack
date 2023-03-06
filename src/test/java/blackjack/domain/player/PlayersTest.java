@@ -77,6 +77,29 @@ public class PlayersTest {
     }
 
     @Test
+    void 플레이어에게_카드를_뽑게한다() {
+        final Players players = Players.from(List.of("허브"));
+        final Deck deck = new FixedDeck(JACK_SPADE);
+        final int gamblerIndex = 1;
+        final Player player = players.getPlayers().get(gamblerIndex);
+
+        players.drawTo(player, deck);
+
+        assertThat(player.getCardLetters()).containsExactly("J스페이드");
+    }
+
+    @Test
+    void 플레이어가_카드를_더_뽑을_수_없는_상태로_변경한다() {
+        final Players players = Players.from(List.of("허브"));
+        final int gamblerIndex = 1;
+        final Player player = players.getPlayers().get(gamblerIndex);
+
+        players.stay(player);
+
+        assertThat(player.isDrawable()).isFalse();
+    }
+
+    @Test
     void 플레이어들을_반환한다() {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
