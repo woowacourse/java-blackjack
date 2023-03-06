@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import static blackjack.controller.Repeater.repeatUntilNoException;
+import static blackjack.util.Repeater.repeatUntilNoException;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;

@@ -1,14 +1,14 @@
-package blackjack.controller;
+package blackjack.util;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-class Repeater {
+public class Repeater {
 
     private Repeater() {
     }
 
-    static <T> T repeatUntilNoException(final Supplier<T> supplier,
+    public static <T> T repeatUntilNoException(final Supplier<T> supplier,
             final Consumer<Exception> exceptionHandler) {
         T result = null;
         while (result == null) {
