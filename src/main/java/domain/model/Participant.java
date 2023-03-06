@@ -8,7 +8,7 @@ public abstract class Participant {
     private final String name;
     private Score score;
 
-    public Participant(final Cards cards, final String name) {
+    protected Participant(final Cards cards, final String name) {
         this.cards = cards;
         this.name = name;
         this.score = makeScore(cards);

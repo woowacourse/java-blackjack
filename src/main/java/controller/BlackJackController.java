@@ -18,7 +18,8 @@ import view.OutputView;
 
 public class BlackJackController {
 
-    public static final int START_DEAL_COUNT = 2;
+    private static final int START_DEAL_COUNT = 2;
+
     private final CardDistributor cardDistributor;
     private final BlackJackResultMaker blackJackResultMaker;
 

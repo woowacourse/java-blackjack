@@ -9,9 +9,9 @@ import java.util.Random;
 
 public class RandomCardGenerator implements CardGenerator {
 
-    private static final Random random = new Random();
-    private static final Queue<Card> cards = new PriorityQueue<>((card1, card2) -> {
-        if (random.nextBoolean()) {
+    private static final Random RANDOM = new Random();
+    private static final Queue<Card> CARDS = new PriorityQueue<>((card1, card2) -> {
+        if (RANDOM.nextBoolean()) {
             return 1;
         }
         return -1;
@@ -22,12 +22,12 @@ public class RandomCardGenerator implements CardGenerator {
             .forEach(
                 letter -> Arrays.stream(Suit.values())
                     .map(suit -> new Card(suit, letter))
-                    .forEach(cards::add));
+                    .forEach(CARDS::add));
     }
 
     @Override
     public Card generate() {
-        return cards.poll();
+        return CARDS.poll();
     }
 
 }
