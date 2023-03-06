@@ -1,10 +1,10 @@
-package controller;
+package view;
 
 import java.util.Arrays;
 
 public enum HitCommand {
-    Y("y", true),
-    N("n", false);
+    YES("y", true),
+    NO("n", false);
 
     private final String command;
     private final boolean isHit;
@@ -14,14 +14,11 @@ public enum HitCommand {
         this.isHit = isHit;
     }
 
-    public static HitCommand from(final String command) {
+    public static boolean from(final String command) {
         return Arrays.stream(HitCommand.values())
             .filter(hitCommand -> command.equals(hitCommand.command))
             .findAny()
-            .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public boolean isHit() {
-        return isHit;
+            .orElseThrow(IllegalArgumentException::new)
+            .isHit;
     }
 }

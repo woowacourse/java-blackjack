@@ -47,22 +47,13 @@ public class Controller {
     }
 
     private void askPlayerHitCommand(final Player player) {
-        HitCommand hitCommand = HitCommand.Y;
-        while (player.isHittable() && hitCommand.isHit()) {
-            String playerName = player.getName();
-            String command = inputView.askHitCommand(playerName);
-            hitCommand = HitCommand.from(command);
-            giveCardToHittable(playerName, hitCommand);
+        String playerName = player.getName();
+        while (player.isHittable() && inputView.askHitCommand(playerName)) {
+            blackJack.giveCard(playerName);
             outputView.printEachPlayerCards(playerName, player.getCards());
         }
     }
-
-    private void giveCardToHittable(final String playerName, final HitCommand hitCommand) {
-        if (hitCommand.isHit()) {
-            blackJack.giveCard(playerName);
-        }
-    }
-
+    
     private void giveCardToDealer() {
         while (blackJack.isDealerHittable()) {
             blackJack.giveCardToDealer();
