@@ -15,7 +15,18 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class CardPoolTest {
 
     @Test
-    @DisplayName("카드 풀에 카드가 저장된다")
+    @DisplayName("카드가 하나씩 잘 저장된다")
+    void addTest() {
+        CardPool cardPool = new CardPool(Collections.emptyList());
+        Card card = new Card(CardType.CLOVER, CardNumber.FOUR);
+
+        cardPool.add(card);
+
+        assertThat(cardPool.getCards()).contains(card);
+    }
+
+    @Test
+    @DisplayName("카드가 한번에 잘 저장된다")
     void makeCardPoolTest() {
         List<Card> cards = List.of(
                 new Card(CardType.CLOVER, CardNumber.EIGHT),
@@ -101,13 +112,30 @@ class CardPoolTest {
     }
 
     @Test
-    @DisplayName("카드가 잘 들어가는지 테스트한다.")
-    void addTest() {
-        CardPool cardPool = new CardPool(Collections.emptyList());
-        Card card = new Card(CardType.CLOVER, CardNumber.FOUR);
+    @DisplayName("카드 숫자의 합이 21이하이면 false를 반환한다.")
+    void isSumExceedWhenUnderCardPointLimit() {
+        List<Card> cards = List.of(
+                new Card(CardType.CLOVER, CardNumber.ACE)
+        );
 
-        cardPool.add(card);
+        CardPool cardPool = new CardPool(cards);
 
-        assertThat(cardPool.getCards()).contains(card);
+        assertThat(cardPool.isSumExceedLimit())
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 숫자의 합이 21을 넘으면 true를 반환한다.")
+    void isSumExceedWhenOverCardPointLimit() {
+        List<Card> cards = List.of(
+                new Card(CardType.CLOVER, CardNumber.JACK),
+                new Card(CardType.CLOVER, CardNumber.JACK),
+                new Card(CardType.CLOVER, CardNumber.JACK)
+        );
+
+        CardPool cardPool = new CardPool(cards);
+
+        assertThat(cardPool.isSumExceedLimit())
+                .isTrue();
     }
 }
