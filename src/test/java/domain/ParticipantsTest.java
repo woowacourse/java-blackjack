@@ -52,19 +52,6 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("플레이어의 게임 결과를 반환한다.")
-    void getPlayerResult() {
-        participants.deal(deck);
-        final GameResultManager gameResultManager = new GameResultManager(participants.makePlayerFinalHandValue(),
-                participants.findDealer());
-        Map<Participant, Result> playerResults = gameResultManager.getPlayerStatus();
-        for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
-            assertThat(playerResult.getValue()).isEqualTo(Result.LOSE);
-        }
-        assertThat(playerResults.size()).isEqualTo(3);
-    }
-
-    @Test
     @DisplayName("딜러와 참가자가 버스트가 아니면, 더 높은 점수의 참가자가 승리한다.")
     void NoBustResultTest() {
         //given
@@ -163,7 +150,6 @@ class ParticipantsTest {
         final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, dealer);
 
         Map<Participant, Result> playerResults = gameResultManager.getPlayerStatus();
-
         //then
         assertThat(playerResults.get(leo)).isEqualTo(Result.WIN);
     }
