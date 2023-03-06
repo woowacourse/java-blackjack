@@ -16,10 +16,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public Card getCard(int index) {
-        return cards.get(index);
-    }
-
     public int getSum() {
         Integer sum = cards.stream()
                 .map(s -> s.getCardValue())
@@ -44,5 +40,4 @@ public class Cards {
                 .map(Card::getCard)
                 .collect(Collectors.toList());
     }
-
 }

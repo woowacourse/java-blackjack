@@ -19,7 +19,7 @@ public class DealerTest {
 
         Card card = new Card(CardNumber.ACE,CardPattern.SPADE);
         dealer.addCard(card);
-        assertThat(dealer.getCard(0)).isEqualTo(card);
+        assertThat(dealer.getCards().get(0)).isEqualTo("A스페이드");
     }
 
     @Test

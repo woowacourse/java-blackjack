@@ -28,9 +28,6 @@ public class Player{
         return name.getName();
     }
 
-    public Card getCard(int index) {
-        return cards.getCard(index);
-    }
 
     public List<String> getCards() {
         return cards.getCards();

@@ -13,9 +13,8 @@ public class CardsTest {
 
         cards.add(new Card(CardNumber.ACE,CardPattern.SPADE));
 
-        Assertions.assertThat(cards.getCard(0))
-                .usingRecursiveComparison()
-                .isEqualTo(new Card(CardNumber.ACE,CardPattern.SPADE));
+        Assertions.assertThat(cards.getCards().get(0))
+                .isEqualTo("A스페이드");
     }
 
     @Test
