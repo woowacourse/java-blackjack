@@ -38,24 +38,21 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public void printParticipantHandValue(String participantName, List<Card> participantCards, boolean isBust) {
+    public void printParticipantHandValue(String participantName, int handValue, List<Card> participantCards, boolean isBust) {
         List<String> cardNames = new ArrayList<>();
-        int playerHandValue = summariseParticipantHand(participantCards, cardNames);
+        summariseParticipantHand(participantCards, cardNames);
         String cards = String.join(DELIMITER, cardNames);
         if (isBust) {
             System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, "버스트");
             return;
         }
-        System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, playerHandValue);
+        System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, handValue);
     }
 
-    private int summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
-        int playerHandValue = 0;
+    private void summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
         for (Card participantCard : participantCards) {
             cardNames.add(participantCard.getRank().getName() + participantCard.getSuit().getShape());
-            playerHandValue += participantCard.getRank().getValue();
         }
-        return playerHandValue;
     }
 
     public void printEmptyLine() {

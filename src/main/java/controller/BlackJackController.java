@@ -114,8 +114,11 @@ public class BlackJackController {
 
     private void showParticipantsScore(final GameResultManager gameResultManager) {
         for (Map.Entry<Participant, Boolean> participantScore : gameResultManager.getParticipantsBustStatus().entrySet()) {
-            outputView.printParticipantHandValue(participantScore.getKey().getName(),
-                    participantScore.getKey().getCards(), participantScore.getValue());
+            outputView.printParticipantHandValue(
+                    participantScore.getKey().getName(),
+                    participantScore.getKey().getHandValue(),
+                    participantScore.getKey().getCards(),
+                    participantScore.getValue());
         }
     }
 
