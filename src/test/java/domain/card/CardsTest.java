@@ -10,10 +10,12 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("블랙잭 게임 ")
 class CardsTest {
+    private final CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
+
     @DisplayName("카드는 52장까지 뽑을 수 있다.")
     @Test
     void drawCardTest() {
-        Cards cards = new Cards();
+        Cards cards = new Cards(cardsGenerator);
 
         IntStream.range(0,52).forEach(index -> cards.drawCard());
 
@@ -23,7 +25,7 @@ class CardsTest {
     @DisplayName(" 카드를 두 장씩 뽑아서 반환할 수 있다.")
     @Test
     void drawTwoCardsTest() {
-        Cards cards = new Cards();
+        Cards cards = new Cards(cardsGenerator);
 
         List<Card> firstTurnCards = cards.drawTwoCards();
 

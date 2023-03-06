@@ -3,6 +3,7 @@ package controller;
 import domain.DrawCommand;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.ShuffledCardsGenerator;
 import domain.game.BlackJackGame;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -38,7 +39,7 @@ public class BlackJackGameController {
     }
 
     private BlackJackGame generateBlackJackGame() {
-        Cards cards = new Cards();
+        Cards cards = new Cards(new ShuffledCardsGenerator());
         Dealer dealer = new Dealer();
         Players players = setUpPlayers();
         return new BlackJackGame(players, dealer, cards);

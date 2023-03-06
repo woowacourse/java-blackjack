@@ -3,6 +3,7 @@ package domain.game;
 import static org.assertj.core.api.Assertions.*;
 
 import domain.card.Cards;
+import domain.card.ShuffledCardsGenerator;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -18,14 +19,14 @@ class BlackJackGameTest {
     void setUp() {
         Players players = new Players(List.of("유자", "민트"));
         Dealer dealer = new Dealer();
-        Cards cards = new Cards();
+        Cards cards = new Cards(new ShuffledCardsGenerator());
 
         blackJackGame = new BlackJackGame(players, dealer, cards);
     }
 
     @DisplayName("블랙잭 게임 생성 당시 플레이어와 딜러는 카드를 가지고 있지 않다.")
     @Test
-    void initialCardTest() {
+    void defaultCardTest() {
         Player player = blackJackGame.getPlayers().get(0);
         Dealer dealer = blackJackGame.getDealer();
 
