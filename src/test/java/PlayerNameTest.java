@@ -1,10 +1,12 @@
 import domain.PlayerName;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PlayerNameTest {
 
@@ -20,5 +22,11 @@ public class PlayerNameTest {
     void createNameFailTestByLength(String name) {
         assertThatThrownBy(() -> new PlayerName(name))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest(name = "이름의 길이는 1글자 이상 5글자 이하여야 합니다.")
+    @ValueSource(strings = {"pobi", "crong"})
+    void createNameSuccessTestByLength(String name) {
+        assertDoesNotThrow(() -> new PlayerName(name));
     }
 }

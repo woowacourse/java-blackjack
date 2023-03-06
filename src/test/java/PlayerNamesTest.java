@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PlayerNamesTest {
 
@@ -23,6 +24,12 @@ public class PlayerNamesTest {
     void createNamesFailTestByNumberOfPlayers(int count) {
         assertThatThrownBy(() -> PlayerNames.from(createPlayerNamesByCount(count)))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest(name = "참여자 수는 1명 이상 8명 이하여야 합니다.")
+    @ValueSource(ints = {1, 8})
+    void createNamesSuccessTestByNumberOfPlayers(int count) {
+        assertDoesNotThrow(() -> PlayerNames.from(createPlayerNamesByCount(count)));
     }
 
     List<String> createPlayerNamesByCount(int count) {

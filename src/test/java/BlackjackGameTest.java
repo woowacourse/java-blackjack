@@ -39,7 +39,7 @@ class BlackjackGameTest {
 
         assertThat(pobi.cardSize()).isEqualTo(initialCountOfCards);
         assertThat(crong.cardSize()).isEqualTo(initialCountOfCards);
-        assertThat(blackjackGame.getDealer().getCards()).isEqualTo(initialCountOfCards);
+        assertThat(blackjackGame.getDealer().cardSize()).isEqualTo(initialCountOfCards);
     }
 
     @DisplayName("딜러는 카드의 합이 17이 넘을때 까지 추가 카드를 받아야 한다.")
