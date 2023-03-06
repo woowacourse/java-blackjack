@@ -32,7 +32,7 @@ public class InputView {
         }
     }
 
-    public static boolean inputCardIntent(final Participant participant) {
+    public static boolean inputPlayerHitOrStand(final Participant participant) {
         System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, participant.getName());
         String input = SCANNER.nextLine();
         checkLetter(input, YES, NO);
