@@ -64,8 +64,10 @@ public class BlackJackController {
         if (blackjackGame.isBurst(player)) {
             return true;
         }
-        String choice = inputView.inputCardCommand(player.getPlayerName().getName());
-        return choice.equals("n");
+
+        String frontCommand = inputView.inputCardCommand(player.getPlayerName().getName());
+        ClientCommand clientCommand = ClientCommand.of(frontCommand);
+        return clientCommand.isQuit();
     }
 
     private void hitByDealer() {
