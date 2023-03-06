@@ -40,7 +40,7 @@ public class GameController {
         final Participants participants = makeParticipants();
         final Deck deck = makeDeck();
         final GameManager gameManager = GameManager.create(deck, participants);
-        handCards(participants, gameManager);
+        handCards(gameManager);
         printParticipantCards(participants);
         drawPlayersCard(participants, gameManager);
         handleDealerCards(participants, gameManager);
@@ -60,8 +60,8 @@ public class GameController {
         return Deck.create(cardShuffler);
     }
 
-    private void handCards(final Participants participants, final GameManager gameManager) {
-        final int participantSize = participants.size();
+    private void handCards(final GameManager gameManager) {
+        final int participantSize = gameManager.getParticipantSize();
         IntStream.range(0, participantSize)
                 .forEach(participantOrder -> gameManager.giveCards(participantOrder, START_GIVEN_COUNT));
     }

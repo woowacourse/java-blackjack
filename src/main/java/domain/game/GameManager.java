@@ -17,6 +17,10 @@ public class GameManager {
         return new GameManager(deck, participants);
     }
 
+    public int getParticipantSize() {
+        return participants.size();
+    }
+
     public void giveCards(final int participantOrder, final int givenCount) {
         int cardCount = 0;
 

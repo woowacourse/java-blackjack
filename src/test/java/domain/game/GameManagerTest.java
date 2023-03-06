@@ -36,6 +36,13 @@ class GameManagerTest {
     }
 
     @Test
+    @DisplayName("getParticipantSize()는 참가자의 수를 반환한다.")
+    void getParticipantSize_whenCall_thenReturnParticipantSize() {
+        assertThat(gameManager.getParticipantSize())
+                .isEqualTo(3);
+    }
+
+    @Test
     @DisplayName("giveCards()는 참가자의 순서를 받으면, 카드를 건네준다")
     void giveCards_givenParticipantOrder_thenSuccess() {
         assertThatCode(() -> gameManager.giveCards(0, 2))
