@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 import java.util.Objects;
 
-public enum Command {
+public enum HitCommand {
     HIT("y"),
     STAY("n");
 
@@ -11,12 +11,12 @@ public enum Command {
 
     private String value;
 
-    Command(String value) {
+    HitCommand(String value) {
         this.value = value;
     }
 
-    public static Command find(String targetCommend) {
-        return Arrays.stream(Command.values())
+    public static HitCommand find(String targetCommend) {
+        return Arrays.stream(HitCommand.values())
                 .filter(command -> Objects.equals(command.value, targetCommend))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_INVALID_COMMAND));

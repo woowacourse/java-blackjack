@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.Command;
+import domain.HitCommand;
 import domain.participant.Participant;
 import java.util.List;
 import view.InputView;
@@ -50,7 +50,7 @@ public class BlackjackController {
     private boolean isCommandHit(Participant player) {
         try {
             String targetCommand = InputView.readHit(player);
-            return Command.HIT == Command.find(targetCommand);
+            return HitCommand.HIT == HitCommand.find(targetCommand);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
             return isCommandHit(player);

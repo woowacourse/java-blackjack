@@ -3,12 +3,11 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Command 는")
-class CommandTest {
+@DisplayName("HitCommand 는")
+class HitCommandTest {
 
     @Test
     void y_또는_n_만_사용할_수_있다() {
@@ -17,8 +16,8 @@ class CommandTest {
         // when
 
         // then
-        assertThat(Command.find("y")).isEqualTo(Command.HIT);
-        assertThat(Command.find("n")).isEqualTo(Command.STAY);
+        assertThat(HitCommand.find("y")).isEqualTo(HitCommand.HIT);
+        assertThat(HitCommand.find("n")).isEqualTo(HitCommand.STAY);
     }
 
     @Test
@@ -28,7 +27,7 @@ class CommandTest {
         // when
 
         // then
-        assertThatThrownBy(() -> Command.find("배럴쵝오"))
+        assertThatThrownBy(() -> HitCommand.find("배럴쵝오"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] y 혹은 n만 입력하실 수 있습니다.");
     }
