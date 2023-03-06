@@ -82,4 +82,19 @@ class DealerTest {
         assertThat(dealer.canHit()).isTrue();
     }
 
+    @Test
+    void 초기에_먼저_받은_한_장의_카드만_보여줄_수_있다() {
+        // given
+        Dealer dealer = new Dealer();
+        List<Card> cards = List.of(new Card(Denomination.FIVE, Suit.CLUB),
+                new Card(Denomination.TEN, Suit.SPADE));
+
+        //when
+        cards.forEach(dealer::addCard);
+
+        // then
+        assertThat(dealer.getCardWithInvisible()).isEqualTo(new Card(Denomination.FIVE, Suit.CLUB));
+    }
+
+
 }
