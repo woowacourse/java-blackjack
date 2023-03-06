@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.util.CardSuit;
 import java.util.ArrayList;
 import java.util.List;
 
