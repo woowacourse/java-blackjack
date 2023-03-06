@@ -51,7 +51,7 @@ public class BlackjackGame {
             Result result = playerResult.get(name);
             dealerResults.add(result);
         }
-        dealerResult.put(dealer.getName().getName(), dealerResults);
+        dealerResult.put(dealer.getName(), dealerResults);
         return dealerResult;
     }
 
@@ -59,7 +59,7 @@ public class BlackjackGame {
         Map<String, Result> result = new LinkedHashMap<>();
         int dealer = this.dealer.getCardsSum();
         for (Player player : players.getPlayers()) {
-            result.put(player.getName().getName(), isPlayerWin(dealer, player.getCardsSum()));
+            result.put(player.getName(), isPlayerWin(dealer, player.getCardsSum()));
         }
         return result;
     }

@@ -23,8 +23,8 @@ public class Player {
         return cards.getSum() >= BlackjackGame.BLACK_JACK;
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
     public List<String> getCards() {

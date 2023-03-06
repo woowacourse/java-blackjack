@@ -29,14 +29,14 @@ public class Players {
 
     public List<String> getPlayersName() {
         return players.stream()
-                .map(s -> s.getName().getName())
+                .map(s -> s.getName())
                 .collect(Collectors.toList());
     }
 
     public Map<String, List<String>> getInfo() {
         Map<String, List<String>> info = new LinkedHashMap<>();
         for (Player player : players) {
-            info.put(player.getName().getName(), player.getCards());
+            info.put(player.getName(), player.getCards());
         }
         return info;
     }
@@ -47,7 +47,7 @@ public class Players {
 
     public int getCardsSum(String playerName) {
         return players.stream()
-                .filter(s -> s.getName().getName() == playerName)
+                .filter(s -> s.getName() == playerName)
                 .findAny()
                 .get()
                 .getCardsSum();

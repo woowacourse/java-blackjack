@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,41 +7,40 @@ import java.util.Map;
 public class Dealer {
     private static final String NAME = "딜러";
     private static final int BOUND = 16;
-    private final Name name;
-    private final Cards cards;
+
+    private final Player player;
 
     public Dealer() {
-        this.name = new Name(NAME);
-        cards = new Cards();
+        this.player = new Player(NAME);
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        player.addCard(card);
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return NAME;
     }
 
     public Map<String, List<String>> getInfo() {
         Map<String, List<String>> info = new LinkedHashMap<>();
-        info.put(getName().getName(), getCards());
+        info.put(getName(), getCards());
         return info;
     }
 
     public Card getCard(int index) {
-        return cards.getCard(index);
+        return player.getCard(index);
     }
 
     public List<String> getCards() {
-        return cards.getCards();
+        return player.getCards();
     }
 
     public boolean isOverStandard() {
-        return cards.getSum() > BOUND;
+        return player.getCardsSum() > BOUND;
     }
 
     public int getCardsSum() {
-        return cards.getSum();
+        return player.getCardsSum();
     }
 }
