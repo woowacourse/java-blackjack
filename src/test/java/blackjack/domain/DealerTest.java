@@ -42,5 +42,4 @@ class DealerTest {
 
         assertThat(dealer.isAbleToReceive()).isFalse();
     }
-
 }

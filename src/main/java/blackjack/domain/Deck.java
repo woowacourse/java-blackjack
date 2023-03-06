@@ -1,21 +1,19 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Deck {
-    private final List<Card> cards = new ArrayList<>();
-    private final NumberGenerator numberGenerator;
+    private final Queue<Card> cards = new LinkedList<>();
 
-    public Deck(NumberGenerator numberGenerator) {
+    public Deck() {
         generateDeck();
-        this.numberGenerator = numberGenerator;
     }
 
     private void generateDeck() {
         for (Suit suit : Suit.values()) {
             generateCardEachSuit(suit);
         }
+        Collections.shuffle((List<?>) cards);
     }
 
     private void generateCardEachSuit(Suit suit) {
@@ -25,6 +23,6 @@ public class Deck {
     }
 
     public Card getCard() {
-        return cards.remove(numberGenerator.generate(cards.size()));
+        return cards.poll();
     }
 }

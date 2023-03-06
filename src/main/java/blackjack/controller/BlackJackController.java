@@ -23,7 +23,7 @@ public class BlackJackController {
 
     public void run() {
         try {
-            Deck deck = new Deck(new RandomNumberGenerator());
+            Deck deck = new Deck();
             Dealer dealer = new Dealer(getInitialCards(deck));
             Players players = generatePlayers(deck);
             showInitialCards(dealer, players);
