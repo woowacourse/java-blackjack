@@ -1,7 +1,7 @@
 package domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 import domain.type.Letter;
 import domain.type.Suit;
@@ -47,25 +47,25 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 없는지 테스트")
-    public void testCanNotReceiveCard() {
+    @DisplayName("카드를 더 받을 수 있는지 테스트")
+    public void testCanReceiveCard() {
         //given
-        Cards cards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX), new Card(Suit.SPADE, Letter.ACE)));
-        Dealer dealer = new Dealer(cards);
+        Cards cardsScore16 = new Cards(Set.of(new Card(Suit.SPADE, Letter.TEN), new Card(Suit.SPADE, Letter.SIX)));
+        Dealer dealer = new Dealer(cardsScore16);
 
         //when
         boolean result = dealer.canReceiveCard();
 
         //then
-        assertFalse(result);
+        assertTrue(result);
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 있는지 테스트")
-    public void testCanReceiveCard() {
+    @DisplayName("카드를 더 받을 수 없는지 테스트")
+    public void testCanNotReceiveCard() {
         //given
-        Cards cards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TEN), new Card(Suit.SPADE, Letter.ACE)));
-        Dealer dealer = new Dealer(cards);
+        Cards cardsScore17 = new Cards(Set.of(new Card(Suit.SPADE, Letter.TEN), new Card(Suit.SPADE, Letter.SEVEN)));
+        Dealer dealer = new Dealer(cardsScore17);
 
         //when
         boolean result = dealer.canReceiveCard();
