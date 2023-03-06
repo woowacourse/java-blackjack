@@ -37,4 +37,12 @@ public class Card {
     public int getValue() {
         return this.value.getValue();
     }
+
+    public String getShape() {
+        return this.shape.getShape();
+    }
+
+    public String getName() {
+        return this.value.getName();
+    }
 }

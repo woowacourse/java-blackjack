@@ -5,10 +5,16 @@ import model.user.Dealer;
 import model.user.Hand;
 import model.user.Participants;
 import model.user.Player;
+import model.user.Score;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
+import static model.user.Score.judge;
 
 public class OutputView {
     private static final String DIVIDE_CARDS_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
@@ -74,12 +80,57 @@ public class OutputView {
     private static void printPlayersScoreBoard(List<Player> players) {
         for (Player player : players) {
             System.out.println(player.getName()
-                            + ": "
-                            + getCardStatusForm(player.getHand())
-                            + " - 결과: "
-                            + player.getHand().getTotalValue()
+                    + ": "
+                    + getCardStatusForm(player.getHand())
+                    + " - 결과: "
+                    + player.getHand().getTotalValue()
             );
         }
     }
 
+    public static void printFinalResult(final Participants participants) {
+        final Dealer dealer = participants.getDealer();
+        final int dealerTotalValue = dealer.calculateTotalValue();
+
+        System.out.println(System.lineSeparator() + "## 최종 승패");
+        printDealerFinalResult(participants, dealerTotalValue);
+        printPlayersFinalResult(dealerTotalValue, participants.getPlayers());
+    }
+
+    private static void printDealerFinalResult(final Participants participants, final int dealerTotalValue) {
+        final Dealer dealer = participants.getDealer();
+        final List<Player> players = participants.getPlayers();
+
+        final Map<Score, Long> dealerResult = createDealerFinalResult(dealerTotalValue, players);
+        createDealerFinalResultForm(dealerResult, dealer);
+        System.out.print(System.lineSeparator());
+    }
+
+    private static Map<Score, Long> createDealerFinalResult(final int dealerTotalValue, final List<Player> players) {
+        return players.stream()
+                .map(player -> judge(player.calculateTotalValue(), dealerTotalValue))
+                .collect(groupingBy(Function.identity(), counting()));
+    }
+
+    private static void createDealerFinalResultForm(final Map<Score, Long> dealerResult, final Dealer dealer) {
+        System.out.printf("%s: ", dealer.getName());
+        for (final Score score : Score.values()) {
+            createDealerFinalResultForm(dealerResult, score);
+        }
+    }
+
+    private static void createDealerFinalResultForm(final Map<Score, Long> dealerResult, final Score score) {
+        final String scoreName = score.getName();
+
+        if (dealerResult.containsKey(score)) {
+            System.out.printf("%s%s ", dealerResult.get(score), scoreName);
+        }
+    }
+
+    private static void printPlayersFinalResult(final int dealerTotalValue, final List<Player> players) {
+        for (final Player player : players) {
+            final Score playerResult = judge(dealerTotalValue, player.calculateTotalValue());
+            System.out.printf("%s: %s%n", player.getName(), playerResult.getName());
+        }
+    }
 }

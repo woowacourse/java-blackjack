@@ -23,6 +23,8 @@ public class BlackJackController {
         divideCardForDealer(deck, dealer);
 
         OutputView.printScoreBoard(participants);
+
+        OutputView.printFinalResult(participants);
     }
 
     private static void divideCardForDealer(Deck deck, Dealer dealer) {
@@ -62,34 +64,4 @@ public class BlackJackController {
     private Participants getParticipants(final Deck deck) {
         return Participants.from(Arrays.asList(InputView.getPlayersName().split(",")));
     }
-
-//    private void receiveCard(final Participants participants, final Dealer dealer) {
-//        forPlayer(participants, dealer);
-//        forDealer(dealer);
-//    }
-////
-//    private void forPlayer(final Participants participants, final Dealer dealer) {
-//        for (User user : participants.getPlayers()) {
-//            wantReceive(user, dealer);
-//        }
-//    }
-//
-//    private void wantReceive(final User user, final Dealer dealer) {
-//        while (canReceiveMoreCard(user, dealer)) {
-//            final Card card = deck.pick();
-//            user.receiveCard(card);
-//            OutputView.printPlayerHand(user);
-//        }
-//    }
-//
-//    private boolean canReceiveMoreCard(final User user, final Dealer dealer) {
-//        return !dealer.equals(user) && user.canReceiveCard() && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(user.getName()));
-//    }
-//
-//    private void forDealer(final Dealer dealer) {
-//        if (dealer.canReceiveCard()) {
-//            OutputView.printDealerGetCard();
-//            dealer.receiveCard(deck.pick());
-//        }
-//    }
 }
