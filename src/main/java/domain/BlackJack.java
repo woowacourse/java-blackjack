@@ -3,7 +3,6 @@ package domain;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.PUSH;
 import static domain.GameResult.WIN;
-import static domain.GameResult.comparePlayerWithDealer;
 
 import domain.user.Dealer;
 import domain.user.Player;
@@ -57,7 +56,7 @@ public class BlackJack {
         int dealerScore = dealer.getScore();
         Map<String, GameResult> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
-            GameResult playerResult = comparePlayerWithDealer(player.getScore(), dealerScore);
+            GameResult playerResult = GameResult.comparePlayerWithDealer(player.getScore(), dealerScore);
             playerResults.put(player.getName(), playerResult);
         }
         return Collections.unmodifiableMap(playerResults);
