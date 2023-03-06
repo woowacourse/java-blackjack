@@ -20,26 +20,24 @@ public class Participant {
     }
 
     public int calculateScore() {
-        int nonAceSum = calculateNonAceSum();
-        int aceDefaultSum = calculateAceDefaultSum();
-        int totalScore = nonAceSum + aceDefaultSum;
-        for (int i = 0; i < aceDefaultSum; i++) {
-            if (totalScore + BONUS_SCORE <= BUST_BOUNDARY_EXCLUSIVE) {
-                totalScore += BONUS_SCORE;
-            }
+        int defaultScore = calculateNonAceSum();
+        boolean hasAce = hasAce();
+        boolean canAddBonusScore = defaultScore + BONUS_SCORE <= BUST_BOUNDARY_EXCLUSIVE;
+
+        if (hasAce && canAddBonusScore) {
+            defaultScore += BONUS_SCORE;
         }
-        return totalScore;
+        return defaultScore;
     }
 
     private int calculateNonAceSum() {
         return cards.stream()
-                .filter(card -> !card.isAce())
                 .mapToInt(Card::getDefaultScore)
                 .sum();
     }
 
-    private int calculateAceDefaultSum() {
-        return (int) cards.stream().filter(Card::isAce).count();
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public boolean isBust() {
