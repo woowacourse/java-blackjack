@@ -13,6 +13,6 @@ class CardTest {
     @DisplayName("생성한다.")
     void create() {
         assertThatNoException()
-                .isThrownBy(() -> new Card(Suit.SPADE, CardNumber.TWO));
+                .isThrownBy(() -> Card.of(Suit.SPADE, CardNumber.TWO));
     }
 }

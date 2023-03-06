@@ -28,29 +28,29 @@ class PlayerTest {
         return Stream.of(
                 Arguments.arguments(
                         // 히트 가능
-                        new Card(Suit.DIAMOND, CardNumber.TWO),
-                        new Card(Suit.DIAMOND, CardNumber.FOUR),
+                        Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(Suit.DIAMOND, CardNumber.THREE),
-                                new Card(Suit.HEART, CardNumber.FOUR)
+                                Card.of(Suit.DIAMOND, CardNumber.THREE),
+                                Card.of(Suit.HEART, CardNumber.FOUR)
                         ), true),
                 Arguments.arguments(
                         // 히트 가능
-                        new Card(Suit.DIAMOND, CardNumber.TWO),
-                        new Card(Suit.DIAMOND, CardNumber.THREE),
+                        Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.THREE),
                         List.of(
-                                new Card(Suit.SPADE, CardNumber.ACE),
-                                new Card(Suit.CLOVER, CardNumber.FOUR)
+                                Card.of(Suit.SPADE, CardNumber.ACE),
+                                Card.of(Suit.CLOVER, CardNumber.FOUR)
                         ), true),
                 Arguments.arguments(
                         // 히트 불가능
-                        new Card(Suit.DIAMOND, CardNumber.TWO),
-                        new Card(Suit.DIAMOND, CardNumber.FOUR),
+                        Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(Suit.SPADE, CardNumber.ACE),
-                                new Card(Suit.CLOVER, CardNumber.QUEEN),
-                                new Card(Suit.HEART, CardNumber.JACK),
-                                new Card(Suit.DIAMOND, CardNumber.THREE)
+                                Card.of(Suit.SPADE, CardNumber.ACE),
+                                Card.of(Suit.CLOVER, CardNumber.QUEEN),
+                                Card.of(Suit.HEART, CardNumber.JACK),
+                                Card.of(Suit.DIAMOND, CardNumber.THREE)
                         ), false)
         );
     }

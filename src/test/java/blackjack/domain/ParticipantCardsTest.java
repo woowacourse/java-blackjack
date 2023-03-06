@@ -21,8 +21,8 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("생성한다.")
     void create() {
-        Card cardOne = new Card(Suit.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(Suit.DIAMOND, CardNumber.TWO);
+        Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
+        Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
 
         assertThatNoException()
                 .isThrownBy(() -> new ParticipantCards(List.of(cardOne, cardTwo)));
@@ -38,8 +38,8 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("생성시에 카드가 중복될 경우 예외가 발생한다.")
     void throwExceptionWhenInitialCardsDuplicated() {
-        Card cardOne = new Card(Suit.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(Suit.DIAMOND, CardNumber.THREE);
+        Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
+        Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.THREE);
 
         assertThatThrownBy(() -> new ParticipantCards(List.of(cardOne, cardTwo)))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -48,11 +48,11 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("중복되는 카드를 가지는 경우 예외가 발생한다.")
     void throwExceptionWhenCardsDuplicated() {
-        Card cardOne = new Card(Suit.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(Suit.DIAMOND, CardNumber.FOUR);
+        Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
+        Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.FOUR);
         ParticipantCards participantCards = new ParticipantCards(List.of(cardOne, cardTwo));
 
-        assertThatThrownBy(() -> participantCards.receive(new Card(Suit.DIAMOND, CardNumber.THREE)))
+        assertThatThrownBy(() -> participantCards.receive(Card.of(Suit.DIAMOND, CardNumber.THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -79,12 +79,12 @@ class ParticipantCardsTest {
     static Stream<Arguments> calculateDummy() {
         return Stream.of(
                 Arguments.arguments(List.of(
-                        new Card(Suit.DIAMOND, CardNumber.THREE),
-                        new Card(Suit.HEART, CardNumber.FOUR)
+                        Card.of(Suit.DIAMOND, CardNumber.THREE),
+                        Card.of(Suit.HEART, CardNumber.FOUR)
                 ), 7),
                 Arguments.arguments(List.of(
-                        new Card(Suit.SPADE, CardNumber.ACE),
-                        new Card(Suit.CLOVER, CardNumber.FOUR)
+                        Card.of(Suit.SPADE, CardNumber.ACE),
+                        Card.of(Suit.CLOVER, CardNumber.FOUR)
                 ), 15)
         );
     }
@@ -92,27 +92,27 @@ class ParticipantCardsTest {
     static Stream<Arguments> isBustDummy() {
         return Stream.of(
                 Arguments.arguments(
-                        new Card(Suit.DIAMOND, CardNumber.TWO),
-                        new Card(Suit.DIAMOND, CardNumber.FOUR),
+                        Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(Suit.DIAMOND, CardNumber.THREE),
-                                new Card(Suit.HEART, CardNumber.FOUR)
+                                Card.of(Suit.DIAMOND, CardNumber.THREE),
+                                Card.of(Suit.HEART, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
-                        new Card(Suit.DIAMOND, CardNumber.TWO),
-                        new Card(Suit.DIAMOND, CardNumber.THREE),
+                        Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.THREE),
                         List.of(
-                                new Card(Suit.SPADE, CardNumber.ACE),
-                                new Card(Suit.CLOVER, CardNumber.FOUR)
+                                Card.of(Suit.SPADE, CardNumber.ACE),
+                                Card.of(Suit.CLOVER, CardNumber.FOUR)
                         ), false),
                 Arguments.arguments(
-                        new Card(Suit.DIAMOND, CardNumber.TWO),
-                        new Card(Suit.DIAMOND, CardNumber.FOUR),
+                        Card.of(Suit.DIAMOND, CardNumber.TWO),
+                        Card.of(Suit.DIAMOND, CardNumber.FOUR),
                         List.of(
-                                new Card(Suit.SPADE, CardNumber.ACE),
-                                new Card(Suit.CLOVER, CardNumber.QUEEN),
-                                new Card(Suit.HEART, CardNumber.JACK),
-                                new Card(Suit.DIAMOND, CardNumber.THREE)
+                                Card.of(Suit.SPADE, CardNumber.ACE),
+                                Card.of(Suit.CLOVER, CardNumber.QUEEN),
+                                Card.of(Suit.HEART, CardNumber.JACK),
+                                Card.of(Suit.DIAMOND, CardNumber.THREE)
                         ), true)
         );
     }

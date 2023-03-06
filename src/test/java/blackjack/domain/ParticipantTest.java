@@ -15,8 +15,8 @@ class ParticipantTest {
     @Test
     @DisplayName("자신의 점수를 계산한다.")
     void getTotalPoint() {
-        Card cardOne = new Card(Suit.DIAMOND, CardNumber.SIX);
-        Card cardTwo = new Card(Suit.HEART, CardNumber.ACE);
+        Card cardOne = Card.of(Suit.DIAMOND, CardNumber.SIX);
+        Card cardTwo = Card.of(Suit.HEART, CardNumber.ACE);
         Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
         int totalPoint = participant.getTotalPoint();
 
@@ -26,11 +26,11 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자가 카드를 뽑는다.")
     void hit() {
-        Card cardOne = new Card(Suit.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(Suit.DIAMOND, CardNumber.TWO);
+        Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
+        Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
         Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
         int beforeHitPoint = participant.getTotalPoint();
-        participant.hit(new Card(Suit.SPADE, CardNumber.ACE));
+        participant.hit(Card.of(Suit.SPADE, CardNumber.ACE));
         int afterHitPoint = participant.getTotalPoint();
 
         assertThat(afterHitPoint).isGreaterThan(beforeHitPoint);
@@ -39,8 +39,8 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자가 카드를 보여준다.")
     void open() {
-        Card cardOne = new Card(Suit.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(Suit.DIAMOND, CardNumber.TWO);
+        Card cardOne = Card.of(Suit.DIAMOND, CardNumber.THREE);
+        Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
         Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
 
         assertThat(participant.open(2)).containsAll(List.of(cardOne, cardTwo));

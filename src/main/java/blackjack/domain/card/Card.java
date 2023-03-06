@@ -1,14 +1,32 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+
 public class Card {
+    private static final Map<Suit, Map<CardNumber, Card>> CARDS;
     private final Suit shape;
     private final CardNumber number;
 
-    public Card(final Suit shape, final CardNumber number) {
-        this.shape = shape;
+    static {
+        CARDS = Arrays.stream(CardNumber.values())
+                .flatMap(cardNumber -> Arrays.stream(Suit.values())
+                        .map(suit -> new Card(suit, cardNumber)))
+                .collect(groupingBy(card -> card.shape,
+                        toMap(card -> card.number, card -> card)));
+    }
+
+    private Card(final Suit suit, final CardNumber number) {
+        this.shape = suit;
         this.number = number;
+    }
+
+    public static Card of(final Suit suit, final CardNumber number) {
+        return CARDS.get(suit).get(number);
     }
 
     public CardNumber getNumber() {

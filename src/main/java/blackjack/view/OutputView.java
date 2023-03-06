@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
     private static final int NOT_EXIST_MATCH_RESULT = 0;
 
     private OutputView() {
