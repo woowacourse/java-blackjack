@@ -6,8 +6,6 @@ import java.util.Objects;
 
 public class User {
 
-    public static final int BUST_NUMBER = 21;
-
     private final String name;
     private final Hand hand;
 
@@ -24,34 +22,9 @@ public class User {
         return hand.getTotalValue();
     }
 
-    public boolean judgeResult(int dealerTotalValue) {
+    public Score judgeResult(int dealerTotalValue) {
         final int playerTotalValue = calculateTotalValue();
-
-        if (dealerTotalValue > BUST_NUMBER || playerTotalValue > BUST_NUMBER) {
-            return judgeOverBurst(dealerTotalValue, playerTotalValue);
-        }
-
-        return judgeUnderBurst(dealerTotalValue, playerTotalValue);
-    }
-
-    private boolean judgeOverBurst(final int dealerTotalValue, final int userTotalValue) {
-        if (userTotalValue > BUST_NUMBER && dealerTotalValue > BUST_NUMBER) {
-            return Boolean.TRUE;
-        }
-
-        if (userTotalValue > BUST_NUMBER) {
-            return Boolean.FALSE;
-        }
-
-        return Boolean.TRUE;
-    }
-
-    private Boolean judgeUnderBurst(final int dealerTotalValue, final int userTotalValue) {
-        if (dealerTotalValue <= userTotalValue) {
-            return Boolean.TRUE;
-        }
-
-        return Boolean.FALSE;
+        return Score.judge(dealerTotalValue, playerTotalValue);
     }
 
     @Override
