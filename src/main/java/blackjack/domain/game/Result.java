@@ -1,8 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 
 public enum Result {
     WIN,
