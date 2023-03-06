@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackJack;
 import domain.Users;
+import domain.shuffler.RandomCardShuffler;
 import domain.user.Player;
 import java.util.List;
 import view.InputView;
@@ -31,8 +32,7 @@ public class Controller {
     private void ready() {
         List<String> playerNames = inputView.askPlayerNames();
         Users users = Users.from(playerNames);
-        blackJack = BlackJack.of(users, cards -> {
-        });
+        blackJack = BlackJack.of(users, new RandomCardShuffler());
         outputView.printInitMessage(playerNames);
         outputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
         outputView.printPlayerCards(blackJack.getPlayerToCard());
