@@ -1,6 +1,5 @@
 package domain.cardtable;
 
-import domain.area.CardArea;
 import domain.deck.CardDeck;
 import domain.player.Player;
 import domain.player.dealer.Dealer;
@@ -25,7 +24,7 @@ public class CardTable {
     }
 
     public Map<Participant, ParticipantResult> determineWinner(final List<Participant> participants,
-                                                              final Dealer dealer) {
+                                                               final Dealer dealer) {
         return participants.stream()
                            .collect(Collectors.toMap(
                                    Function.identity(),

@@ -1,7 +1,6 @@
 package domain.player.dealer;
 
 import domain.Score;
-import domain.area.CardArea;
 import domain.card.Card;
 import domain.player.Name;
 import domain.player.Player;

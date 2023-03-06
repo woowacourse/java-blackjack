@@ -81,11 +81,6 @@ public class BlackJackController {
         OutputView.showParticipantsStateResult(participants);
     }
 
-    private void hittingPlayer(final CardTable cardTable, final List<Participant> participants, final Dealer dealer) {
-        hitForParticipants(cardTable, participants);
-        hitForDealer(cardTable, dealer);
-    }
-
     private static void printStateAfterDeal(final List<Participant> participants, final Dealer dealer) {
         OutputView.showDealtCardTo(participants);
         OutputView.showStateOf(dealer);
@@ -99,6 +94,11 @@ public class BlackJackController {
                             .collect(Collectors.groupingBy(participant -> playersResult.get(participant)
                                                                                        .convertToDealerResult(),
                                                            counting()));
+    }
+
+    private void hittingPlayer(final CardTable cardTable, final List<Participant> participants, final Dealer dealer) {
+        hitForParticipants(cardTable, participants);
+        hitForDealer(cardTable, dealer);
     }
 
     private void hitForDealer(final CardTable cardTable, final Dealer dealer) {

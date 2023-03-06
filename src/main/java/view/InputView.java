@@ -13,7 +13,8 @@ public class InputView {
     private static final String NO_COMMAND = "n";
     private static final Scanner scanner = new Scanner(System.in);
 
-    private InputView() {}
+    private InputView() {
+    }
 
     public static List<String> readParticipantsName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -31,7 +32,7 @@ public class InputView {
         if (validateIneligibleCommand(input)) {
             return readMoreCard(participant);
         }
-        
+
         return input;
     }
 

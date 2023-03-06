@@ -16,8 +16,8 @@ public class Score {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Score score1 = (Score) o;
-        return value == score1.value;
+        final Score score = (Score) o;
+        return value == score.value;
     }
 
     @Override
