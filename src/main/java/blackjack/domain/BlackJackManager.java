@@ -16,23 +16,40 @@ public class BlackJackManager {
         List<Player> players = createPlayers();
         OutputView.printParticipantsInitCards(dealer, players);
 
-        for (Player player : players) {
-            hitBy(player);
-        }
-        hitBy(dealer);
+        playGame(dealer, players);
 
         showParticipantStatus(dealer, players);
         showGameResult(dealer, players);
     }
 
-    private static void showParticipantStatus(final Dealer dealer, final List<Player> players) {
-        OutputView.printParticipantCardWithResult(dealer, dealer.getTotalPoint());
-        players.forEach(player -> OutputView.printParticipantCardWithResult(player, player.getTotalPoint()));
+    private ParticipantCards initCards() {
+        return new ParticipantCards(List.of(deck.draw(), deck.draw()));
     }
 
-    private static void showGameResult(final Dealer dealer, final List<Player> players) {
-        BlackJackResults blackJackResults = new BlackJackResults(dealer, players);
-        OutputView.printBlackJackResults(blackJackResults);
+    private List<Player> createPlayers() {
+        List<String> names = InputView.readNames();
+        List<Player> players = new ArrayList<>();
+        for (final String name : names) {
+            players.add(new Player(initCards(), name));
+        }
+        return players;
+    }
+
+    private void playGame(final Dealer dealer, final List<Player> players) {
+        for (Player player : players) {
+            hitBy(player);
+        }
+        hitBy(dealer);
+    }
+
+    private void hitBy(final Player player) {
+        while (player.isHittable() && InputView.checkPlayerAdditionalHit(player.getName().getValue())) {
+            player.hit(deck.draw());
+            OutputView.printParticipantsCards(player);
+        }
+        if (player.isHittable()) {
+            OutputView.printParticipantsCards(player);
+        }
     }
 
     private void hitBy(final Dealer dealer) {
@@ -47,26 +64,13 @@ public class BlackJackManager {
         }
     }
 
-    private void hitBy(final Player player) {
-        while (player.isHittable() && InputView.checkPlayerAdditionalHit(player.getName().getValue())) {
-            player.hit(deck.draw());
-            OutputView.printParticipantsCards(player);
-        }
-        if (player.isHittable()) {
-            OutputView.printParticipantsCards(player);
-        }
+    private void showParticipantStatus(final Dealer dealer, final List<Player> players) {
+        OutputView.printParticipantCardWithResult(dealer, dealer.getTotalPoint());
+        players.forEach(player -> OutputView.printParticipantCardWithResult(player, player.getTotalPoint()));
     }
 
-    private List<Player> createPlayers() {
-        List<String> names = InputView.readNames();
-        List<Player> players = new ArrayList<>();
-        for (final String name : names) {
-            players.add(new Player(initCards(), name));
-        }
-        return players;
-    }
-
-    private ParticipantCards initCards() {
-        return new ParticipantCards(List.of(deck.draw(), deck.draw()));
+    private void showGameResult(final Dealer dealer, final List<Player> players) {
+        BlackJackResults blackJackResults = new BlackJackResults(dealer, players);
+        OutputView.printBlackJackResults(blackJackResults);
     }
 }
