@@ -7,6 +7,7 @@ import domain.participant.Participants;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BlackjackService {
@@ -31,24 +32,17 @@ public class BlackjackService {
         participants.initHand(deck);
     }
 
-    public boolean existNextPlayerTurn() {
-        return participants.getNextTurnPlayer().isPresent();
+    public Optional<Participant> getNextPlayer() {
+        return participants.getNextTurnPlayer();
     }
 
-    public Participant getNextPlayer() {
-        return participants.getNextTurnPlayer().get();
-    }
-
-    public void nextTurn(String hit) {
-        Participant nextPlayer = participants.getNextTurnPlayer().get();
-
-        if (hit.equals(STAND)) {
-            nextPlayer.stand();
+    public void nextTurn(Participant next, String hit) {
+        if (STAND.equals(hit)) {
+            next.stand();
             return;
         }
-
-        if (hit.equals(HIT)) {
-            nextPlayer.addCard(deck.pollAvailableCard());
+        if (HIT.equals(hit)) {
+            next.addCard(deck.pollAvailableCard());
             return;
         }
 

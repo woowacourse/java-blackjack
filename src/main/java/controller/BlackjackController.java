@@ -32,9 +32,11 @@ public class BlackjackController {
     }
 
     private void runPlayersTurn(BlackjackService blackjackGame) {
-        while (blackjackGame.existNextPlayerTurn()) {
-            Participant nextPlayer = blackjackGame.getNextPlayer();
-            blackjackGame.nextTurn(InputView.readHit(nextPlayer));
+        while (blackjackGame.getNextPlayer().isPresent()) {
+            Participant nextPlayer = blackjackGame.getNextPlayer().get();
+
+            blackjackGame.nextTurn(nextPlayer, InputView.readHit(nextPlayer));
+
             OutputView.printPlayerCard(nextPlayer);
         }
     }
