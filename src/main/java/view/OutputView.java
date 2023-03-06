@@ -23,15 +23,15 @@ public class OutputView {
         System.out.println();
         System.out.printf(INITIAL_DISTRIBUTE_MESSAGE, dealer.getName(), String.join(SPLIT_DELIMITER, players.getPlayersName()));
         System.out.println(dealer.getName() + ": " + dealer.getInfo().get(dealer.getName()).get(0));
-        for (String name : players.getInfo().keySet()) {
-            List<String> value = players.getInfo().get(name);
+        for (String name : players.getPlayersOwnCards().keySet()) {
+            List<String> value = players.getPlayersOwnCards().get(name);
             System.out.println(name + "카드: " + String.join(SPLIT_DELIMITER, value));
         }
     }
 
     public void printPlayerCardsInfo(Player player) {
         System.out.println(player.getName() + "카드: " +
-                String.join(", ", player.getCards()));
+                String.join(", ", player.getCardsFullName()));
     }
 
     public void printDistributeDealer(Dealer dealer) {
@@ -41,10 +41,10 @@ public class OutputView {
 
     public void printCardsResult(Dealer dealer, Players players) {
         System.out.println();
-        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), String.join(SPLIT_DELIMITER, dealer.getCards()), dealer.getCardsSum());
-        for (String name : players.getInfo().keySet()) {
-            List<String> value = players.getInfo().get(name);
-            System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, name, String.join(SPLIT_DELIMITER, value), players.getCardsSum(name));
+        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), String.join(SPLIT_DELIMITER, dealer.getCardsFullName()), dealer.getCardsSum());
+        for (String name : players.getPlayersOwnCards().keySet()) {
+            List<String> value = players.getPlayersOwnCards().get(name);
+            System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, name, String.join(SPLIT_DELIMITER, value), players.getPlayerCardsSum(name));
         }
     }
 

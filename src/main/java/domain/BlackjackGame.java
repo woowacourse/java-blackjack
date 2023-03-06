@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
-    public static final int BLACK_JACK = 21;
+    private static final int BLACK_JACK = 21;
     private static final int INITIAL_CARD_SET = 2;
 
     private final Players players;

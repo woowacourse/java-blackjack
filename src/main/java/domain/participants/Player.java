@@ -1,6 +1,5 @@
 package domain.participants;
 
-import domain.BlackjackGame;
 import domain.deck.Card;
 import domain.deck.Cards;
 
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
+    private static final int BLACK_JACK = 21;
     private static final String Y_COMMAND = "y";
     private final Name name;
     private final Cards cards;
@@ -24,16 +24,8 @@ public class Player {
 
     public Map<String, List<String>> getInfo() {
         Map<String, List<String>> info = new LinkedHashMap<>();
-        info.put(getName(), getCards());
+        info.put(getName(), getCardsFullName());
         return info;
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public List<String> getCards() {
-        return cards.getCards();
     }
 
     public int getCardsSum() {
@@ -41,14 +33,22 @@ public class Player {
     }
 
     public boolean isOverPlayerBlackJack() {
-        return getCardsSum() >= BlackjackGame.BLACK_JACK;
+        return getCardsSum() >= BLACK_JACK;
     }
 
-    public boolean canSelectCard(String command) {
+    public boolean canDrawCard(String command) {
         return !isOverPlayerBlackJack() && isCommandYes(command);
     }
 
     public boolean isCommandYes(String command) {
         return command.equals(Y_COMMAND);
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<String> getCardsFullName() {
+        return cards.getCardsFullName();
     }
 }

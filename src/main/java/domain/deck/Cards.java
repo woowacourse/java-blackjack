@@ -1,12 +1,11 @@
 package domain.deck;
 
-import domain.BlackjackGame;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
+    private static final int BLACK_JACK = 21;
     private static final int DECREASE_ACE_VALUE = -10;
     private final List<Card> cards;
 
@@ -26,7 +25,7 @@ public class Cards {
 
     private int calculateAceValue(int sum) {
         long countAce = countAce();
-        while (countAce-- > 0 && sum > BlackjackGame.BLACK_JACK) {
+        while (countAce-- > 0 && sum > BLACK_JACK) {
             sum += DECREASE_ACE_VALUE;
         }
         return sum;
@@ -36,9 +35,9 @@ public class Cards {
         return cards.stream().filter(Card::isAce).count();
     }
 
-    public List<String> getCards() {
+    public List<String> getCardsFullName() {
         return cards.stream()
-                .map(Card::getCard)
+                .map(Card::getCardFullName)
                 .collect(Collectors.toList());
     }
 }

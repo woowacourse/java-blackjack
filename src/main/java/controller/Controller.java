@@ -57,7 +57,7 @@ public class Controller {
             command = setCommand(player);
             game.distributeByCommand(player, command);
             outputView.printPlayerCardsInfo(player);
-        } while (player.canSelectCard(command));
+        } while (player.canDrawCard(command));
     }
 
     private String setCommand(Player player){

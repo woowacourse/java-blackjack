@@ -17,7 +17,7 @@ public class CardsTest {
 
         cards.add(new Card(CardNumber.ACE, CardPattern.SPADE));
 
-        Assertions.assertThat(cards.getCards().get(0))
+        Assertions.assertThat(cards.getCardsFullName().get(0))
                 .isEqualTo("A스페이드");
     }
 

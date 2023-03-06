@@ -1,8 +1,5 @@
 package domain.participants;
 
-import domain.participants.Dealer;
-import domain.participants.Player;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,13 +15,6 @@ public class Players {
         addPlayer(splitedName);
     }
 
-    private void addPlayer(List<String> splitedName) {
-        players.add(new Dealer());
-        for (String name : splitedName) {
-            players.add(new Player(name));
-        }
-    }
-
     private List<String> splitName(String names) {
         return Arrays.asList(names.split(SPLIT_DELIMITER));
     }
@@ -35,23 +25,30 @@ public class Players {
         }
     }
 
+    private void addPlayer(List<String> splitedName) {
+        players.add(new Dealer());
+        for (String name : splitedName) {
+            players.add(new Player(name));
+        }
+    }
+
     public Dealer findDealer() {
         return (Dealer) players.get(0);
     }
 
-    public Map<String, List<String>> getInfo() {
-        Map<String, List<String>> info = new LinkedHashMap<>();
+    public Map<String, List<String>> getPlayersOwnCards() {
+        Map<String, List<String>> ownCards = new LinkedHashMap<>();
         for (Player player : getPlayersWithOutDealer()) {
-            info.put(player.getName(), player.getCards());
+            ownCards.put(player.getName(), player.getCardsFullName());
         }
-        return info;
+        return ownCards;
     }
 
     public List<Player> getPlayersWithOutDealer() {
         return players.stream().filter(s -> !s.getName().equals(findDealer().getName())).collect(Collectors.toList());
     }
 
-    public int getCardsSum(String playerName) {
+    public int getPlayerCardsSum(String playerName) {
         return players.stream()
                 .filter(s -> s.getName().equals(playerName))
                 .findAny()
