@@ -1,6 +1,7 @@
 package view;
 
 import domain.model.Card;
+import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Participant;
 import domain.model.Result;
@@ -15,7 +16,7 @@ public class OutputView {
     private static final String NEW_LINE = "\n";
     private static final String PRINT_CARDS_MESSAGE = NEW_LINE + "딜러와 %s에게 2장을 나누었습니다.";
     private static final String COLON = ": ";
-    private static final String DEALER_RECEIVE_NOTICE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
+    private static final String DEALER_RECEPTION_NOTICE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_STATE_RESULT_SIGN = " - 결과: ";
     private static final String VICTORY = "승";
     private static final String DRAW = "무";
@@ -27,7 +28,7 @@ public class OutputView {
         printCardsMessage(participants);
         printFirstCard(dealer);
         for (Participant participant : participants) {
-            printCard(participant);
+            printCards(participant);
         }
         System.out.println();
     }
@@ -49,34 +50,34 @@ public class OutputView {
         System.out.println(dealer.getName() + COLON + card);
     }
 
-    public static void printCard(final Participant participant) {
-        final String stringifyCard = stringifyCard(participant);
-        System.out.println(participant.getName() + COLON + stringifyCard);
+    public static void printCards(final Participant participant) {
+        System.out.println(participant.getName() + CARD + COLON + stringifyCards(participant.getCards()));
     }
 
-    private static String stringifyCard(final Participant participant) {
-        final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        participant.getCards().getCards()
+    private static String stringifyCards(final Cards cards) {
+        final StringJoiner sj = new StringJoiner(DELIMITER);
+        cards.getCards()
             .stream()
             .map(Card::toString)
-            .forEach(stringJoiner::add);
-        return stringJoiner.toString();
+            .forEach(sj::add);
+        return sj.toString();
     }
 
-    public static void printDealerReceiveNotice() {
-        System.out.println(DEALER_RECEIVE_NOTICE);
+    public static void printDealerReceptionNotice() {
+        System.out.println(DEALER_RECEPTION_NOTICE);
     }
 
     public static void printTotalCardState(final Dealer dealer, final List<Participant> participants) {
-        printParticipantCardState(dealer);
+        System.out.println();
+        printCardAndScore(dealer);
         for (Participant participant : participants) {
-            printParticipantCardState(participant);
+            printCardAndScore(participant);
         }
     }
 
-    private static void printParticipantCardState(final Participant participant) {
-        System.out.println(participant.getName() + CARD + COLON + stringifyCard(participant) + CARD_STATE_RESULT_SIGN
-            + participant.getScore().getValue());
+    private static void printCardAndScore(final Participant participant) {
+        System.out.println(participant.getName() + CARD + COLON + stringifyCards(participant.getCards())
+            + CARD_STATE_RESULT_SIGN + participant.getScore().getValue());
     }
 
     public static void printDealerResult(final Result dealerResult, final Dealer dealer) {
@@ -95,10 +96,21 @@ public class OutputView {
         resultHistory.put(VICTORY, result.getVictory());
         resultHistory.put(DRAW, result.getDraw());
         resultHistory.put(DEFEAT, result.getDefeat());
-        if (result.getVictory() + result.getDraw() + result.getDefeat() == 1) {
+        if (hasResultSingleHistory(result)) {
             return stringifyOneResultHistory(resultHistory);
         }
         return stringifyResultHistory(resultHistory);
+    }
+
+    private static boolean hasResultSingleHistory(Result result) {
+        return result.getVictory() + result.getDraw() + result.getDefeat() == 1;
+    }
+
+    private static String stringifyOneResultHistory(final Map<String, Integer> resultHistory) {
+        return resultHistory.keySet().stream()
+            .filter(result -> resultHistory.get(result) != 0)
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     private static String stringifyResultHistory(final Map<String, Integer> resultHistory) {
@@ -107,12 +119,5 @@ public class OutputView {
             .filter(result -> resultHistory.get(result) != 0)
             .forEach(result -> sj.add(resultHistory.get(result) + result));
         return sj.toString();
-    }
-
-    private static String stringifyOneResultHistory(final Map<String, Integer> resultHistory) {
-        return resultHistory.keySet().stream()
-            .filter(result -> resultHistory.get(result) != 0)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
     }
 }
