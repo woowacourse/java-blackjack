@@ -20,7 +20,6 @@ class DeckTest {
     @Test
     void 덱은_52가지_종류의_카드가_있다() {
         //given
-        List<Card> expectedCards = initCards();
         Deck deck = Deck.create();
 
         //when

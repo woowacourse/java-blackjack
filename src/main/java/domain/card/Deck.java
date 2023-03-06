@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    private Deck(LinkedList<Card> cards) {
+    private Deck(ArrayDeque<Card> cards) {
         this.cards = cards;
     }
 
@@ -29,7 +30,7 @@ public class Deck {
         List<Card> initialCards = new ArrayList<>(CARDS);
         Collections.shuffle(initialCards);
 
-        return new Deck(new LinkedList<>(initialCards));
+        return new Deck(new ArrayDeque<>(initialCards));
     }
 
     public Card pollAvailableCard() {
@@ -45,6 +46,6 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList((LinkedList<Card>) cards);
+        return Collections.unmodifiableList(new ArrayList<>(cards));
     }
 }
