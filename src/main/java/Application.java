@@ -10,13 +10,20 @@ public class Application {
     private static final OutputView outputView = new OutputView();
 
     public static void main(String[] args) {
-        List<String> playerNames = inputView.readNames();
-        List<Player> players = createPlayersWith(playerNames);
-        Game game = new Game(players, new Deck(), new Dealer());
+        Game game = createGame(getPlayers());
 
         start(game);
         play(game);
         printResult(game);
+    }
+
+    private static Game createGame(List<Player> players) {
+        return new Game(players, new Deck(), new Dealer());
+    }
+
+    private static List<Player> getPlayers() {
+        List<String> playerNames = inputView.readNames();
+        return createPlayersWith(playerNames);
     }
 
     private static void start(Game game) {
