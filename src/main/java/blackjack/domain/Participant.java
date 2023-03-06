@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+
 abstract public class Participant {
 
     private final CardDeck cardDeck;

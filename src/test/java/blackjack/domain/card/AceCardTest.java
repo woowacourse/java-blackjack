@@ -1,7 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import blackjack.domain.Pattern;
+import blackjack.domain.card.AceCard;
+import blackjack.domain.card.Card;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 

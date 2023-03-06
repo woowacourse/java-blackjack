@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import helper.StubCardPicker;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.StandardCard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-class AceCard extends Card{
+import blackjack.domain.Pattern;
+
+public class AceCard extends Card{
 
     private static final String ACE_SYMBOL = "A";
     private static final int ACE_VALUE = 11;
@@ -10,7 +12,7 @@ class AceCard extends Card{
     }
 
     @Override
-    protected int getValue() {
+    public int getValue() {
         return ACE_VALUE;
     }
 }

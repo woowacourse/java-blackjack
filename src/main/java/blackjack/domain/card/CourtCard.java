@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import blackjack.domain.Pattern;
 import java.util.List;
 
-class CourtCard extends Card {
+public class CourtCard extends Card {
 
     private static final List<String> COURT_SYMBOLS = List.of("J", "Q", "K");
     public static final int COURT_VALUE = 10;
@@ -19,7 +20,8 @@ class CourtCard extends Card {
     }
 
     @Override
-    protected int getValue() {
+    public int getValue() {
         return COURT_VALUE;
-}
+    }
+
 }

@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-class StandardCard extends Card {
+import blackjack.domain.Pattern;
+
+public class StandardCard extends Card {
 
     private static final int MIN_INCLUSIVE = 2;
     private static final int MAX_INCLUSIVE = 10;
@@ -18,7 +20,7 @@ class StandardCard extends Card {
     }
 
     @Override
-    protected int getValue() {
+    public int getValue() {
         return Integer.parseInt(symbol);
     }
 }

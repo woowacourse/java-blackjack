@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
+
+import blackjack.domain.Pattern;
 
 import java.util.Objects;
 
@@ -15,7 +17,7 @@ abstract public class Card {
 
     protected void validateSymbol(String symbol) {}
 
-    abstract protected int getValue();
+    public abstract int getValue();
 
     @Override
     public boolean equals(Object o) {
