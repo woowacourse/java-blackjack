@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.game.Command;
+import domain.game.HitCommand;
 import domain.game.Deck;
 import domain.game.GameResult;
 import view.dto.PlayerParameter;
@@ -73,18 +73,18 @@ public class People {
         return dealer;
     }
 
-    public void hitByCommandAllPlayers(Function<String, Command> function, Consumer<PlayerParameter> consumer, Deck deck) {
+    public void hitByCommandAllPlayers(Function<String, HitCommand> function, Consumer<PlayerParameter> consumer, Deck deck) {
         for (Player player : players) {
             hitByCommand(function, consumer,deck, player);
         }
 
     }
 
-    private void hitByCommand(Function<String, Command> function, Consumer<PlayerParameter> consumer, Deck deck, Player player) {
-        Command command;
+    private void hitByCommand(Function<String, HitCommand> inputCommand, Consumer<PlayerParameter> outputPlayer, Deck deck, Player player) {
+        HitCommand hitCommand;
         do{
-            command = function.apply(player.getPlayerName().getValue());
-            command = command.apply(player, deck, consumer);
-        } while(command == Command.y);
+            hitCommand = inputCommand.apply(player.getPlayerName().getValue());
+            hitCommand = hitCommand.hitByCommand(player, deck, outputPlayer);
+        } while(hitCommand == HitCommand.y);
     }
 }

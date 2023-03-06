@@ -1,7 +1,7 @@
 package controller;
 
 import domain.game.BlackjackGame;
-import domain.game.Command;
+import domain.game.HitCommand;
 import domain.game.GameResult;
 import domain.strategy.RandomNumberGenerator;
 import domain.user.People;
@@ -38,7 +38,7 @@ public class BlackjackController {
                 makePlayersParameter(people));
 
 
-        blackjackGame.hitByCommand((name) -> Command.getCommand(inputView.inputCardCommand(name)),
+        blackjackGame.hitAllPlayersByCommand((name) -> HitCommand.findCommand(inputView.inputCardCommand(name)),
                 outputView::printPlayerCardWithName);
         hitByDealer();
 
