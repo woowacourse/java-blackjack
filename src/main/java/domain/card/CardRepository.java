@@ -9,7 +9,6 @@ public class CardRepository {
     private final List<Card> cards;
     private final IndexGenerator indexGenerator;
 
-
     private CardRepository(List<Card> cards, IndexGenerator indexGenerator) {
         this.cards = cards;
         this.indexGenerator = indexGenerator;

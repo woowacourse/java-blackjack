@@ -1,7 +1,6 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.CardHolder;
 import domain.gameresult.GameResult;
 
 import java.util.ArrayList;
@@ -12,16 +11,9 @@ public class Players {
     private final Dealer dealer;
     private final List<Participant> participants;
 
-    private Players(Dealer dealer, List<Participant> participants) {
+    public Players(Dealer dealer, List<Participant> participants) {
         this.dealer = dealer;
         this.participants = participants;
-    }
-
-    public static Players with(Dealer dealer, List<Name> participantNames) {
-        List<Participant> participants = participantNames.stream()
-                .map(name -> new Participant(CardHolder.makeEmptyHolder(), name))
-                .collect(Collectors.toUnmodifiableList());
-        return new Players(dealer,participants);
     }
 
     public void giveCardToDealer(Card card) {
@@ -64,13 +56,6 @@ public class Players {
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public List<Player> getAllPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
-        return players;
     }
 
     public void addCardByName(String name, Card card) {
