@@ -24,6 +24,9 @@ import static model.card.Value.SIX;
 import static model.card.Value.TEN;
 import static model.card.Value.THREE;
 import static model.card.Value.TWO;
+import static model.user.Score.LOSE;
+import static model.user.Score.TIE;
+import static model.user.Score.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
@@ -70,7 +73,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 이긴 결과가 반환된다.")
+    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 비긴 결과가 반환된다.")
     void whenOverBurstNumberFindWinPlayer() {
         // given
         int dealerTotalValue = 23;
@@ -80,7 +83,7 @@ class PlayerTest {
         player.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(player.judgeResult(dealerTotalValue)).isTrue();
+        assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(TIE);
     }
 
     @Test
@@ -94,7 +97,7 @@ class PlayerTest {
         player.receiveCard(new Card(CLOVER, THREE));
 
         // when, then
-        assertThat(player.judgeResult(dealerTotalValue)).isFalse();
+        assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(LOSE);
     }
 
     @Test
@@ -106,6 +109,6 @@ class PlayerTest {
         player.receiveCard(new Card(SPADE, KING));
 
         // when, then
-        assertThat(player.judgeResult(dealerTotalValue)).isTrue();
+        assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(WIN);
     }
 }
