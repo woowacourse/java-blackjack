@@ -4,7 +4,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import domain.deck.Deck;
-import java.util.EmptyStackException;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +19,6 @@ public class DeckTest {
         for (int i = 0; i < expectedDeckSize; i++) {
             deck.popCard();
         }
-        assertThrows(EmptyStackException.class, deck::popCard);
+        assertThrows(NoSuchElementException.class, deck::popCard);
     }
 }
