@@ -20,7 +20,7 @@ class CardsTest {
         IntStream.range(0,52).forEach(index -> cards.drawCard());
 
         //then
-        assertThrows(IllegalArgumentException.class, cards::drawCard);
+        assertThrows(IllegalStateException.class, cards::drawCard);
     }
 
     @Test
