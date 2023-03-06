@@ -48,11 +48,9 @@ public class BlackjackController {
     private void drawInitialCards(final Players players, final Dealer dealer) {
         printInitialPickGuideMessage(players);
         for (Player player : players.getPlayers()) {
-            player.drawCard(deck.pickCard());
-            player.drawCard(deck.pickCard());
+            player.initDraw(deck);
         }
-        dealer.drawCard(deck.pickCard());
-        dealer.drawCard(deck.pickCard());
+        dealer.initDraw(deck);
         printInitialCards(dealer, players);
     }
 

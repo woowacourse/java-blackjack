@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Deck;
 import domain.score.Score;
 
 import java.util.List;
@@ -14,6 +15,11 @@ public class Player {
     public Player(PlayerName playerName) {
         this.playerName = playerName;
         this.cards = new Cards();
+    }
+
+    public void initDraw(Deck deck) {
+        drawCard(deck.pickCard());
+        drawCard(deck.pickCard());
     }
 
     public void drawCard(Card card) {
