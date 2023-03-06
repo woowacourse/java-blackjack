@@ -11,10 +11,6 @@ public class Score {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public boolean isOverThen(Score other) {
         if (other.isBust()) {
             return true;
@@ -27,6 +23,10 @@ public class Score {
 
     private boolean isBust() {
         return value > BUST_SCORE;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override
