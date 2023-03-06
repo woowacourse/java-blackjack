@@ -32,14 +32,14 @@ public class Participants {
     }
 
     public List<Player> findPlayers() {
-        ArrayList<Player> players = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
         for (Participant participant : participants) {
             addParticipantIfPlayer(players, participant);
         }
         return players;
     }
 
-    private void addParticipantIfPlayer(ArrayList<Player> players, Participant participant) {
+    private void addParticipantIfPlayer(List<Player> players, Participant participant) {
         if (!participant.equals(new Dealer())) {
             players.add((Player)participant);
         }
