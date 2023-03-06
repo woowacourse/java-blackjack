@@ -42,4 +42,14 @@ public class CardTest {
         // expect
         assertThat(card.convertToBlackjackScore()).isEqualTo(10);
     }
+
+    @Test
+    @DisplayName("카드 정보 받아오기")
+    void getCardInfo() {
+        // given
+        Card card = new Card(Number.ACE, Pattern.HEART);
+
+        // expect
+        assertThat(card.getCardInfo()).isEqualTo("A하트");
+    }
 }

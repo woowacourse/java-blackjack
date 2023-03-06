@@ -20,6 +20,10 @@ public class Card {
         return this.number == Number.ACE;
     }
 
+    public String getCardInfo() {
+        return "" + number.getState() + pattern.getName();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -31,10 +35,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(number, pattern);
-    }
-
-    @Override
-    public String toString() {
-        return "" + number.getState() + pattern.getName();
     }
 }
