@@ -27,7 +27,7 @@ public class Participant {
     }
 
     private boolean isElevenAce(final Card card) {
-        return card.getRank() == Rank.ACE && (calculateSumOfRank() + ELEVEN_ACE_VALUE < BUST_BOUNDARY);
+        return card.getRank() == Rank.ACE && (calculateSumOfRank() + ELEVEN_ACE_VALUE <= BUST_BOUNDARY);
     }
 
     public int calculateSumOfRank() {
@@ -45,7 +45,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return calculateSumOfRank() >= BUST_BOUNDARY;
+        return calculateSumOfRank() > BUST_BOUNDARY;
     }
 
     public Set<Card> getCards() {
