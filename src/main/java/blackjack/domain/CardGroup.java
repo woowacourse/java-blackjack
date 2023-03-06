@@ -28,7 +28,7 @@ public class CardGroup {
 
     public int getAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber() == CardNumber.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 }

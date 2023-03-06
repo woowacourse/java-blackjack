@@ -20,10 +20,18 @@ public class Card {
         return number;
     }
 
+    public boolean isAce() {
+        return number.equals(CardNumber.ACE);
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Card card = (Card) o;
         return cardShape == card.cardShape && number == card.number;
     }
