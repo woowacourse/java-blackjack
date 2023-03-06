@@ -6,12 +6,13 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
     public static final int REPEAT_COUNT = 2;
     public static final String YES = "y";
-    
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -135,9 +136,8 @@ public class BlackJackController {
         showFinalCards(dealer, players);
 
         GameResult gameResult = new GameResult(dealer, players);
-        List<Result> dealerResults = gameResult.getDealerResults();
 
-        showDealerResult(dealerResults);
+        showDealerResult(gameResult.getDealerResults());
         players.getPlayers().forEach(
                 player -> showPlayerResult(player, gameResult.getPlayerResult(player)));
     }
@@ -148,17 +148,14 @@ public class BlackJackController {
                 player -> outputView.printFinalCards(player.getName(), makeCardNames(player), player.getScore()));
     }
 
-    private void showDealerResult(final List<Result> dealerResults) {
-        int winCount = getResultsCount(dealerResults, Result.WIN);
-        int loseCount = getResultsCount(dealerResults, Result.LOSE);
-        int drawCount = getResultsCount(dealerResults, Result.DRAW);
-        outputView.printDealerResult(winCount, loseCount, drawCount);
-    }
+    private void showDealerResult(final Map<Result, Integer> dealerResults) {
+        Map<String, Integer> convertedDealerResult = dealerResults.keySet().stream()
+                .collect(Collectors.toMap(
+                        Result::getTerm,
+                        dealerResults::get
+                ));
 
-    private int getResultsCount(final List<Result> dealerResults, final Result result) {
-        return (int) dealerResults.stream()
-                .filter(dealerResult -> dealerResult.equals(result))
-                .count();
+        outputView.printDealerResults(convertedDealerResult);
     }
 
     private void showPlayerResult(final Player player, final Result playerResult) {

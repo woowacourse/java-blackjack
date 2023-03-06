@@ -1,19 +1,25 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
     public static final int MAX_BLACKJACK_SCORE = 21;
+    public static final int INITIAL_SCORE = 0;
 
-    private final List<Result> dealerResults = new ArrayList<>();
+    private final Map<Result, Integer> dealerResults = new HashMap<>();
     private final Map<Player, Result> playersResults = new HashMap<>();
 
     public GameResult(Dealer dealer, Players players) {
+        initDealerResults();
+
         for (Player player : players.getPlayers()) {
             decideWinner(dealer, player);
+        }
+    }
+
+    private void initDealerResults() {
+        for (Result result : Result.values()) {
+            dealerResults.put(result, INITIAL_SCORE);
         }
     }
 
@@ -53,24 +59,24 @@ public class GameResult {
 
     private void dealerWin(Player player) {
         playersResults.put(player, Result.LOSE);
-        dealerResults.add(Result.WIN);
+        dealerResults.replace(Result.WIN, dealerResults.get(Result.WIN) + 1);
     }
 
     private void playerWin(Player player) {
         playersResults.put(player, Result.WIN);
-        dealerResults.add(Result.LOSE);
+        dealerResults.replace(Result.LOSE, dealerResults.get(Result.LOSE) + 1);
     }
 
     private void bothDraw(Player player) {
         playersResults.put(player, Result.DRAW);
-        dealerResults.add(Result.DRAW);
+        dealerResults.replace(Result.DRAW, dealerResults.get(Result.DRAW) + 1);
     }
 
     public Result getPlayerResult(Player player) {
         return playersResults.get(player);
     }
 
-    public List<Result> getDealerResults() {
-        return dealerResults;
+    public Map<Result, Integer> getDealerResults() {
+        return Collections.unmodifiableMap(dealerResults);
     }
 }

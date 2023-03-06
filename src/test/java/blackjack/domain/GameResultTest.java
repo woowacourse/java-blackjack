@@ -30,7 +30,7 @@ class GameResultTest {
     void gameResult1() {
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
+        assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
     }
 
@@ -42,7 +42,7 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.DRAW));
+        assertThat(gameResult.getDealerResults().get(Result.DRAW)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.DRAW);
     }
 
@@ -55,7 +55,7 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.LOSE));
+        assertThat(gameResult.getDealerResults().get(Result.LOSE)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN);
     }
 
@@ -68,7 +68,7 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
+        assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
     }
 
@@ -80,7 +80,7 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.LOSE));
+        assertThat(gameResult.getDealerResults().get(Result.LOSE)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN);
     }
 
@@ -95,7 +95,7 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN));
+        assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
     }
 
@@ -109,11 +109,13 @@ class GameResultTest {
         players.getPlayers().forEach(Player::isAbleToReceive);
         GameResult gameResult = new GameResult(dealer, players);
 
-        assertThat(gameResult.getDealerResults()).isEqualTo(List.of(Result.WIN, Result.DRAW, Result.LOSE));
+        assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
+        assertThat(gameResult.getDealerResults().get(Result.DRAW)).isEqualTo(1);
+        assertThat(gameResult.getDealerResults().get(Result.LOSE)).isEqualTo(1);
+
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
         assertThat(gameResult.getPlayerResult(player2)).isEqualTo(Result.DRAW);
         assertThat(gameResult.getPlayerResult(player3)).isEqualTo(Result.WIN);
-
     }
 
 }
