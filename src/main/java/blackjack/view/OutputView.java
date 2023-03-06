@@ -73,7 +73,7 @@ public class OutputView {
         return card.getCardLetter().getName() + card.getCardSuit().getShape();
     }
 
-    public void printDealerResults(Map<Result, Integer> dealerResults) {
+    public void printDealerResults(final Map<Result, Integer> dealerResults) {
         System.out.print(System.lineSeparator() + "## 최종 승패" + System.lineSeparator() + "딜러: ");
         Map<String, Integer> convertedDealerResult = getConvertedDealerResult(dealerResults);
         convertedDealerResult.keySet().forEach(result -> {
@@ -92,7 +92,7 @@ public class OutputView {
                 ));
     }
 
-    public void printPlayerResult(Player player, Result playerResult) {
+    public void printPlayerResult(final Player player, final Result playerResult) {
         System.out.println(player.getName() + ": " + playerResult.getTerm());
     }
 
