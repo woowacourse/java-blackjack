@@ -34,18 +34,9 @@ class DealerTest {
     @Test
     @DisplayName("첫 패 확인 테스트")
     void getInitialStatus() {
-        User dealer = new Dealer(initialGroup);
-
-        assertThat(dealer.getFirstOpenCardGroup()).containsExactly(cardKing);
-    }
-
-    @Test
-    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
-    void getAceCountTest() {
-        initialGroup.add(new Card(CardShape.CLOVER, CardNumber.ACE));
         final User dealer = new Dealer(initialGroup);
 
-        assertThat(dealer.getAceCount()).isEqualTo(1);
+        assertThat(dealer.getFirstOpenCardGroup()).containsExactly(cardKing);
     }
 
     @Nested

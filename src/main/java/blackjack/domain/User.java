@@ -12,8 +12,8 @@ public abstract class User {
         this.cardGroup = cardGroup;
     }
 
-    final public int getScore() {
-        return cardGroup.getTotalValue();
+    final public Score getScore() {
+        return cardGroup.getScore();
     }
 
     final public void drawCard(final Deck deck) {
@@ -28,8 +28,8 @@ public abstract class User {
         return cardGroup.getCards();
     }
 
-    final public int getAceCount() {
-        return cardGroup.getAceCount();
+    final public CardGroup getCardGroups() {
+        return cardGroup;
     }
 
     abstract protected List<Card> getFirstOpenCardGroup();

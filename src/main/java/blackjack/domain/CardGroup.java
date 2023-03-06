@@ -12,23 +12,29 @@ public class CardGroup {
         cards.add(secondCard);
     }
 
-    public int getTotalValue() {
-        return cards.stream().map(Card::getNumber)
+    public void add(final Card newCard) {
+        cards.add(newCard);
+    }
+
+    public Score getScore() {
+        return Score.calculateScore(getTotalValue(), getAceCount());
+    }
+
+    private int getTotalValue() {
+        return cards.stream()
+                .map(Card::getNumber)
                 .mapToInt(CardNumber::getValue)
                 .sum();
     }
 
-    public void add(final Card newCard) {
-        cards.add(newCard);
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    public int getAceCount() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-    }
 }

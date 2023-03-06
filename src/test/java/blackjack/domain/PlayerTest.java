@@ -38,7 +38,7 @@ class PlayerTest {
     void getScoreTest() {
         final User player = new Player(name, initialGroup);
 
-        assertThat(player.getScore())
+        assertThat(player.getScore().getValue())
                 .isEqualTo(firstCard.getNumber().getValue() + secondCard.getNumber().getValue());
     }
 
@@ -60,13 +60,5 @@ class PlayerTest {
         final User player = new Player(name, initialGroup);
 
         assertThat(player.getFirstOpenCardGroup()).containsExactly(firstCard, secondCard);
-    }
-
-    @Test
-    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
-    void getAceCountTest() {
-        final User player = new Player(name, initialGroup);
-
-        assertThat(player.getAceCount()).isEqualTo(1);
     }
 }
