@@ -9,23 +9,21 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class WinningResultTest {
+
+    private Player gitJjang;
+    private Player irene;
+    private Player poo;
+    private Player kyle;
+
+    @DisplayName("각 게임에 맞는 결과를 도출할 수 있다.")
     @Test
-    void name() {
-        List<String> names = Arrays.asList("깃짱", "이리내", "푸우", "카일");
-        Cards cards = new Cards(new FixedCardsShuffler());
-
-        Participants participants = new Participants(names, cards);
-        Player gitJjang = participants.getPlayers().get(0); // K, K
-        Player irene = participants.getPlayers().get(1); // K, K
-        Player poo = participants.getPlayers().get(2); // Q, Q
-        Player kyle = participants.getPlayers().get(3); // Q, Q
-
-        gitJjang.receiveCard(new Card("A", "스페이드")); // K, K, A => 21
-        poo.receiveCard(new Card("A", "하트")); // Q, Q, A => 21
-        kyle.receiveCard(new Card("7", "하트")); // Q, Q, 7 => 27
+    void winningResultTest() {
+        Participants participants = initializeParticipants();
+        giveCardToParticipants();
 
         assertThat(gitJjang.calculateScore()).isEqualTo(21); // 승
         assertThat(irene.calculateScore()).isEqualTo(20); // 무
@@ -43,5 +41,24 @@ class WinningResultTest {
         assertThat(winningResult.getPlayersResult().get(irene)).isEqualTo(WinningStatus.DRAW);
         assertThat(winningResult.getPlayersResult().get(poo)).isEqualTo(WinningStatus.WIN);
         assertThat(winningResult.getPlayersResult().get(kyle)).isEqualTo(WinningStatus.LOSE);
+    }
+
+    private void giveCardToParticipants() {
+        gitJjang.receiveCard(new Card("A", "스페이드")); // K, K, A => 21
+        poo.receiveCard(new Card("A", "하트")); // Q, Q, A => 21
+        kyle.receiveCard(new Card("7", "하트")); // Q, Q, 7 => 27
+    }
+
+    private Participants initializeParticipants() {
+        List<String> names = Arrays.asList("깃짱", "이리내", "푸우", "카일");
+        Cards cards = new Cards(new FixedCardsShuffler());
+
+        Participants participants = new Participants(names, cards);
+
+        gitJjang = participants.getPlayers().get(0); // K, K
+        irene = participants.getPlayers().get(1); // K, K
+        poo = participants.getPlayers().get(2); // Q, Q
+        kyle = participants.getPlayers().get(3); // Q, Q
+        return participants;
     }
 }
