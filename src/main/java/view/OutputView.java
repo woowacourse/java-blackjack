@@ -33,7 +33,7 @@ public class OutputView {
         String cardStr = player.getPlayerName().getName() + "카드: ";
         StringJoiner stringJoiner = new StringJoiner(", ");
         for (Card card : player.getCardPool().getCards()) {
-            stringJoiner.add(CardNumberMapper.getCardNumber(card.getNumber()) + CardTypeMapper.getCardName(card.getType()));
+            stringJoiner.add(CardNumberMapper.ofCardNumber(card.getNumber()) + CardTypeMapper.ofCardType(card.getType()));
         }
         return cardStr + stringJoiner;
     }

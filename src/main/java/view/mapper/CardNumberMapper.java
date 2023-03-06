@@ -20,19 +20,21 @@ public enum CardNumberMapper {
     QUEEN(CardNumber.QUEEN, "Q"),
     KING(CardNumber.KING, "K");
 
-    private final CardNumber cardNumber;
-    private final String value;
+    private static final String NO_SUCH_CARD_NUMBER_MESSAGE = "[ERROR] 카드 숫자가 정의되어 있지 않습니다.";
 
-    CardNumberMapper(final CardNumber cardNumber, final String value) {
+    private final CardNumber cardNumber;
+    private final String message;
+
+    CardNumberMapper(final CardNumber cardNumber, final String message) {
         this.cardNumber = cardNumber;
-        this.value = value;
+        this.message = message;
     }
 
-    public static String getCardNumber(final CardNumber cardNumber) {
+    public static String ofCardNumber(final CardNumber cardNumber) {
         return Arrays.stream(CardNumberMapper.values())
                 .filter(it -> it.cardNumber == cardNumber)
+                .map(cardNumberMapper -> cardNumberMapper.message)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 타입이 없습니다."))
-                .value;
+                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_CARD_NUMBER_MESSAGE));
     }
 }

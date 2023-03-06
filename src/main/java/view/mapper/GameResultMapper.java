@@ -10,6 +10,8 @@ public enum GameResultMapper {
     WIN(GameResult.WIN, "승"),
     DRAW(GameResult.DRAW, "무");
 
+    private static final String NO_SUCH_GAME_RESULT_MESSAGE = "[ERROR] 게임 결과가 정의되어 있지 않습니다.";
+
     private final GameResult gameResult;
     private final String message;
 
@@ -23,6 +25,6 @@ public enum GameResultMapper {
                 .filter(gameResultMapper -> gameResultMapper.gameResult == targetGameResult)
                 .map(gameResultMapper -> gameResultMapper.message)
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_GAME_RESULT_MESSAGE));
     }
 }

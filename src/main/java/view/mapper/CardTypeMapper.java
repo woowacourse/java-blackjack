@@ -11,19 +11,21 @@ public enum CardTypeMapper {
     CLOVER(CardType.CLOVER, "클로버"),
     DIAMOND(CardType.DIAMOND, "다이아몬드");
 
-    private final CardType cardType;
-    private final String cardName;
+    private static final String NO_SUCH_CARD_TYPE_MESSAGE = "[ERROR] 카드 타입이 정의되어 있지 않습니다.";
 
-    CardTypeMapper(final CardType cardType, final String cardName) {
+    private final CardType cardType;
+    private final String message;
+
+    CardTypeMapper(final CardType cardType, final String message) {
         this.cardType = cardType;
-        this.cardName = cardName;
+        this.message = message;
     }
 
-    public static String getCardName(final CardType cardType) {
+    public static String ofCardType(final CardType cardType) {
         return Arrays.stream(CardTypeMapper.values())
                 .filter(it -> it.cardType == cardType)
+                .map(cardTypeMapper -> cardTypeMapper.message)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 타입이 없습니다."))
-                .cardName;
+                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_CARD_TYPE_MESSAGE));
     }
 }
