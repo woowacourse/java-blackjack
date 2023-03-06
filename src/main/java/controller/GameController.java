@@ -97,12 +97,13 @@ public class GameController {
     private void handleDrawCard(final GameManager gameManager,
                                 final int playerIndex,
                                 final Participant player) {
-        DrawCardCommand drawCardCommand;
-        do {
-            drawCardCommand = getDrawCardCommand(player);
-            checkDraw(gameManager, playerIndex, drawCardCommand);
-            outputView.printPlayerCard(player.getName(), player.getCard());
-        } while (canDrawCard(player, drawCardCommand));
+        DrawCardCommand drawCardCommand = getDrawCardCommand(player);
+        checkDraw(gameManager, playerIndex, drawCardCommand);
+        outputView.printPlayerCard(player.getName(), player.getCard());
+        if (cannotDrawCard(player, drawCardCommand)) {
+            return;
+        }
+        handleDrawCard(gameManager, playerIndex, player);
     }
 
     private DrawCardCommand getDrawCardCommand(final Participant player) {
@@ -115,13 +116,14 @@ public class GameController {
     private void checkDraw(final GameManager gameManager,
                            final int playerIndex,
                            final DrawCardCommand drawCardCommand) {
-        if (drawCardCommand.isDrawAgain()) {
-            gameManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
+        if (drawCardCommand.isDrawStop()) {
+            return;
         }
+        gameManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
     }
 
-    private boolean canDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
-        return !isBust(player) && !isBlackJack(player) && drawCardCommand.isDrawAgain();
+    private boolean cannotDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
+        return isBust(player) || isBlackJack(player) || drawCardCommand.isDrawStop();
     }
 
     private boolean isBust(final Participant player) {
