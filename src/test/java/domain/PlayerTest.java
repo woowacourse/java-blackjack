@@ -1,7 +1,9 @@
 package domain;
 
-import static fixture.CardFixture.하트3;
-import static fixture.CardFixture.하트에이스;
+import static domain.CardInfo.A;
+import static domain.CardInfo.FOUR;
+import static domain.CardInfo.THREE;
+import static domain.Shape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -25,19 +27,22 @@ public class PlayerTest {
     }
 
     @Test
-    void 카드박스에서_카드를_뽑을_수_있다() {
+    void 카드를_받아_자신의_카드뭉치에_더할수_있다() {
         Name name = getName();
         Cards cards = getCards();
 
         Player player = new Player(name, cards);
 
-        assertThat(player.selectToPickOtherCard(new CardBox())).isTrue();
+        //중복카드면 false
+        assertThat(player.addCard(new Card(HEART, A))).isFalse();
+        //중복카드가 아니면 true
+        assertThat(player.addCard(new Card(HEART, FOUR))).isTrue();
     }
 
     private static Cards getCards() {
         List<Card> cardsByCardBox = new ArrayList<>();
-        cardsByCardBox.add(하트에이스);
-        cardsByCardBox.add(하트3);
+        cardsByCardBox.add(new Card(HEART, A));
+        cardsByCardBox.add(new Card(HEART, THREE));
         return new Cards(cardsByCardBox);
     }
 

@@ -18,14 +18,10 @@ public class Cards {
     }
 
     public int sumOfCards() {
-        if (isOddSum()) {
-            int sum = calculateOddCardsSum();
-            return checkOver21AndContainsA(sum);
-        }
-        int sum = 0;
-        for (int i = 0; i < cards.size(); i += 2) {
-            sum += cards.get(i).sum(cards.get(i + 1));
-        }
+        int sum = cards.stream()
+                .map(Card::getValue)
+                .mapToInt(i -> i)
+                .sum();
         return checkOver21AndContainsA(sum);
     }
 
@@ -39,18 +35,6 @@ public class Cards {
     private boolean containsA() {
         return cards.stream()
                 .anyMatch(Card::isACE);
-    }
-
-    private int calculateOddCardsSum() {
-        int sum = cards.get(0).getValue();
-        for (int i = 1; i < cards.size(); i += 2) {
-            sum += cards.get(i).sum(cards.get(i + 1));
-        }
-        return sum;
-    }
-
-    private boolean isOddSum() {
-        return cards.size() % 2 != 0;
     }
 
     public boolean addCard(final Card otherCard) {
@@ -80,7 +64,7 @@ public class Cards {
         return cards.size() == 2 && blackJack;
     }
 
-    public List<String> getCards() {
+    public List<String> cardsToString() {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());

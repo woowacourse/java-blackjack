@@ -6,6 +6,8 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
+
     public void printPlayerNames(List<String> names) {
         System.out.print(names.get(0) + "와 ");
         String nameMessage = IntStream.range(1, names.size()).mapToObj(names::get)
@@ -44,7 +46,7 @@ public class OutputView {
     }
 
     public void printWinningResult(final List<Integer> winningResult, final List<String> namesCopy) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
+        System.out.println(NEW_LINE + "## 최종 승패");
 
         printDealerResult(winningResult);
 
@@ -76,13 +78,13 @@ public class OutputView {
     private static void printResult(final List<Integer> winningResult, final List<String> namesCopy, final int i) {
         System.out.print(namesCopy.get(i + 1) + ": ");
         if (winningResult.get(i) == 1) {
-            System.out.print("패" + System.lineSeparator());
+            System.out.print("패" + NEW_LINE);
         }
         if (winningResult.get(i) == 0) {
-            System.out.print("무" + System.lineSeparator());
+            System.out.print("무" + NEW_LINE);
         }
         if (winningResult.get(i) == -1) {
-            System.out.print("승" + System.lineSeparator());
+            System.out.print("승" + NEW_LINE);
         }
     }
 
@@ -103,5 +105,9 @@ public class OutputView {
             return;
         }
         result[2] = result[2] + 1;
+    }
+
+    public void newLine() {
+        System.out.print(NEW_LINE);
     }
 }

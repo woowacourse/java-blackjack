@@ -1,6 +1,10 @@
 package domain;
 
-import static fixture.CardFixture.*;
+import static domain.CardInfo.A;
+import static domain.CardInfo.TEN;
+import static domain.CardInfo.THREE;
+import static domain.CardInfo.TWO;
+import static domain.Shape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -18,7 +22,7 @@ public class CardsTest {
 
     @Test
     void 카드뭉치_안에는_같은_카드가_두개일_수_없다() {
-        List<Card> cards = List.of(하트에이스, 하트에이스);
+        List<Card> cards = List.of(new Card(HEART, A), new Card(HEART, A));
         assertThatThrownBy(() -> new Cards(cards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -26,8 +30,8 @@ public class CardsTest {
     @Test
     void 카드뭉치는_가진_카드의_총합을_반환한다() {
         List<Card> cards = new ArrayList<>();
-        cards.add(하트에이스);
-        cards.add(하트3);
+        cards.add(new Card(HEART, A));
+        cards.add(new Card(HEART, THREE));
         Cards actual = new Cards(cards);
 
         assertThat(actual.sumOfCards()).isEqualTo(14);
@@ -40,8 +44,8 @@ public class CardsTest {
     })
     void 카드뭉치는_카드를_추가할_경우_성공하면_True를_실패하면_False를_반환한다(Shape shape, CardInfo cardInfo, boolean expected) {
         List<Card> cards = new ArrayList<>();
-        cards.add(하트에이스);
-        cards.add(하트3);
+        cards.add(new Card(HEART, A));
+        cards.add(new Card(HEART, THREE));
         Cards actual = new Cards(cards);
 
         assertThat(actual.addCard(new Card(shape, cardInfo))).isEqualTo(expected);
@@ -50,8 +54,8 @@ public class CardsTest {
     @Test
     void 블랙잭인지_확인할_수_있다() {
         List<Card> cards = new ArrayList<>();
-        cards.add(하트에이스);
-        cards.add(하트10);
+        cards.add(new Card(HEART, A));
+        cards.add(new Card(HEART, TEN));
         Cards actual = new Cards(cards);
 
         assertThat(actual.isBlackJack()).isTrue();
@@ -61,9 +65,9 @@ public class CardsTest {
     void 카드의_수가_홀수일_때_총합을_반환한다() {
         List<Card> cards = new ArrayList<>();
 
-        cards.add(하트2);
-        cards.add(하트3);
-        cards.add(하트10);
+        cards.add(new Card(HEART, TWO));
+        cards.add(new Card(HEART, THREE));
+        cards.add(new Card(HEART, TEN));
         Cards actual = new Cards(cards);
 
         assertThat(actual.sumOfCards()).isEqualTo(15);
@@ -74,9 +78,9 @@ public class CardsTest {
         List<Card> cards = new ArrayList<>();
 
         // 21 이 넘을 경우 A 는 1로 대체된다
-        cards.add(하트에이스);
-        cards.add(하트2);
-        cards.add(하트10);
+        cards.add(new Card(HEART, A));
+        cards.add(new Card(HEART, TWO));
+        cards.add(new Card(HEART, TEN));
         Cards actual = new Cards(cards);
 
         assertThat(actual.sumOfCards()).isEqualTo(13);

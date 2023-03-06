@@ -1,10 +1,5 @@
 package domain;
 
-import static fixture.CardFixture.하트10하트4;
-import static fixture.CardFixture.하트9하트3;
-import static fixture.CardFixture.하트에이스하트2;
-import static fixture.NameFixture.*;
-import static fixture.NameFixture.우가;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,9 +20,12 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PlayersTest {
 
-    Player player1 = new Player(우가, 하트에이스하트2);
-    Player player2 = new Player(하마드, 하트9하트3);
-    Player player3 = new Player(빙봉, 하트10하트4);
+    Player player1 = new Player(new Name("우가"),
+            new Cards(List.of(new Card(Shape.HEART, CardInfo.A), new Card(Shape.HEART, CardInfo.TWO))));
+    Player player2 = new Player(new Name("하마드"),
+            new Cards(List.of(new Card(Shape.HEART, CardInfo.NINE), new Card(Shape.HEART, CardInfo.THREE))));
+    Player player3 = new Player(new Name("빙봉"),
+            new Cards(List.of(new Card(Shape.HEART, CardInfo.TEN), new Card(Shape.HEART, CardInfo.FOUR))));
 
     Players players;
 

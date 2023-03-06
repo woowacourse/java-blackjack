@@ -22,13 +22,13 @@ public class Players {
             throw new IllegalArgumentException("블랙잭은 최소 한명이상 가능합니다.");
         }
     }
-
-    public void playerDrawAddCard(final int index, final CardBox cardBox) {
-        boolean flag = true;
-        while (flag) {
-            flag = !players.get(index).selectToPickOtherCard(cardBox);
-        }
-    }
+//
+//    public void playerDrawAddCard(final int index, final CardBox cardBox) {
+//        boolean flag = true;
+//        while (flag) {
+//            flag = !players.get(index).addCard(cardBox);
+//        }
+//    }
 
     public List<String> getNames() {
         return players.stream()
@@ -38,14 +38,6 @@ public class Players {
 
     public int size() {
         return players.size();
-    }
-
-    public String getNameOfPlayer(final int index) {
-        return players.get(index).getName();
-    }
-
-    public List<String> getCardsOfPlayer(final int index) {
-        return players.get(index).getCards();
     }
 
     public Player getPlayer(final int index) {
@@ -58,5 +50,15 @@ public class Players {
 
     public boolean isNotBurst(final int index) {
         return players.get(index).isNotBurst();
+    }
+
+    public List<Cards> getCardss() {
+        return players.stream()
+                .map(Player::getCards)
+                .collect(Collectors.toList());
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Player {
 
     private final Name name;
@@ -12,8 +10,8 @@ public class Player {
         this.cards = cards;
     }
 
-    public boolean selectToPickOtherCard(final CardBox cardBox) {
-        return cards.addCard(cardBox.get());
+    public boolean addCard(final Card card) {
+        return cards.addCard(card);
     }
 
     public int sumOfPlayerCards() {
@@ -24,8 +22,8 @@ public class Player {
         return name.getName();
     }
 
-    public List<String> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 
     public boolean isNotBurst() {

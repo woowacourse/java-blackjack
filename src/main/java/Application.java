@@ -1,4 +1,3 @@
-import domain.CardBox;
 import service.BlackJackGame;
 import view.InputView;
 import view.OutputView;
@@ -10,6 +9,6 @@ public class Application {
                 new OutputView()
         );
 
-        game.run(new CardBox());
+        game.run();
     }
 }
