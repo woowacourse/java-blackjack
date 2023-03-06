@@ -129,8 +129,6 @@ public class SimpleLinkedList<T> implements SimpleList<T> {
         checkIndexOutOfBounds(index);
         if (index == 0) {
             Node node = head;
-            head = node.next;
-            head.previous = null;
             size--;
             return node.value;
         }

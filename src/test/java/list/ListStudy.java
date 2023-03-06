@@ -83,10 +83,15 @@ public class ListStudy {
             assertThat(new SimpleArrayList<Integer>().isEmpty()).isTrue();
         }
 
-//
-//        assertThat(values.remove("first")).isTrue(); // list에서 "first"를 삭제한다.
-//        assertThat(values.size()).isEqualTo(3); // 값이 삭제 됐는지 확인한다.
-//        assertThat(values.remove("fifth")).isFalse(); // 없는 원소를 제거하려하면 "false"를 반환한다.
+        @Test
+        void remove_test() {
+            assertThat(stringValues.remove("init")).isTrue();
+            assertThat(stringValues.isEmpty()).isTrue();
+            assertThat(stringValues.remove("fifth")).isFalse();
+            assertThat(integerValues.remove(Integer.valueOf(0))).isTrue();
+            assertThat(integerValues.isEmpty()).isTrue();
+            assertThat(integerValues.remove(Integer.valueOf(1))).isFalse();
+        }
 //
 //        assertThat(values.remove(0)).isEqualTo("0"); // 첫 번째 값을 삭제한다.
 //        assertThat(values.size()).isEqualTo(2); // 값이 삭제 됐는지 확인한다.
@@ -170,6 +175,16 @@ public class ListStudy {
             assertThat(new SimpleArrayList<String>().isEmpty()).isTrue();
             assertThat(integerValues.isEmpty()).isFalse();
             assertThat(new SimpleArrayList<Integer>().isEmpty()).isTrue();
+        }
+
+        @Test
+        void remove_test() {
+            assertThat(stringValues.remove("init")).isTrue();
+            assertThat(stringValues.isEmpty()).isTrue();
+            assertThat(stringValues.remove("fifth")).isFalse();
+            assertThat(integerValues.remove(Integer.valueOf(0))).isTrue();
+            assertThat(integerValues.isEmpty()).isTrue();
+            assertThat(integerValues.remove(Integer.valueOf(1))).isFalse();
         }
     }
 }

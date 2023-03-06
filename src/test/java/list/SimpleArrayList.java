@@ -1,7 +1,5 @@
 package list;
 
-import java.util.Arrays;
-
 public class SimpleArrayList<T> implements SimpleList<T> {
 
     private static final int INITIAL_CAPACITY = 1;
@@ -137,7 +135,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         for (int i = index + 1; i < size; i++) {
             data[i - 1] = data[i];
         }
-        size--;
-        data[size] = null;
+        data[--size] = null;
     }
 }
