@@ -5,6 +5,7 @@ import model.user.Dealer;
 import model.user.Hand;
 import model.user.Participants;
 import model.user.Player;
+import model.user.Score;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class OutputView {
 
     public static void printDivideTwoCard(List<Player> players) {
         String playersNameForm = players.stream()
-                .map(player -> player.getName())
+                .map(Player::getName)
                 .collect(joining(", "));
         System.out.println(System.lineSeparator() + String.format(DIVIDE_CARDS_MESSAGE, playersNameForm));
     }
@@ -80,6 +81,36 @@ public class OutputView {
                             + player.getHand().getTotalValue()
             );
         }
+    }
+
+    public static void printResult(Participants participants) {
+        List<Score> dealerResult = participants.getFinalResult(participants.getDealer());
+
+        int dealerWinCount = getDealerWinCount(dealerResult, Score.LOSE);
+        int dealerLoseCount = getDealerWinCount(dealerResult, Score.WIN);
+
+        List<Player> players = participants.getPlayers();
+
+        System.out.println(System.lineSeparator() + "## 최종 승패");
+        printDealerResult(dealerWinCount, dealerLoseCount);
+        printPlayersResult(participants, players);
+    }
+
+    private static void printPlayersResult(Participants participants, List<Player> players) {
+        for (Player player : players) {
+            Score score = player.judgeResult(participants.getDealer().calculateTotalValue());
+            System.out.printf("%s: %s\n", player.getName(), score == Score.WIN ? "승" : "패");
+        }
+    }
+
+    private static void printDealerResult(int dealerWinCount, int dealerLoseCount) {
+        System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
+    }
+
+    private static int getDealerWinCount(List<Score> dealerResult, Score lose) {
+        return (int) dealerResult.stream()
+                .filter(score -> score == lose)
+                .count();
     }
 
 }

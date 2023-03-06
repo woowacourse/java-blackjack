@@ -13,7 +13,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return value == Value.ACE;
+        return Value.ACE.equals(value);
     }
 
     @Override
@@ -36,5 +36,13 @@ public class Card {
 
     public int getValue() {
         return this.value.getValue();
+    }
+
+    public String getShape() {
+        return this.shape.getShape();
+    }
+
+    public String getName() {
+        return this.value.getName();
     }
 }

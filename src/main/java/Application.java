@@ -4,6 +4,6 @@ import model.card.Deck;
 public class Application {
 
     public static void main(String[] args) {
-        new BlackJackController(new Deck()).init();
+        new BlackJackController().init(new Deck());
     }
 }

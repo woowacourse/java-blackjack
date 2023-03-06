@@ -38,4 +38,5 @@ public class Dealer implements Receivable {
     public Hand getHand() {
         return user.getHand();
     }
+
 }

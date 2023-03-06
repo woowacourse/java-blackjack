@@ -26,7 +26,6 @@ public class Hand {
 
     public int getTotalValue() {
         int totalValue = calculateTotalValue();
-
         if (totalValue > BUST_NUMBER && isIncludeAce()) {
             return totalValue - 10;
         }
