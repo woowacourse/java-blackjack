@@ -154,4 +154,32 @@ class PlayerTest {
         assertThat(player.getName())
                 .isEqualTo("123");
     }
+    
+    @Test
+    @DisplayName("사용자가 카드를 더 뽑을 수 없으면 거짓을 반환해야 한다.")
+    void canDrawCard_false() {
+        // given
+        Player player = new Player("glen", List.of(
+                new Card(Suit.DIAMOND, Rank.TEN),
+                new Card(Suit.DIAMOND, Rank.TEN),
+                new Card(Suit.DIAMOND, Rank.TEN)
+        ));
+
+        // expect
+        assertThat(player.canDrawCard())
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("사용자가 카드를 더 뽑을 수 있으면 참을 반환해야 한다.")
+    void canDrawCard_true() {
+        // given
+        Player player = new Player("glen", List.of(
+                new Card(Suit.DIAMOND, Rank.TEN)
+        ));
+
+        // expect
+        assertThat(player.canDrawCard())
+                .isTrue();
+    }
 }
