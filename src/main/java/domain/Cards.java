@@ -7,11 +7,8 @@ public class Cards {
 
     private static final int BOUNDARY = 21;
     private static final int BIGGER_A_SCORE = 10;
-    private final List<Card> cards;
 
-    public Cards() {
-        this.cards = new ArrayList<>();
-    }
+    private final List<Card> cards;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
