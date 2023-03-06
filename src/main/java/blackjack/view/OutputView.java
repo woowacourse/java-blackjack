@@ -23,6 +23,7 @@ public class OutputView {
     private static final String WIN_MESSAGE = "승";
     private static final String TIE_MESSAGE = "무";
     private static final String LOSE_MESSAGE = "패";
+    private static final String ERROR_PREFIX_MESSAGE = "[ERROR] ";
 
     public void printInitialHands(final Participants participants) {
         printSplitMessage(participants);
@@ -116,5 +117,9 @@ public class OutputView {
     private void printParticipantCardsAndScores(final Participant participant) {
         printParticipantCard(participant);
         printScore(participant);
+    }
+
+    public void printErrorMessage(IllegalArgumentException e) {
+        System.out.println(ERROR_PREFIX_MESSAGE + e.getMessage());
     }
 }

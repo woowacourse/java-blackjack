@@ -9,12 +9,15 @@ import java.util.Scanner;
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
+        final InputView inputView = new InputView(scanner);
+        final OutputView outputView = new OutputView();
+        final BlackjackController blackjackController = new BlackjackController(inputView, outputView);
 
-        InputView inputView = new InputView(scanner);
-        OutputView outputView = new OutputView();
-
-        BlackjackController blackjackController = new BlackjackController(inputView, outputView);
-        blackjackController.run();
+        try {
+            blackjackController.run();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+        }
     }
 }
