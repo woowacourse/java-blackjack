@@ -12,22 +12,23 @@
 classDiagram
     BlackJackGame <|-- Gamblers
     BlackJackGame <|-- Deck
-    BlackJackGame <|-- Players
-    BlackJackGame <|-- Dealer
-blackjackcontroller.BlackjackController <|-- BlackJackGame
-blackjackcontroller.BlackjackController <|-- InputView
-blackjackcontroller.BlackjackController <|-- OutputView
-Deck <.. DeckGenerator
-<<interface>>DeckGenerator
-DeckGenerator <|.. RandomDeckGenerator
-Players <-- Player
-Player <-- Name
-Player <-- Hand
-Dealer <-- Name
-Dealer <-- Hand
-Hand <-- Card
-Card <-- Pattern
-Card <-- Number
+    BlackJackGame <|-- Participants
+    Participants <|-- Players
+    Participants <|-- Dealer
+    BlackjackController <|-- BlackJackGame
+    BlackjackController <|-- InputView
+    BlackjackController <|-- OutputView
+    Deck <.. DeckGenerator
+    <<interface>>DeckGenerator
+    DeckGenerator <|.. RandomDeckGenerator
+    Players <-- Player
+    Player <-- Name
+    Player <-- Hand
+    Dealer <-- Name
+    Dealer <-- Hand
+    Hand <-- Card
+    Card <-- Pattern
+    Card <-- Number
 ```
 
 ## ✨기능 구현 목록
