@@ -16,8 +16,8 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards generateEmptyCards() {
-        return new Cards(new ArrayList<>());
+    public Cards() {
+        this.cards = new ArrayList<>();
     }
 
     public int calculateTotalScore() {

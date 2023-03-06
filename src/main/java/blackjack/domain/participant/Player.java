@@ -10,7 +10,7 @@ public class Player extends Participant {
     private final String name;
 
     public Player(String name) {
-        super(Cards.generateEmptyCards());
+        super(new Cards());
         validateNameLength(name);
         this.name = name;
     }

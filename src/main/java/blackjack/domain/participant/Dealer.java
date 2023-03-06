@@ -23,7 +23,7 @@ public class Dealer extends Participant {
     private final Deck deck;
 
     public Dealer(final Players players) {
-        super(Cards.generateEmptyCards());
+        super(new Cards());
         this.players = players;
         this.deck = new Deck();
     }
