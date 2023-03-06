@@ -24,7 +24,7 @@ public class BlackJack {
     }
 
     public static BlackJack of(final Users users, final CardIndexGenerator cardIndexGenerator) {
-        Deck deck = Deck.from(cardIndexGenerator);
+        Deck deck = new Deck(cardIndexGenerator);
         initCards(users, deck);
         return new BlackJack(users, deck);
     }
