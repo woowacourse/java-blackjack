@@ -43,9 +43,9 @@ class PlayersTest {
         players.receiveSettingCards(settingCards);
 
         assertAll(
-                () -> assertThat(player1.getCards().getCards().size()).isEqualTo(2),
-                () -> assertThat(player2.getCards().getCards().size()).isEqualTo(2),
-                () -> assertThat(player3.getCards().getCards().size()).isEqualTo(2)
+                () -> assertThat(player1.getCards().size()).isEqualTo(2),
+                () -> assertThat(player2.getCards().size()).isEqualTo(2),
+                () -> assertThat(player3.getCards().size()).isEqualTo(2)
         );
     }
 

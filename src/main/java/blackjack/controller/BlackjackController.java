@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -29,7 +31,7 @@ public class BlackjackController {
         Players players = new Players(playerNames);
         dealer = new Dealer(players);
         setting();
-        for (Player player : dealer.getPlayers().getPlayers()) {
+        for (Player player : dealer.getPlayers()) {
             play(player);
         }
         turnOfDealer();
@@ -42,17 +44,16 @@ public class BlackjackController {
 
         outputView.printDistributeCardsMessage(getPlayerNames(dealer.getPlayers()));
 
-        Card card = dealer.getCards().getCards().get(0);
+        Card card = dealer.showOneCard();
         outputView.printDealerInitCards(card.toString());
 
-        outputView.printPlayersInitCards(getPlayersCards(dealer));
+        outputView.printPlayersInitCards(getPlayersCards());
     }
 
-    private List<String> getPlayerNames(final Players players) {
-        List<String> playerNames = players.getPlayers().stream()
+    private List<String> getPlayerNames(final List<Player> players) {
+        return players.stream()
                 .map(Player::getName)
-                .collect(Collectors.toList());
-        return playerNames;
+                .collect(toList());
     }
 
     private void play(Player player) {
@@ -82,11 +83,10 @@ public class BlackjackController {
     }
 
     private void finishGame() {
-        List<Player> players = dealer.getPlayers().getPlayers();
-        List<Integer> scores = getPlayersScore(players);
+        List<Integer> scores = getPlayersScore(dealer.getPlayers());
 
         outputView.printDealerFinalCards(getCurrentCards(dealer.getCards()), dealer.calculateTotalScore());
-        outputView.printPlayerFinalCards(getPlayersCards(dealer), scores);
+        outputView.printPlayerFinalCards(getPlayersCards(), scores);
 
         Map<Player, Result> playerResults = dealer.makePlayerResults();
         List<Integer> dealerResult = dealer.countSelfResults(playerResults);
@@ -97,25 +97,26 @@ public class BlackjackController {
     }
 
     private List<Integer> getPlayersScore(final List<Player> players) {
-        List<Integer> scores = players.stream()
+        return players.stream()
                 .map(Player::calculateTotalScore)
-                .collect(Collectors.toList());
-        return scores;
+                .collect(toList());
     }
 
-    private List<String> getCurrentCards(Cards cards) {
-        return cards.getCards().stream()
+    private List<String> getCurrentCards(List<Card> cards) {
+        return cards.stream()
                 .map(Card::toString)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
-    private Map<String, List<String>> getPlayersCards(final Dealer dealer) {
-        List<Player> players = dealer.getPlayers().getPlayers();
+    private Map<String, List<String>> getPlayersCards() {
+        List<Player> players = dealer.getPlayers();
         Map<String, List<String>> playersCards = new HashMap<>();
+
         for (Player player : players) {
-            playersCards.put(player.getName(), player.getCards().getCards().stream()
+            playersCards.put(player.getName(), player.getCards()
+                    .stream()
                     .map(Card::toString)
-                    .collect(Collectors.toList()));
+                    .collect(toList()));
         }
         return playersCards;
     }

@@ -39,6 +39,10 @@ public class Dealer extends Participant {
         players.receiveSettingCards(cards);
     }
 
+    public Card showOneCard() {
+        return this.cards.getCards().get(0);
+    }
+
     public void settingSelfCards() {
         for (int count = 0; count < INIT_CARD_COUNT; count++) {
             receiveCard(deck.drawCard());
@@ -86,7 +90,7 @@ public class Dealer extends Participant {
         return cards.calculateTotalScore() <= DEALER_CAN_DRAW_SCORE;
     }
 
-    public Players getPlayers() {
-        return players;
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }

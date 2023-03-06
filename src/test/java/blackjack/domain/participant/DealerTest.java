@@ -40,8 +40,8 @@ class DealerTest {
         dealer.settingCards();
 
         assertAll(
-                () -> assertThat(player1.getCards().getCards().size()).isEqualTo(2),
-                () -> assertThat(player2.getCards().getCards().size()).isEqualTo(2)
+                () -> assertThat(player1.getCards().size()).isEqualTo(2),
+                () -> assertThat(player2.getCards().size()).isEqualTo(2)
         );
     }
 
@@ -50,7 +50,7 @@ class DealerTest {
     void drawSelfCards() {
         dealer.settingSelfCards();
 
-        assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
+        assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -58,7 +58,7 @@ class DealerTest {
     void giveOneMoreCard() {
         dealer.giveOneMoreCard(player1);
 
-        assertThat(player1.getCards().getCards().size()).isEqualTo(1);
+        assertThat(player1.getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -66,14 +66,14 @@ class DealerTest {
     void canDrawTest() {
         dealer.receiveCard(new Card(Number.TWO, Pattern.HEART));
         dealer.receiveCard(new Card(Number.THREE, Pattern.HEART));
-        int initSize = dealer.getCards().getCards().size();
+        int initSize = dealer.getCards().size();
 
         while (dealer.canDraw()) {
             dealer.drawOneMoreCard();
         }
 
         assertAll(
-                () -> assertThat(initSize).isNotEqualTo(dealer.getCards().getCards().size()),
+                () -> assertThat(initSize).isNotEqualTo(dealer.getCards().size()),
                 () -> assertThat(dealer.calculateTotalScore()).isGreaterThan(16)
         );
     }

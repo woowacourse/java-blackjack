@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.List;
 
 abstract public class Participant {
 
@@ -19,7 +20,7 @@ abstract public class Participant {
         return this.cards.calculateTotalScore();
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }
