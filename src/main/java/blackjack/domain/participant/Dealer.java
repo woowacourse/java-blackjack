@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    public static final int BLACKJACK_SCORE = 21;
     private static final int SPECIFIC_SCORE_OF_DEALER = 16;
 
     private final Players players;
