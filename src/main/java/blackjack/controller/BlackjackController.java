@@ -3,16 +3,24 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Cards;
 import blackjack.domain.factory.PlayersFactory;
-import blackjack.domain.player.*;
-import blackjack.domain.result.Result;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Names;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
+
+    private static final int PLAYERS_RESULTS = 0;
+    private static final int DEALER_RESULTS = 1;
+
+    private BlackjackGame blackjackGame;
 
     public void run() {
         Players players = generatePlayers();
@@ -29,7 +37,8 @@ public class BlackjackController {
     }
 
     private void ready(Players players, Dealer dealer) {
-        BlackjackGame.giveFirstCards(players, dealer);
+        blackjackGame = new BlackjackGame(players, dealer);
+        blackjackGame.giveFirstCards();
         OutputView.printReadyMessage(players.getPlayers().stream()
                 .map(Player::getPlayerName)
                 .collect(Collectors.toList())
@@ -48,7 +57,9 @@ public class BlackjackController {
 
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
-        printResults(dealer, players);
+        List<HashMap> results = blackjackGame.getResults();
+        OutputView.printDealerResults(results.get(DEALER_RESULTS));
+        OutputView.printPlayersResults(results.get(PLAYERS_RESULTS));
     }
 
     private void stopServingCard(Player player) {
@@ -79,21 +90,6 @@ public class BlackjackController {
             answer = InputView.askAdditionalCard(player.getPlayerName());
         }
         stopServingCard(player);
-    }
-
-    private void printResults(Dealer dealer, Players players) {
-        int dealerScore = dealer.getTotalScore();
-        HashMap<Player, Result> playerResults = new HashMap<>();
-        HashMap<Result, Integer> dealerResults = initializedResults();
-        BlackjackGame.calculateResults(dealerScore, players, playerResults, dealerResults);
-        OutputView.printResults(playerResults, dealerResults);
-    }
-
-    private HashMap<Result, Integer> initializedResults() {
-        HashMap<Result, Integer> dealerResults = new HashMap<>();
-        Arrays.stream(Result.values())
-                .forEach(result -> dealerResults.put(result, 0));
-        return dealerResults;
     }
 
     private enum GameCommand {

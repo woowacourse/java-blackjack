@@ -67,13 +67,16 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printResults(HashMap<Player, Result> playerResults, HashMap<Result, Integer> dealerResults) {
+    public static void printDealerResults(HashMap<Result, Integer> dealerResults) {
         System.out.println(RESULT_TITLE);
         System.out.print(DEALER);
         dealerResults.keySet().stream()
                 .filter(result -> dealerResults.get(result) > 0)
                 .forEach(result -> System.out.print(dealerResults.get(result) + result.getResult() + BLANK));
         printEmptyLine();
+    }
+
+    public static void printPlayersResults(HashMap<Player, Result> playerResults) {
         for (Player player : playerResults.keySet()) {
             System.out.println(player.getPlayerName() + CARD_USER_DELIMITER + playerResults.get(player).getResult());
         }
