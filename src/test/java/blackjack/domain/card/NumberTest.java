@@ -14,10 +14,10 @@ public class NumberTest {
     void convertNumberToScore() {
         // expect
         Assertions.assertAll(
-                () -> assertThat(Number.convertNumberToScore(Number.TWO)).isEqualTo(2),
-                () -> assertThat(Number.convertNumberToScore(Number.J)).isEqualTo(10),
-                () -> assertThat(Number.convertNumberToScore(Number.Q)).isEqualTo(10),
-                () -> assertThat(Number.convertNumberToScore(Number.K)).isEqualTo(10)
+                () -> assertThat(Number.getScoreOf(Number.TWO)).isEqualTo(2),
+                () -> assertThat(Number.getScoreOf(Number.J)).isEqualTo(10),
+                () -> assertThat(Number.getScoreOf(Number.Q)).isEqualTo(10),
+                () -> assertThat(Number.getScoreOf(Number.K)).isEqualTo(10)
         );
      }
 }
