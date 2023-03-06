@@ -5,8 +5,10 @@ import domain.player.Dealer;
 import domain.player.DealerStatus;
 import domain.player.Player;
 import domain.player.Players;
+import domain.stake.Stake;
 
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static view.InputView.*;
 import static view.OutputView.*;
@@ -33,12 +35,13 @@ public class BlackjackController {
 
     private void process(Players players, Dealer dealer) {
         drawInitialCards(players, dealer);
+        Map<Player, Stake> playerStakes = readStakes(players);
 
         playersHitOrStand(players);
         dealerHitOrStand(dealer);
 
         printScores(players, dealer);
-        getResult(dealer, players);
+        getResult(dealer, players, playerStakes);
     }
 
     private void drawInitialCards(final Players players, final Dealer dealer) {
@@ -50,6 +53,14 @@ public class BlackjackController {
         dealer.drawCard(deck.pickCard());
         dealer.drawCard(deck.pickCard());
         printInitialCards(dealer, players);
+    }
+
+    private Map<Player, Stake> readStakes(final Players players) {
+        Map<Player, Stake> playerStakes = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            playerStakes.put(player, new Stake(readBettingStake(player)));
+        }
+        return new LinkedHashMap<>(playerStakes);
     }
 
     private void playersHitOrStand(Players players) {
@@ -100,8 +111,21 @@ public class BlackjackController {
         }
     }
 
-    private void getResult(Dealer dealer, Players players) {
-        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
-        printResult(dealerStats, players);
+    private void getResult(Dealer dealer, Players players, Map<Player, Stake> playerStakes) {
+        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
+        Map<Player, Integer> prizeResults = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            updateDealerPrize(dealer, playerStakes, dealerStats, prizeResults, player);
+            updatePlayerPrize(playerStakes, dealerStats, prizeResults, player);
+        }
+        printResult(prizeResults);
+    }
+
+    private void updatePlayerPrize(final Map<Player, Stake> playerStakes, final Map<Player, DealerStatus> dealerStats, final Map<Player, Integer> prizeResults, final Player player) {
+        prizeResults.merge(player, playerStakes.get(player).getPlayerPrize(dealerStats.get(player)), Integer::sum);
+    }
+
+    private void updateDealerPrize(final Dealer dealer, final Map<Player, Stake> playerStakes, final Map<Player, DealerStatus> dealerStats, final Map<Player, Integer> prizeResults, final Player player) {
+        prizeResults.merge(dealer, playerStakes.get(player).getDealerPrize(dealerStats.get(player)), Integer::sum);
     }
 }
