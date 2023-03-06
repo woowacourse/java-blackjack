@@ -25,12 +25,16 @@ public class Dealer extends Participant {
         if (participantPoint > MAX_POINT_NOT_BUST) {
             return WIN;
         }
-        if (dealerPoint > MAX_POINT_NOT_BUST || dealerPoint < participantPoint) {
+        if (isDealerBust(dealerPoint, participantPoint)) {
             return LOSE;
         }
         if (dealerPoint > participantPoint) {
             return WIN;
         }
         return PUSH;
+    }
+
+    private boolean isDealerBust(int dealerPoint, int participantPoint) {
+        return dealerPoint > MAX_POINT_NOT_BUST || dealerPoint < participantPoint;
     }
 }
