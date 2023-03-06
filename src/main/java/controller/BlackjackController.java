@@ -31,11 +31,9 @@ public class BlackjackController {
         initializeGame();
         blackjackGame.startHit();
 
-        People people = blackjackGame.getPeople();
-
         outputView.printPlayersInfoWhenGameStarted(
-                PlayerParameter.from(people.getDealer()),
-                makePlayersParameter(people));
+                PlayerParameter.from(blackjackGame.getPeople().getDealer()),
+                makePlayersParameter(blackjackGame.getPeople()));
 
         blackjackGame.hitAllPlayersByCommand(
                 (name) -> HitCommand.findCommand(inputView.inputCardCommand(name)),
@@ -43,11 +41,11 @@ public class BlackjackController {
         blackjackGame.letDealerHitUntilThreshold(outputView::printDealerHitMessage);
 
         outputView.printGameScore(
-                PlayerParameter.of(people.getDealer(), people.getDealer().sumHand()),
-                makePlayersParameterWithResult(people)
+                PlayerParameter.of(blackjackGame.getPeople().getDealer(), blackjackGame.getPeople().getDealer().sumHand()),
+                makePlayersParameterWithResult(blackjackGame.getPeople())
         );
 
-        outputView.printDealerRecord(PlayerParameter.from(people.getDealer()), makeDealerRecord());
+        outputView.printDealerRecord(PlayerParameter.from(blackjackGame.getPeople().getDealer()), makeDealerRecord());
         outputView.printPlayerRecord(makeAllPlayerRecordMap());
     }
 
