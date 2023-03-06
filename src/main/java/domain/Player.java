@@ -35,10 +35,6 @@ public class Player extends User {
         }
     }
 
-    public boolean isRightName(final String name) {
-        return name.equals(this.name);
-    }
-
     @Override
     public boolean isHittable() {
         return cards.isUnder(BLACK_JACK_SCORE);
