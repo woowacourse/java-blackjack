@@ -1,6 +1,8 @@
 package view;
 
 import domain.card.Card;
+import domain.card.Number;
+import domain.card.Shape;
 import domain.game.BlackJackGame;
 import domain.game.Referee;
 import domain.player.GameResult;
@@ -66,8 +68,11 @@ public class OutputView {
     }
 
     private static String parseCardInformation(Card card) {
-        String numberDescription = NumberDisplayMatcher.displayMessage(card.getNumber());
-        String shapeDescription = ShapeDisplayMatcher.displayName(card.getShape());
+        Number number = card.getNumber();
+        String numberDescription = number.getSymbol();
+        
+        Shape shape = card.getShape();
+        String shapeDescription = shape.getSymbol();
         return numberDescription.concat(shapeDescription);
     }
 
@@ -110,7 +115,7 @@ public class OutputView {
     
         return Arrays.stream(GameResult.values())
                 .filter(Predicate.not(gameResult -> OutputView.isGameResultCountZero(gameResult, dealerGameResults)))
-                .map(gameResult -> dealerGameResults.get(gameResult) + gameResult.getGameResult())
+                .map(gameResult -> dealerGameResults.get(gameResult) + gameResult.getSymbol())
                 .collect(Collectors.joining(" "));
 
     }
@@ -130,7 +135,7 @@ public class OutputView {
 
     private static String parseParticipantGameResultDisplay(Player participant, Map<Player, GameResult> participantsGameResults) {
         GameResult gameResult = participantsGameResults.get(participant);
-        return String.format("%s: %s", participant.getName(), gameResult.getGameResult());
+        return String.format("%s: %s", participant.getName(), gameResult.getSymbol());
     }
 
     public static void println(String message) {
