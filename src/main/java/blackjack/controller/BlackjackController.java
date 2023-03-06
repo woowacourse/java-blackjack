@@ -52,14 +52,14 @@ public class BlackjackController {
             outputView.printCurrentCards(player, player.getCards());
             return false;
         }
-        dealer.giveOneMoreCard(player);
+        dealer.giveACard(player);
         outputView.printCurrentCards(player, player.getCards());
         return true;
     }
 
     private void turnOfDealer() {
         while (dealer.canDraw()) {
-            dealer.drawOneMoreCard();
+            dealer.drawACard();
             outputView.printDealerDrawOneMoreCard();
         }
     }

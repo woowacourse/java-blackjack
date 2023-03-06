@@ -9,6 +9,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,35 +34,35 @@ public class Dealer extends Participant {
         int targetSize = players.size() * INIT_CARD_COUNT;
 
         while (cards.size() < targetSize) {
-            cards.add(deck.drawCard());
+            cards.add(deck.drawACard());
         }
 
         players.receiveSettingCards(cards);
+    }
+
+    public void settingSelfCards() {
+        for (int count = 0; count < INIT_CARD_COUNT; count++) {
+            receiveCard(deck.drawACard());
+        }
     }
 
     public Card showOneCard() {
         return this.cards.getCards().get(0);
     }
 
-    public void settingSelfCards() {
-        for (int count = 0; count < INIT_CARD_COUNT; count++) {
-            receiveCard(deck.drawCard());
-        }
+    public void giveACard(Player player) {
+        player.receiveCard(deck.drawACard());
     }
 
-    public void giveOneMoreCard(Player player) {
-        player.receiveCard(deck.drawCard());
-    }
-
-    public void drawOneMoreCard() {
-        receiveCard(deck.drawCard());
+    public void drawACard() {
+        receiveCard(deck.drawACard());
     }
 
     public Map<Player, Result> makePlayerResults() {
         return players.makeResult(this.cards.calculateTotalScore());
     }
 
-    public List<Integer> countSelfResults(Map<Player, Result> playerResults) {
+    public List<Integer> countSelfResults(final Map<Player, Result> playerResults) {
         Map<Result, Integer> dealerResults = new LinkedHashMap<>() {{
             put(WIN, 0);
             put(DRAW, 0);
@@ -74,7 +75,7 @@ public class Dealer extends Participant {
         return new ArrayList<>(dealerResults.values());
     }
 
-    private void compareToPlayerResult(Map<Result, Integer> dealerResult, Result playerResult) {
+    private void compareToPlayerResult(final Map<Result, Integer> dealerResult, final Result playerResult) {
         if (playerResult == WIN) {
             dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
             return;
@@ -91,6 +92,6 @@ public class Dealer extends Participant {
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return Collections.unmodifiableList(players.getPlayers());
     }
 }

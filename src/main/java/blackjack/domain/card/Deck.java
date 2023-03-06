@@ -22,7 +22,7 @@ public class Deck {
         return drawnCards.contains(card);
     }
 
-    public Card drawCard() {
+    public Card drawACard() {
         Card card;
         do {
             Number number = Number.pickRandomNumber();
