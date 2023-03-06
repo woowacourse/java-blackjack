@@ -18,15 +18,16 @@ public class OutputView {
     public void printInitialStatus(InitialStatusDto initialStatusDto) {
         System.out.print(System.lineSeparator());
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.",
-                makeUsersNameList(initialStatusDto.getUsersData().keySet()));
+                makeUsersNameList(initialStatusDto.getUsersData()));
         System.out.print(System.lineSeparator());
         printDealerFirstCard(initialStatusDto.getDealerCard());
         printUsersCards(initialStatusDto.getUsersData());
     }
 
-    private String makeUsersNameList(Set<String> userNames) {
+    private String makeUsersNameList(List<UserDto> userNames) {
         return userNames
                 .stream()
+                .map(userDto -> userDto.getName())
                 .collect(Collectors.joining(DELIMITER));
     }
 
@@ -34,9 +35,9 @@ public class OutputView {
         System.out.println(String.format("딜러: %s", makeCardDtoString(card)));
     }
 
-    private void printUsersCards(final Map<String, List<CardDto>> usersData) {
-        for (String userName : usersData.keySet()) {
-            printCardsOf(userName, usersData.get(userName));
+    private void printUsersCards(final List<UserDto> userDtos) {
+        for (UserDto user : userDtos) {
+            printCardsOf(user.getName(), user.getCards());
         }
         System.out.print(System.lineSeparator());
     }
@@ -78,16 +79,15 @@ public class OutputView {
     }
 
     public void printFinalPlayersStatus(FinalStatusDto finalStatusDto) {
-        printPlayFinalStatus("딜러", finalStatusDto.getDealerCards(), finalStatusDto.getDealerPoint());
-        final Map<String, List<CardDto>> userCardsData = finalStatusDto.getUserCardsData();
-        final Map<String, Integer> userScores = finalStatusDto.getUserScores();
-        for (String userName : finalStatusDto.getUsersNames()) {
-            printPlayFinalStatus(userName, userCardsData.get(userName), userScores.get(userName));
+        printPlayFinalStatus(finalStatusDto.getDealer(), finalStatusDto.getDealerScore());
+        final Map<UserDto, Integer> userScores = finalStatusDto.getUserScores();
+        for(UserDto userDto : userScores.keySet()){
+            printPlayFinalStatus(userDto, userScores.get(userDto));
         }
     }
 
-    private void printPlayFinalStatus(final String playerName, final List<CardDto> cards, final int score) {
-        System.out.println(String.format("%s 카드 : %s- 결과: %s", playerName, getCardStringOf(cards), getScoreString(score)));
+    private void printPlayFinalStatus(final UserDto user, final int score) {
+        System.out.println(String.format("%s 카드 : %s- 결과: %s", user.getName(), getCardStringOf(user.getCards()), getScoreString(score)));
     }
 
 
@@ -125,19 +125,6 @@ public class OutputView {
 
     private String makeStringOf(final ResultDto result, final Integer count) {
         return String.format("%d%s", count, result.getResult());
-    }
-
-    private String getResultString(final Result result) {
-        if (result == Result.LOSE) {
-            return "패";
-        }
-        if (result == Result.DRAW) {
-            return "무";
-        }
-        if (result == Result.WIN) {
-            return "승";
-        }
-        throw new AssertionError();
     }
 
     private void printUsersResult(final GameResultDto gameResultDto) {
