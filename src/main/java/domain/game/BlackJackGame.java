@@ -39,7 +39,7 @@ public class BlackJackGame {
     }
 
     public void drawDealerCardUntilSatisfyingCondition() {
-        while (dealer.getStatus().equals(DealerStatus.UNDER_SEVENTEEN)) {
+        while (dealer.getStatus().equals(DealerStatus.UNDER_MIN_SCORE)) {
             dealer.receiveCard(cards.drawCard());
         }
     }

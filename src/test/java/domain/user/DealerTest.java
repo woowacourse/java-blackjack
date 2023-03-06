@@ -55,6 +55,6 @@ class DealerTest {
         UserStatus result = dealer.getStatus();
 
         //then
-        assertThat(result).isEqualTo(DealerStatus.UNDER_SEVENTEEN);
+        assertThat(result).isEqualTo(DealerStatus.UNDER_MIN_SCORE);
     }
 }

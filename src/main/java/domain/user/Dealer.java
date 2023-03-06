@@ -7,7 +7,7 @@ import java.util.Map;
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
     private static final int RECORD_INITIAL_VALUE = 0;
-    private static final int SEVENTEEN = 16;
+    private static final int MIN_SCORE = 17;
 
     private DealerStatus status;
     private Map<Boolean, Integer> winningRecord;
@@ -44,8 +44,8 @@ public class Dealer extends User {
             status = DealerStatus.BUST;
             return;
         }
-        if (score.getScore() < SEVENTEEN) {
-            status = DealerStatus.UNDER_SEVENTEEN;
+        if (score.getScore() < MIN_SCORE) {
+            status = DealerStatus.UNDER_MIN_SCORE;
             return;
         }
         status = DealerStatus.NORMAL;
