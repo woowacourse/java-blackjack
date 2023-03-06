@@ -62,7 +62,7 @@ public class Dealer extends Participant {
         return players.makeResult(this.cards.calculateTotalScore());
     }
 
-    public List<Integer> countSelfResults(final Map<Player, Result> playerResults) {
+    public Map<Result, Integer> countSelfResults(final Map<Player, Result> playerResults) {
         Map<Result, Integer> dealerResults = new LinkedHashMap<>() {{
             put(WIN, 0);
             put(DRAW, 0);
@@ -72,7 +72,7 @@ public class Dealer extends Participant {
         for (Result playerResult : playerResults.values()) {
             compareToPlayerResult(dealerResults, playerResult);
         }
-        return new ArrayList<>(dealerResults.values());
+        return dealerResults;
     }
 
     private void compareToPlayerResult(final Map<Result, Integer> dealerResult, final Result playerResult) {

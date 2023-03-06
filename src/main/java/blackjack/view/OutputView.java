@@ -1,5 +1,8 @@
 package blackjack.view;
 
+import static blackjack.domain.Result.DRAW;
+import static blackjack.domain.Result.LOSE;
+import static blackjack.domain.Result.WIN;
 import static blackjack.domain.participant.Dealer.DEALER_CAN_DRAW_SCORE;
 import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.joining;
@@ -11,10 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
-    private static final int INDEX_OF_WIN = 0;
-    private static final int INDEX_OF_DRAW = 1;
-    private static final int INDEX_OF_LOSE = 2;
 
     public void printDistributeCardsMessage(final List<Player> players) {
         String names = players.stream()
@@ -68,13 +67,13 @@ public class OutputView {
         }
     }
 
-    public void printGameResult(final List<Integer> dealerResult, final Map<Player, Result> playerResults) {
+    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResults) {
         printDealerResult(dealerResult);
         printPlayerResult(playerResults);
     }
 
-    private void printDealerResult(final List<Integer> dealerResult) {
-        System.out.println("딜러: " + dealerResult.get(INDEX_OF_WIN) + "승 " + dealerResult.get(INDEX_OF_DRAW) + "무 " + dealerResult.get(INDEX_OF_LOSE) + "패 ");
+    private void printDealerResult(final Map<Result, Integer> dealerResult) {
+        System.out.println("딜러: " + dealerResult.get(WIN) + "승 " + dealerResult.get(DRAW) + "무 " + dealerResult.get(LOSE) + "패 ");
     }
 
     private void printPlayerResult(final Map<Player, Result> playerResults) {

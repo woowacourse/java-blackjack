@@ -87,12 +87,12 @@ class DealerTest {
             put(player3, LOSE);
         }};
 
-        List<Integer> resultCountOfDealer = dealer.countSelfResults(resultsFromPlayer);
+        Map<Result, Integer> dealerResult = dealer.countSelfResults(resultsFromPlayer);
 
         assertAll(
-                () -> assertThat(resultCountOfDealer.get(0)).isEqualTo(1),
-                () -> assertThat(resultCountOfDealer.get(1)).isEqualTo(1),
-                () -> assertThat(resultCountOfDealer.get(2)).isEqualTo(1)
+                () -> assertThat(dealerResult.get(WIN)).isEqualTo(1),
+                () -> assertThat(dealerResult.get(DRAW)).isEqualTo(1),
+                () -> assertThat(dealerResult.get(LOSE)).isEqualTo(1)
         );
     }
 }
