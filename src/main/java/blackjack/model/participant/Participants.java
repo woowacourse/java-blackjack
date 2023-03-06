@@ -2,7 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
-import blackjack.model.result.ResultChecker;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -2,12 +2,8 @@ package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
-import blackjack.model.result.ResultChecker;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.State;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Player extends Participant {
 
@@ -27,6 +23,6 @@ public class Player extends Participant {
     }
 
     public Result getResult(Dealer dealer) {
-        return new ResultChecker().checkPlayerResult(this, dealer);
+        return Result.checkPlayerResult(this, dealer);
     }
 }
