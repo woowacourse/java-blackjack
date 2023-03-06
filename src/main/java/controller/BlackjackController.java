@@ -30,17 +30,18 @@ public class BlackjackController {
     }
 
     private BlackjackGame createBlackjackGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
+        Players players = retryOnInvalidUserInput(this::requestPlayers);
+        BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.handOutInitialCards();
         outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
         return blackjackGame;
     }
 
-    private Players createPlayers() {
+    private Players requestPlayers() {
         List<String> playerNamesUserInput = inputView.requestPlayerNames();
-        PlayerNames playerNames = retryOnInvalidUserInput(() -> PlayerNames.from(playerNamesUserInput));
+        PlayerNames playerNames = PlayerNames.from(playerNamesUserInput);
 
-        return retryOnInvalidUserInput(() -> Players.from(playerNames));
+        return Players.from(playerNames);
     }
 
     private void playPlayersTurn(BlackjackGame blackjackGame) {
@@ -51,7 +52,11 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(BlackjackGame blackjackGame, Player player) {
-        while (!player.isBusted() && requestMoreCardTo(player) == BlackjackAction.HIT) {
+        if (player.isBusted()) {
+            return;
+        }
+
+        while (requestAction(player) == BlackjackAction.HIT) {
             blackjackGame.handOutCardTo(player);
             outputView.printPlayerCards(player);
         }
@@ -59,11 +64,15 @@ public class BlackjackController {
         printPlayerCurrentState(player);
     }
 
+    private BlackjackAction requestAction(Player player) {
+        return retryOnInvalidUserInput(() -> requestMoreCardTo(player));
+    }
+
     private BlackjackAction requestMoreCardTo(Player player) {
         String playerName = player.getName();
         String userInputCommand = inputView.requestMoreCard(playerName);
 
-        return retryOnInvalidUserInput(() -> BlackjackAction.from(userInputCommand));
+        return BlackjackAction.from(userInputCommand);
     }
 
     private void playDealerTurn(BlackjackGame blackjackGame) {
