@@ -5,12 +5,11 @@ import static java.util.stream.Collectors.toList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
 
-    private static final String RECEIVE_CARD = "y";
-    private static final String NOT_RECEIVE_CARD = "n";
+    public static final String RECEIVE_CARD = "y";
+    public static final String NOT_RECEIVE_CARD = "n";
 
     private final Scanner scanner = new Scanner(System.in);
 

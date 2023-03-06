@@ -17,7 +17,7 @@ public class Dealer extends Participant {
 
     public static final int INIT_CARD_COUNT = 2;
     public static final int BLACKJACK_SCORE = 21;
-    private static final int DEALER_CAN_DRAW_SCORE = 16;
+    public static final int DEALER_CAN_DRAW_SCORE = 16;
 
     private final Players players;
     private final Deck deck;
