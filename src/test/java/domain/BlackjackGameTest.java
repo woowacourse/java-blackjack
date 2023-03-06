@@ -71,7 +71,7 @@ public class BlackjackGameTest {
 
         Map<String, List<Result>> playerResult = new LinkedHashMap<>();
 
-        playerResult.put(dealer.getName().getName(), List.of(Result.LOSE, Result.LOSE));
+        playerResult.put(dealer.getName(), List.of(Result.LOSE, Result.LOSE));
 
         Assertions.assertThat(blackjackGame.getDealerResult()).isEqualTo(playerResult);
     }
