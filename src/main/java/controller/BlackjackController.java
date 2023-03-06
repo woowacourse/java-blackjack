@@ -79,7 +79,7 @@ public class BlackjackController {
     private void result(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
 
-        blackjackGame.result();
+        blackjackGame.decideResult();
         Dealer dealer = blackjackGame.getDealer();
         outputView.printCardsWithScore(dealer, players);
         outputView.printFinalResult(dealer);

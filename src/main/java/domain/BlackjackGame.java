@@ -41,7 +41,7 @@ public class BlackjackGame {
         }
     }
 
-    public void result() {
+    public void decideResult() {
         dealer.decideResults(players);
     }
 
