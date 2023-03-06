@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import blackjack.domain.game.Result;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.Result;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class Gambler implements Player {
     private final Hand hand;
 
     public Gambler(final String name) {
-        this.name = Name.from(name);
+        this.name = Name.createPlayerName(name);
         this.hand = new Hand();
     }
 

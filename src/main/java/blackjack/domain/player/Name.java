@@ -15,21 +15,25 @@ public class Name {
         this.value = value;
     }
 
-    private static void validate(final String value) {
+    private void validate(final String value) {
         if (isValidName(value)) {
             throw new IllegalArgumentException(INVALID_NAME_LENGTH_MESSAGE + value);
         }
     }
 
-    private static boolean isValidName(final String value) {
+    private boolean isValidName(final String value) {
         return value == null || value.length() < NAME_LENGTH_LOWER_BOUND || NAME_LENGTH_UPPER_BOUND < value.length();
     }
 
-    public static Name from(final String value) {
+    public static Name createPlayerName(final String value) {
+        validateReservedName(value);
+        return new Name(value);
+    }
+
+    private static void validateReservedName(final String value) {
         if (RESERVED_NAME.equals(value)) {
             throw new IllegalArgumentException(RESERVED_NAME_MESSAGE);
         }
-        return new Name(value);
     }
 
     public static Name createDealerName() {
