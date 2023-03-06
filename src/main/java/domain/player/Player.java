@@ -8,11 +8,11 @@ import java.util.Objects;
 
 public abstract class Player {
     private final PlayingCards playingCards;
-    private final String name;
+    private final PlayerName name;
 
     protected Player(String name) {
         this.playingCards = new PlayingCards();
-        this.name = name;
+        this.name = new PlayerName(name);
     }
     
     public void addCard(Card card) {
@@ -66,10 +66,8 @@ public abstract class Player {
     }
     
     public String getName() {
-        return this.name;
+        return this.name.getName();
     }
-    
-    public abstract boolean isNameEqualTo(String playerName);
     
     public abstract boolean isDealer();
     

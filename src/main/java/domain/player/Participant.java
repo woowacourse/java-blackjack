@@ -6,11 +6,6 @@ public class Participant extends Player {
     }
     
     @Override
-    public boolean isNameEqualTo(String playerName) {
-        return getName().equals(playerName);
-    }
-    
-    @Override
     public boolean isDealer() {
         return false;
     }
