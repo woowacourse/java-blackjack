@@ -83,22 +83,6 @@ public class BlackJackTest {
     }
 
     @Test
-    @DisplayName("딜러의 첫 번째 카드를 가져올 수 있다.")
-    void getDealerFirstCardTest() {
-        final Name 푸우 = new Name("푸우");
-
-        Integer[] 푸우카드 = {1, 2};
-        Integer[] 딜러카드 = {1, 2};
-
-        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(푸우카드));
-        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
-
-        final BlackJack blackJack = new BlackJack(List.of(푸우), new TestDeck(테스트덱));
-
-        assertThat(blackJack.getDealerFirstCard().equals(new Card(Shape.HEART, CardNumber.of(1)))).isTrue();
-    }
-
-    @Test
     @DisplayName("블랙잭에게 이름을 기반으로 해당 유저의 버스트 여부를 알 수 있다.")
     void checkBustByTest() {
         final Name 푸우 = new Name("푸우");

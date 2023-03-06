@@ -37,13 +37,13 @@ public class OutputView {
 
     private void printUsersCards(final List<UserDto> userDtos) {
         for (UserDto user : userDtos) {
-            printCardsOf(user.getName(), user.getCards());
+            printCardsOf(user);
         }
         System.out.print(System.lineSeparator());
     }
 
-    public void printCardsOf(final String name, final List<CardDto> cards) {
-        System.out.printf(getPlayerCards(name, cards));
+    public void printCardsOf(UserDto user) {
+        System.out.printf(getPlayerCards(user.getName(), user.getCards()));
         System.out.print(System.lineSeparator());
     }
 

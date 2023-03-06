@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.dto.UserDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 
@@ -41,12 +42,8 @@ public class BlackJack {
         return users.checkBustBy(name);
     }
 
-    public List<Card> getUserCard(Name user) {
-        return users.getCardsOf(user);
-    }
-
-    public Card getDealerFirstCard() {
-        return dealer.getFirstCard();
+    public UserDto getUserDtoBy(Name user) {
+        return new UserDto(users.finUserByName(user));
     }
 
     public Dealer getDealer() {

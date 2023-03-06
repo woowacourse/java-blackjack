@@ -2,10 +2,10 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.RandomDeck;
-import blackjack.domain.dto.DtoUtils;
 import blackjack.domain.dto.FinalStatusDto;
 import blackjack.domain.dto.GameResultDto;
 import blackjack.domain.dto.InitialStatusDto;
+import blackjack.domain.dto.UserDto;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -58,7 +58,7 @@ public class BlackJackController {
     private void drawCardUntilWanted(BlackJack blackJack, final Name name) {
         while (getCardWantFromConsole(name)) {
             blackJack.giveCard(name, randomDeck);
-            outputView.printCardsOf(name.getValue(), DtoUtils.makeCardToDto(blackJack.getUserCard(name)));
+            outputView.printCardsOf(blackJack.getUserDtoBy(name));
             if (blackJack.isBust(name)) {
                 break;
             }

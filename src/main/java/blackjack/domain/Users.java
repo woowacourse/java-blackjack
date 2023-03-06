@@ -67,7 +67,7 @@ public class Users {
         findUser.draw(card);
     }
 
-    private User finUserByName(final Name userName) {
+    public User finUserByName(final Name userName) {
         return users.stream()
                 .filter(user -> user.isNameOf(userName))
                 .findAny()
@@ -81,4 +81,5 @@ public class Users {
     public boolean checkBustBy(final Name name) {
         return finUserByName(name).isBusted();
     }
+
 }
