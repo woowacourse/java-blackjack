@@ -13,7 +13,6 @@ public class BlackJackController {
 
     private static final int BURST_SCORE = 21;
     private static final int DEALER_HIT_NUMBER = 16;
-    private static final int INIT_COUNT = 2;
 
     private final CardPicker cardPicker;
 
@@ -38,10 +37,8 @@ public class BlackJackController {
     }
 
     private void init(Players players, Dealer dealer, CardPool cardPool) {
-        for (int i = 0; i < INIT_COUNT; i++) {
-            dealer.hit(cardPool.draw(cardPicker));
-        }
-        players.getPlayers().forEach(player -> player.hit(cardPool.draw(cardPicker)));
+        dealer.initHit(cardPool, cardPicker);
+        players.initHit(cardPool, cardPicker);
         OutputView.printInitCardDeck(dealer, players);
     }
 

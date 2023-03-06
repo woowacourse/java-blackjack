@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Player;
+import blackjack.strategy.CardPicker;
 import blackjack.util.StringUtil;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -37,6 +38,10 @@ public class Players {
 
     private boolean isFormat(String names) {
         return !NAMES_FORMAT.matcher(names).matches();
+    }
+
+    public void initHit(CardPool cardPool, CardPicker cardPicker) {
+        players.forEach((player) -> player.initHit(cardPool, cardPicker));
     }
 
     public List<Player> getPlayers() {
