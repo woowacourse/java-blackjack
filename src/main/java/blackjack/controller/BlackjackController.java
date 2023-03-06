@@ -39,9 +39,8 @@ public class BlackjackController {
     }
 
     private void play(Player player) {
-        boolean proceed = true;
-        while (proceed && !player.isBust()) {
-            proceed = ask(player);
+        while (ask(player) && !player.isBust()) {
+            // do nothing
         }
     }
 
