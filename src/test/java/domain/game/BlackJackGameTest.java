@@ -4,7 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
+
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,5 +51,31 @@ public class BlackJackGameTest {
         assertEquals(score, blackJackGame.getScore(name));
     }
 
+    @DisplayName("딜러보다 점수가 낮은 플레이어는 LOSE, 점수가 같은 플레이어는 DRAW를 결과로 갖는다.")
+    @Test
+    void decidePlayersOutcomeTest() {
+        // 딜러:  K + Q = 20점
+        // name1: J + 10 = 20점
+        // name2: 9 + 8 = 18점
+        Map<String, Outcome> playersOutcome = blackJackGame.decidePlayersOutcome();
+        Outcome expectedName1Outcome = Outcome.DRAW;
+        Outcome expectedName2Outcome = Outcome.LOSE;
 
+        assertEquals(expectedName1Outcome, playersOutcome.get("name1"));
+        assertEquals(expectedName2Outcome, playersOutcome.get("name2"));
+    }
+
+    @DisplayName("딜러는 플레이어와 비교하여 결과로 갖는다.")
+    @Test
+    void decideDealerOutcomeTest() {
+        int expectedWinCount = 1;
+        int expectedDrawCount = 1;
+        int expectedLoseCount = 0;
+
+        EnumMap<Outcome, Integer> dealerOutcome = blackJackGame.decideDealerOutcome();
+
+        assertEquals(expectedWinCount, dealerOutcome.get(Outcome.WIN));
+        assertEquals(expectedDrawCount, dealerOutcome.get(Outcome.DRAW));
+        assertEquals(expectedLoseCount, dealerOutcome.get(Outcome.LOSE));
+    }
 }

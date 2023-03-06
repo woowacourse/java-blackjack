@@ -38,8 +38,18 @@ public class BlackJackGame {
         EnumMap<Outcome, Integer> dealerOutcome = initializeDealerOutcome();
         for (String key : playerOutcome.keySet()) {
             final Outcome outcome = playerOutcome.get(key);
-            dealerOutcome.put(outcome, dealerOutcome.get(outcome) + 1);
+            dealerOutcome.put(reverseOutcome(outcome), dealerOutcome.get(outcome) + 1);
         }
+        return dealerOutcome;
+    }
+
+    private static EnumMap<Outcome, Integer> initializeDealerOutcome() {
+        EnumMap<Outcome, Integer> dealerOutcome = new EnumMap<>(Outcome.class);
+
+        for (Outcome outcome : Outcome.values()) {
+            dealerOutcome.put(outcome, 0);
+        }
+
         return dealerOutcome;
     }
 
@@ -55,14 +65,14 @@ public class BlackJackGame {
         return playerOutcome;
     }
 
-    private static EnumMap<Outcome, Integer> initializeDealerOutcome() {
-        EnumMap<Outcome, Integer> dealerOutcome = new EnumMap<>(Outcome.class);
-
-        for (Outcome outcome : Outcome.values()) {
-            dealerOutcome.put(outcome, 0);
+    private Outcome reverseOutcome(Outcome outcome) {
+        if (outcome == Outcome.WIN) {
+            return Outcome.LOSE;
         }
-
-        return dealerOutcome;
+        if(outcome == Outcome.LOSE) {
+            return Outcome.WIN;
+        }
+        return Outcome.DRAW;
     }
 
     private Outcome decideOutcome(final int dealerScore, final Player player) {
