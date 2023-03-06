@@ -1,11 +1,11 @@
 package view;
 
-import domain.result.WinningStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.result.WinningStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,6 +38,7 @@ public class OutputView {
         for (Player player : players) {
             printSingleState(player);
         }
+        System.out.println();
     }
 
     public void printSingleState(final Participant participant) {
@@ -52,6 +53,7 @@ public class OutputView {
         for (Player player : players) {
             System.out.printf(finalFormat, formatCardState(player), player.calculateScore());
         }
+        System.out.println();
     }
 
     private String formatCardState(final Participant participant) {
@@ -62,7 +64,7 @@ public class OutputView {
     }
 
     public void printFillDealerCards() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
     public void printFinalResult() {
