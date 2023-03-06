@@ -6,7 +6,7 @@ public class Score {
 
     private static final int BLACK_JACK = 21;
     private static final int ACE_SUB_NUMBER = 1;
-    
+
     private final int value;
 
     private Score(final int value) {
@@ -17,6 +17,13 @@ public class Score {
         final int score = getInitialScore(cards);
         final int count = cards.count(Letter.ACE);
         return new Score(modifyScoreByAce(score, count));
+    }
+
+    private static int getInitialScore(final Cards cards) {
+        return cards.getCards()
+            .stream()
+            .mapToInt(Card::getNumber)
+            .sum();
     }
 
     private static int modifyScoreByAce(int score, final int count) {
@@ -32,13 +39,6 @@ public class Score {
             score += ACE_SUB_NUMBER;
         }
         return score;
-    }
-
-    private static int getInitialScore(final Cards cards) {
-        return cards.getCards()
-            .stream()
-            .mapToInt(Card::getNumber)
-            .sum();
     }
 
     public boolean isBust() {
