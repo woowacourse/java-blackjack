@@ -1,4 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.result;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 
 import java.util.*;
 
