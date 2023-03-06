@@ -6,25 +6,22 @@ public class Player {
 
     private final Cards cards;
     private final String name;
-    private Score score;
 
     public Player(final Cards cards, final String name) {
         this.cards = cards;
         this.name = name;
-        this.score = makeScore(cards);
-    }
-
-    private Score makeScore(final Cards cards) {
-        return Score.of(cards);
     }
 
     public void addCard(final Card card) {
         cards.add(card);
-        score = makeScore(cards);
     }
 
     public boolean isBust() {
-        return score.isBust();
+        return Score.of(cards).isBust();
+    }
+
+    public Score getScore() {
+        return Score.of(cards);
     }
 
     public Cards getCards() {
@@ -33,9 +30,5 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public Score getScore() {
-        return score;
     }
 }
