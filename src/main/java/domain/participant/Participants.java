@@ -64,4 +64,12 @@ public class Participants {
     public int getDealerCardValueSum() {
         return dealer.getCardValueSum();
     }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }
