@@ -2,6 +2,7 @@ package techcourse.jcf.mission;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class SimpleArrayListGenericTest {
@@ -95,5 +96,28 @@ class SimpleArrayListGenericTest {
         integerSimpleArrayList.clear();
 
         assertThat(integerSimpleArrayList.isEmpty()).isTrue();
+    }
+
+    @Test
+    @DisplayName("String 배열을 받아 SimpleList<String>으로 변환한다.")
+    void fromArrayToListString() {
+        String[] strings = {"폴로", "로지"};
+
+        SimpleArrayList<String> list = SimpleArrayList.fromArrayToList(strings);
+
+        assertThat(list.get(0)).isEqualTo("폴로");
+        assertThat(list.get(1)).isEqualTo("로지");
+    }
+
+    @Test
+    @DisplayName("Integer 배열을 받아 SimpleList<Integer>로 변환한다.")
+    void fromArrayToListInteger() {
+        Integer[] integers = {1, 2, 3};
+
+        SimpleArrayList<Integer> integerSimpleArrayList = SimpleArrayList.fromArrayToList(integers);
+
+        assertThat(integerSimpleArrayList.get(0)).isEqualTo(1);
+        assertThat(integerSimpleArrayList.get(1)).isEqualTo(2);
+        assertThat(integerSimpleArrayList.get(2)).isEqualTo(3);
     }
 }

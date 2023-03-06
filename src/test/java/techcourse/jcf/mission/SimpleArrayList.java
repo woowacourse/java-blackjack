@@ -14,6 +14,14 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.arr = (E[]) new Object[capacity];
     }
 
+    static <E> SimpleArrayList<E> fromArrayToList(E[] array) {
+        SimpleArrayList<E> simpleArrayList = new SimpleArrayList<>();
+        for (E value : array) {
+            simpleArrayList.add(value);
+        }
+        return simpleArrayList;
+    }
+
     @Override
     public boolean add(E value) {
         expandArr();
@@ -41,7 +49,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         }
         return newArr;
     }
-
 
     @Override
     public void add(int index, E value) {
