@@ -8,7 +8,6 @@ import domain.card.DrawnCards;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: 테스트
 public class ParticipantGenerator {
 
     private ParticipantGenerator() {
