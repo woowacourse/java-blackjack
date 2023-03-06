@@ -33,8 +33,13 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("모두에게 카드 두장을 나누어 주는지 테스트")
     void giveTwoCardEveryoneTest() {
+        // given
         BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
-        blackjackGame.dealTwoCardsToAllParticipant();
+
+        // when
+        blackjackGame.initialCardsToAllParticipant();
+
+        // then
         assertThat(dealer.getCards().size()).isEqualTo(2);
         participants.getPlayers().forEach(player -> {
             assertThat(player.getCards().size()).isEqualTo(2);
@@ -42,12 +47,29 @@ public class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("카드를 뽑는 테스트")
+    @DisplayName("카드를 한 장만 뽑는 테스트")
     void drawCardTest() {
+        // given
         BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+
+        // when
         blackjackGame.drawCard(dealer);
 
+        // then
         assertThat(dealer.getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("카드를 여러장 뽑을 수 있는지 테스트")
+    void drawMultipleCardTest() {
+        // given
+        BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+
+        // when
+        blackjackGame.drawCard(dealer, 10);
+
+        // then
+        assertThat(dealer.getCards().size()).isEqualTo(10);
     }
 
     @Test

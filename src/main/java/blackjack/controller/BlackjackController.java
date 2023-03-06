@@ -51,7 +51,7 @@ public class BlackjackController {
     private void startGame(final BlackjackGame blackjackGame) {
         final Participants participants = blackjackGame.getParticipants();
 
-        blackjackGame.dealTwoCardsToAllParticipant();
+        blackjackGame.initialCardsToAllParticipant();
 
         outputView.printInitialHands(participants);
     }
