@@ -22,10 +22,6 @@ public abstract class Participant {
         cards.receive(card);
     }
 
-    public List<Card> open(final int cardCount) {
-        return cards.open(cardCount);
-    }
-
     public List<Card> openAll() {
         return cards.openAll();
     }
@@ -33,6 +29,8 @@ public abstract class Participant {
     public Name getName() {
         return name;
     }
+
+    public abstract List<Card> initialOpen();
 
     protected abstract boolean isHittable();
 }

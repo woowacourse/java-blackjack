@@ -11,6 +11,11 @@ public abstract class ParticipantFixture {
         ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, cards);
         return new Participant(participantsCards, "pobi") {
             @Override
+            public List<Card> initialOpen() {
+                return List.of(one, two);
+            }
+
+            @Override
             protected boolean isHittable() {
                 return false;
             }

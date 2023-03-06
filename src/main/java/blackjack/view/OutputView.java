@@ -21,9 +21,9 @@ public class OutputView {
     public static void printParticipantsInitCards(final Dealer dealer, final List<Player> players) {
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().getValue(), getPlayerNames(players))
                 + System.lineSeparator());
-        String dealerInitCards = getParticipantCards(dealer, dealer.open(1));
+        String dealerInitCards = getParticipantCards(dealer, dealer.initialOpen());
         String playersInitCards = players.stream()
-                .map(player -> getParticipantCards(player, player.open(2)))
+                .map(player -> getParticipantCards(player, player.initialOpen()))
                 .collect(Collectors.joining(System.lineSeparator()));
 
         System.out.println(dealerInitCards);

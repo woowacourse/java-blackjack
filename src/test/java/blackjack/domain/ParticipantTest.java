@@ -43,6 +43,6 @@ class ParticipantTest {
         Card cardTwo = Card.of(Suit.DIAMOND, CardNumber.TWO);
         Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
 
-        assertThat(participant.open(2)).containsAll(List.of(cardOne, cardTwo));
+        assertThat(participant.initialOpen()).containsAll(List.of(cardOne, cardTwo));
     }
 }
