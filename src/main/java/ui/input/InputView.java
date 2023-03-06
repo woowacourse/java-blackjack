@@ -13,8 +13,9 @@ public class InputView {
         return SCANNER.next();
     }
 
-    public static String getReceiveCardCommand(final String playerName) {
+    public static String getPlayerInputGetMoreCard(final String playerName) {
         System.out.println(String.format(RECEIVE_MORE_CARD, playerName));
         return SCANNER.next();
     }
+
 }

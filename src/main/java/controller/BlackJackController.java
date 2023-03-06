@@ -1,10 +1,9 @@
 package controller;
 
-import model.card.Card;
 import model.card.Deck;
 import model.user.Dealer;
-import model.user.User;
-import model.user.Users;
+import model.user.Participants;
+import model.user.Player;
 import ui.input.InputView;
 import ui.output.OutputView;
 
@@ -14,64 +13,83 @@ public class BlackJackController {
 
     private static final String RECEIVE_CARD_COMMAND = "y";
 
-    private final Deck deck;
-    private final Dealer dealer;
+    public void init(final Deck deck) {
+        final Participants participants = getParticipants(deck);
+        final Dealer dealer = new Dealer();
+        divideFirstCard(deck, participants);
 
-    public BlackJackController(final Deck deck) {
-        this.deck = deck;
-        this.dealer = Dealer.getInstance();
+        OutputView.printFirstCardStatus(participants);
+        divideCard(deck, participants);
+        divideCardForDealer(deck, dealer);
+
+        OutputView.printScoreBoard(participants);
     }
 
-    public void init() {
-        Users users = getUsers();
-        OutputView.printDivideInitialCards(users);
-
-        receiveCard(users);
-
-        OutputView.printTotalValue(users);
-        OutputView.printFinalResult(users);
-    }
-
-    private Users getUsers() {
-        Users users = Users.from(Arrays.asList(InputView.getPlayersName().split(",")));
-        users.getUsers().forEach(this::receiveInitialCards);
-        return users;
-    }
-
-    private void receiveInitialCards(final User user) {
-        user.receiveCard(deck.pick());
-        user.receiveCard(deck.pick());
-    }
-
-    private void receiveCard(final Users users) {
-        forPlayer(users);
-        forDealer();
-    }
-
-    private void forPlayer(final Users users) {
-        for (User user : users.getUsers()) {
-            wantReceive(user);
-        }
-    }
-
-    private void wantReceive(final User user) {
-        while (canReceiveMoreCard(user)) {
-            final Card card = deck.pick();
-            user.receiveCard(card);
-            OutputView.printPlayerHand(user);
-        }
-    }
-
-    private boolean canReceiveMoreCard(final User user) {
-        return !Dealer.getInstance().equals(user)
-                && user.canReceiveCard()
-                && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(user.getName()));
-    }
-
-    private void forDealer() {
+    private static void divideCardForDealer(Deck deck, Dealer dealer) {
         if (dealer.canReceiveCard()) {
-            OutputView.printDealerGetCard();
             dealer.receiveCard(deck.pick());
+            OutputView.printReceiveCardForDealer();
         }
     }
+
+    private static void divideCard(Deck deck, Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            receiveCardForPlayer(deck, player);
+        }
+    }
+
+    private static void receiveCardForPlayer(Deck deck, Player player) {
+        while (canReceiveCard(player)) {
+            player.receiveCard(deck.pick());
+            OutputView.printPlayerCardStatus(player);
+        }
+    }
+
+    private static boolean canReceiveCard(Player player) {
+        return player.canReceiveCard() && isInputEqualsReceiveCardCommand(player);
+    }
+
+    private static boolean isInputEqualsReceiveCardCommand(Player player) {
+        return RECEIVE_CARD_COMMAND.equals(InputView.getPlayerInputGetMoreCard(player.getName()));
+    }
+
+
+    private static void divideFirstCard(Deck deck, Participants participants) {
+        OutputView.printDivideTwoCard(participants.getPlayers());
+        participants.receiveInitialCards(deck);
+    }
+
+    private Participants getParticipants(final Deck deck) {
+        return Participants.from(Arrays.asList(InputView.getPlayersName().split(",")));
+    }
+
+//    private void receiveCard(final Participants participants, final Dealer dealer) {
+//        forPlayer(participants, dealer);
+//        forDealer(dealer);
+//    }
+////
+//    private void forPlayer(final Participants participants, final Dealer dealer) {
+//        for (User user : participants.getPlayers()) {
+//            wantReceive(user, dealer);
+//        }
+//    }
+//
+//    private void wantReceive(final User user, final Dealer dealer) {
+//        while (canReceiveMoreCard(user, dealer)) {
+//            final Card card = deck.pick();
+//            user.receiveCard(card);
+//            OutputView.printPlayerHand(user);
+//        }
+//    }
+//
+//    private boolean canReceiveMoreCard(final User user, final Dealer dealer) {
+//        return !dealer.equals(user) && user.canReceiveCard() && RECEIVE_CARD_COMMAND.equals(InputView.getReceiveCardCommand(user.getName()));
+//    }
+//
+//    private void forDealer(final Dealer dealer) {
+//        if (dealer.canReceiveCard()) {
+//            OutputView.printDealerGetCard();
+//            dealer.receiveCard(deck.pick());
+//        }
+//    }
 }
