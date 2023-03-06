@@ -32,4 +32,8 @@ public abstract class Participant {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }

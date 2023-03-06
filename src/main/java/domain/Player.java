@@ -21,10 +21,6 @@ public class Player extends Participant {
         }
     }
 
-    public String getName() {
-        return name.getName();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
-    private static final String DEALER_NAME = "딜러";
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String NEW_LINE = System.lineSeparator();
@@ -27,7 +26,7 @@ public class OutputView {
         Card dealerFirstCard = dealer.getFirstCard();
 
         String format = String.format(Format.CARDS.format,
-                DEALER_NAME, getCardFormat(dealerFirstCard));
+                dealer.getName(), getCardFormat(dealerFirstCard));
         System.out.println(format);
     }
 
@@ -76,7 +75,7 @@ public class OutputView {
     }
 
     private void printDealerCardsWithScore(Dealer dealer) {
-        System.out.println(getCardsWithScoreFormat(dealer, DEALER_NAME));
+        System.out.println(getCardsWithScoreFormat(dealer, dealer.getName()));
     }
 
     private void printPlayersCardsWithScore(Players players) {
@@ -105,7 +104,7 @@ public class OutputView {
             dealerResultsFormat.append(getResultFormat(result, dealer.getResultCount(result)));
         }
 
-        return String.format(Format.RESULT.format, DEALER_NAME, dealerResultsFormat);
+        return String.format(Format.RESULT.format, dealer.getName(), dealerResultsFormat);
     }
 
     private String getResultFormat(Result result, int resultCount) {
