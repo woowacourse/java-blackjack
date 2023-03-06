@@ -53,7 +53,7 @@ class PlayingCardsTest {
         playingCards.addCard(new Card(Shape.SPADE, Number.QUEEN));
         playingCards.addCard(new Card(Shape.SPADE, Number.TWO));
 
-        assertThat(playingCards.isBurst()).isTrue();
+        assertThat(playingCards.isBurst(playingCards.getTotalScore())).isTrue();
     }
 
     @Test
@@ -63,6 +63,6 @@ class PlayingCardsTest {
         playingCards.addCard(new Card(Shape.SPADE, Number.ACE));
         playingCards.addCard(new Card(Shape.SPADE, Number.QUEEN));
 
-        assertThat(playingCards.isBurst()).isFalse();
+        assertThat(playingCards.isBurst(playingCards.getTotalScore())).isFalse();
     }
 }

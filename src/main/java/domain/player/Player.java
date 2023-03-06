@@ -58,7 +58,7 @@ public abstract class Player {
     }
     
     public boolean isBurst() {
-        return playingCards.isBurst();
+        return playingCards.isBurst(getTotalScore());
     }
     
     public List<Card> getCards() {

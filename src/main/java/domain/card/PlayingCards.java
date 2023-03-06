@@ -5,6 +5,7 @@ import java.util.List;
 
 public class PlayingCards {
     private static final int BLACKJACK_SCORE = 21;
+    private static final int ACE_BOTH_SCORE_DIFFERENCE = 10;
     
     private final List<Card> cards;
 
@@ -17,16 +18,20 @@ public class PlayingCards {
     }
 
     public int getTotalScore() {
-        int totalScoreExceptAce = getTotalScoreExceptAce();
+        int totalScore = calculateTotalScore();
 
-        if (containsAce()) {
-            return getTotalScoreContainingAce(totalScoreExceptAce);
+        if (isBurst(totalScore) && containsAce()) {
+            return totalScore - ACE_BOTH_SCORE_DIFFERENCE;
         }
 
-        return totalScoreExceptAce;
+        return totalScore;
     }
-
-    private int getTotalScoreExceptAce() {
+    
+    public boolean isBurst(int totalScore) {
+        return totalScore > BLACKJACK_SCORE;
+    }
+    
+    private int calculateTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -34,18 +39,6 @@ public class PlayingCards {
 
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
-    }
-
-    private int getTotalScoreContainingAce(int totalScore) {
-        if (totalScore <= 10) {
-            return totalScore + 11;
-        }
-
-        return totalScore + 1;
-    }
-
-    public boolean isBurst() {
-        return getTotalScore() > BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Number;
 import domain.card.Shape;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +23,7 @@ class DeckTest {
     void findCardByIndex() {
         Deck deck = Deck.from(cards -> cards);
         Card card = deck.draw();
+        
         assertThat(card).isEqualTo(new Card(Shape.DIAMOND, Number.JACK));
     }
 }
