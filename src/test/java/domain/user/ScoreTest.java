@@ -45,5 +45,4 @@ class ScoreTest {
                         CloverCard.CLOVER_NINE), 21)
         );
     }
-
 }

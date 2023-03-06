@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -30,11 +31,6 @@ public class Player extends User {
             status = PlayerStatus.BUST;
         }
     }
-
-//    @Override
-//    public UserStatus getStatus() {
-//        return status;
-//    }
 
     @Override
     public boolean isUserStatus(UserStatus status) {

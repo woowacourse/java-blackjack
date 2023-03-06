@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +44,6 @@ public class Dealer extends User {
         }
         status = DealerStatus.NORMAL;
     }
-
-//    @Override
-//    public UserStatus getStatus() {
-//        return status;
-//    }
 
     @Override
     public boolean isUserStatus(UserStatus status) {
