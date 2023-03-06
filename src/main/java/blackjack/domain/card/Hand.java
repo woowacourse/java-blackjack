@@ -3,14 +3,14 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ZERO = 0;
     private static final int ACE_NUMBER_DIFFERENCE = 10;
     private final List<Card> cards;
 
-    public Cards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 

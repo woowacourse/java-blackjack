@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public class Participant {
 
     private final Name name;
-    private final Cards cards;
+    private final Hand cards;
 
     public Participant(final Name name) {
         this.name = name;
-        this.cards = new Cards();
+        this.cards = new Hand();
     }
 
     public void drawCard(final Card card) {
