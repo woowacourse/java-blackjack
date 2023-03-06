@@ -28,5 +28,9 @@ public abstract class Player {
 
     public abstract Boolean canPick();
 
+    public abstract Boolean isDealer();
+
+    public abstract Boolean isChallenger();
+
     public abstract String getName();
 }

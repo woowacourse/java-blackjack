@@ -45,13 +45,13 @@ public class Players {
 
     public List<Player> getChallengers() {
         return players.stream()
-                .filter(player -> player instanceof Challenger)
+                .filter(Player::isChallenger)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public Player getDealer() {
         return players.stream()
-                .filter(player -> player instanceof Dealer)
+                .filter(Player::isDealer)
                 .findFirst()
                 .orElse(null);
     }

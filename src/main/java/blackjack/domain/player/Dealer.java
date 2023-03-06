@@ -16,6 +16,16 @@ public class Dealer extends Player {
     }
 
     @Override
+    public Boolean isDealer() {
+        return true;
+    }
+
+    @Override
+    public Boolean isChallenger() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }
