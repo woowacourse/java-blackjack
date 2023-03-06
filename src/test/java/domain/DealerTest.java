@@ -69,7 +69,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("player가 blackjack이면 dealer가 진다.")
+    @DisplayName("player와 dealer 모두 blackjack이라면 비긴다.")
     void dealerCompareWithPlayersTest2() {
         //given
         Dealer dealer = new Dealer();
@@ -81,11 +81,11 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         List<DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(DealerStatus.LOSE);
+        assertThat(dealerStats).containsExactly(DealerStatus.DRAW);
     }
 
     @Test
-    @DisplayName("player와 dealer가 둘다 버스트라면 비긴다.")
+    @DisplayName("player와 dealer가 둘다 버스트라면 dealer가 이긴다.")
     void dealerCompareWithPlayersTest3() {
         //given
         Dealer dealer = new Dealer();
@@ -99,6 +99,6 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         List<DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(DealerStatus.DRAW);
+        assertThat(dealerStats).containsExactly(DealerStatus.WIN);
     }
 }

@@ -23,6 +23,9 @@ public class Score {
         if (this.value > score.value) {
             return DealerStatus.WIN;
         }
+        if (this.value == score.value) {
+            return DealerStatus.DRAW;
+        }
         return DealerStatus.LOSE;
     }
 

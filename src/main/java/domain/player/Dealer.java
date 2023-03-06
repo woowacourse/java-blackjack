@@ -23,15 +23,19 @@ public class Dealer extends Player {
     }
 
     private DealerStatus compareWithPlayer(final Player player) {
-        if (player.isBlackjack()) {
-            return DealerStatus.LOSE;
-        }
-        if (this.isBlackjack()) {
-            return DealerStatus.WIN;
-        }
-        if (player.isBusted() && this.isBusted()) {
+        if (bothBlackjack(player)) {
             return DealerStatus.DRAW;
         }
+        if (player.isBlackjack()) {
+            return DealerStatus.BLACKJACK_LOSE;
+        }
+        if (this.isBlackjack() || player.isBusted()) {
+            return DealerStatus.WIN;
+        }
         return this.getScore().compareScore(player.getScore());
+    }
+
+    private boolean bothBlackjack(final Player player) {
+        return player.isBlackjack() && this.isBlackjack();
     }
 }
