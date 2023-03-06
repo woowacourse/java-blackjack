@@ -1,76 +1,69 @@
 package domain;
 
-import static java.util.stream.Collectors.toMap;
-
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Function;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private Participants participants;
+    private static final int DEALER_POSITION = 0;
+
+    private Players players;
+    private Dealer dealer;
     private Deck deck;
 
-    public void initialize(List<String> playerNames, ShuffleStrategy shuffleStrategy) {
-        participants = Participants.create(playerNames);
-        deck = Deck.create();
+    public void setParticipants(List<String> playerNames) {
+        players = Players.from(playerNames);
+        dealer = new Dealer();
+    }
 
+    public void handOutInitialCards(ShuffleStrategy shuffleStrategy) {
+        Objects.requireNonNull(players, "플레이어가 없는 상태에서 카드를 나눠줄 수 없습니다.");
+
+        deck = Deck.create();
         deck.shuffle(shuffleStrategy);
-        participants.readyForGame(deck);
+
+        dealer.receiveCard(deck.draw());
+        dealer.receiveCard(deck.draw());
+        players.receiveCard(deck);
+        players.receiveCard(deck);
     }
 
     public boolean hasDrawablePlayer() {
-        return participants.hasDrawablePlayer();
+        return players.hasDrawablePlayer();
     }
 
-    public String nextDrawablePlayer() {
-        return participants.nextDrawablePlayerName();
+    public Player getCurrentDrawablePlayer() {
+        return players.getCurrentDrawablePlayer();
     }
 
-    public void handOutCardToNextPlayer() {
-        participants.handOutCardToPlayer(deck.draw());
-    }
-
-    public void standCurrentPlayer() {
-        participants.standCurrentPlayer();
+    public void hitOrStand(Decision decision) {
+        if (decision == Decision.HIT) {
+            players.handOutCardToCurrentPlayer(deck.draw());
+            return;
+        }
+        players.standCurrentPlayer();
     }
 
     public boolean isDealerDrawable() {
-        return participants.isDealerDrawable();
+        return dealer.isDrawable();
     }
 
     public void handOutCardToDealer() {
-        participants.handOutCardToDealer(deck.draw());
+        dealer.receiveCard(deck.draw());
     }
-
-//    public Map<String, List<Card>> getParticipantsCards() {
-//    }
 
     public Map<String, GameOutcome> getPlayersOutcome() {
-        int dealerScore = participants.getDealerScore();
-        return participants.getPlayerScores()
-                .entrySet()
+        return players.battleWith(dealer);
+    }
+
+    public List<Participant> getParticipants() {
+        List<Participant> participants = players.getPlayers()
                 .stream()
-                .collect(toMap(Entry::getKey, e -> GameOutcome.of(e.getValue(), dealerScore)
-                        , (d1, d2) -> d1, LinkedHashMap::new));
-    }
-
-    public List<Card> getParticipantCards(String currentPlayerName) {
-        return participants.getParticipantCards(currentPlayerName);
-    }
-
-    public Map<String, List<Card>> getParticipantsCards() {
-        return participants.names()
-                .stream()
-                .collect(toMap(Function.identity(), this::getParticipantCards
-                        , (d1, d2) -> d1, LinkedHashMap::new));
-    }
-
-    public List<Integer> scores() {
-        List<Integer> scores = participants.scores();
-        scores.add(0, participants.getDealerScore());
-        return scores;
+                .map(player -> (Participant) player)
+                .collect(Collectors.toList());
+        participants.add(DEALER_POSITION, dealer);
+        return participants;
     }
 }

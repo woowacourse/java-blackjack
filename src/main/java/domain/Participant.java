@@ -2,7 +2,7 @@ package domain;
 
 import java.util.List;
 
-abstract class Participant {
+public abstract class Participant {
 
     protected final Hand hand;
 
@@ -24,5 +24,5 @@ abstract class Participant {
         return hand.getCards();
     }
 
-    abstract String name();
+    public abstract String name();
 }

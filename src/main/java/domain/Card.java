@@ -19,6 +19,10 @@ public class Card {
         return number.score();
     }
 
+    public String suit() {
+        return suit.value();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -36,8 +40,4 @@ public class Card {
         return Objects.hash(suit, number);
     }
 
-    @Override
-    public String toString() {
-        return number.value() + suit.value();
-    }
 }

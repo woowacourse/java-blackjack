@@ -29,6 +29,9 @@ public class Deck {
     }
 
     public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("덱이 비었습니다.");
+        }
         return cards.pollLast();
     }
 
