@@ -9,7 +9,7 @@ public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
     private static final int RECORD_INITIAL_VALUE = 0;
 
-    private DealerStatus status;
+    private DealerStatus status = DealerStatus.UNDER_MIN_SCORE;
     private Map<Boolean, Integer> winningRecord;
 
     public Dealer() {
