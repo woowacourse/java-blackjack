@@ -3,6 +3,7 @@ package domain.game;
 import domain.deck.Card;
 import domain.deck.Deck;
 import domain.player.Dealer;
+import domain.player.Name;
 import domain.player.Player;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -43,7 +44,7 @@ public class BlackJackGame {
 
     private Player findPlayer(final String playerName) {
         return players.stream()
-                .filter(player -> player.getName().equals(playerName))
+                .filter(player -> player.getName().equals(new Name(playerName)))
                 .findFirst()
                 .orElseThrow();
     }
@@ -62,7 +63,7 @@ public class BlackJackGame {
         final List<Player> players = this.players.subList(1, this.players.size());
 
         players.forEach((player ->
-                result.put(player.getName(), decideOutcome(dealerScore, player.getScore()))
+                result.put(player.getName().getName(), decideOutcome(dealerScore, player.getScore()))
         ));
 
         return result;

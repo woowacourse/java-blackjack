@@ -20,8 +20,8 @@ public class Player {
         return hand.getCards();
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public int getScore() {

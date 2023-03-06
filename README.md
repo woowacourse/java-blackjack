@@ -55,7 +55,7 @@
     - [x] 21점 넘을 경우 뽑지 못하는 로직 추가
 
 - Name
-    - [ ] VO 선언시엔 `equals`와 `hashcode` 구현
+    - [x] VO 선언시엔 `equals`와 `hashcode` 구현
     - [ ] `getName()` 메서드명 객체지향적으로 수정
     - [x] 부등호 방향 통일 (가독성 향상)
 
