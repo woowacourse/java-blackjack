@@ -2,6 +2,7 @@ package service;
 
 import domain.PlayerGameResult;
 import domain.card.Deck;
+import domain.card.ShuffleStrategyImpl;
 import domain.participant.Participant;
 import domain.participant.Participants;
 
@@ -25,7 +26,7 @@ public class BlackjackService {
     }
 
     public static BlackjackService of(List<String> playersName) {
-        return new BlackjackService(Deck.create(), Participants.of(playersName));
+        return new BlackjackService(Deck.create(new ShuffleStrategyImpl()), Participants.of(playersName));
     }
 
     public void start() {
