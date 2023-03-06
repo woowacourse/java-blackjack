@@ -6,6 +6,7 @@ public class InputView {
     private static final String READ_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String READ_ADD_CARD_COMMAND_MESSAGE =
             "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator();
+    private static final String INVALID_COMMAND = "y,n 으로 입력해주세요.";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -17,6 +18,10 @@ public class InputView {
     public String readCommand(String name) {
         System.out.println();
         System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        if(!input.equals("y") && !input.equals("n")){
+            throw new IllegalArgumentException(INVALID_COMMAND);
+        }
+        return input;
     }
 }

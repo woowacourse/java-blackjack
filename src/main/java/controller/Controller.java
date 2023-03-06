@@ -54,10 +54,19 @@ public class Controller {
     private void selectByPlayer(BlackjackGame game, Player player) {
         String command;
         do {
-            command = inputView.readCommand(player.getName());
+            command = setCommand(player);
             game.distributeByCommand(player, command);
             outputView.printPlayerCardsInfo(player);
         } while (player.canSelectCard(command));
+    }
+
+    private String setCommand(Player player){
+        try{
+            return inputView.readCommand(player.getName());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return setCommand(player);
+        }
     }
 
 
