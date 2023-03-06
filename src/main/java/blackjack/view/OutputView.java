@@ -54,8 +54,7 @@ public class OutputView {
             cards.add(cardNumber + cardSuit);
         }
         System.out.print(String.join(", ", cards));
-        System.out.print("- 결과 : " + participant.calculateCardNumber());
-        System.out.println();
+        System.out.print("- 결과 : " + participant.calculateCardNumber() + NEW_LINE);
     }
 
     public void hitDealerCount(Dealer dealer) {
