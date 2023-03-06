@@ -12,6 +12,7 @@ import view.OutputView;
 
 public class MainController {
     private static final String DEALER_NAME = "딜러";
+    private static final int BLACK_JACK_NUMBER = 21;
 
     private List<String> names;
     private BlackJackGame blackJackGame;
@@ -56,9 +57,15 @@ public class MainController {
     }
 
     private void drawWhileYes(final String playerName) {
-        do {
+        boolean answer = true;
+        while (isAbleDraw(playerName) && answer) {
             OutputView.printOneMoreCard(playerName);
-        } while (isOneMore(playerName));
+            answer = isOneMore(playerName);
+        }
+    }
+
+    private boolean isAbleDraw(final String playerName) {
+        return blackJackGame.getScore(playerName) < BLACK_JACK_NUMBER;
     }
 
     private boolean isOneMore(final String playerName) {
