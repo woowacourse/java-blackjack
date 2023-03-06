@@ -38,7 +38,7 @@ public class BlackJackController {
     private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
         while (blackJackGame.existCanHitParticipant()) {
             final Player canHitPlayer = blackJackGame.findCanHitParticipant();
-            final HitState hitState = inputHitOrStay(canHitPlayer);
+            final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitPlayer));
             canHitPlayer.changeState(hitState);
             blackJackGame.hitOrStayForParticipant(canHitPlayer);
             OutputView.showPlayerCardAreaState(canHitPlayer);
@@ -46,10 +46,7 @@ public class BlackJackController {
     }
 
     private HitState inputHitOrStay(final Player player) {
-        if (withExceptionHandle(() -> InputView.readWantHit(player))) {
-            return HitState.HIT;
-        }
-        return HitState.STAY;
+        return HitState.hitWhenBooleanIsTrue(InputView.readWantHit(player));
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
