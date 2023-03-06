@@ -92,6 +92,7 @@ class PlayersTest {
                 cards.add(new Card(Suit.SPADE, Number.JACK));
             });
             players.receiveCard(deck);
+            players.receiveCard(deck);
 
             //when
             boolean existingDrawablePlayer = players.hasDrawablePlayer();
@@ -107,6 +108,13 @@ class PlayersTest {
         void should_카드를받을다음플레이어이름반환_when_카드를받을수있는플레이어가존재할시() {
             //given
             Players players = Players.from(List.of("포이", "에밀"));
+            Deck deck = Deck.create();
+            deck.shuffle((cards) -> {
+                cards.clear();
+                cards.add(new Card(Suit.SPADE, Number.FOUR));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
+            });
+            players.receiveCard(deck);
             String expected = "포이";
 
             //when
@@ -124,8 +132,11 @@ class PlayersTest {
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(new Card(Suit.SPADE, Number.JACK));
                 cards.add(new Card(Suit.SPADE, Number.JACK));
             });
+            players.receiveCard(deck);
             players.receiveCard(deck);
 
             //when

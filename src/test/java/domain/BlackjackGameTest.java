@@ -34,8 +34,8 @@ class BlackjackGameTest {
 
             //then
             assertAll(
-                    () -> assertThat(outcome.get("포이")).isEqualTo(LOSE),
-                    () -> assertThat(outcome.get("에밀")).isEqualTo(WIN)
+                    () -> assertThat(outcome.get("포이")).isEqualTo(WIN),
+                    () -> assertThat(outcome.get("에밀")).isEqualTo(LOSE)
             );
         }
     }
