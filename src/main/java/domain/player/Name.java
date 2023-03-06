@@ -6,15 +6,15 @@ public class Name {
     private static final int MIN_LENGTH = 1;
     private static final int MAX_LENGTH = 15;
 
-    private final String name;
+    private final String value;
 
-    public Name(final String name) {
-        validateLength(name);
-        this.name = name;
+    public Name(final String value) {
+        validateLength(value);
+        this.value = value;
     }
 
-    private static void validateLength(final String name) {
-        if (name.length() < MIN_LENGTH || MAX_LENGTH < name.length()) {
+    private static void validateLength(final String value) {
+        if (value.length() < MIN_LENGTH || MAX_LENGTH < value.length()) {
             throw new IllegalArgumentException();
         }
     }
@@ -28,15 +28,15 @@ public class Name {
             return false;
         }
         final Name name = (Name) obj;
-        return name.name.equals(this.name);
+        return name.value.equals(this.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }

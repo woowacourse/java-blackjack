@@ -56,7 +56,7 @@
 
 - Name
     - [x] VO 선언시엔 `equals`와 `hashcode` 구현
-    - [ ] `getName()` 메서드명 객체지향적으로 수정
+    - [x] `getName()` 메서드명 객체지향적으로 수정
     - [x] 부등호 방향 통일 (가독성 향상)
 
 - Outcome

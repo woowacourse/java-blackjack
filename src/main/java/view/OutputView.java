@@ -93,13 +93,13 @@ public class OutputView {
 
     private static void printEachPlayerResult(final Map<Name, Outcome> result, final Name name) {
         if (result.get(name).equals(Outcome.WIN)) {
-            printGameEachResult(name.getName(), 1, 0, 0);
+            printGameEachResult(name.getValue(), 1, 0, 0);
         }
         if (result.get(name).equals(Outcome.DRAW)) {
-            printGameEachResult(name.getName(), 0, 1, 0);
+            printGameEachResult(name.getValue(), 0, 1, 0);
         }
         if (result.get(name).equals(Outcome.LOSE)) {
-            printGameEachResult(name.getName(), 0, 0, 1);
+            printGameEachResult(name.getValue(), 0, 0, 1);
         }
     }
 
