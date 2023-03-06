@@ -1,13 +1,11 @@
-import domain.BlackjackGame;
-import domain.Participant;
-import domain.Player;
-import domain.PlayerNames;
-import domain.Players;
-import java.util.List;
-import org.assertj.core.api.Assertions;
+import domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackGameTest {
 
@@ -27,7 +25,7 @@ class BlackjackGameTest {
 
         blackjackGame.giveCardTo(pobi);
 
-        Assertions.assertThat(pobi.cardSize()).isEqualTo(1);
+        assertThat(pobi.cardSize()).isEqualTo(1);
     }
 
     @DisplayName("게임 시작 시, 모든 플레이어에게 두 장의 카드를 나눠준다.")
@@ -35,11 +33,13 @@ class BlackjackGameTest {
     void giveInitialCardsSuccessTest() {
         Player pobi = players.getPlayers().get(0);
         Player crong = players.getPlayers().get(1);
+        int initialCountOfCards = 2;
 
         blackjackGame.giveInitialCards();
 
-        Assertions.assertThat(pobi.cardSize()).isEqualTo(2);
-        Assertions.assertThat(crong.cardSize()).isEqualTo(2);
+        assertThat(pobi.cardSize()).isEqualTo(initialCountOfCards);
+        assertThat(crong.cardSize()).isEqualTo(initialCountOfCards);
+        assertThat(blackjackGame.getDealer().getCards()).isEqualTo(initialCountOfCards);
     }
 
     @DisplayName("딜러는 카드의 합이 17이 넘을때 까지 추가 카드를 받아야 한다.")
@@ -50,8 +50,7 @@ class BlackjackGameTest {
 
         Participant dealer = blackjackGame.getDealer();
 
-        Assertions.assertThat(dealer.calculateScore())
+        assertThat(dealer.calculateScore())
                 .isGreaterThanOrEqualTo(17);
     }
-
 }

@@ -1,12 +1,9 @@
-import domain.Card;
-import domain.CardRank;
-import domain.Player;
-import domain.PlayerName;
-import domain.CardShape;
-import org.assertj.core.api.Assertions;
+import domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
 
@@ -22,7 +19,7 @@ class PlayerTest {
     void receiveCardSuccessTest() {
         player.receive(new Card(CardShape.SPADE, CardRank.ACE));
 
-        Assertions.assertThat(player).extracting("cards")
+        assertThat(player).extracting("cards")
                 .asList()
                 .hasSize(1);
     }
@@ -34,7 +31,7 @@ class PlayerTest {
         player.receive(new Card(CardShape.CLUB, CardRank.ACE));
         player.receive(new Card(CardShape.HEART, CardRank.THREE));
 
-        Assertions.assertThat(player.calculateScore())
+        assertThat(player.calculateScore())
                 .isEqualTo(14);
 
     }
@@ -47,7 +44,7 @@ class PlayerTest {
         player.receive(new Card(CardShape.HEART, CardRank.THREE));
         player.receive(new Card(CardShape.HEART, CardRank.TEN));
 
-        Assertions.assertThat(player.calculateScore())
+        assertThat(player.calculateScore())
                 .isEqualTo(14);
 
     }
@@ -60,7 +57,7 @@ class PlayerTest {
         player.receive(new Card(CardShape.HEART, CardRank.ACE));
         player.receive(new Card(CardShape.HEART, CardRank.TEN));
 
-        Assertions.assertThat(player.calculateScore())
+        assertThat(player.calculateScore())
                 .isEqualTo(12);
 
     }
@@ -73,7 +70,7 @@ class PlayerTest {
         player.receive(new Card(CardShape.HEART, CardRank.TEN));
         player.receive(new Card(CardShape.HEART, CardRank.QUEEN));
 
-        Assertions.assertThat(player.isBusted()).isTrue();
+        assertThat(player.isBusted()).isTrue();
     }
 
     @DisplayName("카드의 합이 21이 넘지 않으면 버스트 되지 않는다.")
@@ -84,7 +81,6 @@ class PlayerTest {
         player.receive(new Card(CardShape.HEART, CardRank.ACE));
         player.receive(new Card(CardShape.SPADE, CardRank.ACE));
 
-        Assertions.assertThat(player.isBusted()).isFalse();
+        assertThat(player.isBusted()).isFalse();
     }
-
 }

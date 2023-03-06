@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     private String getCardFormat(Card card) {
-        return card.getNumberName() + card.getShapeName();
+        return card.getCardRankName() + card.getCardShapeName();
     }
 
     public void printPlayerCards(Player player) {

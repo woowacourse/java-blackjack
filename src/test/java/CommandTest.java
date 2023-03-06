@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class CommandTest {
 
     @DisplayName("입력값에 따라 명령이 생성된다. y -> HIT")
@@ -13,7 +15,7 @@ class CommandTest {
         String input = "y";
 
         PlayerAction command = PlayerAction.from(input);
-        Assertions.assertThat(command).isEqualTo(PlayerAction.HIT);
+        assertThat(command).isEqualTo(PlayerAction.HIT);
     }
 
     @DisplayName("입력값에 따라 명령이 생성된다. n -> HOLD")
@@ -22,14 +24,13 @@ class CommandTest {
         String input = "n";
 
         PlayerAction command = PlayerAction.from(input);
-        Assertions.assertThat(command).isEqualTo(PlayerAction.HOLD);
+        assertThat(command).isEqualTo(PlayerAction.HOLD);
     }
 
     @ParameterizedTest(name = "y 혹은 n 만 입력할 수 있다.")
-    @ValueSource(strings = {"yy","nn","hold","hit"})
+    @ValueSource(strings = {"yy", "nn", "hold", "hit"})
     void createCommandFailTest(String input) {
         Assertions.assertThatThrownBy(() -> PlayerAction.from(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

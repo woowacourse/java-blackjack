@@ -1,9 +1,10 @@
 import domain.Card;
 import domain.CardRank;
 import domain.CardShape;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
 
@@ -11,8 +12,11 @@ public class CardTest {
     @Test
     void createCardSuccess() {
         Card card = new Card(CardShape.HEART, CardRank.ACE);
-        Assertions.assertThat(card).extracting("shape")
-                .isEqualTo(CardShape.HEART);
+
+        assertThat(card.getCardShapeName())
+                .isEqualTo(CardShape.HEART.getName());
+        assertThat(card.getScore())
+                .isEqualTo(CardRank.ACE.getScore());
     }
 }
 
