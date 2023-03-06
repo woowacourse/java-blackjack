@@ -2,12 +2,12 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.PlayerCommand;
-import domain.result.WinningResult;
 import domain.card.Cards;
 import domain.card.shuffler.CardsShuffler;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.result.WinningResult;
 import view.InputView;
 import view.OutputView;
 
@@ -17,7 +17,7 @@ public class MainController {
     private final OutputView outputView;
     private final CardsShuffler cardsShuffler;
 
-    public MainController(final InputView inputView, final OutputView outputView, CardsShuffler cardsShuffler) {
+    public MainController(final InputView inputView, final OutputView outputView, final CardsShuffler cardsShuffler) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.cardsShuffler = cardsShuffler;

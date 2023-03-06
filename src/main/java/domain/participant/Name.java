@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 public class Name {
 
     private static final Pattern NAME_REGEX = Pattern.compile("^[a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\\s]*$");
+    private static final int MAX_LENGTH_EXCLUSIVE = 10;
     private final String name;
 
     public Name(final String name) {
@@ -20,7 +21,7 @@ public class Name {
     }
 
     private static void validateLength(final String name) {
-        if (name.length() > 10) {
+        if (name.length() > MAX_LENGTH_EXCLUSIVE) {
             throw new IllegalArgumentException("[ERROR] 이름의 길이는 10글자 이하여야 합니다.");
         }
     }

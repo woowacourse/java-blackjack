@@ -9,8 +9,8 @@ import java.util.List;
 
 public class BlackJackGame {
 
-    private Participants participants;
-    private Cards cards;
+    private final Participants participants;
+    private final Cards cards;
 
     public BlackJackGame(final Participants participants, final Cards cards) {
         this.participants = participants;
