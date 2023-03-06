@@ -35,7 +35,22 @@ class BlackJackTest {
     }
 
     @Test
-    @DisplayName("플레이어에게 한 장을 추가한다.")
+    @DisplayName("전체 플레이어에게 카드를 한 장씩 추가한다.")
+    void givesAllPlayersACard() {
+        Dealer dealer = makeDealer();
+        List<Participant> participants = Participant.of(GIVEN_NAMES);
+        BlackJack blackJack = new BlackJack(
+                new Players(dealer, participants),
+                CardRepository.create(maxIndex -> 0)
+        );
+        blackJack.giveCardToAllPlayers();
+
+        assertThat(dealer.getCards()).hasSize(1);
+        participants.forEach(participant -> assertThat(participant.getCards()).hasSize(1));
+    }
+
+    @Test
+    @DisplayName("특정 플레이어에게 한 장을 추가한다.")
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
                 new Players(makeDealer(), Participant.of(GIVEN_NAMES)),
