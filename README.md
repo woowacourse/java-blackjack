@@ -37,9 +37,6 @@ graph TD
     Participant --> Player
     Participant --> Dealer
     Participant --> Cards
-    Participant --> Score
-    
-    Score --> Result
     
     Player --> Name
     
@@ -64,11 +61,6 @@ graph TD
   - [x] 중복되는 이름은 가질 수 없다.
   - [x] 딜러 포함 최대 6명이다.
 
-### 점수
-
-- [x] 점수를 관리한다.
-- [x] 점수를 비교하여 결과를 판단한다.
-
 ### 결과
 
 - [x] 결과를 관리한다.
@@ -79,6 +71,10 @@ graph TD
   - [x] 최소 1자, 최대 10자까지 가능하다.
   - [x] 중간 공백은 허용한다.
   - [x] `딜러`라는 이름은 가질 수 없다.
+
+### 딜러
+
+- [ ] 플레이어의 점수를 통해 결과를 판단한다.
 
 ### 카드
 
