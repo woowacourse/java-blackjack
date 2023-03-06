@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.user.name.UserName;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,8 +25,8 @@ public class InputView {
     public boolean readCommand(final UserName userName) {
         System.out.println(
                 userName.getName() + "는 한장의 카드를 더 받겠습니까?"
-                        + "(예는 " + Command.YES.name()
-                        + "아니오는 " + Command.NO.name() + ")");
+                        + "(예는 " + Command.YES.getCommand()
+                        + "아니오는 " + Command.NO.getCommand() + ")");
 
         final String input = scanner.nextLine();
         Command command = Command.from(input);

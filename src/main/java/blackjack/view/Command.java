@@ -29,4 +29,8 @@ enum Command {
     boolean getCondition() {
         return condition;
     }
+
+    public String getCommand() {
+        return command;
+    }
 }
