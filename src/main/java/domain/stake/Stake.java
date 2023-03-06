@@ -1,4 +1,6 @@
-package domain;
+package domain.stake;
+
+import domain.player.DealerStatus;
 
 public class Stake {
 
@@ -20,7 +22,7 @@ public class Stake {
         }
     }
 
-    public int getValue() {
-        return value;
+    public Double getPrize(DealerStatus dealerStatus) {
+        return value * dealerStatus.getMultiply();
     }
 }
