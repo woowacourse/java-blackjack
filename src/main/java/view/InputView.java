@@ -4,11 +4,24 @@ import java.util.Scanner;
 
 public class InputView {
     
+    public static final String ILLEGAL_ANSWER_MESSAGE = "잘못된 입력입니다.";
+    public static final String CONTINUE = "y";
+    public static final String STOP = "n";
     private static final Scanner scanner = new Scanner(System.in);
     
-    public static String readAnswerForMoreCard(String participantName) {
+    public static boolean readAnswerForMoreCard(String participantName) {
         System.out.println(participantName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return readLine();
+        return getAnswer(readLine());
+    }
+    
+    private static boolean getAnswer(String answer) {
+        if (answer.equals(CONTINUE)) {
+            return true;
+        }
+        if (answer.equals(STOP)) {
+            return false;
+        }
+        throw new IllegalArgumentException(ILLEGAL_ANSWER_MESSAGE);
     }
     
     private static String readLine() {

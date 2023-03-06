@@ -27,9 +27,8 @@ public class GameController {
     private void playGame(Game game) {
         Participant currentParticipant = game.getCurrentParticipant();
         while (currentParticipant.isPlayer()) {
-            String actionInput = InputView.readAnswerForMoreCard(currentParticipant.getName());
-            BlackJackAction action = BlackJackAction.of(actionInput);
-            game.run(currentParticipant, action);
+            boolean isHit = InputView.readAnswerForMoreCard(currentParticipant.getName());
+            game.run(currentParticipant, BlackJackAction.of(isHit));
             OutputView.printNameAndCards(currentParticipant.getName(), currentParticipant.getCards());
             currentParticipant = game.getCurrentParticipant();
         }
@@ -48,6 +47,5 @@ public class GameController {
             OutputView.printPlayerResult(allPlayers.get(i).getName(), finalGameResults.get(i));
         }
     }
-    
     
 }
