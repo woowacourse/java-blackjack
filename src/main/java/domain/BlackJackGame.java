@@ -27,8 +27,8 @@ public class BlackJackGame {
         return participants.findCardNamesByParticipantName(participantName);
     }
 
-    public Player findPlayerByPlayerName(String playerName) {
-        return participants.findPlayerByPlayerName(playerName);
+    public Players getPlayers() {
+        return participants.getPlayers();
     }
 
     public void distributeCard(Participant participant) {
