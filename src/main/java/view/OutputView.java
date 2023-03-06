@@ -54,50 +54,35 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final Map<String, Outcome> result) {
+    public static void printGameResult(final EnumMap<Outcome, Integer> dealerOutcome, final Map<String, Outcome> playerOutcome) {
         System.out.println("## 최종 승패");
-        printDealerResult(result);
-        printPlayerResult(result);
+        printDealerResult(dealerOutcome);
+        printPlayerResult(playerOutcome);
     }
 
-    private static void printDealerResult(final Map<String, Outcome> result) {
-        EnumMap<Outcome, Integer> dealerResult = initializeDealerResult();
-        for (String key : result.keySet()) {
-            final Outcome outcome = result.get(key);
-            dealerResult.put(outcome, dealerResult.get(outcome) + 1);
-        }
+    private static void printDealerResult(final EnumMap<Outcome, Integer> dealerOutcome) {
         printGameEachResult(
                 "딜러",
-                dealerResult.get(Outcome.LOSE),
-                dealerResult.get(Outcome.DRAW),
-                dealerResult.get(Outcome.WIN)
+                dealerOutcome.get(Outcome.LOSE),
+                dealerOutcome.get(Outcome.DRAW),
+                dealerOutcome.get(Outcome.WIN)
         );
     }
 
-    private static EnumMap<Outcome, Integer> initializeDealerResult() {
-        EnumMap<Outcome, Integer> enumMap = new EnumMap<>(Outcome.class);
-
-        for (Outcome outcome : Outcome.values()) {
-            enumMap.put(outcome, 0);
-        }
-
-        return enumMap;
-    }
-
-    private static void printPlayerResult(final Map<String, Outcome> result) {
-        result.keySet().forEach(name ->
-                printEachPlayerResult(result, name)
+    private static void printPlayerResult(final Map<String, Outcome> playerOutcome) {
+        playerOutcome.keySet().forEach(name ->
+                printEachPlayerResult(playerOutcome, name)
         );
     }
 
-    private static void printEachPlayerResult(final Map<String, Outcome> result, final String name) {
-        if (result.get(name).equals(Outcome.WIN)) {
+    private static void printEachPlayerResult(final Map<String, Outcome> playerOutcome, final String name) {
+        if (playerOutcome.get(name).equals(Outcome.WIN)) {
             printGameEachResult(name, 1, 0, 0);
         }
-        if (result.get(name).equals(Outcome.DRAW)) {
+        if (playerOutcome.get(name).equals(Outcome.DRAW)) {
             printGameEachResult(name, 0, 1, 0);
         }
-        if (result.get(name).equals(Outcome.LOSE)) {
+        if (playerOutcome.get(name).equals(Outcome.LOSE)) {
             printGameEachResult(name, 0, 0, 1);
         }
     }

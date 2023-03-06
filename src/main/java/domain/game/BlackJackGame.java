@@ -6,12 +6,12 @@ import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
 
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
-
     private final Deck deck;
     private final Players players;
 
@@ -33,16 +33,36 @@ public class BlackJackGame {
         return players.findDealer();
     }
 
+    public EnumMap<Outcome, Integer> decideDealerOutcome() {
+        Map<String, Outcome> playerOutcome = decidePlayersOutcome();
+        EnumMap<Outcome, Integer> dealerOutcome = initializeDealerOutcome();
+        for (String key : playerOutcome.keySet()) {
+            final Outcome outcome = playerOutcome.get(key);
+            dealerOutcome.put(outcome, dealerOutcome.get(outcome) + 1);
+        }
+        return dealerOutcome;
+    }
+
     public Map<String, Outcome> decidePlayersOutcome() {
-        Map<String, Outcome> result = new LinkedHashMap<>();
+        Map<String, Outcome> playerOutcome = new LinkedHashMap<>();
         final int dealerScore = findDealer().getScore();
         final List<Player> players = this.players.getPlayersWithOutDealer();
 
         players.forEach((player ->
-                result.put(player.getName(), decideOutcome(dealerScore, player))
+                playerOutcome.put(player.getName(), decideOutcome(dealerScore, player))
         ));
 
-        return result;
+        return playerOutcome;
+    }
+
+    private static EnumMap<Outcome, Integer> initializeDealerOutcome() {
+        EnumMap<Outcome, Integer> dealerOutcome = new EnumMap<>(Outcome.class);
+
+        for (Outcome outcome : Outcome.values()) {
+            dealerOutcome.put(outcome, 0);
+        }
+
+        return dealerOutcome;
     }
 
     private Outcome decideOutcome(final int dealerScore, final Player player) {
