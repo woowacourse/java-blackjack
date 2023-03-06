@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Hand {
-    public static final int UPPER_BOUND = 11;
-    public static final int ACE_RANK_DIFFERENCE = 10;
+    private static final int UPPER_BOUND = 11;
+    private static final int ACE_RANK_DIFFERENCE = 10;
 
     private final LinkedList<Card> cards;
 

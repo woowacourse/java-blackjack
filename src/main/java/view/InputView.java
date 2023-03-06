@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
-
     private static final Scanner scanner = new Scanner(System.in);
     private static final String SPLIT_DELIMITER = ",";
     private static final String YES = "y";

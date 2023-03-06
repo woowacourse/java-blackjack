@@ -15,7 +15,6 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-
     private final String rank;
     private final int score;
 
