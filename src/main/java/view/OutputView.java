@@ -1,11 +1,7 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Participant;
-import domain.Player;
-import domain.Players;
-import domain.Result;
+import domain.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +25,7 @@ public class OutputView {
     }
 
     private void printInitialDealerCards(Dealer dealer) {
-        Card dealerFirstCard = dealer.getDealerFirstCard();
+        Card dealerFirstCard = dealer.getFirstCard();
 
         String format = String.format(Format.CARDS.format,
                 DEALER_NAME, getCardFormat(dealerFirstCard));
@@ -146,8 +142,7 @@ public class OutputView {
         BUSTED("%s는 버스트 되었습니다."),
         RESULT("%s: %s"),
         DEALER_MORE_CARDS("딜러는 16이하라 %d장의 카드를 더 받았습니다."),
-        ERROR("[Error] %s")
-        ;
+        ERROR("[Error] %s");
 
         private final String format;
 

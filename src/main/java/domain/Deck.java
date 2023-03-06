@@ -18,14 +18,14 @@ public class Deck {
     }
 
     private void addAllCards(Stack<Card> deck) {
-        Shape[] shapes = Shape.values();
+        CardShape[] shapes = CardShape.values();
 
-        for (Shape shape : shapes) {
+        for (CardShape shape : shapes) {
             addCardsOfShape(deck, shape);
         }
     }
 
-    private void addCardsOfShape(Stack<Card> deck, Shape shape) {
+    private void addCardsOfShape(Stack<Card> deck, CardShape shape) {
         CardRank[] numbers = CardRank.values();
 
         for (CardRank number : numbers) {

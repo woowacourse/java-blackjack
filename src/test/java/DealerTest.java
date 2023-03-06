@@ -6,7 +6,7 @@ import domain.Player;
 import domain.PlayerNames;
 import domain.Players;
 import domain.Result;
-import domain.Shape;
+import domain.CardShape;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    public static final Card VALUE_TEN = new Card(Shape.DIAMOND, CardRank.TEN);
-    public static final Card VALUE_NINE = new Card(Shape.DIAMOND, CardRank.NINE);
-    public static final Card VALUE_EIGHT = new Card(Shape.DIAMOND, CardRank.EIGHT);
+    public static final Card VALUE_TEN = new Card(CardShape.DIAMOND, CardRank.TEN);
+    public static final Card VALUE_NINE = new Card(CardShape.DIAMOND, CardRank.NINE);
+    public static final Card VALUE_EIGHT = new Card(CardShape.DIAMOND, CardRank.EIGHT);
 
     @DisplayName("딜러의 카드 합을 기준으로 플레이어의 승패를 결정한다.")
     @Test

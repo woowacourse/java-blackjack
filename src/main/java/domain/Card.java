@@ -1,10 +1,10 @@
 package domain;
 
 public class Card {
-    private final Shape shape;
+    private final CardShape shape;
     private final CardRank number;
 
-    public Card(Shape shape, CardRank number) {
+    public Card(CardShape shape, CardRank number) {
         this.shape = shape;
         this.number = number;
     }

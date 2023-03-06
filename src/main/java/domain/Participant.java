@@ -1,38 +1,16 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    private final List<Card> cards = new ArrayList<>();
+    protected final Cards cards = new Cards();
 
     public void receive(Card card) {
         cards.add(card);
     }
 
     public int calculateScore() {
-        int countOfAce = countAce();
-        int score = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-
-        return applyAce(score, countOfAce);
-    }
-
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-    }
-
-    private int applyAce(int score, int aceCount) {
-        while (score > BlackjackRule.BUST_LIMIT.getValue() && aceCount > 0) {
-            score -= BlackjackRule.ACE_GAP.getValue();
-            aceCount--;
-        }
-
-        return score;
+        return cards.calculateScore();
     }
 
     public boolean isBusted() {
@@ -44,6 +22,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 }
