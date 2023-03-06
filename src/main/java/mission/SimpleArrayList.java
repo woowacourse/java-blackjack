@@ -8,7 +8,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     private int size = 0;
 
     public SimpleArrayList() {
-        this.arrayList = new Object[DEFAULT_SIZE];
+        this.arrayList =  new Object[DEFAULT_SIZE];
     }
 
     @Override
@@ -120,5 +120,15 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         if (index >= size) {
             throw new IndexOutOfBoundsException("[ERROR] 인덱스가 범위를 벗어났습니다.");
         }
+    }
+
+    public static <T> SimpleArrayList<T> fromArrayToList(T[] array) {
+        SimpleArrayList<T> arrayToList = new SimpleArrayList<>();
+
+        for (T t : array) {
+            arrayToList.add(t);
+        }
+
+        return arrayToList;
     }
 }

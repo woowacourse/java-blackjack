@@ -172,4 +172,15 @@ class SimpleArrayListTest {
 
         assertThat(arrayList.size()).isEqualTo(0);
     }
+
+    @Test
+    void convertArrayToSimpleList() {
+        String[] arrays = {"first", "second"};
+        SimpleArrayList<String> stringSimpleArrayList = SimpleArrayList.fromArrayToList(arrays);
+
+        assertAll(
+                () -> assertThat(stringSimpleArrayList.get(0)).isEqualTo("first"),
+                () -> assertThat(stringSimpleArrayList.get(1)).isEqualTo("second")
+        );
+    }
 }
