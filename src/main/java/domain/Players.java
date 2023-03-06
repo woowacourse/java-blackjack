@@ -33,8 +33,8 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public Map<String, List<String>> getInfo() {
-        Map<String, List<String>> info = new LinkedHashMap<>();
+    public Map<String, List<Card>> getInfo() {
+        Map<String, List<Card>> info = new LinkedHashMap<>();
         for (Player player : players) {
             info.put(player.getName(), player.getCards());
         }
@@ -43,6 +43,13 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayer(String name) {
+        return players.stream()
+                .filter(s -> s.getName().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다."));
     }
 
     public int getCardsSum(String playerName) {

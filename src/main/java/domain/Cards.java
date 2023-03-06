@@ -39,10 +39,8 @@ public class Cards {
         return Math.toIntExact(cards.stream().filter(s -> s.isAce()).count());
     }
 
-    public List<String> getCards() {
-        return cards.stream()
-                .map(Card::getCard)
-                .collect(Collectors.toList());
+    public List<Card> getCards() {
+        return cards;
     }
 
 }

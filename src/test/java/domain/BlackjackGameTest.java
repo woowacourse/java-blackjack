@@ -26,8 +26,8 @@ public class BlackjackGameTest {
     void distributeDealerInitialCardsTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
 
-        Map<String, List<String>> result = new LinkedHashMap<>();
-        result.put("딜러", List.of("A스페이드"));
+        Map<String, List<Card>> result = new LinkedHashMap<>();
+        result.put("딜러", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
 
         blackjackGame.distributeDealer();
 
@@ -39,9 +39,9 @@ public class BlackjackGameTest {
     void distributePlayersInitialCardsTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
 
-        Map<String, List<String>> result = new LinkedHashMap<>();
-        result.put("pobi", List.of("A스페이드"));
-        result.put("jason", List.of("2스페이드"));
+        Map<String, List<Card>> result = new LinkedHashMap<>();
+        result.put("pobi", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
+        result.put("jason", List.of(new Card(CardNumber.TWO, CardPattern.SPADE)));
 
         blackjackGame.distributePlayers();
 
