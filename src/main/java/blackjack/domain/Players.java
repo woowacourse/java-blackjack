@@ -8,13 +8,15 @@ import java.util.stream.Collectors;
 
 public class Players {
 
+    private static final String DELIMITER = ",";
+
     private static final java.util.regex.Pattern NAMES_FORMAT = Pattern.compile("[^,]+(,[^,]+)+");
     private final List<Player> players;
 
     public Players(String names) {
         validatePlayerNames(names);
 
-        players = StringUtil.split(names, ",")
+        players = StringUtil.split(names, DELIMITER)
             .stream()
             .map(Player::new)
             .collect(Collectors.toList());
