@@ -1,10 +1,21 @@
 package techcourse.jcf.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface SimpleList<E> {
 
     static <T> SimpleList<T> fromArrayToList(T[] arrays) {
         final SimpleArrayList<T> result = new SimpleArrayList<>();
         for (final T element : arrays) {
+            result.add(element);
+        }
+        return result;
+    }
+
+    static <T> SimpleList<T> create(List<T> list) {
+        final SimpleArrayList<T> result = new SimpleArrayList<>();
+        for (final T element : list) {
             result.add(element);
         }
         return result;
@@ -16,6 +27,16 @@ public interface SimpleList<E> {
             result += values.get(i).doubleValue();
         }
         return result;
+    }
+
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> values) {
+        List<T> result = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            if (values.get(i).doubleValue() < 0) {
+                result.add(values.get(i));
+            }
+        }
+        return create(result);
     }
 
     boolean add(E value);
