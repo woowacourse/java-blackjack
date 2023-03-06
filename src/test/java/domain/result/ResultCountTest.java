@@ -38,4 +38,27 @@ class ResultCountTest {
         Assertions.assertThat(resultCount.findLoseCount()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("플레이어의 승리 게임 결과를 반환한다.")
+    void findWinCount() {
+        resultCount.addWinCount();
+
+        Assertions.assertThat(resultCount.findPlayerGameResult()).isEqualTo("승");
+    }
+
+    @Test
+    @DisplayName("플레이어의 무승부 게임 결과를 반환한다.")
+    void findTieCount() {
+        resultCount.addTieCount();
+
+        Assertions.assertThat(resultCount.findPlayerGameResult()).isEqualTo("무");
+    }
+
+    @Test
+    @DisplayName("플레이어의 패배 게임 결과를 반환한다.")
+    void findLoseCount() {
+        resultCount.addLoseCount();
+
+        Assertions.assertThat(resultCount.findPlayerGameResult()).isEqualTo("패");
+    }
 }
