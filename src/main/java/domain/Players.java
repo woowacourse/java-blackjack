@@ -38,7 +38,7 @@ public class Players {
 
     private List<Player> createPlayers(List<String> players) {
         return players.stream()
-                .map(name -> new Player(new PlayerName(name), new Cards()))
+                .map(name -> new Player(new PlayerName(name), new Cards(new ArrayList<>())))
                 .collect(Collectors.toList());
     }
 
