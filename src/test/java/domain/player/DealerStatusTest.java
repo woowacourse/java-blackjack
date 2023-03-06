@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.Bet;
+import domain.Stake;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,9 +12,9 @@ class DealerStatusTest {
     @DisplayName("이기면 베팅 금액의 1배를 반환한다")
     void calculatePrize() {
         //given
-        Bet bet = new Bet(100);
+        Stake stake = new Stake(100);
         //when
-        double v = DealerStatus.WIN.calculatePrize(bet);
+        double v = DealerStatus.WIN.calculatePrize(stake);
         //then
         assertThat(v).isEqualTo(100);
     }
@@ -23,9 +23,9 @@ class DealerStatusTest {
     @DisplayName("지면 베팅 금액의 -1배를 반환한다")
     void calculatePrize2() {
         //given
-        Bet bet = new Bet(100);
+        Stake stake = new Stake(100);
         //when
-        double v = DealerStatus.LOSE.calculatePrize(bet);
+        double v = DealerStatus.LOSE.calculatePrize(stake);
         //then
         assertThat(v).isEqualTo(-100);
     }
@@ -34,9 +34,9 @@ class DealerStatusTest {
     @DisplayName("비기면 베팅 금액의 0배를 반환한다")
     void calculatePrize3() {
         //given
-        Bet bet = new Bet(100);
+        Stake stake = new Stake(100);
         //when
-        double v = DealerStatus.DRAW.calculatePrize(bet);
+        double v = DealerStatus.DRAW.calculatePrize(stake);
         //then
         assertThat(v).isEqualTo(0);
     }
@@ -45,9 +45,9 @@ class DealerStatusTest {
     @DisplayName("블랙잭으로 지면 베팅 금액의 -1.5배를 반환한다")
     void calculatePrize4() {
         //given
-        Bet bet = new Bet(100);
+        Stake stake = new Stake(100);
         //when
-        double v = DealerStatus.BLACKJACK_LOSE.calculatePrize(bet);
+        double v = DealerStatus.BLACKJACK_LOSE.calculatePrize(stake);
         //then
         assertThat(v).isEqualTo(-150);
     }

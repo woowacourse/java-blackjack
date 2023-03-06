@@ -1,12 +1,12 @@
 package domain;
 
-public class Bet {
+public class Stake {
 
     private static final int MIN_BET = 0;
     private static final int MAX_BET = 100_000;
     private final int value;
 
-    public Bet(final int value) {
+    public Stake(final int value) {
         validate(value);
         this.value = value;
     }

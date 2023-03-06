@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class BetTest {
+class StakeTest {
 
     @Test
     @DisplayName("0미만일 수  없다")
     void minimumTest() {
-        assertThatThrownBy(() -> new Bet(-1))
+        assertThatThrownBy(() -> new Stake(-1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("미만");
     }
@@ -18,7 +18,7 @@ class BetTest {
     @Test
     @DisplayName("100_000 초과일 수 없다")
     void maximumTest() {
-        assertThatThrownBy(() -> new Bet(100_001))
+        assertThatThrownBy(() -> new Stake(100_001))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("초과");
     }

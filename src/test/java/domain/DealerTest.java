@@ -5,11 +5,13 @@ import domain.card.Denomination;
 import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.DealerStatus;
+import domain.player.Player;
 import domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -97,8 +99,8 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
+        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(DealerStatus.WIN);
+        assertThat(dealerStats).containsValue(DealerStatus.DRAW);
     }
 }
