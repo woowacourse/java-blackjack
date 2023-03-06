@@ -1,33 +1,33 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.PlayingCards;
 
 import java.util.List;
 
 public abstract class Player {
-    private final Cards cards;
+    private final PlayingCards playingCards;
     private final String name;
 
     public Player(String name) {
-        this.cards = new Cards();
+        this.playingCards = new PlayingCards();
         this.name = name;
     }
 
     public void addCard(Card card) {
-        cards.addCard(card);
+        playingCards.addCard(card);
     }
 
     public int getTotalScore() {
-        return cards.getTotalScore();
+        return playingCards.getTotalScore();
     }
 
     public boolean isBurst() {
-        return cards.isBurst();
+        return playingCards.isBurst();
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return playingCards.getCards();
     }
 
     public abstract void battle(Player player);

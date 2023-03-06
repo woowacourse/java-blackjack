@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardRepository;
+import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
@@ -11,11 +11,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackJack {
-    private final CardRepository cardRepository;
+    private final Deck deck;
     private final List<Player> players;
 
     public BlackJack(String participantNames, ShuffleStrategy shuffleStrategy) {
-        this.cardRepository = CardRepository.create(shuffleStrategy);
+        this.deck = Deck.from(shuffleStrategy);
         this.players = initPlayers(participantNames);
     }
 
@@ -44,7 +44,7 @@ public class BlackJack {
     }
 
     private Card findAnyOneCard() {
-        return cardRepository.findAnyOneCard();
+        return deck.draw();
     }
 
     public Map<Player, List<Card>> getPlayersCards() {
@@ -60,7 +60,7 @@ public class BlackJack {
     public void giveCard(String playerName) {
         players.stream()
                 .filter(player -> player.isNameEqualTo(playerName))
-                .forEach(player -> player.addCard(cardRepository.findAnyOneCard()));
+                .forEach(player -> player.addCard(deck.draw()));
     }
 
     public List<Card> getCardsFrom(String playerName) {

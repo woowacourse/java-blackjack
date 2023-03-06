@@ -3,10 +3,10 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class PlayingCards {
     private final List<Card> cards;
 
-    public Cards() {
+    public PlayingCards() {
         this.cards = new ArrayList<>();
     }
 
