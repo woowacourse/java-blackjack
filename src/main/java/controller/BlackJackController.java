@@ -12,7 +12,6 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
@@ -31,7 +30,7 @@ public class BlackJackController {
         hittingPlayer(cardDeck, participants, dealer);
         printStateAfterHittedCard(participants, dealer);
 
-        final Map<Participant, ParticipantResult> playersResult = determineWinner(participants, dealer);
+        final Map<Participant, ParticipantResult> playersResult = cardTable.determineWinner(participants, dealer);
         final Map<DealerResult, Long> scoreBoard = countDealerResult(playersResult);
 
         printPlayerScoreBoard(participants, playersResult, scoreBoard);
@@ -67,15 +66,6 @@ public class BlackJackController {
                             .collect(Collectors.groupingBy(participant -> playersResult.get(participant)
                                                                                        .convertToDealerResult(),
                                                            counting()));
-    }
-
-    private static Map<Participant, ParticipantResult> determineWinner(final List<Participant> participants,
-                                                                       final Dealer dealer) {
-        return participants.stream()
-                           .collect(Collectors.toMap(
-                                   Function.identity(),
-                                   participant -> ParticipantResult.matchBetween(participant, dealer))
-                           );
     }
 
     private void hitForDealer(final CardDeck cardDeck, final Dealer dealer) {
