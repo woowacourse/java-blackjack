@@ -1,7 +1,7 @@
 package blackjack.model.state;
 
-import blackjack.model.participant.Hand;
 import blackjack.model.card.CardDeck;
+import blackjack.model.participant.Hand;
 
 public class DealerDrawState extends State {
     private static final int DEALER_HIT_NUMBER = 16;
@@ -13,7 +13,7 @@ public class DealerDrawState extends State {
     @Override
     public State draw(CardDeck cardDeck) {
         hand.add(cardDeck.pick());
-        return checkStandOrBustState();
+        return transitStateOrNot();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class DealerDrawState extends State {
         return false;
     }
 
-    public State checkStandOrBustState(){
+    public State transitStateOrNot() {
         if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
         }

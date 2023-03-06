@@ -17,7 +17,7 @@ public class Player extends Participant {
 
     public void changeToStand() {
         if (currentState instanceof DrawState) {
-            this.currentState = ((DrawState) currentState).turnStandState();
+            this.currentState = ((DrawState) currentState).transitToStandState();
         }
     }
 }

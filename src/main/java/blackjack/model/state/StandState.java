@@ -1,7 +1,7 @@
 package blackjack.model.state;
 
-import blackjack.model.participant.Hand;
 import blackjack.model.card.CardDeck;
+import blackjack.model.participant.Hand;
 
 public class StandState extends State {
 

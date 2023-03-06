@@ -36,15 +36,15 @@ public abstract class Participant {
         return currentState.isFinished();
     }
 
-    public CardScore cardScore() {
+    public CardScore getCardScore() {
         return currentState.getCardScore();
     }
 
     public int getScore() {
-        if (isBust() || cardScore().getBigScore() > BLACKJACK_NUMBER) {
-            return cardScore().getSmallScore();
+        if (isBust() || getCardScore().getBigScore() > BLACKJACK_NUMBER) {
+            return getCardScore().getSmallScore();
         }
-        return cardScore().getBigScore();
+        return getCardScore().getBigScore();
     }
 
     public Name getName() {

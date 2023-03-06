@@ -1,7 +1,7 @@
 package blackjack.model.state;
 
-import blackjack.model.participant.Hand;
 import blackjack.model.card.CardDeck;
+import blackjack.model.participant.Hand;
 
 public class DrawState extends State {
     public DrawState(Hand hand) {
@@ -21,11 +21,11 @@ public class DrawState extends State {
         return hand.getCardScore().getSmallScore() > BLACKJACK_NUMBER;
     }
 
-    public State turnStandState() {
+    public State transitToStandState() {
         return new StandState(hand);
     }
 
-    public State turnDealerDrawState() {
+    public State transitToDealerDrawState() {
         return new DealerDrawState(hand);
     }
 

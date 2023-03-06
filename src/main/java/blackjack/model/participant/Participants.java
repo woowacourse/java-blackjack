@@ -21,14 +21,14 @@ public class Participants {
         this.players = players;
     }
 
-    private void validateDuplicatedPlayer(List<Player> players){
-        if(players.stream().distinct().count() != players.size()){
+    private void validateDuplicatedPlayer(List<Player> players) {
+        if (players.stream().distinct().count() != players.size()) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
     }
 
-    private void validatePlayerCount(List<Player> players){
-        if(players.isEmpty()){
+    private void validatePlayerCount(List<Player> players) {
+        if (players.isEmpty()) {
             throw new IllegalArgumentException("게임을 시작하려면 플레이어는 한명 이상이여야 합니다.");
         }
     }
@@ -48,7 +48,7 @@ public class Participants {
         return players;
     }
 
-    public List<Participant> getParticipants(){
+    public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players);

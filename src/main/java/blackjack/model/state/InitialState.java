@@ -1,8 +1,8 @@
 package blackjack.model.state;
 
-import blackjack.model.participant.Hand;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
+import blackjack.model.participant.Hand;
 
 public class InitialState extends State {
 

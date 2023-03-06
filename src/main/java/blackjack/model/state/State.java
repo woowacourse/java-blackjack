@@ -1,8 +1,8 @@
 package blackjack.model.state;
 
-import blackjack.model.participant.Hand;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
+import blackjack.model.participant.Hand;
 
 public abstract class State {
     protected static final int BLACKJACK_NUMBER = 21;
