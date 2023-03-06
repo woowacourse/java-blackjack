@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.CardNumber;
+import domain.Denomination;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +36,7 @@ public class Score {
 
     private int countOfAce(List<Integer> numbers) {
         return (int) numbers.stream()
-                .filter(number -> number == CardNumber.ACE.getScore())
+                .filter(number -> number == Denomination.ACE.getScore())
                 .count();
     }
 
@@ -48,7 +48,7 @@ public class Score {
 
     private int calculateAceAsOne(int aceCount, int score) {
         while (aceCount > ZERO && score > BLACKJACK) {
-            score -= CardNumber.ACE.getScore();
+            score -= Denomination.ACE.getScore();
             score += ACE_ONE;
             aceCount--;
         }

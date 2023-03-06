@@ -1,38 +1,38 @@
 package domain.card;
 
-import domain.CardNumber;
-import domain.Pattern;
+import domain.Denomination;
+import domain.Suit;
 
 public enum HeartCard implements Card {
-    HEART_ACE(Pattern.HEART, CardNumber.ACE),
-    HEART_TWO(Pattern.HEART, CardNumber.TWO),
-    HEART_THREE(Pattern.HEART, CardNumber.THREE),
-    HEART_FOUR(Pattern.HEART, CardNumber.FOUR),
-    HEART_FIVE(Pattern.HEART, CardNumber.FIVE),
-    HEART_SIX(Pattern.HEART, CardNumber.SIX),
-    HEART_SEVEN(Pattern.HEART, CardNumber.SEVEN),
-    HEART_EIGHT(Pattern.HEART, CardNumber.EIGHT),
-    HEART_NINE(Pattern.HEART, CardNumber.NINE),
-    HEART_TEN(Pattern.HEART, CardNumber.TEN),
-    HEART_JACK(Pattern.HEART, CardNumber.JACK),
-    HEART_QUEEN(Pattern.HEART, CardNumber.QUEEN),
-    HEART_KING(Pattern.HEART, CardNumber.KING);
+    HEART_ACE(Suit.HEART, Denomination.ACE),
+    HEART_TWO(Suit.HEART, Denomination.TWO),
+    HEART_THREE(Suit.HEART, Denomination.THREE),
+    HEART_FOUR(Suit.HEART, Denomination.FOUR),
+    HEART_FIVE(Suit.HEART, Denomination.FIVE),
+    HEART_SIX(Suit.HEART, Denomination.SIX),
+    HEART_SEVEN(Suit.HEART, Denomination.SEVEN),
+    HEART_EIGHT(Suit.HEART, Denomination.EIGHT),
+    HEART_NINE(Suit.HEART, Denomination.NINE),
+    HEART_TEN(Suit.HEART, Denomination.TEN),
+    HEART_JACK(Suit.HEART, Denomination.JACK),
+    HEART_QUEEN(Suit.HEART, Denomination.QUEEN),
+    HEART_KING(Suit.HEART, Denomination.KING);
 
-    private final Pattern pattern;
-    private final CardNumber cardNumber;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    HeartCard(Pattern pattern, CardNumber cardNumber) {
-        this.pattern = pattern;
-        this.cardNumber = cardNumber;
+    HeartCard(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     @Override
     public String getSymbol() {
-        return cardNumber.getNumber() + pattern.getPattern();
+        return denomination.getNumber() + suit.getPattern();
     }
 
     @Override
     public int getScore() {
-        return cardNumber.getScore();
+        return denomination.getScore();
     }
 }

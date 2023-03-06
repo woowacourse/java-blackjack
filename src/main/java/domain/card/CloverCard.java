@@ -1,38 +1,38 @@
 package domain.card;
 
-import domain.CardNumber;
-import domain.Pattern;
+import domain.Denomination;
+import domain.Suit;
 
 public enum CloverCard implements Card {
-    CLOVER_ACE(Pattern.CLOVER, CardNumber.ACE),
-    CLOVER_TWO(Pattern.CLOVER, CardNumber.TWO),
-    CLOVER_THREE(Pattern.CLOVER, CardNumber.THREE),
-    CLOVER_FOUR(Pattern.CLOVER, CardNumber.FOUR),
-    CLOVER_FIVE(Pattern.CLOVER, CardNumber.FIVE),
-    CLOVER_SIX(Pattern.CLOVER, CardNumber.SIX),
-    CLOVER_SEVEN(Pattern.CLOVER, CardNumber.SEVEN),
-    CLOVER_EIGHT(Pattern.CLOVER, CardNumber.EIGHT),
-    CLOVER_NINE(Pattern.CLOVER, CardNumber.NINE),
-    CLOVER_TEN(Pattern.CLOVER, CardNumber.TEN),
-    CLOVER_JACK(Pattern.CLOVER, CardNumber.JACK),
-    CLOVER_QUEEN(Pattern.CLOVER, CardNumber.QUEEN),
-    CLOVER_KING(Pattern.CLOVER, CardNumber.KING);
+    CLOVER_ACE(Suit.CLOVER, Denomination.ACE),
+    CLOVER_TWO(Suit.CLOVER, Denomination.TWO),
+    CLOVER_THREE(Suit.CLOVER, Denomination.THREE),
+    CLOVER_FOUR(Suit.CLOVER, Denomination.FOUR),
+    CLOVER_FIVE(Suit.CLOVER, Denomination.FIVE),
+    CLOVER_SIX(Suit.CLOVER, Denomination.SIX),
+    CLOVER_SEVEN(Suit.CLOVER, Denomination.SEVEN),
+    CLOVER_EIGHT(Suit.CLOVER, Denomination.EIGHT),
+    CLOVER_NINE(Suit.CLOVER, Denomination.NINE),
+    CLOVER_TEN(Suit.CLOVER, Denomination.TEN),
+    CLOVER_JACK(Suit.CLOVER, Denomination.JACK),
+    CLOVER_QUEEN(Suit.CLOVER, Denomination.QUEEN),
+    CLOVER_KING(Suit.CLOVER, Denomination.KING);
 
-    private final Pattern pattern;
-    private final CardNumber cardNumber;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    CloverCard(Pattern pattern, CardNumber cardNumber) {
-        this.pattern = pattern;
-        this.cardNumber = cardNumber;
+    CloverCard(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     @Override
     public String getSymbol() {
-        return cardNumber.getNumber() + pattern.getPattern();
+        return denomination.getNumber() + suit.getPattern();
     }
 
     @Override
     public int getScore() {
-        return cardNumber.getScore();
+        return denomination.getScore();
     }
 }
