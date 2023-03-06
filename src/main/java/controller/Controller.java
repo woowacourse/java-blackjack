@@ -17,16 +17,15 @@ public class Controller {
     }
 
     public void run() {
-        Dealer dealer = new Dealer();
         Players players = setPlayers();
-        BlackjackGame game = new BlackjackGame(dealer, players,
+
+        BlackjackGame game = new BlackjackGame(players,
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
 
-        distributeInitialCard(dealer, players, game);
-        selectAdditionalCard(players, game);
-        addWhenUnderStandard(dealer, game);
-        outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
+        distributeInitialCard(players, game);
+        pollPlayerAdditionalCard(players, game);
+        pollDealerAdditionalCard(players, game);
+        printResult(players,game);
     }
 
     private Players setPlayers(){
@@ -38,13 +37,13 @@ public class Controller {
         }
     }
 
-    private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {
+    private void distributeInitialCard(Players players, BlackjackGame game) {
         game.distributeInitialCard();
-        outputView.printInitialCards(dealer, players);
+        outputView.printInitialCards(players.findDealer(), players);
     }
 
-    private void selectAdditionalCard(Players players, BlackjackGame game) {
-        for (Player player : players.getPlayers()) {
+    private void pollPlayerAdditionalCard(Players players, BlackjackGame game) {
+        for (Player player : players.getPlayersWithOutDealer()) {
             selectByPlayer(game, player);
         }
     }
@@ -52,23 +51,24 @@ public class Controller {
     private void selectByPlayer(BlackjackGame game, Player player) {
         String command;
         do {
-            command = inputView.readCommand(player.getName().getName());
-            distributeByCommand(game, player, command);
+            command = inputView.readCommand(player.getName());
+            game.distributeByCommand(player, command);
             outputView.printPlayerCardsInfo(player);
-        } while (!player.isOverPlayerBlackJack() && command.equals(Y_COMMAND));
+        } while (player.canSelectCard(command));
     }
 
-    private void distributeByCommand(BlackjackGame game, Player player, String command) {
-        if (command.equals(Y_COMMAND)) {
-            game.distributePlayer(player);
-        }
-    }
 
-    private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {
+    private void pollDealerAdditionalCard(Players players, BlackjackGame game) {
+        Dealer dealer = players.findDealer();
         while (!dealer.isOverDealerStandard()) {
             game.distributeDealer();
             outputView.printDistributeDealer(dealer);
         }
     }
 
+    private void printResult(Players players, BlackjackGame game){
+        Dealer dealer = players.findDealer();
+        outputView.printCardsResult(dealer, players);
+        outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
+    }
 }

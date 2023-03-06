@@ -1,12 +1,12 @@
 package domain;
 
 
-public class Dealer extends Participant{
+public class Dealer extends Player{
     private static final String NAME = "딜러";
     private static final int BOUND = 16;
 
     public Dealer() {
-        super(new Name(NAME), new Cards());
+        super(NAME);
     }
 
     public boolean isOverDealerStandard() {

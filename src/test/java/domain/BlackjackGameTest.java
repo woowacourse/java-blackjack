@@ -16,8 +16,8 @@ public class BlackjackGameTest {
 
     @BeforeEach
     void set() {
-        dealer = new Dealer();
         players = new Players("pobi,jason");
+        dealer = players.findDealer();
         CardGenerator cardGenerator = new CardGenerator();
         cardDeck = new CardDeck(cardGenerator.generate(new NoShuffleCardsStrategy()));
     }
@@ -25,7 +25,7 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("딜러에게 카드를 1장 나눠준다.")
     void distributeDealerInitialCardsTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
         Map<String, List<String>> result = new LinkedHashMap<>();
         result.put("딜러", List.of("A스페이드"));
@@ -38,7 +38,7 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("플레이어에게 카드를 1장 나눠준다.")
     void distributePlayersInitialCardsTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
         Map<String, List<String>> result = new LinkedHashMap<>();
         result.put("pobi", List.of("A스페이드"));
@@ -52,7 +52,7 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("플레이어의 최종 승패 결과를 가져온다.")
     void calculatePlayerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
         blackjackGame.distributeInitialCard();
 
@@ -66,13 +66,13 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("딜러의 최종 승패 결과를 가져온다.")
     void calculateDealerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
         blackjackGame.distributeInitialCard();
 
         Map<String, List<Result>> playerResult = new LinkedHashMap<>();
 
-        playerResult.put(dealer.getName().getName(), List.of(Result.LOSE, Result.LOSE));
+        playerResult.put(dealer.getName(), List.of(Result.LOSE, Result.LOSE));
 
         Assertions.assertThat(blackjackGame.getDealerResult()).isEqualTo(playerResult);
     }
@@ -81,7 +81,7 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("플레이어와 딜러의 승패 계산")
     void calculateWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
         Assertions.assertThat(blackjackGame.isPlayerWin(21, 10)).isEqualTo(Result.LOSE);
         Assertions.assertThat(blackjackGame.isPlayerWin(10, 21)).isEqualTo(Result.WIN);

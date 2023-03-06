@@ -5,38 +5,34 @@ import java.util.*;
 public class BlackjackGame {
     public final static int BLACK_JACK = 21;
     private final static int INITIAL_CARD_SET = 2;
-    private final Dealer dealer;
+
     private final Players players;
     private final CardDeck cardDeck;
 
-    public BlackjackGame(Dealer dealer, Players players, CardDeck cardDeck) {
-        this.dealer = dealer;
+    public BlackjackGame(Players players, CardDeck cardDeck) {
         this.players = players;
         this.cardDeck = cardDeck;
     }
-
 
     public void distributeInitialCard() {
         for (int i = 0; i < INITIAL_CARD_SET; i++) {
             distributeDealer();
             distributePlayers();
         }
-
-        List<CardNumber> list = new ArrayList<>();
-        list.add(CardNumber.ACE);
     }
 
     public void distributeDealer() {
+        Dealer dealer = players.findDealer();
         dealer.addCard(cardDeck.poll());
     }
 
     public void distributePlayers() {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getPlayersWithOutDealer()) {
             distributePlayer(player);
         }
     }
 
-    public void distributePlayer(Player player) {
+    private void distributePlayer(Player player) {
         player.addCard(cardDeck.poll());
     }
 
@@ -48,15 +44,16 @@ public class BlackjackGame {
             Result result = playerResult.get(name);
             dealerResults.add(result);
         }
-        dealerResult.put(dealer.getName().getName(), dealerResults);
+        dealerResult.put(players.findDealer().getName(), dealerResults);
         return dealerResult;
     }
 
     public Map<String, Result> getPlayersResult() {
+        Dealer dealer = players.findDealer();
         Map<String, Result> result = new LinkedHashMap<>();
-        int dealer = this.dealer.getCardsSum();
-        for (Player player : players.getPlayers()) {
-            result.put(player.getName().getName(), isPlayerWin(dealer, player.getCardsSum()));
+        int dealerSum = dealer.getCardsSum();
+        for (Player player : players.getPlayersWithOutDealer()) {
+            result.put(player.getName(), isPlayerWin(dealerSum, player.getCardsSum()));
         }
         return result;
     }
@@ -76,5 +73,4 @@ public class BlackjackGame {
         }
         return Result.DRAW;
     }
-
 }

@@ -12,9 +12,18 @@ public class Players {
     public Players(String names) {
         List<String> splitedName = splitName(names);
         validateDuplicatedName(splitedName);
+        addPlayer(names);
+    }
+
+    private void addPlayer(String names){
+        players.add(new Dealer());
         for (String name : splitName(names)) {
             players.add(new Player(name));
         }
+    }
+
+    private List<String> splitName(String names) {
+        return Arrays.asList(names.split(SPLIT_DELIMITER));
     }
 
     private void validateDuplicatedName(List<String> splitedName) {
@@ -23,31 +32,31 @@ public class Players {
         }
     }
 
-    private List<String> splitName(String names) {
-        return Arrays.asList(names.split(SPLIT_DELIMITER));
+    public Dealer findDealer(){
+        return (Dealer) players.get(0);
     }
 
     public List<String> getPlayersName() {
         return players.stream()
-                .map(s -> s.getName().getName())
+                .map(s -> s.getName())
                 .collect(Collectors.toList());
     }
 
     public Map<String, List<String>> getInfo() {
         Map<String, List<String>> info = new LinkedHashMap<>();
-        for (Player player : players) {
-            info.put(player.getName().getName(), player.getCards());
+        for (Player player : getPlayersWithOutDealer()) {
+            info.put(player.getName(), player.getCards());
         }
         return info;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<Player> getPlayersWithOutDealer() {
+        return players.stream().filter(s -> s.getName() != findDealer().getName()).collect(Collectors.toList());
     }
 
     public int getCardsSum(String playerName) {
         return players.stream()
-                .filter(s -> s.getName().getName() == playerName)
+                .filter(s -> s.getName() == playerName)
                 .findAny()
                 .get()
                 .getCardsSum();
