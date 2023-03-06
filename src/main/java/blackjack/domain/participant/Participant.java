@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,8 +13,8 @@ public abstract class Participant {
     protected final List<Card> cards;
     protected final Score score;
 
-    protected Participant(List<Card> cards) {
-        this.cards = cards;
+    protected Participant() {
+        this.cards = new ArrayList<>();
         this.score = new Score();
     }
 
