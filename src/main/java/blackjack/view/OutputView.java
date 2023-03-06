@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final int INDEX_OF_WIN = 0;
+    private static final int INDEX_OF_DRAW = 1;
+    private static final int INDEX_OF_LOSE = 2;
+
     public void printDistributeCardsMessage(final List<Player> players) {
         String names = players.stream()
                 .map(Player::getName)
@@ -70,7 +74,7 @@ public class OutputView {
     }
 
     private void printDealerResult(final List<Integer> dealerResult) {
-        System.out.println("딜러: " + dealerResult.get(0) + "승 " + dealerResult.get(1) + "무 " + dealerResult.get(2) + "패 ");
+        System.out.println("딜러: " + dealerResult.get(INDEX_OF_WIN) + "승 " + dealerResult.get(INDEX_OF_DRAW) + "무 " + dealerResult.get(INDEX_OF_LOSE) + "패 ");
     }
 
     private void printPlayerResult(final Map<Player, Result> playerResults) {
