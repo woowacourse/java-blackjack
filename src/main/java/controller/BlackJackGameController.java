@@ -50,7 +50,7 @@ public class BlackJackGameController {
 
     private List<String> readUsersName() {
         outputView.printInputPlayerNameMessage();
-        return inputView.readPlayersName();
+        return inputView.readPlayerNames();
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
