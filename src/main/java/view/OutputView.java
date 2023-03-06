@@ -24,7 +24,7 @@ public class OutputView {
     private static final String PLAYER_WIN = "승";
     private static final String PLAYER_LOSE = "패";
     private static final String PLAYER_DRAW = "무";
-    private static final String RESULT_GUIDE_MESSAGE = "## 최종 승패";
+    private static final String RESULT_GUIDE_MESSAGE = "## 최종 수익";
     private static final String SCORE_GUIDE_MESSAGE = " - 결과: ";
     private static final String POSTFIX_INITIAL_PICK_GUIDE_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "딜러와 ";
@@ -109,11 +109,12 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printResult(List<DealerStatus> dealerStats, Players players) {
+    public static void printResult(Map<Player, Integer> prizeResults) {
         printNewLine();
         System.out.println(RESULT_GUIDE_MESSAGE);
-        printDealerResult(dealerStats);
-        printPlayersResult(dealerStats, players);
+        prizeResults.forEach(
+                (player, prize) -> System.out.println(player.getName() + COLON + prize)
+        );
     }
 
     private static void printDealerResult(final List<DealerStatus> dealerStats) {
@@ -138,6 +139,7 @@ public class OutputView {
         if (loseCount != null) {
             dealerStatView.append(loseCount).append(DEALER_LOSE);
         }
+        //TODO: containsKey, if문 제거할 메서드 추가
     }
 
     private static void printPlayersResult(final List<DealerStatus> dealerStats, final Players players) {
