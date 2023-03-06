@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultTest {
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
     private List<String> names;
     private Players players;
     private Dealer dealer;
@@ -35,9 +35,9 @@ public class ResultTest {
         makePlayersBust();
 
         Result result = new Result(dealer, players);
-        Map<String, GameResult> gameResult = result.getResult();
+        Map<Name, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get("aa")).isEqualTo(GameResult.DRAW);
+        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -46,9 +46,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.NINE))));
 
         Result result = new Result(dealer, players);
-        Map<String, GameResult> gameResult = result.getResult();
+        Map<Name, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get("aa")).isEqualTo(GameResult.DRAW);
+        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -58,9 +58,9 @@ public class ResultTest {
         dealer.pick(new Card(Shape.HEART, Letter.QUEEN));
 
         Result result = new Result(dealer, players);
-        Map<String, GameResult> gameResult = result.getResult();
+        Map<Name, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get("aa")).isEqualTo(GameResult.WIN);
+        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.WIN);
     }
 
     @Test
@@ -69,9 +69,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.JACK))));
 
         Result result = new Result(dealer, players);
-        Map<String, GameResult> gameResult = result.getResult();
+        Map<Name, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get("aa")).isEqualTo(GameResult.WIN);
+        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.WIN);
     }
 
     @Test
@@ -81,9 +81,9 @@ public class ResultTest {
         makePlayersBust();
         Result result = new Result(dealer, players);
 
-        Map<String, GameResult> gameResult = result.getResult();
+        Map<Name, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get("aa")).isEqualTo(GameResult.LOSE);
+        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -92,9 +92,9 @@ public class ResultTest {
         players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.TWO))));
         Result result = new Result(dealer, players);
 
-        Map<String, GameResult> gameResult = result.getResult();
+        Map<Name, GameResult> gameResult = result.getResult();
 
-        assertThat(gameResult.get("aa")).isEqualTo(GameResult.LOSE);
+        assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.LOSE);
     }
 
     private List<Card> generateCardsForTest(Card card) {

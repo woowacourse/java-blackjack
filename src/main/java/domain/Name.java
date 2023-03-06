@@ -27,4 +27,18 @@ public class Name {
         return value;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+
+        return this.value.equals(((Name) object).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
 }

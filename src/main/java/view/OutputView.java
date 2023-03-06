@@ -1,6 +1,7 @@
 package view;
 
 import domain.GameResult;
+import domain.Name;
 
 import java.util.List;
 import java.util.Map;
@@ -38,13 +39,13 @@ public class OutputView {
         System.out.printf(FINAL_SCORE, totalScore);
     }
 
-    public void printFinalResult(String dealerName, Map<String, GameResult> result) {
+    public void printFinalResult(String dealerName, Map<Name, GameResult> result) {
         System.out.println("\n\n" + FINAL_RESULT_TITLE);
         printDealerFinalResult(dealerName, result);
         printPlayersFinalResult(result);
     }
 
-    private void printDealerFinalResult(String dealerName, Map<String, GameResult> results) {
+    private void printDealerFinalResult(String dealerName, Map<Name, GameResult> results) {
         int winCount = 0;
         int loseCount = 0;
         int drawCount = 0;
@@ -90,9 +91,9 @@ public class OutputView {
         }
     }
 
-    private void printPlayersFinalResult(Map<String, GameResult> results) {
+    private void printPlayersFinalResult(Map<Name, GameResult> results) {
         System.out.println();
-        results.forEach((name, result) -> System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n" , name));
+        results.forEach((name, result) -> System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n" , name.getValue()));
     }
     
 }
