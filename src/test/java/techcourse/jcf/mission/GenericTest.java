@@ -28,4 +28,16 @@ class GenericTest {
         assertThat(values.get(0)).isEqualTo("first");
         assertThat(values.get(1)).isEqualTo("second");
     }
+
+    @Test
+    void mission3() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<>(1, 2);
+
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+
+        assertThat(doubleTotal).isEqualTo(1.2);
+        assertThat(intTotal).isEqualTo(3);
+    }
 }

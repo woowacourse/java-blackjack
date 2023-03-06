@@ -10,6 +10,15 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.size = 0;
     }
 
+    @SafeVarargs
+    public SimpleArrayList(T... parameters) {
+        this.values = new Object[DEFAULT_CAPACITY];
+        for (T parameter : parameters) {
+            add(parameter);
+        }
+        this.size = parameters.length;
+    }
+
     @Override
     public boolean add(T value) {
         if (size >= values.length) {
