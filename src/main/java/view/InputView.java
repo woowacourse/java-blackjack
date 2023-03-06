@@ -17,14 +17,17 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.next();
         validateNames(input);
-        return Arrays.stream(input.split(DELIMITER))
+        List<String> names = Arrays.stream(input.split(DELIMITER))
             .collect(Collectors.toUnmodifiableList());
+        validateDuplicateName(names);
+        return names;
     }
 
     private static void validateNames(String input) {
         validateBlank(input);
         validateDelimiter(input);
     }
+
 
     private static void validateBlank(String input) {
         if (input.isBlank()) {
@@ -35,6 +38,12 @@ public class InputView {
     private static void validateDelimiter(String input) {
         if (input.endsWith(DELIMITER)) {
             throw new IllegalArgumentException(",로 끝날수 없습니다.");
+        }
+    }
+
+    private static void validateDuplicateName(List<String> names) {
+        if (names.size() != names.stream().distinct().count()) {
+            throw new IllegalArgumentException("같은 이름은 입력할 수 없습니다.");
         }
     }
 
