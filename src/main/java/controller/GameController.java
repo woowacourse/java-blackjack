@@ -11,13 +11,15 @@ import view.OutputView;
 
 public class GameController {
 
-    private final Game game;
-
-    public GameController(Game game) {
-        this.game = game;
+    public void run(){
+        String participantNames = InputView.getParticipantNames();
+        Game game = new Game(participantNames);
+        makeGameReady(game);
+        playGame(game);
+        printFinalGameResult(game);
     }
 
-    public void ready() {
+    private void makeGameReady(Game game) {
         game.ready();
         List<Participant> allParticipant = game.getAllParticipant();
         OutputView.printReady(allParticipant.stream().map(Participant::getName).collect(Collectors.toList()));
@@ -25,7 +27,7 @@ public class GameController {
             (participant) -> OutputView.printNameAndCards(participant.getName(), participant.getReadyCards()));
     }
 
-    public void play() {
+    private void playGame(Game game) {
         Participant current = game.getCurrentParticipant();
         while (current.isPlayer()) {
             String input = InputView.inputNeedMoreCard(current.getName());
@@ -40,7 +42,7 @@ public class GameController {
         }
     }
 
-    public void printFinalGameResult() {
+    private void printFinalGameResult(Game game) {
         List<Participant> allPlayers = game.getAllParticipant();
         printAllParticipantsStatus(allPlayers);
         List<GameResult> finalGameResults = game.getFinalGameResults();
