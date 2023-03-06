@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.*;
 
 public class Deck {
+    private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
+
     private final Queue<Card> cards = new LinkedList<>();
 
     public Deck() {
@@ -23,6 +25,9 @@ public class Deck {
     }
 
     public Card getCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(NO_REMAIN_CARD_ERROR_MESSAGE);
+        }
         return cards.poll();
     }
 

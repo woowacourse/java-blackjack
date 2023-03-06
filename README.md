@@ -5,7 +5,7 @@
 ### 1단계 피드백 사항 및 추가 수정사항
 - [ ] 클래스, 변수, 메소드명 담고 있는 의미를 잘 나타내도록 수정
 - [x] Card 관리 List -> Queue 변경
-  - [ ] 카드 다떨어지면 어떻게 할지 처리 필요
+  - [x] 카드 다떨어지면 우선 에러처리
 - [x] 카드 뽑는 기능 Collections.shuffle() 사용
 - [x] Player 생성 로직 PlayerFactory 에 위임 -> Players 정적 팩토리 메소드로 구현
 - [x] Player 이름 중복, Player 수 validate 하는 로직 Players 에 이관
