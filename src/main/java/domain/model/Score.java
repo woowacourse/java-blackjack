@@ -4,7 +4,7 @@ import domain.type.Letter;
 
 public class Score {
 
-    public static final int BLACK_JACK = 21;
+    public static final int MAX_VALUE = 21;
     public static final int ACE_SUB_NUMBER = 1;
     private final int value;
 
@@ -14,19 +14,19 @@ public class Score {
 
     public static Score of(final Cards cards) {
         final int score = getInitialScore(cards);
-        final int count = cards.count(Letter.ACE);
-        return new Score(modifyScoreByAce(score, count));
+        final int aceCount = cards.count(Letter.ACE);
+        return new Score(modifyScoreByAce(score, aceCount));
     }
 
-    private static int modifyScoreByAce(int score, final int count) {
-        for (int i = 0; i < count; i++) {
+    private static int modifyScoreByAce(int score, final int aceCount) {
+        for (int i = 0; i < aceCount; i++) {
             score = changeToAceSub(score);
         }
         return score;
     }
 
     private static int changeToAceSub(int score) {
-        if (score > BLACK_JACK) {
+        if (score > MAX_VALUE) {
             score -= Letter.ACE.getNumber();
             score += ACE_SUB_NUMBER;
         }
@@ -41,7 +41,7 @@ public class Score {
     }
 
     public boolean isBust() {
-        return value > BLACK_JACK;
+        return value > MAX_VALUE;
     }
 
     public int getValue() {
