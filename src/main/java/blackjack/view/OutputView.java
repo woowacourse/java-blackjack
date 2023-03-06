@@ -3,8 +3,6 @@ package blackjack.view;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardSuit;
 import blackjack.domain.WinningResult;
 
 import java.util.ArrayList;
@@ -39,9 +37,9 @@ public class OutputView {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
+            String cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(index));
             String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
-            cards.add(cardNumber.getName() + cardSuit);
+            cards.add(cardNumber + cardSuit);
         }
         System.out.print(String.join(", ", cards));
         System.out.println();
@@ -51,9 +49,9 @@ public class OutputView {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
+            String cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(index));
             String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
-            cards.add(cardNumber.getName() + cardSuit);
+            cards.add(cardNumber + cardSuit);
         }
         System.out.print(String.join(", ", cards));
         System.out.print("- 결과 : " + participant.calculateCardNumber());
@@ -66,30 +64,33 @@ public class OutputView {
 
     public void printDealerWinORLose(final List<WinningResult> dealerResult) {
         System.out.print("딜러: ");
-        System.out.print(WinningResult.WIN.getWinCount(dealerResult) + WinningResult.WIN.getName());
-        System.out.print(WinningResult.PUSH.getPushCount(dealerResult) + WinningResult.PUSH.getName());
-        System.out.println(WinningResult.LOSE.getLoseCount(dealerResult) + WinningResult.LOSE.getName());
+        System.out.print(WinningResult.WIN.getWinCount(dealerResult) +
+                ViewWinningResult.getWinningResultName(WinningResult.WIN));
+        System.out.print(WinningResult.PUSH.getPushCount(dealerResult) +
+                ViewWinningResult.getWinningResultName(WinningResult.PUSH));
+        System.out.println(WinningResult.LOSE.getLoseCount(dealerResult) +
+                ViewWinningResult.getWinningResultName(WinningResult.LOSE));
     }
 
     public void printPlayerWinORLose(final Map<Player, WinningResult> playerResult) {
         for (Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + " : " + playerResult.get(player).getName());
+            System.out.println(player.getName() + " : " + playerResult.get(player).name());
         }
     }
 
     private void printFirstDealerCards(final Dealer dealer) {
-        CardNumber cardNumber = CardNumber.getCardNumber(dealer.getCardNumber(FIRST_CARD));
+        String cardNumber = ViewCardNumber.getCardNumber(dealer.getCardNumber(FIRST_CARD));
         String cardSuit = ViewCardSuit.getCardSuit(dealer.getCardSuit(FIRST_CARD));
-        System.out.println(dealer.getName() + " : " + cardNumber.getName() + cardSuit);
+        System.out.println(dealer.getName() + " : " + cardNumber + cardSuit);
     }
 
     private void printFirstPlayersCards(final Participant participant) {
         System.out.print(participant.getName() + " : ");
         List<String> card = new ArrayList<>();
         for (int i = 0; i < FIRST_CARD_COUNT; i++) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(i));
+            String cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(i));
             String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(i));
-            card.add(cardNumber.getName() + cardSuit);
+            card.add(cardNumber + cardSuit);
         }
         System.out.printf(String.join(", ",card));
         System.out.println();

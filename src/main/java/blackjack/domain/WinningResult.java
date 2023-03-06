@@ -4,17 +4,13 @@ import java.util.List;
 
 public enum WinningResult {
 
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무"),
+    WIN,
+    LOSE,
+    PUSH,
     ;
 
     public static final int WIN_MAX_NUMBER = 21;
-    final String name;
 
-    WinningResult(final String name) {
-        this.name = name;
-    }
 
     public int getWinCount(final List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
@@ -64,7 +60,5 @@ public enum WinningResult {
         return PUSH;
     }
 
-    public String getName() {
-        return name;
-    }
+
 }
