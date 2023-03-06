@@ -25,6 +25,9 @@ public class CardDeck {
     }
 
     public Card pick() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("뽑을 수 있는 카드가 없습니다.");
+        }
         return cards.remove(0);
     }
 }
