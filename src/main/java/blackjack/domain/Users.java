@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +19,16 @@ public class Users {
 
     public Users(final List<String> playerNames, final Deck deck) {
         validatePlayerNames(playerNames);
-        final List<User> users = playerNames.stream()
-                .map(name -> new Player(name, initCardGroup(deck)))
-                .collect(Collectors.toList());
+        this.users = List.copyOf(createUsers(playerNames, deck));
+    }
+
+    private List<User> createUsers(final List<String> playerNames, final Deck deck) {
+        final List<User> users = new ArrayList<>();
         users.add(new Dealer(initCardGroup(deck)));
-        this.users = List.copyOf(users);
+        for (final String playerName : playerNames) {
+            users.add(new Player(playerName, initCardGroup(deck)));
+        }
+        return users;
     }
 
     private void validatePlayerNames(final List<String> playerNames) {

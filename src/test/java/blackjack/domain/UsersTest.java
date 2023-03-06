@@ -82,10 +82,16 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getFirstOpenCardGroups().values().stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
-        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
+        final Map<String, List<Card>> firstOpenCardGroups = users.getFirstOpenCardGroups();
+
+        assertSoftly(softly -> {
+            softly.assertThat(firstOpenCardGroups.get("필립"))
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
+            softly.assertThat(firstOpenCardGroups.get("홍실"))
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
+            softly.assertThat(firstOpenCardGroups.get("딜러"))
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
+        });
     }
 
     @Test
@@ -131,9 +137,9 @@ class UsersTest {
     }
 
     /*
-    필립: 21
-    홍실: 19
-    딜러: 13
+    딜러: 21
+    필립: 19
+    홍실: 13
      */
     @Test
     @DisplayName("플레이어들의 승리 여부 반환 테스트")
@@ -143,8 +149,8 @@ class UsersTest {
         Map<String, WinningStatus> winningResult = users.getWinningResult();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.WIN);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.WIN);
+            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.LOSE);
+            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.LOSE);
         });
     }
 

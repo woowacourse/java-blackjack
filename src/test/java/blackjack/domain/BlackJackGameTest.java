@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.dto.CardResult;
+import java.util.Collections;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.future;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class BlackJackGameTest {
@@ -40,21 +42,31 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestDeckGenerator(testCards));
 
-        List<Card> initialCards = blackJackGame.getFirstOpenCardGroups().values().stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
-        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
+        final Map<String, List<Card>> firstOpenCardGroups = blackJackGame.getFirstOpenCardGroups();
+
+        assertSoftly(softly -> {
+            softly.assertThat(firstOpenCardGroups.get("필립"))
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
+            softly.assertThat(firstOpenCardGroups.get("홍실"))
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
+            softly.assertThat(firstOpenCardGroups.get("딜러"))
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
+        });
     }
 
     @Test
     @DisplayName("딜러의 카드 합이 17이상이 될 떄까지 카드를 뽑는 기능 테스트")
     void playDealerTurnTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
-                , new TestDeckGenerator(testCards));
+        final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
+                new Card(CardShape.SPADE, CardNumber.TWO),
+                new Card(CardShape.SPADE, CardNumber.QUEEN),
+                new Card(CardShape.SPADE, CardNumber.QUEEN),
+                new Card(CardShape.SPADE, CardNumber.QUEEN));
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(cards));
 
         int drawCount = blackJackGame.playDealerTurn();
 
-        assertThat(drawCount).isEqualTo(2);
+        assertThat(drawCount).isEqualTo(1);
     }
 
     @Test
@@ -85,10 +97,7 @@ class BlackJackGameTest {
         blackJackGame.playPlayer("필립");
         List<Card> cards = blackJackGame.getStatus().get("필립");
 
-        assertThat(cards).containsExactly(new Card(CardShape.SPADE, CardNumber.ACE), // 필립
-                new Card(CardShape.CLOVER, CardNumber.TEN),
-                new Card(CardShape.HEART, CardNumber.NINE));
-
+        assertThat(cards).containsExactlyInAnyOrderElementsOf(testCards.subList(2, 5));
     }
 
     @Test
@@ -96,12 +105,12 @@ class BlackJackGameTest {
     void getCardResult() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
 
-        CardResult philip = blackJackGame.getCardResult().get("필립");
+        final CardResult philip = blackJackGame.getCardResult().get("필립");
 
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(philip.getCards()).contains(new Card(CardShape.SPADE, CardNumber.ACE)
-                    , new Card(CardShape.CLOVER, CardNumber.TEN));
-            softly.assertThat(philip.getScore()).isEqualTo(21);
+            softly.assertThat(philip.getCards())
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
+            softly.assertThat(philip.getScore()).isEqualTo(19);
         });
     }
 
@@ -118,14 +127,20 @@ class BlackJackGameTest {
         Map<String, WinningStatus> winningResult = blackJackGame.getWinningResult();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.WIN);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.WIN);
+            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.LOSE);
+            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.LOSE);
         });
     }
 
     @Test
     @DisplayName("유저의 점수가 BlackJackNumber인지 확인하는 기능 테스트")
     void isBlackJackScoreTest() {
+        final List<Card> testCards = List.of(
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.JACK)
+        );
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
                 new TestDeckGenerator(testCards));
 
