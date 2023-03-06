@@ -98,26 +98,14 @@ public class BlackJackController {
     }
 
     private void playEachPlayer(final Deck deck, final Player player) {
-        boolean isRepeat = true;
-        while (player.isAbleToReceive() && isRepeat) {
-            isRepeat = isHit(deck, player);
-        }
-    }
-
-    private boolean isHit(final Deck deck, final Player player) {
-        String intention = getIntention(player.getName());
-        if (intention.equals(YES)) {
+        while (player.isAbleToReceive() && wantHit(player.getName())) {
             hit(deck, player);
-            return true;
         }
-        return false;
     }
 
-    private String getIntention(final String playerName) {
+    private boolean wantHit(final String playerName) {
         outputView.printRequestIntention(playerName);
-        String intention = inputView.readPlayerIntention();
-        Validator.getInstance().validatePlayerIntention(intention);
-        return intention;
+        return DrawIntention.of(inputView.readPlayerIntention()).equals(DrawIntention.YES);
     }
 
     private void hit(final Deck deck, final Player player) {
