@@ -19,6 +19,10 @@ public class Card {
         return letter.getLetter();
     }
 
+    public Letter letter() {
+        return letter;
+    }
+
     public Face getFace() {
         return face;
     }
