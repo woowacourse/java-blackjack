@@ -26,6 +26,10 @@ public class Score {
         return DealerStatus.LOSE;
     }
 
+    public boolean isBlackjackCandidate() {
+        return value == MAX_SCORE;
+    }
+
     public int getValue() {
         return value;
     }

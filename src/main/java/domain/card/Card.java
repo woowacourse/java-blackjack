@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.function.Predicate;
+
 public class Card {
 
     private final Suit suit;
@@ -8,6 +10,10 @@ public class Card {
     public Card(Suit suit, Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
+    }
+
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
     }
 
     public int getScore() {
