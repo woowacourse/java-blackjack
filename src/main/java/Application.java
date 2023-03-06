@@ -6,6 +6,6 @@ public class Application {
         Controller controller = new Controller();
         EntityCreator entityCreator = new EntityCreator();
 
-        controller.startGame(entityCreator.getPlayers(), entityCreator.getDealer());
+        controller.playGame(entityCreator.getPlayers(), entityCreator.getDealer());
     }
 }

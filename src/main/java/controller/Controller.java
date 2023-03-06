@@ -14,11 +14,11 @@ public class Controller {
         this.blackjack = new Blackjack();
     }
 
-    public void startGame(Players players, Dealer dealer) {
+    public void playGame(Players players, Dealer dealer) {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
-        blackjack.start(players,  dealer);
+        blackjack.play(players,  dealer);
 
         printScores(players, dealer);
         printResult(blackjack.getResult());
