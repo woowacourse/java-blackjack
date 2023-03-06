@@ -16,14 +16,25 @@ public class InputView {
     public static List<String> readNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.next();
-        validateBlank(input);
+        validateNames(input);
         return Arrays.stream(input.split(DELIMITER))
             .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static void validateNames(String input) {
+        validateBlank(input);
+        validateDelimiter(input);
     }
 
     private static void validateBlank(String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("공백은 입력할 수 없습니다.");
+        }
+    }
+
+    private static void validateDelimiter(String input) {
+        if (input.endsWith(DELIMITER)) {
+            throw new IllegalArgumentException(",로 끝날수 없습니다.");
         }
     }
 
