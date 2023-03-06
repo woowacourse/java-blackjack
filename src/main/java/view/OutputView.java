@@ -19,15 +19,25 @@ public final class OutputView {
     private static final String DELIMITER = ", ";
     private static final String DEFAULT_FORMAT = "%s 카드: %s";
     private static final String FINAL_RESULT_FORMAT = "%s: %s\n";
+    public static final String CARD_FORMAT_NUMBER_AND_SHAPE = "%s%s";
 
     public void printInitialStatus(final Dealer dealer, final Players players) {
         System.out.print(System.lineSeparator());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n",
                 dealer.getName().getValue(),
                 getPlayerNames(players));
+        printDealerAndPlayersStatus(dealer, players);
+    }
 
+    private String getPlayerNames(final Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(user -> user.getName().getValue())
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private void printDealerAndPlayersStatus(final Dealer dealer, final Players players) {
         System.out.println(getInitialDealerStatus(dealer));
-
         for (Player player : players.getPlayers()) {
             System.out.println(getParticipantStatus(player));
         }
@@ -48,13 +58,6 @@ public final class OutputView {
                 getCardStringOf(participant.getCards()));
     }
 
-    private String getPlayerNames(final Players players) {
-        return players.getPlayers()
-                .stream()
-                .map(user -> user.getName().getValue())
-                .collect(Collectors.joining(DELIMITER));
-    }
-
     private String getCardStringOf(final Cards cards) {
         return cards.getCards().stream()
                 .map(this::makeCardString)
@@ -62,26 +65,25 @@ public final class OutputView {
     }
 
     private String makeCardString(final Card card) {
-        return String.format("%s%s",
+        return String.format(CARD_FORMAT_NUMBER_AND_SHAPE,
                 TranslationUtil.translateFaceNumber(card.getCardNumberValue()),
                 TranslationUtil.translateShape(card.getShape()));
     }
 
     public void printPlayerCards(final Player player) {
-        final Cards cards = player.getCards();
         System.out.printf(
                 DEFAULT_FORMAT,
                 player.getName().getValue(),
-                getCardStringOf(cards)
+                getCardStringOf(player.getCards())
         );
         System.out.print(System.lineSeparator());
     }
 
-    public void printAdditionalCardCountOfDealer(final int cardCount) {
-        if (cardCount == 0) {
+    public void printAdditionalCardCountOfDealer(final int cardCount, final boolean haveAdditionalCard) {
+        if (!haveAdditionalCard) {
             System.out.println("\n딜러는 17 이상이라 카드를 받지 못했습니다.\n");
         }
-        if (cardCount > 0) {
+        if (haveAdditionalCard) {
             System.out.printf("\n딜러는 16 이하라 %d장의 카드를 더 받았습니다.\n", cardCount);
         }
         System.out.print(System.lineSeparator());
@@ -97,10 +99,10 @@ public final class OutputView {
     private void printParticipantResult(final Participant participant) {
         System.out.printf("%s - 결과: %s\n",
                 getParticipantStatus(participant),
-                printGamePoint(participant.calculatePoint()));
+                getGamePoint(participant.calculatePoint()));
     }
 
-    private String printGamePoint(final GamePoint gamePoint) {
+    private String getGamePoint(final GamePoint gamePoint) {
         final int point = gamePoint.getPoint();
         return TranslationUtil.translatePoint(point);
     }
@@ -114,8 +116,7 @@ public final class OutputView {
     private void printDealerResult(final Dealer dealer, final Map<Result, Integer> gameResult) {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Result, Integer> entry : gameResult.entrySet()) {
-            result.append(
-                    String.format(
+            result.append(String.format(
                             "%d%s ",
                             entry.getValue(),
                             TranslationUtil.translateResult(entry.getKey())
@@ -127,14 +128,18 @@ public final class OutputView {
 
     private void printPlayersResult(final Map<Result, List<Player>> playerResult) {
         for (Map.Entry<Result, List<Player>> entry : playerResult.entrySet()) {
-            final List<Player> players = entry.getValue();
-            for (Player player : players) {
-                System.out.printf(
-                        FINAL_RESULT_FORMAT,
-                        player.getName().getValue(),
-                        TranslationUtil.translateResult(entry.getKey())
-                );
-            }
+            printPlayerResult(entry);
+        }
+    }
+
+    private void printPlayerResult(final Map.Entry<Result, List<Player>> entry) {
+        final List<Player> players = entry.getValue();
+        for (Player player : players) {
+            System.out.printf(
+                    FINAL_RESULT_FORMAT,
+                    player.getName().getValue(),
+                    TranslationUtil.translateResult(entry.getKey())
+            );
         }
     }
 }

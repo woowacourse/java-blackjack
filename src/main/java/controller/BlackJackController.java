@@ -68,6 +68,10 @@ public final class BlackJackController {
 
     private void getDealerResult() {
         final int cardCount = blackJack.finalizeDealerAndGetAdditionalCount();
-        outputView.printAdditionalCardCountOfDealer(cardCount);
+        if (cardCount == 0) {
+            outputView.printAdditionalCardCountOfDealer(cardCount, false);
+            return;
+        }
+        outputView.printAdditionalCardCountOfDealer(cardCount, true);
     }
 }
