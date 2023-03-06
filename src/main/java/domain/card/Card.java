@@ -18,7 +18,15 @@ public class Card {
     public int getScore() {
         return number.getScore();
     }
-
+    
+    public Number getNumber() {
+        return number;
+    }
+    
+    public Shape getShape() {
+        return shape;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -26,7 +34,7 @@ public class Card {
         Card card = (Card) o;
         return shape == card.shape && number == card.number;
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(shape, number);
@@ -38,13 +46,5 @@ public class Card {
                 "shape=" + shape +
                 ", number=" + number +
                 '}';
-    }
-
-    public Number getNumber() {
-        return number;
-    }
-
-    public Shape getShape() {
-        return shape;
     }
 }

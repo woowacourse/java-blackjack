@@ -23,15 +23,13 @@ class BlackJackGameTest {
     
         Player dealer = blackJackGame.getDealer();
         List<Player> participants = blackJackGame.getParticipants();
-        Map<Player, List<Card>> playersCards = blackJackGame.getPlayersCards();
-        
         
         assertAll(
-                () -> assertThat(playersCards.get(dealer))
+                () -> assertThat(dealer.getCards())
                         .containsExactly(new Card(Shape.DIAMOND, Number.JACK), new Card(Shape.DIAMOND, Number.QUEEN)),
-                () -> assertThat(playersCards.get(participants.get(0)))
+                () -> assertThat(participants.get(0).getCards())
                         .containsExactly(new Card(Shape.DIAMOND, Number.KING), new Card(Shape.DIAMOND, Number.TEN)),
-                () -> assertThat(playersCards.get(participants.get(1)))
+                () -> assertThat(participants.get(1).getCards())
                         .containsExactly(new Card(Shape.DIAMOND, Number.NINE), new Card(Shape.DIAMOND, Number.EIGHT))
         );
     }

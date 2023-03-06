@@ -51,16 +51,6 @@ public class BlackJackGame {
         return deck.draw();
     }
 
-    public Map<Player, List<Card>> getPlayersCards() {
-        HashMap<Player, List<Card>> cardsPerPlayer = new HashMap<>();
-        putPlayerCards(cardsPerPlayer);
-        return cardsPerPlayer;
-    }
-
-    private void putPlayerCards(HashMap<Player, List<Card>> cardsPerPlayer) {
-        players.forEach(player -> cardsPerPlayer.put(player, player.getCards()));
-    }
-
     public void giveCard(Player player) {
         player.addCard(deck.draw());
     }
@@ -72,21 +62,21 @@ public class BlackJackGame {
     public void giveDealerCard() {
         getDealer().addCard(findAnyOneCard());
     }
-
+    
     public Player getDealer() {
         return players.stream()
                 .filter(Player::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
     }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(this.players);
-    }
-
+    
     public List<Player> getParticipants() {
         return players.stream()
                 .filter(Predicate.not(Player::isDealer))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(this.players);
     }
 }
