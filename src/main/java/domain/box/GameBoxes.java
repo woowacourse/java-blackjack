@@ -12,44 +12,44 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Boxes {
+public class GameBoxes {
 
     private static final int BLACK_JACK_POINT = 21;
     private static final int NEED_TEN_POINT = 11;
-    private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayerStatus.HIT_ABLE, 0);
-    private final LinkedHashMap<Player, BoxStatus> boxes;
+    private final LinkedHashMap<Player, GameBoxInfo> boxes;
 
-    private Boxes(LinkedHashMap<Player, BoxStatus> boxes) {
+    private GameBoxes(LinkedHashMap<Player, GameBoxInfo> boxes) {
         this.boxes = boxes;
     }
 
-    public static Boxes of(String playerNamesInput) {
+    public static GameBoxes of(String playerNamesInput) {
         final String nameDelimiter = ",";
         String[] playerNames = playerNamesInput.split(nameDelimiter);
         List<Player> players = Arrays.stream(playerNames).map(Player::new).collect(Collectors.toList());
         return of(players);
     }
 
-    private static Boxes of(List<Player> participants) {
-        LinkedHashMap<Player, BoxStatus> boxes = new LinkedHashMap<>();
-        participants.forEach((participant) -> boxes.put(participant, INITIAL_BOX_STATUS));
-        boxes.put(new Dealer(), INITIAL_BOX_STATUS);
-        return new Boxes(boxes);
+    private static GameBoxes of(List<Player> participants) {
+        final GameBoxInfo initialGameBoxInfo = new GameBoxInfo(PlayerStatus.HIT_ABLE, 0);
+        LinkedHashMap<Player, GameBoxInfo> boxes = new LinkedHashMap<>();
+        participants.forEach((participant) -> boxes.put(participant, initialGameBoxInfo));
+        boxes.put(new Dealer(), initialGameBoxInfo);
+        return new GameBoxes(boxes);
     }
 
     public void updatePlayerBox(Player player) {
         int point = player.calculatePoint();
-        BoxStatus newBoxStatus = new BoxStatus(getResultByScore(point), point);
+        GameBoxInfo newBoxStatus = new GameBoxInfo(getResultByScore(point), point);
         if (boxes.get(player).equals(newBoxStatus)) {
-            newBoxStatus = new BoxStatus(PlayerStatus.STAND, point);
+            newBoxStatus = new GameBoxInfo(PlayerStatus.STAND, point);
         }
         if (point == NEED_TEN_POINT && player.hasAce()) {
-            newBoxStatus = new BoxStatus(PlayerStatus.BLACK_JACK, BLACK_JACK_POINT);
+            newBoxStatus = new GameBoxInfo(PlayerStatus.BLACK_JACK, BLACK_JACK_POINT);
         }
         boxes.put(player, newBoxStatus);
     }
 
-    public BoxStatus getBoxStatusByParticipant(Player participant) {
+    public GameBoxInfo getGameBoxInfoBy(Player participant) {
         return boxes.get(participant);
     }
 
@@ -85,8 +85,8 @@ public class Boxes {
     }
 
     public GameResult getGameResult(Player participant) {
-        BoxStatus dealerBoxStatus = boxes.get(new Dealer());
-        BoxStatus playerBoxStatus = boxes.get(participant);
+        GameBoxInfo dealerBoxStatus = boxes.get(new Dealer());
+        GameBoxInfo playerBoxStatus = boxes.get(participant);
         return GameResult.from(playerBoxStatus.compareTo(dealerBoxStatus));
     }
 }

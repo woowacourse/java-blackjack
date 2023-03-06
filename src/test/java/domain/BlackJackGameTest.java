@@ -66,7 +66,7 @@ class BlackJackGameTest {
     @DisplayName("플레이어들의 게임결과로 딜러의 게임결과를 생성한다.")
     void playTurn() {
         BlackJackGame blackJackGame = new BlackJackGame("split");
-        GameResult dealerBoxResult = blackJackGame.getDealerBoxResult(List.of(
+        GameResult dealerBoxResult = blackJackGame.getDealerGameResult(List.of(
             new GameResult(5, 0),
             new GameResult(0, 3))
         );

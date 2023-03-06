@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Player {
 
     protected static final String DEALER_NAME = "딜러";
+    public static final int INITIAL_HAND_COUNT = 2;
     protected final String name;
     protected final List<Card> hand = new ArrayList<>();
 
@@ -22,7 +23,7 @@ public class Player {
     }
 
     public List<Card> faceUpInitialHand() {
-        if (hand.size() < 2) {
+        if (hand.size() < INITIAL_HAND_COUNT) {
             throw new IllegalStateException("모든 플레이어는 카드 두장을 받고 시작해야 합니다.");
         }
         return List.of(hand.get(0), hand.get(1));

@@ -62,8 +62,8 @@ public class GameController {
         blackJackGame.makeParticipants(participantDTO);
         List<Player> players = participantDTO.getPlayers();
         printAllStatus(participantDTO.getDealer(), players);
-        List<GameResult> playerBoxResults = blackJackGame.getPlayerBoxResults(players);
-        OutputView.printDealerGameResult(blackJackGame.getDealerBoxResult(playerBoxResults), players.size());
+        List<GameResult> playerBoxResults = blackJackGame.getPlayerGameResults(players);
+        OutputView.printDealerGameResult(blackJackGame.getDealerGameResult(playerBoxResults), players.size());
         for (int index = 0; index < players.size(); index++) {
             OutputView.printPlayerBoxResult(players.get(index).getName(), playerBoxResults.get(index));
         }

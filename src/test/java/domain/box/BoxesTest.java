@@ -20,7 +20,7 @@ class BoxesTest {
     @DisplayName("모든 박스 생성 테스트")
     @Test
     void createBoxes() {
-        Boxes boxes = Boxes.of("echo,split");
+        GameBoxes boxes = GameBoxes.of("echo,split");
         List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
         Assertions.assertThat(playersAndDealerAtLast).containsExactly(
             new Player("echo"), new Player("split"), new Dealer()
@@ -30,7 +30,7 @@ class BoxesTest {
     @DisplayName("게임 결과 반환 테스트")
     @Test
     void getBoxResult() {
-        Boxes boxes = Boxes.of("echo");
+        GameBoxes boxes = GameBoxes.of("echo");
         List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
         Player player = playersAndDealerAtLast.get(0);
         Player dealer = playersAndDealerAtLast.get(1);
@@ -46,7 +46,7 @@ class BoxesTest {
     @DisplayName("현재 턴의 박스의 참가자를 반환하고 업데이트 한다.")
     @TestFactory
     Stream<DynamicTest> getCurrentParticipant() {
-        Boxes boxes = Boxes.of("firstPlayer,secondPlayer");
+        GameBoxes boxes = GameBoxes.of("firstPlayer,secondPlayer");
         return Stream.of(
             DynamicTest.dynamicTest("처음에 첫 참가자를 반환한다.", () -> {
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("firstPlayer"));
@@ -55,15 +55,15 @@ class BoxesTest {
                 Player firstPlayer = boxes.getCurrentTurnPlayer();
                 makeBlackJack(firstPlayer);
                 boxes.updatePlayerBox(firstPlayer);
-                Assertions.assertThat(boxes.getBoxStatusByParticipant(firstPlayer))
-                    .isEqualTo(new BoxStatus(PlayerStatus.BLACK_JACK, 21));
+                Assertions.assertThat(boxes.getGameBoxInfoBy(firstPlayer))
+                    .isEqualTo(new GameBoxInfo(PlayerStatus.BLACK_JACK, 21));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("secondPlayer"));
             }),
             DynamicTest.dynamicTest("모든 참가자 턴이 끝나면 딜러를 반환한다.(스탠드)", () -> {
                 Player secondPlayer = boxes.getCurrentTurnPlayer();
                 boxes.updatePlayerBox(secondPlayer);
-                Assertions.assertThat(boxes.getBoxStatusByParticipant(secondPlayer))
-                    .isEqualTo(new BoxStatus(PlayerStatus.STAND, 0));
+                Assertions.assertThat(boxes.getGameBoxInfoBy(secondPlayer))
+                    .isEqualTo(new GameBoxInfo(PlayerStatus.STAND, 0));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Dealer());
             }),
             DynamicTest.dynamicTest("딜러턴 모두 종료된 후 다음 턴을 조회할 경우 오류를 던진다.", () -> {

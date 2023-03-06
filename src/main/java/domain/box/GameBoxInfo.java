@@ -3,12 +3,12 @@ package domain.box;
 import domain.user.PlayerStatus;
 import java.util.Objects;
 
-public class BoxStatus implements Comparable<BoxStatus> {
+public class GameBoxInfo implements Comparable<GameBoxInfo> {
 
     private final PlayerStatus playerResult;
     private final int point;
 
-    public BoxStatus(PlayerStatus playerResult, int point) {
+    public GameBoxInfo(PlayerStatus playerResult, int point) {
         this.playerResult = playerResult;
         this.point = point;
     }
@@ -25,7 +25,7 @@ public class BoxStatus implements Comparable<BoxStatus> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BoxStatus that = (BoxStatus) o;
+        GameBoxInfo that = (GameBoxInfo) o;
         return point == that.point && playerResult == that.playerResult;
     }
 
@@ -35,7 +35,7 @@ public class BoxStatus implements Comparable<BoxStatus> {
     }
 
     @Override
-    public int compareTo(BoxStatus o) {
+    public int compareTo(GameBoxInfo o) {
         if (this.playerResult == PlayerStatus.BUST && o.playerResult == PlayerStatus.BUST) {
             return 0;
         }

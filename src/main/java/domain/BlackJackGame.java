@@ -1,6 +1,6 @@
 package domain;
 
-import domain.box.Boxes;
+import domain.box.GameBoxes;
 import domain.card.Deck;
 import domain.user.Player;
 import dto.ParticipantDTO;
@@ -11,22 +11,22 @@ public class BlackJackGame {
 
     private static final int DEALER_THRESHOLDS = 16;
     private final Deck deck = new Deck();
-    private final Boxes boxes;
+    private final GameBoxes gameBoxes;
 
     public BlackJackGame(String participantNames) {
-        this.boxes = Boxes.of(participantNames);
+        this.gameBoxes = GameBoxes.of(participantNames);
     }
 
     public void initializeHand() {
         deck.shuffle();
-        List<Player> playersAndDealerAtLast = boxes.getPlayersAndDealerAtLast();
+        List<Player> playersAndDealerAtLast = gameBoxes.getPlayersAndDealerAtLast();
         dealToAll(playersAndDealerAtLast);
         dealToAll(playersAndDealerAtLast);
     }
 
     private void dealToAll(List<Player> targets) {
         targets.forEach(this::dealTo);
-        targets.forEach(boxes::updatePlayerBox);
+        targets.forEach(gameBoxes::updatePlayerBox);
     }
 
     private void dealTo(Player participant) {
@@ -37,11 +37,11 @@ public class BlackJackGame {
         if (turnAction == TurnAction.HIT) {
             dealTo(player);
         }
-        boxes.updatePlayerBox(player);
+        gameBoxes.updatePlayerBox(player);
     }
 
     public Player getCurrentPlayer() {
-        return boxes.getCurrentTurnPlayer();
+        return gameBoxes.getCurrentTurnPlayer();
     }
 
     public boolean isDealerUnderThresholds(Player dealer) {
@@ -49,10 +49,10 @@ public class BlackJackGame {
     }
 
     public void makeParticipants(ParticipantDTO participantDTO) {
-        boxes.setParticipantDTO(participantDTO);
+        gameBoxes.setParticipantDTO(participantDTO);
     }
 
-    public GameResult getDealerBoxResult(List<GameResult> playerBoxResults) {
+    public GameResult getDealerGameResult(List<GameResult> playerBoxResults) {
         GameResult dealerBoxResult = new GameResult(0, 0);
         for (GameResult playerBoxResult : playerBoxResults) {
             dealerBoxResult = dealerBoxResult.addReversed(playerBoxResult);
@@ -60,7 +60,7 @@ public class BlackJackGame {
         return dealerBoxResult;
     }
 
-    public List<GameResult> getPlayerBoxResults(List<Player> players) {
-        return players.stream().map(boxes::getGameResult).collect(Collectors.toList());
+    public List<GameResult> getPlayerGameResults(List<Player> players) {
+        return players.stream().map(gameBoxes::getGameResult).collect(Collectors.toList());
     }
 }
