@@ -4,8 +4,9 @@ import domain.type.Letter;
 
 public class Score {
 
-    public static final int BLACK_JACK = 21;
-    public static final int ACE_SUB_NUMBER = 1;
+    private static final int BLACK_JACK = 21;
+    private static final int ACE_SUB_NUMBER = 1;
+    
     private final int value;
 
     private Score(final int value) {

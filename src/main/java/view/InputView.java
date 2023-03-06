@@ -16,11 +16,11 @@ public class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
     private static final String NEW_LINE = "\n";
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> inputNames() {
         System.out.println(INPUT_NAMES_REQUEST_MESSAGE);
-        String input = scanner.nextLine().replace(" ", "");
+        String input = SCANNER.nextLine().replace(" ", "");
         checkBlank(input);
         return Arrays.stream(input.split(DELIMITER))
             .collect(Collectors.toList());
@@ -34,7 +34,7 @@ public class InputView {
 
     public static boolean inputCardIntent(final Participant participant) {
         System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, participant.getName());
-        String input = scanner.nextLine();
+        String input = SCANNER.nextLine();
         checkLetter(input, YES, NO);
         return input.equals(YES);
     }
