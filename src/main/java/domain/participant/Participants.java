@@ -28,12 +28,6 @@ public class Participants {
         }
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Participant::getName)
-                .collect(Collectors.toList());
-    }
-
     public Dealer getDealer() {
         return dealer;
     }
