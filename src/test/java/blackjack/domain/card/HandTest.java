@@ -67,11 +67,11 @@ public class HandTest {
 
     @Test
     void 카드가_추가된다() {
-        final Hand hand = new Hand(List.of(ACE_SPADE));
+        final Hand hand = new Hand();
 
         hand.add(new Card(ACE, HEART));
 
-        assertThat(hand.getCardLetters()).containsExactly("A스페이드", "A하트");
+        assertThat(hand.getCardLetters()).containsExactly("A하트");
     }
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력값: {0}, 결과값: {1}")

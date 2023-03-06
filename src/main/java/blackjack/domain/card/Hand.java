@@ -1,11 +1,16 @@
 package blackjack.domain.card;
 
 import blackjack.domain.player.Result;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private final Cards cards;
     private State state;
+
+    public Hand() {
+        this(new ArrayList<>());
+    }
 
     public Hand(final List<Card> cards) {
         this.cards = new Cards(cards);

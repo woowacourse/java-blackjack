@@ -60,11 +60,11 @@ public class CardsTest {
 
     @Test
     void 카드가_추가된다() {
-        final Cards cards = new Cards(List.of(FIVE_SPADE));
+        final Cards cards = new Cards();
 
-        cards.add(new Card(Rank.FIVE, Shape.DIAMOND));
+        cards.add(new Card(Rank.FIVE, Shape.SPADE));
 
-        assertThat(cards.getCardLetters()).containsExactly("5스페이드", "5다이아몬드");
+        assertThat(cards.getCardLetters()).containsExactly("5스페이드");
     }
 
     @Test
