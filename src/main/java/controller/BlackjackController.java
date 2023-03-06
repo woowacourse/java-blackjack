@@ -7,7 +7,6 @@ import domain.player.Player;
 import domain.player.Players;
 import domain.stake.Stake;
 import view.InputView;
-import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

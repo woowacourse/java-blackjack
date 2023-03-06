@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.function.Predicate;
-
 public class Card {
 
     private final Suit suit;

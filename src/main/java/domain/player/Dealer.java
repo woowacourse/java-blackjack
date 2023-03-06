@@ -4,7 +4,7 @@ import domain.score.Score;
 
 import java.util.Map;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 public class Dealer extends Player {
 
