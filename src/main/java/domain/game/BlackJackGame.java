@@ -172,10 +172,10 @@ public class BlackJackGame {
             playerResults.put(player.getName(), Result.TIE);
             return;
         }
-        compareHandCount(dealer, playerResults, player);
+        calculateResultByHandCount(dealer, playerResults, player);
     }
 
-    private void compareHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
+    private void calculateResultByHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
         int playerHandCount = player.getCardNames().size();
         int dealerHandCount = dealer.getCardNames().size();
         if (playerHandCount != dealerHandCount) {
