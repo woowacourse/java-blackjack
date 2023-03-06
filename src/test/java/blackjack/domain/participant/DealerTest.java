@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Number.FIVE;
 import static blackjack.domain.card.Number.QUEEN;
 import static blackjack.domain.card.Number.SEVEN;
 import static blackjack.domain.card.Number.SIX;
@@ -8,6 +9,9 @@ import static blackjack.domain.card.Number.TWO;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.participant.Result.DRAW;
+import static blackjack.domain.participant.Result.LOSE;
+import static blackjack.domain.participant.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -124,5 +128,82 @@ class DealerTest {
         final Dealer dealer = new Dealer();
 
         assertThat(dealer.isDealer()).isTrue();
+    }
+
+    @Test
+    void 딜러의_이름은_딜러이다() {
+        final Dealer dealer = new Dealer();
+
+        assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+    @Test
+    void 딜러가_카드를_뽑을_수_있는_최대_점수는_16점이다() {
+        final Dealer dealer = new Dealer();
+
+        assertThat(dealer.getMaximumDrawableScore()).isEqualTo(16);
+    }
+
+    @Nested
+    class showResult_메서드는 {
+
+        @Nested
+        class 플레이어_점수가_블랙잭_점수를_초과하면 {
+
+            @Test
+            void LOSE_반환한다() {
+                final Dealer dealer = new Dealer();
+
+                assertThat(dealer.showResult(22)).isEqualTo(LOSE);
+            }
+        }
+
+        @Nested
+        class 딜러_점수가_블랙잭_점수를_초과하면 {
+
+            @Test
+            void 플레이어_점수가_블랙잭_점수_이하라면_WIN_반환한다() {
+                final Dealer dealer = new Dealer();
+
+                assertThat(dealer.showResult(21)).isEqualTo(WIN);
+            }
+        }
+
+        @Nested
+        class 딜러와_플레이어_점수_모두_블랙잭_점수_이하라면 {
+
+            @Test
+            void 딜러_점수가_플레이어_점수보다_낮으면_WIN_반환한다() {
+                final Cards cards = new Cards(List.of(
+                        new Card(ACE, HEART),
+                        new Card(FIVE, DIAMOND)
+                )); //16점
+                final Dealer dealer = new Dealer(cards);
+
+                assertThat(dealer.showResult(17)).isEqualTo(WIN);
+            }
+
+            @Test
+            void 딜러_점수가_플레이어_점수보다_높으면_LOSE_반환한다() {
+                final Cards cards = new Cards(List.of(
+                        new Card(ACE, HEART),
+                        new Card(FIVE, DIAMOND)
+                )); //16점
+                final Dealer dealer = new Dealer(cards);
+
+                assertThat(dealer.showResult(15)).isEqualTo(LOSE);
+            }
+
+            @Test
+            void 점수_같으면_DRAW_반환한다() {
+                final Cards cards = new Cards(List.of(
+                        new Card(ACE, HEART),
+                        new Card(FIVE, DIAMOND)
+                )); //16점
+                final Dealer dealer = new Dealer(cards);
+
+                assertThat(dealer.showResult(16)).isEqualTo(DRAW);
+            }
+        }
     }
 }

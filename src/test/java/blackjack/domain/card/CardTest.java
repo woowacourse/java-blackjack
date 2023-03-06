@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -40,23 +41,27 @@ class CardTest {
         assertThat(card.getScore()).isEqualTo(1);
     }
 
-    @Test
-    void 에이스라면_true_반환한다() {
-        final Suit suit = Suit.SPADE;
-        final Number number = Number.ACE;
+    @Nested
+    class isAce_메서드는 {
 
-        final Card card = new Card(number, suit);
+        @Test
+        void 카드가_에이스라면_true_반환한다() {
+            final Suit suit = Suit.SPADE;
+            final Number number = Number.ACE;
 
-        assertThat(card.isAce()).isTrue();
-    }
+            final Card card = new Card(number, suit);
 
-    @Test
-    void 에이스가_아니라면_false_반환한다() {
-        final Suit suit = Suit.SPADE;
-        final Number number = Number.TEN;
+            assertThat(card.isAce()).isTrue();
+        }
 
-        final Card card = new Card(number, suit);
+        @Test
+        void 카드가_에이스가_아니라면_false_반환한다() {
+            final Suit suit = Suit.SPADE;
+            final Number number = Number.TEN;
 
-        assertThat(card.isAce()).isFalse();
+            final Card card = new Card(number, suit);
+
+            assertThat(card.isAce()).isFalse();
+        }
     }
 }
