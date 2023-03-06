@@ -66,7 +66,7 @@ public class BlackJackGame {
         return playerOutcome;
     }
 
-    private Outcome reverseOutcome(Outcome outcome) {
+    private Outcome reverseOutcome(final Outcome outcome) {
         if (outcome == Outcome.WIN) {
             return Outcome.LOSE;
         }
