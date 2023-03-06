@@ -1,14 +1,32 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Map;
 import java.util.Objects;
 
 public class Card {
+    private static final Map<Suit, Map<Rank, Card>> CACHE;
+
+    static {
+        CACHE = Rank.stream()
+                .flatMap(rank -> Suit.stream()
+                        .map(suit -> new Card(suit, rank))
+                ).collect(groupingBy(card -> card.suit,
+                        toMap(card -> card.rank, card -> card)));
+    }
+
     private final Suit suit;
     private final Rank rank;
 
-    public Card(Suit suit, Rank rank) {
+    private Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
+    }
+
+    public static Card of(Suit suit, Rank rank) {
+        return CACHE.get(suit).get(rank);
     }
 
     public boolean isAce() {

@@ -18,8 +18,8 @@ class CardsTest {
     void getScore_correct() {
         // given
         Cards cards = new Cards(List.of(
-                new Card(Suit.DIAMOND, Rank.TWO),
-                new Card(Suit.CLOVER, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.TWO),
+                Card.of(Suit.CLOVER, Rank.KING)
         ));
 
         // when
@@ -36,7 +36,7 @@ class CardsTest {
     void getScore_haveAce(int input, int expect) {
         // given
         Cards cards = IntStream.range(0, input)
-                .mapToObj(v -> new Card(Suit.DIAMOND, Rank.ACE))
+                .mapToObj(v -> Card.of(Suit.DIAMOND, Rank.ACE))
                 .collect(collectingAndThen(toList(), Cards::new));
 
         // when

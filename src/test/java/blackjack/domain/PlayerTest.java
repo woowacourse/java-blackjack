@@ -15,7 +15,7 @@ class PlayerTest {
     void matchGame_win() {
         // given
         Player player = new Player("glen", List.of(
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
         Dealer dealer = new Dealer(Collections.emptyList());
 
@@ -33,7 +33,7 @@ class PlayerTest {
         // given
         Player player = new Player("glen", Collections.emptyList());
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
 
         // when
@@ -49,10 +49,10 @@ class PlayerTest {
     void matchGame_draw() {
         // given
         Player player = new Player("glen", List.of(
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
 
         // when
@@ -68,9 +68,9 @@ class PlayerTest {
     void matchGame_overScore() {
         // given
         Player player = new Player("glen", List.of(
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
         Dealer dealer = new Dealer(Collections.emptyList());
 
@@ -88,9 +88,9 @@ class PlayerTest {
         // given
         Player player = new Player("glen", Collections.emptyList());
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
 
         // when
@@ -106,14 +106,14 @@ class PlayerTest {
     void matchGame_sameOverScore() {
         // given
         Player player = new Player("glen", List.of(
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.KING)
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING)
         ));
 
         // when
@@ -160,9 +160,9 @@ class PlayerTest {
     void canDrawCard_false() {
         // given
         Player player = new Player("glen", List.of(
-                new Card(Suit.DIAMOND, Rank.TEN),
-                new Card(Suit.DIAMOND, Rank.TEN),
-                new Card(Suit.DIAMOND, Rank.TEN)
+                Card.of(Suit.DIAMOND, Rank.TEN),
+                Card.of(Suit.DIAMOND, Rank.TEN),
+                Card.of(Suit.DIAMOND, Rank.TEN)
         ));
 
         // expect
@@ -175,7 +175,7 @@ class PlayerTest {
     void canDrawCard_true() {
         // given
         Player player = new Player("glen", List.of(
-                new Card(Suit.DIAMOND, Rank.TEN)
+                Card.of(Suit.DIAMOND, Rank.TEN)
         ));
 
         // expect

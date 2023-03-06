@@ -14,8 +14,8 @@ class DealerTest {
     void canDrawCard_true() {
         // given
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.DIAMOND, Rank.FIVE)
+                Card.of(Suit.DIAMOND, Rank.ACE),
+                Card.of(Suit.DIAMOND, Rank.FIVE)
         ));
 
         // expect
@@ -28,9 +28,9 @@ class DealerTest {
     void canDrawCard_false() {
         // given
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.FIVE),
-                new Card(Suit.DIAMOND, Rank.QUEEN)
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.FIVE),
+                Card.of(Suit.DIAMOND, Rank.QUEEN)
         ));
 
         // expect
@@ -43,8 +43,8 @@ class DealerTest {
     void getStartCard_success() {
         // given
         Dealer dealer = new Dealer(List.of(
-                new Card(Suit.DIAMOND, Rank.KING),
-                new Card(Suit.DIAMOND, Rank.FIVE)
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.FIVE)
         ));
 
         // when
@@ -53,7 +53,7 @@ class DealerTest {
         // then
         assertThat(cards)
                 .hasSize(1)
-                .containsExactly(new Card(Suit.DIAMOND, Rank.KING));
+                .containsExactly(Card.of(Suit.DIAMOND, Rank.KING));
     }
 
     @Test

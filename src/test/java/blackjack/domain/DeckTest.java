@@ -18,8 +18,8 @@ class DeckTest {
     void drawCard_success() {
         // given
         Deck deck = new MockDeckGenerator(List.of(
-                new Card(Suit.DIAMOND, Rank.THREE),
-                new Card(Suit.CLOVER, Rank.ACE)
+                Card.of(Suit.DIAMOND, Rank.THREE),
+                Card.of(Suit.CLOVER, Rank.ACE)
         )).generate();
 
         // when
@@ -27,7 +27,7 @@ class DeckTest {
 
         // then
         assertThat(card)
-                .isEqualTo(new Card(Suit.DIAMOND, Rank.THREE));
+                .isEqualTo(Card.of(Suit.DIAMOND, Rank.THREE));
     }
 
     @Test
@@ -48,7 +48,7 @@ class DeckTest {
     @DisplayName("원하는 갯수의 카드를 뽑을 수 있어야 한다.")
     void drawCards_withCount(int count) {
         // given
-        Deck deck = new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52)
+        Deck deck = new MockDeckGenerator(Card.of(Suit.DIAMOND, Rank.KING), 52)
                 .generate();
 
         // when
@@ -63,7 +63,7 @@ class DeckTest {
     @DisplayName("원하는 갯수의 카드를 뽑을 때 카드가 부족하면 예외가 발생한다.")
     void drawCards_insufficientCards() {
         // given
-        Deck deck = new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 3)
+        Deck deck = new MockDeckGenerator(Card.of(Suit.DIAMOND, Rank.KING), 3)
                 .generate();
 
         // expect

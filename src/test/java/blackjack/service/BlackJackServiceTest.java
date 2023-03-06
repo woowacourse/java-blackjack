@@ -28,7 +28,7 @@ class BlackJackServiceTest {
         List<String> names = List.of("glen", "pobi", "encho");
 
         // when
-        blackJackService.setupGame(new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52), names);
+        blackJackService.setupGame(new MockDeckGenerator(Card.of(Suit.DIAMOND, Rank.KING), 52), names);
 
         // then
         assertThat(blackJackService.getPlayersName())
@@ -69,7 +69,7 @@ class BlackJackServiceTest {
     @DisplayName("참여자의 이름으로 카드를 뽑을 때 점수가 21을 초과하면 예외가 발생해야 한다.")
     void drawMoreCardByName_overScore() {
         // given
-        blackJackService.setupGame(new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52),
+        blackJackService.setupGame(new MockDeckGenerator(Card.of(Suit.DIAMOND, Rank.KING), 52),
                 List.of("glen", "pobi"));
 
         // when

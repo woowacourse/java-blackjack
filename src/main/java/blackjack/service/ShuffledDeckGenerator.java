@@ -16,7 +16,7 @@ public class ShuffledDeckGenerator implements DeckGenerator {
     public Deck generate() {
         List<Card> cards = Rank.stream()
                 .flatMap(rank -> Suit.stream()
-                        .map(suit -> new Card(suit, rank))
+                        .map(suit -> Card.of(suit, rank))
                 ).collect(toList());
         Collections.shuffle(cards);
         return new Deck(new ArrayDeque<>(cards));
