@@ -20,11 +20,8 @@ public class Participant {
     }
 
     public int calculateScore() {
-        int nonAceSum = cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getDefaultScore)
-                .sum();
-        int aceDefaultSum = (int) cards.stream().filter(Card::isAce).count();
+        int nonAceSum = calculateNonAceSum();
+        int aceDefaultSum = calculateAceDefaultSum();
         int totalScore = nonAceSum + aceDefaultSum;
         for (int i = 0; i < aceDefaultSum; i++) {
             if (totalScore + BONUS_SCORE <= BUST_BOUNDARY_EXCLUSIVE) {
@@ -32,6 +29,17 @@ public class Participant {
             }
         }
         return totalScore;
+    }
+
+    private int calculateNonAceSum() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getDefaultScore)
+                .sum();
+    }
+
+    private int calculateAceDefaultSum() {
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
     public boolean isBust() {
