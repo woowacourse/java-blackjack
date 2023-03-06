@@ -1,12 +1,17 @@
 package view;
 
 import domain.card.Card;
+import domain.game.BlackJackGame;
+import domain.game.Referee;
+import domain.player.GameResult;
 import domain.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -90,40 +95,42 @@ public class OutputView {
         }
     }
 
-    public static void printPlayersGameResults(List<Player> players) {
-        players = new ArrayList<>(players);
+    public static void printPlayersGameResults(BlackJackGame blackJackGame, Referee referee) {
         println("\n## 최종 승패");
-        printDealerGameResult(players.remove(0));
-        printParticipantsGameResult(players);
+        printDealerGameResult(referee);
+        printParticipantsGameResult(blackJackGame, referee);
     }
 
-    private static void printDealerGameResult(Player dealer) {
-        System.out.printf("딜러: %s%n", parsePlayerGameResultDisplay(dealer));
+    private static void printDealerGameResult(Referee referee) {
+        System.out.printf("딜러: %s%n", parseDealerGameResultDisplay(referee));
     }
 
-    private static String parsePlayerGameResultDisplay(Player dealer) {
-        List<String> strings = List.of("승", "패", "무");
-        List<Integer> gameResults = dealer.getGameResult();
-
-        return IntStream.range(0, gameResults.size())
-                .filter(dealerGameResultIndex -> !OutputView.isGameResultCountZero(gameResults, dealerGameResultIndex))
-                .mapToObj(dealerGameResultIndex -> gameResults.get(dealerGameResultIndex) + strings.get(dealerGameResultIndex))
+    private static String parseDealerGameResultDisplay(Referee referee) {
+        Map<GameResult, Integer> dealerGameResults = referee.dealerGameResults();
+    
+        return Arrays.stream(GameResult.values())
+                .filter(Predicate.not(gameResult -> OutputView.isGameResultCountZero(gameResult, dealerGameResults)))
+                .map(gameResult -> dealerGameResults.get(gameResult) + gameResult.getGameResult())
                 .collect(Collectors.joining(" "));
 
     }
 
-    private static boolean isGameResultCountZero(List<Integer> gameResults, int dealerGameResultIndex) {
-        return gameResults.get(dealerGameResultIndex) == 0;
+    private static boolean isGameResultCountZero(GameResult gameResult, Map<GameResult, Integer> dealerGameResults) {
+        return dealerGameResults.getOrDefault(gameResult, 0) == 0;
     }
 
-    private static void printParticipantsGameResult(List<Player> participants) {
+    private static void printParticipantsGameResult(BlackJackGame blackJackGame, Referee referee) {
+        List<Player> participants = blackJackGame.getParticipants();
+        Map<Player, GameResult> participantsGameResults = referee.participantsGameResults();
+        
         participants.stream()
-                .map(OutputView::parseParticipantGameResultDisplay)
+                .map(participant -> parseParticipantGameResultDisplay(participant, participantsGameResults))
                 .forEach(OutputView::println);
     }
 
-    private static String parseParticipantGameResultDisplay(Player player) {
-        return String.format("%s: %s", player.getName(), parsePlayerGameResultDisplay(player));
+    private static String parseParticipantGameResultDisplay(Player participant, Map<Player, GameResult> participantsGameResults) {
+        GameResult gameResult = participantsGameResults.get(participant);
+        return String.format("%s: %s", participant.getName(), gameResult.getGameResult());
     }
 
     public static void println(String message) {

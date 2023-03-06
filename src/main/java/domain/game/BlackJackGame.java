@@ -96,11 +96,4 @@ public class BlackJackGame {
                 .filter(Predicate.not(Player::isDealer))
                 .collect(Collectors.toUnmodifiableList());
     }
-
-    public void battle() {
-        for (Player participant : getParticipants()) {
-            participant.battle(getDealer());
-            getDealer().battle(participant);
-        }
-    }
 }

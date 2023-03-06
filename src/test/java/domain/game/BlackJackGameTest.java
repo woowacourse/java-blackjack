@@ -22,14 +22,18 @@ class BlackJackGameTest {
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
         blackJackGame.giveTwoCardToPlayers();
-
+    
+        Player dealer = blackJackGame.getDealer();
+        List<Player> participants = blackJackGame.getParticipants();
         Map<Player, List<Card>> playersCards = blackJackGame.getPlayersCards();
+        
+        
         assertAll(
-                () -> assertThat(playersCards.get(new Dealer()))
+                () -> assertThat(playersCards.get(dealer))
                         .containsExactly(new Card(Shape.DIAMOND, Number.JACK), new Card(Shape.DIAMOND, Number.QUEEN)),
-                () -> assertThat(playersCards.get(new Participant("여우")))
+                () -> assertThat(playersCards.get(participants.get(0)))
                         .containsExactly(new Card(Shape.DIAMOND, Number.KING), new Card(Shape.DIAMOND, Number.TEN)),
-                () -> assertThat(playersCards.get(new Participant("아벨")))
+                () -> assertThat(playersCards.get(participants.get(1)))
                         .containsExactly(new Card(Shape.DIAMOND, Number.NINE), new Card(Shape.DIAMOND, Number.EIGHT))
         );
     }

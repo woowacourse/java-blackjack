@@ -1,4 +1,5 @@
 import domain.game.BlackJackGame;
+import domain.game.Referee;
 import domain.player.Player;
 import domain.strategy.RandomBasedShuffleStrategy;
 import view.InputView;
@@ -16,8 +17,10 @@ public class Application {
         initializedBlackjackGame(blackJackGame);
         
         giveCardToPlayers(blackJackGame);
-        blackJackGame.battle();
-        OutputView.printPlayersGameResults(blackJackGame.getPlayers());
+        Referee referee = new Referee();
+        referee.decidePlayersBattleResults(blackJackGame);
+        
+        OutputView.printPlayersGameResults(blackJackGame, referee);
     }
     
     private String getParticipantNames() {
