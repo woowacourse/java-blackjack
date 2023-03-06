@@ -8,15 +8,10 @@ import static java.util.stream.Collectors.*;
 
 public class Dealer extends Player {
 
-    private static final int PICK_BOUNDARY = 16;
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         super(new PlayerName(DEALER_NAME));
-    }
-
-    public boolean isHittable() {
-        return getScore().getValue() <= PICK_BOUNDARY;
     }
 
     public Map<Player, DealerStatus> getDealerStats(final Players players) {
@@ -25,7 +20,7 @@ public class Dealer extends Player {
     }
 
     private DealerStatus compareWithPlayer(final Player player) {
-        if (bothBlackjack(player)) {
+        if (isBothBlackjack(player)) {
             return DealerStatus.DRAW;
         }
         if (player.isBlackjack()) {
@@ -41,7 +36,11 @@ public class Dealer extends Player {
         return getScore().compareScore(score);
     }
 
-    private boolean bothBlackjack(final Player player) {
+    public boolean isHittable() {
+        return getScore().isDealerHittable();
+    }
+
+    private boolean isBothBlackjack(final Player player) {
         return player.isBlackjack() && this.isBlackjack();
     }
 }
