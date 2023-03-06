@@ -39,7 +39,7 @@ public class Hand {
     }
 
     private int addAceCount(int aceCount, Card card) {
-        if (card.getValue() == HIGH_ACE_VALUE) {
+        if (card.isAce()) {
             aceCount += 1;
         }
         return aceCount;

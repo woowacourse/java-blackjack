@@ -3,6 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
+    private static final int HIGH_ACE_VALUE = 11;
     private final String name;
     private final int value;
 
@@ -23,6 +24,9 @@ public class Card {
 
     public int getValue() {
         return value;
+    }
+    public boolean isAce() {
+        return value == HIGH_ACE_VALUE;
     }
 
     @Override
