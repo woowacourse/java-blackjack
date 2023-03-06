@@ -18,8 +18,8 @@ public class OutputView {
     }
 
     public static void printDealerCard(final Card card) {
-        final String rank = card.getRank().getRank();
-        final String suit = card.getSuit().getSuit();
+        final String rank = card.getRank();
+        final String suit = card.getSuit();
         System.out.printf("딜러: %s%s%n", rank, suit);
     }
 
@@ -32,7 +32,7 @@ public class OutputView {
     private static String toStringCards(final List<Card> cards) {
         StringJoiner stringJoiner = new StringJoiner(", ");
         cards.forEach(card -> {
-            String temp = card.getRank().getRank() + card.getSuit().getSuit();
+            String temp = card.getRank() + card.getSuit();
             stringJoiner.add(temp);
         });
         return stringJoiner.toString();

@@ -66,7 +66,7 @@
     - [x] 점수 계산 로직 수정
 
 - Card
-    - [ ] `getRank()`와 `getSuit()`에서 바로 `String`을 반환하도록 수정
+    - [x] `getRank()`와 `getSuit()`에서 바로 `String`을 반환하도록 수정
 
 - MainController
     - [x] 카드 뽑기 여부 확인 과정 `do while` 이용하여 간소화

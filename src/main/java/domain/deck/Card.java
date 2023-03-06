@@ -9,11 +9,15 @@ public class Card {
         this.rank = rank;
     }
 
-    public Suit getSuit() {
-        return suit;
+    public String getSuit() {
+        return suit.getSuit();
     }
 
-    public Rank getRank() {
-        return rank;
+    public String getRank() {
+        return rank.getRank();
+    }
+
+    public int getScore() {
+        return rank.getScore();
     }
 }

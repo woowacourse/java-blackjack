@@ -21,7 +21,7 @@ public class Hand {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getRank() == Rank.ACE);
+                .anyMatch(card -> card.getRank().equals(Rank.ACE.getRank()));
     }
 
     public List<Card> getCards() {
@@ -32,7 +32,7 @@ public class Hand {
         int sum = 0;
 
         for (Card card : cards) {
-            sum += card.getRank().getScore();
+            sum += card.getScore();
         }
         if (hasAce() && sum <= UPPER_BOUND) {
             sum += ACE_RANK_DIFFERENCE;
