@@ -62,6 +62,22 @@ public class ParticipantsTest {
     }
 
     @Test
+    @DisplayName("딜러의 이름을 반환하는 테스트")
+    void getDealerNameTest() {
+        // given
+        Dealer dealer = new Dealer();
+        List<String> playerNames = List.of("pobi", "crong");
+        Participants participants = new Participants(dealer, playerNames);
+
+        // when
+        String actual = participants.getDealerName();
+        String expected = "딜러";
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("플레이어들의 이름을 반환하는 테스트")
     void getPlayerNames() {
         Dealer dealer = new Dealer();
