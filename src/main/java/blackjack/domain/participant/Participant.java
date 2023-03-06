@@ -36,8 +36,8 @@ public class Participant {
                 .sum() + numberOfElevenAce * 10;
     }
 
-    public boolean isUnderThanBoundary(final int number) {
-        return this.calculateSumOfRank() < number;
+    public boolean isUnderThanBoundary(final int boundary) {
+        return this.calculateSumOfRank() < boundary;
     }
 
     public boolean isBlackJack() {

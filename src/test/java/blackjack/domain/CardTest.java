@@ -14,10 +14,10 @@ class CardTest {
     @Test
     void checkCardWithSameRankAndSuit() {
         // given
-        Card card1 = new Card(Rank.ACE, Suit.DIAMOND);
-        Card card2 = new Card(Rank.ACE, Suit.DIAMOND);
+        Card firstSameCard = new Card(Rank.ACE, Suit.DIAMOND);
+        Card secondSameCard = new Card(Rank.ACE, Suit.DIAMOND);
 
         // when & then
-        assertThat(card1.equals(card2)).isTrue();
+        assertThat(firstSameCard).isEqualTo(secondSameCard);
     }
 }

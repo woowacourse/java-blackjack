@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class BlackJackGameTest {
 
-    @DisplayName("초기 카드 2장 배분 후 참가자들이 가진 카드의 총개수를 확인한다.")
+    @DisplayName("초기 카드 2장 배분 후 참가자들이 가진 카드의 총 개수를 확인한다.")
     @Test
     void checkCardSizeOfParticipantsAfterInitialHandOut() {
         // given

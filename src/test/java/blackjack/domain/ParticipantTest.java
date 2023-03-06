@@ -52,4 +52,22 @@ class ParticipantTest {
         // when & then
         assertThat(participant.calculateSumOfRank()).isEqualTo(givenSum);
     }
+
+    @DisplayName("참가자마다 정해진 경계와 카드 숫자의 합을 비교해 boolean값을 반환한다.")
+    @Test
+    void returnsBooleanCompareSumOfCardsAndParticipantBoundary() {
+        // given
+        int sumOfCardByPlayer = 21;
+
+        Card tenDiamond = new Card(Rank.TEN, Suit.DIAMOND);
+        Card jackDiamond = new Card(Rank.JACK, Suit.DIAMOND);
+        participant.receiveCard(tenDiamond);
+        participant.receiveCard(jackDiamond);
+
+        // when
+        boolean isUnderThanBoundary = participant.isUnderThanBoundary(sumOfCardByPlayer);
+
+        // then
+        assertThat(isUnderThanBoundary).isTrue();
+    }
 }
