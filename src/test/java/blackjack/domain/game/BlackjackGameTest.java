@@ -38,6 +38,15 @@ public class BlackjackGameTest {
     }
 
     @Test
+    void 딜러를_반환한다() {
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
+
+        final Player dealer = blackjackGame.getDealer();
+
+        assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+    @Test
     void 플레이어들이_게임_시작_시_카드를_뽑는다() {
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
         final Deck deck = new FixedDeck(List.of(

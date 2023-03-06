@@ -1,12 +1,13 @@
 package blackjack.controller;
 
+import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameResult;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.card.ShuffledDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.function.Supplier;
 
 public class BlackjackController {
@@ -43,7 +44,7 @@ public class BlackjackController {
             drawBy(player);
         }
         blackjackGame.drawByDealer(ShuffledDeck.getInstance());
-        outputView.printDealerDraw(players.getDealer());
+        outputView.printDealerDraw(blackjackGame.getDealer());
     }
 
     private void drawBy(final Player player) {
