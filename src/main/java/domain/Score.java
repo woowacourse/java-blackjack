@@ -44,4 +44,8 @@ public class Score {
     public boolean isGreaterThan(final Score other) {
         return score > other.score;
     }
+
+    public int value() {
+        return score;
+    }
 }

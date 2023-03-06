@@ -123,7 +123,7 @@ public class OutputView {
                                      .collect(Collectors.joining(DELIM, getPlayerName(player)
                                                                          + CARD_INFORMATION_FORMAT,
                                                                  String.format(" - 결과: %d",
-                                                                               player.cardArea().calculate())));
+                                                                               player.cardArea().calculate().value())));
 
         System.out.println(message);
     }

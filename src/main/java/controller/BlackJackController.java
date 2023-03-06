@@ -100,6 +100,5 @@ public class BlackJackController {
                         .map(Name::new)
                         .map(name -> new Participant(name, cardTable.createCardArea()))
                         .collect(Collectors.toList());
-
     }
 }
