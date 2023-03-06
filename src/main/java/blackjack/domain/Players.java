@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -88,26 +87,6 @@ public class Players {
         targetPlayer.drawCard(card);
     }
 
-    public List<Card> findCardsByPlayerName(final String playerName) {
-        return players.stream()
-                .filter(player -> player.hasName(playerName))
-                .findAny()
-                .map(Player::getCards)
-                .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
-    }
-
-    public Map<String, List<Card>> findPlayerNameToCards() {
-        return players.stream()
-                .collect(Collectors.toMap(Player::getName, Participant::getCards));
-    }
-
-    public int getPlayerScoreByName(final String name) {
-        return players.stream()
-                .filter(player -> player.hasName(name))
-                .findFirst()
-                .map(Participant::currentScore)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다"));
-    }
 
     public Player findPlayerByName(final String name) {
         return players.stream()

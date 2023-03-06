@@ -32,20 +32,12 @@ public class BlackJackGame {
         participants.drawDealerCard(deck.removeCard());
     }
 
-    public Player findPlayerByName(final String playerName) {
-        return participants.findPlayerByName(playerName);
-    }
-
     public boolean isDealerDrawable() {
         return participants.getDealer().isDrawable();
     }
 
     public Players getPlayers() {
         return participants.getPlayers();
-    }
-
-    public Dealer getDealer() {
-        return participants.getDealer();
     }
 
     public void calculateFinalResult() {

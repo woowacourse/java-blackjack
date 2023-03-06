@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
 import blackjack.response.CardConvertStrategy;
 import blackjack.response.CardResponse;
 import blackjack.response.DealerScoreResponse;
@@ -61,14 +60,6 @@ public class OutputView {
 
         return convertedSymbol + convertedShape;
     }
-
-    private String convertCard(final Card card) {
-        final String convertedSymbol = card.getSymbol().name();
-        final String convertedShape = card.getShape().name();
-
-        return convertedSymbol + convertedShape;
-    }
-
 
     public void printCardStatusOfPlayer(final PlayerCardsResponse playerCardsResponse) {
         final String name = playerCardsResponse.getName();
