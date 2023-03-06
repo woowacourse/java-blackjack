@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
+    private static final int NUMBER_OF_SETTING_CARDS = 2;
+    private static final String NO_ANSWER_ABOUT_ONE_MORE_CARD = "n";
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -57,7 +60,7 @@ public class BlackjackController {
     }
 
     private void distributeTwoCards(final Deck deck, final Participant participant) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < NUMBER_OF_SETTING_CARDS; i++) {
             Card drawnCard = deck.drawCard();
             participant.receiveCard(drawnCard);
         }
@@ -69,12 +72,6 @@ public class BlackjackController {
         Card card = participants.getDealer().getOneCardToShow();
         outputView.printDealerInitCards(card.getCardInfo());
         outputView.printPlayersInitCards(getPlayersCards(participants.getPlayers()));
-    }
-
-    private List<String> getPlayerNames(final List<Player> players) {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
     }
 
     private void turnOfPlayers(final List<Player> players, final Deck deck) {
@@ -95,7 +92,7 @@ public class BlackjackController {
     private boolean ask(final Player player, final Deck deck) {
         String answer = inputView.askReceiveMoreCard(player.getName());
 
-        if (answer.equals("n")) {
+        if (answer.equals(NO_ANSWER_ABOUT_ONE_MORE_CARD)) {
             outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
             return false;
         }
@@ -141,6 +138,12 @@ public class BlackjackController {
         Map<String, String> playerResultWithName = getPlayerResult(playerResult);
 
         outputView.printGameResult(dealerResult, playerResultWithName);
+    }
+
+    private List<String> getPlayerNames(final List<Player> players) {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
     private Map<String, List<String>> getPlayersCards(final List<Player> players) {

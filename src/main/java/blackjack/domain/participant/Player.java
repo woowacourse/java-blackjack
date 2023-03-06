@@ -17,7 +17,9 @@ public class Player extends Participant {
 
     private void validateNameLength(final String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
+            throw new IllegalArgumentException(
+                    "[ERROR] 이름 길이는 최소 " + MIN_NAME_LENGTH + "글자에서 최대 "
+                            + MAX_NAME_LENGTH + "글자 입니다.");
         }
     }
 
