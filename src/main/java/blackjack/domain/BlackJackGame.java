@@ -46,16 +46,16 @@ public class BlackJackGame {
     }
 
     private void judgeResult(final Player player, final int sumOfDealer, final int sumOfPlayer) {
-        if (judgeResultWhenPlayerIsBlackJack(player)) {
+        if (isBlackJackPlayer(player)) {
             return;
         }
-        if (judgeResultWhenPlayerIsBust(player)) {
+        if (isBustPlayer(player)) {
             return;
         }
         judgeResultWhenPlayerIsNotBust(sumOfDealer, player, sumOfPlayer);
     }
 
-    private boolean judgeResultWhenPlayerIsBlackJack(final Player player) {
+    private boolean isBlackJackPlayer(final Player player) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
             setUpResultWhenPush(player);
             return true;
@@ -67,7 +67,7 @@ public class BlackJackGame {
         return false;
     }
 
-    private boolean judgeResultWhenPlayerIsBust(final Player player) {
+    private boolean isBustPlayer(final Player player) {
         if (player.isBust()) {
             setUpResultWhenDealerWin(player);
             return true;
