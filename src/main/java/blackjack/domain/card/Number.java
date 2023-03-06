@@ -31,6 +31,7 @@ public enum Number {
         return number.score;
     }
 
+    // TODO: 2023/03/06 변수명 수정
     public static Number pickRandomNumber() {
         List<Number> numbers = Arrays.asList(Number.values());
         Collections.shuffle(numbers);

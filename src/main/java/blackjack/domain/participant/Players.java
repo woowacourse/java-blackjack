@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
+
     private static final int MIN_PLAYER_COUNT = 2;
     private static final int MAX_PLAYER_COUNT = 8;
 
@@ -33,11 +34,12 @@ public class Players {
         }
     }
 
-    public void receiveSettingCards(final List<Card> settingCards) {
+    public void receiveSettingCards(final List<Card> cards) {
         int playerIndex = 0;
-        for (int cardIndex = 0; cardIndex < settingCards.size(); cardIndex += INIT_CARD_COUNT) {
-            players.get(playerIndex).receiveCard(settingCards.get(cardIndex));
-            players.get(playerIndex++).receiveCard(settingCards.get(cardIndex + 1));
+
+        for (int cardIndex = 0; cardIndex < cards.size(); cardIndex += INIT_CARD_COUNT) {
+            players.get(playerIndex).receiveCard(cards.get(cardIndex));
+            players.get(playerIndex++).receiveCard(cards.get(cardIndex + 1));
         }
     }
 

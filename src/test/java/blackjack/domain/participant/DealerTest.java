@@ -29,7 +29,7 @@ class DealerTest {
     @Test
     @DisplayName("참가자들에게 2장의 카드를 나눠준다.")
     void distributeTwoCards() {
-        dealer.distributeTwoCards();
+        dealer.settingCards();
 
         assertAll(
                 () -> assertThat(player1.getCards().getCards().size()).isEqualTo(2),

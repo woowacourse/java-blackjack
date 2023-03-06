@@ -28,14 +28,15 @@ public class Dealer extends Participant {
         this.deck = new Deck();
     }
 
-    public void distributeTwoCards() {
-        List<Card> cardList = new ArrayList<>();
+    public void settingCards() {
+        List<Card> cards = new ArrayList<>();
+        int targetSize = players.size() * INIT_CARD_COUNT;
 
-        while (cardList.size() < players.size() * INIT_CARD_COUNT) {
-            Card drawnCard = deck.drawCard();
-            cardList.add(drawnCard);
+        while (cards.size() < targetSize) {
+            cards.add(deck.drawCard());
         }
-        players.receiveSettingCards(cardList);
+
+        players.receiveSettingCards(cards);
     }
 
     public void drawSelfInitCards() {

@@ -38,7 +38,7 @@ public class BlackjackController {
 
     private void setting() {
         dealer.drawSelfInitCards();
-        dealer.distributeTwoCards();
+        dealer.settingCards();
 
         outputView.printDistributeCardsMessage(getPlayerNames(dealer.getPlayers()));
 
