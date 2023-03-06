@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.game.Result;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public enum ResultMapper {
 
@@ -19,26 +19,20 @@ public enum ResultMapper {
         this.value = value;
     }
 
-    public static String getDealerResult(List<Result> playerResults) {
-        int winCount = getCount(playerResults, Result.LOSE);
-        int drawCount = getCount(playerResults, Result.DRAW);
-        int loseCount = getCount(playerResults, Result.WIN);
-
-        return getResult(winCount, drawCount, loseCount);
+    public static String getDealerResult(Map<Result, Integer> dealerResults) {
+        StringBuilder stringBuilder = new StringBuilder();
+        ResultMapper[] resultMappers = ResultMapper.values();
+        for (ResultMapper resultMapper : resultMappers) {
+            stringBuilder.append(resultCount(dealerResults, resultMapper));
+        }
+        return stringBuilder.toString();
     }
 
-    private static String getResult(int winCount, int drawCount, int loseCount) {
-        String result = "";
-        if (winCount > 0) {
-            result += winCount + WIN.value + " ";
+    private static String resultCount(Map<Result, Integer> results, ResultMapper resultMapper) {
+        if (results.containsKey(resultMapper.result)) {
+            return results.get(resultMapper.result) + resultMapper.value + " ";
         }
-        if (drawCount > 0) {
-            result += drawCount + DRAW.value + " ";
-        }
-        if (loseCount > 0) {
-            result += loseCount + LOSE.value;
-        }
-        return result;
+        return "";
     }
 
     public static String map(Result result) {
@@ -47,12 +41,6 @@ public enum ResultMapper {
                 .map(ResultMapper::getValue)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 결과가 없습니다."));
-    }
-
-    private static int getCount(List<Result> playerResults, Result result) {
-        return (int) playerResults.stream()
-                .filter(resultMapper -> resultMapper.equals(result))
-                .count();
     }
 
     public String getValue() {

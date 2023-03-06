@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.game.Result;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.dto.DealerCardsScoreResponse;
+import blackjack.dto.DealerPlayerResultResponse;
+import blackjack.dto.PlayerNameCardsResponse;
+import blackjack.dto.PlayerNameCardsScoreResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,28 +25,26 @@ public class OutputView {
     private static final String RESULT_MESSAGE = " - 결과: ";
     private static final String FINAL_RESULT = "## 최종 승패";
 
-    public void showInitStatus(List<Player> players) {
+    public void showError(String message) {
+        printMessage(ERROR_HEADER + message);
+    }
+
+    public void showInitStatus(List<String> playerNames) {
         printMessage(LINE_SEPARATOR);
-        String names = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(JOINER));
+        String names = String.join(JOINER, playerNames);
+        String message = String.format(CARD_SETUP_MESSAGE, names);
 
-        printMessage(String.format(CARD_SETUP_MESSAGE, names));
+        printMessage(message);
     }
 
-    public void showDealerFirstCard(Card card) {
-        System.out.println(DEALER_NAME + DELIMITER + mapCard(card));
+    public void showDealerFirstCard(Card dealerFirstCard) {
+        System.out.println(DEALER_NAME + DELIMITER + mapCard(dealerFirstCard));
     }
 
-    public void showPlayer(Player player) {
-        printMessage(player.getName() + CARD + DELIMITER + convertCard(player.getCards()));
-    }
-
-    public void showPlayers(List<Player> players) {
-        for (Player player : players) {
-            showPlayer(player);
-        }
-        printMessage(LINE_SEPARATOR);
+    public void showPlayerNameCards(PlayerNameCardsResponse playerNameCards) {
+        String name = playerNameCards.getName();
+        List<Card> cards = playerNameCards.getCards();
+        printMessage(name + CARD + DELIMITER + convertCard(cards));
     }
 
     public void showDealerDrawPossible() {
@@ -59,38 +57,61 @@ public class OutputView {
         printMessage(DEALER_IMPOSSIBLE_MESSAGE);
     }
 
-    public void showTotalScore(Dealer dealer, List<Player> players) {
+    public void showTotalScoreDealer(DealerCardsScoreResponse dealerCardsScore) {
+        List<Card> cards = dealerCardsScore.getCards();
+        int score = dealerCardsScore.getScore();
         printMessage(LINE_SEPARATOR);
-        printMessage(DEALER_NAME + DELIMITER + convertCard(dealer.getCards())
-                + RESULT_MESSAGE + dealer.calculateScore());
+        printMessage(DEALER_NAME + DELIMITER + convertCard(cards) + RESULT_MESSAGE + score);
+    }
 
-        for (Player player : players) {
-            printMessage(player.getName() + DELIMITER + convertCard(player.getCards())
-                    + RESULT_MESSAGE + player.calculateScore());
+    public void showTotalScorePlayer(PlayerNameCardsScoreResponse playerNameCardsScore) {
+        String name = playerNameCardsScore.getName();
+        List<Card> cards = playerNameCardsScore.getCards();
+        int score = playerNameCardsScore.getScore();
+        printMessage(name + DELIMITER + convertCard(cards) + RESULT_MESSAGE + score);
+    }
+
+    public void showAllPlayerNameCards(List<PlayerNameCardsResponse> allPlayerNameAndCards) {
+        for (PlayerNameCardsResponse playerNameAndCards : allPlayerNameAndCards) {
+            showPlayerNameCards(playerNameAndCards);
         }
     }
 
-    public void showFinalResult(Map<Player, Result> results, List<Player> players) {
+    public void showAllPlayerNameCardsScore(List<PlayerNameCardsScoreResponse> allPlayerNameCardsScore) {
+        for (PlayerNameCardsScoreResponse playerNameCardsScore : allPlayerNameCardsScore) {
+            showTotalScorePlayer(playerNameCardsScore);
+        }
+    }
+
+    public void showTotalResult(DealerPlayerResultResponse dealerPlayerResult) {
+        showDealerResult(dealerPlayerResult.getDealerResult());
+        showAllPlayerResult(dealerPlayerResult.getPlayerResult());
+    }
+
+    private void showDealerResult(Map<Result, Integer> results) {
         printMessage(LINE_SEPARATOR);
         printMessage(FINAL_RESULT);
-        printMessage(DEALER_NAME + DELIMITER + ResultMapper.getDealerResult(new ArrayList<>(results.values())));
-        for (Player player : players) {
-            printMessage(player.getName() + DELIMITER + ResultMapper.map(results.get(player)));
+        printMessage(DEALER_NAME + DELIMITER + ResultMapper.getDealerResult(results));
+    }
+
+    private void showAllPlayerResult(Map<String, Result> playerResult) {
+        for (String name : playerResult.keySet()) {
+            showPlayerResult(name, playerResult.get(name));
         }
     }
 
-    private String convertCard(Cards inputCards) {
-        return inputCards.getCards().stream()
+    private void showPlayerResult(String name, Result result) {
+        printMessage(name + DELIMITER + ResultMapper.map(result));
+    }
+
+    private String convertCard(List<Card> inputCards) {
+        return inputCards.stream()
                 .map(this::mapCard)
                 .collect(Collectors.joining(JOINER));
     }
 
     private String mapCard(Card card) {
         return NumberMapper.map(card.getNumber()) + SymbolMapper.map(card.getSymbol());
-    }
-
-    public void showError(String message) {
-        printMessage(ERROR_HEADER + message);
     }
 
     private void printMessage(String message) {

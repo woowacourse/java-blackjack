@@ -1,23 +1,19 @@
 package blackjack.controller;
 
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.Result;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.dto.PlayerNameCardsResponse;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
 
     private static final String CARD_RECEIVE_INTENTION = "y";
-    private static final int EXTRA_CARD_COUNT = 1;
 
     private final InputView inputView;
     private final OutputView outputView;
+    private BlackJackGame blackJackGame;
 
     public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -25,72 +21,77 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = generatePlayers();
+        newBlackJackGame();
 
-        BlackJackGame blackJackGame = BlackJackGame.create(players);
+        passInitialCard();
+
+        passExtraCard();
+
+        finishGame();
+    }
+
+    private void newBlackJackGame() {
+        try {
+            List<String> names = inputView.readNames();
+            blackJackGame = BlackJackGame.createByPlayerNames(names);
+        } catch (IllegalArgumentException e) {
+            outputView.showError(e.getMessage());
+            newBlackJackGame();
+        }
+    }
+
+    private void passInitialCard() {
         blackJackGame.setUp();
-
-        showInitialStatus(blackJackGame);
-
-        passExtraCard(blackJackGame);
-
-        showFinalResult(blackJackGame);
+        outputView.showInitStatus(blackJackGame.findAllPlayerNames());
+        outputView.showDealerFirstCard(blackJackGame.findDealerFirstCard());
+        outputView.showAllPlayerNameCards(blackJackGame.findAllPlayerNameAndCards());
     }
 
-
-    private void passExtraCard(BlackJackGame blackJackGame) {
-        passExtraCardToPlayers(blackJackGame);
-        passExtraCardToDealer(blackJackGame);
+    private void passExtraCard() {
+        passExtraCardToPlayers();
+        passExtraCardToDealer();
     }
 
-    private void showInitialStatus(BlackJackGame blackJackGame) {
-        outputView.showInitStatus(blackJackGame.getPlayers());
-        outputView.showDealerFirstCard(blackJackGame.getDealer().getFirst());
-        outputView.showPlayers(blackJackGame.getPlayers());
-    }
-
-    private void showFinalResult(BlackJackGame blackJackGame) {
-        outputView.showTotalScore(blackJackGame.getDealer(), blackJackGame.getPlayers());
-        Map<Player, Result> result = blackJackGame.calculateResult();
-        outputView.showFinalResult(result, blackJackGame.getPlayers());
-    }
-
-    private void passExtraCardToDealer(BlackJackGame blackJackGame) {
-        Dealer dealer = blackJackGame.getDealer();
-        if (dealer.canReceive()) {
-            blackJackGame.drawCard(dealer, EXTRA_CARD_COUNT);
-            outputView.showDealerDrawPossible();
-            return;
-        }
-        outputView.showDealerDrawImpossible();
-    }
-
-    private void passExtraCardToPlayers(BlackJackGame blackJackGame) {
-        List<Player> players = blackJackGame.getPlayers();
-        for (Player player : players) {
-            addExtraCard(blackJackGame, player);
+    private void passExtraCardToPlayers() {
+        int totalPlayerCount = blackJackGame.getTotalPlayerCount();
+        for (int playerIndex = 0; playerIndex < totalPlayerCount; playerIndex++) {
+            addExtraCard(playerIndex);
         }
     }
 
-    private void addExtraCard(BlackJackGame blackJackGame, Player player) {
-        while (player.canReceive() && hasIntention(inputView.readIntention(player.getName()))) {
-            blackJackGame.drawCard(player, EXTRA_CARD_COUNT);
-            outputView.showPlayer(player);
+    private void addExtraCard(int playerIndex) {
+        while (isContinuePassPlayerCard(playerIndex)) {
+            blackJackGame.passPlayerCard(playerIndex);
+            PlayerNameCardsResponse playerNameCards = blackJackGame.findPlayerNameAndCards(playerIndex);
+            outputView.showPlayerNameCards(playerNameCards);
         }
+    }
+
+    private boolean isContinuePassPlayerCard(int playerIndex) {
+        if (blackJackGame.canPassPlayerCard(playerIndex)) {
+            String intention = inputView.readIntention(blackJackGame.findPlayerName(playerIndex));
+            return hasIntention(intention);
+        }
+        return false;
     }
 
     private boolean hasIntention(String intention) {
         return intention.equals(CARD_RECEIVE_INTENTION);
     }
 
-    private Players generatePlayers() {
-        try {
-            List<String> names = inputView.readNames();
-            Players players = Players.create(names);
-            return players;
-        } catch (IllegalArgumentException e) {
-            outputView.showError(e.getMessage());
-            return generatePlayers();
+    private void passExtraCardToDealer() {
+        if (blackJackGame.canPassDealerCard()) {
+            blackJackGame.passDealerCard();
+            outputView.showDealerDrawPossible();
+            return;
         }
+        outputView.showDealerDrawImpossible();
     }
+
+    private void finishGame() {
+        outputView.showTotalScoreDealer(blackJackGame.findDealerCardsScore());
+        outputView.showAllPlayerNameCardsScore(blackJackGame.findAllPlayerNameCardsScore());
+        outputView.showTotalResult(blackJackGame.findDealerPlayerResult());
+    }
+
 }
