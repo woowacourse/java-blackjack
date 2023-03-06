@@ -7,18 +7,10 @@ import org.junit.jupiter.api.Test;
 
 public class DeckTest {
 
-    private static class ZeroIndexGenerator implements CardIndexGenerator {
-
-        @Override
-        public int chooseIndex(int deckSize) {
-            return 0;
-        }
-    }
-
     @DisplayName("카드를 뽑는다")
     @Test
     void pickCard() {
-        Deck deck = Deck.from(new ZeroIndexGenerator());
+        Deck deck = Deck.from(deckSize -> 0);
 
         Card card1 = deck.pickCard();
         Card card2 = deck.pickCard();
