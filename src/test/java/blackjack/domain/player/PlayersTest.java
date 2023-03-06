@@ -54,7 +54,14 @@ public class PlayersTest {
 
         final Players players = from(names);
 
-        assertThat(players.getNames()).containsExactly("딜러", "후추", "허브");
+        assertThat(getPlayerNames(players)).containsExactly("딜러", "후추", "허브");
+    }
+
+    private List<String> getPlayerNames(final Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
     @Test
@@ -128,7 +135,7 @@ public class PlayersTest {
         ));
         players.initialDraw(deck);
         players.drawByDealer(deck);
-        
+
         Map<Player, Result> result = players.play();
 
         assertThat(result.values()).containsExactly(WIN, DRAW);

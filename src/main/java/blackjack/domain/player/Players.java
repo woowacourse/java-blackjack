@@ -1,19 +1,12 @@
 package blackjack.domain.player;
 
-import blackjack.domain.game.Result;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.Result;
+
+import java.util.*;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toUnmodifiableList;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.function.Function;
 
 public class Players {
 
@@ -95,12 +88,6 @@ public class Players {
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(INVALID_DEALER_MESSAGE));
-    }
-
-    public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(toUnmodifiableList());
     }
 
     public List<Player> getPlayers() {
