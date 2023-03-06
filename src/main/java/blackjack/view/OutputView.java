@@ -63,16 +63,16 @@ public class OutputView {
         final List<String> playerNames = getPlayerNames(players);
         final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();
 
-        String dealerScore = convertToBurst(referee.calculateDeckScore(dealer.getCardDeck()));
+        String dealerScore = convertToBurst(dealer.calculateScore());
         System.out.println(formatFinalCardDeckAndScore(dealer, dealerCards, dealerScore));
-        printFinalPlayersCardDeck(players, referee, playerNames);
+        printFinalPlayersCardDeck(players, playerNames);
         System.out.println();
     }
 
-    private static void printFinalPlayersCardDeck(Players players, Referee referee, List<String> playerNames) {
+    private static void printFinalPlayersCardDeck(Players players, List<String> playerNames) {
         for (int index = 0; index < playerNames.size(); index++) {
             printPlayerCardDeck(players.getPlayers().get(index),
-                    referee.calculateDeckScore(players.getPlayers().get(index).getCardDeck()));
+                    players.getPlayers().get(index).calculateScore());
         }
     }
 

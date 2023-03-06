@@ -21,5 +21,5 @@ class CourtCard extends Card {
     @Override
     protected int getValue() {
         return 10;
-    }
+}
 }

@@ -19,17 +19,21 @@ abstract public class Participant {
         cardDeck.addCard(card);
     }
 
+    public void initHit(CardPicker cardPicker) {
+        for (int count = 0; count < INIT_CARD_COUNT; count++) {
+            hit(cardPicker);
+        }
+    }
+
+    public int calculateScore() {
+        return cardDeck.calculateScore(cardDeck);
+    }
+
     public Name getName() {
         return name;
     }
 
     public CardDeck getCardDeck() {
         return cardDeck;
-    }
-
-    public void initHit(CardPicker cardPicker) {
-        for (int count = 0; count < INIT_CARD_COUNT; count++) {
-            hit(cardPicker);
-        }
     }
 }

@@ -30,7 +30,7 @@ public class BlackJackController {
         init(players, dealer);
         askPlayers(players, referee);
         OutputView.println();
-        hitCardByDealer(dealer, referee);
+        hitCardByDealer(dealer);
         printFinal(players, dealer, referee);
     }
 
@@ -40,12 +40,12 @@ public class BlackJackController {
         OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
     }
 
-    private void hitCardByDealer(Dealer dealer, Referee referee) {
-        int dealerScore = referee.calculateDeckScore(dealer.getCardDeck());
+    private void hitCardByDealer(Dealer dealer) {
+        int dealerScore = dealer.calculateScore();
 
         while (isContinueToHit(dealerScore)) {
             dealer.hit(cardPicker);
-            dealerScore = referee.calculateDeckScore(dealer.getCardDeck());
+            dealerScore = dealer.calculateScore();
             OutputView.printDealerPickMessage(dealer);
         }
     }
@@ -74,12 +74,12 @@ public class BlackJackController {
             command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
             hitByCommand(player, command);
             OutputView.printPlayerCardDeck(player);
-            score = calculateScore(referee, player);
+            score = calculateScore(player);
         }
     }
 
-    private int calculateScore(Referee referee, Player player) {
-        int score = referee.calculateDeckScore(player.getCardDeck());
+    private int calculateScore(Player player) {
+        int score = player.calculateScore();
 
         if (BURST_CODE == score) {
             OutputView.printBurstMessage();
