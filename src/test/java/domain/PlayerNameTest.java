@@ -29,7 +29,7 @@ class PlayerNameTest {
         assertThatCode(() -> new PlayerName("12345"))
                 .doesNotThrowAnyException();
     }
-    
+
     @Test
     @DisplayName("5자 초과의 이름은 만들 수 없다")
     void validateOver() {
