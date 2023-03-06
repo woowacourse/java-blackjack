@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -45,7 +44,7 @@ public class DealerTest {
                 () -> assertThat(dealer.getCardCount()).isEqualTo(1)
         );
     }
-    
+
     @Test
     void 카드를_뽑는다() {
         final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER);
@@ -102,16 +101,6 @@ public class DealerTest {
         final Dealer dealer = Dealer.create(FixedDeck.getFullDeck());
 
         assertThat(dealer.getCardCount()).isEqualTo(1);
-    }
-
-    @Test
-    void 핸드를_반환한다() {
-        final Deck deck = new FixedDeck(ACE_SPADE);
-        final Dealer dealer = Dealer.create(deck);
-
-        final Hand hand = dealer.getHand();
-
-        assertThat(hand.calculateScore()).isEqualTo(11);
     }
 }
 

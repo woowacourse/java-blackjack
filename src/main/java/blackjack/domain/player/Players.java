@@ -73,7 +73,7 @@ public class Players {
         final Dealer dealer = getDealer();
         final Map<Player, Result> result = new LinkedHashMap<>();
         for (Player player : players) {
-            putPlayResult(result, player, dealer.getHand());
+            putPlayResult(result, player, dealer.hand);
         }
         return result;
     }

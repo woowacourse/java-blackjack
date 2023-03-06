@@ -6,7 +6,6 @@ import blackjack.domain.card.Hand;
 import java.util.List;
 
 public class Gambler extends AbstractPlayer {
-    private static final int DRAW_COUNT = 2;
 
     private Gambler(final Name name, final Hand hand) {
         super(name, hand);
