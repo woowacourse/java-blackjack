@@ -4,13 +4,13 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class CardParser {
 
-    private static final Map<Denomination, String> denominationParser = new HashMap<>();
-    private static final Map<Suit, String> suitParser = new HashMap<>();
+    private static final Map<Denomination, String> denominationParser = new EnumMap<>(Denomination.class);
+    private static final Map<Suit, String> suitParser = new EnumMap<>(Suit.class);
 
     static {
         denominationParser.put(Denomination.ACE, "A");
