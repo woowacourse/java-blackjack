@@ -45,9 +45,10 @@ public class Players {
     }
 
     public List<Player> getChallengers() {
-        return players.stream()
+        List<Player> challengers = players.stream()
                 .filter(Player::isChallenger)
                 .collect(Collectors.toUnmodifiableList());
+        return new ArrayList<>(challengers);
     }
 
     public Player getDealer() {
