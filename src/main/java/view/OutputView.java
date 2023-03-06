@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.game.Result;
 import domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,7 @@ public class OutputView {
     private static final String DEALER_DRAW_RESULT_MESSAGE_FORMAT = "%n 딜러는 16이하라 %d장의 카드를 더 받았습니다.%n%n";
 
     private static final String FINAL_RESULT_NOTICE_MESSAGE = "## 최종 승패";
-    private static final String DEALER_FINAL_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d패%n";
-    private static final String WIN_COUNT_MESSAGE = ": 승";
-    private static final String LOSE_COUNT_MESSAGE = ": 패";
+    private static final String DEALER_FINAL_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패%n";
 
     private static final String DRAW_RESULT_DELIMITER = ", ";
     private static final String NAME_CARD_DELIMITER = "카드 : ";
@@ -82,15 +81,22 @@ public class OutputView {
         System.out.print(NEWLINE);
     }
 
-    public void printFinalResult(Map<Boolean, Integer> dealerResult, Map<String, Boolean> userResult) {
+    public void printFinalResult(Map<Result, Integer> dealerResult, Map<String, Result> userResult) {
         System.out.println(FINAL_RESULT_NOTICE_MESSAGE);
-        System.out.printf(DEALER_FINAL_RESULT_MESSAGE_FORMAT, dealerResult.get(true), dealerResult.get(false));
-        for (Entry<String, Boolean> userFinalResult : userResult.entrySet()) {
-            if (userFinalResult.getValue()) {
-                System.out.println(userFinalResult.getKey() + WIN_COUNT_MESSAGE);
-                continue;
-            }
-            System.out.println(userFinalResult.getKey() + LOSE_COUNT_MESSAGE);
+        printDealerFinalResult(dealerResult);
+        printPlayerFinalResult(userResult);
+    }
+
+    private void printDealerFinalResult(Map<Result, Integer> dealerResult) {
+        System.out.printf(DEALER_FINAL_RESULT_MESSAGE_FORMAT,
+                dealerResult.get(Result.WIN),
+                dealerResult.get(Result.DRAW),
+                dealerResult.get(Result.LOSE));
+    }
+
+    private void printPlayerFinalResult(Map<String, Result> userResult) {
+        for (Entry<String, Result> userFinalResult : userResult.entrySet()) {
+            System.out.println(userFinalResult.getKey() + ": " + userFinalResult.getValue().getResult());
         }
     }
 }

@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.game.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +41,11 @@ public class Players {
         }
     }
 
-    public Map<String, Boolean> getPlayerFinalResult() {
-        Map<String, Boolean> playerFinalResult = new LinkedHashMap<>();
+    public Map<String, Result> getPlayerFinalResult() {
+        Map<String, Result> playerFinalResult = new LinkedHashMap<>();
 
         for (Player player : players) {
-            playerFinalResult.put(player.getName(), player.isWinner());
+            playerFinalResult.put(player.getName(), player.getResult());
         }
 
         return playerFinalResult;

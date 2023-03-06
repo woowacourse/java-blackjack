@@ -7,7 +7,6 @@ import domain.user.DealerStatus;
 import domain.user.Player;
 import domain.user.PlayerStatus;
 import domain.user.Players;
-import domain.user.UserStatus;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,24 +50,31 @@ public class BlackJackGame {
     }
 
     private void judgeWinnerBetweenDealer(Player player) {
-        UserStatus playerStatus = player.getStatus();
-        if (playerStatus.equals(PlayerStatus.BUST)) {
-            dealer.win(player);
+        if (isDraw(player)) {
+            dealer.draw(player);
             return;
         }
-        if (playerStatus.equals(PlayerStatus.NORMAL) && dealer.getStatus().equals(DealerStatus.BUST)) {
-            player.win(dealer);
-            return;
-        }
-        judgeWinnerByScore(player);
-    }
-
-    private void judgeWinnerByScore(Player player) {
-        if (dealer.getScore() >= player.getScore()) {
+        if (isDealerWin(player)) {
             dealer.win(player);
             return;
         }
         player.win(dealer);
+    }
+
+    private boolean isDraw(Player player) {
+        boolean isBothBust = player.getStatus() == PlayerStatus.BUST && dealer.getStatus() == DealerStatus.BUST;
+        boolean isSameScore = player.getScore() == dealer.getScore();
+        return isBothBust || isSameScore;
+    }
+
+    private boolean isDealerWin(Player player) {
+        boolean isOnlyPlayerBust = player.getStatus() == PlayerStatus.BUST && dealer.getStatus() != DealerStatus.BUST;
+        boolean isDealerHasHigherScore = isBothNormal(player) && player.getScore() < dealer.getScore();
+        return isOnlyPlayerBust || isDealerHasHigherScore;
+    }
+
+    private boolean isBothNormal(Player player) {
+        return player.getStatus() == PlayerStatus.NORMAL && dealer.getStatus() == DealerStatus.NORMAL;
     }
 
     public Map<String, List<Card>> getSetUpResult() {
@@ -83,7 +89,7 @@ public class BlackJackGame {
         return setUpResult;
     }
 
-    public Map<String, Boolean> getPlayerFinalResult() {
+    public Map<String, Result> getPlayerFinalResult() {
         return players.getPlayerFinalResult();
     }
 

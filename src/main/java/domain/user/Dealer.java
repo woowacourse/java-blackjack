@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.game.Result;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ public class Dealer extends User {
     private static final int RECORD_INITIAL_VALUE = 0;
 
     private DealerStatus status = DealerStatus.UNDER_MIN_SCORE;
-    private Map<Boolean, Integer> winningRecord;
+    private Map<Result, Integer> winningRecord;
 
     public Dealer() {
         super();
@@ -19,8 +20,9 @@ public class Dealer extends User {
 
     private void initWinningRecord() {
         winningRecord = new HashMap<>();
-        winningRecord.put(true, RECORD_INITIAL_VALUE);
-        winningRecord.put(false, RECORD_INITIAL_VALUE);
+        winningRecord.put(Result.WIN, RECORD_INITIAL_VALUE);
+        winningRecord.put(Result.DRAW, RECORD_INITIAL_VALUE);
+        winningRecord.put(Result.LOSE, RECORD_INITIAL_VALUE);
     }
 
     @Override
@@ -41,17 +43,22 @@ public class Dealer extends User {
 
     @Override
     public void win(User player) {
-        winningRecord.put(true, winningRecord.getOrDefault(true, RECORD_INITIAL_VALUE) + 1);
+        winningRecord.put(Result.WIN, winningRecord.getOrDefault(Result.WIN, RECORD_INITIAL_VALUE) + 1);
         player.lose();
+    }
+
+    public void draw(Player player) {
+        winningRecord.put(Result.DRAW, winningRecord.getOrDefault(Result.DRAW, RECORD_INITIAL_VALUE) + 1);
+        player.draw();
     }
 
     @Override
     public void lose() {
-        winningRecord.put(false, winningRecord.getOrDefault(false, RECORD_INITIAL_VALUE) + 1);
+        winningRecord.put(Result.LOSE, winningRecord.getOrDefault(Result.LOSE, RECORD_INITIAL_VALUE) + 1);
     }
 
     @Override
-    public UserStatus getStatus() {
+    public DealerStatus getStatus() {
         return status;
     }
 
@@ -60,7 +67,7 @@ public class Dealer extends User {
         return DEALER_NAME;
     }
 
-    public Map<Boolean, Integer> getWinningRecord() {
+    public Map<Result, Integer> getWinningRecord() {
         return winningRecord;
     }
 }

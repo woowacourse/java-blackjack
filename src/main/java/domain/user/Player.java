@@ -1,12 +1,13 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.game.Result;
 import java.util.List;
 
 public class Player extends User {
     private final Name name;
     private PlayerStatus status = PlayerStatus.NORMAL;
-    private boolean isWinner = false;
+    private Result result;
 
     public Player(Name name) {
         super();
@@ -27,13 +28,17 @@ public class Player extends User {
 
     @Override
     public void win(User dealer) {
-        isWinner = true;
+        result = Result.WIN;
         dealer.lose();
+    }
+
+    public void draw() {
+        result = Result.DRAW;
     }
 
     @Override
     public void lose() {
-        isWinner = false;
+        result = Result.LOSE;
     }
 
     @Override
@@ -46,7 +51,7 @@ public class Player extends User {
         return name.getName();
     }
 
-    public boolean isWinner() {
-        return isWinner;
+    public Result getResult() {
+        return result;
     }
 }
