@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -13,7 +12,6 @@ import blackjack.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 

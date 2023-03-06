@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class InputView {
         isBlank(input);
         return Arrays.stream(input.split(","))
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private void isBlank(String input) {
