@@ -8,12 +8,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardDeckMakerTest {
+public class InitialCardMakerTest {
 
     @Test
     @DisplayName("Card 덱은 52 장의 초기 개수를 가진다.")
     void createCardDeckSuccess() {
-        List<Card> cards = CardDeckMaker.generate();
+        List<Card> cards = InitialCardMaker.generate();
 
         assertThat(cards.size()).isEqualTo(52);
     }

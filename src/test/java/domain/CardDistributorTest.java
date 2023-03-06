@@ -8,14 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import type.Letter;
 import type.Shape;
-import util.CardDeckMaker;
+import util.InitialCardMaker;
 
 public class CardDistributorTest {
 
     @Test
     @DisplayName("카드는 한 번 뽑으면 삭제된다.")
     void removeCardWhenPicked() {
-        CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
+        CardDistributor cardDistributor = new CardDistributor(InitialCardMaker.generate());
 
         Card card = cardDistributor.distribute();
 
@@ -26,7 +26,7 @@ public class CardDistributorTest {
     @Test
     @DisplayName("게임 시작시 카드를 2장씩 분배한다.")
     void distributeTwoCardWhenStartGame() {
-        CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
+        CardDistributor cardDistributor = new CardDistributor(InitialCardMaker.generate());
 
         Cards cards = cardDistributor.distributeInitialCard();
 

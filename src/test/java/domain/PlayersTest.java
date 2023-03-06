@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.CardDeckMaker;
+import util.InitialCardMaker;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        distributor = new CardDistributor(CardDeckMaker.generate());
+        distributor = new CardDistributor(InitialCardMaker.generate());
     }
 
     @Test

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import util.CardDeckMaker;
+import util.InitialCardMaker;
 import util.CardStatusConverter;
 import view.InputView;
 import view.OutputView;
@@ -32,7 +32,7 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = requestPlayerName();
-        CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
+        CardDistributor cardDistributor = new CardDistributor(InitialCardMaker.generate());
         Players players = Players.of(playerNames, distributeCardsForPlayers(playerNames.size(), cardDistributor));
         Dealer dealer = new Dealer(cardDistributor.distributeInitialCard());
         printInitialDistribution(players, dealer);
