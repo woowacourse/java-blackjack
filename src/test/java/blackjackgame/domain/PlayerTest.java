@@ -14,12 +14,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PlayerTest {
     static Stream<Arguments> cardDummy() {
         return Stream.of(
-            Arguments.arguments(List.of(new Card(Symbol.SPADE, CardValue.ACE), new Card(Symbol.SPADE, CardValue.ACE)),
-                12),
-            Arguments.arguments(List.of(new Card(Symbol.SPADE, CardValue.FIVE), new Card(Symbol.SPADE, CardValue.ACE),
-                new Card(Symbol.SPADE, CardValue.ACE)), 17),
-            Arguments.arguments(List.of(new Card(Symbol.SPADE, CardValue.ACE), new Card(Symbol.SPADE, CardValue.NINE),
-                new Card(Symbol.SPADE, CardValue.FIVE)), 15)
+                Arguments.arguments(List.of(new Card(Symbol.HEART, CardValue.FIVE),
+                        new Card(Symbol.DIAMOND, CardValue.TWO)), 7),
+                Arguments.arguments(List.of(new Card(Symbol.SPADE, CardValue.ACE),
+                        new Card(Symbol.SPADE, CardValue.ACE)), 12),
+                Arguments.arguments(List.of(new Card(Symbol.SPADE, CardValue.FIVE),
+                        new Card(Symbol.SPADE, CardValue.ACE), new Card(Symbol.SPADE, CardValue.ACE)), 17),
+                Arguments.arguments(List.of(new Card(Symbol.SPADE, CardValue.ACE),
+                        new Card(Symbol.SPADE, CardValue.NINE), new Card(Symbol.SPADE, CardValue.FIVE)), 15)
         );
     }
 
@@ -40,10 +42,10 @@ class PlayerTest {
     @Test
     void Should_SizePlusOne_When_AddCard() {
         Player player = new Guest(new Name("pobi"));
-        Card card1 = new Card(Symbol.SPADE, CardValue.FIVE);
-        Card card2 = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        player.addCard(card1);
-        player.addCard(card2);
+        Card spade5Card = new Card(Symbol.SPADE, CardValue.FIVE);
+        Card clover8Card = new Card(Symbol.CLOVER, CardValue.EIGHT);
+        player.addCard(spade5Card);
+        player.addCard(clover8Card);
         player.addCard(new Card(Symbol.HEART, CardValue.QUEEN));
 
         assertThat(player.getSize()).isEqualTo(3);
