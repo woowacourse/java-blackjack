@@ -81,37 +81,6 @@ public class Participants {
         }
     }
 
-//    private void compareHandValue(Participant dealer, Map<String, Result> playerResults, Participant player) {
-//        int dealerHandValue = getParticipantHandValue(dealer);
-//        int playerHandValue = getParticipantHandValue(player);
-//
-//        if (playerHandValue != dealerHandValue) {
-//            playerResults.put(player.getName(), Result.isHigherPlayerHandValue(playerHandValue, dealerHandValue));
-//            return;
-//        }
-//        compareAtTieValue(dealer, playerResults, player, playerHandValue);
-//    }
-
-//    private int getParticipantHandValue(Participant participant) {
-//        if (participant.isBust()) {
-//            return 0;
-//        }
-//        return participant.getHandValue();
-//    }
-
-//    private void compareAtTieValue(Participant dealer, Map<String, Result> playerResults, Participant player, int playerHandValue) {
-//        if (playerHandValue == BUST_HAND_VALUE) {
-//            playerResults.put(player.getName(), Result.TIE);
-//            return;
-//        }
-//        playerResults.put(player.getName(), compareHandCount(dealer, player));
-//    }
-//    private Result compareHandCount(Participant dealer, Participant player) {
-//        int playerHandCount = player.getCardNames().size();
-//        int dealerHandCount = dealer.getCardNames().size();
-//        return Result.isGreaterPlayerHandCount(playerHandCount, dealerHandCount);
-//    }
-
     public List<String> getPlayersName() {
         return findPlayers().stream()
                 .map(Participant::getName)
