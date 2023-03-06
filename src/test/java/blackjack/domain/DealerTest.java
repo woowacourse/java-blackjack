@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ class DealerTest {
     @DisplayName("dealer는 플레이어가 아니어야 한다.")
     void isPlayer_false() {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(Collections.emptyList());
 
         // expect
         assertThat(dealer.isPlayer())

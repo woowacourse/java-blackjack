@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
@@ -14,13 +15,18 @@ class ParticipantsTest {
     @DisplayName("Player만 반환할 수 있어야 한다.")
     void getPlayers_success() {
         // given
-        Participants participants = new Participants(new Dealer(), List.of(new Player("glen"), new Player("encho")));
+        Dealer dealer = new Dealer(Collections.emptyList());
+        List<Player> players = List.of(
+                new Player("glen", Collections.emptyList()),
+                new Player("encho", Collections.emptyList())
+        );
+        Participants participants = new Participants(dealer, players);
 
         // when
-        List<Player> players = participants.getPlayers();
+        List<Player> foundPlayers = participants.getPlayers();
 
         // then
-        assertThat(players)
+        assertThat(foundPlayers)
                 .hasSize(2)
                 .isNotOfAnyClassIn(Dealer.class);
     }
@@ -29,13 +35,18 @@ class ParticipantsTest {
     @DisplayName("Dealer만 반환할 수 있어야 한다.")
     void getDealer_success() {
         // given
-        Participants participants = new Participants(new Dealer(), List.of(new Player("glen"), new Player("encho")));
+        Dealer dealer = new Dealer(Collections.emptyList());
+        List<Player> players = List.of(
+                new Player("glen", Collections.emptyList()),
+                new Player("encho", Collections.emptyList())
+        );
+        Participants participants = new Participants(dealer, players);
 
         // when
-        Participant dealer = participants.getDealer();
+        Participant foundDealer = participants.getDealer();
 
         // then
-        assertThat(dealer)
+        assertThat(foundDealer)
                 .isOfAnyClassIn(Dealer.class);
     }
 
@@ -45,12 +56,12 @@ class ParticipantsTest {
         // given
         List<String> names = List.of("glen", "pobi", "glen");
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(name, Collections.emptyList()))
                 .collect(Collectors.toList());
 
         // expect
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Participants(new Dealer(), players);
+            new Participants(new Dealer(Collections.emptyList()), players);
         }).withMessage("[ERROR] 중복된 이름이 있습니다.");
     }
 }

@@ -8,10 +8,6 @@ public class Dealer extends Participant {
     private static final int DRAW_CARD_BOUNDARY = 16;
     private static final int DEALER_START_SHOW_COUNT = 1;
 
-    public Dealer() {
-        super("딜러");
-    }
-
     public Dealer(List<Card> cards) {
         super("딜러", cards);
     }

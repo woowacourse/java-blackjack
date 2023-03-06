@@ -9,13 +9,9 @@ public class Player extends Participant {
     private static final int BUST_SCORE = -1;
     private static final int PLAYER_START_SHOW_COUNT = 2;
 
-    public Player(String name) {
-        super(name);
-        validateBlacklist(name);
-    }
-
     public Player(String name, List<Card> cards) {
         super(name, cards);
+        validateBlacklist(name);
     }
 
     private void validateBlacklist(String name) {

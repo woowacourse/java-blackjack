@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class PlayerTest {
         Player player = new Player("glen", List.of(
                 new Card(Suit.DIAMOND, Rank.KING)
         ));
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(Collections.emptyList());
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -30,7 +31,7 @@ class PlayerTest {
     @DisplayName("딜러의 점수가 내 점수보다 높으면 패배해야 한다.")
     void matchGame_lose() {
         // given
-        Player player = new Player("glen");
+        Player player = new Player("glen", Collections.emptyList());
         Dealer dealer = new Dealer(List.of(
                 new Card(Suit.DIAMOND, Rank.KING)
         ));
@@ -71,7 +72,7 @@ class PlayerTest {
                 new Card(Suit.DIAMOND, Rank.KING),
                 new Card(Suit.DIAMOND, Rank.KING)
         ));
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(Collections.emptyList());
 
         // when
         GameResult gameResult = player.matchGame(dealer);
@@ -85,7 +86,7 @@ class PlayerTest {
     @DisplayName("딜러의 점수가 21점을 넘고 내가 넘지 않으면 승리해야 한다.")
     void matchGame_otherOverScore() {
         // given
-        Player player = new Player("glen");
+        Player player = new Player("glen", Collections.emptyList());
         Dealer dealer = new Dealer(List.of(
                 new Card(Suit.DIAMOND, Rank.KING),
                 new Card(Suit.DIAMOND, Rank.KING),
@@ -127,7 +128,7 @@ class PlayerTest {
     @DisplayName("Player는 플레이어여야 한다.")
     void isPlayer_true() {
         // given
-        Player player = new Player("glen");
+        Player player = new Player("glen", Collections.emptyList());
 
         // expect
         assertThat(player.isPlayer())
@@ -139,7 +140,7 @@ class PlayerTest {
     void validateBlacklist() {
         // expect
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Player("딜러");
+            new Player("딜러", Collections.emptyList());
         }).withMessage("[ERROR] 딜러는 사용할 수 없는 이름입니다.");
     }
 
@@ -147,7 +148,7 @@ class PlayerTest {
     @DisplayName("Player가 정상적으로 생성되어야 한다.")
     void create_success() {
         // given
-        Player player = new Player("123");
+        Player player = new Player("123", Collections.emptyList());
 
         // expect
         assertThat(player.getName())

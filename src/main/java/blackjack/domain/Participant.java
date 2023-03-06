@@ -8,11 +8,6 @@ public abstract class Participant {
     protected final Name name;
     protected final Cards cards;
 
-    protected Participant(String name) {
-        this.name = new Name(name);
-        this.cards = new Cards();
-    }
-
     protected Participant(String name, List<Card> cards) {
         this.name = new Name(name);
         this.cards = new Cards(cards);
