@@ -14,19 +14,8 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
-    }
-
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public Card drawCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 남은 카드가 없습니다.");
-        }
-        return cards.remove(0);
     }
 
     public int getScore() {

@@ -2,15 +2,7 @@ package blackjack.controller;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Card;
-import blackjack.domain.Cards;
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Participants;
-import blackjack.domain.Person;
-import blackjack.domain.Player;
-import blackjack.domain.Rank;
-import blackjack.domain.Suit;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -21,19 +13,19 @@ import java.util.stream.Stream;
 
 public class BlackJackController {
     private Participants participants;
-    private final Cards uniqueCards;
+    private final Deck deck;
 
     public BlackJackController() {
-        this.uniqueCards = createUniqueCards();
+        this.deck = createUniqueCards();
     }
 
-    private Cards createUniqueCards() {
+    private Deck createUniqueCards() {
         List<Card> cards = Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(Suit.values())
                         .flatMap(suit -> Stream.of(new Card(suit, rank)))
                 ).collect(toList());
         Collections.shuffle(cards);
-        return new Cards(cards);
+        return new Deck(cards);
     }
 
     public void run() {
@@ -75,13 +67,13 @@ public class BlackJackController {
     private void initDrawCard() {
         List<Person> persons = participants.getPeople();
         for (Person person : persons) {
-            drawTwoCards(person, uniqueCards);
+            drawTwoCards(person, deck);
         }
     }
 
-    private void drawTwoCards(Person person, Cards cards) {
-        person.addCard(cards.drawCard());
-        person.addCard(cards.drawCard());
+    private void drawTwoCards(Person person, Deck deck) {
+        person.addCard(deck.drawCard());
+        person.addCard(deck.drawCard());
     }
 
     private void printInitStatus() {
@@ -96,7 +88,7 @@ public class BlackJackController {
 
     private void drawMoreCardForPlayers() {
         for (Person person : participants.getPlayers()) {
-            repeat(() -> drawMoreCard(person, uniqueCards));
+            repeat(() -> drawMoreCard(person, deck));
         }
     }
 
@@ -109,10 +101,10 @@ public class BlackJackController {
         }
     }
 
-    private void drawMoreCard(Person person, Cards cards) {
+    private void drawMoreCard(Person person, Deck deck) {
         while (decideDraw(person)) {
             validateOverScore(person);
-            person.addCard(cards.drawCard());
+            person.addCard(deck.drawCard());
             OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
         }
         OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
@@ -142,7 +134,7 @@ public class BlackJackController {
         Person dealer = participants.getDealer();
         OutputView.printDealerDrawCardMessage(dealer.getScore());
         if (dealer.canDrawCard()) {
-            dealer.addCard(uniqueCards.drawCard());
+            dealer.addCard(deck.drawCard());
         }
     }
 
