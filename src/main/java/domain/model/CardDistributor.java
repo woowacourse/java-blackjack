@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 public class CardDistributor {
 
     private static final int INIT_DEAL_COUNT = 2;
+    private static final String CANNOT_GIVE_CARD_ERROR_MESSAGE = "더 이상 카드를 받을 수 없습니다.";
     private final CardGenerator cardGenerator;
 
     public CardDistributor(final CardGenerator cardGenerator) {
@@ -13,6 +14,9 @@ public class CardDistributor {
     }
 
     public void giveCard(final Participant participant) {
+        if (participant.isBust()) {
+            throw new IllegalArgumentException(CANNOT_GIVE_CARD_ERROR_MESSAGE);
+        }
         participant.addCard(cardGenerator.generate());
     }
 

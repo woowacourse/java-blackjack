@@ -58,15 +58,25 @@ public class BlackJackController {
     }
 
     private void getPlayerAdditionalCard(final Participant participant) {
-        boolean intent = false;
-        while (!participant.isBust()
-            && (intent = ExecuteContext.workWithExecuteStrategy(() -> InputView.inputCardIntent(participant)))) {
+        boolean isPossibleGetCard = true;
+        while (isPossibleGetCard && getIntentReceiveCard(participant)) {
+            isPossibleGetCard = giveCard(participant);
+            OutputView.printCard(participant);
+        }
+    }
+
+    private boolean getIntentReceiveCard(final Participant participant) {
+        return ExecuteContext.workWithExecuteStrategy(() -> InputView.inputCardIntent(participant.getName()));
+    }
+
+    private boolean giveCard(final Participant participant) {
+        try {
             cardDistributor.giveCard(participant);
-            OutputView.printCard(participant);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            return false;
         }
-        if (!intent) {
-            OutputView.printCard(participant);
-        }
+        return true;
     }
 
     private void getDealerAdditionalCard(final Dealer dealer) {

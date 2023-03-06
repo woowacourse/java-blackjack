@@ -1,6 +1,5 @@
 package view;
 
-import domain.model.Participant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -32,8 +31,8 @@ public class InputView {
         }
     }
 
-    public static boolean inputCardIntent(final Participant participant) {
-        System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, participant.getName());
+    public static boolean inputCardIntent(final String name) {
+        System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, name);
         String input = scanner.nextLine();
         checkLetter(input, YES, NO);
         return input.equals(YES);
