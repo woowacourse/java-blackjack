@@ -14,6 +14,7 @@ public class OutputView {
     private static final String FINAL_RESULT_TITLE = "## 최종 승패";
     private static final String RESULT_NAME_FORMAT = "%s: ";
     private static final String PARTICIPANT_CARD_STATUS_FORMAT = "%s 카드: %s ";
+    private static final String INTERVAL_SPACE = " ";
     private static final int NONE = 0;
 
     public OutputView() {
@@ -80,19 +81,23 @@ public class OutputView {
     private void printDealerResultCount(String dealerName, int winCount, int loseCount, int drawCount) {
         System.out.printf(RESULT_NAME_FORMAT, dealerName);
         if (winCount != NONE) {
-            System.out.print(winCount + GameResult.WIN.getExpression());
+            System.out.print(winCount + getGameResultExpression(GameResult.WIN));
         }
         if (drawCount != NONE) {
-            System.out.print(drawCount + GameResult.DRAW.getExpression());
+            System.out.print(drawCount + getGameResultExpression(GameResult.DRAW));
         }
         if (loseCount != NONE) {
-            System.out.print(loseCount + GameResult.LOSE.getExpression());
+            System.out.print(loseCount + getGameResultExpression(GameResult.LOSE));
         }
     }
 
     private void printPlayersFinalResult(Map<String, GameResult> results) {
         System.out.println();
-        results.forEach((name, result) -> System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n" , name));
+        results.forEach((name, result) -> System.out.printf(RESULT_NAME_FORMAT + getGameResultExpression(result) + "\n" , name));
+    }
+
+    private String getGameResultExpression(GameResult gameResult) {
+        return gameResult.getExpression() + INTERVAL_SPACE;
     }
     
 }

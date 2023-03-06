@@ -42,4 +42,5 @@ public class Card {
     public int hashCode() {
         return Objects.hash(shape, letter);
     }
+
 }

@@ -13,7 +13,7 @@ public enum GameResult {
     }
 
     public String getExpression() {
-        return expression + " ";
+        return expression;
     }
 
 }
