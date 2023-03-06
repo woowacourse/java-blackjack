@@ -2,7 +2,6 @@ package helper;
 
 import blackjack.domain.card.Card;
 import blackjack.strategy.CardPicker;
-
 import java.util.List;
 
 public class StubCardPicker implements CardPicker {
