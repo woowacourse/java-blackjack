@@ -5,6 +5,7 @@ import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Participants;
+import domain.result.Result;
 import view.InputView;
 import view.OutputView;
 
@@ -62,7 +63,7 @@ public final class Controller {
         while (participant.isInPlaying(isHit(participant))) {
             participant.takeCard(deck.dealCard());
 
-            OutputView.printPlayerCards(participant.getName(), participant.showCards());
+            OutputView.printPlayerCards(participant.getName(), participant.showCardNames());
         }
     }
 
@@ -82,18 +83,20 @@ public final class Controller {
 
     private void printResult(final Participants participants, final Dealer dealer) {
         OutputView.printPlayerScore(dealer.getName(),
-                dealer.showCards(),
+                dealer.showCardNames(),
                 dealer.getScore());
 
         participants.getParticipants()
                 .forEach(this::printPlayerScore);
 
-        OutputView.printGameResult(participants.getResult(dealer));
+        Result result = participants.getResult(dealer);
+
+        OutputView.printGameResult(result.getWinners(), result.getLosers());
     }
 
     private void printPlayerScore(final Participant participant) {
         OutputView.printPlayerScore(participant.getName(),
-                participant.showCards(),
+                participant.showCardNames(),
                 participant.getScore());
     }
 }

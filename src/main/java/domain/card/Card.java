@@ -16,16 +16,16 @@ public final class Card {
         return new Card(shape, number);
     }
 
-    public String getShape() {
-        return shape.getName();
-    }
-
     public int getScore() {
         return number.getScore();
     }
 
     public Number getNumber() {
         return number;
+    }
+
+    public String getCardName() {
+        return String.format("%s%s", number, shape);
     }
 
     @Override

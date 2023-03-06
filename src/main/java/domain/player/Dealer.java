@@ -1,7 +1,6 @@
 package domain.player;
 
 import domain.card.Cards;
-import domain.card.Card;
 
 import java.util.List;
 
@@ -20,17 +19,18 @@ public final class Dealer extends Player {
         return new Dealer(DEALER_NAME, new Cards());
     }
 
-    public boolean dealerIsHit(){
+    public boolean dealerIsHit() {
         return cards.calculateScore() < DEALER_STAY_NUMBER;
     }
 
     @Override
-    public boolean isInPlaying(boolean isHit){
+    public boolean isInPlaying(boolean isHit) {
         return isHit;
     }
 
     @Override
-    public List<Card> revealCards() {
-        return cards.getCards().subList(0, CARD_RENEWAL_COUNT);
+    public List<String> revealCards() {
+        return cards.getCardNames()
+                .subList(0, CARD_RENEWAL_COUNT);
     }
 }

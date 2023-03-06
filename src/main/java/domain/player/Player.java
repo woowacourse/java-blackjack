@@ -4,6 +4,7 @@ import domain.card.Cards;
 import domain.card.Card;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Player {
 
@@ -31,19 +32,26 @@ public abstract class Player {
         }
     }
 
-    abstract public List<Card> revealCards();
+    abstract public List<String> revealCards();
+
     abstract public boolean isInPlaying(boolean isHit);
 
-    public boolean isBust(){
+    public boolean isBust() {
         return HandsState.from(cards.calculateScore()) == HandsState.BUST;
     }
 
-    public boolean isBlackjack(){
+    public boolean isBlackjack() {
         return HandsState.from(cards.calculateScore()) == HandsState.BLACKJACK;
     }
 
     public List<Card> showCards() {
-        return cards.getCards();
+        return List.copyOf(cards.getCards());
+    }
+
+    public List<String> showCardNames() {
+        return showCards().stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toList());
     }
 
     public void takeCard(final Card card) {

@@ -2,6 +2,7 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Cards {
 
@@ -48,5 +49,11 @@ public final class Cards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public List<String> getCardNames() {
+        return List.copyOf(cards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toList()));
     }
 }
