@@ -17,7 +17,7 @@ public class PlayingCards {
     public int getTotalScore() {
         int totalScoreExceptAce = getTotalScoreExceptAce();
 
-        if (isContainsAce()) {
+        if (containsAce()) {
             return getTotalScoreContainingAce(totalScoreExceptAce);
         }
 
@@ -30,7 +30,7 @@ public class PlayingCards {
                 .sum();
     }
 
-    private boolean isContainsAce() {
+    private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
