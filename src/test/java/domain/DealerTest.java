@@ -65,9 +65,9 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.NINE));
         players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
+        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(DealerStatus.WIN, DealerStatus.LOSE);
+        assertThat(dealerStats).containsValues(DealerStatus.WIN, DealerStatus.LOSE);
     }
 
     @Test
@@ -81,9 +81,9 @@ class DealerTest {
         dealer.drawCard(new Card(Suit.HEART, Denomination.JACK));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.ACE));
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        List<DealerStatus> dealerStats = dealer.getDealerStats(players);
+        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsExactly(DealerStatus.DRAW);
+        assertThat(dealerStats).containsValue(DealerStatus.DRAW);
     }
 
     @Test
@@ -101,6 +101,6 @@ class DealerTest {
         players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
         Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
         //then
-        assertThat(dealerStats).containsValue(DealerStatus.DRAW);
+        assertThat(dealerStats).containsValue(DealerStatus.WIN);
     }
 }

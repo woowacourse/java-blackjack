@@ -1,7 +1,8 @@
 package domain.player;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
+
+import static java.util.stream.Collectors.*;
 
 public class Dealer extends Player {
 
@@ -16,10 +17,9 @@ public class Dealer extends Player {
         return getScore().getValue() <= PICK_BOUNDARY;
     }
 
-    public List<DealerStatus> getDealerStats(final Players players) {
+    public Map<Player, DealerStatus> getDealerStats(final Players players) {
         return players.getPlayers().stream()
-                .map(this::compareWithPlayer)
-                .collect(Collectors.toList());
+                .collect(toMap(player -> player, this::compareWithPlayer));
     }
 
     private DealerStatus compareWithPlayer(final Player player) {
