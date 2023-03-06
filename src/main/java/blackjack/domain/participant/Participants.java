@@ -30,9 +30,17 @@ public class Participants {
         }
     }
 
-    public List<Participant> getParticipants() {
+    public List<Participant> getAllParticipants() {
         List<Participant> participants = new ArrayList<>(List.of(dealer));
         participants.addAll(players.getPlayers());
         return participants;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }

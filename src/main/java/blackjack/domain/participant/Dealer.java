@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import java.util.List;
+
 public class Dealer extends Participant {
 
     private static final int MAX_SCORE_TO_RECEIVE = 16;
@@ -12,6 +14,10 @@ public class Dealer extends Participant {
     public boolean isAbleToReceive() {
         score.calculateScore(extractCardNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
+    }
+
+    public List<String> getOpenCardName() {
+        return List.of(cards.get(0).getCardName());
     }
 
     public String getName() {

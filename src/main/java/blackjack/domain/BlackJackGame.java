@@ -19,9 +19,11 @@ public class BlackJackGame {
 
     public void drawInitialCards() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participants.getParticipants().forEach(participant -> participant.receiveCard(deck.getCard()));
+            participants.getAllParticipants().forEach(participant -> participant.receiveCard(deck.getCard()));
         }
     }
 
-
+    public Participants getParticipants() {
+        return participants;
+    }
 }
