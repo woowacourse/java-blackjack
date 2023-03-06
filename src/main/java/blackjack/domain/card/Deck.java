@@ -1,21 +1,22 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class Deck {
 
     private static final int DECK_SIZE = 52;
 
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
-    private Deck(Stack<Card> cards) {
+    private Deck(Deque<Card> cards) {
         validateSize(cards);
         validateDuplicate(cards);
         this.cards = cards;
     }
 
-    private void validateSize(Stack<Card> cards) {
+    private void validateDuplicate(Deque<Card> cards) {
         long duplicatedCardCount = cards.stream()
                 .distinct()
                 .count();
@@ -24,14 +25,14 @@ public class Deck {
         }
     }
 
-    private void validateDuplicate(Stack<Card> cards) {
+    private void validateSize(Deque<Card> cards) {
         if (cards.size() != DECK_SIZE) {
             throw new IllegalArgumentException("덱 크기와 카드 개수가 일치하지 않습니다.");
         }
     }
 
     public static Deck create(List<Card> cards) {
-        Stack<Card> createdCard = new Stack<>();
+        Deque<Card> createdCard = new ArrayDeque<>();
 
         for (Card card : cards) {
             createdCard.push(card);
