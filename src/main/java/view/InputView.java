@@ -25,19 +25,22 @@ public final class InputView {
     }
 
     public boolean cardRequest(Name name) {
-        System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.getValue());
-        final String input = readLine();
-        return isValid(input);
+        System.out.printf(
+                "%s는 한 장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)\n",
+                name.getValue()
+                , YES, NO
+        );
+        return validateInputAndGet(readLine());
     }
 
-    private boolean isValid(final String input) {
+    private boolean validateInputAndGet(final String input) {
         if (input.equals(YES)) {
             return true;
         }
         if (input.equals(NO)) {
             return false;
         }
-        throw new IllegalStateException(
+        throw new IllegalArgumentException(
                 String.format("%s 또는 %s만 입력 가능합니다.", YES, NO)
         );
     }
