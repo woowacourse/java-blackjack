@@ -2,11 +2,10 @@ package domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.*;
+import domain.result.ResultCalculator;
 
 public class BlackJackGame {
 
@@ -51,5 +50,15 @@ public class BlackJackGame {
     public int findPlayerCardValueSumByPlayerName(String playerName) {
         Player findPlayer = participants.findPlayerByPlayerName(playerName);
         return findPlayer.getCardValueSum();
+    }
+
+    public Map<String, String> calculateResult() {
+        Players players = participants.getPlayers();
+        Dealer dealer = participants.getDealer();
+        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
+        for (Player player : players.getPlayers()) {
+            resultCalculator.calculate(player, dealer);
+        }
+        return resultCalculator.getFinalFightResults();
     }
 }
