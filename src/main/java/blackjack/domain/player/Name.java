@@ -1,8 +1,8 @@
 package blackjack.domain.player;
 
 public class Name {
-    private static final int MIN_NAME_LENGTH = 1;
-    private static final int MAX_NAME_LENGTH = 10;
+    private static final int MINIMUM_NAME_LENGTH = 1;
+    private static final int MAXIMUM_NAME_LENGTH = 10;
     private final String name;
 
     public Name(String name) {
@@ -11,8 +11,8 @@ public class Name {
     }
 
     private void validateLength(String name) {
-        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("이름은 한 글자 이상 다섯 글자 이하로 입력해주세요.");
+        if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH) {
+            throw new IllegalArgumentException(String.format("이름의 길이는 %d 이상 %d 이하로 입력해주세요.", MINIMUM_NAME_LENGTH, MAXIMUM_NAME_LENGTH));
         }
     }
 

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.domain.card.Cards.CARD_TOTAL_SIZE;
+
 class CardsTest {
 
     @BeforeEach
@@ -16,7 +18,7 @@ class CardsTest {
     @DisplayName("giveFirstCard()는 카드가 비어있으면 예외를 발생시킨다.")
     void give_first_card_empty_test() {
         // given & when
-        for(int i=0;i<48;i++){
+        for (int cardIndex = 0; cardIndex < CARD_TOTAL_SIZE; cardIndex++) {
             Cards.giveFirstCard();
         }
         // then

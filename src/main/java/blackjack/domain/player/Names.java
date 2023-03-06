@@ -10,7 +10,7 @@ public class Names {
 
     private static final int MINIMUM_NAMES_RANGE = 1;
     private static final int MAXIMUM_NAMES_RANGE = 20;
-    private static final Pattern INPUT_NAMES_PATTERN = Pattern.compile("([a-zA-Z]{1,5})(,[a-zA-Z]{1,5})*");
+    private static final Pattern INPUT_NAMES_PATTERN = Pattern.compile("([a-zA-Z]{1,10})(,[a-zA-Z]{1,10})*");
 
     private final List<Name> names;
 
@@ -53,7 +53,9 @@ public class Names {
 
     private void validateRange(List<Name> names) {
         if (names.size() < MINIMUM_NAMES_RANGE || names.size() > MAXIMUM_NAMES_RANGE) {
-            throw new IllegalArgumentException("이름의 수가 1이상 20이하여야 합니다.");
+            throw new IllegalArgumentException(
+                    String.format("플레이어 이름의 수가 %d개 이상 %d개 이하여야 합니다.", MINIMUM_NAMES_RANGE, MAXIMUM_NAMES_RANGE)
+            );
         }
     }
 
