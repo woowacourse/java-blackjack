@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.BlackJackReferee;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.exception.PlayerNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,14 +80,14 @@ public class Players {
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
                 .map(Player::isDrawable)
-                .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
+                .orElseThrow(PlayerNotFoundException::new);
     }
 
     public void draw(final String playerName, final Card card) {
         final Player targetPlayer = players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("없는 사용자 입니다"));
+                .orElseThrow(PlayerNotFoundException::new);
         targetPlayer.drawCard(card);
     }
 
@@ -95,7 +96,7 @@ public class Players {
         return players.stream()
                 .filter(player -> player.hasName(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다"));
+                .orElseThrow(PlayerNotFoundException::new);
     }
 
     public List<Player> getPlayers() {
