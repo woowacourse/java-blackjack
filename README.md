@@ -9,8 +9,8 @@
 - [x] 카드 뽑는 기능 Collections.shuffle() 사용
 - [x] Player 생성 로직 PlayerFactory 에 위임 -> Players 정적 팩토리 메소드로 구현
 - [x] Player 이름 중복, Player 수 validate 하는 로직 Players 에 이관
-- [ ] 딜러, 플레이어 출력 로직 중복 제거
-  - [ ] 딜러 getName() 메소드 "딜러"로 하드코딩 되어 있는 것 수정
+- [x] 딜러, 플레이어 출력 로직 중복 제거
+  - [x] 딜러 getName() 메소드 "딜러"로 하드코딩 되어 있는 것 수정
 - [x] 카드를 더 받을지 말지 로직 enum 으로 구현
 - [x] 플레이어의 의사(카드를 더 받을지 말지) + 더 받을 수 있는 상태를 판단하는 로직은 Player 에게 위임 
     - 플레이어 의사 판단은 controller 에 있게 함
