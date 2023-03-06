@@ -36,18 +36,18 @@ class ParticipantTest {
     @Test
     void returnsSumOfRank() {
         // given
-        Rank rank1 = Rank.FIVE;
-        Rank rank2 = Rank.EIGHT;
-        Rank rank3 = Rank.SEVEN;
-        int givenSum = rank1.getValue() + rank2.getValue() + rank3.getValue();
+        Rank five = Rank.FIVE;
+        Rank eight = Rank.EIGHT;
+        Rank seven = Rank.SEVEN;
+        int givenSum = five.getValue() + eight.getValue() + seven.getValue();
 
-        Card card1 = new Card(rank1, Suit.CLOVER);
-        Card card2 = new Card(rank2, Suit.SPADE);
-        Card card3 = new Card(rank3, Suit.SPADE);
+        Card fiveClover = new Card(five, Suit.CLOVER);
+        Card eightSpade = new Card(eight, Suit.SPADE);
+        Card sevenSpade = new Card(seven, Suit.SPADE);
 
-        participant.receiveCard(card1);
-        participant.receiveCard(card2);
-        participant.receiveCard(card3);
+        participant.receiveCard(fiveClover);
+        participant.receiveCard(eightSpade);
+        participant.receiveCard(sevenSpade);
 
         // when & then
         assertThat(participant.calculateSumOfRank()).isEqualTo(givenSum);

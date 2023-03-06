@@ -29,4 +29,14 @@ class NameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름의 길이는 1이상 5이하만 가능합니다.");
     }
+
+    @DisplayName("이름에 공백이 포함되어 있으면 예외를 던진다.")
+    @ParameterizedTest
+    @ValueSource(strings = {" pobi", "   ", "H am "})
+    void throwsExceptionWhenContainsSpaceInName(String name) {
+        // when & then
+        assertThatThrownBy(() -> new Name(name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름에는 공백이 포함될 수 없습니다.");
+    }
 }

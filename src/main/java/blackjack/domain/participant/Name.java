@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Name {
 
+
+    private static final String SPACE = " ";
     private static final int LENGTH_OF_MINIMUM_PLAYER_NAME = 1;
     private static final int LENGTH_OF_MAXIMUM_PLAYER_NAME = 5;
 
@@ -16,7 +18,7 @@ public class Name {
     }
 
     private void validateContainSpace(final String value) {
-        if (value.isBlank()) {
+        if (value.isBlank() || value.contains(SPACE)) {
             throw new IllegalArgumentException("이름에는 공백이 포함될 수 없습니다.");
         }
     }
