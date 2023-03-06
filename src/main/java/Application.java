@@ -31,7 +31,7 @@ public class Application {
         for (User user : game.getUsers()) {
             selectHitOrStand(game, user);
         }
-        selectDealerHitOrStand(game, game.getDealer());
+        selectHitOrStand(game, game.getDealer());
     }
 
     private static void printResult(Game game) {
@@ -42,19 +42,19 @@ public class Application {
         }
     }
 
-    private static void selectDealerHitOrStand(Game game, Dealer dealer) {
-        if (dealer.canHit()) {
-            OUTPUT_VIEW.noticeDealerHit();
-            game.dealCardTo(dealer);
-            return;
-        }
-        OUTPUT_VIEW.noticeDealerStand();
-    }
-
     private static void selectHitOrStand(Game game, User user) {
         while (user.canHit() && INPUT_VIEW.askForHit(user)) {
             game.dealCardTo(user);
             OUTPUT_VIEW.printPlayerCards(user.getName(), user.getCards());
         }
+    }
+
+    private static void selectHitOrStand(Game game, Dealer dealer) {
+        int hitCount = 0;
+        while (dealer.canHit()) {
+            game.dealCardTo(dealer);
+            ++hitCount;
+        }
+        OUTPUT_VIEW.noticeDealerHitOrStand(hitCount);
     }
 }

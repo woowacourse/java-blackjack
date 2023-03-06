@@ -7,9 +7,9 @@ import static domain.Result.WIN;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Player;
 import domain.Card;
 import domain.Dealer;
+import domain.Player;
 import domain.Result;
 import domain.User;
 
@@ -37,12 +37,11 @@ public class OutputView {
         System.out.println(name + ": " + getCardDisplay(card));
     }
 
-    public void noticeDealerHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
-    }
-
-    public void noticeDealerStand() {
+    public void noticeDealerHitOrStand(int hitCount) {
+        if (hitCount > 0) {
+            System.out.println("딜러는 16이하라 " + hitCount + "장의 카드를 더 받았습니다." + System.lineSeparator());
+            return;
+        }
         System.out.println("딜러는 16초과라 카드를 받지 않았습니다.");
         System.out.println();
     }
