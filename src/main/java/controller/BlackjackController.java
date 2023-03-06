@@ -36,8 +36,8 @@ public class BlackjackController {
     }
 
     private void process(Players players, Dealer dealer) {
-        drawInitialCards(players, dealer);
         Map<Player, Stake> playerStakes = readStakes(players);
+        drawInitialCards(players, dealer);
 
         playersHitOrStand(players);
         dealerHitOrStand(dealer);
