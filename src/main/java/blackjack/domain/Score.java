@@ -11,16 +11,12 @@ public class Score {
         this.value = value;
     }
 
-    public static Score calculateScore(final CardGroup cardGroup) {
-        int score = cardGroup.getTotalValue();
-        int aceCount = cardGroup.getAceCount();
-
-        while (score > BLACK_JACK_NUMBER && aceCount > 0) {
-            score += ACE_OFFSET;
+    public static Score calculateScore(int totalValue, int aceCount) {
+        while (totalValue > BLACK_JACK_NUMBER && aceCount > 0) {
+            totalValue += ACE_OFFSET;
             aceCount--;
         }
-
-        return new Score(score);
+        return new Score(totalValue);
     }
 
     public int getValue() {
