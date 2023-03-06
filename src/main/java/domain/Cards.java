@@ -2,26 +2,26 @@ package domain;
 
 import java.util.List;
 
-public class CardDeck {
+public class Cards {
 
     private static final int BLACK_JACK = 21;
     private static final int NONE_ACE = 0;
     private static final int ACE_DECREASE = 10;
 
-    private final List<Card> cards;
+    private final List<Card> participantCards;
 
-    public CardDeck(List<Card> cards) {
-        this.cards = cards;
+    public Cards(List<Card> participantCards) {
+        this.participantCards = participantCards;
     }
 
     public int getSize() {
-        return cards.size();
+        return participantCards.size();
     }
 
     public int calculateScore(int limit) {
         int aceCount = 0;
         int sum = 0;
-        for (Card card : cards) {
+        for (Card card : participantCards) {
             aceCount = increaseAceCount(aceCount, card);
             sum += card.getValue().getScore();
         }
@@ -30,7 +30,7 @@ public class CardDeck {
     }
 
     public void addNewCard(Card card) {
-        cards.add(card);
+        participantCards.add(card);
     }
 
     private int increaseAceCount(int aceCount, Card card) {
@@ -54,12 +54,12 @@ public class CardDeck {
         return sum != BLACK_JACK && limit < sum && NONE_ACE < aceCount;
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public List<Card> getParticipantCards() {
+        return List.copyOf(participantCards);
     }
 
     public Card getFirstCard() {
-        return cards.get(0);
+        return participantCards.get(0);
     }
 
 }

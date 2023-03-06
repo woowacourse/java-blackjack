@@ -14,13 +14,13 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> playerNames, List<CardDeck> cardDecks) {
+    public static Players of(List<String> playerNames, List<Cards> cards) {
         List<Name> names = playerNames.stream()
                 .map(String::trim)
                 .map(Name::new)
                 .collect(Collectors.toList());
         validateDuplicateName(names);
-        return new Players(initializePlayers(names, cardDecks));
+        return new Players(initializePlayers(names, cards));
     }
 
     private static void validateDuplicateName(List<Name> playerNames) {
@@ -33,10 +33,10 @@ public class Players {
         }
     }
 
-    private static List<Player> initializePlayers(List<Name> playerNames, List<CardDeck> cardDecks) {
+    private static List<Player> initializePlayers(List<Name> playerNames, List<Cards> cards) {
         List<Player> players = new ArrayList<>();
         for (int index = 0; index < playerNames.size(); index++) {
-            players.add(Player.of(playerNames.get(index), cardDecks.get(index)));
+            players.add(Player.of(playerNames.get(index), cards.get(index)));
         }
         return players;
     }

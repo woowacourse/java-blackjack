@@ -1,6 +1,6 @@
 package controller;
 
-import domain.CardDeck;
+import domain.Cards;
 import domain.CardDistributor;
 import domain.Dealer;
 import domain.Name;
@@ -60,7 +60,7 @@ public class BlackJackController {
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getName().getValue(),
-                CardStatusConverter.convertToCardStatus(participant.getCardDeck().getCards()), participant.getTotalScore());
+                CardStatusConverter.convertToCardStatus(participant.getCards().getParticipantCards()), participant.getTotalScore());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
@@ -68,7 +68,7 @@ public class BlackJackController {
 
         outputView.printCardStatus(dealer.getName().getValue(), CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
         for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
+            outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
         }
     }
 
@@ -103,7 +103,7 @@ public class BlackJackController {
         if (answer.equals(MORE_CARD) && cardDistributor.isCardLeft()) {
             player.pick(cardDistributor.distribute());
         }
-        outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCardDeck().getCards()));
+        outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
         return answer.equals(MORE_CARD);
     }
 
@@ -111,12 +111,12 @@ public class BlackJackController {
         return Arrays.asList(inputView.requestPlayerName().split(DELIMITER, LIMIT_REMOVED));
     }
 
-    private List<CardDeck> distributeCardsForPlayers(int count, CardDistributor cardDistributor) {
-        List<CardDeck> cardDecks = new ArrayList<>();
+    private List<Cards> distributeCardsForPlayers(int count, CardDistributor cardDistributor) {
+        List<Cards> cards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            cardDecks.add(cardDistributor.distributeInitialCard());
+            cards.add(cardDistributor.distributeInitialCard());
         }
-        return cardDecks;
+        return cards;
     }
 
 }

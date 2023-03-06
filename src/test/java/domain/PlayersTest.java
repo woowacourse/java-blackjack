@@ -29,12 +29,12 @@ public class PlayersTest {
                 .hasMessageContaining("참여자 이름은 중복될 수 없습니다.");
     }
 
-    private List<CardDeck> distributeCardDecks(int count) {
-        List<CardDeck> cardDecks = new ArrayList<>();
+    private List<Cards> distributeCardDecks(int count) {
+        List<Cards> cards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            cardDecks.add(distributor.distributeInitialCard());
+            cards.add(distributor.distributeInitialCard());
         }
-        return cardDecks;
+        return cards;
     }
 
 }

@@ -29,9 +29,9 @@ public class ResultTest {
             add(new Card(Shape.HEART, Letter.JACK));
             add(new Card(Shape.CLOVER, Letter.EIGHT));
         }};
-        dealer = new Dealer(new CardDeck(dealerCards));
+        dealer = new Dealer(new Cards(dealerCards));
         names = List.of("aa");
-        players = Players.of(names, List.of(new CardDeck(playerCards)));
+        players = Players.of(names, List.of(new Cards(playerCards)));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ResultTest {
     @DisplayName("둘 다 버스트가 아니고 플레이어가 게임에서 이기는 경우를 확인한다.")
     void calculateGameResultWhenPlayerWin() {
         playerCards.add(getParticipantWinCard());
-        players = Players.of(names, List.of(new CardDeck(playerCards)));
+        players = Players.of(names, List.of(new Cards(playerCards)));
 
         Result result = new Result(dealer, players);
         Map<String, GameResult> gameResult = result.getResult();
