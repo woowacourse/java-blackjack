@@ -9,7 +9,6 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String SPLIT_DELIMITER = ",";
     private static final String YES = "y";
-    private static final String NO = "n";
 
     private InputView() {
     }
@@ -18,10 +17,15 @@ public class InputView {
         final String input = scanner.nextLine();
         final List<String> names = splitAsList(input);
 
-        if (names.size() == 0) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 수는 1명이상 이어야합니다.");
-        }
+        validateName(names);
         return names;
+    }
+
+    private static void validateName(final List<String> names) {
+        InputValidator.validatePlayerCount(names);
+        InputValidator.validatePlayerNameDuplicated(names);
+        InputValidator.validatePlayerNameCannotBeSameAsDealerName(names);
+
     }
 
     private static List<String> splitAsList(final String input) {
@@ -32,12 +36,16 @@ public class InputView {
 
     public static boolean readAnswer() {
         final String input = scanner.nextLine();
+
+        validateAnswer(input);
+
         if (input.equals(YES)) {
             return true;
         }
-        if (input.equals(NO)) {
-            return false;
-        }
-        throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
+        return false;
+    }
+
+    private static void validateAnswer(final String input) {
+        InputValidator.validateAnswerYesOrNo(input);
     }
 }
