@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
-import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -22,7 +21,7 @@ public class PlayerTest {
         // expect
         assertThatIllegalArgumentException().isThrownBy(() ->
                 new Player(name)
-        ).withMessage("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다.");
+        ).withMessage("[ERROR] 이름 길이는 최소 1글자에서 최대 5글자 입니다. 입력값: " + name);
      }
 
      @Test
