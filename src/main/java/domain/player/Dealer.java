@@ -1,5 +1,7 @@
 package domain.player;
 
+import domain.score.Score;
+
 import java.util.Map;
 
 import static java.util.stream.Collectors.*;
@@ -32,7 +34,11 @@ public class Dealer extends Player {
         if (this.isBlackjack() || player.isBusted()) {
             return DealerStatus.WIN;
         }
-        return this.getScore().compareScore(player.getScore());
+        return this.compareNormalCase(player.getScore());
+    }
+
+    private DealerStatus compareNormalCase(Score score) {
+        return getScore().compareScore(score);
     }
 
     private boolean bothBlackjack(final Player player) {
