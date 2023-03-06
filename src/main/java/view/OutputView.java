@@ -34,6 +34,7 @@ public class OutputView {
     private static final String DEALER = "딜러";
     private static final String BUSTED_RESULT_GUIDE_MESSAGE = "Busted";
     private static final int FIRST_INDEX_CARD = 0;
+    private static final String BLACKJACK_GUIDE_MESSAGE = "BLACKJACK!";
 
     private OutputView() {
     }
@@ -96,12 +97,23 @@ public class OutputView {
         printPlayerName(player);
         printPlayerCards(player);
         System.out.print(SCORE_GUIDE_MESSAGE);
-        if (player.isBusted()) {
-            System.out.println(BUSTED_RESULT_GUIDE_MESSAGE);
+        if (isSpecialScore(player)) {
             return;
         }
-        System.out.println(player.getScore().getValue());
+        System.out.print(player.getScore().getValue());
         printNewLine();
+    }
+
+    private static boolean isSpecialScore(final Player player) {
+        if (player.isBusted()) {
+            System.out.println(BUSTED_RESULT_GUIDE_MESSAGE);
+            return true;
+        }
+        if (player.isBlackjack()) {
+            System.out.println(BLACKJACK_GUIDE_MESSAGE);
+            return true;
+        }
+        return false;
     }
 
     public static void printDealerDrawMessage() {
