@@ -27,7 +27,7 @@ public final class Deck {
 
     public Card drawCard() {
         try {
-            return cards.remove(0);
+            return cards.remove(cards.size() - 1);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalStateException("덱에 더이상 카드가 남아있지 않습니다.", exception);
         }

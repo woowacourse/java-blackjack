@@ -25,7 +25,8 @@ public final class Player extends Participant {
 
     private static void validateName(final Name name) {
         if (name.getValue().equals(DEALER_NAME)) {
-            throw new IllegalArgumentException("'딜러'라는 이름을 가질 수 없습니다.");
+            throw new IllegalArgumentException(
+                    String.format("'%s'라는 이름을 가질 수 없습니다.", DEALER_NAME));
         }
     }
 
