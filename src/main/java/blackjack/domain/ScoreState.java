@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public enum ScoreState {
     STAY(17),
-    BUST(21),
+    BUST(22),
     HIT(16);
 
     private final int score;
@@ -12,7 +12,7 @@ public enum ScoreState {
     }
 
     public static ScoreState of(int score) {
-        if (score > BUST.score) {
+        if (score >= BUST.score) {
             return BUST;
         }
         if (score >= STAY.score) {
@@ -23,6 +23,10 @@ public enum ScoreState {
 
     public boolean isBust() {
         return this == BUST;
+    }
+
+    public boolean isNotBust() {
+        return this != BUST;
     }
 
     public boolean isHit() {

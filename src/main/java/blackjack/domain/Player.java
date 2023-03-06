@@ -6,7 +6,8 @@ public class Player extends Participant {
         super(new Name(name));
     }
 
-    public boolean isBust() {
-        return this.getState() == ScoreState.BUST;
+    @Override
+    public boolean isDrawable() {
+        return this.getState().isNotBust();
     }
 }

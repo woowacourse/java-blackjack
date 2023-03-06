@@ -6,7 +6,8 @@ public class Dealer extends Participant {
         super(new Name("딜러"));
     }
 
-    public boolean isHit() {
+    @Override
+    public boolean isDrawable() {
         return this.getState().isHit();
     }
 }

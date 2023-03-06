@@ -1,13 +1,14 @@
 package blackjack.domain;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardSuit;
-import blackjack.domain.Player;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
@@ -28,5 +29,38 @@ public class PlayerTest {
         player.addCard(card);
 
         assertThat(player.getCards()).contains(card);
+    }
+
+    @ParameterizedTest
+    @MethodSource("playerIsDrawableTestSource")
+    @DisplayName("플레이어는 점수 상태에 따라 카드를 뽑을 수 있는지 결정된다")
+    void isDrawableTest(List<Card> cards, boolean expect) {
+        Player player = new Player("박스터");
+        player.addCards(cards);
+        
+        boolean drawable = player.isDrawable();
+
+        assertThat(drawable).isEqualTo(expect);
+    }
+
+    static Stream<Arguments> playerIsDrawableTestSource() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.HEART, CardNumber.SIX)
+                        ), true),
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.HEART, CardNumber.SEVEN)
+                        ), true),
+                Arguments.of(
+                        List.of(
+                                new Card(CardSuit.HEART, CardNumber.TEN),
+                                new Card(CardSuit.SPADE, CardNumber.TEN),
+                                new Card(CardSuit.SPADE, CardNumber.TWO)
+                        ), false)
+        );
     }
 }
