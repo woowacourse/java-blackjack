@@ -1,28 +1,30 @@
 package model.card;
 
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Deck {
 
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck() {
         this.cards = createCards();
     }
 
-    private Stack<Card> createCards() {
-        Stack<Card> cards = new Stack<>();
+    private Deque<Card> createCards() {
+        Deque<Card> cards = new LinkedList<>();
 
         for (Shape shape : Shape.values()) {
             addCard(cards, shape);
         }
-        Collections.shuffle(cards);
+        Collections.shuffle((List<?>) cards);
 
         return cards;
     }
 
-    private static void addCard(final Stack<Card> cards, final Shape shape) {
+    private static void addCard(final Deque<Card> cards, final Shape shape) {
         for (Value value : Value.values()) {
             cards.push(new Card(shape, value));
         }
