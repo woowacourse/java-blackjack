@@ -8,11 +8,11 @@ import static domain.GameResult.comparePlayerWithDealer;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackJack {
 
@@ -55,25 +55,33 @@ public class BlackJack {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
         int dealerScore = dealer.getScore();
-        return players.stream()
-            .collect(Collectors.toMap
-                (Player::getName,
-                    player -> comparePlayerWithDealer(player.getScore(), dealerScore),
-                    (oldValue, newValue) -> newValue,
-                    LinkedHashMap::new));
+        Map<String, GameResult> playerResults = new LinkedHashMap<>();
+        for (Player player : players) {
+            GameResult playerResult = comparePlayerWithDealer(player.getScore(), dealerScore);
+            playerResults.put(player.getName(), playerResult);
+        }
+        return Collections.unmodifiableMap(playerResults);
     }
 
     public Map<GameResult, Integer> calculateDealerResult() {
-        Map<GameResult, Integer> dealerResult = new HashMap<>();
+        Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
         Map<String, GameResult> playerResults = calculatePlayerResults();
         playerResults.values().forEach(result -> convertResult(result, dealerResult));
         return dealerResult;
     }
 
     private void convertResult(final GameResult playerResult, final Map<GameResult, Integer> dealerResult) {
-        Map<GameResult, GameResult> converter = Map.of(WIN, LOSE, LOSE, WIN, PUSH, PUSH);
+        Map<GameResult, GameResult> converter = setUpResultConverter();
         GameResult convertedResult = converter.get(playerResult);
         dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
+    }
+
+    private Map<GameResult, GameResult> setUpResultConverter() {
+        Map<GameResult, GameResult> converter = new EnumMap<>(GameResult.class);
+        converter.put(WIN, LOSE);
+        converter.put(LOSE, WIN);
+        converter.put(PUSH, PUSH);
+        return converter;
     }
 
     public Card getDealerCardWithHidden() {
@@ -83,22 +91,20 @@ public class BlackJack {
 
     public Map<String, List<Card>> getPlayerToCard() {
         List<Player> players = users.getPlayers();
-        return players.stream().collect(Collectors.toMap(
-            Player::getName,
-            Player::getCards,
-            (oldValue, newValue) -> newValue,
-            LinkedHashMap::new
-        ));
+        Map<String, List<Card>> playerToCard = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToCard.put(player.getName(), player.getCards());
+        }
+        return Collections.unmodifiableMap(playerToCard);
     }
 
     public Map<String, Integer> getPlayerToScore() {
         List<Player> players = users.getPlayers();
-        return players.stream().collect(Collectors.toMap(
-            Player::getName,
-            Player::getScore,
-            (oldValue, newValue) -> newValue,
-            LinkedHashMap::new
-        ));
+        Map<String, Integer> playerToScore = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToScore.put(player.getName(), player.getScore());
+        }
+        return Collections.unmodifiableMap(playerToScore);
     }
 
     public List<Player> getHittablePlayers() {
