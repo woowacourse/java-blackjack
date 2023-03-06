@@ -34,11 +34,12 @@ public class OutputView {
         printInitialMessage(playerNameToCards);
         printInitialDealerCard(initialCardResponse.getDealerCard());
         playerNameToCards.forEach(this::printInitialPlayerCard);
-
+        System.out.println();
     }
 
     private void printInitialMessage(final Map<String, List<CardResponse>> playerNameToCards) {
         final String playerNames = String.join(DELIMITER_BETWEEN_CARDS, playerNameToCards.keySet());
+        System.out.println();
         System.out.println(MessageFormat.format(OUTPUT_DISTRIBUTE_MESSAGE, playerNames));
     }
 
@@ -71,6 +72,7 @@ public class OutputView {
     }
 
     public void printDealerCardDrawMessage() {
+        System.out.println();
         System.out.println(OUTPUT_DEALER_STATUS_MESSAGE);
     }
 
@@ -79,6 +81,7 @@ public class OutputView {
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
+        System.out.println();
         System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + dealerScoreResponse.getScore());
     }
 
@@ -96,6 +99,7 @@ public class OutputView {
     }
 
     public void printFinalResult(final FinalResultResponse finalResultDto) {
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.print(DEALER + DELIMITER);
         printDealerResult(finalResultDto.getDealerResult());
