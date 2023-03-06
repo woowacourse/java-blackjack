@@ -1,4 +1,4 @@
-import domain.BlackJack;
+import domain.game.BlackJackGame;
 import domain.player.Player;
 import domain.strategy.RandomBasedShuffleStrategy;
 import view.InputView;
@@ -12,12 +12,12 @@ public class Application {
     }
     
     public void startGame() {
-        BlackJack blackJack = new BlackJack(getParticipantNames(), new RandomBasedShuffleStrategy());
-        initializedBlackjackGame(blackJack);
+        BlackJackGame blackJackGame = new BlackJackGame(getParticipantNames(), new RandomBasedShuffleStrategy());
+        initializedBlackjackGame(blackJackGame);
         
-        giveCardToPlayers(blackJack);
-        blackJack.battle();
-        OutputView.printPlayersGameResults(blackJack.getPlayers());
+        giveCardToPlayers(blackJackGame);
+        blackJackGame.battle();
+        OutputView.printPlayersGameResults(blackJackGame.getPlayers());
     }
     
     private String getParticipantNames() {
@@ -25,28 +25,28 @@ public class Application {
         return InputView.repeat(InputView::inputParticipantNames);
     }
     
-    private void initializedBlackjackGame(BlackJack blackJack) {
-        blackJack.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJack.getPlayers());
+    private void initializedBlackjackGame(BlackJackGame blackJackGame) {
+        blackJackGame.giveTwoCardToPlayers();
+        OutputView.printPlayersInformation(blackJackGame.getPlayers());
     }
     
-    private void giveCardToPlayers(BlackJack blackJack) {
-        giveCardToParticipants(blackJack);
-        giveCardToDealer(blackJack);
-        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
+    private void giveCardToPlayers(BlackJackGame blackJackGame) {
+        giveCardToParticipants(blackJackGame);
+        giveCardToDealer(blackJackGame);
+        OutputView.printPlayersFinalInformation(blackJackGame.getPlayers());
     }
     
-    private void giveCardToParticipants(BlackJack blackJack) {
-        List<Player> participants = blackJack.getParticipants();
+    private void giveCardToParticipants(BlackJackGame blackJackGame) {
+        List<Player> participants = blackJackGame.getParticipants();
         for (Player participant : participants) {
-            giveCardToParticipant(blackJack, participant);
+            giveCardToParticipant(blackJackGame, participant);
         }
     }
     
-    private void giveCardToParticipant(BlackJack blackJack, Player participant) {
+    private void giveCardToParticipant(BlackJackGame blackJackGame, Player participant) {
         String command = getCommand(participant);
         if ("y".equals(command)) {
-            blackJack.giveCard(participant.getName());
+            blackJackGame.giveCard(participant.getName());
             OutputView.printParticipantCardCondition(List.of(participant));
         }
         
@@ -54,7 +54,7 @@ public class Application {
             stopGivingCard(participant, command);
             return;
         }
-        giveCardToParticipant(blackJack, participant);
+        giveCardToParticipant(blackJackGame, participant);
     }
     
     private String getCommand(Player participant) {
@@ -73,9 +73,9 @@ public class Application {
         }
     }
     
-    private void giveCardToDealer(BlackJack blackJack) {
-        if (blackJack.shouldDealerGetCard()) {
-            blackJack.giveDealerCard();
+    private void giveCardToDealer(BlackJackGame blackJackGame) {
+        if (blackJackGame.shouldDealerGetCard()) {
+            blackJackGame.giveDealerCard();
             OutputView.printGiveDealerCardMessage();
         }
     }

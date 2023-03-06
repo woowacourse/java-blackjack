@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.card.Card;
 import domain.card.Number;
@@ -16,14 +16,14 @@ import java.util.Stack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class BlackJackTest {
+class BlackJackGameTest {
     @Test
     @DisplayName("게임 시작 시 플레이어들에게 카드를 2장씩 나눠준다.")
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
-        BlackJack blackJack = new BlackJack("여우,아벨", cards -> cards);
-        blackJack.giveTwoCardToPlayers();
+        BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
+        blackJackGame.giveTwoCardToPlayers();
 
-        Map<Player, List<Card>> playersCards = blackJack.getPlayersCards();
+        Map<Player, List<Card>> playersCards = blackJackGame.getPlayersCards();
         assertAll(
                 () -> assertThat(playersCards.get(new Dealer()))
                         .containsExactly(new Card(Shape.DIAMOND, Number.JACK), new Card(Shape.DIAMOND, Number.QUEEN)),
@@ -37,12 +37,12 @@ class BlackJackTest {
     @Test
     @DisplayName("플레이어에게 한 장을 추가한다.")
     void givenPlayer_thenGivesCard() {
-        BlackJack blackJack = new BlackJack("여우,아벨", cards -> cards);
-        blackJack.giveTwoCardToPlayers();
+        BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
+        blackJackGame.giveTwoCardToPlayers();
 
-        blackJack.giveCard("여우");
+        blackJackGame.giveCard("여우");
 
-        List<Card> cards = blackJack.getCardsFrom("여우");
+        List<Card> cards = blackJackGame.getCardsFrom("여우");
 
         assertThat(cards).containsExactly(
                 new Card(Shape.DIAMOND, Number.KING),
@@ -59,10 +59,10 @@ class BlackJackTest {
         deck.push(new Card(Shape.HEART, Number.FIVE));
         deck.push(new Card(Shape.HEART, Number.EIGHT));
         deck.push(new Card(Shape.HEART, Number.SEVEN));
-        BlackJack blackJack = new BlackJack("여우", cards -> deck);
-        blackJack.giveTwoCardToPlayers();
+        BlackJackGame blackJackGame = new BlackJackGame("여우", cards -> deck);
+        blackJackGame.giveTwoCardToPlayers();
 
-        assertThat(blackJack.shouldDealerGetCard()).isTrue();
+        assertThat(blackJackGame.shouldDealerGetCard()).isTrue();
     }
 
     @Test
@@ -73,20 +73,20 @@ class BlackJackTest {
         deck.push(new Card(Shape.HEART, Number.FIVE));
         deck.push(new Card(Shape.HEART, Number.EIGHT));
         deck.push(new Card(Shape.HEART, Number.NINE));
-        BlackJack blackJack = new BlackJack("여우", cards -> deck);
-        blackJack.giveTwoCardToPlayers();
+        BlackJackGame blackJackGame = new BlackJackGame("여우", cards -> deck);
+        blackJackGame.giveTwoCardToPlayers();
 
-        assertThat(blackJack.shouldDealerGetCard()).isFalse();
+        assertThat(blackJackGame.shouldDealerGetCard()).isFalse();
     }
 
     @Test
     @DisplayName("딜러에게 한 장의 카드를 추가한다.")
     void thenGiveDealerCard() {
-        BlackJack blackJack = new BlackJack("여우,아벨", cards -> cards);
-        blackJack.giveTwoCardToPlayers();
+        BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
+        blackJackGame.giveTwoCardToPlayers();
 
-        blackJack.giveDealerCard();
+        blackJackGame.giveDealerCard();
 
-        assertThat(blackJack.getCardsFrom("딜러")).contains(new Card(Shape.DIAMOND, Number.SEVEN));
+        assertThat(blackJackGame.getCardsFrom("딜러")).contains(new Card(Shape.DIAMOND, Number.SEVEN));
     }
 }

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -11,11 +11,11 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class BlackJack {
+public class BlackJackGame {
     private final Deck deck;
     private final List<Player> players;
 
-    public BlackJack(String participantNames, ShuffleStrategy shuffleStrategy) {
+    public BlackJackGame(String participantNames, ShuffleStrategy shuffleStrategy) {
         this.deck = Deck.from(shuffleStrategy);
         this.players = initPlayers(participantNames);
     }
