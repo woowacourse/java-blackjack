@@ -15,7 +15,7 @@ public class OutputView {
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
 
-    public void printInitCards(Dealer dealer, Players players) {
+    public void printInitialCards(Dealer dealer, Players players) {
         String namesFormat = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
@@ -23,12 +23,12 @@ public class OutputView {
         lineBreak();
         String format = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
         System.out.println(format);
-        printInitDealerCards(dealer);
-        printInitPlayerCards(players);
+        printInitialDealerCards(dealer);
+        printInitialPlayerCards(players);
         lineBreak();
     }
 
-    private void printInitDealerCards(Dealer dealer) {
+    private void printInitialDealerCards(Dealer dealer) {
         Card dealerFirstCard = dealer.getDealerFirstCard();
 
         String format = String.format(Format.CARDS.format,
@@ -36,7 +36,7 @@ public class OutputView {
         System.out.println(format);
     }
 
-    private void printInitPlayerCards(Players players) {
+    private void printInitialPlayerCards(Players players) {
         for (Player player : players.getPlayers()) {
             String format = String.format(Format.CARDS.format,
                     player.getName(), getCardsFormat(player.getCards()));

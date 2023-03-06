@@ -25,8 +25,8 @@ public class BlackjackController {
 
     private BlackjackGame createBlackjackGame() {
         BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
-        blackjackGame.giveInitCards();
-        outputView.printInitCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        blackjackGame.giveInitialCards();
+        outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
         return blackjackGame;
     }
 

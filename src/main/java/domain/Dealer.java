@@ -50,7 +50,7 @@ public class Dealer extends Participant {
     }
 
     public int getHitCardCount() {
-        return getCards().size() - BlackjackRule.INIT_CARD_COUNT.getValue();
+        return getCards().size() - BlackjackRule.INITIAL_CARD_COUNT.getValue();
     }
 
     public int getResultCount(Result result) {

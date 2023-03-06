@@ -14,7 +14,7 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public void giveInitCards() {
+    public void giveInitialCards() {
         giveCardsToDealer();
         giveCardsToPlayers();
     }
