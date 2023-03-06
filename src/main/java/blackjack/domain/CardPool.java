@@ -6,7 +6,9 @@ import java.util.List;
 
 public class CardPool {
 
-    private static final int STANDARD_COUNT = 9;
+    private static final int MIN_INCLUSIVE = 2;
+    private static final int MAX_INCLUSIVE = 10;
+    private static final List<String> COURT_SYMBOLS = List.of("J", "Q", "K");
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -20,12 +22,20 @@ public class CardPool {
 
     private void addAllCardByPattern(Pattern pattern) {
         cards.add(new AceCard(pattern));
-        for (int i = 0; i < STANDARD_COUNT; i++) {
-            cards.add(new StandardCard(pattern, String.valueOf(i)));
+        addStandardCard(pattern);
+        addCourtCard(pattern);
+    }
+
+    private void addCourtCard(Pattern pattern) {
+        for (String courtSymbol : COURT_SYMBOLS) {
+            cards.add(new CourtCard(pattern, courtSymbol));
         }
-        cards.add(new CourtCard(pattern, "J"));
-        cards.add(new CourtCard(pattern, "K"));
-        cards.add(new CourtCard(pattern, "Q"));
+    }
+
+    private void addStandardCard(Pattern pattern) {
+        for (int symbol = MIN_INCLUSIVE; symbol <= MAX_INCLUSIVE; symbol++) {
+            cards.add(new StandardCard(pattern, String.valueOf(symbol)));
+        }
     }
 
     public int getSize() {
