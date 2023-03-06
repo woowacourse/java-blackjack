@@ -11,13 +11,6 @@ public class PlayerCards {
         this.cards = new ArrayList<>();
     }
 
-    private static int getTotalScore(int score, Card card) {
-        if (card.isAce() && ScoreState.of(score).isBust()) {
-            score -= 10;
-        }
-        return score;
-    }
-
     public void add(Card card) {
         this.cards.add(card);
     }
@@ -38,6 +31,13 @@ public class PlayerCards {
     private int handleAce(int score) {
         for (Card card : cards) {
             score = getTotalScore(score, card);
+        }
+        return score;
+    }
+
+    private int getTotalScore(int score, Card card) {
+        if (card.isAce() && ScoreState.of(score).isBust()) {
+            score -= 10;
         }
         return score;
     }
