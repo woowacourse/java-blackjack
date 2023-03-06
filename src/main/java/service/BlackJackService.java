@@ -51,7 +51,7 @@ public class BlackJackService {
     public DrawnCardsInfo drawCards(final CardDeck cardDeck,
                                     final Player player,
                                     final DrawCommand drawCommand) {
-        if (drawCommand.isDraw()) {
+        if (drawCommand.isDraw() && player.calculateCardScore() < BURST_NUMBER) {
             player.pickCard(cardDeck.draw());
         }
 
@@ -59,7 +59,7 @@ public class BlackJackService {
     }
 
     public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
-        return player.calculateCardScore() > BURST_NUMBER || drawCommand.isStop();
+        return player.calculateCardScore() < BURST_NUMBER && drawCommand.isDraw();
     }
 
     public void pickDealerCard(final CardDeck cardDeck, final Dealer dealer) {
