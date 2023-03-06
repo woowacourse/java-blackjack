@@ -35,7 +35,9 @@ public abstract class User {
         return score.getScore();
     }
 
-    public abstract UserStatus getStatus();
+//    public abstract UserStatus getStatus();
+
+    public abstract boolean isUserStatus(UserStatus status);
 
     public abstract String getName();
 }

@@ -44,9 +44,14 @@ public class Dealer extends User {
         status = DealerStatus.NORMAL;
     }
 
+//    @Override
+//    public UserStatus getStatus() {
+//        return status;
+//    }
+
     @Override
-    public UserStatus getStatus() {
-        return status;
+    public boolean isUserStatus(UserStatus status) {
+        return this.status.equals(status);
     }
 
     @Override

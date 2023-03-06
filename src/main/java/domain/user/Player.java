@@ -31,9 +31,14 @@ public class Player extends User {
         }
     }
 
+//    @Override
+//    public UserStatus getStatus() {
+//        return status;
+//    }
+
     @Override
-    public UserStatus getStatus() {
-        return status;
+    public boolean isUserStatus(UserStatus status) {
+        return this.status.equals(status);
     }
 
     @Override

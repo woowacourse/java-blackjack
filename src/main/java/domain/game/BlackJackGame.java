@@ -27,7 +27,7 @@ public class BlackJackGame {
     }
 
     public void drawCardUntilOverSixteen() {
-        while (dealer.getStatus().equals(DealerStatus.UNDER_SEVENTEEN)) {
+        while (dealer.isUserStatus(DealerStatus.UNDER_SEVENTEEN)) {
             dealer.receiveCard(cards.drawCard());
         }
     }
@@ -39,12 +39,11 @@ public class BlackJackGame {
     }
 
     private void compareDealerWithPlayer(Player player) {
-        UserStatus playerStatus = player.getStatus();
-        if (playerStatus.equals(PlayerStatus.BUST)) {
+        if (player.isUserStatus(PlayerStatus.BUST)) {
             dealerWin(player);
             return;
         }
-        if (playerStatus.equals(PlayerStatus.NORMAL) && dealer.getStatus().equals(DealerStatus.BUST)) {
+        if (player.isUserStatus(PlayerStatus.NORMAL) && dealer.isUserStatus(DealerStatus.BUST)) {
             playerWin(player);
             return;
         }
