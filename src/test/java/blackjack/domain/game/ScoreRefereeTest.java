@@ -3,26 +3,31 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ScoreRefereeTest {
+
+    private static final int BUST_SCORE = -1;
+    private static final int MAX_CARD_SCORE = 21;
 
     @Test
     void 카드를_받아_점수를_계산한다() {
         //given
-        List<Card> cards = List.of(new Card(CardNumber.TWO, CardShape.CLOVER));
+        CardNumber cardNumber = CardNumber.TWO;
+        List<Card> cards = List.of(new Card(cardNumber, CardShape.CLOVER));
 
         // when
         final int score = ScoreReferee.calculateScore(cards);
 
         // then
-        Assertions.assertThat(score).isEqualTo(2);
+        Assertions.assertThat(score).isEqualTo(cardNumber.getScore());
     }
 
     @Nested
@@ -54,7 +59,7 @@ class ScoreRefereeTest {
             final int score = ScoreReferee.calculateScore(cards);
 
             // then
-            Assertions.assertThat(score).isEqualTo(21);
+            Assertions.assertThat(score).isEqualTo(MAX_CARD_SCORE);
         }
     }
 
@@ -70,7 +75,6 @@ class ScoreRefereeTest {
         final int score = ScoreReferee.calculateScore(cards);
 
         //then
-        Assertions.assertThat(score).isEqualTo(-1);
-
+        Assertions.assertThat(score).isEqualTo(BUST_SCORE);
     }
 }
