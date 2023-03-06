@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
     private static final String INPUT_PLAYER_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String ASK_ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n) %n";
-    private static final String SETUP_COMPLETE_MESSAGE = "%n딜러와 %s에게 2장을 나누었습니다.%n";
-    private static final String DEALER_DRAW_RESULT_MESSAGE = "%n 딜러는 16이하라 %d장의 카드를 더 받았습니다.%n%n";
+    private static final String ASK_ONE_MORE_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n) %n";
+    private static final String SETUP_COMPLETE_MESSAGE_FORMAT = "%n딜러와 %s에게 2장을 나누었습니다.%n";
+    private static final String DEALER_DRAW_RESULT_MESSAGE_FORMAT = "%n 딜러는 16이하라 %d장의 카드를 더 받았습니다.%n%n";
 
     private static final String FINAL_RESULT_NOTICE_MESSAGE = "## 최종 승패";
-    private static final String DEALER_FINAL_RESULT_MESSAGE = "딜러: %d승 %d패%n";
+    private static final String DEALER_FINAL_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d패%n";
     private static final String WIN_COUNT_MESSAGE = ": 승";
     private static final String LOSE_COUNT_MESSAGE = ": 패";
 
@@ -34,7 +34,7 @@ public class OutputView {
     }
 
     public void printAskOneMoreCardMessage(String name) {
-        System.out.printf(ASK_ONE_MORE_CARD_MESSAGE, name);
+        System.out.printf(ASK_ONE_MORE_CARD_MESSAGE_FORMAT, name);
     }
 
     public void printPlayerDrawResult(String name, List<Card> cards) {
@@ -46,10 +46,11 @@ public class OutputView {
     }
 
     private void printSetUpCompleteMessage(Map<String, List<Card>> setUpResult) {
+
         String playerNames = String.join(DRAW_RESULT_DELIMITER,
                 new ArrayList<>(setUpResult.keySet()).subList(1, setUpResult.size()));
 
-        System.out.printf(SETUP_COMPLETE_MESSAGE, playerNames);
+        System.out.printf(SETUP_COMPLETE_MESSAGE_FORMAT, playerNames);
     }
 
     private void printUserCards(Map<String, List<Card>> setUpResult) {
@@ -65,7 +66,7 @@ public class OutputView {
     }
 
     public void printDealerDrawResult(int dealerDrawCount) {
-        System.out.printf(DEALER_DRAW_RESULT_MESSAGE, dealerDrawCount);
+        System.out.printf(DEALER_DRAW_RESULT_MESSAGE_FORMAT, dealerDrawCount);
     }
 
     public void printUsersCardResult(Map<User, List<Card>> userResult) {
@@ -83,7 +84,7 @@ public class OutputView {
 
     public void printFinalResult(Map<Boolean, Integer> dealerResult, Map<String, Boolean> userResult) {
         System.out.println(FINAL_RESULT_NOTICE_MESSAGE);
-        System.out.printf(DEALER_FINAL_RESULT_MESSAGE, dealerResult.get(true), dealerResult.get(false));
+        System.out.printf(DEALER_FINAL_RESULT_MESSAGE_FORMAT, dealerResult.get(true), dealerResult.get(false));
         for (Entry<String, Boolean> userFinalResult : userResult.entrySet()) {
             if (userFinalResult.getValue()) {
                 System.out.println(userFinalResult.getKey() + WIN_COUNT_MESSAGE);
