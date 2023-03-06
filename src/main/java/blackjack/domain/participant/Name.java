@@ -10,12 +10,16 @@ public class Name {
     private final String value;
 
     public Name(final String value) {
-        validateLengthOfName(value);
-        validateContainSpace(value);
+        validateName(value);
         this.value = value;
     }
 
-    private void validateContainSpace(final String value) {
+    private void validateName(String value) {
+        validateContainBlank(value);
+        validateLengthOfName(value);
+    }
+
+    private void validateContainBlank(final String value) {
         if (value.isBlank()) {
             throw new IllegalArgumentException("이름에는 공백이 포함될 수 없습니다.");
         }
