@@ -2,7 +2,6 @@ package domain;
 
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.User;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,20 +12,21 @@ public class Users {
     private static final int PLAYER_MIN_SIZE = 1;
     private static final int PLAYER_MAX_SIZE = 4;
 
-    private final List<User> users;
+    private final List<Player> players;
+    private final Dealer dealer;
 
-    private Users(final List<User> users) {
-        this.users = users;
+    private Users(final List<Player> players, final Dealer dealer) {
+        this.players = List.copyOf(players);
+        this.dealer = dealer;
     }
 
     public static Users from(final List<String> names) {
         validate(names);
         Dealer dealer = new Dealer();
-        List<User> users = names.stream()
+        List<Player> players = names.stream()
             .map(Player::new)
             .collect(Collectors.toList());
-        users.add(dealer);
-        return new Users(users);
+        return new Users(players, dealer);
     }
 
     private static void validate(final List<String> names) {
@@ -64,22 +64,14 @@ public class Users {
     }
 
     public List<Player> getPlayers() {
-        return users.stream()
-            .filter(user -> user instanceof Player)
-            .map(user -> (Player) user)
-            .collect(Collectors.toUnmodifiableList());
+        return players;
     }
 
     public Dealer getDealer() {
-        User dealer = users.stream()
-            .filter(user -> user instanceof Dealer)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
-        return (Dealer) dealer;
+        return dealer;
     }
 
     public List<Player> getHittablePlayers() {
-        List<Player> players = getPlayers();
         return players.stream()
             .filter(Player::isHittable)
             .collect(Collectors.toUnmodifiableList());
