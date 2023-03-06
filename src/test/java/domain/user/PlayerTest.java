@@ -26,7 +26,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("합산 점수가 21을 초과하면 Bust 상태가 된다.")
-    void checkBustByScoreTest() {
+    void calculateStatusTest() {
         //given
         Player player = new Player(new Name("플레이어"));
 
@@ -37,6 +37,7 @@ class PlayerTest {
         UserStatus result = player.getStatus();
 
         //then
+        assertThat(player.getScore()).isGreaterThan(21);
         assertThat(result).isEqualTo(PlayerStatus.BUST);
     }
 }
