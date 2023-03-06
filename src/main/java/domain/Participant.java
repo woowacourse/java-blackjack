@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
     private final List<Card> cards = new ArrayList<>();
 
     public void receiveCard(Card card) {
