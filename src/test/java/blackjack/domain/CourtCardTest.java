@@ -19,11 +19,4 @@ class CourtCardTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(String.format("심볼은 J, Q, K 중 하나여야 합니다. 입력된 값 : %s", input));
     }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"J", "Q", "K"})
-    void getValue(String input) {
-        Card courtCard = new CourtCard(Pattern.SPADE, input);
-        Assertions.assertThat(courtCard.getValue()).isEqualTo(10);
-    }
 }

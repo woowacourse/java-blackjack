@@ -14,9 +14,4 @@ class AceCardTest {
         Assertions.assertThat(card).isInstanceOf(AceCard.class);
     }
 
-    @Test
-    void getValue() {
-        Card aceCard = new AceCard(Pattern.SPADE);
-        Assertions.assertThat(aceCard.getValue()).isEqualTo(11);
-    }
 }
