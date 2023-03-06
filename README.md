@@ -64,9 +64,27 @@
     - [x] Ace는 1또는 11로 계산한다.
     - [x] King, Queen, Jack은 각각 10으로 계산한다.
 
+### 딜러와 플레이어의 승패 판단 케이스(결과는 플레이어 기준)
+
+플레이어가 blackjack 인 경우
+
+- 딜러가 blackjack 이면 무승부
+- 딜러가 bust/stand 면 승리
+
+플레이어가 bust 인 경우
+
+- 패배
+
+플레이어 stand 인 경우
+
+- 딜러가 stand 면 점수비교를 통해 승리/무승부/패배
+- 딜러가 blackjack 이면 패배
+- 딜러가 bust 면 승리
+
 ## 리팩터링
+
 - [x] 이름 저장할 때 양옆 공백 trim
 - [x] string join 할 때 , 뒤에 공백 추가
 - [x] 중복이름 / 플레이어 수1명이상 검증 -> players? participants?
 - [ ] 비대해진 컨트롤러
-- 
+
