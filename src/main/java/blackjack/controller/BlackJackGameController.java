@@ -25,19 +25,12 @@ public class BlackJackGameController {
 
     public void run() {
         final BlackJackGame blackJackGame = generateBlackJackGame();
-
-        blackJackGame.handOutCards(shufflingMachine);
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
 
-        OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
-        handOutCardToPlayers(blackJackGame, players);
+        playBlackJackGame(blackJackGame, dealer, players);
 
-        handOutCardToDealer(blackJackGame, dealer);
-
-        blackJackGame.findWinner();
-        OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
+        printFinalResult(dealer, players);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -56,6 +49,21 @@ public class BlackJackGameController {
             System.out.println(e.getMessage());
             return Optional.empty();
         }
+    }
+
+    private void playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer, final Players players) {
+        blackJackGame.handOutCards(shufflingMachine);
+
+        OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
+        handOutCardToPlayers(blackJackGame, players);
+        handOutCardToDealer(blackJackGame, dealer);
+
+        blackJackGame.findWinner();
+    }
+
+    private void printFinalResult(final Dealer dealer, final Players players) {
+        OutputView.printCardsWithSum(players.getPlayers(), dealer);
+        OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
     }
 
     private void handOutCardToPlayers(final BlackJackGame blackJackGame, final Players players) {
