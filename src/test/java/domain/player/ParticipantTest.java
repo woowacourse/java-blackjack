@@ -28,12 +28,6 @@ class ParticipantTest {
     };
 
     @Test
-    void 추상클래스다() {
-        //when & then
-        assertThat(Participant.class).isAbstract();
-    }
-
-    @Test
     void 이름과_area_가진다() {
         // when & then
         assertDoesNotThrow(() -> new Participant(코다이름(), equal16CardArea()) {

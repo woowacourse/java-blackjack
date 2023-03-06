@@ -23,11 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Dealer 은")
 class DealerTest {
 
-    private final CardArea cardArea = new CardArea(
-            new Card(CardShape.CLOVER, TEN),
-            new Card(CardShape.CLOVER, SEVEN)
-    );
-
     @Test
     void 딜러는_16이하면_카드를_더_받을_수_있다() {
         // given
@@ -73,8 +68,8 @@ class DealerTest {
     @Test
     void 딜러의_이름은_항상_딜러이다() {
         // given
-        final Dealer dealer1 = new Dealer(cardArea);
-        final Dealer dealer2 = new Dealer(cardArea);
+        final Dealer dealer1 = new Dealer(equal16CardArea());
+        final Dealer dealer2 = new Dealer(equal16CardArea());
 
         // when
         assertAll(
@@ -108,5 +103,4 @@ class DealerTest {
         // then
         assertThat(judge).isEqualTo(dealerCompeteResult);
     }
-
 }

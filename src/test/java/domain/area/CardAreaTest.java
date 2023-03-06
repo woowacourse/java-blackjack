@@ -2,6 +2,7 @@ package domain.area;
 
 import domain.card.Card;
 import domain.card.CardShape;
+import domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -66,20 +67,19 @@ class CardAreaTest {
 
     @ParameterizedTest(name = "킹, 퀸, 잭은 10으로 계산한다")
     @CsvSource(value = {
-            "KING+QUEEN = 20",
-            "KING+JACK = 20",
-            "QUEEN+JACK = 20",
-            "KING+THREE = 13",
-            "QUEEN+THREE = 13",
-            "JACK+SIX = 16",
-    }, delimiterString = " = ")
-    void 킹_퀸_잭은_10으로_계산한다(final String values, final int totalScore) {
+            "KING,QUEEN,20",
+            "KING,JACK,20",
+            "QUEEN,JACK,20",
+            "KING,THREE,13",
+            "QUEEN,THREE,13",
+            "JACK,SIX,16",
+    })
+    void 킹_퀸_잭은_10으로_계산한다(final CardValue first, final CardValue second, final int sum) {
         // given
-        final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(CLOVER, valueOf(split[0])), new Card(CLOVER, valueOf(split[1])));
+        final CardArea cardArea = new CardArea(new Card(CLOVER, first), new Card(CLOVER, second));
 
         // when & then
-        assertThat(cardArea.calculate()).isEqualTo(totalScore);
+        assertThat(cardArea.calculate()).isEqualTo(sum);
     }
 
     @ParameterizedTest(name = "[{index}] ACE 는 해당 값을 포함한 전체 점수가 21 이하인 경우 11로 계산한다.")
