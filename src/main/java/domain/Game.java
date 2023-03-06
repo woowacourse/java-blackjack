@@ -18,24 +18,15 @@ public class Game {
         }
     }
 
-    public void dealCardTo(User user) {
-        User foundUser = participants.find(user);
-        foundUser.addCard(deck.draw());
-    }
-
-    public boolean dealCardToDealer() {
-        Dealer dealer = participants.getDealer();
-        if (dealer.canHit()) {
-            dealer.addCard(deck.draw());
-            return true;
-        }
-        return false;
+    public void dealCardTo(Player user) {
+        Player player = participants.find(user);
+        player.addCard(deck.draw());
     }
 
     public Result getResultOf(User user) {
-        User foundUser = participants.find(user);
+        Player player = participants.find(user);
         Dealer dealer = participants.getDealer();
-        return foundUser.competeWith(dealer);
+        return player.competeWith(dealer);
     }
 
     public List<Result> getDealerResults() {

@@ -1,3 +1,4 @@
+import domain.Dealer;
 import domain.Deck;
 import domain.Game;
 import domain.Participants;
@@ -30,7 +31,7 @@ public class Application {
         for (User user : game.getUsers()) {
             selectHitOrStand(game, user);
         }
-        dealCardToDealer(game);
+        selectDealerHitOrStand(game, game.getDealer());
     }
 
     private static void printResult(Game game) {
@@ -41,27 +42,19 @@ public class Application {
         }
     }
 
-    private static void dealCardToDealer(Game game) {
-        if (game.dealCardToDealer()) {
+    private static void selectDealerHitOrStand(Game game, Dealer dealer) {
+        if (dealer.canHit()) {
             OUTPUT_VIEW.noticeDealerHit();
+            game.dealCardTo(dealer);
             return;
         }
         OUTPUT_VIEW.noticeDealerStand();
     }
 
     private static void selectHitOrStand(Game game, User user) {
-        boolean hit = true;
-        while (hit && user.canHit()) {
-            hit = dealCardIfHit(game, user);
-        }
-    }
-
-    private static boolean dealCardIfHit(Game game, User user) {
-        if (INPUT_VIEW.askForHit(user)) {
+        while (user.canHit() && INPUT_VIEW.askForHit(user)) {
             game.dealCardTo(user);
             OUTPUT_VIEW.printPlayerCards(user.getName(), user.getCards());
-            return true;
         }
-        return false;
     }
 }

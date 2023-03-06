@@ -25,9 +25,12 @@ public class Participants {
         return new Participants(users);
     }
 
-    User find(User user) {
+    Player find(Player player) {
+        if (dealer.equals(player)) {
+            return dealer;
+        }
         return users.stream()
-                .filter(someUser -> someUser.equals(user))
+                .filter(someUser -> someUser.equals(player))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("참가중인 플레이어가 아닙니다"));
     }
