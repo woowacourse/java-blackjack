@@ -10,9 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import domain.card.Deck;
 import domain.card.RandomShuffleStrategy;
-import domain.people.Dealer;
-import domain.people.Participants;
-import domain.people.Player;
 
 class ParticipantsTest {
 

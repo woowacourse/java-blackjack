@@ -41,7 +41,7 @@ class ParticipantTest {
     }
 
     @Test
-    @DisplayName("딜러는 하나만 존재한다.")
+    @DisplayName("딜러는 유일하다.")
     void equalsTest() {
         assertThat(new Dealer().equals(new Dealer())).isTrue();
     }
