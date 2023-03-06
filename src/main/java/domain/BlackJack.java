@@ -3,8 +3,10 @@ package domain;
 import domain.card.CardRepository;
 import domain.gameresult.GameResult;
 import domain.gameresult.GameResultReadOnly;
-import domain.player.*;
-import domain.strategy.IndexGenerator;
+import domain.player.Player;
+import domain.player.PlayerReadOnly;
+import domain.player.Players;
+import domain.player.PlayersReadOnly;
 
 import java.util.List;
 
@@ -12,9 +14,9 @@ public class BlackJack {
     private final Players players;
     private final CardRepository cardRepository;
 
-    public BlackJack(List<Name> participantNames, IndexGenerator indexGenerator) {
-        this.players = Players.with(participantNames);
-        this.cardRepository = CardRepository.create(indexGenerator);
+    public BlackJack(Players players, CardRepository cardRepository) {
+        this.players = players;
+        this.cardRepository = cardRepository;
     }
 
     public void initializeCardsOfPlayers() {
