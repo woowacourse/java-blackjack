@@ -73,10 +73,10 @@ public class BlackJackGameController {
     }
 
     private void handOutCardToEachPlayer(final BlackJackGame blackJackGame, final Player player) {
-        String playerAnswer = inputGameCommandToGetOneMoreCard(player);
-        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) &&
-                handOutCardByCommand(blackJackGame, player, playerAnswer)) {
-            playerAnswer = inputGameCommandToGetOneMoreCard(player);
+        boolean command = true;
+        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) && command) {
+            final String playerAnswer = inputGameCommandToGetOneMoreCard(player);
+            command = isCardHandedOutByCommand(blackJackGame, player, playerAnswer);
         }
     }
 
@@ -99,8 +99,8 @@ public class BlackJackGameController {
         }
     }
 
-    private boolean handOutCardByCommand(final BlackJackGame blackJackGame, final Player player,
-                                         final String playerAnswer) {
+    private boolean isCardHandedOutByCommand(final BlackJackGame blackJackGame, final Player player,
+                                             final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.handOutCardTo(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
