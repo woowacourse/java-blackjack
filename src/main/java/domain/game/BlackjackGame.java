@@ -24,7 +24,7 @@ public class BlackjackGame {
     }
 
     public void letDealerHitUntilThreshold(Runnable outputDealerHitMessage) {
-        if (people.dealerNeedsHit()) {
+        if (people.dealerCanHit()) {
             outputDealerHitMessage.run();
             people.letDealerHitUntilThreshold(deck);
         }

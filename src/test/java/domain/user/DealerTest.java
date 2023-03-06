@@ -20,7 +20,7 @@ class DealerTest {
                 new Card(Suit.HEART, Denomination.ACE)
         )));
 
-        assertThat(dealer.isHit()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @Test
@@ -31,6 +31,6 @@ class DealerTest {
                 new Card(Suit.HEART, Denomination.ACE)
         )));
 
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 }

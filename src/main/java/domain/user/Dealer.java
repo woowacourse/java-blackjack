@@ -8,7 +8,7 @@ public class Dealer extends Player {
         super(playerName, hand);
     }
 
-    public boolean isHit() {
+    public boolean canHit() {
         return sumHand() <= GameRule.DEALER_HIT_LIMIT.getNumber();
     }
 }

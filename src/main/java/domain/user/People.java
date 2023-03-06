@@ -41,7 +41,7 @@ public class People {
     }
 
     public void letDealerHitUntilThreshold(Deck deck) {
-        while (dealer.isHit()) {
+        while (dealer.canHit()) {
             dealer.draw(deck.serve());
         }
     }
@@ -61,16 +61,8 @@ public class People {
         return GameResult.makeDealerRecord(record);
     }
 
-    public boolean dealerNeedsHit() {
-        return dealer.isHit();
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
+    public boolean dealerCanHit() {
+        return dealer.canHit();
     }
 
     public void hitByCommandAllPlayers(Function<String, HitCommand> function, Consumer<PlayerParameter> consumer, Deck deck) {
@@ -86,5 +78,13 @@ public class People {
             hitCommand = inputCommand.apply(player.getPlayerName().getValue());
             hitCommand = hitCommand.hitByCommand(player, deck, outputPlayer);
         } while(hitCommand == HitCommand.y);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
