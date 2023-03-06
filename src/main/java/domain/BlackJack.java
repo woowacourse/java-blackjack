@@ -4,6 +4,7 @@ import static domain.GameResult.LOSE;
 import static domain.GameResult.PUSH;
 import static domain.GameResult.WIN;
 
+import domain.shuffler.CardShuffler;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -23,8 +24,8 @@ public class BlackJack {
         this.deck = deck;
     }
 
-    public static BlackJack of(final Users users, final CardIndexGenerator cardIndexGenerator) {
-        Deck deck = new Deck(cardIndexGenerator);
+    public static BlackJack of(final Users users, final CardShuffler cardShuffler) {
+        Deck deck = Deck.from(cardShuffler);
         initCards(users, deck);
         return new BlackJack(users, deck);
     }

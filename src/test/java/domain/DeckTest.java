@@ -10,7 +10,8 @@ public class DeckTest {
     @DisplayName("카드를 뽑는다")
     @Test
     void pickCard() {
-        Deck deck = new Deck(deckSize -> 0);
+        Deck deck = Deck.from(cards -> {
+        });
 
         Card card1 = deck.pickCard();
         Card card2 = deck.pickCard();

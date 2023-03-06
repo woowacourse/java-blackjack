@@ -18,21 +18,23 @@ public class BlackJackTest {
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users, deckSize -> 0);
+        blackJack = BlackJack.of(users, cards -> {
+        });
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
     @Test
     void calculateGameResults() {
         users = Users.from(List.of("hongo", "kiara"));
-        blackJack = BlackJack.of(users, deckSize -> 0);
+        blackJack = BlackJack.of(users, cards -> {
+        });
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
         // dealer  : 5, 6       => 11
         Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-        
+
         assertThat(gameResults)
             .containsEntry("hongo", GameResult.WIN)
             .containsEntry("kiara", GameResult.LOSE);
@@ -100,7 +102,8 @@ public class BlackJackTest {
     @Test
     void calculateDealerResult() {
         users = Users.from(List.of("hongo", "kiara", "ash"));
-        blackJack = BlackJack.of(users, deckSize -> 0);
+        blackJack = BlackJack.of(users, cards -> {
+        });
         List<Player> players = blackJack.getHittablePlayers();
         players.get(1)
             .hit(new Card(Denomination.EIGHT, Suits.DIAMOND));
@@ -124,7 +127,8 @@ public class BlackJackTest {
     @Test
     void getPlayerToCard() {
         users = Users.from(List.of("hongo", "kiara", "ash"));
-        blackJack = BlackJack.of(users, deckSize -> 0);
+        blackJack = BlackJack.of(users, cards -> {
+        });
         blackJack.giveCard("kiara");
         blackJack.giveCard("ash");
         blackJack.giveCard("ash");
@@ -147,7 +151,8 @@ public class BlackJackTest {
     @Test
     void getPlayerToScore() {
         users = Users.from(List.of("hongo", "kiara", "ash"));
-        blackJack = BlackJack.of(users, deckSize -> 0);
+        blackJack = BlackJack.of(users, cards -> {
+        });
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13

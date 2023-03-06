@@ -1,38 +1,42 @@
 package domain;
 
+import domain.shuffler.CardShuffler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Deck {
 
     private static final List<Card> CARDS;
 
-    private final CardIndexGenerator cardIndexGenerator;
-    private final List<Card> unusedCards;
+    private final Queue<Card> unusedCards;
 
     static {
-        List<Card> cards = new ArrayList<>();
+        CARDS = new ArrayList<>();
         for (Suits suit : Suits.values()) {
             int denominationLength = Denomination.values().length;
-            addCard(cards, suit, denominationLength);
+            addCard(suit, denominationLength);
         }
-        CARDS = List.copyOf(cards);
     }
 
-    public Deck(CardIndexGenerator cardIndexGenerator) {
-        this.cardIndexGenerator = cardIndexGenerator;
-        this.unusedCards = new LinkedList<>(CARDS);
-    }
-
-    private static void addCard(final List<Card> cards, final Suits suit, final int denominationLength) {
+    private static void addCard(final Suits suit, final int denominationLength) {
         for (int i = 0; i < denominationLength; i++) {
-            cards.add(new Card(Denomination.values()[i], suit));
+            Deck.CARDS.add(new Card(Denomination.values()[i], suit));
         }
+    }
+
+    private Deck(final List<Card> unusedCards) {
+        this.unusedCards = new LinkedList<>(unusedCards);
+    }
+
+    public static Deck from(CardShuffler cardShuffler) {
+        List<Card> cards = new ArrayList<>(CARDS);
+        cardShuffler.shuffleCards(cards);
+        return new Deck(cards);
     }
 
     public Card pickCard() {
-        int index = cardIndexGenerator.chooseIndex(unusedCards.size());
-        return unusedCards.remove(index);
+        return unusedCards.remove();
     }
 }
