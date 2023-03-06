@@ -28,9 +28,4 @@ public class StandState extends State {
     public boolean isBust() {
         return false;
     }
-
-    @Override
-    public boolean isStand() {
-        return true;
-    }
 }

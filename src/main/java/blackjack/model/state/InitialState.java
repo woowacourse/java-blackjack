@@ -41,11 +41,6 @@ public class InitialState extends State {
         return false;
     }
 
-    @Override
-    public boolean isStand() {
-        return false;
-    }
-
     private void validateHandCardIsEmpty(HandCard handCard) {
         if (handCard.size() != EMPTY) {
             throw new IllegalArgumentException("초기 상태의 카드는 비어있어야 합니다.");

@@ -32,11 +32,6 @@ public class BustState extends State {
         return true;
     }
 
-    @Override
-    public boolean isStand() {
-        return false;
-    }
-
     private void validateIsHandCardOver21(HandCard handCard) {
         if (!(handCard.isBigScoreOver(BUST_THROTTLE) && handCard.isSmallScoreOver(21))) {
             throw new IllegalArgumentException("카드 합이 21이하입니다. 버스트 상태가 될 수 없습니다.");

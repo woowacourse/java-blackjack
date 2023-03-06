@@ -37,9 +37,4 @@ public class DealerDrawState extends State {
     public boolean isBust() {
         return false;
     }
-
-    @Override
-    public boolean isStand() {
-        return false;
-    }
 }

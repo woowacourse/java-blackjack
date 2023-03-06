@@ -32,11 +32,6 @@ public class BlackjackState extends State {
         return false;
     }
 
-    @Override
-    public boolean isStand() {
-        return false;
-    }
-
     private void validateIsHandCard21(HandCard handCard) {
         if (!handCard.isBigScoreEqual(BLACKJACK_SCORE)) {
             throw new IllegalArgumentException("점수가 21이 아닌 카드들입니다. 블랙잭이 될 수 없습니다.");
