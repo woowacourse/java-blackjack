@@ -57,19 +57,11 @@ public class Result {
         }
     }
 
-    public Map<String, String> getGuestsResult() {
-        Map<String, String> result = new LinkedHashMap<>();
-        for (final Guest guest : guestsResult.keySet()) {
-            result.put(guest.getName(), guestsResult.get(guest).getOutcome());
-        }
-        return Collections.unmodifiableMap(result);
+    public Map<Guest, GameOutcome> getGuestsResult() {
+        return guestsResult;
     }
 
-    public Map<String, Integer> getDealerResult() {
-        Map<String, Integer> result = new LinkedHashMap<>();
-        for (final GameOutcome gameOutcome : dealerResult.keySet()) {
-            result.put(gameOutcome.getOutcome(), dealerResult.get(gameOutcome));
-        }
-        return Collections.unmodifiableMap(result);
+    public Map<GameOutcome, Integer> getDealerResult() {
+        return dealerResult;
     }
 }

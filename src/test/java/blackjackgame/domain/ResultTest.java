@@ -34,15 +34,15 @@ class ResultTest {
 
         Result result = new Result(dealer, List.of(win, lose, draw));
 
-        Map<String, String> guestsResult = result.getGuestsResult();
-        Map<String, Integer> dealerResult = result.getDealerResult();
+        Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+        Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-        assertThat(guestsResult.get("win")).isEqualTo("승");
-        assertThat(guestsResult.get("lose")).isEqualTo("패");
-        assertThat(guestsResult.get("draw")).isEqualTo("무");
-        assertThat(dealerResult.get("승")).isEqualTo(1);
-        assertThat(dealerResult.get("패")).isEqualTo(1);
-        assertThat(dealerResult.get("무")).isEqualTo(1);
+        assertThat(guestsResult.get(win)).isEqualTo(GameOutcome.WIN);
+        assertThat(guestsResult.get(lose)).isEqualTo(GameOutcome.LOSE);
+        assertThat(guestsResult.get(draw)).isEqualTo(GameOutcome.DRAW);
+        assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+        assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(1);
+        assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(1);
     }
 
     @Nested
@@ -59,13 +59,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("패");
-            assertThat(dealerResult.get("승")).isEqualTo(1);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.LOSE);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("점수가 21이하일때 무승부")
@@ -79,13 +79,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("무");
-            assertThat(dealerResult.get("승")).isEqualTo(0);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(1);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.DRAW);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(1);
         }
     }
 
@@ -104,13 +104,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("패");
-            assertThat(dealerResult.get("승")).isEqualTo(1);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.LOSE);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("딜러의 점수가 21을 초과하고 게스트의 점수가 21이하인 경우 게스트 승")
@@ -124,13 +124,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("승");
-            assertThat(dealerResult.get("승")).isEqualTo(0);
-            assertThat(dealerResult.get("패")).isEqualTo(1);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.WIN);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("딜러의 점수가 21이하고 게스트의 점수가 21 초과인 경우 게스트 패")
@@ -144,13 +144,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("패");
-            assertThat(dealerResult.get("승")).isEqualTo(1);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.LOSE);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("딜러와 게스트의 점수가 21이하인 경우, 게스트 패")
@@ -164,17 +164,15 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("패");
-            assertThat(dealerResult.get("승")).isEqualTo(1);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.LOSE);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
-
     }
-
 
     @Nested
     @DisplayName("게스트의 점수가 높을 때, ")
@@ -190,13 +188,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("패");
-            assertThat(dealerResult.get("승")).isEqualTo(1);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.LOSE);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("딜러의 점수가 21이하이고 게스트의 점수가 21초과인 경우 게스트 패")
@@ -210,13 +208,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("패");
-            assertThat(dealerResult.get("승")).isEqualTo(1);
-            assertThat(dealerResult.get("패")).isEqualTo(0);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.LOSE);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("딜러의 점수가 21초과이고 게스트의 점수가 21 이하인 경우 게스트 승")
@@ -230,13 +228,13 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("승");
-            assertThat(dealerResult.get("승")).isEqualTo(0);
-            assertThat(dealerResult.get("패")).isEqualTo(1);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.WIN);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
 
         @DisplayName("딜러와 게스트의 점수가 21이하인 경우, 게스트 승")
@@ -250,26 +248,19 @@ class ResultTest {
 
             Result result = new Result(dealer, List.of(guest));
 
-            Map<String, String> guestsResult = result.getGuestsResult();
-            Map<String, Integer> dealerResult = result.getDealerResult();
+            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
+            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
-            assertThat(guestsResult.get("guest")).isEqualTo("승");
-            assertThat(dealerResult.get("승")).isEqualTo(0);
-            assertThat(dealerResult.get("패")).isEqualTo(1);
-            assertThat(dealerResult.get("무")).isEqualTo(0);
+            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.WIN);
+            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
+            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(1);
+            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
         }
-
     }
 
-    private void addCards(Player player, Card ... cards) {
+    private void addCards(Player player, Card... cards) {
         for (Card card : cards) {
             player.addCard(card);
         }
     }
-
-
-
-
-
-
 }

@@ -1,7 +1,6 @@
 package blackjackgame.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Player {
@@ -49,14 +48,7 @@ public abstract class Player {
         return cards.size();
     }
 
-    public List<List<String>> getCards() {
-        List<List<String>> playerCards = new ArrayList<>();
-        for (final Card card : cards) {
-            List<String> playerCard = new ArrayList<>();
-            playerCard.add(card.getValue());
-            playerCard.add(card.getSymbol());
-            playerCards.add(playerCard);
-        }
-        return Collections.unmodifiableList(playerCards);
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
