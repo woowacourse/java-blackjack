@@ -14,12 +14,12 @@ public enum CardTypeMapper {
     private final CardType cardType;
     private final String cardName;
 
-    CardTypeMapper(CardType cardType, String cardName) {
+    CardTypeMapper(final CardType cardType, final String cardName) {
         this.cardType = cardType;
         this.cardName = cardName;
     }
 
-    public static String getCardName(CardType cardType) {
+    public static String getCardName(final CardType cardType) {
         return Arrays.stream(CardTypeMapper.values())
                 .filter(it -> it.cardType == cardType)
                 .findAny()

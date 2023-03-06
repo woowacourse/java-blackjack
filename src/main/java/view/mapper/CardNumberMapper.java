@@ -23,12 +23,12 @@ public enum CardNumberMapper {
     private final CardNumber cardNumber;
     private final String value;
 
-    CardNumberMapper(CardNumber cardNumber, String value) {
+    CardNumberMapper(final CardNumber cardNumber, final String value) {
         this.cardNumber = cardNumber;
         this.value = value;
     }
 
-    public static String getCardNumber(CardNumber cardNumber) {
+    public static String getCardNumber(final CardNumber cardNumber) {
         return Arrays.stream(CardNumberMapper.values())
                 .filter(it -> it.cardNumber == cardNumber)
                 .findAny()

@@ -14,7 +14,11 @@ public class BlackjackGame {
     private final Deck deck;
     private final GameParticipant gameParticipant;
 
-    public BlackjackGame(List<String> playerNames, String dealerName, ShuffleStrategy shuffleStrategy) {
+    public BlackjackGame(
+            final List<String> playerNames,
+            final String dealerName,
+            final ShuffleStrategy shuffleStrategy
+    ) {
         this.deck = new Deck(shuffleStrategy);
         this.gameParticipant = new GameParticipant(playerNames, dealerName);
     }
@@ -33,11 +37,11 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isBurst(String playerName) {
+    public boolean isBurst(final String playerName) {
         return gameParticipant.isBurst(playerName);
     }
 
-    public void hitFor(String playerName) {
+    public void hitFor(final String playerName) {
         gameParticipant.letPlayerToHit(playerName, deck);
     }
 

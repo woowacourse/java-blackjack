@@ -27,7 +27,7 @@ public class InputView {
         return trimList(List.of(splitNames));
     }
 
-    private List<String> trimList(List<String> targets) {
+    private List<String> trimList(final List<String> targets) {
         List<String> trimmedList = new ArrayList<>();
         for (String target : targets) {
             trimmedList.add(target.trim());
@@ -36,7 +36,7 @@ public class InputView {
         return trimmedList;
     }
 
-    public String inputCardCommand(String player) {
+    public String inputCardCommand(final String player) {
         System.out.println(player + INPUT_CARD_COMMAND_MESSAGE);
         String line = scanner.nextLine();
         validator.validateNotBlank(line);

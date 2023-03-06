@@ -18,7 +18,7 @@ public enum CardNumber {
 
     private final int point;
 
-    CardNumber(int point) {
+    CardNumber(final int point) {
         this.point = point;
     }
 

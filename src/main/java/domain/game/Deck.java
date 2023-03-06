@@ -20,7 +20,7 @@ public class Deck {
         cards = makeCards();
     }
 
-    public Deck(ShuffleStrategy shuffleStrategy) {
+    public Deck(final ShuffleStrategy shuffleStrategy) {
         this.shuffleStrategy = shuffleStrategy;
     }
 
@@ -32,7 +32,7 @@ public class Deck {
         return cardsOfAllCardType;
     }
 
-    private static List<Card> makeCardsOfOneCardType(CardType cardType) {
+    private static List<Card> makeCardsOfOneCardType(final CardType cardType) {
         List<Card> cardsOfOneCardType = new ArrayList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             cardsOfOneCardType.add(new Card(cardType, cardNumber));

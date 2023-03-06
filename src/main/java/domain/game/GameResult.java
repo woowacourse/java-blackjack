@@ -16,25 +16,25 @@ public enum GameResult {
 
     private final BiFunction<Integer, Integer, Boolean> criteria;
 
-    GameResult(BiFunction<Integer, Integer, Boolean> criteria) {
+    GameResult(final BiFunction<Integer, Integer, Boolean> criteria) {
         this.criteria = criteria;
     }
 
-    public static GameResult makePlayerRecord(Player player, Dealer dealer) {
+    public static GameResult makePlayerRecord(final Player player, final Dealer dealer) {
         return Arrays.stream(values())
                 .filter(it -> it.criteria.apply(getPlayerPoint(player), getPlayerPoint(dealer)))
                 .findAny()
                 .orElseThrow();
     }
 
-    private static int getPlayerPoint(Player player) {
+    private static int getPlayerPoint(final Player player) {
         if (player.isBurst()) {
             return OUT_OF_GAME_POINT;
         }
         return player.sumCardPool();
     }
 
-    public static Map<GameResult, Integer> makeDealerRecord(Map<Player, GameResult> record) {
+    public static Map<GameResult, Integer> makeDealerRecord(final Map<Player, GameResult> record) {
         Map<GameResult, Integer> dealerRecord = new HashMap<>();
 
         dealerRecord.put(LOSE, countGameResult(record.values(), WIN));
@@ -44,7 +44,7 @@ public enum GameResult {
         return dealerRecord;
     }
 
-    private static int countGameResult(Collection<GameResult> gameResults, GameResult gameResultType) {
+    private static int countGameResult(final Collection<GameResult> gameResults, final GameResult gameResultType) {
         return Collections.frequency(gameResults, gameResultType);
     }
 }

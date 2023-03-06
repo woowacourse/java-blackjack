@@ -13,12 +13,12 @@ public enum GameResultMapper {
     private final GameResult gameResult;
     private final String message;
 
-    GameResultMapper(GameResult gameResult, String message) {
+    GameResultMapper(final GameResult gameResult, final String message) {
         this.gameResult = gameResult;
         this.message = message;
     }
 
-    public static String getGameResult(GameResult targetGameResult) {
+    public static String getGameResult(final GameResult targetGameResult) {
         return Arrays.stream(values())
                 .filter(gameResultMapper -> gameResultMapper.gameResult == targetGameResult)
                 .map(gameResultMapper -> gameResultMapper.message)

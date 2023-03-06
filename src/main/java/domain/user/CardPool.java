@@ -13,11 +13,11 @@ public class CardPool {
 
     private final List<Card> cards;
 
-    public CardPool(List<Card> cards) {
+    public CardPool(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
@@ -35,11 +35,12 @@ public class CardPool {
         return sum;
     }
 
-    private int updateIfExceedLimitAndAceExists(int sum) {
+    private int updateIfExceedLimitAndAceExists(final int sum) {
+        int updatedSum = sum;
         if (isSumExceedLimit() && containsAce()) {
-            sum -= CARD_POINT_LIMIT - CardNumber.ACE.getPoint();
+            updatedSum -= CARD_POINT_LIMIT - CardNumber.ACE.getPoint();
         }
-        return sum;
+        return updatedSum;
     }
 
     public boolean isSumExceedLimit() {

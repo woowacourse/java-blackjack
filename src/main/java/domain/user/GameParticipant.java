@@ -14,34 +14,34 @@ public class GameParticipant {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public GameParticipant(List<String> playerNames, String dealerName) {
+    public GameParticipant(final List<String> playerNames, final String dealerName) {
         this.players = makePlayersWithName(playerNames);
         this.dealer = makeDealerWithName(dealerName);
     }
 
-    private List<Player> makePlayersWithName(List<String> playerNames) {
+    private List<Player> makePlayersWithName(final List<String> playerNames) {
         return playerNames.stream()
                 .map(playerName -> new Player(playerName, new CardPool(Collections.emptyList())))
                 .collect(Collectors.toList());
     }
 
-    private Dealer makeDealerWithName(String dealerName) {
+    private Dealer makeDealerWithName(final String dealerName) {
         return new Dealer(dealerName, new CardPool(Collections.emptyList()));
     }
 
-    public void letPlayersToHit(Deck deck) {
+    public void letPlayersToHit(final Deck deck) {
         for (Player player : players) {
             player.draw(deck.serve());
         }
         dealer.draw(deck.serve());
     }
 
-    public void letPlayerToHit(String playerName, Deck deck) {
+    public void letPlayerToHit(final String playerName, final Deck deck) {
         Player player = getPlayerByName(playerName);
         player.draw(deck.serve());
     }
 
-    public void letDealerHitUntilThreshold(Deck deck) {
+    public void letDealerHitUntilThreshold(final Deck deck) {
         while (dealer.needsHit()) {
             dealer.draw(deck.serve());
         }
@@ -54,19 +54,19 @@ public class GameParticipant {
         return record;
     }
 
-    private void recordGameResult(Map<Player, GameResult> record) {
+    private void recordGameResult(final Map<Player, GameResult> record) {
         players.forEach(player -> record.put(player, GameResult.makePlayerRecord(player, dealer)));
     }
 
-    public Map<GameResult, Integer> getDealerRecord(Map<Player, GameResult> record) {
+    public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {
         return GameResult.makeDealerRecord(record);
     }
 
-    public boolean isBurst(String playerName) {
+    public boolean isBurst(final String playerName) {
         return getPlayerByName(playerName).isBurst();
     }
 
-    private Player getPlayerByName(String playerName) {
+    private Player getPlayerByName(final String playerName) {
         return players.stream()
                 .filter(it -> it.hasSameNameWith(playerName))
                 .findAny()

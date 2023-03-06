@@ -4,12 +4,12 @@ public class PlayerName {
 
     private final String name;
 
-    public PlayerName(String name) {
+    public PlayerName(final String name) {
         validate(name);
         this.name = name;
     }
 
-    private void validate(String target) {
+    private void validate(final String target) {
         if (target.length() < 1 || target.length() > 5) {
             throw new IllegalArgumentException("[ERROR]");
         }
@@ -19,7 +19,7 @@ public class PlayerName {
         return name;
     }
 
-    public boolean isSameWith(String otherName) {
+    public boolean isSameWith(final String otherName) {
         return otherName.equals(this.name);
     }
 }

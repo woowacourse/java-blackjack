@@ -7,16 +7,16 @@ public class Player {
     private final PlayerName playerName;
     private final CardPool cardPool;
 
-    public Player(String playerName, CardPool cardPool) {
+    public Player(final String playerName, final CardPool cardPool) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
     }
 
-    public void draw(Card card) {
+    public void draw(final Card card) {
         cardPool.add(card);
     }
 
-    public boolean hasSameNameWith(String name) {
+    public boolean hasSameNameWith(final String name) {
         return playerName.isSameWith(name);
     }
 
