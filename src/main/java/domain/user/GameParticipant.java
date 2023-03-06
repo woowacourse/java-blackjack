@@ -36,8 +36,7 @@ public class GameParticipant {
         dealer.draw(deck.serve());
     }
 
-    public void letPlayerToHit(final String playerName, final Deck deck) {
-        Player player = getPlayerByName(playerName);
+    public void letPlayerToHit(final Player player, final Deck deck) {
         player.draw(deck.serve());
     }
 
@@ -62,15 +61,8 @@ public class GameParticipant {
         return GameResult.makeDealerRecord(record);
     }
 
-    public boolean isBurst(final String playerName) {
-        return getPlayerByName(playerName).isBurst();
-    }
-
-    private Player getPlayerByName(final String playerName) {
-        return players.stream()
-                .filter(it -> it.hasSameNameWith(playerName))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 플레이어가 존재하지 않습니다"));
+    public boolean isBurst(final Player player) {
+        return player.isBurst();
     }
 
     public boolean dealerNeedsHit() {

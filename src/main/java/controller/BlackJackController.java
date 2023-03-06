@@ -10,6 +10,7 @@ import view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
+
     private final InputView inputView;
     private final OutputView outputView;
     private BlackjackGame blackjackGame;
@@ -19,8 +20,12 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void play() {
+    public void run() {
         initializeGame();
+        startGame();
+    }
+
+    private void startGame() {
         blackjackGame.startHit();
 
         GameParticipant gameParticipant = blackjackGame.getGameParticipant();
@@ -49,14 +54,14 @@ public class BlackJackController {
         if (needToQuit(player)) {
             return;
         }
-        blackjackGame.hitFor(player.getPlayerName().getName());
+        blackjackGame.hitFor(player);
         outputView.printPlayerCardWithName(player);
 
         hitByPlayerChoice(player);
     }
 
     private boolean needToQuit(Player player) {
-        if (blackjackGame.isBurst(player.getPlayerName().getName())) {
+        if (blackjackGame.isBurst(player)) {
             return true;
         }
         String choice = inputView.inputCardCommand(player.getPlayerName().getName());

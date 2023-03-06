@@ -14,7 +14,6 @@ public class Card {
         return number.equals(otherNumber);
     }
 
-
     public CardType getType() {
         return type;
     }

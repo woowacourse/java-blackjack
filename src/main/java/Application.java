@@ -11,6 +11,6 @@ public class Application {
         InputView inputView = new InputView(new Scanner(System.in), new InputValidator());
         OutputView outputView = new OutputView();
 
-        new BlackJackController(inputView, outputView).play();
+        new BlackJackController(inputView, outputView).run();
     }
 }
