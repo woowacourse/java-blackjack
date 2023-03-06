@@ -67,7 +67,7 @@ public class BlackjackController {
     }
 
     private void hitPlayerCard(final Player player, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
-        while (player.decideHit() && inputHitCommand(player).equals("y")) {
+        while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
             player.hit(cards.pick(cardPickerGenerator));
             outputView.printCurrentCards(player);
         }
