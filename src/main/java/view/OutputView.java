@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
+
     public static void printInputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
@@ -63,9 +64,9 @@ public class OutputView {
     private static void printDealerResult(final EnumMap<Outcome, Integer> dealerOutcome) {
         printGameEachResult(
                 "딜러",
-                dealerOutcome.get(Outcome.LOSE),
+                dealerOutcome.get(Outcome.WIN),
                 dealerOutcome.get(Outcome.DRAW),
-                dealerOutcome.get(Outcome.WIN)
+                dealerOutcome.get(Outcome.LOSE)
         );
     }
 
