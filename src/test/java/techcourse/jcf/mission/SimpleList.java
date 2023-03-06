@@ -39,5 +39,15 @@ public interface SimpleList<E> {
         }
         return sum;
     }
+
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> list) {
+        SimpleList<T> copy = new SimpleArrayList<>();
+        for (int i = 0; i< list.size(); i++) {
+            if(list.get(i).doubleValue() >= 0) {
+                copy.add(list.get(i));
+            }
+        }
+        return copy;
+    }
 }
 

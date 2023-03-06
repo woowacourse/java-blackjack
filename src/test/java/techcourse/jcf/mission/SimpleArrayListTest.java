@@ -229,4 +229,13 @@ class SimpleArrayListTest {
 
         Assertions.assertEquals(3,  SimpleList.sum(simpleList));
     }
+
+    @DisplayName("SimpleList 제네릭 메서드 음수 필터 테스트")
+    @Test
+    void SimpleList_제네릭_메서드_음수_필터_테스트() {
+        Integer[] array = {1, 2, -1, -2};
+        SimpleList<Integer> simpleList = SimpleList.fromArrayToList(array);
+        SimpleList<Integer> copy = SimpleList.filterNegative(simpleList);
+        Assertions.assertEquals(2,  copy.size());
+    }
 }
