@@ -29,7 +29,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("카드를 출력한다")
-    void createParticipant_thenDisplayCards() {
+    void createParticipant_thenGetCards() {
         //when
         List<Card> cards = player.getCards();
 
