@@ -14,7 +14,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CardHolderTest {
     @Test
-    @DisplayName("카드를 추가한 뒤, 플레이어 점수를 가져올 수 있다.")
+    @DisplayName("플레이어에게 카드를 추가할 수 있다")
+    void whenGivingCard_thenSuccess() {
+        Card card = new Card(Shape.CLOVER, Number.THREE);
+
+        CardHolder cardHolder = new CardHolder(new ArrayList<>());
+        cardHolder.addCard(card);
+
+        assertThat(cardHolder.getCards()).contains(card);
+    }
+
+    @Test
+    @DisplayName("플레이어 점수를 가져올 수 있다.")
     void givenCard_whenGetScore() {
         CardHolder cardHolder = new CardHolder(List.of(new Card(Shape.SPADE, Number.THREE)));
         assertThat(cardHolder.getTotalScore()).isEqualTo(3);
