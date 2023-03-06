@@ -26,11 +26,11 @@ public class Player {
         HitCommand hitCommand;
         do {
             hitCommand = HitCommand.findCommand(inputCommand.apply(playerName.getValue()));
-            hitCommand = hitIfCondition(outputPlayer, deck, hitCommand);
+            hitCommand = hitByCondition(outputPlayer, deck, hitCommand);
         } while (hitCommand == HitCommand.y);
     }
 
-    private HitCommand hitIfCondition(Consumer<PlayerParameter> outputPlayer, Deck deck, HitCommand hitCommand) {
+    private HitCommand hitByCondition(Consumer<PlayerParameter> outputPlayer, Deck deck, HitCommand hitCommand) {
         if (hitCommand == HitCommand.n) {
             return hitCommand;
         }
@@ -38,6 +38,10 @@ public class Player {
         draw(deck.serve());
         outputPlayer.accept(PlayerParameter.from(this));
 
+        return commandByBust(hitCommand);
+    }
+
+    private HitCommand commandByBust(HitCommand hitCommand) {
         if (isBust()) {
             return HitCommand.n;
         }
