@@ -25,6 +25,11 @@ public class BlackJackController {
         startGame();
     }
 
+    private void initializeGame() {
+        List<String> playersName = inputView.inputParticipantsName();
+        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomShuffleStrategy());
+    }
+
     private void startGame() {
         blackjackGame.startHit();
 
@@ -36,11 +41,6 @@ public class BlackJackController {
 
         outputView.printDealerRecord(gameParticipant.getDealer(), blackjackGame.getDealerRecord());
         outputView.printPlayerRecord(blackjackGame.getGameResultForAllPlayer());
-    }
-
-    private void initializeGame() {
-        List<String> playersName = inputView.inputParticipantsName();
-        blackjackGame = new BlackjackGame(playersName, "딜러", new RandomShuffleStrategy());
     }
 
     private void letPlayersHit(List<Player> players) {
