@@ -4,14 +4,16 @@ import model.card.Card;
 
 import java.util.Objects;
 
-public abstract class User {
+public class User {
+
+    public static final int BUST_NUMBER = 21;
 
     private final String name;
     private final Hand hand;
 
-    public User(final String name, final Hand hand) {
+    public User(final String name) {
         this.name = name;
-        this.hand = hand;
+        this.hand = Hand.create();
     }
 
     public void receiveCard(final Card card) {
@@ -19,10 +21,38 @@ public abstract class User {
     }
 
     public int calculateTotalValue() {
-        return hand.calculateTotalValue();
+        return hand.getTotalValue();
     }
 
-    public abstract boolean canReceiveCard();
+    public boolean judgeResult(int dealerTotalValue) {
+        final int playerTotalValue = calculateTotalValue();
+
+        if (dealerTotalValue > BUST_NUMBER || playerTotalValue > BUST_NUMBER) {
+            return judgeOverBurst(dealerTotalValue, playerTotalValue);
+        }
+
+        return judgeUnderBurst(dealerTotalValue, playerTotalValue);
+    }
+
+    private boolean judgeOverBurst(final int dealerTotalValue, final int userTotalValue) {
+        if (userTotalValue > BUST_NUMBER && dealerTotalValue > BUST_NUMBER) {
+            return Boolean.TRUE;
+        }
+
+        if (userTotalValue > BUST_NUMBER) {
+            return Boolean.FALSE;
+        }
+
+        return Boolean.TRUE;
+    }
+
+    private Boolean judgeUnderBurst(final int dealerTotalValue, final int userTotalValue) {
+        if (dealerTotalValue <= userTotalValue) {
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
 
     @Override
     public boolean equals(final Object o) {
@@ -41,7 +71,11 @@ public abstract class User {
         return this.name;
     }
 
-    public String getHandInfo() {
-        return this.hand.toString();
+    public Hand getHand() {
+        return this.hand;
+    }
+
+    public int getCardTotalValue() {
+        return hand.getTotalValue();
     }
 }

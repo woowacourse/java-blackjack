@@ -1,11 +1,15 @@
 package model.user;
 
-public class Player extends User {
+import model.card.Card;
+
+public class Player implements Receivable {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
 
-    public Player(final String name, final Hand hand) {
-        super(name, hand);
+    private final User user;
+
+    public Player(final String name) {
+        this.user = new User(name);
     }
 
     @Override
@@ -13,8 +17,23 @@ public class Player extends User {
         return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
     }
 
-    public String getName() {
-        return super.getName();
+    private int calculateTotalValue() {
+        return user.getCardTotalValue();
     }
 
+    public boolean judgeResult(int dealerTotalValue) {
+        return user.judgeResult(dealerTotalValue);
+    }
+
+    public void receiveCard(Card card) {
+        user.receiveCard(card);
+    }
+
+    public String getName() {
+        return user.getName();
+    }
+
+    public Hand getHand() {
+        return user.getHand();
+    }
 }
