@@ -11,8 +11,7 @@ import view.OutputView;
 public class GameController {
     
     public void run() {
-        String participantNames = InputView.getParticipantNames();
-        Game game = new Game(participantNames);
+        Game game = new Game(InputView.readPlayerNames());
         makeGameReady(game);
         playGame(game);
         printFinalGameResult(game);
@@ -26,17 +25,17 @@ public class GameController {
     }
     
     private void playGame(Game game) {
-        Participant current = game.getCurrentParticipant();
-        while (current.isPlayer()) {
-            String input = InputView.inputNeedMoreCard(current.getName());
-            BlackJackAction action = BlackJackAction.getActionByInput(input);
-            game.run(current, action);
-            OutputView.printNameAndCards(current.getName(), current.getCards());
-            current = game.getCurrentParticipant();
+        Participant currentParticipant = game.getCurrentParticipant();
+        while (currentParticipant.isPlayer()) {
+            String actionInput = InputView.readAnswerForMoreCard(currentParticipant.getName());
+            BlackJackAction action = BlackJackAction.of(actionInput);
+            game.run(currentParticipant, action);
+            OutputView.printNameAndCards(currentParticipant.getName(), currentParticipant.getCards());
+            currentParticipant = game.getCurrentParticipant();
         }
-        while (game.isDealerNeedCard(current)) {
+        while (game.isDealerNeedCard(currentParticipant)) {
             OutputView.printDealerReceivedCard();
-            game.run(current, BlackJackAction.HIT);
+            game.run(currentParticipant, BlackJackAction.HIT);
         }
     }
     
