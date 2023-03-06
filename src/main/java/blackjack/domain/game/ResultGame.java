@@ -12,6 +12,7 @@ import static blackjack.domain.game.WinTieLose.*;
 public class ResultGame {
 
     private static final Integer BLACKJACK_SCORE = 21;
+    private static final String NOT_FIND_RESULT_ERROR_MESSAGE = "점수에 해당하는 승무패를 구할 수 없습니다.";
 
     private final Map<Player, WinTieLose> playersResult;
     private final Participants participants;
@@ -44,7 +45,7 @@ public class ResultGame {
         if (isLessScore(playerScore, BLACKJACK_SCORE)) {
             return getResultWhenPlayerNormalScore(playerScore, dealerScore);
         }
-        throw new IllegalArgumentException("점수에 해당하는 승무패를 구할 수 없습니다.");
+        throw new IllegalArgumentException(NOT_FIND_RESULT_ERROR_MESSAGE);
     }
 
     private WinTieLose getResultWhenPlayerBustScore(final int dealerScore) {

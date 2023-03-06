@@ -25,7 +25,7 @@ public class InputView {
         return parseNames(input);
     }
 
-    private List<String> parseNames(String input) {
+    private List<String> parseNames(final String input) {
         return Arrays.stream(input.split(COMMA, LIMIT))
                 .map(String::strip)
                 .collect(Collectors.toUnmodifiableList());

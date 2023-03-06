@@ -33,7 +33,7 @@ public class OutputView {
         final String dealerName = participants.getDealerName();
         final List<String> playerNames = participants.getPlayerNames();
 
-        String message = dealerName + DEALER_AND_PLAYER_DELIMITER +
+        final String message = dealerName + DEALER_AND_PLAYER_DELIMITER +
                 String.join(COMMA, playerNames) + GIVE_TWO_CARD_MESSAGE;
         System.out.println(NEW_LINE + message);
     }
@@ -61,13 +61,13 @@ public class OutputView {
     }
 
     public void printDealerDrawCard(final Participant participant) {
-        String name = participant.getName();
+        final String name = participant.getName();
 
         System.out.println(NEW_LINE + name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN_MESSAGE);
     }
 
     public void printScore(final Participant participant) {
-        int score = participant.getTotalScore();
+        final int score = participant.getTotalScore();
 
         System.out.printf(RESULT_DELIMITER + score);
     }
@@ -78,7 +78,7 @@ public class OutputView {
 
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerResult(dealer, resultGame);
-        for (Player player : players) {
+        for (final Player player : players) {
             printPlayerResult(player, resultGame);
         }
     }
@@ -107,7 +107,7 @@ public class OutputView {
         final List<Player> players = participants.getPlayers();
 
         printParticipantCardsAndScores(dealer);
-        for (Player player : players) {
+        for (final Player player : players) {
             printParticipantCardsAndScores(player);
         }
     }
