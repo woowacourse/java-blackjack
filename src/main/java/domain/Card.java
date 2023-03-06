@@ -4,9 +4,13 @@ public class Card {
     private final CardShape shape;
     private final CardRank rank;
 
-    public Card(CardShape shape, CardRank number) {
+    private Card(CardShape shape, CardRank rank) {
         this.shape = shape;
-        this.rank = number;
+        this.rank = rank;
+    }
+
+    public static Card of(CardShape shape, CardRank rank) {
+        return new Card(shape, rank);
     }
 
     public boolean isAce() {

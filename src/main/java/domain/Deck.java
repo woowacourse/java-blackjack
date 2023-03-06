@@ -29,7 +29,7 @@ public class Deck {
         CardRank[] numbers = CardRank.values();
 
         for (CardRank number : numbers) {
-            deck.add(new Card(shape, number));
+            deck.add(Card.of(shape, number));
         }
     }
 

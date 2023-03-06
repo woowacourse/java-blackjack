@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CommandTest {
+class PlayerActionTest {
 
     @DisplayName("입력값에 따라 명령이 생성된다. y -> HIT")
     @Test

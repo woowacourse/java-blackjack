@@ -11,13 +11,13 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new PlayerName("pobi"));
+        player = Player.from(Name.from("pobi"));
     }
 
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
     void receiveCardSuccessTest() {
-        player.receive(new Card(CardShape.SPADE, CardRank.ACE));
+        player.receive(Card.of(CardShape.SPADE, CardRank.ACE));
 
         assertThat(player).extracting("cards")
                 .asList()
@@ -27,8 +27,8 @@ class PlayerTest {
     @DisplayName("플레이어가 받은 카드의 점수를 확인할 수 있다.")
     @Test
     void calculateScoreSuccessTest() {
-        player.receive(new Card(CardShape.CLUB, CardRank.ACE));
-        player.receive(new Card(CardShape.HEART, CardRank.THREE));
+        player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
+        player.receive(Card.of(CardShape.HEART, CardRank.THREE));
 
         assertThat(player.calculateScore())
                 .isEqualTo(14);
@@ -37,9 +37,9 @@ class PlayerTest {
     @DisplayName("21을 넘은 경우 ACE는 1로 계산한다.")
     @Test
     void calculateScoreSuccessTestWhenHasAce() {
-        player.receive(new Card(CardShape.CLUB, CardRank.ACE));
-        player.receive(new Card(CardShape.HEART, CardRank.THREE));
-        player.receive(new Card(CardShape.HEART, CardRank.TEN));
+        player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
+        player.receive(Card.of(CardShape.HEART, CardRank.THREE));
+        player.receive(Card.of(CardShape.HEART, CardRank.TEN));
 
         assertThat(player.calculateScore())
                 .isEqualTo(14);
@@ -48,9 +48,9 @@ class PlayerTest {
     @DisplayName("21을 넘지 않는 경우 까지 ACE는 11로 계산한다.")
     @Test
     void calculateScoreSuccessTestWhenHasAceUntilNotBusted() {
-        player.receive(new Card(CardShape.CLUB, CardRank.ACE));
-        player.receive(new Card(CardShape.HEART, CardRank.ACE));
-        player.receive(new Card(CardShape.HEART, CardRank.TEN));
+        player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
+        player.receive(Card.of(CardShape.HEART, CardRank.ACE));
+        player.receive(Card.of(CardShape.HEART, CardRank.TEN));
 
         assertThat(player.calculateScore())
                 .isEqualTo(12);
@@ -59,9 +59,9 @@ class PlayerTest {
     @DisplayName("카드의 합이 21이 넘으면 버스트 된다.")
     @Test
     void isBustedSuccessTest() {
-        player.receive(new Card(CardShape.CLUB, CardRank.JACK));
-        player.receive(new Card(CardShape.HEART, CardRank.TEN));
-        player.receive(new Card(CardShape.HEART, CardRank.QUEEN));
+        player.receive(Card.of(CardShape.CLUB, CardRank.JACK));
+        player.receive(Card.of(CardShape.HEART, CardRank.TEN));
+        player.receive(Card.of(CardShape.HEART, CardRank.QUEEN));
 
         assertThat(player.isBusted()).isTrue();
     }
@@ -69,9 +69,9 @@ class PlayerTest {
     @DisplayName("카드의 합이 21이 넘지 않으면 버스트 되지 않는다.")
     @Test
     void isNotBustedSuccessTest() {
-        player.receive(new Card(CardShape.CLUB, CardRank.ACE));
-        player.receive(new Card(CardShape.HEART, CardRank.ACE));
-        player.receive(new Card(CardShape.SPADE, CardRank.ACE));
+        player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
+        player.receive(Card.of(CardShape.HEART, CardRank.ACE));
+        player.receive(Card.of(CardShape.SPADE, CardRank.ACE));
 
         assertThat(player.isBusted()).isFalse();
     }

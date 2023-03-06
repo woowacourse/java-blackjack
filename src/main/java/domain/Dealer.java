@@ -7,6 +7,10 @@ import java.util.Map;
 public class Dealer extends Participant {
     private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
 
+    public Dealer() {
+        super(Name.from(DEALER_NAME));
+    }
+
     public void decideResults(Players players) {
         for (Player player : players.getPlayers()) {
             Result dealerResult = competeWith(player);

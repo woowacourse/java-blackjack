@@ -11,7 +11,7 @@ public class CardTest {
     @DisplayName("카드는 모양과 숫자를 가진다.")
     @Test
     void createCardSuccess() {
-        Card card = new Card(CardShape.HEART, CardRank.ACE);
+        Card card = Card.of(CardShape.HEART, CardRank.ACE);
 
         assertThat(card.getCardShapeName())
                 .isEqualTo(CardShape.HEART.getName());

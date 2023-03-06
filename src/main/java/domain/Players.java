@@ -11,10 +11,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(PlayerNames playerNames) {
+    public static Players from(Names playerNames) {
         return new Players(playerNames.getNames()
                 .stream()
-                .map(Player::new)
+                .map(name -> Player.from(name))
                 .collect(Collectors.toList()));
     }
 

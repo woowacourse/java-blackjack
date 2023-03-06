@@ -8,15 +8,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    private static final Card DIAMOND_TEN = new Card(CardShape.DIAMOND, CardRank.TEN);
-    private static final Card DIAMOND_NINE = new Card(CardShape.DIAMOND, CardRank.NINE);
-    private static final Card DIAMOND_EIGHT = new Card(CardShape.DIAMOND, CardRank.EIGHT);
+    private static final Card DIAMOND_TEN = Card.of(CardShape.DIAMOND, CardRank.TEN);
+    private static final Card DIAMOND_NINE = Card.of(CardShape.DIAMOND, CardRank.NINE);
+    private static final Card DIAMOND_EIGHT = Card.of(CardShape.DIAMOND, CardRank.EIGHT);
 
     @DisplayName("딜러의 카드 합을 기준으로 플레이어의 승패를 결정한다.")
     @Test
     void resultSuccessTest() {
         Dealer dealer = new Dealer();
-        Players players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
+        Players players = Players.from(Names.from(List.of("pobi", "crong")));
         Player pobi = players.getPlayers().get(0);
         Player crong = players.getPlayers().get(1);
 

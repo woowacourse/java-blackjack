@@ -14,7 +14,7 @@ class BlackjackGameTest {
 
     @BeforeEach
     void setUp() {
-        players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
+        players = Players.from(Names.from(List.of("pobi", "crong")));
         blackjackGame = new BlackjackGame(players);
     }
 
