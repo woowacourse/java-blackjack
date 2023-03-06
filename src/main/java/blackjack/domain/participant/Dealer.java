@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    public static final int DRAWING_BOUNDARY = 16;
     private static final int INCREASING_NUMBER = 1;
 
     private final Map<Result, Integer> results;

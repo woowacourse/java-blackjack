@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
@@ -12,8 +13,6 @@ public class BlackJackGameController {
 
     private static final String YES_COMMAND = "y";
     private static final String NO_COMMAND = "n";
-    private static final int DEALER_DRAWING_BOUNDARY = 16;
-    private static final int PLAYER_BUST_BOUNDARY = 21;
 
     public void run() {
         final BlackJackGame blackJackGame = generateBlackJackGame();
@@ -33,8 +32,8 @@ public class BlackJackGameController {
         OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
     }
 
-    private static void handOutCardToDealer(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Dealer dealer) {
-        while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
+    private void handOutCardToDealer(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Dealer dealer) {
+        while (dealer.isUnderThanBoundary(Dealer.DRAWING_BOUNDARY)) {
             blackJackGame.handOutCardTo(shufflingMachine, dealer);
             OutputView.printDealerReceiveOneMoreCard();
         }
@@ -48,12 +47,12 @@ public class BlackJackGameController {
 
     private void handOutCardToEachPlayer(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Player player) {
         String playerAnswer = inputGameCommandToGetOneMoreCard(player);
-        while (player.isUnderThanBoundary(PLAYER_BUST_BOUNDARY) && handOutCardByCommand(blackJackGame, shufflingMachine, player, playerAnswer)) {
+        while (player.isUnderThanBoundary(Participant.BUST_BOUNDARY) && handOutCardByCommand(blackJackGame, shufflingMachine, player, playerAnswer)) {
             playerAnswer = inputGameCommandToGetOneMoreCard(player);
         }
     }
 
-    private static boolean handOutCardByCommand(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Player player, String playerAnswer) {
+    private boolean handOutCardByCommand(BlackJackGame blackJackGame, ShufflingMachine shufflingMachine, Player player, String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
             blackJackGame.handOutCardTo(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
@@ -86,7 +85,7 @@ public class BlackJackGameController {
         }
     }
 
-    private static void validateCorrectCommand(final String gameCommand) {
+    private void validateCorrectCommand(final String gameCommand) {
         if (!(gameCommand.equals(YES_COMMAND) || gameCommand.equals(NO_COMMAND))) {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }

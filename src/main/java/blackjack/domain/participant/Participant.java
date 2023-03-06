@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Participant {
 
-    private static final int BUST_BOUNDARY = 21;
+    public static final int BUST_BOUNDARY = 21;
     private static final int ELEVEN_ACE_VALUE = 11;
     private static final int NUMBER_OF_BLACKJACK_CARD = 2;
 
