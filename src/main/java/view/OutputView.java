@@ -46,11 +46,11 @@ public class OutputView {
     }
 
     private void printSetUpCompleteMessage(Map<String, List<Card>> setUpResult) {
+        List<String> userNames = new ArrayList<>(setUpResult.keySet());
+        List<String> playerNames = userNames.subList(1, setUpResult.size());
+        String playerNamesPrintFormat = String.join(DRAW_RESULT_DELIMITER, playerNames);
 
-        String playerNames = String.join(DRAW_RESULT_DELIMITER,
-                new ArrayList<>(setUpResult.keySet()).subList(1, setUpResult.size()));
-
-        System.out.printf(SETUP_COMPLETE_MESSAGE_FORMAT, playerNames);
+        System.out.printf(SETUP_COMPLETE_MESSAGE_FORMAT, playerNamesPrintFormat);
     }
 
     private void printUserCards(Map<String, List<Card>> setUpResult) {
