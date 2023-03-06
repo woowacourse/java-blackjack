@@ -74,7 +74,7 @@ public class OutputView {
 
     public void printPlayerWinORLose(final Map<Player, WinningResult> playerResult) {
         for (Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + " : " + playerResult.get(player).name());
+            System.out.println(player.getName() + " : " + ViewWinningResult.getWinningResultName(playerResult.get(player)));
         }
     }
 

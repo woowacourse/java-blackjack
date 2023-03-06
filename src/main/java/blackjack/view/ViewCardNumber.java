@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.CardNumber;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 public enum ViewCardNumber {
     ACE(CardNumber.ACE, "A"),
@@ -20,8 +20,8 @@ public enum ViewCardNumber {
     KING(CardNumber.KING, "K"),
     ;
 
-    final String name;
     final CardNumber cardNumber;
+    final String name;
 
     ViewCardNumber(CardNumber cardNumber, String name) {
         this.name = name;
@@ -29,10 +29,10 @@ public enum ViewCardNumber {
     }
 
     public static String getCardNumber(final CardNumber cardNumber) {
-        return Stream.of(CardNumber.values())
-                .filter(number -> number == cardNumber)
-                .findFirst()
+        return Arrays.stream(ViewCardNumber.values())
+                .filter(it -> it.cardNumber == cardNumber)
+                .findAny()
                 .get()
-                .name();
+                .name;
     }
 }
