@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Score {
-    private static final int BUST_SCORE = 21;
+    private static final int BUST_SCORE_BOUNDARY = 21;
 
     private final int value;
 
@@ -22,7 +22,7 @@ public class Score {
     }
 
     private boolean isBust() {
-        return value > BUST_SCORE;
+        return value > BUST_SCORE_BOUNDARY;
     }
 
     public int getValue() {
