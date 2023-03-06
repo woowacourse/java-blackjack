@@ -34,16 +34,17 @@ public class Referee {
 
 
     private int calculateCommonCardScore(CardDeck deck) {
-        return deck.getCards().stream().filter(
-            (card) -> card.getValue() != MAX_ACE_VALUE
-        ).mapToInt(Card::getValue).sum();
+        return deck.getCards().stream()
+                .filter((card) -> card.getValue() != MAX_ACE_VALUE)
+                .mapToInt(Card::getValue)
+                .sum();
     }
 
     private List<AceCard> extractAceCards(CardDeck deck) {
         return deck.getCards().stream()
-            .filter((card) -> card.getValue() == MAX_ACE_VALUE)
-            .map((card) -> (AceCard) card).collect(
-                Collectors.toList());
+                .filter((card) -> card.getValue() == MAX_ACE_VALUE)
+                .map((card) -> (AceCard) card)
+                .collect(Collectors.toList());
     }
 
     private boolean isBurst(int sum, int aceCardCount) {
