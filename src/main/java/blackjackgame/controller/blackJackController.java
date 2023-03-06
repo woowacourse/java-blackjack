@@ -1,8 +1,8 @@
 package blackjackgame.controller;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
-import blackjackgame.domain.CardMachine;
 import blackjackgame.domain.Dealer;
 import blackjackgame.domain.Deck;
 import blackjackgame.domain.Guest;
@@ -24,11 +24,11 @@ public class blackJackController {
     public void run() {
         final Guests guests = generateGuests();
         final Dealer dealer = new Dealer();
-        final CardMachine cardMachine = new CardMachine(new Deck());
-        setGame(guests, dealer, cardMachine);
+        final Deck deck = new Deck();
+        setGame(guests, dealer, deck);
 
-        askGuestsHitCard(guests.getGuests(), cardMachine);
-        askDealerHitCard(dealer, cardMachine);
+        askGuestsHitCard(guests.getGuests(), deck);
+        askDealerHitCard(dealer, deck);
 
         printPlayersCardScore(guests, dealer);
         printGameResult(guests, dealer);
@@ -44,39 +44,43 @@ public class blackJackController {
         }
     }
 
-    private void setGame(final Guests guests, final Dealer dealer, final CardMachine cardMachine) {
-        cardMachine.initPlayersCards(guests, dealer);
+    private void setGame(final Guests guests, final Dealer dealer, final Deck deck) {
+        IntStream.range(0, 2).forEach(
+                count -> {
+                    dealer.addCard(deck.pickOne());
+                    guests.getGuests().forEach(guest -> guest.addCard(deck.pickOne()));
+                });
         outputView.printFirstDealerCards(dealer.getName(), dealer.getCards());
         for (final Guest guest : guests.getGuests()) {
             outputView.printCards(guest.getName(), guest.getCards());
         }
     }
 
-    private void askGuestsHitCard(final List<Guest> guests, final CardMachine cardMachine) {
+    private void askGuestsHitCard(final List<Guest> guests, final Deck deck) {
         for (Guest guest : guests) {
-            askGuestHitCardRepeat(cardMachine, guest);
+            askGuestHitCardRepeat(deck, guest);
         }
     }
 
-    private void askGuestHitCardRepeat(final CardMachine cardMachine, final Guest guest) {
+    private void askGuestHitCardRepeat(final Deck deck, final Guest guest) {
         AddCardResponse addCardResponse = AddCardResponse.YES;
         while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
             addCardResponse = inputView.readWantMoreCard(guest.getName());
-            askGuestHitCard(cardMachine, guest, addCardResponse);
+            askGuestHitCard(deck, guest, addCardResponse);
         }
     }
 
-    private void askGuestHitCard(final CardMachine cardMachine, final Guest guest,
-        final AddCardResponse addCardResponse) {
+    private void askGuestHitCard(final Deck deck, final Guest guest,
+                                 final AddCardResponse addCardResponse) {
         if (addCardResponse == AddCardResponse.YES) {
-            cardMachine.distributeCard(guest);
+            guest.addCard(deck.pickOne());
         }
         outputView.printCards(guest.getName(), guest.getCards());
     }
 
-    private void askDealerHitCard(final Dealer dealer, final CardMachine cardMachine) {
+    private void askDealerHitCard(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
-            cardMachine.distributeCard(dealer);
+            dealer.addCard(deck.pickOne());
             outputView.dealerAddCard();
         }
     }

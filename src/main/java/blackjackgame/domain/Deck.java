@@ -19,6 +19,10 @@ public class Deck {
         this.cards = cards;
     }
 
+    public Card pickOne() {
+        return cards.get(cursorIndex++);
+    }
+
     private List<Card> generateCards() {
         List<Card> cards = new ArrayList<>();
         for (final Symbol symbol : Symbol.values()) {
@@ -31,9 +35,5 @@ public class Deck {
         for (final CardValue cardValue : CardValue.values()) {
             cards.add(new Card(symbol, cardValue));
         }
-    }
-
-    public Card pickOne() {
-        return cards.get(cursorIndex++);
     }
 }
