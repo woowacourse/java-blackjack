@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 import static domain.Result.*;
 
 public class OutputView {
-    public void printCardsFrom(Players players) {
-        printDealCardsNotice(players.getUsers());
-        printFirstPlayerCard(players.getDealer());
-        printPlayersCards(players.getUsers());
+    public void printCardsFrom(Users users) {
+        printDealCardsNotice(users.getPlayers());
+        printFirstPlayerCard(users.getDealer());
+        printPlayersCards(users.getPlayers());
     }
 
     private void printDealCardsNotice(List<Player> players) {
@@ -22,9 +22,9 @@ public class OutputView {
         System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
     }
 
-    private void printFirstPlayerCard(Player player) {
-        String name = player.getName();
-        Card card = player.getCards().get(0);
+    private void printFirstPlayerCard(User user) {
+        String name = user.getName();
+        Card card = user.getCards().get(0);
 
         System.out.println(name + ": " + getCardDisplay(card));
     }
@@ -47,19 +47,19 @@ public class OutputView {
         System.out.println("딜러는 16초과라 카드를 받지 않았습니다.");
     }
 
-    public void printCardsAndScores(Players players) {
-        printCardsAndScore(players.getDealer());
+    public void printCardsAndScores(Users users) {
+        printCardsAndScore(users.getDealer());
 
-        for (Player player : players.getUsers()) {
+        for (Player player : users.getPlayers()) {
             printCardsAndScore(player);
         }
     }
 
-    public void printCardsAndScore(Player player) {
-        String name = player.getName();
-        String cardDisplays = getCardDisplays(player.getCards());
+    public void printCardsAndScore(User user) {
+        String name = user.getName();
+        String cardDisplays = getCardDisplays(user.getCards());
 
-        System.out.println(name + "카드: " + cardDisplays + " - 결과: " + player.getScore());
+        System.out.println(name + "카드: " + cardDisplays + " - 결과: " + user.getScore());
     }
 
     public void printResult(String name, Result result) {

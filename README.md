@@ -8,7 +8,7 @@
 
 - [x] Application 메서드 분리
 - [x] Game도 인스턴스 변수 개수 3개다
-  - dealer를 players 안에 넣자.
+  - dealer를 users 안에 넣자.
 
 - [x] Player::calculateScore 메서드 분리
 - [x] Game::dealCards indent가 2 임.

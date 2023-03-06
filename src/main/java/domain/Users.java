@@ -3,38 +3,38 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Players {
+public class Users {
 
-    private final List<Player> users;
+    private final List<Player> players;
     private final Dealer dealer;
 
-    public Players(List<Player> users, Dealer dealer) {
-        this.users = users;
+    public Users(List<Player> players, Dealer dealer) {
+        this.players = players;
         this.dealer = dealer;
     }
 
     public void dealCardsFrom(Deck deck) {
-        for (Player user : users) {
-            user.addCard(deck.drawCard());
+        for (Player player : players) {
+            player.addCard(deck.drawCard());
         }
         dealer.addCard(deck.drawCard());
     }
 
-    public Result getUserResult(Player player) {
-        return player.compare(dealer);
+    public Result getUserResult(User user) {
+        return user.compare(dealer);
     }
 
     public List<Result> getDealerResults() {
         List<Result> results = new ArrayList<>();
 
-        for (Player player : users) {
+        for (Player player : players) {
             results.add(dealer.compare(player));
         }
         return results;
     }
 
-    public List<Player> getUsers() {
-        return users;
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public Dealer getDealer() {

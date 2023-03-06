@@ -20,27 +20,26 @@ public class Application {
     }
 
     private static void start(Game game) {
-        Players players = game.getPlayers();
+        Users users = game.getUsers();
         game.dealTwoCards();
-        outputView.printCardsFrom(players);
+        outputView.printCardsFrom(users);
     }
 
     private static void play(Game game) {
-
-        for (Player user : game.getUsers()) {
+        for (Player user : game.getPlayers()) {
             selectHitAndStand(game, user);
         }
         dealCardToDealer(game);
     }
 
     private static void printResult(Game game) {
-        Players players = game.getPlayers();
-        outputView.printCardsAndScores(players);
+        Users users = game.getUsers();
+        outputView.printCardsAndScores(users);
         System.out.println("## 최종 승패");
-        outputView.printDealerResults(players.getDealerResults());
-        for (Player user : players.getUsers()) {
-            String name = user.getName();
-            outputView.printResult(name, players.getUserResult(user));
+        outputView.printDealerResults(users.getDealerResults());
+        for (Player player : users.getPlayers()) {
+            String name = player.getName();
+            outputView.printResult(name, users.getUserResult(player));
         }
     }
 

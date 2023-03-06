@@ -84,7 +84,7 @@ public class GameTest {
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
         game.dealCard(players.get(0));
 
-        var player = game.getUsers().get(0);
+        var player = game.getPlayers().get(0);
         assertThat(player.getCards()).hasSize(3);
     }
 
