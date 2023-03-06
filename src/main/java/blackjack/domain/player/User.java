@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class User {
-    PlayerCards playerCards;
+    protected final PlayerCards playerCards;
 
     public User() {
         this.playerCards = new PlayerCards();
@@ -19,9 +19,9 @@ public abstract class User {
         return playerCards.getTotalScore();
     }
 
-    public abstract boolean isUnderLimit();
-
     public void updateCardScore(Card card) {
         playerCards.updateCardScore(card);
     }
+
+    public abstract boolean isUnderLimit();
 }
