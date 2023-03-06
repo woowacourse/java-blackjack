@@ -26,7 +26,7 @@ public class CardArea {
     }
 
     public int calculate() {
-        int total = cards.stream().mapToInt(it -> it.cardValue().value()).sum();
+        int total = cards.stream().mapToInt(Card::defaultScore).sum();
         if (hasAce()) {
             return calculateSpecialAceValue(total);
         }

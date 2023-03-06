@@ -20,6 +20,10 @@ public class Card {
         return this.cardValue;
     }
 
+    public int defaultScore() {
+        return this.cardValue.value();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
