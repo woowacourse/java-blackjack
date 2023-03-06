@@ -1,16 +1,16 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
-import blackjack.domain.ResultType;
-import blackjack.dto.FinalResultDto;
 import blackjack.response.CardConvertStrategy;
 import blackjack.response.CardResponse;
 import blackjack.response.CardsScoreResponse;
+import blackjack.response.FinalResultResponse;
 import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
 import blackjack.response.PlayersCardsResponse;
 import blackjack.response.PlayersCardsResponse.CardsScore;
 import blackjack.response.ResultConvertStrategy;
+import blackjack.response.ResultTypeResponse;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -104,35 +104,35 @@ public class OutputView {
         System.out.println(name + CARD + DELIMITER + cards + RESULT + cardsScore.getScore());
     }
 
-    public void printFinalResult(final FinalResultDto finalResultDto) {
+    public void printFinalResult(final FinalResultResponse finalResultDto) {
         System.out.println("## 최종 승패");
         System.out.print(DEALER + DELIMITER);
         printDealerResult(finalResultDto.getDealerResult());
-        printPlayersResult(finalResultDto.getPlayersResult());
+        printPlayersResult(finalResultDto.getPlayersToResult());
     }
 
-    private void printDealerResult(final Map<ResultType, Long> dealerResult) {
-        printDealer(dealerResult, ResultType.WIN);
-        printDealer(dealerResult, ResultType.TIE);
-        printDealer(dealerResult, ResultType.LOSE);
+    private void printDealerResult(final Map<ResultTypeResponse, Long> dealerResult) {
+        printDealer(dealerResult, ResultTypeResponse.from("WIN"));
+        printDealer(dealerResult, ResultTypeResponse.from("DRAW"));
+        printDealer(dealerResult, ResultTypeResponse.from("LOSE"));
         System.out.println();
     }
 
-    private void printPlayersResult(final Map<String, ResultType> playersResult) {
+    private void printPlayersResult(final Map<String, ResultTypeResponse> playersResult) {
         playersResult.forEach(this::printPlayerResult);
     }
 
-    private void printPlayerResult(final String name, final ResultType resultType) {
-        System.out.println(name + DELIMITER +
-                OutputViewResultType.from(resultType)
-                        .getPrintResultType());
+    private void printPlayerResult(final String name, final ResultTypeResponse resultTypeResponse) {
+        System.out.println(name + DELIMITER + resultTypeResponse.getResult(resultConvertStrategy));
     }
 
-    private void printDealer(final Map<ResultType, Long> dealerResult, final ResultType resultType) {
-        if (dealerResult.containsKey(resultType)) {
-            System.out.print(dealerResult.get(resultType) +
-                    OutputViewResultType.from(resultType)
-                            .getPrintResultType());
+    private void printDealer(
+            final Map<ResultTypeResponse, Long> dealerResult,
+            final ResultTypeResponse resultTypeResponse) {
+
+        if (dealerResult.containsKey(resultTypeResponse)) {
+            System.out.print(
+                    dealerResult.get(resultTypeResponse) + resultTypeResponse.getResult(resultConvertStrategy));
         }
     }
 

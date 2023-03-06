@@ -6,8 +6,8 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.DeckFactory;
 import blackjack.domain.Players;
-import blackjack.dto.FinalResultDto;
 import blackjack.response.CardsScoreResponse;
+import blackjack.response.FinalResultResponse;
 import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
 import blackjack.response.PlayersCardsResponse;
@@ -95,7 +95,7 @@ public class BlackJackController {
 
     private void printResult(final Players players, final Dealer dealer) {
         printStatusOfGame(dealer, players);
-        outputView.printFinalResult(new FinalResultDto(dealer.getResult()));
+        outputView.printFinalResult(FinalResultResponse.from(dealer.getResult()));
     }
 
     private void printStatusOfGame(final Dealer dealer, final Players players) {

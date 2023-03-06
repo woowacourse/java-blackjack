@@ -20,6 +20,6 @@ class ParticipantResults {
     }
 
     Map<String, ResultType> getPlayerNameToResultType() {
-        return Map.copyOf(playerNameToResultType);
+        return playerNameToResultType;
     }
 }
