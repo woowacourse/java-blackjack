@@ -28,6 +28,13 @@ public interface SimpleList<T> {
         return simpleArrayList;
     }
 
+    static <T> void copy(SimpleList<? extends T> source, SimpleList<? super T> target) {
+        int maxSize = Math.max(source.size(), target.size());
+        for (int i = 0; i < maxSize; i++) {
+            target.add(source.get(i));
+        }
+    }
+
     boolean add(T value);
 
     void add(int index, T value);

@@ -52,4 +52,15 @@ class GenericTest {
         assertThat(filteredDoubleValues.contains(-0.1)).isFalse();
         assertThat(filteredIntValues.contains(-10)).isFalse();
     }
+
+    @Test
+    void mission5() {
+        final var laserPrinter = new LaserPrinter();
+        final SimpleList<Printer> printers = new SimpleArrayList<>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<>(laserPrinter);
+
+        SimpleList.copy(laserPrinters, printers);
+
+        assertThat(printers.get(0)).isEqualTo(laserPrinter);
+    }
 }
