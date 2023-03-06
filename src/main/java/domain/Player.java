@@ -13,4 +13,9 @@ public class Player extends Participant {
         return getCards();
     }
 
+    @Override
+    public boolean isAbleToReceiveCard() {
+        return !isBusted();
+    }
+
 }

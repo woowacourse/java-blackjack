@@ -5,7 +5,7 @@ import domain.TrumpCardNumber;
 import domain.Participant;
 import domain.Player;
 import domain.PlayerNames;
-import domain.Players;
+import domain.Participants;
 import domain.Result;
 import domain.TrumpCardType;
 import java.util.List;
@@ -23,16 +23,16 @@ class DealerTest {
     @Test
     void resultSuccessTest() {
         Dealer dealer = new Dealer(new PlayerName("딜러"));
-        Players players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
-        Player pobi = players.getPlayers().get(0);
-        Player crong = players.getPlayers().get(1);
+        Participants participants = Participants.from(PlayerNames.from(List.of("pobi", "crong")));
+        Player pobi = participants.getPlayers().get(0);
+        Player crong = participants.getPlayers().get(1);
 
         giveCardsTo(dealer, List.of(VALUE_TEN, VALUE_NINE)); // 19
 
         giveCardsTo(pobi, List.of(VALUE_TEN, VALUE_TEN)); // 20
         giveCardsTo(crong, List.of(VALUE_TEN, VALUE_EIGHT)); // 18
 
-        dealer.decideDealerResultsAgainst(players);
+        dealer.decideDealerResultsAgainst(participants);
 
         Assertions.assertThat(dealer.getPlayerResultMap().values())
                 .containsExactly(Result.LOSE, Result.WIN);

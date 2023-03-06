@@ -1,26 +1,31 @@
 package domain;
 
+import java.util.List;
+
 public class BlackjackGame {
     private static final int INITIAL_CARD_AMOUNT = 2;
     private static final String DEALER_NAME_VALUE = "딜러";
     private static final PlayerName DEALER_NAME = new PlayerName(DEALER_NAME_VALUE);
 
     private final Deck deck;
-    private final Dealer dealer;
-    private final Players players;
+    private final Participants participants;
 
-    public BlackjackGame(Players players) {
-        this.deck = new Deck();
-        this.dealer = new Dealer(DEALER_NAME);
+    private BlackjackGame(Deck deck, Participants participants) {
+        this.deck = deck;
+        this.participants = participants;
+    }
 
-        this.players = players;
+    public static BlackjackGame from(Participants participants) {
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer(DEALER_NAME);
+        participants.addDealer(dealer);
+
+        return new BlackjackGame(deck, participants);
     }
 
     public void handOutInitialCards() {
-        handOutCardTo(dealer, INITIAL_CARD_AMOUNT);
-
-        for (Player player : players.getPlayers()) {
-            handOutCardTo(player, INITIAL_CARD_AMOUNT);
+        for (Participant participant : participants.getParticipants()) {
+            handOutCardTo(participant, INITIAL_CARD_AMOUNT);
         }
     }
 
@@ -36,20 +41,21 @@ public class BlackjackGame {
     }
 
     public void handOutAdditionalCardToDealer() {
+        Participant dealer = getDealer();
         while (dealer.isAbleToReceiveCard()) {
             handOutCardTo(dealer);
         }
     }
 
-    public void decideBlackjackGameResults() {
-        dealer.decideDealerResultsAgainst(players);
+    public Participant getDealer() {
+        return participants.getDealer();
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public List<Participant> getPlayers() {
+        return participants.getPlayers();
     }
 
-    public Players getPlayers() {
-        return players;
+    public Participants getParticipants() {
+        return participants;
     }
 }

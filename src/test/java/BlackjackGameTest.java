@@ -3,7 +3,7 @@ import domain.Dealer;
 import domain.Participant;
 import domain.Player;
 import domain.PlayerNames;
-import domain.Players;
+import domain.Participants;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,18 +13,18 @@ import org.junit.jupiter.api.Test;
 class BlackjackGameTest {
 
     private BlackjackGame blackjackGame;
-    private Players players;
+    private Participants participants;
 
     @BeforeEach
     void setUp() {
-        players = Players.from(PlayerNames.from(List.of("pobi", "crong")));
-        blackjackGame = new BlackjackGame(players);
+        participants = Participants.from(PlayerNames.from(List.of("pobi", "crong")));
+        blackjackGame = BlackjackGame.from(participants);
     }
 
     @DisplayName("게임 참가자에게 카드를 나눠줄 수 있다.")
     @Test
     void giveCardToSuccessTest() {
-        Player pobi = players.getPlayers().get(0);
+        Player pobi = participants.getPlayers().get(0);
 
         blackjackGame.handOutCardTo(pobi, 2);
 
@@ -34,8 +34,8 @@ class BlackjackGameTest {
     @DisplayName("게임 시작 시, 모든 플레이어에게 두 장의 카드를 나눠준다.")
     @Test
     void giveInitCardsSuccessTest() {
-        Player pobi = players.getPlayers().get(0);
-        Player crong = players.getPlayers().get(1);
+        Player pobi = participants.getPlayers().get(0);
+        Player crong = participants.getPlayers().get(1);
 
         blackjackGame.handOutInitialCards();
         Dealer dealer = blackjackGame.getDealer();

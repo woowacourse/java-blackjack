@@ -36,6 +36,31 @@ public abstract class Participant {
         return calculateBlackjackScore() > BUST_LIMIT;
     }
 
+    public Result competeWith(Participant player) {
+        if (player.isBusted()) {
+            return Result.WIN;
+        }
+
+        if (this.isBusted()) {
+            return Result.LOSE;
+        }
+
+        return competeByScore(player.calculateBlackjackScore());
+    }
+
+    private Result competeByScore(int playerScore) {
+        int dealerScore = this.calculateBlackjackScore();
+
+        if (playerScore > dealerScore) {
+            return Result.LOSE;
+        }
+        if (playerScore < dealerScore) {
+            return Result.WIN;
+        }
+
+        return Result.DRAW;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
@@ -45,4 +70,6 @@ public abstract class Participant {
     }
 
     public abstract List<Card> getInitialCards();
+
+    public abstract boolean isAbleToReceiveCard();
 }
