@@ -15,10 +15,10 @@ public enum ParticipantResult {
         if (dealer.isBust()) {
             return ParticipantResult.WINNER;
         }
-        if (participant.score() > dealer.score()) {
+        if (participant.score().isGreaterThan(dealer.score())) {
             return ParticipantResult.WINNER;
         }
-        if (participant.score() == dealer.score()) {
+        if (participant.score().equals(dealer.score())) {
             return ParticipantResult.DRAWER;
         }
         return ParticipantResult.LOSER;

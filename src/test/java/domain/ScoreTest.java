@@ -21,6 +21,31 @@ class ScoreTest {
         assertEquals(isLess, origin.isLessThan(other));
     }
 
+    static Stream<Arguments> compareScore() {
+        //true
+        final Score origin1 = new Score(51);
+        final Score other1 = new Score(100);
+
+        //false
+        final Score origin2 = new Score(100);
+        final Score other2 = new Score(51);
+
+        //true
+        final Score origin3 = new Score(1);
+        final Score other3 = new Score(2);
+
+        //false
+        final Score origin4 = new Score(1000);
+        final Score other4 = new Score(1000);
+
+        return Stream.of(
+                Arguments.of(origin1, other1, true),
+                Arguments.of(origin2, other2, false),
+                Arguments.of(origin3, other3, true),
+                Arguments.of(origin4, other4, false)
+        );
+    }
+
     @ParameterizedTest
     @CsvSource(value = {
             "22 -> true",
@@ -47,28 +72,51 @@ class ScoreTest {
         assertTrue(score.canMoreCard());
     }
 
-    static Stream<Arguments> compareScore() {
+    @ParameterizedTest
+    @MethodSource("compareEqualScore")
+    @DisplayName("isLessEqualThan() : 파라미터로 들어온 점수보다 작거나 같으면 true를 반환한다.")
+    void test_isLessEqualThen(final Score origin, final Score other, final boolean isLess) throws Exception {
+        //when & then
+        assertEquals(isLess, origin.isLessEqualThan(other));
+    }
+
+    static Stream<Arguments> compareEqualScore() {
         //true
-        final Score origin1 = new Score(51);
-        final Score other1 = new Score(100);
+        final Score origin1 = new Score(1);
+        final Score other1 = new Score(2);
 
         //false
-        final Score origin2 = new Score(100);
-        final Score other2 = new Score(51);
+        final Score origin2 = new Score(21);
+        final Score other2 = new Score(21);
 
         //true
-        final Score origin3 = new Score(1);
-        final Score other3 = new Score(2);
+        final Score origin3 = new Score(16);
+        final Score other3 = new Score(15);
 
         //false
-        final Score origin4 = new Score(1000);
-        final Score other4 = new Score(1000);
+        final Score origin4 = new Score(16);
+        final Score other4 = new Score(17);
 
         return Stream.of(
                 Arguments.of(origin1, other1, true),
-                Arguments.of(origin2, other2, false),
-                Arguments.of(origin3, other3, true),
-                Arguments.of(origin4, other4, false)
+                Arguments.of(origin2, other2, true),
+                Arguments.of(origin3, other3, false),
+                Arguments.of(origin4, other4, true)
         );
+    }
+
+    @Test
+    @DisplayName("isGreaterThan() : 파라미터로 들어온 점수보다 높으면 true를 반환한다.")
+    void test_isGreaterThan() throws Exception {
+        //given
+        final Score origin1 = new Score(21);
+        final Score other1 = new Score(21);
+
+        final Score origin2 = new Score(21);
+        final Score other2 = new Score(20);
+
+        //when & then
+        assertFalse(origin1.isGreaterThan(other1));
+        assertTrue(origin2.isGreaterThan(other2));
     }
 }

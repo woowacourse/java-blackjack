@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.Score;
 import domain.area.CardArea;
 import domain.card.Card;
 
@@ -31,7 +32,7 @@ public abstract class Player {
 
     public abstract boolean canHit();
 
-    public int score() {
+    public Score score() {
         return cardArea.calculate();
     }
 }

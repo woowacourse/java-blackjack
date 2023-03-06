@@ -1,5 +1,6 @@
 package domain.player.dealer;
 
+import domain.Score;
 import domain.area.CardArea;
 import domain.card.Card;
 import domain.player.Name;
@@ -16,7 +17,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return score() <= DEALER_LIMIT_SCORE;
+        return score().isLessEqualThan(new Score(DEALER_LIMIT_SCORE));
     }
 
     public Card faceUpFirstCard() {

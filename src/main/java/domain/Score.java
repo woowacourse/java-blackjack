@@ -26,7 +26,7 @@ public class Score {
     }
 
     public boolean isLessThan(final Score other) {
-        return score - other.score < 0;
+        return score < other.score;
     }
 
     public boolean isBust() {
@@ -35,5 +35,13 @@ public class Score {
 
     public boolean canMoreCard() {
         return score < UPPER_LIMIT_SCORE;
+    }
+
+    public boolean isLessEqualThan(final Score other) {
+        return score <= other.score;
+    }
+
+    public boolean isGreaterThan(final Score other) {
+        return score > other.score;
     }
 }

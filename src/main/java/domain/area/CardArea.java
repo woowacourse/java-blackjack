@@ -1,5 +1,6 @@
 package domain.area;
 
+import domain.Score;
 import domain.card.Card;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class CardArea {
         cards.add(card);
     }
 
-    public int calculate() {
+    public Score calculate() {
         int aceCount = countAceCard();
         int totalValue = sumTotalCardValue();
 
@@ -31,7 +32,7 @@ public class CardArea {
             }
             aceCount--;
         }
-        return totalValue;
+        return new Score(totalValue);
     }
 
     private int sumTotalCardValue() {
@@ -47,11 +48,11 @@ public class CardArea {
     }
 
     public boolean canMoreCard() {
-        return calculate() < 21;
+        return calculate().canMoreCard();
     }
 
     public boolean isBust() {
-        return calculate() > 21;
+        return calculate().isBust();
     }
 
     public Card firstCard() {

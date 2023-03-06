@@ -1,5 +1,6 @@
 package domain.area;
 
+import domain.Score;
 import domain.card.Card;
 import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
@@ -73,7 +74,7 @@ class CardAreaTest {
                                                new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
-        assertThat(cardArea.calculate()).isEqualTo(totalScore);
+        assertThat(cardArea.calculate()).isEqualTo(new Score(totalScore));
     }
 
     @ParameterizedTest(name = "킹, 퀸, 잭은 10으로 계산한다")
@@ -92,14 +93,14 @@ class CardAreaTest {
                                                new Card(CardShape.CLOVER, valueOf(split[1])));
 
         // when & then
-        assertThat(cardArea.calculate()).isEqualTo(totalScore);
+        assertThat(cardArea.calculate()).isEqualTo(new Score(totalScore));
     }
 
     @ParameterizedTest(name = "[{index}] ACE 는 이전까지의 총합이 10 이하면 11로 계산한다")
     @MethodSource("containsAceCardArea")
     void ACE_는_이전까지의_총합이_10_이하면_11로_계산한다(final CardArea cardArea, final int totalScore) {
         // then
-        assertThat(cardArea.calculate()).isEqualTo(totalScore);
+        assertThat(cardArea.calculate()).isEqualTo(new Score(totalScore));
     }
 
     static Stream<Arguments> containsAceCardArea() {
