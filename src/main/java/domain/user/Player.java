@@ -16,10 +16,6 @@ public class Player {
         cardPool.add(card);
     }
 
-    public boolean hasSameNameWith(final String name) {
-        return playerName.isSameWith(name);
-    }
-
     public int sumCardPool() {
         return cardPool.sumCardNumbers();
     }
