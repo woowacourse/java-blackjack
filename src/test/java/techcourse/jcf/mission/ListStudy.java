@@ -15,7 +15,6 @@ class ListStudy {
         assertThat(list.get(0)).isSameAs(1);
         assertThat(list.get(1)).isSameAs(2);
 
-
         // MISSION 2
         final String[] arrays = {"first", "second"};
         final SimpleList<String> values = SimpleList.<String>fromArrayToList(arrays);
@@ -29,7 +28,6 @@ class ListStudy {
         final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
         assertThat(doubleTotal).isEqualTo(1.2d);
 
-
         final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
         assertThat(intValues.get(0)).isEqualTo(1);
         assertThat(intValues.get(1)).isEqualTo(2);
@@ -42,12 +40,17 @@ class ListStudy {
         assertThat(filteredDoubleValues.size()).isSameAs(1);
         assertThat(filteredDoubleValues.get(0)).isEqualTo(-0.1);
 
-
         final SimpleList<Integer> intValues2 = new SimpleArrayList<Integer>(-10, 1, 2);
         final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues2);
         assertThat(filteredIntValues.size()).isSameAs(1);
         assertThat(filteredIntValues.get(0)).isEqualTo(-10);
 
+        // MISSION 5
+        final var laserPrinter = new LaserPrinter();
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+        SimpleList.copy(printers, laserPrinters);
+        assertThat(printers.get(0)).isSameAs(laserPrinter);
     }
 
 }

@@ -39,6 +39,12 @@ public interface SimpleList<E> {
         return create(result);
     }
 
+    static <T> void copy(SimpleList<? super T> superClass, SimpleList<T> subClass) {
+        for (int i = 0; i < subClass.size(); i++) {
+            superClass.add(subClass.get(i));
+        }
+    }
+
     boolean add(E value);
 
     void add(int index, E value);
