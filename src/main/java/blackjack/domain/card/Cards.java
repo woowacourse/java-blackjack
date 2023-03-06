@@ -10,15 +10,15 @@ public class Cards {
     private static final int CARD_TOTAL_SIZE = 48;
 
     private static List<Card> cards;
+    private static final Cards CARDS = new Cards();
 
     private Cards() {
     }
 
     public static Cards initializeCards() {
-        Cards cards = new Cards();
-        cards.createCards();
-        cards.shuffleCards();
-        return cards;
+        CARDS.createCards();
+        CARDS.shuffleCards();
+        return CARDS;
     }
 
     private void createCards() {
