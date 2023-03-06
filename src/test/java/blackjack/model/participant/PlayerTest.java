@@ -6,12 +6,15 @@ import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.InitialState;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 
 class PlayerTest {
 
@@ -29,7 +32,7 @@ class PlayerTest {
         player.play(cardDeck);
 
         //then
-        Assertions.assertThat(player.getHand().getCards()).containsExactly(card2, card1);
+        assertThat(player.getHand().getCards()).containsExactly(card2, card1);
     }
 
     @Test
@@ -48,7 +51,7 @@ class PlayerTest {
         player.play(cardDeck);
 
         //then
-        Assertions.assertThatThrownBy(() -> player.play(cardDeck))
+        assertThatThrownBy(() -> player.play(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("버스트 상태에서는 카드를 더 뽑을 수 없습니다.");
     }
@@ -68,7 +71,7 @@ class PlayerTest {
         player.play(cardDeck);
 
         //then
-        Assertions.assertThatThrownBy(() -> player.play(cardDeck))
+        assertThatThrownBy(() -> player.play(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("블랙잭 상태에서는 카드를 더 뽑을 수 없습니다.");
     }

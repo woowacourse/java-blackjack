@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
 class DealerTest {
 
     @Test
@@ -30,7 +32,7 @@ class DealerTest {
         dealer.play(cardDeck);
 
         //then
-        Assertions.assertThatThrownBy(() -> dealer.play(cardDeck))
+        assertThatThrownBy(() -> dealer.play(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("스탠드 상태에서는 카드를 더 뽑을 수 없습니다.");
     }

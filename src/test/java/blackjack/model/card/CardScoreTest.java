@@ -1,10 +1,11 @@
 package blackjack.model.card;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CardScoreTest {
 
@@ -19,7 +20,7 @@ class CardScoreTest {
         int smallScore = score.getSmallScore();
 
         //then
-        Assertions.assertThat(smallScore).isEqualTo(1 + 4 + 10);
+        assertThat(smallScore).isEqualTo(1 + 4 + 10);
     }
 
     @Test
@@ -33,6 +34,6 @@ class CardScoreTest {
         int bigScore = score.getBigScore();
 
         //then
-        Assertions.assertThat(bigScore).isEqualTo(11 + 4 + 10);
+        assertThat(bigScore).isEqualTo(11 + 4 + 10);
     }
 }
