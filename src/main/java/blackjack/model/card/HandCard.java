@@ -14,7 +14,7 @@ public class HandCard {
     }
 
     public HandCard(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public void add(Card card) {
@@ -22,7 +22,8 @@ public class HandCard {
     }
 
     public CardScore score(ResultState state){
-        List<CardNumber> ownedNumbers = cards.stream().map(Card::getNumber).collect(Collectors.toList());
+        List<CardNumber> ownedNumbers = cards.stream().map(Card::getNumber)
+                .collect(Collectors.toList());
         return new CardScore(ownedNumbers, state);
     }
 
