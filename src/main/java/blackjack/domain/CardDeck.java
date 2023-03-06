@@ -46,7 +46,7 @@ public class CardDeck {
      * @return 일반적인 경우 카드 덱의 총 점수를 반환하고 Burst되는 경우 -1을 반환한다.
      */
     public int calculateScore(CardDeck deck) {
-        int commonSum = calculateCommonCardScore(deck);
+        int commonSum = calculateStandardAndCourtCardScore(deck);
         List<AceCard> aceCards = extractAceCards(deck);
         int aceCardCount = aceCards.size();
 
@@ -58,7 +58,7 @@ public class CardDeck {
     }
 
 
-    private int calculateCommonCardScore(CardDeck deck) {
+    private int calculateStandardAndCourtCardScore(CardDeck deck) {
         return deck.getCards().stream()
                 .filter((card) -> card.getValue() != MAX_ACE_VALUE)
                 .mapToInt(Card::getValue)
