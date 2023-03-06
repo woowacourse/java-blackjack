@@ -8,7 +8,6 @@ import domain.game.Referee;
 import domain.player.GameResult;
 import domain.player.Player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -28,26 +27,29 @@ public class OutputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printPlayersInformation(List<Player> players) {
-        List<String> playerNames = players.stream()
+    public static void printPlayersInformation(BlackJackGame blackJackGame) {
+        printPlayerNames(blackJackGame);
+        printPlayerCardConditions(blackJackGame);
+    }
+
+    private static void printPlayerNames(BlackJackGame blackJackGame) {
+        Player dealer = blackJackGame.getDealer();
+        List<String> participantsNames = parseParticipantsNames(blackJackGame);
+        
+        System.out.printf("%n%s와 %s에게 2장을 나누어주었습니다.%n",
+                dealer.getName(),
+                String.join(", ", participantsNames));
+    }
+    
+    private static List<String> parseParticipantsNames(BlackJackGame blackJackGame) {
+        return blackJackGame.getParticipants().stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
-        printPlayerNames(playerNames);
-        printPlayerCardConditions(players);
     }
-
-    private static void printPlayerNames(List<String> playerNames) {
-        playerNames = new ArrayList<>(playerNames);
-        System.out.printf("%n%s와 %s에게 2장을 나누어주었습니다.%n",
-                playerNames.remove(0),
-                String.join(", ", playerNames));
-    }
-
-    private static void printPlayerCardConditions(List<Player> players) {
-        players = new ArrayList<>(players);
-        Player dealer = players.remove(0);
-        printDealerCardCondition(dealer);
-        printParticipantCardCondition(players);
+    
+    private static void printPlayerCardConditions(BlackJackGame blackJackGame) {
+        printDealerCardCondition(blackJackGame.getDealer());
+        printParticipantCardCondition(blackJackGame.getParticipants());
     }
 
     private static void printDealerCardCondition(Player dealer) {

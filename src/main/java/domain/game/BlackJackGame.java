@@ -12,6 +12,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
+    private static final int INIT_GIVE_CARD_COUNT = 2;
+    private static final int DEALER_GIVE_CARD_STATE_MAX_SCORE = 16;
+    
     private final Deck deck;
     private final List<Player> players;
 
@@ -39,7 +42,7 @@ public class BlackJackGame {
     }
 
     private void giveTwoCardToPerPlayer(Player player) {
-        for (int divideCardCount = 0; divideCardCount < 2; divideCardCount++) {
+        for (int divideCardCount = 0; divideCardCount < INIT_GIVE_CARD_COUNT; divideCardCount++) {
             player.addCard(findAnyOneCard());
         }
     }
@@ -63,7 +66,7 @@ public class BlackJackGame {
     }
 
     public boolean shouldDealerGetCard() {
-        return getDealer().getTotalScore() <= 16;
+        return getDealer().getTotalScore() <= DEALER_GIVE_CARD_STATE_MAX_SCORE;
     }
 
     public void giveDealerCard() {

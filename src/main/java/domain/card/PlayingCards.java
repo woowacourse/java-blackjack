@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayingCards {
+    private static final int BLACKJACK_SCORE = 21;
+    
     private final List<Card> cards;
 
     public PlayingCards() {
@@ -43,7 +45,7 @@ public class PlayingCards {
     }
 
     public boolean isBurst() {
-        return getTotalScore() > 21;
+        return getTotalScore() > BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

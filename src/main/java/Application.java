@@ -31,7 +31,7 @@ public class Application {
     
     private void initializedBlackjackGame(BlackJackGame blackJackGame) {
         blackJackGame.giveTwoCardToPlayers();
-        OutputView.printPlayersInformation(blackJackGame.getPlayers());
+        OutputView.printPlayersInformation(blackJackGame);
     }
     
     private void giveCardToPlayers(BlackJackGame blackJackGame) {
