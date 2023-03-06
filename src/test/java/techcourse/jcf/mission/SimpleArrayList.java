@@ -14,6 +14,14 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.elementData = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
+    @SafeVarargs
+    public SimpleArrayList(final E... values) {
+        this();
+        for (final E value : values) {
+            add(value);
+        }
+    }
+
     @Override
     public boolean add(E value) {
         if (size == elementData.length) {

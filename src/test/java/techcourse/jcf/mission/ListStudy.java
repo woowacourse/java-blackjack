@@ -22,6 +22,19 @@ class ListStudy {
         assertThat(values.get(0)).isEqualTo("first");
         assertThat(values.get(1)).isEqualTo("second");
 
+        // MISSION 3
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
+        assertThat(doubleValues.get(0)).isEqualTo(0.5D);
+        assertThat(doubleValues.get(1)).isEqualTo(0.7D);
+        assertThat(intValues.get(0)).isEqualTo(1);
+        assertThat(intValues.get(1)).isEqualTo(2);
+
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+        assertThat(doubleTotal).isEqualTo(1.2d);
+        assertThat(intTotal).isEqualTo(3);
+
     }
 
 }
