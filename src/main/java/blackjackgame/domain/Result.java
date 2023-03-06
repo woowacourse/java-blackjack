@@ -1,11 +1,9 @@
 package blackjackgame.domain;
 
-import static blackjackgame.domain.GameOutcome.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import static blackjackgame.domain.GameOutcome.*;
 
 public class Result {
     private static final int BLACKJACK_MAX_SCORE = 21;
@@ -20,20 +18,14 @@ public class Result {
     }
 
     private Map<GameOutcome, Integer> initDealerResult() {
-        Map<GameOutcome, Integer> dealerResult = new LinkedHashMap<>();
-        for (final GameOutcome gameOutcome : GameOutcome.values()) {
-            dealerResult.put(gameOutcome, 0);
-        }
-        return dealerResult;
+        return Arrays.stream(GameOutcome.values())
+                .collect(Collectors.toMap(value -> value, value -> 0));
     }
 
     private Map<Guest, GameOutcome> generateGuestsResult(final Dealer dealer, final List<Guest> guests) {
-        Map<Guest, GameOutcome> guestsResult = new LinkedHashMap<>();
         int dealerScore = dealer.getScore();
-        for (final Guest guest : guests) {
-            guestsResult.put(guest, judgeGuestResult(dealerScore, guest.getScore()));
-        }
-        return guestsResult;
+        return guests.stream()
+                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealerScore, guest.getScore())));
     }
 
     private GameOutcome judgeGuestResult(final int dealerScore, final int guestScore) {

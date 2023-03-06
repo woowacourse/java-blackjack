@@ -29,11 +29,8 @@ public abstract class Player {
     }
 
     private boolean findAce() {
-        boolean hasAce = false;
-        for (final Card card : cards) {
-            hasAce |= (card.getValue().equals(CardValue.ACE.getValue()));
-        }
-        return hasAce;
+        return cards.stream()
+                .anyMatch(card -> card.getValue().equals(CardValue.ACE.getValue()));
     }
 
     private int getBasicScore() {

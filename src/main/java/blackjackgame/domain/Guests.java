@@ -1,8 +1,8 @@
 package blackjackgame.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Guests {
     private static final int MIN_GUESTS_NUMBER = 1;
@@ -17,13 +17,11 @@ public class Guests {
     }
 
     private List<Guest> generateGuests(final List<String> playerNames) {
-        List<Guest> inputGuests = new ArrayList<>();
-        for (final String playerName : playerNames) {
-            Guest guest = new Guest(new Name(playerName));
-            validateDuplicate(inputGuests, guest);
-            inputGuests.add(guest);
-        }
-        return inputGuests;
+        validateDuplicate(playerNames);
+
+        return playerNames.stream()
+                .map(playerName -> new Guest(new Name(playerName)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void validateGuestNumbers(final List<String> playerNames) {
@@ -32,8 +30,8 @@ public class Guests {
         }
     }
 
-    private void validateDuplicate(final List<Guest> inputGuests, final Guest guest) {
-        if (inputGuests.contains(guest)) {
+    private void validateDuplicate(final List<String> playerNames) {
+        if (playerNames.size() != playerNames.stream().distinct().count()) {
             throw new IllegalArgumentException("참여자의 이름은 중복될 수 없습니다.");
         }
     }
