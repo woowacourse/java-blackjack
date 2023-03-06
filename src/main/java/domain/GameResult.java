@@ -14,11 +14,11 @@ public enum GameResult {
     }
 
     public static GameResult comparePlayerWithDealer(final int playerScore, final int dealerScore) {
-        if ((playerScore == dealerScore) || (isBust(playerScore) && isBust(dealerScore))) {
-            return PUSH;
-        }
-        if (((playerScore < dealerScore) && !isBust(dealerScore)) || isBust(playerScore)) {
+        if (isBust(playerScore) || ((playerScore < dealerScore) && !isBust(dealerScore))) {
             return LOSE;
+        }
+        if (playerScore == dealerScore) {
+            return PUSH;
         }
         return WIN;
     }

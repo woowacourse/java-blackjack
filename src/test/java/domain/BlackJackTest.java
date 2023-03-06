@@ -12,28 +12,21 @@ import org.junit.jupiter.api.Test;
 
 public class BlackJackTest {
 
-    private static class ZeroIndexGenerator implements CardIndexGenerator {
-
-        @Override
-        public int chooseIndex(int deckSize) {
-            return 0;
-        }
-    }
-
     private Users users;
     private BlackJack blackJack;
 
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        blackJack = BlackJack.of(users, deckSize -> 0);
     }
 
     @DisplayName("플레이어의 승부 결과를 반환한다")
     @Test
     void calculateGameResults() {
         users = Users.from(List.of("hongo", "kiara"));
-        blackJack = BlackJack.of(users, new ZeroIndexGenerator());
+        blackJack = BlackJack.of(users, deckSize -> 0);
+
         // 카드 현황
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
@@ -58,7 +51,7 @@ public class BlackJackTest {
             .containsEntry("hongo", GameResult.PUSH);
     }
 
-    @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
+    @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 플레이어가 진다")
     @Test
     void PUSH_whenBothCardsOver21() {
         List<Player> players = users.getPlayers();
@@ -75,7 +68,7 @@ public class BlackJackTest {
         // dealer : 3, 4, 5, 10        => 22
         Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
         assertThat(gameResults)
-            .containsEntry("hongo", GameResult.PUSH);
+            .containsEntry("hongo", GameResult.LOSE);
     }
 
     @DisplayName("유저가 요청하면 카드를 하나 더 준다")
@@ -87,5 +80,39 @@ public class BlackJackTest {
         int oldScore = player.getScore();
         blackJack.giveCard("hongo");
         assertThat(player.getScore()).isGreaterThan(oldScore);
+    }
+
+    @DisplayName("딜러에게 카드를 한 장 더 준다")
+    @Test
+    void giveCard_toDealer() {
+        Dealer dealer = users.getDealer();
+        int oldCardSize = dealer.getCards().size();
+
+        blackJack.giveCardToDealer();
+
+        assertThat(dealer.getCards().size()).isEqualTo(oldCardSize + 1);
+    }
+
+    @DisplayName("딜러의 점수를 계산한다")
+    @Test
+    void calculateDealerResult() {
+        users = Users.from(List.of("hongo", "kiara", "ash"));
+        blackJack = BlackJack.of(users, deckSize -> 0);
+        List<Player> players = blackJack.getHittablePlayers();
+        players.get(1)
+            .hit(new Card(Denomination.EIGHT, Suits.DIAMOND));
+        players.get(2)
+            .hit(new Card(Denomination.FIVE, Suits.DIAMOND));
+
+        // 카드 현황
+        // player1 : ACE(11), 2 => 13
+        // player2 : 3, 4, 8    => 15
+        // player3 : 5, 6, 5    => 16
+        // dealer  : 7, 8       => 15
+        Map<GameResult, Integer> dealerResult = blackJack.calculateDealerResult();
+        assertThat(dealerResult)
+            .containsEntry(GameResult.WIN, 1)
+            .containsEntry(GameResult.PUSH, 1)
+            .containsEntry(GameResult.LOSE, 1);
     }
 }
