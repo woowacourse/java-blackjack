@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
 import static blackjack.domain.player.Players.from;
-import static blackjack.domain.player.Result.DRAW;
+import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
 import static blackjack.util.CardFixtures.ACE_DIAMOND;
 import static blackjack.util.CardFixtures.ACE_SPADE;
@@ -115,6 +115,6 @@ public class PlayersTest {
 
         Map<Player, Result> result = players.play();
 
-        assertThat(result.values()).containsExactly(WIN, DRAW);
+        assertThat(result.values()).containsExactly(WIN, PUSH);
     }
 }

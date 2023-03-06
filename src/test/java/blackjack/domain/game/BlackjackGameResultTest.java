@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
-import static blackjack.domain.player.Result.DRAW;
 import static blackjack.domain.player.Result.LOSE;
+import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,11 +50,11 @@ public class BlackjackGameResultTest {
     void 딜러_무승부_수를_반환한다() {
         final Deck deck = FixedDeck.getFullDeck();
         final BlackjackGameResult blackjackGameResult = new BlackjackGameResult(Map.of(
-                Gambler.create("허브", deck), DRAW,
-                Gambler.create("후추", deck), DRAW
+                Gambler.create("허브", deck), PUSH,
+                Gambler.create("후추", deck), PUSH
         ));
 
-        final int result = blackjackGameResult.getDealerDrawCount();
+        final int result = blackjackGameResult.getDealerPushCount();
 
         assertThat(result).isEqualTo(2);
     }

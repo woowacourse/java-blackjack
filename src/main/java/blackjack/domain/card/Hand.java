@@ -29,7 +29,7 @@ public class Hand {
 
     private Result playWithBlackjack(final Hand other) {
         if (other.state.isBlackjack()) {
-            return Result.DRAW;
+            return Result.PUSH;
         }
         return Result.WIN;
     }
@@ -41,7 +41,7 @@ public class Hand {
         if (other.state.isNotBust() && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
             return Result.LOSE;
         }
-        return Result.DRAW;
+        return Result.PUSH;
     }
 
     public boolean isPlayable() {

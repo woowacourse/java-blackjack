@@ -17,8 +17,8 @@ public class BlackjackGameResult {
         return Collections.frequency(result.values(), Result.LOSE);
     }
 
-    public int getDealerDrawCount() {
-        return Collections.frequency(result.values(), Result.DRAW);
+    public int getDealerPushCount() {
+        return Collections.frequency(result.values(), Result.PUSH);
     }
 
     public int getDealerLoseCount() {

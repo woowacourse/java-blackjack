@@ -49,13 +49,13 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_SPADE, JACK_SPADE), Result.DRAW),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_SPADE, JACK_SPADE), Result.PUSH),
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, JACK_HEART), Result.WIN),
                 Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), Result.WIN),
                 Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, ACE_SPADE), Result.LOSE),
                 Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), List.of(JACK_SPADE, ACE_SPADE), Result.LOSE),
                 Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, EIGHT_SPADE), Result.WIN),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, JACK_HEART), Result.DRAW),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, JACK_HEART), Result.PUSH),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, JACK_HEART), Result.LOSE),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), Result.WIN),
                 Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(JACK_SPADE, SEVEN_SPADE),

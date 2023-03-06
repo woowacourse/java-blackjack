@@ -22,10 +22,10 @@ public class OutputView {
     private static final String GAME_RESULT_MESSAGE = NEW_LINE + "##최종 승패";
     private static final String GAME_RESULT_PLAYER_MESSAGE_FORMAT = "%s: %s";
     private static final String WIN_MESSAGE = "승";
-    private static final String DRAW_MESSAGE = "무";
+    private static final String PUSH_MESSAGE = "무";
     private static final String LOSE_MESSAGE = "패";
     private static final String GAME_RESULT_DEALER_MESSAGE_FORMAT =
-            "딜러: %d" + WIN_MESSAGE + " %d" + DRAW_MESSAGE + " %d" + LOSE_MESSAGE;
+            "딜러: %d" + WIN_MESSAGE + " %d" + PUSH_MESSAGE + " %d" + LOSE_MESSAGE;
 
     public void printInitialDraw(final Players players) {
         System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
@@ -76,7 +76,7 @@ public class OutputView {
         return String.format(
                 GAME_RESULT_DEALER_MESSAGE_FORMAT,
                 result.getDealerWinCount(),
-                result.getDealerDrawCount(),
+                result.getDealerPushCount(),
                 result.getDealerLoseCount()
         );
     }
@@ -93,8 +93,8 @@ public class OutputView {
         if (result == Result.WIN) {
             return WIN_MESSAGE;
         }
-        if (result == Result.DRAW) {
-            return DRAW_MESSAGE;
+        if (result == Result.PUSH) {
+            return PUSH_MESSAGE;
         }
         return LOSE_MESSAGE;
     }
