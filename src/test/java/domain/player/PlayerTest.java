@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerTest {
     Deck deck = new Deck();
 
-    @Test
     @DisplayName("플레이어가 처음 카드를 뽑으면 패의 크기는 1이다.")
+    @Test
     void drawTest() {
 
         final String testName = "test";
@@ -27,8 +27,8 @@ public class PlayerTest {
         assertEquals(1, player.getCards().size());
     }
 
-    @Test
     @DisplayName("플레이어가 딜러보다 점수가 높은 경우 isWin은 True를 반환한다.")
+    @Test
     void isWinTrueTest() {
         Player player = new Player("hardy");
         player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
@@ -38,8 +38,8 @@ public class PlayerTest {
         assertTrue(player.isWin(dealerScore));
     }
 
-    @Test
     @DisplayName("플레이어가 딜러보다 점수가 높지 않을 경우 isWin은 False를 반환한다.")
+    @Test
     void isWinFalseTest() {
         Player player = new Player("hardy");
         player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
@@ -49,8 +49,8 @@ public class PlayerTest {
         assertFalse(player.isWin(dealerScore));
     }
 
-    @Test
     @DisplayName("플레이어가 딜러와 점수가 같을 경우 isDraw은 True를 반환한다.")
+    @Test
     void isDrawTrueTest() {
         Player player = new Player("hardy");
         player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
@@ -60,8 +60,8 @@ public class PlayerTest {
         assertTrue(player.isDraw(dealerScore));
     }
 
-    @Test
     @DisplayName("플레이어가 딜러와 점수가 같지 않을 경우 isDraw은 False를 반환한다.")
+    @Test
     void isDrawFalseTest() {
         Player player = new Player("hardy");
         player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
