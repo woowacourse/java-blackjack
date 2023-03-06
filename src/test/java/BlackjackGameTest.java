@@ -25,7 +25,7 @@ class BlackjackGameTest {
     void giveCardToSuccessTest() {
         Player pobi = players.getPlayers().get(0);
 
-        blackjackGame.giveCardTo(pobi);
+        blackjackGame.handOutCardTo(pobi);
 
         Assertions.assertThat(pobi.cardSize()).isEqualTo(1);
     }
@@ -36,7 +36,7 @@ class BlackjackGameTest {
         Player pobi = players.getPlayers().get(0);
         Player crong = players.getPlayers().get(1);
 
-        blackjackGame.giveInitCards();
+        blackjackGame.handOutInitialCards();
 
         Assertions.assertThat(pobi.cardSize()).isEqualTo(2);
         Assertions.assertThat(crong.cardSize()).isEqualTo(2);
@@ -45,8 +45,8 @@ class BlackjackGameTest {
     @DisplayName("딜러는 카드의 합이 17이 넘을때 까지 추가 카드를 받아야 한다.")
     @Test
     void giveAdditionalCardToDealerSuccessTest() {
-        blackjackGame.giveInitCards();
-        blackjackGame.giveAdditionalCardToDealer();
+        blackjackGame.handOutInitialCards();
+        blackjackGame.handOutAdditionalCardToDealer();
 
         Participant dealer = blackjackGame.getDealer();
 

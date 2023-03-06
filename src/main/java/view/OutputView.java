@@ -15,17 +15,17 @@ public class OutputView {
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
 
-    public void printInitCards(Dealer dealer, Players players) {
+    public void printInitialCards(Dealer dealer, Players players) {
         String namesFormat = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
 
-        lineBreak();
+        breakLine();
         String format = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
         System.out.println(format);
         printInitDealerCards(dealer);
         printInitPlayerCards(players);
-        lineBreak();
+        breakLine();
     }
 
     private void printInitDealerCards(Dealer dealer) {
@@ -71,13 +71,13 @@ public class OutputView {
             return;
         }
 
-        lineBreak();
+        breakLine();
         String format = String.format(Format.DEALER_MORE_CARDS.format, hitCardCount);
         System.out.println(format);
     }
 
     public void printCardsWithScore(Dealer dealer, Players players) {
-        lineBreak();
+        breakLine();
         printDealerCardsWithScore(dealer);
         printPlayersCardsWithScore(players);
     }
@@ -98,7 +98,7 @@ public class OutputView {
     }
 
     public void printFinalResult(Dealer dealer) {
-        lineBreak();
+        breakLine();
         System.out.println(FINAL_RESULT_MESSAGE);
         System.out.println(getDealerResultFormat(dealer));
 
@@ -135,8 +135,8 @@ public class OutputView {
         System.out.println(format);
     }
 
-    private void lineBreak() {
-        System.out.println();
+    private void breakLine() {
+        System.out.print(System.lineSeparator());
     }
 
     public enum Format {

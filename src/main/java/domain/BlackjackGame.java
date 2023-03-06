@@ -14,35 +14,35 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public void giveInitCards() {
+    public void handOutInitialCards() {
         giveCardsToDealer();
         giveCardsToPlayers();
     }
     private void giveCardsToDealer() {
-        giveCardTo(dealer);
-        giveCardTo(dealer);
+        handOutCardTo(dealer);
+        handOutCardTo(dealer);
     }
 
     private void giveCardsToPlayers() {
         for (Player player : players.getPlayers()) {
-            giveCardTo(player);
-            giveCardTo(player);
+            handOutCardTo(player);
+            handOutCardTo(player);
         }
     }
 
-    public void giveCardTo(Participant participant) {
+    public void handOutCardTo(Participant participant) {
         Card card = deck.drawCard();
         participant.receiveCard(card);
     }
 
-    public void giveAdditionalCardToDealer() {
+    public void handOutAdditionalCardToDealer() {
         while (dealer.calculateScore() < STANDARD_OF_HIT) {
-            giveCardTo(dealer);
+            handOutCardTo(dealer);
         }
     }
 
     public void result() {
-        dealer.decideResults(players);
+        dealer.decideDealerResultsAgainst(players);
     }
 
     public Dealer getDealer() {

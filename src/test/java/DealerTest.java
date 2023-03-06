@@ -31,7 +31,7 @@ class DealerTest {
         giveCardsTo(pobi, List.of(VALUE_TEN, VALUE_TEN)); // 20
         giveCardsTo(crong, List.of(VALUE_TEN, VALUE_EIGHT)); // 18
 
-        dealer.decideResults(players);
+        dealer.decideDealerResultsAgainst(players);
 
         Assertions.assertThat(dealer.getPlayerResultMap().values())
                 .containsExactly(Result.LOSE, Result.WIN);

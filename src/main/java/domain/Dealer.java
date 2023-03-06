@@ -10,7 +10,7 @@ public class Dealer extends Participant {
 
     private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
 
-    public void decideResults(Players players) {
+    public void decideDealerResultsAgainst(Players players) {
         for (Player player : players.getPlayers()) {
             Result dealerResult = competeWith(player);
             playerResultMap.put(player, dealerResult);

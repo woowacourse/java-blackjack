@@ -23,14 +23,16 @@ public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = createBlackjackGame();
 
-        play(blackjackGame);
-        result(blackjackGame);
+        playPlayersTurn(blackjackGame);
+        playDealerTurn(blackjackGame);
+
+        printResults(blackjackGame);
     }
 
     private BlackjackGame createBlackjackGame() {
         BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
-        blackjackGame.giveInitCards();
-        outputView.printInitCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        blackjackGame.handOutInitialCards();
+        outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
         return blackjackGame;
     }
 
@@ -44,32 +46,33 @@ public class BlackjackController {
         return inputView.requestPlayerNames();
     }
 
-    private void play(BlackjackGame blackjackGame) {
+    private void playPlayersTurn(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
-            requestMoreCard(blackjackGame, player);
+            playPlayerTurn(blackjackGame, player);
         }
-
-        Dealer dealer = blackjackGame.getDealer();
-        blackjackGame.giveAdditionalCardToDealer();
-        outputView.printDealerHitCount(dealer.getHitCardCount());
     }
 
-    private void requestMoreCard(BlackjackGame blackjackGame, Player player) {
-        while (!player.isBusted() && isHitCommand(player.getName())) {
-            blackjackGame.giveCardTo(player);
+    private void playPlayerTurn(BlackjackGame blackjackGame, Player player) {
+        while (!player.isBusted() && requestMoreCardTo(player) == Command.HIT) {
+            blackjackGame.handOutCardTo(player);
             outputView.printPlayerCards(player);
         }
 
         printPlayerCurrentState(player);
     }
 
-    private boolean isHitCommand(String name) {
-        Command command = retryOnInvalidUserInput(
-                () -> Command.from(inputView.requestMoreCard(name))
+    private Command requestMoreCardTo(Player player) {
+        String playerName = player.getName();
+        return retryOnInvalidUserInput(
+                () -> Command.from(inputView.requestMoreCard(playerName))
         );
+    }
 
-        return command == Command.HIT;
+    private void playDealerTurn(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getDealer();
+        blackjackGame.handOutAdditionalCardToDealer();
+        outputView.printDealerHitCount(dealer.getHitCardCount());
     }
 
     private void printPlayerCurrentState(Player player) {
@@ -81,7 +84,7 @@ public class BlackjackController {
         outputView.printPlayerCards(player);
     }
 
-    private void result(BlackjackGame blackjackGame) {
+    private void printResults(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
 
         blackjackGame.result();
