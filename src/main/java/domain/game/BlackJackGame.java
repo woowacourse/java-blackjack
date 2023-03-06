@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import domain.card.Deck;
+import domain.card.RandomShuffleStrategy;
 import domain.people.Dealer;
 import domain.people.Participant;
 import domain.people.Participants;
@@ -25,15 +26,15 @@ public class BlackJackGame {
     private boolean isOngoing;
     private int currentPlayerIndex;
 
-    private BlackJackGame(List<String> names, Deck deck) {
-        this.deck = deck;
+    private BlackJackGame(List<String> names) {
+        this.deck = Deck.from(new RandomShuffleStrategy());
         this.participants = createParticipants(names);
         this.isOngoing = true;
         this.currentPlayerIndex = 0;
     }
 
-    public static BlackJackGame from(List<String> names, Deck deck) {
-        return new BlackJackGame(names, deck);
+    public static BlackJackGame from(List<String> names) {
+        return new BlackJackGame(names);
     }
 
     public Participants createParticipants(List<String> names) {

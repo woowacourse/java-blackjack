@@ -1,8 +1,6 @@
 import java.util.List;
 import java.util.Map;
 
-import domain.card.Deck;
-import domain.card.RandomShuffleStrategy;
 import domain.game.BlackJackGame;
 import domain.game.Result;
 import domain.people.Participant;
@@ -21,8 +19,7 @@ public class Application {
     private static BlackJackGame initGame() {
         try {
             List<String> names = InputView.requestNames();
-            Deck deck = Deck.from(new RandomShuffleStrategy());
-            return BlackJackGame.from(names, deck);
+            return BlackJackGame.from(names);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
             return initGame();
