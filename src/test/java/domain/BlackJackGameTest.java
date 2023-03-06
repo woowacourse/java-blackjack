@@ -1,6 +1,6 @@
 package domain;
 
-import domain.box.BoxResult;
+import domain.box.GameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
@@ -67,9 +67,9 @@ class BlackJackGameTest {
     @DisplayName("플레이어들의 게임결과로 딜러의 게임결과를 생성한다.")
     void playTurn() {
         BlackJackGame blackJackGame = new BlackJackGame("split");
-        BoxResult dealerBoxResult = blackJackGame.getDealerBoxResult(List.of(
-            new BoxResult(5, 0),
-            new BoxResult(0, 3))
+        GameResult dealerBoxResult = blackJackGame.getDealerBoxResult(List.of(
+            new GameResult(5, 0),
+            new GameResult(0, 3))
         );
         Assertions.assertThat(dealerBoxResult.getWinCount()).isEqualTo(3);
         Assertions.assertThat(dealerBoxResult.getLoseCount()).isEqualTo(5);

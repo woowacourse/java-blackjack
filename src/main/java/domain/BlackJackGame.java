@@ -1,7 +1,7 @@
 package domain;
 
-import domain.box.BoxResult;
 import domain.box.Boxes;
+import domain.box.GameResult;
 import domain.card.Deck;
 import domain.user.Player;
 import dto.ParticipantDTO;
@@ -53,15 +53,15 @@ public class BlackJackGame {
         boxes.setParticipantDTO(participantDTO);
     }
 
-    public BoxResult getDealerBoxResult(List<BoxResult> playerBoxResults) {
-        BoxResult dealerBoxResult = new BoxResult(0, 0);
-        for (BoxResult playerBoxResult : playerBoxResults) {
+    public GameResult getDealerBoxResult(List<GameResult> playerBoxResults) {
+        GameResult dealerBoxResult = new GameResult(0, 0);
+        for (GameResult playerBoxResult : playerBoxResults) {
             dealerBoxResult = dealerBoxResult.addReversed(playerBoxResult);
         }
         return dealerBoxResult;
     }
 
-    public List<BoxResult> getPlayerBoxResults(List<Player> players) {
-        return players.stream().map(boxes::getBoxResult).collect(Collectors.toList());
+    public List<GameResult> getPlayerBoxResults(List<Player> players) {
+        return players.stream().map(boxes::getGameResult).collect(Collectors.toList());
     }
 }

@@ -14,7 +14,7 @@ public class Boxes {
 
     private static final int BLACK_JACK_POINT = 21;
     private static final int NEED_TEN_POINT = 11;
-    private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayResult.NOT_BUST, 0);
+    private static final BoxStatus INITIAL_BOX_STATUS = new BoxStatus(PlayerStatus.HIT_ABLE, 0);
     private final LinkedHashMap<Player, BoxStatus> boxes;
 
     private Boxes(LinkedHashMap<Player, BoxStatus> boxes) {
@@ -39,10 +39,10 @@ public class Boxes {
         int point = player.calculatePoint();
         BoxStatus newBoxStatus = new BoxStatus(getResultByScore(point), point);
         if (boxes.get(player).equals(newBoxStatus)) {
-            newBoxStatus = new BoxStatus(PlayResult.STAND, point);
+            newBoxStatus = new BoxStatus(PlayerStatus.STAND, point);
         }
         if (point == NEED_TEN_POINT && player.hasAce()) {
-            newBoxStatus = new BoxStatus(PlayResult.BLACK_JACK, BLACK_JACK_POINT);
+            newBoxStatus = new BoxStatus(PlayerStatus.BLACK_JACK, BLACK_JACK_POINT);
         }
         boxes.put(player, newBoxStatus);
     }
@@ -51,14 +51,14 @@ public class Boxes {
         return boxes.get(participant);
     }
 
-    public PlayResult getResultByScore(int score) {
+    public PlayerStatus getResultByScore(int score) {
         if (score > BLACK_JACK_POINT) {
-            return PlayResult.BUST;
+            return PlayerStatus.BUST;
         }
         if (score == BLACK_JACK_POINT) {
-            return PlayResult.BLACK_JACK;
+            return PlayerStatus.BLACK_JACK;
         }
-        return PlayResult.NOT_BUST;
+        return PlayerStatus.HIT_ABLE;
     }
 
     public void setParticipantDTO(ParticipantDTO participantDTO) {
@@ -82,9 +82,9 @@ public class Boxes {
         return currentTurnPlayer.get();
     }
 
-    public BoxResult getBoxResult(Player participant) {
+    public GameResult getGameResult(Player participant) {
         BoxStatus dealerBoxStatus = boxes.get(new Dealer());
         BoxStatus playerBoxStatus = boxes.get(participant);
-        return BoxResult.from(playerBoxStatus.compareTo(dealerBoxStatus));
+        return GameResult.from(playerBoxStatus.compareTo(dealerBoxStatus));
     }
 }

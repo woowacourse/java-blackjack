@@ -2,7 +2,7 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.TurnAction;
-import domain.box.BoxResult;
+import domain.box.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import dto.ParticipantDTO;
@@ -62,7 +62,7 @@ public class GameController {
         blackJackGame.makeParticipants(participantDTO);
         List<Player> players = participantDTO.getPlayers();
         printAllStatus(participantDTO.getDealer(), players);
-        List<BoxResult> playerBoxResults = blackJackGame.getPlayerBoxResults(players);
+        List<GameResult> playerBoxResults = blackJackGame.getPlayerBoxResults(players);
         OutputView.printDealerGameResult(blackJackGame.getDealerBoxResult(playerBoxResults), players.size());
         for (int index = 0; index < players.size(); index++) {
             OutputView.printPlayerBoxResult(players.get(index).getName(), playerBoxResults.get(index));

@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class BoxStatus implements Comparable<BoxStatus> {
 
-    private final PlayResult playResult;
+    private final PlayerStatus playerResult;
     private final int point;
 
-    public BoxStatus(PlayResult playResult, int point) {
-        this.playResult = playResult;
+    public BoxStatus(PlayerStatus playerResult, int point) {
+        this.playerResult = playerResult;
         this.point = point;
     }
 
     public boolean isOnTurn() {
-        return playResult == PlayResult.NOT_BUST;
+        return playerResult == PlayerStatus.HIT_ABLE;
     }
 
     @Override
@@ -25,23 +25,23 @@ public class BoxStatus implements Comparable<BoxStatus> {
             return false;
         }
         BoxStatus that = (BoxStatus) o;
-        return point == that.point && playResult == that.playResult;
+        return point == that.point && playerResult == that.playerResult;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playResult, point);
+        return Objects.hash(playerResult, point);
     }
 
     @Override
     public int compareTo(BoxStatus o) {
-        if (this.playResult == PlayResult.BUST && o.playResult == PlayResult.BUST) {
+        if (this.playerResult == PlayerStatus.BUST && o.playerResult == PlayerStatus.BUST) {
             return 0;
         }
-        if (this.playResult == PlayResult.BUST) {
+        if (this.playerResult == PlayerStatus.BUST) {
             return -1;
         }
-        if (o.playResult == PlayResult.BUST) {
+        if (o.playerResult == PlayerStatus.BUST) {
             return 1;
         }
         return Integer.compare(this.point, o.point);

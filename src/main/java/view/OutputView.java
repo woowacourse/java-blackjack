@@ -1,6 +1,6 @@
 package view;
 
-import domain.box.BoxResult;
+import domain.box.GameResult;
 import domain.card.Card;
 import domain.card.Suit;
 import java.util.List;
@@ -76,7 +76,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER_GET_CARD);
     }
 
-    public static void printDealerGameResult(BoxResult dealerResult, int playerCount) {
+    public static void printDealerGameResult(GameResult dealerResult, int playerCount) {
         int winCount = dealerResult.getWinCount();
         int loseCount = dealerResult.getLoseCount();
         int drawCount = playerCount - winCount - loseCount;
@@ -87,7 +87,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printPlayerBoxResult(String name, BoxResult gameResult) {
+    public static void printPlayerBoxResult(String name, GameResult gameResult) {
         resetMessage();
         message.append(name).append(COLON);
         message.append(addPlayerResultMessage(gameResult.getWinCount(), gameResult.getLoseCount()));

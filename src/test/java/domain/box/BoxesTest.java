@@ -36,9 +36,9 @@ class BoxesTest {
         boxes.updatePlayerBox(player);
         makeBustByTwentyTwo(dealer);
         boxes.updatePlayerBox(dealer);
-        BoxResult boxResult = boxes.getBoxResult(player);
-        Assertions.assertThat(boxResult.getWinCount()).isEqualTo(1);
-        Assertions.assertThat(boxResult.getLoseCount()).isEqualTo(0);
+        GameResult gameResult = boxes.getGameResult(player);
+        Assertions.assertThat(gameResult.getWinCount()).isEqualTo(1);
+        Assertions.assertThat(gameResult.getLoseCount()).isEqualTo(0);
     }
 
     @DisplayName("현재 턴의 박스의 참가자를 반환하고 업데이트 한다.")
@@ -54,14 +54,14 @@ class BoxesTest {
                 makeBlackJack(firstPlayer);
                 boxes.updatePlayerBox(firstPlayer);
                 Assertions.assertThat(boxes.getBoxStatusByParticipant(firstPlayer))
-                    .isEqualTo(new BoxStatus(PlayResult.BLACK_JACK, 21));
+                    .isEqualTo(new BoxStatus(PlayerStatus.BLACK_JACK, 21));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Player("secondPlayer"));
             }),
             DynamicTest.dynamicTest("모든 참가자 턴이 끝나면 딜러를 반환한다.(스탠드)", () -> {
                 Player secondPlayer = boxes.getCurrentTurnPlayer();
                 boxes.updatePlayerBox(secondPlayer);
                 Assertions.assertThat(boxes.getBoxStatusByParticipant(secondPlayer))
-                    .isEqualTo(new BoxStatus(PlayResult.STAND, 0));
+                    .isEqualTo(new BoxStatus(PlayerStatus.STAND, 0));
                 Assertions.assertThat(boxes.getCurrentTurnPlayer()).isEqualTo(new Dealer());
             }),
             DynamicTest.dynamicTest("딜러턴 모두 종료된 후 다음 턴을 조회할 경우 오류를 던진다.", () -> {
