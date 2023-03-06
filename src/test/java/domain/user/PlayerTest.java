@@ -4,9 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.CloverCard;
+
 import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("플레이어는 ")
 class PlayerTest {
@@ -39,18 +46,25 @@ class PlayerTest {
         assertThat(cards.size()).isEqualTo(3);
     }
 
-    @Test
-    @DisplayName("합산 점수가 21을 초과하면 Bust 상태가 된다.")
-    void checkBustByScoreTest() {
+    @ParameterizedTest(name = "{2} 상태값을 확인할 수 있다.")
+    @MethodSource("isPlayerStatusTestCase")
+    @DisplayName("자신의 상태값을 확인할 수 있다.")
+    void isPlayerStatusTest(List<Card> firstTurnCards, Card drawCard, PlayerStatus playerStatus) {
         //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING);
         Player player = new Player(new Name("플레이어"), firstTurnCards);
 
         //when
-        player.receiveCard(CloverCard.CLOVER_QUEEN);
-        UserStatus result = player.getStatus();
+        player.receiveCard(drawCard);
 
         //then
-        assertThat(result).isEqualTo(PlayerStatus.BUST);
+        assertThat(player.isUserStatus(playerStatus)).isTrue();
+
+    }
+
+    static Stream<Arguments> isPlayerStatusTestCase() {
+        return Stream.of(
+                Arguments.of(List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING), CloverCard.CLOVER_QUEEN, Named.of("버스트", PlayerStatus.BUST)),
+                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE), CloverCard.CLOVER_FOUR, Named.of("노멀", PlayerStatus.NORMAL))
+        );
     }
 }

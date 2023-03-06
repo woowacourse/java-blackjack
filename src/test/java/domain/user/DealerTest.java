@@ -5,53 +5,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CloverCard;
 import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Named;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("딜러는 ")
 class DealerTest {
-    @Test
-    @DisplayName("합산 점수가 21을 초과하면 BUST 상태가 된다.")
-    void checkBustByScoreTest() {
+    @ParameterizedTest(name = "{2} 상태 값을 확인할 수 있다.")
+    @MethodSource("isDealerStatusTestCase")
+    @DisplayName("자신의 상태값을 확인할 수 있다.")
+    void isPlayerStatusTest(List<Card> firstTurnCards, Card drawCard, DealerStatus dealerStatus) {
         //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING);
-        Dealer dealer = new Dealer(firstTurnCards);
+        Dealer dealer= new Dealer(firstTurnCards);
 
         //when
-        dealer.receiveCard(CloverCard.CLOVER_QUEEN);
-        UserStatus result = dealer.getStatus();
+        dealer.receiveCard(drawCard);
 
         //then
-        assertThat(result).isEqualTo(DealerStatus.BUST);
+        assertThat(dealer.isUserStatus(dealerStatus)).isTrue();
+
     }
 
-    @Test
-    @DisplayName("합산 점수가 17~21 사이 값을 가지면 NORMAL 상태가 된다.")
-    void checkNormalByScoreTest() {
-        //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_THREE);
-        Dealer dealer = new Dealer(firstTurnCards);
-
-        //when
-        dealer.receiveCard(CloverCard.CLOVER_FOUR);
-        UserStatus result = dealer.getStatus();
-
-        //then
-        assertThat(result).isEqualTo(DealerStatus.NORMAL);
-    }
-
-    @Test
-    @DisplayName("합산 점수가 17 미만이면 UNDER_SEVENTEEN 상태가 된다.")
-    void checkUnderSeventeenByScoreTest() {
-        //given
-        List<Card> firstTurnCards = List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_TWO);
-        Dealer dealer = new Dealer(firstTurnCards);
-
-        //when
-        dealer.receiveCard(CloverCard.CLOVER_THREE);
-        UserStatus result = dealer.getStatus();
-
-        //then
-        assertThat(result).isEqualTo(DealerStatus.UNDER_SEVENTEEN);
+    static Stream<Arguments> isDealerStatusTestCase() {
+        return Stream.of(
+                Arguments.of(List.of(CloverCard.CLOVER_TEN, CloverCard.CLOVER_KING), CloverCard.CLOVER_QUEEN, Named.of("버스트", DealerStatus.BUST)),
+                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_EIGHT), CloverCard.CLOVER_SEVEN,  Named.of("노멀", DealerStatus.NORMAL)),
+                Arguments.of(List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE), CloverCard.CLOVER_FOUR,  Named.of("17미만", DealerStatus.UNDER_SEVENTEEN))
+        );
     }
 }
