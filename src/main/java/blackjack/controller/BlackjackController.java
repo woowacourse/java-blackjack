@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.NOT_RECEIVE_CARD;
-
 import blackjack.domain.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -46,9 +44,8 @@ public class BlackjackController {
 
     private boolean ask(Player player) {
         outputView.printCurrentCards(player);
-        String answer = inputView.askReceiveMoreCard(player.getName());
 
-        if (answer.equals(NOT_RECEIVE_CARD)) {
+        if (inputView.askReceiveMoreCard(player.getName())) {
             outputView.printCurrentCards(player);
             return false;
         }

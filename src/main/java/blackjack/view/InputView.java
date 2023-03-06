@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static final String RECEIVE_CARD = "y";
-    public static final String NOT_RECEIVE_CARD = "n";
+    private static final String RECEIVE_CARD = "y";
+    private static final String NOT_RECEIVE_CARD = "n";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -29,13 +29,13 @@ public class InputView {
         }
     }
 
-    public String askReceiveMoreCard(final String playerName) {
+    public boolean askReceiveMoreCard(final String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
         isBlank(input);
         validateCorrectResponse(input);
 
-        return input;
+        return input.equals(RECEIVE_CARD);
     }
 
     private void validateCorrectResponse(final String input) {
