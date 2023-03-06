@@ -22,7 +22,7 @@ public class Cards {
 
     public Card drawCard() {
         if (isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 카드가 존재하지 않습니다.");
+            throw new IllegalStateException("[ERROR] 뽑을 카드가 더 이상 존재하지 않습니다.");
         }
         return cards.remove(0);
     }
