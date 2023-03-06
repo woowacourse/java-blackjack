@@ -20,8 +20,8 @@ public class BlackJackGame {
         return users.getStatus();
     }
 
-    public Map<String, List<Card>> getInitialStatus() {
-        return users.getInitialStatus();
+    public Map<String, List<Card>> getFirstOpenCardGroups() {
+        return users.getFirstOpenCardGroups();
     }
 
     public List<String> getPlayerNames() {

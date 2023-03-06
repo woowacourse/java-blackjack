@@ -11,7 +11,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public List<Card> getInitialStatus() {
+    public List<Card> getFirstOpenCardGroup() {
         return List.of(getStatus().get(0));
     }
 

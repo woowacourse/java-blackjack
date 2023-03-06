@@ -82,7 +82,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getInitialStatus().values().stream()
+        List<Card> initialCards = users.getFirstOpenCardGroups().values().stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));

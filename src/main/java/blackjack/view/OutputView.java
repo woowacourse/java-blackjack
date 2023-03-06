@@ -23,7 +23,7 @@ public class OutputView {
         System.out.println(PLAYER_NAME_REQUEST_MESSAGE);
     }
 
-    public void printInitialStatus(Map<String, List<String>> initialStatus) {
+    public void printFirstOpenCardGroups(Map<String, List<String>> initialStatus) {
         printLineBreak();
         List<String> playerNames = initialStatus.keySet().stream()
                 .filter(name -> !name.equals(Dealer.DEALER_NAME))

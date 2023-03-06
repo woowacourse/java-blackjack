@@ -43,9 +43,9 @@ public class Users {
                 .collect(Collectors.toUnmodifiableMap(User::getName, User::getStatus));
     }
 
-    public Map<String, List<Card>> getInitialStatus() {
+    public Map<String, List<Card>> getFirstOpenCardGroups() {
         return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getInitialStatus));
+                .collect(Collectors.toUnmodifiableMap(User::getName, User::getFirstOpenCardGroup));
     }
 
     public boolean isDealerOverDrawLimit() {

@@ -32,5 +32,5 @@ public abstract class User {
         return cardGroup.getAceCount();
     }
 
-    abstract protected List<Card> getInitialStatus();
+    abstract protected List<Card> getFirstOpenCardGroup();
 }

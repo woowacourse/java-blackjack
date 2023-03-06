@@ -36,7 +36,7 @@ class DealerTest {
     void getInitialStatus() {
         User dealer = new Dealer(initialGroup);
 
-        assertThat(dealer.getInitialStatus()).containsExactly(cardKing);
+        assertThat(dealer.getFirstOpenCardGroup()).containsExactly(cardKing);
     }
 
     @Test

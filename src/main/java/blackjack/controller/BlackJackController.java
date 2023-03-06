@@ -19,7 +19,7 @@ public class BlackJackController {
 
     public void run() {
         final BlackJackGame blackJackGame = initBlackJackGame();
-        printInitialStatus(blackJackGame);
+        printFirstOpenCardGroups(blackJackGame);
         playPlayerTurn(blackJackGame);
         playDealerTurn(blackJackGame);
         printCardResult(blackJackGame);
@@ -37,8 +37,8 @@ public class BlackJackController {
         }
     }
 
-    private void printInitialStatus(final BlackJackGame blackJackGame) {
-        outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialStatus()));
+    private void printFirstOpenCardGroups(final BlackJackGame blackJackGame) {
+        outputView.printFirstOpenCardGroups(ViewRenderer.renderStatus(blackJackGame.getFirstOpenCardGroups()));
     }
 
     private void playPlayerTurn(final BlackJackGame blackJackGame) {

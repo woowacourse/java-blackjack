@@ -59,7 +59,7 @@ class PlayerTest {
     void getInitialStatus() {
         final User player = new Player(name, initialGroup);
 
-        assertThat(player.getInitialStatus()).containsExactly(firstCard, secondCard);
+        assertThat(player.getFirstOpenCardGroup()).containsExactly(firstCard, secondCard);
     }
 
     @Test

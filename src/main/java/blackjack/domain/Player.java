@@ -10,7 +10,7 @@ public class Player extends User {
     }
 
     @Override
-    protected List<Card> getInitialStatus() {
+    protected List<Card> getFirstOpenCardGroup() {
         return getStatus().stream()
                 .limit(2)
                 .collect(Collectors.toUnmodifiableList());

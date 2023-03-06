@@ -40,7 +40,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestDeckGenerator(testCards));
 
-        List<Card> initialCards = blackJackGame.getInitialStatus().values().stream()
+        List<Card> initialCards = blackJackGame.getFirstOpenCardGroups().values().stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
