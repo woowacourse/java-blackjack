@@ -9,9 +9,10 @@ public abstract class Participant {
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
 
     private final ParticipantName participantName;
-    private final List<Card> receivedCards = new ArrayList<>();
+    private final List<Card> receivedCards;
 
     public Participant(final ParticipantName participantName) {
+        this.receivedCards = new ArrayList<>();
         this.participantName = participantName;
     }
 

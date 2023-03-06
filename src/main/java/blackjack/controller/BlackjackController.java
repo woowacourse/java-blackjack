@@ -19,11 +19,10 @@ public class BlackjackController {
     }
 
     public void run() {
+        CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
         List<String> playersName = inputView.readPlayerName();
         Cards cards = Cards.generator();
         Participants participants = Participants.generate(playersName);
-
-        CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
 
         gameSetting(participants, cardPickerGenerator, blackjackGame);
