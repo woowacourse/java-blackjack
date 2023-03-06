@@ -14,10 +14,6 @@ public class BlackjackGame {
         return players;
     }
 
-    public void initialDraw(final Deck deck) {
-        players.initialDraw(deck);
-    }
-
     public void drawByDealer(final Deck deck) {
         players.drawByDealer(deck);
     }

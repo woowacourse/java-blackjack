@@ -27,12 +27,6 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names) {
-        validateDuplicate(names);
-        validateNameCount(names);
-        return new Players(generate(names));
-    }
-
     public static Players from(final List<String> names, final Deck deck) {
         validateDuplicate(names);
         validateNameCount(names);
@@ -59,15 +53,6 @@ public class Players {
         return names.size() < NAME_COUNT_LOWER_BOUND || NAME_COUNT_UPPER_BOUND < names.size();
     }
 
-    private static List<Player> generate(final List<String> names) {
-        final List<Player> players = new ArrayList<>();
-        players.add(Dealer.create());
-        for (String name : names) {
-            players.add(Gambler.create(name));
-        }
-        return players;
-    }
-
     private static List<Player> generate(final List<String> names, final Deck deck) {
         final List<Player> players = new ArrayList<>();
         players.add(Dealer.create(deck));
@@ -75,12 +60,6 @@ public class Players {
             players.add(Gambler.create(name, deck));
         }
         return players;
-    }
-
-    public void initialDraw(final Deck deck) {
-        for (Player player : players) {
-            player.initialDraw(deck);
-        }
     }
 
     public void drawByDealer(final Deck deck) {

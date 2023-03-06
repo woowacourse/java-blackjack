@@ -13,8 +13,6 @@ public abstract class AbstractPlayer implements Player {
         this.hand = hand;
     }
 
-    abstract public void initialDraw(final Deck deck);
-
     abstract public boolean isDrawable();
 
     abstract public boolean isDealer();

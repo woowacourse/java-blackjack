@@ -12,18 +12,9 @@ public class Dealer extends AbstractPlayer {
         super(name, hand);
     }
 
-    public static Dealer create() {
-        return new Dealer(Name.createDealerName(), new Hand());
-    }
-
     public static Dealer create(final Deck deck) {
         final List<Card> initialDraw = List.of(deck.draw());
         return new Dealer(Name.createDealerName(), new Hand(initialDraw));
-    }
-
-    @Override
-    public void initialDraw(final Deck deck) {
-        hand.add(deck.draw());
     }
 
     @Override

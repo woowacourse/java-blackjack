@@ -1,12 +1,10 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.controller.BlackjackCommand;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -21,20 +19,18 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public Players readPlayers() {
+    public List<String> readPlayers() {
         System.out.println(INPUT_PLAYER_NAMES_MESSAGE);
         final String names = scanner.nextLine();
 
         return Arrays.stream(names.split(DELIMITER, LIMIT))
                 .map(String::trim)
-                .collect(collectingAndThen(toList(), Players::from));
+                .collect(toList());
     }
 
-    public BlackjackCommand readCommand(final Player player) {
+    public String readCommand(final Player player) {
         System.out.println(player.getName() + INPUT_PLAYER_COMMAND_MESSAGE);
 
-        final String command = scanner.nextLine();
-
-        return BlackjackCommand.from(command);
+        return scanner.nextLine();
     }
 }

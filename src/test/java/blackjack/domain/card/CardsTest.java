@@ -60,23 +60,20 @@ public class CardsTest {
 
     @Test
     void 카드가_추가된다() {
-        final Cards cards = new Cards();
+        final Cards cards = new Cards(List.of(FIVE_SPADE));
 
         cards.add(new Card(Rank.FIVE, Shape.DIAMOND));
 
-        assertThat(cards.getCardLetters()).containsExactly("5다이아몬드");
+        assertThat(cards.getCardLetters()).containsExactly("5스페이드", "5다이아몬드");
     }
 
     @Test
     void 모든_카드의_정보를_반환한다() {
-        final Cards cards = new Cards(List.of(
-                new Card(Rank.FIVE, Shape.DIAMOND),
-                new Card(Rank.ACE, Shape.CLOVER))
-        );
+        final Cards cards = new Cards(List.of(FIVE_SPADE, ACE_CLOVER));
 
         final List<String> result = cards.getCardLetters();
 
-        assertThat(result).containsExactly("5다이아몬드", "A클로버");
+        assertThat(result).containsExactly("5스페이드", "A클로버");
     }
 
     @ParameterizedTest(name = "블랙잭인지 확인한다. 입력값: {0}, 결과값: {1}")

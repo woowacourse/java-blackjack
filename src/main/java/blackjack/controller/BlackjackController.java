@@ -31,7 +31,7 @@ public class BlackjackController {
     private Players createPlayers(final Retry retry) {
         while (retry.isRepeatable()) {
             try {
-                return inputView.readPlayers();
+                return Players.from(inputView.readPlayers(), ShuffledDeck.getInstance());
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 retry.decrease();
@@ -41,7 +41,6 @@ public class BlackjackController {
     }
 
     private void initialDraw(final BlackjackGame blackjackGame) {
-        blackjackGame.initialDraw(ShuffledDeck.getInstance());
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 
@@ -65,7 +64,7 @@ public class BlackjackController {
     private BlackjackCommand createCommand(final Player player, final Retry retry) {
         while (retry.isRepeatable()) {
             try {
-                return inputView.readCommand(player);
+                return BlackjackCommand.from(inputView.readCommand(player));
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 retry.decrease();

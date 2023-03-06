@@ -1,9 +1,9 @@
 package blackjack.domain.player;
 
+import static blackjack.util.CardFixtures.ACE_CLOVER;
 import static blackjack.util.CardFixtures.ACE_DIAMOND;
 import static blackjack.util.CardFixtures.ACE_SPADE;
 import static blackjack.util.CardFixtures.FOUR_SPADE;
-import static blackjack.util.CardFixtures.JACK_CLOVER;
 import static blackjack.util.CardFixtures.JACK_SPADE;
 import static blackjack.util.CardFixtures.KING_HEART;
 import static blackjack.util.CardFixtures.KING_SPADE;
@@ -32,13 +32,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class GamblerTest {
 
     @Test
-    void 겜블러가_정상_생성된다() {
-        final Gambler gambler = Gambler.create("허브");
-
-        assertThat(gambler.getName()).isEqualTo("허브");
-    }
-
-    @Test
     void 덱을_입력받아_딜러를_생성한다() {
         final Deck deck = new FixedDeck(ACE_SPADE, KING_HEART);
 
@@ -50,16 +43,6 @@ public class GamblerTest {
         );
     }
 
-    @Test
-    void 게임_시작_시_카드를_뽑는다() {
-        final Gambler gambler = Gambler.create("허브");
-        final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER);
-
-        gambler.initialDraw(deck);
-
-        assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드", "J클로버");
-    }
-
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력: {0}, 결과: {1}")
     @MethodSource("isDrawableSource")
     void 카드를_뽑을_수_있는지_확인한다(final List<Card> cards, final boolean result) {
@@ -68,7 +51,7 @@ public class GamblerTest {
         gambler.draw(deck);
 
         final boolean drawable = gambler.isDrawable();
-        
+
         assertThat(drawable).isEqualTo(result);
     }
 
@@ -82,17 +65,17 @@ public class GamblerTest {
 
     @Test
     void 카드를_뽑는다() {
-        final Gambler gambler = Gambler.create("허브");
-        final Deck deck = new FixedDeck(ACE_DIAMOND);
+        final Deck deck = new FixedDeck(ACE_DIAMOND, ACE_SPADE, ACE_CLOVER);
+        final Gambler gambler = Gambler.create("허브", deck);
 
         gambler.draw(deck);
 
-        assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드");
+        assertThat(gambler.getCardLetters()).containsExactly("A다이아몬드", "A스페이드", "A클로버");
     }
 
     @Test
     void 딜러가_아닌지_확인한다() {
-        final Gambler gambler = Gambler.create("후추");
+        final Gambler gambler = Gambler.create("후추", new FixedDeck(ACE_SPADE, KING_HEART));
 
         assertThat(gambler.isDealer()).isFalse();
     }
