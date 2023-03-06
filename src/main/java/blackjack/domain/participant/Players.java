@@ -43,7 +43,7 @@ public class Players {
         }
     }
 
-    public Map<Player, Result> decideResults(final int dealerScore) {
+    public Map<Player, Result> makeResult(final int dealerScore) {
         Map<Player, Result> results = new HashMap<>();
 
         for (Player player : players) {

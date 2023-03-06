@@ -40,7 +40,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 자신의 카드 2장을 가져온다.")
     void drawSelfCards() {
-        dealer.drawSelfInitCards();
+        dealer.settingSelfCards();
 
         assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
     }

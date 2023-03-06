@@ -37,7 +37,7 @@ public class BlackjackController {
     }
 
     private void setting() {
-        dealer.drawSelfInitCards();
+        dealer.settingSelfCards();
         dealer.settingCards();
 
         outputView.printDistributeCardsMessage(getPlayerNames(dealer.getPlayers()));
@@ -88,8 +88,8 @@ public class BlackjackController {
         outputView.printDealerFinalCards(getCurrentCards(dealer.getCards()), dealer.calculateTotalScore());
         outputView.printPlayerFinalCards(getPlayersCards(dealer), scores);
 
-        Map<Player, Result> playerResultMap = dealer.decideResult();
-        List<Integer> dealerResult = dealer.decideSelfResult();
+        Map<Player, Result> playerResultMap = dealer.compareWithPlayers();
+        List<Integer> dealerResult = dealer.makeSelfResult();
 
         Map<String, String> playerResult = getPlayerResult(playerResultMap);
 

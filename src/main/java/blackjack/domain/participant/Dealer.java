@@ -17,7 +17,7 @@ public class Dealer extends Participant {
 
     public static final int INIT_CARD_COUNT = 2;
     public static final int BLACKJACK_SCORE = 21;
-    private static final int SPECIFIC_SCORE_OF_DEALER = 16;
+    private static final int DEALER_CAN_DRAW_SCORE = 16;
 
     private final Players players;
     private final Deck deck;
@@ -39,10 +39,9 @@ public class Dealer extends Participant {
         players.receiveSettingCards(cards);
     }
 
-    public void drawSelfInitCards() {
+    public void settingSelfCards() {
         for (int count = 0; count < INIT_CARD_COUNT; count++) {
-            Card drawnCard = deck.drawCard();
-            receiveCard(drawnCard);
+            receiveCard(deck.drawCard());
         }
     }
 
@@ -50,26 +49,30 @@ public class Dealer extends Participant {
         player.receiveCard(deck.drawCard());
     }
 
-    public Map<Player, Result> decideResult() {
-        return players.decideResults(cards.calculateTotalScore());
+    public void drawOneMoreCard() {
+        receiveCard(deck.drawCard());
     }
 
-    public List<Integer> decideSelfResult() {
-        Map<Result, Integer> dealerResult = new LinkedHashMap<>() {{
+    public Map<Player, Result> compareWithPlayers() {
+        return players.makeResult(this.cards.calculateTotalScore());
+    }
+
+    public List<Integer> makeSelfResult() {
+        Map<Player, Result> resultsFromPlayer = compareWithPlayers();
+        Map<Result, Integer> dealerResults = new LinkedHashMap<>() {{
             put(WIN, 0);
             put(DRAW, 0);
             put(LOSE, 0);
         }};
-        Map<Player, Result> playerResultMap = decideResult();
 
-        for (Result playerResult : playerResultMap.values()) {
-            decideResult(playerResult, dealerResult);
+        for (Result resultOfPlayer : resultsFromPlayer.values()) {
+            compareToPlayerResult(dealerResults, resultOfPlayer);
         }
 
-        return new ArrayList<>(dealerResult.values());
+        return new ArrayList<>(dealerResults.values());
     }
 
-    private void decideResult(Result playerResult, Map<Result, Integer> dealerResult) {
+    private void compareToPlayerResult(Map<Result, Integer> dealerResult, Result playerResult) {
         if (playerResult == WIN) {
             dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
             return;
@@ -82,11 +85,7 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.calculateTotalScore() <= SPECIFIC_SCORE_OF_DEALER;
-    }
-
-    public void drawOneMoreCard() {
-        receiveCard(deck.drawCard());
+        return cards.calculateTotalScore() <= DEALER_CAN_DRAW_SCORE;
     }
 
     public Players getPlayers() {
