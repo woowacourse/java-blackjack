@@ -9,7 +9,7 @@ public abstract class Player {
     private final PlayingCards playingCards;
     private final String name;
 
-    public Player(String name) {
+    protected Player(String name) {
         this.playingCards = new PlayingCards();
         this.name = name;
     }
