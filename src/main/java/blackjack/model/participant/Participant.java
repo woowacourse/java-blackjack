@@ -64,15 +64,10 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        if (isBust() || cardScore().bigScore() > 21) {
-            return cardScore().smallScore();
-        }
-        return cardScore().bigScore();
+        return cardScore().getScore();
     }
 
     public String getName() {
         return name.getName();
     }
 }
-
-

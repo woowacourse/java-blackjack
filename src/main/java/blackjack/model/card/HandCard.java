@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HandCard {
+    public static final int BUST_THROTTLE = 21;
+
     private final List<Card> cards;
 
     public HandCard() {
@@ -23,46 +25,36 @@ public class HandCard {
     }
 
     public CardScore score(ResultState state) {
-        List<CardNumber> ownedNumbers = cards.stream().map(Card::getNumber)
-                .collect(Collectors.toList());
-        return new CardScore(ownedNumbers, state);
+        int score = bigScore();
+        if (isBigScoreOver(BUST_THROTTLE)) {
+            score = smallScore();
+        }
+        return new CardScore(score, state);
     }
 
     public boolean isBigScoreEqual(int throttle) {
-        List<CardNumber> numbers = cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList());
-
-        return (bigScore(numbers) == throttle);
+        return (bigScore() == throttle);
     }
 
     public boolean isBigScoreOver(int throttle) {
-        List<CardNumber> numbers = cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList());
-
-        return (bigScore(numbers) > throttle);
+        return (bigScore() > throttle);
     }
 
     public boolean isSmallScoreOver(int throttle) {
-        List<CardNumber> numbers = cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList());
-
-        return (smallScore(numbers) > throttle);
+        return (smallScore() > throttle);
     }
 
-    public int smallScore(List<CardNumber> numbers) {
+    public int smallScore() {
         int score = 0;
-        for (CardNumber number : numbers) {
+        for (CardNumber number : this.getCardNumbers()) {
             score += number.getSmallScore();
         }
         return score;
     }
 
-    public int bigScore(List<CardNumber> numbers) {
+    public int bigScore() {
         int score = 0;
-        for (CardNumber number : numbers) {
+        for (CardNumber number : this.getCardNumbers()) {
             score += number.getBigScore();
         }
         return score;
@@ -74,5 +66,11 @@ public class HandCard {
 
     public int size() {
         return cards.size();
+    }
+
+    private List<CardNumber> getCardNumbers() {
+        return cards.stream()
+                .map(Card::getNumber)
+                .collect(Collectors.toList());
     }
 }
