@@ -18,21 +18,21 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ParticipantTest {
 
-    private Participant participant;
+    private Participant player;
 
     @BeforeEach
     void setParticipant() {
-        participant = new Participant("test");
+        player = new Player("test");
     }
 
     @DisplayName("참가자는 카드를 받으면 카드의 수가 1 증가한다.")
     @Test
     void should_HasSize_1Increased() {
-        int previousSize = participant.getCards().size();
+        int previousSize = player.getCards().size();
 
         Card card = new Card(SPADE, JACK);
-        participant.take(card);
-        int currentSize = participant.getCards().size();
+        player.take(card);
+        int currentSize = player.getCards().size();
 
         assertThat(currentSize).isEqualTo(previousSize + 1);
     }
@@ -41,9 +41,9 @@ class ParticipantTest {
     @Test
     void should_addCard_At_LastIndex() {
         Card card = new Card(SPADE, JACK);
-        participant.take(card);
+        player.take(card);
 
-        List<Card> cards = participant.getCards();
+        List<Card> cards = player.getCards();
         Card lastCard = cards.get(cards.size() - 1);
         assertThat(lastCard).isEqualTo(card);
     }
@@ -51,28 +51,28 @@ class ParticipantTest {
     @DisplayName("참가자가 가지고 있는 카드의 합을 반환한다.")
     @Test
     void should_ReturnSumOfCards() {
-        participant.take(new Card(SPADE, JACK));
-        participant.take(new Card(CLUB, QUEEN));
+        player.take(new Card(SPADE, JACK));
+        player.take(new Card(CLUB, QUEEN));
 
-        assertThat(participant.computeSumOfCards()).isEqualTo(20);
+        assertThat(player.computeSumOfCards()).isEqualTo(20);
     }
 
     @DisplayName("참가자 카드 중 ACE는 11을 기본값으로 한다.")
     @Test
     void should_defaultValueOfACE_Is_11() {
-        participant.take(new Card(SPADE, ACE));
-        participant.take(new Card(CLUB, QUEEN));
+        player.take(new Card(SPADE, ACE));
+        player.take(new Card(CLUB, QUEEN));
 
-        assertThat(participant.computeSumOfCards()).isEqualTo(21);
+        assertThat(player.computeSumOfCards()).isEqualTo(21);
     }
 
     @DisplayName("참가자 카드 합이 21을 초과하면 ACE의 값을 1로 계산한다.")
     @Test
     void should_valueOfAce_Is_1_WhenSumOfCardsOver21() {
-        participant.take(new Card(SPADE, ACE));
-        participant.take(new Card(SPADE, KING));
-        participant.take(new Card(CLUB, QUEEN));
+        player.take(new Card(SPADE, ACE));
+        player.take(new Card(SPADE, KING));
+        player.take(new Card(CLUB, QUEEN));
 
-        assertThat(participant.computeSumOfCards()).isEqualTo(21);
+        assertThat(player.computeSumOfCards()).isEqualTo(21);
     }
 }

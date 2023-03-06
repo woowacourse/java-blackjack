@@ -3,10 +3,10 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participant {
+abstract class Participant {
 
-    private static final int BLACK_JACK = 21;
-    private static final int ACE_ADDITIONAL_VALUE = 10;
+    static final int SUM_MAXIMUM_BEFORE_BUST = 21;
+    static final int ACE_ADDITIONAL_VALUE = 10;
 
     private final String name;
     private final List<Card> cards;
@@ -32,7 +32,7 @@ public class Participant {
                 .map(Card::getNumberValue)
                 .reduce(0, Integer::sum);
 
-        if ((sum > BLACK_JACK) && hasACE()) {
+        if ((sum > SUM_MAXIMUM_BEFORE_BUST) && hasACE()) {
             return (sum - ACE_ADDITIONAL_VALUE);
         }
 
@@ -45,15 +45,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return computeSumOfCards() > BLACK_JACK;
-    }
-
-    public boolean isAvailable() {
-        return !(isBlackJack()) && !(isBust());
-    }
-
-    private boolean isBlackJack() {
-        return computeSumOfCards() == BLACK_JACK;
+        return computeSumOfCards() > SUM_MAXIMUM_BEFORE_BUST;
     }
 
     public List<Card> getCards() {
@@ -63,4 +55,6 @@ public class Participant {
     public String getName() {
         return name;
     }
+
+    abstract boolean isAvailable();
 }

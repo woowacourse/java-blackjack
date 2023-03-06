@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 public class Participants {
 
     private static final int INITIAL_HAND_OUT_COUNT = 2;
-    private static final int INITIAL_DEALER_CARD_OPEN_INDEX = 0;
 
     private final Dealer dealer;
     private final Players players;
@@ -59,15 +58,10 @@ public class Participants {
 
     public Map<String, List<Card>> openHandOutCardsByName() {
         Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
-        cardsByParticipants.put(dealer.getName(), List.of(extractOneToOpenForDealer()));
+        cardsByParticipants.put(dealer.getName(), List.of(dealer.openFirstCard()));
         players.players()
                 .forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
         return cardsByParticipants;
-    }
-
-    // TODO dealer에서 직접 반환, 카드를 뽑은 상태인지 검증
-    private Card extractOneToOpenForDealer() {
-        return dealer.getCards().get(INITIAL_DEALER_CARD_OPEN_INDEX);
     }
 
     public List<String> findAvailablePlayerNames() {
