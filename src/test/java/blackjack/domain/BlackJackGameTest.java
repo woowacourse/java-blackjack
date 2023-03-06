@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackGameTest {
 
@@ -57,5 +55,21 @@ class BlackJackGameTest {
         }
 
         assertThat(blackJackGame.canPick(ditoo)).isFalse();
+    }
+
+    @Test
+    @DisplayName("getDealer()에 대한 테스트")
+    void get_dealer() {
+        Player dealer = blackJackGame.getDealer();
+
+        assertThat(dealer.isDealer()).isTrue();
+    }
+
+    @Test
+    @DisplayName("getChallengers()에 대한 테스트")
+    void get_challengers() {
+        List<Player> challengers = blackJackGame.getChallengers();
+
+        challengers.forEach(challenger -> assertThat(challenger.isChallenger()).isTrue());
     }
 }
