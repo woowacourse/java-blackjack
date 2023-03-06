@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.card.*;
@@ -59,6 +60,16 @@ class RefereeTest {
             .isEqualTo(List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE));
     }
 
+    @Test
+    void countDealerResult() {
+        List<Result> results = List.of(Result.WIN, Result.DRAW, Result.WIN, Result.LOSE);
+
+        Map<String, Long> dealerResult = referee.countDealerResult(results);
+
+        Assertions.assertThat(dealerResult.get(Result.WIN.getResult())).isEqualTo(2);
+        Assertions.assertThat(dealerResult.get(Result.DRAW.getResult())).isEqualTo(1);
+        Assertions.assertThat(dealerResult.get(Result.LOSE.getResult())).isEqualTo(1);
+    }
 
 
 }
