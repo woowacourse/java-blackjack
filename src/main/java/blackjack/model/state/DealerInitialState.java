@@ -29,7 +29,7 @@ public class DealerInitialState extends InitialState {
 
     @Override
     public boolean isFinished() {
-        return handCard.isBigScoreEqual(DEALER_HIT_NUMBER);
+        return handCard.isBigScoreOver(DEALER_HIT_NUMBER);
     }
 
     @Override
