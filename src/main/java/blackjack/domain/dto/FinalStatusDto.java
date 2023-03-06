@@ -1,5 +1,6 @@
 package blackjack.domain.dto;
 
+import blackjack.domain.BlackJack;
 import blackjack.domain.Users;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
@@ -12,10 +13,10 @@ public class FinalStatusDto {
     private final Integer dealerScore;
     private final Map<UserDto, Integer> userScores;
 
-    public FinalStatusDto(final Dealer dealer, final Users users) {
-        this.dealer = new UserDto(dealer);
-        this.dealerScore = dealer.getGamePoint().optimizeValue();
-        this.userScores = makeUsersStatus(users);
+    public FinalStatusDto(BlackJack blackJack) {
+        this.dealer = new UserDto(blackJack.getDealer());
+        this.dealerScore = blackJack.getDealer().getGamePoint().optimizeValue();
+        this.userScores = makeUsersStatus(blackJack.getUsers());
     }
 
     private Map<UserDto, Integer> makeUsersStatus(final Users users) {

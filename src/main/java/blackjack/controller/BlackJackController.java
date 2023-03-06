@@ -3,6 +3,9 @@ package blackjack.controller;
 import blackjack.domain.BlackJack;
 import blackjack.domain.RandomDeck;
 import blackjack.domain.dto.DtoUtils;
+import blackjack.domain.dto.FinalStatusDto;
+import blackjack.domain.dto.GameResultDto;
+import blackjack.domain.dto.InitialStatusDto;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -32,13 +35,13 @@ public class BlackJackController {
 
     private BlackJack makeBlackJackBy(final List<Name> namesByView) {
         final BlackJack blackJack = new BlackJack(namesByView, randomDeck);
-        outputView.printInitialStatus(blackJack.getInitialStatus());
+        outputView.printInitialStatus(new InitialStatusDto(blackJack));
         return blackJack;
     }
 
     private void printCompletedGame(final BlackJack blackJack) {
-        outputView.printFinalPlayersStatus(blackJack.getFinalStatus());
-        outputView.printResult(blackJack.getGameResult());
+        outputView.printFinalPlayersStatus(new FinalStatusDto(blackJack));
+        outputView.printResult(new GameResultDto(blackJack));
     }
 
     private void finalizeDealerCardStatus(final BlackJack blackJack) {

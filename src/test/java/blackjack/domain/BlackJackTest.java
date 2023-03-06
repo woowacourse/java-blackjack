@@ -66,24 +66,6 @@ public class BlackJackTest {
     }
 
     @Test
-    @DisplayName("딜러가 카드를 받을 수 있는 상태라면 Dealer객체를 가져오지 못한다.")
-    void getDealerStatusTest() {
-        final Name 푸우 = new Name("푸우");
-
-        Integer[] 푸우카드 = {1, 2};
-        Integer[] 딜러카드 = {2, 2};
-
-        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(푸우카드));
-        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
-
-        final BlackJack blackJack = new BlackJack(List.of(푸우), new TestDeck(테스트덱));
-        assertThatThrownBy(() -> {
-            blackJack.getDealer();
-        }).isInstanceOf(IllegalStateException.class)
-                .hasMessage("딜러가 아직 카드의 결론이 나지 않았습니다.");
-    }
-
-    @Test
     @DisplayName("딜러가 카드를 받을 수 없는 상태라면 Dealer객체를 가져올 수 있다.")
     void getDealerStatusTest2() {
         final Name 푸우 = new Name("푸우");

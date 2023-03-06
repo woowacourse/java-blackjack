@@ -1,5 +1,6 @@
 package blackjack.domain.dto;
 
+import blackjack.domain.BlackJack;
 import blackjack.domain.Result;
 import blackjack.domain.Users;
 import blackjack.domain.card.GamePoint;
@@ -13,9 +14,9 @@ public class GameResultDto {
     private final Map<String, ResultDto> userResult;
     private final Map<ResultDto, Integer> dealerResult = new HashMap<>();
 
-    public GameResultDto(final Dealer dealer, final Users users) {
+    public GameResultDto(BlackJack blackJack) {
         userResult = new LinkedHashMap<>();
-        judgeUsers(users, dealer.getGamePoint());
+        judgeUsers(blackJack.getUsers(), blackJack.getDealer().getGamePoint());
     }
 
     private void judgeUsers(final Users users, final GamePoint gamePoint) {

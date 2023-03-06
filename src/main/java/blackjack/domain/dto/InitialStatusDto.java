@@ -1,5 +1,6 @@
 package blackjack.domain.dto;
 
+import blackjack.domain.BlackJack;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
@@ -15,9 +16,9 @@ public class InitialStatusDto {
     private final CardDto dealerCard;
     private final List<UserDto> usersData;
 
-    public InitialStatusDto(Dealer dealer, Users users) {
-        this.dealerCard = new CardDto(dealer.getFirstCard());
-        this.usersData = makeUsersDto(users);
+    public InitialStatusDto(BlackJack blackJack) {
+        this.dealerCard = new CardDto(blackJack.getDealer().getFirstCard());
+        this.usersData = makeUsersDto(blackJack.getUsers());
     }
 
     private List<UserDto> makeUsersDto(final Users users) {

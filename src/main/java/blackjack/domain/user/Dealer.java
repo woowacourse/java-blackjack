@@ -32,14 +32,7 @@ public class Dealer implements Player {
     }
 
     public List<Card> openCards() {
-        validateDealerStatus();
         return cards.getCards();
-    }
-
-    private void validateDealerStatus() {
-        if (canReceive()) {
-            throw new IllegalStateException("딜러는 17이상 혹은 버스트가 날 때 까지 카드를 줘야 결과를 알 수 있습니다.");
-        }
     }
 
     @Override
@@ -58,7 +51,6 @@ public class Dealer implements Player {
 
     @Override
     public GamePoint getGamePoint() {
-        validateDealerStatus();
         return cards.getPoint();
     }
 
@@ -67,7 +59,6 @@ public class Dealer implements Player {
     }
 
     public Cards getCards() {
-        validateDealerStatus();
         return cards;
     }
 }

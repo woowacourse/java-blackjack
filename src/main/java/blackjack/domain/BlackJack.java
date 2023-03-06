@@ -1,9 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.FinalStatusDto;
-import blackjack.domain.dto.GameResultDto;
-import blackjack.domain.dto.InitialStatusDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 
@@ -53,22 +50,7 @@ public class BlackJack {
     }
 
     public Dealer getDealer() {
-        if (dealer.needCardToGetResult()) {
-            throw new IllegalStateException("딜러가 아직 카드의 결론이 나지 않았습니다.");
-        }
         return dealer;
-    }
-
-    public InitialStatusDto getInitialStatus() {
-        return new InitialStatusDto(dealer, users);
-    }
-
-    public FinalStatusDto getFinalStatus() {
-        return new FinalStatusDto(dealer, users);
-    }
-
-    public GameResultDto getGameResult() {
-        return new GameResultDto(dealer, users);
     }
 
     public Users getUsers() {
