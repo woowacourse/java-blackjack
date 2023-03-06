@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.util.WinningResult;
 import java.util.List;
 import java.util.Map;
 

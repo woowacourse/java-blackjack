@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.util.WinningResult;
-
 public class ResultReader {
 
     public static final int WIN_MAX_VALUE = 21;
