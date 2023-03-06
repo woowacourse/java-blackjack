@@ -20,7 +20,7 @@ public class CardPocket {
 
     private void validateCardPocket(final List<Card> cards) {
         if (cards == null) {
-            throw new IllegalArgumentException("카드를 입력하지 않았습니다");
+            throw new IllegalArgumentException("카드에 null 값이 들어갈 수 없습니다");
         }
     }
 
