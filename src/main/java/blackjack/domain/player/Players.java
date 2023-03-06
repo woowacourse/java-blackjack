@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -62,7 +62,7 @@ public class Players {
         return players;
     }
 
-    public void drawByDealer(final Deck deck) {
+    public void drawToDealer(final Deck deck) {
         final Dealer dealer = getDealer();
         while (dealer.isDrawable()) {
             dealer.draw(deck);
@@ -70,19 +70,17 @@ public class Players {
     }
 
     public Map<Player, Result> play() {
-        final Dealer dealer = getDealer();
         final Map<Player, Result> result = new LinkedHashMap<>();
-        for (Player player : players) {
-            putPlayResult(result, player, dealer.hand);
+        for (Player player : getGambler()) {
+            result.put(player, player.play(getDealer().hand));
         }
         return result;
     }
 
-    private void putPlayResult(final Map<Player, Result> result, final Player player, final Hand dealerHand) {
-        if (player.isDealer()) {
-            return;
-        }
-        result.put(player, player.play(dealerHand));
+    private List<Player> getGambler() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {

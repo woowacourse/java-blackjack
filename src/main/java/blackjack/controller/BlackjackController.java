@@ -22,7 +22,7 @@ public class BlackjackController {
         final Players players = createPlayers(new Retry());
         final BlackjackGame blackjackGame = new BlackjackGame(players);
 
-        initialDraw(blackjackGame);
+        outputView.printInitialDraw(blackjackGame.getPlayers());
         draw(blackjackGame);
         printPlayerResult(blackjackGame);
         play(blackjackGame);
@@ -40,16 +40,12 @@ public class BlackjackController {
         throw new IllegalArgumentException(retry.getFailMessage());
     }
 
-    private void initialDraw(final BlackjackGame blackjackGame) {
-        outputView.printInitialDraw(blackjackGame.getPlayers());
-    }
-
     private void draw(final BlackjackGame blackjackGame) {
         final Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
             drawTo(player);
         }
-        blackjackGame.drawByDealer(ShuffledDeck.getInstance());
+        blackjackGame.drawToDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(players.getDealer());
     }
 
@@ -59,6 +55,10 @@ public class BlackjackController {
             drawOnce(player, command);
             outputView.printDrawResult(player);
         }
+    }
+
+    private boolean isDrawable(final Player player) {
+        return player.isDrawable() && !player.isDealer();
     }
 
     private BlackjackCommand createCommand(final Player player, final Retry retry) {
@@ -71,10 +71,6 @@ public class BlackjackController {
             }
         }
         throw new IllegalArgumentException(retry.getFailMessage());
-    }
-
-    private boolean isDrawable(final Player player) {
-        return player.isDrawable() && !player.isDealer();
     }
 
     private void drawOnce(final Player player, final BlackjackCommand command) {

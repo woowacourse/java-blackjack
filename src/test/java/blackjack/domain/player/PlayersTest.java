@@ -101,7 +101,7 @@ public class PlayersTest {
         final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER, TWO_SPADE, EIGHT_SPADE);
         final Players players = from(names, deck);
 
-        players.drawByDealer(deck);
+        players.drawToDealer(deck);
 
         assertThat(players.getDealer().calculateScore()).isEqualTo(19);
     }
@@ -111,7 +111,7 @@ public class PlayersTest {
         final List<String> names = List.of("후추", "허브");
         final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER, SEVEN_SPADE);
         final Players players = from(names, deck);
-        players.drawByDealer(deck);
+        players.drawToDealer(deck);
 
         Map<Player, Result> result = players.play();
 

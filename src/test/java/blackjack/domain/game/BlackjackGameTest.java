@@ -41,7 +41,7 @@ public class BlackjackGameTest {
         final Players players = Players.from(List.of("허브"), deck);
         final BlackjackGame blackjackGame = new BlackjackGame(players);
 
-        blackjackGame.drawByDealer(deck);
+        blackjackGame.drawToDealer(deck);
 
         final Dealer dealer = blackjackGame.getPlayers().getDealer();
         assertThat(dealer.getCardCount()).isEqualTo(3);
@@ -52,7 +52,7 @@ public class BlackjackGameTest {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
         final Players players = Players.from(List.of("허브"), deck);
         final BlackjackGame blackjackGame = new BlackjackGame(players);
-        blackjackGame.drawByDealer(deck);
+        blackjackGame.drawToDealer(deck);
 
         final BlackjackGameResult result = blackjackGame.play();
 

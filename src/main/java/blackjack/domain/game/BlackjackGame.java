@@ -10,15 +10,15 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public Players getPlayers() {
-        return players;
-    }
-
-    public void drawByDealer(final Deck deck) {
-        players.drawByDealer(deck);
+    public void drawToDealer(final Deck deck) {
+        players.drawToDealer(deck);
     }
 
     public BlackjackGameResult play() {
         return new BlackjackGameResult(players.play());
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }
