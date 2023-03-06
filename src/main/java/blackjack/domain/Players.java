@@ -37,10 +37,6 @@ public class Players {
         return !NAMES_FORMAT.matcher(names).matches();
     }
 
-    public void initHit(CardPicker cardPicker) {
-        players.forEach(player -> player.initHit(cardPicker));
-    }
-
     public List<Player> getPlayers() {
         return players;
     }

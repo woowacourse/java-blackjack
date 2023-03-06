@@ -1,10 +1,6 @@
 package blackjack.domain;
 
-import blackjack.strategy.CardPicker;
-
 abstract public class Participant {
-
-    private static final int INIT_CARD_COUNT = 2;
 
     private final CardDeck cardDeck;
     private final Name name;
@@ -14,15 +10,8 @@ abstract public class Participant {
         cardDeck = new CardDeck();
     }
 
-    public void hit(CardPicker cardPicker) {
-        Card card = CardPool.draw(cardPicker);
+    public void hit(Card card) {
         cardDeck.addCard(card);
-    }
-
-    public void initHit(CardPicker cardPicker) {
-        for (int count = 0; count < INIT_CARD_COUNT; count++) {
-            hit(cardPicker);
-        }
     }
 
     public int calculateScore() {

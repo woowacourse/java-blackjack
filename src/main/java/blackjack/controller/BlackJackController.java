@@ -1,10 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Referee;
-import blackjack.domain.Result;
+import blackjack.domain.*;
 import blackjack.strategy.CardPicker;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
@@ -15,6 +11,7 @@ public class BlackJackController {
 
     private static final int BURST_SCORE = 21;
     private static final int DEALER_HIT_NUMBER = 16;
+    private static final int INIT_COUNT = 2;
 
     private final CardPicker cardPicker;
 
@@ -26,11 +23,11 @@ public class BlackJackController {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames, OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
         final Referee referee = new Referee();
+        final CardPool cardPool = new CardPool();
 
-        init(players, dealer);
-        askPlayers(players);
-        OutputView.println();
-        hitCardByDealer(dealer);
+        init(players, dealer, cardPool);
+        askPlayers(players, cardPool);
+        hitCardByDealer(dealer, cardPool);
         printFinal(players, dealer, referee);
     }
 
@@ -40,11 +37,12 @@ public class BlackJackController {
         OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
     }
 
-    private void hitCardByDealer(Dealer dealer) {
+    private void hitCardByDealer(Dealer dealer, CardPool cardPool) {
+        OutputView.println();
         int dealerScore = dealer.calculateScore();
 
         while (isContinueToHit(dealerScore)) {
-            dealer.hit(cardPicker);
+            dealer.hit(cardPool.draw(cardPicker));
             dealerScore = dealer.calculateScore();
             OutputView.printDealerPickMessage(dealer);
         }
@@ -54,25 +52,27 @@ public class BlackJackController {
         return dealerScore <= DEALER_HIT_NUMBER;
     }
 
-    private void askPlayers(Players players) {
+    private void askPlayers(Players players, CardPool cardPool) {
         for (Player player : players.getPlayers()) {
-            askPlayer(player);
+            askPlayer(player, cardPool);
         }
     }
 
-    private void init(Players players, Dealer dealer) {
-        dealer.initHit(cardPicker);
-        players.initHit(cardPicker);
+    private void init(Players players, Dealer dealer, CardPool cardPool) {
+        for (int i = 0; i < INIT_COUNT; i++) {
+            dealer.hit(cardPool.draw(cardPicker));
+        }
+        players.getPlayers().forEach(player -> player.hit(cardPool.draw(cardPicker)));
         OutputView.printInitCardDeck(dealer, players);
     }
 
-    private void askPlayer(Player player) {
+    private void askPlayer(Player player, CardPool cardPool) {
         Command command = Command.CONTINUE;
         int score = 0;
 
         while (isContinueToAsk(command, score)) {
             command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
-            hitByCommand(player, command);
+            hitByCommand(player, command, cardPool);
             OutputView.printPlayerCardDeck(player);
             score = calculateScore(player);
         }
@@ -87,9 +87,9 @@ public class BlackJackController {
         return score;
     }
 
-    private void hitByCommand(Player player, Command command) {
+    private void hitByCommand(Player player, Command command, CardPool cardPool) {
         if (Command.isContinue(command)) {
-            player.hit(cardPicker);
+            player.hit(cardPool.draw(cardPicker));
         }
     }
 

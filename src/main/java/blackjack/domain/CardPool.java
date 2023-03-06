@@ -6,17 +6,11 @@ import java.util.List;
 
 public class CardPool {
 
-    private static final List<Card> cards = new ArrayList<>();
+    private static final int STANDARD_COUNT = 9;
 
-    private CardPool() {
-    }
+    private final List<Card> cards = new ArrayList<>();
 
-    static {
-        CardPool.init();
-    }
-
-    public static void init() {
-        cards.clear();
+    public CardPool() {
         final Pattern[] values = Pattern.values();
 
         for (Pattern pattern : values) {
@@ -24,9 +18,9 @@ public class CardPool {
         }
     }
 
-    private static void addAllCardByPattern(Pattern pattern) {
+    private void addAllCardByPattern(Pattern pattern) {
         cards.add(new AceCard(pattern));
-        for (int i = 2; i < 11; i++) {
+        for (int i = 0; i < STANDARD_COUNT; i++) {
             cards.add(new StandardCard(pattern, String.valueOf(i)));
         }
         cards.add(new CourtCard(pattern, "J"));
@@ -34,18 +28,13 @@ public class CardPool {
         cards.add(new CourtCard(pattern, "Q"));
     }
 
-    public static int getSize() {
+    public int getSize() {
         return cards.size();
     }
 
-    public static Card draw(CardPicker cardPicker) {
-        final Card card = cardPicker.pick();
+    public Card draw(CardPicker cardPicker) {
+        final Card card = cardPicker.pick(cards);
         cards.remove(card);
         return card;
     }
-
-    public static List<Card> getCards() {
-        return cards;
-    }
-
 }
