@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.stream.Collectors.joining;
-
 public class Hand {
-    private static final int BURST_NUMBER = 21;
+
+    private static final int BUST_NUMBER = 21;
 
     private final List<Card> cards;
 
@@ -25,14 +24,17 @@ public class Hand {
         this.cards.add(card);
     }
 
-    public int calculateTotalValue() {
-        if (getTotalValue() > BURST_NUMBER && isIncludeAce()) {
-            return getTotalValue() - 10;
+    public int getTotalValue() {
+        int totalValue = calculateTotalValue();
+
+        if (totalValue > BUST_NUMBER && isIncludeAce()) {
+            return totalValue - 10;
         }
-        return getTotalValue();
+
+        return totalValue;
     }
 
-    private int getTotalValue() {
+    private int calculateTotalValue() {
         return cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
@@ -41,13 +43,6 @@ public class Hand {
     private boolean isIncludeAce() {
         return this.cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    @Override
-    public String toString() {
-        return cards.stream()
-                .map(Card::toString)
-                .collect(joining(", "));
     }
 
     @Override
@@ -61,5 +56,9 @@ public class Hand {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    public List<Card> getCards() {
+        return this.cards;
     }
 }

@@ -4,10 +4,11 @@ import model.card.Card;
 import model.card.Shape;
 import model.card.Value;
 import model.user.Hand;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
 
@@ -24,7 +25,7 @@ class HandTest {
     @DisplayName("플레이어가 가지고 있는 카드 값의 총 합을 반환한다.")
     void calculateTotalValue() {
         // when, then
-        Assertions.assertThat(hand.calculateTotalValue()).isEqualTo(19);
+        assertThat(hand.getTotalValue()).isEqualTo(19);
     }
 
     @Test
@@ -34,6 +35,6 @@ class HandTest {
         hand.receiveCard(new Card(Shape.DIAMOND, Value.ACE));
 
         // when, then
-        Assertions.assertThat(hand.calculateTotalValue()).isEqualTo(20);
+        assertThat(hand.getTotalValue()).isEqualTo(20);
     }
 }
