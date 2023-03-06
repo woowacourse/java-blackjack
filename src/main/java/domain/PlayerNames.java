@@ -7,6 +7,8 @@ public class PlayerNames {
     private static final int MAX_SIZE = 8;
     private static final String INVALID_PLAYER_SIZE = "참여자 수는 1명 이상 8명 이하여야 합니다.";
     private static final String PLAYER_NAME_DUPLICATION = "중복된 이름을 허용할 수 없습니다.";
+    private static final String DEALER_NAME = "딜러";
+    private static final String EXISTED_NAME = "\"딜러\"라는 이름은 사용하실 수 없습니다.";
 
     private final List<PlayerName> names;
 
@@ -26,6 +28,7 @@ public class PlayerNames {
     private void validate(List<PlayerName> names) {
         validateSize(names);
         validateDuplication(names);
+        validateExistedName(names);
     }
 
     private void validateSize(List<PlayerName> names) {
@@ -42,6 +45,14 @@ public class PlayerNames {
 
         if (names.size() != distinctionSize) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATION);
+        }
+    }
+
+    private void validateExistedName(List<PlayerName> names) {
+        boolean isExistedName = names.stream().map(PlayerName::getName)
+                .anyMatch(name -> name.equals(DEALER_NAME));
+        if (isExistedName) {
+            throw new IllegalArgumentException(EXISTED_NAME);
         }
     }
 
