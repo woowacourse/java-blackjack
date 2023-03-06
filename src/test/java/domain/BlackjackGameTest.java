@@ -15,7 +15,6 @@ import java.util.*;
 public class BlackjackGameTest {
     private Dealer dealer;
     private Players players;
-    private BlackjackGame game;
     private CardDeck cardDeck;
 
     @BeforeEach
@@ -50,7 +49,7 @@ public class BlackjackGameTest {
 
         blackjackGame.distributePlayers();
 
-        Assertions.assertThat(players.getInfo()).usingRecursiveComparison().isEqualTo(result);
+        Assertions.assertThat(players.getPlayersOwnCards()).usingRecursiveComparison().isEqualTo(result);
     }
 
     @Test
@@ -76,7 +75,7 @@ public class BlackjackGameTest {
 
         Map<String, List<Result>> playerResult = new LinkedHashMap<>();
 
-        playerResult.put(dealer.getName(), List.of(Result.LOSE, Result.LOSE));
+        playerResult.put(dealer.getName(), List.of(Result.WIN, Result.WIN));
 
         Assertions.assertThat(blackjackGame.getDealerResult()).isEqualTo(playerResult);
     }

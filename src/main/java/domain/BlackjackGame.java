@@ -71,16 +71,10 @@ public class BlackjackGame {
     }
 
     public Result isPlayerWin(int dealerSum, int playerSum) {
-        if (playerSum > BLACK_JACK) {
+        if (playerSum > BLACK_JACK || dealerSum > playerSum) {
             return Result.LOSE;
         }
-        if (dealerSum > BLACK_JACK) {
-            return Result.WIN;
-        }
-        if (dealerSum > playerSum) {
-            return Result.LOSE;
-        }
-        if (dealerSum < playerSum) {
+        if (dealerSum > BLACK_JACK || dealerSum<playerSum) {
             return Result.WIN;
         }
         return Result.DRAW;
