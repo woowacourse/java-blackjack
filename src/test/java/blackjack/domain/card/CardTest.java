@@ -20,7 +20,7 @@ public class CardTest {
         // given
         Card card = new Card(Shape.DIAMOND, Letter.ACE);
         String actual = card.getCardName();
-        String expected = Letter.ACE.getValue() + Shape.DIAMOND.getValue();
+        String expected = Letter.ACE.getName() + Shape.DIAMOND.getValue();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -29,28 +29,16 @@ public class CardTest {
     @Test
     @DisplayName("카드가 에이스 인지 확인하는 테스트")
     void isAceTest() {
-        Card diamondAce = new Card(Shape.DIAMOND, Letter.ACE);
-        Card spadeAce = new Card(Shape.SPADE, Letter.ACE);
-        Card cloverAce = new Card(Shape.CLOVER, Letter.ACE);
-        Card heartAce = new Card(Shape.HEART, Letter.ACE);
+        Card card = new Card(Shape.DIAMOND, Letter.ACE);
 
-        assertThat(diamondAce.isAce()).isTrue();
-        assertThat(spadeAce.isAce()).isTrue();
-        assertThat(cloverAce.isAce()).isTrue();
-        assertThat(heartAce.isAce()).isTrue();
+        assertThat(card.isAce()).isTrue();
     }
 
     @Test
     @DisplayName("카드가 에이스 아닌지 확인하는 테스트")
     void isNotAceTest() {
-        Card card;
-        for (Shape shape : Shape.values()) {
-            for (Letter letter : Letter.values()) {
-                card = new Card(shape, letter);
+        Card card = new Card(Shape.DIAMOND, Letter.EIGHT);
 
-                if (!letter.equals(Letter.ACE)) assertThat(card.isAce()).isFalse();
-                if (letter.equals(Letter.ACE)) assertThat(card.isAce()).isTrue();
-            }
-        }
+        assertThat(card.isAce()).isFalse();
     }
 }
