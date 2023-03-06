@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,7 +57,7 @@ public class OutputView {
             String.format("%s는 16 이하라 한장의 카드를 더 받았습니다.", dealer.getName().getValue()));
     }
 
-    public static void printFinalCardDeckAndScore(Participant dealer, Players players, Referee referee) {
+    public static void printFinalCardDeckAndScore(Participant dealer, Players players) {
         System.out.println();
         final List<String> playerNames = getPlayerNames(players);
         final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();

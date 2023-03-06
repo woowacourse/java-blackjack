@@ -36,7 +36,7 @@ public class BlackJackController {
 
     private void printFinal(Players players, Dealer dealer, Referee referee) {
         List<Result> results = referee.judgeResult(dealer, players);
-        OutputView.printFinalCardDeckAndScore(dealer, players, referee);
+        OutputView.printFinalCardDeckAndScore(dealer, players);
         OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
     }
 
