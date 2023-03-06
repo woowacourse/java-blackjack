@@ -25,7 +25,7 @@ class CardsTest {
                 .isEqualTo(12);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "K다이아몬드와 에이스 {0}개면 점수가 {1}점이다.")
     @DisplayName("Cards에 ACE가 있을때 정확히 점수를 계산할 수 있어야 한다.")
     @CsvSource(value = {"1,21", "2,12", "3,13", "4,14"})
     void getScore_haveAce(int input, int expect) {

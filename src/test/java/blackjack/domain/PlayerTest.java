@@ -112,7 +112,7 @@ class PlayerTest {
                 .isTrue();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이름이 \"{0}\"일 때")
     @ValueSource(strings = {" ", "  ", "", "\n"})
     @DisplayName("이름이 공백이면 예외가 발생해야 한다.")
     void validateBlankName(String input) {
