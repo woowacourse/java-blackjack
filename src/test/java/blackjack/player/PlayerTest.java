@@ -26,10 +26,11 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     void hit() {
         Player player = new Player(new Name("폴로"));
-        Card card = new Card(Rank.ACE, Suit.HEART);
+        Card card = new Card(Rank.TWO, Suit.HEART);
 
-        assertThatCode(() -> player.hit(card))
-                .doesNotThrowAnyException();
+        player.hit(card);
+
+        assertThat(player.calculateScore()).isEqualTo(2);
     }
 
     @Test

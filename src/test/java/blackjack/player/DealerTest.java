@@ -28,17 +28,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 카드를 받는다.")
-    void hit() {
-        Dealer dealer = new Dealer();
-        Card card = new Card(Rank.ACE, Suit.HEART);
-
-        assertThatCode(() -> dealer.hit(card))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("딜러는 받은 카드의 점수 합계를 구한다")
+    @DisplayName("딜러는 카드를 받고, 받은 카드의 점수 합계를 구한다")
     void calculateScore() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);
@@ -52,7 +42,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 현재 가지고 있는 카드를 반환한다.")
+    @DisplayName("딜러는 hit로 받은 카드를 반환한다.")
     void showCards() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Rank.ACE, Suit.HEART);

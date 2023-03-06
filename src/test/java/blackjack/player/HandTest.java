@@ -24,15 +24,6 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("Hand는 카드를 받는다.")
-    void add() {
-        hand = new Hand();
-
-        assertThatCode(() -> hand.add(new Card(Rank.ACE, Suit.CLOVER)))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
     @DisplayName("Hand에 추가한 카드가 카드리스트에 들어있다.")
     void saveCard() {
         hand = new Hand();
