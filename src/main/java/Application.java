@@ -45,7 +45,8 @@ public class Application {
     }
 
     private static void dealCardToDealer(Game game) {
-        if (game.dealCardToDealer()) {
+        if (game.canHitByDealerScore()) {
+            game.dealCardToDealer();
             outputView.noticeDealerAccept();
             return;
         }
@@ -54,7 +55,7 @@ public class Application {
 
     private static void selectHitAndStand(Game game, Player player) {
         boolean hit = true;
-        while (hit && game.canHit(player)) {
+        while (hit && game.canHitByPlayerScore(player)) {
             hit = dealAnotherCardIfHit(game, player);
         }
     }

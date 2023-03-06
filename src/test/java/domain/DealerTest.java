@@ -55,36 +55,14 @@ class DealerTest {
         assertThat(dealer.getScore()).isEqualTo(12);
     }
 
-    @ParameterizedTest(name = "점수가 16을 초과하는지 확인한다")
-    @CsvSource({"DIAMOND,8,HEART,9,true", "DIAMOND,10,DIAMOND,6,false"})
+    @ParameterizedTest(name = "점수가 16 초과인지 확인하여 hit이 가능한지 판단한다")
+    @CsvSource({"DIAMOND,8,HEART,9,false", "DIAMOND,10,DIAMOND,6,true"})
     void test_over_16(Face face1, String letter1, Face face2, String letter2, boolean isOverSixteen) {
         var dealer = new Dealer(List.of(
                 new Card(face1, letter1),
                 new Card(face2, letter2)));
 
         assertThat(dealer.canHit()).isEqualTo(isOverSixteen);
-    }
-
-    @Test
-    @DisplayName("점수가 16 이하이면 카드 1장을 뽑는다")
-    void test_draw_16() {
-        var dealer = new Dealer(List.of(
-                new Card(HEART, "10"),
-                new Card(HEART, "6")));
-        dealer.drawCardIfNecessary(new Deck());
-
-        assertThat(dealer.getScore()).isGreaterThan(16);
-    }
-
-    @Test
-    @DisplayName("점수가 16을 초과하면 카드를 뽑지 않는다")
-    void test_not_draw_16() {
-        var dealer = new Dealer(List.of(
-                new Card(HEART, "10"),
-                new Card(HEART, "7")));
-        dealer.drawCardIfNecessary(new Deck());
-
-        assertThat(dealer.getScore()).isEqualTo(17);
     }
 
 }

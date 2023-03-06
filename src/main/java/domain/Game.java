@@ -27,12 +27,20 @@ public class Game {
         player.addCard(deck.drawCard());
     }
 
-    public boolean canHit(Player player) {
+    public boolean canHitByPlayerScore(Player player) {
         return player.canHit();
     }
 
-    public boolean dealCardToDealer() {
-        return players.getDealer().drawCardIfNecessary(deck);
+    public boolean canHitByDealerScore() {
+        return canHitByPlayerScore(players.getDealer());
+    }
+
+    public void dealCardToDealer() {
+        Dealer dealer = players.getDealer();
+
+        if (dealer.canHit()) {
+            dealer.addCard(deck.drawCard());
+        }
     }
 
     public List<Player> getUsers() {

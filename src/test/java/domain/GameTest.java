@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static domain.Face.HEART;
 import static domain.Face.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -92,5 +93,43 @@ public class GameTest {
                 .map(letter -> new Card(SPADE, letter))
                 .collect(Collectors.toList());
     }
+
+    @Test
+    @DisplayName("딜러는 점수가 16 이하이면 카드 1장을 뽑는다")
+    void test_draw_16() {
+        var players = List.of(
+                new Player("조이", createCards("10", "2"))
+        );
+
+        var dealer = new Dealer(List.of(
+                new Card(HEART, "10"),
+                new Card(HEART, "6")));
+
+        var game = new Game(players, new Deck(), dealer);
+
+        game.dealCardToDealer();
+
+        assertThat(dealer.getScore()).isGreaterThan(16);
+    }
+
+    @Test
+    @DisplayName("딜러는 점수가 16을 초과하면 카드를 뽑지 않는다")
+    void test_not_draw_16() {
+        var players = List.of(
+                new Player("조이", createCards("10", "2"))
+        );
+
+        var dealer = new Dealer(List.of(
+                new Card(HEART, "10"),
+                new Card(HEART, "7")));
+
+        var game = new Game(players, new Deck(), dealer);
+
+        game.dealCardToDealer();
+
+        assertThat(dealer.getScore()).isEqualTo(17);
+    }
+
+
 
 }

@@ -16,16 +16,9 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return getScore() > 16;
+        return getScore() <= 16;
     }
 
-    public boolean drawCardIfNecessary(Deck deck) {
-        if (!canHit()) {
-            addCard(deck.drawCard());
-            return true;
-        }
-        return false;
-    }
 }
 
 
