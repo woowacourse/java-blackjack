@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class BlackJackController {
 
-    private static final String CARD_RECEIVE_INTENTION = "y";
     private static final int EXTRA_CARD_COUNT = 1;
 
     private final InputView inputView;
@@ -38,15 +37,15 @@ public class BlackJackController {
     }
 
 
-    private void passExtraCard(BlackJackGame blackJackGame) {
-        passExtraCardToPlayers(blackJackGame);
-        passExtraCardToDealer(blackJackGame);
-    }
-
     private void showInitialStatus(BlackJackGame blackJackGame) {
         outputView.showInitStatus(blackJackGame.getPlayers());
         outputView.showDealerFirstCard(blackJackGame.getDealer().getFirst());
         outputView.showPlayers(blackJackGame.getPlayers());
+    }
+
+    private void passExtraCard(BlackJackGame blackJackGame) {
+        passExtraCardToPlayers(blackJackGame);
+        passExtraCardToDealer(blackJackGame);
     }
 
     private void showFinalResult(BlackJackGame blackJackGame) {
@@ -73,21 +72,20 @@ public class BlackJackController {
     }
 
     private void addExtraCard(BlackJackGame blackJackGame, Player player) {
-        while (player.canReceive() && hasIntention(inputView.readIntention(player.getName()))) {
+        while (player.canReceive() && hasIntention(player.getName())) {
             blackJackGame.drawCard(player, EXTRA_CARD_COUNT);
             outputView.showPlayer(player);
         }
     }
 
-    private boolean hasIntention(String intention) {
-        return intention.equals(CARD_RECEIVE_INTENTION);
+    private boolean hasIntention(String name) {
+        return inputView.readIntention(name);
     }
 
     private Players generatePlayers() {
         try {
             List<String> names = inputView.readNames();
-            Players players = Players.create(names);
-            return players;
+            return Players.create(names);
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
             return generatePlayers();

@@ -9,8 +9,6 @@ public class InputView {
 
     private static final String NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String CARD_INPUT_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private static final String YES_INPUT_MESSAGE = "y";
-    private static final String NO_INPUT_MESSAGE = "n";
 
     private static final String DELIMITER = ",";
 
@@ -23,21 +21,14 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public String readIntention(String name) {
+    public boolean readIntention(String name) {
         printMessage(name + CARD_INPUT_MESSAGE);
         try {
             String intention = input().toLowerCase();
-            validateIntention(intention);
-            return intention;
+            return Intention.getIntention(intention);
         } catch (IllegalArgumentException e) {
             printMessage(e.getMessage());
             return readIntention(name);
-        }
-    }
-
-    private void validateIntention(String intention) {
-        if (!intention.equals(YES_INPUT_MESSAGE) && !intention.equals(NO_INPUT_MESSAGE)) {
-            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
     }
 
