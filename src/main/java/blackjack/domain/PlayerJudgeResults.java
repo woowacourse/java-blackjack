@@ -4,19 +4,14 @@ import static blackjack.domain.JudgeResult.LOSE;
 import static blackjack.domain.JudgeResult.PUSH;
 import static blackjack.domain.JudgeResult.WIN;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PlayerJudgeResults {
 
     private final Map<String, JudgeResult> judgeResultsByPlayer;
 
-    public PlayerJudgeResults() {
-        this.judgeResultsByPlayer = new LinkedHashMap<>();
-    }
-
-    public void addResultByPlayerName(String playerName, JudgeResult playerJudgeResult) {
-        judgeResultsByPlayer.put(playerName, playerJudgeResult);
+    public PlayerJudgeResults(Map<String, JudgeResult> judgeResultsByPlayer) {
+        this.judgeResultsByPlayer = judgeResultsByPlayer;
     }
 
     public int countDealerWins() {

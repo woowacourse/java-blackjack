@@ -1,6 +1,8 @@
 package blackjack.domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 // TODO 딜러 싱글톤 여부 검토
 public class Dealer extends Participant {
@@ -10,6 +12,14 @@ public class Dealer extends Participant {
 
     public Dealer(String name) {
         super(name);
+    }
+
+    public Map<String, JudgeResult> judgeAllPlayersResult(Players players) {
+        Map<String, JudgeResult> playerJudgeResults = new LinkedHashMap<>();
+        for (Player player : players.players()) {
+            playerJudgeResults.put(player.getName(), judge(player));
+        }
+        return playerJudgeResults;
     }
 
     public JudgeResult judge(Player player) {

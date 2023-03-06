@@ -89,13 +89,8 @@ public class Participants {
         return new FinalCards(participant.getCards(), participant.computeCardsScore());
     }
 
-    // TODO 결과 계산 클래스 분리
     public PlayerJudgeResults computeJudgeResultsByPlayer() {
-        PlayerJudgeResults playerJudgeResults = new PlayerJudgeResults();
-        for (Player player : players.players()) {
-            playerJudgeResults.addResultByPlayerName(player.getName(), dealer.judge(player));
-        }
-        return playerJudgeResults;
+        return new PlayerJudgeResults(dealer.judgeAllPlayersResult(players));
     }
 
     public List<Card> findHoldingCardsByName(String participantName) {
