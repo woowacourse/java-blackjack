@@ -1,5 +1,8 @@
 package list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public interface SimpleList<T> {
 
     boolean add(T value);
@@ -23,4 +26,8 @@ public interface SimpleList<T> {
     T remove(int index);
 
     void clear();
+
+    static <T> SimpleList<T> fromArrayToList(T[] array) {
+        return new SimpleArrayList<T>(array);
+    }
 }

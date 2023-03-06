@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class ListStudy {
+public class ListStudyTest {
 
     @Nested
     public class ArrayList {
@@ -109,6 +109,15 @@ public class ListStudy {
             assertThat(stringValues.isEmpty()).isTrue();
             assertThatCode(integerValues::clear).doesNotThrowAnyException();
             assertThat(integerValues.isEmpty()).isTrue();
+        }
+
+        @Test
+        void mission2_test() {
+            final String[] arrays = {"first", "second"};
+            final SimpleList<String> stringValues = SimpleList.<String>fromArrayToList(arrays);
+
+            assertThat(stringValues.remove(0)).isEqualTo("first");
+            assertThat(stringValues.remove(0)).isEqualTo("second");
         }
     }
 

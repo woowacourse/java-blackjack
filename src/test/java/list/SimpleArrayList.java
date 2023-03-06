@@ -9,10 +9,17 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     private int size;
     private T[] data;
 
+    @SuppressWarnings("unchecked")
     public SimpleArrayList() {
         this.capacity = INITIAL_CAPACITY;
         this.size = INITIAL_SIZE;
         this.data = (T[]) new Object[capacity];
+    }
+
+    public SimpleArrayList(T[] data) {
+        this.capacity = data.length;
+        this.size = data.length;
+        this.data = data;
     }
 
     @Override
