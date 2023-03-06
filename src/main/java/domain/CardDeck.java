@@ -58,4 +58,8 @@ public class CardDeck {
         return List.copyOf(cards);
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
 }

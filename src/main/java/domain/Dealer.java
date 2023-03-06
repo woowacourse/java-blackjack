@@ -10,15 +10,13 @@ public class Dealer extends Participant {
     }
 
     public Card showOneCard() {
-        return cardDeck.getCards().get(0);
+        return cardDeck.getFirstCard();
     }
 
-    @Override
     public boolean isMoreCardAble() {
         return getTotalScore() <= MORE_CARD_LIMIT;
     }
 
-    @Override
     public int getTotalScore() {
         return cardDeck.calculateScore(MORE_CARD_LIMIT);
     }
