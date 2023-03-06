@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Participant {
 
@@ -16,7 +16,7 @@ public class Participant {
     private int numberOfElevenAce = 0;
 
     public Participant() {
-        this.cards = new HashSet<>();
+        this.cards = new LinkedHashSet<>();
     }
 
     public void receiveCard(final Card card) {

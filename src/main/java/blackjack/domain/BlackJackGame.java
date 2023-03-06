@@ -1,15 +1,9 @@
 package blackjack.domain;
 
-import java.util.stream.IntStream;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.domain.participant.Result;
+import blackjack.domain.card.ShufflingMachine;
+import blackjack.domain.participant.*;
 
 public class BlackJackGame {
 
