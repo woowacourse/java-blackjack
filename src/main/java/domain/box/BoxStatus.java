@@ -1,5 +1,6 @@
 package domain.box;
 
+import domain.user.PlayerStatus;
 import java.util.Objects;
 
 public class BoxStatus implements Comparable<BoxStatus> {

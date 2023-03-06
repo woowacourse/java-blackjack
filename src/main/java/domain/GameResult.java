@@ -1,4 +1,4 @@
-package domain.box;
+package domain;
 
 public class GameResult {
 

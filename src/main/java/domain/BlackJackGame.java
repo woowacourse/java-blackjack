@@ -1,7 +1,6 @@
 package domain;
 
 import domain.box.Boxes;
-import domain.box.GameResult;
 import domain.card.Deck;
 import domain.user.Player;
 import dto.ParticipantDTO;

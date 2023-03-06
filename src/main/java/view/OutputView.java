@@ -1,6 +1,6 @@
 package view;
 
-import domain.box.GameResult;
+import domain.GameResult;
 import domain.card.Card;
 import domain.card.Suit;
 import java.util.List;

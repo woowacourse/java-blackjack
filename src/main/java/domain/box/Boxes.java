@@ -1,7 +1,9 @@
 package domain.box;
 
+import domain.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.PlayerStatus;
 import dto.ParticipantDTO;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,8 +1,8 @@
 package controller;
 
 import domain.BlackJackGame;
+import domain.GameResult;
 import domain.TurnAction;
-import domain.box.GameResult;
 import domain.user.Dealer;
 import domain.user.Player;
 import dto.ParticipantDTO;

@@ -1,10 +1,12 @@
 package domain.box;
 
+import domain.GameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.PlayerStatus;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

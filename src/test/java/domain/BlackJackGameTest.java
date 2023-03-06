@@ -1,6 +1,5 @@
 package domain;
 
-import domain.box.GameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;

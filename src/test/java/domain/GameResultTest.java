@@ -1,5 +1,7 @@
-package domain.box;
+package domain;
 
+import domain.box.BoxStatus;
+import domain.user.PlayerStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
