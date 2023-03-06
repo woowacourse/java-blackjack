@@ -2,10 +2,7 @@ package domain.game;
 
 import domain.area.CardArea;
 import domain.deck.CardDeck;
-import domain.player.Dealer;
-import domain.player.DealerCompeteResult;
-import domain.player.Name;
-import domain.player.Player;
+import domain.player.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +52,8 @@ public class BlackJackGame {
                 .orElseThrow(() -> new IllegalArgumentException("Hit 가능한 참여자가 없습니다."));
     }
 
-    public void hitOrStayForParticipant(final Player player) {
+    public void hitOrStayForParticipant(final Player player, final HitState hitState) {
+        player.changeState(hitState);
         players.stream()
                 .filter(player::equals)
                 .filter(Player::wantHit)

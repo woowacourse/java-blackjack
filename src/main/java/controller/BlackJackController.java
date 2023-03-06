@@ -39,8 +39,7 @@ public class BlackJackController {
         while (blackJackGame.existCanHitParticipant()) {
             final Player canHitPlayer = blackJackGame.findCanHitParticipant();
             final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitPlayer));
-            canHitPlayer.changeState(hitState);
-            blackJackGame.hitOrStayForParticipant(canHitPlayer);
+            blackJackGame.hitOrStayForParticipant(canHitPlayer, hitState);
             OutputView.showPlayerCardAreaState(canHitPlayer);
         }
     }

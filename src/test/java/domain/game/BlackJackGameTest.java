@@ -162,11 +162,10 @@ class BlackJackGameTest {
             // given
             final Player 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            코다.changeState(HitState.HIT);
             final int before = 코다.score();
 
             // when
-            blackJackGame.hitOrStayForParticipant(코다);
+            blackJackGame.hitOrStayForParticipant(코다, HitState.HIT);
 
             // then
             assertThat(코다.score()).isNotEqualTo(before);
@@ -177,11 +176,10 @@ class BlackJackGameTest {
             // given
             final Player 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            코다.changeState(HitState.STAY);
             final int before = 코다.score();
 
             // when
-            blackJackGame.hitOrStayForParticipant(코다);
+            blackJackGame.hitOrStayForParticipant(코다, HitState.STAY);
 
             // then
             assertThat(코다.score()).isEqualTo(before);
