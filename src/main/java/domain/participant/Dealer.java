@@ -8,4 +8,9 @@ public class Dealer extends Participant {
     public Dealer() {
         super(DEALER_NAME);
     }
+
+    @Override
+    public boolean canHit() {
+        return calculateScore() <= STAY_LOWER_BOUND;
+    }
 }

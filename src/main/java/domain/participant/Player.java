@@ -29,4 +29,9 @@ public class Player extends Participant {
             throw new IllegalArgumentException(ERROR_PROHIBIT_NAME);
         }
     }
+
+    @Override
+    public boolean canHit() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -67,4 +67,19 @@ class DealerTest {
         //then
         assertThat(dealer.isBust()).isTrue();
     }
+
+    @Test
+    void 히트_여부를_계산할_수_있다() {
+        // given
+        Dealer dealer = new Dealer();
+        List<Card> cards = List.of(new Card(Denomination.FIVE, Suit.CLUB),
+                new Card(Denomination.TEN, Suit.SPADE));
+
+        //when
+        cards.forEach(dealer::addCard);
+
+        // then
+        assertThat(dealer.canHit()).isTrue();
+    }
+
 }
