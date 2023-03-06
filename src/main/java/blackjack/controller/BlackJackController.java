@@ -99,9 +99,7 @@ public class BlackJackController {
     }
 
     private void printStatusOfGame(final Dealer dealer, final Players players) {
-        outputView.printFinalStatusOfDealer(CardsScoreResponse.of(
-                dealer.getCards(),
-                dealer.currentScore()));
+        outputView.printFinalStatusOfDealer(CardsScoreResponse.from(dealer));
         outputView.printFinalStatusOfPlayers(createPlayersCardsResponse(players));
     }
 
