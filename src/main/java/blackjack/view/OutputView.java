@@ -21,10 +21,8 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printReadyMessage(List<Name> names) {
-        String allName = names.stream()
-                .map(Name::getName)
-                .collect(Collectors.joining(NAME_JOINING_DELIMITER));
+    public static void printReadyMessage(List<String> names) {
+        String allName = String.join(NAME_JOINING_DELIMITER, names);
         printEmptyLine();
         System.out.println("딜러와 " + allName + "에게 2장을 나누었습니다.");
     }
