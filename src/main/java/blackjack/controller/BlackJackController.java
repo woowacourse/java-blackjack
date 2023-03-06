@@ -33,6 +33,7 @@ public class BlackJackController {
         initDrawCard();
         printInitStatus();
         drawMoreCardForPlayers();
+        InputView.closeScanner();
         drawDealerMoreCard();
         printAllStatus();
         printGameResult();
