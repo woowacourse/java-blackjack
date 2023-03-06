@@ -31,11 +31,7 @@ public class DealerResult {
         dealerResult.get(LOSE).addCount();
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        Map<Result, Integer> newMap = new HashMap<>();
-        dealerResult.forEach((key, value) -> {
-            newMap.put(key, value.getCount());
-        });
-        return Map.copyOf(newMap);
+    public Map<Result, Count> getDealerResult() {
+        return Map.copyOf(new HashMap<>(dealerResult));
     }
 }

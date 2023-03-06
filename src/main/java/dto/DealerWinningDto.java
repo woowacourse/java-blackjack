@@ -3,14 +3,15 @@ package dto;
 import java.util.Map;
 
 import blackjackgame.Result;
+import player.Count;
 import player.Dealer;
 import player.Name;
 
 public class DealerWinningDto {
     private final Name name;
-    private final Map<Result, Integer> winningMap;
+    private final Map<Result, Count> winningMap;
 
-    private DealerWinningDto(Name name, Map<Result, Integer> winningMap) {
+    private DealerWinningDto(Name name, Map<Result, Count> winningMap) {
         this.name = name;
         this.winningMap = winningMap;
     }
@@ -23,7 +24,7 @@ public class DealerWinningDto {
         return name;
     }
 
-    public Map<Result, Integer> getWinningMap() {
+    public Map<Result, Count> getWinningMap() {
         return winningMap;
     }
 }

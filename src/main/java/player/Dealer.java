@@ -35,7 +35,7 @@ public class Dealer extends Participant {
         dealerResult.addTie();
     }
 
-    public Map<Result, Integer> getDealerResult() {
+    public Map<Result, Count> getDealerResult() {
         return dealerResult.getDealerResult();
     }
 }

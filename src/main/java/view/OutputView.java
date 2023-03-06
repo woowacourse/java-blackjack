@@ -71,8 +71,10 @@ public class OutputView {
     }
 
     private String parseDealerWinningResult(DealerWinningDto dealerWinningResult) {
-        return dealerWinningResult.getWinningMap().keySet().stream()
-                .map(result -> dealerWinningResult.getWinningMap().get(result) + result.getLabel()).collect(
-                        Collectors.joining(" "));
+        return dealerWinningResult.getWinningMap()
+                .keySet()
+                .stream()
+                .map(result -> dealerWinningResult.getWinningMap().get(result).getCount() + result.getLabel())
+                .collect(Collectors.joining(" "));
     }
 }

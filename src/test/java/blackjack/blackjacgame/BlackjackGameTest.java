@@ -23,6 +23,7 @@ import card.Suit;
 import deck.CardsGenerator;
 import deck.Deck;
 import dto.DealerWinningDto;
+import player.Count;
 import player.Dealer;
 import player.Name;
 import player.Player;
@@ -181,12 +182,12 @@ class BlackjackGameTest {
 
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         Name name = dealerWinningResult.getName();
-        Map<Result, Integer> dealerResult = dealerWinningResult.getWinningMap();
+        Map<Result, Count> dealerResult = dealerWinningResult.getWinningMap();
 
         assertThat(name.getValue()).isEqualTo("딜러");
-        assertThat(dealerResult.get(WIN)).isEqualTo(2);
-        assertThat(dealerResult.get(LOSE)).isEqualTo(1);
-        assertThat(dealerResult.get(TIE)).isEqualTo(1);
+        assertThat(dealerResult.get(WIN).getCount()).isEqualTo(2);
+        assertThat(dealerResult.get(LOSE).getCount()).isEqualTo(1);
+        assertThat(dealerResult.get(TIE).getCount()).isEqualTo(1);
     }
 
     @Nested

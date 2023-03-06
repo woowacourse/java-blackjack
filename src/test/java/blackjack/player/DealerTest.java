@@ -16,6 +16,7 @@ import blackjackgame.Result;
 import card.Card;
 import card.Rank;
 import card.Suit;
+import player.Count;
 import player.Dealer;
 
 class DealerTest {
@@ -141,10 +142,10 @@ class DealerTest {
         dealer.lose();
         dealer.tie();
 
-        Map<Result, Integer> dealerResult = dealer.getDealerResult();
+        Map<Result, Count> dealerResult = dealer.getDealerResult();
 
-        Assertions.assertThat(dealerResult.get(WIN)).isEqualTo(2);
-        Assertions.assertThat(dealerResult.get(LOSE)).isEqualTo(1);
-        Assertions.assertThat(dealerResult.get(TIE)).isEqualTo(1);
+        Assertions.assertThat(dealerResult.get(WIN).getCount()).isEqualTo(2);
+        Assertions.assertThat(dealerResult.get(LOSE).getCount()).isEqualTo(1);
+        Assertions.assertThat(dealerResult.get(TIE).getCount()).isEqualTo(1);
     }
 }
