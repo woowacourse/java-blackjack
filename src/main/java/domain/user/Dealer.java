@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.Card;
+
 public class Dealer extends User {
 
     private static final int UNDER_OVER_SCORE = 17;
@@ -7,5 +9,9 @@ public class Dealer extends User {
     @Override
     public boolean isHittable() {
         return cards.isUnder(UNDER_OVER_SCORE);
+    }
+
+    public Card getCardWithHidden() {
+        return cards.getCards().get(0);
     }
 }

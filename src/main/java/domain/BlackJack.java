@@ -85,7 +85,7 @@ public class BlackJack {
 
     public Card getDealerCardWithHidden() {
         Dealer dealer = users.getDealer();
-        return dealer.getCards().get(0);
+        return dealer.getCardWithHidden();
     }
 
     public Map<String, List<Card>> getPlayerToCard() {
