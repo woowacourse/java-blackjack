@@ -18,9 +18,9 @@ class ParticipantResultsTest {
     @BeforeAll
     static void setParticipantResults() {
         participantResults = new ParticipantResults();
-        participantResults.winPlayer("디디");
-        participantResults.losePlayer("pobi");
-        participantResults.tiePlayer("완태");
+        participantResults.addPlayerResult("pobi", ResultType.LOSE);
+        participantResults.addPlayerResult("디디", ResultType.WIN);
+        participantResults.addPlayerResult("완태", ResultType.TIE);
     }
 
     @ParameterizedTest

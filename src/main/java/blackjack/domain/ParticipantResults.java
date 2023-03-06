@@ -7,16 +7,8 @@ class ParticipantResults {
 
     private final Map<String, ResultType> playerNameToResultType = new HashMap<>();
 
-    void tiePlayer(final String playerName) {
-        playerNameToResultType.put(playerName, ResultType.TIE);
-    }
-
-    void winPlayer(final String playerName) {
-        playerNameToResultType.put(playerName, ResultType.WIN);
-    }
-
-    void losePlayer(final String playerName) {
-        playerNameToResultType.put(playerName, ResultType.LOSE);
+    public void addPlayerResult(final String playerName, final ResultType resultType) {
+        playerNameToResultType.put(playerName, resultType);
     }
 
     Map<String, ResultType> getPlayerNameToResultType() {
