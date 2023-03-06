@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User {
-    protected static final int BLACKJACK = 21;
-
     private final List<Card> cards;
     protected final Score score;
 
@@ -17,17 +15,13 @@ public abstract class User {
 
     public void receiveCard(Card card) {
         cards.add(card);
-        score.calculate(cards);
-        checkBustByScore();
+        score.setScore(cards);
     }
 
     public void receiveCards(List<Card> receivedCards) {
         cards.addAll(receivedCards);
-        score.calculate(cards);
-        checkBustByScore();
+        score.setScore(cards);
     }
-
-    protected abstract void checkBustByScore();
 
     public abstract void win(User opponent);
 

@@ -2,12 +2,12 @@ package domain.user;
 
 import domain.card.Card;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
     private static final int RECORD_INITIAL_VALUE = 0;
-    private static final int MIN_SCORE = 17;
 
     private DealerStatus status;
     private Map<Boolean, Integer> winningRecord;
@@ -23,6 +23,18 @@ public class Dealer extends User {
         winningRecord.put(false, RECORD_INITIAL_VALUE);
     }
 
+    @Override
+    public void receiveCard(Card card) {
+        super.receiveCard(card);
+        status = score.calculateDealerStatus();
+    }
+
+    @Override
+    public void receiveCards(List<Card> receivedCards) {
+        super.receiveCards(receivedCards);
+        status = score.calculateDealerStatus();
+    }
+
     public Card getFirstCard() {
         return getCards().get(0);
     }
@@ -36,19 +48,6 @@ public class Dealer extends User {
     @Override
     public void lose() {
         winningRecord.put(false, winningRecord.getOrDefault(false, RECORD_INITIAL_VALUE) + 1);
-    }
-
-    @Override
-    protected void checkBustByScore() {
-        if (score.getScore() > BLACKJACK) {
-            status = DealerStatus.BUST;
-            return;
-        }
-        if (score.getScore() < MIN_SCORE) {
-            status = DealerStatus.UNDER_MIN_SCORE;
-            return;
-        }
-        status = DealerStatus.NORMAL;
     }
 
     @Override

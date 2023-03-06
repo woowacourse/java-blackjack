@@ -21,7 +21,7 @@ class ScoreTest {
         List<Card> cards = List.of(CloverCard.CLOVER_TWO, CloverCard.CLOVER_THREE, CloverCard.CLOVER_FOUR, CloverCard.CLOVER_FIVE);
 
         //when
-        score.calculate(cards);
+        score.setScore(cards);
 
         //then
         Assertions.assertThat(score.getScore()).isEqualTo(14);
@@ -32,7 +32,7 @@ class ScoreTest {
     @DisplayName("에이스를 포함하며 21 초과 시 에이스를 1점으로 계산한다.")
     void calculateScoreWithAceTest(List<Card> cards, int expected) {
         Score score = new Score();
-        score.calculate(cards);
+        score.setScore(cards);
 
         Assertions.assertThat(score.getScore()).isEqualTo(expected);
     }
@@ -47,5 +47,4 @@ class ScoreTest {
                         CloverCard.CLOVER_NINE), 21)
         );
     }
-
 }

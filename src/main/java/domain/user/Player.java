@@ -1,5 +1,7 @@
 package domain.user;
 
+import domain.card.Card;
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends User {
@@ -13,6 +15,18 @@ public class Player extends User {
     }
 
     @Override
+    public void receiveCard(Card card) {
+        super.receiveCard(card);
+        status = score.calculatePlayerStatus();
+    }
+
+    @Override
+    public void receiveCards(List<Card> receivedCards) {
+        super.receiveCards(receivedCards);
+        status = score.calculatePlayerStatus();
+    }
+
+    @Override
     public void win(User dealer) {
         isWinner = true;
         dealer.lose();
@@ -21,13 +35,6 @@ public class Player extends User {
     @Override
     public void lose() {
         isWinner = false;
-    }
-
-    @Override
-    protected void checkBustByScore() {
-        if (score.getScore() > BLACKJACK) {
-            status = PlayerStatus.BUST;
-        }
     }
 
     @Override
