@@ -1,10 +1,10 @@
-package blackjack.domain;
+package blackjack.controller;
 
 import java.util.Arrays;
 
 public enum HitCommand {
-    TRY("Y"),
-    END("N"),
+    TRY("y"),
+    END("n"),
     ;
 
     final String command;
@@ -21,7 +21,7 @@ public enum HitCommand {
     }
 
     public boolean isQuit() {
-        return this == HitCommand.END;
+        return this != HitCommand.END;
     }
 
 }
