@@ -21,7 +21,7 @@ public class BlackjackGame {
         this.dealer = dealer;
     }
 
-    public void giveFirstCards() {
+    public void giveInitializedCards() {
         Cards.init();
         for (Player player : players.getPlayers()) {
             giveFirstCard(player);

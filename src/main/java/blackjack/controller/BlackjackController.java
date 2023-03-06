@@ -38,7 +38,7 @@ public class BlackjackController {
 
     private void ready(Players players, Dealer dealer) {
         blackjackGame = new BlackjackGame(players, dealer);
-        blackjackGame.giveFirstCards();
+        blackjackGame.giveInitializedCards();
         OutputView.printReadyMessage(players.getPlayers().stream()
                 .map(Player::getPlayerName)
                 .collect(Collectors.toList())
@@ -52,7 +52,7 @@ public class BlackjackController {
 
     private void giveAdditionalCards(Players players, Dealer dealer) {
         giveAdditionalCardsToPlayers(players);
-        giveAdditionalCardToDealer(dealer);
+        giveAdditionalCardsToDealer(dealer);
     }
 
     private void printFinalResults(Dealer dealer, Players players) {
@@ -76,7 +76,7 @@ public class BlackjackController {
         }
     }
 
-    public void giveAdditionalCardToDealer(Dealer dealer) {
+    public void giveAdditionalCardsToDealer(Dealer dealer) {
         while (dealer.isUnderLimit()) {
             OutputView.printDealerOneMore();
             dealer.updateCardScore(Cards.giveFirstCard());
