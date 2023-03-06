@@ -2,6 +2,7 @@ package domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     private static final int BUST_LIMIT = 21;
@@ -72,4 +73,21 @@ public abstract class Participant {
     public abstract List<Card> getInitialCards();
 
     public abstract boolean isAbleToReceiveCard();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return playerName.equals(that.playerName) && getCards().equals(that.getCards());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerName, getCards());
+    }
 }
