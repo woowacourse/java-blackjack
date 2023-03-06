@@ -2,23 +2,23 @@ package blackjack.domain;
 
 public class Card {
 
-    private final TrumpShape trumpShape;
-    private final TrumpNumber trumpNumber;
+    private final CardShape cardShape;
+    private final CardNumber cardNumber;
 
-    public Card(TrumpShape trumpShape, TrumpNumber trumpNumber) {
-        this.trumpShape = trumpShape;
-        this.trumpNumber = trumpNumber;
+    public Card(CardShape cardShape, CardNumber cardNumber) {
+        this.cardShape = cardShape;
+        this.cardNumber = cardNumber;
     }
 
     public String getCardName() {
-        return trumpNumber.getName() + trumpShape.getShape();
+        return cardNumber.getName() + cardShape.getShape();
     }
 
-    public TrumpShape getTrumpShape() {
-        return trumpShape;
+    public CardShape getTrumpShape() {
+        return cardShape;
     }
 
-    public TrumpNumber getTrumpNumber() {
-        return trumpNumber;
+    public CardNumber getTrumpNumber() {
+        return cardNumber;
     }
 }

@@ -20,7 +20,7 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    protected List<TrumpNumber> extractTrumpNumbers() {
+    protected List<CardNumber> extractCardNumbers() {
         return cards.stream()
                 .map(Card::getTrumpNumber)
                 .collect(Collectors.toList());

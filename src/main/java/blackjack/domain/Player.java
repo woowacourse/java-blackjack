@@ -14,7 +14,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(extractTrumpNumbers());
+        score.calculateScore(extractCardNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
 

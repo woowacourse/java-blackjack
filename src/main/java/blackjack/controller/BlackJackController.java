@@ -23,28 +23,28 @@ public class BlackJackController {
 
     public void run() {
         try {
-            Trump trump = new Trump(new RandomNumberGenerator());
-            Dealer dealer = new Dealer(getInitialCards(trump));
-            Players players = generatePlayers(trump);
+            Deck deck = new Deck(new RandomNumberGenerator());
+            Dealer dealer = new Dealer(getInitialCards(deck));
+            Players players = generatePlayers(deck);
             showInitialCards(dealer, players);
-            playGame(trump, dealer, players);
+            playGame(deck, dealer, players);
             closeGame(dealer, players);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private List<Card> getInitialCards(final Trump trump) {
+    private List<Card> getInitialCards(final Deck deck) {
         List<Card> initialCards = new ArrayList<>();
 
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            initialCards.add(trump.getCard());
+            initialCards.add(deck.getCard());
         }
 
         return initialCards;
     }
 
-    private Players generatePlayers(final Trump trump) {
+    private Players generatePlayers(final Deck deck) {
         outputView.printRequestPlayerNames();
         List<String> playerNames = inputView.readPlayerNames();
 
@@ -52,7 +52,7 @@ public class BlackJackController {
 
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(new Player(playerName, getInitialCards(trump)));
+            players.add(new Player(playerName, getInitialCards(deck)));
         }
 
         return new Players(players);
@@ -77,26 +77,26 @@ public class BlackJackController {
         outputView.printInitialPlayerCards(player.getName(), player.getCardNames());
     }
 
-    private void playGame(final Trump trump, final Dealer dealer, final Players players) {
+    private void playGame(final Deck deck, final Dealer dealer, final Players players) {
         players.getPlayers().forEach(
-                player -> playEachPlayer(trump, player));
+                player -> playEachPlayer(deck, player));
 
-        playDealer(trump, dealer);
+        playDealer(deck, dealer);
     }
 
-    private void playEachPlayer(final Trump trump, final Player player) {
+    private void playEachPlayer(final Deck deck, final Player player) {
         boolean isRepeat = true;
 
         while (player.isAbleToReceive() && isRepeat) {
-            isRepeat = isHit(trump, player);
+            isRepeat = isHit(deck, player);
         }
     }
 
-    private boolean isHit(final Trump trump, final Player player) {
+    private boolean isHit(final Deck deck, final Player player) {
         String intention = requestIntention(player.getName());
 
         if (intention.equals(YES)) {
-            hit(trump, player);
+            hit(deck, player);
             return true;
         }
         return false;
@@ -109,15 +109,15 @@ public class BlackJackController {
         return intention;
     }
 
-    private void hit(final Trump trump, final Player player) {
-        player.receiveCard(trump.getCard());
+    private void hit(final Deck deck, final Player player) {
+        player.receiveCard(deck.getCard());
         showEachPlayerCards(player);
     }
 
-    private void playDealer(final Trump trump, final Dealer dealer) {
+    private void playDealer(final Deck deck, final Dealer dealer) {
         while (dealer.isAbleToReceive()) {
             outputView.printDealerReceived();
-            dealer.receiveCard(trump.getCard());
+            dealer.receiveCard(deck.getCard());
         }
     }
 
