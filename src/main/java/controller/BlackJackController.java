@@ -5,7 +5,6 @@ import domain.model.BlackJackResultMaker;
 import domain.model.CardDistributor;
 import domain.model.Cards;
 import domain.model.Dealer;
-import domain.model.Participant;
 import domain.model.Player;
 import domain.model.Result;
 import java.util.List;
@@ -25,16 +24,16 @@ public class BlackJackController {
     }
 
     public void play() {
-        final List<Participant> participants = getParticipants();
+        final List<Player> players = getPlayers();
         final Dealer dealer = new Dealer(Cards.makeEmptyCards());
-        giveInitialCards(dealer, participants);
-        getPlayerAdditionalCard(participants);
+        giveInitialCards(dealer, players);
+        getPlayerAdditionalCard(players);
         getDealerAdditionalCard(dealer);
-        printTotalCardState(dealer, participants);
-        printResult(dealer, participants);
+        printTotalCardState(dealer, players);
+        printResult(dealer, players);
     }
 
-    private List<Participant> getParticipants() {
+    private List<Player> getPlayers() {
         return ExecuteContext.workWithExecuteStrategy(() -> {
             List<String> names = InputView.inputNames();
             return names.stream()
@@ -43,30 +42,30 @@ public class BlackJackController {
         });
     }
 
-    private void giveInitialCards(final Dealer dealer, final List<Participant> participants) {
-        cardDistributor.giveInitCards(dealer, participants);
-        OutputView.printInitialCards(dealer, participants);
+    private void giveInitialCards(final Dealer dealer, final List<Player> players) {
+        cardDistributor.giveInitCards(dealer, players);
+        OutputView.printInitialCards(dealer, players);
     }
 
-    private void getPlayerAdditionalCard(final List<Participant> participants) {
-        participants.forEach(this::getPlayerAdditionalCard);
+    private void getPlayerAdditionalCard(final List<Player> players) {
+        players.forEach(this::getPlayerAdditionalCard);
     }
 
-    private void getPlayerAdditionalCard(final Participant participant) {
+    private void getPlayerAdditionalCard(final Player player) {
         boolean isPossibleGetCard = true;
-        while (isPossibleGetCard && getIntentReceiveCard(participant)) {
-            isPossibleGetCard = giveCard(participant);
-            OutputView.printCard(participant);
+        while (isPossibleGetCard && getIntentReceiveCard(player)) {
+            isPossibleGetCard = giveCard(player);
+            OutputView.printCard(player);
         }
     }
 
-    private boolean getIntentReceiveCard(final Participant participant) {
-        return ExecuteContext.workWithExecuteStrategy(() -> InputView.inputCardIntent(participant.getName()));
+    private boolean getIntentReceiveCard(final Player player) {
+        return ExecuteContext.workWithExecuteStrategy(() -> InputView.inputCardIntent(player.getName()));
     }
 
-    private boolean giveCard(final Participant participant) {
+    private boolean giveCard(final Player player) {
         try {
-            cardDistributor.giveCard(participant);
+            cardDistributor.giveCard(player);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             return false;
@@ -81,14 +80,14 @@ public class BlackJackController {
         }
     }
 
-    private void printTotalCardState(final Dealer dealer, final List<Participant> participants) {
-        OutputView.printTotalCardState(dealer, participants);
+    private void printTotalCardState(final Dealer dealer, final List<Player> players) {
+        OutputView.printTotalCardState(dealer, players);
     }
 
-    private void printResult(final Dealer dealer, final List<Participant> participants) {
-        Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, participants);
-        Map<Participant, Result> playerResult = blackJackResultMaker.makeParticipantsResult(dealer, participants);
-        OutputView.printDealerResult(dealerResult, dealer);
+    private void printResult(final Dealer dealer, final List<Player> players) {
+        Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
+        Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
+        OutputView.printDealerResult(dealerResult);
         OutputView.printResult(playerResult);
     }
 }

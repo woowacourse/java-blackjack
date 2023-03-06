@@ -18,7 +18,7 @@ class BlackJackResultMakerTest {
     private final Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
     private final Dealer dealer = new Dealer(dealerCards);
     private final Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
-    private final List<Participant> players = IntStream.range(0, 10)
+    private final List<Player> players = IntStream.range(0, 10)
         .mapToObj(i -> new Player(playerCards, "test"))
         .collect(Collectors.toList());
 
@@ -27,10 +27,10 @@ class BlackJackResultMakerTest {
     public void testMakeParticipantsResult() {
         //given
         //when
-        Map<Participant, Result> results = blackJackResultMaker.makeParticipantsResult(dealer, players);
+        Map<Player, Result> results = blackJackResultMaker.makePlayersResult(dealer, players);
 
         //then
-        for (Participant player : results.keySet()) {
+        for (Player player : results.keySet()) {
             assertThat(results.get(player).getVictory()).isEqualTo(1);
             assertThat(results.get(player).getDefeat()).isEqualTo(0);
         }

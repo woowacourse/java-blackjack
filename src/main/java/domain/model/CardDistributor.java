@@ -13,18 +13,18 @@ public class CardDistributor {
         this.cardGenerator = cardGenerator;
     }
 
-    public void giveCard(final Participant participant) {
-        if (participant.isBust()) {
+    public void giveCard(final Player player) {
+        if (player.isBust()) {
             throw new IllegalArgumentException(CANNOT_GIVE_CARD_ERROR_MESSAGE);
         }
-        participant.addCard(cardGenerator.generate());
+        player.addCard(cardGenerator.generate());
     }
 
-    public void giveInitCards(final Dealer dealer, final List<Participant> participants) {
+    public void giveInitCards(final Dealer dealer, final List<Player> players) {
         IntStream.range(0, INIT_DEAL_COUNT)
             .forEach(i -> {
                 giveCard(dealer);
-                participants.forEach(this::giveCard);
+                players.forEach(this::giveCard);
             });
     }
 }

@@ -2,7 +2,7 @@ package view;
 
 import domain.model.Card;
 import domain.model.Dealer;
-import domain.model.Participant;
+import domain.model.Player;
 import domain.model.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,20 +22,20 @@ public class OutputView {
     private static final String DEFEAT = "패";
     private static final String CARD = " 카드";
     private static final String RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
+    private static final String DEALER_NAME = "딜러";
 
-    public static void printInitialCards(final Dealer dealer, final List<Participant> participants) {
-        printCardsMessage(participants);
+
+    public static void printInitialCards(final Dealer dealer, final List<Player> players) {
+        printCardsMessage(players);
         printFirstCard(dealer);
-        for (Participant participant : participants) {
-            printCard(participant);
-        }
+        players.forEach(OutputView::printCard);
         System.out.println();
     }
 
-    private static void printCardsMessage(final List<Participant> participants) {
+    private static void printCardsMessage(final List<Player> players) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        participants.stream()
-            .map(Participant::getName)
+        players.stream()
+            .map(Player::getName)
             .forEach(stringJoiner::add);
         System.out.printf(PRINT_CARDS_MESSAGE, stringJoiner);
         System.out.println();
@@ -46,17 +46,17 @@ public class OutputView {
             .stream()
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
-        System.out.println(dealer.getName() + COLON + card);
+        System.out.println(DEALER_NAME + COLON + card);
     }
 
-    public static void printCard(final Participant participant) {
-        final String stringifyCard = stringifyCard(participant);
-        System.out.println(participant.getName() + COLON + stringifyCard);
+    public static void printCard(final Player player) {
+        final String stringifyCard = stringifyCard(player);
+        System.out.println(player.getName() + COLON + stringifyCard);
     }
 
-    private static String stringifyCard(final Participant participant) {
+    private static String stringifyCard(final Player player) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        participant.getCards().getCards()
+        player.getCards().getCards()
             .stream()
             .map(Card::toString)
             .forEach(stringJoiner::add);
@@ -67,26 +67,26 @@ public class OutputView {
         System.out.println(DEALER_RECEIVE_NOTICE);
     }
 
-    public static void printTotalCardState(final Dealer dealer, final List<Participant> participants) {
-        printParticipantCardState(dealer);
-        for (Participant participant : participants) {
-            printParticipantCardState(participant);
+    public static void printTotalCardState(final Dealer dealer, final List<Player> players) {
+        printPlayerCardState(dealer);
+        for (Player player : players) {
+            printPlayerCardState(player);
         }
     }
 
-    private static void printParticipantCardState(final Participant participant) {
-        System.out.println(participant.getName() + CARD + COLON + stringifyCard(participant) + CARD_STATE_RESULT_SIGN
-            + participant.getScore().getValue());
+    private static void printPlayerCardState(final Player player) {
+        System.out.println(player.getName() + CARD + COLON + stringifyCard(player) + CARD_STATE_RESULT_SIGN
+            + player.getScore().getValue());
     }
 
-    public static void printDealerResult(final Result dealerResult, final Dealer dealer) {
+    public static void printDealerResult(final Result dealerResult) {
         System.out.println(RESULT_MESSAGE);
-        System.out.println(dealer.getName() + COLON + stringifyResult(dealerResult));
+        System.out.println(DEALER_NAME + COLON + stringifyResult(dealerResult));
     }
 
-    public static void printResult(final Map<Participant, Result> participantResults) {
-        for (Participant participant : participantResults.keySet()) {
-            System.out.println(participant.getName() + COLON + stringifyResult(participantResults.get(participant)));
+    public static void printResult(final Map<Player, Result> playerResults) {
+        for (Player player : playerResults.keySet()) {
+            System.out.println(player.getName() + COLON + stringifyResult(playerResults.get(player)));
         }
     }
 
