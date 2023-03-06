@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Referee {
 
-    private static final int BURST_CODE = -1;
+    private static final int BURST_SCORE = 21;
 
     public List<Result> judgeResult(Participant dealer, Players players) {
         int dealerScore = dealer.calculateScore();
@@ -34,10 +34,10 @@ public class Referee {
     }
 
     private Result compareScore(int dealerScore, int playerScore) {
-        if (playerScore == BURST_CODE) {
+        if (playerScore > BURST_SCORE) {
             return Result.LOSE;
         }
-        if (playerScore > dealerScore) {
+        if (playerScore > dealerScore || dealerScore > BURST_SCORE) {
             return Result.WIN;
         }
         if (playerScore == dealerScore) {

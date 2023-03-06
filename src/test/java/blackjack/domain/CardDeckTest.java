@@ -42,7 +42,7 @@ class CardDeckTest {
         deck.addCard(new CourtCard(Pattern.SPADE, "J"));
         deck.addCard(new CourtCard(Pattern.SPADE, "Q"));
 
-        Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(-1);
+        Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(30);
     }
 
 
@@ -89,7 +89,7 @@ class CardDeckTest {
             deck.addCard(new CourtCard(Pattern.SPADE, "J"));
             deck.addCard(new AceCard(Pattern.CLUB));
 
-            Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(-1);
+            Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(23);
         }
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    private static final int BURST_CODE = -1;
+    private static final int BURST_SCORE = 21;
     private static final int DEALER_HIT_NUMBER = 16;
 
     private final CardPicker cardPicker;
@@ -28,7 +28,7 @@ public class BlackJackController {
         final Referee referee = new Referee();
 
         init(players, dealer);
-        askPlayers(players, referee);
+        askPlayers(players);
         OutputView.println();
         hitCardByDealer(dealer);
         printFinal(players, dealer, referee);
@@ -51,12 +51,12 @@ public class BlackJackController {
     }
 
     private boolean isContinueToHit(int dealerScore) {
-        return dealerScore <= DEALER_HIT_NUMBER && dealerScore != BURST_CODE;
+        return dealerScore <= DEALER_HIT_NUMBER;
     }
 
-    private void askPlayers(Players players, Referee referee) {
+    private void askPlayers(Players players) {
         for (Player player : players.getPlayers()) {
-            askPlayer(referee, player);
+            askPlayer(player);
         }
     }
 
@@ -66,7 +66,7 @@ public class BlackJackController {
         OutputView.printInitCardDeck(dealer, players);
     }
 
-    private void askPlayer(Referee referee, Player player) {
+    private void askPlayer(Player player) {
         Command command = Command.CONTINUE;
         int score = 0;
 
@@ -81,7 +81,7 @@ public class BlackJackController {
     private int calculateScore(Player player) {
         int score = player.calculateScore();
 
-        if (BURST_CODE == score) {
+        if (BURST_SCORE < score) {
             OutputView.printBurstMessage();
         }
         return score;
@@ -94,7 +94,7 @@ public class BlackJackController {
     }
 
     private boolean isContinueToAsk(Command command, int score) {
-        return Command.isContinue(command) && BURST_CODE != score;
+        return Command.isContinue(command) && BURST_SCORE > score;
     }
 
     private Players inputPlayerNames() {

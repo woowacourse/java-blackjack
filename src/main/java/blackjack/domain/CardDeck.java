@@ -49,10 +49,6 @@ public class CardDeck {
         int commonSum = calculateStandardAndCourtCardScore(deck);
         List<AceCard> aceCards = extractAceCards(deck);
         int aceCardCount = aceCards.size();
-
-        if (isBurst(commonSum, aceCardCount)) {
-            return BURST_CODE;
-        }
         int aceSum = calculateAceCardScore(commonSum, aceCardCount);
         return commonSum + aceSum;
     }
@@ -70,10 +66,6 @@ public class CardDeck {
                 .filter((card) -> card.getValue() == MAX_ACE_VALUE)
                 .map((card) -> (AceCard) card)
                 .collect(Collectors.toList());
-    }
-
-    private boolean isBurst(int sum, int aceCardCount) {
-        return sum + aceCardCount * MIN_ACE_VALUE > BLACKJACK_SCORE;
     }
 
     private int calculateAceCardScore(int commonSum, int aceCardCount) {
