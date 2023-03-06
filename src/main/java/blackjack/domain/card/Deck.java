@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.cardPicker.CardPicker;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
