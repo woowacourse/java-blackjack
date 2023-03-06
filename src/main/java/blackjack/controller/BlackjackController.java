@@ -63,8 +63,7 @@ public class BlackjackController {
         for(Participant participant : participants.getParticipants()) {
             outputView.printTotalCardsAndScore(participant);
         }
-        outputView.printDealerWinORLose(blackjackGame.generateDealerResult());
-        outputView.printPlayerWinORLose(blackjackGame.generatePlayersResult());
+        outputView.printAllWinORLose(blackjackGame.generatePlayersResult());
     }
 
     private void hitPlayerCard(final Player player, final Cards cards, final CardPickerGenerator cardPickerGenerator) {

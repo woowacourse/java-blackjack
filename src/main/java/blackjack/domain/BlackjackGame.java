@@ -29,16 +29,6 @@ public class BlackjackGame {
         return playersResult;
     }
 
-    public List<WinningResult> generateDealerResult() {
-        List<WinningResult> dealerResult = new ArrayList<>();
-        Dealer dealer = findDealer();
-        List<Player> players = findPlayers();
-        for (Player player : players) {
-            dealerResult.add(dealer.judgeWinOrLose(player));
-        }
-        return dealerResult;
-    }
-
     public void initFirstHit(CardPickerGenerator cardPickerGenerator) {
         for (Participant participant : participants.getParticipants()) {
             firstHitRule(cardPickerGenerator, participant);

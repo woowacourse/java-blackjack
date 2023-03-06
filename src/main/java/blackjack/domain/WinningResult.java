@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.Map;
 
 public enum WinningResult {
 
@@ -12,20 +12,20 @@ public enum WinningResult {
     public static final int WIN_MAX_NUMBER = 21;
 
 
-    public int getWinCount(final List<WinningResult> dealerResult) {
-        return (int) dealerResult.stream()
+    public int getDealerLoseCount(final Map<Player, WinningResult> playersResult) {
+        return (int) playersResult.values().stream()
                 .filter(result -> result.equals(WIN))
                 .count();
     }
 
-    public int getLoseCount(final List<WinningResult> dealerResult) {
-        return (int) dealerResult.stream()
+    public int getDealerWinCount(final Map<Player, WinningResult> playersResult) {
+        return (int) playersResult.values().stream()
                 .filter(result -> result.equals(LOSE))
                 .count();
     }
 
-    public int getPushCount(final List<WinningResult> dealerResult) {
-        return (int) dealerResult.stream()
+    public int getDealerPushCount(final Map<Player, WinningResult> playersResult) {
+        return (int) playersResult.values().stream()
                 .filter(result -> result.equals(PUSH))
                 .count();
     }

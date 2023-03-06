@@ -62,7 +62,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("포비가 5점이고 아코가 20점일 때 딜러가 17점 이면 결과는 각각 WIN,LOSE")
+    @DisplayName("포비가 5점이고 아코가 20점일 때 딜러가 17점 이면 결과는 각각 LOSE,WIN")
     void dealerResultTest() {
         //given
         List<Integer> testData = settingTestData();
@@ -72,11 +72,19 @@ class BlackjackGameTest {
         game.initFirstHit(testCardPickerGenerator);
 
         //when
-        List<WinningResult> result = game.generateDealerResult();
+        Map<Player, WinningResult> result = game.generatePlayersResult();
 
         //then
-        assertThat(result.get(0)).isEqualTo(WinningResult.WIN);
-        assertThat(result.get(1)).isEqualTo(WinningResult.LOSE);
+        Set<Player> players = result.keySet();
+        for(Participant participant : players) {
+            String playername = participant.getParticipantName().getName();
+            if (playername.equals("pobi")){
+                assertThat(result.get(participant)).isEqualTo(WinningResult.LOSE);
+            }
+            if (playername.equals("ako")) {
+                assertThat(result.get(participant)).isEqualTo(WinningResult.WIN);
+            }
+        }
     }
 
     private static List<Integer> settingTestData() {

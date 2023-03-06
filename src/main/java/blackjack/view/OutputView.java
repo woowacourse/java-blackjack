@@ -61,20 +61,21 @@ public class OutputView {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getReceivedCards().size() - FIRST_CARD_COUNT));
     }
 
-    public void printDealerWinORLose(final List<WinningResult> dealerResult) {
-        System.out.print("딜러: ");
-        System.out.print(WinningResult.WIN.getWinCount(dealerResult) +
-                ViewWinningResult.getWinningResultName(WinningResult.WIN));
-        System.out.print(WinningResult.PUSH.getPushCount(dealerResult) +
-                ViewWinningResult.getWinningResultName(WinningResult.PUSH));
-        System.out.println(WinningResult.LOSE.getLoseCount(dealerResult) +
-                ViewWinningResult.getWinningResultName(WinningResult.LOSE));
-    }
-
-    public void printPlayerWinORLose(final Map<Player, WinningResult> playerResult) {
+    public void printAllWinORLose(final Map<Player, WinningResult> playerResult) {
+        printDealerWinORLose(playerResult);
         for (Player player : playerResult.keySet()) {
             System.out.println(player.getName() + " : " + ViewWinningResult.getWinningResultName(playerResult.get(player)));
         }
+    }
+
+    public void printDealerWinORLose(final Map<Player, WinningResult> playerResult) {
+        System.out.print("딜러: ");
+        System.out.print(WinningResult.WIN.getDealerWinCount(playerResult) +
+                ViewWinningResult.getWinningResultName(WinningResult.WIN));
+        System.out.print(WinningResult.PUSH.getDealerPushCount(playerResult) +
+                ViewWinningResult.getWinningResultName(WinningResult.PUSH));
+        System.out.println(WinningResult.LOSE.getDealerLoseCount(playerResult) +
+                ViewWinningResult.getWinningResultName(WinningResult.LOSE));
     }
 
     private void printFirstDealerCards(final Dealer dealer) {
