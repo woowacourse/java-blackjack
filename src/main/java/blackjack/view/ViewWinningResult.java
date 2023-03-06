@@ -21,19 +21,19 @@ public enum ViewWinningResult {
 
     public int winCount(List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
-            .filter(result -> result.equals(WIN))
+            .filter(result -> result == WIN.winningResult)
             .count();
     }
 
     public int loseCount(List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
-            .filter(result -> result.equals(LOSE))
+            .filter(result -> result == LOSE.winningResult)
             .count();
     }
 
     public int pushCount(List<WinningResult> dealerResult) {
         return (int) dealerResult.stream()
-            .filter(result -> result.equals(PUSH))
+            .filter(result -> result == PUSH.winningResult)
             .count();
     }
 
