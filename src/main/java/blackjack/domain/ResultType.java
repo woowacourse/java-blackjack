@@ -5,7 +5,7 @@ public enum ResultType {
     TIE,
     LOSE;
 
-    public ResultType getPlayerResultType() {
+    public ResultType getOppositeResult() {
         if (this == WIN) {
             return LOSE;
         }

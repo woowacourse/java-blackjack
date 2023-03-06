@@ -28,7 +28,7 @@ public class FinalResultResponse {
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        result -> ResultTypeResponse.from(result.getValue().getPlayerResultType()),
+                        result -> ResultTypeResponse.from(result.getValue().getOppositeResult()),
                         (x, y) -> y,
                         LinkedHashMap::new));
     }
