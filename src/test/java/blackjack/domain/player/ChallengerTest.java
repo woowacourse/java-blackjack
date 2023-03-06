@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
+import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
 import blackjack.domain.player.exception.InvalidPlayerNameException;
 import java.util.List;
@@ -40,14 +40,14 @@ class ChallengerTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(Shape.DIAMOND, Number.QUEEN),
-                                new Card(Shape.CLOVER, Number.FIVE)),
+                                new Card(Shape.DIAMOND, Symbol.QUEEN),
+                                new Card(Shape.CLOVER, Symbol.FIVE)),
                         true),
                 Arguments.of(
                         List.of(
-                                new Card(Shape.DIAMOND, Number.QUEEN),
-                                new Card(Shape.CLOVER, Number.FIVE),
-                                new Card(Shape.HEART, Number.EIGHT)),
+                                new Card(Shape.DIAMOND, Symbol.QUEEN),
+                                new Card(Shape.CLOVER, Symbol.FIVE),
+                                new Card(Shape.HEART, Symbol.EIGHT)),
                         false)
         );
     }

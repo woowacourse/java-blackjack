@@ -3,27 +3,26 @@ package blackjack.domain.card;
 public class Card {
 
     private final Shape shape;
-    private final Number number;
+    private final Symbol symbol;
 
-    public Card(Shape shape, Number number) {
+    public Card(Shape shape, Symbol symbol) {
         this.shape = shape;
-        this.number = number;
+        this.symbol = symbol;
     }
 
     public boolean isAce() {
-        return number.equals(Number.ACE);
+        return symbol.equals(Symbol.ACE);
     }
 
     public Shape getShape() {
         return shape;
     }
 
-    // TODO : string, number 어떤걸 get 해야할까?
-    public Number getNumber() {
-        return number;
+    public Symbol getSymbol() {
+        return symbol;
     }
 
     public int getPoint() {
-        return number.getValue();
+        return symbol.getValue();
     }
 }

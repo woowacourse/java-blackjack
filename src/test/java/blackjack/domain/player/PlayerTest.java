@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
+import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,8 +32,8 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어는 초기 카드 2장을 받는다")
     void get_two_cards() {
-        Card card1 = new Card(Shape.HEART, Number.FOUR);
-        Card card2 = new Card(Shape.CLOVER, Number.KING);
+        Card card1 = new Card(Shape.HEART, Symbol.FOUR);
+        Card card2 = new Card(Shape.CLOVER, Symbol.KING);
         player.pickStartCards(card1, card2);
 
         assertThat(player.getHoldingCards().getCards())
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     @DisplayName("추가 카드를 뽑는다.")
     void pick_card() {
-        Card card = new Card(Shape.DIAMOND, Number.JACK);
+        Card card = new Card(Shape.DIAMOND, Symbol.JACK);
         player.pick(card);
 
         assertThat(player.getHoldingCards().getCards())

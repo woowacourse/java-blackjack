@@ -139,7 +139,7 @@ public class BlackJackController {
     private static List<String> makeCardInfo(List<Card> inputCards) {
         List<String> cardInfo = new ArrayList<>();
         for (Card card : inputCards) {
-            cardInfo.add(card.getNumber().getName() + card.getShape().getName());
+            cardInfo.add(card.getSymbol().getName() + card.getShape().getName());
         }
         return cardInfo;
     }

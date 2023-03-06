@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
+import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,13 +30,13 @@ class DealerTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(Shape.DIAMOND, Number.QUEEN),
-                                new Card(Shape.CLOVER, Number.FOUR)),
+                                new Card(Shape.DIAMOND, Symbol.QUEEN),
+                                new Card(Shape.CLOVER, Symbol.FOUR)),
                         true),
                 Arguments.of(
                         List.of(
-                                new Card(Shape.DIAMOND, Number.QUEEN),
-                                new Card(Shape.CLOVER, Number.SEVEN)),
+                                new Card(Shape.DIAMOND, Symbol.QUEEN),
+                                new Card(Shape.CLOVER, Symbol.SEVEN)),
                         false)
         );
     }

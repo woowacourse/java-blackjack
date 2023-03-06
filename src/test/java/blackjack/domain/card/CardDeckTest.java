@@ -27,9 +27,9 @@ class CardDeckTest {
         Card spadeTwo = cardDeck.pick();
 
         assertThat(spadeAce.getShape()).isEqualTo(Shape.SPADE);
-        assertThat(spadeAce.getNumber()).isEqualTo(Number.ACE);
+        assertThat(spadeAce.getSymbol()).isEqualTo(Symbol.ACE);
 
         assertThat(spadeTwo.getShape()).isEqualTo(Shape.SPADE);
-        assertThat(spadeTwo.getNumber()).isEqualTo(Number.TWO);
+        assertThat(spadeTwo.getSymbol()).isEqualTo(Symbol.TWO);
     }
 }
