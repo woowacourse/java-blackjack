@@ -25,20 +25,35 @@
 graph TD
     BlackJackController --> InputView
     BlackJackController --> OutputView
-    BlackJackController --> Participants
-    BlackJackController --> Deck
+    BlackJackController --> BlackJackGame
+    
+    BlackJackGame --> Participants
+    BlackJackGame --> Deck
+
+    DeckFactory --> Deck
+    
     Participants --> Participant
+    
     Participant --> Player
     Participant --> Dealer
     Participant --> Cards
+    Participant --> Score
+    
+    Score --> Result
+    
     Player --> Name
-    DeckFactory --> Deck
+    
     Cards --> Card
+    
     Card --> Suit
     Card --> Number
 ```
 
 ## 기능 구현 목록
+
+### 블랙잭 게임
+
+- [ ] 덱과 참가자들을 관리한다.
 
 ### 참가자
 
@@ -48,6 +63,15 @@ graph TD
 - [x] 여러 명일 수 있다.
   - [x] 중복되는 이름은 가질 수 없다.
   - [x] 딜러 포함 최대 6명이다.
+
+### 점수
+
+- [x] 점수를 관리한다.
+- [x] 점수를 비교하여 결과를 판단한다.
+
+### 결과
+
+- [x] 결과를 관리한다.
 
 ### 플레이어
 
