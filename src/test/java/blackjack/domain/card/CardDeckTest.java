@@ -10,12 +10,13 @@ import org.junit.jupiter.api.Test;
 class CardDeckTest {
 
     @Test
-    @DisplayName("카드 52장이 생성되는지 테스트")
+    @DisplayName("더 이상 뽑을 카드가 없으면 예외가 발생한다")
     void pick_random_card() {
         CardDeck cardDeck = CardDeck.create();
         for (int i = 0; i < 52; i++) {
             cardDeck.pick();
         }
+
         assertThrows(NoMoreCardException.class, () -> cardDeck.pick());
     }
 
