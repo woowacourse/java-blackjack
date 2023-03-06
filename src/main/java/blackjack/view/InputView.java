@@ -15,8 +15,7 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String inputPlayersName = scanner.nextLine();
         inputValidator.validateInput(inputPlayersName);
-        List<String> playersName = Arrays.asList(inputPlayersName.split(DELIMITER, -1));
-        return playersName;
+        return Arrays.asList(inputPlayersName.split(DELIMITER, -1));
     }
 
     public String readHitCommand(String name) {
