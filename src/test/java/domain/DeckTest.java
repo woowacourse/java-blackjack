@@ -29,7 +29,7 @@ class DeckTest {
         void should_적절한카드반환_when_draw호출() {
             //given
             Deck deck = Deck.create();
-            Card expected = new Card(Suit.CLUB, Number.JACK);
+            Card expected = Card.of(Suit.CLUB, Number.JACK);
 
             //when
             Card actual = deck.draw();
@@ -45,7 +45,7 @@ class DeckTest {
         void should_카드를섞는다_when_shuffle호출() {
             //given
             Deck deck = Deck.create();
-            Card expected = new Card(Suit.SPADE, Number.ACE);
+            Card expected = Card.of(Suit.SPADE, Number.ACE);
             ShuffleStrategy testShuffleStrategy = Collections::reverse;
 
             //when

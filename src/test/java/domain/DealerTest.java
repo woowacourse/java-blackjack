@@ -13,8 +13,8 @@ class DealerTest {
         void should_카드를더받을수있다_when_점수가17점보다작으면() {
             //given
             Dealer dealer = new Dealer();
-            dealer.receiveCard(new Card(Suit.SPADE, Number.TEN));
-            dealer.receiveCard(new Card(Suit.SPADE, Number.SIX));
+            dealer.receiveCard(Card.of(Suit.SPADE, Number.TEN));
+            dealer.receiveCard(Card.of(Suit.SPADE, Number.SIX));
 
             //when
             boolean drawable = dealer.isDrawable();
@@ -27,8 +27,8 @@ class DealerTest {
         void should_카드를더받을수없다_when_점수가17점이상일경우() {
             //given
             Dealer dealer = new Dealer();
-            dealer.receiveCard(new Card(Suit.SPADE, Number.TEN));
-            dealer.receiveCard(new Card(Suit.SPADE, Number.SEVEN));
+            dealer.receiveCard(Card.of(Suit.SPADE, Number.TEN));
+            dealer.receiveCard(Card.of(Suit.SPADE, Number.SEVEN));
 
             //when
             boolean drawable = dealer.isDrawable();

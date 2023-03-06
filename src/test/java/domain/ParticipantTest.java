@@ -14,7 +14,7 @@ class ParticipantTest {
         void should_카드를패에추가한다_when_receiveCard호출() {
             //given
             Participant participant = spy(Participant.class);
-            Card card = new Card(Suit.SPADE, Number.ACE);
+            Card card = Card.of(Suit.SPADE, Number.ACE);
 
             //when
             participant.receiveCard(card);

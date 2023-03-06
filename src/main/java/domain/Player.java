@@ -3,8 +3,8 @@ package domain;
 import java.util.Objects;
 
 public class Player extends Participant {
-
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 21;
+
     private final Name name;
     private Decision decision;
 

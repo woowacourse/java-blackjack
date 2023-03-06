@@ -69,8 +69,8 @@ class PlayersTest {
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
                 cards.clear();
-                cards.add(new Card(Suit.SPADE, Number.ACE));
-                cards.add(new Card(Suit.SPADE, Number.ACE));
+                cards.add(Card.of(Suit.SPADE, Number.ACE));
+                cards.add(Card.of(Suit.SPADE, Number.ACE));
             });
             players.receiveCard(deck);
 
@@ -88,8 +88,8 @@ class PlayersTest {
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
                 cards.clear();
-                cards.add(new Card(Suit.SPADE, Number.ACE));
-                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(Card.of(Suit.SPADE, Number.ACE));
+                cards.add(Card.of(Suit.SPADE, Number.JACK));
             });
             players.receiveCard(deck);
             players.receiveCard(deck);
@@ -111,8 +111,8 @@ class PlayersTest {
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
                 cards.clear();
-                cards.add(new Card(Suit.SPADE, Number.FOUR));
-                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(Card.of(Suit.SPADE, Number.FOUR));
+                cards.add(Card.of(Suit.SPADE, Number.JACK));
             });
             players.receiveCard(deck);
             String expected = "포이";
@@ -131,10 +131,10 @@ class PlayersTest {
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
                 cards.clear();
-                cards.add(new Card(Suit.SPADE, Number.ACE));
-                cards.add(new Card(Suit.SPADE, Number.ACE));
-                cards.add(new Card(Suit.SPADE, Number.JACK));
-                cards.add(new Card(Suit.SPADE, Number.JACK));
+                cards.add(Card.of(Suit.SPADE, Number.ACE));
+                cards.add(Card.of(Suit.SPADE, Number.ACE));
+                cards.add(Card.of(Suit.SPADE, Number.JACK));
+                cards.add(Card.of(Suit.SPADE, Number.JACK));
             });
             players.receiveCard(deck);
             players.receiveCard(deck);

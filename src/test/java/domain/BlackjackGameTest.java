@@ -21,12 +21,12 @@ class BlackjackGameTest {
             blackjackGame.setParticipants(List.of("포이", "에밀"));
             blackjackGame.handOutInitialCards((cards) -> {
                 cards.clear();
-                cards.add(new Card(Suit.SPADE, Number.JACK));
-                cards.add(new Card(Suit.SPADE, Number.TEN));
-                cards.add(new Card(Suit.SPADE, Number.SEVEN));
-                cards.add(new Card(Suit.SPADE, Number.NINE));
-                cards.add(new Card(Suit.SPADE, Number.EIGHT));
-                cards.add(new Card(Suit.SPADE, Number.TEN));
+                cards.add(Card.of(Suit.SPADE, Number.JACK));
+                cards.add(Card.of(Suit.SPADE, Number.TEN));
+                cards.add(Card.of(Suit.SPADE, Number.SEVEN));
+                cards.add(Card.of(Suit.SPADE, Number.NINE));
+                cards.add(Card.of(Suit.SPADE, Number.EIGHT));
+                cards.add(Card.of(Suit.SPADE, Number.TEN));
             });
 
             //when

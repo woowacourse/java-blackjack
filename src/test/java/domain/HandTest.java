@@ -13,8 +13,8 @@ class HandTest {
         void should_정상적으로카드추가_when_add호출() {
             //given
             Hand hand = new Hand();
-            Card card1 = new Card(Suit.CLUB, Number.ACE);
-            Card card2 = new Card(Suit.CLUB, Number.JACK);
+            Card card1 = Card.of(Suit.CLUB, Number.ACE);
+            Card card2 = Card.of(Suit.CLUB, Number.JACK);
             int expectedSize = 2;
 
             //when
@@ -34,8 +34,8 @@ class HandTest {
         void should_올바른점수반환_when_calculateScore호출() {
             //given
             Hand hand = new Hand();
-            hand.add(new Card(Suit.CLUB, Number.ACE));
-            hand.add(new Card(Suit.SPADE, Number.ACE));
+            hand.add(Card.of(Suit.CLUB, Number.ACE));
+            hand.add(Card.of(Suit.SPADE, Number.ACE));
             int expected = 12;
 
             //when

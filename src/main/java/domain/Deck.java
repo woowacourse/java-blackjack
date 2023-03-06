@@ -24,7 +24,7 @@ public class Deck {
 
     private static void addAllNumbersInSuit(LinkedList<Card> cards, Suit suit) {
         for (Number number : Number.values()) {
-            cards.add(new Card(suit, number));
+            cards.add(Card.of(suit, number));
         }
     }
 

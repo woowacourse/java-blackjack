@@ -10,11 +10,11 @@ public class Players {
     private final List<Player> players;
 
     private Players(List<Player> players) {
-        validateNotEmptyPlayers(players);
+        validateNotEmpty(players);
         this.players = players;
     }
 
-    private void validateNotEmptyPlayers(List<Player> players) {
+    private void validateNotEmpty(List<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어는 1명 이상이어야 합니다.");
         }
