@@ -18,11 +18,11 @@ public class Participants {
     }
 
     public void addDealer(Dealer dealer) {
-        assertUniqueDealer();
+        assertNotDealerExist();
         participants.add(dealer);
     }
 
-    private void assertUniqueDealer() {
+    private void assertNotDealerExist() {
         if (getDealer() != null) {
             throw new IllegalStateException();
         }
@@ -39,7 +39,7 @@ public class Participants {
         return participants.stream()
                 .filter(participant -> participant instanceof Dealer)
                 .findFirst()
-                .orElseThrow();
+                .orElse(null);
     }
 
     public List<Participant> getParticipants() {
