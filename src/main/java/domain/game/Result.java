@@ -9,10 +9,10 @@ public enum Result {
     DEFEAT;
 
     public static Result of(final Dealer dealer, final Participant participant) {
-        if (participant.isBurst()) {
+        if (participant.isBust()) {
             return Result.DEFEAT;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return Result.VICTORY;
         }
         return judgeResult(dealer.getScore(), participant.getScore());

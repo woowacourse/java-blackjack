@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Player {
 
-    private static final int BURST_NUMBER = 22;
+    private static final int BUST_NUMBER = 22;
 
     private final Name name;
     private final Cards cards;
@@ -17,8 +17,8 @@ public abstract class Player {
         this.cards = cards;
     }
 
-    public final boolean isBurst() {
-        return getScore() >= BURST_NUMBER;
+    public final boolean isBust() {
+        return getScore() >= BUST_NUMBER;
     }
 
     public final void takeCard(final Card card) {
