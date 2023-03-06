@@ -11,8 +11,8 @@ public class HoldingCards {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public void initialCard(Card card1, Card card2) {
-        cards.addAll(List.of(card1, card2));
+    public void initialCard(final Card firstCard, final Card secondCard) {
+        cards.addAll(List.of(firstCard, secondCard));
     }
 
     public void add(Card card) {
