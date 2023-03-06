@@ -39,12 +39,6 @@ public class CardDeck {
             .collect(Collectors.toList());
     }
 
-    /**
-     * 카드 덱의 점수를 계산하는 메서드
-     *
-     * @param deck 총 점수를 계산하고자 하는 카드 덱
-     * @return 일반적인 경우 카드 덱의 총 점수를 반환하고 Burst되는 경우 -1을 반환한다.
-     */
     public int calculateScore(CardDeck deck) {
         int commonSum = calculateStandardAndCourtCardScore(deck);
         List<AceCard> aceCards = extractAceCards(deck);
