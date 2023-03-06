@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-abstract public class User {
-    private final String name;
+public abstract class User {
     private final List<Card> cards;
 
-    public User(String name, List<Card> cards) {
-        this.name = name;
+    public User(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
+
+    abstract boolean canHit();
+    public abstract String getName();
 
     private int calculateScore() {
         List<Card> cardsExceptA = getCardsExceptA();

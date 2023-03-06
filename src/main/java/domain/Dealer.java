@@ -11,12 +11,17 @@ public class Dealer extends User {
     }
 
     public Dealer(List<Card> cards) {
-        super("딜러", cards);
+        super(cards);
     }
 
     @Override
     public boolean canHit() {
         return getScore() <= 16;
+    }
+
+    @Override
+    public String getName() {
+        return "딜러";
     }
 
 }
