@@ -1,15 +1,11 @@
 package controller;
 
-import domain.BlackjackGame;
-import domain.Command;
-import domain.Dealer;
-import domain.Player;
-import domain.PlayerNames;
-import domain.Players;
-import java.util.List;
-import java.util.function.Supplier;
+import domain.*;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -50,9 +46,8 @@ public class BlackjackController {
             requestMoreCard(blackjackGame, player);
         }
 
-        Dealer dealer = blackjackGame.getDealer();
         blackjackGame.giveAdditionalCardToDealer();
-        outputView.printDealerHitCount(dealer.getHitCardCount());
+        outputView.printDealerHitCount(blackjackGame.getDealerHitCardCount());
     }
 
     private void requestMoreCard(BlackjackGame blackjackGame, Player player) {

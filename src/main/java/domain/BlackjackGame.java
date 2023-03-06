@@ -45,6 +45,10 @@ public class BlackjackGame {
         dealer.decideResults(players);
     }
 
+    public int getDealerHitCardCount(){
+        return dealer.getHitCardCount();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
