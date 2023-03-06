@@ -22,10 +22,13 @@ public class CardDistributor {
     }
 
     public List<Card> distributeInitialCard() {
-        return new ArrayList<>() {{
-            add(distribute());
-            add(distribute());
-        }};
+        List<Card> initialCard = new ArrayList<>();
+
+        for (int i = 0; i < 2; i++) {
+            initialCard.add(distribute());
+        }
+
+        return initialCard;
     }
 
     public int getDeckSize() {
