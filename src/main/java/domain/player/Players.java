@@ -72,4 +72,8 @@ public class Players {
         players.addAll(participants);
         return players;
     }
+
+    public void addCardByName(String name, Card card) {
+        findByName(name).addCard(card);
+    }
 }

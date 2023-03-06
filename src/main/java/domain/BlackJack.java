@@ -3,7 +3,6 @@ package domain;
 import domain.card.CardRepository;
 import domain.gameresult.GameResult;
 import domain.gameresult.GameResultReadOnly;
-import domain.player.Player;
 import domain.player.PlayerReadOnly;
 import domain.player.Players;
 import domain.player.PlayersReadOnly;
@@ -26,8 +25,8 @@ public class BlackJack {
     }
 
     public void giveCardToAllPlayers() {
-        for (Player player : players.getAllPlayers()) {
-            player.addCard(cardRepository.findAnyOneCard());
+        for (String name : players.getAllPlayerNames()) {
+            players.addCardByName(name, cardRepository.findAnyOneCard());
         }
     }
 
