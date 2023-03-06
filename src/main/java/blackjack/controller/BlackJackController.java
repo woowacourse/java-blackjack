@@ -33,10 +33,58 @@ public class BlackJackController {
         printFinal(players, dealer, referee);
     }
 
-    private void printFinal(Players players, Dealer dealer, Referee referee) {
-        List<Result> results = referee.judgeResult(dealer, players);
-        OutputView.printFinalCardDeckAndScore(dealer, players);
-        OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
+    private Players inputPlayerNames() {
+        return new Players(InputView.inputPlayerNames());
+    }
+
+    private void init(Players players, Dealer dealer, CardPool cardPool) {
+        for (int i = 0; i < INIT_COUNT; i++) {
+            dealer.hit(cardPool.draw(cardPicker));
+        }
+        players.getPlayers().forEach(player -> player.hit(cardPool.draw(cardPicker)));
+        OutputView.printInitCardDeck(dealer, players);
+    }
+
+
+    private void askPlayers(Players players, CardPool cardPool) {
+        for (Player player : players.getPlayers()) {
+            askPlayer(player, cardPool);
+        }
+    }
+
+    private void askPlayer(Player player, CardPool cardPool) {
+        Command command = Command.CONTINUE;
+        int score = 0;
+
+        while (isContinueToAsk(command, score)) {
+            command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
+            hitByCommand(player, command, cardPool);
+            OutputView.printPlayerCardDeck(player);
+            score = calculateScore(player);
+        }
+    }
+
+    private boolean isContinueToAsk(Command command, int score) {
+        return Command.isContinue(command) && BURST_SCORE > score;
+    }
+
+    private Command inputCommand(Player player) {
+        return Command.toCommand(InputView.inputReply(player.getName().getValue()));
+    }
+
+    private void hitByCommand(Player player, Command command, CardPool cardPool) {
+        if (Command.isContinue(command)) {
+            player.hit(cardPool.draw(cardPicker));
+        }
+    }
+
+    private int calculateScore(Player player) {
+        int score = player.calculateScore();
+
+        if (BURST_SCORE < score) {
+            OutputView.printBurstMessage();
+        }
+        return score;
     }
 
     private void hitCardByDealer(Dealer dealer, CardPool cardPool) {
@@ -54,56 +102,10 @@ public class BlackJackController {
         return dealerScore <= DEALER_HIT_NUMBER;
     }
 
-    private void askPlayers(Players players, CardPool cardPool) {
-        for (Player player : players.getPlayers()) {
-            askPlayer(player, cardPool);
-        }
-    }
+    private void printFinal(Players players, Dealer dealer, Referee referee) {
+        List<Result> results = referee.judgeResult(dealer, players);
 
-    private void init(Players players, Dealer dealer, CardPool cardPool) {
-        for (int i = 0; i < INIT_COUNT; i++) {
-            dealer.hit(cardPool.draw(cardPicker));
-        }
-        players.getPlayers().forEach(player -> player.hit(cardPool.draw(cardPicker)));
-        OutputView.printInitCardDeck(dealer, players);
-    }
-
-    private void askPlayer(Player player, CardPool cardPool) {
-        Command command = Command.CONTINUE;
-        int score = 0;
-
-        while (isContinueToAsk(command, score)) {
-            command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
-            hitByCommand(player, command, cardPool);
-            OutputView.printPlayerCardDeck(player);
-            score = calculateScore(player);
-        }
-    }
-
-    private int calculateScore(Player player) {
-        int score = player.calculateScore();
-
-        if (BURST_SCORE < score) {
-            OutputView.printBurstMessage();
-        }
-        return score;
-    }
-
-    private void hitByCommand(Player player, Command command, CardPool cardPool) {
-        if (Command.isContinue(command)) {
-            player.hit(cardPool.draw(cardPicker));
-        }
-    }
-
-    private boolean isContinueToAsk(Command command, int score) {
-        return Command.isContinue(command) && BURST_SCORE > score;
-    }
-
-    private Players inputPlayerNames() {
-        return new Players(InputView.inputPlayerNames());
-    }
-
-    private Command inputCommand(Player player) {
-        return Command.toCommand(InputView.inputReply(player.getName().getValue()));
+        OutputView.printFinalCardDeckAndScore(dealer, players);
+        OutputView.printResult(referee.countDealerResult(results), dealer, players, results);
     }
 }
