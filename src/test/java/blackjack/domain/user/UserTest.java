@@ -4,13 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.cardpack.CardPack;
+import blackjack.domain.cardpack.NoviceShuffleStrategy;
 import blackjack.domain.user.name.UserName;
-import blackjack.domain.util.NoviceShuffleStrategy;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class UserTest {

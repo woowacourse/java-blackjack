@@ -1,7 +1,7 @@
-package blackjack.domain.util;
+package blackjack.domain.cardpack;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardpack.ShuffleStrategy;
+
 import java.util.List;
 
 public class NoviceShuffleStrategy implements ShuffleStrategy {
