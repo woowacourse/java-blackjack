@@ -4,10 +4,9 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.HandCard;
 
-public class DealerInitialState extends State {
+public class DealerInitialState extends InitialState {
     private static final int DEALER_HIT_NUMBER = 16;
     private static final int PICK_COUNT = 2;
-
 
     public DealerInitialState(HandCard handCard) {
         super(handCard);

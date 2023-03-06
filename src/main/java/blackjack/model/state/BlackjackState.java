@@ -5,8 +5,11 @@ import blackjack.model.card.CardDeck;
 
 public class BlackjackState extends State {
 
+    public static final int BLACKJACK_SCORE = 21;
+
     public BlackjackState(HandCard handCard) {
         super(handCard);
+        validateIsHandCard21(handCard);
     }
 
     @Override
@@ -32,5 +35,11 @@ public class BlackjackState extends State {
     @Override
     public boolean isStand() {
         return false;
+    }
+
+    private void validateIsHandCard21(HandCard handCard) {
+        if (!handCard.isBigScoreEqual(BLACKJACK_SCORE)) {
+            throw new IllegalArgumentException("점수가 21이 아닌 카드들입니다. 블랙잭이 될 수 없습니다.");
+        }
     }
 }

@@ -7,9 +7,11 @@ import blackjack.model.card.CardDeck;
 public class InitialState extends State {
 
     private static final int PICK_COUNT = 2;
+    public static final int EMPTY = 0;
 
     public InitialState(HandCard handCard) {
         super(handCard);
+        validateHandCardIsEmpty(handCard);
     }
 
     @Override
@@ -42,5 +44,11 @@ public class InitialState extends State {
     @Override
     public boolean isStand() {
         return false;
+    }
+
+    private void validateHandCardIsEmpty(HandCard handCard) {
+        if (handCard.size() != EMPTY) {
+            throw new IllegalArgumentException("초기 상태의 카드는 비어있어야 합니다.");
+        }
     }
 }
