@@ -54,15 +54,15 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public GameResult computeDealerGameResult() {
-        return participants.openDealerGameResult();
+    public FinalCards computeDealerFinalCards() {
+        return participants.openDealerFinalCards();
     }
 
-    public Map<String, GameResult> computePlayerGameResults() {
-        return participants.openPlayerGameResults();
+    public Map<String, FinalCards> computePlayersFinalCards() {
+        return participants.openPlayersFinalCards();
     }
 
-    public PlayerWinResults computePlayerWinResults() {
-        return participants.computePlayerWinResults();
+    public PlayerJudgeResults computeJudgeResultsByPlayer() {
+        return participants.computeJudgeResultsByPlayer();
     }
 }

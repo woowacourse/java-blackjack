@@ -1,9 +1,9 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Number.FOUR;
-import static blackjack.domain.Number.THREE;
-import static blackjack.domain.Number.TWO;
+import static blackjack.domain.Letter.ACE;
+import static blackjack.domain.Letter.FOUR;
+import static blackjack.domain.Letter.THREE;
+import static blackjack.domain.Letter.TWO;
 import static blackjack.domain.Symbol.DIAMOND;
 import static blackjack.domain.Symbol.HEART;
 import static blackjack.domain.Symbol.SPADE;

@@ -5,27 +5,27 @@ import java.util.Objects;
 public class Card {
 
     private final Symbol symbol;
-    private final Number number;
+    private final Letter letter;
 
-    public Card(Symbol symbol, Number number) {
+    public Card(Symbol symbol, Letter letter) {
         this.symbol = symbol;
-        this.number = number;
+        this.letter = letter;
     }
 
     public boolean isACE() {
-        return this.number == Number.ACE;
+        return this.letter == Letter.ACE;
     }
 
     public Symbol getSymbol() {
         return symbol;
     }
 
-    public Number getNumber() {
-        return number;
+    public Letter getNumber() {
+        return letter;
     }
 
     public int getNumberValue() {
-        return number.getValue();
+        return letter.getValue();
     }
 
     @Override
@@ -37,11 +37,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && number == card.number;
+        return symbol == card.symbol && letter == card.letter;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, number);
+        return Objects.hash(symbol, letter);
     }
 }

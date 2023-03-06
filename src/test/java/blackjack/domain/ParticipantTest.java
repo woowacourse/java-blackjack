@@ -1,9 +1,9 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.ACE;
-import static blackjack.domain.Number.JACK;
-import static blackjack.domain.Number.KING;
-import static blackjack.domain.Number.QUEEN;
+import static blackjack.domain.Letter.ACE;
+import static blackjack.domain.Letter.JACK;
+import static blackjack.domain.Letter.KING;
+import static blackjack.domain.Letter.QUEEN;
 import static blackjack.domain.Symbol.CLUB;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;

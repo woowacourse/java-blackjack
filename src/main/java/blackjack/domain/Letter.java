@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public enum Number {
+public enum Letter {
 
     ACE(11),
     TWO(2),
@@ -18,7 +18,7 @@ public enum Number {
 
     private final int value;
 
-    Number(int value) {
+    Letter(int value) {
         this.value = value;
     }
 

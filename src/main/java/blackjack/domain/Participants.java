@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// TODO 중복 로직 메서드 수정, 클래스 책임 검토
 public class Participants {
 
     private static final int INITIAL_HAND_OUT_COUNT = 2;
 
     private final Dealer dealer;
+    // TODO players 클래스 분리해서 player 반환받아 쓰기?
     private final List<Player> players;
 
     private Participants(List<Player> players) {
@@ -46,32 +48,33 @@ public class Participants {
         }
     }
 
+    // TODO stream 사용해서 map 만들기
     public Map<String, List<Card>> openPlayerCards() {
         Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
         players.forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
         return cardsByParticipants;
     }
 
-    public GameResult openDealerGameResult() {
-        return GameResult.from(dealer);
+    public FinalCards openDealerFinalCards() {
+        return FinalCards.from(dealer);
     }
 
-    public Map<String, GameResult> openPlayerGameResults() {
-        Map<String, GameResult> gameResultsByPlayerName = new LinkedHashMap<>();
-        players.forEach(player -> gameResultsByPlayerName.put(player.getName(), GameResult.from(player)));
-        return gameResultsByPlayerName;
+    public Map<String, FinalCards> openPlayersFinalCards() {
+        Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
+        players.forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.from(player)));
+        return finalCardsByPlayerName;
     }
 
     public Card openDealerFirstCard() {
         return dealer.getCards().get(0);
     }
 
-    public PlayerWinResults computePlayerWinResults() {
-        PlayerWinResults playerWinResults = new PlayerWinResults();
+    public PlayerJudgeResults computeJudgeResultsByPlayer() {
+        PlayerJudgeResults playerJudgeResults = new PlayerJudgeResults();
         for (Player player : players) {
-            playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
+            playerJudgeResults.addResultByPlayerName(player.getName(), dealer.judge(player));
         }
-        return playerWinResults;
+        return playerJudgeResults;
     }
 
     public List<String> findAvailablePlayerNames() {

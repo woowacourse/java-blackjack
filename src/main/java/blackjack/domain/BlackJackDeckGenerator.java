@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.values;
+import static blackjack.domain.Letter.values;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +17,8 @@ public class BlackJackDeckGenerator implements DeckGenerator {
     }
 
     private static void addCards(List<Card> cards, Symbol symbol) {
-        for (Number number : values()) {
-            cards.add(new Card(symbol, number));
+        for (Letter letter : values()) {
+            cards.add(new Card(symbol, letter));
         }
     }
 

@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
-import blackjack.domain.GameResult;
-import blackjack.domain.PlayerWinResults;
-import blackjack.domain.WinResult;
+import blackjack.domain.FinalCards;
+import blackjack.domain.JudgeResult;
+import blackjack.domain.PlayerJudgeResults;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,7 +39,7 @@ public class OutputView {
     }
 
     private static String toCardName(Card card) {
-        return NumberWord.toWord(card.getNumber()) + SymbolWord.toWord(card.getSymbol());
+        return LetterWord.toWord(card.getNumber()) + SymbolWord.toWord(card.getSymbol());
     }
 
     private static String joinAllCardNames(List<Card> cards) {
@@ -56,37 +56,39 @@ public class OutputView {
         System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
     }
 
-    public static void showParticipantGameResults(GameResult dealerResult,
-                                                  Map<String, GameResult> playerResults) {
+    public static void showAllFinalCards(FinalCards dealerResult,
+                                         Map<String, FinalCards> playerResults) {
         System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardNames(dealerResult.getCards()),
                 dealerResult.getSum());
-        for (Entry<String, GameResult> result : playerResults.entrySet()) {
-            GameResult gameResult = result.getValue();
-            System.out.printf(GAME_RESULT_FORMAT, result.getKey(), joinAllCardNames(gameResult.getCards()),
-                    gameResult.getSum());
+        for (Entry<String, FinalCards> result : playerResults.entrySet()) {
+            FinalCards finalCards = result.getValue();
+            System.out.printf(GAME_RESULT_FORMAT, result.getKey(), joinAllCardNames(finalCards.getCards()),
+                    finalCards.getSum());
         }
     }
 
-    public static void showFinalResult(PlayerWinResults playerWinResults) {
+    public static void showAllJudgeResults(PlayerJudgeResults playerJudgeResults) {
         System.out.printf(FINAL_RESULT_HEADER);
-        showDealerWinResult(playerWinResults);
-        showPlayerWinResults(playerWinResults);
+        showDealerJudgeResult(playerJudgeResults);
+        showJudgeResultsByPlayer(playerJudgeResults);
     }
 
-    private static void showPlayerWinResults(PlayerWinResults playerWinResults) {
-        Map<String, WinResult> results = playerWinResults.getResults();
-        for (Entry<String, WinResult> result : results.entrySet()) {
-            System.out.printf(KEY_VALUE_FORMAT, result.getKey(), WinResultWord.toWord(result.getValue()));
+    private static void showJudgeResultsByPlayer(PlayerJudgeResults playerJudgeResults) {
+        Map<String, JudgeResult> results = playerJudgeResults.getJudgeResultsByPlayer();
+        for (Entry<String, JudgeResult> result : results.entrySet()) {
+            System.out.printf(KEY_VALUE_FORMAT, result.getKey(), JudgeResultWord.toWord(result.getValue()));
         }
     }
 
-    private static void showDealerWinResult(PlayerWinResults playerWinResults) {
-        int winCount = playerWinResults.countDealerWins();
-        int pushCount = playerWinResults.countDealerPushes();
-        int loseCount = playerWinResults.countDealerLoses();
+    // TODO dealer의 승무패 개수 계산하는 로직 분리
+    private static void showDealerJudgeResult(PlayerJudgeResults playerJudgeResults) {
+        int winCount = playerJudgeResults.countDealerWins();
+        int pushCount = playerJudgeResults.countDealerPushes();
+        int loseCount = playerJudgeResults.countDealerLoses();
         System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toDealerWinResult(winCount, pushCount, loseCount));
     }
 
+    // TODO WinResult로 책임 이관
     private static String toDealerWinResult(int win, int push, int lose) {
         StringJoiner result = new StringJoiner(" ");
         if (win != 0) {

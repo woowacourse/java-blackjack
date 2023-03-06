@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.QUEEN;
-import static blackjack.domain.Number.SEVEN;
-import static blackjack.domain.Number.SIX;
+import static blackjack.domain.Letter.QUEEN;
+import static blackjack.domain.Letter.SEVEN;
+import static blackjack.domain.Letter.SIX;
 import static blackjack.domain.Symbol.CLUB;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,6 +37,7 @@ class DealerTest {
         assertThat(dealer.isUnderTakeLimit()).isFalse();
     }
 
+    // TODO 메서드 네이밍 수정
     @DisplayName("합을 비교해 최종 승패를 결정한다.")
     @Test
     void should_() {
@@ -48,6 +49,6 @@ class DealerTest {
         Player player = new Player("pobi");
         player.take(new Card(SPADE, QUEEN));
         player.take(new Card(CLUB, SIX));
-        assertThat(dealer.judge(player)).isEqualTo(WinResult.LOSE);
+        assertThat(dealer.judge(player)).isEqualTo(JudgeResult.LOSE);
     }
 }

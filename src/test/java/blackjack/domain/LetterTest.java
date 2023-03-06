@@ -11,24 +11,24 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class NumberTest {
+class LetterTest {
 
-    @DisplayName("카드는 숫자(2~10, Ace, King, Queen, Jack)을 가진다.")
+    @DisplayName("카드는 문자(2~10, Ace, King, Queen, Jack)을 가진다.")
     @Test
     void should_HaveAllNumberTypes() {
-        assertThat(Number.values())
+        assertThat(Letter.values())
                 .containsExactlyInAnyOrder(
-                        Number.ACE, Number.TWO, Number.THREE, Number.FOUR, Number.FIVE,
-                        Number.SIX, Number.SEVEN, Number.EIGHT, Number.NINE,
-                        Number.TEN, Number.KING, Number.QUEEN, Number.JACK
+                        Letter.ACE, Letter.TWO, Letter.THREE, Letter.FOUR, Letter.FIVE,
+                        Letter.SIX, Letter.SEVEN, Letter.EIGHT, Letter.NINE,
+                        Letter.TEN, Letter.KING, Letter.QUEEN, Letter.JACK
                 );
     }
 
-    @DisplayName("각 숫자는 값을 가진다.")
+    @DisplayName("각 문자는 값을 가진다.")
     @Test
     void should_HaveAllNumberValues() {
-        List<Integer> numberValues = Arrays.stream(Number.values())
-                .map(Number::getValue)
+        List<Integer> numberValues = Arrays.stream(Letter.values())
+                .map(Letter::getValue)
                 .collect(Collectors.toList());
         assertThat(numberValues)
                 .containsExactly(11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10);

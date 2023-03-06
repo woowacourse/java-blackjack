@@ -38,6 +38,7 @@ public class BlackJackController {
 
     private void hitOrStay(String playerName) {
         String toTakeKeyword = InputView.askToTake(playerName);
+        // TODO 키워드 Enum으로 분리, HIT or STAY 여부 도메인에서 관리
         if (toTakeKeyword.equals("n")) {
             return;
         }
@@ -54,8 +55,8 @@ public class BlackJackController {
     }
 
     private void totalUp() {
-        OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
-                blackJackGame.computePlayerGameResults());
-        OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
+        OutputView.showAllFinalCards(blackJackGame.computeDealerFinalCards(),
+                blackJackGame.computePlayersFinalCards());
+        OutputView.showAllJudgeResults(blackJackGame.computeJudgeResultsByPlayer());
     }
 }
