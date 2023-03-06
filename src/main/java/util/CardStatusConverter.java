@@ -14,7 +14,7 @@ public class CardStatusConverter {
     }
 
     private static String getCardStatus(Card card) {
-        return card.getValue().getExpression() + card.getShape().getName();
+        return card.getLetterExpression() + card.getShapeName();
     }
 
 }

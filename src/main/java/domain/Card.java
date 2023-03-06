@@ -13,12 +13,16 @@ public class Card {
         this.letter = letter;
     }
 
-    public Shape getShape() {
-        return shape;
+    public String getShapeName() {
+        return shape.getName();
     }
 
-    public Letter getValue() {
-        return letter;
+    public int getLetterScore() {
+        return letter.getScore();
+    }
+
+    public String getLetterExpression() {
+        return letter.getExpression();
     }
 
     public boolean isAce() {

@@ -23,7 +23,7 @@ public class CardDeck {
         int sum = 0;
         for (Card card : cards) {
             aceCount = increaseAceCount(aceCount, card);
-            sum += card.getValue().getScore();
+            sum += card.getLetterScore();
         }
 
         return decreaseScoreByAce(sum, limit, aceCount);

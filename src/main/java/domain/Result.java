@@ -53,7 +53,7 @@ public class Result {
 
 
     private boolean isPlayerDraw(Dealer dealer, Player player) {
-        return dealer.isBust() && (player.isBust() || dealer.getTotalScore() == player.getTotalScore());
+        return (dealer.isBust() && player.isBust()) || (dealer.getTotalScore() == player.getTotalScore());
     }
 
     public Map<String, GameResult> getResult() {

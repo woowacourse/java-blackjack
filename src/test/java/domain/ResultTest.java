@@ -44,6 +44,7 @@ public class ResultTest {
     @DisplayName("플레이어가 게임에서 비기는 경우를 확인한다.")
     void calculateGameResultWhenPlayerDraw() {
         players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.NINE))));
+
         Result result = new Result(dealer, players);
         Map<String, GameResult> gameResult = result.getResult();
 

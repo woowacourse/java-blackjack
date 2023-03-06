@@ -17,9 +17,9 @@ public class CardTest {
 
         Card card = new Card(diamond, two);
 
-        assertThat(card.getShape()).isEqualTo(Shape.DIAMOND);
-        assertThat(card.getValue().getExpression()).isEqualTo("2");
-        assertThat(card.getValue().getScore()).isEqualTo(2);
+        assertThat(card.getShapeName()).isEqualTo("다이아몬드");
+        assertThat(card.getLetterExpression()).isEqualTo("2");
+        assertThat(card.getLetterScore()).isEqualTo(2);
     }
 
 }

@@ -36,4 +36,8 @@ public abstract class Participant {
         return name;
     }
 
+    public String getNameValue() {
+        return name.getValue();
+    }
+
 }
