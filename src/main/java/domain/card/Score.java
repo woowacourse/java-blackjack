@@ -22,7 +22,7 @@ public final class Score {
 
     public void sumScore(Card... cards) {
         hasAce(cards);
-        score = Arrays.stream(cards)
+        score += Arrays.stream(cards)
                 .mapToInt(Card::getScore)
                 .sum();
     }

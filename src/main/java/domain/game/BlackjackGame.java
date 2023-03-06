@@ -34,7 +34,7 @@ public final class BlackjackGame {
 
         final List<Player> players = new LinkedList<>();
 
-        players.add(Dealer.create());
+        players.add(Dealer.create(0));
         players.addAll(createParticipants(participantNames));
 
 
@@ -54,6 +54,7 @@ public final class BlackjackGame {
 
     public void playDealerTurn(Consumer<Boolean> consumer) {
         final Dealer dealer = getDealer();
+
         while (dealer.isHit()) {
             consumer.accept(dealer.isHit());
             dealer.takeCard(this.deck.dealCard());
@@ -78,7 +79,7 @@ public final class BlackjackGame {
 
     private static List<Participant> createParticipants(final List<String> participantNames) {
         return participantNames.stream()
-                .map(Participant::from)
+                .map(name -> Participant.of(name, 0))
                 .collect(toList());
     }
 

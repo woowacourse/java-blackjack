@@ -13,8 +13,8 @@ public final class Dealer extends Player {
         super(name, cards);
     }
 
-    public static Dealer create() {
-        return new Dealer(Name.of(DEALER_NAME), new Cards());
+    public static Dealer create(final int score) {
+        return new Dealer(Name.of(DEALER_NAME), Cards.from(score));
     }
 
     public Card getFirstCard() {

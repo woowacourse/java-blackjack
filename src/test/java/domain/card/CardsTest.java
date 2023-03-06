@@ -1,7 +1,6 @@
 package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,63 +9,21 @@ import static org.assertj.core.api.Assertions.*;
 
 class CardsTest {
     @Test
-    @DisplayName("가지고 있는 카드의 점수를 합한다")
-    void givenCards_thenSumScore() {
+    @DisplayName("getCards하면 입력받은 카드 전부를 리스트로 반환한다.")
+    void getCardsTest() {
         //given
-        final Cards cards = new Cards();
+        final Cards cards = Cards.from(0);
+
         final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
 
         for (int i = 0; i < ranks.size(); i++) {
             cards.takeCard(deck.dealCard());
         }
-
-        //when
-        int score = cards.getScore();
+        final List<Card> result =
+                List.of(Card.of(Suit.CLUBS, Rank.EIGHT), Card.of(Suit.CLUBS, Rank.SIX), Card.of(Suit.CLUBS, Rank.SEVEN));
 
         //then
-        assertThat(score).isEqualTo(21);
-    }
-
-    @Nested
-    class IsSoftTest {
-        @Test
-        @DisplayName("점수 총합이 11이하면 ACE의 값을 11로 계산한다")
-        void givenAceAndUnderElevenScore_thenAceScoreEleven() {
-            //given
-            final Cards cards = new Cards();
-            final List<Rank> ranks = List.of(Rank.ACE, Rank.TWO, Rank.SEVEN);
-            final Deck deck = Deck.from(TestCardGenerator.from(ranks));
-
-            for (int i = 0; i < ranks.size(); i++) {
-                cards.takeCard(deck.dealCard());
-            }
-
-            //when
-            final int score = cards.getScore();
-
-            //then
-            assertThat(score).isEqualTo(20);
-        }
-
-        @Test
-        @DisplayName("점수 총합이 12이상이면 Ace에 값을 1로 계산한다")
-        void givenAceAndOverTwelveScore_thenAceScoreOne() {
-            //given
-            final Cards cards = new Cards();
-
-            final List<Rank> ranks = List.of(Rank.ACE, Rank.FIVE, Rank.SEVEN);
-            final Deck deck = Deck.from(TestCardGenerator.from(ranks));
-
-            for (int i = 0; i < ranks.size(); i++) {
-                cards.takeCard(deck.dealCard());
-            }
-
-            //when
-            final int score = cards.getScore();
-
-            //then
-            assertThat(score).isEqualTo(13);
-        }
+        assertThat(cards.getCards()).isEqualTo(result);
     }
 }

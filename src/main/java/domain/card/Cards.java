@@ -5,35 +5,21 @@ import java.util.List;
 
 public final class Cards {
 
-    private static final int SOFT_ADD = 10;
-    private static final int SOFT_CONDITION = 21 - SOFT_ADD;
     private final List<Card> cards;
+    private final Score score;
 
-    public Cards() {
+    private Cards(final int score) {
         this.cards = new ArrayList<>();
+        this.score = Score.from(score);
+    }
+
+    public static Cards from(final int score) {
+        return new Cards(score);
     }
 
     public void takeCard(final Card card) {
         cards.add(card);
-    }
-
-    private int sumScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private static boolean isHard(final int sum) {
-        return sum <= SOFT_CONDITION;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(this::isAce);
-    }
-
-    private boolean isAce(Card card) {
-        return card.getRank() == Rank.ACE;
+        score.sumScore(card);
     }
 
     public List<Card> getCards() {
@@ -41,11 +27,6 @@ public final class Cards {
     }
 
     public int getScore() {
-        final int score = sumScore();
-
-        if (hasAce() && isHard(score)) {
-            return score + SOFT_ADD;
-        }
-        return score;
+        return score.getScore();
     }
 }

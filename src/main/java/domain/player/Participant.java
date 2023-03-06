@@ -8,10 +8,10 @@ public final class Participant extends Player {
         super(name, cards);
     }
 
-    public static Participant from(final String name) {
+    public static Participant of(final String name, final int score) {
         validateImpersonate(name);
 
-        return new Participant(Name.of(name), new Cards());
+        return new Participant(Name.of(name), Cards.from(score));
     }
 
     private static void validateImpersonate(final String name) {

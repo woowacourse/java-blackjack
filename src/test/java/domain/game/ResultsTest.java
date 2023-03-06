@@ -1,8 +1,7 @@
 package domain.game;
 
-import domain.card.TestCardGenerator;
-import domain.card.Rank;
-
+import domain.player.Dealer;
+import domain.player.Participant;
 import domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,20 +14,18 @@ import static org.assertj.core.api.Assertions.*;
 
 class ResultsTest {
 
-    private TestCardGenerator testCardGenerator;
     private Results results;
 
     @BeforeEach
     public void beforeEach() {
         //given
-        final List<String> participantNames = List.of("준팍", "범블비", "파워", "서브웨이");
-        final List<Rank> ranks = List.of(Rank.ACE, Rank.ACE, Rank.SIX, Rank.SEVEN, Rank.ACE, Rank.ACE, Rank.FOUR, Rank.FIVE, Rank.KING, Rank.JACK);
-        testCardGenerator = TestCardGenerator.from(ranks);
+        final List<Participant> participants = List.of(Participant.of("준팍", 13),
+                Participant.of("범블비", 12),
+                Participant.of("파워", 9),
+                Participant.of("서브웨이", 20));
 
-        final BlackjackGame blackjackGame = BlackjackGame.from(participantNames, testCardGenerator);
 
-        blackjackGame.drawCards();
-        results = Results.of(blackjackGame.getDealer(), blackjackGame.getParticipants());
+        results = Results.of(Dealer.create(12), participants);
     }
 
 

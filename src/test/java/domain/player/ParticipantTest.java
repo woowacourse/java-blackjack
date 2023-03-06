@@ -1,8 +1,5 @@
 package domain.player;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,7 +11,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자의 이름이 딜러면 예외가 발생한다")
     void givenDealerName_theFailed() {
-        assertThatThrownBy(() -> Participant.from("딜러"))
+        assertThatThrownBy(() -> Participant.of("딜러", 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 이름은 딜러가 될 수 없습니다.");
     }
@@ -29,11 +26,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 미만이면 true를 리턴한다.")
         void giveUnderBustScore_thenReturnTrue() {
             //given
-            final Participant participant = Participant.from("준팍");
-            participant.takeCard(Card.of(Suit.DIAMOND, Rank.FIVE));
-            participant.takeCard(Card.of(Suit.SPADE, Rank.TWO));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.SIX));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.EIGHT));
+            final Participant participant = Participant.of("준팍", 21);
 
             //when
             final boolean keepGaming = participant.isKeepGaming(isHit);
@@ -46,11 +39,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 이상이면 false를 리턴한다.")
         void giveBustScore_thenReturnFalse() {
             //given
-            final Participant participant = Participant.from("준팍");
-            participant.takeCard(Card.of(Suit.DIAMOND, Rank.FIVE));
-            participant.takeCard(Card.of(Suit.SPADE, Rank.TWO));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.SIX));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.NINE));
+            final Participant participant = Participant.of("준팍", 22);
 
             //when
             final boolean keepGaming = participant.isKeepGaming(isHit);
@@ -70,11 +59,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 미만이어도 false를 리턴한다.")
         void giveUnderBustScore_thenReturnTrue() {
             //given
-            final Participant participant = Participant.from("준팍");
-            participant.takeCard(Card.of(Suit.DIAMOND, Rank.FIVE));
-            participant.takeCard(Card.of(Suit.SPADE, Rank.TWO));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.SIX));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.EIGHT));
+            final Participant participant = Participant.of("준팍", 21);
 
             //when
             final boolean keepGaming = participant.isKeepGaming(isHit);
@@ -87,11 +72,7 @@ class ParticipantTest {
         @DisplayName("카드 점수의 총합이 22 이상이면 false를 리턴한다.")
         void giveBustScore_thenReturnFalse() {
             //given
-            final Participant participant = Participant.from("준팍");
-            participant.takeCard(Card.of(Suit.DIAMOND, Rank.FIVE));
-            participant.takeCard(Card.of(Suit.SPADE, Rank.TWO));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.SIX));
-            participant.takeCard(Card.of(Suit.CLUBS, Rank.NINE));
+            final Participant participant = Participant.of("준팍", 22);
 
             //when
             final boolean keepGaming = participant.isKeepGaming(isHit);
