@@ -22,7 +22,7 @@ class ResultTest {
     @ParameterizedTest
     @CsvSource(value = {"LOSE:WIN", "WIN:LOSE", "TIE:TIE"}, delimiter = ':')
     @DisplayName("ofOppositeResult()는 특정 게임 결과를 입력하면 상대방의 결과를 반환한다.")
-    void test_2(String inputPlayerResult, String inputDealerResult) {
+    void get_opposite_result_of_input_result(String inputPlayerResult, String inputDealerResult) {
         // given & when
         Result playerResult = Result.valueOf(inputPlayerResult);
         Result expectedResult = Result.valueOf(inputDealerResult);
