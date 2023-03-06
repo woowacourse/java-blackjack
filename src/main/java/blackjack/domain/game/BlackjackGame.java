@@ -24,7 +24,7 @@ public class BlackjackGame {
         return participants;
     }
 
-    public void giveTwoCardEveryone() {
+    public void dealTwoCardsToAllParticipant() {
         final Dealer dealer = participants.getDealer();
         final List<Player> players = participants.getPlayers();
 

@@ -39,7 +39,7 @@ public class BlackjackController {
 
         final Map<Player, WinTieLose> playersResult = new HashMap<>();
         final ResultGame resultGame = new ResultGame(participants, playersResult);
-        showAllResult(participants, resultGame);
+        displayAllResult(participants, resultGame);
     }
 
     private Participants makeParticipants() {
@@ -56,15 +56,15 @@ public class BlackjackController {
     private void startGame(final BlackjackGame blackjackGame) {
         final Participants participants = blackjackGame.getParticipants();
 
-        blackjackGame.giveTwoCardEveryone();
+        blackjackGame.dealTwoCardsToAllParticipant();
 
-        outputView.printHandOutStart(participants);
+        outputView.printInitialHands(participants);
     }
 
     private void hitParticipants(final BlackjackGame blackjackGame) {
         hitPlayers(blackjackGame);
         hitDealer(blackjackGame);
-        showAllCardsAndScore(blackjackGame);
+        displayParticipantsCardsAndScore(blackjackGame);
     }
 
     private void hitPlayers(final BlackjackGame blackjackGame) {
@@ -96,13 +96,13 @@ public class BlackjackController {
         }
     }
 
-    private void showAllCardsAndScore(final BlackjackGame blackjackGame) {
+    private void displayParticipantsCardsAndScore(final BlackjackGame blackjackGame) {
         final Participants participants = blackjackGame.getParticipants();
 
         outputView.printAllCardsAndScores(participants);
     }
 
-    private void showAllResult(final Participants participants, final ResultGame resultGame) {
-        outputView.printResult(participants, resultGame);
+    private void displayAllResult(final Participants participants, final ResultGame resultGame) {
+        outputView.printParticipantsResult(participants, resultGame);
     }
 }

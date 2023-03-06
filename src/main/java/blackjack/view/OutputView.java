@@ -24,7 +24,7 @@ public class OutputView {
     private static final String TIE_MESSAGE = "무";
     private static final String LOSE_MESSAGE = "패";
 
-    public void printHandOutStart(final Participants participants) {
+    public void printInitialHands(final Participants participants) {
         printSplitMessage(participants);
         printAllParticipantCard(participants);
     }
@@ -72,7 +72,7 @@ public class OutputView {
         System.out.printf(RESULT_DELIMITER + score);
     }
 
-    public void printResult(final Participants participants, final ResultGame resultGame) {
+    public void printParticipantsResult(final Participants participants, final ResultGame resultGame) {
         final Dealer dealer = participants.getDealer();
         final List<Player> players = participants.getPlayers();
 
