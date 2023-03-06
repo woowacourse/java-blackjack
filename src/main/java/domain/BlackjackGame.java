@@ -13,16 +13,16 @@ public class BlackjackGame {
     }
 
     public void giveInitialCards() {
-        giveCardsToDealer();
-        giveCardsToPlayers();
+        giveInitialCardsToDealer();
+        giveInitialCardsToPlayers();
     }
 
-    private void giveCardsToDealer() {
+    private void giveInitialCardsToDealer() {
         giveCardTo(dealer);
         giveCardTo(dealer);
     }
 
-    private void giveCardsToPlayers() {
+    private void giveInitialCardsToPlayers() {
         for (Player player : players.getPlayers()) {
             giveCardTo(player);
             giveCardTo(player);
