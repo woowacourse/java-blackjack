@@ -1,6 +1,7 @@
 package domain;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -31,5 +32,25 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레이어 이름은 중복일 수 없습니다.");
+    }
+
+    @Test
+    void 올바른_입력이_들어왔을_때_잘_생성되는지_확인한다() {
+        //given
+        List<String> playerNames = List.of("judy", "kevin");
+        Players players = new Players(playerNames);
+
+        // when
+        String[] expected = {"judy", "kevin"};
+        String[] actual = new String[2];
+
+        List<Player> playersPlayers = players.getPlayers();
+        for (int i = 0; i < playersPlayers.size(); i++) {
+            Player player = playersPlayers.get(i);
+            actual[i] = player.getName();
+        }
+
+        //then
+        Assertions.assertArrayEquals(expected,actual);
     }
 }
