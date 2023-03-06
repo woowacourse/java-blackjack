@@ -9,7 +9,6 @@ public class CardDeck {
     private static final int MIN_ACE_VALUE = 1;
     private static final int MAX_ACE_VALUE = 11;
     private static final int BLACKJACK_SCORE = 21;
-    private static final int BURST_CODE = -1;
 
     private final List<Card> cards;
 
