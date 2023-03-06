@@ -18,7 +18,7 @@ public class Player implements Receivable {
         return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
     }
 
-    private int calculateTotalValue() {
+    public int calculateTotalValue() {
         return user.getCardTotalValue();
     }
 

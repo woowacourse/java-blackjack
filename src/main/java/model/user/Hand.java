@@ -9,6 +9,7 @@ import java.util.Objects;
 public class Hand {
 
     private static final int BUST_NUMBER = 21;
+    private static final int ACE_REVISE_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -26,11 +27,15 @@ public class Hand {
 
     public int getTotalValue() {
         int totalValue = calculateTotalValue();
+        return reviseTotalValue(totalValue);
+    }
 
-        if (totalValue > BUST_NUMBER && isIncludeAce()) {
-            return totalValue - 10;
+    private int reviseTotalValue(int totalValue) {
+        int aceCount = countAce();
+        while (totalValue > BUST_NUMBER && aceCount > 0) {
+            aceCount--;
+            totalValue -= ACE_REVISE_VALUE;
         }
-
         return totalValue;
     }
 
@@ -40,9 +45,10 @@ public class Hand {
                 .sum();
     }
 
-    private boolean isIncludeAce() {
-        return this.cards.stream()
-                .anyMatch(Card::isAce);
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     @Override
