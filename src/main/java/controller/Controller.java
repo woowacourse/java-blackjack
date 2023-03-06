@@ -5,6 +5,7 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static view.InputView.*;
 import static view.OutputView.*;
@@ -12,11 +13,11 @@ import static view.OutputView.*;
 public class Controller {
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-    public void blackjack() {
+    public void start() {
         Players players = getPlayers();
         Dealer dealer = new Dealer(new Cards());
 
-        gameStart(players, dealer);
+        startBlackjack(players, dealer);
     }
 
     private Players getPlayers() {
@@ -31,7 +32,7 @@ public class Controller {
         return players;
     }
 
-    private void gameStart(Players players, Dealer dealer) {
+    private void startBlackjack(Players players, Dealer dealer) {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
@@ -39,7 +40,7 @@ public class Controller {
         dealerHitOrStand(dealer);
 
         printScores(players, dealer);
-        LinkedHashMap<Gambler, Integer> result = getResult(dealer, players);
+        Map<Gambler, Integer> result = getResult(dealer, players);
         OutputView.printResult(result);
     }
 
@@ -101,12 +102,12 @@ public class Controller {
         }
     }
 
-    private LinkedHashMap<Gambler, Integer> getResult(Dealer dealer, Players players) {
-        LinkedHashMap<Gambler, Integer> result = new LinkedHashMap<>();
+    private Map<Gambler, Integer> getResult(Dealer dealer, Players players) {
+        Map<Gambler, Integer> result = new LinkedHashMap<>();
         return calculateWinCount(dealer, players, result);
     }
 
-    private LinkedHashMap<Gambler, Integer> calculateWinCount(Dealer dealer, Players players, LinkedHashMap<Gambler, Integer> result) {
+    private Map<Gambler, Integer> calculateWinCount(Dealer dealer, Players players, Map<Gambler, Integer> result) {
         result.put(dealer, 0);
         for (Player player : players.getPlayers()) {
             decideWinner(dealer, result, player);
@@ -114,7 +115,7 @@ public class Controller {
         return result;
     }
 
-    private void decideWinner(Dealer dealer, LinkedHashMap<Gambler, Integer> result, Player player) {
+    private void decideWinner(Dealer dealer, Map<Gambler, Integer> result, Player player) {
         if (isPlayerWin(dealer, player)) {
             result.put(player, 1);
             return;
@@ -126,6 +127,7 @@ public class Controller {
         }
     }
 
+    //TODO: controller에서 getter 제거 하기
     private boolean isPlayerWin(Dealer dealer, Player player) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
