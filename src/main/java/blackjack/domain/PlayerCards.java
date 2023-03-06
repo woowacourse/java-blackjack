@@ -10,7 +10,7 @@ public class PlayerCards {
         this.cards = new ArrayList<>();
     }
 
-    private static int getTotalScore(int score, Card card) {
+    private int getTotalScore(int score, Card card) {
         if (card.isAce() && ScoreState.of(score)
                                       .isBust()) {
             score -= 10;
