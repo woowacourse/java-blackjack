@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,6 +49,16 @@ public class Participants {
         return player.isAvailable();
     }
 
+    public int repeatHandToDealerUntilAvailable(Deck deck) {
+        int hitCount = 0;
+        while (dealer.isAvailable()) {
+            List<Card> cards = deck.draw(1);
+            dealer.take(cards.get(0));
+            hitCount++;
+        }
+        return hitCount;
+    }
+
     private void handCardsTo(Participant participant, List<Card> cards) {
         for (Card card : cards) {
             participant.take(card);
@@ -91,14 +100,5 @@ public class Participants {
         }
         Player player = players.findPlayerBy(participantName);
         return player.getCards();
-    }
-
-    // TODO 불필요한 getter 삭제
-    public List<Card> getDealerCards() {
-        return new ArrayList<>(dealer.getCards());
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 }

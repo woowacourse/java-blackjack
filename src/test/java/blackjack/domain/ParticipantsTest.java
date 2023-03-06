@@ -40,12 +40,11 @@ class ParticipantsTest {
 
         participants.handOut(new BlackJackDeckGenerator().generate());
 
-        assertThat(participants.getDealerCards()).hasSize(2);
-        List<List<Card>> playersCards = participants.openFinalCardsByName()
+        List<List<Card>> participantCards = participants.openFinalCardsByName()
                 .values()
                 .stream().map(FinalCards::getCards)
                 .collect(Collectors.toList());
-        for (List<Card> cards : playersCards) {
+        for (List<Card> cards : participantCards) {
             assertThat(cards).hasSize(2);
         }
     }

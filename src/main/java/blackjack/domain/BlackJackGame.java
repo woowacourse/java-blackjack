@@ -34,16 +34,7 @@ public class BlackJackGame {
     }
 
     public int hitOrStayForDealer() {
-        Dealer dealer = participants.getDealer();
-        int hitCount = 0;
-
-        while (dealer.isAvailable()) {
-            List<Card> cards = deck.draw(1);
-            dealer.take(cards.get(0));
-            hitCount++;
-        }
-
-        return hitCount;
+        return participants.repeatHandToDealerUntilAvailable(deck);
     }
 
     public Map<String, FinalCards> openAllFinalCards() {
