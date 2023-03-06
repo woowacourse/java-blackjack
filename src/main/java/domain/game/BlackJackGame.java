@@ -5,7 +5,7 @@ import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
-import java.util.ArrayList;
+import domain.player.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,48 +16,28 @@ public class BlackJackGame {
 
     private final Deck deck;
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
     public BlackJackGame(final Deck deck, final List<String> playerNames) {
         this.deck = deck;
         this.dealer = new Dealer();
-        this.players = generatePlayers(playerNames);
+        this.players = new Players(playerNames);
         distributeTwoCards();
-    }
-
-    private List<Player> generatePlayers(final List<String> playerNames) {
-        List<Player> players = new ArrayList<>();
-
-        playerNames.forEach(
-                name -> players.add(new Player(name))
-        );
-
-        return players;
     }
 
     private void distributeTwoCards() {
         dealer.drawCard(deck.popCard());
         dealer.drawCard(deck.popCard());
 
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             player.drawCard(deck.popCard());
             player.drawCard(deck.popCard());
         }
     }
 
     public void drawCard(final String playerName) {
-        Player player = findPlayer(playerName);
-        player.drawCard(deck.popCard());
-    }
-
-    private Player findPlayer(final String playerName) {
-        if (isDealer(playerName)) {
-            return dealer;
-        }
-        return players.stream()
-                .filter(player -> player.getName().equals(new Name(playerName)))
-                .findFirst()
-                .orElseThrow();
+        players.getPlayer(playerName)
+                .drawCard(deck.popCard());
     }
 
     public boolean isDealerDraw() {
@@ -67,9 +47,10 @@ public class BlackJackGame {
     public Map<Name, Outcome> decidePlayersOutcome() {
         Map<Name, Outcome> result = new LinkedHashMap<>();
 
-        players.forEach(player ->
-                result.put(player.getName(), decideOutcome(dealer.getScore(), player.getScore()))
-        );
+        players.getPlayers()
+                .forEach(player ->
+                        result.put(player.getName(), decideOutcome(dealer.getScore(), player.getScore()))
+                );
 
         return result;
     }
@@ -106,7 +87,7 @@ public class BlackJackGame {
         if (isDealer(playerName)) {
             return dealer.getCards();
         }
-        return findPlayer(playerName).getCards();
+        return players.getPlayer(playerName).getCards();
     }
 
     private boolean isDealer(final String name) {
@@ -117,6 +98,6 @@ public class BlackJackGame {
         if (isDealer(playerName)) {
             return dealer.getScore();
         }
-        return findPlayer(playerName).getScore();
+        return players.getPlayer(playerName).getScore();
     }
 }
