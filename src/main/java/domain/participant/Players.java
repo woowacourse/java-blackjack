@@ -45,10 +45,6 @@ public final class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
     public List<Player> findPlayersLowerThan(final GamePoint gamePoint) {
         return players.stream()
                 .filter(player -> player.hasLowerThan(gamePoint))
@@ -65,5 +61,9 @@ public final class Players {
         return players.stream()
                 .filter(player -> player.hasGreaterThan(gamePoint))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }
