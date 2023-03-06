@@ -47,7 +47,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
 
-        assertThat(game.getResult(players.get(index))).isEqualTo(result);
+        assertThat(game.getResultBy(players.get(index))).isEqualTo(result);
     }
 
     @DisplayName("점수가 동일하면 무승부로 한다")
@@ -59,7 +59,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K")));
 
-        assertThat(game.getResult(players.get(0))).isEqualTo(Result.DRAW);
+        assertThat(game.getResultBy(players.get(0))).isEqualTo(Result.DRAW);
     }
 
     @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
@@ -71,7 +71,7 @@ public class GameTest {
 
         var game = new Game(players, new Deck(), new Dealer(createCards("K", "9", "9")));
 
-        assertThat(game.getResult(players.get(0))).isEqualTo(Result.DRAW);
+        assertThat(game.getResultBy(players.get(0))).isEqualTo(Result.DRAW);
     }
 
     @Test

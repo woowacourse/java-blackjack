@@ -19,7 +19,7 @@ public class Game {
         }
     }
 
-    public Result getResult(Player player) {
+    public Result getResultBy(Player player) {
         return players.getUserResult(player);
     }
 
