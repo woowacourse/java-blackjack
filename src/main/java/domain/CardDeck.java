@@ -42,7 +42,7 @@ public class CardDeck {
     }
 
     private int decreaseScoreByAce(int sum, int limit, int aceCount) {
-        while (isScoreDecreasableByAce(sum, limit, aceCount)) {
+        while (canDecreaseScoreByAce(sum, limit, aceCount)) {
             sum -= ACE_DECREASE;
             aceCount--;
         }
@@ -50,7 +50,7 @@ public class CardDeck {
         return sum;
     }
 
-    private boolean isScoreDecreasableByAce(int sum, int limit, int aceCount) {
+    private boolean canDecreaseScoreByAce(int sum, int limit, int aceCount) {
         return sum != BLACK_JACK && limit < sum && NONE_ACE < aceCount;
     }
 

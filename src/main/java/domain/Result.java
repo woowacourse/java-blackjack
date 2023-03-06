@@ -25,21 +25,35 @@ public class Result {
     }
 
     private void win(Dealer dealer, Player player) {
-        if (!player.isBust() && (dealer.isBust() || dealer.getTotalScore() < player.getTotalScore())) {
+        if (isPlayerWin(dealer, player)) {
             gameResult.put(player.getName().getValue(), GameResult.WIN);
         }
     }
 
     private void lose(Dealer dealer, Player player) {
-        if (!dealer.isBust() && (player.isBust() || dealer.getTotalScore() > player.getTotalScore())) {
+        if (isPlayerLose(dealer, player)) {
             gameResult.put(player.getName().getValue(), GameResult.LOSE);
         }
     }
 
     private void draw(Dealer dealer, Player player) {
-        if (dealer.isBust() && player.isBust() || dealer.getTotalScore() == player.getTotalScore()) {
+        if (isPlayerDraw(dealer, player)) {
             gameResult.put(player.getName().getValue(), GameResult.DRAW);
         }
+    }
+
+    private boolean isPlayerWin(Dealer dealer, Player player) {
+        return !player.isBust() && (dealer.isBust() || dealer.getTotalScore() < player.getTotalScore());
+    }
+
+
+    private boolean isPlayerLose(Dealer dealer, Player player) {
+        return !dealer.isBust() && (player.isBust() || dealer.getTotalScore() > player.getTotalScore());
+    }
+
+
+    private boolean isPlayerDraw(Dealer dealer, Player player) {
+        return dealer.isBust() && (player.isBust() || dealer.getTotalScore() == player.getTotalScore());
     }
 
     public Map<String, GameResult> getResult() {
