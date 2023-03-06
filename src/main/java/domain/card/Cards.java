@@ -25,7 +25,7 @@ public class Cards {
     }
 
     public List<Card> giveInitialCards() {
-        return new ArrayList<>(List.of(cards.pop(), cards.pop()));
+        return new ArrayList<>(List.of(getCard(), getCard()));
     }
 
     public boolean contains(final Card card) {
