@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static java.text.MessageFormat.format;
+
 import blackjack.domain.BlackjackResult;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
@@ -76,5 +78,9 @@ public class OutputView {
 
     private String getGameResultMessage(GameResult gameResult) {
         return GameResultMessage.from(gameResult).getMessage();
+    }
+
+    public void printError(String message) {
+        System.out.println(format("[ERROR] {0}", message));
     }
 }

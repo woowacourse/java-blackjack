@@ -26,10 +26,14 @@ public class BlackjackController {
     }
 
     private void startGame(Participants participants, BlackjackGame blackjackGame) {
-        blackjackGame.dealOutCard();
-        outputView.printInitCards(participants);
-        play(participants, blackjackGame);
-        outputView.printCardResult(participants);
+        try {
+            blackjackGame.dealOutCard();
+            outputView.printInitCards(participants);
+            play(participants, blackjackGame);
+            outputView.printCardResult(participants);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+        }
     }
 
     private void printResult(BlackjackGame blackjackGame) {
@@ -38,8 +42,13 @@ public class BlackjackController {
     }
 
     private Participants getParticipants() {
-        List<String> names = inputView.readNames();
-        return Participants.from(names);
+        try {
+            List<String> names = inputView.readNames();
+            return Participants.from(names);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return getParticipants();
+        }
     }
 
     private void play(Participants participants, BlackjackGame blackjackGame) {
@@ -53,10 +62,19 @@ public class BlackjackController {
     private void playPerPlayer(Player player, BlackjackGame blackjackGame) {
         GameCommand command = GameCommand.PLAY;
         while (player.isDrawable() && command.isPlay()) {
-            String inputCommand = inputView.readIsContinue(player.getName());
-            command = GameCommand.from(inputCommand);
+            command = getGameCommand(player);
             giveCard(player, blackjackGame, command);
             outputView.printPlayerCards(player);
+        }
+    }
+
+    private GameCommand getGameCommand(Player player) {
+        try {
+            String inputCommand = inputView.readIsContinue(player.getName());
+            return GameCommand.from(inputCommand);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return getGameCommand(player);
         }
     }
 
