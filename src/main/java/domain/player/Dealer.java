@@ -1,11 +1,12 @@
 package domain.player;
 
+import domain.card.CardHolder;
 import domain.gameresult.GameResult;
 
 public class Dealer extends Player {
 
-    public Dealer() {
-        super(Name.of("딜러"));
+    public Dealer(CardHolder cardHolder) {
+        super(cardHolder, Name.of("딜러"));
     }
 
     public void battle(Player participant, GameResult gameResult) {

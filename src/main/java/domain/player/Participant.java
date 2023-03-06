@@ -1,8 +1,10 @@
 package domain.player;
 
+import domain.card.CardHolder;
+
 public class Participant extends Player {
-    public Participant(Name name) {
-        super(name);
+    public Participant(CardHolder cardHolder, Name name) {
+        super(cardHolder, name);
     }
 
     @Override

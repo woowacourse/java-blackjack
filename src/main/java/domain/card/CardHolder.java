@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class CardHolder {
     public static final int ACE_SCORE_SWITCHING_LINE = 10;
     public static final int ACE_MAX_SCORE = 11;
     public static final int ACE_MIN_SCORE = 1;
     private final List<Card> cards;
 
-    public Cards() {
-        this.cards = new ArrayList<>();
+    public CardHolder(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static CardHolder makeEmptyHolder() {
+        return new CardHolder(new ArrayList<>());
     }
 
     public void addCard(Card card) {

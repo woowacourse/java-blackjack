@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.CardHolder;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.gameresult.GameResult;
@@ -22,8 +23,8 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer();
-        participant = new Participant(Name.of("테스트"));
+        dealer = new Dealer(CardHolder.makeEmptyHolder());
+        participant = new Participant(CardHolder.makeEmptyHolder(), Name.of("테스트"));
         gameResult = new GameResult();
     }
 

@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.CardRepository;
+import domain.card.CardHolder;
 import domain.gameresult.GameResult;
 
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ public class Players {
     private final List<Participant> participants;
 
     private Players(List<Participant> participants) {
-        this.dealer = new Dealer();
+        this.dealer = new Dealer(CardHolder.makeEmptyHolder());
         this.participants = participants;
     }
 
     public static Players with(List<Name> participantNames) {
         List<Participant> participants = participantNames.stream()
-                .map(Participant::new)
+                .map(name -> new Participant(CardHolder.makeEmptyHolder(), name))
                 .collect(Collectors.toUnmodifiableList());
         return new Players(participants);
     }
