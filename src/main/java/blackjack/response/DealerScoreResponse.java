@@ -5,18 +5,18 @@ import blackjack.domain.Dealer;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CardsScoreResponse {
+public class DealerScoreResponse {
 
     private final List<CardResponse> cards;
     private final int score;
 
-    private CardsScoreResponse(final List<CardResponse> cards, final int score) {
+    private DealerScoreResponse(final List<CardResponse> cards, final int score) {
         this.cards = cards;
         this.score = score;
     }
 
-    public static CardsScoreResponse from(final Dealer dealer) {
-        return new CardsScoreResponse(convertCards(dealer.getCards()), dealer.currentScore());
+    public static DealerScoreResponse from(final Dealer dealer) {
+        return new DealerScoreResponse(convertCards(dealer.getCards()), dealer.currentScore());
     }
 
     private static List<CardResponse> convertCards(

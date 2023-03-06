@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.response.CardConvertStrategy;
 import blackjack.response.CardResponse;
-import blackjack.response.CardsScoreResponse;
+import blackjack.response.DealerScoreResponse;
 import blackjack.response.FinalResultResponse;
 import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
@@ -83,12 +83,12 @@ public class OutputView {
         System.out.println(OUTPUT_DEALER_STATUS_MESSAGE);
     }
 
-    public void printFinalStatusOfDealer(final CardsScoreResponse cardsScoreResponse) {
-        final String cards = cardsScoreResponse.getCards()
+    public void printFinalStatusOfDealer(final DealerScoreResponse dealerScoreResponse) {
+        final String cards = dealerScoreResponse.getCards()
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + cardsScoreResponse.getScore());
+        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + dealerScoreResponse.getScore());
     }
 
     public void printFinalStatusOfPlayers(final PlayersCardsResponse playersCardsResponse) {
