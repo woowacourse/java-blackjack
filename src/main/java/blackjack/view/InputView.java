@@ -22,12 +22,9 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String askToTake(String playerName) {
+    public static Command askToTake(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), playerName);
         String keyword = scanner.nextLine();
-        if (keyword.equals("y") || keyword.equals("n")) {
-            return keyword;
-        }
-        throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+        return Command.of(keyword);
     }
 }

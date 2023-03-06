@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
+import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -52,8 +53,8 @@ public class BlackJackController {
     }
 
     private void hitOrStay(String playerName) {
-        String toTakeKeyword = InputView.askToTake(playerName);
-        if (toTakeKeyword.equals("n")) {
+        Command command = InputView.askToTake(playerName);
+        if (command.isStay()) {
             return;
         }
         boolean keepGoing = blackJackGame.handOneCard(playerName);
