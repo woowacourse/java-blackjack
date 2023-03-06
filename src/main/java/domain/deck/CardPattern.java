@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 public enum CardPattern {
     SPADE("스페이드"),

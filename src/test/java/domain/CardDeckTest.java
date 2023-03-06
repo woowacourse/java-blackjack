@@ -2,6 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.deck.Card;
+import domain.deck.CardDeck;
+import domain.deck.CardNumber;
+import domain.deck.CardPattern;
+import domain.generator.CardGenerator;
 import domain.strategy.NoShuffleCardsStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +29,7 @@ public class CardDeckTest {
     @DisplayName("카드덱의 맨 윗장을 뽑는다.")
     void pollCard() {
         Queue<Card> cards = new LinkedList<>();
-        Card firstCard = new Card(CardNumber.ACE,CardPattern.SPADE);
+        Card firstCard = new Card(CardNumber.ACE, CardPattern.SPADE);
         Card secondCard = new Card(CardNumber.ACE,CardPattern.HEART);
         cards.add(firstCard);
         cards.add(secondCard);

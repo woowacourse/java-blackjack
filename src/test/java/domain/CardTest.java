@@ -1,5 +1,8 @@
 package domain;
 
+import domain.deck.Card;
+import domain.deck.CardNumber;
+import domain.deck.CardPattern;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,7 @@ public class CardTest {
     @Test
     @DisplayName("카드를 생성한다.")
     void createCardTest() {
-        assertDoesNotThrow(()->new Card(CardNumber.ACE,CardPattern.SPADE));
+        assertDoesNotThrow(()->new Card(CardNumber.ACE, CardPattern.SPADE));
     }
 
     @Test

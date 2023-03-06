@@ -1,4 +1,4 @@
-package domain;
+package domain.participants;
 
 public class Name {
     private static final String INVALID_NAME_LENGTH_MESSAGE = "이름길이는 5자를 초과 할 수 없습니다.";

@@ -1,5 +1,8 @@
-package domain;
+package domain.generator;
 
+import domain.deck.Card;
+import domain.deck.CardNumber;
+import domain.deck.CardPattern;
 import strategy.ShuffleStrategy;
 
 import java.util.ArrayList;

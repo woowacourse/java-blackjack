@@ -1,6 +1,6 @@
 package strategy;
 
-import domain.Card;
+import domain.deck.Card;
 
 import java.util.List;
 

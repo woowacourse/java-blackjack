@@ -1,4 +1,7 @@
-package domain;
+package domain.participants;
+
+import domain.participants.Dealer;
+import domain.participants.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;

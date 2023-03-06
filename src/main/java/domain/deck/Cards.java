@@ -1,4 +1,6 @@
-package domain;
+package domain.deck;
+
+import domain.BlackjackGame;
 
 import java.util.ArrayList;
 import java.util.List;

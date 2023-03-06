@@ -1,5 +1,9 @@
 package domain;
 
+import domain.deck.Card;
+import domain.deck.CardNumber;
+import domain.deck.CardPattern;
+import domain.deck.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +15,7 @@ public class CardsTest {
     void add() {
         Cards cards = new Cards();
 
-        cards.add(new Card(CardNumber.ACE,CardPattern.SPADE));
+        cards.add(new Card(CardNumber.ACE, CardPattern.SPADE));
 
         Assertions.assertThat(cards.getCards().get(0))
                 .isEqualTo("A스페이드");

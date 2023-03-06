@@ -1,8 +1,8 @@
 package view;
 
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
+import domain.participants.Dealer;
+import domain.participants.Player;
+import domain.participants.Players;
 import domain.Result;
 
 import java.util.List;

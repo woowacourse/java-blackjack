@@ -1,6 +1,11 @@
 package controller;
 
 import domain.*;
+import domain.deck.CardDeck;
+import domain.generator.CardGenerator;
+import domain.participants.Dealer;
+import domain.participants.Player;
+import domain.participants.Players;
 import strategy.ShuffleCardsStrategy;
 import view.InputView;
 import view.OutputView;

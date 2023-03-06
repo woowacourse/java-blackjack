@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.deck.Card;
+import domain.generator.CardGenerator;
 import domain.strategy.NoShuffleCardsStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
