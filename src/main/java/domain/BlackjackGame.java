@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
-    public final static int BLACK_JACK = 21;
-    private final static int INITIAL_CARD_SET = 2;
+    public static final int BLACK_JACK = 21;
+    private static final int INITIAL_CARD_SET = 2;
 
     private final Players players;
     private final CardDeck cardDeck;
@@ -55,7 +55,7 @@ public class BlackjackGame {
         List<Result> dealerResults = new ArrayList<>();
         for (String name : getPlayersResult().keySet()) {
             Result result = getPlayersResult().get(name);
-            dealerResults.add(result);
+            dealerResults.add(result.getReverseResult());
         }
         dealerResult.put(players.findDealer().getName(), dealerResults);
         return dealerResult;

@@ -52,9 +52,9 @@ public class OutputView {
         System.out.println(FINAL_WIN_LOSE_RATIO_MESSAGE);
         String name = dealerResult.keySet().stream().findFirst().get();
         List<Result> dealerResults = dealerResult.get(name);
-        System.out.printf(DEALER_RESULT_MESSAGE, name, dealerResults.stream().filter(s -> s == Result.LOSE).count(),
+        System.out.printf(DEALER_RESULT_MESSAGE, name,dealerResults.stream().filter(s -> s == Result.WIN).count(),
                 dealerResults.stream().filter(s -> s == Result.DRAW).count(),
-                dealerResults.stream().filter(s -> s == Result.WIN).count());
+                dealerResults.stream().filter(s -> s == Result.LOSE).count());
         for (String key : playerResult.keySet()) {
             System.out.printf(PLAYER_RESULT_MESSAGE, key, playerResult.get(key).getResult());
         }
