@@ -24,10 +24,7 @@ public class BlackjackController {
     }
 
     private BlackjackGame createBlackjackGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(createPlayers());
-        blackjackGame.giveInitialCards();
-        outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        return blackjackGame;
+        return new BlackjackGame(createPlayers());
     }
 
     private Players createPlayers() {
@@ -41,6 +38,9 @@ public class BlackjackController {
     }
 
     private void play(BlackjackGame blackjackGame) {
+        blackjackGame.giveInitialCards();
+        outputView.printInitialCards(blackjackGame.getDealer(), blackjackGame.getPlayers());
+
         Players players = blackjackGame.getPlayers();
         for (Player player : players.getPlayers()) {
             requestMoreCard(blackjackGame, player);
