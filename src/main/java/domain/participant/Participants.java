@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
+import util.Constants;
 
 public class Participants {
 
-    private static final String DEALER_NAME = "딜러";
     private static final String NOT_MATCH_DEALER_NAME = "[ERROR] 딜러 이름이 일치하지 않습니다.";
 
     private final Players players;
@@ -21,10 +21,10 @@ public class Participants {
 
     public List<String> findCardNamesByParticipantName(String participantName) {
         List<String> cardNames = new ArrayList<>();
-        if (participantName.equals(DEALER_NAME)) {
+        if (participantName.equals(Constants.DEALER_NAME)) {
             cardNames = generateParticipantHandCardsName(dealer);
         }
-        if (!participantName.equals(DEALER_NAME)) {
+        if (!participantName.equals(Constants.DEALER_NAME)) {
             Player findPlayer = players.findPlayerByPlayerName(participantName);
             cardNames = generateParticipantHandCardsName(findPlayer);
         }
@@ -51,7 +51,7 @@ public class Participants {
     }
 
     public Dealer findDealerByDealerName(String dealerName) {
-        if (dealerName.equals(DEALER_NAME)) {
+        if (dealerName.equals(Constants.DEALER_NAME)) {
             return dealer;
         }
         throw new IllegalArgumentException(NOT_MATCH_DEALER_NAME);

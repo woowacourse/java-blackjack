@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import util.Constants;
+
 public class Players {
 
-    private static final String NOT_FOUND_PLAYER_ERROR = "[ERROR] 해당 플레이어 이름과 일치하는 플레이어가 없습니다.";
+    private static final String NOT_FOUND_PLAYER_ERROR = Constants.ERROR_PREFIX + "해당 플레이어 이름과 일치하는 플레이어가 없습니다.";
 
     private final List<Player> players;
 

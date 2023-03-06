@@ -1,10 +1,12 @@
 package domain.participant;
 
+import util.Constants;
+
 public class Name {
 
     public static final String NAME_REGEX_FORMAT = "^[a-zA-Z가-힣]+$";
-    public static final String NAME_EMPTY_ERROR_MESSAGE = "[ERROR] 이름은 빈칸이 포함될 수 없습니다.";
-    public static final String NAME_FORMAT_ERROR_MESSAGE = "[ERROR] 이름은 영어만 가능합니다.";
+    public static final String NAME_EMPTY_ERROR_MESSAGE = Constants.ERROR_PREFIX + "이름은 빈칸이 포함될 수 없습니다.";
+    public static final String NAME_FORMAT_ERROR_MESSAGE = Constants.ERROR_PREFIX+ "이름은 영어만 가능합니다.";
 
     private final String value;
 

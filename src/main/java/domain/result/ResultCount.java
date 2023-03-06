@@ -3,9 +3,11 @@ package domain.result;
 import java.util.HashMap;
 import java.util.Map;
 
+import util.Constants;
+
 public class ResultCount {
 
-    private static final String NOT_FIGHT_RESULT_ERROR_MESSAGE = "[ERROR] 승부가 나지 않았습니다.";
+    private static final String NOT_FIGHT_RESULT_ERROR_MESSAGE = Constants.ERROR_PREFIX + "승부가 나지 않았습니다.";
     private static final String DEALER_WIN_WORD = "승 ";
     private static final String DEALER_TIE_WORD = "무 ";
     private static final String DEALER_LOSE_WORD = "패";
