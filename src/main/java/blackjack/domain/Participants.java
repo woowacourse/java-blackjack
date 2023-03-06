@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class People {
+public class Participants {
     private final List<Person> people = new ArrayList<>();
 
-    public People(Dealer dealer, List<Player> players) {
+    public Participants(Dealer dealer, List<Player> players) {
         this.people.add(dealer);
         this.people.addAll(players);
     }

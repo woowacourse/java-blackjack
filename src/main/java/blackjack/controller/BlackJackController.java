@@ -6,7 +6,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.People;
+import blackjack.domain.Participants;
 import blackjack.domain.Person;
 import blackjack.domain.Player;
 import blackjack.domain.Rank;
@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class BlackJackController {
-    private People people;
+    private Participants participants;
     private final Cards uniqueCards;
 
     public BlackJackController() {
@@ -37,7 +37,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        people = new People(new Dealer(), repeat(this::getPlayers));
+        participants = new Participants(new Dealer(), repeat(this::getPlayers));
         initDrawCard();
         printInitStatus();
         drawMoreCardForPlayers();
@@ -73,7 +73,7 @@ public class BlackJackController {
     }
 
     private void initDrawCard() {
-        List<Person> persons = people.getPeople();
+        List<Person> persons = participants.getPeople();
         for (Person person : persons) {
             drawTwoCards(person, uniqueCards);
         }
@@ -85,17 +85,17 @@ public class BlackJackController {
     }
 
     private void printInitStatus() {
-        List<String> playerNames = people.getPlayers().stream()
+        List<String> playerNames = participants.getPlayers().stream()
                 .map(Person::getName)
                 .collect(toList());
         OutputView.printDefaultDrawCardMessage(playerNames);
-        for (Person person : people.getPeople()) {
+        for (Person person : participants.getPeople()) {
             OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getInitCards()));
         }
     }
 
     private void drawMoreCardForPlayers() {
-        for (Person person : people.getPlayers()) {
+        for (Person person : participants.getPlayers()) {
             repeat(() -> drawMoreCard(person, uniqueCards));
         }
     }
@@ -139,7 +139,7 @@ public class BlackJackController {
     }
 
     private void drawDealerMoreCard() {
-        Person dealer = people.getDealer();
+        Person dealer = participants.getDealer();
         OutputView.printDealerDrawCardMessage(dealer.getScore());
         if (dealer.canDrawCard()) {
             dealer.addCard(uniqueCards.drawCard());
@@ -147,7 +147,7 @@ public class BlackJackController {
     }
 
     private void printAllStatus() {
-        for (Person person : people.getPeople()) {
+        for (Person person : participants.getPeople()) {
             printPersonStatus(person);
         }
     }
@@ -158,13 +158,13 @@ public class BlackJackController {
 
     private void printGameResult() {
         OutputView.printGameEndMessage();
-        Person dealer = people.getDealer();
-        List<GameResult> dealerGameResults = people.getPlayers()
+        Person dealer = participants.getDealer();
+        List<GameResult> dealerGameResults = participants.getPlayers()
                 .stream()
                 .map(dealer::matchGame)
                 .collect(toList());
         OutputView.printDealerResult(dealerGameResults);
-        for (Person person : people.getPlayers()) {
+        for (Person person : participants.getPlayers()) {
             OutputView.printPlayerResult(person.getName(), person.matchGame(dealer));
         }
     }
