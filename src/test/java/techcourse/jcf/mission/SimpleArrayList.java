@@ -13,7 +13,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.values = (T[]) new Object[10];
     }
 
-    public SimpleArrayList(T[] values) {
+    public SimpleArrayList(T... values) {
         this.capacity = DEFAULT_CAPACITY;
         this.values = values;
         this.pointerToNext = values.length;
