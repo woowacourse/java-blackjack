@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardGroup {
 
@@ -33,8 +34,13 @@ public class CardGroup {
                 .count();
     }
 
+    public List<Card> subCardGroup(int size) {
+        return cards.stream()
+                .limit(size)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
-
 }

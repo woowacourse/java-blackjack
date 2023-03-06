@@ -32,5 +32,5 @@ public abstract class User {
         return cardGroup;
     }
 
-    abstract protected List<Card> getFirstOpenCardGroup();
+    abstract public List<Card> getFirstOpenCardGroup();
 }

@@ -5,6 +5,7 @@ import java.util.List;
 public class Dealer extends User {
 
     public static final String DEALER_NAME = "딜러";
+    private static final int FIRST_OPEN_CARD_COUNT = 1;
 
     public Dealer(CardGroup initialGroup) {
         super(DEALER_NAME, initialGroup);
@@ -12,7 +13,7 @@ public class Dealer extends User {
 
     @Override
     public List<Card> getFirstOpenCardGroup() {
-        return List.of(getStatus().get(0));
+        return getCardGroups().subCardGroup(FIRST_OPEN_CARD_COUNT);
     }
 
     public WinningStatus comparePlayer(final Player player) {

@@ -5,14 +5,14 @@ import java.util.stream.Collectors;
 
 public class Player extends User {
 
+    private static final int FIRST_OPEN_CARD_COUNT = 2;
+
     protected Player(String name, CardGroup cardGroup) {
         super(name, cardGroup);
     }
 
     @Override
-    protected List<Card> getFirstOpenCardGroup() {
-        return getStatus().stream()
-                .limit(2)
-                .collect(Collectors.toUnmodifiableList());
+    public List<Card> getFirstOpenCardGroup() {
+        return getCardGroups().subCardGroup(FIRST_OPEN_CARD_COUNT);
     }
 }
