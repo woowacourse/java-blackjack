@@ -12,13 +12,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
 
-    public static final int START_DEAL_COUNT = 2;
     private final CardDistributor cardDistributor;
     private final BlackJackResultMaker blackJackResultMaker;
 
@@ -30,7 +28,7 @@ public class BlackJackController {
     public void play() {
         final List<Participant> participants = getParticipants();
         final Dealer dealer = new Dealer(makeEmptyCards());
-        giveCards(dealer, participants);
+        giveInitialCards(dealer, participants);
         getPlayerAdditionalCard(participants);
         getDealerAdditionalCard(dealer);
         printTotalCardState(dealer, participants);
@@ -50,16 +48,9 @@ public class BlackJackController {
         return new Cards(new HashSet<>());
     }
 
-    private void giveCards(final Dealer dealer, final List<Participant> participants) {
-        dealCard(participants);
-        dealCard(List.of(dealer));
+    private void giveInitialCards(final Dealer dealer, final List<Participant> participants) {
+        cardDistributor.giveInitCards(dealer, participants);
         OutputView.printInitialCards(dealer, participants);
-    }
-
-    private void dealCard(final List<Participant> participants) {
-        IntStream.range(0, START_DEAL_COUNT)
-            .mapToObj(i -> participants)
-            .forEach(cardDistributor::giveCard);
     }
 
     private void getPlayerAdditionalCard(final List<Participant> participants) {

@@ -1,9 +1,11 @@
 package domain.model;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class CardDistributor {
 
+    private static final int INIT_DEAL_COUNT = 2;
     private final CardGenerator cardGenerator;
 
     public CardDistributor(final CardGenerator cardGenerator) {
@@ -14,7 +16,11 @@ public class CardDistributor {
         participant.addCard(cardGenerator.generate());
     }
 
-    public void giveCard(final List<Participant> participants) {
-        participants.forEach(this::giveCard);
+    public void giveInitCards(final Dealer dealer, final List<Participant> participants) {
+        IntStream.range(0, INIT_DEAL_COUNT)
+            .forEach(i -> {
+                giveCard(dealer);
+                participants.forEach(this::giveCard);
+            });
     }
 }
