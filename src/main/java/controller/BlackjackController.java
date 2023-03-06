@@ -29,11 +29,11 @@ public class BlackjackController {
 
     private Players createPlayers() {
         return retryOnInvalidUserInput(
-                () -> Players.from(PlayerNames.from(readNames()))
+                () -> Players.from(PlayerNames.from(readPlayerNames()))
         );
     }
 
-    private List<String> readNames() {
+    private List<String> readPlayerNames() {
         return inputView.requestPlayerNames();
     }
 
