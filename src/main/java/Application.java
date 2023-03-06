@@ -50,7 +50,7 @@ public class Application {
     private void giveCardToParticipant(BlackJackGame blackJackGame, Player participant) {
         AddCardCommand command = getCommand(participant);
         if (command.isAddCardCommand()) {
-            blackJackGame.giveCard(participant.getName());
+            blackJackGame.giveCard(participant);
             OutputView.printParticipantCardCondition(List.of(participant));
         }
         

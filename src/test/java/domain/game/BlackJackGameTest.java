@@ -3,8 +3,6 @@ package domain.game;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.player.Dealer;
-import domain.player.Participant;
 import domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,10 +41,12 @@ class BlackJackGameTest {
     void givenPlayer_thenGivesCard() {
         BlackJackGame blackJackGame = new BlackJackGame("여우,아벨", cards -> cards);
         blackJackGame.giveTwoCardToPlayers();
+        List<Player> participants = blackJackGame.getParticipants();
+    
+        Player player = participants.get(0);
+        blackJackGame.giveCard(player);
 
-        blackJackGame.giveCard("여우");
-
-        List<Card> cards = blackJackGame.getCardsFrom("여우");
+        List<Card> cards = player.getCards();
 
         assertThat(cards).containsExactly(
                 new Card(Shape.DIAMOND, Number.KING),
@@ -91,6 +91,6 @@ class BlackJackGameTest {
 
         blackJackGame.giveDealerCard();
 
-        assertThat(blackJackGame.getCardsFrom("딜러")).contains(new Card(Shape.DIAMOND, Number.SEVEN));
+        assertThat(blackJackGame.getDealer().getCards()).contains(new Card(Shape.DIAMOND, Number.SEVEN));
     }
 }

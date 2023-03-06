@@ -58,18 +58,8 @@ public class BlackJackGame {
         players.forEach(player -> cardsPerPlayer.put(player, player.getCards()));
     }
 
-    public void giveCard(String playerName) {
-        players.stream()
-                .filter(player -> player.isNameEqualTo(playerName))
-                .forEach(player -> player.addCard(deck.draw()));
-    }
-
-    public List<Card> getCardsFrom(String playerName) {
-        return players.stream()
-                .filter(player -> player.isNameEqualTo(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이름입니다."))
-                .getCards();
+    public void giveCard(Player player) {
+        player.addCard(deck.draw());
     }
 
     public boolean shouldDealerGetCard() {
