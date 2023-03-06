@@ -70,14 +70,6 @@ public class BlackjackController {
         return player.isDrawable() && !player.isDealer();
     }
 
-    private void decideAction(final BlackjackGame blackjackGame, final Player player, final BlackjackCommand command) {
-        if (command.isHit()) {
-            blackjackGame.drawTo(player, ShuffledDeck.getInstance());
-            return;
-        }
-        blackjackGame.stay(player);
-    }
-
     private BlackjackCommand createCommand(final Player player, final Retry retry) {
         while (retry.isRepeatable()) {
             try {
@@ -88,6 +80,14 @@ public class BlackjackController {
             }
         }
         throw new IllegalArgumentException(retry.getFailMessage());
+    }
+
+    private void decideAction(final BlackjackGame blackjackGame, final Player player, final BlackjackCommand command) {
+        if (command.isHit()) {
+            blackjackGame.drawTo(player, ShuffledDeck.getInstance());
+            return;
+        }
+        blackjackGame.stay(player);
     }
 
     private void play(final BlackjackGame blackjackGame) {
