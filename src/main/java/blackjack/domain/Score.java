@@ -8,27 +8,27 @@ public class Score {
 
     private int score;
 
-    public void calculateScore(List<TrumpNumber> trumpNumbers) {
-        score = trumpNumbers.stream()
-                .mapToInt(TrumpNumber::getScore)
+    public void calculateScore(List<Letter> letters) {
+        score = letters.stream()
+                .mapToInt(Letter::getScore)
                 .sum();
 
         if (score > MAX_BLACKJACK_SCORE) {
-            handleBurst(trumpNumbers);
+            handleBurst(letters);
         }
     }
 
-    private void handleBurst(List<TrumpNumber> trumpNumbers) {
-        int aceCount = countAce(trumpNumbers);
+    private void handleBurst(List<Letter> letters) {
+        int aceCount = countAce(letters);
         while (score > MAX_BLACKJACK_SCORE && aceCount > 0) {
             score -= ACE_GAP;
             aceCount -= 1;
         }
     }
 
-    private int countAce(List<TrumpNumber> trumpNumbers) {
-        return (int) trumpNumbers.stream()
-                .filter(e -> e.equals(TrumpNumber.ACE))
+    private int countAce(List<Letter> letters) {
+        return (int) letters.stream()
+                .filter(e -> e.equals(Letter.ACE))
                 .count();
     }
 

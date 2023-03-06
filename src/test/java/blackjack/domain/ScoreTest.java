@@ -12,7 +12,7 @@ class ScoreTest {
     @DisplayName("점수 계산")
     void calculateScore() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.FIVE, TrumpNumber.NINE));
+        score.calculateScore(List.of(Letter.FIVE, Letter.NINE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(14);
     }
@@ -21,7 +21,7 @@ class ScoreTest {
     @DisplayName("21점 초과일 때 ACE 처리 (ACE 1장인 경우)")
     void calculateScoreIncludeAce() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.FIVE, TrumpNumber.NINE, TrumpNumber.ACE));
+        score.calculateScore(List.of(Letter.FIVE, Letter.NINE, Letter.ACE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(15);
     }
@@ -30,8 +30,8 @@ class ScoreTest {
     @DisplayName("21점 초과일 때 ACE 처리 (ACE 3장일 경우)")
     void calculateScoreIncludeAce3() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.FIVE, TrumpNumber.NINE,
-                TrumpNumber.ACE, TrumpNumber.ACE, TrumpNumber.ACE));
+        score.calculateScore(List.of(Letter.FIVE, Letter.NINE,
+                Letter.ACE, Letter.ACE, Letter.ACE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(17);
     }
@@ -40,7 +40,7 @@ class ScoreTest {
     @DisplayName("ACE 가 4장일 경우")
     void calculateScoreAce4() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.ACE, TrumpNumber.ACE, TrumpNumber.ACE, TrumpNumber.ACE));
+        score.calculateScore(List.of(Letter.ACE, Letter.ACE, Letter.ACE, Letter.ACE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(14);
     }

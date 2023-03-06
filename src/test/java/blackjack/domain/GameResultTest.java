@@ -17,10 +17,10 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new ArrayList<>(List.of(new Card(TrumpShape.HEART, TrumpNumber.JACK), new Card(TrumpShape.SPADE, TrumpNumber.EIGHT))));
+        dealer = new Dealer(new ArrayList<>(List.of(new Card(Suit.HEART, Letter.JACK), new Card(Suit.SPADE, Letter.EIGHT))));
         dealer.isAbleToReceive();
 
-        player = new Player("pobi", new ArrayList<>(List.of(new Card(TrumpShape.CLOVER, TrumpNumber.FOUR), new Card(TrumpShape.DIAMOND, TrumpNumber.SIX))));
+        player = new Player("pobi", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.FOUR), new Card(Suit.DIAMOND, Letter.SIX))));
         players = new Players(List.of(player));
         player.isAbleToReceive();
     }
@@ -37,7 +37,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 비기는 경우")
     void gameResult2() {
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.EIGHT));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -49,8 +49,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 딜러가 지는 경우")
     void gameResult3() {
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.EIGHT));
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.TWO));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.TWO));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -62,8 +62,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 플레이어만 버스터인 경우")
     void gameResult4() {
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.EIGHT));
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.KING));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.KING));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -75,7 +75,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 딜러만 버스터인 경우")
     void gameResult5() {
-        dealer.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.SEVEN));
+        dealer.receiveCard(new Card(Suit.CLOVER, Letter.SEVEN));
         dealer.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -87,10 +87,10 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 둘 다 버스터인 경우")
     void gameResult6() {
-        dealer.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.SEVEN));
+        dealer.receiveCard(new Card(Suit.CLOVER, Letter.SEVEN));
         dealer.isAbleToReceive();
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.EIGHT));
-        player.receiveCard(new Card(TrumpShape.CLOVER, TrumpNumber.KING));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(new Card(Suit.CLOVER, Letter.KING));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -102,8 +102,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인 : 플레이어 여러명일 때")
     void multiPlayer() {
-        Player player2 = new Player("jena", new ArrayList<>(List.of(new Card(TrumpShape.CLOVER, TrumpNumber.ACE), new Card(TrumpShape.DIAMOND, TrumpNumber.SEVEN))));
-        Player player3 = new Player("io", new ArrayList<>(List.of(new Card(TrumpShape.CLOVER, TrumpNumber.JACK), new Card(TrumpShape.DIAMOND, TrumpNumber.KING))));
+        Player player2 = new Player("jena", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.ACE), new Card(Suit.DIAMOND, Letter.SEVEN))));
+        Player player3 = new Player("io", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.JACK), new Card(Suit.DIAMOND, Letter.KING))));
 
         players = new Players(List.of(player, player2, player3));
         players.getPlayers().forEach(Player::isAbleToReceive);

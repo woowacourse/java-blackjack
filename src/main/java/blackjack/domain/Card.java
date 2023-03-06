@@ -1,19 +1,19 @@
 package blackjack.domain;
 
 public class Card {
-    private final TrumpShape trumpShape;
-    private final TrumpNumber trumpNumber;
+    private final Suit suit;
+    private final Letter letter;
 
-    public Card(TrumpShape trumpShape, TrumpNumber trumpNumber) {
-        this.trumpShape = trumpShape;
-        this.trumpNumber = trumpNumber;
+    public Card(Suit suit, Letter letter) {
+        this.suit = suit;
+        this.letter = letter;
     }
 
-    public TrumpShape getTrumpShape() {
-        return trumpShape;
+    public Suit getTrumpShape() {
+        return suit;
     }
 
-    public TrumpNumber getTrumpNumber() {
-        return trumpNumber;
+    public Letter getTrumpNumber() {
+        return letter;
     }
 }
