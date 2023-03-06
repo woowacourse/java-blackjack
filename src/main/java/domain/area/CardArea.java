@@ -8,6 +8,9 @@ import java.util.List;
 
 public class CardArea {
 
+    private static final int REMAIN_SCORE_ACE = 10;
+    private static final int ADD_ACE_BUST_OR_NOT = 11;
+
     private final List<Card> cards = new ArrayList<>();
 
     public CardArea(final Card firstCard, final Card secondCard) {
@@ -27,8 +30,8 @@ public class CardArea {
         int totalValue = sumTotalCardValue();
 
         while (aceCount > 0) {
-            if (totalValue <= 11) {
-                totalValue += 10;
+            if (totalValue <= ADD_ACE_BUST_OR_NOT) {
+                totalValue += REMAIN_SCORE_ACE;
             }
             aceCount--;
         }
