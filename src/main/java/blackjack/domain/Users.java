@@ -9,8 +9,10 @@ public class Users {
 
     private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
     private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
-    static final String PLAYER_NAMES_IS_EMPTY = "쉼표만 입력할 수 없습니다.";
+    private static final String PLAYER_NAMES_IS_EMPTY = "쉼표만 입력할 수 없습니다.";
+    private static final String NUMBER_OF_PLAYER_OVER_LIMIT = "플레이어의 이름은 5개까지만 입력해야 합니다.";
     private static final int DEALER_DRAW_LIMIT = 16;
+    private static final int NUMBER_OF_PLAYER_LIMIT = 5;
 
     private final List<User> users;
 
@@ -26,6 +28,9 @@ public class Users {
     private void validatePlayerNames(final List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException(PLAYER_NAMES_IS_EMPTY);
+        }
+        if (playerNames.size() > NUMBER_OF_PLAYER_LIMIT) {
+            throw new IllegalArgumentException(NUMBER_OF_PLAYER_OVER_LIMIT);
         }
     }
 

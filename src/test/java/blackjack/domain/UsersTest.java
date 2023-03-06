@@ -3,12 +3,14 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class UsersTest {
@@ -20,17 +22,46 @@ class UsersTest {
             new Card(CardShape.HEART, CardNumber.NINE),
             new Card(CardShape.DIAMOND, CardNumber.FOUR));
 
-    @Test
-    @DisplayName("플레이어 이름으로 아무것도 오지 않는다면 에러를 반환하는 테스트")
-    void throwExceptionIfPlayerNamesIsEmpty() {
-        final List<String> playerNames = Collections.emptyList();
+    @Nested
+    class validation {
 
-        final Runnable throwException =
-                () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+        @Test
+        @DisplayName("플레이어 이름으로 아무것도 오지 않는다면 에러를 반환하는 테스트")
+        void throwExceptionIfPlayerNamesIsEmpty() {
+            final List<String> playerNames = Collections.emptyList();
 
-        assertThatThrownBy(throwException::run)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Users.PLAYER_NAMES_IS_EMPTY);
+            final Runnable initialUsersByEmptyPlayerNames =
+                    () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+
+            assertThatThrownBy(initialUsersByEmptyPlayerNames::run)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("쉼표만 입력할 수 없습니다.");
+        }
+
+        @Test
+        @DisplayName("플레이어의 이름이 6개 이상 입력되는 경우 예외처리")
+        void throwExceptionIfPlayerNamesLengthOver5() {
+            final List<String> playerNames = List.of("홍실", "제이미", "네오", "솔라", "필립", "다니");
+
+            final Runnable initialUsersByPlayerNamesLengthOver5 =
+                    () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+
+            assertThatThrownBy(initialUsersByPlayerNamesLengthOver5::run)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("플레이어의 이름은 5개까지만 입력해야 합니다.");
+        }
+
+        //TODO : 내부의 상태를 검증하는 방법으로 테스트 유효성 확인
+        @Test
+        @DisplayName("조건을 만족하는 경우 정상적으로 Users가 생성된다.")
+        void initialUsersSuccess() {
+            final List<String> playerNames = List.of("홍실", "제이미", "필립");
+
+            final Runnable initialUsers =
+                    () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
+
+            assertDoesNotThrow(initialUsers::run);
+        }
     }
 
     @Test
