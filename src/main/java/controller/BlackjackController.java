@@ -51,7 +51,7 @@ public class BlackjackController {
     }
 
     private void requestMoreCard(BlackjackGame blackjackGame, Player player) {
-        while (!player.isBusted() && isHitCommand(player.getName())) {
+        while (!player.isBusted() && wantMoreCard(player)) {
             blackjackGame.giveCardTo(player);
             outputView.printPlayerCards(player);
         }
@@ -59,11 +59,15 @@ public class BlackjackController {
         printPlayerCurrentState(player);
     }
 
-    private boolean isHitCommand(String name) {
+    private boolean wantMoreCard(Player player) {
         Command command = retryOnInvalidUserInput(
-                () -> Command.from(inputView.requestMoreCard(name))
+                () -> Command.from(inputView.requestMoreCard(player.getName()))
         );
 
+        return isHitCommand(command);
+    }
+
+    private boolean isHitCommand(Command command) {
         return command == Command.HIT;
     }
 
