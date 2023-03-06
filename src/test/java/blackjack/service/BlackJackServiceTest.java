@@ -69,7 +69,8 @@ class BlackJackServiceTest {
     @DisplayName("참여자의 이름으로 카드를 뽑을 때 점수가 21을 초과하면 예외가 발생해야 한다.")
     void drawMoreCardByName_overScore() {
         // given
-        blackJackService.setupGame(new ShuffledDeckGenerator(), List.of("glen", "pobi"));
+        blackJackService.setupGame(new MockDeckGenerator(new Card(Suit.DIAMOND, Rank.KING), 52),
+                List.of("glen", "pobi"));
 
         // when
         blackJackService.drawMoreCardByName("glen");
