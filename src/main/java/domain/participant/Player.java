@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.card.Card;
+
 public class Player extends Participant {
 
     private static final String ERROR_NAME_LENGTH = "[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.";
@@ -32,6 +34,11 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Card getCardWithInvisible() {
         throw new UnsupportedOperationException();
     }
 }

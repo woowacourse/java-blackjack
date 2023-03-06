@@ -5,7 +5,6 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Participant;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +22,6 @@ public class OutputView {
     private static final String WIN = "승";
     private static final String DRAW = "무";
     private static final String LOSE = "패";
-    private static final int DEALER_VISIBLE_CARD = 1;
 
     private OutputView() {
     }
@@ -33,7 +31,7 @@ public class OutputView {
     }
 
     public static void printDealerCard(Participant dealer) {
-        System.out.println(dealer.getName() + ": " + makeCardView(dealer.getCards().get(DEALER_VISIBLE_CARD)));
+        System.out.println(dealer.getName() + ": " + makeCardView(dealer.getCardWithInvisible()));
     }
 
     public static void printPlayersCard(List<Participant> players) {

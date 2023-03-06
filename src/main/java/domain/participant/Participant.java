@@ -34,6 +34,8 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
+    public abstract Card getCardWithInvisible();
+
     public String getName() {
         return name;
     }
