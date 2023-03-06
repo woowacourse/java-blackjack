@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum PlayerAction {
     HIT("y"),
     HOLD("n"),
     ;
@@ -11,12 +11,12 @@ public enum Command {
 
     private final String command;
 
-    Command(String command) {
+    PlayerAction(String command) {
         this.command = command;
     }
 
-    public static Command from(String input) {
-        return Arrays.stream(Command.values())
+    public static PlayerAction from(String input) {
+        return Arrays.stream(PlayerAction.values())
                 .filter(c -> c.command.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(COMMAND_INPUT_ERROR));

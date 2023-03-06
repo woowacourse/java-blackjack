@@ -31,7 +31,7 @@ public class BlackjackGame {
 
     public void giveCardTo(Participant participant) {
         Card card = deck.drawCard();
-        participant.receiveCard(card);
+        participant.receive(card);
     }
 
     public void giveAdditionalCardToDealer() {

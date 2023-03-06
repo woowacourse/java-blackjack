@@ -20,7 +20,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
     void receiveCardSuccessTest() {
-        player.receiveCard(new Card(Shape.SPADE, Number.A));
+        player.receive(new Card(Shape.SPADE, Number.A));
 
         Assertions.assertThat(player).extracting("cards")
                 .asList()
@@ -31,8 +31,8 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTest() {
 
-        player.receiveCard(new Card(Shape.CLUB, Number.A));
-        player.receiveCard(new Card(Shape.HEART, Number.THREE));
+        player.receive(new Card(Shape.CLUB, Number.A));
+        player.receive(new Card(Shape.HEART, Number.THREE));
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(14);
@@ -43,9 +43,9 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTestWhenHasAce() {
 
-        player.receiveCard(new Card(Shape.CLUB, Number.A));
-        player.receiveCard(new Card(Shape.HEART, Number.THREE));
-        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receive(new Card(Shape.CLUB, Number.A));
+        player.receive(new Card(Shape.HEART, Number.THREE));
+        player.receive(new Card(Shape.HEART, Number.TEN));
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(14);
@@ -56,9 +56,9 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTestWhenHasAceUntilNotBusted() {
 
-        player.receiveCard(new Card(Shape.CLUB, Number.A));
-        player.receiveCard(new Card(Shape.HEART, Number.A));
-        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receive(new Card(Shape.CLUB, Number.A));
+        player.receive(new Card(Shape.HEART, Number.A));
+        player.receive(new Card(Shape.HEART, Number.TEN));
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(12);
@@ -69,9 +69,9 @@ class PlayerTest {
     @Test
     void isBustedSuccessTest() {
 
-        player.receiveCard(new Card(Shape.CLUB, Number.J));
-        player.receiveCard(new Card(Shape.HEART, Number.TEN));
-        player.receiveCard(new Card(Shape.HEART, Number.Q));
+        player.receive(new Card(Shape.CLUB, Number.J));
+        player.receive(new Card(Shape.HEART, Number.TEN));
+        player.receive(new Card(Shape.HEART, Number.Q));
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }
@@ -80,9 +80,9 @@ class PlayerTest {
     @Test
     void isNotBustedSuccessTest() {
 
-        player.receiveCard(new Card(Shape.CLUB, Number.A));
-        player.receiveCard(new Card(Shape.HEART, Number.A));
-        player.receiveCard(new Card(Shape.SPADE, Number.A));
+        player.receive(new Card(Shape.CLUB, Number.A));
+        player.receive(new Card(Shape.HEART, Number.A));
+        player.receive(new Card(Shape.SPADE, Number.A));
 
         Assertions.assertThat(player.isBusted()).isFalse();
     }

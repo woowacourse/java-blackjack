@@ -39,7 +39,7 @@ class DealerTest {
 
     public void giveCardsTo(Participant participant, List<Card> cards){
         for (Card card : cards) {
-            participant.receiveCard(card);
+            participant.receive(card);
         }
     }
 

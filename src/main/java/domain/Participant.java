@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Participant {
     private final List<Card> cards = new ArrayList<>();
 
-    public void receiveCard(Card card) {
+    public void receive(Card card) {
         cards.add(card);
     }
 

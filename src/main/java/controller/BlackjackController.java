@@ -60,15 +60,15 @@ public class BlackjackController {
     }
 
     private boolean wantMoreCard(Player player) {
-        Command command = retryOnInvalidUserInput(
-                () -> Command.from(inputView.requestMoreCard(player.getName()))
+        PlayerAction command = retryOnInvalidUserInput(
+                () -> PlayerAction.from(inputView.requestMoreCard(player.getName()))
         );
 
         return isHitCommand(command);
     }
 
-    private boolean isHitCommand(Command command) {
-        return command == Command.HIT;
+    private boolean isHitCommand(PlayerAction command) {
+        return command == PlayerAction.HIT;
     }
 
     private void printPlayerCurrentState(Player player) {
