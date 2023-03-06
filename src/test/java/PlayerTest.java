@@ -1,5 +1,5 @@
 import domain.Card;
-import domain.Number;
+import domain.CardRank;
 import domain.Player;
 import domain.PlayerName;
 import domain.Shape;
@@ -20,7 +20,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
     void receiveCardSuccessTest() {
-        player.receive(new Card(Shape.SPADE, Number.A));
+        player.receive(new Card(Shape.SPADE, CardRank.ACE));
 
         Assertions.assertThat(player).extracting("cards")
                 .asList()
@@ -31,8 +31,8 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTest() {
 
-        player.receive(new Card(Shape.CLUB, Number.A));
-        player.receive(new Card(Shape.HEART, Number.THREE));
+        player.receive(new Card(Shape.CLUB, CardRank.ACE));
+        player.receive(new Card(Shape.HEART, CardRank.THREE));
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(14);
@@ -43,9 +43,9 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTestWhenHasAce() {
 
-        player.receive(new Card(Shape.CLUB, Number.A));
-        player.receive(new Card(Shape.HEART, Number.THREE));
-        player.receive(new Card(Shape.HEART, Number.TEN));
+        player.receive(new Card(Shape.CLUB, CardRank.ACE));
+        player.receive(new Card(Shape.HEART, CardRank.THREE));
+        player.receive(new Card(Shape.HEART, CardRank.TEN));
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(14);
@@ -56,9 +56,9 @@ class PlayerTest {
     @Test
     void calculateScoreSuccessTestWhenHasAceUntilNotBusted() {
 
-        player.receive(new Card(Shape.CLUB, Number.A));
-        player.receive(new Card(Shape.HEART, Number.A));
-        player.receive(new Card(Shape.HEART, Number.TEN));
+        player.receive(new Card(Shape.CLUB, CardRank.ACE));
+        player.receive(new Card(Shape.HEART, CardRank.ACE));
+        player.receive(new Card(Shape.HEART, CardRank.TEN));
 
         Assertions.assertThat(player.calculateScore())
                 .isEqualTo(12);
@@ -69,9 +69,9 @@ class PlayerTest {
     @Test
     void isBustedSuccessTest() {
 
-        player.receive(new Card(Shape.CLUB, Number.J));
-        player.receive(new Card(Shape.HEART, Number.TEN));
-        player.receive(new Card(Shape.HEART, Number.Q));
+        player.receive(new Card(Shape.CLUB, CardRank.JACK));
+        player.receive(new Card(Shape.HEART, CardRank.TEN));
+        player.receive(new Card(Shape.HEART, CardRank.QUEEN));
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }
@@ -80,9 +80,9 @@ class PlayerTest {
     @Test
     void isNotBustedSuccessTest() {
 
-        player.receive(new Card(Shape.CLUB, Number.A));
-        player.receive(new Card(Shape.HEART, Number.A));
-        player.receive(new Card(Shape.SPADE, Number.A));
+        player.receive(new Card(Shape.CLUB, CardRank.ACE));
+        player.receive(new Card(Shape.HEART, CardRank.ACE));
+        player.receive(new Card(Shape.SPADE, CardRank.ACE));
 
         Assertions.assertThat(player.isBusted()).isFalse();
     }

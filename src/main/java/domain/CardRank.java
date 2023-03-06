@@ -1,7 +1,7 @@
 package domain;
 
-public enum Number {
-    A("A", 11),
+public enum CardRank {
+    ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -11,15 +11,15 @@ public enum Number {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    J("J", 10),
-    Q("Q", 10),
-    K("K", 10),
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10),
     ;
 
     private final String name;
     private final int score;
 
-    Number(String name, int score) {
+    CardRank(String name, int score) {
         this.name = name;
         this.score = score;
     }

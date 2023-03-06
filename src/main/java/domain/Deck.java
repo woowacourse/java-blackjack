@@ -26,9 +26,9 @@ public class Deck {
     }
 
     private void addCardsOfShape(Stack<Card> deck, Shape shape) {
-        Number[] numbers = Number.values();
+        CardRank[] numbers = CardRank.values();
 
-        for (Number number : numbers) {
+        for (CardRank number : numbers) {
             deck.add(new Card(shape, number));
         }
     }
