@@ -12,7 +12,6 @@ public class Controller {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private BlackJack blackJack;
 
     public Controller(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -21,32 +20,33 @@ public class Controller {
 
     public void run() {
         try {
-            ready();
-            play();
-            end();
+            BlackJack blackJack = ready();
+            play(blackJack);
+            end(blackJack);
         } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void ready() {
+    private BlackJack ready() {
         List<String> playerNames = inputView.askPlayerNames();
         Users users = Users.from(playerNames);
-        blackJack = BlackJack.of(users, new RandomCardShuffler());
+        BlackJack blackJack = BlackJack.of(users, new RandomCardShuffler());
         outputView.printInitMessage(playerNames);
         outputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
         outputView.printPlayerCards(blackJack.getPlayerToCard());
+        return blackJack;
     }
 
-    private void play() {
+    private void play(BlackJack blackJack) {
         List<Player> hittablePlayers = blackJack.getHittablePlayers();
         for (Player player : hittablePlayers) {
-            askPlayerHitCommand(player);
+            askPlayerHitCommand(player, blackJack);
         }
-        giveCardToDealer();
+        giveCardToDealer(blackJack);
     }
 
-    private void askPlayerHitCommand(final Player player) {
+    private void askPlayerHitCommand(final Player player, final BlackJack blackJack) {
         String playerName = player.getName();
         while (player.isHittable() && inputView.askHitCommand(playerName)) {
             blackJack.giveCard(playerName);
@@ -54,14 +54,14 @@ public class Controller {
         }
     }
 
-    private void giveCardToDealer() {
+    private void giveCardToDealer(BlackJack blackJack) {
         while (blackJack.isDealerHittable()) {
             blackJack.giveCardToDealer();
             outputView.printDealerHitMessage();
         }
     }
 
-    private void end() {
+    private void end(BlackJack blackJack) {
         outputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
         outputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
         outputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
