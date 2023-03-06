@@ -142,4 +142,29 @@ class SimpleArrayListGenericTest {
 
         assertThat(sum).isEqualTo(1.2);
     }
+
+    @Test
+    void filterNegative() {
+        Double[] integers = {0.5, -0.7, 0.7, -0.3};
+        SimpleArrayList<Double> doubleSimpleArrayList = SimpleArrayList.fromArrayToList(integers);
+
+        SimpleArrayList<Double> withoutNegative = SimpleArrayList.filterNegative(doubleSimpleArrayList);
+
+        assertThat(withoutNegative.size()).isEqualTo(2);
+        assertThat(withoutNegative.get(0)).isEqualTo(0.5);
+        assertThat(withoutNegative.get(1)).isEqualTo(0.7);
+    }
+
+    @Test
+    void filterNegativeInteger() {
+        Integer[] integers = {1, 2, -3, -4, 5};
+        SimpleArrayList<Integer> integerSimpleArrayList = SimpleArrayList.fromArrayToList(integers);
+
+        SimpleArrayList<Integer> withoutNegative = SimpleArrayList.filterNegative(integerSimpleArrayList);
+
+        assertThat(withoutNegative.size()).isEqualTo(3);
+        assertThat(withoutNegative.get(0)).isEqualTo(1);
+        assertThat(withoutNegative.get(1)).isEqualTo(2);
+        assertThat(withoutNegative.get(2)).isEqualTo(5);
+    }
 }

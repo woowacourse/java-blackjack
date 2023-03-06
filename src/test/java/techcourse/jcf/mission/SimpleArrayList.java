@@ -14,7 +14,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.arr = (E[]) new Object[capacity];
     }
 
-    static <E> SimpleArrayList<E> fromArrayToList(E[] array) {
+    public static <E> SimpleArrayList<E> fromArrayToList(E[] array) {
         SimpleArrayList<E> simpleArrayList = new SimpleArrayList<>();
         for (E value : array) {
             simpleArrayList.add(value);
@@ -22,12 +22,24 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         return simpleArrayList;
     }
 
-    static <E extends Number> double sum(SimpleArrayList<E> numbers) {
+    public static <E extends Number> double sum(SimpleArrayList<E> numbers) {
         double sum = 0;
         for (int i = 0; i < numbers.size; i++) {
             sum += numbers.get(i).doubleValue();
         }
         return sum;
+    }
+
+    public static <E extends Number> SimpleArrayList<E> filterNegative(SimpleArrayList<? extends E> numbers) {
+        SimpleArrayList<E> newSimpleArrayList = new SimpleArrayList<>();
+        for (int i = 0; i < numbers.size; i++) {
+            E number = numbers.get(i);
+            double doubleValue = number.doubleValue();
+            if (doubleValue >= 0) {
+                newSimpleArrayList.add(number);
+            }
+        }
+        return newSimpleArrayList;
     }
 
     @Override
