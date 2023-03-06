@@ -2,6 +2,7 @@ package view;
 
 import domain.deck.Card;
 import domain.game.Outcome;
+import domain.player.Name;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -54,15 +55,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final Map<String, Outcome> result) {
+    public static void printGameResult(final Map<Name, Outcome> result) {
         System.out.println("## 최종 승패");
         printDealerResult(result);
         printPlayerResult(result);
     }
 
-    private static void printDealerResult(final Map<String, Outcome> result) {
+    private static void printDealerResult(final Map<Name, Outcome> result) {
         EnumMap<Outcome, Integer> dealerResult = initializeDealerResult();
-        for (String key : result.keySet()) {
+        for (Name key : result.keySet()) {
             final Outcome outcome = result.get(key);
             dealerResult.put(outcome, dealerResult.get(outcome) + 1);
         }
@@ -84,21 +85,21 @@ public class OutputView {
         return enumMap;
     }
 
-    private static void printPlayerResult(final Map<String, Outcome> result) {
+    private static void printPlayerResult(final Map<Name, Outcome> result) {
         result.keySet().forEach(name ->
                 printEachPlayerResult(result, name)
         );
     }
 
-    private static void printEachPlayerResult(final Map<String, Outcome> result, final String name) {
+    private static void printEachPlayerResult(final Map<Name, Outcome> result, final Name name) {
         if (result.get(name).equals(Outcome.WIN)) {
-            printGameEachResult(name, 1, 0, 0);
+            printGameEachResult(name.getName(), 1, 0, 0);
         }
         if (result.get(name).equals(Outcome.DRAW)) {
-            printGameEachResult(name, 0, 1, 0);
+            printGameEachResult(name.getName(), 0, 1, 0);
         }
         if (result.get(name).equals(Outcome.LOSE)) {
-            printGameEachResult(name, 0, 0, 1);
+            printGameEachResult(name.getName(), 0, 0, 1);
         }
     }
 

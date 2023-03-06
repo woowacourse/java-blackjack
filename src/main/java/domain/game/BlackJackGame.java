@@ -57,13 +57,13 @@ public class BlackJackGame {
         return (Dealer) players.get(0);
     }
 
-    public Map<String, Outcome> decidePlayersOutcome() {
-        Map<String, Outcome> result = new LinkedHashMap<>();
+    public Map<Name, Outcome> decidePlayersOutcome() {
+        Map<Name, Outcome> result = new LinkedHashMap<>();
         final int dealerScore = findDealer().getScore();
         final List<Player> players = this.players.subList(1, this.players.size());
 
         players.forEach((player ->
-                result.put(player.getName().getName(), decideOutcome(dealerScore, player.getScore()))
+                result.put(player.getName(), decideOutcome(dealerScore, player.getScore()))
         ));
 
         return result;

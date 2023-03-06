@@ -5,6 +5,7 @@ import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
 import domain.game.Outcome;
+import domain.player.Name;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -100,7 +101,7 @@ public class MainController {
     }
 
     private void outputGameResult() {
-        final Map<String, Outcome> result = blackJackGame.decidePlayersOutcome();
+        final Map<Name, Outcome> result = blackJackGame.decidePlayersOutcome();
         OutputView.printEmptyLine();
         OutputView.printGameResult(result);
     }
