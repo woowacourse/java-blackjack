@@ -3,10 +3,7 @@ package domain;
 import domain.card.CardRepository;
 import domain.gameresult.GameResult;
 import domain.gameresult.GameResultReadOnly;
-import domain.player.Name;
-import domain.player.PlayerReadOnly;
-import domain.player.Players;
-import domain.player.PlayersReadOnly;
+import domain.player.*;
 import domain.strategy.IndexGenerator;
 
 import java.util.List;
@@ -20,9 +17,16 @@ public class BlackJack {
         this.cardRepository = CardRepository.create(indexGenerator);
     }
 
-    public void giveTwoCardToPlayers() {
-        players.giveCardToAll(cardRepository);
-        players.giveCardToAll(cardRepository);
+    public void initializeCardsOfPlayers() {
+        for (int count = 0; count < 2; count++) {
+            giveCardToAllPlayers();
+        }
+    }
+
+    public void giveCardToAllPlayers() {
+        for (Player player : players.getAllPlayers()) {
+            player.addCard(cardRepository.findAnyOneCard());
+        }
     }
 
     public void giveCard(PlayerReadOnly participant) {
@@ -34,7 +38,7 @@ public class BlackJack {
     }
 
     public void giveCardToDealer() {
-        players.giveCardToDealer(cardRepository);
+        players.giveCardToDealer(cardRepository.findAnyOneCard());
     }
 
     public PlayersReadOnly getPlayers() {

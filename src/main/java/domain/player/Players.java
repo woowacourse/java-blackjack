@@ -24,13 +24,8 @@ public class Players {
         return new Players(participants);
     }
 
-    public void giveCardToAll(CardRepository cardRepository) {
-        dealer.addCard(cardRepository.findAnyOneCard());
-        participants.forEach(participant -> participant.addCard(cardRepository.findAnyOneCard()));
-    }
-
-    public void giveCardToDealer(CardRepository cardRepository) {
-        dealer.addCard(cardRepository.findAnyOneCard());
+    public void giveCardToDealer(Card card) {
+        dealer.addCard(card);
     }
 
     public boolean shouldDealerGetCard() {
@@ -69,5 +64,12 @@ public class Players {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public List<Player> getAllPlayers() {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(participants);
+        return players;
     }
 }
