@@ -18,6 +18,8 @@ public class OutputView {
     private static final String DELIMITER = ", ";
 
     private static final String BLANK = " ";
+    private static final String BUST_HAND_VALUE = "0";
+    private static final String BUST = "버스트";
 
     public static void printDealFinishMessage(List<String> participantNames) {
         printEmptyLine();
@@ -39,6 +41,9 @@ public class OutputView {
     public static void printParticipantHandValue(String participantName, List<String> participantCards,
         String handValue) {
         String cards = String.join(DELIMITER, participantCards);
+        if (handValue.equals(BUST_HAND_VALUE)) {
+            handValue = BUST;
+        }
         System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, handValue);
     }
 

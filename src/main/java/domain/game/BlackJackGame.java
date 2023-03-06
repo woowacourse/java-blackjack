@@ -17,7 +17,6 @@ public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int BUST_BOUNDARY_VALUE = 21;
     private static final int BUST_HAND_VALUE = 0;
-    private static final String BUST = "버스트";
     private static final String HIT_REQUEST = "y";
     private static final String DEALER_NAME = new Dealer().getName();
 
@@ -131,7 +130,7 @@ public class BlackJackGame {
     private void judgeBust(Map<Participant, String> scores, Participant participant) {
         int handValue = participant.getHandValue();
         if (handValue > BUST_BOUNDARY_VALUE) {
-            scores.put(participant, BUST);
+            scores.put(participant, String.valueOf(BUST_HAND_VALUE));
             return;
         }
         scores.put(participant, String.valueOf(handValue));
