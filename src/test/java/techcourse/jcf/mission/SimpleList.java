@@ -17,10 +17,10 @@ public interface SimpleList<T> {
         return sum;
     }
 
-    static <T extends Number> SimpleList<T> filterNegative(SimpleList<? extends Number> values) {
+    static <T extends Number> SimpleList<T> filterNegative(SimpleList<T> values) {
         SimpleArrayList<T> simpleArrayList = new SimpleArrayList<>();
         for (int i = 0; i < values.size(); i++) {
-            T value = (T) values.get(i);
+            T value = values.get(i);
             if (value.doubleValue() >= 0) {
                 simpleArrayList.add(value);
             }
