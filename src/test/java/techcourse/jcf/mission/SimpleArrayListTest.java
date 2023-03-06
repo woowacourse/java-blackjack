@@ -220,4 +220,13 @@ class SimpleArrayListTest {
         SimpleList<String> simpleList = SimpleList.<String>fromArrayToList(array);
         Assertions.assertEquals(2, simpleList.size());
     }
+
+    @DisplayName("SimpleList 제네릭 메서드 합 테스트")
+    @Test
+    void SimpleList_제네릭_메서드_합_테스트() {
+        Integer[] array = {1, 2};
+        SimpleList<Integer> simpleList = SimpleList.fromArrayToList(array);
+
+        Assertions.assertEquals(3,  SimpleList.sum(simpleList));
+    }
 }

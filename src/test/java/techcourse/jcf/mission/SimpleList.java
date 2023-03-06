@@ -31,5 +31,13 @@ public interface SimpleList<E> {
         }
         return list;
     }
+
+    static <T extends Number> double sum(SimpleList<T> list) {
+        double sum = 0;
+        for (int i = 0; i< list.size(); i++) {
+            sum += list.get(i).doubleValue();
+        }
+        return sum;
+    }
 }
 
