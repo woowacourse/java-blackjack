@@ -12,7 +12,7 @@ import blackjack.view.ViewRenderer;
 import java.util.List;
 import java.util.Map;
 
-public class BackJackController {
+public class BlackJackController {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
