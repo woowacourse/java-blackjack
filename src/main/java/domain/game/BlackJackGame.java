@@ -179,13 +179,9 @@ public class BlackJackGame {
     }
 
     public Map<Result, Integer> calculateDealerResults(Map<String, Result> playerResults) {
-        return getDealerResults(playerResults);
-    }
-
-    public Map<Result, Integer> getDealerResults(Map<String, Result> results) {
         EnumMap<Result, Integer> result = new EnumMap<>(Result.class);
 
-        for (Result playerResult : results.values()) {
+        for (Result playerResult : playerResults.values()) {
             judgeResult(result, playerResult);
         }
         return result;
