@@ -13,14 +13,10 @@ public class Controller {
 
 	private BlackJack blackJack;
 
-	public void run() {
-		try {
-			ready();
-			play();
-			end();
-		} catch (Exception e) {
-			printErrorMessage(e.getMessage());
-		}
+	public void run(){
+		ready();
+		play();
+		end();
 	}
 
 	private void ready() {
