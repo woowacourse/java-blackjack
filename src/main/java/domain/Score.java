@@ -6,10 +6,10 @@ public class Score {
 
     private static final int UPPER_LIMIT_SCORE = 21;
 
-    private final int score;
+    private final int value;
 
-    public Score(final int score) {
-        this.score = score;
+    public Score(final int value) {
+        this.value = value;
     }
 
     @Override
@@ -17,35 +17,35 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Score score1 = (Score) o;
-        return score == score1.score;
+        return value == score1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(value);
     }
 
     public boolean isLessThan(final Score other) {
-        return score < other.score;
+        return value < other.value;
     }
 
     public boolean isBust() {
-        return score > UPPER_LIMIT_SCORE;
+        return value > UPPER_LIMIT_SCORE;
     }
 
     public boolean canMoreCard() {
-        return score < UPPER_LIMIT_SCORE;
+        return value < UPPER_LIMIT_SCORE;
     }
 
     public boolean isLessEqualThan(final Score other) {
-        return score <= other.score;
+        return value <= other.value;
     }
 
     public boolean isGreaterThan(final Score other) {
-        return score > other.score;
+        return value > other.value;
     }
 
     public int value() {
-        return score;
+        return value;
     }
 }
