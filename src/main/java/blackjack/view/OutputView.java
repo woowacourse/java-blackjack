@@ -34,8 +34,8 @@ public class OutputView {
         }
     }
 
-    public void printCurrentCards(final Player player, final List<Card> currentCards) {
-        String cards = currentCards.stream()
+    public void printCurrentCards(final Player player) {
+        String cards = player.getCards().stream()
                 .map(Card::combineNumberAndPattern)
                 .collect(joining(", "));
 
