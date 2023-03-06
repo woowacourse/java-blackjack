@@ -1,7 +1,10 @@
 package blackjack.domain.card;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.card.exception.NoMoreCardException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,23 +15,10 @@ public class CardDeck {
     private CardDeck(List<Card> cards) {
         this.cards = cards;
     }
-
     public static CardDeck create() {
-        List<Card> cards = new ArrayList<>();
-        addShapeSets(cards);
-        return new CardDeck(cards);
-    }
-
-    private static void addShapeSets(List<Card> cards) {
-        for (Shape shape : Shape.values()) {
-            addNumberSets(cards, shape);
-        }
-    }
-
-    private static void addNumberSets(List<Card> cards, Shape shape) {
-        for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
-        }
+        return Arrays.stream(Shape.values())
+                .flatMap(shape -> Arrays.stream(Symbol.values()).map(symbol -> new Card(shape, symbol)))
+                .collect(collectingAndThen(toList(), CardDeck::new));
     }
 
     public void shuffle() {
