@@ -4,11 +4,11 @@ import model.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hand {
 
     private static final int BUST_NUMBER = 21;
-    private static final int ACE_REVISE_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -26,15 +26,11 @@ public class Hand {
 
     public int getTotalValue() {
         int totalValue = calculateTotalValue();
-        return reviseTotalValue(totalValue);
-    }
 
-    private int reviseTotalValue(int totalValue) {
-        int aceCount = countAce();
-        while (totalValue > BUST_NUMBER && aceCount > 0) {
-            aceCount--;
-            totalValue -= ACE_REVISE_VALUE;
+        if (totalValue > BUST_NUMBER && isIncludeAce()) {
+            return totalValue - 10;
         }
+
         return totalValue;
     }
 
@@ -44,10 +40,22 @@ public class Hand {
                 .sum();
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    private boolean isIncludeAce() {
+        return this.cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Hand hand = (Hand) o;
+        return Objects.equals(cards, hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 
     public List<Card> getCards() {

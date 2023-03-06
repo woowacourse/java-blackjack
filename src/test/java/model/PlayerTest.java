@@ -1,6 +1,7 @@
 package model;
 
 import model.card.Card;
+import model.card.Deck;
 import model.user.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -110,5 +111,15 @@ class PlayerTest {
 
         // when, then
         assertThat(player.judgeResult(dealerTotalValue)).isEqualTo(WIN);
+    }
+
+    @DisplayName("receiveInitialCards가 두 장의 카드를 주는지 확인한다.")
+    @Test
+    void receiveInitialCards() {
+        // given
+        player.receiveInitialCards(new Deck());
+
+        // when, then
+        assertThat(player.getHand().getCards()).hasSize(2);
     }
 }

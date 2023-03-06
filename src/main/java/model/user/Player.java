@@ -1,6 +1,7 @@
 package model.user;
 
 import model.card.Card;
+import model.card.Deck;
 
 public class Player implements Receivable {
 
@@ -25,7 +26,12 @@ public class Player implements Receivable {
         return user.judgeResult(dealerTotalValue);
     }
 
-    public void receiveCard(Card card) {
+    public void receiveInitialCards(final Deck deck) {
+        receiveCard(deck.pick());
+        receiveCard(deck.pick());
+    }
+
+    public void receiveCard(final Card card) {
         user.receiveCard(card);
     }
 

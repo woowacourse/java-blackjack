@@ -2,7 +2,6 @@ package model;
 
 import model.card.Card;
 import model.card.Deck;
-import model.card.RandomShuffleMaker;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
@@ -22,9 +21,9 @@ import static model.card.Value.KING;
 import static model.card.Value.NINE;
 import static model.card.Value.THREE;
 import static model.card.Value.TWO;
-import static model.user.Result.LOSE;
-import static model.user.Result.TIE;
-import static model.user.Result.WIN;
+import static model.user.Score.LOSE;
+import static model.user.Score.TIE;
+import static model.user.Score.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -105,7 +104,7 @@ class ParticipantsTest {
     @Test
     void receiveInitialCards() {
         // given
-        participants.receiveInitialCards(Deck.create(new RandomShuffleMaker()));
+        participants.receiveInitialCards(new Deck());
 
         // when, then
         assertAll(
