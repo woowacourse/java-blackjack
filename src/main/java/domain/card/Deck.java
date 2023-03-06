@@ -1,42 +1,36 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
 
-    private static final int INIT_INDEX = 0;
-    private final List<Card> deck;
+    private static final Queue<Card> deck;
 
-    private int index;
-
-    public Deck() {
-        this.deck = createDeck();
-        index = INIT_INDEX;
-        Collections.shuffle(deck);
+    static {
+        LinkedList<Card> cards = createDeck();
+        Collections.shuffle(cards);
+        deck = cards;
     }
 
-    private List<Card> createDeck() {
+    private static LinkedList<Card> createDeck() {
         return Arrays.stream(Denomination.values())
                 .flatMap(generateCardForm())
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private Function<Denomination, Stream<? extends Card>> generateCardForm() {
+    private static Function<Denomination, Stream<? extends Card>> generateCardForm() {
         return denomination -> Arrays.stream(Suit.values())
                 .map(suit -> new Card(suit, denomination));
     }
 
-    public Card pickCard() {
-        return deck.get(index++);
+    public static Card pickCard() {
+        return deck.poll();
     }
 
-    public List<Card> getDeck() {
+    public static List<Card> getDeck() {
         return new ArrayList<>(deck);
     }
 }
