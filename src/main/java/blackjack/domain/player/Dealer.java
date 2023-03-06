@@ -1,9 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import java.util.List;
 
 public class Dealer extends AbstractPlayer {
     private static final int SCORE_LOWER_BOUND = 16;
@@ -12,9 +9,8 @@ public class Dealer extends AbstractPlayer {
         super(name, hand);
     }
 
-    public static Dealer create(final Deck deck) {
-        final List<Card> initialDraw = List.of(deck.draw());
-        return new Dealer(Name.createDealerName(), new Hand(initialDraw));
+    public static Dealer create() {
+        return new Dealer(Name.createDealerName(), new Hand());
     }
 
     @Override

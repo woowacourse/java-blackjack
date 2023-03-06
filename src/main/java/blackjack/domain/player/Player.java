@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface Player {
 
+    void initialDraw(Deck deck);
+
     void draw(final Deck deck);
 
     boolean isDrawable();

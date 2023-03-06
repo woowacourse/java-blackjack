@@ -27,10 +27,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> names, final Deck deck) {
+    public static Players from(final List<String> names) {
         validateDuplicate(names);
         validateNameCount(names);
-        return new Players(generate(names, deck));
+        return new Players(generate(names));
     }
 
     private static void validateDuplicate(final List<String> names) {
@@ -53,13 +53,19 @@ public class Players {
         return names.size() < NAME_COUNT_LOWER_BOUND || NAME_COUNT_UPPER_BOUND < names.size();
     }
 
-    private static List<Player> generate(final List<String> names, final Deck deck) {
+    private static List<Player> generate(final List<String> names) {
         final List<Player> players = new ArrayList<>();
-        players.add(Dealer.create(deck));
+        players.add(Dealer.create());
         for (String name : names) {
-            players.add(Gambler.create(name, deck));
+            players.add(Gambler.create(name));
         }
         return players;
+    }
+
+    public void initialDraw(final Deck deck) {
+        for (Player player : players) {
+            player.initialDraw(deck);
+        }
     }
 
     public void drawToDealer(final Deck deck) {

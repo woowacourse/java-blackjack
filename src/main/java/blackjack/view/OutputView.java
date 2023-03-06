@@ -9,10 +9,12 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.player.Result;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final int INITIAL_DRAW_COUNT = 2;
+    private static final int DEALER_OPEN_CARD_INDEX = 0;
     private static final String INITIAL_DRAW_MESSAGE = "에게 " + INITIAL_DRAW_COUNT + "장을 나누었습니다.";
     private static final String DELIMITER = ", ";
     private static final String PLAYER_CARD_MESSAGE_FORMAT = "%s 카드: %s";
@@ -29,18 +31,28 @@ public class OutputView {
 
     public void printInitialDraw(final Players players) {
         System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
-        for (Player player : players.getPlayers()) {
-            printPlayerMessage(player, generateCardMessage(player));
-        }
-        System.out.print(NEW_LINE);
+        System.out.println(generateInitialDrawMessages(players) + NEW_LINE);
     }
 
     private String generateNames(final Players players) {
         return join(DELIMITER, players.getNames());
     }
 
-    private void printPlayerMessage(final Player player, final String message) {
-        System.out.println(format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message));
+    private String generateInitialDrawMessages(final Players players) {
+        return players.getPlayers().stream()
+                .map(this::generateInitialDrawMessage)
+                .collect(Collectors.joining(NEW_LINE));
+    }
+
+    private String generateInitialDrawMessage(final Player player) {
+        if (player.isDealer()) {
+            return generatePlayerMessage(player, player.getCardLetters().get(DEALER_OPEN_CARD_INDEX));
+        }
+        return generatePlayerMessage(player, generateCardMessage(player));
+    }
+
+    private String generatePlayerMessage(final Player player, final String message) {
+        return format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message);
     }
 
     private String generateCardMessage(final Player player) {
@@ -52,11 +64,11 @@ public class OutputView {
     }
 
     public void printDrawResult(final Player player) {
-        printPlayerMessage(player, generateCardMessage(player));
+        System.out.println(generatePlayerMessage(player, generateCardMessage(player)));
     }
 
     public void printPlayerResult(final Player player) {
-        printPlayerMessage(player, generateCardMessage(player) + generateScoreMessage(player));
+        System.out.println(generatePlayerMessage(player, generateCardMessage(player) + generateScoreMessage(player)));
     }
 
     private String generateScoreMessage(final Player player) {

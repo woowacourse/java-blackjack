@@ -37,7 +37,7 @@ public class PlayersTest {
     void 입력받은_플레이어의_이름이_중복되는_경우_예외를_던진다() {
         final List<String> names = List.of("name", "name");
 
-        assertThatThrownBy(() -> from(names, FixedDeck.getFullDeck()))
+        assertThatThrownBy(() -> from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.DUPLICATE_NAMES_MESSAGE + names);
     }
@@ -49,7 +49,7 @@ public class PlayersTest {
                 .mapToObj(String::valueOf)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> from(names, FixedDeck.getFullDeck()))
+        assertThatThrownBy(() -> from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.INVALID_NAME_COUNT + count);
     }
@@ -58,7 +58,7 @@ public class PlayersTest {
     void 플레이어들이_정상_생성된다() {
         final List<String> names = List.of("후추", "허브");
 
-        final Players players = from(names, FixedDeck.getFullDeck());
+        final Players players = from(names);
 
         assertThat(players.getNames()).containsExactly("딜러", "후추", "허브");
     }
@@ -66,18 +66,20 @@ public class PlayersTest {
     @Test
     void 플레이어들이_게임_시작_시_카드를_뽑는다() {
         final List<String> names = List.of("후추", "허브");
-        final Deck deck = new FixedDeck(ACE_SPADE, JACK_SPADE, TWO_SPADE, EIGHT_SPADE, KING_HEART);
-        final Players players = from(names, deck);
+        final Deck deck = new FixedDeck(ACE_SPADE, KING_HEART, JACK_SPADE, TWO_SPADE, EIGHT_SPADE, JACK_SPADE);
+        final Players players = from(names);
+
+        players.initialDraw(deck);
 
         assertThat(players.getPlayers())
                 .extracting(Player::calculateScore)
-                .containsExactly(11, 12, 18);
+                .containsExactly(21, 12, 18);
     }
 
     @Test
     void 플레이어들을_반환한다() {
         final List<String> names = List.of("후추", "허브");
-        final Players players = from(names, FixedDeck.getFullDeck());
+        final Players players = from(names);
 
         List<Player> result = players.getPlayers();
 
@@ -88,7 +90,7 @@ public class PlayersTest {
     @Test
     void 딜러를_반환한다() {
         final List<String> names = List.of("후추", "허브");
-        final Players players = from(names, FixedDeck.getFullDeck());
+        final Players players = from(names);
 
         final Player player = players.getDealer();
 
@@ -98,20 +100,21 @@ public class PlayersTest {
     @Test
     void 딜러가_카드를_가능할_때_까지_뽑는다() {
         final List<String> names = List.of("후추");
-        final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER, TWO_SPADE, EIGHT_SPADE);
-        final Players players = from(names, deck);
+        final Deck deck = new FixedDeck(ACE_DIAMOND, TWO_SPADE, JACK_CLOVER, TWO_SPADE, EIGHT_SPADE);
+        final Players players = from(names);
+        players.initialDraw(deck);
 
         players.drawToDealer(deck);
 
-        assertThat(players.getDealer().calculateScore()).isEqualTo(19);
+        assertThat(players.getDealer().calculateScore()).isEqualTo(21);
     }
 
     @Test
     void 게임_결과를_반환한다() {
         final List<String> names = List.of("후추", "허브");
-        final Deck deck = new FixedDeck(ACE_DIAMOND, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER, SEVEN_SPADE);
-        final Players players = from(names, deck);
-        players.drawToDealer(deck);
+        final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER);
+        final Players players = from(names);
+        players.initialDraw(deck);
 
         Map<Player, Result> result = players.play();
 

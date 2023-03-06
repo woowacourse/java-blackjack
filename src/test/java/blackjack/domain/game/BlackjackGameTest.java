@@ -25,7 +25,7 @@ public class BlackjackGameTest {
     @Test
     void 플레이어들을_반환한다() {
         final List<String> names = List.of("허브", "후추");
-        final Players players = Players.from(names, FixedDeck.getFullDeck());
+        final Players players = Players.from(names);
         final BlackjackGame blackjackGame = new BlackjackGame(players);
 
         final Players gamePlayers = blackjackGame.getPlayers();
@@ -38,8 +38,9 @@ public class BlackjackGameTest {
     @Test
     void 딜러가_카드를_뽑는다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
-        final Players players = Players.from(List.of("허브"), deck);
+        final Players players = Players.from(List.of("허브"));
         final BlackjackGame blackjackGame = new BlackjackGame(players);
+        blackjackGame.initialDraw(deck);
 
         blackjackGame.drawToDealer(deck);
 
@@ -50,8 +51,9 @@ public class BlackjackGameTest {
     @Test
     void 게임_결과를_반환한다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
-        final Players players = Players.from(List.of("허브"), deck);
+        final Players players = Players.from(List.of("허브"));
         final BlackjackGame blackjackGame = new BlackjackGame(players);
+        blackjackGame.initialDraw(deck);
         blackjackGame.drawToDealer(deck);
 
         final BlackjackGameResult result = blackjackGame.play();

@@ -10,6 +10,10 @@ public class BlackjackGame {
         this.players = players;
     }
 
+    public void initialDraw(final Deck deck) {
+        players.initialDraw(deck);
+    }
+
     public void drawToDealer(final Deck deck) {
         players.drawToDealer(deck);
     }

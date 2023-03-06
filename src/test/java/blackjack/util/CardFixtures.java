@@ -4,9 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Shape;
 
-/**
- * Card Fixture Name Format RANK_SHAPE
- */
 public class CardFixtures {
     public static final Card ACE_SPADE = new Card(Rank.ACE, Shape.SPADE);
     public static final Card TWO_SPADE = new Card(Rank.TWO, Shape.SPADE);
@@ -34,5 +31,4 @@ public class CardFixtures {
     public static final Card JACK_CLOVER = new Card(Rank.JACK, Shape.CLOVER);
 
     public static final Card ACE_DIAMOND = new Card(Rank.ACE, Shape.DIAMOND);
-
 }

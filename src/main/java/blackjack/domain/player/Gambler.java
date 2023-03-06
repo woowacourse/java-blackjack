@@ -1,9 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import java.util.List;
 
 public class Gambler extends AbstractPlayer {
 
@@ -11,9 +8,8 @@ public class Gambler extends AbstractPlayer {
         super(name, hand);
     }
 
-    public static Gambler create(final String name, final Deck deck) {
-        final List<Card> initialDraw = List.of(deck.draw(), deck.draw());
-        return new Gambler(Name.from(name), new Hand(initialDraw));
+    public static Gambler create(final String name) {
+        return new Gambler(Name.from(name), new Hand());
     }
 
     @Override
