@@ -23,7 +23,7 @@ public class OutputView {
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public void printNameAndHand(Map<String, List<String>> playerHand) {
+    public void printHandCardUnits(Map<String, List<String>> playerHand) {
         for (Map.Entry<String, List<String>> entry : playerHand.entrySet()) {
             String name = entry.getKey();
             String hand = String.join(",", entry.getValue());
