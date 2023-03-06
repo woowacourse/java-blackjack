@@ -27,8 +27,8 @@ public class Dealer implements Gambler {
     }
 
     @Override
-    public boolean isBustedGambler(int sum) {
-        return this.cards.isBusted(sum);
+    public boolean isBustedGambler() {
+        return this.cards.isBusted(cards.calculateScore());
     }
 
     @Override

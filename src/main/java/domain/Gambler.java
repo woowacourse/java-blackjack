@@ -14,5 +14,5 @@ public interface Gambler {
 
     int getScore();
 
-    boolean isBustedGambler(int sum);
+    boolean isBustedGambler();
 }

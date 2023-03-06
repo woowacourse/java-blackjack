@@ -62,7 +62,7 @@ public class Controller {
     }
 
     private boolean isPickAble(Player player, boolean isHit) {
-        if (player.isBustedGambler(player.getScore())) {
+        if (player.isBustedGambler()) {
             isHit = false;
         }
         return isHit;
@@ -130,13 +130,13 @@ public class Controller {
     private boolean isPlayerWin(Dealer dealer, Player player) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
-        return (dealerScore <= playerScore && !player.isBustedGambler(playerScore))
-                || (dealer.isBustedGambler(dealerScore) && !player.isBustedGambler(playerScore));
+        return (dealerScore <= playerScore && !player.isBustedGambler()
+                || (dealer.isBustedGambler() && !player.isBustedGambler()));
     }
 
     private boolean isDealerWin(Dealer dealer, Player player) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
-        return dealerScore > playerScore || player.isBustedGambler(playerScore);
+        return dealerScore > playerScore || player.isBustedGambler();
     }
 }
