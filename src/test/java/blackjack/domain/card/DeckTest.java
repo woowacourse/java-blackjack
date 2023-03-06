@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class DeckTest {
     @Test
@@ -16,7 +15,17 @@ public class DeckTest {
     void constructorDeckTest() {
         List<Card> cards = List.of(new Card(Shape.CLOVER, Letter.EIGHT));
 
-        Assertions.assertThatNoException().isThrownBy(() -> new Deck(cards));
+        assertThatNoException().isThrownBy(() -> new Deck(cards));
+    }
+
+    @Test
+    @DisplayName("중복된 카드를 주입하면 에러를 반환한다")
+    void throwExceptionWhenDuplicateCard() {
+        List<Card> cards = List.of(new Card(Shape.DIAMOND, Letter.JACK), new Card(Shape.DIAMOND, Letter.JACK));
+
+        assertThatThrownBy(() -> new Deck(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 카드가 존재합니다.");
     }
 
     @Test
