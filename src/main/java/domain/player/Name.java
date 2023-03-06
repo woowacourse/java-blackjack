@@ -1,5 +1,7 @@
 package domain.player;
 
+import java.util.Objects;
+
 public final class Name {
 
     private static final int MAX_NAME_LENGTH = 10;
@@ -32,5 +34,18 @@ public final class Name {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Name name1 = (Name) o;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
