@@ -19,4 +19,8 @@ public class Bet {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 100,000 초과일 수 없습니다.");
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
