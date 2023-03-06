@@ -7,17 +7,17 @@ public class Players {
     private static final String INVALID_NAME = "중복된 이름입니다.";
     private static final String SPLIT_DELIMITER = ",";
 
-    private List<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     public Players(String names) {
         List<String> splitedName = splitName(names);
         validateDuplicatedName(splitedName);
-        addPlayer(names);
+        addPlayer(splitedName);
     }
 
-    private void addPlayer(String names){
+    private void addPlayer(List<String> splitedName) {
         players.add(new Dealer());
-        for (String name : splitName(names)) {
+        for (String name : splitedName) {
             players.add(new Player(name));
         }
     }
@@ -32,14 +32,8 @@ public class Players {
         }
     }
 
-    public Dealer findDealer(){
+    public Dealer findDealer() {
         return (Dealer) players.get(0);
-    }
-
-    public List<String> getPlayersName() {
-        return players.stream()
-                .map(s -> s.getName())
-                .collect(Collectors.toList());
     }
 
     public Map<String, List<String>> getInfo() {
@@ -51,15 +45,20 @@ public class Players {
     }
 
     public List<Player> getPlayersWithOutDealer() {
-        return players.stream().filter(s -> s.getName() != findDealer().getName()).collect(Collectors.toList());
+        return players.stream().filter(s -> !s.getName().equals(findDealer().getName())).collect(Collectors.toList());
     }
 
     public int getCardsSum(String playerName) {
         return players.stream()
-                .filter(s -> s.getName() == playerName)
+                .filter(s -> s.getName().equals(playerName))
                 .findAny()
                 .get()
                 .getCardsSum();
     }
 
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
 }

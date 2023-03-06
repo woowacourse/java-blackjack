@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Player{
+public class Player {
     private static final String Y_COMMAND = "y";
     private final Name name;
     private final Cards cards;
@@ -20,14 +20,13 @@ public class Player{
 
     public Map<String, List<String>> getInfo() {
         Map<String, List<String>> info = new LinkedHashMap<>();
-        info.put(name.getName(), getCards());
+        info.put(getName(), getCards());
         return info;
     }
 
     public String getName() {
         return name.getName();
     }
-
 
     public List<String> getCards() {
         return cards.getCards();
@@ -42,17 +41,10 @@ public class Player{
     }
 
     public boolean canSelectCard(String command) {
-        if(!isOverPlayerBlackJack() && isCommandYes(command)){
-            return true;
-        }
-        return false;
+        return !isOverPlayerBlackJack() && isCommandYes(command);
     }
 
-    public boolean isCommandYes(String command){
-        if(command.equals(Y_COMMAND)){
-            return true;
-        }
-        return false;
+    public boolean isCommandYes(String command) {
+        return command.equals(Y_COMMAND);
     }
-
 }

@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.*;
+import java.util.Queue;
 
 public class CardDeck {
     private final Queue<Card> cards;
@@ -9,7 +9,7 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public Card poll(){
+    public Card poll() {
         return cards.poll();
     }
 }

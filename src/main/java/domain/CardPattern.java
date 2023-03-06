@@ -7,11 +7,12 @@ public enum CardPattern {
     CLOVER("클로버");
 
     private final String pattern;
+
     CardPattern(String pattern) {
         this.pattern = pattern;
     }
 
-    public String getPattern(){
+    public String getPattern() {
         return pattern;
     }
 }

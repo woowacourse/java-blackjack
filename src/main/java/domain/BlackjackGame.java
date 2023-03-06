@@ -1,6 +1,9 @@
 package domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     public final static int BLACK_JACK = 21;
@@ -54,9 +57,8 @@ public class BlackjackGame {
     }
 
     public Map<String, Result> getPlayersResult() {
-        Dealer dealer = players.findDealer();
         Map<String, Result> result = new LinkedHashMap<>();
-        int dealerSum = dealer.getCardsSum();
+        int dealerSum = players.findDealer().getCardsSum();
         for (Player player : players.getPlayersWithOutDealer()) {
             result.put(player.getName(), isPlayerWin(dealerSum, player.getCardsSum()));
         }

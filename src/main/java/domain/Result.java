@@ -14,5 +14,4 @@ public enum Result {
     public String getResult() {
         return result;
     }
-
 }

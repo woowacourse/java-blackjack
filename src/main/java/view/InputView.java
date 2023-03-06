@@ -19,5 +19,4 @@ public class InputView {
         System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
         return scanner.nextLine();
     }
-
 }

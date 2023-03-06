@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
     private static final int DECREASE_ACE_VALUE = -10;
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards() {
         this.cards = new ArrayList<>();
@@ -17,22 +17,21 @@ public class Cards {
     }
 
     public int getSum() {
-        Integer sum = cards.stream()
-                .map(s -> s.getCardValue())
-                .collect(Collectors.summingInt(Integer::intValue));
+        int sum = cards.stream()
+                .map(Card::getCardValue).mapToInt(Integer::intValue).sum();
         return calculateAceValue(sum);
     }
 
     private int calculateAceValue(int sum) {
-        int countAce = countAce();
+        long countAce = countAce();
         while (countAce-- > 0 && sum > BlackjackGame.BLACK_JACK) {
             sum += DECREASE_ACE_VALUE;
         }
         return sum;
     }
 
-    public int countAce() {
-        return Math.toIntExact(cards.stream().filter(s -> s.isAce()).count());
+    private long countAce() {
+        return cards.stream().filter(Card::isAce).count();
     }
 
     public List<String> getCards() {

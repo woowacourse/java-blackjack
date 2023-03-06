@@ -23,10 +23,10 @@ public class Controller {
         distributeInitialCard(players, game);
         pollPlayerAdditionalCard(players, game);
         pollDealerAdditionalCard(players, game);
-        printResult(players,game);
+        printResult(players, game);
     }
 
-    private Players setPlayers(){
+    private Players setPlayers() {
         try {
             return new Players(inputView.readPlayerNames());
         } catch (IllegalArgumentException e) {
@@ -64,7 +64,7 @@ public class Controller {
         }
     }
 
-    private void printResult(Players players, BlackjackGame game){
+    private void printResult(Players players, BlackjackGame game) {
         Dealer dealer = players.findDealer();
         outputView.printCardsResult(dealer, players);
         outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
