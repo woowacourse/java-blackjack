@@ -40,7 +40,7 @@ class ResultCountTest {
 
     @Test
     @DisplayName("플레이어의 승리 게임 결과를 반환한다.")
-    void findWinCount() {
+    void findPlayerWinResult() {
         resultCount.addWinCount();
 
         Assertions.assertThat(resultCount.findPlayerGameResult()).isEqualTo("승");
@@ -48,7 +48,7 @@ class ResultCountTest {
 
     @Test
     @DisplayName("플레이어의 무승부 게임 결과를 반환한다.")
-    void findTieCount() {
+    void findPlayerTieResult() {
         resultCount.addTieCount();
 
         Assertions.assertThat(resultCount.findPlayerGameResult()).isEqualTo("무");
@@ -56,9 +56,37 @@ class ResultCountTest {
 
     @Test
     @DisplayName("플레이어의 패배 게임 결과를 반환한다.")
-    void findLoseCount() {
+    void findPlayerLoseResult() {
         resultCount.addLoseCount();
 
         Assertions.assertThat(resultCount.findPlayerGameResult()).isEqualTo("패");
+    }
+
+    @Test
+    @DisplayName("딜러의 게임 결과를 반환한다. - 승, 무, 패")
+    void findDealerResult1() {
+        resultCount.addLoseCount();
+        resultCount.addWinCount();
+        resultCount.addTieCount();
+
+        Assertions.assertThat(resultCount.findDealerGameResult()).isEqualTo("1승 1무 1패");
+    }
+
+    @Test
+    @DisplayName("딜러의 게임 결과를 반환한다. - 승, 패")
+    void findDealerResult2() {
+        resultCount.addLoseCount();
+        resultCount.addWinCount();
+
+        Assertions.assertThat(resultCount.findDealerGameResult()).isEqualTo("1승 1패");
+    }
+
+    @Test
+    @DisplayName("딜러의 게임 결과를 반환한다. - 무, 패")
+    void findDealerResult3() {
+        resultCount.addLoseCount();
+        resultCount.addTieCount();
+
+        Assertions.assertThat(resultCount.findDealerGameResult()).isEqualTo("1무 1패");
     }
 }
