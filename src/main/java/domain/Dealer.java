@@ -41,7 +41,7 @@ public class Dealer extends Participant {
         return Result.DRAW;
     }
 
-    public Map<Player, Result> getPlayerResultMap() {
+    public Map<Player, Result> getGameResult() {
         return Collections.unmodifiableMap(playerResultMap);
     }
 

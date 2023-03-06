@@ -33,7 +33,7 @@ class DealerTest {
 
         dealer.decideResults(players);
 
-        Assertions.assertThat(dealer.getPlayerResultMap().values())
+        Assertions.assertThat(dealer.getGameResult().values())
                 .containsExactly(Result.LOSE, Result.WIN);
     }
 

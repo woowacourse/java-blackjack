@@ -102,7 +102,7 @@ public class OutputView {
         System.out.println(FINAL_RESULT_MESSAGE);
         System.out.println(getDealerResultFormat(dealer));
 
-        dealer.getPlayerResultMap().forEach(
+        dealer.getGameResult().forEach(
                 (key, value) -> printPlayerResult(key, value.convertToOpposite())
         );
     }
