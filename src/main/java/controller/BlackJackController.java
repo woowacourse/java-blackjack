@@ -1,6 +1,5 @@
 package controller;
 
-import domain.Cards;
 import domain.CardDistributor;
 import domain.Dealer;
 import domain.Name;
@@ -8,12 +7,11 @@ import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Result;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import util.InitialCardMaker;
 import util.CardStatusConverter;
+import util.InitialCardMaker;
 import view.InputView;
 import view.OutputView;
 
@@ -31,11 +29,11 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> playerNames = requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(InitialCardMaker.generate());
-        Players players = Players.of(playerNames, distributeCardsForPlayers(playerNames.size(), cardDistributor));
+        Players players = createGamePlayers(cardDistributor);
         Dealer dealer = new Dealer(cardDistributor.distributeInitialCard());
         printInitialDistribution(players, dealer);
+
         progress(players, cardDistributor, dealer);
         end(players, dealer);
     }
@@ -55,20 +53,23 @@ public class BlackJackController {
     private void end(Players players, Dealer dealer) {
         printFinalCard(dealer);
         players.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(dealer.getName().getValue(),new Result(dealer, players).getResult());
+        outputView.printFinalResult(dealer.getName().getValue(), new Result(dealer, players).getResult());
     }
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getName().getValue(),
-                CardStatusConverter.convertToCardStatus(participant.getCards().getParticipantCards()), participant.getTotalScore());
+                CardStatusConverter.convertToCardStatus(participant.getCards().getParticipantCards()),
+                participant.getTotalScore());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
         outputView.printFirstCardDistribution(dealer.getName().getValue(), getPlayerNames(players));
 
-        outputView.printCardStatus(dealer.getName().getValue(), CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
+        outputView.printCardStatus(dealer.getName().getValue(),
+                CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
         for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
+            outputView.printCardStatus(player.getName().getValue(),
+                    CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
         }
     }
 
@@ -103,20 +104,27 @@ public class BlackJackController {
         if (answer.equals(MORE_CARD) && cardDistributor.isCardLeft()) {
             player.pick(cardDistributor.distribute());
         }
-        outputView.printCardStatus(player.getName().getValue(), CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
+        outputView.printCardStatus(player.getName().getValue(),
+                CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
         return answer.equals(MORE_CARD);
     }
 
     private List<String> requestPlayerName() {
-        return Arrays.asList(inputView.requestPlayerName().split(DELIMITER, LIMIT_REMOVED));
+        return Arrays.stream(inputView.requestPlayerName().split(DELIMITER, LIMIT_REMOVED))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
-    private List<Cards> distributeCardsForPlayers(int count, CardDistributor cardDistributor) {
-        List<Cards> cards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            cards.add(cardDistributor.distributeInitialCard());
-        }
-        return cards;
+    private Players createGamePlayers(CardDistributor cardDistributor) {
+        List<String> playerNames = requestPlayerName();
+        List<Player> players = playerNames.stream()
+                .map(name -> distributeInitialCardForPlayer(name, cardDistributor))
+                .collect(Collectors.toList());
+        return Players.from(players);
+    }
+
+    private Player distributeInitialCardForPlayer(String playerName, CardDistributor cardDistributor) {
+        return Player.of(new Name(playerName), cardDistributor.distributeInitialCard());
     }
 
 }

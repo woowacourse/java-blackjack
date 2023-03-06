@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,13 +13,12 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> playerNames, List<Cards> cards) {
-        List<Name> names = playerNames.stream()
-                .map(String::trim)
-                .map(Name::new)
+    public static Players from(List<Player> players) {
+        List<Name> playerNames = players.stream()
+                .map(Player::getName)
                 .collect(Collectors.toList());
-        validateDuplicateName(names);
-        return new Players(initializePlayers(names, cards));
+        validateDuplicateName(playerNames);
+        return new Players(players);
     }
 
     private static void validateDuplicateName(List<Name> playerNames) {
@@ -31,14 +29,6 @@ public class Players {
         if (deduplicatedNameCount != playerNames.size()) {
             throw new IllegalArgumentException(PLAYER_DUPLICATE_NAME_ERROR_MESSAGE);
         }
-    }
-
-    private static List<Player> initializePlayers(List<Name> playerNames, List<Cards> cards) {
-        List<Player> players = new ArrayList<>();
-        for (int index = 0; index < playerNames.size(); index++) {
-            players.add(Player.of(playerNames.get(index), cards.get(index)));
-        }
-        return players;
     }
 
     public List<Player> getPlayers() {

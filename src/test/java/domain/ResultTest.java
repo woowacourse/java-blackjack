@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class ResultTest {
         }};
         dealer = new Dealer(new Cards(dealerCards));
         names = List.of("aa");
-        players = Players.of(names, List.of(new Cards(playerCards)));
+        players = createGamePlayers(names, playerCards);
     }
 
     @Test
@@ -70,7 +71,7 @@ public class ResultTest {
     @DisplayName("둘 다 버스트가 아니고 플레이어가 게임에서 이기는 경우를 확인한다.")
     void calculateGameResultWhenPlayerWin() {
         playerCards.add(getParticipantWinCard());
-        players = Players.of(names, List.of(new Cards(playerCards)));
+        players = createGamePlayers(names, playerCards);
 
         Result result = new Result(dealer, players);
         Map<String, GameResult> gameResult = result.getResult();
@@ -110,6 +111,17 @@ public class ResultTest {
 
     private Card getParticipantBustCard() {
         return new Card(Shape.HEART, Letter.NINE);
+    }
+
+    private Players createGamePlayers(List<String> playerNames, List<Card> cards) {
+        List<Player> players = playerNames.stream()
+                .map(name -> distributeInitialCardForPlayer(name, cards))
+                .collect(Collectors.toList());
+        return Players.from(players);
+    }
+
+    private Player distributeInitialCardForPlayer(String playerName, List<Card> cards) {
+        return Player.of(new Name(playerName), new Cards(cards));
     }
 
 }
