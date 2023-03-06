@@ -15,13 +15,15 @@ class DealerTest {
 
     private Player player1;
     private Player player2;
+    private Players players;
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        player1 = new Player("1");
-        player2 = new Player("2");
-        dealer = new Dealer(new Players(List.of(player1, player2)));
+        players = new Players(List.of("1", "2"));
+        dealer = new Dealer(players);
+        player1 = players.getPlayers().get(0);
+        player2 = players.getPlayers().get(1);
     }
 
     @Test

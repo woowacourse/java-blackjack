@@ -6,7 +6,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.PlayersFactory;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashMap;
@@ -26,8 +25,8 @@ public class BlackjackController {
     }
 
     public void run() {
-        String[] playersName = inputView.receivePlayersName();
-        Players players = PlayersFactory.from(playersName);
+        List<String> playerNames = inputView.receivePlayersName();
+        Players players = new Players(playerNames);
         dealer = new Dealer(players);
         setting();
         for (Player player : dealer.getPlayers().getPlayers()) {

@@ -10,21 +10,25 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Players {
+    public static final int MIN_PLAYER_COUNT = 2;
+    public static final int MAX_PLAYER_COUNT = 8;
 
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
-        this.players = players;
+    public Players(final List<String> names) {
+        validateLength(names);
+        this.players = names.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    public int size() {
-        return players.size();
+    private void validateLength(List<String> names) {
+        if (MAX_PLAYER_COUNT < names.size() || names.size() < MIN_PLAYER_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 참가자의 수는 최소 2명에서 최대 8명이어야 합니다.");
+        }
     }
 
     public void receiveSettingCards(List<Card> settingCards) {
@@ -66,5 +70,13 @@ public class Players {
         if (dealerScore == player.calculateTotalScore()) {
             results.put(player, DRAW);
         }
+    }
+
+    public int size() {
+        return players.size();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

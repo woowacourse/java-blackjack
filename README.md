@@ -4,10 +4,6 @@
 
 # 요구사항 분석
 ## 주요 객체의 속성, 역할
-### PlayersFactory
-- [x] 입력된 이름을 가지고 `Players`를 만들어 반환한다.
-  - [x] 최소 2명에서 최대 8명의 `Players`를 생성한다.
-
 ### Participant
 - [x] `Cards`를 가진다.
 - [x] `Card`를 받는다.
@@ -19,7 +15,8 @@
 - [x] `Card`를 받는다.
 
 ### Players
-- [x] `Player`들을 가진다.
+- [x] 입력된 이름들로 `Player`를 만들어 가진다.
+  - [X] 최소 2명에서 최대 8명의 `Players`를 생성한다.
 
 ### Dealer (extends Participant)
 - [x] `Players`를 가진다.
