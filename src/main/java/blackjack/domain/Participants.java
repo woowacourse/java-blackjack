@@ -37,8 +37,8 @@ public class Participants {
         return (Dealer) participants.stream()
                                     .filter(participant -> participant instanceof Dealer)
                                     .findAny()
-                                    .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
-                                            "찾지 못했습니다."));
+                                    .orElseThrow(() ->
+                                            new IllegalArgumentException("딜러를 찾지 못했습니다."));
     }
 
     public List<String> getPlayerNames() {
