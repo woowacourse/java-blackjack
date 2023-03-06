@@ -5,7 +5,7 @@ import domain.card.CardRepository;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
-import domain.strategy.IndexGenerator;
+import domain.strategy.ShuffleStrategy;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,8 +14,8 @@ public class BlackJack {
     private final CardRepository cardRepository;
     private final List<Player> players;
 
-    public BlackJack(String participantNames, IndexGenerator indexGenerator) {
-        this.cardRepository = CardRepository.create(indexGenerator);
+    public BlackJack(String participantNames, ShuffleStrategy shuffleStrategy) {
+        this.cardRepository = CardRepository.create(shuffleStrategy);
         this.players = initPlayers(participantNames);
     }
 

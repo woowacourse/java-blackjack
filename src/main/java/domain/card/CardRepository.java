@@ -1,26 +1,25 @@
 package domain.card;
 
-import domain.strategy.IndexGenerator;
+import domain.strategy.ShuffleStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 public class CardRepository {
-    private final List<Card> cards;
-    private final IndexGenerator indexGenerator;
+    private final Stack<Card> cards;
+    private final ShuffleStrategy shuffleStrategy;
 
 
-    private CardRepository(List<Card> cards, IndexGenerator indexGenerator) {
+    private CardRepository(Stack<Card> cards, ShuffleStrategy shuffleStrategy) {
         this.cards = cards;
-        this.indexGenerator = indexGenerator;
+        this.shuffleStrategy = shuffleStrategy;
     }
 
-    public static CardRepository create(IndexGenerator indexGenerator) {
-        return new CardRepository(initializeCards(), indexGenerator);
+    public static CardRepository create(ShuffleStrategy shuffleStrategy) {
+        return new CardRepository(initializeCards(), shuffleStrategy);
     }
 
-    private static List<Card> initializeCards() {
-        List<Card> cards = new ArrayList<>();
+    private static Stack<Card> initializeCards() {
+        Stack<Card> cards = new Stack<>();
         for (Shape shape : Shape.values()) {
             initializeCardsByShape(cards, shape);
         }
@@ -28,9 +27,9 @@ public class CardRepository {
         return cards;
     }
 
-    private static void initializeCardsByShape(List<Card> cards, Shape shape) {
+    private static void initializeCardsByShape(Stack<Card> cards, Shape shape) {
         for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
+            cards.push(new Card(shape, number));
         }
     }
 
@@ -39,7 +38,7 @@ public class CardRepository {
     }
 
     public Card findAnyOneCard() {
-        int index = this.indexGenerator.generate(size());
-        return cards.remove(index);
+        Stack<Card> shuffledCards = this.shuffleStrategy.shuffle(cards);
+        return shuffledCards.pop();
     }
 }

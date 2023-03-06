@@ -1,6 +1,6 @@
 import domain.BlackJack;
 import domain.player.Player;
-import domain.strategy.RandomBasedIndexGenerator;
+import domain.strategy.RandomBasedShuffleStrategy;
 import view.InputView;
 import view.OutputView;
 
@@ -12,7 +12,7 @@ public class Application {
     }
     
     public void startGame() {
-        BlackJack blackJack = new BlackJack(getParticipantNames(), new RandomBasedIndexGenerator());
+        BlackJack blackJack = new BlackJack(getParticipantNames(), new RandomBasedShuffleStrategy());
         initializedBlackjackGame(blackJack);
         
         giveCardToPlayers(blackJack);
