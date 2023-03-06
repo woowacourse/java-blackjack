@@ -1,9 +1,9 @@
 package view;
 
+import controller.GameStatisticResponse;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
-import domain.game.GameStatistic;
 import domain.player.Dealer;
 import domain.player.DealerCompeteResult;
 import domain.player.Participant;
@@ -125,7 +125,7 @@ public class OutputView {
      * pobi: 승
      * jason: 패
      */
-    public static void showGameStatistic(final GameStatistic statistic) {
+    public static void showGameStatistic(final GameStatisticResponse statistic) {
         showFinalCards(statistic);
         showFinalWinLose(statistic);
     }
@@ -135,7 +135,7 @@ public class OutputView {
      * pobi 카드: 2하트, 8스페이드, A 클로버 - 결과: 21
      * jason 카드: 7클로버, K 스페이드 - 결과: 17
      */
-    private static void showFinalCards(final GameStatistic statistic) {
+    private static void showFinalCards(final GameStatisticResponse statistic) {
         System.out.println();
         final List<Participant> participant = new ArrayList<>();
         participant.add(statistic.dealer());
@@ -155,14 +155,14 @@ public class OutputView {
         System.out.println(message);
     }
 
-    private static void showFinalWinLose(final GameStatistic statistic) {
+    private static void showFinalWinLose(final GameStatisticResponse statistic) {
         System.out.println("\n## 최종 승패");
         showFinalDealerWinLose(statistic);
         showFinalParticipantsWinLose(statistic);
     }
 
-    private static void showFinalDealerWinLose(final GameStatistic gameStatistic) {
-        final Map<Player, DealerCompeteResult> resultPerParticipant = gameStatistic.dealerResultPerPlayer();
+    private static void showFinalDealerWinLose(final GameStatisticResponse gameStatisticResponse) {
+        final Map<Player, DealerCompeteResult> resultPerParticipant = gameStatisticResponse.dealerResultPerPlayer();
         final Map<DealerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
                 .collect(Collectors.groupingBy(Function.identity(), counting()));
         final String dealerStatisticMessage = stringBuilder.append("딜러:")
@@ -181,7 +181,7 @@ public class OutputView {
         return String.format(" %d%s", count, DEALER_COMPETE_MESSAGE_MAP.get(dealerCompeteResult));
     }
 
-    private static void showFinalParticipantsWinLose(final GameStatistic statistic) {
+    private static void showFinalParticipantsWinLose(final GameStatisticResponse statistic) {
         final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
         final List<Player> players = statistic.players();
         players.stream()

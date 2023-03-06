@@ -69,14 +69,12 @@ public class BlackJackGame {
         dealer.hit(cardDeck.draw());
     }
 
-    public GameStatistic statistic() {
-        final Map<Player, DealerCompeteResult> resultPerParticipant = players.stream()
+    public Map<Player, DealerCompeteResult> statistic() {
+        return players.stream()
                 .collect(toMap(
                         identity(),
                         dealer::compete
                 ));
-
-        return new GameStatistic(dealer, players, resultPerParticipant);
     }
 
     public List<Player> participants() {

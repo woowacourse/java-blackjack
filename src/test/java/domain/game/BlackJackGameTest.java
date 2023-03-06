@@ -5,6 +5,7 @@ import domain.player.*;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
+import java.util.Map;
 
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.NameFixture.말랑이름;
@@ -63,12 +64,12 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
 
         // when
-        final GameStatistic statistic = blackJackGame.statistic();
+        final Map<Player, DealerCompeteResult> statistic = blackJackGame.statistic();
 
         // then
-        assertThat(statistic.dealerResultPerPlayer().get(말랑)).isEqualTo(DealerCompeteResult.DRAW);
-        assertThat(statistic.dealerResultPerPlayer().get(콩떡)).isEqualTo(DealerCompeteResult.WIN);
-        assertThat(statistic.dealerResultPerPlayer().get(코다)).isEqualTo(DealerCompeteResult.LOSE);
+        assertThat(statistic.get(말랑)).isEqualTo(DealerCompeteResult.DRAW);
+        assertThat(statistic.get(콩떡)).isEqualTo(DealerCompeteResult.WIN);
+        assertThat(statistic.get(코다)).isEqualTo(DealerCompeteResult.LOSE);
     }
 
     @Nested

@@ -19,7 +19,10 @@ public class BlackJackController {
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
         hitOrStayForParticipants(blackJackGame);
         hitOrStayForDealer(blackJackGame);
-        OutputView.showGameStatistic(blackJackGame.statistic());
+        OutputView.showGameStatistic(new GameStatisticResponse(
+                blackJackGame.dealer(),
+                blackJackGame.participants(),
+                blackJackGame.statistic()));
     }
 
     private BlackJackGame setUpGame() {
