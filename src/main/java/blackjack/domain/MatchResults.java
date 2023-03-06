@@ -4,14 +4,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJackResult {
+public class MatchResults {
     private final List<ResultType> results;
 
-    public BlackJackResult(final List<ResultType> results) {
+    public MatchResults(final List<ResultType> results) {
         this.results = results;
     }
 
-    public BlackJackResult(final ResultType results) {
+    public MatchResults(final ResultType results) {
         this(List.of(results));
     }
 

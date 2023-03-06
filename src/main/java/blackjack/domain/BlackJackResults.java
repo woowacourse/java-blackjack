@@ -6,16 +6,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackResults {
-    private final Map<Name, BlackJackResult> participants = new LinkedHashMap<>();
+    private final Map<Name, MatchResults> participants = new LinkedHashMap<>();
 
     public BlackJackResults(final Dealer dealer, final List<Player> players) {
         List<ResultType> dealerResults = createDealerResults(dealer, players);
-        participants.put(dealer.getName(), new BlackJackResult(dealerResults));
+        participants.put(dealer.getName(), new MatchResults(dealerResults));
         for (int index = 0; index < dealerResults.size(); index++) {
             Name playerName = players.get(index).getName();
             ResultType dealerResult = dealerResults.get(index);
             ResultType reverseType = ResultType.getReverseType(dealerResult);
-            participants.put(playerName, new BlackJackResult(reverseType));
+            participants.put(playerName, new MatchResults(reverseType));
         }
     }
 
@@ -25,7 +25,7 @@ public class BlackJackResults {
                 .collect(Collectors.toList());
     }
 
-    public Map<Name, BlackJackResult> getParticipants() {
+    public Map<Name, MatchResults> getParticipants() {
         return new LinkedHashMap<>(participants);
     }
 }

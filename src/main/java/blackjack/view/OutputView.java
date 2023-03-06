@@ -47,7 +47,7 @@ public class OutputView {
     }
 
     private static String createBlackJackResult(BlackJackResults blackJackResults) {
-        Map<Name, BlackJackResult> participants = blackJackResults.getParticipants();
+        Map<Name, MatchResults> participants = blackJackResults.getParticipants();
         StringBuilder stringBuilder = new StringBuilder();
 
         for (final Name name : participants.keySet()) {
