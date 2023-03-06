@@ -34,7 +34,7 @@ public class CardDeck {
     private boolean isDuplicate(final List<Card> cards) {
         return cards.stream()
                 .distinct()
-                .count() != SIZE_OF_CARD_DECK;
+                .count() != cards.size();
     }
 
     public Card draw() {

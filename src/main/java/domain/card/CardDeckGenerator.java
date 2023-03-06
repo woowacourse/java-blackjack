@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CardDeckGenerator {
 
@@ -13,11 +14,14 @@ public class CardDeckGenerator {
 
     public static CardDeck create() {
         List<Card> cards = Arrays.stream(CardType.values())
-                .flatMap(cardType ->
-                        Arrays.stream(CardValue.values())
-                                .map(cardValue -> new Card(cardType, cardValue)))
+                .flatMap(cardType -> createCard(cardType))
                 .collect(toList());
 
         return CardDeck.createShuffled(cards);
+    }
+
+    private static Stream<Card> createCard(CardType cardType) {
+        return Arrays.stream(CardValue.values())
+                .map(cardValue -> new Card(cardType, cardValue));
     }
 }
