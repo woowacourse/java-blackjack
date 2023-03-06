@@ -37,11 +37,10 @@ public class BlackjackController {
                 PlayerParameter.from(people.getDealer()),
                 makePlayersParameter(people));
 
-
-        blackjackGame.hitAllPlayersByCommand((name) -> HitCommand.findCommand(inputView.inputCardCommand(name)),
+        blackjackGame.hitAllPlayersByCommand(
+                (name) -> HitCommand.findCommand(inputView.inputCardCommand(name)),
                 outputView::printPlayerCardWithName);
-        hitByDealer();
-
+        blackjackGame.letDealerHitUntilThreshold(outputView::printDealerHitMessage);
 
         outputView.printGameScore(
                 PlayerParameter.of(people.getDealer(), people.getDealer().sumHand()),
@@ -82,10 +81,4 @@ public class BlackjackController {
         blackjackGame = new BlackjackGame(playersName, new RandomNumberGenerator());
     }
 
-    private void hitByDealer() {
-        if (blackjackGame.dealerNeedsHit()) {
-            outputView.printDealerHitMessage();
-            blackjackGame.letDealerHitUntilThreshold();
-        }
-    }
 }

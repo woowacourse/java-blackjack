@@ -23,12 +23,12 @@ public class BlackjackGame {
         this.people = new People(playerNames, DEALER_NAME);
     }
 
-    public void letDealerHitUntilThreshold() {
-        people.letDealerHitUntilThreshold(deck);
-    }
+    public void letDealerHitUntilThreshold(Runnable outputDealerHitMessage) {
+        if (people.dealerNeedsHit()) {
+            outputDealerHitMessage.run();
+            people.letDealerHitUntilThreshold(deck);
+        }
 
-    public boolean dealerNeedsHit() {
-        return people.dealerNeedsHit();
     }
 
     public void startHit() {
