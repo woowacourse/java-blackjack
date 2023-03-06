@@ -46,6 +46,7 @@ public class OutputView {
         for (final Player player : players) {
             printParticipantCard(player);
         }
+        System.out.printf(NEW_LINE);
     }
 
     public void printParticipantCard(final Participant participant) {
@@ -57,7 +58,7 @@ public class OutputView {
     public void printParticipantCard(final Participant participant, final List<String> cards) {
         final String name = participant.getName();
 
-        System.out.print(NEW_LINE + name + COLON + String.join(COMMA, cards));
+        System.out.printf(NEW_LINE + name + COLON + String.join(COMMA, cards));
     }
 
     public void printDealerDrawCard(final Participant participant) {
@@ -76,7 +77,7 @@ public class OutputView {
         final Dealer dealer = participants.getDealer();
         final List<Player> players = participants.getPlayers();
 
-        System.out.println(FINAL_RESULT_MESSAGE);
+        System.out.println(NEW_LINE + NEW_LINE + FINAL_RESULT_MESSAGE);
         printDealerResult(dealer, resultGame);
         for (final Player player : players) {
             printPlayerResult(player, resultGame);
