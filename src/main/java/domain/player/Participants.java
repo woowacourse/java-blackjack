@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
@@ -25,7 +25,7 @@ public final class Participants {
         validateDuplicate(playerNames);
         List<Participant> participants = playerNames.stream()
                 .map(Participant::from)
-                .collect(Collectors.toList());
+                .collect(toList());
 
         return new Participants(participants);
     }
@@ -59,11 +59,12 @@ public final class Participants {
     }
 
     public Result getResult(final Dealer dealer) {
-        Map<GameResult, List<Participant>> result = participants.stream()
-                .collect(groupingBy(participant -> isWinner(dealer, participant)));
+        Map<GameResult, List<String>> result = participants.stream()
+                .collect(groupingBy(participant -> isWinner(dealer, participant)
+                        , mapping(Participant::getName, toList())));
 
-        List<String> winners = classifyParticipants(result.get(GameResult.VICTORY));
-        List<String> losers = classifyParticipants(result.get(GameResult.DEFEAT));
+        List<String> winners = result.getOrDefault(GameResult.VICTORY, new ArrayList<>());
+        List<String> losers = result.getOrDefault(GameResult.DEFEAT, new ArrayList<>());
 
         return new Result(winners, losers);
     }
@@ -77,14 +78,5 @@ public final class Participants {
 
     private boolean isParticipantDefeat(final Dealer dealer, final Participant participant) {
         return !dealer.isBust() && dealer.getScore() > participant.getScore();
-    }
-
-    private List<String> classifyParticipants(final List<Participant> result) {
-        if (result == null) {
-            return new ArrayList<>();
-        }
-        return result.stream()
-                .map(Player::getName)
-                .collect(toList());
     }
 }
