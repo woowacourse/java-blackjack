@@ -17,4 +17,15 @@ class GenericTest {
         assertThat(first).isEqualTo(1);
         assertThat(second).isEqualTo(2);
     }
+
+    @Test
+    void mission2() {
+        final String[] arrays = {"first", "second"};
+
+        final SimpleList<String> values = SimpleList.fromArrayToList(arrays);
+
+        assertThat(values.size()).isEqualTo(2);
+        assertThat(values.get(0)).isEqualTo("first");
+        assertThat(values.get(1)).isEqualTo("second");
+    }
 }
