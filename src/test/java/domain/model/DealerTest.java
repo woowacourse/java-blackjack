@@ -47,10 +47,24 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("카드를 더 받을 수 없는 테스트")
-    public void testCanReceiveCard() {
+    @DisplayName("카드를 더 받을 수 없는지 테스트")
+    public void testCanNotReceiveCard() {
         //given
         Cards cards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX), new Card(Suit.SPADE, Letter.ACE)));
+        Dealer dealer = new Dealer(cards);
+
+        //when
+        boolean result = dealer.canReceiveCard();
+
+        //then
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("카드를 더 받을 수 있는지 테스트")
+    public void testCanReceiveCard() {
+        //given
+        Cards cards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TEN), new Card(Suit.SPADE, Letter.ACE)));
         Dealer dealer = new Dealer(cards);
 
         //when
