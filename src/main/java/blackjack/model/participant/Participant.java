@@ -9,7 +9,6 @@ import blackjack.model.state.State;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public abstract class Participant {
     private static int CURRENT_MAX_ID = 0;
@@ -29,7 +28,26 @@ public abstract class Participant {
 
     abstract public void changeToStand();
 
-    public boolean isBlackjack(){
+    abstract public ResultState resultState();
+
+    abstract public List<Card> firstDistributedCard();
+
+    public Map<String, List<Card>> handCards() {
+        Map<String, List<Card>> handCards = new HashMap<>();
+
+        handCards.put(getName(), getCards());
+        return handCards;
+    }
+
+    public CardScore cardScore() {
+        return currentState.getScore(resultState());
+    }
+
+    public boolean isEqualId(int findId) {
+        return this.id == findId;
+    }
+
+    public boolean isBlackjack() {
         return currentState.isBlackjack();
     }
 
@@ -41,17 +59,9 @@ public abstract class Participant {
         return currentState.isFinished();
     }
 
-    public CardScore cardScore() {
-        return currentState.getScore(resultState());
+    public List<Card> getCards() {
+        return currentState.getHand();
     }
-
-    public boolean isEqualId(int findId) {
-        return this.id == findId;
-    }
-
-    abstract public ResultState resultState();
-
-    abstract public List<Card> firstDistributedCard();
 
     public int getScore() {
         if (isBust() || cardScore().bigScore() > 21) {
@@ -62,22 +72,6 @@ public abstract class Participant {
 
     public String getName() {
         return name.getName();
-    }
-
-
-    public Map<String, List<String>> handCards() {
-        Map<String, List<String>> handCards = new HashMap<>();
-
-        List<String> cards = getCards().stream()
-                .map(Card::cardUnit)
-                .collect(Collectors.toList());
-
-        handCards.put(getName(), cards);
-        return handCards;
-    }
-
-    public List<Card> getCards() {
-        return currentState.getHand();
     }
 }
 

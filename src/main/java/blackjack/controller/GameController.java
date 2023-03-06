@@ -51,14 +51,15 @@ public class GameController {
         dealerDistributedCards.put(dealer.getName(), dealerCards);
         outputView.printDistributionMessage(players.getPlayerNames());
         outputView.printNameAndHand(dealerDistributedCards);
-        outputView.printNameAndHand(players.firstDistributedCards());
+        outputView.printNameAndHand(handCardUnits(players.firstDistributedCards()));
     }
+
 
     private void playerHitOrStand(Players players, CardDeck cardDeck, int playerId) {
         while (!players.isPlayerFinished(playerId) && inputView.readIsHit(players.getNameById(playerId))) {
             players.hit(cardDeck, playerId);
-            Map<String, List<String>> playerHandCards = players.getHandCardsById(playerId);
-            outputView.printNameAndHand(playerHandCards);
+            Map<String, List<Card>> playerHandCards = players.getHandCardsById(playerId);
+            outputView.printNameAndHand(handCardUnits(playerHandCards));
         }
         if (!players.isPlayerFinished(playerId)) {
             players.changeToStand(playerId);
@@ -77,17 +78,17 @@ public class GameController {
         if (dealer.isBlackjack()) {
             dealerResult += " (블랙잭!!)";
         }
-        outputView.printScoreResult(dealer.handCards(), dealerResult);
+        outputView.printScoreResult(handCardUnits(dealer.handCards()), dealerResult);
     }
 
     private void printPlayerScoreResult(Players players) {
         for (int playerId = 0; playerId < players.getPlayerCount(); playerId++) {
-            Map<String, List<String>> playerHandCards = players.getHandCardsById(playerId);
+            Map<String, List<Card>> playerHandCards = players.getHandCardsById(playerId);
             String scoreResult = Integer.toString(players.getScoreById(playerId));
             if (players.isBlackjack(playerId)) {
                 scoreResult += "(블랙잭!!)";
             }
-            outputView.printScoreResult(playerHandCards, scoreResult);
+            outputView.printScoreResult(handCardUnits(playerHandCards), scoreResult);
         }
     }
 
@@ -102,5 +103,16 @@ public class GameController {
             WinningResult playerWinning = playerResult.getValue();
             outputView.printPlayersWinningResult(playerResult.getKey(), playerWinning.getWin(), playerWinning.getDraw(), playerWinning.getLose());
         }
+    }
+
+    private Map<String, List<String>> handCardUnits(Map<String, List<Card>> handCards) {
+        Map<String, List<String>> handCardUnits = new HashMap<>();
+
+        for (Map.Entry<String, List<Card>> handCard : handCards.entrySet()) {
+            List<Card> cards = handCard.getValue();
+            List<String> cardUnits = cards.stream().map(Card::cardUnit).collect(Collectors.toList());
+            handCardUnits.put(handCard.getKey(), cardUnits);
+        }
+        return handCardUnits;
     }
 }

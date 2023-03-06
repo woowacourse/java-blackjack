@@ -31,14 +31,11 @@ public class Players {
         }
     }
 
-    public Map<String, List<String>> firstDistributedCards() {
-        Map<String, List<String>> distributedCards = new HashMap<>();
+    public Map<String, List<Card>> firstDistributedCards() {
+        Map<String, List<Card>> distributedCards = new HashMap<>();
 
         for (Player player : players) {
-            List<String> firstDistributed = player.firstDistributedCard().stream()
-                    .map(Card::cardUnit)
-                    .collect(Collectors.toList());
-
+            List<Card> firstDistributed = player.firstDistributedCard();
             distributedCards.put(player.getName(), firstDistributed);
         }
         return distributedCards;
@@ -62,8 +59,7 @@ public class Players {
         return player.isFinished();
     }
 
-
-    public Map<String, List<String>> getHandCardsById(int playerId) {
+    public Map<String, List<Card>> getHandCardsById(int playerId) {
         return getPlayerById(playerId).handCards();
     }
 
@@ -86,7 +82,6 @@ public class Players {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
-
 
     public WinningResult getWinningResultById(int playerId, CardScore cardScore) {
         return getPlayerById(playerId)
