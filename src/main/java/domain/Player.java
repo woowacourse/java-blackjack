@@ -16,4 +16,12 @@ public class Player extends Participant {
         }
     }
 
+    public int getTotalScore() {
+        return cardDeck.calculateScore(BUST_LIMIT);
+    }
+
+    public boolean isMoreCardAble() {
+        return getTotalScore() < BUST_LIMIT;
+    }
+
 }

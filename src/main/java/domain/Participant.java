@@ -2,7 +2,8 @@ package domain;
 
 public abstract class Participant {
 
-    private static final int BUST_LIMIT = 21;
+    protected static final int BUST_LIMIT = 21;
+
 
     protected final Name name;
     protected final CardDeck cardDeck;
@@ -20,13 +21,9 @@ public abstract class Participant {
         return getTotalScore() > BUST_LIMIT;
     }
 
-    public int getTotalScore() {
-        return cardDeck.calculateScore(BUST_LIMIT);
-    }
+    public abstract int getTotalScore();
 
-    public boolean isMoreCardAble() {
-        return getTotalScore() < BUST_LIMIT;
-    }
+    public abstract boolean isMoreCardAble();
 
     public CardDeck getCardDeck() {
         return cardDeck;
