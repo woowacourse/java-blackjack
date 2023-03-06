@@ -14,7 +14,7 @@ import domain.people.Participants;
 import domain.people.Player;
 
 public class BlackJackGame {
-    private static final int DEALER_MINIMUM_VALUE = 17;
+
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int BUST_BOUNDARY_VALUE = 21;
     private static final int BUST_HAND_VALUE = 0;
@@ -110,9 +110,8 @@ public class BlackJackGame {
         return drawingInput.equals(HIT_REQUEST);
     }
 
-    public boolean isDealerHandUnderMinimumValue() {
-        int dealerHandValue = participants.findDealer().getHandValue();
-        return dealerHandValue < DEALER_MINIMUM_VALUE;
+    public boolean shouldDealerHit() {
+        return participants.findDealer().shouldHit();
     }
 
     public void dealerHit() {
@@ -148,8 +147,8 @@ public class BlackJackGame {
     }
 
     private void compareHandValue(Dealer dealer, Map<String, Result> playerResults, Player player) {
-        int dealerHandValue = getParticipantHandValue(dealer);
-        int playerHandValue = getParticipantHandValue(player);
+        int dealerHandValue = dealer.getParticipantHandValue();
+        int playerHandValue = player.getParticipantHandValue();
 
         if (playerHandValue != dealerHandValue) {
             Result result = Result.compareHandValue(playerHandValue, dealerHandValue);
@@ -157,14 +156,6 @@ public class BlackJackGame {
             return;
         }
         compareAtTieValue(dealer, playerResults, player, playerHandValue);
-    }
-
-    private int getParticipantHandValue(Participant participant) {
-        int participantHandValue = participant.getHandValue();
-        if (participantHandValue > BUST_BOUNDARY_VALUE) {
-            participantHandValue = BUST_HAND_VALUE;
-        }
-        return participantHandValue;
     }
 
     private void compareAtTieValue(Dealer dealer, Map<String, Result> playerResults, Player player,

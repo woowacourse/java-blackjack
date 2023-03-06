@@ -69,7 +69,7 @@ public class Application {
     }
 
     private static void hitOrStayForDealer(BlackJackGame blackJackGame) {
-        while (blackJackGame.isDealerHandUnderMinimumValue()) {
+        while (blackJackGame.shouldDealerHit()) {
             blackJackGame.dealerHit();
             OutputView.printDealerPickCardMessage();
         }

@@ -6,6 +6,8 @@ import java.util.List;
 import view.ErrorMessage;
 
 public class Participants {
+    private static final int MINIMUM_PLAYER_COUNT = 1;
+    private static final int MAXIMUM_PLAYER_COUNT = 7;
     private final List<Participant> participants;
 
     private Participants(List<Participant> participants) {
@@ -13,6 +15,7 @@ public class Participants {
     }
 
     public static Participants from(List<String> names) {
+        validate(names);
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
 
@@ -20,6 +23,23 @@ public class Participants {
             participants.add(new Player(name));
         }
         return new Participants(participants);
+    }
+
+    private static void validate(List<String> names) {
+        validateNumberOfNames(names);
+        validateNoDuplication(names);
+    }
+
+    private static void validateNumberOfNames(List<String> names) {
+        if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_OF_PLAYER.getMessage());
+        }
+    }
+
+    private static void validateNoDuplication(List<String> names) {
+        if (names.stream().distinct().count() != names.size()) {
+            throw new IllegalArgumentException(ErrorMessage.NAME_IS_DUPLICATED.getMessage());
+        }
     }
 
     public Dealer findDealer() {
