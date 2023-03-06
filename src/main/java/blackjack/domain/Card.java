@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.util.CardNumber;
 import blackjack.util.CardSuit;
 
 public class Card {

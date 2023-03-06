@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
-import blackjack.util.CardNumber;
+import blackjack.domain.CardNumber;
 import blackjack.util.CardSuit;
 import blackjack.util.WinningResult;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class OutputView {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
+            ViewCardNumber cardNumber = ViewCardNumber.findCardNumber(participant.getCardNumber(index));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
         }
@@ -48,7 +48,7 @@ public class OutputView {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
+            ViewCardNumber cardNumber = ViewCardNumber.findCardNumber(participant.getCardNumber(index));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
         }
@@ -76,7 +76,7 @@ public class OutputView {
 
     private void printFirstDealerCards(final Participant participant) {
         if (participant.isDealer()) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(FIRST_CARD));
+            ViewCardNumber cardNumber = ViewCardNumber.findCardNumber(participant.getCardNumber(FIRST_CARD));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(FIRST_CARD));
             System.out.println(participant.getName() + " : " + cardNumber.getName() + cardSuit.getCardSuitName());
         }
@@ -86,7 +86,7 @@ public class OutputView {
         System.out.print(participant.getName() + " : ");
         List<String> card = new ArrayList<>();
         for (int i = 0; i < FIRST_HIT_COUNT; i++) {
-            CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(i));
+            ViewCardNumber cardNumber = ViewCardNumber.findCardNumber(participant.getCardNumber(i));
             CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(i));
             card.add(cardNumber.getName() + cardSuit.getCardSuitName());
         }
