@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
-    private static final String DEALER_NAME = "딜러";
     private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final int NO_MORE_CARD_COUNT = 0;
+    private static final int SKIP_COUNT = 0;
 
     public void printInitialCards(Participants participants) {
         String namesFormat = participants.getPlayers().stream()
@@ -20,25 +21,25 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
 
         breakLine();
-        String format = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
-        System.out.println(format);
+        String initialCardsPrefixFormat = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
+        System.out.println(initialCardsPrefixFormat);
         printParticipantsInitialCards(participants);
         breakLine();
     }
 
     private void printParticipantsInitialCards(Participants participants) {
-        printParticipantInitialCards(participants.getDealer());
+        Participant dealer = participants.getDealer();
+        printParticipantCards(dealer, dealer.getInitialCards());
 
         for (Participant participant : participants.getPlayers()) {
-            printParticipantInitialCards(participant);
+            printParticipantCards(participant, participant.getInitialCards());
         }
     }
 
-    private void printParticipantInitialCards(Participant participant) {
-        List<Card> initialCards = participant.getInitialCards();
-        String format = String.format(Format.CARDS.format,
-                participant.getName(), getCardsFormat(initialCards));
-        System.out.println(format);
+    public void printParticipantCards(Participant participant, List<Card> cards) {
+        String cardsFormat = String.format(Format.CARDS.format,
+                participant.getName(), getCardsFormat(cards));
+        System.out.println(cardsFormat);
     }
 
     private String getCardsFormat(List<Card> cards) {
@@ -51,19 +52,13 @@ public class OutputView {
         return card.getNumberSignature() + card.getTypeName();
     }
 
-    public void printPlayerCards(Participant player) {
-        String format = String.format(Format.CARDS.format,
-                player.getName(), getCardsFormat(player.getCards()));
-        System.out.println(format);
-    }
-
     public void printBusted(String name) {
         String format = String.format(Format.BUSTED.format, name);
         System.out.println(format);
     }
 
     public void printDealerHitCount(int hitCardCount) {
-        if (hitCardCount == 0) {
+        if (hitCardCount == NO_MORE_CARD_COUNT) {
             System.out.println(DEALER_NO_MORE_CARD_MESSAGE);
             return;
         }
@@ -109,7 +104,7 @@ public class OutputView {
     }
 
     private String getResultFormat(Result result, int resultCount) {
-        if (resultCount == 0) {
+        if (resultCount == SKIP_COUNT) {
             return "";
         }
 

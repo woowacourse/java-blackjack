@@ -13,6 +13,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
+    private static final int INITIAL_CARD_AMOUNT = 2;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -54,7 +55,7 @@ public class BlackjackController {
         while (player.isAbleToReceiveCard()
                 && requestAction(player) == BlackjackAction.HIT) {
             blackjackGame.handOutCardTo(player);
-            outputView.printPlayerCards(player);
+            outputView.printParticipantCards(player, player.getCards());
         }
 
         printPlayerCurrentState(player);
@@ -75,7 +76,8 @@ public class BlackjackController {
         Participant dealer = blackjackGame.getDealer();
         blackjackGame.handOutAdditionalCardToDealer();
 
-        outputView.printDealerHitCount(dealer.getCards().size() - 2); //TODO 분리
+        int hitCardCount = dealer.getCards().size() - INITIAL_CARD_AMOUNT;
+        outputView.printDealerHitCount(hitCardCount);
     }
 
     private void printPlayerCurrentState(Participant player) {
@@ -84,7 +86,7 @@ public class BlackjackController {
             return;
         }
 
-        outputView.printPlayerCards(player);
+        outputView.printParticipantCards(player, player.getCards());
     }
 
     private void printResults(BlackjackGame blackjackGame) {
