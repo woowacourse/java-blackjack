@@ -2,9 +2,9 @@ package domain.card;
 
 public enum Suit {
 
-    HEART(),
-    CLOVER(),
-    DIAMOND(),
-    SPADE();
+    HEART,
+    CLOVER,
+    DIAMOND,
+    SPADE
 
 }
