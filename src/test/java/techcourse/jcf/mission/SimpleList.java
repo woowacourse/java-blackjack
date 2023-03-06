@@ -18,6 +18,16 @@ public interface SimpleList<T> {
         return sum;
     }
 
+    static <T> SimpleList<T> filterNegative(SimpleList<? extends Number> simpleList) {
+        SimpleList<T> resultList = new SimpleArrayList<>();
+        for (int i = 0; i < simpleList.size(); i++) {
+            if (simpleList.get(i).doubleValue() >= 0) {
+                resultList.add((T) simpleList.get(i));
+            }
+        }
+        return resultList;
+    }
+
     boolean add(T value);
 
     void add(int index, T value);
