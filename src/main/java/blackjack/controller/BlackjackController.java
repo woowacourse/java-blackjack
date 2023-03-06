@@ -42,12 +42,11 @@ public class BlackjackController {
     }
 
     private void draw(final BlackjackGame blackjackGame) {
-        final Players players = blackjackGame.getPlayers();
-        for (Player player : players.getPlayers()) {
+        for (Player player : blackjackGame.getPlayers()) {
             drawTo(player);
         }
         blackjackGame.drawToDealer(ShuffledDeck.getInstance());
-        outputView.printDealerDraw(players.getDealer());
+        outputView.printDealerDraw(blackjackGame.getDealer());
     }
 
     private void drawTo(final Player player) {
@@ -83,8 +82,7 @@ public class BlackjackController {
     }
 
     private void printPlayerResult(final BlackjackGame blackjackGame) {
-        final Players players = blackjackGame.getPlayers();
-        for (final Player player : players.getPlayers()) {
+        for (final Player player : blackjackGame.getPlayers()) {
             outputView.printPlayerResult(player);
         }
     }

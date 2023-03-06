@@ -60,7 +60,7 @@ public class PlayersTest {
 
         final Players players = from(names);
 
-        assertThat(players.getNames()).containsExactly("딜러", "후추", "허브");
+        assertThat(players.getPlayers()).hasSize(3);
     }
 
     @Test

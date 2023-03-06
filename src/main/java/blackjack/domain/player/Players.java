@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import static java.util.stream.Collectors.toUnmodifiableList;
-
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,12 +92,6 @@ public class Players {
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(INVALID_DEALER_MESSAGE));
-    }
-
-    public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(toUnmodifiableList());
     }
 
     public List<Player> getPlayers() {

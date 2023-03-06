@@ -23,19 +23,6 @@ import org.junit.jupiter.api.Test;
 public class BlackjackGameTest {
 
     @Test
-    void 플레이어들을_반환한다() {
-        final List<String> names = List.of("허브", "후추");
-        final Players players = Players.from(names);
-        final BlackjackGame blackjackGame = new BlackjackGame(players);
-
-        final Players gamePlayers = blackjackGame.getPlayers();
-
-        assertThat(gamePlayers.getPlayers())
-                .extracting(Player::getName)
-                .containsExactly("딜러", "허브", "후추");
-    }
-
-    @Test
     void 딜러가_카드를_뽑는다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
         final Players players = Players.from(List.of("허브"));
@@ -44,7 +31,7 @@ public class BlackjackGameTest {
 
         blackjackGame.drawToDealer(deck);
 
-        final Dealer dealer = blackjackGame.getPlayers().getDealer();
+        final Dealer dealer = blackjackGame.getDealer();
         assertThat(dealer.getCardCount()).isEqualTo(3);
     }
 
@@ -59,5 +46,27 @@ public class BlackjackGameTest {
         final BlackjackGameResult result = blackjackGame.play();
 
         assertThat(result.getResult().values()).containsExactly(WIN);
+    }
+
+    @Test
+    void 플레이어들을_반환한다() {
+        final List<String> names = List.of("허브", "후추");
+        final BlackjackGame blackjackGame = new BlackjackGame(Players.from(names));
+
+        final List<Player> players = blackjackGame.getPlayers();
+
+        assertThat(players)
+                .extracting(Player::getName)
+                .containsExactly("딜러", "허브", "후추");
+    }
+
+    @Test
+    void 딜러를_반환한다() {
+        final List<String> names = List.of("후추");
+        final BlackjackGame blackjackGame = new BlackjackGame(Players.from(names));
+
+        final Dealer dealer = blackjackGame.getDealer();
+
+        assertThat(dealer.isDealer()).isTrue();
     }
 }

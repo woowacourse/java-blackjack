@@ -6,8 +6,8 @@ import static java.lang.String.join;
 import blackjack.domain.game.BlackjackGameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.domain.player.Result;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -29,17 +29,19 @@ public class OutputView {
     private static final String GAME_RESULT_DEALER_MESSAGE_FORMAT =
             "딜러: %d" + WIN_MESSAGE + " %d" + PUSH_MESSAGE + " %d" + LOSE_MESSAGE;
 
-    public void printInitialDraw(final Players players) {
+    public void printInitialDraw(final List<Player> players) {
         System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
         System.out.println(generateInitialDrawMessages(players) + NEW_LINE);
     }
 
-    private String generateNames(final Players players) {
-        return join(DELIMITER, players.getNames());
+    private String generateNames(final List<Player> players) {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(DELIMITER));
     }
 
-    private String generateInitialDrawMessages(final Players players) {
-        return players.getPlayers().stream()
+    private String generateInitialDrawMessages(final List<Player> players) {
+        return players.stream()
                 .map(this::generateInitialDrawMessage)
                 .collect(Collectors.joining(NEW_LINE));
     }
