@@ -3,6 +3,7 @@ package controller;
 import domain.cardtable.CardTable;
 import domain.deck.CardDeck;
 import domain.player.Name;
+import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.dealer.DealerResult;
 import domain.player.participant.Participant;
@@ -10,6 +11,7 @@ import domain.player.participant.ParticipantResult;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,17 +25,48 @@ public class BlackJackController {
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final CardTable cardTable = CardTable.readyToPlayBlackjack(cardDeck);
 
-        final List<Participant> participants = dealParticipantsCards(cardTable);
-        final Dealer dealer = dealDealerCards(cardTable);
+        final List<Participant> participants = createParticipants();
+        final Dealer dealer = createDealer();
+        final List<Player> players = createPlayers(participants, dealer);
 
-        printStateAfterDealtCard(participants, dealer);
-        hittingPlayer(cardDeck, participants, dealer);
-        printStateAfterHittedCard(participants, dealer);
+        deal(cardTable, players);
 
-        final Map<Participant, ParticipantResult> playersResult = cardTable.determineWinner(participants, dealer);
-        final Map<DealerResult, Long> scoreBoard = countDealerResult(playersResult);
+        printStateAfterDeal(participants, dealer);
+        hittingPlayer(cardTable, participants, dealer);
+        printStateAfterHit(participants, dealer);
 
-        printPlayerScoreBoard(participants, playersResult, scoreBoard);
+        final Map<Participant, ParticipantResult> participantsResult = cardTable.determineWinner(participants, dealer);
+        final Map<DealerResult, Long> scoreBoard = countDealerResult(participantsResult);
+
+        printPlayerScoreBoard(participants, participantsResult, scoreBoard);
+    }
+
+    private static List<Player> createPlayers(final List<Participant> participants, final Dealer dealer) {
+        List<Player> players = new ArrayList<>(participants);
+        players.add(dealer);
+
+        return players;
+    }
+
+    private static void deal(final CardTable cardTable, final List<Player> players) {
+        dealCard(cardTable, players);
+        dealCard(cardTable, players);
+    }
+
+    private static void dealCard(final CardTable cardTable, final List<Player> players) {
+        players.forEach(cardTable::dealCardTo);
+    }
+
+    private static Dealer createDealer() {
+        return new Dealer();
+    }
+
+    private static List<Participant> createParticipants() {
+        return InputView.readParticipantsName()
+                        .stream()
+                        .map(Name::new)
+                        .map(Participant::new)
+                        .collect(Collectors.toList());
     }
 
     private static void printPlayerScoreBoard(final List<Participant> participants,
@@ -43,17 +76,17 @@ public class BlackJackController {
         OutputView.showParticipantsScoreBoard(playersResult, participants);
     }
 
-    private static void printStateAfterHittedCard(final List<Participant> participants, final Dealer dealer) {
+    private static void printStateAfterHit(final List<Participant> participants, final Dealer dealer) {
         OutputView.showPlayerStateResult(dealer);
         OutputView.showParticipantsStateResult(participants);
     }
 
-    private void hittingPlayer(final CardDeck cardDeck, final List<Participant> participants, final Dealer dealer) {
-        hitForParticipants(cardDeck, participants);
-        hitForDealer(cardDeck, dealer);
+    private void hittingPlayer(final CardTable cardTable, final List<Participant> participants, final Dealer dealer) {
+        hitForParticipants(cardTable, participants);
+        hitForDealer(cardTable, dealer);
     }
 
-    private static void printStateAfterDealtCard(final List<Participant> participants, final Dealer dealer) {
+    private static void printStateAfterDeal(final List<Participant> participants, final Dealer dealer) {
         OutputView.showDealtCardTo(participants);
         OutputView.showStateOf(dealer);
         OutputView.showStateOf(participants);
@@ -68,37 +101,24 @@ public class BlackJackController {
                                                            counting()));
     }
 
-    private void hitForDealer(final CardDeck cardDeck, final Dealer dealer) {
-        while (dealer.canHit()) {
+    private void hitForDealer(final CardTable cardTable, final Dealer dealer) {
+        do {
             OutputView.dealerOneMoreCard();
-            dealer.hit(cardDeck.draw());
-        }
+        } while (cardTable.dealCardTo(dealer));
     }
 
-    private void hitForParticipants(final CardDeck cardDeck, final List<Participant> participants) {
-        participants.forEach(participant -> hitForParticipant(cardDeck, participant));
+    private void hitForParticipants(final CardTable cardTable, final List<Participant> participants) {
+        participants.forEach(participant -> hitForParticipant(cardTable, participant));
     }
 
-    private void hitForParticipant(final CardDeck cardDeck, final Participant participant) {
-        while (participant.canHit() && inputHitOrStay(participant)) {
-            participant.hit(cardDeck.draw());
+    private void hitForParticipant(final CardTable cardTable, final Participant participant) {
+        while (inputHitOrStay(participant)) {
+            cardTable.dealCardTo(participant);
             OutputView.showStateOf(participant);
         }
     }
 
     private boolean inputHitOrStay(final Participant participant) {
         return InputView.readMoreCard(participant).equals("y");
-    }
-
-    private Dealer dealDealerCards(final CardTable cardTable) {
-        return new Dealer(cardTable.createCardArea());
-    }
-
-    private List<Participant> dealParticipantsCards(final CardTable cardTable) {
-        return InputView.readParticipantsName()
-                        .stream()
-                        .map(Name::new)
-                        .map(name -> new Participant(name, cardTable.createCardArea()))
-                        .collect(Collectors.toList());
     }
 }
