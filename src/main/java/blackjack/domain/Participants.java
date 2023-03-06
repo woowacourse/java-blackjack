@@ -5,18 +5,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participants {
-    private final List<Participant> participants;
+    private final List<Player> players;
+    private final Dealer dealer;
 
-    private Participants(List<Participant> participants) {
-        this.participants = participants;
+    private Participants(List<Player> players) {
+        this.players = players;
+        this.dealer = new Dealer();
     }
 
     public static Participants from(List<String> names) {
         validateDuplicate(names);
-        List<Participant> players = names.stream()
+        List<Player> players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
-        players.add(new Dealer());
         return new Participants(players);
     }
 
@@ -27,27 +28,16 @@ public class Participants {
     }
 
     public List<Player> getPlayers() {
-        return participants.stream()
-                .filter(participant -> participant instanceof Player)
-                .map(participant -> (Player) participant)
-                .collect(Collectors.toList());
+        return List.copyOf(players);
     }
 
     public Dealer getDealer() {
-        return (Dealer) participants.stream()
-                .filter(participant -> participant instanceof Dealer)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("딜러를 " +
-                        "찾지 못했습니다."));
+        return dealer;
     }
 
     public List<String> getPlayerNames() {
         return getPlayers().stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
-    }
-
-    public List<Participant> toList() {
-        return List.copyOf(participants);
     }
 }

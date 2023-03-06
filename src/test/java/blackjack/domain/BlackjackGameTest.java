@@ -18,22 +18,26 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants);
         blackjackGame.dealOutCard();
 
-        Participant participant = participants.toList().get(0);
-        assertThat(participant.getCards()).hasSize(2);
+        Player player = participants.getPlayers().get(0);
+        assertThat(player.getCards()).hasSize(2);
     }
 
     @Test
     @DisplayName("게임 승패를 반환한다")
     void getGameResultTest() {
-        List<String> names = List.of("jamie", "boxster");
+        List<String> names = List.of("jamie");
         Participants participants = Participants.from(names);
-        List<Card> cards = new ArrayList<>(List.of(
-                new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
-                new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING),
-                new Card(CardSuit.SPADE, CardNumber.KING), new Card(CardSuit.HEART, CardNumber.THREE)));
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        new Card(CardSuit.HEART, CardNumber.TWO), new Card(CardSuit.HEART, CardNumber.SEVEN),
+                        new Card(CardSuit.HEART, CardNumber.JACK), new Card(CardSuit.SPADE, CardNumber.KING)
+                ));
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
 
-        assertThat(blackjackGame.getResult()).containsEntry(participants.getPlayers().get(0), GameResult.LOSE);
+        BlackjackResult result = blackjackGame.getResult();
+
+        Player player = participants.getPlayers().get(0);
+        assertThat(result.get(player)).isEqualTo(GameResult.LOSE);
     }
 }

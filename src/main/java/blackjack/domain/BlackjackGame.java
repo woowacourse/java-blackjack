@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -21,12 +22,10 @@ public class BlackjackGame {
 
     public void dealOutCard() {
         for (Player player : participants.getPlayers()) {
-            List<Card> cards = pickTwice();
-            player.addCards(cards);
+            player.addCards(pickTwice());
         }
-        List<Card> cards = pickTwice();
         Dealer dealer = participants.getDealer();
-        dealer.addCards(cards);
+        dealer.addCards(pickTwice());
     }
 
     private List<Card> pickTwice() {
@@ -36,15 +35,16 @@ public class BlackjackGame {
         return pick;
     }
 
-    public Map<Participant, GameResult> getResult() {
-        Map<Participant, GameResult> result = new LinkedHashMap<>();
-        for (Player player : participants.getPlayers()) {
-            result.put(player, GameResult.of(player, participants.getDealer()));
-        }
-        return result;
+    public BlackjackResult getResult() {
+        Map<Player, GameResult> result = participants.getPlayers().stream()
+                .collect(Collectors.toMap(player -> player,
+                        player -> GameResult.of(player, participants.getDealer()),
+                        (o1, o2) -> o1,
+                        LinkedHashMap::new));
+        return new BlackjackResult(result);
     }
 
-    public void giveCard(Participant participant) {
+    public void drawCard(Participant participant) {
         participant.addCard(cardDeck.pick());
     }
 }
