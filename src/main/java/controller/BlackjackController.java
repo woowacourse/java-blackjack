@@ -11,9 +11,8 @@ public class BlackjackController {
         try {
             BlackjackService blackjackGame = BlackjackService.of(InputView.readPlayersName());
 
-            initParticipantsHand(blackjackGame);
-            runPlayersTurn(blackjackGame);
-            runDealerTurn(blackjackGame);
+            prepare(blackjackGame);
+            start(blackjackGame);
 
             OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
             OutputView.printParticipantsResult(blackjackGame.getResult());
@@ -22,13 +21,15 @@ public class BlackjackController {
         }
     }
 
-    private void initParticipantsHand(BlackjackService blackjackGame) {
+    private void prepare(BlackjackService blackjackGame) {
         OutputView.printStartMessage(blackjackGame.getPlayersName());
-
-        blackjackGame.start();
-
         OutputView.printDealerCard(blackjackGame.getDealer());
         OutputView.printPlayersCard(blackjackGame.getPlayers());
+    }
+
+    private void start(BlackjackService blackjackGame) {
+        runPlayersTurn(blackjackGame);
+        runDealerTurn(blackjackGame);
     }
 
     private void runPlayersTurn(BlackjackService blackjackGame) {

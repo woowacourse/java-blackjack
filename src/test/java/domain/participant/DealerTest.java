@@ -1,8 +1,6 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +14,7 @@ class DealerTest {
     @Test
     void 카드를_가질_수_있다() {
         //given
-        Dealer dealer = new Dealer();
+        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
         int beforeCount = dealer.getCards().size();
 
         //when
@@ -31,7 +29,7 @@ class DealerTest {
     @Test
     void 카드들의_합을_계산_할_수_있다() {
         //given
-        Dealer dealer = new Dealer();
+        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
         cards.forEach(dealer::addCard);
 
@@ -39,15 +37,14 @@ class DealerTest {
         int totalScore = dealer.calculateScore();
 
         //then
-        assertThat(totalScore).isEqualTo(19);
+        assertThat(totalScore).isEqualTo(21);
     }
 
     @Test
     void 카드의_합이_16_이하면_stand가_아니다() {
         //given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.FIVE, Suit.HEART));
-        cards.forEach(dealer::addCard);
+        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        dealer.addCard(new Card(Rank.FOUR, Suit.CLUB));
 
         //when
 
@@ -58,9 +55,8 @@ class DealerTest {
     @Test
     void 카드의_합이_16_초과면_stand() {
         //given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.SIX, Suit.HEART));
-        cards.forEach(dealer::addCard);
+        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        dealer.addCard(new Card(Rank.FIVE, Suit.CLUB));
 
         //when
 
@@ -71,7 +67,8 @@ class DealerTest {
     @Test
     void 카드들의_합이_21_이하라면_bust_가_아니다() {
         //given
-        Dealer dealer = new Dealer();
+        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        dealer.addCard(new Card(Rank.KING, Suit.CLUB));
 
         //when
 
@@ -82,15 +79,19 @@ class DealerTest {
     @Test
     void 카드들의_합이_21_초과라면_bust() {
         //given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
-                new Card(Rank.TEN, Suit.HEART),
-                new Card(Rank.TEN, Suit.SPADE));
+        Participant dealer = Participant.dealer(Deck.create(notShuffle()));
+        dealer.addCard(new Card(Rank.KING, Suit.CLUB));
+        dealer.addCard(new Card(Rank.KING, Suit.SPADE));
+        dealer.addCard(new Card(Rank.KING, Suit.HEART));
 
         //when
-        cards.forEach(dealer::addCard);
 
         //then
         assertThat(dealer.isBust()).isTrue();
+    }
+
+    private ShuffleStrategy notShuffle() {
+        return cards -> {
+        };
     }
 }

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Hand;
 
 import java.util.Collections;
@@ -13,9 +14,17 @@ public abstract class Participant {
     private final String name;
     private final Hand hand;
 
-    Participant(String name) {
-        this.hand = new Hand();
+    protected Participant(String name, Hand hand) {
+        this.hand = hand;
         this.name = name;
+    }
+
+    public static Participant dealer(Deck deck) {
+        return Dealer.from(Hand.from(deck));
+    }
+
+    public static Participant player(String name, Deck deck) {
+        return Player.from(name, Hand.from(deck));
     }
 
     public void addCard(Card card) {
@@ -24,10 +33,6 @@ public abstract class Participant {
 
     public int calculateScore() {
         return hand.getScore();
-    }
-
-    public void initHand(List<Card> twoCards) {
-        twoCards.forEach(hand::addCard);
     }
 
     public boolean isBust() {

@@ -1,6 +1,9 @@
 package domain.card;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
 public class Deck {
     private static final String ERROR_EMPTY_CARDS = "[ERROR] 뽑을 수 있는 카드가 존재하지 않습니다";
@@ -26,11 +29,7 @@ public class Deck {
         return cards.poll();
     }
 
-    public List<Card> pollTwoCards() {
-        return List.of(pollAvailableCard(), pollAvailableCard());
-    }
-
     public List<Card> getCards() {
-        return Collections.unmodifiableList((LinkedList<Card>) cards);
+        return new ArrayList<>(cards);
     }
 }

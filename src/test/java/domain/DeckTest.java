@@ -1,9 +1,6 @@
 package domain;
 
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -18,8 +15,7 @@ class DeckTest {
     @Test
     void 덱은_52가지_종류의_카드가_있다() {
         //given
-        List<Card> expectedCards = initCards();
-        Deck deck = Deck.create();
+        Deck deck = Deck.create(notShuffle());
 
         //when
 
@@ -30,7 +26,7 @@ class DeckTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Deck deck = Deck.create();
+        Deck deck = Deck.create(notShuffle());
         List<Card> cards = initCards();
 
         //when
@@ -43,7 +39,7 @@ class DeckTest {
     @Test
     void 뽑은_카드는_제거된다() {
         //given
-        Deck deck = Deck.create();
+        Deck deck = Deck.create(notShuffle());
 
         //when
         for (int i = 0; i < 52; i++) {
@@ -61,5 +57,10 @@ class DeckTest {
                 .flatMap(rank -> Arrays.stream(Suit.values())
                         .map(suit -> new Card(rank, suit)))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    private ShuffleStrategy notShuffle() {
+        return cards -> {
+        };
     }
 }

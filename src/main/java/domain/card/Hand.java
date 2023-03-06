@@ -10,8 +10,16 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand() {
-        this.cards = new ArrayList<>();
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static Hand from(Deck deck) {
+        List<Card> hand = new ArrayList<>();
+        hand.add(deck.pollAvailableCard());
+        hand.add(deck.pollAvailableCard());
+
+        return new Hand(hand);
     }
 
     public void addCard(Card card) {

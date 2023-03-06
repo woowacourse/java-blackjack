@@ -1,12 +1,18 @@
 package domain.participant;
 
+import domain.card.Hand;
+
 public class Dealer extends Participant {
 
-    private static final int STAY_LOWER_BOUND = 16;
     private static final String DEALER_NAME = "딜러";
+    private static final int STAY_LOWER_BOUND = 16;
 
-    public Dealer() {
-        super(DEALER_NAME);
+    private Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
+    }
+
+    public static Dealer from(Hand hand) {
+        return new Dealer(hand);
     }
 
     @Override

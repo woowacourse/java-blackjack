@@ -1,8 +1,6 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +23,7 @@ class PlayerTest {
         //when
 
         //then
-        assertDoesNotThrow(() -> Player.from(name));
+        assertDoesNotThrow(() -> Player.from(name, Hand.from(Deck.create(new ShuffleStrategyImpl()))));
     }
 
     @ParameterizedTest
@@ -36,7 +34,7 @@ class PlayerTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Player.from(name))
+        assertThatThrownBy(() -> Player.from(name, Hand.from(Deck.create(new ShuffleStrategyImpl()))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.");
     }
@@ -44,7 +42,7 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Player player = Player.from("럿고");
+        Player player = Player.from("럿고", Hand.from(Deck.create(new ShuffleStrategyImpl())));
         int beforeCount = player.getCards().size();
 
         //when
@@ -59,7 +57,7 @@ class PlayerTest {
     @Test
     void 카드들의_합을_계산_할_수_있다() {
         //given
-        Player player = Player.from("연어");
+        Player player = Player.from("연어", Hand.from(Deck.create(notShuffle()))); //1, 2가 뽑힌 상태
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.EIGHT, Suit.HEART));
         cards.forEach(player::addCard);
 
@@ -67,13 +65,13 @@ class PlayerTest {
         int totalScore = player.calculateScore();
 
         //then
-        assertThat(totalScore).isEqualTo(19);
+        assertThat(totalScore).isEqualTo(21);
     }
 
     @Test
     void 카드들의_합이_21_이하라면_더_받을_수_있다() {
         //given
-        Player player = Player.from("연어");
+        Player player = Player.from("연어", Hand.from(Deck.create(new ShuffleStrategyImpl())));
 
         //when
 
@@ -84,7 +82,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_초과라면_더_받을_수_없다() {
         //given
-        Player player = Player.from("연어");
+        Player player = Player.from("연어", Hand.from(Deck.create(new ShuffleStrategyImpl())));
         List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
                 new Card(Rank.TEN, Suit.HEART),
                 new Card(Rank.TEN, Suit.SPADE));
@@ -94,5 +92,10 @@ class PlayerTest {
 
         //then
         assertThat(player.isBust()).isTrue();
+    }
+
+    private ShuffleStrategy notShuffle() {
+        return cards -> {
+        };
     }
 }

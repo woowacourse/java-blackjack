@@ -21,14 +21,14 @@ public class Participants {
         this.players = players;
     }
 
-    public static Participants of(List<String> playersName) {
+    public static Participants of(List<String> playersName, Deck deck) {
         validate(playersName);
 
         List<Participant> players = playersName.stream()
-                .map(Player::from)
+                .map(name -> Participant.player(name, deck))
                 .collect(Collectors.toList());
 
-        return new Participants(new Dealer(), players);
+        return new Participants(Participant.dealer(deck), players);
     }
 
     private static void validate(List<String> names) {
@@ -51,11 +51,6 @@ public class Participants {
         if (removedDistinctCount != names.size()) {
             throw new IllegalArgumentException(ERROR_DUPLICATED_NAME);
         }
-    }
-
-    public void initHand(Deck deck) {
-        dealer.initHand(deck.pollTwoCards());
-        players.forEach(player -> player.initHand(deck.pollTwoCards()));
     }
 
     public Optional<Participant> getNextTurnPlayer() {

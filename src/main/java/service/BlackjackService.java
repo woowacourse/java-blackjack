@@ -26,11 +26,10 @@ public class BlackjackService {
     }
 
     public static BlackjackService of(List<String> playersName) {
-        return new BlackjackService(Deck.create(new ShuffleStrategyImpl()), Participants.of(playersName));
-    }
+        Deck deck = Deck.create(new ShuffleStrategyImpl());
+        Participants participants = Participants.of(playersName, deck);
 
-    public void start() {
-        participants.initHand(deck);
+        return new BlackjackService(deck, participants);
     }
 
     public Optional<Participant> getNextPlayer() {
