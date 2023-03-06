@@ -2,10 +2,10 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 
-import static java.util.stream.Collectors.toUnmodifiableList;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class Cards {
     private static final int ACE_ADDITIONAL_SCORE = 10;
@@ -14,9 +14,6 @@ public class Cards {
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards = new ArrayList<>();
-
-    public Cards() {
-    }
 
     public void add(final Card card) {
         cards.add(card);
