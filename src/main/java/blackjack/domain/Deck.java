@@ -25,4 +25,11 @@ public class Deck {
     public Card getCard() {
         return cards.poll();
     }
+
+    public List<Card> getTwoCards() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(getCard());
+        cards.add(getCard());
+        return cards;
+    }
 }

@@ -4,15 +4,11 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-    public static final int REPEAT_COUNT = 2;
-    public static final String YES = "y";
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -24,7 +20,7 @@ public class BlackJackController {
     public void run() {
         try {
             Deck deck = new Deck();
-            Dealer dealer = new Dealer(getInitialCards(deck));
+            Dealer dealer = new Dealer(deck.getTwoCards());
             Players players = generatePlayers(deck);
             showInitialCards(dealer, players);
             playGame(deck, dealer, players);
@@ -34,27 +30,10 @@ public class BlackJackController {
         }
     }
 
-    private List<Card> getInitialCards(final Deck deck) {
-        List<Card> initialCards = new ArrayList<>();
-        for (int i = 0; i < REPEAT_COUNT; i++) {
-            initialCards.add(deck.getCard());
-        }
-
-        return initialCards;
-    }
 
     private Players generatePlayers(final Deck deck) {
         outputView.printRequestPlayerNames();
-        List<String> playerNames = inputView.readPlayerNames();
-
-        Validator.getInstance().validatePlayerNames(playerNames);
-
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName, getInitialCards(deck)));
-        }
-
-        return new Players(players);
+        return Players.of(inputView.readPlayerNames(), deck);
     }
 
     private void showInitialCards(final Dealer dealer, final Players players) {
@@ -123,7 +102,7 @@ public class BlackJackController {
     private void closeGame(final Dealer dealer, final Players players) {
         showFinalCards(dealer, players);
 
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         showDealerResult(gameResult.getDealerResults());
         players.getPlayers().forEach(

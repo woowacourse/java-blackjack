@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class GameResultTest {
 
     private static Dealer dealer;
-    private static Players players;
+    private static List<Player> players;
     private static Player player;
 
     @BeforeEach
@@ -21,8 +21,9 @@ class GameResultTest {
         dealer.isAbleToReceive();
 
         player = new Player("pobi", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.FOUR), new Card(Suit.DIAMOND, Letter.SIX))));
-        players = new Players(List.of(player));
         player.isAbleToReceive();
+        players = new ArrayList<>();
+        players.add(player);
     }
 
     @Test
@@ -105,8 +106,12 @@ class GameResultTest {
         Player player2 = new Player("jena", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.ACE), new Card(Suit.DIAMOND, Letter.SEVEN))));
         Player player3 = new Player("io", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.JACK), new Card(Suit.DIAMOND, Letter.KING))));
 
-        players = new Players(List.of(player, player2, player3));
-        players.getPlayers().forEach(Player::isAbleToReceive);
+        List<Player> players = new ArrayList<>();
+        players.add(player);
+        players.add(player2);
+        players.add(player3);
+
+        players.forEach(Player::isAbleToReceive);
         GameResult gameResult = new GameResult(dealer, players);
 
         assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);

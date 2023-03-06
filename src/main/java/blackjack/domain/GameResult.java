@@ -1,6 +1,9 @@
 package blackjack.domain;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameResult {
     public static final int MAX_BLACKJACK_SCORE = 21;
@@ -9,10 +12,10 @@ public class GameResult {
     private final Map<Result, Integer> dealerResults = new HashMap<>();
     private final Map<Player, Result> playersResults = new HashMap<>();
 
-    public GameResult(Dealer dealer, Players players) {
+    public GameResult(Dealer dealer, List<Player> players) {
         initDealerResults();
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             decideWinner(dealer, player);
         }
     }

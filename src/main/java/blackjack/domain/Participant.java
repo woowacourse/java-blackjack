@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Participant {
+    protected static final int REPEAT_COUNT = 2;
 
     protected final List<Card> cards;
     protected final Score score;
