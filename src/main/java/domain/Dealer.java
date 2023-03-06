@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
-    private final Map<Player, Result> playerResultMap = new LinkedHashMap<>();
+    private final Map<Player, Result> resultMap = new LinkedHashMap<>();
 
     public Dealer() {
         super(Name.from(DEALER_NAME));
@@ -14,7 +14,7 @@ public class Dealer extends Participant {
     public void decideResults(Players players) {
         for (Player player : players.getPlayers()) {
             Result dealerResult = competeWith(player);
-            playerResultMap.put(player, dealerResult);
+            resultMap.put(player, dealerResult);
         }
     }
 
@@ -44,7 +44,7 @@ public class Dealer extends Participant {
     }
 
     public Map<Player, Result> getGameResult() {
-        return Collections.unmodifiableMap(playerResultMap);
+        return Collections.unmodifiableMap(resultMap);
     }
 
     public Card getFirstCard() {
@@ -56,7 +56,7 @@ public class Dealer extends Participant {
     }
 
     public int getResultCount(Result result) {
-        return (int) playerResultMap.values().stream()
+        return (int) resultMap.values().stream()
                 .filter(result::equals)
                 .count();
     }
