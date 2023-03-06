@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.dto.UserDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
+import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,16 @@ public class BlackJack {
 
     public boolean isBust(final Name name) {
         return users.checkBustBy(name);
+    }
+
+    public List<User> getUserOf(Result result) {
+        final ArrayList<User> resultUsers = new ArrayList<>();
+        for (User user : users.getUsers()) {
+            if (Result.of(user.getGamePoint(), dealer.getGamePoint()) == result) {
+                resultUsers.add(user);
+            }
+        }
+        return resultUsers;
     }
 
     public UserDto getUserDtoBy(Name user) {

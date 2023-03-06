@@ -47,49 +47,6 @@ public class UsersTest {
     }
 
     @Test
-    @DisplayName("Users 중 해당 게임 결과 값보다 큰 유저들의 리스트를 얻을 수 있다.")
-    void findUsersGreaterThanGamePoint() {
-
-        final GamePoint gamePoint = new GamePoint(List.of(CARD_10, CARD_9));
-
-        final Users users = new Users(
-                List.of(new Name("a"), new Name("b"), new Name("c")),
-                new TestDeck(Arrays.asList(10, 8, 10, 9, 10, 10))
-        );
-
-        assertThat(users.getUsersGreaterThan(gamePoint))
-                .allMatch((user) -> user.isNameOf(new Name("c")));
-    }
-
-    @Test
-    @DisplayName("Users 중 해당 게임 결과 값과 같은 유저들의 리스트를 얻을 수 있다.")
-    void findUsersEqualGamePoint() {
-        final GamePoint gamePoint = new GamePoint(List.of(CARD_10, CARD_9));
-
-        final Users users = new Users(
-                List.of(new Name("a"), new Name("b"), new Name("c")),
-                new TestDeck(Arrays.asList(10, 8, 10, 9, 10, 10))
-        );
-
-        assertThat(users.getUsersEqualTo(gamePoint))
-                .allMatch((user) -> user.isNameOf(new Name("b")));
-    }
-
-    @Test
-    @DisplayName("Users 중 해당 게임 결과 값보다 작은 유저들의 리스트를 얻을 수 있다.")
-    void findUserLowerThanGamePoint() {
-        final GamePoint gamePoint = new GamePoint(List.of(CARD_10, CARD_9));
-
-        final Users users = new Users(
-                List.of(new Name("a"), new Name("b"), new Name("c")),
-                new TestDeck(Arrays.asList(10, 8, 10, 9, 10, 10))
-        );
-
-        assertThat(users.getUsersLowerThan(gamePoint))
-                .allMatch((user) -> user.isNameOf(new Name("a")));
-    }
-
-    @Test
     @DisplayName("유저 이름으로 유저의 카드들을 가져온다.")
     void getCardsOfTest() {
         final List<Card> 푸우카드 = HupkAndPooh.getCardsOf(new Name("푸우"));

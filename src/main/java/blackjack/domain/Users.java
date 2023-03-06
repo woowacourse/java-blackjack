@@ -39,24 +39,6 @@ public class Users {
         return new Cards(cards);
     }
 
-    public List<User> getUsersGreaterThan(GamePoint point) {
-        return getUserOf(user -> user.pointCompare(point) == USER_HAVE_BIGGER_POINT);
-    }
-
-    public List<User> getUsersEqualTo(final GamePoint point) {
-        return getUserOf(user -> user.pointCompare(point) == USER_HAVE_SAME_POINT);
-    }
-
-    public List<User> getUsersLowerThan(final GamePoint point) {
-        return getUserOf(user -> user.pointCompare(point) == USER_HAVE_LOWER_POINT);
-    }
-
-    private List<User> getUserOf(Predicate<User> method) {
-        return users.stream()
-                .filter(user -> method.test(user))
-                .collect(Collectors.toList());
-    }
-
     public List<Card> getCardsOf(final Name user) {
         final User targetUser = finUserByName(user);
         return targetUser.openCards();

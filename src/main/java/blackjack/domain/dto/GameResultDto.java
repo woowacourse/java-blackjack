@@ -16,13 +16,13 @@ public class GameResultDto {
 
     public GameResultDto(BlackJack blackJack) {
         userResult = new LinkedHashMap<>();
-        judgeUsers(blackJack.getUsers(), blackJack.getDealer().getGamePoint());
+        judgeUsers(blackJack);
     }
 
-    private void judgeUsers(final Users users, final GamePoint gamePoint) {
-        enrollUser(users.getUsersGreaterThan(gamePoint), Result.WIN);
-        enrollUser(users.getUsersEqualTo(gamePoint), Result.DRAW);
-        enrollUser(users.getUsersLowerThan(gamePoint), Result.LOSE);
+    private void judgeUsers(final BlackJack blackJack) {
+        enrollUser(blackJack.getUserOf(Result.WIN), Result.WIN);
+        enrollUser(blackJack.getUserOf(Result.DRAW), Result.DRAW);
+        enrollUser(blackJack.getUserOf(Result.LOSE), Result.LOSE);
     }
 
     private void enrollUser(final List<User> winningUsers, Result result) {
