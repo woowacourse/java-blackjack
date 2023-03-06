@@ -29,10 +29,7 @@ public final class BlackJackController {
         getPlayersDecision();
         getDealerResult();
         outputView.printStatus(blackJack.getDealer(), blackJack.getPlayers());
-        outputView.printFinalResult(
-                blackJack.getDealer(),
-                blackJack.getGameResult()
-        );
+        outputView.printFinalResult(blackJack.getDealer(), blackJack.getGameResult());
     }
 
     private List<Name> userNameRequest() {
@@ -51,15 +48,14 @@ public final class BlackJackController {
     }
 
     private void getPlayerDecision(final Player player) {
-        boolean decision = Repeater.repeat(() -> cardRequest(player.getName()));
-        while (decision && !blackJack.isBusted(player)) {
+        while (!blackJack.isBusted(player) && wantMoreCard(player)) {
             blackJack.drawCard(player);
             outputView.printPlayerCards(player);
-            if (blackJack.isBusted(player)) {
-                break;
-            }
-            decision = Repeater.repeat(() -> cardRequest(player.getName()));
         }
+    }
+
+    private boolean wantMoreCard(final Player player) {
+        return Repeater.repeat(() -> cardRequest(player.getName()));
     }
 
     private boolean cardRequest(Name name) {
@@ -67,11 +63,11 @@ public final class BlackJackController {
     }
 
     private void getDealerResult() {
-        final int cardCount = blackJack.finalizeDealerAndGetAdditionalCount();
+        final int cardCount = blackJack.endDealerTurnAndCollectAdditionalCardCount();
         if (cardCount == 0) {
-            outputView.printAdditionalCardCountOfDealer(cardCount, false);
+            outputView.printAdditionalCardCount(cardCount, false);
             return;
         }
-        outputView.printAdditionalCardCountOfDealer(cardCount, true);
+        outputView.printAdditionalCardCount(cardCount, true);
     }
 }

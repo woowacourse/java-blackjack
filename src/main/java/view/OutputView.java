@@ -79,7 +79,7 @@ public final class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    public void printAdditionalCardCountOfDealer(final int cardCount, final boolean haveAdditionalCard) {
+    public void printAdditionalCardCount(final int cardCount, final boolean haveAdditionalCard) {
         if (!haveAdditionalCard) {
             System.out.println("\n딜러는 17 이상이라 카드를 받지 못했습니다.\n");
         }

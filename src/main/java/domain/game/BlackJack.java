@@ -39,7 +39,7 @@ public final class BlackJack {
         player.takeCard(deck.drawCard());
     }
 
-    public int finalizeDealerAndGetAdditionalCount() {
+    public int endDealerTurnAndCollectAdditionalCardCount() {
         int additionalCardCount = 0;
         while (dealer.needMoreCard()) {
             dealer.takeCard(deck.drawCard());
