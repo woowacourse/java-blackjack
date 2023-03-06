@@ -20,12 +20,14 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ParticipantsTest {
 
+    private final String dealerName = "딜러";
+
     @DisplayName("참가자 중 플레이어는 중복인 이름을 허용하지 않는다.")
     @Test
     void should_ThrowException_When_PlayerNameDuplicated() {
         List<String> playerNames = List.of("pobi", "pobi", "jason");
 
-        Assertions.assertThatThrownBy(() -> Participants.of(playerNames))
+        Assertions.assertThatThrownBy(() -> Participants.of(dealerName, playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
     }
@@ -33,8 +35,7 @@ class ParticipantsTest {
     @DisplayName("모든 참가자에게 카드를 2장씩 나눠준다.")
     @Test
     void should_AllParticipantsHas2Cards_When_HandOut() {
-        List<String> playerNames = List.of("pobi", "odo", "jason");
-        Participants participants = Participants.of(playerNames);
+        Participants participants = Participants.of(dealerName, List.of("pobi", "odo", "jason"));
 
         participants.handOut(new BlackJackDeckGenerator().generate());
 
@@ -45,11 +46,10 @@ class ParticipantsTest {
         }
     }
 
-    @DisplayName("플레이어의 보유 카드를 모두 확인한다")
+    @DisplayName("참가자의 보유 카드를 모두 확인하되, 딜러 카드는 첫 카드만 확인한다.")
     @Test
-    void should_OpenCards_Of_AllPlayers() {
-        List<String> playerNames = List.of("odo", "doy");
-        Participants participants = Participants.of(playerNames);
+    void should_OpenCards_Of_AllParticipants() {
+        Participants participants = Participants.of(dealerName, List.of("odo", "doy"));
 
         DeckGenerator mockGenerator = new MockDeckGenerator((List.of(
                 new Card(SPADE, ACE), new Card(SPADE, TWO),
@@ -58,9 +58,10 @@ class ParticipantsTest {
         )));
         participants.handOut(mockGenerator.generate());
 
-        Map<String, List<Card>> cardsByParticipants = participants.openPlayerCards();
+        Map<String, List<Card>> cardsByParticipants = participants.openHandOutCardsByName();
         assertThat(cardsByParticipants)
                 .containsAllEntriesOf(Map.of(
+                        "딜러", List.of(new Card(SPADE, ACE)),
                         "odo", List.of(new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR)),
                         "doy", List.of(new Card(HEART, THREE), new Card(HEART, FOUR))
                 ));

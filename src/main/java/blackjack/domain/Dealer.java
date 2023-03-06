@@ -1,9 +1,13 @@
 package blackjack.domain;
 
-// TODO 딜러도 이름 갖게 하기?
+// TODO 딜러 싱글톤 여부 검토
 public class Dealer extends Participant {
 
     private static final int CARD_TAKE_LIMIT = 17;
+
+    public Dealer(String name) {
+        super(name);
+    }
 
     public boolean isUnderTakeLimit() {
         return computeSumOfCards() < CARD_TAKE_LIMIT;

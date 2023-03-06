@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class BlackJackController {
 
+    private static final String DealerName = "딜러";
     private BlackJackGame blackJackGame;
 
     public void run() {
@@ -22,14 +23,13 @@ public class BlackJackController {
 
     private void initialize() {
         List<String> playerNames = InputView.askPlayerNames();
-        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), playerNames);
+        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DealerName, playerNames);
     }
 
     private void startGame() {
         blackJackGame.handOut();
-        Card dealerFirstCard = blackJackGame.openDealerFirstCard();
-        Map<String, List<Card>> playersCards = blackJackGame.openPlayersCards();
-        OutputView.showOpenCards(dealerFirstCard, playersCards);
+        Map<String, List<Card>> allOpenedCardsByParticipantName = blackJackGame.openHandOutCards();
+        OutputView.showOpenCards(DealerName, allOpenedCardsByParticipantName);
     }
 
     private void hitOrStayForAvailablePlayers(List<String> playerNames) {
@@ -51,12 +51,11 @@ public class BlackJackController {
 
     private void hitUntilDealerAvailable() {
         int hitCount = blackJackGame.hitOrStayForDealer();
-        OutputView.showDealerHitResult(hitCount);
+        OutputView.showDealerHitResult(DealerName, hitCount);
     }
 
     private void totalUp() {
-        OutputView.showAllFinalCards(blackJackGame.computeDealerFinalCards(),
-                blackJackGame.computePlayersFinalCards());
+        OutputView.showAllFinalCards(blackJackGame.openAllFinalCards());
         OutputView.showAllJudgeResults(blackJackGame.computeJudgeResultsByPlayer());
     }
 }

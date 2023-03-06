@@ -8,9 +8,9 @@ public class BlackJackGame {
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(DeckGenerator deckGenerator, List<String> playerNames) {
+    public BlackJackGame(DeckGenerator deckGenerator, String dealerName, List<String> playerNames) {
         this.deck = deckGenerator.generate();
-        this.participants = Participants.of(playerNames);
+        this.participants = Participants.of(dealerName, playerNames);
     }
 
     public void handOut() {
@@ -24,12 +24,8 @@ public class BlackJackGame {
         return player.isAvailable();
     }
 
-    public Map<String, List<Card>> openPlayersCards() {
-        return participants.openPlayerCards();
-    }
-
-    public Card openDealerFirstCard() {
-        return participants.openDealerFirstCard();
+    public Map<String, List<Card>> openHandOutCards() {
+        return participants.openHandOutCardsByName();
     }
 
     public List<String> findAvailablePlayerNames() {
@@ -54,12 +50,8 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public FinalCards computeDealerFinalCards() {
-        return participants.openDealerFinalCards();
-    }
-
-    public Map<String, FinalCards> computePlayersFinalCards() {
-        return participants.openPlayersFinalCards();
+    public Map<String, FinalCards> openAllFinalCards() {
+        return participants.OpenFinalCardsByName();
     }
 
     public PlayerJudgeResults computeJudgeResultsByPlayer() {

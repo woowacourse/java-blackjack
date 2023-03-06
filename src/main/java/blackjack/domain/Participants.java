@@ -11,27 +11,31 @@ import java.util.stream.Collectors;
 public class Participants {
 
     private static final int INITIAL_HAND_OUT_COUNT = 2;
+    private static final int INITIAL_DEALER_CARD_OPEN_INDEX = 0;
 
     private final Dealer dealer;
     // TODO players 클래스 분리해서 player 반환받아 쓰기?
     private final List<Player> players;
 
-    private Participants(List<Player> players) {
-        this.dealer = new Dealer();
+    private Participants(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
         this.players = players;
     }
 
-    public static Participants of(List<String> playerNames) {
-        validatePlayerNames(playerNames);
+    public static Participants of(String dealerName, List<String> playerNames) {
+        validatePlayerNames(dealerName, playerNames);
         List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
-        return new Participants(players);
+        return new Participants(new Dealer(dealerName), players);
     }
 
-    private static void validatePlayerNames(List<String> playerNames) {
+    private static void validatePlayerNames(String dealerName, List<String> playerNames) {
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
+        if (playerNames.contains(dealerName)) {
+            throw new IllegalArgumentException("플레이어 이름은 딜러 이름(" + dealerName + ")과 중복될 수 없습니다.");
         }
     }
 
@@ -48,25 +52,22 @@ public class Participants {
         }
     }
 
-    // TODO stream 사용해서 map 만들기
-    public Map<String, List<Card>> openPlayerCards() {
+    public Map<String, List<Card>> openHandOutCardsByName() {
         Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
+        cardsByParticipants.put(dealer.getName(), List.of(extractOneToOpenForDealer()));
         players.forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
         return cardsByParticipants;
     }
 
-    public FinalCards openDealerFinalCards() {
-        return FinalCards.from(dealer);
+    private Card extractOneToOpenForDealer() {
+        return dealer.getCards().get(INITIAL_DEALER_CARD_OPEN_INDEX);
     }
 
-    public Map<String, FinalCards> openPlayersFinalCards() {
+    public Map<String, FinalCards> OpenFinalCardsByName() {
         Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
+        finalCardsByPlayerName.put(dealer.getName(), FinalCards.from(dealer));
         players.forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.from(player)));
         return finalCardsByPlayerName;
-    }
-
-    public Card openDealerFirstCard() {
-        return dealer.getCards().get(0);
     }
 
     public PlayerJudgeResults computeJudgeResultsByPlayer() {

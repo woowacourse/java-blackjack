@@ -4,34 +4,40 @@ import blackjack.domain.Card;
 import blackjack.domain.FinalCards;
 import blackjack.domain.JudgeResult;
 import blackjack.domain.PlayerJudgeResults;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
+import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final String DEALER_NAME = "딜러";
     private static final String WIN = "승";
     private static final String PUSH = "무";
     private static final String LOSE = "패";
     private static final String KEY_VALUE_FORMAT = "%s : %s%n";
-    private static final String GAME_RESULT_FORMAT = "%s카드: %s - 결과: %d%n";
-    private static final String OPEN_CARD_MESSAGE = "%n%s에게 2장을 나누었습니다.%n";
-    private static final String DEALER_HIT_RESULT_MESSAGE = DEALER_NAME + "는 16 이하라 %d장의 카드를 더 받았습니다.%n";
+    private static final String GAME_RESULT_FORMAT = "%s 카드: %s - 결과: %d%n";
+    private static final String OPEN_CARD_MESSAGE = "%n%s와 %s에게 2장을 나누었습니다.%n";
+    private static final String DEALER_HIT_RESULT_MESSAGE = "%s는 16 이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String FINAL_RESULT_HEADER = "%n## 최종 승패%n";
 
-    public static void showOpenCards(Card dealerFirstCard, Map<String, List<Card>> playersCards) {
-        Set<String> playerNames = playersCards.keySet();
-        System.out.printf(OPEN_CARD_MESSAGE, String.join(DELIMITER, playerNames));
-        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toCardName(dealerFirstCard));
-        for (String playerName : playerNames) {
-            List<Card> playerCard = playersCards.get(playerName);
-            showPlayerCard(playerName, playerCard);
+    public static void showOpenCards(String dealerName, Map<String, List<Card>> openedCardsByParticipantName) {
+        List<String> participantNames = new ArrayList<>(openedCardsByParticipantName.keySet());
+        List<String> playerNames = filterPlayerNamesFrom(dealerName, participantNames);
+        System.out.printf(OPEN_CARD_MESSAGE, dealerName, String.join(DELIMITER, playerNames));
+        for (String name : participantNames) {
+            List<Card> playerCard = openedCardsByParticipantName.get(name);
+            showPlayerCard(name, playerCard);
         }
+    }
+
+    private static List<String> filterPlayerNamesFrom(String dealerName, List<String> participantNames) {
+        return participantNames.stream()
+                .filter(name -> !Objects.equals(name, dealerName))
+                .collect(Collectors.toList());
     }
 
     public static void showPlayerCard(String playerName, List<Card> playerCard) {
@@ -49,20 +55,17 @@ public class OutputView {
         return String.join(DELIMITER, cardNames);
     }
 
-    public static void showDealerHitResult(int hitCount) {
+    public static void showDealerHitResult(String dealerName, int hitCount) {
         if (hitCount == 0) {
             return;
         }
-        System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
+        System.out.printf(DEALER_HIT_RESULT_MESSAGE, dealerName, hitCount);
     }
 
-    public static void showAllFinalCards(FinalCards dealerResult,
-                                         Map<String, FinalCards> playerResults) {
-        System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardNames(dealerResult.getCards()),
-                dealerResult.getSum());
-        for (Entry<String, FinalCards> result : playerResults.entrySet()) {
-            FinalCards finalCards = result.getValue();
-            System.out.printf(GAME_RESULT_FORMAT, result.getKey(), joinAllCardNames(finalCards.getCards()),
+    public static void showAllFinalCards(Map<String, FinalCards> finalCardsByParticipantName) {
+        for (Entry<String, FinalCards> cards : finalCardsByParticipantName.entrySet()) {
+            FinalCards finalCards = cards.getValue();
+            System.out.printf(GAME_RESULT_FORMAT, cards.getKey(), joinAllCardNames(finalCards.getCards()),
                     finalCards.getSum());
         }
     }
@@ -85,7 +88,7 @@ public class OutputView {
         int winCount = playerJudgeResults.countDealerWins();
         int pushCount = playerJudgeResults.countDealerPushes();
         int loseCount = playerJudgeResults.countDealerLoses();
-        System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toDealerWinResult(winCount, pushCount, loseCount));
+        System.out.printf(KEY_VALUE_FORMAT, "딜러", toDealerWinResult(winCount, pushCount, loseCount));
     }
 
     // TODO WinResult로 책임 이관

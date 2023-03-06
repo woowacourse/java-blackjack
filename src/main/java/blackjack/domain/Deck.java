@@ -13,6 +13,7 @@ public class Deck {
         this.cards = new LinkedList<>(cards);
     }
 
+    // TODO 한 장씩 주도록 변경
     public List<Card> draw(int count) {
         List<Card> drawnCards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
