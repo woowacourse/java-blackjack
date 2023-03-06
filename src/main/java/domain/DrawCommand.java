@@ -1,10 +1,16 @@
 package domain;
 
-import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum DrawCommand {
     DRAW("y"),
     STOP("n");
+
+    private static final Map<String, DrawCommand> inputDrawCommandMap = Stream.of(values())
+            .collect(Collectors.toMap(DrawCommand::getCommand, Function.identity()));
 
     private final String command;
 
@@ -13,9 +19,13 @@ public enum DrawCommand {
     }
 
     public static DrawCommand of(String inputCommand) {
-        return Arrays.stream(values())
-                .filter(drawCommand -> drawCommand.command.equals(inputCommand))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("카드 드로우 커맨드는 y,n 둘 중 하나입니다."));
+        if(inputDrawCommandMap.containsKey(inputCommand)) {
+            return inputDrawCommandMap.get(inputCommand);
+        }
+        throw new IllegalArgumentException("[Error] 카드 드로우 커맨드는 y,n 둘 중 하나입니다.");
+    }
+
+    private String getCommand() {
+        return command;
     }
 }
