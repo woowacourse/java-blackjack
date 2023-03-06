@@ -20,10 +20,10 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator));
 
         //when
-        game.settingGame(testCardPickerGenerator);
+        game.settingGame();
 
         //then
         for (Participant participant : participants.getParticipants()) {
@@ -43,8 +43,8 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
-        game.settingGame(testCardPickerGenerator);
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator));
+        game.settingGame();
 
         //when
         Map<Participant, WinningResult> result = game.generatePlayersResult();
@@ -69,8 +69,8 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.generate(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
-        game.settingGame(testCardPickerGenerator);
+        BlackjackGame game = new BlackjackGame(participants, Cards.generator(testCardPickerGenerator));
+        game.settingGame();
 
         //when
         List<WinningResult> result = game.generateDealerResult();

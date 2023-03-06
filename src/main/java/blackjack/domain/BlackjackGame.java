@@ -42,9 +42,9 @@ public class BlackjackGame {
         return dealerResult;
     }
 
-    public void settingGame(CardPickerGenerator cardPickerGenerator) {
+    public void settingGame() {
         for (Participant participant : participants.getParticipants()) {
-            firstHitRule(cardPickerGenerator, participant);
+            firstHitRule(participant);
         }
     }
 
@@ -75,9 +75,9 @@ public class BlackjackGame {
         return dealer;
     }
 
-    private void firstHitRule(final CardPickerGenerator cardPickerGenerator, final Participant participant) {
+    private void firstHitRule(final Participant participant) {
         for (int count = 0; count < FIRST_HIT_COUNT; count++) {
-            participant.hit(cards.pick(cardPickerGenerator));
+            participant.hit(cards.pick());
         }
     }
 }

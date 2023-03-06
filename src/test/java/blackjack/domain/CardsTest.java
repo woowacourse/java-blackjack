@@ -14,12 +14,12 @@ class CardsTest {
     @DisplayName("랜덤의 카드를 뽑아서 비교")
     void create() {
         //give
-        Cards cards = Cards.generator();
         Card card = new Card(CardNumber.ACE, CardSuit.SPADE);
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(0);
+        Cards cards = Cards.generator(testCardPickerGenerator);
 
         //when
-        Card result = cards.pick(testCardPickerGenerator);
+        Card result = cards.pick();
 
         //then
         assertThat(result).isEqualTo(card);
