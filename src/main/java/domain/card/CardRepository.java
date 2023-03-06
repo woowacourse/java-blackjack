@@ -34,12 +34,8 @@ public class CardRepository {
         }
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     public Card findAnyOneCard() {
-        int index = this.indexGenerator.generate(size());
+        int index = this.indexGenerator.generate(cards.size());
         return cards.remove(index);
     }
 }

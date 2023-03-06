@@ -22,7 +22,10 @@ class CardRepositoryTest {
     @Test
     @DisplayName("CardRepository가 생성되면 모든 종류의 카드가 저장되어 있다.")
     void initializingCardRepository() {
-        assertThat(cardRepository.size()).isEqualTo(52);
+        assertThat(cardRepository)
+                .extracting("cards")
+                .asList()
+                .hasSize(52);
     }
 
     @Test
@@ -32,7 +35,10 @@ class CardRepositoryTest {
 
         assertAll(
                 () -> assertThat(card).isEqualTo(new Card(Shape.HEART, Number.FOUR)),
-                () -> assertThat(cardRepository.size()).isEqualTo(51)
+                () -> assertThat(cardRepository)
+                        .extracting("cards")
+                        .asList()
+                        .hasSize(51)
         );
     }
 }
