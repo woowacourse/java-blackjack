@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import blackjack.util.CardNumber;
 import blackjack.util.CardSuit;
 import blackjack.util.WinningResult;
@@ -67,7 +68,7 @@ public class OutputView {
         System.out.println(WinningResult.LOSE.loseCount(dealerResult) + WinningResult.LOSE.getName());
     }
 
-    public void printPlayerWinORLose(Map<Participant, WinningResult> playerResult) {
+    public void printPlayerWinORLose(Map<Player, WinningResult> playerResult) {
         for (Participant player : playerResult.keySet()) {
             System.out.println(player.getName() + " : " + playerResult.get(player).getName());
         }

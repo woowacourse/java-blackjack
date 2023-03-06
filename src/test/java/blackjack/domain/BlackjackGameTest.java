@@ -37,7 +37,7 @@ class BlackjackGameTest {
      * ako : 10(10) 10(10) => 20점
      */
     @Test
-    @DisplayName("딜러가 17점일 때 포비(5점),아코(20점)의 결과는 각각 LOSE,WIN")
+    @DisplayName("딜러가 17점일 때 포비(5점),아코(20점)의 결과는 각각 LOSE, WIN")
     void playerResultTest() {
         //given
         List<Integer> testData = settingTestData();
@@ -47,17 +47,17 @@ class BlackjackGameTest {
         game.settingGame();
 
         //when
-        Map<Participant, WinningResult> result = game.generatePlayersResult();
+        Map<Player, WinningResult> result = game.generateBlackjackResult().getPlayerResult();
 
         //then
-        Set<Participant> players = result.keySet();
-        for(Participant participant : players) {
-            String playername = participant.getParticipantName().getName();
+
+        for(Player player : result.keySet()) {
+            String playername = player.getParticipantName().getName();
             if (playername.equals("pobi")){
-                assertThat(result.get(participant)).isEqualTo(WinningResult.LOSE);
+                assertThat(result.get(player)).isEqualTo(WinningResult.LOSE);
             }
             if (playername.equals("ako")) {
-                assertThat(result.get(participant)).isEqualTo(WinningResult.WIN);
+                assertThat(result.get(player)).isEqualTo(WinningResult.WIN);
             }
         }
     }
@@ -73,7 +73,7 @@ class BlackjackGameTest {
         game.settingGame();
 
         //when
-        List<WinningResult> result = game.generateDealerResult();
+        List<WinningResult> result = game.generateBlackjackResult().getDealerResult();
 
         //then
         assertThat(result.get(0)).isEqualTo(WinningResult.WIN);

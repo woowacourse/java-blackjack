@@ -19,25 +19,18 @@ public class BlackjackGame {
         this.cards = cards;
     }
 
-    public Map<Participant, WinningResult> generatePlayersResult() {
-        Map<Participant, WinningResult> playersResult = new LinkedHashMap<>();
+    public BlackjackResult generateBlackjackResult() {
         Dealer dealer = participants.extractDealer();
         List<Player> players = participants.extractPlayers();
-        for (Participant player : players) {
+        Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
+        List<WinningResult> dealerResults = new ArrayList<>();
+
+        for (Player player : players) {
             WinningResult dealerResult = dealer.judgeWinOrLose(player);
+            dealerResults.add(dealerResult);
             playerResultSave(playersResult, player, dealerResult);
         }
-        return playersResult;
-    }
-
-    public List<WinningResult> generateDealerResult() {
-        List<WinningResult> dealerResult = new ArrayList<>();
-        Dealer dealer = participants.extractDealer();
-        List<Player> players = participants.extractPlayers();
-        for (Participant player : players) {
-            dealerResult.add(dealer.judgeWinOrLose(player));
-        }
-        return dealerResult;
+        return new BlackjackResult(playersResult, dealerResults);
     }
 
     public void settingGame() {
@@ -46,7 +39,11 @@ public class BlackjackGame {
         }
     }
 
-    private void playerResultSave(final Map<Participant, WinningResult> playersResult, final Participant player, final WinningResult dealerResult) {
+    public Participants getParticipants() {
+        return participants;
+    }
+
+    private void playerResultSave(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
         if (dealerResult == WinningResult.WIN) {
             playersResult.put(player, WinningResult.LOSE);
         }

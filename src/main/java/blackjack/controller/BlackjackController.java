@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.BlackjackResult;
 import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
@@ -31,13 +32,10 @@ public class BlackjackController {
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
 
         gameSetting(participants, blackjackGame);
-
         playersHitCard(participants, cards);
-
         dealerHitCard(participants, cards);
 
-        printResult(participants, blackjackGame);
-
+        printResult(blackjackGame);
     }
 
     private void playersHitCard(final Participants participants, final Cards cards) {
@@ -47,12 +45,13 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(final Participants participants, final BlackjackGame blackjackGame) {
-        for(Participant participant : participants.getParticipants()) {
-            outputView.printTotalCardsAndScore(participant);
+    private void printResult(final BlackjackGame blackjackGame) {
+        for(Participant player : blackjackGame.getParticipants().getParticipants()) {
+            outputView.printTotalCardsAndScore(player);
         }
-        outputView.printDealerWinORLose(blackjackGame.generateDealerResult());
-        outputView.printPlayerWinORLose(blackjackGame.generatePlayersResult());
+        BlackjackResult blackjackResult = blackjackGame.generateBlackjackResult();
+        outputView.printDealerWinORLose(blackjackResult.getDealerResult());
+        outputView.printPlayerWinORLose(blackjackResult.getPlayerResult());
     }
 
     private void dealerHitCard(final Participants participants, final Cards cards) {
