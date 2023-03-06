@@ -1,12 +1,11 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackJackConstant.BLACKJACK;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardPocket {
+class CardPocket {
 
+    private static final int BUST_SCORE = 21;
     private static final int VALUE_ACE = 10;
     private final List<Card> cards;
 
@@ -51,7 +50,7 @@ public class CardPocket {
     }
 
     private int calculateAceScore(final int score) {
-        if (score + VALUE_ACE > BLACKJACK) {
+        if (score + VALUE_ACE > BUST_SCORE) {
             return score;
         }
         return score + VALUE_ACE;

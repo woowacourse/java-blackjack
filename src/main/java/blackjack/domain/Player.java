@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import static blackjack.domain.BlackJackConstant.BLACKJACK;
-
 public class Player extends Participant {
+
+    private final int BUST_POINT = 21;
 
     private final Name name;
 
@@ -13,7 +13,7 @@ public class Player extends Participant {
     @Override
     public boolean isDrawable() {
         final int currentScore = currentScore();
-        return currentScore < BLACKJACK;
+        return currentScore < BUST_POINT;
     }
 
     public String getName() {
