@@ -4,9 +4,7 @@ import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.stream;
@@ -14,12 +12,10 @@ import static java.util.stream.Collectors.toList;
 
 public class CardDeck {
 
-    private static final int DRAW_CARD_INDEX = 0;
-
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
     private CardDeck(final List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayDeque<>(cards);
     }
 
     public static CardDeck shuffledFullCardDeck() {
@@ -44,6 +40,6 @@ public class CardDeck {
     }
 
     public Card draw() {
-        return this.cards.remove(DRAW_CARD_INDEX);
+        return this.cards.pollFirst();
     }
 }
