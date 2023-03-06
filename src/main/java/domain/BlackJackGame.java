@@ -66,7 +66,6 @@ public class BlackJackGame {
                                                          final Players players) {
         List<ParticipantResult> participantResults = new ArrayList<>();
         participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateScore()));
-
         players.stream()
                 .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateScore())));
 

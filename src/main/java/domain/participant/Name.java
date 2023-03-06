@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Name {
 
+    public static final int MAX_NAME_LENGTH = 10;
+
     private final String name;
 
     public Name(final String name) {
@@ -16,8 +18,8 @@ public class Name {
             throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
         }
 
-        if (isNotSatisfiedLength(name)) {
-            throw new IllegalArgumentException("이름의 길이는 10자를 초과할 수 없습니다.");
+        if (name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException(String.format("이름의 길이는 %s자를 초과할 수 없습니다.", MAX_NAME_LENGTH));
         }
     }
 
@@ -25,9 +27,6 @@ public class Name {
         return Objects.isNull(name) || name.isBlank();
     }
 
-    private boolean isNotSatisfiedLength(String name) {
-        return name.length() > 10;
-    }
 
     public String getName() {
         return name;

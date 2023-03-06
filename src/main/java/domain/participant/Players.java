@@ -5,6 +5,9 @@ import java.util.stream.Stream;
 
 public class Players {
 
+    public static final int MIN_SIZE = 1;
+    public static final int MAX_SIZE = 4;
+
     private final List<Player> players;
 
     public Players(final List<Player> players) {
@@ -13,17 +16,13 @@ public class Players {
     }
 
     private void validate(final List<Player> players) {
-        if (isNotSatisfiedSize(players)) {
-            throw new IllegalArgumentException("플레이어의 수는 최소 1명, 최대 4명입니다.");
+        if (players.size() < MIN_SIZE || MAX_SIZE < players.size()) {
+            throw new IllegalArgumentException(String.format("플레이어의 수는 최소 %s명, 최대 %s명입니다.", MIN_SIZE, MAX_SIZE));
         }
 
         if (hasDuplicateName(players)) {
             throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
         }
-    }
-
-    private boolean isNotSatisfiedSize(List<Player> players) {
-        return players.size() < 1 || 4 < players.size();
     }
 
     private boolean hasDuplicateName(List<Player> players) {
