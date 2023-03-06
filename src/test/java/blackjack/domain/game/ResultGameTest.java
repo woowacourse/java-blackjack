@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
@@ -18,25 +20,27 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException
 public class ResultGameTest {
     private Dealer dealer;
     private Participants participants;
+    private Map<Player, WinTieLose> playersResult;
 
 
     @BeforeEach
     void setting() {
         dealer = new Dealer();
         participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
+        playersResult = new HashMap<>();
     }
 
     @Test
     @DisplayName("생성자 테스트")
     void constructorTest() {
-        assertThatNoException().isThrownBy(() -> new ResultGame(participants));
+        assertThatNoException().isThrownBy(() -> new ResultGame(participants, playersResult));
     }
 
     @Test
     @DisplayName("결과를 계산하는 딜러가 승리하는 테스트")
     void calculateResultDealerWinTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants);
+        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
@@ -51,7 +55,7 @@ public class ResultGameTest {
     @DisplayName("결과를 계산하는 딜러가 비기는 테스트")
     void calculateResultTieTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants);
+        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.JACK));
 
@@ -66,7 +70,7 @@ public class ResultGameTest {
     @DisplayName("결과를 계산하는 딜러가 지는 테스트")
     void calculateResultDealerLoseTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants);
+        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
         participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
@@ -82,7 +86,7 @@ public class ResultGameTest {
     @DisplayName("딜러가 버스트일 때, 딜러가 지는 테스트")
     void calculateResultDealerLoseWithBustTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants);
+        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
@@ -99,7 +103,7 @@ public class ResultGameTest {
     @DisplayName("플레이어의 결과를 출력하는 테스트")
     void getPlayerResultTest() {
         // given
-        ResultGame resultGame = new ResultGame(participants);
+        ResultGame resultGame = new ResultGame(participants, playersResult);
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
         Player player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));

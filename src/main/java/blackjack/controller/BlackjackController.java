@@ -6,13 +6,16 @@ import blackjack.domain.cardPicker.CardPicker;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
+import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -34,7 +37,8 @@ public class BlackjackController {
         startGame(blackjackGame);
         hitParticipants(blackjackGame);
 
-        final ResultGame resultGame = new ResultGame(participants);
+        final Map<Player, WinTieLose> playersResult = new HashMap<>();
+        final ResultGame resultGame = new ResultGame(participants, playersResult);
         showAllResult(participants, resultGame);
     }
 
