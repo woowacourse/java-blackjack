@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
+    public static final int INIT_CARD_COUNT = 2;
     public static final int BLACKJACK_SCORE = 21;
     private static final int SPECIFIC_SCORE_OF_DEALER = 16;
 
@@ -30,7 +31,7 @@ public class Dealer extends Participant {
     public void distributeTwoCards() {
         List<Card> cardList = new ArrayList<>();
 
-        while (cardList.size() < players.size() * 2) {
+        while (cardList.size() < players.size() * INIT_CARD_COUNT) {
             Card drawnCard = deck.drawCard();
             cardList.add(drawnCard);
         }
@@ -38,7 +39,7 @@ public class Dealer extends Participant {
     }
 
     public void drawSelfInitCards() {
-        for (int count = 0; count < 2; count++) {
+        for (int count = 0; count < INIT_CARD_COUNT; count++) {
             Card drawnCard = deck.drawCard();
             receiveCard(drawnCard);
         }

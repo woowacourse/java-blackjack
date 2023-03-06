@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
+    private static final String RECEIVE_CARD = "y";
+    private static final String NOT_RECEIVE_CARD = "n";
+
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> receivePlayersName() {
@@ -34,7 +37,7 @@ public class InputView {
     }
 
     private void validateCorrectResponse(final String input) {
-        if (!input.equals("y") && !input.equals("n")) {
+        if (!input.equals(RECEIVE_CARD) && !input.equals(NOT_RECEIVE_CARD)) {
             throw new IllegalArgumentException("[ERROR] 예는 y, 아니오는 n을 입력해주세요.");
         }
     }

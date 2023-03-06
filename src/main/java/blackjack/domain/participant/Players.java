@@ -4,6 +4,7 @@ import static blackjack.domain.Result.DRAW;
 import static blackjack.domain.Result.LOSE;
 import static blackjack.domain.Result.WIN;
 import static blackjack.domain.participant.Dealer.BLACKJACK_SCORE;
+import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
@@ -14,8 +15,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
-    public static final int MIN_PLAYER_COUNT = 2;
-    public static final int MAX_PLAYER_COUNT = 8;
+    private static final int MIN_PLAYER_COUNT = 2;
+    private static final int MAX_PLAYER_COUNT = 8;
 
     private final List<Player> players;
 
@@ -33,9 +34,10 @@ public class Players {
     }
 
     public void receiveSettingCards(final List<Card> settingCards) {
-        for (int cardIndex = 0, playerIndex = 0; cardIndex < settingCards.size(); cardIndex += 2, playerIndex++) {
+        int playerIndex = 0;
+        for (int cardIndex = 0; cardIndex < settingCards.size(); cardIndex += INIT_CARD_COUNT) {
             players.get(playerIndex).receiveCard(settingCards.get(cardIndex));
-            players.get(playerIndex).receiveCard(settingCards.get(cardIndex + 1));
+            players.get(playerIndex++).receiveCard(settingCards.get(cardIndex + 1));
         }
     }
 
