@@ -34,8 +34,8 @@ public class Participants {
         participant.addCard(card);
     }
 
-    public Participant getDealer() {
-        return participants.get(DEALER_ORDER);
+    public Dealer getDealer() {
+        return (Dealer) participants.get(DEALER_ORDER);
     }
 
     public List<Participant> getPlayer() {

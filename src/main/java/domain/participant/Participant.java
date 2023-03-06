@@ -4,7 +4,7 @@ import domain.card.Card;
 
 import java.util.List;
 
-public abstract class Participant {
+public class Participant {
 
     protected static final String DEALER_NAME = "딜러";
 

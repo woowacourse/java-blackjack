@@ -73,7 +73,7 @@ public class GameController {
     }
 
     private void printDealerCard(final Participants participants) {
-        final Dealer dealer = (Dealer) participants.getDealer();
+        final Dealer dealer = participants.getDealer();
         final Card dealerFirstCard = dealer.getFirstCard();
         outputView.printDealerCard(dealer.getName(), dealerFirstCard);
     }
@@ -143,7 +143,7 @@ public class GameController {
     }
 
     private void handleDealerCards(final Participants participants, final GameManager gameManager) {
-        final Dealer dealer = (Dealer) participants.getDealer();
+        final Dealer dealer = participants.getDealer();
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canGiveCard()) {
             gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
