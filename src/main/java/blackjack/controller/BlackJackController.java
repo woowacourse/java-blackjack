@@ -27,10 +27,15 @@ public class BlackJackController {
     }
 
     private BlackJackGame initBlackJackGame() {
-        outputView.printPlayerNameRequestMessage();
-        final List<String> playerNames = inputView.readPlayerNames();
-        outputView.printLineBreak();
-        return new BlackJackGame(playerNames, new RandomDeckGenerator());
+        try {
+            outputView.printPlayerNameRequestMessage();
+            final List<String> playerNames = inputView.readPlayerNames();
+            outputView.printLineBreak();
+            return new BlackJackGame(playerNames, new RandomDeckGenerator());
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            return initBlackJackGame();
+        }
     }
 
     private void printInitialStatus(final BlackJackGame blackJackGame) {
@@ -46,19 +51,25 @@ public class BlackJackController {
     }
 
     private void playFor(final BlackJackGame blackJackGame, final String playerName) {
-        while (isContinuous(playerName, blackJackGame)) {
+        while (isContinuous(playerName, blackJackGame).isDraw()) {
             blackJackGame.playPlayer(playerName);
             List<Card> userCards = blackJackGame.getStatus().get(playerName);
             outputView.printCards(playerName, ViewRenderer.renderCardsToString(userCards));
         }
     }
 
-    private boolean isContinuous(final String playerName, BlackJackGame blackJackGame) {
-        if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isBust(playerName)) {
-            return false;
+    //TODO : indent 줄이기 + 메서드 라인 줄이기
+    private DrawInput isContinuous(final String playerName, final BlackJackGame blackJackGame) {
+        try {
+            if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isBust(playerName)) {
+                return DrawInput.STAY;
+            }
+            outputView.printDrawCardRequestMessage(playerName);
+            return DrawInput.from(inputView.readDrawOrStay());
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            return isContinuous(playerName, blackJackGame);
         }
-        outputView.printDrawCardRequestMessage(playerName);
-        return DrawInput.from(inputView.readDrawOrStay()).isDraw();
     }
 
     private void playDealerTurn(BlackJackGame blackJackGame) {
@@ -70,10 +81,11 @@ public class BlackJackController {
     }
 
     private void printCardResult(BlackJackGame blackJackGame) {
-        final Map<String, CardResult> cardResult = blackJackGame.getCardResult();
-        for (final String name : cardResult.keySet()) {
-            final CardResult cardDto = cardResult.get(name);
-            outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardDto.getCards()), cardDto.getScore());
+        final Map<String, CardResult> cardResults = blackJackGame.getCardResult();
+        for (final String name : cardResults.keySet()) {
+            final CardResult cardResult = cardResults.get(name);
+            outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardResult.getCards()),
+                    cardResult.getScore());
         }
         outputView.printLineBreak();
     }
