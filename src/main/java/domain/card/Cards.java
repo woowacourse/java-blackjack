@@ -22,10 +22,10 @@ public class Cards {
     }
 
     public List<Card> drawTwoCards() {
-        List<Card> firstTurnCards = new ArrayList<>();
-        firstTurnCards.add(drawCard());
-        firstTurnCards.add(drawCard());
+        List<Card> twoCards = new ArrayList<>();
+        twoCards.add(drawCard());
+        twoCards.add(drawCard());
 
-        return firstTurnCards;
+        return twoCards;
     }
 }
