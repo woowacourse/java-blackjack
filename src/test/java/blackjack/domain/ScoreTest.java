@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.participant.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,37 +12,41 @@ class ScoreTest {
 
     @Test
     @DisplayName("점수 계산")
-    void calculateScore() {
+    void calculateScoreTest() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.FIVE, TrumpNumber.NINE));
+
+        score.calculateScore(List.of(CardNumber.FIVE, CardNumber.NINE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(14);
     }
 
     @Test
     @DisplayName("21점 초과일 때 ACE 처리 (ACE 1장인 경우)")
-    void calculateScoreIncludeAce() {
+    void calculateScoreIncludeAceTest() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.FIVE, TrumpNumber.NINE, TrumpNumber.ACE));
+
+        score.calculateScore(List.of(CardNumber.FIVE, CardNumber.NINE, CardNumber.ACE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(15);
     }
 
     @Test
     @DisplayName("21점 초과일 때 ACE 처리 (ACE 3장일 경우)")
-    void calculateScoreIncludeAce3() {
+    void calculateScoreIncludeMultipleAceTest() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.FIVE, TrumpNumber.NINE,
-                TrumpNumber.ACE, TrumpNumber.ACE, TrumpNumber.ACE));
+
+        score.calculateScore(List.of(CardNumber.FIVE, CardNumber.NINE,
+                CardNumber.ACE, CardNumber.ACE, CardNumber.ACE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(17);
     }
 
     @Test
     @DisplayName("ACE 가 4장일 경우")
-    void calculateScoreAce4() {
+    void calculateScoreOnlyAceTest() {
         Score score = new Score();
-        score.calculateScore(List.of(TrumpNumber.ACE, TrumpNumber.ACE, TrumpNumber.ACE, TrumpNumber.ACE));
+
+        score.calculateScore(List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.ACE, CardNumber.ACE));
 
         Assertions.assertThat(score.getScore()).isEqualTo(14);
     }

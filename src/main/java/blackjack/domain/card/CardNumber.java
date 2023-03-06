@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-public enum TrumpNumber {
+public enum CardNumber {
     ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
@@ -18,7 +18,7 @@ public enum TrumpNumber {
     private final String name;
     private final int score;
 
-    TrumpNumber(String name, int score) {
+    CardNumber(String name, int score) {
         this.name = name;
         this.score = score;
     }
