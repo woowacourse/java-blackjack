@@ -25,27 +25,6 @@ public class HandTest {
         assertEquals(1, hand.getCards().size());
     }
 
-    @DisplayName("카드 패에 A가 들어오면 항상 마지막 자리에 위치한다.")
-    @ParameterizedTest
-    @MethodSource("addAceCardTestProvider")
-    void addAceCardTest(final Card firstCard, final Card secondCard) {
-        Hand hand = new Hand();
-        hand.addCard(firstCard);
-        hand.addCard(secondCard);
-
-        int lastIndex = hand.getCards().size() - 1;
-        Rank lastCardRank = hand.getCards().get(lastIndex).getRank();
-
-        assertEquals(Rank.ACE, lastCardRank);
-    }
-
-    private static Stream<Arguments> addAceCardTestProvider() {
-        return Stream.of(
-                Arguments.of(new Card(Suit.DIAMOND, Rank.ACE), new Card(Suit.DIAMOND, Rank.SIX)),
-                Arguments.of(new Card(Suit.CLOVER, Rank.ACE), new Card(Suit.HEART, Rank.SEVEN))
-        );
-    }
-
     @DisplayName("21에 가장 가까운 점수를 반환한다.")
     @ParameterizedTest
     @MethodSource("calculateScoreTestProvider")
@@ -62,22 +41,30 @@ public class HandTest {
 
     private static Stream<Arguments> calculateScoreTestProvider() {
         return Stream.of(
-                Arguments.of(new Card(Suit.DIAMOND, Rank.SEVEN),
+                Arguments.of(
+                        new Card(Suit.DIAMOND, Rank.SEVEN),
                         new Card(Suit.DIAMOND, Rank.KING),
                         new Card(Suit.DIAMOND, Rank.TWO),
-                        19),
-                Arguments.of(new Card(Suit.CLOVER, Rank.ACE),
+                        19
+                ),
+                Arguments.of(
+                        new Card(Suit.CLOVER, Rank.ACE),
                         new Card(Suit.HEART, Rank.JACK),
                         new Card(Suit.DIAMOND, Rank.SEVEN),
-                        18),
-                Arguments.of(new Card(Suit.CLOVER, Rank.ACE),
+                        18
+                ),
+                Arguments.of(
+                        new Card(Suit.CLOVER, Rank.ACE),
                         new Card(Suit.HEART, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.SEVEN),
-                        19),
-                Arguments.of(new Card(Suit.CLOVER, Rank.KING),
+                        19
+                ),
+                Arguments.of(
+                        new Card(Suit.CLOVER, Rank.KING),
                         new Card(Suit.HEART, Rank.QUEEN),
                         new Card(Suit.DIAMOND, Rank.JACK),
-                        30)
+                        30
+                )
         );
     }
 }

@@ -2,29 +2,26 @@ package domain.player;
 
 import domain.deck.Card;
 import domain.deck.Rank;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     public static final int UPPER_BOUND = 11;
     public static final int ACE_RANK_DIFFERENCE = 10;
 
-    private final LinkedList<Card> cards;
+    private final List<Card> cards;
 
     public Hand() {
-        cards = new LinkedList<>();
+        cards = new ArrayList<>();
     }
 
     public void addCard(final Card card) {
-        if (isAce(card)) {
-            cards.add(card);
-            return;
-        }
-        cards.addFirst(card);
+        cards.add(card);
     }
 
-    private static boolean isAce(final Card card) {
-        return card.getRank().equals(Rank.ACE);
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getRank() == Rank.ACE);
     }
 
     public List<Card> getCards() {
@@ -37,7 +34,7 @@ public class Hand {
         for (Card card : cards) {
             sum += card.getRank().getScore();
         }
-        if (isAce(cards.getLast()) && sum <= UPPER_BOUND) {
+        if (hasAce() && sum <= UPPER_BOUND) {
             sum += ACE_RANK_DIFFERENCE;
         }
 
