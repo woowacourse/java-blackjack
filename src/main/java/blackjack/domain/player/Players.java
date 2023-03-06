@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.exception.DealerNotFoundException;
 import blackjack.domain.player.exception.DuplicatedPlayerNameException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +38,9 @@ public class Players {
 
     public void pickStartCards(final CardDeck cardDeck) {
         for (Player player : players) {
-            Card card1 = cardDeck.pick();
-            Card card2 = cardDeck.pick();
-            player.pickStartCards(card1, card2);
+            Card firstCard = cardDeck.pick();
+            Card secondCard = cardDeck.pick();
+            player.pickStartCards(firstCard, secondCard);
         }
     }
 
@@ -53,6 +54,6 @@ public class Players {
         return players.stream()
                 .filter(Player::isDealer)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(DealerNotFoundException::new);
     }
 }
