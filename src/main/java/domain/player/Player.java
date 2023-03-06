@@ -29,14 +29,16 @@ public abstract class Player {
     public List<Card> getCards() {
         return playingCards.getCards();
     }
-
-    public abstract void battle(Player player);
-
-    public abstract List<Integer> getGameResult();
-
-    public abstract boolean isNameEqualTo(String playerName);
-
+    
     public String getName() {
         return this.name;
     }
+    
+    public abstract void battle(Player player);
+    
+    public abstract List<Integer> getGameResult();
+
+    public abstract boolean isNameEqualTo(String playerName);
+    
+    public abstract boolean isDealer();
 }

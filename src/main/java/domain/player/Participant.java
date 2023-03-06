@@ -62,17 +62,22 @@ public class Participant extends Player {
                 .map(this::isGameResultEqualTo)
                 .collect(Collectors.toUnmodifiableList());
     }
-
-    @Override
-    public boolean isNameEqualTo(String playerName) {
-        return getName().equals(playerName);
-    }
-
+    
     private int isGameResultEqualTo(GameResult gameResult) {
         if (this.gameResult == gameResult) {
             return 1;
         }
         return 0;
+    }
+    
+    @Override
+    public boolean isNameEqualTo(String playerName) {
+        return getName().equals(playerName);
+    }
+    
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 
     @Override

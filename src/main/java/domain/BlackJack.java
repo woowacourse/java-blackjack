@@ -8,6 +8,7 @@ import domain.player.Player;
 import domain.strategy.ShuffleStrategy;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BlackJack {
@@ -80,7 +81,10 @@ public class BlackJack {
     }
 
     public Player getDealer() {
-        return players.get(0);
+        return players.stream()
+                .filter(Player::isDealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
     }
 
     public List<Player> getPlayers() {
@@ -88,9 +92,9 @@ public class BlackJack {
     }
 
     public List<Player> getParticipants() {
-        List<Player> players = new ArrayList<>(getPlayers());
-        players.remove(0);
-        return players;
+        return players.stream()
+                .filter(Predicate.not(Player::isDealer))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public void battle() {

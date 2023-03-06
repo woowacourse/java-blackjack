@@ -77,7 +77,12 @@ public class Dealer extends Player {
     public boolean isNameEqualTo(String name) {
         return getName().equals(name);
     }
-
+    
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
