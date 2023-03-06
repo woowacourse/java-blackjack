@@ -84,7 +84,7 @@ public class ListStudy {
         }
 
         @Test
-        void remove_test() {
+        void remove_by_value_test() {
             assertThat(stringValues.remove("init")).isTrue();
             assertThat(stringValues.isEmpty()).isTrue();
             assertThat(stringValues.remove("fifth")).isFalse();
@@ -92,10 +92,16 @@ public class ListStudy {
             assertThat(integerValues.isEmpty()).isTrue();
             assertThat(integerValues.remove(Integer.valueOf(1))).isFalse();
         }
-//
-//        assertThat(values.remove(0)).isEqualTo("0"); // 첫 번째 값을 삭제한다.
-//        assertThat(values.size()).isEqualTo(2); // 값이 삭제 됐는지 확인한다.
-//        assertThatCode(() -> values.remove(100)).isInstanceOf(RuntimeException.class); // 인덱스가 넘어가면 예외가 발생한다.
+
+        @Test
+        void remove_by_index_test() {
+            assertThat(stringValues.remove(0)).isEqualTo("init");
+            assertThat(stringValues.size()).isZero();
+            assertThatCode(() -> stringValues.remove(100)).isInstanceOf(RuntimeException.class);
+            assertThat(integerValues.remove(0)).isEqualTo(0);
+            assertThat(integerValues.size()).isZero();
+            assertThatCode(() -> integerValues.remove(100)).isInstanceOf(RuntimeException.class);
+        }
 //
 //        // TODO values에 담긴 모든 값을 출력한다.
 //        values.printAll();
@@ -178,13 +184,23 @@ public class ListStudy {
         }
 
         @Test
-        void remove_test() {
+        void remove_by_value_test() {
             assertThat(stringValues.remove("init")).isTrue();
             assertThat(stringValues.isEmpty()).isTrue();
             assertThat(stringValues.remove("fifth")).isFalse();
             assertThat(integerValues.remove(Integer.valueOf(0))).isTrue();
             assertThat(integerValues.isEmpty()).isTrue();
             assertThat(integerValues.remove(Integer.valueOf(1))).isFalse();
+        }
+
+        @Test
+        void remove_by_index_test() {
+            assertThat(stringValues.remove(0)).isEqualTo("init");
+            assertThat(stringValues.size()).isZero();
+            assertThatCode(() -> stringValues.remove(100)).isInstanceOf(RuntimeException.class);
+            assertThat(integerValues.remove(0)).isEqualTo(0);
+            assertThat(integerValues.size()).isZero();
+            assertThatCode(() -> integerValues.remove(100)).isInstanceOf(RuntimeException.class);
         }
     }
 }
