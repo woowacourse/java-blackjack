@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.deck.Card;
+
 import java.util.List;
 
 public class Player {
@@ -30,6 +31,13 @@ public class Player {
             return true;
         }
         return dealerScore == hand.score();
+    }
+
+    public boolean isOver21() {
+        if (getScore() > BLACK_JACK_NUMBER) {
+            return true;
+        }
+        return false;
     }
 
     public List<Card> getCards() {

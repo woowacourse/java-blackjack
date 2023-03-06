@@ -37,8 +37,9 @@ public class BlackJackGame {
         Map<String, Outcome> playerOutcome = decidePlayersOutcome();
         EnumMap<Outcome, Integer> dealerOutcome = initializeDealerOutcome();
         for (String key : playerOutcome.keySet()) {
-            final Outcome outcome = playerOutcome.get(key);
-            dealerOutcome.put(reverseOutcome(outcome), dealerOutcome.get(outcome) + 1);
+            Outcome outcome = playerOutcome.get(key);
+            Outcome dealerEachOutcome = reverseOutcome(outcome);
+            dealerOutcome.put(dealerEachOutcome, dealerOutcome.get(dealerEachOutcome) + 1);
         }
         return dealerOutcome;
     }
@@ -83,6 +84,13 @@ public class BlackJackGame {
             return Outcome.DRAW;
         }
         return Outcome.LOSE;
+    }
+
+    public boolean isOver21(final String playerName) {
+        if(players.isOver21(playerName)) {
+            return true;
+        }
+        return false;
     }
 
     public List<Card> getCards(final String playerName) {

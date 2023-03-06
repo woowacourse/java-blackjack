@@ -28,6 +28,13 @@ public class Players {
         }
     }
 
+    public boolean isOver21(final String playerName) {
+        if(findPlayer(playerName).isOver21()) {
+            return true;
+        }
+        return false;
+    }
+
     public Player findPlayer(final String playerName) {
         return players.stream()
                 .filter(player -> player.getName().equals(playerName))

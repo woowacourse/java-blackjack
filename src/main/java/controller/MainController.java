@@ -63,7 +63,7 @@ public class MainController {
     }
 
     private boolean isOneMore(final String playerName) {
-        if (InputView.readAnswer()) {
+        if (!blackJackGame.isOver21(playerName) && InputView.readAnswer()) {
             blackJackGame.drawCard(playerName);
             OutputView.printPlayerCard(playerName, blackJackGame.getCards(playerName));
             return true;
