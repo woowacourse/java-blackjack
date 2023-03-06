@@ -19,7 +19,8 @@ public class Deck {
             throw new IllegalArgumentException("카드에 null 이 들어왔습니다");
         }
         if (cards.size() != NUMBER_OF_CARDS_IN_DECK) {
-            throw new IllegalArgumentException("카드 숫자가 " + NUMBER_OF_CARDS_IN_DECK + "장이 아닙니다");
+            throw new IllegalArgumentException(
+                    "카드 숫자는 " + NUMBER_OF_CARDS_IN_DECK + "장이어야 합니다 현재 :" + cards.size() + "장");
         }
     }
 
