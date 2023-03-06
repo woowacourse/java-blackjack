@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +15,7 @@ class DealerTest {
     @Test
     void 점수가_16이하면_카드를_뽑는다() {
         //given,when
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer(new Cards(new ArrayList<>()));
         int expected = 1;
         int actual = dealer.getCardsSize();
 

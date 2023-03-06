@@ -23,7 +23,7 @@ class CardsTest {
     }
 
     @Test
-    void A가_나오면_10_혹은_1중에_고른다() {
+    void A가_나오면_11_혹은_1중에_고른다() {
         //given, when
         List<Card> cards = List.of(new Card(Suit.CLOVER, Denomination.QUEEN),
                 new Card(Suit.HEART, Denomination.QUEEN), new Card(Suit.HEART, Denomination.ACE));
