@@ -13,6 +13,7 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    public static final int NUMBER_OF_INITIALIZED_CARDS = 2;
     private final Players players;
     private final Dealer dealer;
 
@@ -30,7 +31,7 @@ public class BlackjackGame {
     }
 
     private void giveFirstCard(User user) {
-        for (int cardIndex = 0; cardIndex < 2; cardIndex++) {
+        for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIALIZED_CARDS; cardIndex++) {
             user.updateCardScore(Cards.giveFirstCard());
         }
     }
