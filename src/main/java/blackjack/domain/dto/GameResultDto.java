@@ -12,11 +12,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameResult {
+public class GameResultDto {
     private final Map<String, Result> userResult;
     private final Map<Result, Integer> dealerResult = new HashMap<>();
 
-    public GameResult(final Dealer dealer, final Users users) {
+    public GameResultDto(final Dealer dealer, final Users users) {
         userResult = new LinkedHashMap<>();
         judgeUsers(users, dealer.getGamePoint());
     }
