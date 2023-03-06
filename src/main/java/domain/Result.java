@@ -26,7 +26,7 @@ public class Result {
 
     private void win(Dealer dealer, Player player) {
         if (isPlayerNotBustAndWin(dealer, player)) {
-            gameResult.put(player.getName().getValue(), GameResult.WIN);
+            gameResult.put(player.getNameToValue(), GameResult.WIN);
         }
     }
 
@@ -36,7 +36,7 @@ public class Result {
 
     private void lose(Dealer dealer, Player player) {
         if (isPlayerBustOrLose(dealer, player)) {
-            gameResult.put(player.getName().getValue(), GameResult.LOSE);
+            gameResult.put(player.getNameToValue(), GameResult.LOSE);
         }
     }
 
@@ -46,7 +46,7 @@ public class Result {
 
     private void draw(Dealer dealer, Player player) {
         if (isBothBustOrDraw(dealer, player)) {
-            gameResult.put(player.getName().getValue(), GameResult.DRAW);
+            gameResult.put(player.getNameToValue(), GameResult.DRAW);
         }
     }
 

@@ -35,4 +35,10 @@ public class Players {
         return List.copyOf(players);
     }
 
+    public List<String> getPlayerNamesToString() {
+        return players.stream()
+                .map(Player::getNameToValue)
+                .collect(Collectors.toList());
+    }
+
 }

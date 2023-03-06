@@ -47,53 +47,43 @@ public class BlackJackController {
             dealer.pick(cardDistributor.distribute());
             dealerMoreCardCount++;
         }
-        outputView.printDealerMoreCard(dealer.getName().getValue(), dealerMoreCardCount);
+        outputView.printDealerMoreCard(dealer.getNameToValue(), dealerMoreCardCount);
     }
 
     private void end(Players players, Dealer dealer) {
         printFinalCard(dealer);
         players.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(dealer.getName().getValue(), new Result(dealer, players).getResult());
+        outputView.printFinalResult(dealer.getNameToValue(), new Result(dealer, players).getResult());
     }
 
     private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getName().getValue(),
-                CardStatusConverter.convertToCardStatus(participant.getCards().getParticipantCards()),
+        outputView.printCardAndScore(participant.getNameToValue(),
+                CardStatusConverter.convertToCardStatus(participant.getCardList()),
                 participant.getTotalScore());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
-        outputView.printFirstCardDistribution(dealer.getName().getValue(), getPlayerNames(players));
+        outputView.printFirstCardDistribution(dealer.getNameToValue(), players.getPlayerNamesToString());
 
-        outputView.printCardStatus(dealer.getName().getValue(),
+        outputView.printCardStatus(dealer.getNameToValue(),
                 CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
         for (Participant player : players.getPlayers()) {
-            outputView.printCardStatus(player.getName().getValue(),
-                    CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
+            outputView.printCardStatus(player.getNameToValue(),
+                    CardStatusConverter.convertToCardStatus(player.getCardList()));
         }
-    }
-
-    private List<String> getPlayerNames(Players players) {
-        List<String> playerNames;
-        playerNames = players.getPlayers()
-                .stream()
-                .map(Participant::getName)
-                .map(Name::getValue)
-                .collect(Collectors.toList());
-        return playerNames;
     }
 
     private void requestPlayerMoreCard(CardDistributor cardDistributor, Player player) {
         boolean isCardRequested = true;
 
         while (player.isMoreCardAble() && isCardRequested) {
-            String answer = inputView.askMoreCard(player.getName().getValue());
-            validate(answer);
+            String answer = inputView.askMoreCard(player.getNameToValue());
+            validateCardAnswer(answer);
             isCardRequested = isNoStop(cardDistributor, player, answer);
         }
     }
 
-    private void validate(String answer) {
+    private void validateCardAnswer(String answer) {
         if (answer.equals(MORE_CARD) || answer.equals(CARD_STOP)) {
             return;
         }
@@ -104,8 +94,8 @@ public class BlackJackController {
         if (answer.equals(MORE_CARD) && cardDistributor.isCardLeft()) {
             player.pick(cardDistributor.distribute());
         }
-        outputView.printCardStatus(player.getName().getValue(),
-                CardStatusConverter.convertToCardStatus(player.getCards().getParticipantCards()));
+        outputView.printCardStatus(player.getNameToValue(),
+                CardStatusConverter.convertToCardStatus(player.getCardList()));
         return answer.equals(MORE_CARD);
     }
 

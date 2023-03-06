@@ -37,7 +37,7 @@ public class PlayerTest {
 
         player.pick(new Card(Shape.DIAMOND, Letter.NINE));
 
-        assertThat(player.getCards().getParticipantCards().size()).isEqualTo(3);
+        assertThat(player.getCardList().size()).isEqualTo(3);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Participant {
 
     private static final int BUST_LIMIT = 21;
@@ -28,8 +30,16 @@ public abstract class Participant {
         return cards;
     }
 
+    public List<Card> getCardList() {
+        return List.copyOf(cards.getParticipantCards());
+    }
+
     public Name getName() {
         return name;
+    }
+
+    public String getNameToValue() {
+        return name.getValue();
     }
 
 }
