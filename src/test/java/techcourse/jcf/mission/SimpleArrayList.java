@@ -2,20 +2,20 @@ package techcourse.jcf.mission;
 
 import java.util.Objects;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<E> implements SimpleList<E> {
 
-    private String[] arr;
+    private E[] arr;
     private int capacity;
     private int size;
 
     public SimpleArrayList() {
         this.capacity = 1;
         this.size = 0;
-        this.arr = new String[capacity];
+        this.arr = (E[]) new Object[capacity];
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(E value) {
         expandArr();
 
         arr[size] = value;
@@ -26,7 +26,7 @@ public class SimpleArrayList implements SimpleList {
     private void expandArr() {
         if (isFull()) {
             capacity *= 2;
-            arr = createdExpandedArr();
+            arr = (E[]) createdExpandedArr();
         }
     }
 
@@ -34,8 +34,8 @@ public class SimpleArrayList implements SimpleList {
         return size == capacity;
     }
 
-    private String[] createdExpandedArr() {
-        String[] newArr = new String[capacity];
+    private Object[] createdExpandedArr() {
+        Object[] newArr = new Object[capacity];
         for (int i = 0; i < arr.length; i++) {
             newArr[i] = arr[i];
         }
@@ -44,7 +44,7 @@ public class SimpleArrayList implements SimpleList {
 
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         validateIndex(index);
         expandArr();
         for (int i = size; i < index; i--) {
@@ -62,25 +62,25 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
-        String oldValue = arr[index];
+    public E set(int index, E value) {
+        E oldValue = arr[index];
         arr[index] = value;
         return oldValue;
     }
 
     @Override
-    public String get(int index) {
+    public E get(int index) {
         validateIndex(index);
         return arr[index];
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         for (int i = 0; i < arr.length; i++) {
             if (Objects.equals(arr[i], value)) {
                 return i;
@@ -100,7 +100,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(E value) {
         int index = indexOf(value);
         if (index >= 0) {
             remove(index);
@@ -110,8 +110,8 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
-        String removedValue = arr[index];
+    public E remove(int index) {
+        E removedValue = arr[index];
 
         for (int i = index; i < size; i++) {
             arr[i] = arr[i + 1];
@@ -126,6 +126,6 @@ public class SimpleArrayList implements SimpleList {
     public void clear() {
         this.capacity = 1;
         this.size = 0;
-        this.arr = new String[capacity];
+        this.arr = (E[]) new Object[capacity];
     }
 }
