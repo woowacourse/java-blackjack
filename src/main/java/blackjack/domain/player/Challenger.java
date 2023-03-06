@@ -10,12 +10,12 @@ public class Challenger extends Player {
 
     private final String name;
 
-    public Challenger(String name) {
+    public Challenger(final String name) {
         validateName(name);
         this.name = name;
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (name.equals(INVALID_NAME)) {
             throw new InvalidPlayerNameException();
         }

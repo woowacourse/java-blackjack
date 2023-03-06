@@ -8,7 +8,7 @@ public enum Shape {
 
     private final String name;
 
-    Shape(String name) {
+    Shape(final String name) {
         this.name = name;
     }
 

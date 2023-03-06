@@ -14,11 +14,11 @@ public class Result {
 
     private final Map<Player, Rank> results;
 
-    private Result(Map<Player, Rank> results) {
+    private Result(final Map<Player, Rank> results) {
         this.results = results;
     }
 
-    public static Result from(Players players) {
+    public static Result from(final Players players) {
         Map<Player, Rank> results = new LinkedHashMap<>();
         int dealerPoint = players.getDealer().getTotalPoint();
         for (Player challenger : players.getChallengers()) {
@@ -28,7 +28,7 @@ public class Result {
         return new Result(results);
     }
 
-    private static Rank makePlayerResult(int dealerPoint, Player challenger) {
+    private static Rank makePlayerResult(final int dealerPoint, final Player challenger) {
         int challengerPoint = challenger.getTotalPoint();
         if (isOverMaximumPoint(dealerPoint)) {
             return getRankWhenDealerOverPoint(challengerPoint);
@@ -36,21 +36,21 @@ public class Result {
         return getRankWhenDealerNotOverPoint(dealerPoint, challengerPoint);
     }
 
-    private static Rank getRankWhenDealerOverPoint(int challengerPoint) {
+    private static Rank getRankWhenDealerOverPoint(final int challengerPoint) {
         if (isOverMaximumPoint(challengerPoint)) {
             return Rank.DRAW;
         }
         return Rank.WIN;
     }
 
-    private static Rank getRankWhenDealerNotOverPoint(int dealerPoint, int challengerPoint) {
+    private static Rank getRankWhenDealerNotOverPoint(final int dealerPoint, final int challengerPoint) {
         if (isOverMaximumPoint(challengerPoint)) {
             return Rank.LOSE;
         }
         return comparePoint(dealerPoint, challengerPoint);
     }
 
-    private static Rank comparePoint(int dealerPoint, int challengerPoint) {
+    private static Rank comparePoint(final int dealerPoint, final int challengerPoint) {
         if (challengerPoint < dealerPoint) {
             return Rank.LOSE;
         }
@@ -60,11 +60,11 @@ public class Result {
         return Rank.DRAW;
     }
 
-    private static boolean isOverMaximumPoint(int sum) {
+    private static boolean isOverMaximumPoint(final int sum) {
         return sum > MAXIMUM_POINT;
     }
 
-    public Rank getChallengerResult(Player player) {
+    public Rank getChallengerResult(final Player player) {
         return results.get(player);
     }
 

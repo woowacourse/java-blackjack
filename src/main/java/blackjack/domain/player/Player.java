@@ -10,15 +10,15 @@ public abstract class Player {
         this.holdingCards = new HoldingCards();
     }
 
-    public void pickStartCards(Card card1, Card card2) {
-        holdingCards.initialCard(card1, card2);
+    public void pickStartCards(final Card firstCard, final Card secondCard) {
+        holdingCards.initialCard(firstCard, secondCard);
     }
 
     public HoldingCards getHoldingCards() {
         return holdingCards;
     }
 
-    public void pick(Card card) {
+    public void pick(final Card card) {
         holdingCards.add(card);
     }
 

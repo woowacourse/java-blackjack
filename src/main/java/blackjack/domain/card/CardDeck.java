@@ -12,7 +12,7 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    private CardDeck(List<Card> cards) {
+    private CardDeck(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -24,7 +24,7 @@ public class CardDeck {
         return new CardDeck(cards);
     }
 
-    private static List<Card> makeCardsOfSameShape(Shape shape) {
+    private static List<Card> makeCardsOfSameShape(final Shape shape) {
         List<Card> cards = new ArrayList<>();
         for (Number number : Number.values()) {
             cards.add(new Card(shape, number));

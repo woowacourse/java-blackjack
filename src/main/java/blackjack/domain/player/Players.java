@@ -11,11 +11,11 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    private Players(final List<Player> players) {
         this.players = players;
     }
 
-    public static Players from(List<String> names) {
+    public static Players from(final List<String> names) {
         validateDuplicatedNames(names);
         List<Player> players = new ArrayList<>();
         players.add(new Dealer());
@@ -25,7 +25,7 @@ public class Players {
         return new Players(players);
     }
 
-    private static void validateDuplicatedNames(List<String> names) {
+    private static void validateDuplicatedNames(final List<String> names) {
         long distinctNameCount = names.stream()
                 .distinct()
                 .count();
@@ -35,7 +35,7 @@ public class Players {
         }
     }
 
-    public void pickStartCards(CardDeck cardDeck) {
+    public void pickStartCards(final CardDeck cardDeck) {
         for (Player player : players) {
             Card card1 = cardDeck.pick();
             Card card2 = cardDeck.pick();

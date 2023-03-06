@@ -15,7 +15,7 @@ public class HoldingCards {
         cards.addAll(List.of(firstCard, secondCard));
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 

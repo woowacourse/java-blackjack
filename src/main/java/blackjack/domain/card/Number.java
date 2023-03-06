@@ -18,7 +18,7 @@ public enum Number {
     private final String name;
     private final int value;
 
-    Number(String name, int value) {
+    Number(final String name, final int value) {
         this.name = name;
         this.value = value;
     }
