@@ -1,7 +1,7 @@
 package domain;
 
-public enum Number {
-    A("A", 11),
+public enum TrumpCardNumber {
+    ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -11,16 +11,16 @@ public enum Number {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    J("J", 10),
-    Q("Q", 10),
-    K("K", 10),
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10),
     ;
 
-    private final String name;
+    private final String signature;
     private final int score;
 
-    Number(String name, int score) {
-        this.name = name;
+    TrumpCardNumber(String signature, int score) {
+        this.signature = signature;
         this.score = score;
     }
 
@@ -28,7 +28,7 @@ public enum Number {
         return score;
     }
 
-    public String getName() {
-        return name;
+    public String getSignature() {
+        return signature;
     }
 }

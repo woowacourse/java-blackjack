@@ -1,12 +1,12 @@
 import domain.Card;
 import domain.Dealer;
-import domain.Number;
+import domain.TrumpCardNumber;
 import domain.Participant;
 import domain.Player;
 import domain.PlayerNames;
 import domain.Players;
 import domain.Result;
-import domain.Shape;
+import domain.TrumpCardType;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private static final Card VALUE_TEN = new Card(Shape.DIAMOND, Number.TEN);
-    private static final Card VALUE_NINE = new Card(Shape.DIAMOND, Number.NINE);
-    private static final Card VALUE_EIGHT = new Card(Shape.DIAMOND, Number.EIGHT);
+    private static final Card VALUE_TEN = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.TEN);
+    private static final Card VALUE_NINE = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.NINE);
+    private static final Card VALUE_EIGHT = new Card(TrumpCardType.DIAMOND, TrumpCardNumber.EIGHT);
 
     @DisplayName("딜러의 카드 합을 기준으로 플레이어의 승패를 결정한다.")
     @Test

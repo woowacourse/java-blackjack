@@ -1,7 +1,7 @@
 package controller;
 
+import domain.BlackjackAction;
 import domain.BlackjackGame;
-import domain.Command;
 import domain.Dealer;
 import domain.Player;
 import domain.PlayerNames;
@@ -51,7 +51,7 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(BlackjackGame blackjackGame, Player player) {
-        while (!player.isBusted() && requestMoreCardTo(player) == Command.HIT) {
+        while (!player.isBusted() && requestMoreCardTo(player) == BlackjackAction.HIT) {
             blackjackGame.handOutCardTo(player);
             outputView.printPlayerCards(player);
         }
@@ -59,11 +59,11 @@ public class BlackjackController {
         printPlayerCurrentState(player);
     }
 
-    private Command requestMoreCardTo(Player player) {
+    private BlackjackAction requestMoreCardTo(Player player) {
         String playerName = player.getName();
         String userInputCommand = inputView.requestMoreCard(playerName);
 
-        return retryOnInvalidUserInput(() -> Command.from(userInputCommand));
+        return retryOnInvalidUserInput(() -> BlackjackAction.from(userInputCommand));
     }
 
     private void playDealerTurn(BlackjackGame blackjackGame) {

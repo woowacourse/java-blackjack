@@ -18,18 +18,18 @@ public class Deck {
     }
 
     private void addAllCards(Stack<Card> deck) {
-        Shape[] shapes = Shape.values();
+        TrumpCardType[] trumpCardTypes = TrumpCardType.values();
 
-        for (Shape shape : shapes) {
-            addCardsOfShape(deck, shape);
+        for (TrumpCardType trumpCardType : trumpCardTypes) {
+            addCardsOfShape(deck, trumpCardType);
         }
     }
 
-    private void addCardsOfShape(Stack<Card> deck, Shape shape) {
-        Number[] numbers = Number.values();
+    private void addCardsOfShape(Stack<Card> deck, TrumpCardType trumpCardType) {
+        TrumpCardNumber[] trumpCardNumbers = TrumpCardNumber.values();
 
-        for (Number number : numbers) {
-            deck.add(new Card(shape, number));
+        for (TrumpCardNumber trumpCardNumber : trumpCardNumbers) {
+            deck.add(new Card(trumpCardType, trumpCardNumber));
         }
     }
 

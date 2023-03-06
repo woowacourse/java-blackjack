@@ -1,6 +1,6 @@
 package domain;
 
-public enum Shape {
+public enum TrumpCardType {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
@@ -9,7 +9,7 @@ public enum Shape {
 
     private final String name;
 
-    Shape(String name) {
+    TrumpCardType(String name) {
         this.name = name;
     }
 

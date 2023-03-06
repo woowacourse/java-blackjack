@@ -1,27 +1,27 @@
 package domain;
 
 public class Card {
-    private final Shape shape;
-    private final Number number;
+    private final TrumpCardType trumpCardType;
+    private final TrumpCardNumber trumpCardNumber;
 
-    public Card(Shape shape, Number number) {
-        this.shape = shape;
-        this.number = number;
+    public Card(TrumpCardType trumpCardType, TrumpCardNumber trumpCardNumber) {
+        this.trumpCardType = trumpCardType;
+        this.trumpCardNumber = trumpCardNumber;
     }
 
     public boolean isAce() {
-        return this.number == Number.A;
+        return this.trumpCardNumber == TrumpCardNumber.ACE;
     }
 
     public int getScore() {
-        return number.getScore();
+        return trumpCardNumber.getScore();
     }
 
     public String getShapeName() {
-        return shape.getName();
+        return trumpCardType.getName();
     }
 
     public String getNumberName() {
-        return number.getName();
+        return trumpCardNumber.getSignature();
     }
 }
