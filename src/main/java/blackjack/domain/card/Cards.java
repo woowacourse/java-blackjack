@@ -8,7 +8,6 @@ public class Cards {
 
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
-    private static final int BLACKJACK_SIZE_CONDITION = 2;
 
     private final List<Card> cards;
 
@@ -55,11 +54,6 @@ public class Cards {
 
     public void add(Card card) {
         this.cards.add(card);
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE_CONDITION
-                && calculateScoreForBlackjack() == BLACKJACK_SCORE_CONDITION;
     }
 
     public boolean isBust() {
