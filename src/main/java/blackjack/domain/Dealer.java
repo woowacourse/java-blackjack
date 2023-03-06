@@ -27,7 +27,7 @@ public class Dealer extends Participant {
 
     private WinningResult getWinningResult(final Player player, final int myValue, final int playerValue) {
         if (playerValue > WinningResult.WIN_MAX_NUMBER || myValue > WinningResult.WIN_MAX_NUMBER) {
-            return WinningResult.calculateByBurst(playerValue, myValue);
+            return WinningResult.calculateByBurst(playerValue);
         }
         if (judgeBlackjack() || player.judgeBlackjack()) {
             return WinningResult.calculateByBlackjack(player.judgeBlackjack(), judgeBlackjack());

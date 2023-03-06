@@ -30,10 +30,7 @@ public enum WinningResult {
                 .count();
     }
 
-    public static WinningResult calculateByBurst(int playerValue, int dealerValue) {
-        if (playerValue > WIN_MAX_NUMBER && dealerValue > WIN_MAX_NUMBER) {
-            return PUSH;
-        }
+    public static WinningResult calculateByBurst(int playerValue) {
         if (playerValue > WIN_MAX_NUMBER) {
             return WIN;
         }
@@ -59,6 +56,4 @@ public enum WinningResult {
         }
         return PUSH;
     }
-
-
 }
