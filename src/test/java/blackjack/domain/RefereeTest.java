@@ -5,107 +5,60 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.card.*;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
 
-    Referee referee;
-
-    @BeforeEach
-    void init() {
-        referee = new Referee();
-    }
+    private final Referee referee = new Referee();
 
     @Test
     void testResult() {
-
-        //int dealerScore = 20;
-        //List<Integer> playerScores = List.of(21, 9, 20, -1);
-
         Participant dealer = new Dealer();
-        Players players = new Players("무민,아마란스,프리지아,수국");
-        Card card1 = new StandardCard(Pattern.CLUB, "10");
-        Card card2 = new StandardCard(Pattern.CLUB, "4");
-        Card card3 = new StandardCard(Pattern.CLUB, "6");
-
-        dealer.hit(card1);
-        dealer.hit(card2);
-        dealer.hit(card3);
-
-        Card card4 = new StandardCard(Pattern.SPADE, "10");
-        Card card5 = new AceCard(Pattern.SPADE);
-        players.getPlayers().get(0).hit(card4);
-        players.getPlayers().get(0).hit(card5);
-
-        Card card7 = new StandardCard(Pattern.CLUB, "9");
-        players.getPlayers().get(1).hit(card7);
-
-        Card card8 = new StandardCard(Pattern.HEART, "10");
-        Card card9 = new StandardCard(Pattern.HEART, "4");
-        Card card10 = new StandardCard(Pattern.HEART, "6");
-
-        players.getPlayers().get(2).hit(card8);
-        players.getPlayers().get(2).hit(card9);
-        players.getPlayers().get(2).hit(card10);
-
-        Card card11 = new StandardCard(Pattern.HEART, "10");
-        Card card12 = new StandardCard(Pattern.DIAMOND, "10");
-        Card card13 = new CourtCard(Pattern.DIAMOND, "K");
-
-        players.getPlayers().get(3).hit(card11);
-        players.getPlayers().get(3).hit(card12);
-        players.getPlayers().get(3).hit(card13);
+        dealer.hit(createStandCard(Pattern.CLUB, "10"));
+        Players players = createPlayers();
 
         List<Result> result = referee.judgeResult(dealer, players);
-        Assertions.assertThat(result)
-            .isEqualTo(List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE));
+
+        Assertions.assertThat(result).isEqualTo(List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE));
+    }
+
+    private Players createPlayers() {
+        Players players = new Players("무민,아마란스,프리지아,수국");
+        players.getPlayers().get(0).hit(createAceCard(Pattern.SPADE));
+        players.getPlayers().get(1).hit(createStandCard(Pattern.CLUB, "9"));
+        players.getPlayers().get(2).hit(createStandCard(Pattern.SPADE, "10"));
+        players.getPlayers().get(3).hit(createStandCard(Pattern.HEART, "10"));
+        players.getPlayers().get(3).hit(createStandCard(Pattern.DIAMOND, "10"));
+        players.getPlayers().get(3).hit(createCourtCard(Pattern.DIAMOND, "K"));
+        return players;
+    }
+
+    private CourtCard createCourtCard(Pattern pattern, String symbol) {
+        return new CourtCard(pattern, symbol);
+    }
+
+    private AceCard createAceCard(Pattern pattern) {
+        return new AceCard(pattern);
+    }
+
+    private StandardCard createStandCard(Pattern pattern, String symbol) {
+        return new StandardCard(pattern, symbol);
     }
 
     @Test
-    void testTwoBurstResult() {
-
-        //int dealerScore = -1;
-        //List<Integer> playerScores = List.of(21, 9, 20, -1);
-
+    void testDealerBurstResult() {
         Participant dealer = new Dealer();
-        Players players = new Players("무민,아마란스,프리지아,수국");
-        Card card1 = new StandardCard(Pattern.CLUB, "10");
-        Card card2 = new StandardCard(Pattern.CLUB, "4");
-        Card card3 = new StandardCard(Pattern.CLUB, "9");
-
-        dealer.hit(card1);
-        dealer.hit(card2);
-        dealer.hit(card3);
-
-        Card card4 = new StandardCard(Pattern.SPADE, "10");
-        Card card5 = new AceCard(Pattern.SPADE);
-        players.getPlayers().get(0).hit(card4);
-        players.getPlayers().get(0).hit(card5);
-
-        Card card7 = new StandardCard(Pattern.CLUB, "9");
-        players.getPlayers().get(1).hit(card7);
-
-        Card card8 = new StandardCard(Pattern.HEART, "10");
-        Card card9 = new StandardCard(Pattern.HEART, "4");
-        Card card10 = new StandardCard(Pattern.HEART, "6");
-
-        players.getPlayers().get(2).hit(card8);
-        players.getPlayers().get(2).hit(card9);
-        players.getPlayers().get(2).hit(card10);
-
-        Card card11 = new StandardCard(Pattern.HEART, "10");
-        Card card12 = new StandardCard(Pattern.DIAMOND, "10");
-        Card card13 = new CourtCard(Pattern.DIAMOND, "K");
-
-        players.getPlayers().get(3).hit(card11);
-        players.getPlayers().get(3).hit(card12);
-        players.getPlayers().get(3).hit(card13);
+        dealer.hit(createStandCard(Pattern.CLUB, "10"));
+        dealer.hit(createStandCard(Pattern.CLUB, "4"));
+        dealer.hit(createStandCard(Pattern.CLUB, "9"));
+        Players players = createPlayers();
 
         List<Result> result = referee.judgeResult(dealer, players);
+
         Assertions.assertThat(result)
             .isEqualTo(List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE));
     }
+
 
 
 }
