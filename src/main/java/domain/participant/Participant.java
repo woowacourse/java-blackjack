@@ -7,7 +7,7 @@ public class Participant {
 
     private static final int BUST_BOUNDARY_EXCLUSIVE = 21;
     private final Name name;
-    protected final List<Card> cards;
+    private final List<Card> cards;
 
     public Participant(final Name name, final List<Card> cards) {
         this.name = name;
