@@ -40,8 +40,8 @@ public class OutputView {
         List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
-            CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(index));
-            cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
+            String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
+            cards.add(cardNumber.getName() + cardSuit);
         }
         System.out.print(String.join(", ", cards));
         System.out.println();
@@ -52,8 +52,8 @@ public class OutputView {
         List<String> cards = new ArrayList<>();
         for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(index));
-            CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(index));
-            cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
+            String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
+            cards.add(cardNumber.getName() + cardSuit);
         }
         System.out.print(String.join(", ", cards));
         System.out.print("- 결과 : " + participant.calculateCardNumber());
@@ -79,8 +79,8 @@ public class OutputView {
 
     private void printFirstDealerCards(final Dealer dealer) {
         CardNumber cardNumber = CardNumber.getCardNumber(dealer.getCardNumber(FIRST_CARD));
-        CardSuit cardSuit = CardSuit.getCardSuit(dealer.getCardSuit(FIRST_CARD));
-        System.out.println(dealer.getName() + " : " + cardNumber.getName() + cardSuit.getCardSuitName());
+        String cardSuit = ViewCardSuit.getCardSuit(dealer.getCardSuit(FIRST_CARD));
+        System.out.println(dealer.getName() + " : " + cardNumber.getName() + cardSuit);
     }
 
     private void printFirstPlayersCards(final Participant participant) {
@@ -88,8 +88,8 @@ public class OutputView {
         List<String> card = new ArrayList<>();
         for (int i = 0; i < FIRST_CARD_COUNT; i++) {
             CardNumber cardNumber = CardNumber.getCardNumber(participant.getCardNumber(i));
-            CardSuit cardSuit = CardSuit.getCardSuit(participant.getCardSuit(i));
-            card.add(cardNumber.getName() + cardSuit.getCardSuitName());
+            String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(i));
+            card.add(cardNumber.getName() + cardSuit);
         }
         System.out.printf(String.join(", ",card));
         System.out.println();
