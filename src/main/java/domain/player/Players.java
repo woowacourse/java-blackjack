@@ -12,16 +12,16 @@ public class Players {
     private final Dealer dealer;
     private final List<Participant> participants;
 
-    private Players(List<Participant> participants) {
-        this.dealer = new Dealer(CardHolder.makeEmptyHolder());
+    private Players(Dealer dealer, List<Participant> participants) {
+        this.dealer = dealer;
         this.participants = participants;
     }
 
-    public static Players with(List<Name> participantNames) {
+    public static Players with(Dealer dealer, List<Name> participantNames) {
         List<Participant> participants = participantNames.stream()
                 .map(name -> new Participant(CardHolder.makeEmptyHolder(), name))
                 .collect(Collectors.toUnmodifiableList());
-        return new Players(participants);
+        return new Players(dealer,participants);
     }
 
     public void giveCardToDealer(Card card) {

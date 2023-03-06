@@ -16,9 +16,7 @@ class CardHolderTest {
     @Test
     @DisplayName("카드를 추가한 뒤, 플레이어 점수를 가져올 수 있다.")
     void givenCard_whenGetScore() {
-        CardHolder cardHolder = new CardHolder(new ArrayList<>());
-        cardHolder.addCard(new Card(Shape.SPADE, Number.THREE));
-
+        CardHolder cardHolder = new CardHolder(List.of(new Card(Shape.SPADE, Number.THREE)));
         assertThat(cardHolder.getTotalScore()).isEqualTo(3);
     }
 
