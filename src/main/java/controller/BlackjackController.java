@@ -37,13 +37,10 @@ public class BlackjackController {
     }
 
     private Players createPlayers() {
-        return retryOnInvalidUserInput(
-                () -> Players.from(PlayerNames.from(readNames()))
-        );
-    }
+        List<String> playerNamesUserInput = inputView.requestPlayerNames();
+        PlayerNames playerNames = retryOnInvalidUserInput(() -> PlayerNames.from(playerNamesUserInput));
 
-    private List<String> readNames() {
-        return inputView.requestPlayerNames();
+        return retryOnInvalidUserInput(() -> Players.from(playerNames));
     }
 
     private void playPlayersTurn(BlackjackGame blackjackGame) {
@@ -64,9 +61,9 @@ public class BlackjackController {
 
     private Command requestMoreCardTo(Player player) {
         String playerName = player.getName();
-        return retryOnInvalidUserInput(
-                () -> Command.from(inputView.requestMoreCard(playerName))
-        );
+        String userInputCommand = inputView.requestMoreCard(playerName);
+
+        return retryOnInvalidUserInput(() -> Command.from(userInputCommand));
     }
 
     private void playDealerTurn(BlackjackGame blackjackGame) {
