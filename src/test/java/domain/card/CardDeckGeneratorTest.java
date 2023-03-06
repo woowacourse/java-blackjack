@@ -11,4 +11,5 @@ class CardDeckGeneratorTest {
         // when && then
         assertThatNoException().isThrownBy(() -> CardDeckGenerator.create());
     }
+
 }
