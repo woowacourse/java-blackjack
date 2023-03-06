@@ -22,7 +22,7 @@ public class Stake {
         }
     }
 
-    public Double getPrize(DealerStatus dealerStatus) {
-        return value * dealerStatus.getMultiply();
+    public int getPrize(DealerStatus dealerStatus) {
+        return (int) (value * dealerStatus.getMultiply());
     }
 }
