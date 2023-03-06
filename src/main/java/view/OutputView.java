@@ -3,7 +3,7 @@ package view;
 import domain.model.Card;
 import domain.model.Cards;
 import domain.model.Dealer;
-import domain.model.Participant;
+import domain.model.Player;
 import domain.model.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,19 +24,19 @@ public class OutputView {
     private static final String CARD = " 카드";
     private static final String RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
 
-    public static void printInitialCards(final Dealer dealer, final List<Participant> participants) {
-        printCardsMessage(participants);
+    public static void printInitialCards(final Dealer dealer, final List<Player> players) {
+        printCardsMessage(players);
         printFirstCard(dealer);
-        for (Participant participant : participants) {
-            printCards(participant);
+        for (Player player : players) {
+            printCards(player);
         }
         System.out.println();
     }
 
-    private static void printCardsMessage(final List<Participant> participants) {
+    private static void printCardsMessage(final List<Player> players) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        participants.stream()
-            .map(Participant::getName)
+        players.stream()
+            .map(Player::getName)
             .forEach(stringJoiner::add);
         System.out.printf(PRINT_CARDS_MESSAGE, stringJoiner);
         System.out.println();
@@ -50,8 +50,8 @@ public class OutputView {
         System.out.println(dealer.getName() + COLON + card);
     }
 
-    public static void printCards(final Participant participant) {
-        System.out.println(participant.getName() + CARD + COLON + stringifyCards(participant.getCards()));
+    public static void printCards(final Player player) {
+        System.out.println(player.getName() + CARD + COLON + stringifyCards(player.getCards()));
     }
 
     private static String stringifyCards(final Cards cards) {
@@ -67,17 +67,17 @@ public class OutputView {
         System.out.println(DEALER_RECEPTION_NOTICE);
     }
 
-    public static void printTotalCardState(final Dealer dealer, final List<Participant> participants) {
+    public static void printTotalCardState(final Dealer dealer, final List<Player> players) {
         System.out.println();
         printCardAndScore(dealer);
-        for (Participant participant : participants) {
-            printCardAndScore(participant);
+        for (Player player : players) {
+            printCardAndScore(player);
         }
     }
 
-    private static void printCardAndScore(final Participant participant) {
-        System.out.println(participant.getName() + CARD + COLON + stringifyCards(participant.getCards())
-            + CARD_STATE_RESULT_SIGN + participant.getScore().getValue());
+    private static void printCardAndScore(final Player player) {
+        System.out.println(player.getName() + CARD + COLON + stringifyCards(player.getCards())
+            + CARD_STATE_RESULT_SIGN + player.getScore().getValue());
     }
 
     public static void printDealerResult(final Result dealerResult, final Dealer dealer) {
@@ -85,9 +85,9 @@ public class OutputView {
         System.out.println(dealer.getName() + COLON + stringifyResult(dealerResult));
     }
 
-    public static void printResult(final Map<Participant, Result> participantResults) {
-        for (Participant participant : participantResults.keySet()) {
-            System.out.println(participant.getName() + COLON + stringifyResult(participantResults.get(participant)));
+    public static void printResult(final Map<Player, Result> participantResults) {
+        for (Player player : participantResults.keySet()) {
+            System.out.println(player.getName() + COLON + stringifyResult(participantResults.get(player)));
         }
     }
 
