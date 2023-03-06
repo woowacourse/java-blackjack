@@ -1,6 +1,5 @@
 package controller;
 
-import common.Logger;
 import domain.deck.CardDeck;
 import domain.game.BlackJackGame;
 import domain.player.HitState;

@@ -1,4 +1,4 @@
-package common;
+package controller;
 
 public class Logger {
 
