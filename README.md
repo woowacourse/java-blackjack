@@ -2,7 +2,7 @@
 
 블랙잭 미션 저장소!
 
-### 요구 사항
+### 1단계 요구 사항
 
 ### 입력
 
@@ -47,6 +47,14 @@
 - [x] Player 와 Dealer 중복되는 코드 제거
   - [x] Participant 클래스 상속
 
-## 우아한테크코스 코드리뷰
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+
+## 1단계 리팩토링
+- [x] BlackJackGame 생성
+- [ ] 카드 shuffle 방식으로 변경
+- [x] validator 분리
+- [ ] EnumMap 적용
+- [ ] 메소드 이름 통일
+- [ ] 불필요한 생성자 제거
+- [ ] 변경에 따른 관련 코드 수정
+- [ ] 플레이어 이름으로 딜러 제한

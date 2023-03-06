@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Participants {
@@ -33,7 +34,7 @@ public class Participants {
     public List<Participant> getAllParticipants() {
         List<Participant> participants = new ArrayList<>(List.of(dealer));
         participants.addAll(players.getPlayers());
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
 
     public Dealer getDealer() {

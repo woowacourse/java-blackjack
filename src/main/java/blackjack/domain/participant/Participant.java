@@ -20,6 +20,8 @@ public abstract class Participant {
 
     abstract boolean isAbleToReceive();
 
+    public abstract String getName();
+
     public void receiveCard(Card card) {
         cards.add(card);
     }

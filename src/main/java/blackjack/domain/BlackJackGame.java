@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.result.GameResult;
 
 import java.util.List;
 
@@ -21,6 +23,14 @@ public class BlackJackGame {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             participants.getAllParticipants().forEach(participant -> participant.receiveCard(deck.getCard()));
         }
+    }
+
+    public void drawNewCard(Participant participant) {
+        participant.receiveCard(deck.getCard());
+    }
+
+    public GameResult getGameResult() {
+        return new GameResult(participants.getDealer(), participants.getPlayers());
     }
 
     public Participants getParticipants() {

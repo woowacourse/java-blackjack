@@ -20,6 +20,7 @@ public class Dealer extends Participant {
         return List.of(cards.get(0).getCardName());
     }
 
+    @Override
     public String getName() {
         return DEALER_NAME;
     }

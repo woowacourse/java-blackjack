@@ -15,6 +15,7 @@ public class Player extends Participant {
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
 
+    @Override
     public String getName() {
         return name.getName();
     }

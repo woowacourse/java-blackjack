@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,10 +24,15 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new ArrayList<>(List.of(new Card(CardShape.HEART, CardNumber.JACK), new Card(CardShape.SPADE, CardNumber.EIGHT))));
+        dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.JACK));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+
         dealer.isAbleToReceive();
 
-        player = new Player("pobi", new ArrayList<>(List.of(new Card(CardShape.CLOVER, CardNumber.FOUR), new Card(CardShape.DIAMOND, CardNumber.SIX))));
+        player = new Player("pobi");
+        player.receiveCard(new Card(CardShape.CLOVER, CardNumber.FOUR));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SIX));
         players = new Players(List.of(player));
         player.isAbleToReceive();
     }
@@ -36,7 +40,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 플레이어가 지는 경우")
     void gameResult1() {
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
@@ -48,7 +52,7 @@ class GameResultTest {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.DRAW)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.DRAW);
@@ -61,7 +65,7 @@ class GameResultTest {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.TWO));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.LOSE)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN);
@@ -74,7 +78,7 @@ class GameResultTest {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.KING));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
@@ -86,7 +90,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(CardShape.CLOVER, CardNumber.SEVEN));
         dealer.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.LOSE)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN);
@@ -101,7 +105,7 @@ class GameResultTest {
         player.receiveCard(new Card(CardShape.CLOVER, CardNumber.KING));
         player.isAbleToReceive();
 
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE);
@@ -110,12 +114,16 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인 : 플레이어 여러명일 때")
     void multiPlayer() {
-        Player player2 = new Player("jena", new ArrayList<>(List.of(new Card(CardShape.CLOVER, CardNumber.ACE), new Card(CardShape.DIAMOND, CardNumber.SEVEN))));
-        Player player3 = new Player("io", new ArrayList<>(List.of(new Card(CardShape.CLOVER, CardNumber.JACK), new Card(CardShape.DIAMOND, CardNumber.KING))));
+        Player player2 = new Player("jena");
+        player2.receiveCard(new Card(CardShape.CLOVER, CardNumber.ACE));
+        player2.receiveCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
+        Player player3 = new Player("io");
+        player3.receiveCard(new Card(CardShape.CLOVER, CardNumber.JACK));
+        player3.receiveCard(new Card(CardShape.DIAMOND, CardNumber.KING));
 
         players = new Players(List.of(player, player2, player3));
         players.getPlayers().forEach(Player::isAbleToReceive);
-        GameResult gameResult = new GameResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players.getPlayers());
 
         assertThat(gameResult.getDealerResults().get(Result.WIN)).isEqualTo(1);
         assertThat(gameResult.getDealerResults().get(Result.DRAW)).isEqualTo(1);

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -19,7 +18,10 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new ArrayList<>(List.of(new Card(CardShape.DIAMOND, CardNumber.FIVE), new Card(CardShape.HEART, CardNumber.JACK))));
+        dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.FIVE));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.JACK));
+
     }
 
     @Test
