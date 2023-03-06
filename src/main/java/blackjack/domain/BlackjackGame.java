@@ -43,6 +43,10 @@ public class BlackjackGame {
         return participants;
     }
 
+    public Cards getCards() {
+        return cards;
+    }
+
     private void playerResultSave(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
         if (dealerResult == WinningResult.WIN) {
             playersResult.put(player, WinningResult.LOSE);

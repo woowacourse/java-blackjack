@@ -27,8 +27,8 @@ public class OutputView {
 
     public void printParticipantsCard(Participants participants) {
         printFirstDealerCards(participants.getParticipants().get(DEALER_INDEX));
-        for (int i = 1; i < participants.getParticipants().size(); i++) {
-            printFirstPlayersCards(participants.getParticipants().get(i));
+        for (Player player : participants.extractPlayers()) {
+            printFirstPlayersCards(player);
         }
     }
 
