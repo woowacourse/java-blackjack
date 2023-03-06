@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 class Participants {
 
     private final Players players;
@@ -27,6 +29,11 @@ class Participants {
         players.draw(playerName, card);
     }
 
+
+    boolean isDealerDrawable() {
+        return dealer.isDrawable();
+    }
+
     void drawDealerCard(final Card card) {
         dealer.drawCard(card);
     }
@@ -41,5 +48,9 @@ class Participants {
 
     void calculateFinalResult() {
         players.calculateResult(dealer);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getPlayerNames();
     }
 }

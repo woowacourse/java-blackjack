@@ -4,7 +4,6 @@ import static blackjack.util.Repeater.repeatUntilNoException;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.DeckFactory;
-import blackjack.domain.Players;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -48,8 +47,7 @@ public class BlackJackController {
     }
 
     private void drawPlayersCards(final BlackJackGame blackJackGame) {
-        final Players players = blackJackGame.getPlayers();
-        for (final String playerName : players.getPlayerNames()) {
+        for (final String playerName : blackJackGame.getPlayerNames()) {
             drawPlayerCard(playerName, blackJackGame);
         }
     }

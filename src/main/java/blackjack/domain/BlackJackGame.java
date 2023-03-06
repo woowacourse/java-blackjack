@@ -38,11 +38,11 @@ public class BlackJackGame {
     }
 
     public boolean isDealerDrawable() {
-        return participants.getDealer().isDrawable();
+        return participants.isDealerDrawable();
     }
 
-    public Players getPlayers() {
-        return participants.getPlayers();
+    public List<String> getPlayerNames() {
+        return participants.getPlayerNames();
     }
 
     public void calculateFinalResult() {
