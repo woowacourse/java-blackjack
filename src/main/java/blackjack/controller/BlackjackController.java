@@ -20,7 +20,7 @@ public class BlackjackController {
 
     public void run() {
         CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
-        List<String> playersName = inputView.readPlayerName();
+        List<String> playersName = inputPlayerNameCommand();
         Cards cards = Cards.generator();
         Participants participants = Participants.generate(playersName);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
@@ -30,6 +30,24 @@ public class BlackjackController {
         hitParticipantsCard(blackjackGame, cards, cardPickerGenerator);
 
         printResult(participants, blackjackGame);
+    }
+
+    private List<String> inputPlayerNameCommand() {
+        try {
+            return inputView.readPlayerName();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return inputPlayerNameCommand();
+    }
+
+    private String inputHitCommand(final Player player) {
+        try {
+            return inputView.readHitCommand(player.getName());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return inputHitCommand(player);
     }
 
     private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
@@ -50,7 +68,7 @@ public class BlackjackController {
     }
 
     private void hitPlayerCard(final Player player, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
-        while (player.decideHit() && inputView.readHitCommand(player.getName()).equals("y")) {
+        while (player.decideHit() && inputHitCommand(player).equals("y")) {
             player.hit(cards.pick(cardPickerGenerator));
             outputView.printCurrentCards(player);
         }
