@@ -26,7 +26,7 @@ class ScoreTest {
     @DisplayName("여러장의 카드가 주어지면 각 카드들의 랭크만큼 숫자를 더한다.")
     void givenCards_thenSumScore() {
         //given
-        final Score score = Score.from(0);
+        final Score score = Score.from(8);
 
         //when
         final Card eight = Card.of(Suit.SPADE, Rank.EIGHT);
@@ -36,7 +36,7 @@ class ScoreTest {
 
         //then
         assertThat(score.getScore())
-                .isEqualTo(21);
+                .isEqualTo(8 + 8 + 6 + 7);
     }
 
     @Nested

@@ -17,6 +17,7 @@ class CardsTest {
         final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
 
+        //when
         for (int i = 0; i < ranks.size(); i++) {
             cards.takeCard(deck.dealCard());
         }
@@ -25,5 +26,23 @@ class CardsTest {
 
         //then
         assertThat(cards.getCards()).isEqualTo(result);
+    }
+
+    @Test
+    @DisplayName("카드를 받으면, 총점에 카드의 점수만큼 더해준다.")
+    void takeCards_thenAddSum() {
+        //given
+        final Cards cards = Cards.from(8);
+
+        final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
+        final Deck deck = Deck.from(TestCardGenerator.from(ranks));
+
+        //when
+        for (int i = 0; i < ranks.size(); i++) {
+            cards.takeCard(deck.dealCard());
+        }
+
+        //then
+        assertThat(cards.getScore()).isEqualTo(8 + 8 + 6 + 7);
     }
 }
