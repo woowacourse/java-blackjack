@@ -6,6 +6,7 @@ public class Stake {
 
     private static final int MIN_BET = 0;
     private static final int MAX_BET = 100_000;
+    private static final int PLAYER_NEGATE = -1;
     private final int value;
 
     public Stake(final int value) {
@@ -22,7 +23,11 @@ public class Stake {
         }
     }
 
-    public int getPrize(DealerStatus dealerStatus) {
+    public int getDealerPrize(DealerStatus dealerStatus) {
         return (int) (value * dealerStatus.getMultiply());
+    }
+
+    public int getPlayerPrize(DealerStatus dealerStatus) {
+        return (int) (PLAYER_NEGATE * value * dealerStatus.getMultiply());
     }
 }

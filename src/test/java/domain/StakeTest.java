@@ -33,7 +33,7 @@ class StakeTest {
         //given
         Stake stake = new Stake(100);
         //when
-        double v = stake.getPrize(DealerStatus.WIN);
+        double v = stake.getDealerPrize(DealerStatus.WIN);
         //then
         assertThat(v).isEqualTo(100);
     }
@@ -44,7 +44,7 @@ class StakeTest {
         //given
         Stake stake = new Stake(100);
         //when
-        double v = stake.getPrize(DealerStatus.LOSE);
+        double v = stake.getDealerPrize(DealerStatus.LOSE);
         //then
         assertThat(v).isEqualTo(-100);
     }
@@ -55,7 +55,7 @@ class StakeTest {
         //given
         Stake stake = new Stake(100);
         //when
-        double v = stake.getPrize(DealerStatus.DRAW);
+        double v = stake.getDealerPrize(DealerStatus.DRAW);
         //then
         assertThat(v).isEqualTo(0);
     }
@@ -66,7 +66,7 @@ class StakeTest {
         //given
         Stake stake = new Stake(100);
         //when
-        double v = stake.getPrize(DealerStatus.BLACKJACK_LOSE);
+        double v = stake.getDealerPrize(DealerStatus.BLACKJACK_LOSE);
         //then
         assertThat(v).isEqualTo(-150);
     }
