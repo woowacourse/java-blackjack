@@ -43,7 +43,7 @@ class CardDeckTest {
         // when & then
         assertThatThrownBy(() -> CardDeck.createShuffled(cards))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("전체 카드의 수는 52장이어야 합니다.");
+                .hasMessageContaining(Message.CARD_DECK_INVALID_SIZE.getMessage());
     }
 
     @DisplayName("카드가 52장 모두 개별적인 카드가 아니면 예외를 반환한다.")

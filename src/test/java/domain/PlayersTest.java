@@ -30,7 +30,7 @@ class PlayersTest {
         // when && then
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
+                .hasMessage(Message.PLAYER_INVALID_NUMBERS.getMessage());
     }
 
     @DisplayName("플레이어의 수가 1명 미만이면 예외를 반환한다.")
@@ -42,7 +42,7 @@ class PlayersTest {
         // when && then
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
+                .hasMessage(Message.PLAYER_INVALID_NUMBERS.getMessage());
     }
 
     private List<Player> createPlayers(String... names) {
@@ -65,7 +65,7 @@ class PlayersTest {
         // when && then
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("참여자의 이름은 중복이 되면 안됩니다.");
+                .hasMessage(Message.PLAYER_NAME_NOT_DUPLICATED.getMessage());
     }
 
     @DisplayName("플레이어의 이름이 딜러와 같다면 예외를 반환한다.")
@@ -78,6 +78,6 @@ class PlayersTest {
         // when && then
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("참여자의 이름은 '딜러'가 되면 안됩니다.");
+                .hasMessage(Message.PLAYER_NAME_NOT_DEALER.getMessage());
     }
 }

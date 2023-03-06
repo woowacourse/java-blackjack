@@ -28,9 +28,9 @@ public class Players {
         validateNameNotDealer(playerNames);
     }
 
-    private void validatePlayerNumbers(List<String> playerNames) {
+    private void validatePlayerNumbers(final List<String> playerNames) {
         if (playerNames.size() < MIN_PLAYERS_SIZE || MAX_PLAYERS_NUMBER < playerNames.size()) {
-            throw new IllegalArgumentException("플레이어의 수는 최소 1명, 최대 4명입니다.");
+            throw new IllegalArgumentException(Message.PLAYER_INVALID_NUMBERS.getMessage());
         }
     }
 
@@ -38,13 +38,13 @@ public class Players {
         Set<String> notDuplicatedPlayerNames = new HashSet<>(playerNames);
 
         if (playerNames.size() != notDuplicatedPlayerNames.size()) {
-            throw new IllegalArgumentException("참여자의 이름은 중복이 되면 안됩니다.");
+            throw new IllegalArgumentException(Message.PLAYER_NAME_NOT_DUPLICATED.getMessage());
         }
     }
 
     private void validateNameNotDealer(final List<String> playerNames) {
         if (playerNames.contains(DEALER_NAME)) {
-            throw new IllegalArgumentException("참여자의 이름은 '" + DEALER_NAME + "'가 되면 안됩니다.");
+            throw new IllegalArgumentException(Message.PLAYER_NAME_NOT_DEALER.getMessage());
         }
     }
 

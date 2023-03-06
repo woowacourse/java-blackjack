@@ -7,10 +7,8 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final String DEALER_DEFAULT_NAME = "딜러";
-
     public Dealer(final DrawnCards drawnCards) {
-        super(new Name(DEALER_DEFAULT_NAME), drawnCards);
+        super(new Name(Message.DEALER_NAME.getMessage()), drawnCards);
     }
 
     @Override

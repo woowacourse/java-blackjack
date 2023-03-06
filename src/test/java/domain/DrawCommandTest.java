@@ -27,7 +27,7 @@ class DrawCommandTest {
         // when & then
         assertThatThrownBy(() -> new DrawCommand(command))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("y혹은 n을 입력해주세요.");
+                .hasMessage(Message.COMMAND_NOT_PERMITTED.getMessage());
     }
 
     @DisplayName("사용자가 뽑는 커맨드를 입력하면 true를 반환한다.")

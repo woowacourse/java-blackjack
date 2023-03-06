@@ -25,7 +25,7 @@ class NameTest {
         // when & then
         assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이름은 비어있을 수 없습니다.");
+                .hasMessageContaining(Message.NAME_IS_EMPTY.getMessage());
     }
 
     @DisplayName("이름의 길이는 10자를 초과하면 예외를 반환한다.")
@@ -37,6 +37,6 @@ class NameTest {
         // when & then
         assertThatThrownBy(() -> new Name(givenName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이름의 길이는 10자를 초과할 수 없습니다.");
+                .hasMessageContaining(Message.NAME_LENGTH_OVER.getMessage());
     }
 }

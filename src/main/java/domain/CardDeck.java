@@ -24,11 +24,11 @@ public class CardDeck {
 
     private void validate(final Deque<Card> cards) {
         if (cards.size() != SIZE_OF_CARD_DECK) {
-            throw new IllegalArgumentException("전체 카드의 수는 52장이어야 합니다.");
+            throw new IllegalArgumentException(Message.CARD_DECK_INVALID_SIZE.getMessage());
         }
 
         if (isDuplicate(cards)) {
-            throw new IllegalArgumentException("중복된 카드가 존재합니다.");
+            throw new IllegalArgumentException(Message.CARD_DECK_DUPLICATED.getMessage());
         }
     }
 

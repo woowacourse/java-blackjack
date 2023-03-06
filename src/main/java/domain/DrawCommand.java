@@ -2,9 +2,6 @@ package domain;
 
 public class DrawCommand {
 
-    private static final String DRAW_COMMAND = "y";
-    private static final String STOP_COMMAND = "n";
-
     private final String command;
 
     public DrawCommand(final String command) {
@@ -13,16 +10,16 @@ public class DrawCommand {
     }
 
     private void validate(final String command) {
-        if (!(command.equals(DRAW_COMMAND) || command.equals(STOP_COMMAND))) {
-            throw new IllegalArgumentException("y혹은 n을 입력해주세요.");
+        if (!(command.equals(Message.DRAW_COMMAND.getMessage()) || command.equals(Message.STOP_COMMAND.getMessage()))) {
+            throw new IllegalArgumentException(Message.COMMAND_NOT_PERMITTED.getMessage());
         }
     }
 
     public boolean isDraw() {
-        return command.equals(DRAW_COMMAND);
+        return command.equals(Message.DRAW_COMMAND.getMessage());
     }
 
     public boolean isStop() {
-        return command.equals(STOP_COMMAND);
+        return command.equals(Message.STOP_COMMAND.getMessage());
     }
 }
