@@ -22,6 +22,16 @@ class PlayerTest {
             }
 
             @Override
+            public Boolean isDealer() {
+                return false;
+            }
+
+            @Override
+            public Boolean isChallenger() {
+                return true;
+            }
+
+            @Override
             public String getName() {
                 return null;
             }
