@@ -1,26 +1,42 @@
 package techcourse.jcf.mission;
 
-public interface SimpleList {
+public interface SimpleList<T> {
 
-    boolean add(String value);
+    static <T> SimpleList<T> fromArrayToList(T[] objects) {
+        SimpleArrayList<T> simpleArrayList = new SimpleArrayList<>();
+        for (T object : objects) {
+            simpleArrayList.add(object);
+        }
+        return simpleArrayList;
+    }
 
-    void add(int index, String value);
+    static <T extends Number> double sum(SimpleList<T> simpleList) {
+        double sum = 0;
+        for (int i = 0; i < simpleList.size(); i++) {
+            sum += simpleList.get(i).doubleValue();
+        }
+        return sum;
+    }
 
-    String set(int index, String value);
+    boolean add(T value);
 
-    String get(int index);
+    void add(int index, T value);
 
-    boolean contains(String value);
+    T set(int index, T value);
 
-    int indexOf(String value);
+    T get(int index);
+
+    boolean contains(T value);
+
+    int indexOf(T value);
 
     int size();
 
     boolean isEmpty();
 
-    boolean remove(String value);
+    boolean remove(T value);
 
-    String remove(int index);
+    T remove(int index);
 
     void clear();
 }

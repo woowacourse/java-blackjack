@@ -1,19 +1,19 @@
 package techcourse.jcf.mission;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<T> implements SimpleList<T> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private int capacity;
     private int pointerToNext;
-    private String[] values;
+    private Object[] values;
 
     public SimpleArrayList() {
         this.capacity = DEFAULT_CAPACITY;
         this.pointerToNext = 0;
-        this.values = new String[10];
+        this.values = (T[]) new Object[10];
     }
 
-    public SimpleArrayList(String[] values) {
+    public SimpleArrayList(T... values) {
         this.capacity = DEFAULT_CAPACITY;
         this.values = values;
         this.pointerToNext = values.length;
@@ -22,13 +22,13 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         checkIndexHaveValue(index);
-        return this.values[index];
+        return (T) this.values[index];
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(T value) {
         this.values[pointerToNext] = value;
         this.pointerToNext += 1;
         checkCapacityOverKeepingOrder();
@@ -36,7 +36,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, T value) {
         checkIndexHaveValue(index - 1);
         for (int i = pointerToNext; i > index; i--) {
             values[i] = values[i - 1];
@@ -47,15 +47,16 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    public T set(int index, T value) {
         checkIndexHaveValue(index);
-        String valueBeforeChange = this.values[index];
+        T valueBeforeChange = (T) this.values[index];
         this.values[index] = value;
         return valueBeforeChange;
     }
 
+
     @Override
-    public boolean contains(String value) {
+    public boolean contains(T value) {
         for (int i = 0; i < this.pointerToNext; i++) {
             if (this.values[i].equals(value)) {
                 return true;
@@ -65,7 +66,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(T value) {
         for (int i = 0; i < this.pointerToNext; i++) {
             if (this.values[i].equals(value)) {
                 return i;
@@ -85,7 +86,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(T value) {
         for (int i = 0; i < this.pointerToNext; i++) {
             if (this.values[i].equals(value)) {
                 moveToLeftFromIndexToEnd(i);
@@ -96,9 +97,9 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         checkIndexHaveValue(index);
-        String valueToRemove = this.values[index];
+        T valueToRemove = (T) this.values[index];
         moveToLeftFromIndexToEnd(index);
         return valueToRemove;
     }
@@ -107,7 +108,7 @@ public class SimpleArrayList implements SimpleList {
     public void clear() {
         this.capacity = DEFAULT_CAPACITY;
         this.pointerToNext = 0;
-        this.values = new String[10];
+        this.values = (T[]) new Object[10];
     }
 
     @Override
@@ -123,9 +124,9 @@ public class SimpleArrayList implements SimpleList {
 
     private void checkCapacityUnderKeepingOrder() {
         if (this.values.length < 10) {
-            String[] newValues = new String[DEFAULT_CAPACITY];
+            T[] newValues = (T[]) new Object[DEFAULT_CAPACITY];
             for (int i = 0; i < this.values.length; i++) {
-                newValues[i] = this.values[i];
+                newValues[i] = (T) this.values[i];
             }
             this.values = newValues;
         }
@@ -139,9 +140,9 @@ public class SimpleArrayList implements SimpleList {
 
     private void copyValuesIntactly() {
         this.capacity *= 2;
-        String[] newValues = new String[this.capacity];
+        T[] newValues = (T[]) new Object[this.capacity];
         for (int i = 0; i < this.values.length; i++) {
-            newValues[i] = this.values[i];
+            newValues[i] = (T) this.values[i];
         }
         this.values = newValues;
     }
