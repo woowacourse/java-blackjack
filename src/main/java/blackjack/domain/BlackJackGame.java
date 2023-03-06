@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Players;
 import blackjack.response.DealerScoreResponse;
 import blackjack.response.FinalResultResponse;
 import blackjack.response.InitialCardResponse;
@@ -43,10 +46,6 @@ public class BlackJackGame {
 
     public List<String> getPlayerNames() {
         return participants.getPlayerNames();
-    }
-
-    public void calculateFinalResult() {
-        participants.calculateFinalResult();
     }
 
     public InitialCardResponse getInitialCardResponse() {

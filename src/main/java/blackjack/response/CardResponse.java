@@ -1,6 +1,6 @@
 package blackjack.response;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 
 /**
  * 대부분의 Response 가 이 클래스를 통해서 symbol 과 shape 를 변경하는 구조로 되어있는데

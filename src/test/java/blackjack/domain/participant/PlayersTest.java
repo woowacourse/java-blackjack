@@ -1,15 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

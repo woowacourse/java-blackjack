@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardPocket;
 import java.util.List;
 
 public abstract class Participant {
@@ -10,7 +12,7 @@ public abstract class Participant {
         cardPocket = CardPocket.empty();
     }
 
-    public void drawInitialCard(Card first, Card second) {
+    public void drawInitialCard(final Card first, final Card second) {
         cardPocket.addCard(first);
         cardPocket.addCard(second);
     }

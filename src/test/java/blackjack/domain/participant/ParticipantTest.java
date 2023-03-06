@@ -1,7 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -31,7 +34,7 @@ class ParticipantTest {
     @Test
     void 참가자는_점수를_계산할_수_있다() {
 
-        int score = participant.currentScore();
+        final int score = participant.currentScore();
 
         assertThat(score).isEqualTo(12);
     }
@@ -40,7 +43,7 @@ class ParticipantTest {
     void 참가자는_추가로_드로우를_해서_점수를_계산할_수_있다() {
         participant.drawCard(new Card(Shape.CLOVER, Symbol.ACE));
 
-        int score = participant.currentScore();
+        final int score = participant.currentScore();
 
         assertThat(score).isEqualTo(13);
     }

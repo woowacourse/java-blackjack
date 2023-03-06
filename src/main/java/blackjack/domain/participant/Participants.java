@@ -1,53 +1,57 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.BlackJackReferee;
+import blackjack.domain.Deck;
+import blackjack.domain.ResultType;
+import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.Map;
 
-class Participants {
+public class Participants {
 
     private final Players players;
     private final Dealer dealer;
 
-    Participants(final Players players, final Dealer dealer) {
+    public Participants(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
 
-    void distributeInitialCards(final Deck deck) {
+    public void distributeInitialCards(final Deck deck) {
         players.distributeInitialCards(deck);
         dealer.drawInitialCard(deck.removeCard(), deck.removeCard());
     }
 
-    Player findPlayerByName(final String playerName) {
+    public Player findPlayerByName(final String playerName) {
         return players.findPlayerByName(playerName);
     }
 
-    boolean isPlayerDrawable(final String playerName) {
+    public boolean isPlayerDrawable(final String playerName) {
         return players.isDrawable(playerName);
     }
 
-    void drawPlayerCard(final String playerName, final Card card) {
+    public void drawPlayerCard(final String playerName, final Card card) {
         players.draw(playerName, card);
     }
 
 
-    boolean isDealerDrawable() {
+    public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }
 
-    void drawDealerCard(final Card card) {
+    public void drawDealerCard(final Card card) {
         dealer.drawCard(card);
     }
 
-    Dealer getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    Players getPlayers() {
+    public Players getPlayers() {
         return players;
     }
 
-    Map<String, ResultType> calculateFinalResult() {
+    public Map<String, ResultType> calculateFinalResult() {
         final BlackJackReferee blackJackReferee = BlackJackReferee.from(dealer.currentScore());
         players.calculateResult(blackJackReferee);
         return blackJackReferee.getResult();

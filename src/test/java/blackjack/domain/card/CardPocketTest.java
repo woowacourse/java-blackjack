@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,7 +56,7 @@ class CardPocketTest {
 
     @Test
     void 카드_포켓에서_Ace_의_점수_계산이_11_과_1로_잘_계산된다() {
-        CardPocket cardPocket = CardPocket.empty();
+        final CardPocket cardPocket = CardPocket.empty();
         cardPocket.addCard(new Card(Shape.DIAMOND, Symbol.ACE));
         cardPocket.addCard(new Card(Shape.DIAMOND, Symbol.TEN));
 

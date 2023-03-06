@@ -1,9 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class CardPocket {
+public class CardPocket {
 
     private static final int BUST_SCORE = 21;
     private static final int VALUE_ACE = 10;
@@ -14,7 +14,7 @@ class CardPocket {
         this.cards = new ArrayList<>(cards);
     }
 
-    static CardPocket empty() {
+    public static CardPocket empty() {
         return new CardPocket(new ArrayList<>());
     }
 
@@ -24,11 +24,11 @@ class CardPocket {
         }
     }
 
-    void addCard(final Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
-    int calculateScore() {
+    public int calculateScore() {
         final int countOfAce = countAce();
         int scoreOfCards = calculateMinimumScore();
         for (int i = 0; i < countOfAce; i++) {
@@ -56,7 +56,7 @@ class CardPocket {
         return score + VALUE_ACE;
     }
 
-    List<Card> getCards() {
+    public List<Card> getCards() {
         return List.copyOf(cards);
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 /**
  * 하나의 카드에 대한 정보를 가지고 있는 자료구조입니다

@@ -1,7 +1,7 @@
 package blackjack.response;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
 import java.util.List;
 import java.util.stream.Collectors;
 
