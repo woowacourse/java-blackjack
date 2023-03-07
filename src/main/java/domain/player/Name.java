@@ -32,6 +32,10 @@ public class Name {
         if (!NAME_FORMAT.matcher(name).matches()) {
             throw new IllegalArgumentException("한글, 영어 대/소문자와 숫자만 이름이 될 수 있습니다.");
         }
+
+        if (name.equals(Dealer.DEALER_NAME)) {
+            throw new IllegalArgumentException("사용할 수 없는 이름입니다.");
+        }
     }
 
     public String getName() {

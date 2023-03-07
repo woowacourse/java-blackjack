@@ -37,4 +37,11 @@ class NameTest {
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
+
+    @Test
+    @DisplayName("딜러를 나타내는 값을 이름으로 입력할 수 없다.")
+    void givenDealerName_thenFail() {
+        assertThatThrownBy(() -> Name.of(Dealer.DEALER_NAME))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
