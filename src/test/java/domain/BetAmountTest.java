@@ -8,15 +8,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BetAmountTest {
-    @ParameterizedTest(name = "배팅 금액은 최소 10원, 최대 1억이다.")
-    @ValueSource(ints = {9, 100000001})
+    @ParameterizedTest(name = "배팅 금액은 최소 100원, 최대 1억이다.")
+    @ValueSource(ints = {99, 100000001})
     void createBetAmountFailTest(int money) {
         assertThatThrownBy(() -> BetAmount.from(money))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest(name = "배팅 금액은 최소 10원, 최대 1억이다.")
-    @ValueSource(ints = {10, 100000000})
+    @ParameterizedTest(name = "배팅 금액은 최소 100원, 최대 1억이다.")
+    @ValueSource(ints = {100, 100000000})
     void createBetAmountSuccessTest(int money) {
         assertDoesNotThrow(() -> BetAmount.from(money));
     }
@@ -36,6 +36,6 @@ class BetAmountTest {
         BetAmount betAmount = BetAmount.from(money);
 
         assertThat(betAmount.receiveWithBlackjack().getMoney())
-                .isEqualTo(money * 2.5);
+                .isEqualTo((int) (money * 2.5));
     }
 }
