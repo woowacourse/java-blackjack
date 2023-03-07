@@ -27,7 +27,7 @@ public class BlackJackApplication {
         return InputView.inputPlayerNames();
     }
 
-    public static void run(Players players, Dealer dealer) {
+    private static void run(Players players, Dealer dealer) {
         players.askEachPlayers();
         dealerDistributeOrNot(dealer);
         printFinalGameStatus(players, dealer);
