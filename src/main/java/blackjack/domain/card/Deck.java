@@ -33,7 +33,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public Card giveFirstCard() {
+    public Card drawCard() {
         if (cards.size() < MIN_CARD_SIZE) {
             throw new IndexOutOfBoundsException("뽑을 수 있는 카드가 없습니다.");
         }

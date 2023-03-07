@@ -16,10 +16,10 @@ class DeckTest {
 
         // when
         for (int cardIndex = 0; cardIndex < CARD_TOTAL_SIZE; cardIndex++) {
-            deck.giveFirstCard();
+            deck.drawCard();
         }
         // then
-        Assertions.assertThatThrownBy(deck::giveFirstCard)
+        Assertions.assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("뽑을 수 있는 카드가 없습니다.");
     }
