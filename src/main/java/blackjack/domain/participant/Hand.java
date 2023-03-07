@@ -34,7 +34,16 @@ public class Hand {
     }
 
     public int calculateScore() {
-        return Score.from(cards).getValue();
+        Score score = Score.of(cards.stream().mapToInt(Card::getScore).toArray());
+        if (containsAce() && score.getValue() <= 11) {
+            return score.plus(10).getValue();
+        }
+        return score.getValue();
+    }
+
+    private boolean containsAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public Card pickFirstCard() {

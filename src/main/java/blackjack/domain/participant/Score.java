@@ -1,31 +1,17 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Score {
     private final int value;
 
-    public static Score from(List<Card> cards) {
-        Score score = new Score(sumOfNumbers(cards));
-        if (containsAce(cards) && score.value <= 11) {
-            return score.plus(10);
-        }
-        return score;
+    public static Score of(int... values) {
+        int sum = Arrays.stream(values).sum();
+        return new Score(sum);
     }
-
-    private static int sumOfNumbers(List<Card> cards) {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private static boolean containsAce(List<Card> cards) {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
 
     public Score(int value) {
         this.value = value;

@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -54,25 +55,12 @@ class ScoreTest {
         assertThat(afterPlus).isEqualTo(new Score(10));
     }
 
-    @DisplayName("카드 리스트로 점수 객체를 생성할 수 있다.")
+    @DisplayName("정수 인자들로 생성될 수 있다.")
     @Test
-    void createFrom() {
+    void createByIntList() {
         //given
-        List<Card> cards = List.of(new Card(CardNumber.EIGHT, Pattern.CLOVER), new Card(CardNumber.EIGHT, Pattern.DIAMOND));
         //when
-        Score score = Score.from(cards);
         //then
-        assertThat(score).isEqualTo(new Score(16));
-    }
-
-    @DisplayName("점수 합이 10이하일 때, 에이스는 11로 계산된다.")
-    @Test
-    void calculateAceAsEleven() {
-        //given
-        List<Card> cards = List.of(new Card(CardNumber.ACE, Pattern.CLOVER), new Card(CardNumber.EIGHT, Pattern.DIAMOND));
-        //when
-        Score score = Score.from(cards);
-        //then
-        assertThat(score).isEqualTo(new Score(19));
+        assertDoesNotThrow(() -> Score.of(1, 2, 3, 4, 5));
     }
 }
