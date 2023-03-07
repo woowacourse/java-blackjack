@@ -25,10 +25,9 @@ public class Deck {
     }
 
     public Card draw() {
-        try {
-            return this.deck.remove(0);
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalStateException("덱이 비었습니다.");
+        if(this.deck.size() == 0) {
+            generateCards();
         }
+        return this.deck.remove(0);
     }
 }
