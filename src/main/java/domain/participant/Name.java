@@ -22,7 +22,7 @@ public final class Name {
 
     private static void validateLength(final String name) {
         if (name.length() > MAX_LENGTH_EXCLUSIVE) {
-            throw new IllegalArgumentException("[ERROR] 이름의 길이는 10글자 이하여야 합니다.");
+            throw new IllegalArgumentException("이름의 길이는 10글자 이하여야 합니다.");
         }
     }
 

@@ -17,11 +17,11 @@ public final class OutputView {
 
     private static final OutputView instance = new OutputView();
 
-    public static OutputView getInstance() {
-        return instance;
+    private OutputView() {
     }
 
-    private OutputView() {
+    public static OutputView getInstance() {
+        return instance;
     }
 
     private static final Map<Shape, String> shapeDisplay = new EnumMap<>(Shape.class);
