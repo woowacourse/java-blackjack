@@ -8,22 +8,22 @@ import java.util.StringJoiner;
 
 public class OutputView {
 
-    public void printPlayersInfoWhenGameStarted(PlayerDTO dealer, List<PlayerDTO> players) {
+    public void printGameStarted(PlayerDTO dealer, List<PlayerDTO> players) {
         StringJoiner stringJoiner = new StringJoiner(", ");
         players.forEach(player -> stringJoiner.add(player.getPlayerName()));
         System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName(), stringJoiner);
 
-        printPlayerCardWithName(dealer);
+        printNameAndCard(dealer);
         for (PlayerDTO player : players) {
-            printPlayerCardWithName(player);
+            printNameAndCard(player);
         }
     }
 
-    public void printPlayerCardWithName(PlayerDTO player) {
-        System.out.println(makePlayerCardMessageWithName(player));
+    public void printNameAndCard(PlayerDTO player) {
+        System.out.println(makeNameAndCardMessage(player));
     }
 
-    public String makePlayerCardMessageWithName(PlayerDTO player) {
+    public String makeNameAndCardMessage(PlayerDTO player) {
         String cardStr = player.getPlayerName() + "카드: ";
         StringJoiner stringJoiner = new StringJoiner(", ");
 
@@ -62,6 +62,6 @@ public class OutputView {
     }
 
     private void printScore(PlayerDTO playerDTO) {
-        System.out.println(makePlayerCardMessageWithName(playerDTO) + " - 결과 : " + playerDTO.getResult());
+        System.out.println(makeNameAndCardMessage(playerDTO) + " - 결과 : " + playerDTO.getResult());
     }
 }
