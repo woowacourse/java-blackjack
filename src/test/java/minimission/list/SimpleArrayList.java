@@ -1,24 +1,24 @@
-package list;
+package minimission.list;
 
-public class CustomArrayList implements SimpleList {
+public class SimpleArrayList<E> implements SimpleList<E> {
     private static final int INITIAL_CAPACITY = 10;
-    private String[] array;
+    private Object[] array;
     private int size;
 
-    public CustomArrayList() {
-        array = new String[INITIAL_CAPACITY];
+    public SimpleArrayList() {
+        array = new Object[INITIAL_CAPACITY];
         size = 0;
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(E value) {
         ensureCapacity(size + 1);
         array[size++] = value;
         return true;
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
@@ -29,30 +29,32 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    @SuppressWarnings("unchecked")
+    public E set(int index, E value) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
-        String oldValue = array[index];
+        Object oldValue = array[index];
         array[index] = value;
-        return oldValue;
+        return (E) oldValue;
     }
 
     @Override
-    public String get(int index) {
+    @SuppressWarnings("unchecked")
+    public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
-        return array[index];
+        return (E) array[index];
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(E value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(value)) {
                 return i;
@@ -72,7 +74,7 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(E value) {
         int index = indexOf(value);
         if (index == -1) {
             return false;
@@ -82,11 +84,12 @@ public class CustomArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    @SuppressWarnings("unchecked")
+    public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
-        String removedValue = array[index];
+        E removedValue = (E) array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         array[--size] = null;
         return removedValue;
@@ -106,7 +109,7 @@ public class CustomArrayList implements SimpleList {
             if (newCapacity < minCapacity) {
                 newCapacity = minCapacity;
             }
-            String[] newArray = new String[newCapacity];
+            Object[] newArray = new Object[newCapacity];
             System.arraycopy(array, 0, newArray, 0, size);
             array = newArray;
         }

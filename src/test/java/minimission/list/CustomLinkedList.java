@@ -1,6 +1,6 @@
-package list;
+package minimission.list;
 
-public class CustomLinkedList implements SimpleList {
+public class CustomLinkedList<E> implements SimpleList<E> {
     private Node head;
     private int size;
 
@@ -10,7 +10,7 @@ public class CustomLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(E value) {
         Node newNode = new Node(value);
         if (head == null) {
             head = newNode;
@@ -26,7 +26,7 @@ public class CustomLinkedList implements SimpleList {
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, E value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Invalid index");
         }
@@ -46,7 +46,8 @@ public class CustomLinkedList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
+    @SuppressWarnings("unchecked")
+    public E set(int index, E value) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid index");
         }
@@ -54,13 +55,14 @@ public class CustomLinkedList implements SimpleList {
         for (int i = 0; i < index; i++) {
             curr = curr.next;
         }
-        String temp = curr.value;
+        E temp = (E) curr.value;
         curr.value = value;
         return temp;
     }
 
     @Override
-    public String get(int index) {
+    @SuppressWarnings("unchecked")
+    public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid index");
         }
@@ -68,11 +70,11 @@ public class CustomLinkedList implements SimpleList {
         for (int i = 0; i < index; i++) {
             curr = curr.next;
         }
-        return curr.value;
+        return (E) curr.value;
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(E value) {
         Node curr = head;
         while (curr != null) {
             if (curr.value.equals(value)) {
@@ -84,7 +86,7 @@ public class CustomLinkedList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(E value) {
         Node curr = head;
         int index = 0;
         while (curr != null) {
@@ -108,7 +110,7 @@ public class CustomLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
+    public boolean remove(E value) {
         Node curr = head;
         Node prev = null;
         while (curr != null) {
@@ -128,11 +130,12 @@ public class CustomLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    @SuppressWarnings("unchecked")
+    public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid index");
         }
-        String removedValue;
+        Object removedValue;
         if (index == 0) {
             removedValue = head.value;
             head = head.next;
@@ -145,12 +148,20 @@ public class CustomLinkedList implements SimpleList {
             curr.next = curr.next.next;
         }
         size--;
-        return removedValue;
+        return (E) removedValue;
     }
 
     @Override
     public void clear() {
         head = null;
         size = 0;
+    }
+    
+    @Override
+    public String toString() {
+        return "CustomLinkedList{" +
+                "head=" + head +
+                ", size=" + size +
+                '}';
     }
 }
