@@ -43,17 +43,20 @@ public class Participants {
         }
     }
 
-    public boolean handCardsByPlayerName(String playerName, List<Card> cards) {
+    public void handCardsByPlayerName(String playerName, List<Card> cards) {
         Player player = players.findPlayerBy(playerName);
         handCardsTo(player, cards);
+    }
+
+    public boolean isAvailablePlayer(String name) {
+        Player player = players.findPlayerBy(name);
         return player.isAvailable();
     }
 
     public int repeatHandToDealerUntilAvailable(Deck deck) {
         int hitCount = 0;
         while (dealer.isAvailable()) {
-            List<Card> cards = deck.draw(1);
-            dealer.take(cards.get(0));
+            handCardsTo(dealer, deck.draw(1));
             hitCount++;
         }
         return hitCount;
@@ -94,10 +97,14 @@ public class Participants {
     }
 
     public List<Card> findHoldingCardsByName(String participantName) {
+        Participant participant = findParticipantByName(participantName);
+        return participant.getCards();
+    }
+
+    private Participant findParticipantByName(String participantName) {
         if (Objects.equals(participantName, dealer.getName())) {
-            return dealer.getCards();
+            return dealer;
         }
-        Player player = players.findPlayerBy(participantName);
-        return player.getCards();
+        return players.findPlayerBy(participantName);
     }
 }

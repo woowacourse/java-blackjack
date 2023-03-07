@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class BlackJackController {
 
-    private static final String DealerName = "딜러";
+    private final static String DealerName = "딜러";
     private BlackJackGame blackJackGame;
 
     public void run() {
@@ -33,18 +33,23 @@ public class BlackJackController {
     }
 
     private void hitOrStayForAvailablePlayers(List<String> playerNames) {
-        playerNames.forEach(this::hitOrStay);
+        playerNames.forEach(this::repeatHitOrStayUntilPlayerWants);
     }
 
-    private void hitOrStay(String playerName) {
-        if (InputView.askToHit(playerName) == HitCommand.NO) {
-            return;
+    private void repeatHitOrStayUntilPlayerWants(String playerName) {
+        HitCommand hitCommand = refreshHitCommand(playerName);
+        while (hitCommand == HitCommand.YES) {
+            blackJackGame.handOneCard(playerName);
+            OutputView.showPlayerCard(playerName, blackJackGame.openCardsByName(playerName));
+            hitCommand = refreshHitCommand(playerName);
         }
-        boolean keepGoing = blackJackGame.handOneCard(playerName);
-        OutputView.showPlayerCard(playerName, blackJackGame.openCardsByName(playerName));
-        if (keepGoing) {
-            hitOrStay(playerName);
+    }
+
+    private HitCommand refreshHitCommand(String playerName) {
+        if (blackJackGame.isAvailablePlayer(playerName)) {
+            return InputView.askToHit(playerName);
         }
+        return HitCommand.NO;
     }
 
     private void hitUntilDealerAvailable() {

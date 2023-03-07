@@ -17,8 +17,8 @@ public class BlackJackGame {
         participants.handOut(deck);
     }
 
-    public boolean handOneCard(String playerName) {
-        return participants.handCardsByPlayerName(playerName, deck.draw(1));
+    public void handOneCard(String playerName) {
+        participants.handCardsByPlayerName(playerName, deck.draw(1));
     }
 
     public Map<String, List<Card>> openHandOutCards() {
@@ -27,6 +27,10 @@ public class BlackJackGame {
 
     public List<String> findAvailablePlayerNames() {
         return participants.findAvailablePlayerNames();
+    }
+
+    public boolean isAvailablePlayer(String name) {
+        return participants.isAvailablePlayer(name);
     }
 
     public List<Card> openCardsByName(String participantName) {
