@@ -4,18 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCards {
+    private static final int ACE_HANDLE_SCORE = 10;
+
     private final List<Card> cards;
 
     public PlayerCards() {
         this.cards = new ArrayList<>();
-    }
-
-    private int getTotalScore(int score, Card card) {
-        if (card.isAce() && ScoreState.of(score)
-                                      .isBust()) {
-            score -= 10;
-        }
-        return score;
     }
 
     public void add(Card card) {
@@ -36,10 +30,25 @@ public class PlayerCards {
     }
 
     private int handleAce(int score) {
-        for (Card card : cards) {
-            score = getTotalScore(score, card);
+        if (hasAceCard()) {
+            return getFinalScore(score);
         }
+
         return score;
+    }
+
+    private int getFinalScore(int score) {
+        if (ScoreState.of(score + ACE_HANDLE_SCORE)
+                      .isBust()) {
+            return score;
+        }
+
+        return score + ACE_HANDLE_SCORE;
+    }
+
+    private boolean hasAceCard() {
+        return cards.stream()
+                    .anyMatch(Card::isAce);
     }
 
     public List<Card> toList() {
