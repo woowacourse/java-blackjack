@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public Player(final Name name, final DrawnCards drawnCards) {
-        super(name, drawnCards);
+    public Player(final Status status, final DrawnCards drawnCards) {
+        super(status, drawnCards);
     }
 
     @Override

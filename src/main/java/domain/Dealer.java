@@ -8,7 +8,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     public Dealer(final DrawnCards drawnCards) {
-        super(new Name(Message.DEALER_NAME.getMessage()), drawnCards);
+        super(new Status(new Name(Message.DEALER_NAME.getMessage()), new Account(0)), drawnCards);
     }
 
     @Override

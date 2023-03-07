@@ -17,10 +17,12 @@ class PlayerTest {
         Card cardB = new Card(Type.SPADE, Value.QUEEN);
 
         Name name = new Name("pobi");
+        Account account = new Account(10000);
+
         List<Card> emptyCards = new ArrayList<>();
         DrawnCards drawnCards = new DrawnCards(emptyCards);
 
-        Player player = new Player(name, drawnCards);
+        Player player = new Player(new Status(name, account), drawnCards);
 
         // when
         player.pickCard(cardA);
@@ -41,10 +43,12 @@ class PlayerTest {
         Card cardB = new Card(Type.SPADE, queen);
 
         Name name = new Name("pobi");
+        Account account = new Account(10000);
+
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        Player player = new Player(name, drawnCards);
+        Player player = new Player(new Status(name, account), drawnCards);
 
         // when
         int expectedCardScore = player.calculateCardScore();
@@ -61,10 +65,12 @@ class PlayerTest {
         Card cardB = new Card(Type.SPADE, Value.QUEEN);
 
         Name name = new Name("pobi");
+        Account account = new Account(10000);
+
         List<Card> givenCards = List.of(cardA, cardB);
         DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        Player player = new Player(name, drawnCards);
+        Player player = new Player(new Status(name, account), drawnCards);
 
         // when
         List<Card> expectedDrawnCards = player.openDrawnCards();

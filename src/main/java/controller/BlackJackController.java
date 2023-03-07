@@ -2,6 +2,7 @@ package controller;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.Account;
 import domain.CardDeck;
 import domain.CardDeckGenerator;
 import domain.Dealer;
@@ -10,6 +11,7 @@ import domain.Name;
 import domain.ParticipantGenerator;
 import domain.Player;
 import domain.Players;
+import domain.Status;
 import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
@@ -48,11 +50,11 @@ public class BlackJackController {
         try {
             List<String> rawNames = inputView.readPlayerNames();
 
-            List<Name> names = rawNames.stream()
-                    .map(Name::new)
+            List<Status> statuses = rawNames.stream()
+                    .map(name -> new Status(new Name(name), new Account(inputView.readAccount(name))))
                     .collect(toList());
 
-            return ParticipantGenerator.createPlayers(names);
+            return ParticipantGenerator.createPlayers(statuses);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return createPlayers();

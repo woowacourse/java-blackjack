@@ -12,11 +12,11 @@ public class ParticipantGenerator {
         throw new IllegalStateException("생성할 수 없는 객체입니다.");
     }
 
-    public static Players createPlayers(final List<Name> names) {
+    public static Players createPlayers(final List<Status> statuses) {
         List<Card> emptyCards = new ArrayList<>();
 
-        return names.stream()
-                .map(name -> new Player(name, new DrawnCards(emptyCards)))
+        return statuses.stream()
+                .map(status -> new Player(status, new DrawnCards(emptyCards)))
                 .collect(collectingAndThen(toList(), Players::new));
     }
 

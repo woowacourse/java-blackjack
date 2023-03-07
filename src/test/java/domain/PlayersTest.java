@@ -49,7 +49,7 @@ class PlayersTest {
         List<Card> cards = new ArrayList<>();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
-            players.add(new Player(new Name(name), new DrawnCards(cards)));
+            players.add(new Player(new Status(new Name(name), new Account(10000)), new DrawnCards(cards)));
         }
 
         return players;

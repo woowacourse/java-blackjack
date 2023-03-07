@@ -2,6 +2,7 @@ package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.Account;
 import domain.Card;
 import domain.CardDeck;
 import domain.CardDeckGenerator;
@@ -12,6 +13,7 @@ import domain.Message;
 import domain.Name;
 import domain.Player;
 import domain.Players;
+import domain.Status;
 import domain.Type;
 import domain.Value;
 import dto.DealerWinLoseResult;
@@ -34,7 +36,7 @@ class BlackJackServiceTest {
         DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
         CardDeck cardDeck = CardDeckGenerator.create();
 
-        Player player = new Player(new Name("pobi"), emptyCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
         Players players = new Players(List.of(player));
         Dealer dealer = new Dealer(emptyCards);
 
@@ -54,7 +56,7 @@ class BlackJackServiceTest {
         DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
         CardDeck cardDeck = CardDeckGenerator.create();
 
-        Player player = new Player(new Name("pobi"), emptyCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
 
         DrawCommand drawCommand = new DrawCommand("y");
 
@@ -73,7 +75,7 @@ class BlackJackServiceTest {
         DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
         CardDeck cardDeck = CardDeckGenerator.create();
 
-        Player player = new Player(new Name("pobi"), emptyCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
 
         DrawCommand drawCommand = new DrawCommand("n");
 
@@ -95,7 +97,7 @@ class BlackJackServiceTest {
 
         DrawnCards overBurstNumberCards = new DrawnCards(List.of(card1, card2, card3));
 
-        Player player = new Player(new Name("pobi"), overBurstNumberCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), overBurstNumberCards);
         DrawCommand drawCommand = new DrawCommand(Message.DRAW_COMMAND.getMessage());
 
         // when
@@ -114,7 +116,7 @@ class BlackJackServiceTest {
 
         DrawnCards cards = new DrawnCards(List.of(card1, card2));
 
-        Player player = new Player(new Name("pobi"), cards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), cards);
         DrawCommand drawCommand = new DrawCommand(Message.STOP_COMMAND.getMessage());
 
         // when
@@ -133,7 +135,7 @@ class BlackJackServiceTest {
 
         DrawnCards cards = new DrawnCards(List.of(card1, card2));
 
-        Player player = new Player(new Name("pobi"), cards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), cards);
         DrawCommand drawCommand = new DrawCommand(Message.DRAW_COMMAND.getMessage());
 
         // when
@@ -190,7 +192,7 @@ class BlackJackServiceTest {
         // given
         DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
 
-        Player player = new Player(new Name("pobi"), emptyCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
         Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(emptyCards);
@@ -216,7 +218,7 @@ class BlackJackServiceTest {
         DrawnCards drawnCards = new DrawnCards(List.of(card1, card2));
         DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
 
-        Player player = new Player(new Name("pobi"), emptyCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
         Players players = new Players(List.of(player));
         Dealer dealer = new Dealer(drawnCards);
 
@@ -238,7 +240,7 @@ class BlackJackServiceTest {
         DrawnCards drawnCards = new DrawnCards(List.of(card1, card2));
         DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
 
-        Player player = new Player(new Name("pobi"), emptyCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
         Players players = new Players(List.of(player));
         Dealer dealer = new Dealer(drawnCards);
 

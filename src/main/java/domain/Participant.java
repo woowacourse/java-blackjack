@@ -5,11 +5,11 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Name name;
+    protected final Status status;
     protected final DrawnCards drawnCards;
 
-    protected Participant(final Name name, final DrawnCards drawnCards) {
-        this.name = name;
+    protected Participant(final Status status, final DrawnCards drawnCards) {
+        this.status = status;
         this.drawnCards = drawnCards;
     }
 
@@ -24,10 +24,14 @@ public abstract class Participant {
     public abstract List<Card> openDrawnCards();
 
     public String getName() {
-        return name.getName();
+        return status.getName();
     }
 
     public List<Card> getDrawnCards() {
         return Collections.unmodifiableList(drawnCards.getCards());
+    }
+
+    public int getAccount() {
+        return status.getAccount();
     }
 }
