@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class RandomCardGenerator implements CardGenerator {
 
-    private static final Random random = new Random();
-    private static final Queue<Card> cards = new PriorityQueue<>((card1, card2) -> {
+    private final Random random = new Random();
+    private final Queue<Card> cards = new PriorityQueue<>((card1, card2) -> {
         if (random.nextBoolean()) {
             return 1;
         }
