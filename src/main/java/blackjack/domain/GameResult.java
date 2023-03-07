@@ -11,7 +11,7 @@ public class GameResult {
     private static final int INIT_NUMBER = 0;
 
     private final Map<Result, Integer> dealerResult;
-    private final Map<String, Result> playerResult;
+    private final Map<Player, Result> playerResult;
 
     public GameResult(Game game) {
         this.dealerResult = initDealerResult();
@@ -35,7 +35,7 @@ public class GameResult {
             int playerScore = player.calculateScore();
             Result playerWin = Result.getLeftResult(playerScore, dealerScore, BURST_NUMBER);
             Result dealerWin = Result.getLeftResult(dealerScore, playerScore, BURST_NUMBER);
-            playerResult.put(player.showName(), playerWin);
+            playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
         }
     }
@@ -44,7 +44,7 @@ public class GameResult {
         return dealerResult;
     }
 
-    public Map<String, Result> getPlayerResult() {
+    public Map<Player, Result> getPlayerResult() {
         return playerResult;
     }
 }

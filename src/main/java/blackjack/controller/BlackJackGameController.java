@@ -141,10 +141,10 @@ public class BlackJackGameController {
         return formattedDealerResult;
     }
 
-    private Map<String, String> getFormattedPlayerResult(Map<String, Result> playerResult) {
+    private Map<String, String> getFormattedPlayerResult(Map<Player, Result> playerResult) {
         Map<String, String> formattedPlayerResult = new HashMap<>();
-        for (String playerName : playerResult.keySet()) {
-            formattedPlayerResult.put(playerName, playerResult.get(playerName).getResult());
+        for (Player player : playerResult.keySet()) {
+            formattedPlayerResult.put(player.showName(), playerResult.get(player).getResult());
         }
         return formattedPlayerResult;
     }
