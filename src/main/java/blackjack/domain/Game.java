@@ -29,16 +29,8 @@ public class Game {
         gamePlayer.init(cards);
     }
 
-    public boolean isHitPlayerByIndex(int i) {
-        return gamePlayer.isHitPlayerByIndex(i);
-    }
-
     public boolean isHitDealer() {
         return gamePlayer.isHitDealer();
-    }
-
-    public void giveCardTo(int i) {
-        gamePlayer.giveCardToPlayerByIndex(i, deck.draw());
     }
 
     public void giveCardTo(Player player) {
@@ -63,10 +55,6 @@ public class Game {
 
     public String showPlayerNameByIndex(int i) {
         return getPlayers().showPlayerNameByIndex(i);
-    }
-
-    public List<Card> showPlayerCardsByIndex(int i) {
-        return getPlayers().showPlayerCardsByIndex(i);
     }
 
     public List<Card> showDealerCards() {

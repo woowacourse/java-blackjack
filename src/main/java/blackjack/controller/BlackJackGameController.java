@@ -31,28 +31,32 @@ public class BlackJackGameController {
     }
 
     private Game start() {
-        Game game = generateGame();
+        Game game = initGame();
         printStartCards(game);
         return game;
     }
 
-    private Game generateGame() {
-        List<Player> players = generatePlayers();
-        Deck deck = generateDeck();
+    private Game initGame() {
+        List<Player> players = initPlayers();
+        Deck deck = initDeck();
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
         return new Game(deck, gamePlayer);
     }
 
-    private List<Player> generatePlayers() {
+    private List<Player> initPlayers() {
         try {
             List<String> playersName = inputView.readPlayersName();
-            return playersName.stream()
-                    .map(name -> new Player(new Name(name)))
-                    .collect(Collectors.toList());
+            return generatePlayers(playersName);
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR]" + e.getMessage());
-            return generatePlayers();
+            return initPlayers();
         }
+    }
+
+    private List<Player> generatePlayers(List<String> playersName) {
+        return playersName.stream()
+                .map(name -> new Player(new Name(name)))
+                .collect(Collectors.toList());
     }
 
     private void printStartCards(Game game) {
@@ -75,7 +79,7 @@ public class BlackJackGameController {
                 .collect(Collectors.toList());
     }
 
-    private Deck generateDeck() {
+    private Deck initDeck() {
         return DeckFactory.createBlackJackDeck();
     }
 
