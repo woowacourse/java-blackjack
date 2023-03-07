@@ -25,7 +25,7 @@ public abstract class User {
         playerCards.updateCardScore(card);
     }
 
-    public boolean isBust() {
-        return playerCards.getTotalScore() > BUST;
+    public boolean isUnderBust() {
+        return playerCards.getTotalScore() <= BUST;
     }
 }

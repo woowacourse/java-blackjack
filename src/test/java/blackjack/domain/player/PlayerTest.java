@@ -18,7 +18,7 @@ class PlayerTest {
         player.playerCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
 
         // then
-        Assertions.assertThat(player.isBust()).isTrue();
+        Assertions.assertThat(player.isUnderBust()).isTrue();
     }
 
     @Test
@@ -31,6 +31,6 @@ class PlayerTest {
         player.playerCards.updateCardScore(new Card(CardNumber.KING, CardSymbol.HEART));
 
         // then
-        Assertions.assertThat(player.isBust()).isFalse();
+        Assertions.assertThat(player.isUnderBust()).isFalse();
     }
 }
