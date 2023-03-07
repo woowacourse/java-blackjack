@@ -28,7 +28,7 @@ public final class Dealer extends Participant {
         this.deck = Deck.getInstance();
     }
 
-    public void settingCards() {
+    public void settingPlayersCards() {
         List<Card> cards = new ArrayList<>();
         int targetSize = players.size() * INIT_CARD_COUNT;
 
@@ -57,7 +57,7 @@ public final class Dealer extends Participant {
         receiveCard(deck.drawACard());
     }
 
-    public Map<Player, Result> makePlayerResults() {
+    public Map<Player, Result> requestResultToPlayers() {
         return players.makeResult(this.cards.calculateTotalScore());
     }
 
