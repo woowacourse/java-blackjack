@@ -4,6 +4,7 @@ import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,5 +32,17 @@ class CardNumberTest {
     @DisplayName("TWO의 value 1을 가져올 수 있다.")
     void getValueTwo() {
         assertThat(TWO.getValue()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("Ace가 아니면 false")
+    void returnFalse() {
+        assertThat(CardNumber.FOUR.isAce()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Ace면 true")
+    void returnTrue() {
+        assertThat(ACE.isAce()).isTrue();
     }
 }

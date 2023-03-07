@@ -20,7 +20,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNumber.getLabel().equals(CardNumber.ACE.getLabel());
+        return cardNumber.isAce();
     }
 
     @Override
