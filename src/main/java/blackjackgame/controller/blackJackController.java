@@ -1,6 +1,7 @@
 package blackjackgame.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjackgame.domain.Judge;
 import blackjackgame.domain.Result;
@@ -8,6 +9,7 @@ import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.player.Dealer;
 import blackjackgame.domain.player.Guest;
 import blackjackgame.domain.player.Guests;
+import blackjackgame.domain.player.Name;
 import blackjackgame.view.AddCardResponse;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
@@ -39,14 +41,20 @@ public class BlackJackController {
     private Guests generateGuests() {
         Guests guests = null;
         do {
-            List<String> guestNames = inputView.readGuestsName();
             try {
-                guests = new Guests(guestNames);
+                guests = getGuests();
             } catch (IllegalArgumentException e) {
                 inputView.printErrorMsg(e.getMessage());
             }
         } while (guests == null);
         return guests;
+    }
+
+    private Guests getGuests() {
+        List<String> guestNames = inputView.readGuestsName();
+        List<Name> names = guestNames.stream().map(Name::new).collect(Collectors.toList());
+        List<Guest> guests = names.stream().map(Guest::new).collect(Collectors.toList());
+        return new Guests(guests);
     }
 
     private void printFirstCards(final Guests guests, final Dealer dealer) {
