@@ -30,9 +30,6 @@ public class PlayersCardsResponse {
         return playerNameToResult;
     }
 
-    /**
-     * 고민인 부분인데, 다른 dto(PlayerCardsResponse)와 완벽하게 중복되는 코드여서, 이렇게 해도 될지 궁금합니다
-     */
     public static class CardsScore {
 
         private final int score;

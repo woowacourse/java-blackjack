@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-/**
- * 하나의 카드에 대한 정보를 가지고 있는 자료구조입니다
- */
 public class Card {
 
     private final Shape shape;
@@ -13,11 +10,11 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public boolean isAce() {
+    boolean isAce() {
         return symbol.isAce();
     }
 
-    public int getScore() {
+    int getScore() {
         return symbol.getScore();
     }
 
