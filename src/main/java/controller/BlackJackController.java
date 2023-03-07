@@ -14,15 +14,15 @@ public class BlackJackController {
 
     public void run() {
         try {
-            ready();
-            play();
-            end();
+            initGame();
+            playGame();
+            endGame();
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void ready() {
+    private void initGame() {
         List<String> playerNames = InputView.askPlayerNames();
         Users users = Users.from(playerNames);
         blackJack = BlackJack.of(users, new RandomDeckGenerator().generateDeck());
@@ -31,39 +31,37 @@ public class BlackJackController {
         OutputView.printPlayerCards(blackJack.getPlayerToCard());
     }
 
-    private void play() {
-        List<Player> hittablePlayers = blackJack.getHittablePlayers();
-        for (Player player : hittablePlayers) {
-            askPlayerHitCommand(player);
-        }
-        giveCardToDealer();
+    private void playGame() {
+        playTurnOfPlayers();
+        playTurnOfDealer();
     }
 
-    private void askPlayerHitCommand(final Player player) {
-        HitCommand hitCommand = HitCommand.Y;
-        while (player.isHittable() && hitCommand.isHit()) {
-            String playerName = player.getName();
-            String command = InputView.askHitCommand(playerName);
-            hitCommand = HitCommand.from(command);
-            giveCardToHittable(playerName, hitCommand);
+    private void playTurnOfPlayers() {
+        List<Player> hittablePlayers = blackJack.getHittablePlayers();
+        hittablePlayers.forEach(this::playTurnOfPlayer);
+    }
+
+    private void playTurnOfPlayer(final Player player) {
+        String playerName = player.getName();
+        while (blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit()) {
+            blackJack.giveCard(playerName);
             OutputView.printEachPlayerCards(playerName, player.getCards());
         }
     }
 
-    private void giveCardToHittable(final String playerName, final HitCommand hitCommand) {
-        if (hitCommand.isHit()) {
-            blackJack.giveCard(playerName);
-        }
+    private HitCommand askHitCommandToPlayer(final Player player) {
+        String inputCommand = InputView.askHitCommand(player.getName());
+        return HitCommand.from(inputCommand);
     }
 
-    private void giveCardToDealer() {
-        while (blackJack.isDealerHittable()) {
+    private void playTurnOfDealer() {
+        while (blackJack.isHittableDealer()) {
             blackJack.giveCardToDealer();
             OutputView.printDealerHitMessage();
         }
     }
 
-    private void end() {
+    private void endGame() {
         OutputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
         OutputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());

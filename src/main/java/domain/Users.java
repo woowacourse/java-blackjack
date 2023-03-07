@@ -59,7 +59,7 @@ public class Users {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public boolean isDealerHittable() {
+    public boolean isHittableDealer() {
         return getDealer().isHittable();
     }
 

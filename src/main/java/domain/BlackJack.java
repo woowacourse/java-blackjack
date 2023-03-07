@@ -85,6 +85,10 @@ public class BlackJack {
         return dealer.getCards().get(0);
     }
 
+    public boolean isHittablePlayer(Player player) {
+        return player.isHittable();
+    }
+
     public Map<String, List<Card>> getPlayerToCard() {
         List<Player> players = users.getPlayers();
         return players.stream().collect(Collectors.toMap(
@@ -117,7 +121,7 @@ public class BlackJack {
         return users.getDealer().getScore();
     }
 
-    public boolean isDealerHittable() {
-        return users.isDealerHittable();
+    public boolean isHittableDealer() {
+        return users.isHittableDealer();
     }
 }
