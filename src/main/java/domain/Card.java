@@ -24,4 +24,8 @@ public class Card {
     public boolean isAce() {
         return this.cardNumber.isAce();
     }
+
+    public boolean isTenCard() {
+        return this.cardNumber.isTenCard();
+    }
 }

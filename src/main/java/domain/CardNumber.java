@@ -34,4 +34,8 @@ public enum CardNumber {
     public boolean isAce() {
         return this.equals(ACE);
     }
+
+    public boolean isTenCard() {
+        return this.equals(TEN) || this.equals(JACK) || this.equals(QUEEN) || this.equals(KING);
+    }
 }

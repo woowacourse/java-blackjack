@@ -8,7 +8,7 @@ public class CardHand {
     public static final int ACE_BONUS = 10;
     private final List<Card> cards;
 
-    public CardHand(){
+    public CardHand() {
         this.cards = new ArrayList<>();
     }
 
@@ -28,6 +28,10 @@ public class CardHand {
 
     private boolean haveAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && cards.stream().anyMatch(Card::isAce) && cards.stream().anyMatch(Card::isTenCard);
     }
 
     public List<Card> getCards() {

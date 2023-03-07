@@ -32,7 +32,7 @@ abstract public class AbstractUser {
     }
 
     public boolean isBlackjack() {
-        return cardHand.calculateScore() == BLACKJACK_SCORE;
+        return cardHand.isBlackjack();
     }
 
     public void addCard(Card card) {
