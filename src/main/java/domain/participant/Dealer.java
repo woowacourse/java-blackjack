@@ -12,7 +12,7 @@ public final class Dealer extends Participant {
         super(DEFAULT_DEALER, cards);
     }
 
-    public boolean isFill() {
+    public boolean isFillable() {
         return calculateScore() <= FILL_BOUNDARY_INCLUSIVE;
     }
 }

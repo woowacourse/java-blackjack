@@ -70,7 +70,7 @@ public final class MainController {
     private void distributeCardToDealer(final BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
 
-        while (dealer.isFill()) {
+        while (dealer.isFillable()) {
             outputView.printFillDealerCards();
 
             blackJackGame.giveCardTo(dealer);
