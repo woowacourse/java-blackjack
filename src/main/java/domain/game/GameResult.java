@@ -14,15 +14,15 @@ public enum GameResult {
     LOSE((playerPoint, dealerPoint) -> playerPoint < dealerPoint),
     DRAW(Integer::equals);
 
-    private final BiFunction<Integer, Integer, Boolean> function;
+    private final BiFunction<Integer, Integer, Boolean> comparePoint;
 
-    GameResult(BiFunction<Integer, Integer, Boolean> function) {
-        this.function = function;
+    GameResult(BiFunction<Integer, Integer, Boolean> comparePoint) {
+        this.comparePoint = comparePoint;
     }
 
     public static GameResult getResult(Player player, Dealer dealer) {
         return Arrays.stream(GameResult.values())
-                .filter(it -> it.function.apply(
+                .filter(it -> it.comparePoint.apply(
                                 getPlayerPoint(player),
                                 getPlayerPoint(dealer)
                         )
@@ -55,6 +55,5 @@ public enum GameResult {
         return (int) gameResults.stream()
                 .filter(gameResult -> gameResult == gameResultType)
                 .count();
-
     }
 }
