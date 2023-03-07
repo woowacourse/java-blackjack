@@ -27,41 +27,40 @@ public class BlackJackController {
         OutputView.printFinalResult(participants);
     }
 
-    private static void divideCardForDealer(Deck deck, Dealer dealer) {
-        if (dealer.canReceiveCard()) {
-            dealer.receiveCard(deck.pick());
-            OutputView.printReceiveCardForDealer();
-        }
+    private Participants getParticipants(final Deck deck) {
+        return Participants.from(Arrays.asList(InputView.getPlayersName().split(",")));
     }
 
-    private static void divideCard(Deck deck, Participants participants) {
+    private static void divideFirstCard(final Deck deck, final Participants participants) {
+        OutputView.printDivideTwoCard(participants.getPlayers());
+        participants.receiveInitialCards(deck);
+    }
+
+    private static void divideCard(final Deck deck, final Participants participants) {
         for (Player player : participants.getPlayers()) {
             receiveCardForPlayer(deck, player);
         }
     }
 
-    private static void receiveCardForPlayer(Deck deck, Player player) {
+    private static void receiveCardForPlayer(final Deck deck, final Player player) {
         while (canReceiveCard(player)) {
             player.receiveCard(deck.pick());
             OutputView.printPlayerCardStatus(player);
         }
     }
 
-    private static boolean canReceiveCard(Player player) {
+    private static boolean canReceiveCard(final Player player) {
         return player.canReceiveCard() && isInputEqualsReceiveCardCommand(player);
     }
 
-    private static boolean isInputEqualsReceiveCardCommand(Player player) {
+    private static void divideCardForDealer(final Deck deck, final Dealer dealer) {
+        if (dealer.canReceiveCard()) {
+            dealer.receiveCard(deck.pick());
+            OutputView.printReceiveCardForDealer();
+        }
+    }
+
+    private static boolean isInputEqualsReceiveCardCommand(final Player player) {
         return RECEIVE_CARD_COMMAND.equals(InputView.getPlayerInputGetMoreCard(player.getName()));
-    }
-
-
-    private static void divideFirstCard(Deck deck, Participants participants) {
-        OutputView.printDivideTwoCard(participants.getPlayers());
-        participants.receiveInitialCards(deck);
-    }
-
-    private Participants getParticipants(final Deck deck) {
-        return Participants.from(Arrays.asList(InputView.getPlayersName().split(",")));
     }
 }
