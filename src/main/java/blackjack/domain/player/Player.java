@@ -12,19 +12,11 @@ public abstract class Player {
     }
 
     public void pickStartCards(Card firstCard, Card secondCard) {
-        holdingCards.initialCard(firstCard, secondCard);
+        holdingCards.initialize(firstCard, secondCard);
     }
 
-    public HoldingCards getHoldingCards() {
-        return holdingCards;
-    }
-
-    public void pick(Card card) {
+    public void pickCard(Card card) {
         holdingCards.add(card);
-    }
-
-    public int getTotalPoint() {
-        return holdingCards.getSum();
     }
 
     public boolean isBust() {
@@ -32,6 +24,14 @@ public abstract class Player {
             return true;
         }
         return false;
+    }
+
+    public int getTotalPoint() {
+        return holdingCards.getSum();
+    }
+
+    public HoldingCards getHoldingCards() {
+        return holdingCards;
     }
 
     public abstract Boolean canPick();

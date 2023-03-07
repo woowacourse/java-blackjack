@@ -3,8 +3,8 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class PlayerTest {
     @DisplayName("추가 카드를 뽑는다.")
     void pick_card() {
         Card card = new Card(Shape.DIAMOND, Symbol.JACK);
-        player.pick(card);
+        player.pickCard(card);
 
         assertThat(player.getHoldingCards().getCards())
                 .contains(card);

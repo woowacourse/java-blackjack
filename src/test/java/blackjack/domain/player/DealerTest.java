@@ -3,8 +3,8 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ class DealerTest {
     void checking_sum_is_over_16(List<Card> cards, boolean expected) {
         Player player = new Dealer();
         for (Card card : cards) {
-            player.pick(card);
+            player.pickCard(card);
         }
 
         assertThat(player.canPick()).isEqualTo(expected);

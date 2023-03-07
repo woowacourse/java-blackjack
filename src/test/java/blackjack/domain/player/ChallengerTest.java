@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
 import blackjack.domain.player.exception.InvalidPlayerNameException;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,7 +30,7 @@ class ChallengerTest {
     void checking_sum_is_over_21(List<Card> cards, boolean expected) {
         Player player = new Challenger("neo");
         for (Card card : cards) {
-            player.pick(card);
+            player.pickCard(card);
         }
 
         assertThat(player.canPick()).isEqualTo(expected);

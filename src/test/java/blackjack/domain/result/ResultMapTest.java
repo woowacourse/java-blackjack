@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Symbol;
 import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
@@ -27,9 +27,9 @@ class ResultMapTest {
         Card heartSeven = new Card(Shape.HEART, Symbol.SEVEN);
         Card heartThree = new Card(Shape.HEART, Symbol.THREE);
 
-        players.getDealer().pick(heartSeven);
-        players.getChallengers().get(0).pick(heartThree);
-        players.getChallengers().get(1).pick(heartKing);
+        players.getDealer().pickCard(heartSeven);
+        players.getChallengers().get(0).pickCard(heartThree);
+        players.getChallengers().get(1).pickCard(heartKing);
         resultMap = ResultMap.from(players);
     }
 

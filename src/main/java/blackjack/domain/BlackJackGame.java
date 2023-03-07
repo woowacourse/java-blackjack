@@ -33,7 +33,7 @@ public class BlackJackGame {
 
     public void pick(Player player) {
         Card pickedCard = cardDeck.pick();
-        player.pick(pickedCard);
+        player.pickCard(pickedCard);
     }
 
     public ResultMap makeResult() {
