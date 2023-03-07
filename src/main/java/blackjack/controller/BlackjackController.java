@@ -39,8 +39,8 @@ public class BlackjackController {
         showAllResult(blackjackGame);
     }
 
-    private HashMap<String, List<String>> makeParticipantsList(Participants participants) {
-        HashMap<String, List<String>> participantsMap = new HashMap<>();
+    private HashMap<String, List<List<String>>> makeParticipantsList(Participants participants) {
+        HashMap<String, List<List<String>>> participantsMap = new HashMap<>();
         participantsMap.put(DEALER_NAME, participants.getDealer().getOneCard());
         participants.getPlayers().forEach(player -> participantsMap.put(player.getName(), player.getCardNames()));
         return participantsMap;

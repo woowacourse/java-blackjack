@@ -20,7 +20,7 @@ public class DealerTest {
         dealer.drawCard(card1);
         dealer.drawCard(card2);
 
-        List<String> expected = dealer.getOneCard();
+        List<List<String>> expected = dealer.getOneCard();
         Assertions.assertThat(expected.size()).isEqualTo(1);
         Assertions.assertThat(expected).contains(card1.getCardName());
     }

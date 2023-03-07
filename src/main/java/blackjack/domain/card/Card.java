@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.List;
+
 public class Card {
     final private Shape shape;
     final private Letter letter;
@@ -9,8 +11,8 @@ public class Card {
         this.letter = letter;
     }
 
-    public String getCardName() {
-        return letter.getName() + shape.getValue();
+    public List<String> getCardName() {
+        return List.of(letter.getName(), shape.getValue());
     }
 
     public int getValue() {

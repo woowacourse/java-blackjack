@@ -3,6 +3,8 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -19,8 +21,8 @@ public class CardTest {
     void getCardNameTest() {
         // given
         Card card = new Card(Shape.DIAMOND, Letter.ACE);
-        String actual = card.getCardName();
-        String expected = Letter.ACE.getName() + Shape.DIAMOND.getValue();
+        List<String> actual = card.getCardName();
+        List<String> expected = List.of(Letter.ACE.getName(), Shape.DIAMOND.getValue());
 
         // then
         assertThat(actual).isEqualTo(expected);

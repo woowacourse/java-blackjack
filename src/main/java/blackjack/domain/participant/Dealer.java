@@ -11,7 +11,7 @@ public class Dealer extends Participant {
         super(new Name(DEALER_NAME));
     }
 
-    public List<String> getOneCard() {
+    public List<List<String>> getOneCard() {
         final Card firstCard = this.getCards().get(0);
 
         return List.of(firstCard.getCardName());

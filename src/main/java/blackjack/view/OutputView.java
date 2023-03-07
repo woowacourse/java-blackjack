@@ -2,6 +2,7 @@ package blackjack.view;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String CHANGE_LINE = "\n";
@@ -26,7 +27,8 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void outputParticipantCards(HashMap<String, List<String>> playerCards) {
+
+    public void outputParticipantCards(HashMap<String, List<List<String>>> playerCards) {
         outputPlayerCard(DEALER_NAME, playerCards.get(DEALER_NAME));
         changeLine();
         for (final String name : playerCards.keySet()) {
@@ -34,8 +36,11 @@ public class OutputView {
         }
     }
 
-    public void outputPlayerCard(final String name, final List<String> cards) {
-        System.out.print(name + PLAYER_SCORE_DELIMITER + String.join(PLAYER_DELIMITER, cards));
+    public void outputPlayerCard(final String name, final List<List<String>> cards) {
+        System.out.print(name + PLAYER_SCORE_DELIMITER +
+                String.join(PLAYER_DELIMITER, cards.stream()
+                        .map(card -> OutputLetter.match(card.get(0)) + OutputShape.match(card.get(1)))
+                        .collect(Collectors.toList())));
     }
 
     public void outputDealerDrawCard(final String name) {

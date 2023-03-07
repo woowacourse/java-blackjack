@@ -23,13 +23,13 @@ public class ResultGame {
     }
 
     private void compareScore(final Player player) {
-            compareScoreWithBustDealer(player);
-            compareScoreWithBustPlayer(player);
-            compareScoreWithNotBustDealer(player);
+        compareScoreWithBustDealer(player);
+        compareScoreWithBustPlayer(player);
+        compareScoreWithNotBustDealer(player);
     }
 
     private void compareScoreWithBustDealer(final Player player) {
-        if(dealer.isNotBust()) {
+        if (dealer.isNotBust()) {
             return;
         }
         if (player.isBust()) {
@@ -40,7 +40,7 @@ public class ResultGame {
     }
 
     private void compareScoreWithBustPlayer(final Player player) {
-        if(player.isNotBust()) {
+        if (player.isNotBust()) {
             return;
         }
         if (dealer.isBust()) {
@@ -52,7 +52,7 @@ public class ResultGame {
     }
 
     private void compareScoreWithNotBustDealer(final Player player) {
-        if(dealer.isBust()||player.isBust()) {
+        if (dealer.isBust() || player.isBust()) {
             return;
         }
         if (player.isScoreSameWith(dealer)) {

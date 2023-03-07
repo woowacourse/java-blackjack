@@ -26,6 +26,7 @@ public class Participant {
     public boolean isBust() {
         return getTotalScore() > 21;
     }
+
     public String getName() {
         return name.getValue();
     }
@@ -34,7 +35,7 @@ public class Participant {
         return this.cards.getCards();
     }
 
-    public List<String> getCardNames() {
+    public List<List<String>> getCardNames() {
         return cards.getCards().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
@@ -44,13 +45,15 @@ public class Participant {
         return getTotalScore() <= 21;
     }
 
-    public boolean isScoreBiggerThan(Participant participant){
-        return participant.getTotalScore()<this.getTotalScore();
+    public boolean isScoreBiggerThan(Participant participant) {
+        return participant.getTotalScore() < this.getTotalScore();
     }
-    public boolean isScoreSameWith(Participant participant){
-        return participant.getTotalScore()==this.getTotalScore();
+
+    public boolean isScoreSameWith(Participant participant) {
+        return participant.getTotalScore() == this.getTotalScore();
     }
-    public boolean isScoreSmallerThan(Participant participant){
-        return participant.getTotalScore()>this.getTotalScore();
+
+    public boolean isScoreSmallerThan(Participant participant) {
+        return participant.getTotalScore() > this.getTotalScore();
     }
 }
