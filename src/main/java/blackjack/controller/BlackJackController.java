@@ -2,21 +2,16 @@ package blackjack.controller;
 
 import static blackjack.controller.Repeater.repeatUntilNoException;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
+import blackjack.domain.BlackJackGame;
 import blackjack.domain.DeckFactory;
-import blackjack.domain.Players;
-import blackjack.dto.CardsScoreDto;
-import blackjack.dto.FinalResultDto;
-import blackjack.dto.InitialCardDto;
-import blackjack.dto.PlayerCardDto;
-import blackjack.dto.PlayerCardsScoreDto;
+import blackjack.domain.participants.GameParticipants;
+import blackjack.domain.participants.Players;
+import blackjack.domain.participants.ResultOfGame;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 public class BlackJackController {
 
@@ -28,17 +23,23 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void play(final DeckFactory deckFactory) {
-        final Players players = createPlayers();
-        final Dealer dealer = new Dealer();
-        final Deck deck = deckFactory.generate();
+    private static void initInitialCards(final BlackJackGame blackJackGame) {
+        blackJackGame.distributeInitialCards();
+    }
 
-        distributeInitialCard(players, dealer, deck);
-        printInitialCards(players, dealer);
-        drawPlayersCards(players, deck);
-        drawDealerCards(dealer, deck);
-        players.calculateResult(dealer);
-        printResult(players, dealer);
+    public void generate(final DeckFactory deckFactory) {
+        final BlackJackGame blackJackGame = createBlackJackGame(deckFactory);
+
+        initInitialCards(blackJackGame);
+        printInitialCard(blackJackGame);
+        play(blackJackGame);
+        printResult(blackJackGame);
+    }
+
+    //todo: deckFactory 확인하기 및 리팩토링 하기
+    private BlackJackGame createBlackJackGame(final DeckFactory deckFactory) {
+        final GameParticipants gameParticipants = new GameParticipants(createPlayers());
+        return new BlackJackGame(gameParticipants, deckFactory.generate());
     }
 
     private Players createPlayers() {
@@ -46,80 +47,82 @@ public class BlackJackController {
                 () -> Players.from(inputView.inputPlayerNames()), outputView::printError);
     }
 
-    private void distributeInitialCard(final Players players, final Dealer dealer, final Deck deck) {
-        players.distributeInitialCards(deck);
-        dealer.drawCard(deck.popCard());
-        dealer.drawCard(deck.popCard());
+    private void printInitialCard(final BlackJackGame blackJackGame) {
+        outputView.printInitialCards(blackJackGame.findDealerInitialCard(),
+                blackJackGame.findPlayerNameAndCards());
     }
 
-
-    private void printInitialCards(final Players players, final Dealer dealer) {
-        final InitialCardDto initialCardDto = new InitialCardDto(
-                dealer.getCards()
-                        .get(0),
-                players.findPlayerNameToCards());
-        outputView.printInitialCards(initialCardDto);
+    private void play(final BlackJackGame blackJackGame) {
+        drawPlayersCards(blackJackGame);
+        drawDealerCards(blackJackGame);
     }
 
-    private void drawPlayersCards(final Players players, final Deck deck) {
-        for (final String playerName : players.getPlayerNames()) {
-            drawPlayerCard(playerName, deck, players);
+    private void drawPlayersCards(final BlackJackGame blackJackGame) {
+        for (final String playerName : blackJackGame.findPlayerNames()) {
+            drawPlayerCard(playerName, blackJackGame);
         }
     }
 
-    private void drawPlayerCard(final String playerName, final Deck deck, final Players players) {
+    private DrawCommand inputDrawCommand(final String playerName) {
+        return repeatUntilNoException(
+                () -> inputView.inputCommand(playerName), outputView::printError);
+    }
+
+    private void drawPlayerCard(final String playerName, final BlackJackGame blackJackGame) {
         DrawCommand playerInput = DrawCommand.DRAW;
-        while (players.isDrawable(playerName) && playerInput != DrawCommand.STAY) {
-            playerInput = repeatUntilNoException(
-                    () -> inputView.inputCommand(playerName), outputView::printError);
-            drawCard(playerName, deck, players, playerInput);
-            printPlayerResult(playerName, players);
+        while (blackJackGame.isPlayerDrawable(playerName) && playerInput == DrawCommand.DRAW) {
+            playerInput = inputDrawCommand(playerName);
+            blackJackGame.drawCardOf(playerName, playerInput);
+            outputView.printCardStatusOfPlayer(playerName, blackJackGame.findCardsByPlayerName(playerName));
         }
     }
 
-    private void drawCard(final String playerName, final Deck deck, final Players players,
-                          final DrawCommand playerInput) {
-        if (playerInput == DrawCommand.DRAW) {
-            players.draw(playerName, deck);
-        }
+    private void drawDealerCards(final BlackJackGame blackJackGame) {
+        IntStream.range(0, blackJackGame.findDealerDrawCount())
+                .forEach(ignored -> outputView.printDealerCardDrawMessage());
     }
 
-    private void printPlayerResult(final String playerName, final Players players) {
-        final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
-                players.findCardsByPlayerName(playerName));
-        outputView.printCardStatusOfPlayer(playerCardDto);
+    private void printResult(final BlackJackGame blackJackGame) {
+        printFinalStatusOfParticipants(blackJackGame);
+
+        printResultOfGame(blackJackGame);
     }
 
-
-    private void drawDealerCards(final Dealer dealer, final Deck deck) {
-        while (dealer.isDrawable()) {
-            dealer.drawCard(deck.popCard());
-            outputView.printDealerCardDrawMessage();
-        }
+    private void printFinalStatusOfParticipants(final BlackJackGame blackJackGame) {
+        outputView.printFinalStatusOfDealer(blackJackGame.findDealerCard(), blackJackGame.findDealerScore());
+        outputView.printFinalStatusOfPlayers(blackJackGame.findPlayerStatusByName());
     }
 
-    private void printResult(final Players players, final Dealer dealer) {
-        printStatusOfGame(dealer, players);
-        outputView.printFinalResult(new FinalResultDto(dealer.getResult()));
+    private void printResultOfGame(final BlackJackGame blackJackGame) {
+        final ResultOfGame result = blackJackGame.findResultOfGame();
+        outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
     }
 
-    private void printStatusOfGame(final Dealer dealer, final Players players) {
-        outputView.printFinalStatusOfDealer(
-                new CardsScoreDto(dealer.getCards(), dealer.currentScore()));
-        outputView.printFinalStatusOfPlayers(createPlayerCardDto(players));
-    }
+    //dto
+//    private void printPlayerResult(final String playerName, final Players players) {
+//        final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
+//                players.findCardsByPlayerName(playerName));
+//        outputView.printCardStatusOfPlayer(playerCardDto);
+//    }
 
-    private PlayerCardsScoreDto createPlayerCardDto(final Players players) {
-        final Map<String, CardsScoreDto> playerNameToResult = new LinkedHashMap<>();
+//    private void printStatusOfGameByDto(final BlackJackGame blackJackGame) {
+//        outputView.printFinalStatusOfDealer(
+//                new CardsScoreDto(dealer.getCards(), dealer.currentScore()));
+//        outputView.printFinalStatusOfPlayers(createPlayerCardDto(players));
+//    }
 
-        for (final String playerName : players.getPlayerNames()) {
-            final CardsScoreDto playerCardDto = new CardsScoreDto(
-                    players.findCardsByPlayerName(playerName),
-                    players.getPlayerScoreByName(playerName)
-            );
-            playerNameToResult.put(playerName, playerCardDto);
-        }
+//    private PlayerCardsScoreDto createPlayerCardDto(final Players players) {
+//        final Map<String, CardsScoreDto> playerNameToResult = new LinkedHashMap<>();
+//
+//        for (final String playerName : players.findPlayerNames()) {
+//            final CardsScoreDto playerCardDto = new CardsScoreDto(
+//                    players.findCardsByPlayerName(playerName),
+//                    players.getPlayerScoreByName(playerName)
+//            );
+//            playerNameToResult.put(playerName, playerCardDto);
+//        }
+//
+//        return new PlayerCardsScoreDto(playerNameToResult);
+//    }
 
-        return new PlayerCardsScoreDto(playerNameToResult);
-    }
 }
