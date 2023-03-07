@@ -28,7 +28,8 @@ public class InputView {
 
     public String readChoiceOfDrawCard(final String name) {
         System.out.println(name + generatePreposition(name) + " 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        String command = scanner.next();
+        return command;
     }
 
     private String generatePreposition(final String name) {
