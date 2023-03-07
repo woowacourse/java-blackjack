@@ -5,7 +5,6 @@ import view.InputView;
 import view.OutputView;
 
 public class Controller {
-    private static final String Y_COMMAND = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -34,24 +33,19 @@ public class Controller {
 
     private void selectAdditionalCard(Players players, BlackjackGame game) {
         for (Player player : players.getPlayers()) {
-            selectByPlayer(game, player);
+            this.selectByPlayer(game, player);
         }
     }
 
     private void selectByPlayer(BlackjackGame game, Player player) {
-        String command;
+        Command command;
         do {
-            command = inputView.readCommand(player.getName());
-            distributeByCommand(game, player, command);
+            command = Command.from(inputView.readCommand(player.getName()));
+            game.selectByPlayer(player, command);
             outputView.printPlayerCardsInfo(player);
-        } while (!player.isOverBlackJack() && command.equals(Y_COMMAND));
+        } while (!player.isOverBlackJack() && command.equals(Command.YES));
     }
 
-    private void distributeByCommand(BlackjackGame game, Player player, String command) {
-        if (command.equals(Y_COMMAND)) {
-            game.distributePlayer(player);
-        }
-    }
 
     private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {
         while (!dealer.isOverStandard()) {
