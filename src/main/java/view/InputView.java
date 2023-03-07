@@ -9,6 +9,7 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String END_VOWEL = "는";
     private static final String END_CONSONANT = "은";
+    private static final String NEW_LINE = System.getProperty("line.separator");
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -20,7 +21,7 @@ public class InputView {
     }
 
     public int readAccount(final String name) {
-        System.out.println(name + "의 배팅 금액은?");
+        System.out.println(NEW_LINE + name + "의 배팅 금액은?");
         int account = scanner.nextInt();
         return account;
     }

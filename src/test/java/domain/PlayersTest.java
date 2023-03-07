@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayersTest {
 
@@ -79,5 +81,29 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Message.PLAYER_NAME_NOT_DEALER.getMessage());
+    }
+
+    @Test
+    @DisplayName("요구사항에 맞게 배팅 금액의 조건이 충족하면 정상적으로 객체를 생성한다.")
+    void create_account_success() {
+        // given
+        Player player = new Player(new Status(new Name("pobi"), new Account(1000)), new DrawnCards(new ArrayList<>()));
+
+        // when & then
+        assertThatNoException()
+                .isThrownBy(() -> new Players(List.of(player)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-100, 0, 100, 900})
+    @DisplayName("배팅 금액이 1000원 미만이면 예외가 발생한다.")
+    void throws_exception_when_betting_account_under_boundary(int givenAccount) {
+        // given
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), new DrawnCards(new ArrayList<>()));
+
+        // when & then
+        assertThatThrownBy(() -> new Players(List.of(player)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Message.BETTING_MONEY_NEED_MORE.getMessage());
     }
 }

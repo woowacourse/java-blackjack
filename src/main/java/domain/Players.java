@@ -12,6 +12,7 @@ public class Players {
     private static final String DEALER_NAME = "딜러";
     private static final int MIN_PLAYERS_SIZE = 1;
     private static final int MAX_PLAYERS_NUMBER = 4;
+    private static final int MIN_BETTING_ACCOUNT = 1000;
 
     private final List<Player> players;
 
@@ -26,6 +27,8 @@ public class Players {
         validatePlayerNumbers(playerNames);
         validateNameDuplicated(playerNames);
         validateNameNotDealer(playerNames);
+        validateMinimumAccount(players);
+
     }
 
     private void validatePlayerNumbers(final List<String> playerNames) {
@@ -45,6 +48,15 @@ public class Players {
     private void validateNameNotDealer(final List<String> playerNames) {
         if (playerNames.contains(DEALER_NAME)) {
             throw new IllegalArgumentException(Message.PLAYER_NAME_NOT_DEALER.getMessage());
+        }
+    }
+
+    private void validateMinimumAccount(final List<Player> players) {
+        boolean isValidate = players.stream()
+                .anyMatch(player -> player.getAccount() < MIN_BETTING_ACCOUNT);
+
+        if(isValidate) {
+            throw new IllegalArgumentException(Message.BETTING_MONEY_NEED_MORE.getMessage());
         }
     }
 
