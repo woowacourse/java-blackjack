@@ -9,7 +9,7 @@ public class Dealer extends Player {
     public static final String DEALER_NAME = "딜러";
 
     public Dealer(CardHolder cardHolder) {
-        super(cardHolder, Name.of(DEALER_NAME));
+        super(cardHolder, Name.dealerName());
     }
 
     public void battle(Player participant, GameResult gameResult) {

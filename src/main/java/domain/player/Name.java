@@ -18,6 +18,10 @@ public class Name {
         return new Name(name);
     }
 
+    public static Name dealerName() {
+        return new Name(Dealer.DEALER_NAME);
+    }
+
     public static List<Name> of(List<String> names) {
         return names.stream()
                 .map(Name::of)
