@@ -1,20 +1,22 @@
 package domain.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.model.Card;
 import java.util.HashSet;
 import java.util.Set;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RandomCardGeneratorTest {
 
-    private final CardGenerator randomCardGenerator = new RandomCardGenerator();
+    private CardGenerator randomCardGenerator;
 
     @Test
     @DisplayName("카드를 겸치지 않게 배분하기 테스트")
     public void testRandomGenerate() {
         //given
+        randomCardGenerator = new RandomCardGenerator();
         Set<Card> cards = new HashSet<>();
 
         //when
@@ -23,6 +25,6 @@ class RandomCardGeneratorTest {
         }
 
         //then
-        Assertions.assertThat(cards.size()).isEqualTo(52);
+        assertThat(cards.size()).isEqualTo(52);
     }
 }

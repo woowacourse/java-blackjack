@@ -18,7 +18,11 @@ public class RandomCardGenerator implements CardGenerator {
         return -1;
     });
 
-    static {
+    public RandomCardGenerator() {
+        reset();
+    }
+
+    private void reset() {
         Arrays.stream(Letter.values())
             .forEach(
                 letter -> Arrays.stream(Suit.values())
