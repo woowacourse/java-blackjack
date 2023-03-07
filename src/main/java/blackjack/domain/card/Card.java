@@ -18,7 +18,6 @@ public class Card {
         return shape;
     }
 
-    // TODO : string, number 어떤걸 get 해야할까?
     public Number getNumber() {
         return number;
     }
