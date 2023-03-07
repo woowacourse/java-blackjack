@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class SimpleArrayList <T> implements SimpleList <T> {
+public class SimpleArrayList<T> implements SimpleList<T> {
 
     private Object[] array;
     private int pointer;

@@ -15,7 +15,7 @@ public class Name {
 
     private void validate(String name) {
         if (isNameOutOfRange(name)) {
-           throw new IllegalArgumentException(NAME_OUT_OF_RANGE_ERROR_MESSAGE);
+            throw new IllegalArgumentException(NAME_OUT_OF_RANGE_ERROR_MESSAGE);
         }
     }
 

@@ -3,7 +3,7 @@ package techcourse.jcf.mission;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class SimpleLinkedList <T> implements SimpleList <T> {
+public class SimpleLinkedList<T> implements SimpleList<T> {
 
     private Node<T> pointer;
     private Node<T> root;
@@ -161,7 +161,7 @@ public class SimpleLinkedList <T> implements SimpleList <T> {
         size = 0;
     }
 
-    private static class Node <T> {
+    private static class Node<T> {
         T value;
         Node<T> previous;
         Node<T> next;

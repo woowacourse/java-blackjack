@@ -7,10 +7,9 @@ import dto.CardStatusDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class OutputView {
-    
+
     private static final String INITIAL_CARD_DISTRIBUTION = "%s와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_RECEIVE_CARD = "%s는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String NAME_DELIMITER = ", ";
@@ -58,7 +57,7 @@ public class OutputView {
         int winCount = 0;
         int loseCount = 0;
         int drawCount = 0;
-        for (GameResult result: results.values()) {
+        for (GameResult result : results.values()) {
             winCount = getWinCount(winCount, result);
             drawCount = getDrawCount(drawCount, result);
             loseCount = getLoseCount(loseCount, result);
@@ -102,7 +101,8 @@ public class OutputView {
 
     private void printPlayersFinalResult(Map<Name, GameResult> results) {
         System.out.println();
-        results.forEach((name, result) -> System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n" , name.getValue()));
+        results.forEach((name, result) ->
+                System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n", name.getValue()));
     }
-    
+
 }

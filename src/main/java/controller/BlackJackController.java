@@ -24,6 +24,7 @@ public class BlackJackController {
     private static final String DELIMITER = ",";
     private static final int LIMIT_REMOVED = -1;
     private static final String INVALID_MORE_CARD_ERROR_MESSAGE = "y 나 n 만을 입력해주세요.";
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -57,19 +58,15 @@ public class BlackJackController {
     private void end(Players players, Dealer dealer) {
         printFinalCard(dealer);
         players.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(dealer.getNameValue(),new Result(dealer, players).getResult());
+        outputView.printFinalResult(dealer.getNameValue(), new Result(dealer, players).getResult());
     }
 
     private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getNameValue(),
-                getCardStatus(participant), participant.getTotalScore());
+        outputView.printCardAndScore(participant.getNameValue(), getCardStatus(participant), participant.getTotalScore());
     }
 
     private List<CardStatusDto> getCardStatus(Participant participant) {
-        return participant.getCards()
-                .stream()
-                .map(CardStatusDto::new)
-                .collect(Collectors.toList());
+        return participant.getCards().stream().map(CardStatusDto::new).collect(Collectors.toList());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
@@ -83,11 +80,7 @@ public class BlackJackController {
 
     private List<String> getPlayerNames(Players players) {
         List<String> playerNames;
-        playerNames = players.getPlayers()
-                .stream()
-                .map(Participant::getName)
-                .map(Name::getValue)
-                .collect(Collectors.toList());
+        playerNames = players.getPlayers().stream().map(Participant::getName).map(Name::getValue).collect(Collectors.toList());
         return playerNames;
     }
 
@@ -101,7 +94,7 @@ public class BlackJackController {
         }
     }
 
-    private void validate(String answer) { 
+    private void validate(String answer) {
         if (isNotRequestMoreCardCommand(answer)) {
             throw new IllegalArgumentException(INVALID_MORE_CARD_ERROR_MESSAGE);
         }

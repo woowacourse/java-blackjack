@@ -1,6 +1,6 @@
 package techcourse.jcf.mission;
 
-public interface SimpleList <T> {
+public interface SimpleList<T> {
 
     boolean add(T value);
 
@@ -32,7 +32,7 @@ public interface SimpleList <T> {
         double totalSum = 0;
 
         for (int i = 0; i < values.size(); i++) {
-             totalSum += values.get(i).doubleValue();
+            totalSum += values.get(i).doubleValue();
         }
 
         return totalSum;
