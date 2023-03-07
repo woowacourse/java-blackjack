@@ -119,9 +119,6 @@ public class BlackJackGameController {
     }
 
     private boolean isCheckPlayerCommand(Player player) {
-        if (player.isHit()) {
-            return inputView.readTryCommand(player.showName()).equals("y");
-        }
-        return false;
+        return player.isHit() && inputView.readTryCommand(player.showName()).equals("y");
     }
 }
