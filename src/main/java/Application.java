@@ -3,9 +3,9 @@ import controller.EntityCreator;
 
 public class Application {
     public static void main(String[] args) {
-        Controller controller = new Controller();
         EntityCreator entityCreator = new EntityCreator();
 
-        controller.playGame(entityCreator.getPlayers(), entityCreator.getDealer());
+        Controller controller = new Controller(entityCreator.getPlayers(), entityCreator.getDealer());
+        controller.playGame();
     }
 }

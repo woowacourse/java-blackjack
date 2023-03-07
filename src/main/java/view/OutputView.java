@@ -124,4 +124,11 @@ public class OutputView {
     public static void printNewLine() {
         System.out.println();
     }
+
+    public static void printScores(Players players, Dealer dealer) {
+        printScore(dealer);
+        for (Player player : players.getPlayers()) {
+            printScore(player);
+        }
+    }
 }

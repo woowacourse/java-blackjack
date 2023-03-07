@@ -9,25 +9,22 @@ import static view.OutputView.*;
 
 public class Controller {
     private Blackjack blackjack;
+    private Players players;
+    private Dealer dealer;
 
-    public Controller(){
-        this.blackjack = new Blackjack();
+    public Controller(Players players, Dealer dealer) {
+        this.blackjack = new Blackjack(players, dealer);
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    public void playGame(Players players, Dealer dealer) {
+    public void playGame() {
         printInitialPickGuideMessage(players);
         printGamblersCards(players, dealer);
 
-        blackjack.play(players,  dealer);
+        blackjack.play();
 
         printScores(players, dealer);
-        printResult(blackjack.getResult());
-    }
-
-    private void printScores(Players players, Dealer dealer) {
-        printScore(dealer);
-        for (Player player : players.getPlayers()) {
-            printScore(player);
-        }
+        printResult(blackjack.getResultMap());
     }
 }

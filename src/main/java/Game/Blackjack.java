@@ -7,27 +7,30 @@ import domain.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static view.InputView.readIsHit;
 
 public class Blackjack {
-    private Map<Gambler, Integer> result;
-
-    public Blackjack(){
-        result = new LinkedHashMap<>();
-    }
 
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-    public void play(Players players, Dealer dealer) {
-        playersHitOrStand(players);
-        dealerHitOrStand(dealer);
-        result = getResult(dealer, players);
+    private final Players players;
+    private final Dealer dealer;
+    private Result result;
+
+    public Blackjack(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    private void playersHitOrStand(Players players) {
+    public void play() {
+        playersHitOrStand();
+        dealerHitOrStand();
+        this.result = new Result(players,dealer);
+    }
+
+    private void playersHitOrStand() {
         for (Player player : players.getPlayers()) {
             playerHitOrStand(player);
         }
@@ -67,55 +70,18 @@ public class Blackjack {
         }
     }
 
-    private void dealerHitOrStand(Dealer dealer) {
+    private void dealerHitOrStand() {
         while (dealer.getScore() <= dealer.getPickBoundary()) {
-            dealerHit(dealer);
+            dealerHit();
         }
     }
 
-    private void dealerHit(Dealer dealer) {
+    private void dealerHit() {
         dealer.pickCard();
         System.out.println(DEALER_HIT);
     }
 
-    private Map<Gambler, Integer> getResult(Dealer dealer, Players players) {
-        Map<Gambler, Integer> result = new LinkedHashMap<>();
-        return calculateWinCount(dealer, players, result);
-    }
-
-    private Map<Gambler, Integer> calculateWinCount(Dealer dealer, Players players, Map<Gambler, Integer> result) {
-        result.put(dealer, 0);
-        for (Player player : players.getPlayers()) {
-            decideWinner(dealer, result, player);
-        }
-        return result;
-    }
-
-    private void decideWinner(Dealer dealer, Map<Gambler, Integer> result, Player player) {
-        if (isPlayerWin(dealer, player)) {
-            result.put(player, 1);
-        }
-
-        if (isDealerWin(dealer, player)) {
-            result.put(player, 0);
-            result.replace(dealer, result.get(dealer) + 1);
-        }
-    }
-
-    private boolean isPlayerWin(Dealer dealer, Player player) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        return (dealerScore <= playerScore && !player.isBustedGambler()
-                || (dealer.isBustedGambler() && !player.isBustedGambler()));
-    }
-
-    private boolean isDealerWin(Dealer dealer, Player player) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        return dealerScore > playerScore || player.isBustedGambler();
-    }
-
-    public Map<Gambler, Integer> getResult() {
-        return result;
+    public Map<Gambler, Integer> getResultMap() {
+        return result.getResult();
     }
 }
