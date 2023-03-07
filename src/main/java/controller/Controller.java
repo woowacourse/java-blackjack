@@ -1,13 +1,17 @@
 package controller;
 
-import Game.Blackjack;
+import game.Blackjack;
 import domain.Dealer;
 import domain.Players;
 
-import static view.OutputView.*;
+import static view.OutputView.printGamblersCards;
+import static view.OutputView.printInitialPickGuideMessage;
+import static view.OutputView.printResult;
+import static view.OutputView.printScores;
+
 
 public class Controller {
-    private Blackjack blackjack;
+    private final Blackjack blackjack;
 
     public Controller(Players players, Dealer dealer) {
         this.blackjack = new Blackjack(players, dealer);

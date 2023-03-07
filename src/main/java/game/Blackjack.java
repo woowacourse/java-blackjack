@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import domain.Dealer;
 import domain.Gambler;
@@ -9,10 +9,13 @@ import view.OutputView;
 
 import java.util.Map;
 
+import static view.InputView.printErrorMessage;
 import static view.InputView.readIsHit;
+import static view.OutputView.printSingleGambler;
 
 public class Blackjack {
 
+    //TODO: view 의존성 분리 고민
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     private final Players players;
@@ -41,7 +44,7 @@ public class Blackjack {
         do {
             isHit = getIsHit(player);
             playerHit(player, isHit);
-            OutputView.printSingleGambler(player);
+            printSingleGambler(player);
             isHit = isPickAble(player, isHit);
         } while (isHit);
     }
@@ -58,7 +61,7 @@ public class Blackjack {
         try {
             isHit = readIsHit(player);
         } catch (RuntimeException exception) {
-            InputView.printErrorMessage(exception);
+            printErrorMessage(exception);
             isHit = getIsHit(player);
         }
         return isHit;

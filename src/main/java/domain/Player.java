@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Player implements Gambler {
     private final PlayerName playerName;
-    private Cards cards;
+    private final Cards cards;
 
     public Player(PlayerName playerName, Cards cards) {
         this.playerName = playerName;

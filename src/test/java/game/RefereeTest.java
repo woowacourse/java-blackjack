@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import domain.*;
 import org.junit.jupiter.api.Assertions;

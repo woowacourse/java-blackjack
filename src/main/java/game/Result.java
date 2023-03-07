@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import domain.Dealer;
 import domain.Gambler;
@@ -8,7 +8,7 @@ import domain.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static Game.Referee.decideWinner;
+import static game.Referee.decideWinner;
 
 public class Result {
 
