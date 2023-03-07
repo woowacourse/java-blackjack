@@ -40,6 +40,9 @@ public enum WinningResult {
         if (this.isLose()) {
             return WIN;
         }
+        if (this.isWin()) {
+            return LOSE;
+        }
         return PUSH;
     }
 
