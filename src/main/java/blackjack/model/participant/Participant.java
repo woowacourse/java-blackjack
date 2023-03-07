@@ -4,6 +4,7 @@ import blackjack.model.ResultState;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
+import blackjack.model.card.HandCard;
 import blackjack.model.state.ParticipantState;
 
 import java.util.HashMap;
@@ -12,35 +13,42 @@ import java.util.Map;
 
 public abstract class Participant {
     private static int CURRENT_MAX_ID = 0;
+    public static final int BLACKJACK_NUMBER = 21;
 
     private final int id;
-    protected Name name;
+    private final Name name;
     protected ParticipantState currentState;
+    protected final HandCard handcard;
 
-    public Participant(Name name, ParticipantState currentState) {
+    public Participant(Name name, ParticipantState state, HandCard handCard) {
         this.id = CURRENT_MAX_ID;
         this.name = name;
-        this.currentState = currentState;
+        this.currentState = state;
+        this.handcard = handCard;
         CURRENT_MAX_ID++;
     }
+
+    public Participant(Name name, ParticipantState state) {
+        this(name, state, new HandCard());
+    }
+
+    abstract public ResultState resultState();
 
     abstract public void draw(CardDeck cardDeck);
 
     abstract public void changeToStand();
 
-    abstract public ResultState resultState();
-
     abstract public List<Card> firstDistributedCard();
+
+    public CardScore cardScore() {
+        return handcard.score(resultState());
+    }
 
     public Map<String, List<Card>> handCards() {
         Map<String, List<Card>> handCards = new HashMap<>();
 
-        handCards.put(getName(), getCards());
+        handCards.put(getName(), handcard.getCards());
         return handCards;
-    }
-
-    public CardScore cardScore() {
-        return currentState.getScore(resultState());
     }
 
     public boolean isEqualId(int findId) {
@@ -60,11 +68,7 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return currentState.getHand();
-    }
-
-    public int getScore() {
-        return cardScore().getScore();
+        return handcard.getCards();
     }
 
     public String getName() {

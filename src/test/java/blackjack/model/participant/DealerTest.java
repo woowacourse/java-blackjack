@@ -21,10 +21,11 @@ class DealerTest {
     @DisplayName("딜러의 처음 분배 카드를 조회 - 실패 : 받은 카드가 없을 경우 예외 발생")
     void dealer_firstDistributed_card_fail() {
         //given
-        Dealer dealer = new Dealer(new DealerInitialState(new HandCard()));
+        Dealer dealer = new Dealer(new DealerInitialState());
 
         //then
-        assertThatThrownBy(dealer::firstDistributedCard).isInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(dealer::firstDistributedCard)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 분배 받지 않은 상태입니다.");
     }
 
@@ -38,7 +39,7 @@ class DealerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card1, card2, card3, card4);
         CardDeck cardDeck = new CardDeck(cards);
-        Dealer dealer = new Dealer(new DealerInitialState(new HandCard()));
+        Dealer dealer = new Dealer(new DealerInitialState());
 
         // when
         dealer.draw(cardDeck);
@@ -57,7 +58,7 @@ class DealerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
 
         List<Card> cards = List.of(card4, card3);
-        Dealer dealer = new Dealer(new DealerDrawState(new HandCard(new ArrayList<>(List.of(card1, card2)))));
+        Dealer dealer = new Dealer(new DealerDrawState(), new HandCard(new ArrayList<>(List.of(card1, card2))));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when

@@ -41,10 +41,6 @@ public class Card {
         return number.getSymbol() + suit.getSuit();
     }
 
-    public CardSuit getSuit() {
-        return suit;
-    }
-
     public CardNumber getNumber() {
         return number;
     }

@@ -3,14 +3,13 @@ package blackjack.model.state;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
-public class StandState extends ParticipantState {
+public class StandState implements ParticipantState {
 
-    public StandState(HandCard handCard) {
-        super(handCard);
+    public StandState() {
     }
 
     @Override
-    public ParticipantState draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck, HandCard handCard) {
         throw new IllegalStateException("스탠드 상태에서는 카드를 더 뽑을 수 없습니다.");
     }
 

@@ -4,32 +4,33 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.HandCard;
 
-public class DealerInitialState extends InitialState {
-    private static final int DEALER_HIT_NUMBER = 16;
+import static blackjack.model.participant.Dealer.DEALER_HIT_NUMBER;
+import static blackjack.model.participant.Participant.BLACKJACK_NUMBER;
+
+public class DealerInitialState implements ParticipantState {
     private static final int PICK_COUNT = 2;
 
-    public DealerInitialState(HandCard handCard) {
-        super(handCard);
+    public DealerInitialState() {
     }
 
     @Override
-    public ParticipantState draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck, HandCard handCard) {
         for (int i = 0; i < PICK_COUNT; i++) {
             Card picked = cardDeck.pick();
             handCard.add(picked);
         }
         if (handCard.isBigScoreEqual(BLACKJACK_NUMBER)) {
-            return new BlackjackState(handCard);
+            return new BlackjackState();
         }
-        if (isFinished()) {
-            return new StandState(handCard);
+        if (handCard.isBigScoreOver(DEALER_HIT_NUMBER)) {
+            return new StandState();
         }
-        return new DealerDrawState((handCard));
+        return new DealerDrawState();
     }
 
     @Override
     public boolean isFinished() {
-        return handCard.isBigScoreOver(DEALER_HIT_NUMBER);
+        return false;
     }
 
     @Override

@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.model.CardUnit;
 import blackjack.model.participant.Players;
 import blackjack.model.WinningResult;
-import blackjack.model.card.HandCard;
 import blackjack.model.card.*;
 import blackjack.model.participant.Dealer;
 import blackjack.model.state.DealerInitialState;
@@ -28,7 +27,7 @@ public class GameController {
 
     public void run() {
         Players players = new Players(inputView.readNames());
-        Dealer dealer = new Dealer(new DealerInitialState(new HandCard()));
+        Dealer dealer = new Dealer(new DealerInitialState());
         CardDeck cardDeck = new CardDeck();
 
         distributeFirstCards(players, dealer, cardDeck);
@@ -75,7 +74,7 @@ public class GameController {
     }
 
     private void printScoreResults(Players players, Dealer dealer) {
-        printOneScoreResult(Integer.toString(dealer.getScore()), dealer.isBlackjack(), dealer.handCards());
+        printOneScoreResult(Integer.toString(dealer.cardScore().getScore()), dealer.isBlackjack(), dealer.handCards());
 
         for (int playerId = 0; playerId < players.getPlayerCount(); playerId++) {
             String scoreResult = Integer.toString(players.getScoreById(playerId));

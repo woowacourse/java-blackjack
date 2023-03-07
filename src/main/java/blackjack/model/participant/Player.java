@@ -5,6 +5,7 @@ import blackjack.model.WinningResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
+import blackjack.model.card.HandCard;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.ParticipantState;
 
@@ -19,9 +20,13 @@ public class Player extends Participant {
         super(name, currentState);
     }
 
+    public Player(Name name, ParticipantState state, HandCard handCard) {
+        super(name, state, handCard);
+    }
+
     @Override
     public void draw(CardDeck cardDeck) {
-        this.currentState = currentState.draw(cardDeck);
+        this.currentState = currentState.draw(cardDeck, this.handcard);
     }
 
     @Override
@@ -33,10 +38,10 @@ public class Player extends Participant {
 
     @Override
     public List<Card> firstDistributedCard() {
-        if (!currentState.isCardDistributed()) {
+        if (handcard.size() == 0) {
             throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
         }
-        List<Card> handCards = currentState.getHand();
+        List<Card> handCards = handcard.getCards();
         return List.of(handCards.get(FIRST_CARD), handCards.get(SECOND_CARD));
     }
 

@@ -24,7 +24,7 @@ class PlayerTest {
     @DisplayName("플레이어 처음 카드 분배 - 성공 : 두 장의 카드를 지급받는다.")
     void player_initial_state_draw() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState(new HandCard()));
+        Player player = new Player(new Name("도치"), new InitialState());
 
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
@@ -42,7 +42,7 @@ class PlayerTest {
     @DisplayName("플레이어의 처음 분배 카드를 조회 - 실패 : 받은 카드가 없을 경우 예외 발생")
     void player_firstDistributed_card_fail() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState(new HandCard()));
+        Player player = new Player(new Name("도치"), new InitialState());
 
         //then
         assertThatThrownBy(player::firstDistributedCard).isInstanceOf(IllegalStateException.class)
@@ -53,7 +53,7 @@ class PlayerTest {
     @DisplayName("플레이어의 처음 분배 카드를 조회 - 성공 : 분배된 순으로 2장을 노출한다.")
     void player_firstDistributed_card_success() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState(new HandCard()));
+        Player player = new Player(new Name("도치"), new InitialState());
 
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.FIVE);
@@ -71,14 +71,14 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 Bust상태 도달 - 성공 : hit하다가 점수가 21을 넘기면 bust상태가 된다.")
+    @DisplayName("플레이어 Bust상태 도달 - 성공 : hit 하다가 점수가 21을 넘기면 bust 상태가 된다.")
     void player_draw_change_to_bust_success() {
         //given
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.NINE);
 
         List<Card> cards = List.of(card1, card2);
-        Player player = new Player(new Name("도치"), new DrawState(new HandCard(new ArrayList<>(cards))));
+        Player player = new Player(new Name("도치"), new DrawState(), new HandCard(new ArrayList<>(cards)));
         Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.NINE);
         CardDeck cardDeck = new CardDeck(List.of(card3));
 
@@ -90,7 +90,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 Bust상태에서 draw - 실패 : 버스트 상태에서 draw하면 예외발생")
+    @DisplayName("플레이어 Bust 상태에서 draw - 실패 : 버스트 상태에서 draw 하면 예외발생")
     void player_bust_draw_fail() {
         //given
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
@@ -99,7 +99,7 @@ class PlayerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
 
         List<Card> cards = List.of(card1, card2, card3, card4);
-        Player player = new Player(new Name("도치"), new BustState(new HandCard(new ArrayList<>(cards))));
+        Player player = new Player(new Name("도치"), new BustState(), new HandCard(new ArrayList<>(cards)));
         CardDeck cardDeck = new CardDeck(cards);
 
         //then
@@ -116,7 +116,7 @@ class PlayerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
 
         List<Card> cards = List.of(card1, card2);
-        Player player = new Player(new Name("도치"), new InitialState(new HandCard()));
+        Player player = new Player(new Name("도치"), new InitialState());
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -127,14 +127,14 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 blackjack 상태 draw - 실패 : blackjack 상태에서 draw하면 예외발생")
+    @DisplayName("플레이어 blackjack 상태 draw - 실패 : blackjack 상태에서 draw 하면 예외발생")
     void player_when_blackjack_draw_fail() {
         //given
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.JACK);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
 
         List<Card> cards = List.of(card1, card2);
-        Player player = new Player(new Name("도치"), new BlackjackState(new HandCard(cards)));
+        Player player = new Player(new Name("도치"), new BlackjackState(), new HandCard(cards));
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         CardDeck cardDeck = new CardDeck(List.of(card3));
 

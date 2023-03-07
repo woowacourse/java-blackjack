@@ -18,11 +18,11 @@ class DealerDrawStateTest {
         Card card2 = Card.of(CardSuit.CLUB, CardNumber.NINE);
 
         List<Card> cards = List.of(card1, card2);
-        DealerDrawState dealerDrawState = new DealerDrawState(new HandCard(cards));
+        DealerDrawState dealerDrawState = new DealerDrawState();
         Card card3 = Card.of(CardSuit.CLUB, CardNumber.THREE);
         CardDeck cardDeck = new CardDeck(List.of(card3));
 
         // then
-        assertThat(dealerDrawState.draw(cardDeck)).isInstanceOf(StandState.class);
+        assertThat(dealerDrawState.draw(cardDeck, new HandCard(cards))).isInstanceOf(StandState.class);
     }
 }

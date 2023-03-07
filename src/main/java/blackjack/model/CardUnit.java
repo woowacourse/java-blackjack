@@ -19,7 +19,7 @@ public class CardUnit {
 
         for (Map.Entry<String, List<Card>> handCard : cardUnit.entrySet()) {
             List<String> cardUnits = handCard.getValue().stream().map(Card::cardUnit)
-                                .collect(Collectors.toList());
+                    .collect(Collectors.toList());
             handCardUnits.put(handCard.getKey(), cardUnits);
         }
         return handCardUnits;

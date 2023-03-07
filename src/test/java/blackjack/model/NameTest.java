@@ -16,5 +16,4 @@ class NameTest {
                 .hasMessage("이름은 빈 문자열일 수 없습니다.");
 
     }
-
 }

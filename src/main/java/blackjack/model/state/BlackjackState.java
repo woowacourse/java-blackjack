@@ -3,17 +3,13 @@ package blackjack.model.state;
 import blackjack.model.card.HandCard;
 import blackjack.model.card.CardDeck;
 
-public class BlackjackState extends ParticipantState {
+public class BlackjackState implements ParticipantState {
 
-    public static final int BLACKJACK_SCORE = 21;
-
-    public BlackjackState(HandCard handCard) {
-        super(handCard);
-        validateIsHandCard21(handCard);
+    public BlackjackState() {
     }
 
     @Override
-    public ParticipantState draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck, HandCard handCard) {
         throw new IllegalStateException("블랙잭 상태에서는 카드를 더 뽑을 수 없습니다.");
     }
 
@@ -30,11 +26,5 @@ public class BlackjackState extends ParticipantState {
     @Override
     public boolean isBust() {
         return false;
-    }
-
-    private void validateIsHandCard21(HandCard handCard) {
-        if (!handCard.isBigScoreEqual(BLACKJACK_SCORE)) {
-            throw new IllegalArgumentException("점수가 21이 아닌 카드들입니다. 블랙잭이 될 수 없습니다.");
-        }
     }
 }

@@ -4,26 +4,25 @@ import blackjack.model.card.HandCard;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 
-public class InitialState extends ParticipantState {
+import static blackjack.model.participant.Participant.BLACKJACK_NUMBER;
+
+public class InitialState implements ParticipantState {
 
     private static final int PICK_COUNT = 2;
-    public static final int EMPTY = 0;
 
-    public InitialState(HandCard handCard) {
-        super(handCard);
-        validateHandCardIsEmpty(handCard);
+    public InitialState() {
     }
 
     @Override
-    public ParticipantState draw(CardDeck cardDeck) {
+    public ParticipantState draw(CardDeck cardDeck, HandCard handCard) {
         for (int i = 0; i < PICK_COUNT; i++) {
             Card picked = cardDeck.pick();
             handCard.add(picked);
         }
         if (handCard.isBigScoreEqual(BLACKJACK_NUMBER)) {
-            return new BlackjackState(handCard);
+            return new BlackjackState();
         }
-        return new DrawState(handCard);
+        return new DrawState();
     }
 
     @Override
@@ -39,11 +38,5 @@ public class InitialState extends ParticipantState {
     @Override
     public boolean isBust() {
         return false;
-    }
-
-    private void validateHandCardIsEmpty(HandCard handCard) {
-        if (handCard.size() != EMPTY) {
-            throw new IllegalArgumentException("초기 상태의 카드는 비어있어야 합니다.");
-        }
     }
 }

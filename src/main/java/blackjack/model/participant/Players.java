@@ -17,7 +17,7 @@ public class Players {
 
     public Players(List<String> playerNames) {
         this.players = playerNames.stream()
-                .map(name -> new Player(new Name(name), new InitialState(new HandCard())))
+                .map(name -> new Player(new Name(name), new InitialState()))
                 .collect(Collectors.toList());
     }
 
@@ -91,6 +91,6 @@ public class Players {
 
     public int getScoreById(int playerId) {
         Player player = getPlayerById(playerId);
-        return player.getScore();
+        return player.cardScore().getScore();
     }
 }
