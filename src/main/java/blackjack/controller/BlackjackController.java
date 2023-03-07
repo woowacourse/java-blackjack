@@ -5,7 +5,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -19,20 +18,7 @@ public class BlackjackController {
     public void run() {
         Participants participants = getParticipants();
         BlackjackGame blackjackGame = new BlackjackGame(participants);
-        startGame(participants, blackjackGame);
-        printResult(blackjackGame);
-    }
-
-    private void startGame(Participants participants, BlackjackGame blackjackGame) {
-        blackjackGame.dealOutCard();
-        outputView.printInitCards(participants);
-        play(participants, blackjackGame);
-        outputView.printCardResult(participants);
-    }
-
-    private void printResult(BlackjackGame blackjackGame) {
-        Map<Player, GameResult> result = blackjackGame.getResult();
-        outputView.printGameResult(result);
+        startGame(blackjackGame, participants);
     }
 
     private Participants getParticipants() {
@@ -43,6 +29,13 @@ public class BlackjackController {
             outputView.printException(exception.getMessage());
             return getParticipants();
         }
+    }
+
+    private void startGame(BlackjackGame blackjackGame, Participants participants) {
+        blackjackGame.dealOutCard();
+        printInitGame(participants);
+        play(participants, blackjackGame);
+        printResult(blackjackGame, participants);
     }
 
     private void play(Participants participants, BlackjackGame blackjackGame) {
@@ -58,7 +51,7 @@ public class BlackjackController {
         while (!player.isBust() && command.isPlay()) {
             command = getCommand(player);
             giveCard(player, blackjackGame, command);
-            outputView.printPlayerCards(player);
+            outputView.printPlayerCards(player.getName(), player.getCardNames());
         }
     }
 
@@ -82,6 +75,40 @@ public class BlackjackController {
         while (dealer.isHit()) {
             outputView.printDealerState();
             blackjackGame.giveCard(dealer);
+        }
+    }
+
+    private void printInitGame(Participants participants) {
+        outputView.printInitCardsMessage(participants.getPlayerNames());
+
+        Dealer dealer = participants.getDealer();
+        outputView.printDealerInitCards(dealer.getName(), dealer.getCardNames()
+                                                                .get(0));
+
+        for (Player player : participants.getPlayers()) {
+            outputView.printPlayerCards(player.getName(), player.getCardNames());
+        }
+    }
+
+    private void printResult(BlackjackGame blackjackGame, Participants participants) {
+        printCardResult(participants);
+        printGameResult(blackjackGame, participants);
+    }
+
+    private void printCardResult(Participants participants) {
+        for (Participant participant : participants.getParticipants()) {
+            outputView.printEachParticipantCardsResult(
+                    participant.getName(), participant.getCardNames(), participant.getScore());
+        }
+    }
+
+    private void printGameResult(BlackjackGame blackjackGame, Participants participants) {
+        outputView.printGameResultMessage();
+        GameResult gameResult = blackjackGame.getResult();
+        outputView.printDealerGameResult(gameResult.getDealerWin(), gameResult.getDealerLose());
+        for (Player player : participants.getPlayers()) {
+            outputView.printEachPlayerGameResult(player.getName(),
+                    gameResult.getResultStateByPlayer(player));
         }
     }
 }

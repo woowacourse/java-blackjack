@@ -25,12 +25,16 @@ public abstract class Participant {
         return ScoreState.of(playerCards.getScore());
     }
 
-    public List<Card> getCards() {
-        return playerCards.toList();
+    public List<String> getCardNames() {
+        return playerCards.getCardNames();
     }
 
     public int getScore() {
         return playerCards.getScore();
+    }
+
+    public List<Card> getCards() {
+        return playerCards.toList();
     }
 
     public String getName() {

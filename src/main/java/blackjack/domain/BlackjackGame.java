@@ -32,12 +32,12 @@ public class BlackjackGame {
         dealer.addCards(cards);
     }
 
-    public Map<Player, GameResult> getResult() {
-        Map<Player, GameResult> result = new LinkedHashMap<>();
+    public GameResult getResult() {
+        Map<Player, ResultState> result = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
-            result.put(player, GameResult.of(player, participants.getDealer()));
+            result.put(player, ResultState.of(player, participants.getDealer()));
         }
-        return result;
+        return new GameResult(result);
     }
 
     public void giveCard(Participant participant) {

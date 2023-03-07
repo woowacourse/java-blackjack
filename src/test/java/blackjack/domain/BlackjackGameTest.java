@@ -38,6 +38,10 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
 
-        assertThat(blackjackGame.getResult()).containsEntry(Player.from("jamie"), GameResult.LOSE);
+        Player player = Player.from("jamie");
+
+        assertThat(blackjackGame.getResult()
+                                .getResultStateByPlayer(player))
+                .isEqualTo(ResultState.LOSE.getValue());
     }
 }

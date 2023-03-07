@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,17 +38,23 @@ public class Participants {
         }
     }
 
+    public List<String> getPlayerNames() {
+        return getPlayers().stream()
+                           .map(Participant::getName)
+                           .collect(Collectors.toList());
+    }
+
+    public List<Participant> getParticipants() {
+        List<Participant> participant = new ArrayList<>(List.of(dealer));
+        participant.addAll(players);
+        return participant;
+    }
+
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public List<String> getPlayerNames() {
-        return getPlayers().stream()
-                           .map(Participant::getName)
-                           .collect(Collectors.toList());
     }
 }

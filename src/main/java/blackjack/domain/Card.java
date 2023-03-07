@@ -12,12 +12,8 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public CardSuit getSuit() {
-        return cardSuit;
-    }
-
-    public CardNumber getNumber() {
-        return cardNumber;
+    public String getCardName() {
+        return this.cardNumber.getValue() + this.cardSuit.getValue();
     }
 
     public boolean isAce() {
@@ -35,5 +31,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardSuit, cardNumber);
+    }
+
+    public CardSuit getSuit() {
+        return cardSuit;
+    }
+
+    public CardNumber getNumber() {
+        return cardNumber;
     }
 }
