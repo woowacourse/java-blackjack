@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends User {
+    private static final int PLAYER_HIT_LIMIT = 21;
+
     private final String name;
 
     public Player(String name) {
@@ -17,7 +19,7 @@ public class Player extends User {
 
     @Override
     public boolean canHit() {
-        return score().getValue() < 21;
+        return score().getValue() < PLAYER_HIT_LIMIT;
     }
 
     @Override

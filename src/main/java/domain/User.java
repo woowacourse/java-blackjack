@@ -4,6 +4,8 @@ import java.util.List;
 
 public abstract class User {
 
+    private static final int BUST_LIMIT = 21;
+
     private final Hand hand;
 
     public User(Hand hand) {
@@ -32,7 +34,7 @@ public abstract class User {
     }
 
     boolean isBusted() {
-        return score().getValue() > 21;
+        return score().getValue() > BUST_LIMIT;
     }
 
     void addCard(Card card) {

@@ -42,7 +42,7 @@ public class Application {
     private static void printResult(Game game) {
         Users users = game.getUsers();
         outputView.printCardsAndScores(users);
-        System.out.println("## 최종 승패");
+        outputView.printResultNotice();
         outputView.printDealerResults(users.getDealerResults());
         for (Player player : users.getPlayers()) {
             String name = player.getName();

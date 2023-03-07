@@ -5,6 +5,8 @@ import java.util.List;
 
 
 public class Dealer extends User {
+    private static final int DEALER_HIT_LIMIT = 16;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         this(new ArrayList<>());
@@ -16,12 +18,12 @@ public class Dealer extends User {
 
     @Override
     public boolean canHit() {
-        return score().getValue() <= 16;
+        return score().getValue() <= DEALER_HIT_LIMIT;
     }
 
     @Override
     public String getName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 
 }
