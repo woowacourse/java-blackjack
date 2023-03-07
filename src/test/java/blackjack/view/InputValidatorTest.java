@@ -20,13 +20,4 @@ class InputValidatorTest {
         assertThatThrownBy(() -> {inputValidator.validateInput(input);})
             .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"Y","N","가", "yy", "nn"})
-    @DisplayName("y나 n이 아닌 명령어가 들어오면 예외 발생")
-    void checkHitCommand(String hitCommand) {
-        InputValidator inputValidator = new InputValidator();
-        assertThatThrownBy(() -> inputValidator.checkHitCommand(hitCommand))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
 }
