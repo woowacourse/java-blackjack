@@ -51,7 +51,6 @@ public class BlackjackController {
             return false;
         }
         dealer.giveACard(player);
-//        outputView.printCurrentCards(player);
         return true;
     }
 

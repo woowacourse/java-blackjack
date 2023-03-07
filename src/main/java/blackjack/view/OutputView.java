@@ -20,7 +20,7 @@ public class OutputView {
                 .map(Player::getName)
                 .collect(joining(", "));
 
-        System.out.println("딜러와 " + names + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다.");
+        System.out.println(System.lineSeparator() + "딜러와 " + names + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다." + System.lineSeparator());
     }
 
     public void printDealerInitCards(final Card card) {
@@ -31,6 +31,7 @@ public class OutputView {
         for (Player player : players) {
             System.out.println(player.getName() + "카드: " + joiningCards(player.getCards()));
         }
+        System.out.println();
     }
 
     public void printCurrentCards(final Player player) {
@@ -38,7 +39,7 @@ public class OutputView {
     }
 
     public void printDealerDrawOneMoreCard() {
-        System.out.println("딜러는 " + DEALER_CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("[System]: " + "딜러는 " + DEALER_CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
     public void printDealerLastCards(final List<Card> finalCards, final int score) {
@@ -54,6 +55,7 @@ public class OutputView {
     }
 
     public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResults) {
+        System.out.println("---블랙잭 결과---");
         printDealerResult(dealerResult);
         printPlayerResult(playerResults);
     }
