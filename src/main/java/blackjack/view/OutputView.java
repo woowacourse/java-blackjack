@@ -1,12 +1,6 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-
-import blackjack.domain.GameResult;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     private static final int DEALER_DRAW_BOUNDARY = 16;
@@ -19,17 +13,14 @@ public class OutputView {
         System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCardsStatus(final String playerName, final List<String> cards) {
-        System.out.println(getCardStatus(playerName, cards));
-    }
-
-    private static String getCardStatus(final String playerName, final List<String> cards) {
+    public static void printPersonStatus(final String playerName, final List<String> cards) {
         final String allCards = String.join(", ", cards);
-        return playerName + " 카드: " + allCards;
+        System.out.println(playerName + "카드 : " + allCards);
     }
 
-    public static void printCardsStatus(final String playerName, final List<String> cards, int score) {
-        System.out.println(getCardStatus(playerName, cards) + " - 결과: " + score);
+    public static void printPersonStatus(final String playerName, final List<String> cards, int score) {
+        final String allCards = String.join(", ", cards);
+        System.out.println(playerName + "카드 : " + allCards + " - 결과: " + score);
     }
 
     public static void printDealerDrawCardMessage(final int score) {
@@ -44,17 +35,12 @@ public class OutputView {
         System.out.println("\n## 최종 승패");
     }
 
-    public static void printDealerResult(final List<GameResult> gameResults) {
-        final Map<String, Long> collect = gameResults.stream()
-                .collect(groupingBy(GameResult::getName, counting()));
-        final String result = collect.entrySet().stream()
-                .map(entry -> entry.getValue() + entry.getKey())
-                .collect(joining(" "));
-        System.out.println("딜러: " + result);
+    public static void printDealerResult(final String dealerResults) {
+        System.out.println("딜러: " + dealerResults);
     }
 
-    public static void printPlayerResult(final String playerName, final GameResult gameResult) {
-        System.out.println(playerName + ": " + gameResult.getName());
+    public static void printPlayerResult(final String playerName, final String playerResult) {
+        System.out.println(playerName + ": " + playerResult);
     }
 
     public static void printExceptionMessage(final String message) {

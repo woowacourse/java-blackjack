@@ -1,42 +1,23 @@
 package blackjack.controller;
 
-import static java.util.stream.Collectors.toList;
-
-import blackjack.domain.*;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.DeckMaker;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.PersonStatusDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.Arrays;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class BlackJackController {
-    private Participants participants;
-    private final Deck deck;
+
+    private final BlackjackGame blackjackGame;
 
     public BlackJackController() {
-        this.deck = createUniqueCards();
-    }
-
-    private Deck createUniqueCards() {
-        List<Card> cards = Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(Suit.values())
-                        .flatMap(suit -> Stream.of(new Card(suit, rank)))
-                ).collect(toList());
-        Collections.shuffle(cards);
-        return new Deck(cards);
-    }
-
-    public void run() {
-        participants = new Participants(new Dealer(), repeat(this::getPlayers));
-        initDrawCard();
-        printInitStatus();
-        drawMoreCardForPlayers();
-        InputView.closeScanner();
-        drawDealerMoreCard();
-        printAllStatus();
-        printGameResult();
+        this.blackjackGame = repeat(() -> new BlackjackGame(InputView.readPlayerNames(), new DeckMaker()));
     }
 
     private <T> T repeat(Supplier<T> supplier) {
@@ -48,48 +29,30 @@ public class BlackJackController {
         }
     }
 
-    private List<Player> getPlayers() {
-        String[] names = InputView.readPlayerNames();
-        validateDuplicate(names);
-        return Arrays.stream(names)
-                .map(Player::new)
+    public void run() {
+        blackjackGame.drawInitCard();
+        printInitStatus(blackjackGame.getParticipantsInit());
+        drawMoreCardForPlayers(blackjackGame.getPlayersName());
+        InputView.closeScanner();
+        drawMoreCardForDealer();
+        printAllStatus();
+        printGameResult();
+    }
+
+    private void printInitStatus(List<PersonStatusDto> personStatusDtos) {
+        List<String> playersName = personStatusDtos.stream()
+                .map(PersonStatusDto::getName)
                 .collect(toList());
-    }
+        OutputView.printDefaultDrawCardMessage(playersName);
 
-    private void validateDuplicate(String[] names) {
-        long uniqueNamesCount = Arrays.stream(names)
-                .distinct()
-                .count();
-        if (uniqueNamesCount != names.length) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름이 있습니다.");
+        for (PersonStatusDto personStatusDto : personStatusDtos) {
+            OutputView.printPersonStatus(personStatusDto.getName(), personStatusDto.getCards());
         }
     }
 
-    private void initDrawCard() {
-        List<Person> persons = participants.getPeople();
-        for (Person person : persons) {
-            drawTwoCards(person, deck);
-        }
-    }
-
-    private void drawTwoCards(Person person, Deck deck) {
-        person.addCard(deck.drawCard());
-        person.addCard(deck.drawCard());
-    }
-
-    private void printInitStatus() {
-        List<String> playerNames = participants.getPlayers().stream()
-                .map(Person::getName)
-                .collect(toList());
-        OutputView.printDefaultDrawCardMessage(playerNames);
-        for (Person person : participants.getPeople()) {
-            OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getInitCards()));
-        }
-    }
-
-    private void drawMoreCardForPlayers() {
-        for (Person person : participants.getPlayers()) {
-            repeat(() -> drawMoreCard(person, deck));
+    private void drawMoreCardForPlayers(List<String> playersName) {
+        for (String name : playersName) {
+            repeat(() -> getDecisionRepeatedly(name));
         }
     }
 
@@ -102,63 +65,51 @@ public class BlackJackController {
         }
     }
 
-    private void drawMoreCard(Person person, Deck deck) {
-        while (decideDraw(person)) {
-            validateOverScore(person);
-            person.addCard(deck.drawCard());
-            OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
+    private void getDecisionRepeatedly(String name) {
+        while(getDecision(name)) {
+            blackjackGame.drawMoreCard(name);
+            PersonStatusDto personStatusDto = blackjackGame.getPlayerStatus(name);
+            OutputView.printPersonStatus(personStatusDto.getName(), personStatusDto.getCards());
+
         }
-        OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()));
+        PersonStatusDto personStatusDto = blackjackGame.getPlayerStatus(name);
+        OutputView.printPersonStatus(personStatusDto.getName(), personStatusDto.getCards());
     }
 
-    private boolean decideDraw(Person person) {
-        String decision = InputView.readDrawCardDecision(person.getName());
+    private boolean getDecision(String name) {
+        String decision = InputView.readDrawCardDecision(name);
         if (decision.equals("y") || decision.equals("n")) {
             return decision.equals("y");
         }
         throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
     }
 
-    private void validateOverScore(Person person) {
-        if (!person.canDrawCard()) {
-            throw new IllegalArgumentException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
-        }
-    }
-
-    private List<String> getCardsStatus(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.getRank() + card.getSuit())
-                .collect(toList());
-    }
-
-    private void drawDealerMoreCard() {
-        Person dealer = participants.getDealer();
-        OutputView.printDealerDrawCardMessage(dealer.getScore());
-        if (dealer.canDrawCard()) {
-            dealer.addCard(deck.drawCard());
-        }
+    private void drawMoreCardForDealer() {
+        OutputView.printDealerDrawCardMessage(blackjackGame.getDealerScore());
+        blackjackGame.drawDealerMoreCard();
     }
 
     private void printAllStatus() {
-        for (Person person : participants.getPeople()) {
-            printPersonStatus(person);
+        for (PersonStatusDto personStatusDto : blackjackGame.getAllPersonStatus()) {
+            printPersonStatus(personStatusDto);
         }
     }
 
-    private void printPersonStatus(Person person) {
-        OutputView.printCardsStatus(person.getName(), getCardsStatus(person.getCards()), person.getScore());
+    private void printPersonStatus(PersonStatusDto personStatusDto) {
+        String name = personStatusDto.getName();
+        int score = blackjackGame.getPlayerScore(name);
+        OutputView.printPersonStatus(name, personStatusDto.getCards(), score);
     }
 
     private void printGameResult() {
         OutputView.printGameEndMessage();
-        Person dealer = participants.getDealer();
-        List<GameResult> dealerGameResults = participants.getPlayers()
-                .stream()
-                .map(dealer::matchGame)
-                .collect(toList());
-        OutputView.printDealerResult(dealerGameResults);
-        for (Person person : participants.getPlayers()) {
-            OutputView.printPlayerResult(person.getName(), person.matchGame(dealer));
+
+        GameResultDto dealerGameResultDto = blackjackGame.getDelearGameResultDto();
+        OutputView.printDealerResult(dealerGameResultDto.getDealerGameResult());
+
+        for (String name : blackjackGame.getPlayersName()) {
+            GameResultDto playerGameResultDto = blackjackGame.getPlayerGameResultDto(name);
+            OutputView.printPlayerResult(name, playerGameResultDto.getPlayerGameResult());
         }
     }
 }
