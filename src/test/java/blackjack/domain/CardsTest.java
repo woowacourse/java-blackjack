@@ -1,8 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Shape;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
@@ -19,9 +19,9 @@ public class CardsTest {
     @DisplayName("Cards는 카드들의 리스트로 이루어져 있다.")
     void cardsSumTest() {
         final List<Card> data = List.of(
-                new Card(Shape.CLOVER, CardNumber.of(1)),
-                new Card(Shape.DIAMOND, CardNumber.of(2)),
-                new Card(Shape.HEART, CardNumber.of(3))
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.DIAMOND, CardNumber.TWO),
+                new Card(Shape.HEART, CardNumber.THREE)
         );
         assertDoesNotThrow(() -> {
             final Cards cards = new Cards(data);
@@ -32,15 +32,15 @@ public class CardsTest {
     @DisplayName("Cards에 Card를 추가할 수 있다.")
     void addCardTest() {
         final List<Card> data = List.of(
-                new Card(Shape.CLOVER, CardNumber.of(1)),
-                new Card(Shape.DIAMOND, CardNumber.of(2)),
-                new Card(Shape.HEART, CardNumber.of(3))
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.DIAMOND, CardNumber.TWO),
+                new Card(Shape.HEART, CardNumber.THREE)
         );
         final Cards cards = new Cards(data);
         assertThat(cards).extracting("cards", InstanceOfAssertFactories.collection(List.class))
                 .size().isEqualTo(3);
 
-        final Card card = new Card(Shape.HEART, CardNumber.of(1));
+        final Card card = new Card(Shape.HEART, CardNumber.ACE);
         assertThat(cards.add(card)).extracting("cards", InstanceOfAssertFactories.collection(List.class))
                 .size().isEqualTo(4);
     }
@@ -49,9 +49,9 @@ public class CardsTest {
     @DisplayName("Cards에 Card를 추가하면 Point도 업데이트 된다.")
     void addCardPointUpdateTest() {
         final List<Card> data = List.of(
-                new Card(Shape.CLOVER, CardNumber.of(1)),
-                new Card(Shape.DIAMOND, CardNumber.of(2)),
-                new Card(Shape.HEART, CardNumber.of(3))
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.DIAMOND, CardNumber.TWO),
+                new Card(Shape.HEART, CardNumber.THREE)
         );
         final Cards cards = new Cards(data);
         assertThat(cards)
@@ -59,7 +59,7 @@ public class CardsTest {
                 .extracting("gamePoint")
                 .isEqualTo(16);
 
-        final Card card = new Card(Shape.HEART, CardNumber.of(5));
+        final Card card = new Card(Shape.HEART, CardNumber.FIVE);
 
         assertThat(cards.add(card))
                 .extracting("point")
@@ -71,9 +71,9 @@ public class CardsTest {
     @DisplayName("cards의 bust 상태 테스트")
     void bustTest() {
         final List<Card> data = List.of(
-                new Card(Shape.HEART, CardNumber.of(10)),
-                new Card(Shape.HEART, CardNumber.of(10)),
-                new Card(Shape.HEART, CardNumber.of(10))
+                new Card(Shape.HEART, CardNumber.TEN),
+                new Card(Shape.HEART, CardNumber.TEN),
+                new Card(Shape.HEART, CardNumber.TEN)
         );
         final Cards cards = new Cards(data);
         assertThat(cards.isBust()).isTrue();
@@ -82,11 +82,11 @@ public class CardsTest {
     @Test
     @DisplayName("카드 뭉치의 첫 번째 카드를 반환한다.")
     void getFirstCardTest() {
-        final Card firstCard = new Card(Shape.HEART, CardNumber.of(10));
+        final Card firstCard = new Card(Shape.HEART, CardNumber.TEN);
         final List<Card> data = List.of(
                 firstCard,
-                new Card(Shape.HEART, CardNumber.of(10)),
-                new Card(Shape.HEART, CardNumber.of(10))
+                new Card(Shape.HEART, CardNumber.TEN),
+                new Card(Shape.HEART, CardNumber.TEN)
         );
         final Cards cards = new Cards(data);
         assertThat(cards.getFirstCard()).isEqualTo(firstCard);

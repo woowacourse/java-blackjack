@@ -15,14 +15,14 @@ public class FinalStatusDto {
 
     public FinalStatusDto(BlackJack blackJack) {
         this.dealer = new UserDto(blackJack.getDealer());
-        this.dealerScore = blackJack.getDealer().getGamePoint().optimizeValue();
+        this.dealerScore = blackJack.getDealer().getGamePoint().getValue();
         this.userScores = makeUsersStatus(blackJack.getUsers());
     }
 
     private Map<UserDto, Integer> makeUsersStatus(final Users users) {
         final HashMap<UserDto, Integer> usersInfo = new HashMap<>();
         for (User user : users.getUsers()) {
-            usersInfo.put(new UserDto(user), user.getGamePoint().optimizeValue());
+            usersInfo.put(new UserDto(user), user.getGamePoint().getValue());
         }
         return usersInfo;
     }

@@ -11,12 +11,8 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public boolean haveOverNumberThan(CardNumber cardNumber) {
-        return this.cardNumber.compareTo(cardNumber) == 1;
-    }
-
-    public boolean haveCardNumberOf(final CardNumber number) {
-        return this.cardNumber.compareTo(number) == 0;
+    public boolean isAce() {
+        return cardNumber == CardNumber.ACE;
     }
 
     @Override
@@ -36,14 +32,11 @@ public class Card {
         return Objects.hash(shape, cardNumber);
     }
 
-
-    public int getCardNumberValue() {
-        return cardNumber.getValue();
-    }
-
     public Shape getShape() {
         return shape;
     }
 
-
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
 }

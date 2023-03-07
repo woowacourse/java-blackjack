@@ -52,7 +52,7 @@ public class BlackJackTest {
 
         final List<Card> 푸우카드 = blackJack.getUsers().getCardsOf(푸우);
 
-        assertThat(푸우카드.contains(new Card(Shape.HEART, CardNumber.of(2)))).isTrue();
+        assertThat(푸우카드.contains(new Card(Shape.HEART, CardNumber.TWO))).isTrue();
     }
 
     @Test

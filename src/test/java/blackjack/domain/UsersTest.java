@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.*;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class UsersTest {
 
-    private static final Card CARD_9 = new Card(Shape.HEART, CardNumber.of(9));
-    private static final Card CARD_10 = new Card(Shape.HEART, CardNumber.of(10));
-    private static final Cards CARDS_20 = new Cards(List.of(new Card(Shape.HEART, CardNumber.of(10)), new Card(Shape.HEART, CardNumber.of(10))));
+    private static final Card CARD_9 = new Card(Shape.HEART, CardNumber.NINE);
+    private static final Card CARD_10 = new Card(Shape.HEART, CardNumber.TEN);
+    private static final Cards CARDS_20 = new Cards(List.of(new Card(Shape.HEART, CardNumber.TEN), new Card(Shape.HEART, CardNumber.TEN)));
     private static User 헙크;
     private static User 푸우;
     private static Users HupkAndPooh;

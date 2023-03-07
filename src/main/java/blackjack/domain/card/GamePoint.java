@@ -1,106 +1,93 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GamePoint implements Comparable<GamePoint> {
 
     private static final int BUST = 0;
-    private static final CardNumber ACE = CardNumber.of(1);
-    private static final CardNumber TEN = CardNumber.of(10);
     private static final int MAX_GAME_POINT_VALUE = 21;
+    private static final int ACE_BONUS_VALUE = 10;
     private final int gamePoint;
 
     public GamePoint(final List<Card> cards) {
-        this.gamePoint = getOptimizeValueOf(cards);
+        this.gamePoint = getOptimizedValue(cards);
     }
 
-    private Integer getOptimizeValueOf(final List<Card> cards) {
-        int point = calculateMaxPoint(cards);
-        if (canOptimize(cards, point)) {
-            return optimizeValue(point, getCountOfAce(cards));
+    private int getOptimizedValue(List<Card> cards) {
+        int originValue = getValueOf(cards);
+        if (originValue + ACE_BONUS_VALUE <= MAX_GAME_POINT_VALUE && containAce(cards)) {
+            originValue += ACE_BONUS_VALUE;
         }
-        return calculateWithBust(point);
+        return checkWithBust(originValue);
     }
 
-    private int calculateMaxPoint(final List<Card> cards) {
-        int point = 0;
+    private int getValueOf(final List<Card> cards) {
+        int value = 0;
         for (Card card : cards) {
-            point += transform(card);
+            value += PointValue.getDefaultValueOf(card.getCardNumber());
         }
-        return point;
+        return value;
     }
 
-    private int transform(Card card) {
-        if (isAce(card)) {
-            return 11;
-        }
-        if (card.haveOverNumberThan(TEN)) {
-            return 10;
-        }
-        return card.getCardNumberValue();
+    private boolean containAce(final List<Card> cards) {
+        return cards.stream().anyMatch(card -> card.isAce());
     }
 
-    private boolean isAce(final Card card) {
-        return card.haveCardNumberOf(ACE);
-    }
-
-    private boolean canOptimize(final List<Card> cards, final int point) {
-        return isBust(point) && containAceInCards(cards);
-    }
-
-    private boolean isBust(final int point) {
-        return calculateWithBust(point) == BUST;
-    }
-
-    private int calculateWithBust(final int point) {
-        if (point > 21) {
+    private int checkWithBust(final int value) {
+        if (value > MAX_GAME_POINT_VALUE) {
             return BUST;
         }
-        return point;
-    }
-
-    private boolean containAceInCards(List<Card> cards) {
-        if (getCountOfAce(cards) != 0) {
-            return true;
-        }
-        return false;
-    }
-
-    private int getCountOfAce(final List<Card> cards) {
-        return (int) cards.stream()
-                .filter((card) -> isAce(card))
-                .count();
-    }
-
-    private int optimizeValue(final int point, final int aceCount) {
-        int optimizedPoint = calculateAceToOnePoint(point, aceCount);
-        return calculateWithBust(optimizedPoint);
-    }
-
-    private int calculateAceToOnePoint(final int value, final int aceCount) {
-        int remainAce = aceCount;
-        int optimizedPoint = value;
-        while (optimizedPoint > MAX_GAME_POINT_VALUE && remainAce > 0) {
-            optimizedPoint -= 10;
-            remainAce -= 1;
-        }
-        return optimizedPoint;
+        return value;
     }
 
     public boolean isBusted() {
         return gamePoint == BUST;
     }
 
-    public int optimizeValue() {
-        return gamePoint;
-    }
-
     public boolean isLowerThan(final int value) {
         return gamePoint <= value;
+    }
+
+    public int getValue() {
+        return gamePoint;
     }
 
     @Override
     public int compareTo(final GamePoint other) {
         return Integer.compare(this.gamePoint, other.gamePoint);
+    }
+
+    private enum PointValue {
+        ACE(CardNumber.ACE, 1),
+        Two(CardNumber.TWO, 2),
+        THREE(CardNumber.THREE, 3),
+        FOUR(CardNumber.FOUR, 4),
+        FIVE(CardNumber.FIVE, 5),
+        SIX(CardNumber.SIX, 6),
+        SEVEN(CardNumber.SEVEN, 7),
+        EIGHT(CardNumber.EIGHT, 8),
+        NINE(CardNumber.NINE, 9),
+        TEN(CardNumber.TEN, 10),
+        JACK(CardNumber.JACK, 10),
+        QUEEN(CardNumber.JACK, 10),
+        KING(CardNumber.KING, 10);
+
+        private CardNumber cardNumber;
+        private int defaultValue;
+
+        PointValue(CardNumber cardNumber, int value) {
+            this.cardNumber = cardNumber;
+            this.defaultValue = value;
+        }
+
+        public static int getDefaultValueOf(CardNumber cardNumber) {
+            final PointValue pointValue = Arrays.stream(values()).filter((num) -> num.cardNumber.equals(cardNumber))
+                    .findAny()
+                    .orElseThrow(() -> {
+                        throw new IllegalArgumentException("해당 Number는 처리되지 않습니다.");
+                    });
+            return pointValue.defaultValue;
+        }
     }
 }
