@@ -25,6 +25,19 @@ class BetAmountTest {
         assertDoesNotThrow(() -> BetAmount.from(money));
     }
 
+    @ParameterizedTest(name = "배팅 금액은 100원 단위로 가능하다.")
+    @ValueSource(ints = {101, 110010})
+    void createBetAmountFailByUnitTest(int money) {
+        assertThatThrownBy(() -> BetAmount.from(money))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest(name = "배팅 금액은 100원 단위로 가능하다.")
+    @ValueSource(ints = {10000, 110100})
+    void createBetAmountSuccessByUnitTest(int money) {
+        assertDoesNotThrow(() -> BetAmount.from(money));
+    }
+
     @ParameterizedTest(name = "배율에 맞게 배팅금액을 돌려받을 수 있다.")
     @MethodSource("moneyAndRatioProvider")
     void receiveBetAmountSuccessTest(int money, double ratio) {
