@@ -2,21 +2,31 @@ package domain;
 
 import java.util.List;
 
-public abstract class User {
+public class User {
 
 	private static final int NAME_MAX_LENGTH = 5;
+	private static final String DEALER_NAME = "딜러";
+	private static final int DEALER_LIMIT = 17;
+	private static final int BLACK_JACK_SCORE = 21;
 
-	protected Cards cards;
+
 	protected String name;
+	protected Cards cards;
 
-	public User(final String name) {
-		cards = new Cards();
+	public User(final String name, Cards cards) {
 		validate(name);
 		this.name = name;
+		this.cards = cards;
 	}
 
 	public void hit(Card card) {
 		cards.addCard(card);
+	}
+
+	public boolean isHittable(){
+		if(name.equals(DEALER_NAME) && cards.isHittable(DEALER_LIMIT))
+			return true;
+		return !name.equals(DEALER_NAME) && cards.isHittable(BLACK_JACK_SCORE);
 	}
 
 	private void validate(final String name) {
@@ -36,8 +46,6 @@ public abstract class User {
 		}
 
 	}
-
-	public abstract boolean isHittable();
 
 	public String getName() {
 		return name;

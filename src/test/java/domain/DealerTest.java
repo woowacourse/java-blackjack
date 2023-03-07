@@ -15,7 +15,7 @@ public class DealerTest {
 
 	@BeforeEach
 	void setDealer() {
-		dealer = new Dealer();
+		dealer = new Dealer(new Cards());
 	}
 
 	@DisplayName("카드 점수가 17보다 작으면 카드를 받아야 한다")

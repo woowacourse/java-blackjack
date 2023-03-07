@@ -8,18 +8,10 @@ import org.junit.jupiter.api.Test;
 
 public class UserTest {
 
-    static class UserImplement extends User {
-
-        @Override
-        public boolean isHittable() {
-            return true;
-        }
-    }
-
     @DisplayName("카드를 받아 자신의 카드 더미에 추가할 수 있다")
     @Test
     void hit() {
-        User user = new UserImplement();
+        User user = new User("kiara", new Cards());
         Card card1 = new Card(Denomination.TWO, Suits.HEART);
         Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
         user.hit(card1);

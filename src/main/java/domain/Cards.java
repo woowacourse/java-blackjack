@@ -39,7 +39,7 @@ public class Cards {
 			.anyMatch(name -> name.equals(Denomination.ACE.getPoint()));
 	}
 
-	public boolean isUnder(int score) {
+	public boolean isHittable(int score) {
 		return calculateScore() < score;
 	}
 

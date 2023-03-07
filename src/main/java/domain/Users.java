@@ -21,9 +21,9 @@ public class Users {
 		validate(names);
 		List<User> users = new ArrayList<>();
 		for (String name : names) {
-			users.add(new Player(name));
+			users.add(new Player(name, new Cards()));
 		}
-		users.add(new Dealer());
+		users.add(new Dealer(new Cards()));
 		initTwoCards(users, deck);
 		return new Users(users);
 	}

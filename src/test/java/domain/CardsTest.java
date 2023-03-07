@@ -63,8 +63,8 @@ public class CardsTest {
     void checkScoreMoreThanN() {
         addCards(List.of(TWO, THREE));
 
-        assertThat(cards.isUnder(5)).isFalse();
-        assertThat(cards.isUnder(6)).isTrue();
+        assertThat(cards.isHittable(5)).isFalse();
+        assertThat(cards.isHittable(6)).isTrue();
     }
 
     private void addCards(List<Denomination> denominations) {
