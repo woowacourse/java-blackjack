@@ -14,7 +14,7 @@ public class Players {
     public static Players from(Names playerNames) {
         return new Players(playerNames.getNames()
                 .stream()
-                .map(name -> Player.from(name))
+                .map(Player::from)
                 .collect(Collectors.toList()));
     }
 
