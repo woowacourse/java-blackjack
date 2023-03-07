@@ -3,12 +3,16 @@ package blackjackcontroller;
 import java.util.List;
 
 import blackjackgame.BlackjackGame;
+import deck.CardsGenerator;
+import deck.Deck;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
 import dto.PlayerResultDto;
 import dto.PlayerWinningDto;
+import player.Dealer;
 import player.Name;
+import player.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -17,10 +21,17 @@ public class BlackjackController {
     private final OutputView outputView;
     private final BlackjackGame blackjackGame;
 
-    public BlackjackController(InputView inputView, OutputView outputView, BlackjackGame blackjackGame) {
+    public BlackjackController(InputView inputView, OutputView outputView, CardsGenerator cardsGenerator) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackjackGame = blackjackGame;
+        this.blackjackGame = initializeGame(cardsGenerator);
+    }
+
+    private BlackjackGame initializeGame(CardsGenerator cardsGenerator) {
+        Dealer dealer = new Dealer();
+        Players players = new Players();
+        Deck deck = new Deck(cardsGenerator);
+        return new BlackjackGame(players, dealer, deck);
     }
 
     public void run() {
