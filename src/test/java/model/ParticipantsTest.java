@@ -2,6 +2,7 @@ package model;
 
 import model.card.Card;
 import model.card.Deck;
+import model.card.RandomShuffleMaker;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
@@ -104,7 +105,7 @@ class ParticipantsTest {
     @Test
     void receiveInitialCards() {
         // given
-        participants.receiveInitialCards(Deck.create());
+        participants.receiveInitialCards(Deck.create(new RandomShuffleMaker()));
 
         // when, then
         assertAll(

@@ -2,6 +2,7 @@ package model;
 
 import model.card.Card;
 import model.card.Deck;
+import model.card.RandomShuffleMaker;
 import model.user.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -117,7 +118,7 @@ class PlayerTest {
     @Test
     void receiveInitialCards() {
         // given
-        player.receiveInitialCards(Deck.create());
+        player.receiveInitialCards(Deck.create(new RandomShuffleMaker()));
 
         // when, then
         assertThat(player.getHand().getCards()).hasSize(2);
