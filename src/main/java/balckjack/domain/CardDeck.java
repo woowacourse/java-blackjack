@@ -33,4 +33,10 @@ public class CardDeck {
             .collect(Collectors.toList());
     }
 
+    public List<Card> extractStandardCards() {
+        return cards.stream()
+            .filter((card) -> !card.isAce())
+            .collect(Collectors.toList());
+    }
+
 }

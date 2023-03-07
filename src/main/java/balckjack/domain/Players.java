@@ -3,7 +3,9 @@ package balckjack.domain;
 import balckjack.strategy.CardPicker;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -40,10 +42,10 @@ public class Players {
     }
 
     private void validateDuplicateName(List<String> names) {
-        List<String> duplicateNames = names.stream()
-            .filter(i -> Collections.frequency(names, i) > 1)
-            .distinct()
-            .collect(Collectors.toList());
+        Set<String> distinctNames = new HashSet<>();
+        Set<String> duplicateNames = names.stream()
+            .filter(name -> !distinctNames.add(name))
+            .collect(Collectors.toSet());
         if (duplicateNames.size() > 0) {
             throw new IllegalArgumentException(
                 String.format("중복되는 이름이 존재합니다. : %s", String.join(", ", duplicateNames)));

@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class Referee {
 
-    public static final int DEALER_HIT_NUMBER = 16;
-    public static final int MAX_ACE_VALUE = 11;
+    private static final int DEALER_HIT_NUMBER = 16;
+    private static final int MAX_ACE_VALUE = 11;
 
     private static final int MIN_ACE_VALUE = 1;
     private static final int BLACKJACK_SCORE = 21;
@@ -23,15 +23,12 @@ public class Referee {
      */
     public int calculateDeckScore(CardDeck deck) {
         int commonSum = calculateCommonCardScore(deck);
-        List<Card> aceCards = deck.extractAceCards();
-        int aceCardCount = aceCards.size();
-        int aceSum = calculateAceCardScore(commonSum, aceCardCount);
+        int aceSum = calculateAceCardScore(commonSum, deck);
         return commonSum + aceSum;
     }
 
     private int calculateCommonCardScore(CardDeck deck) {
-        return deck.getCards().stream().filter(
-                (card) -> !card.isAce())
+        return deck.extractStandardCards().stream()
             .mapToInt(Card::getValue).sum();
     }
 
@@ -39,8 +36,9 @@ public class Referee {
         return calculateDeckScore(deck) > BLACKJACK_SCORE;
     }
 
-    private int calculateAceCardScore(int commonSum, int aceCardCount) {
+    private int calculateAceCardScore(int commonSum, CardDeck deck) {
         int sum = 0;
+        int aceCardCount = deck.extractAceCards().size();
         for (int restCount = aceCardCount; restCount > 0; restCount--) {
             int aceScore = decideAceScore(commonSum, restCount);
             commonSum += aceScore;
@@ -78,10 +76,7 @@ public class Referee {
         if (playerScore > BLACKJACK_SCORE) {
             return Result.LOSE;
         }
-        if (dealerScore > BLACKJACK_SCORE) {
-            return Result.WIN;
-        }
-        if (playerScore > dealerScore) {
+        if (dealerScore > BLACKJACK_SCORE || playerScore > dealerScore) {
             return Result.WIN;
         }
         if (playerScore == dealerScore) {
@@ -89,6 +84,7 @@ public class Referee {
         }
         return Result.LOSE;
     }
+
     public boolean isContinueDealerTurn(Dealer dealer) {
         return calculateDeckScore(dealer.getCardDeck()) <= Referee.DEALER_HIT_NUMBER
             && isBurst(dealer.getCardDeck());
