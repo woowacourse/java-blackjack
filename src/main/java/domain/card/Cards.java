@@ -17,9 +17,9 @@ public final class Cards {
     }
 
     private static Deque<Card> initializeCards() {
-        return Arrays.stream(Shape.values())
-                .flatMap(shape -> Arrays.stream(Value.values())
-                        .map(value -> new Card(value, shape)))
+        return Arrays.stream(Value.values())
+                .flatMap(value -> Arrays.stream(Shape.values())
+                        .map(shape -> new Card(value, shape)))
                 .collect(Collectors.toCollection(ArrayDeque::new));
     }
 

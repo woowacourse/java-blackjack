@@ -82,10 +82,10 @@ public final class OutputView {
     public void printFinalState(final Participants participants) {
         String finalFormat = "%s - 결과: %d" + System.lineSeparator();
         Dealer dealer = participants.getDealer();
-        System.out.printf(finalFormat, formatCardState(dealer), dealer.calculateScore());
+        System.out.printf(finalFormat, formatCardState(dealer), dealer.getScore());
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            System.out.printf(finalFormat, formatCardState(player), player.calculateScore());
+            System.out.printf(finalFormat, formatCardState(player), player.getScore());
         }
         System.out.println();
     }

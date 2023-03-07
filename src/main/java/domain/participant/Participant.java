@@ -21,7 +21,7 @@ public abstract class Participant {
         this.cards.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         boolean hasAce = hasAce();
         Score defaultScore = new Score(calculateDefaultScore());
         boolean canAddBonusScore = defaultScore.canAddBonusScore();
@@ -29,7 +29,7 @@ public abstract class Participant {
         if (hasAce && canAddBonusScore) {
             defaultScore = defaultScore.addBonusScore();
         }
-        return defaultScore.getValue();
+        return defaultScore;
     }
 
     private int calculateDefaultScore() {
@@ -54,4 +54,9 @@ public abstract class Participant {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int getScore() {
+        return calculateScore().getValue();
+    }
+
 }

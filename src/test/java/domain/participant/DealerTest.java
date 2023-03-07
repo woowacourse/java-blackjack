@@ -3,10 +3,8 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Shape;
 import domain.card.Value;
-import domain.shuffler.FixedCardsShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -20,10 +18,9 @@ class DealerTest {
         List<Card> initialCards = new ArrayList<>(
                 List.of(new Card(Value.THREE, Shape.SPADE), new Card(Value.KING, Shape.SPADE)));
         Dealer dealer = new Dealer(initialCards);
-        Cards cards = new Cards(new FixedCardsShuffler());
 
-        dealer.receiveCard(cards.getCard());
+        dealer.receiveCard(new Card(Value.TEN, Shape.SPADE));
 
-        assertThat(dealer.calculateScore()).isEqualTo(23);
+        assertThat(dealer.getScore()).isEqualTo(23);
     }
 }

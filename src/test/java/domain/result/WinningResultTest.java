@@ -27,10 +27,10 @@ class WinningResultTest {
         Participants participants = initializeParticipants();
         giveCardToParticipants();
 
-        assertThat(gitJjang.calculateScore()).isEqualTo(21); // 승
-        assertThat(irene.calculateScore()).isEqualTo(20); // 무
-        assertThat(poo.calculateScore()).isEqualTo(21); // 승
-        assertThat(kyle.calculateScore()).isEqualTo(27); // 패
+        assertThat(gitJjang.getScore()).isEqualTo(21); // 승
+        assertThat(irene.getScore()).isEqualTo(20); // 무
+        assertThat(poo.getScore()).isEqualTo(21); // 승
+        assertThat(kyle.getScore()).isEqualTo(27); // 패
         // 딜러: 20 -> 1승 1무 2패
 
         WinningResult winningResult = new WinningResult(participants);

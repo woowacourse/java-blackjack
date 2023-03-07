@@ -26,23 +26,23 @@ class PlayerTest {
     @DisplayName("플레이어의 점수를 알 수 있다.")
     @Test
     void calculateScoreTest() {
-        assertThat(gitJjang.calculateScore()).isEqualTo(13);
-        assertThat(kyle.calculateScore()).isEqualTo(15);
+        assertThat(gitJjang.getScore()).isEqualTo(13);
+        assertThat(kyle.getScore()).isEqualTo(15);
     }
 
     @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
         gitJjang.receiveCard(new Card(Value.TEN, Shape.HEART));
-        assertThat(gitJjang.calculateScore()).isEqualTo(23);
+        assertThat(gitJjang.getScore()).isEqualTo(23);
 
         kyle.receiveCard(new Card(Value.FOUR, Shape.HEART));
-        assertThat(kyle.calculateScore()).isEqualTo(19);
+        assertThat(kyle.getScore()).isEqualTo(19);
 
         kyle.receiveCard(new Card(Value.ACE, Shape.DIAMOND));
-        assertThat(kyle.calculateScore()).isEqualTo(20);
+        assertThat(kyle.getScore()).isEqualTo(20);
 
         kyle.receiveCard(new Card(Value.NINE, Shape.DIAMOND));
-        assertThat(kyle.calculateScore()).isEqualTo(19);
+        assertThat(kyle.getScore()).isEqualTo(19);
     }
 }

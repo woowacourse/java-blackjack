@@ -3,6 +3,7 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Score;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,12 +42,12 @@ public final class WinningResult {
     }
 
     private WinningStatus statusWhenDealerNotBust(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
-        if (!player.isBust() && playerScore > dealerScore) {
+        Score playerScore = player.calculateScore();
+        Score dealerScore = dealer.calculateScore();
+        if (!player.isBust() && playerScore.wins(dealerScore)) {
             return WinningStatus.WIN;
         }
-        if (playerScore == dealerScore) {
+        if (playerScore.draws(dealerScore)) {
             return WinningStatus.DRAW;
         }
         return WinningStatus.LOSE;
