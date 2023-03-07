@@ -1,12 +1,13 @@
 package domain.result;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.card.Denomination;
+import domain.card.Suit;
+import domain.participant.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,40 +15,32 @@ import org.junit.jupiter.api.Test;
 public class ResultCalculatorTest {
 
     @Test
-    @DisplayName("대결 시 승패 여부가 올바르게 저장된다.")
-    void shouldSuccessSaveFightWinOrLoseResult() {
-        Player player = new Player(new Name("dino"));
-        Dealer dealer = new Dealer();
-        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of(player)), dealer);
-        player.takeCard(new Card("5다이아몬드", 5));
-        player.takeCard(new Card("10다이아몬드", 10));
-        dealer.takeCard(new Card("3하트", 3));
-        dealer.takeCard(new Card("8클로버", 8));
-        resultCalculator.fight(player, dealer);
+    @DisplayName("플레이어와 딜러의 승부 결과를 계산이 올바르게 반환된다.")
+    void calculate() {
+        Card card1 = new Card(Suit.CLOVER, Denomination.SIX);
+        Card card2 = new Card(Suit.CLOVER, Denomination.NINE);
+        Card card3 = new Card(Suit.HEART, Denomination.TEN);
+        List<Card> playerCards = new ArrayList<>();
+        List<Card> dealerCards = new ArrayList<>();
 
-        List<Integer> playerResults = resultCalculator.getResultsByName("dino");
-        List<Integer> dealerResults = resultCalculator.getResultsByName("딜러");
+        playerCards.add(card1);
+        playerCards.add(card2);
+        dealerCards.add(card1);
+        dealerCards.add(card3);
 
-        Assertions.assertThat(playerResults).isEqualTo(List.of(1, 0, 0));
-        Assertions.assertThat(dealerResults).isEqualTo(List.of(0, 0, 1));
-    }
 
-    @Test
-    @DisplayName("대결 시 무승부 여부가 올바르게 저장된다.")
-    void shouldSuccessSaveFightDrawResult() {
-        Player player = new Player(new Name("dino"));
-        Dealer dealer = new Dealer();
-        ResultCalculator resultCalculator = new ResultCalculator(new Players(List.of(player)), dealer);
-        player.takeCard(new Card("5다이아몬드", 5));
-        player.takeCard(new Card("10다이아몬드", 10));
-        dealer.takeCard(new Card("10하트", 10));
-        dealer.takeCard(new Card("5클로버", 5));
-        resultCalculator.fight(player, dealer);
+        List<Player> players = new ArrayList<>();
 
-        List<Integer> playerResults = resultCalculator.getResultsByName("dino");
-        List<Integer> dealerResults = resultCalculator.getResultsByName("딜러");
+        Player player = new Player(new Name("seongha"), new HandCards(playerCards));
+        Dealer dealer = new Dealer(new HandCards(dealerCards));
+        players.add(player);
 
-        Assertions.assertThat(playerResults).isEqualTo(List.of(0, 1, 0));
-        Assertions.assertThat(dealerResults).isEqualTo(List.of(0, 1, 0));
+        ResultCalculator resultCalculator = new ResultCalculator(dealer, new Players(players));
+        resultCalculator.calculate(player, dealer);
+
+        Map<String, String> finalFightResults = resultCalculator.getFinalFightResults();
+
+        Assertions.assertThat(finalFightResults.get("seongha")).isEqualTo("패");
+        Assertions.assertThat(finalFightResults.get("딜러")).isEqualTo("1승 ");
     }
 }
