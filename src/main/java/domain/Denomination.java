@@ -19,7 +19,6 @@ public enum Denomination {
     JACK("J", 10);
 
     private final String letter;
-
     private final int score;
 
     Denomination(String letter, int score) {

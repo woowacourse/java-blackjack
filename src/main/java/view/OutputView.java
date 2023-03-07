@@ -59,7 +59,7 @@ public class OutputView {
         String name = user.getName();
         String cardDisplays = getCardDisplays(user.getCards());
 
-        System.out.println(name + "카드: " + cardDisplays + " - 결과: " + user.getScore());
+        System.out.println(name + "카드: " + cardDisplays + " - 결과: " + user.score().getValue());
     }
 
     public void printResult(String name, Result result) {
@@ -87,7 +87,7 @@ public class OutputView {
     }
 
     private String getCardDisplay(Card card) {
-        return card.getLetter() + card.getFace().getName();
+        return card.letter() + card.suit().getName();
     }
 
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,11 +89,7 @@ public class GameTest {
         assertThat(player.getCards()).hasSize(3);
     }
 
-    private List<Card> createCards(String... letters) {
-        return Arrays.stream(letters)
-                .map(letter -> new Card(SPADE, letter))
-                .collect(Collectors.toList());
-    }
+
 
     @Test
     @DisplayName("딜러는 점수가 16 이하이면 카드 1장을 뽑는다")
@@ -101,15 +98,15 @@ public class GameTest {
                 new Player("조이", createCards("10", "2"))
         );
 
-        var dealer = new Dealer(List.of(
+        var dealer = new Dealer(new ArrayList<>(List.of(
                 new Card(HEART, "10"),
-                new Card(HEART, "6")));
+                new Card(HEART, "6"))));
 
         var game = new Game(players, new Deck(), dealer);
 
         game.dealCardToDealer();
 
-        assertThat(dealer.getScore()).isGreaterThan(16);
+        assertThat(dealer.score().getValue()).isGreaterThan(16);
     }
 
     @Test
@@ -127,9 +124,13 @@ public class GameTest {
 
         game.dealCardToDealer();
 
-        assertThat(dealer.getScore()).isEqualTo(17);
+        assertThat(dealer.score()).isEqualTo(new Score(17));
     }
 
-
+    private List<Card> createCards(String... letters) {
+        return Arrays.stream(letters)
+                .map(letter -> new Card(SPADE, letter))
+                .collect(Collectors.toList());
+    }
 
 }

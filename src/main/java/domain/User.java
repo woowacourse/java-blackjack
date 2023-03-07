@@ -1,47 +1,17 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class User {
-    private final List<Card> cards;
 
-    public User(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    private final Hand hand;
+
+    public User(Hand hand) {
+        this.hand = hand;
     }
 
     abstract boolean canHit();
     public abstract String getName();
-
-    private int calculateScore() {
-        List<Card> cardsExceptA = getCardsExceptA();
-        int scoreExceptA = getScoreExceptA(cardsExceptA);
-        int countA = cards.size() - cardsExceptA.size();
-        return getFinalScore(countA, scoreExceptA);
-    }
-
-    private int getScoreExceptA(List<Card> cardsExceptA) {
-        return cardsExceptA.stream()
-                .map(Card::letter)
-                .mapToInt(Letter::getScore)
-                .sum();
-    }
-
-    private List<Card> getCardsExceptA() {
-        return cards.stream()
-                .filter(Card::isNotA)
-                .collect(Collectors.toList());
-    }
-
-    private int getFinalScore(int countA, final int scoreExceptA) {
-        int score = scoreExceptA;
-        for (int i = 0; i < countA; i++) {
-            score += Letter.getScoreFromA(score);
-        }
-
-        return score;
-    }
 
     public Result compare(User other) {
         if (isDraw(other)) {
@@ -54,34 +24,29 @@ public abstract class User {
     }
 
     private boolean isWon(User other) {
-        return !isBusted() && (getScore() > other.getScore() || other.isBusted());
+        return !isBusted() && (score().getValue() > other.score().getValue() || other.isBusted());
     }
 
     private boolean isDraw(User other) {
-        return getScore() == other.getScore() || (isBusted() && other.isBusted());
+        return score().getValue() == other.score().getValue() || (isBusted() && other.isBusted());
     }
 
-    public int getScore() {
-        return calculateScore();
+    boolean isBusted() {
+        return score().getValue() > 21;
     }
 
-    abstract public boolean canHit();
-
-    public boolean isBusted() {
-        return getScore() > 21;
+    void addCard(Card card) {
+        hand.add(card);
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public Score score() {
+        return hand.score();
     }
 
     public List<Card> getCards() {
-        return cards;
+        return hand.getCards();
     }
 
-    public String getName() {
-        return name;
-    }
 }
 
 

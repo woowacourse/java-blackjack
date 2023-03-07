@@ -23,8 +23,8 @@ public class Card {
         return suit;
     }
 
-    public Face getFace() {
-        return face;
+    public Score score() {
+        return denomination.score();
     }
 
     public boolean isAce() {

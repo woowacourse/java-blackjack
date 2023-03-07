@@ -11,12 +11,12 @@ public class Dealer extends User {
     }
 
     public Dealer(List<Card> cards) {
-        super(cards);
+        super(new Hand(cards));
     }
 
     @Override
     public boolean canHit() {
-        return getScore() <= 16;
+        return score().getValue() <= 16;
     }
 
     @Override

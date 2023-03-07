@@ -11,13 +11,13 @@ public class Player extends User {
     }
 
     public Player(String name, List<Card> cards) {
-        super(cards);
+        super(new Hand(cards));
         this.name = name;
     }
 
     @Override
     public boolean canHit() {
-        return getScore() < 21;
+        return score().getValue() < 21;
     }
 
     @Override
