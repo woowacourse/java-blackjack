@@ -4,16 +4,16 @@ import java.util.List;
 
 public class Deck {
 
-    private final List<Card> cards;
+    private final List<Card> deck;
 
-    public Deck(List<Card> cards) {
-        this.cards = cards;
+    public Deck(Shuffler shuffler) {
+        this.deck = shuffler.createDeck();
     }
 
     public Card drawCard() {
-        if (cards.isEmpty()) {
+        if (deck.isEmpty()) {
             throw new IllegalStateException("[ERROR] 남은 카드가 없습니다.");
         }
-        return cards.remove(0);
+        return deck.remove(0);
     }
 }
