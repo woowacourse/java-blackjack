@@ -22,7 +22,7 @@ public class Dealer implements Person {
     @Override
     public boolean isHit() {
         Score totalScore = calculateScore();
-        return totalScore.isLessThan(Score.DEALER_HIT_UPPER_BOUND);
+        return totalScore.isLessThan(Score.dealerHitUpperBound);
     }
 
     @Override

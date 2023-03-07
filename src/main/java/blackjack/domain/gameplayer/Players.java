@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players implements Iterable<Player> {
-    private final static int MAX_PLAYER_SIZE = 6;
-    private final static String INVALID_PLAYER_SIZE_MESSAGE = "게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.";
-    private final static String INVALID_DUPLICATED_NAME_MESSAGE = "게임을 진행하는 플레이어의 이름은 중복이 없어야합니다.";
+    private static final int MAX_PLAYER_SIZE = 6;
+    private static final String INVALID_PLAYER_SIZE_MESSAGE = "게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.";
+    private static final String INVALID_DUPLICATED_NAME_MESSAGE = "게임을 진행하는 플레이어의 이름은 중복이 없어야합니다.";
 
     private final List<Player> players;
 

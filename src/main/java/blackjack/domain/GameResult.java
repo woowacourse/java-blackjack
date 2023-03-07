@@ -32,7 +32,7 @@ public class GameResult {
 
         for (Player player : game.getPlayers()) {
             Score playerScore = player.calculateScore();
-            Result playerWin = Result.getLeftResult(playerScore, dealerScore, Score.BUST_LOWER_BOUND);
+            Result playerWin = Result.getLeftResult(playerScore, dealerScore, Score.bustLowerBound);
             Result dealerWin = Result.getOpponentResult(playerWin);
             playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);

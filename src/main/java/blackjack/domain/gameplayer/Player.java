@@ -35,7 +35,7 @@ public class Player implements Person {
     @Override
     public boolean isHit() {
         Score totalScore = calculateScore();
-        return totalScore.isLessThan(Score.PLAYER_HIT_UPPER_BOUND);
+        return totalScore.isLessThan(Score.playerHitUpperBound);
     }
 
     @Override
