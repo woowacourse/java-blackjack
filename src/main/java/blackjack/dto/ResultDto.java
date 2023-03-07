@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.model.participant.Name;
+import blackjack.model.participant.Player;
 import blackjack.model.result.Result;
 
 public class ResultDto {
@@ -13,8 +14,8 @@ public class ResultDto {
         this.result = result;
     }
 
-    public static ResultDto of(Name name, Result result) {
-        return new ResultDto(name.getName(), result.getResult());
+    public static ResultDto of(Player player, Result result) {
+        return new ResultDto(player.getName().getName(), result.getResult());
     }
 
     public String getName() {

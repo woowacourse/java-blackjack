@@ -83,10 +83,10 @@ public class Participants {
         return hitCount;
     }
 
-    public Map<Name, Result> getPlayerResult() {
-        Map<Name, Result> playerResult = new HashMap<>();
+    public Map<Player, Result> getPlayerResult() {
+        Map<Player, Result> playerResult = new HashMap<>();
         for (Player player : players) {
-            playerResult.put(player.getName(), player.getResult(dealer));
+            playerResult.put(player, player.getResult(dealer));
         }
         return playerResult;
     }

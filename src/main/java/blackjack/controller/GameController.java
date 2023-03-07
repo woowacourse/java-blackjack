@@ -9,7 +9,6 @@ import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -76,7 +75,7 @@ public class GameController {
         }
     }
 
-    private void printWinningResult(Map<Name, Result> playerResult) {
+    private void printWinningResult(Map<Player, Result> playerResult) {
         outputView.printWinningResultMessage();
 
         long dealerWin = playerResult.values().stream().filter(value -> value.equals(Result.LOSE)).count();
@@ -84,7 +83,7 @@ public class GameController {
         long dealerLose = playerResult.values().stream().filter(value -> value.equals(Result.WIN)).count();
         outputView.printDealerWinningResult(dealerWin, dealerTie, dealerLose);
 
-        for (Map.Entry<Name, Result> entry : playerResult.entrySet()) {
+        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
             outputView.printPlayerWinningResult(ResultDto.of(entry.getKey(), entry.getValue()));
         }
     }
