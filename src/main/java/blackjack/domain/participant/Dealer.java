@@ -32,9 +32,9 @@ public class Dealer extends Participant {
         return cards.calculateTotalScore() <= MAXIMUM_SCORE;
     }
 
-    public Result compareScoreTo(Player player) {
-        int dealerScore = this.getScore();
-        int playerScore = player.getScore();
+    public Result compareScoreTo(final Player player) {
+        final int dealerScore = this.getScore();
+        final int playerScore = player.getScore();
 
         if (playerScore > 21) {
             return Result.WIN;
