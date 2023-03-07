@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("참여자들은 ")
+@DisplayName("Participants는 ")
 class ParticipantsTest {
 
     @ValueSource(strings = {"가비", "연어,가비,애쉬,우가,럿고,비버,아코"})

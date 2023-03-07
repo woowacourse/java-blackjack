@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("딜러는 ")
+@DisplayName("Dealer는 ")
 class DealerTest {
 
     @Test

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@DisplayName("플레이어는 ")
+@DisplayName("Player는 ")
 class PlayerTest {
 
     @ParameterizedTest

@@ -18,10 +18,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> toList() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public int getScore() {
         int score = calculateScore();
         if (score >= BLACKJACK || hasNoAce()) {
@@ -47,5 +43,9 @@ public class Hand {
 
     private int changeAnAceTo11(int score) {
         return score + ACE_OFFSET;
+    }
+
+    public List<Card> toList() {
+        return Collections.unmodifiableList(cards);
     }
 }
