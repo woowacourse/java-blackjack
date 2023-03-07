@@ -1,23 +1,13 @@
 package domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class Cards {
-    private final List<Card> cards = new ArrayList<>();
+public class GameDeck {
+    private final List<Card> cards;
 
-    public Cards() {
-        addAllCards();
-        Collections.shuffle(cards);
-    }
-
-    private void addAllCards() {
-        cards.addAll(Arrays.asList(CloverCard.values()));
-        cards.addAll(Arrays.asList(DiamondCard.values()));
-        cards.addAll(Arrays.asList(HeartCard.values()));
-        cards.addAll(Arrays.asList(SpadeCard.values()));
+    public GameDeck(DeckGenerator deckGenerator) {
+        cards = deckGenerator.generate();
     }
 
     public Card drawCard() {
