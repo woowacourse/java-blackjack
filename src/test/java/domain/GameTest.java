@@ -1,5 +1,8 @@
 package domain;
 
+import domain.Card.Card;
+import domain.Card.CardNumber;
+import domain.Card.CardShape;
 import domain.user.Dealer;
 import domain.user.Participant;
 import java.util.List;
@@ -21,7 +24,6 @@ class GameTest {
     @Test
     @DisplayName("게임이 준비완료된 상태를 반환한다.")
     void readyResultTest() {
-        Game game = new Game("echo");
         game.ready();
         List<Participant> readyResults = game.getAllParticipant();
         Participant dealer = readyResults.get(0);

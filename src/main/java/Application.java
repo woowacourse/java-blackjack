@@ -1,5 +1,5 @@
 import controller.GameController;
-import domain.Deck;
+import domain.Card.Deck;
 
 public class Application {
     

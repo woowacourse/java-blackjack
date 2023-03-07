@@ -1,4 +1,4 @@
-package domain;
+package domain.Card;
 
 public enum CardShape {
     SPADE,

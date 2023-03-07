@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackJackAction;
-import domain.Deck;
+import domain.Card.Deck;
 import domain.Game;
 import domain.GameResult;
 import domain.user.Participant;

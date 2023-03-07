@@ -1,5 +1,6 @@
 package domain;
 
+import domain.Card.Deck;
 import domain.user.Participant;
 import java.util.ArrayList;
 import java.util.List;
