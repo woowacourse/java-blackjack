@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +74,11 @@ public class Players {
                 .map(Player::isBlackJackScore)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
+    }
+
+    public Map<String, CardResult> getPlayerNameAndCardResults() {
+        return players.stream()
+                .collect(Collectors.toMap(Player::getName,
+                        player -> new CardResult(player.getCardGroups(), player.getScore())));
     }
 }

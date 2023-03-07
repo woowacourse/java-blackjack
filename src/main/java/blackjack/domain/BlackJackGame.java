@@ -3,11 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Users;
-import blackjack.domain.result.CardResult;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,15 +47,8 @@ public class BlackJackGame {
         users.drawCard(userName, deck);
     }
 
-    public Map<String, CardResult> getCardResult() {
-        final Map<String, CardResult> cardResult = new HashMap<>();
-        final Map<String, CardGroup> status = users.getStatus();
-
-        for (final String name : status.keySet()) {
-            cardResult.put(name, new CardResult(status.get(name), status.get(name).getScore()));
-        }
-
-        return cardResult;
+    public Map<String, CardResult> getUserNameAndCardResults() {
+        return users.getUserNameAndCardResults();
     }
 
     public Map<String, WinningStatus> getWinningResult() {

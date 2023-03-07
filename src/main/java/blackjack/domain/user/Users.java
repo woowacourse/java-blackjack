@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Users {
         usersStatus.put(dealer.getName(), dealer.getCardGroups());
         final Map<String, CardGroup> playersStatus = players.getStatus();
         usersStatus.putAll(playersStatus);
-        return usersStatus;
+        return Map.copyOf(usersStatus);
     }
 
     public boolean isDealerUnderDrawLimit() {
@@ -59,5 +60,13 @@ public class Users {
 
     public boolean isBlackJackScore(final String name) {
         return players.isBlackJackScore(name);
+    }
+
+    public Map<String, CardResult> getUserNameAndCardResults() {
+        final Map<String, CardResult> userNameAndResults = new LinkedHashMap<>();
+        userNameAndResults.put(dealer.getName(), new CardResult(dealer.getCardGroups(), dealer.getScore()));
+        final Map<String, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
+        userNameAndResults.putAll(playerNameAndResults);
+        return Map.copyOf(userNameAndResults);
     }
 }

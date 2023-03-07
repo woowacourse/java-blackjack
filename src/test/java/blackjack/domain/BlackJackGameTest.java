@@ -8,6 +8,7 @@ import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestDeckGenerator;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Dealer;
 import java.util.Collections;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -123,7 +124,7 @@ class BlackJackGameTest {
     void getCardResult() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
 
-        final CardResult philip = blackJackGame.getCardResult().get("필립");
+        final CardResult philip = blackJackGame.getUserNameAndCardResults().get("필립");
 
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(philip.getCards().getCards())
@@ -166,4 +167,24 @@ class BlackJackGameTest {
 
         assertThat(isBlackJack).isTrue();
     }
+
+    @Test
+    @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
+    void getUserNamesAndResultsTest() {
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
+
+        final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
+
+        assertSoftly(softly -> {
+            softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getCards().getCards())
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
+            softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getScore().getValue())
+                    .isEqualTo(21);
+            softly.assertThat(userNameAndCardResults.get("필립").getCards().getCards())
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
+            softly.assertThat(userNameAndCardResults.get("필립").getScore().getValue())
+                    .isEqualTo(19);
+        });
+    }
+
 }

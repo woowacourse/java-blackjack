@@ -12,6 +12,7 @@ import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import java.util.List;
 import java.util.Map;
@@ -139,4 +140,23 @@ class UsersTest {
         });
     }
 
+
+    @Test
+    @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
+    void getUserNamesAndResultsTest() {
+        final Users users = new Users(List.of("필립"), new Deck(new TestDeckGenerator(testCards)));
+
+        final Map<String, CardResult> userNameAndCardResults = users.getUserNameAndCardResults();
+
+        assertSoftly(softly -> {
+            softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getCards().getCards())
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
+            softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getScore().getValue())
+                    .isEqualTo(21);
+            softly.assertThat(userNameAndCardResults.get("필립").getCards().getCards())
+                    .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
+            softly.assertThat(userNameAndCardResults.get("필립").getScore().getValue())
+                    .isEqualTo(19);
+        });
+    }
 }

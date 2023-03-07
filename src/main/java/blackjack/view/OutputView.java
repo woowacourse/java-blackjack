@@ -53,8 +53,8 @@ public class OutputView {
         System.out.println(DEALER_DRAW_INFO_MESSAGE);
     }
 
-    public void printCardResult(final String name, final List<String> cardNames, int score) {
-        System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT, name
+    public void printCardResult(final String userName, final List<String> cardNames, int score) {
+        System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT, userName
                 , String.join(DELIMITER, cardNames), score));
     }
 
