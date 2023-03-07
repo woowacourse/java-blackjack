@@ -38,7 +38,7 @@ class DeckTest {
         Guests guests = new Guests(inputNames);
         Dealer dealer = new Dealer();
 
-        deck.initPlayersCards(guests, dealer);
+        deck.initializePlayersCards(guests, dealer);
 
         assertThat(dealer.getSize()).isEqualTo(2);
 
