@@ -5,6 +5,7 @@ public class Player extends User {
     private final Name name;
 
     public Player(Name name) {
+        super(name);
         this.name = name;
     }
 

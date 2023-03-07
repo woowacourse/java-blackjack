@@ -9,8 +9,10 @@ public abstract class User {
     protected static final int BUST = 21;
 
     protected final Hand hand;
+    protected final Name name;
 
-    public User() {
+    public User(Name name) {
+        this.name = name;
         this.hand = new Hand();
     }
 
@@ -29,5 +31,9 @@ public abstract class User {
 
     public boolean isUnderBust() {
         return hand.getTotalScore() <= BUST;
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }
