@@ -9,7 +9,7 @@ public class PlayerNameTest {
 
     @DisplayName("이름은 null을 허용하지 않는다.")
     @Test
-    void createNameFailTestByNull(){
+    void createNameFailTestByNull() {
         Assertions.assertThatThrownBy(() -> new PlayerName(null))
                 .isInstanceOf(NullPointerException.class);
     }

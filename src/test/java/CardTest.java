@@ -1,7 +1,8 @@
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.Card;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,12 @@ public class CardTest {
     @Test
     void createCardSuccess() {
         Card card = new Card(TrumpCardType.HEART, TrumpCardNumber.ACE);
-        Assertions.assertThat(card).extracting("trumpCardType")
-                .isEqualTo(TrumpCardType.HEART);
+
+        assertThat(card.getTypeName())
+                .isEqualTo(TrumpCardType.HEART.getName());
+
+        assertThat(card.getNumberSignature())
+                .isEqualTo(TrumpCardNumber.ACE.getSignature());
     }
 }
 
