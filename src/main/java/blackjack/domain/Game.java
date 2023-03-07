@@ -10,16 +10,16 @@ public class Game {
     public Game(Deck deck, GamePlayer gamePlayer) {
         this.deck = deck;
         this.gamePlayer = gamePlayer;
-        init();
+        initializeGame();
     }
 
-    private void init() {
+    private void initializeGame() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < gamePlayer.getPlayers().count() + 1; i++) {
             cards.add(deck.draw());
             cards.add(deck.draw());
         }
-        gamePlayer.init(cards);
+        gamePlayer.initializeGamePlayer(cards);
     }
 
     public boolean isHitPlayerByIndex(int i) {

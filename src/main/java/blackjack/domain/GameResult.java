@@ -13,12 +13,12 @@ public class GameResult {
     private final Map<String, String> playerResult;
 
     public GameResult(Game game) {
-        this.dealerResult = initDealerResult();
+        this.dealerResult = initializeDealerResult();
         this.playerResult = new LinkedHashMap<>();
         accumulationResult(game);
     }
 
-    private Map<String, Integer> initDealerResult() {
+    private Map<String, Integer> initializeDealerResult() {
         Map<String, Integer> dealerResult = new HashMap<>();
 
         dealerResult.put(WIN, 0);

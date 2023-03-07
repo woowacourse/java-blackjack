@@ -63,7 +63,7 @@ class GamePlayerTest {
         cards.add(card7);
         cards.add(card8);
 
-        assertDoesNotThrow(() -> gamePlayer.init(cards));
+        assertDoesNotThrow(() -> gamePlayer.initializeGamePlayer(cards));
     }
 
 }
