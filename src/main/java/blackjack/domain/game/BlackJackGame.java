@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -36,11 +35,13 @@ public class BlackJackGame {
     public static BlackJackGame createByPlayerNames(List<String> names) {
         Players players = Players.create(names);
         Dealer dealer = new Dealer();
-        Deck deck = Deck.create(CardFactory.createShuffledCard());
+        Deck deck = Deck.create(Card.getAllCards());
         return new BlackJackGame(players, dealer, deck);
     }
 
     public void setUp() {
+        deck.shuffle();
+
         List<Player> players = this.players.getPlayers();
         for (Player player : players) {
             drawCard(player, INIT_CARD_COUNT);

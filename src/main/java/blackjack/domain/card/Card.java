@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Card {
 
@@ -25,6 +23,22 @@ public class Card {
 
     public static Card of(Suit suit, Denomination denomination) {
         return cache.get(suit).get(denomination);
+    }
+
+    public static List<Card> getAllCards() {
+        List<Card> cards = new ArrayList<>();
+
+        for (Suit suit : Suit.values()) {
+            addCards(cards, suit);
+        }
+
+        return cards;
+    }
+
+    private static void addCards(List<Card> cards, Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(Card.of(suit, denomination));
+        }
     }
 
     private static Map<Denomination, Card> createAllNumberCard(Suit suit) {

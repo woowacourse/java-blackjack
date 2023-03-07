@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -18,6 +19,10 @@ public class Deck {
             createdCard.push(card);
         }
         return new Deck(createdCard);
+    }
+
+    public void shuffle(){
+        Collections.shuffle(cards);
     }
 
     public Card draw() {
