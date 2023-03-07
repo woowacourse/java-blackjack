@@ -37,7 +37,7 @@ public class BlackJackController {
         List<String> playerNames = requestPlayerName();
         CardDistributor cardDistributor = new CardDistributor(CardsMaker.generate());
         Players players = Players.of(playerNames, cardDistributor);
-        Dealer dealer = new Dealer(new Cards(cardDistributor.distributeInitialCard()));
+        Dealer dealer = new Dealer(cardDistributor.distributeInitialCard());
         printInitialDistribution(players, dealer);
         progress(players, cardDistributor, dealer);
         end(players, dealer);

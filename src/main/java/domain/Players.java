@@ -51,7 +51,7 @@ public class Players {
     }
 
     private static Player createPlayer(CardDistributor distributor, String playerName) {
-        return new Player(new Name(playerName), new Cards(distributor.distributeInitialCard()));
+        return new Player(new Name(playerName), distributor.distributeInitialCard());
     }
 
     public List<Player> getPlayers() {

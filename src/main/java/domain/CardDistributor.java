@@ -18,14 +18,14 @@ public class CardDistributor {
         return card;
     }
 
-    public List<Card> distributeInitialCard() {
+    public Cards distributeInitialCard() {
         List<Card> initialCard = new ArrayList<>();
 
         for (int i = 0; i < 2; i++) {
             initialCard.add(distribute());
         }
 
-        return initialCard;
+        return new Cards(initialCard);
     }
 
     public int getCardsSize() {
