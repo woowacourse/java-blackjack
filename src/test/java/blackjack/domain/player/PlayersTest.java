@@ -70,6 +70,7 @@ public class PlayersTest {
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND),
+                new Card(FIVE, DIAMOND),
                 new Card(JACK, CLOVER),
                 new Card(TWO, CLOVER),
                 new Card(EIGHT, SPADE),
@@ -80,7 +81,7 @@ public class PlayersTest {
 
         assertThat(players.getPlayers())
                 .extracting(Player::calculateScore)
-                .containsExactly(11, 12, 18);
+                .containsExactly(16, 12, 18);
     }
 
     @Test
@@ -110,9 +111,10 @@ public class PlayersTest {
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER),
+                new Card(FIVE, CLOVER),
                 new Card(TWO, CLOVER),
-                new Card(EIGHT, SPADE)
+                new Card(THREE, SPADE),
+                new Card(THREE, SPADE)
         ));
         players.initialDraw(deck);
 
@@ -122,15 +124,15 @@ public class PlayersTest {
     }
 
     @Test
-    void 게임_결과를_반반환다() {
+    void 게임_결과를_반환환다() {
         final List<String> names = List.of("후추", "허브");
         final Players players = from(names);
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER),
+                new Card(SEVEN, DIAMOND),
+                new Card(KING, CLOVER),
                 new Card(NINE, CLOVER),
                 new Card(NINE, SPADE),
-                new Card(NINE, HEART),
+                new Card(JACK, HEART),
                 new Card(SEVEN, SPADE)
         ));
         players.initialDraw(deck);

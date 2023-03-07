@@ -52,9 +52,10 @@ public class BlackjackGameTest {
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND),
                 new Card(JACK, CLOVER),
-                new Card(TWO, CLOVER),
+                new Card(EIGHT, CLOVER),
                 new Card(EIGHT, SPADE),
-                new Card(KING, HEART)
+                new Card(KING, HEART),
+                new Card(QUEEN, HEART)
         ));
         final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"), deck);
 
@@ -63,7 +64,7 @@ public class BlackjackGameTest {
         final List<Player> players = blackjackGame.getPlayers();
         assertThat(players)
                 .extracting(Player::calculateScore)
-                .containsExactly(11, 12, 18);
+                .containsExactly(21, 16, 20);
     }
 
     @Test

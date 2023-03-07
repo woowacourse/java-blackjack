@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.Rank.*;
-import static blackjack.domain.card.Shape.CLOVER;
-import static blackjack.domain.card.Shape.DIAMOND;
+import static blackjack.domain.card.Shape.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -34,12 +33,13 @@ public class DealerTest {
     void 게임_시작_시_카드를_뽑는다() {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(List.of(
-                new Card(ACE, DIAMOND)
+                new Card(ACE, DIAMOND),
+                new Card(JACK, DIAMOND)
         ));
 
         dealer.initialDraw(deck);
 
-        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드");
+        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J다이아몬드");
     }
 
     @Test
@@ -47,13 +47,14 @@ public class DealerTest {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND),
-                new Card(JACK, CLOVER)
+                new Card(JACK, CLOVER),
+                new Card(THREE, SPADE)
         ));
         dealer.initialDraw(deck);
 
         dealer.draw(deck);
 
-        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J클로버");
+        assertThat(dealer.getCardLetters()).containsExactly("A다이아몬드", "J클로버", "3스페이드");
     }
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력: {0}, 결과: {1}")
@@ -62,14 +63,13 @@ public class DealerTest {
         final Dealer dealer = Dealer.create();
         final Deck deck = new FixedDeck(cards);
         dealer.initialDraw(deck);
-        dealer.draw(deck);
 
         assertThat(dealer.isDrawable()).isEqualTo(result);
     }
 
     static Stream<Arguments> isDrawableSource() {
         return Stream.of(
-                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER)), true),
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(FIVE, CLOVER)), true),
                 Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SEVEN, CLOVER)), false)
         );
     }

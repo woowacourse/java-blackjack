@@ -1,26 +1,48 @@
 package blackjack.domain.player;
 
-import blackjack.domain.game.Result;
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.Result;
 
 import java.util.List;
 
-public interface Player {
-    void initialDraw(final Deck deck);
+public abstract class Player {
 
-    void draw(final Deck deck);
+    protected final Name name;
+    protected final Hand hand;
 
-    boolean isDrawable();
+    public Player(final Name name, Hand hand) {
+        this.name = name;
+        this.hand = hand;
+    }
 
-    boolean isDealer();
+    public abstract boolean isDrawable();
 
-    int calculateScore();
+    public abstract boolean isDealer();
 
-    void stay();
+    public abstract Result play(final Hand hand);
 
-    Result play(final Hand hand);
+    public void initialDraw(final Deck deck) {
+        draw(deck);
+        draw(deck);
+    }
 
-    String getName();
+    public void draw(final Deck deck) {
+        hand.add(deck.draw());
+    }
 
-    List<String> getCardLetters();
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
+
+    public void stay() {
+        hand.stay();
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public List<String> getCardLetters() {
+        return hand.getCardLetters();
+    }
 }
