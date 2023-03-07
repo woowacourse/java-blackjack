@@ -26,7 +26,7 @@ public class Players {
     }
 
     public boolean shouldDealerGetCard() {
-        return dealer.getTotalScore() <= 16;
+        return dealer.getTotalScore() <= Dealer.DEALER_MIN_SCORE;
     }
 
     public GameResult battleAll() {

@@ -5,6 +5,8 @@ import domain.gameresult.GameResult;
 
 public class Dealer extends Player {
 
+    public static final int DEALER_MIN_SCORE = 16;
+
     public Dealer(CardHolder cardHolder) {
         super(cardHolder, Name.of("딜러"));
     }
