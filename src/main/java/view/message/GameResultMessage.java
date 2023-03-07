@@ -1,29 +1,29 @@
 package view.message;
 
-import domain.participant.Result;
+import domain.game.GameResult;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum GameResultMessage {
-    WIN(Result.WIN, "승"),
-    LOSE(Result.LOSE, "패"),
-    DRAW(Result.DRAW, "무");
+    WIN(GameResult.WIN, "승"),
+    LOSE(GameResult.LOSE, "패"),
+    DRAW(GameResult.DRAW, "무");
 
-    private static final Map<Result, String> CACHE = Stream.of(GameResultMessage.values())
-            .collect(Collectors.toUnmodifiableMap(resultMessage -> resultMessage.result,
+    private static final Map<GameResult, String> CACHE = Stream.of(GameResultMessage.values())
+            .collect(Collectors.toUnmodifiableMap(resultMessage -> resultMessage.gameResult,
                     resultMessage -> resultMessage.message));
 
-    private final Result result;
+    private final GameResult gameResult;
     private final String message;
 
-    GameResultMessage(final Result result, final String message) {
-        this.result = result;
+    GameResultMessage(final GameResult gameResult, final String message) {
+        this.gameResult = gameResult;
         this.message = message;
     }
 
-    public static String findMessage(final Result result) {
-        return CACHE.get(result);
+    public static String findMessage(final GameResult gameResult) {
+        return CACHE.get(gameResult);
     }
 }

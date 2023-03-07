@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
 import domain.game.GameManager;
-import domain.participant.Result;
+import domain.game.GameResult;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import view.InputView;
@@ -121,7 +121,7 @@ public final class GameController {
 
     private void printFinalGameResult(final GameManager gameManager) {
         final String dealerName = gameManager.findDealerName();
-        final Map<String, Result> totalPlayerGameResult = gameManager.getTotalPlayerGameResult();
+        final Map<String, GameResult> totalPlayerGameResult = gameManager.getTotalPlayerGameResult();
 
         outputView.guideFinalGameResult();
         outputView.printFinalGameResult(dealerName, totalPlayerGameResult);

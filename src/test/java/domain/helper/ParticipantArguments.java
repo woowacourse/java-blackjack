@@ -15,9 +15,9 @@ import static domain.card.CardPattern.HEART;
 import static domain.card.CardPattern.SPADE;
 import static domain.participant.ParticipantOffset.DEALER;
 import static domain.participant.ParticipantOffset.PLAYER;
-import static domain.participant.Result.DRAW;
-import static domain.participant.Result.LOSE;
-import static domain.participant.Result.WIN;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
 
 import domain.card.Card;
 import org.junit.jupiter.params.provider.Arguments;

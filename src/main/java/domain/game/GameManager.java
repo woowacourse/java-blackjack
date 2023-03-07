@@ -5,7 +5,6 @@ import domain.card.Deck;
 import domain.participant.Participant;
 import domain.participant.ParticipantOffset;
 import domain.participant.Participants;
-import domain.participant.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,8 +99,8 @@ public final class GameManager {
         return participants.getParticipantNames();
     }
 
-    public Map<String, Result> getTotalPlayerGameResult() {
-        final Map<Participant, Result> gameResults = participants.calculatePlayerGameResult();
+    public Map<String, GameResult> getTotalPlayerGameResult() {
+        final Map<Participant, GameResult> gameResults = participants.calculatePlayerGameResult();
 
         return gameResults.keySet().stream()
                 .collect(Collectors.toMap(Participant::getName, gameResults::get,

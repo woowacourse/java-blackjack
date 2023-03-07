@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import domain.game.GameResult;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -152,7 +153,7 @@ class ParticipantsTest {
     @DisplayName("calculatePlayerGameResult()는 호출하면 각 플레이어의 게임 결과를 계산해 반환한다")
     void calculatePlayerGameResult_whenCall_thenReturnPlayerGameResult() {
         // when
-        final Map<Participant, Result> actual = participants.calculatePlayerGameResult();
+        final Map<Participant, GameResult> actual = participants.calculatePlayerGameResult();
 
         // then
         assertThat(actual.keySet().size())
@@ -160,6 +161,6 @@ class ParticipantsTest {
 
         actual.keySet()
                 .forEach(player -> assertThat(actual.get(player))
-                        .isSameAs(Result.DRAW));
+                        .isSameAs(GameResult.DRAW));
     }
 }

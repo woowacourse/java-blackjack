@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 
+import domain.game.GameResult;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -33,7 +34,7 @@ public final class Participants {
         return new Participants(playerNames);
     }
 
-    public Map<Participant, Result> calculatePlayerGameResult() {
+    public Map<Participant, GameResult> calculatePlayerGameResult() {
         final Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
         final int totalParticipantSize = participants.size();
         final List<Participant> players = participants.subList(PLAYER_START_INDEX, totalParticipantSize);

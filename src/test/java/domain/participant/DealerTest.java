@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import domain.game.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -86,7 +87,7 @@ class DealerTest {
     @ParameterizedTest(name = "calculateResult()는 플레이어를 건네주면 게임 결과를 반환한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeParticipantsCards")
     void calculateResult_givenPlayer_thenReturnGameResult(final List<Card> dealerCards,
-            final List<Card> playerCards, final Result expected) {
+            final List<Card> playerCards, final GameResult expected) {
         // given
         final Dealer dealer = Dealer.create();
         final Player player = Player.create("a");
@@ -94,7 +95,7 @@ class DealerTest {
         playerCards.forEach(player::addCard);
 
         // when
-        Result actual = dealer.calculateResult(player);
+        GameResult actual = dealer.calculateResult(player);
 
         // then
         assertThat(actual)

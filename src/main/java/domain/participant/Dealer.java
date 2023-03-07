@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.game.GameResult;
 import java.util.List;
 
 public final class Dealer extends Participant {
@@ -15,16 +16,16 @@ public final class Dealer extends Participant {
         return new Dealer(DEALER_NAME);
     }
 
-    public Result calculateResult(Participant player) {
+    public GameResult calculateResult(Participant player) {
         final ParticipantCard playerCard = player.participantCard;
 
         if (checkDealerWin(playerCard)) {
-            return Result.LOSE;
+            return GameResult.LOSE;
         }
         if (checkPlayerWin(playerCard)) {
-            return Result.WIN;
+            return GameResult.WIN;
         }
-        return Result.DRAW;
+        return GameResult.DRAW;
     }
 
     @Override

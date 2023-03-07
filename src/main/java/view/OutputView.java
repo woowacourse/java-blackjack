@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.participant.Participant;
-import domain.participant.Result;
+import domain.game.GameResult;
 import view.message.GameResultMessage;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
@@ -99,7 +99,7 @@ public final class OutputView {
         print(LINE_FEED);
     }
 
-    public void printFinalGameResult(final String dealerName, final Map<String, Result> totalPlayerGameResult) {
+    public void printFinalGameResult(final String dealerName, final Map<String, GameResult> totalPlayerGameResult) {
         printDealerGameResult(dealerName, totalPlayerGameResult);
         print(LINE_FEED);
 
@@ -142,24 +142,24 @@ public final class OutputView {
         return numberMessage.concat(patternMessage);
     }
 
-    private void printDealerGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
-        final int dealerWinCount = Collections.frequency(playerGameResults.values(), Result.LOSE);
-        final int dealerLoseCount = Collections.frequency(playerGameResults.values(), Result.WIN);
-        final int drawCount = Collections.frequency(playerGameResults.values(), Result.DRAW);
+    private void printDealerGameResult(final String dealerName, final Map<String, GameResult> playerGameResults) {
+        final int dealerWinCount = Collections.frequency(playerGameResults.values(), GameResult.LOSE);
+        final int dealerLoseCount = Collections.frequency(playerGameResults.values(), GameResult.WIN);
+        final int drawCount = Collections.frequency(playerGameResults.values(), GameResult.DRAW);
         final String dealerGameResultMessage =
                 DEALER_GAME_RESULT.format(dealerName, dealerWinCount, dealerLoseCount, drawCount);
 
         print(dealerGameResultMessage);
     }
 
-    private String mapToPlayerGameResultMessage(final Map<String, Result> playerGameResults) {
+    private String mapToPlayerGameResultMessage(final Map<String, GameResult> playerGameResults) {
         return playerGameResults.keySet().stream()
                 .map(playerName -> mapToPlayerGameResultMessage(playerName, playerGameResults.get(playerName)))
                 .collect(Collectors.joining(LINE_FEED));
     }
 
-    private String mapToPlayerGameResultMessage(final String playerName, final Result playerResult) {
-        return PLAYER_GAME_RESULT.format(playerName, GameResultMessage.findMessage(playerResult));
+    private String mapToPlayerGameResultMessage(final String playerName, final GameResult playerGameResult) {
+        return PLAYER_GAME_RESULT.format(playerName, GameResultMessage.findMessage(playerGameResult));
     }
 
     private void print(final String message) {
