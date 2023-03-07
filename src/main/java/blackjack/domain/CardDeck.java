@@ -8,7 +8,7 @@ public class CardDeck {
     private final List<Card> cards;
 
     public CardDeck() {
-        this.cards = new ArrayList<>(Card.values());
+        this.cards = new ArrayList<>(CardFactory.values());
         shuffleCards();
     }
 
