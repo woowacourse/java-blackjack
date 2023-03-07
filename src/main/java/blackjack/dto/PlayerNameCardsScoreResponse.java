@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Player;
 
 import java.util.List;
 
@@ -11,10 +10,10 @@ public class PlayerNameCardsScoreResponse {
     private final List<Card> cards;
     private final int score;
 
-    public PlayerNameCardsScoreResponse(Player player) {
-        this.name = player.getName();
-        this.cards = player.getCards().getCards();
-        this.score = player.calculateScore();
+    public PlayerNameCardsScoreResponse(String name, List<Card> cards, int score) {
+        this.name = name;
+        this.cards = cards;
+        this.score = score;
     }
 
     public String getName() {

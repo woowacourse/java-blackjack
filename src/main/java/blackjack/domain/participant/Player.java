@@ -13,7 +13,9 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        return calculateScore() < BLACK_JACK_SCORE;
+        Score score = calculateScore();
+        Score blackJackScore = new Score(BLACK_JACK_SCORE);
+        return score.isLessThan(blackJackScore);
     }
 
     public String getName() {

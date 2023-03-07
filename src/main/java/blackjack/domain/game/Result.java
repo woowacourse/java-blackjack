@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Score;
 
 public enum Result {
     WIN,
@@ -9,16 +9,14 @@ public enum Result {
 
     private static final int BLACKJACK_CHECK_SUM = 21;
 
-    public static Result calculate(Participant targetParticipant, Participant oppositeParticipant) {
-        int targetScore = calculateFinalScore(targetParticipant.calculateScore());
-        int oppositeScore = calculateFinalScore(oppositeParticipant.calculateScore());
-        if (targetScore > oppositeScore) {
+    public static Result calculate(Score targetScore, Score oppositeScore) {
+        if (targetScore.isGreaterThan(oppositeScore)) {
             return WIN;
         }
-        if (targetScore == oppositeScore) {
-            return DRAW;
+        if (targetScore.isLessThan(oppositeScore)) {
+            return LOSE;
         }
-        return LOSE;
+        return DRAW;
     }
 
     private static int calculateFinalScore(int sum) {

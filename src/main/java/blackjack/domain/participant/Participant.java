@@ -18,15 +18,10 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        int sum = cards.sum();
+    public Score calculateScore() {
+        Score score = cards.sum();
         int aceCount = cards.getAceCount();
-
-        while (sum > BLACK_JACK_SCORE && aceCount > 0) {
-            sum -= ACE_ALTER_VALUE;
-            aceCount -= 1;
-        }
-        return sum;
+        return score.calculateBestScoreAce(aceCount);
     }
 
     public abstract boolean canReceive();

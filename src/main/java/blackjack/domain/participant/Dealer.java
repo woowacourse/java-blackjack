@@ -32,6 +32,8 @@ public class Dealer extends Participant {
     }
 
     private boolean isUnderScore() {
-        return calculateScore() <= CARD_RECEIVE_CRITERIA;
+        Score score = calculateScore();
+        Score receiveScore = new Score(CARD_RECEIVE_CRITERIA);
+        return score.isLessThan(receiveScore) || score.equals(receiveScore);
     }
 }

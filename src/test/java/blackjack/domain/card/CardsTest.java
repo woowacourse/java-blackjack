@@ -34,7 +34,7 @@ public class CardsTest {
             cards.add(card);
         }
 
-        assertThat(cards.sum()).isEqualTo(expectedSum);
+        assertThat(cards.sum().getValue()).isEqualTo(expectedSum);
     }
 
     static Stream<Arguments> generateCards() {

@@ -30,13 +30,14 @@ public class PlayerTest {
     @ParameterizedTest
     @MethodSource("generateCards")
     @DisplayName("참여자는 자신의 카드 점수를 계산한다.")
-    void calculateCards(List<Card> cards, int expectedScore) {
+    void calculateCards(List<Card> cards, int expected) {
         Player player = new Player(new Name("pobi"));
         for (Card card : cards) {
             player.addCard(card);
         }
 
-        int score = player.calculateScore();
+        Score score = player.calculateScore();
+        Score expectedScore = new Score(expected);
 
         assertThat(score).isEqualTo(expectedScore);
     }
