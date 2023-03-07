@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,8 +21,8 @@ public class PlayerTest {
     void addCardInCards() {
         Player player = new Player(new Name("pobi"));
 
-        player.addCard(new Card(Symbol.CLOVER, Number.ACE));
-        player.addCard(new Card(Symbol.DIAMOND, Number.TEN));
+        player.addCard(new Card(Suit.CLOVER, Denomination.ACE));
+        player.addCard(new Card(Suit.DIAMOND, Denomination.TEN));
 
         assertThat(player.getCards().getCount()).isEqualTo(2);
     }
@@ -43,12 +43,12 @@ public class PlayerTest {
 
     static Stream<Arguments> generateCards() {
         return Stream.of(
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.CLOVER, Number.TWO)), 9),
-                Arguments.of(List.of(new Card(Symbol.HEART, Number.NINE), new Card(Symbol.HEART, Number.TWO)), 11),
-                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), 20),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.THREE), new Card(Symbol.CLOVER, Number.TWO)), 5),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.SEVEN), new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.DIAMOND, Number.SEVEN)), 21),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.TEN), new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.DIAMOND, Number.SEVEN)), 18)
+                Arguments.of(List.of(new Card(Suit.SPADE, Denomination.SEVEN), new Card(Suit.CLOVER, Denomination.TWO)), 9),
+                Arguments.of(List.of(new Card(Suit.HEART, Denomination.NINE), new Card(Suit.HEART, Denomination.TWO)), 11),
+                Arguments.of(List.of(new Card(Suit.DIAMOND, Denomination.TEN), new Card(Suit.SPADE, Denomination.TEN)), 20),
+                Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.THREE), new Card(Suit.CLOVER, Denomination.TWO)), 5),
+                Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.SEVEN), new Card(Suit.SPADE, Denomination.SEVEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), 21),
+                Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.TEN), new Card(Suit.SPADE, Denomination.ACE), new Card(Suit.DIAMOND, Denomination.SEVEN)), 18)
         );
     }
 
@@ -66,12 +66,12 @@ public class PlayerTest {
 
     static Stream<Arguments> generateCardsAndFlag() {
         return Stream.of(
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.CLOVER, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.HEART, Number.NINE), new Card(Symbol.HEART, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), true),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.THREE), new Card(Symbol.CLOVER, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.SEVEN), new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.DIAMOND, Number.SEVEN)), false),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.TEN), new Card(Symbol.SPADE, Number.TEN), new Card(Symbol.DIAMOND, Number.SEVEN)), false)
+                Arguments.of(List.of(new Card(Suit.SPADE, Denomination.SEVEN), new Card(Suit.CLOVER, Denomination.TWO)), true),
+                Arguments.of(List.of(new Card(Suit.HEART, Denomination.NINE), new Card(Suit.HEART, Denomination.TWO)), true),
+                Arguments.of(List.of(new Card(Suit.DIAMOND, Denomination.TEN), new Card(Suit.SPADE, Denomination.TEN)), true),
+                Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.THREE), new Card(Suit.CLOVER, Denomination.TWO)), true),
+                Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.SEVEN), new Card(Suit.SPADE, Denomination.SEVEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), false),
+                Arguments.of(List.of(new Card(Suit.CLOVER, Denomination.TEN), new Card(Suit.SPADE, Denomination.TEN), new Card(Suit.DIAMOND, Denomination.SEVEN)), false)
         );
     }
 }

@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -73,7 +73,7 @@ public class BlackJackGameTest {
     void passExtraCardToDealer() {
         BlackJackGame blackJackGame = BlackJackGame.create(players);
         Dealer dealer = blackJackGame.getDealer();
-        dealer.addCard(new Card(Symbol.SPADE, Number.TEN));
+        dealer.addCard(new Card(Suit.SPADE, Denomination.TEN));
         int beforeCount = dealer.getCards().getCount();
 
         blackJackGame.passCardTo(dealer);
@@ -86,8 +86,8 @@ public class BlackJackGameTest {
     void canNotPassExtraCardToDealer() {
         BlackJackGame blackJackGame = BlackJackGame.create(players);
         Dealer dealer = blackJackGame.getDealer();
-        dealer.addCard(new Card(Symbol.SPADE, Number.TEN));
-        dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
+        dealer.addCard(new Card(Suit.SPADE, Denomination.TEN));
+        dealer.addCard(new Card(Suit.HEART, Denomination.SEVEN));
         int beforeCount = dealer.getCards().getCount();
 
         blackJackGame.passCardTo(dealer);
@@ -114,11 +114,11 @@ public class BlackJackGameTest {
     }
 
     private void setCards(Dealer dealer, Player gray, Player luca) {
-        dealer.addCard(new Card(Symbol.HEART, Number.TEN));
-        dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
-        gray.addCard(new Card(Symbol.SPADE, Number.ACE));
-        gray.addCard(new Card(Symbol.SPADE, Number.TEN));
-        luca.addCard(new Card(Symbol.DIAMOND, Number.SIX));
-        luca.addCard(new Card(Symbol.DIAMOND, Number.TEN));
+        dealer.addCard(new Card(Suit.HEART, Denomination.TEN));
+        dealer.addCard(new Card(Suit.HEART, Denomination.SEVEN));
+        gray.addCard(new Card(Suit.SPADE, Denomination.ACE));
+        gray.addCard(new Card(Suit.SPADE, Denomination.TEN));
+        luca.addCard(new Card(Suit.DIAMOND, Denomination.SIX));
+        luca.addCard(new Card(Suit.DIAMOND, Denomination.TEN));
     }
 }

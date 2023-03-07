@@ -86,7 +86,7 @@ public class OutputView {
     }
 
     private String mapCard(Card card) {
-        return NumberMapper.map(card.getNumber()) + SymbolMapper.map(card.getSymbol());
+        return DenominationMapper.map(card.getNumber()) + SuitMapper.map(card.getSymbol());
     }
 
     public void showError(String message) {

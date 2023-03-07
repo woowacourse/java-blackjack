@@ -22,7 +22,7 @@ public class Cards {
 
     public int getAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber().equals(Number.ACE))
+                .filter(card -> card.getNumber().equals(Denomination.ACE))
                 .count();
     }
 

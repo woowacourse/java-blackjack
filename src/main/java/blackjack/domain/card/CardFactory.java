@@ -9,17 +9,17 @@ public class CardFactory {
     public static List<Card> createShuffledCard() {
         List<Card> createdCard = new ArrayList<>();
 
-        for (Symbol symbol : Symbol.values()) {
-            addCards(createdCard, symbol);
+        for (Suit suit : Suit.values()) {
+            addCards(createdCard, suit);
         }
         Collections.shuffle(createdCard);
 
         return createdCard;
     }
 
-    private static void addCards(List<Card> createdCard, Symbol symbol) {
-        for (Number number : Number.values()) {
-            createdCard.add(new Card(symbol, number));
+    private static void addCards(List<Card> createdCard, Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            createdCard.add(new Card(suit, denomination));
         }
     }
 }

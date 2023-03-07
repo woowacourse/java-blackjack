@@ -10,7 +10,7 @@ public class CardTest {
     @Test
     @DisplayName("카드 생성 테스트")
     void createCard() {
-        Card card = new Card(Symbol.SPADE, Number.ACE);
+        Card card = new Card(Suit.SPADE, Denomination.ACE);
 
         assertThat(card).isNotNull();
     }

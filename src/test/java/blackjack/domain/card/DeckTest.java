@@ -35,7 +35,7 @@ public class DeckTest {
     void createDeckWithDuplicatedCard() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 51; i++) {
-            cards.add(new Card(Symbol.SPADE, Number.ACE));
+            cards.add(new Card(Suit.SPADE, Denomination.ACE));
         }
         assertThatThrownBy(() -> Deck.create(cards))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -65,11 +65,11 @@ public class DeckTest {
     }
 
     private List<Card> createCard(int size) {
-        List<Symbol> symbols = Symbol.getAll();
-        List<Number> numbers = Number.getAll();
+        List<Suit> suits = Suit.getAll();
+        List<Denomination> denominations = Denomination.getAll();
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            cards.add(new Card(symbols.get(i / 13), numbers.get(i % 13)));
+            cards.add(new Card(suits.get(i / 13), denominations.get(i % 13)));
         }
         return cards;
     }
