@@ -22,7 +22,7 @@ public abstract class Player {
         holdingCards.add(card);
     }
 
-    public int getTotalPoint() {
+    public Score getTotalPoint() {
         return holdingCards.getSum();
     }
 

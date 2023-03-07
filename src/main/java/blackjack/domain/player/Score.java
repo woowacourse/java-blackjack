@@ -23,6 +23,10 @@ public final class Score {
         return new Score(score.value + value);
     }
 
+    public boolean isBiggerThan(final Score score) {
+        return value > score.value;
+    }
+
     public int getValue() {
         return value;
     }

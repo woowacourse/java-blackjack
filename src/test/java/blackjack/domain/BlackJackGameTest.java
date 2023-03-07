@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,11 +46,11 @@ class BlackJackGameTest {
     @DisplayName("canPick()에 대한 테스트")
     void can_pick() {
         Player ditoo = blackJackGame.getChallengers().get(0);
-        int holdingCardsPoint = ditoo.getTotalPoint();
+        Score holdingCardsPoint = ditoo.getTotalPoint();
 
         assertThat(blackJackGame.canPick(ditoo)).isTrue();
 
-        while (holdingCardsPoint <= 21) {
+        while (!holdingCardsPoint.isBust()) {
             blackJackGame.pick(ditoo);
             holdingCardsPoint = ditoo.getTotalPoint();
         }

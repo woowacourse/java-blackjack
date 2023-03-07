@@ -25,22 +25,7 @@ class HoldingCardsTest {
         Card card2 = new Card(Shape.SPADE, Number.FOUR);
         holdingCards.initialCard(card1, card2);
 
-        assertThat(holdingCards.getSum()).isEqualTo(14);
-    }
-
-    @Test
-    @DisplayName("ACE가 존재하는 경우 가능한 모든 합 테스트")
-    void sums_of_ace_existing() {
-        Card cloverAce = new Card(Shape.CLOVER, Number.ACE);
-        Card cloverKing = new Card(Shape.CLOVER, Number.KING);
-        Card spadeAce = new Card(Shape.SPADE, Number.ACE);
-        Card heartAce = new Card(Shape.HEART, Number.ACE);
-        holdingCards.initialCard(cloverAce, cloverKing);
-        holdingCards.add(spadeAce);
-        holdingCards.add(heartAce);
-
-        assertThat(holdingCards.getSums())
-                .containsExactly(13, 23, 33, 43);
+        assertThat(holdingCards.getSum().getValue()).isEqualTo(14);
     }
 
     @Test
@@ -52,7 +37,7 @@ class HoldingCardsTest {
         holdingCards.initialCard(cloverAce, cloverFive);
         holdingCards.add(spadeAce);
 
-        assertThat(holdingCards.getSum())
+        assertThat(holdingCards.getSum().getValue())
                 .isEqualTo(17);
     }
 }

@@ -18,7 +18,7 @@ public class PlayerStatusWithPointDto extends PlayerStatusDto {
         String name = player.getName();
         List<Card> holdingCards = player.getHoldingCards().getCards();
         List<String> cardInfos = PlayerStatusDto.extractCardInfo(holdingCards);
-        int point = player.getTotalPoint();
+        int point = player.getTotalPoint().getValue();
         return new PlayerStatusWithPointDto(name, cardInfos, point);
     }
 
