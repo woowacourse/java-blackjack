@@ -82,9 +82,9 @@ public class BlackJackGameController {
     private void printStartCards(Game game) {
         outputView.printStartMsg(game.showPlayersName());
         outputView.printDealerCards(getCardNames(game.showDealerCards()), System.lineSeparator());
-        for (int i = 0; i < game.getPlayersCount(); i++) {
-            String playerName = game.showPlayerNameByIndex(i);
-            List<String> cards = getCardNames(game.showPlayerCardsByIndex(i));
+        for (Player player : game.getPlayers()) {
+            String playerName = player.showName();
+            List<String> cards = getCardNames(player.showCards());
             outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
         }
     }
