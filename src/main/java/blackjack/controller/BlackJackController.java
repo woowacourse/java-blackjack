@@ -56,7 +56,7 @@ public class BlackJackController {
         final Participants participants = gatherParticipants();
         final Deck deck = DeckFactory.createWithCount(TRUMP, 1);
 
-        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck);
+        final BlackJackGame blackJackGame = startBlackJackGame(participants, deck);
 
         drawCardForPlayers(blackJackGame);
         drawCardForDealer(blackJackGame);
@@ -77,6 +77,20 @@ public class BlackJackController {
         final List<String> playerNames = inputView.readPlayerNames();
         return playerNames.stream()
                 .map(Player::new)
+                .collect(Collectors.toList());
+    }
+
+    private BlackJackGame startBlackJackGame(final Participants participants, final Deck deck) {
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck, INIT_DRAW_COUNT);
+        final ParticipantResponse dealerResponse = ParticipantResponse.from(blackJackGame.dealer());
+        final List<ParticipantResponse> playerResponses = getPlayerResponses(blackJackGame.players());
+        outputView.printDealCards(dealerResponse, playerResponses, INIT_DRAW_COUNT);
+        return blackJackGame;
+    }
+
+    private List<ParticipantResponse> getPlayerResponses(final List<Player> players) {
+        return players.stream()
+                .map(ParticipantResponse::from)
                 .collect(Collectors.toList());
     }
 

@@ -13,15 +13,15 @@ public class BlackJackGame {
     private final Participants participants;
     private final Deck deck;
 
-    public BlackJackGame(final Participants participants, final Deck deck) {
+    public BlackJackGame(final Participants participants, final Deck deck, final int drawCount) {
         this.participants = participants;
         this.deck = deck;
-        initGame();
+        initGame(drawCount);
     }
 
-    private void initGame() {
+    private void initGame(final int drawCount) {
         deck.shuffle();
-        participants.drawCard(deck, 2);
+        participants.drawCard(deck, drawCount);
     }
 
     public void drawOrNot(final boolean wantMoreDraw, final Participant participant) {
