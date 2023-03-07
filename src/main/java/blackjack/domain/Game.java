@@ -53,9 +53,6 @@ public class Game {
         return getPlayers().getPlayersName();
     }
 
-    public String showPlayerNameByIndex(int i) {
-        return getPlayers().showPlayerNameByIndex(i);
-    }
 
     public List<Card> showDealerCards() {
         return getDealer().showCards();
@@ -65,15 +62,7 @@ public class Game {
         return getDealer().showAllCards();
     }
 
-    public int getPlayersCount() {
-        return getPlayers().count();
-    }
-
     public int getDealerScore() {
         return getDealer().calculateScore();
-    }
-
-    public int getPlayerScoreByIndex(int i) {
-        return getPlayers().getPlayerScoreByIndex(i);
     }
 }

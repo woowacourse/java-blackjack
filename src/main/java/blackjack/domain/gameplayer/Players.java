@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players implements Iterable<Player> {
+    private final static int MAX_PLAYER_SIZE = 6;
+    private final static String INVALID_PLAYER_SIZE_MESSAGE = "게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.";
+    private final static String INVALID_DUPLICATED_NAME_MESSAGE = "게임을 진행하는 플레이어의 이름은 중복이 없어야합니다.";
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -16,14 +20,14 @@ public class Players implements Iterable<Player> {
     }
 
     private void validatePlayersCount(List<Player> players) {
-        if (players.isEmpty() || players.size() > 6) {
-            throw new IllegalArgumentException("게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.");
+        if (players.isEmpty() || players.size() > MAX_PLAYER_SIZE) {
+            throw new IllegalArgumentException(INVALID_PLAYER_SIZE_MESSAGE);
         }
     }
 
     private void validateDuplicatedPlayerNames(List<Player> players) {
         if (hasDuplicatedNames(players)) {
-            throw new IllegalArgumentException("게임을 진행하는 플레이어의 이름은 중복이 없어야합니다.");
+            throw new IllegalArgumentException(INVALID_DUPLICATED_NAME_MESSAGE);
         }
     }
 
@@ -52,10 +56,6 @@ public class Players implements Iterable<Player> {
                 .forEach(x -> x.addCard(card));
     }
 
-    public Player getPlayer(int i) {
-        return players.get(i);
-    }
-
     public int count() {
         return players.size();
     }
@@ -64,18 +64,6 @@ public class Players implements Iterable<Player> {
         return players.stream()
                 .map(Player::showName)
                 .collect(Collectors.toList());
-    }
-
-    public int getPlayerScoreByIndex(int i) {
-        return getPlayer(i).calculateScore();
-    }
-
-    public List<Card> showPlayerCardsByIndex(int i) {
-        return getPlayer(i).showCards();
-    }
-
-    public String showPlayerNameByIndex(int i) {
-        return getPlayer(i).showName();
     }
 
     @Override
