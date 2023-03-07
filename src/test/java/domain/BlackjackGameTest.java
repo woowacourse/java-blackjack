@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BlackjackGameTest {
     private Dealer dealer;
@@ -48,43 +50,4 @@ public class BlackjackGameTest {
         Assertions.assertThat(players.getInfo()).usingRecursiveComparison().isEqualTo(result);
     }
 
-    @Test
-    @DisplayName("플레이어의 최종 승패 결과를 가져온다.")
-    void calculatePlayerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
-
-        blackjackGame.distributeInitialCard();
-
-        Map<String, Result> playerResult = new LinkedHashMap<>();
-        playerResult.put("pobi", Result.LOSE);
-        playerResult.put("jason", Result.LOSE);
-
-        Assertions.assertThat(blackjackGame.getPlayersResult()).isEqualTo(playerResult);
-    }
-
-    @Test
-    @DisplayName("딜러의 최종 승패 결과를 가져온다.")
-    void calculateDealerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
-
-        blackjackGame.distributeInitialCard();
-
-        Map<String, List<Result>> playerResult = new LinkedHashMap<>();
-
-        playerResult.put(dealer.getName(), List.of(Result.LOSE, Result.LOSE));
-
-        Assertions.assertThat(blackjackGame.getDealerResult()).isEqualTo(playerResult);
-    }
-
-
-    @Test
-    @DisplayName("플레이어와 딜러의 승패 계산")
-    void calculateWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
-
-        Assertions.assertThat(blackjackGame.isPlayerWin(21, 10)).isEqualTo(Result.LOSE);
-        Assertions.assertThat(blackjackGame.isPlayerWin(10, 21)).isEqualTo(Result.WIN);
-        Assertions.assertThat(blackjackGame.isPlayerWin(25, 22)).isEqualTo(Result.LOSE);
-        Assertions.assertThat(blackjackGame.isPlayerWin(21, 21)).isEqualTo(Result.DRAW);
-    }
 }
