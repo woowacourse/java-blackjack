@@ -55,7 +55,7 @@ public class Users {
         return players.getWinningResult(dealer);
     }
 
-    public Map<WinningStatus, Long> getDealersWinningResults() {
+    public Map<WinningStatus, Long> getDealerWinningResults() {
         return getPlayersWinningResults()
                 .values()
                 .stream()

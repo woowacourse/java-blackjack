@@ -140,7 +140,6 @@ class UsersTest {
         });
     }
 
-
     @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
@@ -158,5 +157,15 @@ class UsersTest {
             softly.assertThat(userNameAndCardResults.get("필립").getScore().getValue())
                     .isEqualTo(19);
         });
+    }
+
+    @Test
+    @DisplayName("딜러의 승무패 결과를 반환하는 기능 테스트")
+    void getDealerWinningResultsTest() {
+        final Users users = new Users(List.of("제이미", "홍실"), new Deck(new TestDeckGenerator(testCards)));
+        final Map<WinningStatus, Long> dealerWinningResults = users.getDealerWinningResults();
+
+        assertThat(dealerWinningResults.get(WinningStatus.WIN))
+                .isEqualTo(2);
     }
 }

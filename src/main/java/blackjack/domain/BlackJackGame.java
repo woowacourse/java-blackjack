@@ -56,7 +56,7 @@ public class BlackJackGame {
     }
 
     public Map<WinningStatus, Long> getDealerWinningResult() {
-        return users.getDealersWinningResults();
+        return users.getDealerWinningResults();
     }
 
     public boolean isBlackJackScore(final String name) {
