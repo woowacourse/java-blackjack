@@ -17,6 +17,8 @@ public abstract class User {
     }
 
     abstract public boolean isHittable();
+    abstract public boolean isDealer();
+    abstract public boolean isPlayer();
 
     public int getScore() {
         return cards.getSumOfScores();

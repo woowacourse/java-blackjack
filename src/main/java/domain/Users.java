@@ -65,14 +65,14 @@ public class Users {
 
     public List<Player> getPlayers() {
         return users.stream()
-                .filter(user -> user instanceof Player)
+                .filter(user -> user.isPlayer())
                 .map(user -> (Player) user)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public Dealer getDealer() {
         User dealer = users.stream()
-                .filter(user -> user instanceof Dealer)
+                .filter(user -> user.isDealer())
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
         return (Dealer) dealer;

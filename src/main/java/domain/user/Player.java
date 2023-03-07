@@ -46,6 +46,16 @@ public class Player extends User {
         return cards.isUnder(BLACK_JACK_SCORE);
     }
 
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
     public String getName() {
         return name;
     }
