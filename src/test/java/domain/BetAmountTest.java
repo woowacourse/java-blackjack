@@ -1,7 +1,11 @@
 package domain;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -22,12 +26,19 @@ class BetAmountTest {
     }
 
     @ParameterizedTest(name = "배율에 맞게 배팅금액을 돌려받을 수 있다.")
-    @ValueSource(ints = {100, 2000, 30000, 100000000},
-            doubles = {0, 1.5, 2.5})
+    @MethodSource("moneyAndRatioProvider")
     void receiveBetAmountSuccessTest(int money, double ratio) {
         BetAmount betAmount = BetAmount.from(money);
 
         assertThat(betAmount.applyRatio(ratio).getMoney())
                 .isEqualTo((int) (money * ratio));
+    }
+
+    static Stream<Arguments> moneyAndRatioProvider() {
+        return Stream.of(
+                Arguments.arguments(100, 0.0),
+                Arguments.arguments(2000, 1.5),
+                Arguments.arguments(1000000, 2.5)
+        );
     }
 }
