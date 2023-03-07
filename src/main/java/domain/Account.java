@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Account {
 
     private int account;
@@ -22,5 +24,22 @@ public class Account {
 
     public void subAccount(final int losingMoney) {
         account -= losingMoney;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Account account1 = (Account) o;
+        return account == account1.account;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(account);
     }
 }
