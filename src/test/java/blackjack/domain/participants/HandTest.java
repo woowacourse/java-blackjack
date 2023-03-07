@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class HandTest {
 
-    @DisplayName("카드 문자의 총 합을 계산해 반환한다.")
+    @DisplayName("카드 끗수의 총 합을 계산해 반환한다.")
     @Test
     void should_ReturnSumOfHand() {
         Hand hand = new Hand(List.of(new Card(SPADE, JACK), new Card(CLUB, QUEEN)));
@@ -27,7 +27,7 @@ class HandTest {
         assertThat(hand.sumScore()).isEqualTo(JACK.getValue() + QUEEN.getValue());
     }
 
-    @DisplayName("문자 중 ACE는 기본값을 1로 하되, 추가 값 10을 더할 수 있다.")
+    @DisplayName("끗수 중 ACE는 기본값을 1로 하되, 추가 값 10을 더할 수 있다.")
     @Test
     void should_Add10ForACE_When_SumIsUnderBustLimit() {
         Hand hand = new Hand(List.of(new Card(SPADE, ACE), new Card(CLUB, QUEEN)));

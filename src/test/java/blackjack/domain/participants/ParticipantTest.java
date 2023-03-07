@@ -27,17 +27,16 @@ class ParticipantTest {
     void should_HasSize_1Increased() {
         int previousSize = player.getCards().size();
 
-        Card card = new Card(SPADE, JACK);
-        player.take(card);
-        int currentSize = player.getCards().size();
+        player.take(new Card(SPADE, JACK));
 
-        assertThat(currentSize).isEqualTo(previousSize + 1);
+        assertThat(player.getCards()).hasSize(previousSize + 1);
     }
 
     @DisplayName("참가자는 카드를 받으면 마지막 위치에 저장한다.")
     @Test
     void should_addCard_At_LastIndex() {
         Card card = new Card(SPADE, JACK);
+
         player.take(card);
 
         List<Card> cards = player.getCards();

@@ -2,13 +2,16 @@ package blackjack.domain;
 
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.TWO;
+import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participants.Player;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,12 +20,38 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DeckTest {
 
-    @DisplayName("카드 덱에서 주어진 장수만큼 카드를 뽑는다.")
+    private Player player;
+
+    @BeforeEach
+    void setUpPlayer() {
+        player = new Player("test");
+    }
+
+    @DisplayName("전달받은 참가자에게 주어진 장수 만큼의 카드를 준다.")
     @Test
-    void should_DrawCards_As_Count() {
+    void should_DrawCardsForPlayer_As_Count() {
         List<Card> mockCards = List.of(new Card(SPADE, ACE), new Card(SPADE, TWO));
         Deck deck = new MockDeckGenerator(mockCards).generate();
-        assertThat(deck.draw(2))
+
+        deck.handCardsTo(player, 2);
+
+        assertThat(player.getCards())
+                .containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
+    }
+
+    @DisplayName("전달받은 다수의 참가자에게 주어진 장수 만큼의 카드를 준다.")
+    @Test
+    void should_DrawCardsForPlayers_As_Count() {
+        List<Card> mockCards = List.of(
+                new Card(SPADE, ACE), new Card(SPADE, TWO),
+                new Card(HEART, ACE), new Card(HEART, TWO)
+        );
+        Deck deck = new MockDeckGenerator(mockCards).generate();
+        List<Player> players = List.of(player, new Player("test2"));
+
+        deck.handCardsTo(players, 2);
+
+        assertThat(player.getCards())
                 .containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
     }
 
@@ -31,7 +60,7 @@ class DeckTest {
     void should_ThrowException_When_DrawEmptyDeck() {
         Deck deck = new Deck(new ArrayList<>());
 
-        assertThatThrownBy(() -> deck.draw(1))
+        assertThatThrownBy(() -> deck.handCardsTo(player, 1))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 꺼낼 카드가 없습니다.");
     }
