@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.player.CardDecisionStrategy;
 import java.util.List;
 
 import blackjack.domain.game.BlackjackGame;
@@ -13,7 +15,6 @@ import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Controller {
     private final InputView inputView;
@@ -56,12 +57,12 @@ public class Controller {
     }
 
     private void supplyAdditionalCardToPlayers() {
-        Function<Name, AddCardOrNot> decideAddCardOrNot = (Name name) -> {
-            String command = inputView.readCommandToAddCardOrNot(name);
+        CardDecisionStrategy cardDecisionStrategy = (Participant participant) -> {
+            String command = inputView.readCommandToAddCardOrNot(participant.getName());
             return AddCardOrNot.of(command);
         };
         Consumer<Player> showPlayerCards = (player) -> outputView.printPlayerCard(ParticipantCardsDto.from(player));
-        blackjackGame.supplyCardToPlayerNameOf(decideAddCardOrNot, showPlayerCards);
+        blackjackGame.supplyCardToPlayerNameOf(cardDecisionStrategy, showPlayerCards);
     }
 
     private void supplyAdditionalCardToDealer() {

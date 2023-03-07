@@ -1,20 +1,18 @@
 package blackjack.domain.game;
 
-import blackjack.controller.AddCardOrNot;
+import blackjack.domain.participant.player.CardDecisionStrategy;
 import java.util.List;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.dealer.DealerFirstCardDto;
 import blackjack.domain.participant.dealer.DealerWinningDto;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.domain.participant.player.Players;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BlackjackGame {
     public static final int FIRST_DRAW_COUNT = 2;
@@ -40,9 +38,9 @@ public class BlackjackGame {
         players.takeCard(deck, FIRST_DRAW_COUNT);
     }
 
-    public void supplyCardToPlayerNameOf(Function<Name, AddCardOrNot> decideAddCardOrNot,
+    public void supplyCardToPlayerNameOf(CardDecisionStrategy cardDecisionStrategy,
                                          Consumer<Player> showPlayerCards) {
-        players.hitAdditionalCard(deck, decideAddCardOrNot, showPlayerCards);
+        players.hitAdditionalCard(deck, cardDecisionStrategy, showPlayerCards);
     }
 
     public boolean canDealerHit() {

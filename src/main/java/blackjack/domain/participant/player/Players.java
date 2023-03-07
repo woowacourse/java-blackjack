@@ -1,15 +1,12 @@
 package blackjack.domain.participant.player;
 
-import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.Deck;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.ParticipantCardsDto;
 import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.dealer.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -20,9 +17,9 @@ public class Players {
         players.add(player);
     }
 
-    public void hitAdditionalCard(Deck deck, Function<Name, AddCardOrNot> decideAddCardOrNot,
+    public void hitAdditionalCard(Deck deck, CardDecisionStrategy cardDecisionStrategy,
                                   Consumer<Player> showPlayerCards) {
-        players.forEach(player -> player.hitAdditionalCardFrom(deck, decideAddCardOrNot, showPlayerCards));
+        players.forEach(player -> player.hitAdditionalCardFrom(deck, cardDecisionStrategy, showPlayerCards));
     }
 
     public void takeCard(Deck deck, int size) {

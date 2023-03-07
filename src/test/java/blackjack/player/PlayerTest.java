@@ -96,9 +96,8 @@ class PlayerTest {
                 cards.push(twoHeart);
                 return cards;
             });
-            Function<Name, AddCardOrNot> decideAddCardOrNot = (name) -> AddCardOrNot.YES;
             //when
-            soni.hitAdditionalCardFrom(deck, decideAddCardOrNot, (player) -> {
+            soni.hitAdditionalCardFrom(deck, (name) -> AddCardOrNot.YES, (player) -> {
             });
             //then
             assertThat(soni.showCards()).contains(twoHeart);
