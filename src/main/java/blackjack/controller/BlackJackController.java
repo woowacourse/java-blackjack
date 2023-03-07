@@ -22,8 +22,8 @@ public class BlackJackController {
         printFirstOpenCardGroups(blackJackGame);
         playPlayersTurn(blackJackGame);
         playDealerTurn(blackJackGame);
-        printCardResult(blackJackGame);
-        printWinningResult(blackJackGame);
+        printUserNameAndCardResults(blackJackGame);
+        printUserWinningResults(blackJackGame);
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -81,14 +81,14 @@ public class BlackJackController {
         }
     }
 
-    private void printCardResult(BlackJackGame blackJackGame) {
+    private void printUserNameAndCardResults(BlackJackGame blackJackGame) {
         final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer
                 .renderUserNameAndCardResults(userNameAndCardResults);
         outputView.printUserNameAndCardResults(renderedUserNameAndCardResults);
     }
 
-    private void printWinningResult(final BlackJackGame blackJackGame) {
+    private void printUserWinningResults(final BlackJackGame blackJackGame) {
         final Map<WinningStatus, Long> dealerWinningResult = blackJackGame.getDealerWinningResult();
         outputView.printDealerWinningResult(ViewRenderer.renderDealerWinningResult(dealerWinningResult));
         final Map<String, WinningStatus> playersWinningResult = blackJackGame.getPlayersWinningResults();
