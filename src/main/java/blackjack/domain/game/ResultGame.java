@@ -89,7 +89,7 @@ public class ResultGame {
     public int getDealerCount(final WinTieLose expected) {
         return (int) playersResult.values()
                 .stream()
-                .filter(winTieLose -> winTieLose.equals(expected.reverseValue()))
+                .filter(winTieLose -> winTieLose.equals(expected.reverse()))
                 .count();
     }
 

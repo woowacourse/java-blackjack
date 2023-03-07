@@ -19,16 +19,16 @@ public class Deck {
     }
 
     public Deck() {
-        this.cards = new Stack<>();
-
         Collections.shuffle(CARDS);
+
+        this.cards = new Stack<>();
         this.cards.addAll(CARDS);
     }
 
     public Deck(final List<Card> cards) {
-        this.cards = new Stack<>();
         validate(cards);
 
+        this.cards = new Stack<>();
         this.cards.addAll(cards);
     }
 

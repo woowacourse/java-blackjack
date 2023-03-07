@@ -17,9 +17,9 @@ public class WinTieLoseTest {
     @Test
     @DisplayName("승무패의 반대값을 제대로 반환하는지 테스트")
     void reverseValueTest() {
-        assertThat(WinTieLose.WIN.reverseValue()).isEqualTo(WinTieLose.LOSE);
-        assertThat(WinTieLose.TIE.reverseValue()).isEqualTo(WinTieLose.TIE);
-        assertThat(WinTieLose.LOSE.reverseValue()).isEqualTo(WinTieLose.WIN);
+        assertThat(WinTieLose.WIN.reverse()).isEqualTo(WinTieLose.LOSE);
+        assertThat(WinTieLose.TIE.reverse()).isEqualTo(WinTieLose.TIE);
+        assertThat(WinTieLose.LOSE.reverse()).isEqualTo(WinTieLose.WIN);
     }
 
 }
