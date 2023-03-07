@@ -34,7 +34,6 @@ public class CardsTest {
         Card card1 = new Card(CardNumber.ACE, CardPattern.DIAMOND);
         Card card2 = new Card(CardNumber.ACE, CardPattern.SPADE);
         Card card3 = new Card(CardNumber.ACE, CardPattern.HEART);
-
         Cards cards = new Cards();
         cards.add(card1);
         cards.add(card2);
