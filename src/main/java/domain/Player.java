@@ -1,37 +1,38 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
 
     private final String name;
-    private final Cards cards;
+    private final Hand hand;
 
     public Player(String name, List<Card> cards) {
         this.name = name;
-        this.cards = new Cards(cards);
+        this.hand = new Hand(cards);
     }
 
     void addCard(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int getScore() {
-        return cards.getScore();
+        return hand.score();
     }
 
     Result competeWith(Player other) {
-        return cards.competeWith(other.cards);
+        return hand.compareWith(other.hand);
     }
 
     public abstract boolean canHit();
 
     boolean isBusted() {
-        return getScore() > 21;
+        return hand.score() > 21;
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return new ArrayList<>(hand.cards());
     }
 
     public String getName() {
