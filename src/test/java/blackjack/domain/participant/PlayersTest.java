@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Result;
@@ -47,6 +49,20 @@ class PlayersTest {
                 () -> assertThat(player2.getCards().size()).isEqualTo(2),
                 () -> assertThat(player3.getCards().size()).isEqualTo(2)
         );
+    }
+
+    @Test
+    @DisplayName("SettingCards가 인원수의 " + INIT_CARD_COUNT + "배가 아닌 경우 예외가 발생한다.")
+    void receiveSettingCards_Exception() {
+        List<Card> cards = List.of(
+                new Card(Number.TWO, Suit.CLOVER),
+                new Card(Number.J, Suit.SPADE),
+                new Card(Number.ACE, Suit.HEART)
+        );
+
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> players.receiveSettingCards(cards)
+        ).withMessage("[ERROR] 초기 세팅 카드의 개수는 인원수의 2배여야 합니다. 입력값:" + cards);
     }
 
     @Test

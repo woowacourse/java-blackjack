@@ -35,15 +35,20 @@ public final class Players {
     }
 
     public void receiveSettingCards(final List<Card> cards) {
+        validateSize(cards);
+
         int playerIndex = 0;
-
         for (int cardIndex = 0; cardIndex < cards.size(); cardIndex += INIT_CARD_COUNT) {
-            Player player = this.players.get(playerIndex);
-
+            Player player = players.get(playerIndex);
             player.receiveCard(cards.get(cardIndex));
             player.receiveCard(cards.get(cardIndex + 1));
-
             playerIndex++;
+        }
+    }
+
+    private void validateSize(final List<Card> cards) {
+        if (cards.size() != players.size() * INIT_CARD_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 초기 세팅 카드의 개수는 인원수의 2배여야 합니다. 입력값:" + cards);
         }
     }
 
