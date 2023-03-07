@@ -1,15 +1,20 @@
 package domain;
 
+// TODO: 2023-03-07 Rate를 변수로 두고 사용 ??
 public enum Result {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    WIN("승", 2.0),
+    DRAW("무", 1.0),
+    LOSE("패", 0.0),
     ;
 
-    private final String value;
+    private static final double BLACKJACK_BONUS_RATIO = 0.5;
 
-    Result(String value) {
+    private final String value;
+    private final double ratio;
+
+    Result(String value, double ratio) {
         this.value = value;
+        this.ratio = ratio;
     }
 
     public Result convertToOpposite() {
@@ -24,7 +29,19 @@ public enum Result {
         return DRAW;
     }
 
+    public BetAmount updateBalance(BetAmount betAmount, boolean isBlackjack) {
+        if (isBlackjack) {
+            return betAmount.applyRatio(this.ratio + BLACKJACK_BONUS_RATIO);
+        }
+
+        return betAmount.applyRatio(this.ratio);
+    }
+
     public String getValue() {
         return value;
+    }
+
+    public double getRatio() {
+        return ratio;
     }
 }
