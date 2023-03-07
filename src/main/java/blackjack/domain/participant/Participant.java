@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.Collections;
 import java.util.List;
 
 abstract public class Participant {
@@ -22,6 +21,6 @@ abstract public class Participant {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(this.cards.getCards());
+        return cards.getCards();
     }
 }
