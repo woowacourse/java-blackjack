@@ -6,10 +6,8 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int MAKE_ACE_BIGGER_SCORE = 10;
-    private static final int BLACKJACK_SCORE_CONDITION = 21;
-
     private final List<Card> cards;
+    private final Score score = Score.min();
 
     public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -20,19 +18,19 @@ public class Cards {
     }
 
     public int calculateScoreForBlackjack() {
-        int score = calculate();
+        Score sum = calculate();
 
         if (containsAce()) {
-            score = reCalculateIfSoftHand(score);
+            return sum.reCalculateIfSoftHand().getValue();
         }
 
-        return score;
+        return sum.getValue();
     }
 
-    private int calculate() {
-        return cards.stream()
+    private Score calculate() {
+        return new Score(cards.stream()
                 .mapToInt(Card::convertToBlackjackScore)
-                .sum();
+                .sum());
     }
 
     private boolean containsAce() {
@@ -40,20 +38,16 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int reCalculateIfSoftHand(int score) {
-        if (score + MAKE_ACE_BIGGER_SCORE <= BLACKJACK_SCORE_CONDITION) {
-            return score + MAKE_ACE_BIGGER_SCORE;
-        }
-
-        return score;
-    }
-
-    public void add(Card card) {
-        this.cards.add(card);
-    }
-
     public boolean isBust() {
-        return calculateScoreForBlackjack() > BLACKJACK_SCORE_CONDITION;
+        Score currentScore = new Score(calculateScoreForBlackjack());
+        return currentScore.isBust();
+    }
+
+    public Cards add(Card card) {
+        final List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+
+        return new Cards(newCards);
     }
 
     public List<Card> getCards() {
