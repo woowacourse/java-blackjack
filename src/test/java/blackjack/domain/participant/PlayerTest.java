@@ -17,15 +17,15 @@ class PlayerTest {
     @BeforeEach
     void setting() {
         player = new Player(new Name("test"), new ArrayList<>());
-        player.draw(new Card(Shape.DIAMOND, Letter.TEN));
-        player.draw(new Card(Shape.DIAMOND, Letter.NINE));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.NINE));
     }
 
     @Test
     @DisplayName("플레이어의 점수가 21 이하일 때, 히트인지 테스트")
     void isHitTest() {
         // when
-        player.draw(new Card(Shape.DIAMOND, Letter.TWO));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
         // then
         Assertions.assertThat(player.isHit()).isTrue();
@@ -35,7 +35,7 @@ class PlayerTest {
     @DisplayName("플레이어의 점수가 21 이상일 때, 히트인지 테스트")
     void isNotHitTest() {
         // when
-        player.draw(new Card(Shape.DIAMOND, Letter.THREE));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
         // then
         Assertions.assertThat(player.isHit()).isFalse();

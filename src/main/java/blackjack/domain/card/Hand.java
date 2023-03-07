@@ -25,16 +25,19 @@ public class Hand {
 
     public int getScore() {
         final int aceCount = getAceCardCount();
-        int score = score();
+        final int score = originalScore();
 
+        return calculateScore(aceCount, score);
+    }
+
+    private int calculateScore(int aceCount, int score) {
         if (isNeedDowngradeScoreAceCard(aceCount, score)) {
-            score = scoreWithDowngradeScoreAceCard(aceCount, score);
+            return scoreWithDowngradeScoreAceCard(aceCount, score);
         }
-
         return score;
     }
 
-    private int score() {
+    private int originalScore() {
         return cards.stream()
                 .map(Card::getValue)
                 .reduce(ZERO, Integer::sum);

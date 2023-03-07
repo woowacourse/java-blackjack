@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DealerTest {
 
@@ -21,8 +20,8 @@ public class DealerTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
         //when
-        dealer.draw(card1);
-        dealer.draw(card2);
+        dealer.drawCard(card1);
+        dealer.drawCard(card2);
 
         //then
         Assertions.assertThat(dealer.isHit()).isTrue();
@@ -37,8 +36,8 @@ public class DealerTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
         //when
-        dealer.draw(card1);
-        dealer.draw(card2);
+        dealer.drawCard(card1);
+        dealer.drawCard(card2);
 
         //then
         Assertions.assertThat(dealer.isHit()).isFalse();

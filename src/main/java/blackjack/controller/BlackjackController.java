@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
@@ -26,10 +25,10 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = makeParticipants();
-        final BlackjackGame blackjackGame = new BlackjackGame(participants, new Deck());
+        final Deck deck = new Deck();
 
-        startGame(blackjackGame);
-        hitParticipants(blackjackGame);
+        startGame(participants, deck);
+        hitParticipants(participants, deck);
 
         final ResultGame resultGame = new ResultGame(participants, new HashMap<>());
         displayAllResult(participants, resultGame);
@@ -42,30 +41,29 @@ public class BlackjackController {
         return new Participants(dealer, playerNames, new ArrayList<>());
     }
 
-    private void startGame(final BlackjackGame blackjackGame) {
-        blackjackGame.initialCardsToAllParticipant();
+    private void startGame(final Participants participants, final Deck deck) {
+        participants.draw(deck, 2);
 
-        final Participants participants = blackjackGame.getParticipants();
         outputView.printInitialHandOutMessage(participants);
     }
 
-    private void hitParticipants(final BlackjackGame blackjackGame) {
-        hitPlayers(blackjackGame);
-        hitDealer(blackjackGame);
-        displayParticipantsCardsAndScore(blackjackGame);
+    private void hitParticipants(final Participants participants, final Deck deck) {
+        hitPlayers(participants, deck);
+        hitDealer(participants, deck);
+        displayParticipantsCardsAndScore(participants);
     }
 
-    private void hitPlayers(final BlackjackGame blackjackGame) {
-        final List<Participant> players = blackjackGame.getParticipants().getPlayers();
+    private void hitPlayers(final Participants participants, final Deck deck) {
+        final List<Participant> players = participants.getPlayers();
 
         for (final Participant player : players) {
-            hitEachPlayer(blackjackGame, player);
+            hitEachPlayer(player, deck);
         }
     }
 
-    private void hitEachPlayer(final BlackjackGame blackjackGame, final Participant player) {
+    private void hitEachPlayer(final Participant player, final Deck deck) {
         while (player.isHit() && isMoreHit(player)) {
-            blackjackGame.drawCard(player);
+            player.drawCard(deck);
             outputView.printParticipantNameAndCards(player);
         }
     }
@@ -75,18 +73,16 @@ public class BlackjackController {
         return order.isYES();
     }
 
-    private void hitDealer(final BlackjackGame blackjackGame) {
-        final Participant dealer = blackjackGame.getParticipants().getDealer();
+    private void hitDealer(final Participants participants, final Deck deck) {
+        final Participant dealer = participants.getDealer();
 
         while (dealer.isHit()) {
             outputView.printDealerDrawCard();
-            blackjackGame.drawCard(dealer);
+            dealer.drawCard(deck);
         }
     }
 
-    private void displayParticipantsCardsAndScore(final BlackjackGame blackjackGame) {
-        final Participants participants = blackjackGame.getParticipants();
-
+    private void displayParticipantsCardsAndScore(final Participants participants) {
         outputView.printAllCardsAndScore(participants);
     }
 

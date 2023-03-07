@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +52,12 @@ public class Participants {
 
     public List<Participant> getAll() {
         return participants;
+    }
+
+    public void draw(final Deck deck, final int count) {
+        for(int i = 0; i < count; i++) {
+            participants.forEach(participant -> participant.drawCard(deck));
+        }
     }
 
     public Participant getDealer() {
