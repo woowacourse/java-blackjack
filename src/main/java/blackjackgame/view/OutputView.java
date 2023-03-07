@@ -3,6 +3,10 @@ package blackjackgame.view;
 import java.util.List;
 import java.util.Map;
 
+import blackjackgame.domain.GameOutcome;
+import blackjackgame.domain.ResultDto;
+import blackjackgame.domain.player.Guest;
+
 public class OutputView {
     public static final String FINAL_RESULT_MSG = "## 최종 승패";
     private static final String DELIMITER = ", ";
@@ -32,28 +36,28 @@ public class OutputView {
         System.out.print(" - 결과: " + score);
     }
 
-    public void printResult(final Map<String, Integer> dealerResult, final Map<String, String> result) {
+    public void printResult(ResultDto resultDto) {
         System.out.println();
         StringBuilder stringBuilder = new StringBuilder(FINAL_RESULT_MSG + System.lineSeparator() + "딜러: ");
-        appendDealerResult(dealerResult, stringBuilder);
-        appendGuestsResult(result, stringBuilder);
+        appendDealerResult(resultDto.getDealerResult(), stringBuilder);
+        appendGuestsResult(resultDto.getGuestsResult(), stringBuilder);
         System.out.println(System.lineSeparator() + stringBuilder);
     }
 
-    private void appendDealerResult(final Map<String, Integer> dealerResult, final StringBuilder stringBuilder) {
-        for (final String gameOutcome : dealerResult.keySet()) {
+    private void appendDealerResult(final Map<GameOutcome, Integer> dealerResult, final StringBuilder stringBuilder) {
+        for (final GameOutcome gameOutcome : dealerResult.keySet()) {
             stringBuilder.append(dealerResult.get(gameOutcome))
-                .append(gameOutcome)
+                .append(gameOutcome.getOutcome())
                 .append(" ");
         }
     }
 
-    private void appendGuestsResult(final Map<String, String> result, final StringBuilder stringBuilder) {
-        for (final String name : result.keySet()) {
+    private void appendGuestsResult(final Map<Guest, GameOutcome> result, final StringBuilder stringBuilder) {
+        for (final Guest guest : result.keySet()) {
             stringBuilder.append(System.lineSeparator());
-            stringBuilder.append(name)
+            stringBuilder.append(guest.getName())
                 .append(": ")
-                .append(result.get(name));
+                .append(result.get(guest).getOutcome());
         }
     }
 }
