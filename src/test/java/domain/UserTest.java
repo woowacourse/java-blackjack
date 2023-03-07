@@ -1,9 +1,5 @@
 package domain;
-
-import static domain.Face.SPADE;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,37 +8,20 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class UserTest extends AbstractTestFixture {
 
-    @ParameterizedTest(name = "점수를 계산한다")
-    @CsvSource({"8,K,18", "10,5,15"})
-    void a(String letter1, String letter2, int score) {
-        var player = new User("조이", createCards(letter1, letter2));
-
-        assertThat(player.getScore()).isEqualTo(score);
-    }
-
-    @ParameterizedTest(name = "A는 무조건 플레이어에게 유리하게 계산한다")
-    @CsvSource({"J,10,21", "7,3,21", "A,A,13"})
-    void b(String letter1, String letter2, int score) {
-        var player = new User("조이", createCards(letter1, letter2, "A"));
-
-        assertThat(player.getScore()).isEqualTo(score);
-    }
-
-    @ParameterizedTest(name = "점수가 21을 초과하는지 확인한다")
-    @CsvSource({"8,K,true", "10,5,false"})
-    void c(String letter1, String letter2, boolean isBusted) {
-        var player = new User("조이", createCards(letter1, letter2, "5"));
-
-        assertThat(player.isBusted()).isEqualTo(isBusted);
-    }
-
-    @DisplayName("카드를 받는다.")
     @Test
-    void d() {
-        List<Card> cards = createCards("2");
-        var player = new User("조이", cards);
-        player.addCard(new Card(SPADE, letterFrom("K")));
+    @DisplayName("이름을 가진다")
+    void test_has_name() {
+        var name = "이름이름";
+        var user = new User(name);
 
-        assertThat(player.getScore()).isEqualTo(12);
+        assertThat(user.getName()).isEqualTo("이름이름");
+    }
+
+    @ParameterizedTest(name = "점수가 21미만이면 더 뽑을 수 있고, 21이상이면 불가하다")
+    @CsvSource({"A,false", "J,true"})
+    void test_can_hit(String lastLetter, boolean canHit) {
+        var user = new User("조이", createCards("K", lastLetter));
+
+        assertThat(user.canHit()).isEqualTo(canHit);
     }
 }
