@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class DeckFactory {
@@ -13,15 +14,12 @@ public class DeckFactory {
 
     private static Deck createBlackJackDeck() {
         Stack<Card> cards = new Stack<>();
-        for (CardNumber cardNumber : CardNumber.values()) {
-            generateCardByAllSymbol(cards, cardNumber);
-        }
+
+        Arrays.stream(CardNumber.values())
+                .forEach(cardNumber -> Arrays.stream(CardSymbol.values())
+                        .forEach(cardSymbol -> cards.add(new Card(cardNumber, cardSymbol))));
+
         return new Deck(cards);
     }
 
-    private static void generateCardByAllSymbol(Stack<Card> cards, CardNumber cardNumber) {
-        for (CardSymbol cardSymbol : CardSymbol.values()) {
-            cards.add(new Card(cardNumber, cardSymbol));
-        }
-    }
 }
