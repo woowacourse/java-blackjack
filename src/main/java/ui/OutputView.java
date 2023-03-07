@@ -1,5 +1,6 @@
 package ui;
 
+import domain.PlayerResultRepository;
 import domain.Result;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
@@ -52,10 +53,10 @@ public class OutputView {
         players.forEach(OutputView::printCardsStatusAndScoreOfUser);
     }
 
-    public static void printResults(Map<Player, Result> repository) {
-        long dealerLose = repository.values().stream().filter(result -> result == Result.WIN).count();
-        long dealerWin = repository.values().stream().filter(result -> result == Result.LOSE).count();
-        long dealerDraws = repository.values().stream().filter(result -> result == Result.DRAW).count();
+    public static void printResults(PlayerResultRepository repository) {
+        long dealerLose = repository.playerWinCount();
+        long dealerWin = repository.playerLoseCount();
+        long dealerDraws = repository.playerDrawCount();
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패", dealerWin, dealerLose);
@@ -63,7 +64,6 @@ public class OutputView {
             System.out.printf(" %d무", dealerDraws);
         }
         System.out.println();
-        repository.forEach(
-                (player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
+        repository.getRepository().forEach((player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
     }
 }

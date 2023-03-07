@@ -22,4 +22,16 @@ public class PlayerResultRepository {
     public Map<Player, Result> getRepository() {
         return repository;
     }
+
+    public long playerWinCount(){
+        return repository.values().stream().filter(result -> result == Result.WIN).count();
+    }
+
+    public long playerLoseCount(){
+        return repository.values().stream().filter(result -> result == Result.LOSE).count();
+    }
+
+    public long playerDrawCount(){
+        return repository.values().stream().filter(result -> result == Result.DRAW).count();
+    }
 }

@@ -31,7 +31,7 @@ public class BlackjackController {
         addCardToDealerIfPossible(blackjackGame);
         OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
         blackjackGame.calculateAllResults(playerResultRepository);
-        OutputView.printResults(playerResultRepository.getRepository());
+        OutputView.printResults(playerResultRepository);
     }
 
     private void addCardToDealerIfPossible(BlackjackGame blackjackGame) {
