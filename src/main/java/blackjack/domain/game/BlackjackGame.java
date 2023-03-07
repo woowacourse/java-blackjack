@@ -11,6 +11,8 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    private static final int START_CARD_DRAW_COUNT = 2;
+    private static final int ONE = 1;
     private final Participants participants;
     private final Deck deck;
 
@@ -27,12 +29,12 @@ public class BlackjackGame {
         final Dealer dealer = participants.getDealer();
         final List<Player> players = participants.getPlayers();
 
-        drawCard(dealer, 2);
-        players.forEach(player -> drawCard(player, 2));
+        drawCard(dealer, START_CARD_DRAW_COUNT);
+        players.forEach(player -> drawCard(player, START_CARD_DRAW_COUNT));
     }
 
     public void drawCard(final Participant participant) {
-        drawCard(participant, 1);
+        drawCard(participant, ONE);
     }
 
     public void drawCard(final Participant participant, final int count) {
