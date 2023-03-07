@@ -60,7 +60,7 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(name.getName(), that.name.getName());
+        return Objects.equals(name, that.name);
     }
 
     @Override
