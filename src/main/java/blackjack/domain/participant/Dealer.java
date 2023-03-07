@@ -9,12 +9,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     public static final int INIT_CARD_COUNT = 2;
     public static final int BLACKJACK_SCORE = 21;
@@ -92,6 +91,6 @@ public class Dealer extends Participant {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players.getPlayers());
+        return players.getPlayers();
     }
 }
