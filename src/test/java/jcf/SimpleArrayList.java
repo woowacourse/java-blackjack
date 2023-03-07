@@ -30,8 +30,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         for (int i = size - 1; i >= index; i--) {
             array[i + 1] = array[i];
         }
-        set(index, value);
         size += 1;
+        set(index, value);
     }
 
     private void enlargeCapacityIfExcessiveSize() {
