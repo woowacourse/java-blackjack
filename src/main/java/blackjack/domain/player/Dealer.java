@@ -4,6 +4,7 @@ import blackjack.domain.game.Result;
 
 public class Dealer extends Player {
     private static final int SCORE_LOWER_BOUND = 16;
+    private static final int FIRST_CARD_INDEX = 0;
 
     private Dealer(final Name name, final Hand hand) {
         super(name, hand);
@@ -34,5 +35,9 @@ public class Dealer extends Player {
 
     public int getCardCount() {
         return hand.getCardLetters().size();
+    }
+
+    public String getFirstCardLetter() {
+        return hand.getCardLetters().get(FIRST_CARD_INDEX);
     }
 }

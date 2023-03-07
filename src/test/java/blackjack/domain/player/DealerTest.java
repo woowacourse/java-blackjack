@@ -121,5 +121,19 @@ public class DealerTest {
 
         assertThat(hand.calculateScore()).isEqualTo(0);
     }
+
+    @Test
+    void 첫번째_카드를_반환한다() {
+        final Dealer dealer = Dealer.create();
+        final Deck deck = new FixedDeck(List.of(
+                new Card(ACE, DIAMOND),
+                new Card(JACK, CLOVER)
+        ));
+        dealer.initialDraw(deck);
+
+        final String firstCardLetter = dealer.getFirstCardLetter();
+
+        assertThat(firstCardLetter).isEqualTo("A다이아몬드");
+    }
 }
 
