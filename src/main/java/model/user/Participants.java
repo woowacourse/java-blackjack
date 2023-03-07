@@ -27,11 +27,11 @@ public class Participants {
         return new Participants(playersName, new Dealer());
     }
 
-    public List<Score> getFinalResult(final Dealer dealer) {
+    public List<Result> getFinalResult(final Dealer dealer) {
         return createFinalResultWithoutDealer(dealer.calculateTotalValue());
     }
 
-    private List<Score> createFinalResultWithoutDealer(final int dealerTotalValue) {
+    private List<Result> createFinalResultWithoutDealer(final int dealerTotalValue) {
         return players.stream()
                 .map(player -> player.judgeResult(dealerTotalValue))
                 .collect(toUnmodifiableList());

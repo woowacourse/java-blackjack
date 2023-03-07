@@ -22,7 +22,7 @@ public class Player implements Receivable {
         return user.getCardTotalValue();
     }
 
-    public Score judgeResult(int dealerTotalValue) {
+    public Result judgeResult(int dealerTotalValue) {
         return user.judgeResult(dealerTotalValue);
     }
 

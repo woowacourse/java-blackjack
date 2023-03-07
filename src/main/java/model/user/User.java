@@ -28,9 +28,9 @@ public class User {
         return hand.getTotalValue();
     }
 
-    public Score judgeResult(int dealerTotalValue) {
+    public Result judgeResult(int dealerTotalValue) {
         final int playerTotalValue = calculateTotalValue();
-        return Score.judge(dealerTotalValue, playerTotalValue);
+        return Result.judge(dealerTotalValue, playerTotalValue);
     }
 
     @Override
