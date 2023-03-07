@@ -3,7 +3,6 @@ package minimission.list;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ListStudy {
@@ -73,7 +72,24 @@ class ListStudy {
         final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
         final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
         
-        assertThat(filteredDoubleValues.size()).isEqualTo(2);
-        assertThat(filteredIntValues.size()).isEqualTo(2);
+        assertAll(
+                () -> assertThat(filteredDoubleValues.size()).isEqualTo(2),
+                () -> assertThat(filteredIntValues.size()).isEqualTo(2)
+        );
+    }
+    
+    class Printer { }
+    class LaserPrinter extends Printer { }
+    
+    @Test
+    void generic_mission5() {
+        final var laserPrinter = new LaserPrinter();
+    
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+    
+        SimpleList.copy(laserPrinters, printers);
+    
+        assertThat(printers.get(0) == laserPrinter).isTrue();
     }
 }

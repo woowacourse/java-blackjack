@@ -36,6 +36,14 @@ public interface SimpleList<E> {
         return tmpArr;
     }
     
+    static <E> void copy(SimpleList<? extends E> laserPrinters, SimpleList<E> printers) {
+        printers.clear();
+        
+        for (int i = 0; i < laserPrinters.size(); i++) {
+            printers.add(laserPrinters.get(i));
+        }
+    }
+    
     boolean add(E value);
 
     void add(int index, E value);
