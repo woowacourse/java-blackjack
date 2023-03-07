@@ -83,8 +83,10 @@ public class BlackJackController {
         outputView.printUserNameAndCardResults(renderedUserNameAndCardResults);
     }
 
-    private void printWinningResult(BlackJackGame blackJackGame) {
-        final Map<String, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
-        outputView.printWinningResult(ViewRenderer.renderWinningResult(winningResult));
+    private void printWinningResult(final BlackJackGame blackJackGame) {
+        final Map<WinningStatus, Long> dealerWinningResult = blackJackGame.getDealerWinningResult();
+        outputView.printDealerWinningResult(ViewRenderer.renderDealerWinningResult(dealerWinningResult));
+        final Map<String, WinningStatus> playersWinningResult = blackJackGame.getPlayersWinningResults();
+        outputView.printPlayersWinningResults(ViewRenderer.renderPlayersWinningResults(playersWinningResult));
     }
 }
