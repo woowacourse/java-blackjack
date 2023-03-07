@@ -29,15 +29,15 @@ public class Participants {
         }
     }
 
-    private static List<String> stripNames(List<String> names) {
-        return names.stream()
-                    .map(String::strip)
-                    .collect(Collectors.toList());
-    }
-
     private static List<Player> getParticipantsByNames(List<String> names) {
         return names.stream()
                     .map(Player::from)
+                    .collect(Collectors.toList());
+    }
+
+    private static List<String> stripNames(List<String> names) {
+        return names.stream()
+                    .map(String::strip)
                     .collect(Collectors.toList());
     }
 
