@@ -23,8 +23,7 @@ public class Dealer implements Receivable {
     }
 
     public void receiveInitialCards(final Deck deck) {
-        receiveCard(deck.pick());
-        receiveCard(deck.pick());
+        user.receiveInitialCards(deck);
     }
 
     public void receiveCard(Card card) {
