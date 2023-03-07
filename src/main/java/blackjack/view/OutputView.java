@@ -45,7 +45,7 @@ public class OutputView {
     }
 
     private static String toCardName(Card card) {
-        return LetterWord.toWord(card.getLetter()) + SymbolWord.toWord(card.getSymbol());
+        return DenominationWord.toWord(card.getDenomination()) + SuitWord.toWord(card.getSuit());
     }
 
     private static String joinAllCardNames(List<Card> cards) {

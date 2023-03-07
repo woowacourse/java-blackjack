@@ -3,14 +3,14 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     static final int SUM_MAXIMUM_BEFORE_BUST = 21;
     static final int ACE_ADDITIONAL_VALUE = 10;
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -20,8 +20,8 @@ public class Cards {
 
     public int sumScore() {
         int sum = cards.stream()
-                .map(Card::getLetterValue)
-                .reduce(0, Integer::sum);
+                .mapToInt(Card::getDenominationValue)
+                .sum();
         return addBonusScoreByAceCount(sum, countACE());
     }
 

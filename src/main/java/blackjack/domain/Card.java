@@ -4,28 +4,28 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Symbol symbol;
-    private final Letter letter;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(Symbol symbol, Letter letter) {
-        this.symbol = symbol;
-        this.letter = letter;
+    public Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     public boolean isACE() {
-        return this.letter == Letter.ACE;
+        return this.denomination == Denomination.ACE;
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public Letter getLetter() {
-        return letter;
+    public Denomination getDenomination() {
+        return denomination;
     }
 
-    public int getLetterValue() {
-        return letter.getValue();
+    public int getDenominationValue() {
+        return denomination.getValue();
     }
 
     @Override
@@ -37,11 +37,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && letter == card.letter;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, letter);
+        return Objects.hash(suit, denomination);
     }
 }

@@ -34,7 +34,7 @@ public class BlackJackGame {
     }
 
     public List<Card> openCardsByName(String participantName) {
-        return participants.findHoldingCardsByName(participantName);
+        return participants.findHandCardsByName(participantName);
     }
 
     public int hitOrStayForDealer() {

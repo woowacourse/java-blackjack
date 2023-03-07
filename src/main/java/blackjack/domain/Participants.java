@@ -96,7 +96,7 @@ public class Participants {
         return new PlayerJudgeResults(dealer.judgeAllPlayersResult(players));
     }
 
-    public List<Card> findHoldingCardsByName(String participantName) {
+    public List<Card> findHandCardsByName(String participantName) {
         Participant participant = findParticipantByName(participantName);
         return participant.getCards();
     }

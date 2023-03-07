@@ -1,7 +1,7 @@
 package blackjack.domain;
 
-import static blackjack.domain.Letter.JACK;
-import static blackjack.domain.Symbol.SPADE;
+import static blackjack.domain.Denomination.JACK;
+import static blackjack.domain.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;

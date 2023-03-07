@@ -7,12 +7,12 @@ import java.util.Objects;
 abstract class Participant {
 
     private final String name;
-    private final Cards cards;
+    private final Hand hand;
 
     public Participant(String name) {
         this.name = name;
         validateName(name);
-        cards = new Cards(new ArrayList<>());
+        hand = new Hand(new ArrayList<>());
     }
 
     private void validateName(String name) {
@@ -22,19 +22,19 @@ abstract class Participant {
     }
 
     public void take(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int computeCardsScore() {
-        return cards.sumScore();
+        return hand.sumScore();
     }
 
     public boolean isBust() {
-        return cards.hasBustedScore();
+        return hand.hasBustedScore();
     }
 
     public boolean isSafe() {
-        return cards.hasSafeScore();
+        return hand.hasSafeScore();
     }
 
     public String getName() {
@@ -42,7 +42,7 @@ abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return cards.cards();
+        return hand.cards();
     }
 
     abstract boolean isAvailable();

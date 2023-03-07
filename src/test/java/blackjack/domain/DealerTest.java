@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import static blackjack.domain.Letter.QUEEN;
-import static blackjack.domain.Letter.SEVEN;
-import static blackjack.domain.Letter.SIX;
-import static blackjack.domain.Symbol.CLUB;
-import static blackjack.domain.Symbol.SPADE;
+import static blackjack.domain.Denomination.QUEEN;
+import static blackjack.domain.Denomination.SEVEN;
+import static blackjack.domain.Denomination.SIX;
+import static blackjack.domain.Suit.CLUB;
+import static blackjack.domain.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

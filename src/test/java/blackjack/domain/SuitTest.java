@@ -7,12 +7,12 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class SymbolTest {
+class SuitTest {
 
-    @DisplayName("심볼(스페이드, 하트, 클로버, 다이아몬드)을 가진다.")
+    @DisplayName("슈트(스페이드, 하트, 클로버, 다이아몬드)을 가진다.")
     @Test
-    void should_HaveAllSymbolTypes() {
-        Assertions.assertThat(Symbol.values())
-                .containsExactlyInAnyOrder(Symbol.SPADE, Symbol.HEART, Symbol.CLUB, Symbol.DIAMOND);
+    void should_HaveAllSuitTypes() {
+        Assertions.assertThat(Suit.values())
+                .containsExactlyInAnyOrder(Suit.SPADE, Suit.HEART, Suit.CLUB, Suit.DIAMOND);
     }
 }

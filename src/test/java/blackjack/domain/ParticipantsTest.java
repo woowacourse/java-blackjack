@@ -1,12 +1,12 @@
 package blackjack.domain;
 
-import static blackjack.domain.Letter.ACE;
-import static blackjack.domain.Letter.FOUR;
-import static blackjack.domain.Letter.THREE;
-import static blackjack.domain.Letter.TWO;
-import static blackjack.domain.Symbol.DIAMOND;
-import static blackjack.domain.Symbol.HEART;
-import static blackjack.domain.Symbol.SPADE;
+import static blackjack.domain.Denomination.ACE;
+import static blackjack.domain.Denomination.FOUR;
+import static blackjack.domain.Denomination.THREE;
+import static blackjack.domain.Denomination.TWO;
+import static blackjack.domain.Suit.DIAMOND;
+import static blackjack.domain.Suit.HEART;
+import static blackjack.domain.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
