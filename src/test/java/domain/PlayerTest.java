@@ -1,3 +1,5 @@
+package domain;
+
 import domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

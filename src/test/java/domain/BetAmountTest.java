@@ -29,4 +29,13 @@ class BetAmountTest {
         assertThat(betAmount.receiveDouble().getMoney())
                 .isEqualTo(money * 2);
     }
+
+    @ParameterizedTest(name = "배팅 금액의 1.5배를 추가로(2.5배) 돌려받을 수 있다.")
+    @ValueSource(ints = {100, 2000, 30000, 100000000})
+    void receiveWithBlackjackSuccessTest(int money) {
+        BetAmount betAmount = BetAmount.from(money);
+
+        assertThat(betAmount.receiveWithBlackjack().getMoney())
+                .isEqualTo(money * 2.5);
+    }
 }

@@ -1,3 +1,5 @@
+package domain;
+
 import domain.PlayerAction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

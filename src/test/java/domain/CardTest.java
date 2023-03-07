@@ -1,3 +1,5 @@
+package domain;
+
 import domain.Card;
 import domain.CardRank;
 import domain.CardShape;
