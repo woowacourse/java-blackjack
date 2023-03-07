@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
+import blackjack.domain.GameResult;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -65,8 +66,13 @@ public class BlackJackController {
     }
 
     private void showResult() {
-        OutputView.showParticipantGameResults(blackJackGame.computeDealerGameResult(),
-                blackJackGame.computePlayerGameResults());
+        OutputView.showDealerGameResult(blackJackGame.computeDealerGameResult());
+
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        for (String playerName : playerNames) {
+            GameResult playerResult = blackJackGame.computePlayerGameResult(playerName);
+            OutputView.showPlayerGameResult(playerName, playerResult);
+        }
 
         OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
     }

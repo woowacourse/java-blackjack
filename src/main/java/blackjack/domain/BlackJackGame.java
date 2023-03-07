@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
 
@@ -64,8 +63,8 @@ public class BlackJackGame {
         return participants.openDealerGameResult();
     }
 
-    public Map<String, GameResult> computePlayerGameResults() {
-        return participants.openPlayerGameResults();
+    public GameResult computePlayerGameResult(String playerName) {
+        return participants.openPlayerGameResult(playerName);
     }
 
     public PlayerWinResults computePlayerWinResults() {

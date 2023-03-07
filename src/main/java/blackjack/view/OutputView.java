@@ -54,15 +54,17 @@ public class OutputView {
         System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
     }
 
-    public static void showParticipantGameResults(GameResult dealerResult,
-                                                  Map<String, GameResult> playerResults) {
+    public static void showDealerGameResult(GameResult dealerResult) {
         System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardNames(dealerResult.getCards()),
                 dealerResult.getSum());
-        for (Entry<String, GameResult> result : playerResults.entrySet()) {
-            GameResult gameResult = result.getValue();
-            System.out.printf(GAME_RESULT_FORMAT, result.getKey(), joinAllCardNames(gameResult.getCards()),
-                    gameResult.getSum());
-        }
+    }
+
+    public static void showPlayerGameResult(String playerName, GameResult playerResult) {
+        System.out.printf(GAME_RESULT_FORMAT,
+                playerName,
+                joinAllCardNames(playerResult.getCards()),
+                playerResult.getSum()
+        );
     }
 
     public static void showFinalResult(PlayerWinResults playerWinResults) {
