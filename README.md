@@ -18,6 +18,8 @@ flowchart
     Deck --> Card
 
     BlackjackGame --> BlackjackGameResult
+    BlackjackGame --> Deck
+    BlackjackGame --> Player
 
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView
@@ -61,7 +63,7 @@ flowchart
             - [x] 딜러와 갬블러의 점수가 같으면 무승부가 된다.
 
           | Gambler\Dealer | BLACKJACK | STOP | BUST |
-          |----------------|-----------|------|-------|
+                    |----------------|-----------|------|-------|
           | BLACKJACK | 무승부 | 겜블러 승 | 겜블러 승 |
           | STOP | 딜러 승 | 값 비교 | 겜블러 승 |
           | BUST | 딜러 승 | 딜러 승 | 무승부 |
@@ -82,7 +84,8 @@ flowchart
 
 - [x] 블랙잭 게임의 딜러는 1명 존재한다.
     - [x] 딜러는 `딜러` 라는 이름을 가진다.
-    - [x] 딜러는 게임 시작 시 카드 1장을 받는다. (추후에 한 장을 더 받는다.)
+    - [x] 딜러는 게임 시작 시 카드 2장을 받는다.
+    - [x] 딜러는 게임 시작 시 받은 카드 중 첫번째 카드를 먼저 보여준다.
     - [x] 딜러의 카드 점수의 합이 16이하이면 16을 초과할 때까지 카드를 더 받는다.
 
 **겜블러**
