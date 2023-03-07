@@ -2,6 +2,7 @@ package view;
 
 import domain.model.Card;
 import domain.model.Dealer;
+import domain.model.Participant;
 import domain.model.Player;
 import domain.vo.Result;
 import java.util.LinkedHashMap;
@@ -52,9 +53,9 @@ public class OutputView {
         System.out.println(player.getName() + COLON + stringifyCard);
     }
 
-    private static String stringifyCard(final Player player) {
+    private static String stringifyCard(final Participant participant) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        player.getCards()
+        participant.getCards()
             .stream()
             .map(Card::toString)
             .forEach(stringJoiner::add);
@@ -67,13 +68,13 @@ public class OutputView {
 
     public static void printTotalCardState(final Dealer dealer, final List<Player> players) {
         System.out.print(NEW_LINE);
-        printPlayerCardState(dealer);
-        players.forEach(OutputView::printPlayerCardState);
+        printPlayerCardState(dealer, DEALER_NAME);
+        players.forEach(player -> printPlayerCardState(player, player.getName()));
     }
 
-    private static void printPlayerCardState(final Player player) {
-        System.out.println(player.getName() + CARD + COLON + stringifyCard(player) + CARD_STATE_RESULT_SIGN
-            + player.getScore().getValue());
+    private static void printPlayerCardState(final Participant participant, final String name) {
+        System.out.println(name + CARD + COLON + stringifyCard(participant) + CARD_STATE_RESULT_SIGN
+            + participant.getScore().getValue());
     }
 
     public static void printDealerResult(final Result dealerResult) {
