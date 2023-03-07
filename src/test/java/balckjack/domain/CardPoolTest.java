@@ -6,8 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CardPoolTest {
+
     @BeforeEach
-    void init(){
+    void init() {
         CardPool.init();
     }
 

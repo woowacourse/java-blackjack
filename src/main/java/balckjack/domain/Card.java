@@ -13,7 +13,8 @@ abstract public class Card {
         this.symbol = symbol;
     }
 
-    protected void validateSymbol(String symbol) {}
+    protected void validateSymbol(String symbol) {
+    }
 
     abstract protected int getValue();
 

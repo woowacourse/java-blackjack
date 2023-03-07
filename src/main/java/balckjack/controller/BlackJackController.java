@@ -41,8 +41,8 @@ public class BlackJackController {
     }
 
     private void askPlayer(Referee referee, Player player, CardPicker cardPicker) {
-        if(isContinue(referee, player, cardPicker)) {
-            askPlayer(referee,player,cardPicker);
+        if (isContinue(referee, player, cardPicker)) {
+            askPlayer(referee, player, cardPicker);
         }
     }
 

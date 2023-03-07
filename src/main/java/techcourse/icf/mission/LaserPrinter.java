@@ -1,5 +1,5 @@
 package techcourse.icf.mission;
 
-public class LaserPrinter extends Printer{
+public class LaserPrinter extends Printer {
 
 }
