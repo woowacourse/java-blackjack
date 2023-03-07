@@ -20,4 +20,13 @@ public class Dealer extends Participant {
 
         return Collections.unmodifiableList(openCards);
     }
+
+    public void winGame(final int playerAccount) {
+        this.status.winGame(playerAccount);
+    }
+
+    public void loseGame(final double playerAccount) {
+        int loseMoney = (int) (playerAccount * 0.5);
+        status.loseGame(loseMoney);
+    }
 }
