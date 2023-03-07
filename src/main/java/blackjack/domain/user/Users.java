@@ -28,14 +28,14 @@ public class Users {
         return new CardGroup(deck.draw(), deck.draw());
     }
 
-    public Map<String, List<Card>> getStatus() {
+    public Map<String, List<Card>> getHandholdingCards() {
         return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getStatus));
+                .collect(Collectors.toUnmodifiableMap(User::getName, User::getHandholdingCards));
     }
 
-    public Map<String, List<Card>> getInitialStatus() {
+    public Map<String, List<Card>> getInitialHoldingStatus() {
         return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getInitialStatus));
+                .collect(Collectors.toUnmodifiableMap(User::getName, User::getInitialHoldingCards));
     }
 
     public boolean isDealerOverDrawLimit() {
@@ -68,13 +68,13 @@ public class Users {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
     }
 
-    public Map<String, GameResult> getWinningResult() {
+    public Map<String, GameResult> getGameResult() {
         final Dealer dealer = getDealer();
-        final Map<String, GameResult> winningResult = new HashMap<>();
+        final Map<String, GameResult> gameResult = new HashMap<>();
         for (final Player player : getPlayers()) {
-            winningResult.put(player.getName(), dealer.comparePlayer(player));
+            gameResult.put(player.getName(), dealer.comparePlayer(player));
         }
-        return winningResult;
+        return gameResult;
     }
 
     private List<Player> getPlayers() {

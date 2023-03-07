@@ -20,12 +20,12 @@ public class BlackJackGame {
         this.users = new Users(playerNames, deck);
     }
 
-    public Map<String, List<Card>> getStatus() {
-        return users.getStatus();
+    public Map<String, List<Card>> getHandholdingCards() {
+        return users.getHandholdingCards();
     }
 
-    public Map<String, List<Card>> getInitialStatus() {
-        return users.getInitialStatus();
+    public Map<String, List<Card>> getInitialHoldingCards() {
+        return users.getInitialHoldingStatus();
     }
 
     public List<String> getPlayerNames() {
@@ -51,17 +51,17 @@ public class BlackJackGame {
 
     public Map<String, CardResult> getCardResult() {
         final Map<String, CardResult> cardResult = new HashMap<>();
-        final Map<String, List<Card>> status = users.getStatus();
+        final Map<String, List<Card>> handholdingCards = users.getHandholdingCards();
 
-        for (final String name : status.keySet()) {
-            cardResult.put(name, new CardResult(status.get(name), users.getUser(name).getScore()));
+        for (final String name : handholdingCards.keySet()) {
+            cardResult.put(name, new CardResult(handholdingCards.get(name), users.getUser(name).getScore()));
         }
 
         return cardResult;
     }
 
-    public Map<String, GameResult> getWinningResult() {
-        return users.getWinningResult();
+    public Map<String, GameResult> getGameResult() {
+        return users.getGameResult();
     }
 
     public boolean isBlackJackScore(final String name) {

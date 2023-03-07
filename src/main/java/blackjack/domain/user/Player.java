@@ -13,8 +13,8 @@ public class Player extends User {
     }
 
     @Override
-    protected List<Card> getInitialStatus() {
-        return getStatus().stream()
+    protected List<Card> getInitialHoldingCards() {
+        return getHandholdingCards().stream()
                 .limit(2)
                 .collect(Collectors.toUnmodifiableList());
     }

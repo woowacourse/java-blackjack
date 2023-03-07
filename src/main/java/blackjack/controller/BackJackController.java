@@ -34,7 +34,7 @@ public class BackJackController {
     }
 
     private void printInitialStatus(BlackJackGame blackJackGame) {
-        outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialStatus()));
+        outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialHoldingCards()));
         outputView.printLineBreak();
     }
 
@@ -49,7 +49,7 @@ public class BackJackController {
     private void playFor(BlackJackGame blackJackGame, String name) {
         while (isContinuous(name, blackJackGame)) {
             blackJackGame.playPlayer(name);
-            List<Card> userCards = blackJackGame.getStatus().get(name);
+            List<Card> userCards = blackJackGame.getHandholdingCards().get(name);
             outputView.printCards(name, ViewRenderer.renderCardsToString(userCards));
         }
     }
@@ -81,7 +81,7 @@ public class BackJackController {
     }
 
     private void printWinningResult(BlackJackGame blackJackGame) {
-        Map<String, GameResult> winningResult = blackJackGame.getWinningResult();
+        Map<String, GameResult> winningResult = blackJackGame.getGameResult();
         outputView.printWinningResult(ViewRenderer.renderWinningResult(winningResult));
     }
 }

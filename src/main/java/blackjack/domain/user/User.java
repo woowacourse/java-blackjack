@@ -36,9 +36,9 @@ public abstract class User {
         return name.getValue();
     }
 
-    final public List<Card> getStatus() {
+    final public List<Card> getHandholdingCards() {
         return cardGroup.getCards();
     }
 
-    abstract protected List<Card> getInitialStatus();
+    abstract protected List<Card> getInitialHoldingCards();
 }

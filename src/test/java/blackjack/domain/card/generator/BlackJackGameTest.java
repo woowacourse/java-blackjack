@@ -40,7 +40,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestDeckGenerator(testCards));
 
-        assertThat(blackJackGame.getStatus().keySet())
+        assertThat(blackJackGame.getHandholdingCards().keySet())
                 .contains("필립", "홍실", "딜러");
     }
 
@@ -50,7 +50,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestDeckGenerator(testCards));
 
-        List<Card> initialCards = blackJackGame.getInitialStatus().values().stream()
+        List<Card> initialCards = blackJackGame.getInitialHoldingCards().values().stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
 
@@ -94,7 +94,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
 
         blackJackGame.playPlayer("필립");
-        List<Card> cards = blackJackGame.getStatus().get("필립");
+        List<Card> cards = blackJackGame.getHandholdingCards().get("필립");
 
         assertThat(cards).containsExactly(spadeAce, cloverTen, heartNine);
     }
@@ -122,7 +122,7 @@ class BlackJackGameTest {
     void getWinningResultTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"), new TestDeckGenerator(testCards));
 
-        Map<String, GameResult> winningResult = blackJackGame.getWinningResult();
+        Map<String, GameResult> winningResult = blackJackGame.getGameResult();
 
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);

@@ -16,8 +16,8 @@ public class Dealer extends User {
     }
 
     @Override
-    public List<Card> getInitialStatus() {
-        return List.of(getStatus().get(0));
+    public List<Card> getInitialHoldingCards() {
+        return List.of(getHandholdingCards().get(0));
     }
 
     public GameResult comparePlayer(final Player player) {

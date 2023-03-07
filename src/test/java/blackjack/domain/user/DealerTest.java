@@ -30,7 +30,7 @@ class DealerTest {
 
         assertSoftly(softly -> {
             softly.assertThat(dealer.getName()).isEqualTo(Dealer.DEALER_NAME);
-            softly.assertThat(dealer.getStatus()).containsExactly(firstCard, secondCard);
+            softly.assertThat(dealer.getHandholdingCards()).containsExactly(firstCard, secondCard);
         });
     }
 
@@ -39,7 +39,7 @@ class DealerTest {
     void getInitialStatus() {
         User dealer = new Dealer(initialGroup);
 
-        assertThat(dealer.getInitialStatus()).containsExactly(firstCard);
+        assertThat(dealer.getInitialHoldingCards()).containsExactly(firstCard);
     }
 
     @Test

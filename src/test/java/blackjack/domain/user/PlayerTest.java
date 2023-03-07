@@ -27,6 +27,6 @@ class PlayerTest {
     void getInitialStatus() {
         final User player = new Player(name, initialGroup);
 
-        assertThat(player.getInitialStatus()).containsExactly(spadeAce, cloverEight);
+        assertThat(player.getInitialHoldingCards()).containsExactly(spadeAce, cloverEight);
     }
 }

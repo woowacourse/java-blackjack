@@ -39,7 +39,7 @@ class UserTest {
 
         assertSoftly(softly -> {
             softly.assertThat(user.getName()).isEqualTo(name);
-            softly.assertThat(user.getStatus()).containsExactly(spadeAce, cloverEight);
+            softly.assertThat(user.getHandholdingCards()).containsExactly(spadeAce, cloverEight);
         });
     }
 
@@ -61,7 +61,7 @@ class UserTest {
 
         user.drawCard(deck);
 
-        Assertions.assertThat(user.getStatus()).containsExactly(spadeAce, cloverEight, heartJack);
+        Assertions.assertThat(user.getHandholdingCards()).containsExactly(spadeAce, cloverEight, heartJack);
     }
 
     @DisplayName("버스트 확인 테스트")
@@ -115,7 +115,7 @@ class UserTest {
         }
 
         @Override
-        protected List<Card> getInitialStatus() {
+        protected List<Card> getInitialHoldingCards() {
             return null;
         }
     }

@@ -32,7 +32,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getStatus().values().stream()
+        List<Card> initialCards = users.getHandholdingCards().values().stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards);
@@ -44,7 +44,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getInitialStatus().values().stream()
+        List<Card> initialCards = users.getInitialHoldingStatus().values().stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
@@ -67,7 +67,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립"), deck);
 
         users.drawDealer(deck);
-        int dealerCardCount = users.getStatus().get("딜러").size();
+        int dealerCardCount = users.getHandholdingCards().get("딜러").size();
 
         assertThat(dealerCardCount).isEqualTo(3);
     }
@@ -102,7 +102,7 @@ class UsersTest {
     void getWinningResultTest() {
         final Users users = new Users(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
 
-        Map<String, GameResult> winningResult = users.getWinningResult();
+        Map<String, GameResult> winningResult = users.getGameResult();
 
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
