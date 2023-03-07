@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.player.CardDecisionStrategy;
 import java.util.List;
 
 import blackjack.domain.game.BlackjackGame;
@@ -14,7 +13,6 @@ import blackjack.domain.participant.ParticipantResultDto;
 import blackjack.domain.participant.player.PlayerWinningDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.function.Consumer;
 
 public class Controller {
     private final InputView inputView;
