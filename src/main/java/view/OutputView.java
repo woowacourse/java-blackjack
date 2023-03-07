@@ -1,9 +1,9 @@
 package view;
 
-import static domain.Result.DRAW;
 import static domain.Result.LOSE;
 import static domain.Result.WIN;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,21 +60,20 @@ public class OutputView {
     }
 
     public void printResult(User user, Result result) {
-        System.out.println(user.getName() + ": " + result.getResult());
+        System.out.println(user.getName() + ": " + getDisplay(result));
     }
 
     public void printDealerResults(List<Result> results) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        long winCount = countResults(WIN, results);
-        long loseCount = countResults(LOSE, results);
-        long drawCount = countResults(DRAW, results);
-        String result = winCount + "승 " + drawCount + "무 " + loseCount + "패";
-        System.out.println("딜러: " + result);
+        String renderedResults = Arrays.stream(Result.values())
+                .map(targetResult -> getDisplay(targetResult, results))
+                .collect(Collectors.joining(" "));
+        System.out.println("딜러: " + renderedResults);
     }
 
-    private long countResults(Result target, List<Result> results) {
+    private long countResults(Result targetResult, List<Result> results) {
         return results.stream()
-                .filter(result -> result.equals(target))
+                .filter(result -> result.equals(targetResult))
                 .count();
     }
 
@@ -88,6 +87,20 @@ public class OutputView {
         return users.stream()
                 .map(User::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    private String getDisplay(Result targetResult, List<Result> results) {
+        return countResults(targetResult, results) + getDisplay(targetResult);
+    }
+
+    private String getDisplay(Result result) {
+        if (result == WIN) {
+            return "승";
+        }
+        if (result == LOSE) {
+            return "패";
+        }
+        return "무";
     }
 
     private String getCardDisplay(Card card) {
