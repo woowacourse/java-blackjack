@@ -25,6 +25,7 @@ class CardNumberTest {
 
         // when
         List<Integer> result = CardNumber.getScoresByNumber(number);
+
         // then
         assertThat(result).isEqualTo(expected);
     }
