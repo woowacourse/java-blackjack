@@ -86,7 +86,7 @@ public class ViewRenderer {
         userNameAndCardResults
                 .forEach((key, value) -> renderedUserNameAndCardResults.put(key, renderCardResults(value)));
 
-        return renderedUserNameAndCardResults;
+        return Collections.unmodifiableMap(renderedUserNameAndCardResults);
     }
 
     private static String renderCardResults(final CardResult cardResult) {

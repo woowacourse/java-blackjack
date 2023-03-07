@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -69,5 +71,21 @@ class ViewRendererTest {
             softly.assertThat(renderedWinningResult.get("무 ")).isEqualTo(4);
             softly.assertThat(renderedWinningResult.get("패")).isEqualTo(2);
         });
+    }
+
+    @Test
+    @DisplayName("유저의 이름과 카드결과를 렌더링하는 기능 테스트")
+    void renderUserNameAndCardResultsTest() {
+        final CardGroup cardGroup = new CardGroup(
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.DIAMOND, CardNumber.NINE)
+        );
+        final Map<String, CardResult> userNameAndCardResults = Map.of("딜러",
+                new CardResult(cardGroup, cardGroup.getScore()));
+        final Map<String, String> renderedUserNameAndCardResults = ViewRenderer.renderUserNameAndCardResults(
+                userNameAndCardResults);
+
+        assertThat(renderedUserNameAndCardResults)
+                .containsExactly(entry("딜러", "A스페이드, 9다이아몬드 - 결과: 20"));
     }
 }
