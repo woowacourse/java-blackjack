@@ -13,6 +13,7 @@ import static domain.card.CardPattern.CLOVER;
 import static domain.card.CardPattern.DIAMOND;
 import static domain.card.CardPattern.HEART;
 import static domain.card.CardPattern.SPADE;
+import static domain.game.GameResult.BLACKJACK_WIN;
 import static domain.participant.ParticipantOffset.DEALER;
 import static domain.participant.ParticipantOffset.PLAYER;
 import static domain.game.GameResult.DRAW;
@@ -94,6 +95,44 @@ public final class ParticipantArguments {
                         List.of(Card.of(DIAMOND, TWO), Card.of(DIAMOND, THREE)), DRAW),
                 Arguments.of(List.of(Card.of(HEART, TWO), Card.of(HEART, THREE)),
                         List.of(Card.of(DIAMOND, FOUR), Card.of(DIAMOND, THREE)), WIN)
+        );
+    }
+
+    private static Stream<Arguments> makePlayerWinByBlackJack() {
+        return Stream.of(
+                Arguments.of(List.of(Card.of(DIAMOND, THREE), Card.of(DIAMOND, TWO)),
+                        List.of(Card.of(HEART, ACE), Card.of(HEART, TEN)),
+                        BLACKJACK_WIN),
+                Arguments.of(List.of(Card.of(DIAMOND, TEN), Card.of(HEART, TEN), Card.of(CLOVER, TEN)),
+                        List.of(Card.of(HEART, ACE), Card.of(HEART, TEN)),
+                        BLACKJACK_WIN)
+        );
+    }
+
+    private static Stream<Arguments> makeDrawByBlackJack() {
+        return Stream.of(
+                Arguments.of(List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, ACE)),
+                        List.of(Card.of(HEART, ACE), Card.of(HEART, TEN)),
+                        DRAW)
+        );
+    }
+
+    private static Stream<Arguments> makeLoseByBust() {
+        return Stream.of(
+                Arguments.of(List.of(Card.of(DIAMOND, TEN), Card.of(HEART, TEN), Card.of(CLOVER, TEN)),
+                        List.of(Card.of(DIAMOND, KING), Card.of(HEART, QUEEN), Card.of(CLOVER, JACK)),
+                        LOSE)
+        );
+    }
+
+    private static Stream<Arguments> makeLoseByPlayerBust() {
+        return Stream.of(
+                Arguments.of(List.of(Card.of(DIAMOND, TEN), Card.of(HEART, TEN)),
+                        List.of(Card.of(DIAMOND, KING), Card.of(HEART, QUEEN), Card.of(CLOVER, JACK)),
+                        LOSE),
+                Arguments.of(List.of(Card.of(DIAMOND, TEN), Card.of(HEART, ACE)),
+                        List.of(Card.of(DIAMOND, KING), Card.of(HEART, QUEEN), Card.of(CLOVER, JACK)),
+                        LOSE)
         );
     }
 

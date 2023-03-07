@@ -4,7 +4,9 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.game.GameResult;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -84,22 +86,98 @@ class DealerTest {
                 .isSameAs(expected);
     }
 
-    @ParameterizedTest(name = "calculateResult()는 플레이어를 건네주면 게임 결과를 반환한다")
-    @MethodSource(value = "domain.helper.ParticipantArguments#makeParticipantsCards")
-    void calculateResult_givenPlayer_thenReturnGameResult(final List<Card> dealerCards,
-            final List<Card> playerCards, final GameResult expected) {
-        // given
-        final Dealer dealer = Dealer.create();
-        final Player player = Player.create("a");
-        dealerCards.forEach(dealer::addCard);
-        playerCards.forEach(player::addCard);
+    @Nested
+    @DisplayName("calculateResult() 테스트")
+    class CalculateResultMethodTest {
 
-        // when
-        GameResult actual = dealer.calculateResult(player);
+        private Dealer dealer;
+        private Player player;
 
-        // then
-        assertThat(actual)
+        @BeforeEach
+        void init() {
+            dealer = Dealer.create();
+            player = Player.create("a");
+        }
+
+        @ParameterizedTest(name = "플레이어의 카드를 건네주면 점수 차이에 의한 게임 결과를 반환한다")
+        @MethodSource(value = "domain.helper.ParticipantArguments#makeParticipantsCards")
+        void calculateResult_givenPlayer_thenReturnGameResultByScore(final List<Card> dealerCards,
+                final List<Card> playerCards, final GameResult expected) {
+            // given
+            dealerCards.forEach(dealer::addCard);
+            playerCards.forEach(player::addCard);
+
+            // when
+            GameResult actual = dealer.calculateResult(player);
+
+            // then
+            assertThat(actual)
+                    .isSameAs(expected);
+        }
+
+        @ParameterizedTest(name = "플레이어의 카드를 건네주면 플레이어가 블랙잭인 경우의 게임 결과를 반환한다")
+        @MethodSource(value = "domain.helper.ParticipantArguments#makePlayerWinByBlackJack")
+        void calculateResult_givenPlayer_thenReturnBlackJackWin(final List<Card> dealerCards,
+                final List<Card> playerCards, final GameResult expected) {
+            // given
+            dealerCards.forEach(dealer::addCard);
+            playerCards.forEach(player::addCard);
+
+            // when
+            GameResult actual = dealer.calculateResult(player);
+
+            // then
+            assertThat(actual)
+                    .isSameAs(expected);
+        }
+
+        @ParameterizedTest(name = "플레이어의 카드를 건네주면 플레이어와 딜러가 모두 블랙잭인 경우의 게임 결과를 반환한다")
+        @MethodSource(value = "domain.helper.ParticipantArguments#makeDrawByBlackJack")
+        void calculateResult_givenPlayer_thenReturnDrawByBlackJack(final List<Card> dealerCards,
+                final List<Card> playerCards, final GameResult expected) {
+            // given
+            dealerCards.forEach(dealer::addCard);
+            playerCards.forEach(player::addCard);
+
+            // when
+            GameResult actual = dealer.calculateResult(player);
+
+            // then
+            assertThat(actual)
                 .isSameAs(expected);
+        }
+
+        @ParameterizedTest(name = "플레이어의 카드를 건네주면 플레이어와 딜러가 모두 버스트인 경우의 게임 결과를 반환한다")
+        @MethodSource(value = "domain.helper.ParticipantArguments#makeLoseByBust")
+        void calculateResult_givenPlayer_thenReturnLoseByBust(final List<Card> dealerCards,
+                final List<Card> playerCards, final GameResult expected) {
+            // given
+            dealerCards.forEach(dealer::addCard);
+            playerCards.forEach(player::addCard);
+
+            // when
+            GameResult actual = dealer.calculateResult(player);
+
+            // then
+            assertThat(actual)
+                    .isSameAs(expected);
+        }
+
+        @ParameterizedTest(name = "플레이어의 카드를 건네주면 플레이어가 버스트인 경우의 게임 결과를 반환한다")
+        @MethodSource(value = "domain.helper.ParticipantArguments#makeLoseByPlayerBust")
+        void calculateResult_givenPlayer_thenReturnLoseByPlayerBust(final List<Card> dealerCards,
+                final List<Card> playerCards, final GameResult expected) {
+            // given
+            dealerCards.forEach(dealer::addCard);
+            playerCards.forEach(player::addCard);
+
+            // when
+            GameResult actual = dealer.calculateResult(player);
+
+            // then
+            assertThat(actual)
+                    .isSameAs(expected);
+        }
     }
 
     @Test

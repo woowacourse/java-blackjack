@@ -18,15 +18,7 @@ public final class Dealer extends Participant {
     }
 
     public GameResult calculateResult(Participant player) {
-        final ParticipantCard playerCard = player.participantCard;
-
-        if (checkDealerWin(playerCard)) {
-            return GameResult.LOSE;
-        }
-        if (checkPlayerWin(playerCard)) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
+        return calculateGameResult(this.participantCard, player.participantCard);
     }
 
     @Override
@@ -34,20 +26,31 @@ public final class Dealer extends Participant {
         return participantCard.canDraw(STANDARD_GIVEN_SCORE);
     }
 
-    private boolean checkDealerWin(final ParticipantCard playerCard) {
-        final ParticipantCard dealerCard = this.participantCard;
+    private GameResult calculateGameResult(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
+        if (checkPlayerBlackJackWin(dealerCard, playerCard)) {
+            return GameResult.BLACKJACK_WIN;
+        }
+        if (checkDealerWin(dealerCard, playerCard)) {
+            return GameResult.LOSE;
+        }
+        if (checkPlayerWin(dealerCard, playerCard)) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
 
+    private boolean checkPlayerBlackJackWin(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
+        return playerCard.checkBlackJack() && !dealerCard.checkBlackJack();
+    }
+
+    private boolean checkDealerWin(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
         return playerCard.checkBust()
-                || dealerCard.checkBlackJack()
-                || dealerCard.checkBust() && playerCard.checkBust()
+                || dealerCard.checkBlackJack() && !playerCard.checkBlackJack()
                 || !dealerCard.checkBust() && dealerCard.checkGreaterScoreThan(playerCard);
     }
 
-    private boolean checkPlayerWin(final ParticipantCard playerCard) {
-        final ParticipantCard dealerCard = this.participantCard;
-
+    private boolean checkPlayerWin(final ParticipantCard dealerCard, final ParticipantCard playerCard) {
         return dealerCard.checkBust()
-                || playerCard.checkBlackJack()
                 || playerCard.checkGreaterScoreThan(dealerCard);
     }
 
