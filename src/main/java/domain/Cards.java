@@ -37,8 +37,8 @@ public class Cards {
         return Math.toIntExact(cards.stream().filter(s -> s.isAce()).count());
     }
 
-    public boolean isOverBlackJack(){
-        return getSum() > BLACK_JACK;
+    public boolean isOverBlackJack() {
+        return getSum() >= BLACK_JACK;
     }
 
     public List<Card> getCards() {
