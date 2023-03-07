@@ -6,41 +6,41 @@ import java.util.Map;
 
 public class Card {
 
-    private static final Map<Symbol, Map<Number, Card>> cache = new HashMap<>();
+    private static final Map<Suit, Map<Denomination, Card>> cache = new HashMap<>();
 
     static {
-        List<Symbol> symbols = Symbol.getAll();
-        for (Symbol symbol : symbols) {
-            cache.put(symbol, createAllNumberCard(symbol));
+        List<Suit> suits = Suit.getAll();
+        for (Suit suit : suits) {
+            cache.put(suit, createAllNumberCard(suit));
         }
     }
 
-    private final Symbol symbol;
-    private final Number number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    private Card(Symbol symbol, Number number) {
-        this.symbol = symbol;
-        this.number = number;
+    private Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
-    public static Card of(Symbol symbol, Number number) {
-        return cache.get(symbol).get(number);
+    public static Card of(Suit suit, Denomination denomination) {
+        return cache.get(suit).get(denomination);
     }
 
-    private static Map<Number, Card> createAllNumberCard(Symbol symbol) {
-        List<Number> numbers = Number.getAll();
-        Map<Number, Card> numberCard = new HashMap<>();
-        for (Number number : numbers) {
-            numberCard.put(number, new Card(symbol, number));
+    private static Map<Denomination, Card> createAllNumberCard(Suit suit) {
+        List<Denomination> denominations = Denomination.getAll();
+        Map<Denomination, Card> numberCard = new HashMap<>();
+        for (Denomination denomination : denominations) {
+            numberCard.put(denomination, new Card(suit, denomination));
         }
         return numberCard;
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public Number getNumber() {
-        return number;
+    public Denomination getDenomination() {
+        return denomination;
     }
 }

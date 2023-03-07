@@ -20,15 +20,15 @@ public class Dealer extends Participant {
     }
 
     public Card getFirst() {
-        List<Card> cards = this.cards.getCards();
-        if (cards.isEmpty()) {
+        List<Card> hand = this.hand.getHand();
+        if (hand.isEmpty()) {
             throw new IllegalStateException("잘못된 접근입니다.");
         }
-        return cards.get(FIRST_CARD_INDEX);
+        return hand.get(FIRST_CARD_INDEX);
     }
 
     private boolean isUnderCount() {
-        return cards.getCount() < MAX_CARD_COUNT;
+        return hand.getCount() < MAX_CARD_COUNT;
     }
 
     private boolean isUnderScore() {

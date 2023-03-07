@@ -3,13 +3,13 @@ package blackjack.domain.card;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Symbol {
+public enum Suit {
     SPADE,
     DIAMOND,
     HEART,
     CLOVER;
 
-    public static List<Symbol> getAll() {
+    public static List<Suit> getAll() {
         return Arrays.asList(values());
     }
 }

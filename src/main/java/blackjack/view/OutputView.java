@@ -2,10 +2,10 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Result;
-import blackjack.dto.DealerCardsScoreResponse;
+import blackjack.dto.DealerHandScoreResponse;
 import blackjack.dto.DealerPlayerResultResponse;
-import blackjack.dto.PlayerNameCardsResponse;
-import blackjack.dto.PlayerNameCardsScoreResponse;
+import blackjack.dto.PlayerNameHandResponse;
+import blackjack.dto.PlayerNameHandScoreResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -41,10 +41,10 @@ public class OutputView {
         System.out.println(DEALER_NAME + DELIMITER + mapCard(dealerFirstCard));
     }
 
-    public void showPlayerNameCards(PlayerNameCardsResponse playerNameCards) {
-        String name = playerNameCards.getName();
-        List<Card> cards = playerNameCards.getCards();
-        printMessage(name + CARD + DELIMITER + convertCard(cards));
+    public void showPlayerNameHand(PlayerNameHandResponse playerNameHand) {
+        String name = playerNameHand.getName();
+        List<Card> hand = playerNameHand.getHand();
+        printMessage(name + CARD + DELIMITER + convertCard(hand));
     }
 
     public void showDealerDrawPossible() {
@@ -57,29 +57,29 @@ public class OutputView {
         printMessage(DEALER_IMPOSSIBLE_MESSAGE);
     }
 
-    public void showTotalScoreDealer(DealerCardsScoreResponse dealerCardsScore) {
-        List<Card> cards = dealerCardsScore.getCards();
-        int score = dealerCardsScore.getScore();
+    public void showTotalScoreDealer(DealerHandScoreResponse dealerHandScore) {
+        List<Card> hand = dealerHandScore.getHand();
+        int score = dealerHandScore.getScore();
         printMessage(LINE_SEPARATOR);
-        printMessage(DEALER_NAME + DELIMITER + convertCard(cards) + RESULT_MESSAGE + score);
+        printMessage(DEALER_NAME + DELIMITER + convertCard(hand) + RESULT_MESSAGE + score);
     }
 
-    public void showTotalScorePlayer(PlayerNameCardsScoreResponse playerNameCardsScore) {
-        String name = playerNameCardsScore.getName();
-        List<Card> cards = playerNameCardsScore.getCards();
-        int score = playerNameCardsScore.getScore();
-        printMessage(name + DELIMITER + convertCard(cards) + RESULT_MESSAGE + score);
+    public void showTotalScorePlayer(PlayerNameHandScoreResponse playerNameHandScore) {
+        String name = playerNameHandScore.getName();
+        List<Card> hand = playerNameHandScore.getHand();
+        int score = playerNameHandScore.getScore();
+        printMessage(name + DELIMITER + convertCard(hand) + RESULT_MESSAGE + score);
     }
 
-    public void showAllPlayerNameCards(List<PlayerNameCardsResponse> allPlayerNameAndCards) {
-        for (PlayerNameCardsResponse playerNameAndCards : allPlayerNameAndCards) {
-            showPlayerNameCards(playerNameAndCards);
+    public void showAllPlayerNameHand(List<PlayerNameHandResponse> allPlayerNameAndHand) {
+        for (PlayerNameHandResponse playerNameAndHand : allPlayerNameAndHand) {
+            showPlayerNameHand(playerNameAndHand);
         }
     }
 
-    public void showAllPlayerNameCardsScore(List<PlayerNameCardsScoreResponse> allPlayerNameCardsScore) {
-        for (PlayerNameCardsScoreResponse playerNameCardsScore : allPlayerNameCardsScore) {
-            showTotalScorePlayer(playerNameCardsScore);
+    public void showAllPlayerNameHandScore(List<PlayerNameHandScoreResponse> allPlayerNameHandScore) {
+        for (PlayerNameHandScoreResponse playerNameHandScore : allPlayerNameHandScore) {
+            showTotalScorePlayer(playerNameHandScore);
         }
     }
 
@@ -104,14 +104,14 @@ public class OutputView {
         printMessage(name + DELIMITER + ResultMapper.map(result));
     }
 
-    private String convertCard(List<Card> inputCards) {
-        return inputCards.stream()
+    private String convertCard(List<Card> inputHand) {
+        return inputHand.stream()
                 .map(this::mapCard)
                 .collect(Collectors.joining(JOINER));
     }
 
     private String mapCard(Card card) {
-        return NumberMapper.map(card.getNumber()) + SymbolMapper.map(card.getSymbol());
+        return NumberMapper.map(card.getDenomination()) + SuitMapper.map(card.getSuit());
     }
 
     private void printMessage(String message) {

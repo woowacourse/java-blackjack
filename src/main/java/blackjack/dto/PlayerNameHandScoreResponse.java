@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerNameCardsScoreResponse {
+public class PlayerNameHandScoreResponse {
 
     private final String name;
-    private final List<Card> cards;
+    private final List<Card> hand;
     private final int score;
 
-    public PlayerNameCardsScoreResponse(String name, List<Card> cards, int score) {
+    public PlayerNameHandScoreResponse(String name, List<Card> hand, int score) {
         this.name = name;
-        this.cards = new ArrayList<>(cards);
+        this.hand = new ArrayList<>(hand);
         this.score = score;
     }
 
@@ -22,8 +22,8 @@ public class PlayerNameCardsScoreResponse {
         return name;
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
     public int getScore() {

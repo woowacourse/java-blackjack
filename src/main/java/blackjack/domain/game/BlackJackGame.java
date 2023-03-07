@@ -7,10 +7,10 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.DealerCardsScoreResponse;
+import blackjack.dto.DealerHandScoreResponse;
 import blackjack.dto.DealerPlayerResultResponse;
-import blackjack.dto.PlayerNameCardsResponse;
-import blackjack.dto.PlayerNameCardsScoreResponse;
+import blackjack.dto.PlayerNameHandResponse;
+import blackjack.dto.PlayerNameHandScoreResponse;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -61,32 +61,6 @@ public class BlackJackGame {
         }
     }
 
-    public List<String> findAllPlayerNames() {
-        return players.getPlayers().stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public Card findDealerFirstCard() {
-        return dealer.getCards().getCards().get(0);
-    }
-
-    public String findPlayerName(int playerIndex) {
-        return players.getPlayers().get(playerIndex).getName();
-    }
-
-    public int getTotalPlayerCount() {
-        return players.getPlayers().size();
-    }
-
-    public boolean canPassDealerCard() {
-        return dealer.canReceive();
-    }
-
-    public boolean canPassPlayerCard(int playerIndex) {
-        return players.getPlayers().get(playerIndex).canReceive();
-    }
-
     private void drawCard(Participant participant, int count) {
         for (int cardCount = 0; cardCount < count; cardCount++) {
             passCard(participant);
@@ -100,32 +74,58 @@ public class BlackJackGame {
         }
     }
 
-    public PlayerNameCardsResponse findPlayerNameAndCards(int playerIndex) {
+    public String findPlayerName(int playerIndex) {
+        return players.getPlayers().get(playerIndex).getName();
+    }
+
+    public boolean canPassDealerCard() {
+        return dealer.canReceive();
+    }
+
+    public List<String> findAllPlayerNames() {
+        return players.getPlayers().stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
+    public Card findDealerFirstCard() {
+        return dealer.getFirst();
+    }
+
+    public boolean canPassPlayerCard(int playerIndex) {
+        return players.getPlayers().get(playerIndex).canReceive();
+    }
+
+    public PlayerNameHandResponse findPlayerNameHand(int playerIndex) {
         Player player = players.getPlayers().get(playerIndex);
-        return convertNameCards(player);
+        return convertNameHand(player);
     }
 
-    public List<PlayerNameCardsResponse> findAllPlayerNameAndCards() {
-        List<PlayerNameCardsResponse> allPlayerNameCards = new ArrayList<>();
+    public List<PlayerNameHandResponse> findAllPlayerNameHand() {
+        List<PlayerNameHandResponse> allPlayerNameHand = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            allPlayerNameCards.add(convertNameCards(player));
+            allPlayerNameHand.add(convertNameHand(player));
         }
-        return allPlayerNameCards;
+        return allPlayerNameHand;
     }
 
-    public DealerCardsScoreResponse findDealerCardsScore() {
-        return new DealerCardsScoreResponse(
-                dealer.getCards().getCards(),
+    public int getTotalPlayerCount() {
+        return players.getPlayers().size();
+    }
+
+    public DealerHandScoreResponse findDealerHandScore() {
+        return new DealerHandScoreResponse(
+                dealer.getHand().getHand(),
                 dealer.calculateScore().getValue()
         );
     }
 
-    public List<PlayerNameCardsScoreResponse> findAllPlayerNameCardsScore() {
-        List<PlayerNameCardsScoreResponse> allPlayerNameCardsScore = new ArrayList<>();
+    public List<PlayerNameHandScoreResponse> findAllPlayerNameHandScore() {
+        List<PlayerNameHandScoreResponse> allPlayerNameHandScore = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            allPlayerNameCardsScore.add(convertNameCardsScore(player));
+            allPlayerNameHandScore.add(convertNameHandScore(player));
         }
-        return allPlayerNameCardsScore;
+        return allPlayerNameHandScore;
     }
 
     public DealerPlayerResultResponse findDealerPlayerResult() {
@@ -135,17 +135,17 @@ public class BlackJackGame {
         return new DealerPlayerResultResponse(dealerResult, allPlayerResult);
     }
 
-    private PlayerNameCardsResponse convertNameCards(Player player) {
-        return new PlayerNameCardsResponse(
+    private PlayerNameHandResponse convertNameHand(Player player) {
+        return new PlayerNameHandResponse(
                 player.getName(),
-                player.getCards().getCards()
+                player.getHand().getHand()
         );
     }
 
-    private PlayerNameCardsScoreResponse convertNameCardsScore(Player player) {
-        return new PlayerNameCardsScoreResponse(
+    private PlayerNameHandScoreResponse convertNameHandScore(Player player) {
+        return new PlayerNameHandScoreResponse(
                 player.getName(),
-                player.getCards().getCards(),
+                player.getHand().getHand(),
                 player.calculateScore().getValue()
         );
     }

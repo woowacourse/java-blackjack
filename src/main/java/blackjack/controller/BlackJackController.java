@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.game.BlackJackGame;
-import blackjack.dto.PlayerNameCardsResponse;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -21,7 +20,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        newBlackJackGame();
+        createBlackJackGame();
 
         passInitialCard();
 
@@ -30,13 +29,13 @@ public class BlackJackController {
         finishGame();
     }
 
-    private void newBlackJackGame() {
+    private void createBlackJackGame() {
         try {
             List<String> names = inputView.readNames();
             blackJackGame = BlackJackGame.createByPlayerNames(names);
         } catch (IllegalArgumentException e) {
             outputView.showError(e.getMessage());
-            newBlackJackGame();
+            createBlackJackGame();
         }
     }
 
@@ -44,26 +43,25 @@ public class BlackJackController {
         blackJackGame.setUp();
         outputView.showInitStatus(blackJackGame.findAllPlayerNames());
         outputView.showDealerFirstCard(blackJackGame.findDealerFirstCard());
-        outputView.showAllPlayerNameCards(blackJackGame.findAllPlayerNameAndCards());
+        outputView.showAllPlayerNameHand(blackJackGame.findAllPlayerNameHand());
     }
 
     private void passExtraCard() {
-        passExtraCardToPlayers();
+        passExtraCardToAllPlayers();
         passExtraCardToDealer();
     }
 
-    private void passExtraCardToPlayers() {
+    private void passExtraCardToAllPlayers() {
         int totalPlayerCount = blackJackGame.getTotalPlayerCount();
         for (int playerIndex = 0; playerIndex < totalPlayerCount; playerIndex++) {
-            addExtraCard(playerIndex);
+            passExtraCard(playerIndex);
         }
     }
 
-    private void addExtraCard(int playerIndex) {
+    private void passExtraCard(int playerIndex) {
         while (isContinuePassPlayerCard(playerIndex)) {
             blackJackGame.passPlayerCard(playerIndex);
-            PlayerNameCardsResponse playerNameCards = blackJackGame.findPlayerNameAndCards(playerIndex);
-            outputView.showPlayerNameCards(playerNameCards);
+            outputView.showPlayerNameHand(blackJackGame.findPlayerNameHand(playerIndex));
         }
     }
 
@@ -89,8 +87,8 @@ public class BlackJackController {
     }
 
     private void finishGame() {
-        outputView.showTotalScoreDealer(blackJackGame.findDealerCardsScore());
-        outputView.showAllPlayerNameCardsScore(blackJackGame.findAllPlayerNameCardsScore());
+        outputView.showTotalScoreDealer(blackJackGame.findDealerHandScore());
+        outputView.showAllPlayerNameHandScore(blackJackGame.findAllPlayerNameHandScore());
         outputView.showTotalResult(blackJackGame.findDealerPlayerResult());
     }
 

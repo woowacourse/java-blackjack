@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Number {
+public enum Denomination {
     ACE(11),
     TWO(2),
     THREE(3),
@@ -20,7 +20,7 @@ public enum Number {
 
     private final int value;
 
-    Number(int value) {
+    Denomination(int value) {
         this.value = value;
     }
 
@@ -28,7 +28,7 @@ public enum Number {
         return value;
     }
 
-    public static List<Number> getAll() {
+    public static List<Denomination> getAll() {
         return Arrays.asList(values());
     }
 }
