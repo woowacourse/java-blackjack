@@ -4,7 +4,7 @@ public class PlayerName {
 
     private static final String BLANK_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이어의 이름은 빈 칸일 수 없습니다.";
     private static final String NULL_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이어의 이름은 null일 수 없습니다.";
-    private static final String EMPTY_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이어의 이름은 EMPTY일 수 없습니다.";
+    private static final String EMPTY_ERROR_GUIDE_MESSAGE = "[ERROR] 플레이가어의 이름은 Empty일 수 없습니다.";
 
     private final String name;
 
