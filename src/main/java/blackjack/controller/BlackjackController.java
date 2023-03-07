@@ -55,13 +55,6 @@ public class BlackjackController {
         printParticipantsInitCards(participants);
     }
 
-    private void distributeTwoCards(final Deck deck, final Participant participant) {
-        for (int i = 0; i < NUMBER_OF_SETTING_CARDS; i++) {
-            Card drawnCard = deck.drawCard();
-            participant.receiveCard(drawnCard);
-        }
-    }
-
     private void printParticipantsInitCards(final Participants participants) {
         outputView.printDistributeCardsMessage(getPlayerNames(participants.getPlayers()));
         outputView.printDealerInitCards(getDealersCards(participants.getDealer()));
@@ -161,8 +154,8 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    private List<String> getCurrentCards(final Cards cards) {
-        return cards.getCards().stream()
+    private List<String> getCurrentCards(final List<Card> cards) {
+        return cards.stream()
                 .map(Card::getCardInfo)
                 .collect(Collectors.toList());
     }
@@ -170,7 +163,7 @@ public class BlackjackController {
     private Map<String, String> getPlayerResult(final Map<Player, Result> playerResult) {
         Map<String, String> playerResultWithName = new HashMap<>();
 
-        for(Player player: playerResult.keySet()) {
+        for (Player player : playerResult.keySet()) {
             playerResultWithName.put(player.getName(), playerResult.get(player).getState());
         }
         return playerResultWithName;

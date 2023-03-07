@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import java.util.List;
 
 public class Participants {
@@ -10,6 +12,25 @@ public class Participants {
     public Participants(final Dealer dealer, final Players players) {
         this.dealer = dealer;
         this.players = players;
+    }
+
+    public void receiveCards(final Deck deck, final int numberOfCardsToReceive) {
+        for (int i = 0; i < numberOfCardsToReceive; i++) {
+            receiveToPlayers(deck);
+            receiveToDealer(deck);
+        }
+    }
+
+    private void receiveToPlayers(Deck deck) {
+        for (Player player : players.getPlayers()) {
+            Card drawnCard = deck.drawCard();
+            player.receiveCard(drawnCard);
+        }
+    }
+
+    private void receiveToDealer(Deck deck) {
+        Card drawnCard = deck.drawCard();
+        dealer.receiveCard(drawnCard);
     }
 
     public Dealer getDealer() {
