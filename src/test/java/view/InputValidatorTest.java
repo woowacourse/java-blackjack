@@ -9,8 +9,8 @@ public class InputValidatorTest {
     @Test
     @DisplayName("빈 값이 들어오면 예외처리한다.")
     void shouldThrowInputIsEmpty() {
-        assertThatThrownBy(() -> InputValidator.validateBlank(""))
+        assertThatThrownBy(() -> InputView.validateBlank(""))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(InputValidator.INPUT_EMPTY_ERROR_MESSAGE);
+                .hasMessage(InputView.INPUT_EMPTY_ERROR_MESSAGE);
     }
 }

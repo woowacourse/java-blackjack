@@ -7,7 +7,6 @@ import domain.participant.Participant;
 import domain.participant.Players;
 import domain.result.ResultCalculator;
 import view.OutputView;
-import view.ResultView;
 
 public class BlackJackGame {
     private final Players players;
@@ -39,7 +38,7 @@ public class BlackJackGame {
 
     private void initSetting() {
         initSettingCards(players, dealer);
-        ResultView.printInitMessage(players.getPlayerNames());
+        OutputView.printInitMessage(players.getPlayerNames());
 
         printInitMemberCards();
     }
@@ -50,7 +49,7 @@ public class BlackJackGame {
     }
 
     private void printInitMemberCards() {
-        ResultView.printParticipantResult(dealer.getName(), dealer.getCardNames());
+        OutputView.printParticipantResult(dealer.getName(), dealer.getCardNames());
         players.printInitPlayerCards();
     }
 
@@ -63,13 +62,13 @@ public class BlackJackGame {
 
     private void printFinalGameStatus() {
         System.out.println();
-        ResultView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.calculateScore());
+        OutputView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.calculateScore());
         players.printFinalPlayerResults();
     }
 
     private void printFinalFightResult() {
         ResultCalculator resultCalculator = new ResultCalculator(players, dealer);
         resultCalculator.executeGame(players, dealer);
-        ResultView.printFinalFightResult(resultCalculator.getFinalFightResults());
+        OutputView.printFinalFightResult(resultCalculator.getFinalFightResults());
     }
 }

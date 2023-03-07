@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
-import view.ResultView;
 
 public class Players {
 
@@ -53,7 +52,7 @@ public class Players {
     private void checkAdditionalDistribute(Player player) {
         do {
             OutputView.printInputReceiveYesOrNotMessage(player.getName());
-            ResultView.printParticipantResult(player.getName(), player.getCardNames());
+            OutputView.printParticipantResult(player.getName(), player.getCardNames());
         } while (player.playerAbleToDraw() && isReceivable(player));
     }
 
@@ -67,13 +66,13 @@ public class Players {
 
     public void printInitPlayerCards() {
         for (Player player : players) {
-            ResultView.printParticipantResult(player.getName(), player.getCardNames());
+            OutputView.printParticipantResult(player.getName(), player.getCardNames());
         }
     }
 
     public void printFinalPlayerResults()  {
         for (Player player : players) {
-            ResultView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.calculateScore());
+            OutputView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.calculateScore());
         }
     }
 }
