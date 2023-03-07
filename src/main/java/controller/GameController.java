@@ -14,9 +14,8 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
-public class GameController {
+public final class GameController {
 
     private static final int START_GIVEN_COUNT = 2;
     private static final int PARTICIPANT_GIVEN_COUNT = 1;
@@ -35,12 +34,11 @@ public class GameController {
         final Participants participants = makeParticipants();
         final Deck deck = Deck.create(new RandomUniqueCardSelector());
         final CardManager cardManager = CardManager.create(deck, participants);
-        handCards(participants, cardManager);
-        printParticipantCards(participants);
-        drawPlayersCard(participants, cardManager);
-        handleDealerCards(participants, cardManager);
+
+        startGame(participants, cardManager);
+        playForPlayers(participants, cardManager);
+        playForDealer(participants, cardManager);
         printGameResult(participants);
-        printFinalGameResult(participants);
     }
 
     private Participants makeParticipants() {
@@ -50,17 +48,13 @@ public class GameController {
                 outputView::printExceptionMessage);
     }
 
-    private void printGameResult(final Participants participants) {
-        final List<Participant> totalParticipants = participants.getParticipants();
-
-        outputView.printCardResult(totalParticipants);
-    }
-
-    private void handCards(final Participants participants, final CardManager cardManager) {
+    private void startGame(final Participants participants, final CardManager cardManager) {
         final int size = participants.size();
 
-        IntStream.range(0, size)
-                .forEach(participantOrder -> cardManager.giveCards(participantOrder, START_GIVEN_COUNT));
+        for (int participantOrder = 0; participantOrder < size; participantOrder++) {
+            cardManager.giveCards(participantOrder, START_GIVEN_COUNT);
+        }
+        printParticipantCards(participants);
     }
 
     private void printParticipantCards(final Participants participants) {
@@ -75,7 +69,7 @@ public class GameController {
         outputView.printTotalParticipantCards(dealer, players);
     }
 
-    private void drawPlayersCard(final Participants participants, final CardManager cardManager) {
+    private void playForPlayers(final Participants participants, final CardManager cardManager) {
         final List<Participant> players = participants.findPlayers();
 
         for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
@@ -101,10 +95,28 @@ public class GameController {
     }
 
     private void processDrawCard(final CardManager cardManager, final int playerIndex,
-            final DrawCardCommand drawCardCommand) {
+        final DrawCardCommand drawCardCommand) {
+
         if (drawCardCommand.isDrawAgain()) {
             cardManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
         }
+    }
+
+    private void playForDealer(final Participants participants, final CardManager cardManager) {
+        final Dealer dealer = (Dealer) participants.findDealer();
+        final String name = dealer.getName();
+
+        while (dealer.canDraw()) {
+            cardManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
+            outputView.guideDealerGivenCard(name);
+        }
+    }
+
+    private void printGameResult(final Participants participants) {
+        final List<Participant> totalParticipants = participants.getParticipants();
+
+        outputView.printCardResult(totalParticipants);
+        printFinalGameResult(participants);
     }
 
     private DrawCardCommand inputDrawCardCommand(final Participant player) {
@@ -114,16 +126,6 @@ public class GameController {
                 () -> outputView.guideDrawCard(playerName),
                 DrawCardCommand::findCardCommand,
                 outputView::printExceptionMessage);
-    }
-
-    private void handleDealerCards(final Participants participants, final CardManager cardManager) {
-        final Dealer dealer = (Dealer) participants.findDealer();
-        final String name = dealer.getName();
-
-        while (dealer.canDraw()) {
-            cardManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
-            outputView.guideDealerGivenCard(name);
-        }
     }
 
     private void printFinalGameResult(final Participants participants) {
@@ -138,6 +140,6 @@ public class GameController {
     private Map<String, Result> makeFinalGameResult(final Participants participants, final Dealer dealer) {
         return participants.findPlayers().stream()
                 .collect(Collectors.toMap(Participant::getName, dealer::calculateResult,
-                (newValue, oldValue) -> oldValue, LinkedHashMap::new));
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }
