@@ -6,9 +6,10 @@ import domain.gameresult.GameResult;
 public class Dealer extends Player {
 
     public static final int DEALER_MIN_SCORE = 16;
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer(CardHolder cardHolder) {
-        super(cardHolder, Name.of("딜러"));
+        super(cardHolder, Name.of(DEALER_NAME));
     }
 
     public void battle(Player participant, GameResult gameResult) {
