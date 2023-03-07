@@ -18,6 +18,6 @@ class CardTest {
         Card card2 = new Card(Rank.ACE, Suit.DIAMOND);
 
         // when & then
-        assertThat(card1.equals(card2)).isTrue();
+        assertThat(card1).isEqualTo(card2);
     }
 }

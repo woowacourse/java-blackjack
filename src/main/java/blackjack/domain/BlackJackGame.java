@@ -38,21 +38,12 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Result, Integer> findWinner(final PlayerResult playerResult) {
+    public Map<Result, Integer> calculateDealerResult(final PlayerResult playerResult) {
         final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
         for (final Player player : players.getPlayers()) {
             playerResult.calculatePlayerResult(player, dealer);
             final Result resultForDealer = changeResultForDealer(playerResult.getPlayerResult(player));
             dealerResult.put(resultForDealer, dealerResult.getOrDefault(resultForDealer, 0) + 1);
-        }
-        return dealerResult;
-    }
-
-    private Map<Result, Integer> calculateDealerResult(final PlayerResult playerResult) {
-        final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        for (final Player player : players.getPlayers()) {
-            Result result = changeResultForDealer(playerResult.getPlayerResult(player));
-            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
         }
         return dealerResult;
     }

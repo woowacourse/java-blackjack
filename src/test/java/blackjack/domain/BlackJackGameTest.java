@@ -4,16 +4,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.domain.participant.Result;
+import blackjack.domain.participant.*;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -58,7 +53,7 @@ class BlackJackGameTest {
         assertThat(dealerCardSize).isEqualTo(1);
     }
 
-    @DisplayName("BlackJackGame의 findWinner는 각 참가자의 승패를 계산한다.")
+    @DisplayName("BlackJackGame의 findWinner는 각 참가자의 승패를 계산하고 Dealer의 승패를 반환한다.")
     @Test
     void findResultForEachParticipant() {
         // given
@@ -85,21 +80,14 @@ class BlackJackGameTest {
             playerCard2 = new Card(Rank.SIX, Suit.SPADE);
         }
 
-        blackJackGame.findWinner();
+        PlayerResult playerResult = new PlayerResult();
+        Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResult(playerResult);
 
         // then
-        Map<Result, Integer> results = dealer.getResults();
-
-        List<Result> playerResults = new ArrayList<>();
-        for (Player player: players.getPlayers()) {
-            playerResults.add(player.getResult());
-        }
-
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(results.get(Result.WIN)).isEqualTo(2);
-            softly.assertThat(results.get(Result.LOSE)).isEqualTo(0);
-            softly.assertThat(results.get(Result.PUSH)).isEqualTo(0);
-            softly.assertThat(playerResults).isEqualTo(List.of(Result.LOSE, Result.LOSE));
+            softly.assertThat(dealerResult.get(Result.WIN)).isEqualTo(2);
+            softly.assertThat(dealerResult.get(Result.LOSE)).isNull();
+            softly.assertThat(dealerResult.get(Result.PUSH)).isNull();
         });
     }
 }

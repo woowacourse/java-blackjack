@@ -106,7 +106,7 @@ public class BlackJackGameController {
 
     private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer) {
         final PlayerResult playerResult = new PlayerResult();
-        final Map<Result, Integer> dealerResult = blackJackGame.findWinner(playerResult);
+        final Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResult(playerResult);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
         OutputView.printFinalResult(dealerResult, playerResult.getPlayerResults());
     }
