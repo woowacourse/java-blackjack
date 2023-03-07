@@ -4,6 +4,7 @@ import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
 
+import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
@@ -55,11 +56,10 @@ public class BlackJackController {
         final Participants participants = gatherParticipants();
         final Deck deck = DeckFactory.createWithCount(TRUMP, 1);
 
-        deck.shuffle();
-        dealCards(participants, deck);
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck);
 
-        cardDraw(participants.getPlayers(), deck);
-        cardDraw(participants.getDealer(), deck);
+        drawCardForPlayers(blackJackGame);
+        drawCardForDealer(blackJackGame);
 
         printResult(participants);
     }
@@ -80,37 +80,18 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private void dealCards(Participants participants, Deck deck) {
-        participants.drawCard(deck, INIT_DRAW_COUNT);
-
-        final ParticipantResponse dealerResponse = ParticipantResponse.from(participants.getDealer());
-        final List<ParticipantResponse> playerResponse = getPlayerResponse(participants.getPlayers());
-
-        outputView.printDealCards(dealerResponse, playerResponse, INIT_DRAW_COUNT);
-    }
-
-    private List<ParticipantResponse> getPlayerResponse(final List<Player> players) {
-        return players.stream()
-                .map(ParticipantResponse::from)
-                .collect(Collectors.toList());
-    }
-
-    private void cardDraw(final List<Player> players, final Deck deck) {
-        for (final Player player : players) {
-            cardDraw(player, deck);
+    private void drawCardForPlayers(final BlackJackGame blackJackGame) {
+        while (blackJackGame.existDrawablePlayer()) {
+            final Player drawablePlayer = blackJackGame.findDrawablePlayer();
+            final boolean drawState = inputView.readDrawState(drawablePlayer.getName());
+            blackJackGame.drawOrNot(drawState, drawablePlayer);
         }
     }
 
-    private void cardDraw(final Player player, final Deck deck) {
-        while (player.isDrawable() && inputView.readDrawState(player.getName())) {
-            player.drawCard(deck.draw());
-            outputView.printHandedCardsWithoutScore(ParticipantResponse.from(player));
-        }
-    }
-
-    private void cardDraw(final Dealer dealer, final Deck deck) {
-        if (dealer.isDrawable()) {
-            dealer.drawCard(deck.draw());
+    private void drawCardForDealer(final BlackJackGame blackJackGame) {
+        if (blackJackGame.isDealerDrawable()) {
+            final Dealer dealer = blackJackGame.dealer();
+            blackJackGame.drawOrNot(true, dealer);
             outputView.printDealerCardDrawn(DealerStateResponse.from(dealer));
         }
     }
