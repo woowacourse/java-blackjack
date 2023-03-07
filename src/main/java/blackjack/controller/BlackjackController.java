@@ -78,7 +78,7 @@ public class BlackjackController {
     private void hitDealer(final BlackjackGame blackjackGame) {
         final Dealer dealer = blackjackGame.getParticipants().getDealer();
 
-        while (dealer.canHit()) {
+        while (dealer.isHit()) {
             outputView.printDealerDrawCard(dealer);
             blackjackGame.drawCard(dealer);
         }

@@ -36,7 +36,7 @@ public class DeckTest {
         Deck deck = new Deck(cards);
 
         //when
-        Card actual = deck.drawCard();
+        Card actual = deck.draw();
         Card expected = cards.get(0);
 
         //then

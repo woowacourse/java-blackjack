@@ -25,11 +25,11 @@ public class ResultGame {
 
     private void calculateResult() {
         final Dealer dealer = participants.getDealer();
-        final int dealerScore = dealer.getTotalScore();
+        final int dealerScore = dealer.getScore();
         final List<Player> players = participants.getPlayers();
 
         for (final Player player : players) {
-            final int playerScore = player.getTotalScore();
+            final int playerScore = player.getScore();
 
             playersResult.put(player, getPlayerResult(playerScore, dealerScore));
         }

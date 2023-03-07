@@ -18,8 +18,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(new ArrayList<>());
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        dealer.drawCard(card1);
-        dealer.drawCard(card2);
+        dealer.draw(card1);
+        dealer.draw(card2);
 
         List<String> expected = dealer.getOneCard();
         Assertions.assertThat(expected.size()).isEqualTo(1);
@@ -35,11 +35,11 @@ public class DealerTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
         //when
-        dealer.drawCard(card1);
-        dealer.drawCard(card2);
+        dealer.draw(card1);
+        dealer.draw(card2);
 
         //then
-        Assertions.assertThat(dealer.canHit()).isTrue();
+        Assertions.assertThat(dealer.isHit()).isTrue();
     }
 
     @Test
@@ -51,10 +51,10 @@ public class DealerTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
         //when
-        dealer.drawCard(card1);
-        dealer.drawCard(card2);
+        dealer.draw(card1);
+        dealer.draw(card2);
 
         //then
-        Assertions.assertThat(dealer.canHit()).isFalse();
+        Assertions.assertThat(dealer.isHit()).isFalse();
     }
 }

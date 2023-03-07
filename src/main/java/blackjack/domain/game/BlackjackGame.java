@@ -39,7 +39,7 @@ public class BlackjackGame {
 
     public void drawCard(final Participant participant, final int count) {
         for (int i = 0; i < count; i++) {
-            participant.drawCard(deck.drawCard());
+            participant.draw(deck.draw());
         }
     }
 }

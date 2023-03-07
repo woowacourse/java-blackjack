@@ -45,7 +45,7 @@ public class HandTest {
         cards.add(card2);
 
         // that
-        assertThat(expectedValue).isEqualTo(cards.calculateTotalScore());
+        assertThat(expectedValue).isEqualTo(cards.getScore());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class HandTest {
         cards.add(card2);
 
         // that
-        assertThat(cards.calculateTotalScore()).isEqualTo(12);
+        assertThat(cards.getScore()).isEqualTo(12);
     }
 
     @Test
@@ -96,6 +96,6 @@ public class HandTest {
         cards.add(card4);
 
         // that
-        assertThat(cards.calculateTotalScore()).isEqualTo(21);
+        assertThat(cards.getScore()).isEqualTo(21);
     }
 }

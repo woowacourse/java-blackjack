@@ -16,16 +16,16 @@ public class Participant {
         this.cards = new Hand(cards);
     }
 
-    public void drawCard(final Card card) {
+    public void draw(final Card card) {
         cards.add(card);
     }
 
-    public int getTotalScore() {
-        return cards.calculateTotalScore();
+    public int getScore() {
+        return cards.getScore();
     }
 
     public boolean isBust() {
-        return getTotalScore() > 21;
+        return getScore() > 21;
     }
 
     public String getName() {

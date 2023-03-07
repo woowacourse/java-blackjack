@@ -39,7 +39,7 @@ public class ParticipantTest {
         Card card = new Card(Shape.CLOVER, Letter.ACE);
 
         // when
-        participant.drawCard(card);
+        participant.draw(card);
 
         // then
         Assertions.assertThat(participant.getCardNames())
@@ -54,11 +54,11 @@ public class ParticipantTest {
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
         int expected = card1.getValue() + card2.getValue();
-        participant.drawCard(card1);
-        participant.drawCard(card2);
+        participant.draw(card1);
+        participant.draw(card2);
 
         // when
-        int actual = participant.getTotalScore();
+        int actual = participant.getScore();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -80,8 +80,8 @@ public class ParticipantTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
         // when
-        participant.drawCard(card1);
-        participant.drawCard(card2);
+        participant.draw(card1);
+        participant.draw(card2);
 
         // then
         Assertions.assertThat(participant.getCards()).contains(card1, card2);
@@ -96,8 +96,8 @@ public class ParticipantTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
         // when
-        participant.drawCard(card1);
-        participant.drawCard(card2);
+        participant.draw(card1);
+        participant.draw(card2);
 
         // then
         Assertions.assertThat(participant.getCardNames()).contains(card1.getCardName(), card2.getCardName());
@@ -113,9 +113,9 @@ public class ParticipantTest {
         Card card3 = new Card(Shape.DIAMOND, Letter.QUEEN);
 
         // when
-        participant.drawCard(card1);
-        participant.drawCard(card2);
-        participant.drawCard(card3);
+        participant.draw(card1);
+        participant.draw(card2);
+        participant.draw(card3);
 
         // then
         assertThat(participant.isBust()).isTrue();
@@ -131,9 +131,9 @@ public class ParticipantTest {
         Card card3 = new Card(Shape.DIAMOND, Letter.NINE);
 
         // when
-        participant.drawCard(card1);
-        participant.drawCard(card2);
-        participant.drawCard(card3);
+        participant.draw(card1);
+        participant.draw(card2);
+        participant.draw(card3);
 
         // then
         assertThat(participant.isBust()).isFalse();

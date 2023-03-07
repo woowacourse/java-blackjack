@@ -69,7 +69,7 @@ public class OutputView {
     }
 
     public void printScore(final Participant participant) {
-        final int score = participant.getTotalScore();
+        final int score = participant.getScore();
 
         System.out.printf(RESULT_DELIMITER + score);
     }

@@ -18,7 +18,7 @@ public class Dealer extends Participant {
         return List.of(firstCard.getCardName());
     }
 
-    public boolean canHit() {
-        return getTotalScore() <= 16;
+    public boolean isHit() {
+        return getScore() <= 16;
     }
 }

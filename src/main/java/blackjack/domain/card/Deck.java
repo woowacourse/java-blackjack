@@ -47,7 +47,7 @@ public class Deck {
         return uniqueCards.size() != cards.size();
     }
 
-    public Card drawCard() {
+    public Card draw() {
         return cards.pop();
     }
 
