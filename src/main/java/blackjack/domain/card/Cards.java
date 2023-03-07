@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
 
     private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
@@ -21,27 +21,12 @@ public class Cards {
     }
 
     public int calculateTotalScore() {
-        int score = preCalculate();
+        int score = cards.stream()
+                .mapToInt(Card::score)
+                .sum();
 
         if (containsAce()) {
             score = plusScoreIfNotBust(score);
-        }
-
-        return score;
-    }
-
-    private int preCalculate() {
-        int score = 0;
-        for (Card card : cards) {
-            score += card.convertToScore();
-        }
-
-        return score;
-    }
-
-    private int plusScoreIfNotBust(int score) {
-        if (score <= ACE_BIGGER_SCORE) {
-            score += MAKE_ACE_BIGGER_SCORE;
         }
 
         return score;
@@ -52,12 +37,20 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
+    private int plusScoreIfNotBust(int score) {
+        if (score <= ACE_BIGGER_SCORE) {
+            score += MAKE_ACE_BIGGER_SCORE;
+        }
+        return score;
+    }
+
     public void add(final Card card) {
         this.cards.add(card);
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE_CONDITION && BLACKJACK_SCORE_CONDITION == calculateTotalScore();
+        return cards.size() == BLACKJACK_SIZE_CONDITION
+                && BLACKJACK_SCORE_CONDITION == calculateTotalScore();
     }
 
     public boolean isBust() {
