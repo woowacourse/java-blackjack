@@ -1,7 +1,6 @@
 package minimission;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class SimpleArrayList implements SimpleList {
 
@@ -116,7 +115,7 @@ public class SimpleArrayList implements SimpleList {
         final String oldValue = array[index];
 
         if (currentSize - 1 > index) {
-            System.arraycopy(array, index +  1, array, index, currentSize - index);
+            System.arraycopy(array, index + 1, array, index, currentSize - index);
         }
 
         array[currentSize] = null;
