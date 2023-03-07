@@ -46,7 +46,6 @@ public class Controller {
         } while (!player.isOverBlackJack() && command.equals(Command.YES));
     }
 
-
     private void addWhenUnderStandard(Dealer dealer, BlackjackGame game) {
         while (!dealer.isOverStandard()) {
             game.distributeDealer();

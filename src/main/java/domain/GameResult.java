@@ -46,6 +46,7 @@ public class GameResult {
     public int getDealerResultTypeCount(ResultType resultType) {
         return Collections.frequency(dealerResult.values().stream().findFirst().get(), resultType);
     }
+
     public Map<String, ResultType> getPlayerResult() {
         return playerResult;
     }

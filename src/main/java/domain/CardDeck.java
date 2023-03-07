@@ -1,6 +1,9 @@
 package domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Queue;
 
 public class CardDeck {
     private final Queue<Card> cards;
@@ -9,11 +12,11 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public Card poll(){
+    public Card poll() {
         return cards.poll();
     }
 
-    public void shuffle(){
+    public void shuffle() {
         List<Card> shuffledCards = new ArrayList<>();
         shuffledCards.addAll(cards);
         Collections.shuffle(shuffledCards);

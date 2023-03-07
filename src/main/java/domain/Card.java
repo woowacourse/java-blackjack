@@ -8,6 +8,7 @@ public class Card {
         this.cardNumber = cardNumber;
         this.cardPattern = cardPattern;
     }
+
     public boolean isAce() {
         return cardNumber == CardNumber.ACE;
     }
@@ -16,7 +17,8 @@ public class Card {
         return cardNumber.getValue();
     }
 
-    public String getCardInfo(){
+    public String getCardInfo() {
         return cardNumber.getName() + cardPattern.getPattern();
     }
+
 }

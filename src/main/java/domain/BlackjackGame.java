@@ -1,10 +1,8 @@
 package domain;
 
-import java.util.*;
-
 public class BlackjackGame {
-    public final static int BLACK_JACK = 21;
-    private final static int INITIAL_CARD_SET = 2;
+    private static final int INITIAL_CARD_SET = 2;
+
     private final Dealer dealer;
     private final Players players;
     private final CardDeck cardDeck;
