@@ -22,12 +22,11 @@ class DealerTest {
     private Player player1;
     private Player player2;
     private Player player3;
-    private Players players;
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        players = new Players(List.of("1", "2", "3"));
+        Players players = new Players(List.of("1", "2", "3"));
         dealer = new Dealer(players);
         player1 = players.getPlayers().get(0);
         player2 = players.getPlayers().get(1);
