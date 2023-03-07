@@ -10,8 +10,8 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public boolean isAce() {
-        return denomination.equals(Denomination.ACE);
+    public boolean isAceCard() {
+        return denomination.isAce();
     }
 
     public int getScore() {

@@ -38,7 +38,7 @@ public class Cards {
 
     private boolean isContainAce() {
         return cards.stream()
-                .anyMatch(Card::isAce);
+                .anyMatch(Card::isAceCard);
     }
 
     public boolean isBlackJack() {

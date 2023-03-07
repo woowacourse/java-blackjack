@@ -22,6 +22,10 @@ public enum Denomination {
         this.score = score;
     }
 
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
+
     public int getScore() {
         return score;
     }
