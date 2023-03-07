@@ -13,7 +13,7 @@ public final class GameResult {
 
     private final Map<Participant, Result> gameResults;
 
-    private GameResult(Map<Participant, Result> gameResults) {
+    private GameResult(final Map<Participant, Result> gameResults) {
         this.gameResults = gameResults;
     }
 
@@ -37,7 +37,7 @@ public final class GameResult {
         return gameResults;
     }
 
-    private static Result calculateResult(Participant dealer, Participant player) {
+    private static Result calculateResult(final Participant dealer, final Participant player) {
         if (isDealerWin(dealer, player)) {
             return Result.LOSE;
         }
