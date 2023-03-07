@@ -2,6 +2,9 @@ package domain;
 
 import java.util.List;
 
+import static domain.Status.BUST;
+import static domain.Status.STAY;
+
 public class Game {
 
     private final Deck deck;
@@ -26,12 +29,19 @@ public class Game {
         user.addCard(deck.drawCard());
     }
 
-    public boolean canHitByPlayerScore(User user) {
-        return user.canHit();
-    }
 
     public boolean canHitByDealerScore() {
         return canHitByPlayerScore(users.dealer());
+    }
+
+    public boolean canHitByPlayerScore(User user) {
+        Status status = user.status();
+
+        return status != STAY && status != BUST;
+    }
+
+    public void updateStatusToStay(User user) {
+        user.updateStatusToStay();
     }
 
     public void dealCardToDealer() {

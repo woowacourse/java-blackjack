@@ -2,14 +2,18 @@ package domain;
 
 import java.util.List;
 
+import static domain.Status.*;
+
 public abstract class User {
 
     private static final int BUST_LIMIT = 21;
 
     private final Hand hand;
+    private Status status;
 
     public User(Hand hand) {
         this.hand = hand;
+        this.status = PLAYING;
     }
 
     abstract boolean canHit();
@@ -44,6 +48,20 @@ public abstract class User {
 
     public Score score() {
         return hand.score();
+    }
+
+    public Status status() {
+        if (isBusted()) {
+            return BUST;
+        }
+        if (!canHit()) {
+            return STAY;
+        }
+        return status;
+    }
+
+    public void updateStatusToStay() {
+        status = STAY;
     }
 
     public List<Card> cards() {

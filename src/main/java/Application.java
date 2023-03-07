@@ -46,19 +46,17 @@ public class Application {
     }
 
     private static void selectHitAndStand(Game game, Player player) {
-        boolean hit = true;
-        while (hit && game.canHitByPlayerScore(player)) {
-            hit = dealAnotherCardIfHit(game, player);
+        while (game.canHitByPlayerScore(player)) {
+            dealAnotherCardIfHit(game, player);
         }
     }
 
-    private static boolean dealAnotherCardIfHit(Game game, Player player) {
+    private static void dealAnotherCardIfHit(Game game, Player player) {
         if (inputView.askForAnotherCard(player.getName())) {
             game.dealCard(player);
             outputView.printPlayerCards(player);
-            return true;
         }
-        return false;
+        game.updateStatusToStay(player);
     }
 
     private static void dealCardToDealer(Game game) {
