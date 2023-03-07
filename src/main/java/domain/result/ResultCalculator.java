@@ -13,11 +13,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 
 public class ResultCalculator {
-
-    private static final String WIN = "승 ";
-    private static final String DRAW = "무 ";
-    private static final String LOSE = "패";
-    private final Map<String, Map<String, Integer>> results;
+    private final Map<String, Map<Score, Integer>> results;
 
     public ResultCalculator(Players players, Dealer dealer) {
         this.results = new LinkedHashMap<>();
@@ -57,11 +53,11 @@ public class ResultCalculator {
     }
 
     public List<Integer> getResultsByName(String name) {
-        Map<String, Integer> resultsMapName = results.get(name);
+        Map<Score, Integer> resultsMapName = results.get(name);
         ArrayList<Integer> results = new ArrayList<>();
-        results.add(resultsMapName.get(WIN));
-        results.add(resultsMapName.get(DRAW));
-        results.add(resultsMapName.get(LOSE));
+        results.add(resultsMapName.get(Score.WIN));
+        results.add(resultsMapName.get(Score.DRAW));
+        results.add(resultsMapName.get(Score.LOSE));
 
         return results;
     }
@@ -73,39 +69,39 @@ public class ResultCalculator {
         return maxSum;
     }
 
-    private void playerWin(Map<String, Integer> playerResult, Map<String, Integer> dealerResult) {
-        playerResult.replace(WIN, playerResult.get(WIN) + 1);
-        dealerResult.replace(LOSE, dealerResult.get(LOSE) + 1);
+    private void playerWin(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
+        playerResult.replace(Score.WIN, playerResult.get(Score.WIN) + 1);
+        dealerResult.replace(Score.LOSE, dealerResult.get(Score.LOSE) + 1);
     }
 
-    private void dealerWin(Map<String, Integer> playerResult, Map<String, Integer> dealerResult) {
-        playerResult.replace(LOSE, playerResult.get(LOSE) + 1);
-        dealerResult.replace(WIN, dealerResult.get(WIN) + 1);
+    private void dealerWin(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
+        playerResult.replace(Score.LOSE, playerResult.get(Score.LOSE) + 1);
+        dealerResult.replace(Score.WIN, dealerResult.get(Score.WIN) + 1);
     }
 
-    private void draw(Map<String, Integer> playerResult, Map<String, Integer> dealerResult) {
-        playerResult.replace(DRAW, playerResult.get(DRAW) + 1);
-        dealerResult.replace(DRAW, dealerResult.get(DRAW) + 1);
+    private void draw(Map<Score, Integer> playerResult, Map<Score, Integer> dealerResult) {
+        playerResult.replace(Score.DRAW, playerResult.get(Score.DRAW) + 1);
+        dealerResult.replace(Score.DRAW, dealerResult.get(Score.DRAW) + 1);
     }
 
-    private Map<String, Integer> initResults() {
-        Map<String, Integer> resultMap = new HashMap<>();
-        resultMap.put(WIN, 0);
-        resultMap.put(DRAW, 0);
-        resultMap.put(LOSE, 0);
+    private Map<Score, Integer> initResults() {
+        Map<Score, Integer> resultMap = new HashMap<>();
+        resultMap.put(Score.WIN, 0);
+        resultMap.put(Score.DRAW, 0);
+        resultMap.put(Score.LOSE, 0);
         return resultMap;
     }
 
     private StringBuilder getResultCount(String name, List<Integer> participantResult) {
         StringBuilder sb = new StringBuilder(name + ": ");
         if (participantResult.get(0) != 0) {
-            sb.append(participantResult.get(0)).append(WIN);
+            sb.append(participantResult.get(0)).append(Score.WIN.getValue());
         }
         if (participantResult.get(1) != 0) {
-            sb.append(participantResult.get(1)).append(DRAW);
+            sb.append(participantResult.get(1)).append(Score.DRAW.getValue());
         }
         if (participantResult.get(2) != 0) {
-            sb.append(participantResult.get(2)).append(LOSE);
+            sb.append(participantResult.get(2)).append(Score.LOSE.getValue());
         }
         return sb;
     }
