@@ -4,12 +4,12 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GameResultManager {
+public class GameResult {
     private static final int BUST_HAND_VALUE = 0;
     private final Map<Participant, Integer> gameResult;
     private final Participant dealer;
 
-    public GameResultManager(final Map<Participant, Integer> gameResult, final Participant dealer) {
+    public GameResult(final Map<Participant, Integer> gameResult, final Participant dealer) {
         this.gameResult = gameResult;
         this.dealer = dealer;
     }

@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultManagerTest {
+class GameResultTest {
 
     private Participants participants;
     private Deck deck;
@@ -35,8 +35,8 @@ class GameResultManagerTest {
         leo.receiveCard(new Card(Suit.CLOVER, Rank.QUEEN));
         leo.receiveCard(card);
 
-        final GameResultManager gameResultManager = new GameResultManager(participants.makePlayerFinalHandValue(), participants.findDealer());
-        final Map<Participant, Boolean> participantsBustStatus = gameResultManager.getParticipantsBustStatus();
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), participants.findDealer());
+        final Map<Participant, Boolean> participantsBustStatus = gameResult.getParticipantsBustStatus();
 
         Assertions.assertThat(participantsBustStatus.get(leo)).isEqualTo(isBust);
     }
@@ -49,8 +49,8 @@ class GameResultManagerTest {
         leo.receiveCard(new Card(Suit.CLOVER, Rank.KING));
         dealer.receiveCard(card);
 
-        final GameResultManager gameResultManager = new GameResultManager(participants.makePlayerFinalHandValue(), dealer);
-        final Map<Result, Integer> dealerStatus = gameResultManager.getDealerStatus(gameResultManager.getPlayerStatus());
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(), dealer);
+        final Map<Result, Integer> dealerStatus = gameResult.getDealerStatus(gameResult.getPlayerStatus());
 
         assertThat(dealerStatus.get(result)).isEqualTo(1);
     }
@@ -59,9 +59,9 @@ class GameResultManagerTest {
     @DisplayName("플레이어의 게임 결과를 반환한다.")
     void getPlayerResult() {
         participants.deal(deck);
-        final GameResultManager gameResultManager = new GameResultManager(participants.makePlayerFinalHandValue(),
+        final GameResult gameResult = new GameResult(participants.makePlayerFinalHandValue(),
                 participants.findDealer());
-        Map<Participant, Result> playerResults = gameResultManager.getPlayerStatus();
+        Map<Participant, Result> playerResults = gameResult.getPlayerStatus();
         for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
             assertThat(playerResult.getValue()).isEqualTo(Result.LOSE);
         }

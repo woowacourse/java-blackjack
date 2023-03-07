@@ -31,8 +31,8 @@ public class BlackJackController {
 
         play(deck, participants);
         final Map<Participant, Integer> participantIntegerMap = participants.makePlayerFinalHandValue();
-        final GameResultManager gameResultManager = new GameResultManager(participantIntegerMap, participants.findDealer());
-        showResults(gameResultManager);
+        final GameResult gameResult = new GameResult(participantIntegerMap, participants.findDealer());
+        showResults(gameResult);
     }
 
     private Participants makeParticipants() {
@@ -107,14 +107,14 @@ public class BlackJackController {
         }
     }
 
-    private void showResults(GameResultManager gameResultManager) {
-        showParticipantsScore(gameResultManager);
+    private void showResults(GameResult gameResult) {
+        showParticipantsScore(gameResult);
         outputView.printResultInfo();
-        showParticipantsWinningStatus(gameResultManager);
+        showParticipantsWinningStatus(gameResult);
     }
 
-    private void showParticipantsScore(final GameResultManager gameResultManager) {
-        for (Map.Entry<Participant, Boolean> participantScore : gameResultManager.getParticipantsBustStatus().entrySet()) {
+    private void showParticipantsScore(final GameResult gameResult) {
+        for (Map.Entry<Participant, Boolean> participantScore : gameResult.getParticipantsBustStatus().entrySet()) {
             outputView.printParticipantHandValue(
                     participantScore.getKey().getName(),
                     participantScore.getKey().getHandValue(),
@@ -123,9 +123,9 @@ public class BlackJackController {
         }
     }
 
-    private void showParticipantsWinningStatus(final GameResultManager gameResultManager) {
-        Map<Participant, Result> playerResults = gameResultManager.getPlayerStatus();
-        Map<Result, Integer> dealerResults = gameResultManager.getDealerStatus(playerResults);
+    private void showParticipantsWinningStatus(final GameResult gameResult) {
+        Map<Participant, Result> playerResults = gameResult.getPlayerStatus();
+        Map<Result, Integer> dealerResults = gameResult.getDealerStatus(playerResults);
         outputView.printDealerResult(dealerResults);
         for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
             outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
