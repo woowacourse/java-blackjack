@@ -110,7 +110,8 @@ public class BlackJackGameController {
     }
 
     private boolean isCommandHit(Player player) {
-        return Command.findCommand(inputView.readTryCommand(player.showName())).equals(Command.HIT);
+        String userCommand = inputView.readTryCommand(player.showName());
+        return Command.isHit(userCommand);
     }
 
     private void dealerTurn(Game game) {

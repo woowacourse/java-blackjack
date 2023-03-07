@@ -13,11 +13,8 @@ public enum Command {
         this.command = command;
     }
 
-    public static Command findCommand(String command) {
-        return Arrays.stream(values())
-                .filter(x -> x.getCommand().equals(command))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND));
+    public static boolean isHit(String command) {
+        return HIT.getCommand() == command;
     }
 
     private String getCommand() {
