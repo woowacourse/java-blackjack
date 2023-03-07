@@ -11,28 +11,28 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result getLeftResult(int leftScore, int rightScore, int standard) {
-        if (rightScore > standard) {
+    public static Result getLeftResult(Score leftScore, Score rightScore, Score standard) {
+        if (rightScore.isGreaterThan(standard)) {
             return getLeftResultWhenRightScoreOverStandard(leftScore, standard);
         }
-        if (leftScore <= standard) {
+        if (leftScore.isLessThan(standard)) {
             return getLeftResultWhenRightScoreLessThanStandard(leftScore, rightScore);
         }
         return LOSE;
     }
 
-    private static Result getLeftResultWhenRightScoreOverStandard(int score, int standard) {
-        if (score <= standard) {
+    private static Result getLeftResultWhenRightScoreOverStandard(Score score, Score standard) {
+        if (score.isLessThan(standard)) {
             return WIN;
         }
         return DRAW;
     }
 
-    private static Result getLeftResultWhenRightScoreLessThanStandard(int leftScore, int rightScore) {
-        if (leftScore > rightScore) {
+    private static Result getLeftResultWhenRightScoreLessThanStandard(Score leftScore, Score rightScore) {
+        if (leftScore.isGreaterThan(rightScore)) {
             return WIN;
         }
-        if (leftScore < rightScore) {
+        if (leftScore.isLessThan(rightScore)) {
             return LOSE;
         }
         return DRAW;

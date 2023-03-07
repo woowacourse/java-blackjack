@@ -29,11 +29,11 @@ public class GameResult {
     }
 
     private void accumulationResult(Game game) {
-        int dealerScore = game.getDealerScore();
+        Score dealerScore = game.getDealerScore();
 
         for (Player player : game.getPlayers()) {
-            int playerScore = player.calculateScore();
-            Result playerWin = Result.getLeftResult(playerScore, dealerScore, BURST_NUMBER);
+            Score playerScore = player.calculateScore();
+            Result playerWin = Result.getLeftResult(playerScore, dealerScore, Score.BUST_LOWER_BOUND);
             Result dealerWin = Result.getOpponentResult(playerWin);
             playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);

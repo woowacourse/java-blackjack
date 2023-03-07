@@ -1,5 +1,6 @@
 package blackjack.domain.gameplayer;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface Person {
 
     boolean isHit();
 
-    int calculateScore();
+    Score calculateScore();
 }

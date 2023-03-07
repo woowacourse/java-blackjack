@@ -1,5 +1,6 @@
 package blackjack.domain.gameplayer;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
@@ -58,7 +59,7 @@ class DealerTest {
         dealer.addCard(card2);
 
         // when, then
-        assertThat(dealer.calculateScore()).isEqualTo(20);
+        assertThat(dealer.calculateScore().getScore()).isEqualTo(20);
     }
 
     @DisplayName("딜러가 A를 가지고 있을 때 딜러의 점수 합이 21 이하면(버스트가 아니면) A는 11점으로 간주한다.")
@@ -74,7 +75,7 @@ class DealerTest {
         dealer.addCard(card2);
 
         // when, then
-        assertThat(dealer.calculateScore()).isEqualTo(21);
+        assertThat(dealer.calculateScore().getScore()).isEqualTo(21);
     }
 
     @DisplayName("딜러가 A를 가지고 있을 때 딜러의 점수 합이 21을 초과하면(burst이면) A는 1점으로 간주한다.")
@@ -92,7 +93,7 @@ class DealerTest {
         dealer.addCard(card3);
 
         // when, then
-        assertThat(dealer.calculateScore()).isEqualTo(12);
+        assertThat(dealer.calculateScore().getScore()).isEqualTo(12);
     }
 
 

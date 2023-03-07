@@ -1,5 +1,6 @@
 package blackjack.domain.gameplayer;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 
@@ -9,9 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player implements Person {
-    private static final int BURST_NUMBER = 21;
-    private static final int ACE_MAX_NUMBER = 11;
-    private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;
+
     private final Name name;
     private final List<Card> cards;
 
@@ -36,25 +35,13 @@ public class Player implements Person {
 
     @Override
     public boolean isHit() {
-        int totalScore = calculateScore();
-        return totalScore < BURST_NUMBER;
+        Score totalScore = calculateScore();
+        return totalScore.isLessThan(Score.PLAYER_HIT_UPPER_BOUND);
     }
 
     @Override
-    public int calculateScore() {
-        int totalScore = cards.stream()
-                .map(card -> Collections.min(card.getScore()))
-                .reduce(0, Integer::sum);
-
-        if (totalScore <= ACE_MAX_NUMBER && hasACE()) {
-            return totalScore + DIFFERENCE_WITH_ACE_NUMBER;
-        }
-        return totalScore;
-    }
-
-    private boolean hasACE() {
-        return cards.stream()
-                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.getNumber()));
+    public Score calculateScore() {
+        return Score.from(cards);
     }
 
     @Override

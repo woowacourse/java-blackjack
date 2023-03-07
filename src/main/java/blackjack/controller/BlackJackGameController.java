@@ -1,9 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Command;
-import blackjack.domain.Game;
-import blackjack.domain.GameResult;
-import blackjack.domain.Result;
+import blackjack.domain.*;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
@@ -123,7 +120,7 @@ public class BlackJackGameController {
     }
 
     private void finish(Game game) {
-        outputView.printDealerResult(getCardNames(game.showDealerAllCards()), game.getDealerScore());
+        outputView.printDealerResult(getCardNames(game.showDealerAllCards()), game.getDealerScore().getScore());
 
         for (Player player : game.getPlayers()) {
             printOnePlayerResult(player);
@@ -154,7 +151,7 @@ public class BlackJackGameController {
     private void printOnePlayerResult(Player player) {
         String playerName = player.showName();
         List<String> playerCards = getCardNames(player.showCards());
-        int score = player.calculateScore();
-        outputView.printPlayerResult(playerName, playerCards, score);
+        Score score = player.calculateScore();
+        outputView.printPlayerResult(playerName, playerCards, score.getScore());
     }
 }

@@ -68,7 +68,7 @@ public class Game {
         return getDealer().showAllCards();
     }
 
-    public int getDealerScore() {
+    public Score getDealerScore() {
         return getDealer().calculateScore();
     }
 }

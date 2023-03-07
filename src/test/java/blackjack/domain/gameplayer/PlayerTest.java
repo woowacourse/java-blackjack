@@ -76,7 +76,7 @@ class PlayerTest {
         tori.addCard(card2);
 
         // when, then
-        assertThat(tori.calculateScore()).isEqualTo(20);
+        assertThat(tori.calculateScore().getScore()).isEqualTo(20);
     }
 
     @DisplayName("플레이어가 A를 가지고 있을 때 플레이어의 점수 합이 11 이하면 A는 11점으로 간주한다.")
@@ -92,7 +92,7 @@ class PlayerTest {
         tori.addCard(card2);
 
         // when, then
-        assertThat(tori.calculateScore()).isEqualTo(21);
+        assertThat(tori.calculateScore().getScore()).isEqualTo(21);
     }
 
     @DisplayName("플레이어가 A를 가지고 있을 때 플레이어의 점수 합이 11을 초과하면 A는 1점으로 간주한다.")
@@ -110,7 +110,7 @@ class PlayerTest {
         tori.addCard(card3);
 
         // when, then
-        assertThat(tori.calculateScore()).isEqualTo(12);
+        assertThat(tori.calculateScore().getScore()).isEqualTo(12);
     }
 
     @DisplayName("플레이어가 가진 카드를 가져올 수 있다.")
