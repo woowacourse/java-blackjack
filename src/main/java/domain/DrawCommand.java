@@ -22,7 +22,7 @@ public enum DrawCommand {
         if(inputDrawCommandMap.containsKey(inputCommand)) {
             return inputDrawCommandMap.get(inputCommand);
         }
-        throw new IllegalArgumentException("[Error] 카드 드로우 커맨드는 y,n 둘 중 하나입니다.");
+        throw new IllegalArgumentException("[ERROR] 카드 드로우 커맨드는 y,n 둘 중 하나입니다.");
     }
 
     private String getCommand() {
