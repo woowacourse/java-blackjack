@@ -37,7 +37,7 @@ public class GameParticipants {
     }
 
     public boolean isPlayerDrawable(final String playerName) {
-        return players.isDrawable(playerName);
+        return players.isPlayerDrawable(playerName);
     }
 
     public void drawCardOf(final String playerName, final Card card) {
