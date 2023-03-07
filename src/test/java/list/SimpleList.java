@@ -46,4 +46,11 @@ public interface SimpleList<T> {
         }
         return newList;
     }
+
+    static <T> void copy(SimpleList<? extends T> originalList, SimpleList<? super T> copiedList) {
+        for (int i = 0; i < originalList.size(); i++) {
+            final T element = originalList.get(i);
+            copiedList.add(element);
+        }
+    }
 }

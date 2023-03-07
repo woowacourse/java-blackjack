@@ -144,6 +144,21 @@ public class ListStudyTest {
             assertThat(filteredIntValues.get(0)).isEqualTo(1);
             assertThat(filteredIntValues.get(1)).isEqualTo(2);
         }
+
+        @Test
+        void mission5_test() {
+            class Printer { }
+            class LaserPrinter extends Printer { }
+
+            final var laserPrinter = new LaserPrinter();
+
+            final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+            final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+            SimpleList.copy(laserPrinters, printers);
+
+            assertThat(printers.get(0)).isEqualTo(laserPrinter);
+        }
     }
 
     @Nested
