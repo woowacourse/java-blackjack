@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BlackJackReferee;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.exception.PlayerNotFoundException;
@@ -62,10 +61,6 @@ public class Players {
             final Card secondCard = deck.removeCard();
             player.drawInitialCard(firstCard, secondCard);
         }
-    }
-
-    void calculateResult(final BlackJackReferee blackJackReferee) {
-        players.forEach(blackJackReferee::calculateResult);
     }
 
     List<String> getPlayerNames() {

@@ -1,11 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BlackJackReferee;
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import java.util.List;
-import java.util.Map;
 
 public class Participants {
 
@@ -48,12 +45,6 @@ public class Participants {
 
     public Players getPlayers() {
         return players;
-    }
-
-    public Map<String, ResultType> calculateFinalResult() {
-        final BlackJackReferee blackJackReferee = BlackJackReferee.from(dealer.currentScore());
-        players.calculateResult(blackJackReferee);
-        return blackJackReferee.getResult();
     }
 
     public List<String> getPlayerNames() {
