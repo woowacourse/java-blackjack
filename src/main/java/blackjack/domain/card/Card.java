@@ -9,6 +9,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class Card {
     private static final Map<Suit, Map<CardNumber, Card>> CARDS;
+
     private final Suit shape;
     private final CardNumber number;
 
