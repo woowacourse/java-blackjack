@@ -22,7 +22,7 @@ public class GameResult {
     private static Map<Result, Integer> initDealerResult() {
         Map<Result, Integer> dealerResult = new HashMap<>();
 
-        for (Result result: Result.values()) {
+        for (Result result : Result.values()) {
             dealerResult.put(result, INIT_NUMBER);
         }
         return dealerResult;

@@ -25,7 +25,7 @@ public class GenericSimpleArrayListTest {
     void fromArrayToListTest() {
         final String[] arrays = {"first", "second"};
 
-        final SimpleList<String> values = SimpleList.<String>fromArrayToList(arrays);
+        final SimpleList<String> values = SimpleList.fromArrayToList(arrays);
     }
 
     @DisplayName("숫자 타입의 SimpleList를 받아 모든 값을 더해주는 메서드 구현")

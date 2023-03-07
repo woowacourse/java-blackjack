@@ -53,7 +53,6 @@ public class Game {
         return getPlayers().getPlayersName();
     }
 
-
     public List<Card> showDealerCards() {
         return getDealer().showCards();
     }

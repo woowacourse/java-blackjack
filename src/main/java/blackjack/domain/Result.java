@@ -11,10 +11,6 @@ public enum Result {
         this.result = result;
     }
 
-    public String getResult() {
-        return result;
-    }
-
     public static Result getLeftResult(int leftScore, int rightScore, int standard) {
         if (rightScore > standard) {
             return getLeftResultWhenRightScoreOverStandard(leftScore, standard);
@@ -50,5 +46,9 @@ public enum Result {
             return DRAW;
         }
         return WIN;
+    }
+
+    public String getResult() {
+        return result;
     }
 }
