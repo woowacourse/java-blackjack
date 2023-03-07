@@ -4,8 +4,11 @@ import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class Participants {
@@ -30,6 +33,16 @@ public final class Participants {
         return new Participants(playerNames);
     }
 
+    public Map<Participant, Result> calculatePlayerGameResult() {
+        final Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
+        final int totalParticipantSize = participants.size();
+        final List<Participant> players = participants.subList(PLAYER_START_INDEX, totalParticipantSize);
+
+        return players.stream()
+                .collect(Collectors.toMap(Function.identity(), dealer::calculateResult,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
+    }
+
     public void addCard(final int participantOrder, final Card card) {
         final Participant participant = participants.get(participantOrder);
 
@@ -41,14 +54,6 @@ public final class Participants {
         final Participant participant = participants.get(participantIndex);
 
         participant.addCard(card);
-    }
-
-    public Participant findDealer() {
-        return participants.get(DEALER_ORDER);
-    }
-
-    public List<Participant> findPlayers() {
-        return participants.subList(PLAYER_START_INDEX, participants.size());
     }
 
     public boolean canDrawByOrder(final int participantOrder, final ParticipantOffset offset) {

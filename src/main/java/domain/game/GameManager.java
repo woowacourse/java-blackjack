@@ -2,9 +2,14 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.participant.Participant;
 import domain.participant.ParticipantOffset;
 import domain.participant.Participants;
+import domain.participant.Result;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public final class GameManager {
@@ -82,5 +87,17 @@ public final class GameManager {
 
     private String findNameByOrder(final int participantOrder, final ParticipantOffset offset) {
         return participants.findParticipantNameByOrder(participantOrder, offset);
+    }
+
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
+    }
+
+    public Map<String, Result> getTotalPlayerGameResult() {
+        final Map<Participant, Result> gameResults = participants.calculatePlayerGameResult();
+
+        return gameResults.keySet().stream()
+                .collect(Collectors.toMap(Participant::getName, gameResults::get,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }

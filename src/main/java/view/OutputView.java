@@ -99,11 +99,11 @@ public final class OutputView {
         print(LINE_FEED);
     }
 
-    public void printFinalGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
-        printDealerGameResult(dealerName, playerGameResults);
+    public void printFinalGameResult(final String dealerName, final Map<String, Result> totalPlayerGameResult) {
+        printDealerGameResult(dealerName, totalPlayerGameResult);
         print(LINE_FEED);
 
-        final String playerGameResultMessage = mapToPlayerGameResultMessage(playerGameResults);
+        final String playerGameResultMessage = mapToPlayerGameResultMessage(totalPlayerGameResult);
 
         print(playerGameResultMessage);
     }

@@ -34,7 +34,7 @@ public final class GameController {
         startGame(participants, gameManager);
         playForPlayers(participants, gameManager);
         playForDealer(gameManager);
-        printGameResult(participants);
+        printGameResult(gameManager);
     }
 
     private Participants makeParticipants() {
@@ -110,25 +110,18 @@ public final class GameController {
         outputView.guideDealerGivenCard(dealerName, drawCardCount);
     }
 
-    private void printGameResult(final Participants participants) {
-        final List<Participant> totalParticipants = participants.getParticipants();
+    private void printGameResult(final GameManager gameManager) {
+        final List<Participant> totalParticipants = gameManager.getParticipants();
 
         outputView.printCardResult(totalParticipants);
-        printFinalGameResult(participants);
+        printFinalGameResult(gameManager);
     }
 
-    private void printFinalGameResult(final Participants participants) {
-        final Dealer dealer = (Dealer) participants.findDealer();
-        final Map<String, Result> playerGameResults = makeFinalGameResult(participants, dealer);
-        final String dealerName = dealer.getName();
+    private void printFinalGameResult(final GameManager gameManager) {
+        final String dealerName = gameManager.findDealerName();
+        final Map<String, Result> totalPlayerGameResult = gameManager.getTotalPlayerGameResult();
 
         outputView.guideFinalGameResult();
-        outputView.printFinalGameResult(dealerName, playerGameResults);
-    }
-
-    private Map<String, Result> makeFinalGameResult(final Participants participants, final Dealer dealer) {
-        return participants.findPlayers().stream()
-                .collect(Collectors.toMap(Participant::getName, dealer::calculateResult,
-                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
+        outputView.printFinalGameResult(dealerName, totalPlayerGameResult);
     }
 }

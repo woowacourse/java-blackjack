@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -84,24 +85,6 @@ class ParticipantsTest {
         }
     }
 
-    @Test
-    @DisplayName("findDealer()는 호출하면 참가자들 중 딜러를 찾아 반환한다")
-    void findDealer_whenCall_thenReturnDealer() {
-        final Participant dealer = participants.findDealer();
-
-        assertThat(dealer)
-                .isExactlyInstanceOf(Dealer.class);
-    }
-
-    @Test
-    @DisplayName("findPlayers()는 호출하면 참가자들 중 플레이어를 찾아 반환한다")
-    void findPlayers_whenCall_thenReturnPlayers() {
-        List<Participant> players = participants.findPlayers();
-
-        players.forEach(player -> assertThat(player)
-                .isExactlyInstanceOf(Player.class));
-    }
-
     @ParameterizedTest(name = "canDrawByOrder()는 순서를 건네주면 카드를 더 뽑을 수 있는 상태인지 반환한다")
     @MethodSource("domain.helper.ParticipantArguments#makeDrawCards")
     void canDrawByOrder_givenPlayerOrder_thenReturnIsDraw(final List<Card> playerCards,
@@ -163,5 +146,20 @@ class ParticipantsTest {
         // then
         assertThat(actual)
                 .isSameAs(5);
+    }
+
+    @Test
+    @DisplayName("calculatePlayerGameResult()는 호출하면 각 플레이어의 게임 결과를 계산해 반환한다")
+    void calculatePlayerGameResult_whenCall_thenReturnPlayerGameResult() {
+        // when
+        final Map<Participant, Result> actual = participants.calculatePlayerGameResult();
+
+        // then
+        assertThat(actual.keySet().size())
+                .isSameAs(5);
+
+        actual.keySet()
+                .forEach(player -> assertThat(actual.get(player))
+                        .isSameAs(Result.DRAW));
     }
 }
