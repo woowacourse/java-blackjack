@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -20,7 +21,10 @@ class BlackJackDeckGeneratorTest {
         BlackJackDeckGenerator blackJackDeckGenerator = new BlackJackDeckGenerator();
         Deck deck = blackJackDeckGenerator.generate();
 
-        List<Card> allCards = deck.draw(52);
+        List<Card> allCards = new ArrayList<>();
+        for (int i = 0; i < 52; i++) {
+            allCards.add(deck.draw());
+        }
 
         int setSize = new HashSet<>(allCards).size();
         assertThat(allCards).hasSize(setSize);
@@ -32,9 +36,11 @@ class BlackJackDeckGeneratorTest {
         BlackJackDeckGenerator blackJackDeckGenerator = new BlackJackDeckGenerator();
         Deck deck = blackJackDeckGenerator.generate();
 
-        deck.draw(52);
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
 
-        assertThatThrownBy(() -> deck.draw(1))
+        assertThatThrownBy(() -> deck.draw())
                 .isInstanceOf(IllegalStateException.class);
     }
 }

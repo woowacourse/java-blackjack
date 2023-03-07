@@ -22,7 +22,11 @@ class DeckTest {
     void should_DrawCards_As_Count() {
         List<Card> mockCards = List.of(new Card(SPADE, ACE), new Card(SPADE, TWO));
         Deck deck = new MockDeckGenerator(mockCards).generate();
-        assertThat(deck.draw(2))
+
+        List<Card> cards = new ArrayList<>();
+        cards.add(deck.draw());
+        cards.add(deck.draw());
+        assertThat(cards)
                 .containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
     }
 
@@ -31,7 +35,7 @@ class DeckTest {
     void should_ThrowException_When_DrawEmptyDeck() {
         Deck deck = new Deck(new ArrayList<>());
 
-        assertThatThrownBy(() -> deck.draw(1))
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 꺼낼 카드가 없습니다.");
     }
