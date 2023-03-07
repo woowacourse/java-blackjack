@@ -14,7 +14,7 @@ public class BlackJackGame {
     private final Participants participants;
 
     public BlackJackGame(List<String> playerNames) {
-        deck = new Deck(new RandomNumberGenerator());
+        deck = new Deck();
         participants = new Participants(playerNames);
 
     }

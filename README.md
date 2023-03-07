@@ -51,7 +51,7 @@
 
 ## 1단계 리팩토링
 - [x] BlackJackGame 생성
-- [ ] 카드 shuffle 방식으로 변경
+- [x] 카드 shuffle 방식으로 변경
 - [x] validator 분리
 - [ ] EnumMap 적용
 - [ ] 메소드 이름 통일

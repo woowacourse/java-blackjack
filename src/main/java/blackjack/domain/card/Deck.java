@@ -1,17 +1,15 @@
 package blackjack.domain.card;
 
-import blackjack.domain.NumberGenerator;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
     private final List<Card> cards = new ArrayList<>();
-    private final NumberGenerator numberGenerator;
 
-    public Deck(NumberGenerator numberGenerator) {
+    public Deck() {
         generateDeck();
-        this.numberGenerator = numberGenerator;
+        Collections.shuffle(cards);
     }
 
     private void generateDeck() {
@@ -27,6 +25,6 @@ public class Deck {
     }
 
     public Card getCard() {
-        return cards.remove(numberGenerator.generate(cards.size()));
+        return cards.remove(0);
     }
 }
