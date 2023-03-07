@@ -117,7 +117,7 @@ class PlayerTest {
     @Test
     void receiveInitialCards() {
         // given
-        player.receiveInitialCards(new Deck());
+        player.receiveInitialCards(Deck.create());
 
         // when, then
         assertThat(player.getHand().getCards()).hasSize(2);
