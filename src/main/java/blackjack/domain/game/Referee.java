@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Players;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.CardPool;
+import blackjack.domain.game.CardPool;
 import blackjack.domain.card.Card;
 import blackjack.strategy.CardPicker;
 
