@@ -25,28 +25,29 @@ public class BlackJackController {
         Players players = generatePlayers();
 
         BlackJackGame blackJackGame = BlackJackGame.create(players);
-        blackJackGame.setUp();
 
-        showInitialStatus(blackJackGame);
+        start(blackJackGame);
 
-        passExtraCard(blackJackGame);
+        play(blackJackGame);
 
-        showFinalResult(blackJackGame);
+        showResult(blackJackGame);
     }
 
 
-    private void showInitialStatus(BlackJackGame blackJackGame) {
+    private void start(BlackJackGame blackJackGame) {
+        blackJackGame.setUp();
+
         outputView.showInitStatus(blackJackGame.getPlayers());
         outputView.showDealerFirstCard(blackJackGame.getDealer().getFirstCard());
         outputView.showPlayers(blackJackGame.getPlayers());
     }
 
-    private void passExtraCard(BlackJackGame blackJackGame) {
+    private void play(BlackJackGame blackJackGame) {
         passExtraCardToPlayers(blackJackGame);
         passExtraCardToDealer(blackJackGame);
     }
 
-    private void showFinalResult(BlackJackGame blackJackGame) {
+    private void showResult(BlackJackGame blackJackGame) {
         outputView.showTotalScore(blackJackGame.getDealer(), blackJackGame.getPlayers());
         Map<Player, Result> result = blackJackGame.calculateResult();
         outputView.showFinalResult(result, blackJackGame.getPlayers());
@@ -61,7 +62,7 @@ public class BlackJackController {
 
     private void addExtraCard(BlackJackGame blackJackGame, Player player) {
         while (player.canReceive() && hasIntention(player.getName())) {
-            blackJackGame.drawCardTo(player);
+            blackJackGame.passCardTo(player);
             outputView.showPlayer(player);
         }
     }
@@ -69,7 +70,7 @@ public class BlackJackController {
     private void passExtraCardToDealer(BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
         if (dealer.canReceive()) {
-            blackJackGame.drawCardTo(dealer);
+            blackJackGame.passCardTo(dealer);
             outputView.showDealerDrawPossible();
             return;
         }

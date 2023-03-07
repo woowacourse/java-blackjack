@@ -62,11 +62,11 @@ public class OutputView {
     public void showTotalScore(Dealer dealer, List<Player> players) {
         printMessage(LINE_SEPARATOR);
         printMessage(DEALER_NAME + DELIMITER + convertCard(dealer.getCards())
-                + RESULT_MESSAGE + dealer.calculateScore());
+                + RESULT_MESSAGE + dealer.calculateCurrentScore());
 
         for (Player player : players) {
             printMessage(player.getName() + DELIMITER + convertCard(player.getCards())
-                    + RESULT_MESSAGE + player.calculateScore());
+                    + RESULT_MESSAGE + player.calculateCurrentScore());
         }
     }
 

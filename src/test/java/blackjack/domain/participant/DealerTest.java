@@ -36,7 +36,7 @@ public class DealerTest {
             dealer.addCard(card);
         }
 
-        int score = dealer.calculateScore();
+        int score = dealer.calculateCurrentScore();
 
         assertThat(score).isEqualTo(expectedScore);
     }

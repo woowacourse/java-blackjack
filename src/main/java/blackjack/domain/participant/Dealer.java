@@ -32,6 +32,6 @@ public class Dealer extends Participant {
     }
 
     private boolean isUnderScore() {
-        return calculateScore() <= CARD_RECEIVE_CRITERIA;
+        return calculateCurrentScore() <= CARD_RECEIVE_CRITERIA;
     }
 }
