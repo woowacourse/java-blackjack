@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class GameResult {
     private static final int BURST_NUMBER = 21;
+    private static final int INIT_NUMBER = 0;
 
     private final Map<Result, Integer> dealerResult;
     private final Map<String, Result> playerResult;
@@ -22,7 +23,7 @@ public class GameResult {
         Map<Result, Integer> dealerResult = new HashMap<>();
 
         for (Result result: Result.values()) {
-            dealerResult.put(result, 0);
+            dealerResult.put(result, INIT_NUMBER);
         }
         return dealerResult;
     }
