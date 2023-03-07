@@ -19,7 +19,7 @@ public class PlayerTest {
         Player player = new Player("pobi");
         Card card = new Card(CardNumber.ACE,CardPattern.SPADE);
         player.addCard(card);
-        assertThat(player.getCard(0)).isEqualTo(card);
+        assertThat(player.getCardsSum()).isEqualTo(11);
     }
 
     @Test
