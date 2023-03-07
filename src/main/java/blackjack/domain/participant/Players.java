@@ -22,9 +22,13 @@ public class Players {
         final List<Player> names = Arrays.stream(input.split(SPLIT_DELIMITER))
                 .map(Player::new)
                 .collect(Collectors.toList());
+        validatePlayers(names);
+        return names;
+    }
+
+    private void validatePlayers(final List<Player> names) {
         validateNumberOfPlayers(names);
         validateDuplicatedNames(names);
-        return names;
     }
 
     private void validateNumberOfPlayers(final List<Player> names) {
