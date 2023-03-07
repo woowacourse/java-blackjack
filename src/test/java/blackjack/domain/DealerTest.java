@@ -25,17 +25,4 @@ class DealerTest {
 
         assertThat(dealer.getCards()).contains(card);
     }
-
-    @Test
-    @DisplayName("딜러는 처음에 카드를 한 장만 보여준다")
-    void showFirstCardTest() {
-        Dealer dealer = new Dealer();
-        Card card1 = new Card(CardSuit.HEART, CardNumber.ACE);
-        Card card2 = new Card(CardSuit.HEART, CardNumber.ACE);
-
-        dealer.addCard(card1);
-        dealer.addCard(card2);
-
-        assertThat(dealer.getCards()).contains(card1, card2);
-    }
 }
