@@ -1,7 +1,5 @@
 package domain.card;
 
-import domain.CardSelector;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
