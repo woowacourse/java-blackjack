@@ -1,17 +1,21 @@
 package blackjack.domain;
 
-import blackjack.dto.CardResult;
-import java.util.Collections;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.RandomDeckGenerator;
+import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.result.CardResult;
+import blackjack.domain.result.WinningStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.future;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class BlackJackGameTest {

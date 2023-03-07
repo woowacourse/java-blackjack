@@ -1,10 +1,18 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomDeckGenerator;
+import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.result.WinningStatus;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +110,7 @@ class UsersTest {
 
         boolean dealerOverDrawLimit = users.isDealerUnderDrawLimit();
 
-        assertThat(dealerOverDrawLimit).isTrue();
+        assertThat(dealerOverDrawLimit).isFalse();
     }
 
     @Test

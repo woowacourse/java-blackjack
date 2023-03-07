@@ -1,10 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.CardGroup;
-import blackjack.domain.RandomDeckGenerator;
-import blackjack.domain.WinningStatus;
-import blackjack.dto.CardResult;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.RandomDeckGenerator;
+import blackjack.domain.result.CardResult;
+import blackjack.domain.result.WinningStatus;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;

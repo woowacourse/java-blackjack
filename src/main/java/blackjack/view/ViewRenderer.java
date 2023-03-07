@@ -1,11 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardGroup;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardShape;
-import blackjack.domain.Dealer;
-import blackjack.domain.WinningStatus;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.result.WinningStatus;
 
 import java.util.EnumMap;
 import java.util.HashMap;

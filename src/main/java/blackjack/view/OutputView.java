@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
+import blackjack.domain.user.Dealer;
 
 import java.util.List;
 import java.util.Map;

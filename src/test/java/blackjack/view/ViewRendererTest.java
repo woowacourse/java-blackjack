@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardGroup;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardShape;
-import blackjack.domain.WinningStatus;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.result.WinningStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.user;
+
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.result.Score;
+import blackjack.domain.result.WinningStatus;
 
 public class Dealer extends User {
 

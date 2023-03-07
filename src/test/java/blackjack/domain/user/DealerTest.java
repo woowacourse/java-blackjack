@@ -1,8 +1,18 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

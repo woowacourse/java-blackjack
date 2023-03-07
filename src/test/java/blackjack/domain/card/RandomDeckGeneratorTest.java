@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.RandomDeckGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,6 @@
-package blackjack.dto;
+package blackjack.domain.result;
 
-import blackjack.domain.CardGroup;
-import blackjack.domain.Score;
+import blackjack.domain.card.CardGroup;
 
 public class CardResult {
 

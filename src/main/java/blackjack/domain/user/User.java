@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
-import java.util.List;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.Deck;
+import blackjack.domain.result.Score;
 
 public abstract class User {
 
