@@ -53,7 +53,7 @@ public class BlackjackController {
             hitPlayerCard(player, cards, cardPickerGenerator);
         }
         blackjackGame.dealerHitCard(cards,cardPickerGenerator);
-        outputView.hitDealerCount(blackjackGame.findDealer());
+        outputView.printHitDealerCount(blackjackGame.findDealer());
     }
 
     private void printResult(final Participants participants, final BlackjackGame blackjackGame) {

@@ -57,7 +57,7 @@ public class OutputView {
         System.out.print("- 결과 : " + participant.calculateCardNumber() + NEW_LINE);
     }
 
-    public void hitDealerCount(Dealer dealer) {
+    public void printHitDealerCount(Dealer dealer) {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getReceivedCards().size() - FIRST_CARD_COUNT));
     }
 

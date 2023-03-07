@@ -31,7 +31,7 @@ public class BlackjackGame {
 
     public void initFirstHit(CardPickerGenerator cardPickerGenerator) {
         for (Participant participant : participants.getParticipants()) {
-            firstHitRule(cardPickerGenerator, participant);
+            getTwoHitCards(cardPickerGenerator, participant);
         }
     }
     public void dealerHitCard(final Cards cards, final CardPickerGenerator cardPickerGenerator) {
@@ -67,7 +67,7 @@ public class BlackjackGame {
             .get();
     }
 
-    private void firstHitRule(final CardPickerGenerator cardPickerGenerator, final Participant participant) {
+    private void getTwoHitCards(final CardPickerGenerator cardPickerGenerator, final Participant participant) {
         for (int count = 0; count < FIRST_HIT_COUNT; count++) {
             participant.hit(cards.pick(cardPickerGenerator));
         }
