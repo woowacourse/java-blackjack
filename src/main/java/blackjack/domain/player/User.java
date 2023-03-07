@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
@@ -21,8 +22,9 @@ public abstract class User {
         return hand.getTotalScore();
     }
 
-    public void updateCardScore(Card card) {
-        hand.updateCardScore(card);
+    public void updateCardScore() {
+        Deck deck = Deck.getInstance();
+        hand.updateCardScore(deck.drawCard());
     }
 
     public boolean isUnderBust() {
