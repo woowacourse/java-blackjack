@@ -23,74 +23,16 @@ public class BlackJackGameController {
         this.outputView = outputView;
     }
 
-    private static Deck generateDeck() {
-        return DeckFactory.createBlackJackDeck();
-    }
-
-    private static List<String> getCardNames(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
-                .collect(Collectors.toList());
-    }
-
     public void run() {
         Game game = start();
         play(game);
         finish(game);
     }
 
-    private void finish(Game game) {
-        outputView.printDealerResult(getCardNames(game.showDealerAllCards()), game.getDealerScore());
-
-        for (Player player : game.getPlayers()) {
-            printOnePlayerResult(player);
-        }
-
-        GameResult gameResult = new GameResult(game);
-        outputView.printEndMsg();
-        outputView.printDealerWinningResult(gameResult.getDealerResult());
-        outputView.printPlayerWinningResult(gameResult.getPlayerResult());
-    }
-
-    private void printOnePlayerResult(Player player) {
-        String playerName = player.showName();
-        List<String> playerCards = getCardNames(player.showCards());
-        int score = player.calculateScore();
-        outputView.printPlayerResult(playerName, playerCards, score);
-    }
-
-    private void play(Game game) {
-        for (Player player : game.getPlayers()) {
-            playersPlay(game, player);
-        }
-        dealerPlay(game);
-    }
-
     private Game start() {
         Game game = generateGame();
         printStartCards(game);
         return game;
-    }
-
-    private void dealerPlay(Game game) {
-        while (game.isHitDealer()) {
-            outputView.printDealerHit();
-            game.giveCardToDealer();
-        }
-    }
-
-    private void printStartCards(Game game) {
-        outputView.printStartMsg(game.showPlayersName());
-        outputView.printDealerCards(getCardNames(game.showDealerCards()), System.lineSeparator());
-        for (Player player : game.getPlayers()) {
-            printPlayerCards(player);
-        }
-    }
-
-    private void printPlayerCards(Player player) {
-        String playerName = player.showName();
-        List<String> cards = getCardNames(player.showCards());
-        outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
     }
 
     private Game generateGame() {
@@ -112,7 +54,38 @@ public class BlackJackGameController {
         }
     }
 
-    private void playersPlay(Game game, Player player) {
+    private void printStartCards(Game game) {
+        outputView.printStartMsg(game.showPlayersName());
+        outputView.printDealerCards(getCardNames(game.showDealerCards()), System.lineSeparator());
+        for (Player player : game.getPlayers()) {
+            printPlayerCards(player);
+        }
+    }
+
+    private void printPlayerCards(Player player) {
+        String playerName = player.showName();
+        List<String> cards = getCardNames(player.showCards());
+        outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
+    }
+
+    private List<String> getCardNames(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
+                .collect(Collectors.toList());
+    }
+
+    private Deck generateDeck() {
+        return DeckFactory.createBlackJackDeck();
+    }
+
+    private void play(Game game) {
+        for (Player player : game.getPlayers()) {
+            playerTurn(game, player);
+        }
+        dealerTurn(game);
+    }
+
+    private void playerTurn(Game game, Player player) {
         while (isCheckPlayerCommand(player)) {
             game.giveCardTo(player);
             printPlayerCards(player);
@@ -121,5 +94,32 @@ public class BlackJackGameController {
 
     private boolean isCheckPlayerCommand(Player player) {
         return player.isHit() && inputView.readTryCommand(player.showName()).equals("y");
+    }
+
+    private void dealerTurn(Game game) {
+        while (game.isHitDealer()) {
+            outputView.printDealerHit();
+            game.giveCardToDealer();
+        }
+    }
+
+    private void finish(Game game) {
+        outputView.printDealerResult(getCardNames(game.showDealerAllCards()), game.getDealerScore());
+
+        for (Player player : game.getPlayers()) {
+            printOnePlayerResult(player);
+        }
+
+        GameResult gameResult = new GameResult(game);
+        outputView.printEndMsg();
+        outputView.printDealerWinningResult(gameResult.getDealerResult());
+        outputView.printPlayerWinningResult(gameResult.getPlayerResult());
+    }
+
+    private void printOnePlayerResult(Player player) {
+        String playerName = player.showName();
+        List<String> playerCards = getCardNames(player.showCards());
+        int score = player.calculateScore();
+        outputView.printPlayerResult(playerName, playerCards, score);
     }
 }
