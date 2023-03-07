@@ -14,7 +14,7 @@ import static controller.DrawCardCommand.CARD_DRAW_STOP;
 import static view.message.Message.DRAW_CARD_CARD_MESSAGE;
 import static view.message.Message.PLAYER_NAME_INPUT_MESSAGE;
 
-public class InputView {
+public final class InputView {
 
     private final BufferedReader bufferedReader;
 
