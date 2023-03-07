@@ -2,6 +2,7 @@ package blackjackgame.controller;
 
 import java.util.List;
 
+import blackjackgame.domain.Judge;
 import blackjackgame.domain.Result;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.player.Dealer;
@@ -32,7 +33,7 @@ public class BlackJackController {
         askDealerHitCardRepeat(dealer, deck);
 
         printPlayersCardScore(guests, dealer);
-        printGameResult(guests, dealer);
+        judgeAndPrintResult(guests, dealer);
     }
 
     private Guests generateGuests() {
@@ -89,8 +90,10 @@ public class BlackJackController {
         }
     }
 
-    private void printGameResult(final Guests guests, final Dealer dealer) {
-        Result result = new Result(dealer, guests.getGuests());
-        outputView.printResult(result.getDealerResult(), result.getGuestsResult());
+    private void judgeAndPrintResult(final Guests guests, final Dealer dealer) {
+        Judge judge = new Judge(dealer, guests);
+        Result result = new Result(judge.guestsResult());
+        result.generateDealer();
+        outputView.printResult(result.getDealer(), result.getGuests());
     }
 }
