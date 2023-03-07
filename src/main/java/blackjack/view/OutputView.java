@@ -32,7 +32,7 @@ public class OutputView {
     public void printInitialDraw(final List<Player> players) {
         System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
         for (Player player : players) {
-            printPlayerMessage(player, generateCardMessages(player));
+            printPlayerMessage(player, generateFirstCardMessages(player));
         }
         System.out.print(NEW_LINE);
     }
@@ -47,11 +47,15 @@ public class OutputView {
         System.out.printf((PLAYER_CARD_MESSAGE_FORMAT) + "%n", player.getName(), message);
     }
 
-    private String generateCardMessages(final Player player) {
+    private String generateFirstCardMessages(final Player player) {
         if (player.isDealer()) {
             Dealer dealer = (Dealer) player;
             return dealer.getFirstCardLetter();
         }
+        return generateCardMessages(player);
+    }
+
+    private String generateCardMessages(final Player player) {
         return join(DELIMITER, player.getCardLetters());
     }
 
@@ -60,7 +64,7 @@ public class OutputView {
     }
 
     public void printDrawResult(final Player player) {
-        printPlayerMessage(player, generateCardMessages(player));
+        printPlayerMessage(player, generateFirstCardMessages(player));
     }
 
     public void printPlayerResult(final Player player) {
