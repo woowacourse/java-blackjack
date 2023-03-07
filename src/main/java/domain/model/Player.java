@@ -21,6 +21,10 @@ public class Player {
         return Score.of(cards).isBust();
     }
 
+    public boolean cardsIsNotEmpty() {
+        return cards.isNotEmpty();
+    }
+
     public Score getScore() {
         return Score.of(cards);
     }
