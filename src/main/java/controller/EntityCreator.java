@@ -13,7 +13,7 @@ public class EntityCreator {
     private Players players;
     private Dealer dealer;
 
-    public EntityCreator(){
+    public EntityCreator() {
         this.players = getValidPlayerNames();
         this.dealer = new Dealer(new Cards(new ArrayList<>()));
     }

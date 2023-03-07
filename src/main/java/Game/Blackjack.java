@@ -27,7 +27,7 @@ public class Blackjack {
     public void play() {
         playersHitOrStand();
         dealerHitOrStand();
-        this.result = new Result(players,dealer);
+        this.result = new Result(players, dealer);
     }
 
     private void playersHitOrStand() {
