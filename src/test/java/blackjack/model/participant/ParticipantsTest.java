@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ParticipantsTest {
 
@@ -65,6 +66,20 @@ class ParticipantsTest {
 
         //then
         assertThat(nextPlayer).isEqualTo(player2);
+    }
+
+    @Test
+    @DisplayName("증복된 이름을 가진 플레이어가 있을 경우 예외처리한다.")
+    void validate_duplicated_name() {
+        //given
+        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Player player1 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        List<Player> players = new ArrayList<>(List.of(player1, player2));
+
+        //then
+        assertThatThrownBy(() -> new Participants(dealer, players)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 중복될 수 없습니다.");
     }
 
 }
