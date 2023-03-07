@@ -1,6 +1,8 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.game.GameResult;
+import java.math.BigDecimal;
 import java.util.List;
 
 public final class Player extends Participant {
@@ -30,6 +32,10 @@ public final class Player extends Participant {
 
     public void bet(final int betAmount) {
         playerInfo.bet(betAmount);
+    }
+
+    public BigDecimal calculateBenefit(final GameResult gameResult) {
+        return playerInfo.calculateBenefit(gameResult);
     }
 
     @Override

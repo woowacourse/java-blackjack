@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -140,5 +141,22 @@ class PlayerTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("천 원 단위로 배팅해주세요.");
         }
+    }
+
+    @Test
+    @DisplayName("calculateBenefit()은 배당 금액을 건네주면 순이익을 반환한다")
+    void calculateBenefit_givenPrizeRatio_thenReturnBenefit() {
+        // given
+        final PlayerBet playerBet = PlayerBet.create(1000);
+        final double prizeRatio = 1.5d;
+
+        // when
+        final BigDecimal actual = playerBet.calculateBenefit(prizeRatio);
+
+        // then
+        final BigDecimal expected = new BigDecimal("500.0");
+
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 }
