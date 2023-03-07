@@ -69,8 +69,7 @@ public class BlackJackService {
         return dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE;
     }
 
-    public List<ParticipantResult> getParticipantResults(final Dealer dealer,
-                                                         final Players players) {
+    public List<ParticipantResult> getParticipantResults(final Dealer dealer, final Players players) {
         List<ParticipantResult> participantResults = new ArrayList<>();
         participantResults.add(ParticipantResult.toDto(dealer));
 
@@ -85,43 +84,27 @@ public class BlackJackService {
         cardInfos.add(DrawnCardsInfo.toDto(dealer));
     }
 
-    public void getWinLoseResults(final Dealer dealer, final Players players) {
+    public void calculateGameResults(final Dealer dealer, final Players players) {
         players.stream()
-                .forEach(player -> calculateWinLose(player, dealer));
+                .forEach(player -> calculateAccount(player, dealer));
     }
 
-    private void calculateWinLose(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateCardScore();
-        int dealerScore = dealer.calculateCardScore();
-        int playerAccount = player.getAccount();
-
+    private void calculateAccount(final Player player, final Dealer dealer) {
         if (isAllParticipantBust(player, dealer)) {
             return;
         }
 
-        if (isPlayerAndDealerNotBust(player, dealer)) {
-            if (playerScore > dealerScore) {
-                winPlayer(player, dealer, playerAccount);
-                return;
-            }
-            winDealer(player, dealer, playerAccount);
-        }
-
         if (isPlayerWin(player, dealer)) {
-            winPlayer(player, dealer, playerAccount);
+            winPlayer(player, dealer, player.getAccount());
+            return;
         }
 
-        if (isDealerWin(player, dealer)) {
-            winDealer(player, dealer, playerAccount);
-        }
-    }
-
-    private boolean isDealerWin(final Player player, final Dealer dealer) {
-        return player.isBust() && !dealer.isBust();
+        winDealer(player, dealer, player.getAccount());
     }
 
     private boolean isPlayerWin(final Player player, final Dealer dealer) {
-        return !player.isBust() && dealer.isBust();
+        return (player.calculateCardScore() > dealer.calculateCardScore() && !player.isBust())
+                || dealer.isBust();
     }
 
     private void winPlayer(final Player player, final Dealer dealer, final int playerAccount) {
@@ -138,11 +121,7 @@ public class BlackJackService {
         return player.isBust() && dealer.isBust();
     }
 
-    private boolean isPlayerAndDealerNotBust(final Player player, final Dealer dealer) {
-        return !player.isBust() && !dealer.isBust();
-    }
-
-    public List<BlackJackResult> getGameResults(final Dealer dealer, final Players players) {
+    public List<BlackJackResult> getParticipantsNameAndAccount(final Dealer dealer, final Players players) {
         List<BlackJackResult> blackJackResults = new ArrayList<>();
         blackJackResults.add(BlackJackResult.toDto(dealer));
 

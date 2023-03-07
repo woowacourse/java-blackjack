@@ -74,7 +74,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public void printResult(final List<BlackJackResult> results) {
+    public void printGameResults(final List<BlackJackResult> results) {
         System.out.println(NEW_LINE + "## 최종 수익");
         results
                 .forEach(result -> System.out.println(result.getName() + ": " + (int) result.getAccount()));

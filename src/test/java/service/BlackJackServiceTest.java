@@ -222,7 +222,7 @@ class BlackJackServiceTest {
         Players players = new Players(List.of(player));
 
         // when
-        blackJackService.getWinLoseResults(dealer, players);
+        blackJackService.calculateGameResults(dealer, players);
 
         // then
         assertThat(player.getAccount()).isEqualTo(givenAccount);
@@ -243,7 +243,7 @@ class BlackJackServiceTest {
         Players players = new Players(List.of(player));
 
         // when
-        blackJackService.getWinLoseResults(dealer, players);
+        blackJackService.calculateGameResults(dealer, players);
 
         // then
         assertThat(player.getAccount()).isEqualTo(1500);
@@ -265,7 +265,7 @@ class BlackJackServiceTest {
         Players players = new Players(List.of(player));
 
         // when
-        blackJackService.getWinLoseResults(dealer, players);
+        blackJackService.calculateGameResults(dealer, players);
 
         // then
         assertThat(player.getAccount()).isEqualTo(0);
@@ -292,7 +292,7 @@ class BlackJackServiceTest {
         Players players = new Players(List.of(player));
 
         // when
-        blackJackService.getWinLoseResults(dealer, players);
+        blackJackService.calculateGameResults(dealer, players);
 
         // then
         assertThat(player.getAccount()).isEqualTo(expectedPlayerAccount);
@@ -316,7 +316,7 @@ class BlackJackServiceTest {
         Players players = new Players(List.of(player));
 
         // when
-        blackJackService.getWinLoseResults(dealer, players);
+        blackJackService.calculateGameResults(dealer, players);
 
         // then
         assertThat(player.getAccount()).isEqualTo(0);

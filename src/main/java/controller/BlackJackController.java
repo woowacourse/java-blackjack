@@ -12,6 +12,7 @@ import domain.ParticipantGenerator;
 import domain.Player;
 import domain.Players;
 import domain.Status;
+import dto.BlackJackResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
 import java.util.List;
@@ -103,7 +104,9 @@ public class BlackJackController {
     }
 
     private void printWinLoseResult(final Dealer dealer, final Players players) {
-        blackJackService.getWinLoseResults(dealer, players);
-        outputView.printResult(blackJackService.getGameResults(dealer, players));
+        blackJackService.calculateGameResults(dealer, players);
+
+        List<BlackJackResult> gameResults = blackJackService.getParticipantsNameAndAccount(dealer, players);
+        outputView.printGameResults(gameResults);
     }
 }
