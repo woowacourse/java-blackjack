@@ -3,18 +3,13 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
-
-    private static final int INIT_CARD_COUNT = 2;
 
     private final Players players;
     private final Dealer dealer;
@@ -33,11 +28,12 @@ public class BlackJackGame {
     }
 
     public void setUp() {
-        List<Player> players = this.players.getPlayers();
-        for (Player player : players) {
-            drawCard(player, INIT_CARD_COUNT);
+        for (Player player : getPlayers()) {
+            drawCardTo(player);
+            drawCardTo(player);
         }
-        drawCard(dealer, INIT_CARD_COUNT);
+        drawCardTo(dealer);
+        drawCardTo(dealer);
     }
 
     public Map<Player, Result> calculateResult() {
@@ -49,13 +45,7 @@ public class BlackJackGame {
         return result;
     }
 
-    public void drawCard(Participant participant, int count) {
-        for (int i = 0; i < count; i++) {
-            passCard(participant);
-        }
-    }
-
-    private void passCard(Participant participant) {
+    public void drawCardTo(Participant participant) {
         if (participant.canReceive()) {
             Card card = deck.draw();
             participant.addCard(card);

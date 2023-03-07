@@ -13,8 +13,6 @@ import java.util.Map;
 
 public class BlackJackController {
 
-    private static final int EXTRA_CARD_COUNT = 1;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -39,7 +37,7 @@ public class BlackJackController {
 
     private void showInitialStatus(BlackJackGame blackJackGame) {
         outputView.showInitStatus(blackJackGame.getPlayers());
-        outputView.showDealerFirstCard(blackJackGame.getDealer().getFirst());
+        outputView.showDealerFirstCard(blackJackGame.getDealer().getFirstCard());
         outputView.showPlayers(blackJackGame.getPlayers());
     }
 
@@ -54,16 +52,6 @@ public class BlackJackController {
         outputView.showFinalResult(result, blackJackGame.getPlayers());
     }
 
-    private void passExtraCardToDealer(BlackJackGame blackJackGame) {
-        Dealer dealer = blackJackGame.getDealer();
-        if (dealer.canReceive()) {
-            blackJackGame.drawCard(dealer, EXTRA_CARD_COUNT);
-            outputView.showDealerDrawPossible();
-            return;
-        }
-        outputView.showDealerDrawImpossible();
-    }
-
     private void passExtraCardToPlayers(BlackJackGame blackJackGame) {
         List<Player> players = blackJackGame.getPlayers();
         for (Player player : players) {
@@ -73,9 +61,19 @@ public class BlackJackController {
 
     private void addExtraCard(BlackJackGame blackJackGame, Player player) {
         while (player.canReceive() && hasIntention(player.getName())) {
-            blackJackGame.drawCard(player, EXTRA_CARD_COUNT);
+            blackJackGame.drawCardTo(player);
             outputView.showPlayer(player);
         }
+    }
+
+    private void passExtraCardToDealer(BlackJackGame blackJackGame) {
+        Dealer dealer = blackJackGame.getDealer();
+        if (dealer.canReceive()) {
+            blackJackGame.drawCardTo(dealer);
+            outputView.showDealerDrawPossible();
+            return;
+        }
+        outputView.showDealerDrawImpossible();
     }
 
     private boolean hasIntention(String name) {
