@@ -41,4 +41,14 @@ public enum Result {
         }
         return DRAW;
     }
+
+    public static Result getOpponentResult(Result result) {
+        if (result == WIN) {
+            return LOSE;
+        }
+        if (result == DRAW) {
+            return DRAW;
+        }
+        return WIN;
+    }
 }

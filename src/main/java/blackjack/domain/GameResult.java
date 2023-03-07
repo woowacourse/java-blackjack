@@ -34,7 +34,7 @@ public class GameResult {
         for (Player player : game.getPlayers()) {
             int playerScore = player.calculateScore();
             Result playerWin = Result.getLeftResult(playerScore, dealerScore, BURST_NUMBER);
-            Result dealerWin = Result.getLeftResult(dealerScore, playerScore, BURST_NUMBER);
+            Result dealerWin = Result.getOpponentResult(playerWin);
             playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
         }
