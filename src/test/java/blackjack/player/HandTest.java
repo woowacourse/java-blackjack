@@ -69,9 +69,10 @@ class HandTest {
     @Test
     @DisplayName("Hand에 들어있는 카드들을 가져올 수 있다.")
     void getCards() {
-        hand = new Hand();
+        Card card = new Card(CardNumber.KING, Pattern.DIAMOND);
+        hand = new Hand(List.of(card));
 
-        assertThat(hand.getCards()).isInstanceOf(ArrayList.class);
+        assertThat(hand.getCards()).contains(card);
     }
 
     @Test

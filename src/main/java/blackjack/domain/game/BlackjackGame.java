@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BlackjackGame {
     public static final int FIRST_DRAW_COUNT = 2;
-    private final Players players;
+    private Players players;
     private final Dealer dealer;
     private final Deck deck;
 
@@ -26,7 +26,7 @@ public class BlackjackGame {
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
+        players = players.add(player);
     }
 
     public void supplyCardsToDealer() {

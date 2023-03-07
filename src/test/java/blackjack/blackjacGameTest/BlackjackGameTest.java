@@ -50,9 +50,8 @@ class BlackjackGameTest {
         Player polo = new Player(new Name("폴로"));
         blackjackGame.addPlayer(polo);
 
-        assertThat(players)
-                .extracting("players", InstanceOfAssertFactories.list(Player.class))
-                .contains(polo);
+        assertThat(blackjackGame).extracting("players")
+                .isNotSameAs(players);
     }
 
     @Test

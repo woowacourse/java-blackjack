@@ -10,6 +10,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.ShuffledCardsGenerator;
 import java.util.List;
 
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,9 +34,14 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어 한 명을 추가할 수 있다.")
     void addPlayer() {
+        //given
         Players players = new Players();
         Player player = new Player(new Name("로지"));
-        players.add(player);
+        //when
+        Players newPlayers = players.add(player);
+        //then
+        assertThat(newPlayers).extracting("players", InstanceOfAssertFactories.list(Player.class))
+                .contains(player);
     }
 
     @DisplayName("플레이어들이 알아서 덱에서 카드를 받는다.")
@@ -45,9 +51,9 @@ class PlayersTest {
         Deck deck = new Deck(new ShuffledCardsGenerator());
         Players players = new Players();
         Player player = new Player(new Name("로지"));
-        players.add(player);
+        Players newPlayers = players.add(player);
         //when
-        players.takeCard(deck, 2);
+        newPlayers.takeCard(deck, 2);
         //then
         assertThat(player.showCards()).hasSize(2);
     }
@@ -57,10 +63,10 @@ class PlayersTest {
     void getWinningResult() {
         Players players = new Players();
         Player player = new Player(new Name("폴로"));
-        players.add(player);
+        Players newPlayers = players.add(player);
 
         player.win();
-        List<PlayerWinningDto> playerWinningResults = players.getWinningResults();
+        List<PlayerWinningDto> playerWinningResults = newPlayers.getWinningResults();
         PlayerWinningDto playerWinningDto = playerWinningResults.get(0);
 
         assertThat(playerWinningDto.getName().getValue()).isEqualTo("폴로");
@@ -76,13 +82,13 @@ class PlayersTest {
         void winWhenScoreIsHigher() {
             Players players = new Players();
             Player player = new Player(new Name("폴로"));
-            players.add(player);
+            Players newPlayers = players.add(player);
 
             Dealer dealer = new Dealer();
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
             dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
 
-            players.calculateWinning(dealer);
+            newPlayers.calculateWinning(dealer);
             assertThat(player.getResult()).isEqualTo(WIN);
         }
 
@@ -91,14 +97,14 @@ class PlayersTest {
         void winWhenDealerBust() {
             Players players = new Players();
             Player player = new Player(new Name("폴로"));
-            players.add(player);
+            Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
 
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
             dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
             dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
             dealer.hit(new Card(CardNumber.KING, Pattern.CLOVER));
-            players.calculateWinning(dealer);
+            newPlayers.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(WIN);
         }
@@ -108,13 +114,13 @@ class PlayersTest {
         void loseWhenLowerScore() {
             Players players = new Players();
             Player player = new Player(new Name("폴로"));
-            players.add(player);
+            Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
 
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
             dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
             dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            players.calculateWinning(dealer);
+            newPlayers.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(LOSE);
         }
@@ -124,7 +130,7 @@ class PlayersTest {
         void loseWhenPlayerBust() {
             Players players = new Players();
             Player player = new Player(new Name("폴로"));
-            players.add(player);
+            Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
 
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
@@ -132,7 +138,7 @@ class PlayersTest {
             player.hit(new Card(CardNumber.JACK, Pattern.DIAMOND));
             dealer.hit(new Card(CardNumber.FIVE, Pattern.CLOVER));
             dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            players.calculateWinning(dealer);
+            newPlayers.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(LOSE);
         }
@@ -142,12 +148,12 @@ class PlayersTest {
         void tieWhenSameScore() {
             Players players = new Players();
             Player player = new Player(new Name("폴로"));
-            players.add(player);
+            Players newPlayers = players.add(player);
             Dealer dealer = new Dealer();
 
             player.hit(new Card(CardNumber.KING, Pattern.HEART));
             dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            players.calculateWinning(dealer);
+            newPlayers.calculateWinning(dealer);
 
             assertThat(player.getResult()).isEqualTo(TIE);
         }

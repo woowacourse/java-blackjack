@@ -9,11 +9,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
+
+    public Players() {
+        players = new ArrayList<>();
+    }
+
+    public Players(List<Player> players) {
+        this.players = players;
+    }
 
 
-    public void add(Player player) {
-        players.add(player);
+    public Players add(Player player) {
+        ArrayList<Player> newPlayers = new ArrayList<>(players);
+        newPlayers.add(player);
+        return new Players(newPlayers);
     }
 
     public void hitAdditionalCard(Deck deck, CardDecisionStrategy cardDecisionStrategy,
