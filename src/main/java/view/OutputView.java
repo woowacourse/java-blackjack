@@ -125,18 +125,19 @@ public final class OutputView {
 
     public void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
         for (Player player : playersResult.keySet()) {
-            String playerDisplay = "";
             WinningStatus winningStatus = playersResult.get(player);
-            if (winningStatus.equals(WinningStatus.WIN)) {
-                playerDisplay = "승";
-            }
-            if (winningStatus.equals(WinningStatus.DRAW)) {
-                playerDisplay = "무";
-            }
-            if (winningStatus.equals(WinningStatus.LOSE)) {
-                playerDisplay = "패";
-            }
-            System.out.printf("%s: %s" + System.lineSeparator(), player.getName(), playerDisplay);
+            System.out.printf("%s: %s" + System.lineSeparator(), player.getName(),
+                    formatWinningStatusDisplay(winningStatus));
         }
+    }
+
+    private static String formatWinningStatusDisplay(final WinningStatus winningStatus) {
+        if (winningStatus.equals(WinningStatus.WIN)) {
+            return "승";
+        }
+        if (winningStatus.equals(WinningStatus.DRAW)) {
+            return "무";
+        }
+        return "패";
     }
 }
