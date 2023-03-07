@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
 
     private static final int STANDARD_GIVEN_SCORE = 16;
 
@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     public static Dealer create() {
-        return new Dealer(DEALER_NAME);
+        return new Dealer(DEALER_NAME.getName());
     }
 
     public Card getFirstCard() {

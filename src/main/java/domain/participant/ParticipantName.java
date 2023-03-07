@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.util.Objects;
 
-public class ParticipantName {
+public final class ParticipantName {
 
     private static final int MAX_LENGTH = 20;
 
@@ -17,6 +17,10 @@ public class ParticipantName {
         validateBlankName(name);
         validateNameLength(name);
         return new ParticipantName(name);
+    }
+
+    boolean isSame(final String name) {
+        return this.name.equals(name);
     }
 
     private static void validateNullName(final String name) {

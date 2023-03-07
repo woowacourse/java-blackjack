@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Participant {
 
-    protected static final String DEALER_NAME = "딜러";
+    protected static final ParticipantName DEALER_NAME = ParticipantName.create("딜러");
 
     private final ParticipantName name;
     protected final ParticipantCard participantCard;
@@ -17,7 +17,7 @@ public class Participant {
     }
 
     public final void addCard(final Card card) {
-        participantCard.addCard(card);
+        this.participantCard.addCard(card);
     }
 
     public final List<Card> getCard() {
