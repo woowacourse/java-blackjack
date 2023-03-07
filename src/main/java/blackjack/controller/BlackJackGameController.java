@@ -94,7 +94,12 @@ public class BlackJackGameController {
     }
 
     private boolean isCheckPlayerCommand(Player player) {
-        return player.isHit() && isCommandHit(player);
+        try {
+            return player.isHit() && isCommandHit(player);
+        } catch (IllegalArgumentException exception) {
+            System.out.println("[ERROR] " + exception.getMessage());
+            return isCheckPlayerCommand(player);
+        }
     }
 
     private boolean isCommandHit(Player player) {
