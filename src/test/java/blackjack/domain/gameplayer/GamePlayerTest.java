@@ -33,14 +33,20 @@ class GamePlayerTest {
     @DisplayName("딜러에게 카드를 나눠주는 메소드 테스트")
     @Test
     void Should_Success_When_GiveCardToDealer() {
+        // given
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
+
+        // when, then
         assertDoesNotThrow(() -> gamePlayer.giveCardToDealer(new Card(CardNumber.ACE, CardSymbol.HEARTS)));
     }
 
     @DisplayName("플레이어에게 카드를 나눠주는 메소드 테스트")
     @Test
     void Should_Success_When_GiveCardToPlayer() {
+        // given
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
+
+        // when, then
         assertDoesNotThrow(() -> gamePlayer.giveCardTo(players.get(0), new Card(CardNumber.ACE, CardSymbol.HEARTS)));
     }
 }

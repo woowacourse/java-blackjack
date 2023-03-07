@@ -22,9 +22,12 @@ class PlayerTest {
     @DisplayName("플레이어에게 카드를 전달하면 플레이어는 카드를 받는다.")
     @Test
     void Should_Success_When_AddCard() {
+        // given
         Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
         Player tori = new Player(new Name("tori"));
         tori.addCard(card);
+
+        // when, then
         assertThat(tori.showCards()).contains(card);
     }
 

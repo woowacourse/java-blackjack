@@ -18,12 +18,14 @@ class CardNumberTest {
     @ParameterizedTest
     @CsvSource(value = {"A:1,11", "2:2", "J:10"}, delimiter = ':')
     void Should_GetScore_When_InputNumber(String number, String score) {
+        // given
         List<Integer> expected = Stream.of(score.split(","))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
+        // when
         List<Integer> result = CardNumber.getScoresByNumber(number);
-
+        // then
         assertThat(result).isEqualTo(expected);
     }
 
