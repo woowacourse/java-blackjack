@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ParticipantsTest {
 
@@ -98,6 +99,23 @@ class ParticipantsTest {
                 .hasMessage("게임을 시작하려면 플레이어는 한명 이상이여야 합니다.");
     }
 
+    @Test
+    @DisplayName("딜러와 플레이어는 처음에 카드를 2개씩 받는다.")
+    void distribute_two_cards_to_each_participant() {
+        //given
+        Dealer dealer = new Dealer(new InitialState(new Hand()));
+        Player player1 = new Player(new Name("도치"), new InitialState(new Hand()));
+        Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+        Participants participants = new Participants(dealer, List.of(player1, player2));
+        CardDeck cardDeck = new CardDeck();
 
+        //when
+        participants.distributeTwoCardsToEach(cardDeck);
+
+        //then
+        assertAll(() -> assertThat(dealer.getHand().getCards().size()).isEqualTo(2),
+                () -> assertThat(player1.getHand().getCards().size()).isEqualTo(2),
+                () -> assertThat(player2.getHand().getCards().size()).isEqualTo(2));
+    }
 
 }

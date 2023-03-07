@@ -75,4 +75,5 @@ class PlayerTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("블랙잭 상태에서는 카드를 더 뽑을 수 없습니다.");
     }
+
 }
