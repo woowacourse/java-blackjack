@@ -46,7 +46,7 @@ public abstract class User {
         return hand.score();
     }
 
-    public List<Card> getCards() {
+    public List<Card> cards() {
         return hand.getCards();
     }
 

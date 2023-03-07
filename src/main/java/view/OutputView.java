@@ -19,9 +19,9 @@ public class OutputView {
     private static final String RESULT_NOTICE = " - 결과: ";
 
     public void printCardsFrom(Users users) {
-        printDealCardsNotice(users.getPlayers());
-        printFirstPlayerCard(users.getDealer());
-        printPlayersCards(users.getPlayers());
+        printDealCardsNotice(users.players());
+        printFirstPlayerCard(users.dealer());
+        printPlayersCards(users.players());
     }
 
     private void printDealCardsNotice(List<Player> players) {
@@ -34,7 +34,7 @@ public class OutputView {
 
     private void printFirstPlayerCard(User user) {
         String name = user.getName();
-        Card card = user.getCards().get(0);
+        Card card = user.cards().get(0);
 
         System.out.println(name + NAME_AND_VALUE_DELIMITER + getCardDisplay(card));
     }
@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     public void printPlayerCards(Player player) {
-        System.out.println(player.getName() + CARD_NOTICE + getCardDisplays(player.getCards()));
+        System.out.println(player.getName() + CARD_NOTICE + getCardDisplays(player.cards()));
     }
 
     public void noticeDealerAccept() {
@@ -58,16 +58,16 @@ public class OutputView {
     }
 
     public void printCardsAndScores(Users users) {
-        printCardsAndScore(users.getDealer());
+        printCardsAndScore(users.dealer());
 
-        for (Player player : users.getPlayers()) {
+        for (Player player : users.players()) {
             printCardsAndScore(player);
         }
     }
 
     public void printCardsAndScore(User user) {
         String name = user.getName();
-        String cardDisplays = getCardDisplays(user.getCards());
+        String cardDisplays = getCardDisplays(user.cards());
 
         System.out.println(name + CARD_NOTICE + cardDisplays + RESULT_NOTICE + user.score().getValue());
     }

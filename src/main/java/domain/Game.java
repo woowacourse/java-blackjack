@@ -31,11 +31,11 @@ public class Game {
     }
 
     public boolean canHitByDealerScore() {
-        return canHitByPlayerScore(users.getDealer());
+        return canHitByPlayerScore(users.dealer());
     }
 
     public void dealCardToDealer() {
-        Dealer dealer = users.getDealer();
+        Dealer dealer = users.dealer();
 
         if (dealer.canHit()) {
             dealer.addCard(deck.drawCard());
@@ -43,7 +43,7 @@ public class Game {
     }
 
     public List<Player> getPlayers() {
-        return users.getPlayers();
+        return users.players();
     }
 
     public Users getUsers() {

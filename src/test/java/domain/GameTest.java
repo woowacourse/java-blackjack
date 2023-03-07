@@ -32,10 +32,10 @@ public class GameTest {
         game.dealTwoCards();
 
         for (Player player : players) {
-            assertThat(player.getCards()).hasSize(2);
+            assertThat(player.cards()).hasSize(2);
         }
 
-        assertThat(dealer.getCards()).hasSize(2);
+        assertThat(dealer.cards()).hasSize(2);
     }
 
     @ParameterizedTest(name = "딜러와 플레이어중에 21에 가까운 사람이 이긴다.")
@@ -86,7 +86,7 @@ public class GameTest {
         game.dealCard(players.get(0));
 
         var player = game.getPlayers().get(0);
-        assertThat(player.getCards()).hasSize(3);
+        assertThat(player.cards()).hasSize(3);
     }
 
 

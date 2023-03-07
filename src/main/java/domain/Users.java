@@ -33,11 +33,11 @@ public class Users {
         return results;
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> players() {
         return players;
     }
 
-    public Dealer getDealer() {
+    public Dealer dealer() {
         return dealer;
     }
 }

@@ -35,12 +35,12 @@ public class Deck {
     }
 
     public Card drawCard() {
-        validateNotEmpty();
+        validateDrawCard();
 
         return cards.remove(pickRandomCard());
     }
 
-    private void validateNotEmpty() {
+    private void validateDrawCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 모두 소진됐습니다.");
         }
