@@ -7,7 +7,7 @@ public class Dealer implements Gambler {
     private static final int PICK_BOUNDARY = 16;
     private static final String NAME = "딜러";
 
-    private final Cards cards;
+    private Cards cards;
 
     public Dealer(Cards cards) {
         this.cards = cards;
@@ -16,7 +16,9 @@ public class Dealer implements Gambler {
 
     @Override
     public void initialPick() {
-        pickCard();
+        if (cards.getCards().isEmpty()) {
+            pickCard();
+        }
     }
 
     @Override

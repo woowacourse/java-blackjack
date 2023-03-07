@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Player implements Gambler {
     private final PlayerName playerName;
-    private final Cards cards;
+    private Cards cards;
 
     public Player(PlayerName playerName, Cards cards) {
         this.playerName = playerName;
@@ -14,8 +14,10 @@ public class Player implements Gambler {
 
     @Override
     public void initialPick() {
-        pickCard();
-        pickCard();
+        if (cards.getCards().isEmpty()) {
+            pickCard();
+            pickCard();
+        }
     }
 
     @Override
