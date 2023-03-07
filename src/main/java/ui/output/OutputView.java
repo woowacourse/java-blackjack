@@ -20,6 +20,10 @@ public class OutputView {
     private static final String DIVIDE_CARDS_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
+    public void printErrorMessage(final String message) {
+        System.out.printf("%n[ERROR] %s%n", message);
+    }
+
 
     public void printDivideTwoCard(List<Player> players) {
         String playersNameForm = players.stream()
