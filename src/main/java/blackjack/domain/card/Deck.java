@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
+
+import blackjack.domain.card.generator.DeckGenerator;
 
 import java.util.LinkedList;
 import java.util.Queue;

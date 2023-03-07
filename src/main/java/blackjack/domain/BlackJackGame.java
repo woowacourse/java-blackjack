@@ -1,5 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.generator.DeckGenerator;
+import blackjack.domain.user.Users;
 import blackjack.dto.CardResult;
 
 import java.util.HashMap;

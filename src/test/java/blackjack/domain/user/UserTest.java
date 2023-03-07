@@ -1,5 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.generator.TestDeckGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

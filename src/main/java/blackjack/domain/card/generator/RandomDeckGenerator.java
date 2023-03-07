@@ -1,4 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.card.generator;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 
 import java.util.ArrayList;
 import java.util.Arrays;

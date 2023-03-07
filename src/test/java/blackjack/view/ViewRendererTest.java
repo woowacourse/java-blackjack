@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardShape;
 import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

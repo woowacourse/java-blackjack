@@ -1,9 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.Card;
-import blackjack.domain.RandomDeckGenerator;
 import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.dto.CardResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

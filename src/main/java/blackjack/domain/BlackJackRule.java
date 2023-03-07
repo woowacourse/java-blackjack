@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.user.User;
+
 public class BlackJackRule {
 
     private static final int BLACK_JACK_NUMBER = 21;

@@ -1,5 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card.generator;
 
+import blackjack.domain.BlackJackGame;
+import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import blackjack.dto.CardResult;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
