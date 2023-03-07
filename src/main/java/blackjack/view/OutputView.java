@@ -7,8 +7,6 @@ public class OutputView {
     private static final OutputView INSTANCE = new OutputView();
     private static final String ERROR = "[ERROR] : ";
 
-    private OutputView() {}
-
     public static OutputView getInstance() {
         return INSTANCE;
     }
@@ -35,19 +33,18 @@ public class OutputView {
     }
 
     public void printDealerReceived() {
-        System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printFinalCards(String name, List<String> cardNames, int score) {
-        System.out.println(name + "카드: " + String.join(", ", cardNames) + " - 결과: " + score);
+        System.out.println(name + " 카드: " + String.join(", ", cardNames) + " - 결과: " + score);
     }
 
-    public void printDealerResults(Map<String, Integer> dealerResults){
+    public void printDealerResults(Map<String, Integer> dealerResults) {
         System.out.print(System.lineSeparator() + "## 최종 승패" + System.lineSeparator() + "딜러: ");
 
         dealerResults.keySet().forEach(result -> {
-            if (dealerResults.get(result) > 0){
+            if (dealerResults.get(result) > 0) {
                 System.out.print(dealerResults.get(result) + result);
             }
         });
