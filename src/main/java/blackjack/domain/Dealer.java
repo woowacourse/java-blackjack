@@ -21,11 +21,7 @@ public class Dealer extends Participant {
 
     public WinningResult judgeWinOrLose(final Player player) {
         int myValue = calculateDealerCardNumber();
-        int otherPlayer = player.calculateCardNumber();
-        return getWinningResult(player, myValue, otherPlayer);
-    }
-
-    private WinningResult getWinningResult(final Player player, final int myValue, final int playerValue) {
+        int playerValue = player.calculateCardNumber();
         if (playerValue > WinningResult.WIN_MAX_NUMBER || myValue > WinningResult.WIN_MAX_NUMBER) {
             return WinningResult.calculateByBurst(playerValue);
         }

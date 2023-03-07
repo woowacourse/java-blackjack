@@ -74,7 +74,9 @@ public class BlackjackController {
     }
 
     private void gameSetting(final Participants participants, final CardPickerGenerator cardPickerGenerator, final BlackjackGame blackjackGame) {
-        blackjackGame.initFirstHit(cardPickerGenerator);
+        for (Participant participant : participants.getParticipants()) {
+            blackjackGame.getTwoHitCards(cardPickerGenerator,participant);
+        }
         outputView.printParticipants(participants.getParticipantsName());
         outputView.printParticipantsCard(blackjackGame.findDealer(), blackjackGame.findPlayers());
     }

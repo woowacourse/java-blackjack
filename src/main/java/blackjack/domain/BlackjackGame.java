@@ -29,11 +29,12 @@ public class BlackjackGame {
         return playersResult;
     }
 
-    public void initFirstHit(CardPickerGenerator cardPickerGenerator) {
-        for (Participant participant : participants.getParticipants()) {
-            getTwoHitCards(cardPickerGenerator, participant);
+    public void getTwoHitCards(final CardPickerGenerator cardPickerGenerator, final Participant participant) {
+        for (int count = 0; count < FIRST_HIT_COUNT; count++) {
+            participant.hit(cards.pick(cardPickerGenerator));
         }
     }
+
     public void dealerHitCard(final Cards cards, final CardPickerGenerator cardPickerGenerator) {
         Dealer dealer = findDealer();
         while (dealer.decideHit()) {
@@ -65,11 +66,5 @@ public class BlackjackGame {
             .filter(participant -> participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
             .findFirst()
             .get();
-    }
-
-    private void getTwoHitCards(final CardPickerGenerator cardPickerGenerator, final Participant participant) {
-        for (int count = 0; count < FIRST_HIT_COUNT; count++) {
-            participant.hit(cards.pick(cardPickerGenerator));
-        }
     }
 }

@@ -22,8 +22,9 @@ class BlackjackGameTest {
         Participants participants = Participants.from(List.of("pobi", "ako"));
         BlackjackGame game = new BlackjackGame(participants, Cards.create());
         //when
-        game.initFirstHit(testCardPickerGenerator);
-
+        for (Participant participant : participants.getParticipants()) {
+            game.getTwoHitCards(testCardPickerGenerator,participant);
+        }
         //then
         for (Participant participant : participants.getParticipants()) {
             assertThat(participant.getReceivedCards().size()).isEqualTo(2);
@@ -43,7 +44,9 @@ class BlackjackGameTest {
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.from(List.of("pobi", "ako"));
         BlackjackGame game = new BlackjackGame(participants, Cards.create());
-        game.initFirstHit(testCardPickerGenerator);
+        for (Participant participant : participants.getParticipants()) {
+            game.getTwoHitCards(testCardPickerGenerator,participant);
+        }
 
         //when
         Map<Player, WinningResult> result = game.generatePlayersResult();
@@ -69,7 +72,9 @@ class BlackjackGameTest {
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.from(List.of("pobi", "ako"));
         BlackjackGame game = new BlackjackGame(participants, Cards.create());
-        game.initFirstHit(testCardPickerGenerator);
+        for (Participant participant : participants.getParticipants()) {
+            game.getTwoHitCards(testCardPickerGenerator,participant);
+        }
 
         //when
         Map<Player, WinningResult> result = game.generatePlayersResult();
