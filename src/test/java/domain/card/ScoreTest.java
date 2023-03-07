@@ -3,6 +3,8 @@ package domain.card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -48,6 +50,20 @@ class ScoreTest {
 
         // when
         Score actual = score.subtract(otherScore);
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "isGreaterThan()는 호출하면, 인자로 넘긴 점수와 비교해 더 큰지 판단한다.")
+    @CsvSource(value = {"3:true", "10:false", "12:false"}, delimiter = ':')
+    void isGreaterThan_givenScore_thenReturnCompareResult(final int scoreValue, final boolean expected) {
+        // given
+        Score otherScore = Score.create(scoreValue);
+
+        // when
+        boolean actual = score.isGreaterThan(otherScore);
 
         // then
         assertThat(actual)

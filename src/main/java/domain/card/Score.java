@@ -21,11 +21,15 @@ public final class Score {
     public Score add(final Score other) {
         return new Score(this.score + other.score);
     }
-    
+
     public Score subtract(final Score other) {
         return new Score(this.score - other.score);
     }
 
+    public boolean isGreaterThan(final Score other) {
+        return other.score < this.score;
+    }
+    
     @Override
     public boolean equals(final Object target) {
         if (this == target) {
