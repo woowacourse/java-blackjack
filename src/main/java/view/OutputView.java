@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String DEALER_CARD_CONDITION_FORMAT = "%s: %s%n";
-    private static final String PARTICIPANT_CARD_CONDITION_FORMAT = "%s카드: %s%n";
+    private static final String DEALER_CARD_CONDITION_FORMAT = "%s: %s";
+    private static final String PARTICIPANT_CARD_CONDITION_FORMAT = "%s카드: %s";
 
     public static void printParticipantNamesGuide() {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -29,9 +29,9 @@ public class OutputView {
     private static void printPlayerNames(List<String> playerNames) {
         playerNames = new ArrayList<>(playerNames);
         printEmptyLine();
-        System.out.printf("%s와 %s에게 2장을 나누어주었습니다.%n",
+        println(String.format("%s와 %s에게 2장을 나누어주었습니다.",
                 playerNames.remove(0),
-                String.join(", ", playerNames));
+                String.join(", ", playerNames)));
     }
 
     private static void printPlayerCardConditions(PlayersReadOnly players) {
@@ -63,16 +63,16 @@ public class OutputView {
     }
 
     private static void printPlayerCardCondition(PlayerReadOnly player, String format, String cardsDisplay) {
-        System.out.printf(format, player.getName(), cardsDisplay);
+        println(String.format(format, player.getName(), cardsDisplay));
     }
 
     public static void printAddCardGuide(String name) {
         printEmptyLine();
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
     }
 
     public static void printBurstMessage(String name) {
-        System.out.printf("%s님은 버스트 되셨습니다. 더이상 카드를 뽑을 수 없습니다.%n", name);
+        println(String.format("%s님은 버스트 되셨습니다. 더이상 카드를 뽑을 수 없습니다.", name));
     }
 
     public static void printGiveDealerCardMessage() {
@@ -84,7 +84,7 @@ public class OutputView {
         printEmptyLine();
         for (PlayerReadOnly player : players.getAllPlayers()) {
             printPlayerCardCondition(player, "%s카드: %s", parseCardsInformation(player.getCards()));
-            System.out.printf(" - 결과: %d%n", player.getTotalScore());
+            println(String.format(" - 결과: %d", player.getTotalScore()));
         }
     }
 
