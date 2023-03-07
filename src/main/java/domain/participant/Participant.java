@@ -20,8 +20,8 @@ public class Participant {
     }
 
     public int calculateScore() {
-        int defaultScore = calculateNonAceSum();
         boolean hasAce = hasAce();
+        int defaultScore = calculateDefaultScore();
         boolean canAddBonusScore = defaultScore + BONUS_SCORE <= BUST_BOUNDARY_EXCLUSIVE;
 
         if (hasAce && canAddBonusScore) {
@@ -30,7 +30,7 @@ public class Participant {
         return defaultScore;
     }
 
-    private int calculateNonAceSum() {
+    private int calculateDefaultScore() {
         return cards.stream()
                 .mapToInt(Card::getDefaultScore)
                 .sum();
