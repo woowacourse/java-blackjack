@@ -24,8 +24,8 @@ public class CardsTest {
     @Test
     @DisplayName("카드목록의 합을 계산한다.")
     void sumTest() {
-        Card card1 = new Card(CardNumber.KING,CardPattern.SPADE);
-        Card card2 = new Card(CardNumber.KING,CardPattern.DIAMOND);
+        Card card1 = new Card(CardNumber.KING, CardPattern.SPADE);
+        Card card2 = new Card(CardNumber.KING, CardPattern.DIAMOND);
         Cards cards = new Cards();
         cards.add(card1);
         cards.add(card2);
@@ -36,9 +36,9 @@ public class CardsTest {
     @Test
     @DisplayName("카드목록에 ACE가 존재하고 카드값의 합이 21 초과시 ACE의 값을 1로 계산한다")
     void changeAceValue() {
-        Card card1 = new Card(CardNumber.ACE,CardPattern.DIAMOND);
-        Card card2 = new Card(CardNumber.ACE,CardPattern.SPADE);
-        Card card3 = new Card(CardNumber.ACE,CardPattern.HEART);
+        Card card1 = new Card(CardNumber.ACE, CardPattern.DIAMOND);
+        Card card2 = new Card(CardNumber.ACE, CardPattern.SPADE);
+        Card card3 = new Card(CardNumber.ACE, CardPattern.HEART);
 
         Cards cards = new Cards();
         cards.add(card1);
@@ -47,5 +47,4 @@ public class CardsTest {
 
         Assertions.assertThat(cards.getSum()).isEqualTo(13);
     }
-
 }

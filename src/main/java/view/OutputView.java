@@ -17,13 +17,14 @@ public class OutputView {
     private static final String DEALER_RESULT_MESSAGE = "%s: %d승 %d무 %d패" + System.lineSeparator();
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String SPLIT_DELIMITER = ", ";
-    private static final String FINAL_WIN_LOSE_RATIO_MESSAGE = System.lineSeparator()+"## 최종 승패";
+    private static final String FINAL_WIN_LOSE_RATIO_MESSAGE = System.lineSeparator() + "## 최종 승패";
 
-    private String printCardsForm(Player player){
+    private String printCardsForm(Player player) {
         return player.getPlayerCards().stream()
-                .map(e->e.getCardName()+e.getCardPattern())
+                .map(e -> e.getCardName() + e.getCardPattern())
                 .collect(Collectors.joining(SPLIT_DELIMITER));
-}
+    }
+
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(INITIAL_DISTRIBUTE_MESSAGE, dealer.getName(), String.join(SPLIT_DELIMITER, players.getPlayersName()));
@@ -60,8 +61,7 @@ public class OutputView {
                 dealerResults.stream().filter(s -> s == Result.DRAW).count(),
                 dealerResults.stream().filter(s -> s == Result.LOSE).count());
         for (Player player : players.getPlayersWithOutDealer()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(),
-                    game.getPlayersResult(player).getResult());
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), game.getPlayersResult(player).getResult());
         }
     }
 }

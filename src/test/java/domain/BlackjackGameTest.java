@@ -14,17 +14,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackjackGameTest {
-    private Dealer dealer;
     private Players players;
     private CardDeck cardDeck;
 
     @BeforeEach
     void set() {
-        players = new Players(List.of("pobi","jason"));
-        dealer = players.findDealer();
+        players = new Players(List.of("pobi", "jason"));
         CardGenerator cardGenerator = new CardGenerator();
         cardDeck = new CardDeck(cardGenerator.generate(new NoShuffleCardsStrategy()));
     }
@@ -76,11 +75,8 @@ public class BlackjackGameTest {
 
         blackjackGame.distributeInitialCard();
 
-        Dealer dealer = players.findDealer();
-
-        Assertions.assertThat(blackjackGame.getDealerResult(players)).isEqualTo(List.of(Result.WIN,Result.WIN));
+        Assertions.assertThat(blackjackGame.getDealerResult(players)).isEqualTo(List.of(Result.WIN, Result.WIN));
     }
-
 
     @Test
     @DisplayName("플레이어와 딜러의 승패 계산")

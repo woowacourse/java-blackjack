@@ -1,7 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import domain.deck.Card;
 import domain.deck.CardDeck;
 import domain.deck.CardNumber;
@@ -14,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardDeckTest {
     @Test
@@ -30,14 +30,11 @@ public class CardDeckTest {
     void pollCard() {
         Queue<Card> cards = new LinkedList<>();
         Card firstCard = new Card(CardNumber.ACE, CardPattern.SPADE);
-        Card secondCard = new Card(CardNumber.ACE,CardPattern.HEART);
+        Card secondCard = new Card(CardNumber.ACE, CardPattern.HEART);
         cards.add(firstCard);
         cards.add(secondCard);
         CardDeck cardDeck = new CardDeck(cards);
 
         assertThat(cardDeck.poll()).isEqualTo(firstCard);
     }
-
-
-
 }

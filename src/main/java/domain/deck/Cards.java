@@ -18,7 +18,9 @@ public class Cards {
 
     public int getSum() {
         int sum = cards.stream()
-                .map(Card::getCardValue).mapToInt(Integer::intValue).sum();
+                .map(Card::getCardValue)
+                .mapToInt(Integer::intValue)
+                .sum();
         return calculateAceValue(sum);
     }
 

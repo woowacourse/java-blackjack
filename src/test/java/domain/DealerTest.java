@@ -1,13 +1,13 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import domain.deck.Card;
 import domain.deck.CardNumber;
 import domain.deck.CardPattern;
 import domain.participants.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
     @Test
@@ -31,9 +31,9 @@ public class DealerTest {
     @DisplayName("딜러의 카드의 합이 16을 초과하는지 확인하기")
     void isOverStandardTest() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardNumber.ACE,CardPattern.SPADE);
-        Card card2 = new Card(CardNumber.ACE,CardPattern.SPADE);
-        Card card3 = new Card(CardNumber.SEVEN,CardPattern.SPADE);
+        Card card1 = new Card(CardNumber.ACE, CardPattern.SPADE);
+        Card card2 = new Card(CardNumber.ACE, CardPattern.SPADE);
+        Card card3 = new Card(CardNumber.SEVEN, CardPattern.SPADE);
         dealer.addCard(card1);
         dealer.addCard(card2);
         dealer.addCard(card3);

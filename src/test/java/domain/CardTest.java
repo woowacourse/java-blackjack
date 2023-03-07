@@ -14,7 +14,7 @@ public class CardTest {
     @Test
     @DisplayName("카드를 생성한다.")
     void createCardTest() {
-        assertDoesNotThrow(()->new Card(CardNumber.ACE, CardPattern.SPADE));
+        assertDoesNotThrow(() -> new Card(CardNumber.ACE, CardPattern.SPADE));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class CardTest {
     @Test
     @DisplayName("카드가 Ace인지 확인한다.")
     void isAceTest() {
-        Card card = new Card(CardNumber.ACE,CardPattern.DIAMOND);
+        Card card = new Card(CardNumber.ACE, CardPattern.DIAMOND);
 
         Assertions.assertThat(card.isAce()).isTrue();
     }
