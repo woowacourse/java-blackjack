@@ -65,20 +65,18 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(final List<Player> players, final Map<Result, Integer> dealerResult) {
+    public static void printFinalResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
         for (final Result result : dealerResult.keySet()) {
             generateDealerResult(dealerResult, result);
         }
         System.out.println(NEW_LINE + "## 최종 승패");
         System.out.println("딜러: " + finalResult);
-        for (Player player : players) {
-            System.out.println(player.getName() + ": " + player.getResult().getValue());
+        for (final Player player : playerResult.keySet()) {
+            System.out.println(player.getName() + ": " + playerResult.get(player).getValue());
         }
     }
 
     private static void generateDealerResult(Map<Result, Integer> dealerResult, Result result) {
-        if (dealerResult.get(result) != 0) {
-            finalResult.append(dealerResult.get(result)).append(result.getValue());
-        }
+        finalResult.append(dealerResult.get(result)).append(result.getValue());
     }
 }

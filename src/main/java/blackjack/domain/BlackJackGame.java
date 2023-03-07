@@ -3,11 +3,10 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.domain.participant.Result;
+import blackjack.domain.participant.*;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -39,70 +38,33 @@ public class BlackJackGame {
         }
     }
 
-    public void findWinner() {
-        final int sumOfDealer = dealer.calculateSumOfRank();
-
+    public Map<Result, Integer> findWinner(final PlayerResult playerResult) {
+        final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
         for (final Player player : players.getPlayers()) {
-            final int sumOfPlayer = player.calculateSumOfRank();
-            judgeResult(player, sumOfDealer, sumOfPlayer);
+            playerResult.calculatePlayerResult(player, dealer);
+            final Result resultForDealer = changeResultForDealer(playerResult.getPlayerResult(player));
+            dealerResult.put(resultForDealer, dealerResult.getOrDefault(resultForDealer, 0) + 1);
         }
+        return dealerResult;
     }
 
-    private void judgeResult(final Player player, final int sumOfDealer, final int sumOfPlayer) {
-        if (judgeResultWhenPlayerIsBlackJack(player)) {
-            return;
+    private Map<Result, Integer> calculateDealerResult(final PlayerResult playerResult) {
+        final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+        for (final Player player : players.getPlayers()) {
+            Result result = changeResultForDealer(playerResult.getPlayerResult(player));
+            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
         }
-        if (judgeResultWhenPlayerIsBust(player)) {
-            return;
-        }
-        judgeResultWhenPlayerIsNotBust(sumOfDealer, player, sumOfPlayer);
+        return dealerResult;
     }
 
-    private boolean judgeResultWhenPlayerIsBlackJack(final Player player) {
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            setUpResultWhenPush(player);
-            return true;
+    private Result changeResultForDealer(final Result result) {
+        if (result.equals(Result.WIN)) {
+            return Result.LOSE;
         }
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            setUpResultWhenPlayerWin(player);
-            return true;
+        if (result.equals(Result.LOSE)) {
+            return Result.WIN;
         }
-        return false;
-    }
-
-    private boolean judgeResultWhenPlayerIsBust(final Player player) {
-        if (player.isBust()) {
-            setUpResultWhenDealerWin(player);
-            return true;
-        }
-        return false;
-    }
-
-    private void judgeResultWhenPlayerIsNotBust(final int sumOfDealer, final Player player, final int sumOfPlayer) {
-        if (dealer.isBust() || sumOfPlayer > sumOfDealer) {
-            setUpResultWhenPlayerWin(player);
-            return;
-        }
-        if (dealer.isBlackJack() || sumOfPlayer < sumOfDealer) {
-            setUpResultWhenDealerWin(player);
-            return;
-        }
-        setUpResultWhenPush(player);
-    }
-
-    private void setUpResultWhenPush(final Player player) {
-        dealer.setResults(Result.PUSH);
-        player.setResult(Result.PUSH);
-    }
-
-    private void setUpResultWhenDealerWin(final Player player) {
-        dealer.setResults(Result.WIN);
-        player.setResult(Result.LOSE);
-    }
-
-    private void setUpResultWhenPlayerWin(final Player player) {
-        dealer.setResults(Result.LOSE);
-        player.setResult(Result.WIN);
+        return Result.PUSH;
     }
 
     public Dealer getDealer() {

@@ -2,12 +2,13 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.List;
 
 public class Dealer extends Participant {
 
     public static final int DRAWING_BOUNDARY = 16;
-    private static final int INCREASING_NUMBER_OF_RESULT = 1;
 
     private final Map<Result, Integer> results;
 
@@ -29,9 +30,5 @@ public class Dealer extends Participant {
 
     public Map<Result, Integer> getResults() {
         return this.results;
-    }
-
-    public void setResults(final Result result) {
-        results.put(result, results.get(result) + INCREASING_NUMBER_OF_RESULT);
     }
 }

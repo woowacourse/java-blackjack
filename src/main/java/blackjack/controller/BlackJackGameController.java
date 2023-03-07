@@ -2,13 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.ShufflingMachine;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class BlackJackGameController {
@@ -107,8 +105,9 @@ public class BlackJackGameController {
     }
 
     private void judgeGameResult(BlackJackGame blackJackGame, Players players, Dealer dealer) {
-        blackJackGame.findWinner();
+        final PlayerResult playerResult = new PlayerResult();
+        final Map<Result, Integer> dealerResult = blackJackGame.findWinner(playerResult);
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
+        OutputView.printFinalResult(dealerResult, playerResult.getPlayerResults());
     }
 }
