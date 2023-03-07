@@ -55,4 +55,14 @@ class PlayerTest {
         assertThat(player.score()).isEqualTo(new Score(12));
     }
 
+    @ParameterizedTest(name = "점수가 21 초과인지 확인하여 hit이 가능한지 판단한다")
+    @CsvSource({"DIAMOND,10,HEART,A,false", "DIAMOND,10,DIAMOND,6,true"})
+    void test_over_21(Suit suit1, String denomination1, Suit suit2, String denomination2, boolean canHit) {
+        var player = new Player("조이", List.of(
+                new Card(suit1, denomination1),
+                new Card(suit2, denomination2)));
+
+        assertThat(player.canHit()).isEqualTo(canHit);
+    }
+
 }
