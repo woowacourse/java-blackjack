@@ -1,9 +1,9 @@
 package domain.card.shuffler;
 
 import domain.card.Card;
-import java.util.Stack;
+import java.util.Deque;
 
 public interface CardsShuffler {
 
-    Stack<Card> shuffleCards(Stack<Card> cards);
+    Deque<Card> shuffleCards(Deque<Card> cards);
 }

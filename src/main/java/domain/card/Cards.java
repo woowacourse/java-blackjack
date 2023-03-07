@@ -1,21 +1,23 @@
 package domain.card;
 
 import domain.card.shuffler.CardsShuffler;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
+import java.util.NoSuchElementException;
 
 public final class Cards {
 
-    private final Stack<Card> cards;
+
+    private final Deque<Card> cards;
 
     public Cards(CardsShuffler shuffler) {
         this.cards = shuffler.shuffleCards(initializeCards());
     }
 
-    private static Stack<Card> initializeCards() {
-        Stack<Card> cards = new Stack<>();
+    private static Deque<Card> initializeCards() {
+        Deque<Card> cards = new ArrayDeque<>();
         for (Value value : Value.values()) {
             for (Shape shape : Shape.values()) {
                 cards.push(new Card(value, shape));
@@ -35,8 +37,8 @@ public final class Cards {
     public Card getCard() {
         try {
             return cards.pop();
-        } catch (EmptyStackException exception) {
-            throw new EmptyStackException();
+        } catch (NoSuchElementException exception) {
+            throw new NoSuchElementException();
         }
     }
 }
