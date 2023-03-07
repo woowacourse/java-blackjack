@@ -20,8 +20,8 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public List<Card> getReceivedCards() {
-        return cards;
+    public int getCardsCount() {
+        return cards.size();
     }
 
     public boolean hasAceCard() {

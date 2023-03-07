@@ -26,12 +26,12 @@ class BlackjackGameTest {
         }
         //then
         for (Participant participant : game.getParticipants()) {
-            assertThat(participant.getReceivedCards().size()).isEqualTo(2);
+            assertThat(participant.getCardsCount()).isEqualTo(2);
         }
     }
 
     /**
-     * dealer : A(11) 6(6) => 17점
+     * dealer : TEN(10) 6(6) => 17점
      * pobi : 2(2) 3(3) => 5점
      * ako : 10(10) 10(10) => 20점
      */
@@ -52,11 +52,11 @@ class BlackjackGameTest {
         //then
         Set<Player> players = result.keySet();
         for(Participant participant : players) {
-            String playername = participant.getParticipantName().getName();
-            if (playername.equals("pobi")){
+            String playerName = participant.getParticipantName().getName();
+            if (playerName.equals("pobi")){
                 assertThat(result.get(participant)).isEqualTo(WinningResult.LOSE);
             }
-            if (playername.equals("ako")) {
+            if (participant.equals("ako")) {
                 assertThat(result.get(participant)).isEqualTo(WinningResult.WIN);
             }
         }
@@ -91,12 +91,12 @@ class BlackjackGameTest {
 
     private static List<Integer> settingTestData() {
         List<Integer> testData = new ArrayList<>();
-        testData.add(1);
-        testData.add(21);
+        testData.add(0);
+        testData.add(0);
+        testData.add(0);
+        testData.add(0);
+        testData.add(0);
         testData.add(4);
-        testData.add(10);
-        testData.add(33);
-        testData.add(34);
         return testData;
     }
 

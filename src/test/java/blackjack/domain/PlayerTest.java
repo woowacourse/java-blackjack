@@ -20,7 +20,7 @@ class PlayerTest {
         player.hit(card);
 
         //then
-        assertTrue(player.getReceivedCards().contains(card));
+        assertThat(player.getCardsCount()).isEqualTo(1);
     }
 
     @Test

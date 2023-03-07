@@ -36,7 +36,7 @@ public class OutputView {
     public void printCurrentCards(final Participant participant) {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
-        for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
+        for (int index = 0, end = participant.getCardsCount(); index < end; index++) {
             String cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(index));
             String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber + cardSuit);
@@ -48,7 +48,7 @@ public class OutputView {
     public void printTotalCardsAndScore(final Participant participant) {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
-        for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
+        for (int index = 0, end = participant.getCardsCount(); index < end; index++) {
             String cardNumber = ViewCardNumber.getCardNumber(participant.getCardNumber(index));
             String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber + cardSuit);
@@ -58,7 +58,7 @@ public class OutputView {
     }
 
     public void printHitDealerCount(Dealer dealer) {
-        System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getReceivedCards().size() - FIRST_CARD_COUNT));
+        System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getCardsCount() - FIRST_CARD_COUNT));
     }
 
     public void printAllWinORLose(final Map<Player, WinningResult> playerResult) {
