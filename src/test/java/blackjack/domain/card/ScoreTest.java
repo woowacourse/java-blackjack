@@ -17,7 +17,7 @@ class ScoreTest {
         Score current = new Score(currentScore);
 
         // when
-        Score after = current.reCalculateIfSoftHand();
+        Score after = current.plusIfSoftHand();
 
         // then
         assertThat(after).isEqualTo(new Score(currentScore + 10));
@@ -31,7 +31,7 @@ class ScoreTest {
         Score current = new Score(currentScore);
 
         // when
-        Score after = current.reCalculateIfSoftHand();
+        Score after = current.plusIfSoftHand();
 
         // then
         assertThat(after).isEqualTo(current);

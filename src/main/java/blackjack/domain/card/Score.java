@@ -19,7 +19,7 @@ public class Score {
         return new Score(MIN_SCORE);
     }
 
-    public Score reCalculateIfSoftHand() {
+    public Score plusIfSoftHand() {
         if (value + MAKE_ACE_BIGGER_SCORE <= BLACKJACK_SCORE_CONDITION) {
             return new Score(value + MAKE_ACE_BIGGER_SCORE);
         }

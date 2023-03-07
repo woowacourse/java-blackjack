@@ -21,7 +21,7 @@ public class Cards {
         Score sum = calculate();
 
         if (containsAce()) {
-            return sum.reCalculateIfSoftHand().getValue();
+            return sum.plusIfSoftHand().getValue();
         }
 
         return sum.getValue();
