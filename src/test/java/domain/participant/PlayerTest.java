@@ -108,4 +108,28 @@ class PlayerTest {
         //then
         assertThat(player.isBust()).isTrue();
     }
+
+    @Test
+    void 히트_여부_계산할_수_없다() {
+        // given
+        Player player = Player.from("에밀");
+
+        //when
+
+        // then
+        assertThatThrownBy( () -> player.canHit())
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    void 초기에_받은_카드는_모두_보여줘야_한다() {
+        // given
+        Player player = Player.from("가비");
+
+        //when
+
+        // then
+        assertThatThrownBy( () -> player.getCardWithInvisible())
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
 }
