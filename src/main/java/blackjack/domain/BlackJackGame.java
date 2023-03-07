@@ -18,7 +18,7 @@ public class BlackJackGame {
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(DeckGenerator deckGenerator, String dealerName, List<String> playerNames) {
+    public BlackJackGame(final DeckGenerator deckGenerator, final String dealerName, final List<String> playerNames) {
         this.deck = deckGenerator.generate();
         this.participants = Participants.of(dealerName, playerNames);
     }
@@ -28,18 +28,18 @@ public class BlackJackGame {
         deck.handCardsTo(participants.players(), INITIAL_HAND_OUT_COUNT);
     }
 
-    public void hitByName(String participantName) {
-        Participant participant = participants.findParticipantByName(participantName);
+    public void hitByName(final String participantName) {
+        final Participant participant = participants.findParticipantByName(participantName);
         hit(participant);
     }
 
-    private void hit(Participant participant) {
+    private void hit(final Participant participant) {
         deck.handCardsTo(participant, HIT_CARD_COUNT);
     }
 
     public int hitOrStayForDealer() {
         int hitCount = 0;
-        Dealer dealer = participants.dealer();
+        final Dealer dealer = participants.dealer();
         while (dealer.isAvailable()) {
             hit(dealer);
             hitCount++;
@@ -48,27 +48,27 @@ public class BlackJackGame {
     }
 
     public Map<String, List<Card>> openHandOutCards() {
-        Dealer dealer = participants.dealer();
-        Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
+        final Dealer dealer = participants.dealer();
+        final Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
         cardsByParticipants.put(dealer.getName(), List.of(dealer.openFirstCard()));
         participants.players()
                 .forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
         return cardsByParticipants;
     }
 
-    public List<Card> openCardsByName(String participantName) {
-        Participant participant = participants.findParticipantByName(participantName);
+    public List<Card> openCardsByName(final String participantName) {
+        final Participant participant = participants.findParticipantByName(participantName);
         return participant.getCards();
     }
 
-    public boolean isAvailable(String participantName) {
-        Participant participant = participants.findParticipantByName(participantName);
+    public boolean isAvailable(final String participantName) {
+        final Participant participant = participants.findParticipantByName(participantName);
         return participant.isAvailable();
     }
 
     public Map<String, FinalCards> openAllFinalCards() {
-        Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
-        Dealer dealer = participants.dealer();
+        final Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
+        final Dealer dealer = participants.dealer();
         finalCardsByPlayerName.put(dealer.getName(), FinalCards.of(dealer));
         participants.players()
                 .forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.of(player)));

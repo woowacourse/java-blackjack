@@ -16,7 +16,7 @@ public class BlackJackController {
     private BlackJackGame blackJackGame;
 
     public void run() {
-        List<String> playerNames = InputView.askPlayerNames();
+        final List<String> playerNames = InputView.askPlayerNames();
         initialize(playerNames);
         startGame();
         hitOrStayForAvailablePlayers(playerNames);
@@ -24,21 +24,21 @@ public class BlackJackController {
         totalUp();
     }
 
-    private void initialize(List<String> playerNames) {
+    private void initialize(final List<String> playerNames) {
         blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DealerName, playerNames);
     }
 
     private void startGame() {
         blackJackGame.handOut();
-        Map<String, List<Card>> allOpenedCardsByParticipantName = blackJackGame.openHandOutCards();
+        final Map<String, List<Card>> allOpenedCardsByParticipantName = blackJackGame.openHandOutCards();
         OutputView.showOpenCards(DealerName, allOpenedCardsByParticipantName);
     }
 
-    private void hitOrStayForAvailablePlayers(List<String> playerNames) {
+    private void hitOrStayForAvailablePlayers(final List<String> playerNames) {
         playerNames.forEach(this::repeatHitOrStayUntilPlayerWants);
     }
 
-    private void repeatHitOrStayUntilPlayerWants(String playerName) {
+    private void repeatHitOrStayUntilPlayerWants(final String playerName) {
         HitCommand hitCommand = refreshHitCommand(playerName);
         while (hitCommand == HitCommand.YES) {
             blackJackGame.hitByName(playerName);
@@ -47,7 +47,7 @@ public class BlackJackController {
         }
     }
 
-    private HitCommand refreshHitCommand(String playerName) {
+    private HitCommand refreshHitCommand(final String playerName) {
         if (blackJackGame.isAvailable(playerName)) {
             return InputView.askToHit(playerName);
         }
@@ -55,13 +55,13 @@ public class BlackJackController {
     }
 
     private void hitUntilDealerAvailable() {
-        int hitCount = blackJackGame.hitOrStayForDealer();
+        final int hitCount = blackJackGame.hitOrStayForDealer();
         OutputView.showDealerHitResult(DealerName, hitCount);
     }
 
     private void totalUp() {
         OutputView.showAllFinalCards(blackJackGame.openAllFinalCards());
-        PlayerJudgeResults playerJudgeResults = blackJackGame.computeJudgeResultsByPlayer();
+        final PlayerJudgeResults playerJudgeResults = blackJackGame.computeJudgeResultsByPlayer();
         OutputView.showAllJudgeResults(playerJudgeResults, DealerJudgeResultsStatistic.from(playerJudgeResults));
     }
 }

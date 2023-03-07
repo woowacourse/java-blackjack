@@ -15,7 +15,7 @@ public class FinalCards {
         this.sum = sum;
     }
 
-    public static FinalCards of(Participant participant) {
+    public static FinalCards of(final Participant participant) {
         return new FinalCards(participant.getCards(), participant.computeCardsScore());
     }
 

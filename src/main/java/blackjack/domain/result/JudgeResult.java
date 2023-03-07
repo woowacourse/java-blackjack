@@ -12,11 +12,11 @@ public enum JudgeResult {
 
     private final BiPredicate<Integer, Integer> scoreComparer;
 
-    JudgeResult(BiPredicate<Integer, Integer> scoreComparer) {
+    JudgeResult(final BiPredicate<Integer, Integer> scoreComparer) {
         this.scoreComparer = scoreComparer;
     }
 
-    public static JudgeResult match(int selfScore, int counterScore) {
+    public static JudgeResult match(final int selfScore, final int counterScore) {
         return Arrays.stream(values())
                 .filter(result -> result.scoreComparer.test(selfScore, counterScore))
                 .findFirst()

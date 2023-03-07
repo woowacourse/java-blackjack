@@ -9,11 +9,11 @@ public enum HitCommand {
 
     private final String keyword;
 
-    HitCommand(String keyword) {
+    HitCommand(final String keyword) {
         this.keyword = keyword;
     }
 
-    public static HitCommand find(String keyword) {
+    public static HitCommand find(final String keyword) {
         return Arrays.stream(values())
                 .filter(command -> command.keyword.equalsIgnoreCase(keyword))
                 .findFirst()

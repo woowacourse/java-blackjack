@@ -12,20 +12,20 @@ public class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    private Participants(Dealer dealer, List<Player> players) {
+    private Participants(final Dealer dealer, final List<Player> players) {
         this.dealer = dealer;
         this.players = new Players(players);
     }
 
-    public static Participants of(String dealerName, List<String> playerNames) {
+    public static Participants of(final String dealerName, final List<String> playerNames) {
         validatePlayerNames(dealerName, playerNames);
-        List<Player> players = playerNames.stream()
+        final List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
         return new Participants(new Dealer(dealerName), players);
     }
 
-    private static void validatePlayerNames(String dealerName, List<String> playerNames) {
+    private static void validatePlayerNames(final String dealerName, final List<String> playerNames) {
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
@@ -34,7 +34,7 @@ public class Participants {
         }
     }
 
-    public Participant findParticipantByName(String participantName) {
+    public Participant findParticipantByName(final String participantName) {
         if (Objects.equals(participantName, dealer.getName())) {
             return dealer;
         }

@@ -11,19 +11,19 @@ public class Dealer extends Participant {
     private static final int CARD_TAKE_LIMIT = 17;
     private static final int INITIAL_DEALER_CARD_OPEN_INDEX = 0;
 
-    public Dealer(String name) {
+    public Dealer(final String name) {
         super(name);
     }
 
-    public Map<String, JudgeResult> judgeAllPlayersResult(Players players) {
-        Map<String, JudgeResult> playerJudgeResults = new LinkedHashMap<>();
-        for (Player player : players.players()) {
+    public Map<String, JudgeResult> judgeAllPlayersResult(final Players players) {
+        final Map<String, JudgeResult> playerJudgeResults = new LinkedHashMap<>();
+        for (final Player player : players.players()) {
             playerJudgeResults.put(player.getName(), judge(player));
         }
         return playerJudgeResults;
     }
 
-    public JudgeResult judge(Player player) {
+    public JudgeResult judge(final Player player) {
         if (player.isBust()) {
             return JudgeResult.LOSE;
         }
@@ -39,7 +39,7 @@ public class Dealer extends Participant {
     }
 
     public Card openFirstCard() {
-        List<Card> cards = getCards();
+        final List<Card> cards = getCards();
         if (cards.isEmpty()) {
             throw new IllegalStateException("딜러가 아직 카드를 가지고 있지 않습니다.");
         }

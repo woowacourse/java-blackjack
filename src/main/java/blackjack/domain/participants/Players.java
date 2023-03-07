@@ -10,32 +10,18 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    public Players(final List<Player> players) {
         validatePlayersCount(players);
         this.players = players;
     }
 
-    private void validatePlayersCount(List<Player> players) {
+    private void validatePlayersCount(final List<Player> players) {
         if (players.size() < COUNT_MINIMUM || players.size() > COUNT_MAXIMUM) {
             throw new IllegalArgumentException("플레이어 인원 수는 최소 " + COUNT_MINIMUM + "명 최대 " + COUNT_MAXIMUM + "명입니다.");
         }
     }
 
-    public List<String> findAvailablePlayerNames() {
-        List<String> availablePlayerNames = new ArrayList<>();
-        for (Player player : players) {
-            addAvailablePlayer(player, availablePlayerNames);
-        }
-        return availablePlayerNames;
-    }
-
-    private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
-        if (player.isAvailable()) {
-            availablePlayerNames.add(player.getName());
-        }
-    }
-
-    public Player findPlayerBy(String playerName) {
+    public Player findPlayerBy(final String playerName) {
         return players.stream()
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()

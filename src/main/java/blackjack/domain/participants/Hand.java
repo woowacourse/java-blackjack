@@ -11,16 +11,16 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.cards = cards;
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
     public int sumScore() {
-        int sum = cards.stream()
+        final int sum = cards.stream()
                 .mapToInt(Card::getDenominationValue)
                 .sum();
         return addBonusScoreByAceCount(sum, countACE());

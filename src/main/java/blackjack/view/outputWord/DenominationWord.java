@@ -22,13 +22,13 @@ public enum DenominationWord {
     private final Denomination denomination;
     private final String word;
 
-    DenominationWord(Denomination denomination, String word) {
+    DenominationWord(final Denomination denomination, final String word) {
         this.denomination = denomination;
         this.word = word;
     }
 
-    public static String toWord(Denomination findDenomination) {
-        DenominationWord numberWord = Arrays.stream(values())
+    public static String toWord(final Denomination findDenomination) {
+        final DenominationWord numberWord = Arrays.stream(values())
                 .filter(number -> number.denomination == findDenomination)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 문자가 존재하지 않습니다."));

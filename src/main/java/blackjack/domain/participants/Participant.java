@@ -10,19 +10,19 @@ public abstract class Participant {
     private final String name;
     private final Hand hand;
 
-    public Participant(String name) {
+    public Participant(final String name) {
         this.name = name;
         validateName(name);
         hand = new Hand(new ArrayList<>());
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름은 빈 문자열이거나 공백일 수 없습니다.");
         }
     }
 
-    public void take(Card card) {
+    public void take(final Card card) {
         hand.add(card);
     }
 
@@ -49,14 +49,14 @@ public abstract class Participant {
     public abstract boolean isAvailable();
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Participant that = (Participant) o;
+        final Participant that = (Participant) o;
         return Objects.equals(name, that.name);
     }
 

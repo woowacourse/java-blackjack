@@ -13,13 +13,13 @@ public enum SuitWord {
     private final Suit suit;
     private final String word;
 
-    SuitWord(Suit suit, String word) {
+    SuitWord(final Suit suit, final String word) {
         this.suit = suit;
         this.word = word;
     }
 
-    public static String toWord(Suit findSuit) {
-        SuitWord suitWord = Arrays.stream(values())
+    public static String toWord(final Suit findSuit) {
+        final SuitWord suitWord = Arrays.stream(values())
                 .filter(Suit -> Suit.suit == findSuit)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 슈트이 존재하지 않습니다."));

@@ -2,7 +2,7 @@ package blackjack.domain.participants;
 
 public class Player extends Participant {
 
-    public Player(String name) {
+    public Player(final String name) {
         super(name);
     }
 

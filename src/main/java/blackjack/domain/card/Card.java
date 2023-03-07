@@ -7,7 +7,7 @@ public class Card {
     private final Suit suit;
     private final Denomination denomination;
 
-    public Card(Suit suit, Denomination denomination) {
+    public Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
@@ -29,14 +29,14 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card card = (Card) o;
+        final Card card = (Card) o;
         return suit == card.suit && denomination == card.denomination;
     }
 

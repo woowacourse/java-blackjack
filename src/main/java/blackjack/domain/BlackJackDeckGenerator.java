@@ -12,22 +12,22 @@ import java.util.List;
 public class BlackJackDeckGenerator implements DeckGenerator {
 
     private static List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
+        final List<Card> cards = new ArrayList<>();
+        for (final Suit suit : Suit.values()) {
             addCards(cards, suit);
         }
         return cards;
     }
 
-    private static void addCards(List<Card> cards, Suit suit) {
-        for (Denomination denomination : values()) {
+    private static void addCards(final List<Card> cards, final Suit suit) {
+        for (final Denomination denomination : values()) {
             cards.add(new Card(suit, denomination));
         }
     }
 
     @Override
     public Deck generate() {
-        List<Card> cards = createCards();
+        final List<Card> cards = createCards();
         Collections.shuffle(cards);
         return new Deck(cards);
     }

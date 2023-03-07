@@ -12,25 +12,25 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    public Deck(List<Card> cards) {
+    public Deck(final List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 
-    public List<Card> draw(int count) {
-        List<Card> drawnCards = new ArrayList<>();
+    public List<Card> draw(final int count) {
+        final List<Card> drawnCards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             drawnCards.add(takeOutOneCard());
         }
         return drawnCards;
     }
 
-    public void handCardsTo(Participant participant, int count) {
-        for (Card card : draw(count)) {
+    public void handCardsTo(final Participant participant, final int count) {
+        for (final Card card : draw(count)) {
             participant.take(card);
         }
     }
 
-    public void handCardsTo(List<Player> players, int eachCount) {
+    public void handCardsTo(final List<Player> players, final int eachCount) {
         players.forEach(player -> handCardsTo(player, eachCount));
     }
 

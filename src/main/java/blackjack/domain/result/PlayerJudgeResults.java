@@ -6,11 +6,11 @@ public class PlayerJudgeResults {
 
     private final Map<String, JudgeResult> judgeResultsByPlayer;
 
-    public PlayerJudgeResults(Map<String, JudgeResult> judgeResultsByPlayer) {
+    public PlayerJudgeResults(final Map<String, JudgeResult> judgeResultsByPlayer) {
         this.judgeResultsByPlayer = judgeResultsByPlayer;
     }
 
-    public int collectCountByJudgeResult(JudgeResult judgeResult) {
+    public int collectCountByJudgeResult(final JudgeResult judgeResult) {
         return (int) judgeResultsByPlayer.values()
                 .stream()
                 .filter(result -> result == judgeResult)
