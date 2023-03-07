@@ -1,15 +1,19 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 class DeckTest {
     @Test
-    @DisplayName("4개의 그림과 13개의 글자로 52장의 덱을 생성한다")
-    void a() {
+    @DisplayName("52장의 덱을 생성한다")
+    void test_create() {
         var deck = new Deck();
         var cards = deck.getCards();
 
@@ -17,8 +21,32 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("카드 한 장을 준다")
-    void aa() {
+    @DisplayName("4종의 그림으로 이뤄져있다")
+    void test_has_four_faces() {
+        var deck = new Deck();
+        var cards = deck.getCards();
+        var distinctFaces = cards.stream()
+                .map(Card::face)
+                .collect(Collectors.toSet());
+
+        assertThat(distinctFaces).hasSize(4);
+    }
+
+    @ParameterizedTest(name = "각 그림마다 13장으로 이뤄져있다")
+    @CsvSource({"SPADE", "CLOVER", "HEART", "DIAMOND"})
+    void test_cards_every_face_13(Face face) {
+        var deck = new Deck();
+        var cards = deck.getCards();
+        var cardsByFace = cards.stream()
+                .filter(card -> card.face().equals(face))
+                .collect(Collectors.toSet());
+
+        assertThat(cardsByFace).hasSize(13);
+    }
+
+    @Test
+    @DisplayName("카드 한 장을 뽑는다")
+    void test_draw_a_card() {
         var deck = new Deck();
         deck.draw();
 
@@ -27,7 +55,7 @@ class DeckTest {
 
     @Test
     @DisplayName("뽑힌 카드는 덱에서 제거된다")
-    void aaa() {
+    void test_drawn_card_is_removed() {
         var deck = new Deck();
         var card = deck.draw();
 
@@ -35,8 +63,8 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("카드가 없는 덱에서 카드를 뽑으면 IllegalStateException을 던진다")
-    void aaaa() {
+    @DisplayName("카드가 바닥났을 때 뽑으려고 하면 IllegalStateException을 던진다")
+    void test_draw_from_empty_deck_throws() {
         var deck = new Deck();
         for (int i = 0; i < 52; i++) {
             deck.draw();

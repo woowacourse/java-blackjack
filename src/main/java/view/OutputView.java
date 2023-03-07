@@ -104,6 +104,6 @@ public class OutputView {
     }
 
     private String getCardDisplay(Card card) {
-        return card.getLetter().getLetter() + card.getFace().getName();
+        return card.getLetter().getLetter() + card.face().getName();
     }
 }

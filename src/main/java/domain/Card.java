@@ -14,7 +14,7 @@ public class Card {
         return letter;
     }
 
-    public Face getFace() {
+    public Face face() {
         return face;
     }
 
