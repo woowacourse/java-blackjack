@@ -29,6 +29,7 @@ public class OutputView {
 
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
         printParticipantsCardDeck(players, playerNames, dealerName, displayCards);
+        System.out.println();
     }
 
     private static String convertCardDeckString(CardDeck cardDeck) {

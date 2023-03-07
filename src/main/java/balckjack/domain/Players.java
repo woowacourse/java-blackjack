@@ -58,7 +58,7 @@ public class Players {
     }
 
     public void initHit(CardPicker cardPicker) {
-        players.forEach(player -> player.initHit(cardPicker));
+        players.forEach(player -> player.distributeCards(cardPicker));
     }
 
     public List<Player> getPlayers() {

@@ -27,7 +27,7 @@ abstract public class Participant {
         return cardDeck;
     }
 
-    public void initHit(CardPicker cardPicker) {
+    public void distributeCards(CardPicker cardPicker) {
         for (int count = 0; count < INIT_CARD_COUNT; count++) {
             hit(cardPicker);
         }

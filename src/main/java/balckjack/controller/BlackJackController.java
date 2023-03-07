@@ -19,48 +19,43 @@ public class BlackJackController {
         final Dealer dealer = new Dealer();
         final Referee referee = new Referee();
 
-        initialSetting(cardPicker, players, dealer);
+        initializeGame(cardPicker, players, dealer);
         tryPlayersTurn(cardPicker, players, referee);
         tryDealerTurn(cardPicker, dealer, referee);
         reportResult(players, dealer, referee);
     }
 
-    private void initialSetting(CardPicker cardPicker, Players players, Dealer dealer) {
-        dealer.initHit(cardPicker);
+    private void initializeGame(CardPicker cardPicker, Players players, Dealer dealer) {
+        dealer.distributeCards(cardPicker);
         players.initHit(cardPicker);
 
         OutputView.printInitCardDeck(dealer, players);
     }
 
     private void tryPlayersTurn(CardPicker cardPicker, Players players, Referee referee) {
-        System.out.println();
         for (Player player : players.getPlayers()) {
-            askPlayer(referee, player, cardPicker);
+            tryPlayerTurn(referee, player, cardPicker);
         }
     }
 
-    private void askPlayer(Referee referee, Player player, CardPicker cardPicker) {
-        if (isContinue(referee, player, cardPicker)) {
-            askPlayer(referee, player, cardPicker);
+    private void tryPlayerTurn(Referee referee, Player player, CardPicker cardPicker) {
+        if (isContinueHit(player, cardPicker) && !isBurst(referee, player)) {
+            tryPlayerTurn(referee, player, cardPicker);
         }
     }
 
-    private boolean isContinue(Referee referee, Player player, CardPicker cardPicker) {
-        if (isReplyNo(player)) {
+    private boolean isContinueHit(Player player, CardPicker cardPicker) {
+        if (askIfContinue(player) == Command.NO) {
             return false;
         }
         player.hit(cardPicker);
         OutputView.printParticipantCardDeck(player);
-        if (isBurst(referee, player)) {
-            return false;
-        }
         return true;
     }
 
-    private boolean isReplyNo(Player player) {
-        Command command = Repeater.repeatIfError(() -> inputCommand(player),
+    private Command askIfContinue(Player player) {
+        return Repeater.repeatIfError(() -> inputCommand(player),
             OutputView::printErrorMessage);
-        return command == Command.NO;
     }
 
     private boolean isBurst(Referee referee, Player player) {
@@ -71,7 +66,6 @@ public class BlackJackController {
         }
         return false;
     }
-
 
     private Players inputPlayerNames() {
         return new Players(InputView.inputPlayerNames());
