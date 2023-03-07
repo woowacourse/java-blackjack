@@ -24,10 +24,10 @@ public interface SimpleList<E> {
 
     void clear();
 
-    public static <E> SimpleList<E> fromArrayToList(Object[] elements) {
+    static <E> SimpleList<E> fromArrayToList(E... elements) {
         SimpleList<E> list = new SimpleArrayList<>();
-        for (Object object: elements){
-            list.add((E) object);
+        for (E object: elements){
+            list.add(object);
         }
         return list;
     }
@@ -50,12 +50,12 @@ public interface SimpleList<E> {
         return copy;
     }
 
-    static <T> SimpleList<T> copy(SimpleList<? extends T> source, SimpleList<T> destination) {
-        SimpleList<T> copy = new SimpleArrayList<>(source.size());
+    static <T> void copy(SimpleList<? extends T> source, SimpleList<? super T> destination) {
+        destination.clear();
+
         for (int i = 0; i< source.size(); i++) {
             destination.add(source.get(i));
         }
-        return copy;
     }
 }
 

@@ -50,7 +50,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (this.size < this.values.length) {
             return;
         }
-        Object[] newMemory = new Object[this.values.length * 2];
+        Object[] newMemory = new Object[this.values.length << 1];
         for (int i = 0; i < this.size; i++) {
             newMemory[i] = this.values[i];
         }
