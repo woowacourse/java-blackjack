@@ -11,22 +11,22 @@ class BetAmountTest {
     @ParameterizedTest(name = "배팅 금액은 최소 10원, 최대 1억이다.")
     @ValueSource(ints = {9, 100000001})
     void createBetAmountFailTest(int money) {
-        assertThatThrownBy(() -> new BetAmount(money))
+        assertThatThrownBy(() -> BetAmount.from(money))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest(name = "배팅 금액은 최소 10원, 최대 1억이다.")
     @ValueSource(ints = {10, 100000000})
     void createBetAmountSuccessTest(int money) {
-        assertDoesNotThrow(() -> new BetAmount(money));
+        assertDoesNotThrow(() -> BetAmount.from(money));
     }
 
     @ParameterizedTest(name = "배팅 금액의 2배를 돌려받을 수 있다.")
-    @ValueSource(ints = {100, 2000, 30000})
+    @ValueSource(ints = {100, 2000, 30000, 100000000})
     void receiveBetAmountSuccessTest(int money) {
-        BetAmount betAmount = new BetAmount(money);
+        BetAmount betAmount = BetAmount.from(money);
 
-        assertThat(betAmount.receiveDouble())
-                .isEqualTo(new BetAmount(money * 2));
+        assertThat(betAmount.receiveDouble().getMoney())
+                .isEqualTo(money * 2);
     }
 }
