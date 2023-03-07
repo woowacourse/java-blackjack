@@ -13,10 +13,17 @@ public enum GameCommand {
     }
 
     public static GameCommand from(String input) {
+        validateBlank(input);
         return Arrays.stream(GameCommand.values())
                      .filter(command -> input.equals(command.command))
                      .findFirst()
-                     .orElseThrow(() -> new IllegalArgumentException("y 또는 n를 입력해주세요."));
+                     .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
+    }
+
+    private static void validateBlank(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("y 또는 n을 입력해주세요.");
+        }
     }
 
     public boolean isPlay() {
