@@ -70,9 +70,9 @@ public class BlackJackController {
     }
 
     private void playDealerTurn(BlackJackGame blackJackGame) {
-        int dealerDrawCount = blackJackGame.playDealerTurn();
-        while (dealerDrawCount-- > 0) {
+        while (blackJackGame.shouldDealerDraw()) {
             outputView.printDealerDrawInfoMessage();
+            blackJackGame.drawDealer();
         }
     }
 

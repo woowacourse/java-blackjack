@@ -37,13 +37,12 @@ public class BlackJackGame {
         return users.isPlayerBust(name);
     }
 
-    public int playDealerTurn() {
-        int drawCount = 0;
-        while (users.isDealerUnderDrawLimit()) {
-            users.drawDealer(deck);
-            drawCount++;
-        }
-        return drawCount;
+    public void drawDealer() {
+        users.drawDealer(deck);
+    }
+
+    public boolean shouldDealerDraw() {
+        return users.isDealerUnderDrawLimit();
     }
 
     public void playPlayer(final String userName) {

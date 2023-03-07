@@ -8,6 +8,7 @@ import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestDeckGenerator;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import java.util.Collections;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,18 +60,31 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드 합이 17이상이 될 떄까지 카드를 뽑는 기능 테스트")
+    @DisplayName("딜러의 카드를 하나 뽑는 기능 테스트")
     void playDealerTurnTest() {
         final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
                 new Card(CardShape.SPADE, CardNumber.TWO),
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
-                new Card(CardShape.SPADE, CardNumber.QUEEN),
                 new Card(CardShape.SPADE, CardNumber.QUEEN));
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(cards));
+        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(), new TestDeckGenerator(cards));
 
-        int drawCount = blackJackGame.playDealerTurn();
+        blackJackGame.drawDealer();
+        final int dealerCardSize = blackJackGame.getStatus()
+                .get("딜러")
+                .getCards()
+                .size();
 
-        assertThat(drawCount).isEqualTo(1);
+        assertThat(dealerCardSize).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 추가로 뽑아야 하는지를 반환하는 기능 테스트")
+    void shouldDealerDrawTest() {
+        final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
+                new Card(CardShape.SPADE, CardNumber.TWO),
+                new Card(CardShape.SPADE, CardNumber.QUEEN));
+        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(), new TestDeckGenerator(cards));
+
+        assertThat(blackJackGame.shouldDealerDraw()).isTrue();
     }
 
     @Test
