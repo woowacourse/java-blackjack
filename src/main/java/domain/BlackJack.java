@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackJack {
 
@@ -55,12 +54,11 @@ public class BlackJack {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
         int dealerScore = dealer.getScore();
-        return players.stream()
-                .collect(Collectors.toMap
-                        (Player::getName,
-                                player -> comparePlayerWithDealer(player.getScore(), dealerScore),
-                                (oldValue, newValue) -> newValue,
-                                LinkedHashMap::new));
+        Map<String, GameResult> playerResults = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerResults.put(player.getName(), comparePlayerWithDealer(player.getScore(), dealerScore));
+        }
+        return playerResults;
     }
 
     public Map<GameResult, Integer> calculateDealerResult() {
@@ -91,22 +89,20 @@ public class BlackJack {
 
     public Map<String, List<Card>> getPlayerToCard() {
         List<Player> players = users.getPlayers();
-        return players.stream().collect(Collectors.toMap(
-                Player::getName,
-                Player::getCards,
-                (oldValue, newValue) -> newValue,
-                LinkedHashMap::new
-        ));
+        Map<String, List<Card>> playerToCard = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToCard.put(player.getName(), player.getCards());
+        }
+        return playerToCard;
     }
 
     public Map<String, Integer> getPlayerToScore() {
         List<Player> players = users.getPlayers();
-        return players.stream().collect(Collectors.toMap(
-                Player::getName,
-                Player::getScore,
-                (oldValue, newValue) -> newValue,
-                LinkedHashMap::new
-        ));
+        Map<String, Integer> playerToScore = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToScore.put(player.getName(), player.getScore());
+        }
+        return playerToScore;
     }
 
     public List<Player> getHittablePlayers() {
