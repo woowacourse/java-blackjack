@@ -41,6 +41,7 @@ public class OutputView {
                 String.join(PLAYER_DELIMITER, cards.stream()
                         .map(card -> OutputLetter.match(card.get(0)) + OutputShape.match(card.get(1)))
                         .collect(Collectors.toList())));
+        changeLine();
     }
 
     public void outputDealerDrawCard(final String name) {
