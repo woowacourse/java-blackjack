@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreTest {
 
@@ -23,5 +22,14 @@ class ScoreTest {
         Score score = new Score(value);
 
         assertThat(score.isBust()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("점수 덧셈 테스트")
+    void add() {
+        Score score = new Score(10);
+        Score addedScore = score.plus(score);
+
+        assertThat(addedScore.getValue()).isEqualTo(20);
     }
 }

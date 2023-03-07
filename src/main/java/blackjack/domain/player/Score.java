@@ -2,8 +2,8 @@ package blackjack.domain.player;
 
 public final class Score {
 
-    private static final int MAX = 21;
-    private static final int MIN = 0;
+    private static final int MAX_VALUE = 21;
+    private static final Score min = new Score(0);
 
     private final int value;
 
@@ -12,11 +12,15 @@ public final class Score {
     }
 
     public static Score min() {
-        return new Score(MIN);
+        return min;
     }
 
     public boolean isBust() {
-        return value > MAX;
+        return value > MAX_VALUE;
+    }
+
+    public Score plus(final Score score) {
+        return new Score(score.value + value);
     }
 
     public int getValue() {
