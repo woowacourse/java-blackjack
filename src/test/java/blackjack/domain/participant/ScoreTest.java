@@ -41,17 +41,6 @@ class ScoreTest {
         assertThat(score2).isEqualTo(score1);
     }
 
-    @DisplayName("값을 더할 수 있다.")
-    @Test
-    void plus() {
-        //given
-        Score score = new Score(0);
-        //when
-        Score afterPlus = score.plus(10);
-        //then
-        assertThat(afterPlus).isEqualTo(new Score(10));
-    }
-
     @DisplayName("정수 인자들로 생성될 수 있다.")
     @Test
     void createByIntList() {

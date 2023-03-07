@@ -36,10 +36,6 @@ public class Score {
         return Objects.hash(value);
     }
 
-    public Score plus(int increment) {
-        return new Score(value + increment);
-    }
-
     public Score minus(int decrement) {
         return new Score(value - decrement);
     }
