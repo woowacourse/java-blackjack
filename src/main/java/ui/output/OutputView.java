@@ -86,30 +86,34 @@ public class OutputView {
     public static void printResult(Participants participants) {
         List<Score> dealerResult = participants.getFinalResult(participants.getDealer());
 
-        int dealerWinCount = getDealerWinCount(dealerResult, Score.LOSE);
-        int dealerLoseCount = getDealerWinCount(dealerResult, Score.WIN);
+        int dealerWinCount = getDealerScoreCount(dealerResult, Score.LOSE);
+        int dealerLoseCount = getDealerScoreCount(dealerResult, Score.WIN);
+        int dealerTieCount = getDealerScoreCount(dealerResult, Score.TIE);
 
         List<Player> players = participants.getPlayers();
 
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        printDealerResult(dealerWinCount, dealerLoseCount);
+        System.out.println(getDealerResultForm(dealerWinCount, dealerLoseCount, dealerTieCount));
         printPlayersResult(participants, players);
     }
 
     private static void printPlayersResult(Participants participants, List<Player> players) {
         for (Player player : players) {
             Score score = player.judgeResult(participants.getDealer().calculateTotalValue());
-            System.out.printf("%s: %s\n", player.getName(), score == Score.WIN ? "승" : "패");
+            System.out.printf("%s: %s\n", player.getName(), score.getName());
         }
     }
 
-    private static void printDealerResult(int dealerWinCount, int dealerLoseCount) {
-        System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
+    private static String getDealerResultForm(int dealerWinCount, int dealerLoseCount, int dealerTieCount) {
+        if (dealerTieCount == 0) {
+            return String.format("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
+        }
+        return String.format("딜러: %d승 %d패 %d무\n", dealerWinCount, dealerLoseCount, dealerTieCount);
     }
 
-    private static int getDealerWinCount(List<Score> dealerResult, Score lose) {
+    private static int getDealerScoreCount(List<Score> dealerResult, Score score) {
         return (int) dealerResult.stream()
-                .filter(score -> score == lose)
+                .filter(result -> result == score)
                 .count();
     }
 
