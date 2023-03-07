@@ -26,7 +26,6 @@ public abstract class Player {
         return hand.score();
     }
 
-
     Result competeWith(Player other) {
         if (hand.isDrawAgainst(other.hand)) {
             return Result.DRAW;
