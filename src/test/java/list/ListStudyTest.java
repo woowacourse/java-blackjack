@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 public class ListStudyTest {
 
@@ -114,10 +113,22 @@ public class ListStudyTest {
         @Test
         void mission2_test() {
             final String[] arrays = {"first", "second"};
-            final SimpleList<String> stringValues = SimpleList.<String>fromArrayToList(arrays);
+            final SimpleList<String> stringValues = SimpleList.fromArrayToList(arrays);
 
             assertThat(stringValues.remove(0)).isEqualTo("first");
             assertThat(stringValues.remove(0)).isEqualTo("second");
+        }
+
+        @Test
+        void mission3_test() {
+            final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
+            final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
+
+            final double doubleTotal = SimpleList.sum(doubleValues);
+            final double intTotal = SimpleList.sum(intValues);
+
+            assertThat(doubleTotal).isEqualTo(1.2);
+            assertThat(intTotal). isEqualTo(3);
         }
     }
 

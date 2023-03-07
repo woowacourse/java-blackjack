@@ -1,8 +1,5 @@
 package list;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public interface SimpleList<T> {
 
     boolean add(T value);
@@ -29,5 +26,13 @@ public interface SimpleList<T> {
 
     static <T> SimpleList<T> fromArrayToList(T[] array) {
         return new SimpleArrayList<T>(array);
+    }
+
+    static <T extends Number> double sum(SimpleList<T> simpleList) {
+        double sum = 0;
+        for (int i = 0; i < simpleList.size(); i++) {
+            sum += simpleList.get(i).doubleValue();
+        }
+        return sum;
     }
 }

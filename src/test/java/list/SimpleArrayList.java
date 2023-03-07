@@ -16,7 +16,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.data = (T[]) new Object[capacity];
     }
 
-    public SimpleArrayList(T[] data) {
+    @SafeVarargs
+    public SimpleArrayList(T... data) {
         this.capacity = data.length;
         this.size = data.length;
         this.data = data;
@@ -105,6 +106,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         return value;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void clear() {
         capacity = INITIAL_CAPACITY;
@@ -121,6 +123,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     private void expandCapacity() {
         capacity *= 2;
+        @SuppressWarnings("unchecked")
         T[] newData = (T[]) new Object[capacity];
         copyArray(newData, data);
         data = newData;
