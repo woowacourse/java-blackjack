@@ -2,11 +2,12 @@ package blackjack.controller;
 
 import static blackjack.util.Repeater.repeatUntilNoException;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.DeckFactory;
+import blackjack.service.BlackJackGame;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackJackController {
 
@@ -19,28 +20,25 @@ public class BlackJackController {
     }
 
     public void play(final DeckFactory deckFactory) {
-        final BlackJackGame blackJackGame = generateBlackJackGame(deckFactory);
-        distributeInitialCard(blackJackGame);
-        printInitialCards(blackJackGame);
-        drawPlayersCards(blackJackGame);
-        drawDealerCards(blackJackGame);
-        printFinalResult(blackJackGame);
-    }
-
-    private BlackJackGame generateBlackJackGame(final DeckFactory deckFactory) {
-        return repeatUntilNoException(
+        final BlackJackGame blackJackGame = repeatUntilNoException(
                 () -> BlackJackGame.of(
-                        inputView.inputPlayerNames(),
+                        inputPlayerNames(),
                         deckFactory),
                 outputView::printError);
-    }
 
-    private void distributeInitialCard(final BlackJackGame blackJackGame) {
         blackJackGame.distributeInitialCard();
+        outputView.printInitialCards(blackJackGame.getInitialCardResponse());
+
+        drawPlayersCards(blackJackGame);
+        drawDealerCards(blackJackGame);
+
+        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScoreResponse());
+        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCardsResponse());
+        outputView.printFinalResult(blackJackGame.createFinalResultResponse());
     }
 
-    private void printInitialCards(final BlackJackGame blackJackGame) {
-        outputView.printInitialCards(blackJackGame.getInitialCardResponse());
+    private List<String> inputPlayerNames() {
+        return inputView.inputPlayerNames();
     }
 
     private void drawPlayersCards(final BlackJackGame blackJackGame) {
@@ -77,9 +75,4 @@ public class BlackJackController {
         }
     }
 
-    private void printFinalResult(final BlackJackGame blackJackGame) {
-        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScoreResponse());
-        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCardsResponse());
-        outputView.printFinalResult(blackJackGame.createFinalResultResponse());
-    }
 }
