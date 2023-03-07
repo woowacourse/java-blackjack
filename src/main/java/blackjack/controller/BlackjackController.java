@@ -44,8 +44,9 @@ public class BlackjackController {
 
     private boolean ask(Player player) {
         outputView.printCurrentCards(player);
+        boolean receive = inputView.askReceiveMoreCard(player.getName());
 
-        if (inputView.askReceiveMoreCard(player.getName())) {
+        if (receive) {
             outputView.printCurrentCards(player);
             return false;
         }
