@@ -11,7 +11,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(extractCardNumbers());
+        score.calculateScore(getCardNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
 

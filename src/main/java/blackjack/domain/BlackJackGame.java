@@ -14,7 +14,6 @@ public class BlackJackGame {
     public BlackJackGame(Participants participants) {
         deck = new Deck();
         this.participants = participants;
-
     }
 
     public void drawInitialCards() {

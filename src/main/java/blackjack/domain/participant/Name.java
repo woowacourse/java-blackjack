@@ -25,7 +25,7 @@ public class Name {
     }
 
     private static void validateNameNotDealer(String name) {
-        if (name.equals(Dealer.DEALER_NAME)){
+        if (name.equals(Dealer.DEALER_NAME)) {
             throw new IllegalArgumentException(NAME_DEALER_ERROR_MESSAGE);
         }
     }

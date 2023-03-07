@@ -14,11 +14,11 @@ public class Deck {
 
     private void generateDeck() {
         for (CardShape cardShape : CardShape.values()) {
-            generateTrumpForEachShape(cardShape);
+            generateDeckForEachShape(cardShape);
         }
     }
 
-    private void generateTrumpForEachShape(CardShape cardShape) {
+    private void generateDeckForEachShape(CardShape cardShape) {
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(cardShape, cardNumber));
         }

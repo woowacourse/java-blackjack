@@ -26,16 +26,16 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    protected List<CardNumber> extractCardNumbers() {
+    protected List<CardNumber> getCardNumbers() {
         return cards.stream()
-                .map(Card::getTrumpNumber)
-                .collect(Collectors.toList());
+                .map(Card::getCardNumber)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public List<String> getCardNames() {
         return cards.stream()
                 .map(Card::getCardName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public List<Card> getCards() {

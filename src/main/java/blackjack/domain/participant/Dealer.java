@@ -3,13 +3,12 @@ package blackjack.domain.participant;
 import java.util.List;
 
 public class Dealer extends Participant {
-
     private static final int MAX_SCORE_TO_RECEIVE = 16;
     public static final String DEALER_NAME = "딜러";
 
     @Override
     public boolean isAbleToReceive() {
-        score.calculateScore(extractCardNumbers());
+        score.calculateScore(getCardNumbers());
         return score.getScore() <= MAX_SCORE_TO_RECEIVE;
     }
 

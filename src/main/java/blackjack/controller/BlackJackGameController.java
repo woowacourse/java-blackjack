@@ -26,10 +26,8 @@ public class BlackJackGameController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(generateParticipants());
-        blackJackGame.drawInitialCards();
-        showInitialCards(blackJackGame.getParticipants());
-
-        playTurn(blackJackGame);
+        startGame(blackJackGame);
+        playGame(blackJackGame);
         closeGame(blackJackGame);
     }
 
@@ -41,18 +39,35 @@ public class BlackJackGameController {
         return inputView.readPlayerNames();
     }
 
+    private void startGame(final BlackJackGame blackJackGame) {
+        blackJackGame.drawInitialCards();
+        showInitialCards(blackJackGame.getParticipants());
+    }
+
     private void showInitialCards(final Participants participants) {
-        List<String> playerNames = participants.getPlayers().stream()
+        showInitialCardMessage(participants.getPlayers());
+        showInitialDealerCard(participants.getDealer());
+        showInitialPlayersCards(participants.getPlayers());
+    }
+
+    private void showInitialCardMessage(final List<Player> players) {
+        final List<String> playerNames = players.stream()
                 .map(Player::getName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
 
         outputView.printInitialCardMessage(playerNames);
-        outputView.printInitialPlayerCards(participants.getDealer().getName(), participants.getDealer().getOpenCardName());
-        participants.getPlayers().forEach(player ->
+    }
+
+    private void showInitialDealerCard(final Dealer dealer) {
+        outputView.printInitialPlayerCards(dealer.getName(), dealer.getOpenCardName());
+    }
+
+    private void showInitialPlayersCards(final List<Player> players) {
+        players.forEach(player ->
                 outputView.printInitialPlayerCards(player.getName(), player.getCardNames()));
     }
 
-    private void playTurn(final BlackJackGame blackJackGame) {
+    private void playGame(final BlackJackGame blackJackGame) {
         playPlayersTurn(blackJackGame);
         playDealerTurn(blackJackGame);
     }
@@ -65,14 +80,14 @@ public class BlackJackGameController {
     }
 
     private void playEachPlayerTurn(final BlackJackGame blackJackGame, final Player player) {
-        while (player.isAbleToReceive() && requestIsHit(player.getName())) {
-
+        final String playerName = player.getName();
+        while (player.isAbleToReceive() && requestIsHit(playerName)) {
             blackJackGame.drawNewCard(player);
             showEachPlayerCards(player);
         }
     }
 
-    private boolean requestIsHit(String playerName) {
+    private boolean requestIsHit(final String playerName) {
         return Retryable.retryWhenIllegalArgumentException(() -> inputView.readIsHit(playerName));
     }
 
@@ -81,7 +96,7 @@ public class BlackJackGameController {
     }
 
     private void playDealerTurn(final BlackJackGame blackJackGame) {
-        Dealer dealer = blackJackGame.getParticipants().getDealer();
+        final Dealer dealer = blackJackGame.getParticipants().getDealer();
         while (dealer.isAbleToReceive()) {
             blackJackGame.drawNewCard(dealer);
             outputView.printDealerReceived();
@@ -91,11 +106,9 @@ public class BlackJackGameController {
     private void closeGame(final BlackJackGame blackJackGame) {
         showFinalCards(blackJackGame.getParticipants());
 
-        GameResult gameResult = blackJackGame.getGameResult();
-
+        final GameResult gameResult = blackJackGame.getGameResult();
         showDealerResult(gameResult.getDealerResults());
-        blackJackGame.getParticipants().getPlayers().forEach(
-                player -> showPlayerResult(player, gameResult.getPlayerResult(player)));
+        showPlayersResult(gameResult, blackJackGame.getParticipants().getPlayers());
     }
 
     private void showFinalCards(final Participants participants) {
@@ -113,7 +126,12 @@ public class BlackJackGameController {
         outputView.printDealerResults(convertedDealerResult);
     }
 
-    private void showPlayerResult(final Player player, final Result playerResult) {
+    private void showPlayersResult(final GameResult gameResult, final List<Player> players) {
+        players.forEach(
+                player -> showEachPlayerResult(player, gameResult.getPlayerResult(player)));
+    }
+
+    private void showEachPlayerResult(final Player player, final Result playerResult) {
         outputView.printPlayerResult(player.getName(), playerResult.getTerm());
     }
 }

@@ -14,11 +14,7 @@ public class Card {
         return cardNumber.getName() + cardShape.getShape();
     }
 
-    public CardShape getTrumpShape() {
-        return cardShape;
-    }
-
-    public CardNumber getTrumpNumber() {
+    public CardNumber getCardNumber() {
         return cardNumber;
     }
 }
