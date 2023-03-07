@@ -17,4 +17,16 @@ public class Status {
     public int getAccount() {
         return account.account();
     }
+
+    public void bustAccount() {
+        account.bust();
+    }
+
+    public void winGame(final int price) {
+        account.addAccount(price);
+    }
+
+    public void loseGame(final int loseMoney) {
+        account.subAccount(loseMoney);
+    }
 }
