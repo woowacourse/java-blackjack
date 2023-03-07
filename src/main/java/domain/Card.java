@@ -23,6 +23,6 @@ public class Card {
     }
 
     public int getScore() {
-        return letter.getScore();
+        return letter.score();
     }
 }
