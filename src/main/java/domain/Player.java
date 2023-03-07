@@ -3,7 +3,7 @@ package domain;
 import java.util.Objects;
 
 public class Player extends Participant {
-    private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 21;
+    private static final int DRAWABLE_SCORE_UPPER_BOUND_EXCLUSIVE = 21;
 
     private final Name name;
     private HitOrStand hitOrStand;
@@ -13,14 +13,13 @@ public class Player extends Participant {
         this.hitOrStand = HitOrStand.HIT;
     }
 
-    public void stand() {
-        hitOrStand = HitOrStand.STAND;
-    }
-
-    @Override
     public boolean isDrawable() {
         return hitOrStand == HitOrStand.HIT &&
-                hand.calculateScore() < UPPER_BOUND_OF_DRAWABLE_SCORE;
+                hand.calculateScore() < DRAWABLE_SCORE_UPPER_BOUND_EXCLUSIVE;
+    }
+
+    public void stand() {
+        hitOrStand = HitOrStand.STAND;
     }
 
     @Override

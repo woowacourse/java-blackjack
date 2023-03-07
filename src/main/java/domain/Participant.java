@@ -10,8 +10,6 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    abstract boolean isDrawable();
-
     public void receiveCard(Card card) {
         hand.add(card);
     }

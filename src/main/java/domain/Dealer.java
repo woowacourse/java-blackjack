@@ -2,12 +2,11 @@ package domain;
 
 public class Dealer extends Participant {
 
-    private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 17;
+    private static final int SHOULD_DRAW_SCORE_UPPER_BOUND_EXCLUSIVE = 17;
     private static final String NAME = "딜러";
 
-    @Override
-    public boolean isDrawable() {
-        return UPPER_BOUND_OF_DRAWABLE_SCORE > hand.calculateScore();
+    public boolean shouldDrawCard() {
+        return SHOULD_DRAW_SCORE_UPPER_BOUND_EXCLUSIVE > hand.calculateScore();
     }
 
     @Override

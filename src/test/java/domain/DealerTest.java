@@ -17,7 +17,7 @@ class DealerTest {
             dealer.receiveCard(Card.of(Suit.SPADE, Number.SIX));
 
             //when
-            boolean drawable = dealer.isDrawable();
+            boolean drawable = dealer.shouldDrawCard();
 
             //then
             assertThat(drawable).isTrue();
@@ -31,7 +31,7 @@ class DealerTest {
             dealer.receiveCard(Card.of(Suit.SPADE, Number.SEVEN));
 
             //when
-            boolean drawable = dealer.isDrawable();
+            boolean drawable = dealer.shouldDrawCard();
 
             //then
             assertThat(drawable).isFalse();
