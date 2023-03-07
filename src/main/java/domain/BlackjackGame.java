@@ -2,25 +2,28 @@ package domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
     private static final int DEALER_POSITION = 0;
 
-    private Players players;
-    private Dealer dealer;
+    private final Players players;
+    private final Dealer dealer;
     private Deck deck;
 
-    public void setParticipants(List<String> playerNames) {
-        players = Players.from(playerNames);
-        dealer = new Dealer();
+    private BlackjackGame(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
+    }
+
+    public static BlackjackGame createWithPlayerNames(List<String> playerNames) {
+        Players players = Players.from(playerNames);
+        Dealer dealer = new Dealer();
+        return new BlackjackGame(players, dealer);
     }
 
     public void handOutInitialCards(ShuffleStrategy shuffleStrategy) {
-        Objects.requireNonNull(players, "플레이어가 없는 상태에서 카드를 나눠줄 수 없습니다.");
-
         deck = Deck.create();
         deck.shuffle(shuffleStrategy);
 

@@ -29,8 +29,8 @@ public class BlackjackController {
     }
 
     private BlackjackGame initializeGame() {
-        BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.setParticipants(inputView.readNames());
+        List<String> playerNames = inputView.readNames();
+        BlackjackGame blackjackGame = BlackjackGame.createWithPlayerNames(playerNames);
         blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
 
         outputView.printParticipantsInitialCards(toParticipantDtos(blackjackGame.getParticipants()));
