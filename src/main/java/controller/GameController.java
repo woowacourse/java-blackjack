@@ -1,6 +1,7 @@
 package controller;
 
 import domain.BlackJackAction;
+import domain.Deck;
 import domain.Game;
 import domain.GameResult;
 import domain.user.Participant;
@@ -10,8 +11,9 @@ import view.OutputView;
 
 public class GameController {
     
-    public void run() {
-        Game game = new Game(InputView.readPlayerNames());
+    public void run(Deck deck) {
+        deck.shuffle();
+        Game game = new Game(InputView.readPlayerNames(), deck);
         makeGameReady(game);
         playGame(game);
         printFinalGameResult(game);

@@ -7,16 +7,16 @@ import java.util.List;
 public class Game {
     
     public static final int DEALER_THRESHOLDS = 16;
-    private final Deck deck = new Deck();
+    private final Deck deck;
     private final Participants participants;
     
     
-    public Game(String participantNames) {
+    public Game(String participantNames, Deck deck) {
+        this.deck = deck;
         this.participants = Participants.of(participantNames);
     }
     
     public void ready() {
-        deck.shuffle();
         List<Participant> allParticipants = participants.getAllParticipantsDealerInLastIndex();
         allParticipants.forEach((participant -> {
             deal(participant);
