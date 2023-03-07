@@ -22,29 +22,22 @@ class MoneyTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("돈을 번 금액이 음수일 경우 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {-1, -10, -100, -1000, -10000})
-    void throwExceptionWhenEarnValueIsNegative(final int value) {
-        final Money money = new Money(1000);
-        assertThatThrownBy(() -> money.earn(value))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("돈을 벌다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
     void earn(final int value) {
+        final Money earnMoney = new Money(value);
         final Money money = new Money(1000);
-        assertThatNoException().isThrownBy(() -> money.earn(value));
+        assertThatNoException().isThrownBy(() -> money.earn(earnMoney));
     }
 
-    @DisplayName("사용할 금액이 보유한 금액을 넘어설 경우 예외가 발생한다.")
+    @DisplayName("지불할 금액이 보유한 금액을 넘어설 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
     void throwExceptionWhenSpendValueIsGreaterThanCurrentValue(final int value) {
+        final Money spendMoney = new Money(value);
         final Money money = new Money(0);
-        assertThatThrownBy(() -> money.spend(value))
+        assertThatThrownBy(() -> money.spend(spendMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -52,8 +45,9 @@ class MoneyTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
     void spend(final int value) {
+        final Money spendMoney = new Money(value);
         final Money money = new Money(Integer.MAX_VALUE);
-        assertThatNoException().isThrownBy(() -> money.spend(value));
+        assertThatNoException().isThrownBy(() -> money.spend(spendMoney));
     }
 
     @DisplayName("현금을 확인한다.")
