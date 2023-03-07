@@ -89,6 +89,10 @@ public class Referee {
         }
         return Result.LOSE;
     }
+    public boolean isContinueDealerTurn(Dealer dealer) {
+        return calculateDeckScore(dealer.getCardDeck()) <= Referee.DEALER_HIT_NUMBER
+            && isBurst(dealer.getCardDeck());
+    }
 
 
 }

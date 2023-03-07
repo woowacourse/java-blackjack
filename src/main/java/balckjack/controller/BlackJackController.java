@@ -75,8 +75,7 @@ public class BlackJackController {
     }
 
     private void tryDealerTurn(CardPicker cardPicker, Dealer dealer, Referee referee) {
-        while (referee.calculateDeckScore(dealer.getCardDeck()) <= Referee.DEALER_HIT_NUMBER
-            && referee.isBurst(dealer.getCardDeck())) {
+        while (referee.isContinueDealerTurn(dealer)) {
             dealer.hit(cardPicker);
             OutputView.printDealerPickMessage(dealer);
         }
