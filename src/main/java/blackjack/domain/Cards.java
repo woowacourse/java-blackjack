@@ -3,7 +3,9 @@ package blackjack.domain;
 import blackjack.util.CardPickerGenerator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -19,21 +21,17 @@ public class Cards {
     public static Cards create(CardPickerGenerator cardPickerGenerator) {
         List<Card> deck = new ArrayList<>();
         for (int count = 0; count < MAX_DECK_SIZE; count++) {
-            initCardNumber(deck);
+            deck.addAll(initCards());
         }
         return new Cards(deck,cardPickerGenerator);
     }
 
-    private static void initCardNumber(final List<Card> deck) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            initCardSuit(deck, cardNumber);
-        }
-    }
+    private static List<Card> initCards() {
+        return Arrays.stream(CardSuit.values())
+                .flatMap(cardSuit -> Arrays.stream(CardNumber.values())
+                        .map(cardNumber -> (new Card(cardNumber, cardSuit))))
+                .collect(Collectors.toList());
 
-    private static void initCardSuit(final List<Card> deck, final CardNumber cardNumber) {
-        for (CardSuit cardSuit : CardSuit.values()) {
-            deck.add(new Card(cardNumber, cardSuit));
-        }
     }
 
     public Card pick() {
