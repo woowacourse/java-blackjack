@@ -2,7 +2,10 @@ package domain.helper;
 
 import static domain.card.CardNumber.ACE;
 import static domain.card.CardNumber.FOUR;
+import static domain.card.CardNumber.JACK;
+import static domain.card.CardNumber.KING;
 import static domain.card.CardNumber.QUEEN;
+import static domain.card.CardNumber.SIX;
 import static domain.card.CardNumber.TEN;
 import static domain.card.CardNumber.THREE;
 import static domain.card.CardNumber.TWO;
@@ -10,6 +13,8 @@ import static domain.card.CardPattern.CLOVER;
 import static domain.card.CardPattern.DIAMOND;
 import static domain.card.CardPattern.HEART;
 import static domain.card.CardPattern.SPADE;
+import static domain.participant.ParticipantOffset.DEALER;
+import static domain.participant.ParticipantOffset.PLAYER;
 import static domain.participant.Result.DRAW;
 import static domain.participant.Result.LOSE;
 import static domain.participant.Result.WIN;
@@ -89,6 +94,19 @@ public final class ParticipantArguments {
                         List.of(Card.of(DIAMOND, TWO), Card.of(DIAMOND, THREE)), DRAW),
                 Arguments.of(List.of(Card.of(HEART, TWO), Card.of(HEART, THREE)),
                         List.of(Card.of(DIAMOND, FOUR), Card.of(DIAMOND, THREE)), WIN)
+        );
+    }
+
+    private static Stream<Arguments> makeDrawCards() {
+        return Stream.of(
+                Arguments.of(List.of(Card.of(HEART, FOUR), Card.of(HEART, THREE)),
+                        PLAYER, true),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, JACK),
+                        Card.of(HEART, KING)), PLAYER, false),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, SIX)),
+                        DEALER, true),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(HEART, SIX)),
+                        DEALER, true)
         );
     }
 }

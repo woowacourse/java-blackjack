@@ -45,9 +45,14 @@ public final class OutputView {
         print(LINE_FEED);
     }
 
-    public void guideDealerGivenCard(final String name) {
+    public void guideDealerGivenCard(final String name, final int drawCardCount) {
+        int count = 0;
+
         print(LINE_FEED);
-        print(DEALER_DRAW_MESSAGE.format(name));
+        while (count++ < drawCardCount) {
+            print(DEALER_DRAW_MESSAGE.format(name));
+            print(LINE_FEED);
+        }
         print(LINE_FEED);
     }
 

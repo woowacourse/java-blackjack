@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Participants {
+public final class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 7;
     private static final int DEALER_ORDER = 0;
-    private static final int PARTICIPANT_START_ORDER = 1;
+    private static final int PLAYER_START_INDEX = 1;
 
     private final List<Participant> participants;
 
@@ -36,16 +36,46 @@ public class Participants {
         participant.addCard(card);
     }
 
+    public void addCard(final int participantOrder, final Card card, final ParticipantOffset offset) {
+        final int participantIndex = offset.mapToIndexFromOrder(participantOrder);
+        final Participant participant = participants.get(participantIndex);
+
+        participant.addCard(card);
+    }
+
     public Participant findDealer() {
         return participants.get(DEALER_ORDER);
     }
 
     public List<Participant> findPlayers() {
-        return participants.subList(PARTICIPANT_START_ORDER, participants.size());
+        return participants.subList(PLAYER_START_INDEX, participants.size());
+    }
+
+    public boolean canDrawByOrder(final int participantOrder, final ParticipantOffset offset) {
+        final int participantIndex = offset.mapToIndexFromOrder(participantOrder);
+        final Participant target = participants.get(participantIndex);
+
+        return target.canDraw();
+    }
+
+    public String findParticipantNameByOrder(final int participantOrder, final ParticipantOffset offset) {
+        final int participantIndex = offset.mapToIndexFromOrder(participantOrder);
+        final Participant targetPlayer = participants.get(participantIndex);
+
+        return targetPlayer.getName();
+    }
+
+    public List<Card> findPlayerCardsByOrder(final int playerOrder, final ParticipantOffset offset) {
+        final int playerIndex = offset.mapToIndexFromOrder(playerOrder);
+        final Participant player = participants.get(playerIndex);
+        final ParticipantCard playerCard = player.participantCard;
+
+        return playerCard.getCards();
     }
 
     private List<String> processTrimPlayerNames(final List<String> playerNames) {
-        return playerNames.stream().map(String::trim)
+        return playerNames.stream()
+                .map(String::trim)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -82,6 +112,12 @@ public class Participants {
 
     public int size() {
         return participants.size();
+    }
+
+    public int playerSize() {
+        final int totalParticipantSize = participants.size();
+
+        return totalParticipantSize - PLAYER_START_INDEX;
     }
 
     public List<Participant> getParticipants() {
