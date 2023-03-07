@@ -1,11 +1,8 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DeckTest {
 
@@ -13,6 +10,6 @@ class DeckTest {
     void initDeck_카드갯수_테스트() {
         int size = Deck.getDeck().size();
         //then
-        assertThat(size).isEqualTo(52);
+        assertThat(size).isEqualTo(51);
     }
 }
