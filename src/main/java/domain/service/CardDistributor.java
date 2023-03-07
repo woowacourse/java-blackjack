@@ -1,5 +1,7 @@
-package domain.model;
+package domain.service;
 
+import domain.model.Dealer;
+import domain.model.Player;
 import java.util.List;
 import java.util.stream.IntStream;
 

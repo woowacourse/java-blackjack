@@ -1,7 +1,12 @@
-package domain.model;
+package domain.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.model.Card;
+import domain.model.Cards;
+import domain.model.Dealer;
+import domain.model.Player;
+import domain.model.Result;
 import domain.type.Letter;
 import domain.type.Suit;
 import java.util.List;

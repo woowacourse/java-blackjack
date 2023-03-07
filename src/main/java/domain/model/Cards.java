@@ -8,7 +8,7 @@ public class Cards {
 
     private final Set<Card> cards;
 
-    private Cards(final Set<Card> cards) {
+    public Cards(final Set<Card> cards) {
         this.cards = cards;
     }
 

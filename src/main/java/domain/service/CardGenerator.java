@@ -1,4 +1,6 @@
-package domain.model;
+package domain.service;
+
+import domain.model.Card;
 
 @FunctionalInterface
 public interface CardGenerator {

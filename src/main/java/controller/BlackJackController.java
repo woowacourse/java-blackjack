@@ -1,8 +1,8 @@
 package controller;
 
 import common.ExecuteContext;
-import domain.model.BlackJackResultMaker;
-import domain.model.CardDistributor;
+import domain.service.BlackJackResultMaker;
+import domain.service.CardDistributor;
 import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;

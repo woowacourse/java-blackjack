@@ -1,5 +1,6 @@
-package domain.model;
+package domain.service;
 
+import domain.model.Card;
 import domain.type.Letter;
 import domain.type.Suit;
 import java.util.Arrays;

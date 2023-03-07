@@ -1,7 +1,7 @@
 import controller.BlackJackController;
-import domain.model.BlackJackResultMaker;
-import domain.model.CardDistributor;
-import domain.model.RandomCardGenerator;
+import domain.service.BlackJackResultMaker;
+import domain.service.CardDistributor;
+import domain.service.RandomCardGenerator;
 
 public class Application {
 
