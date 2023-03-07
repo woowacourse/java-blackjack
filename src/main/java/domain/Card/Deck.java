@@ -6,18 +6,17 @@ import java.util.List;
 
 public class Deck {
     
+    public static final String NO_CARDS_IN_DECK = "덱에 카드가 없습니다.";
     private final List<Card> cards;
-    private int usedCount = 0;
-    
     
     public Deck() {
-        this.cards = generateCards();
+        this.cards = this.generateCards();
     }
     
     private List<Card> generateCards() {
         List<Card> cards = new ArrayList<>();
         for (CardNumber value : CardNumber.values()) {
-            generateCard(cards, value);
+            this.generateCard(cards, value);
         }
         return cards;
     }
@@ -30,11 +29,14 @@ public class Deck {
     }
     
     public void shuffle() {
-        Collections.shuffle(cards);
+        Collections.shuffle(this.cards);
     }
     
     public Card draw() {
-        return cards.get(usedCount++);
+        if (this.cards.isEmpty()) {
+            throw new IllegalStateException(NO_CARDS_IN_DECK);
+        }
+        return this.cards.remove(0);
     }
     
     public int getSize() {
