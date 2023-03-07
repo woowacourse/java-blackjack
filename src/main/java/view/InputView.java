@@ -32,7 +32,7 @@ public class InputView {
     }
 
     public static boolean inputCardIntent(final String name) {
-        System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, name);
+        System.out.printf(NEW_LINE + INPUT_CARD_INTENT_REQUEST_MESSAGE + NEW_LINE, name);
         final String input = scanner.nextLine();
         checkLetter(input, YES, NO);
         return input.equals(YES);

@@ -29,7 +29,6 @@ public class OutputView {
         printCardsMessage(players);
         printFirstCard(dealer);
         players.forEach(OutputView::printCard);
-        System.out.println();
     }
 
     private static void printCardsMessage(final List<Player> players) {
@@ -37,8 +36,7 @@ public class OutputView {
         players.stream()
             .map(Player::getName)
             .forEach(stringJoiner::add);
-        System.out.printf(PRINT_CARDS_MESSAGE, stringJoiner);
-        System.out.println();
+        System.out.printf(PRINT_CARDS_MESSAGE + NEW_LINE, stringJoiner);
     }
 
     private static void printFirstCard(final Dealer dealer) {
@@ -68,6 +66,7 @@ public class OutputView {
     }
 
     public static void printTotalCardState(final Dealer dealer, final List<Player> players) {
+        System.out.print(NEW_LINE);
         printPlayerCardState(dealer);
         players.forEach(OutputView::printPlayerCardState);
     }
