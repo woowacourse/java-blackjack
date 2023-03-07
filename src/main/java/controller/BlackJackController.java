@@ -55,14 +55,21 @@ public class BlackJackController {
     }
 
     private void receiveCardForPlayer(final Deck deck, final Player player) {
-        while (player.canReceiveCard() && isInputEqualsReceiveCardCommand(player)) {
-            player.receiveCard(deck.pick());
-            outputView.printPlayerCardStatus(player);
+        while (player.canReceiveCard()) {
+            final String inputCommand = inputMoreCardCommand(player);
+            receiveCardForPlayer(deck, player, inputCommand);
         }
     }
 
-    private boolean isInputEqualsReceiveCardCommand(final Player player) {
-        return RECEIVE_CARD_COMMAND.equals(inputView.getPlayerInputGetMoreCard(player.getName()));
+    private String inputMoreCardCommand(final Player player) {
+        return inputView.getPlayerInputGetMoreCard(player.getName());
+    }
+
+    private void receiveCardForPlayer(final Deck deck, final Player player, final String inputCommand) {
+        if (RECEIVE_CARD_COMMAND.equals(inputCommand)) {
+            player.receiveCard(deck.pick());
+            outputView.printPlayerCardStatus(player);
+        }
     }
 
     private void divideCardForDealer(final Deck deck, final Dealer dealer) {
