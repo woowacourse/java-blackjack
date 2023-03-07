@@ -24,7 +24,6 @@ public class BlackJackApplication {
     }
 
     private static List<String> initPlayerNames() {
-        OutputView.printInputPlayerNameMessage();
         return InputView.inputPlayerNames();
     }
 
