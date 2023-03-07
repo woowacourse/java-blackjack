@@ -50,7 +50,7 @@ public class CardsTest {
 
     @ParameterizedTest
     @MethodSource("generateCardsWithACE")
-    @DisplayName("에이스가 포함된 카드의 줌수 합을 계산한다.")
+    @DisplayName("에이스가 포함된 카드의 점수 합을 계산한다.")
     void getSumWithACE(List<Card> createdCards, int expectedCount) {
         Cards cards = new Cards();
 

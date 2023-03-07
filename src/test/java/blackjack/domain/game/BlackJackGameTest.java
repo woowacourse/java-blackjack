@@ -108,8 +108,8 @@ public class BlackJackGameTest {
         Map<Player, Result> result = blackJackGame.calculateResult();
 
         Assertions.assertAll(
-                () -> assertThat(result.get(gray)).isEqualTo(Result.WIN),
-                () -> assertThat(result.get(luca)).isEqualTo(Result.LOSE)
+                () -> assertThat(result).containsEntry(gray, Result.WIN),
+                () -> assertThat(result).containsEntry(luca, Result.LOSE)
         );
     }
 
