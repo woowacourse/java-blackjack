@@ -3,8 +3,6 @@ package controller;
 import domain.game.BlackjackGame;
 import domain.game.GameResult;
 import domain.strategy.RandomNumberGenerator;
-import domain.user.Dealer;
-import domain.user.People;
 import domain.user.Player;
 import view.InputView;
 import view.OutputView;
@@ -39,21 +37,15 @@ public class BlackjackController {
         printGameResult();
     }
 
-    private void printGameResult() {
-        People people = blackjackGame.getPeople();
-        Dealer dealer = people.getDealer();
-        List<Player> players = people.getPlayers();
-
-        outputView.printGameScore(PlayerDTO.of(dealer, dealer.sumHand()),
-                makePlayersParameterWithResult(players)
-        );
-
-        outputView.printDealerRecord(PlayerDTO.from(dealer), makeDealerRecord());
-        outputView.printPlayerRecord(makeAllPlayerRecordMap());
+    private void initializeGame() {
+        List<String> playersName = inputView.inputParticipantsName();
+        blackjackGame = new BlackjackGame(playersName, new RandomNumberGenerator());
     }
 
-    private void hitDealer() {
-        blackjackGame.letDealerHitUntilThreshold(outputView::printDealerHitMessage);
+    private void gameStarted() {
+        outputView.printGameStarted(
+                PlayerDTO.from(blackjackGame.getDealer()),
+                makePlayersParameter(blackjackGame.getPlayers()));
     }
 
     private void hitPlayers() {
@@ -62,10 +54,17 @@ public class BlackjackController {
                 outputView::printNameAndCard);
     }
 
-    private void gameStarted() {
-        outputView.printGameStarted(
-                PlayerDTO.from(blackjackGame.getPeople().getDealer()),
-                makePlayersParameter(blackjackGame.getPeople().getPlayers()));
+    private void hitDealer() {
+        blackjackGame.letDealerHitUntilThreshold(outputView::printDealerHitMessage);
+    }
+
+    private void printGameResult() {
+        outputView.printGameScore(PlayerDTO.of(blackjackGame.getDealer(), blackjackGame.getDealerSumHand()),
+                makePlayersParameterWithResult(blackjackGame.getPlayers())
+        );
+
+        outputView.printDealerRecord(PlayerDTO.from(blackjackGame.getDealer()), makeDealerRecord());
+        outputView.printPlayerRecord(makeAllPlayerRecordMap());
     }
 
     private Map<String, Integer> makeDealerRecord() {
@@ -91,11 +90,6 @@ public class BlackjackController {
         return players.stream()
                 .map(PlayerDTO::from)
                 .collect(Collectors.toList());
-    }
-
-    private void initializeGame() {
-        List<String> playersName = inputView.inputParticipantsName();
-        blackjackGame = new BlackjackGame(playersName, new RandomNumberGenerator());
     }
 
 }

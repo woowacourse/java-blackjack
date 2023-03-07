@@ -24,28 +24,22 @@ public class Player {
 
     public void hitByCommand(Function<String, String> inputCommand, Consumer<PlayerDTO> outputPlayer, Deck deck) {
         HitCommand hitCommand;
+        boolean hittable;
         do {
             hitCommand = HitCommand.findCommand(inputCommand.apply(playerName.getValue()));
-            hitCommand = hitByCondition(outputPlayer, deck, hitCommand);
-        } while (hitCommand == HitCommand.Y);
+            hittable = hitByCondition(outputPlayer, deck, hitCommand);
+        } while (hitCommand == HitCommand.Y && hittable);
     }
 
-    private HitCommand hitByCondition(Consumer<PlayerDTO> outputPlayer, Deck deck, HitCommand hitCommand) {
+    private boolean hitByCondition(Consumer<PlayerDTO> outputPlayer, Deck deck, HitCommand hitCommand) {
         if (hitCommand == HitCommand.N) {
-            return hitCommand;
+            return false;
         }
 
         draw(deck.serve());
         outputPlayer.accept(PlayerDTO.from(this));
 
-        return commandByBust(hitCommand);
-    }
-
-    private HitCommand commandByBust(HitCommand hitCommand) {
-        if (isBust()) {
-            return HitCommand.N;
-        }
-        return hitCommand;
+        return isBust();
     }
 
     public int sumHand() {

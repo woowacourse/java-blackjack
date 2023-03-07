@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.strategy.NumberGenerator;
+import domain.user.Dealer;
 import domain.user.People;
 import domain.user.Player;
 import view.dto.PlayerDTO;
@@ -23,6 +24,12 @@ public class BlackjackGame {
         this.people = new People(playerNames, DEALER_NAME);
     }
 
+    public void startHit() {
+        for (int i = 0; i < START_HIT_COUNT; i++) {
+            people.letPlayersToHit(deck);
+        }
+    }
+
     public void letDealerHitUntilThreshold(Runnable outputDealerHitMessage) {
         if (people.dealerCanHit()) {
             outputDealerHitMessage.run();
@@ -31,10 +38,8 @@ public class BlackjackGame {
 
     }
 
-    public void startHit() {
-        for (int i = 0; i < START_HIT_COUNT; i++) {
-            people.letPlayersToHit(deck);
-        }
+    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerDTO> outputPlayer) {
+        people.hitByCommandAllPlayers(inputCommand, outputPlayer, deck);
     }
 
     public Map<Player, GameResult> getGameResultForAllPlayer() {
@@ -45,11 +50,15 @@ public class BlackjackGame {
         return people.getDealerRecord(people.makeGameResultForAllPlayer());
     }
 
-    public People getPeople() {
-        return people;
+    public List<Player> getPlayers() {
+        return people.getPlayers();
     }
 
-    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerDTO> outputPlayer) {
-        people.hitByCommandAllPlayers(inputCommand, outputPlayer, deck);
+    public Dealer getDealer() {
+        return people.getDealer();
+    }
+
+    public int getDealerSumHand() {
+        return getDealer().sumHand();
     }
 }
