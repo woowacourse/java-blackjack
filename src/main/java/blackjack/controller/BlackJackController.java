@@ -50,15 +50,12 @@ public class BlackJackController {
 
         final ParticipantResponse dealerResponse = ParticipantResponse
                 .hiddenForDealer(participants.getDealer(), INITIAL_DRAW_COUNT);
-        final List<ParticipantResponse> playerResponse = getParticipantResponses(
-                participants.getPlayers());
+        final List<ParticipantResponse> playerResponse = getParticipantResponses(participants.getPlayers());
 
         outputView.printDealCards(dealerResponse, playerResponse, INITIAL_DRAW_COUNT);
     }
 
-    private List<ParticipantResponse> getParticipantResponses(
-            final List<? extends Participant> participants
-    ) {
+    private List<ParticipantResponse> getParticipantResponses(final List<? extends Participant> participants) {
         return participants.stream()
                 .map(ParticipantResponse::from)
                 .collect(Collectors.toList());
@@ -78,14 +75,12 @@ public class BlackJackController {
     private void drawCard(final Dealer dealer, final Deck deck) {
         if (dealer.isDrawable()) {
             dealer.drawCard(deck.draw());
-            outputView.printDealerDrawn(
-                    new DealerStateResponse(true, dealer.getMaximumDrawableScore()));
+            outputView.printDealerDrawn(new DealerStateResponse(true, dealer.getMaximumDrawableScore()));
         }
     }
 
     private void printResult(final Participants participants) {
-        final List<ParticipantResponse> participantResponses = getParticipantResponses(
-                participants.getParticipants());
+        final List<ParticipantResponse> participantResponses = getParticipantResponses(participants.getParticipants());
         outputView.printHandedCardsWithScore(participantResponses);
 
         final Dealer dealer = participants.getDealer();
@@ -97,10 +92,7 @@ public class BlackJackController {
         outputView.printFinalResult(dealerResult, playerResults);
     }
 
-    private List<PlayerResultResponse> getPlayerResults(
-            final Dealer dealer,
-            final List<Player> players
-    ) {
+    private List<PlayerResultResponse> getPlayerResults(final Dealer dealer, final List<Player> players) {
         return players.stream()
                 .map(player -> PlayerResultResponse.of(dealer, player))
                 .collect(Collectors.toList());

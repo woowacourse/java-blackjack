@@ -25,10 +25,7 @@ class PlayerTest {
 
     @Test
     void 이름을_확인한다() {
-        final Cards cards = new Cards(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(QUEEN, HEART)
-        ));
+        final Cards cards = new Cards(List.of(new Card(QUEEN, CLOVER), new Card(QUEEN, HEART)));
         final Player player = new Player("dazzle", cards);
 
         assertThat(player.getName()).isEqualTo("dazzle");
@@ -39,10 +36,7 @@ class PlayerTest {
 
         @Test
         void 점수가_21미만이면_true_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(QUEEN, HEART)
-            )); //20점
+            final Cards cards = new Cards(List.of(new Card(QUEEN, CLOVER), new Card(QUEEN, HEART))); //20점
             final Player player = new Player("kokodak", cards);
 
             assertThat(player.isDrawable()).isTrue();
@@ -50,10 +44,7 @@ class PlayerTest {
 
         @Test
         void 점수가_21이상이면_false_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(ACE, HEART)
-            )); //21점
+            final Cards cards = new Cards(List.of(new Card(QUEEN, CLOVER), new Card(ACE, HEART))); //21점
             final Player player = new Player("kokodak", cards);
 
             assertThat(player.isDrawable()).isFalse();
@@ -65,23 +56,16 @@ class PlayerTest {
 
         @Test
         void 카드를_받을_수_없는_상태라면_예외를_던진다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(ACE, HEART)
-            ));
+            final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(ACE, HEART)));
             final Cards cards = new Cards(cardPack);
             final Player player = new Player("dazzle", cards);
 
-            assertThatThrownBy(() -> player.drawCard(new Card(TWO, DIAMOND)))
-                    .isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> player.drawCard(new Card(TWO, DIAMOND))).isInstanceOf(IllegalStateException.class);
         }
 
         @Test
         void 카드를_받을_수_있는_상태라면_카드를_받는다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(KING, HEART)
-            ));
+            final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(KING, HEART)));
             final Cards cards = new Cards(cardPack);
             final Player player = new Player("dazzle", cards);
 
@@ -93,10 +77,7 @@ class PlayerTest {
 
     @Test
     void 점수를_확인한다() {
-        final List<Card> cardPack = new ArrayList<>(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(KING, HEART)
-        ));
+        final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(KING, HEART)));
         final Cards cards = new Cards(cardPack);
         final Player player = new Player("dazzle", cards);
 

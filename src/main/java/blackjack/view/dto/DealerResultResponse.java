@@ -16,10 +16,7 @@ public class DealerResultResponse {
         this.result = result;
     }
 
-    public static DealerResultResponse of(
-            final Dealer dealer,
-            final List<PlayerResultResponse> playerResults
-    ) {
+    public static DealerResultResponse of(final Dealer dealer, final List<PlayerResultResponse> playerResults) {
         final Map<String, Integer> dealerResult = initResult();
         for (final PlayerResultResponse playerResult : playerResults) {
             final Result result = playerResult.getResult().reverse();

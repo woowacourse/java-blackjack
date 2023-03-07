@@ -17,8 +17,7 @@ class ParticipantsTest {
         final Dealer dealer = new Dealer();
         final List<Player> players = List.of(new Player("toney"), new Player("toney"));
 
-        assertThatThrownBy(() -> new Participants(dealer, players))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Participants(dealer, players)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -33,8 +32,7 @@ class ParticipantsTest {
                 new Player("jason")
         );
 
-        assertThatThrownBy(() -> new Participants(dealer, players))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Participants(dealer, players)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

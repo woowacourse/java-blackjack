@@ -35,8 +35,7 @@ class DeckTest {
 
             final Deck deck = new Deck(cards);
 
-            assertThatThrownBy(deck::draw)
-                    .isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(deck::draw).isInstanceOf(IllegalStateException.class);
         }
     }
 }

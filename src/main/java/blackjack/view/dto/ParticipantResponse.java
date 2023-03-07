@@ -16,10 +16,7 @@ public class ParticipantResponse {
     }
 
     public static ParticipantResponse from(final Participant participant) {
-        final CardsResponse cardsResponse = CardsResponse.of(
-                participant.getScore(),
-                participant.getCards()
-        );
+        final CardsResponse cardsResponse = CardsResponse.of(participant.getScore(), participant.getCards());
         return new ParticipantResponse(participant.getName(), cardsResponse);
     }
 

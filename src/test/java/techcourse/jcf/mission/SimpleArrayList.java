@@ -70,7 +70,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     private void validateIndexForAdd(final int index) {
         if (index < 0 || size < index) {
-            throw new IndexOutOfBoundsException(format("해당 인덱스에서 작업을 수행할 수 없습니다. 인덱스: {0}, 크기: {1}", index, size));
+            throw new IndexOutOfBoundsException(
+                    format("해당 인덱스에서 작업을 수행할 수 없습니다. 인덱스: {0}, 크기: {1}", index, size));
         }
     }
 
@@ -90,7 +91,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     private void validateIndex(final int index) {
         if (index < 0 || size <= index) {
-            throw new IndexOutOfBoundsException(format("해당 인덱스에서 작업을 수행할 수 없습니다. 인덱스: {0}, 크기: {1}", index, size));
+            throw new IndexOutOfBoundsException(
+                    format("해당 인덱스에서 작업을 수행할 수 없습니다. 인덱스: {0}, 크기: {1}", index, size));
         }
     }
 

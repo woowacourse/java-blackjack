@@ -33,10 +33,7 @@ class DealerTest {
 
         @Test
         void 카드가_2장_이하이고_점수가_16점_이하라면_true_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(SIX, HEART)
-            )); //16점
+            final Cards cards = new Cards(List.of(new Card(QUEEN, CLOVER), new Card(SIX, HEART))); //16점
             final Dealer dealer = new Dealer(cards);
 
             assertThat(dealer.isDrawable()).isTrue();
@@ -44,10 +41,7 @@ class DealerTest {
 
         @Test
         void 카드가_2장_이하이고_점수가_16점_초과라면_false_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(SEVEN, HEART)
-            )); //17점
+            final Cards cards = new Cards(List.of(new Card(QUEEN, CLOVER), new Card(SEVEN, HEART))); //17점
             final Dealer dealer = new Dealer(cards);
 
             assertThat(dealer.isDrawable()).isFalse();
@@ -55,11 +49,8 @@ class DealerTest {
 
         @Test
         void 카드가_2장_초과라면_false_반환한다() {
-            final Cards cards = new Cards(List.of(
-                    new Card(TWO, CLOVER),
-                    new Card(SIX, HEART),
-                    new Card(SEVEN, DIAMOND)
-            )); // 15점
+            final Cards cards = new Cards(
+                    List.of(new Card(TWO, CLOVER), new Card(SIX, HEART), new Card(SEVEN, DIAMOND))); // 15점
             final Dealer dealer = new Dealer(cards);
 
             assertThat(dealer.isDrawable()).isFalse();
@@ -71,23 +62,16 @@ class DealerTest {
 
         @Test
         void 카드를_받을_수_없는_상태라면_예외를_던진다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(ACE, HEART)
-            ));
+            final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(ACE, HEART)));
             final Cards cards = new Cards(cardPack);
             final Dealer dealer = new Dealer(cards);
 
-            assertThatThrownBy(() -> dealer.drawCard(new Card(TWO, DIAMOND)))
-                    .isInstanceOf(IllegalStateException.class);
+            assertThatThrownBy(() -> dealer.drawCard(new Card(TWO, DIAMOND))).isInstanceOf(IllegalStateException.class);
         }
 
         @Test
         void 카드를_받을_수_있는_상태라면_카드를_받는다() {
-            final List<Card> cardPack = new ArrayList<>(List.of(
-                    new Card(QUEEN, CLOVER),
-                    new Card(SIX, HEART)
-            ));
+            final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(SIX, HEART)));
             final Cards cards = new Cards(cardPack);
             final Dealer dealer = new Dealer(cards);
 
@@ -99,10 +83,7 @@ class DealerTest {
 
     @Test
     void 카드를_받는다() {
-        final List<Card> cardPack = new ArrayList<>(List.of(
-                new Card(QUEEN, CLOVER),
-                new Card(SIX, HEART)
-        ));
+        final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(SIX, HEART)));
         final Cards cards = new Cards(cardPack);
         final Dealer dealer = new Dealer(cards);
 
@@ -113,11 +94,7 @@ class DealerTest {
 
     @Test
     void 점수를_확인한다() {
-        final Cards cards = new Cards(List.of(
-                new Card(TWO, CLOVER),
-                new Card(SIX, HEART),
-                new Card(SEVEN, DIAMOND)
-        ));
+        final Cards cards = new Cards(List.of(new Card(TWO, CLOVER), new Card(SIX, HEART), new Card(SEVEN, DIAMOND)));
         final Dealer dealer = new Dealer(cards);
 
         assertThat(dealer.getScore()).isEqualTo(15);
@@ -174,10 +151,7 @@ class DealerTest {
 
             @Test
             void 딜러_점수가_플레이어_점수보다_낮으면_WIN_반환한다() {
-                final Cards cards = new Cards(List.of(
-                        new Card(ACE, HEART),
-                        new Card(FIVE, DIAMOND)
-                )); //16점
+                final Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(FIVE, DIAMOND))); //16점
                 final Dealer dealer = new Dealer(cards);
 
                 assertThat(dealer.showResult(17)).isEqualTo(WIN);
@@ -185,10 +159,7 @@ class DealerTest {
 
             @Test
             void 딜러_점수가_플레이어_점수보다_높으면_LOSE_반환한다() {
-                final Cards cards = new Cards(List.of(
-                        new Card(ACE, HEART),
-                        new Card(FIVE, DIAMOND)
-                )); //16점
+                final Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(FIVE, DIAMOND))); //16점
                 final Dealer dealer = new Dealer(cards);
 
                 assertThat(dealer.showResult(15)).isEqualTo(LOSE);
@@ -196,10 +167,7 @@ class DealerTest {
 
             @Test
             void 점수_같으면_DRAW_반환한다() {
-                final Cards cards = new Cards(List.of(
-                        new Card(ACE, HEART),
-                        new Card(FIVE, DIAMOND)
-                )); //16점
+                final Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(FIVE, DIAMOND))); //16점
                 final Dealer dealer = new Dealer(cards);
 
                 assertThat(dealer.showResult(16)).isEqualTo(DRAW);

@@ -10,10 +10,7 @@ public class BlackJackApplication {
         final InputView inputView = new InputView();
         final OutputView outputView = new OutputView();
 
-        final BlackJackController blackJackController = new BlackJackController(
-                inputView,
-                outputView
-        );
+        final BlackJackController blackJackController = new BlackJackController(inputView, outputView);
         blackJackController.run();
     }
 }
