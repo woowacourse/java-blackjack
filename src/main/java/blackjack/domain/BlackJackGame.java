@@ -7,6 +7,7 @@ import blackjack.strategy.CardPicker;
 public class BlackJackGame {
 
     private static final int BURST_SCORE = 21;
+    private static final int DEALER_HIT_NUMBER = 16;
 
     private final CardPool cardPool;
 
@@ -33,5 +34,9 @@ public class BlackJackGame {
 
     public boolean isValidScore(int score) {
         return BURST_SCORE > score;
+    }
+
+    public boolean isContinueToHit(int dealerScore) {
+        return dealerScore <= DEALER_HIT_NUMBER;
     }
 }

@@ -52,4 +52,9 @@ class BlackJackGameTest {
     void isValidScore() {
         assertThat(blackJackGame.isValidScore(20)).isTrue();
     }
+
+    @Test
+    void isConitnueToHit() {
+        assertThat(blackJackGame.isContinueToHit(16)).isTrue();
+    }
 }
