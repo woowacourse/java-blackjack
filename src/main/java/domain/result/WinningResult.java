@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WinningResult {
+public final class WinningResult {
 
     private final Map<Player, WinningStatus> playersResult = new HashMap<>();
     private final Map<WinningStatus, Integer> dealerResult = new HashMap<>();

@@ -11,7 +11,7 @@ import domain.result.WinningResult;
 import view.InputView;
 import view.OutputView;
 
-public class MainController {
+public final class MainController {
 
     private final InputView inputView;
     private final OutputView outputView;

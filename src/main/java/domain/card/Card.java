@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Card {
+public final class Card {
 
     // TODO: 캐싱에 대해 공부해보자!
     // TODO: 클래스 변수 vs 상수

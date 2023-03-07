@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.util.regex.Pattern;
 
-public class Name {
+public final class Name {
 
     private static final Pattern NAME_REGEX = Pattern.compile("^[a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\\s]*$");
     private static final int MAX_LENGTH_EXCLUSIVE = 10;

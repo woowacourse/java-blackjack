@@ -7,7 +7,7 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.List;
 
-public class BlackJackGame {
+public final class BlackJackGame {
 
     private final Participants participants;
     private final Cards cards;

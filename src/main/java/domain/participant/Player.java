@@ -3,7 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import java.util.List;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private static final int BUST_BOUNDARY_EXCLUSIVE = 21;
 

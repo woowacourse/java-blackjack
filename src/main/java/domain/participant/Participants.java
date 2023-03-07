@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants {
+public final class Participants {
 
     private static final int MIN_SIZE_EXCLUSIVE = 1;
     private static final int MAX_SIZE_EXCLUSIVE = 7;
