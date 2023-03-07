@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 
 public class Deck {
 
-    public static final List<Card> CARDS;
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 카드가 존재합니다.";
+    public static final List<Card> CARDS;
 
     private final Stack<Card> cards;
 
@@ -18,18 +18,17 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public Deck() {
-        Collections.shuffle(CARDS);
-
-        this.cards = new Stack<>();
-        this.cards.addAll(CARDS);
-    }
-
-    public Deck(final List<Card> cards) {
+    public Deck(List<Card> cards) {
         validate(cards);
 
         this.cards = new Stack<>();
         this.cards.addAll(cards);
+    }
+
+    public static Deck createAllCard() {
+        Collections.shuffle(CARDS);
+
+        return new Deck(CARDS);
     }
 
     private void validate(final List<Card> cards) {
@@ -49,9 +48,5 @@ public class Deck {
 
     public Card draw() {
         return cards.pop();
-    }
-
-    public List<Card> getCards() {
-        return cards;
     }
 }

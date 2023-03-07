@@ -25,7 +25,7 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = makeParticipants();
-        final Deck deck = new Deck();
+        final Deck deck = Deck.createAllCard();
 
         startGame(participants, deck);
         hitParticipants(participants, deck);

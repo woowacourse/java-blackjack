@@ -3,20 +3,11 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class DeckTest {
-    @Test
-    @DisplayName("덱을 생성한다.")
-    void constructorDeckTest() {
-        List<Card> cards = List.of(new Card(Shape.CLOVER, Letter.EIGHT));
-
-        assertThatNoException().isThrownBy(() -> new Deck(cards));
-    }
 
     @Test
     @DisplayName("중복된 카드를 주입하면 에러를 반환한다")
@@ -32,26 +23,14 @@ public class DeckTest {
     @DisplayName("카드를 뽑는다")
     void drawCardTest() {
         //given
-        List<Card> cards = List.of(new Card(Shape.DIAMOND, Letter.JACK));
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck(List.of(new Card(Shape.DIAMOND, Letter.JACK)));
 
         //when
         Card actual = deck.draw();
-        Card expected = cards.get(0);
+        Card expected = new Card(Shape.DIAMOND, Letter.JACK);
 
         //then
+        System.out.println(actual.getCardName());
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("덱 반환 테스트")
-    void getCardsTest() {
-        List<Card> cards = new ArrayList<>(
-                Arrays.asList(
-                        new Card(Shape.CLOVER, Letter.ACE),
-                        new Card(Shape.DIAMOND, Letter.JACK)));
-        Deck deck = new Deck(cards);
-
-        assertThat(deck.getCards()).isEqualTo(cards);
     }
 }
