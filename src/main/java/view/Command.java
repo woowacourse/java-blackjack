@@ -12,7 +12,7 @@ public enum Command {
         this.command = command;
     }
 
-    public static Command of(String value) {
+    public static Command from(String value) {
         return Arrays.stream(Command.values())
                 .filter(c -> c.command.equals(value))
                 .findAny()

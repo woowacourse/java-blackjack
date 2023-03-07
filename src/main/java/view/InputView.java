@@ -29,7 +29,7 @@ public class InputView {
     public static Command inputAddCardCommand() {
         try {
             String input = BUFFERED_READER.readLine();
-            return Command.of(input);
+            return Command.from(input);
         } catch (IOException ioException) {
             OutputView.println(ioException.getMessage());
             return inputAddCardCommand();
