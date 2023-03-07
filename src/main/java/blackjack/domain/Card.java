@@ -20,6 +20,14 @@ public class Card {
         return this.cardNumber.isAce();
     }
 
+    public CardSuit getSuit() {
+        return cardSuit;
+    }
+
+    public CardNumber getNumber() {
+        return cardNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,13 +39,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardSuit, cardNumber);
-    }
-
-    public CardSuit getSuit() {
-        return cardSuit;
-    }
-
-    public CardNumber getNumber() {
-        return cardNumber;
     }
 }
