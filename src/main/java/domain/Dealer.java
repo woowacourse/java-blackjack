@@ -22,8 +22,8 @@ public class Dealer {
         return NAME;
     }
 
-    public Map<String, List<String>> getInfo() {
-        Map<String, List<String>> info = new LinkedHashMap<>();
+    public Map<String, List<Card>> getInfo() {
+        Map<String, List<Card>> info = new LinkedHashMap<>();
         info.put(getName(), getCards());
         return info;
     }
@@ -32,7 +32,7 @@ public class Dealer {
         return player.getCard(index);
     }
 
-    public List<String> getCards() {
+    public List<Card> getCards() {
         return player.getCards();
     }
 

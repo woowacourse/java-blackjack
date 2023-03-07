@@ -1,12 +1,8 @@
 package view;
 
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.Result;
+import domain.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -24,16 +20,18 @@ public class OutputView {
         System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName(), players.getPlayersName()
                 .stream()
                 .collect(Collectors.joining(SPLIT_DELIMITER)));
-        System.out.println(dealer.getName() + ": " + dealer.getInfo().get(dealer.getName()).get(0));
+        System.out.println(dealer.getName() + ": " + dealer.getInfo().get(dealer.getName()).get(0).getCardInfo());
         for (String key : players.getInfo().keySet()) {
-            List<String> value = players.getInfo().get(key);
-            System.out.println(key + "카드: " + value.stream().collect(Collectors.joining(SPLIT_DELIMITER)));
+            List<Card> value = players.getInfo().get(key);
+            System.out.println(key + "카드: " + value.stream().map(s -> s.getCardInfo())
+                    .collect(Collectors.joining(SPLIT_DELIMITER)));
         }
     }
 
     public void printPlayerCardsInfo(Player player) {
         System.out.println(player.getName() + "카드: " +
-                player.getCards().stream().collect(Collectors.joining(", ")));
+                player.getCards().stream().
+                        map(s -> s.getCardInfo()).collect(Collectors.joining(", ")));
 
     }
 
