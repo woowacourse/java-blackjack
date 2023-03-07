@@ -61,4 +61,8 @@ public class Hand {
     private boolean isBusted() {
         return score() > 21;
     }
+
+    public boolean hasSameScoreWith(Hand other) {
+        return score() == other.score();
+    }
 }

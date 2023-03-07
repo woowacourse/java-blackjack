@@ -48,6 +48,15 @@ public class HandTest extends AbstractTestFixture {
         assertThat(hand.score()).isEqualTo(score);
     }
 
+    @ParameterizedTest(name = "패의 점수가 같은지 알 수 있다.")
+    @CsvSource({"K,K,true", "K,A,false"})
+    void test_score_same(String letter, String otherLetter, boolean isScoreSame) {
+        var hand = new Hand(createCards(letter));
+        var otherHand = new Hand(createCards(otherLetter));
+
+        assertThat(hand.hasSameScoreWith(otherHand)).isEqualTo(isScoreSame);
+    }
+
     static Stream<Arguments> test_win_lose_draw() {
         return Stream.of(
                 Arguments.of(new String[] {"K", "K"}, new String[] {"9"}, Result.WIN),
@@ -56,7 +65,7 @@ public class HandTest extends AbstractTestFixture {
         );
     }
 
-    @ParameterizedTest(name = "패와 패를 비교해 승패를 알아낼 수 있다")
+    @ParameterizedTest(name = "패와 패를 비교해 점수가 큰 패를 알아낼 수 있다")
     @MethodSource
     void test_win_lose_draw(String[] letters, String[] otherLetters, Result result) {
         var hand = new Hand(createCards(letters));
