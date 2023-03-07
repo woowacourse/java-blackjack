@@ -26,16 +26,8 @@ public abstract class Participant {
 
     public abstract boolean isHit();
 
-    public boolean isBust() {
-        return getScore() > 21;
-    }
-
     public String getName() {
         return name.getValue();
-    }
-
-    public List<String> getCardName(int index) {
-        return List.of(hand.getCards().get(index).getCardName());
     }
 
     public List<Card> getHand() {

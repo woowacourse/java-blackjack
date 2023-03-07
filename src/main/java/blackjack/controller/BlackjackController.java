@@ -64,7 +64,7 @@ public class BlackjackController {
     }
 
     private void hitEachPlayer(final BlackjackGame blackjackGame, final Participant player) {
-        while (!player.isBust() && isMoreHit(player)) {
+        while (player.isHit() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
             outputView.printParticipantNameAndCards(player);
         }
