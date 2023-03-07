@@ -6,7 +6,6 @@ import domain.card.CardArea;
 public class Dealer extends Participant {
 
     private static final Name DEALER_NAME = Name.of("딜러");
-    private static final int DEALER_SHOULD_HIT_INCLUDE_VALUE = 16;
 
     public Dealer(final CardArea cardArea) {
         super(DEALER_NAME, cardArea);
@@ -14,7 +13,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return cardArea.calculate() <= DEALER_SHOULD_HIT_INCLUDE_VALUE;
+        return score().isDealerShouldHitScore();
     }
 
     public Card firstCard() {
@@ -22,18 +21,18 @@ public class Dealer extends Participant {
     }
 
     public DealerCompeteResult compete(final Participant participant) {
-        if (participant.isBurst()) {
+        if (participant.isBust()) {
             return DealerCompeteResult.WIN;
         }
-        if (isBurst()) {
+        if (isBust()) {
             return DealerCompeteResult.LOSE;
         }
-        if (participant.score() > score()) {
+        if (participant.isLargerScoreThan(this)) {
             return DealerCompeteResult.LOSE;
         }
-        if (participant.score() == score()) {
-            return DealerCompeteResult.DRAW;
+        if (isLargerScoreThan(participant)) {
+            return DealerCompeteResult.WIN;
         }
-        return DealerCompeteResult.WIN;
+        return DealerCompeteResult.DRAW;
     }
 }

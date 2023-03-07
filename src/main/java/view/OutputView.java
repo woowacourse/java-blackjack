@@ -6,8 +6,8 @@ import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.player.Dealer;
 import domain.player.DealerCompeteResult;
-import domain.player.Participant;
 import domain.player.Gambler;
+import domain.player.Participant;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -142,7 +142,7 @@ public class OutputView {
     private static void showParticipantsCardAreaResultState(final Participant participant) {
         final String message = participant.cardArea().cards().stream()
                 .map(OutputView::makeCardMessage)
-                .collect(Collectors.joining(DELIMITER, participant.nameValue() + "카드: ", String.format(" - 결과: %d", participant.cardArea().calculate())));
+                .collect(Collectors.joining(DELIMITER, participant.nameValue() + "카드: ", String.format(" - 결과: %d", participant.score().value())));
         System.out.println(message);
     }
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static domain.fixture.CardAreaFixture.*;
-import static domain.fixture.PlayerFixture.코다;
+import static domain.fixture.GamblerFixture.코다;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 

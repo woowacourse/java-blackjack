@@ -1,5 +1,6 @@
 package domain.fixture;
 
+import domain.card.BlackJackScore;
 import domain.card.Card;
 import domain.card.CardArea;
 import domain.card.CardValue;
@@ -57,5 +58,24 @@ public class CardAreaFixture {
         final CardArea cardArea = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
         cardArea.addCard(new Card(DIAMOND, THREE));
         return cardArea;
+    }
+
+    public static CardArea scoreOf(final int score) {
+        return new FixedCardArea(score);
+    }
+
+    static class FixedCardArea extends CardArea {
+
+        private final int value;
+
+        public FixedCardArea(final int value) {
+            super(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
+            this.value = value;
+        }
+
+        @Override
+        public BlackJackScore calculate() {
+            return BlackJackScore.of(value);
+        }
     }
 }

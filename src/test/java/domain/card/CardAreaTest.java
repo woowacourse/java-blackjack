@@ -48,18 +48,17 @@ class CardAreaTest {
 
     @ParameterizedTest(name = "카드 목록이 {0} 일 때, 총합은 {1}다.")
     @CsvSource(value = {
-            "TWO+THREE = 5",
-            "FIVE+SIX = 11",
-            "TWO+TWO = 4",
-            "TEN+TEN = 20",
-    }, delimiterString = " = ")
-    void 자신이_가진_카드의_합을_구할_수_있다(final String values, final int totalScore) {
+            "TWO,THREE,5",
+            "FIVE,SIX,11",
+            "TWO,TWO,4",
+            "TEN,TEN,20",
+    })
+    void 자신이_가진_카드의_합을_구할_수_있다(final CardValue first, final CardValue second, final int sum) {
         // given
-        final String[] split = values.split("\\+");
-        final CardArea cardArea = new CardArea(new Card(CLOVER, valueOf(split[0])), new Card(CLOVER, valueOf(split[1])));
+        final CardArea cardArea = new CardArea(new Card(CLOVER, first), new Card(CLOVER, second));
 
         // when & then
-        assertThat(cardArea.calculate()).isEqualTo(totalScore);
+        assertThat(cardArea.calculate().value()).isEqualTo(sum);
     }
 
     @ParameterizedTest(name = "킹, 퀸, 잭은 10으로 계산한다")
@@ -76,14 +75,14 @@ class CardAreaTest {
         final CardArea cardArea = new CardArea(new Card(CLOVER, first), new Card(CLOVER, second));
 
         // when & then
-        assertThat(cardArea.calculate()).isEqualTo(sum);
+        assertThat(cardArea.calculate().value()).isEqualTo(sum);
     }
 
     @ParameterizedTest(name = "[{index}] ACE 는 해당 값을 포함한 전체 점수가 21 이하인 경우 11로 계산한다.")
     @MethodSource("containsAceCardArea")
     void ACE_는_이전까지의_총합이_10_이하면_11로_계산한다(final CardArea cardArea, final int totalScore) {
         // then
-        assertThat(cardArea.calculate()).isEqualTo(totalScore);
+        assertThat(cardArea.calculate().value()).isEqualTo(totalScore);
     }
 
     static Stream<Arguments> containsAceCardArea() {
@@ -150,7 +149,7 @@ class CardAreaTest {
         cardArea.addCard(new Card(CardShape.DIAMOND, TEN));
 
         // when & then
-        assertTrue(cardArea.isBurst());
+        assertTrue(cardArea.isBust());
     }
 
     @Test
@@ -159,6 +158,6 @@ class CardAreaTest {
         final CardArea cardArea = new CardArea(new Card(CLOVER, TEN), new Card(CLOVER, ACE));
 
         // when & then
-        assertFalse(cardArea.isBurst());
+        assertFalse(cardArea.isBust());
     }
 }

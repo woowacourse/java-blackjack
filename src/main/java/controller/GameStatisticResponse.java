@@ -2,7 +2,7 @@ package controller;
 
 import domain.player.Dealer;
 import domain.player.DealerCompeteResult;
-import domain.player.Player;
+import domain.player.Gambler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,12 @@ import java.util.Map;
 public class GameStatisticResponse {
 
     private final Dealer dealer;
-    private final List<Player> players;
-    private final Map<Player, DealerCompeteResult> dealerResultPerPlayer;
+    private final List<Gambler> gamblers;
+    private final Map<Gambler, DealerCompeteResult> dealerResultPerPlayer;
 
-    public GameStatisticResponse(final Dealer dealer, final List<Player> players, final Map<Player, DealerCompeteResult> dealerResultPerPlayer) {
+    public GameStatisticResponse(final Dealer dealer, final List<Gambler> gamblers, final Map<Gambler, DealerCompeteResult> dealerResultPerPlayer) {
         this.dealer = dealer;
-        this.players = new ArrayList<>(players);
+        this.gamblers = new ArrayList<>(gamblers);
         this.dealerResultPerPlayer = dealerResultPerPlayer;
     }
 
@@ -24,11 +24,11 @@ public class GameStatisticResponse {
         return dealer;
     }
 
-    public List<Player> players() {
-        return new ArrayList<>(players);
+    public List<Gambler> players() {
+        return new ArrayList<>(gamblers);
     }
 
-    public Map<Player, DealerCompeteResult> dealerResultPerPlayer() {
+    public Map<Gambler, DealerCompeteResult> dealerResultPerPlayer() {
         return dealerResultPerPlayer;
     }
 }

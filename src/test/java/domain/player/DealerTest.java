@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.*;
-import static domain.fixture.PlayerFixture.말랑;
+import static domain.fixture.GamblerFixture.말랑;
 import static domain.player.DealerCompeteResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

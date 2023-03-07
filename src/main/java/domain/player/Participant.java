@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.BlackJackScore;
 import domain.card.Card;
 import domain.card.CardArea;
 
@@ -25,8 +26,8 @@ public abstract class Participant {
         return name.value();
     }
 
-    public boolean isBurst() {
-        return cardArea.isBurst();
+    public boolean isBust() {
+        return cardArea.isBust();
     }
 
     public void hit(final Card card) {
@@ -35,7 +36,11 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public int score() {
+    public BlackJackScore score() {
         return cardArea.calculate();
+    }
+
+    protected boolean isLargerScoreThan(final Participant participant) {
+        return score().isLargerThan(participant.score());
     }
 }

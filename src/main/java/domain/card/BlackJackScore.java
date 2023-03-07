@@ -6,7 +6,9 @@ public class BlackJackScore {
 
     private static final int ADDITIONAL_ACE_VALUE = 10;
     private static final int BLACK_JACK_SCORE_VALUE = 21;
-    public static final int MAXIMUM_DEALER_SHOULD_HIT_SCORE_INCLUDE = 16;
+    private static final int MAXIMUM_DEALER_SHOULD_HIT_SCORE_INCLUDE = 16;
+
+    public static final BlackJackScore BLACK_JACK_SCORE = BlackJackScore.of(BLACK_JACK_SCORE_VALUE);
 
     private final int value;
 

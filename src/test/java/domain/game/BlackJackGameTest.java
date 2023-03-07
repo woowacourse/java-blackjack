@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import static domain.fixture.CardAreaFixture.*;
+import static domain.fixture.GamblerFixture.*;
 import static domain.fixture.NameFixture.말랑이름;
 import static domain.fixture.NameFixture.코다이름;
-import static domain.fixture.PlayerFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

@@ -3,10 +3,10 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.card.BlackJackScore.BLACK_JACK_SCORE;
+
 public class CardArea {
 
-    private static final int SPECIAL_ACE_ADD_VALUE = 10;
-    private static final int BLACK_JACK_NUMBER = 21;
     private static final int FIRST_CARD_INDEX = 0;
 
     private final List<Card> cards = new ArrayList<>();
@@ -23,12 +23,17 @@ public class CardArea {
         cards.add(card);
     }
 
-    public int calculate() {
-        int total = cards.stream().mapToInt(Card::defaultScore).sum();
+    public BlackJackScore calculate() {
+        BlackJackScore total = minScore();
         if (hasAce()) {
-            return calculateSpecialAceValue(total);
+            return total.plusThenIfNotBust();
         }
         return total;
+    }
+
+    private BlackJackScore minScore() {
+        return BlackJackScore.of(cards.stream()
+                .mapToInt(Card::defaultScore).sum());
     }
 
     private boolean hasAce() {
@@ -36,19 +41,12 @@ public class CardArea {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculateSpecialAceValue(final int total) {
-        if (total + SPECIAL_ACE_ADD_VALUE <= BLACK_JACK_NUMBER) {
-            return total + SPECIAL_ACE_ADD_VALUE;
-        }
-        return total;
-    }
-
     public boolean canMoreCard() {
-        return calculate() < BLACK_JACK_NUMBER;
+        return BLACK_JACK_SCORE.isLargerThan(calculate());
     }
 
-    public boolean isBurst() {
-        return calculate() > BLACK_JACK_NUMBER;
+    public boolean isBust() {
+        return calculate().isBust();
     }
 
     public Card firstCard() {

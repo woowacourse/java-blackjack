@@ -1,6 +1,6 @@
 package view;
 
-import domain.player.Player;
+import domain.player.Gambler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +20,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean readWantHit(final Player player) {
-        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", player.nameValue());
+    public static boolean readWantHit(final Gambler gambler) {
+        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", gambler.nameValue());
         return parseHitCommand(scanner.nextLine());
     }
 
