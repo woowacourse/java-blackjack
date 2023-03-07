@@ -5,18 +5,12 @@ import java.util.stream.Collectors;
 
 public class Players {
     private static final String INVALID_NAME = "중복된 이름입니다.";
-    private static final String SPLIT_DELIMITER = ",";
 
     private final List<Player> players = new ArrayList<>();
 
-    public Players(String names) {
-        List<String> splitedName = splitName(names);
-        validateDuplicatedName(splitedName);
-        addPlayer(splitedName);
-    }
-
-    private List<String> splitName(String names) {
-        return Arrays.asList(names.split(SPLIT_DELIMITER));
+    public Players(List<String> names) {
+        validateDuplicatedName(names);
+        addPlayer(names);
     }
 
     private void validateDuplicatedName(List<String> splitedName) {

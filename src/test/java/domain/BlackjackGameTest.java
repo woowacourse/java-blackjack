@@ -19,7 +19,7 @@ public class BlackjackGameTest {
 
     @BeforeEach
     void set() {
-        players = new Players("pobi,jason");
+        players = new Players(List.of("pobi","jason"));
         dealer = players.findDealer();
         CardGenerator cardGenerator = new CardGenerator();
         cardDeck = new CardDeck(cardGenerator.generate(new NoShuffleCardsStrategy()));

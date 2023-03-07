@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -7,12 +9,17 @@ public class InputView {
     private static final String READ_ADD_CARD_COMMAND_MESSAGE =
             "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator();
     private static final String INVALID_COMMAND = "y,n 으로 입력해주세요.";
+    private static final String SPLIT_DELIMITER = ",";
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public String readPlayerNames() {
+    public List<String> readPlayerNames() {
         System.out.println(READ_PLAYER_NAMES_MESSAGE);
-        return scanner.nextLine();
+        return splitName(scanner.nextLine());
+    }
+
+    private List<String> splitName(String names) {
+        return Arrays.asList(names.split(SPLIT_DELIMITER));
     }
 
     public String readCommand(String name) {
