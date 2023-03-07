@@ -65,4 +65,8 @@ public class Hand {
     public boolean hasSameScoreWith(Hand other) {
         return score() == other.score();
     }
+
+    public boolean hasScoreGreaterThan(Hand other) {
+        return score() > other.score();
+    }
 }
