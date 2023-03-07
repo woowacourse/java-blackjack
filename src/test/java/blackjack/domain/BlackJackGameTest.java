@@ -42,14 +42,14 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestDeckGenerator(testCards));
 
-        final Map<String, List<Card>> firstOpenCardGroups = blackJackGame.getFirstOpenCardGroups();
+        final Map<String, CardGroup> firstOpenCardGroups = blackJackGame.getFirstOpenCardGroups();
 
         assertSoftly(softly -> {
-            softly.assertThat(firstOpenCardGroups.get("필립"))
+            softly.assertThat(firstOpenCardGroups.get("필립").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(firstOpenCardGroups.get("홍실"))
+            softly.assertThat(firstOpenCardGroups.get("홍실").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
-            softly.assertThat(firstOpenCardGroups.get("딜러"))
+            softly.assertThat(firstOpenCardGroups.get("딜러").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
         });
     }
@@ -95,7 +95,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
 
         blackJackGame.playPlayer("필립");
-        List<Card> cards = blackJackGame.getStatus().get("필립");
+        List<Card> cards = blackJackGame.getStatus().get("필립").getCards();
 
         assertThat(cards).containsExactlyInAnyOrderElementsOf(testCards.subList(2, 5));
     }
@@ -108,9 +108,9 @@ class BlackJackGameTest {
         final CardResult philip = blackJackGame.getCardResult().get("필립");
 
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(philip.getCards())
+            softly.assertThat(philip.getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(philip.getScore()).isEqualTo(19);
+            softly.assertThat(philip.getScore().getValue()).isEqualTo(19);
         });
     }
 

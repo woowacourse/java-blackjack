@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardGroup;
 import blackjack.domain.CardNumber;
 import blackjack.domain.CardShape;
 import blackjack.domain.WinningStatus;
@@ -18,22 +19,26 @@ class ViewRendererTest {
     @Test
     @DisplayName("Status를 출력 형식에 맞게 렌더링 테스트")
     void renderStatusTest() {
-        final Map<String, List<Card>> status = Map.of("홍실", List.of(new Card(CardShape.SPADE, CardNumber.ACE)));
+        final Map<String, CardGroup> status = Map.of("홍실", new CardGroup(
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.DIAMOND, CardNumber.TWO)
+        ));
 
         final Map<String, List<String>> renderedStatus = ViewRenderer.renderStatus(status);
 
-        assertThat(renderedStatus.get("홍실")).contains("A스페이드");
+        assertThat(renderedStatus.get("홍실")).contains("A스페이드", "2다이아몬드");
     }
 
 
     @Test
     @DisplayName("카드 렌더링 테스트")
     void renderCardToStringTest() {
-        final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.ACE));
+        final CardGroup cardGroup = new CardGroup(new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.DIAMOND, CardNumber.TWO));
 
-        List<String> renderedCardNames = ViewRenderer.renderCardsToString(cards);
+        List<String> renderedCardNames = ViewRenderer.renderCardsToString(cardGroup);
 
-        assertThat(renderedCardNames).contains("A스페이드");
+        assertThat(renderedCardNames).contains("A스페이드", "2다이아몬드");
     }
 
     @Test

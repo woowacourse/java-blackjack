@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardGroup;
 import blackjack.domain.CardNumber;
 import blackjack.domain.CardShape;
 import blackjack.domain.Dealer;
@@ -51,7 +52,7 @@ public class ViewRenderer {
     private ViewRenderer() {
     }
 
-    public static Map<String, List<String>> renderStatus(final Map<String, List<Card>> status) {
+    public static Map<String, List<String>> renderStatus(final Map<String, CardGroup> status) {
         final Map<String, List<String>> renderedStatus = new HashMap<>();
 
         for (final String name : status.keySet()) {
@@ -60,8 +61,8 @@ public class ViewRenderer {
         return renderedStatus;
     }
 
-    public static List<String> renderCardsToString(final List<Card> cards) {
-        return cards.stream()
+    public static List<String> renderCardsToString(final CardGroup cardGroup) {
+        return cardGroup.getCards().stream()
                 .map(card -> CARD_NUMBER_STRING_MAPPER.get(card.getNumber())
                         + CARD_SHAPE_STRING_MAPPER.get(card.getShape()))
                 .collect(toUnmodifiableList());

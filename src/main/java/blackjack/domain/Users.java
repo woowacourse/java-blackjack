@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class Users {
 
-    private static final String NOT_CONTAIN_DEALER = "Users에 Dealer 객체가 없습니다.";
     private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
     private static final String PLAYER_NAMES_IS_EMPTY = "쉼표만 입력할 수 없습니다.";
     private static final String NUMBER_OF_PLAYER_OVER_LIMIT = "플레이어의 이름은 5개까지만 입력해야 합니다.";
@@ -34,22 +33,22 @@ public class Users {
         }
     }
 
-    private CardGroup initCardGroup(Deck deck) {
+    private CardGroup initCardGroup(final Deck deck) {
         return new CardGroup(deck.draw(), deck.draw());
     }
 
-    public Map<String, List<Card>> getStatus() {
-        Map<String, List<Card>> status = players.stream()
-                .collect(Collectors.toMap(Player::getName, Player::getStatus));
-        status.put(dealer.getName(), dealer.getStatus());
-        return status;
-    }
-
-    public Map<String, List<Card>> getFirstOpenCardGroups() {
-        Map<String, List<Card>> firstOpenCardGroups = players.stream()
+    public Map<String, CardGroup> getFirstOpenCardGroups() {
+        Map<String, CardGroup> firstOpenCardGroups = players.stream()
                 .collect(Collectors.toMap(User::getName, User::getFirstOpenCardGroup));
         firstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
         return firstOpenCardGroups;
+    }
+
+    public Map<String, CardGroup> getStatus() {
+        Map<String, CardGroup> status = players.stream()
+                .collect(Collectors.toMap(Player::getName, Player::getCardGroups));
+        status.put(dealer.getName(), dealer.getCardGroups());
+        return status;
     }
 
     public boolean isDealerOverDrawLimit() {
@@ -70,9 +69,9 @@ public class Users {
         getDealer().drawCard(deck);
     }
 
-    public User getUser(final String name) {
+    public Player getUser(final String name) {
         return players.stream()
-                .filter(user -> user.getName().equals(name))
+                .filter(player -> player.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
     }

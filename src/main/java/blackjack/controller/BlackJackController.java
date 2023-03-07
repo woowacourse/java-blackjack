@@ -1,14 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.Card;
+import blackjack.domain.CardGroup;
 import blackjack.domain.RandomDeckGenerator;
 import blackjack.domain.WinningStatus;
 import blackjack.dto.CardResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
-
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +50,7 @@ public class BlackJackController {
     private void playFor(final BlackJackGame blackJackGame, final String playerName) {
         while (isContinuous(playerName, blackJackGame).isDraw()) {
             blackJackGame.playPlayer(playerName);
-            List<Card> userCards = blackJackGame.getStatus().get(playerName);
+            CardGroup userCards = blackJackGame.getStatus().get(playerName);
             outputView.printCards(playerName, ViewRenderer.renderCardsToString(userCards));
         }
     }
@@ -83,7 +82,7 @@ public class BlackJackController {
         for (final String name : cardResults.keySet()) {
             final CardResult cardResult = cardResults.get(name);
             outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardResult.getCards()),
-                    cardResult.getScore());
+                    cardResult.getScore().getValue());
         }
     }
 

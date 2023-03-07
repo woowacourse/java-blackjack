@@ -16,11 +16,11 @@ public class BlackJackGame {
         this.users = new Users(playerNames, deck);
     }
 
-    public Map<String, List<Card>> getStatus() {
+    public Map<String, CardGroup> getStatus() {
         return users.getStatus();
     }
 
-    public Map<String, List<Card>> getFirstOpenCardGroups() {
+    public Map<String, CardGroup> getFirstOpenCardGroups() {
         return users.getFirstOpenCardGroups();
     }
 
@@ -47,10 +47,10 @@ public class BlackJackGame {
 
     public Map<String, CardResult> getCardResult() {
         final Map<String, CardResult> cardResult = new HashMap<>();
-        final Map<String, List<Card>> status = users.getStatus();
+        final Map<String, CardGroup> status = users.getStatus();
 
         for (final String name : status.keySet()) {
-            cardResult.put(name, new CardResult(status.get(name), BlackJackRule.getScore(users.getUser(name))));
+            cardResult.put(name, new CardResult(status.get(name), status.get(name).getScore()));
         }
 
         return cardResult;

@@ -1,24 +1,23 @@
 package blackjack.dto;
 
-import blackjack.domain.Card;
-
-import java.util.List;
+import blackjack.domain.CardGroup;
+import blackjack.domain.Score;
 
 public class CardResult {
 
-    private final List<Card> cards;
-    private final int score;
+    private final CardGroup cards;
+    private final Score score;
 
-    public CardResult(List<Card> cards, int score) {
+    public CardResult(final CardGroup cards, final Score score) {
         this.cards = cards;
         this.score = score;
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public CardGroup getCards() {
+        return cards;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
     }
 }
