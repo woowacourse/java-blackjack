@@ -1,20 +1,26 @@
 package blackjack.view.dto;
 
+import blackjack.domain.participant.Dealer;
+
 public class DealerStateResponse {
 
     private final boolean drawable;
-    private final int limit;
+    private final int thresholdScore;
 
-    public DealerStateResponse(final boolean drawable, final int limit) {
+    private DealerStateResponse(final boolean drawable, final int thresholdScore) {
         this.drawable = drawable;
-        this.limit = limit;
+        this.thresholdScore = thresholdScore;
+    }
+
+    public static DealerStateResponse from(final Dealer dealer) {
+        return new DealerStateResponse(dealer.isDrawable(), dealer.getThresholdScore());
     }
 
     public boolean isDrawable() {
         return drawable;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getThresholdScore() {
+        return thresholdScore;
     }
 }

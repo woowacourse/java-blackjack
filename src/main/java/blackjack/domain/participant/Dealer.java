@@ -7,9 +7,7 @@ public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int MAXIMUM_CARD_COUNT = 2;
-    private static final int MAXIMUM_SCORE = 16;
-
-    private final String name = DEALER_NAME;
+    private static final int THRESHOLD_SCORE = 16;
 
     public Dealer() {
         super();
@@ -29,7 +27,7 @@ public class Dealer extends Participant {
     }
 
     private boolean isScoreLow() {
-        return cards.calculateTotalScore() <= MAXIMUM_SCORE;
+        return cards.calculateTotalScore() <= THRESHOLD_SCORE;
     }
 
     public Result compareScoreTo(final Player player) {
@@ -53,6 +51,10 @@ public class Dealer extends Participant {
 
     @Override
     public String getName() {
-        return name;
+        return DEALER_NAME;
+    }
+
+    public int getThresholdScore() {
+        return THRESHOLD_SCORE;
     }
 }

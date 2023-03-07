@@ -103,7 +103,7 @@ public class BlackJackController {
     private void cardDraw(final Dealer dealer, final Deck deck) {
         if (dealer.isDrawable()) {
             dealer.drawCard(deck.draw());
-            outputView.printDealerCardDrawn(new DealerStateResponse(true, DEALER_LIMIT));
+            outputView.printDealerCardDrawn(DealerStateResponse.from(dealer));
         }
     }
 

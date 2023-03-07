@@ -40,8 +40,8 @@ public class OutputView {
     }
 
     private String getHandedCards(final ParticipantResponse participant) {
-        final CardsResponse cardsResponse = participant.getCardsResponse();
-        final List<String> cardInfos = cardsResponse.getCardInfos();
+        final CardsResponse cards = participant.getCardsResponse();
+        final List<String> cardInfos = cards.getCardInfos();
 
         return format("{0}카드: {1}", participant.getName(), getCardInfosFormat(cardInfos));
     }
@@ -53,7 +53,7 @@ public class OutputView {
     public void printDealerCardDrawn(final DealerStateResponse dealerStateResponse) {
         if (dealerStateResponse.isDrawable()) {
             System.out.println();
-            System.out.println(format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.", dealerStateResponse.getLimit()));
+            System.out.println(format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.", dealerStateResponse.getThresholdScore()));
             System.out.println();
         }
     }
