@@ -4,6 +4,7 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,6 @@ public class Users {
         userNameAndResults.put(dealer.getName(), new CardResult(dealer.getCardGroups(), dealer.getScore()));
         final Map<String, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
         userNameAndResults.putAll(playerNameAndResults);
-        return Map.copyOf(userNameAndResults);
+        return Collections.unmodifiableMap(userNameAndResults);
     }
 }

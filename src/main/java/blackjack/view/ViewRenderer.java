@@ -1,20 +1,20 @@
 package blackjack.view;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.user.Dealer;
+import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
-
+import blackjack.domain.user.Dealer;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class ViewRenderer {
 
@@ -30,6 +30,7 @@ public class ViewRenderer {
             WinningStatus.TIE, "무 ",
             WinningStatus.LOSE, "패 "
     );
+    private static final String CARD_RESULT_FORMAT = "%s - 결과: %d";
     private static final String BLANK = "";
 
     static {
@@ -57,6 +58,7 @@ public class ViewRenderer {
         for (final String name : status.keySet()) {
             renderedStatus.put(name, renderCardsToString(status.get(name)));
         }
+
         return renderedStatus;
     }
 
@@ -105,5 +107,21 @@ public class ViewRenderer {
             return dealerWinningResult.get(winningStatus) + WINNING_STATUS_MAPPER.get(winningStatus);
         }
         return BLANK;
+    }
+
+    public static Map<String, String> renderUserNameAndCardResults(
+            final Map<String, CardResult> userNameAndCardResults) {
+        final Map<String, String> renderedUserNameAndCardResults = new LinkedHashMap<>();
+
+        userNameAndCardResults
+                .forEach((key, value) -> renderedUserNameAndCardResults.put(key, renderCardResults(value)));
+
+        return renderedUserNameAndCardResults;
+    }
+
+    private static String renderCardResults(final CardResult cardResult) {
+        final List<String> cardNames = renderCardsToString(cardResult.getCards());
+        return String.format(CARD_RESULT_FORMAT, String.join(", ", cardNames)
+                , cardResult.getScore().getValue());
     }
 }

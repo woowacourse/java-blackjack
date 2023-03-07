@@ -4,6 +4,8 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -77,8 +79,9 @@ public class Players {
     }
 
     public Map<String, CardResult> getPlayerNameAndCardResults() {
-        return players.stream()
-                .collect(Collectors.toMap(Player::getName,
-                        player -> new CardResult(player.getCardGroups(), player.getScore())));
+        final Map<String, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
+        players.forEach(player -> playerNameAndCardResults.put(player.getName(),
+                new CardResult(player.getCardGroups(), player.getScore())));
+        return Collections.unmodifiableMap(playerNameAndCardResults);
     }
 }

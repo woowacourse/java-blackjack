@@ -78,12 +78,10 @@ public class BlackJackController {
 
     //TODO: 해당 로직 view로 분리하게 변경
     private void printCardResult(BlackJackGame blackJackGame) {
-        final Map<String, CardResult> cardResults = blackJackGame.getUserNameAndCardResults();
-        for (final String name : cardResults.keySet()) {
-            final CardResult cardResult = cardResults.get(name);
-            outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardResult.getCards()),
-                    cardResult.getScore().getValue());
-        }
+        final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
+        final Map<String, String> renderedUserNameAndCardResults = ViewRenderer
+                .renderUserNameAndCardResults(userNameAndCardResults);
+        outputView.printUserNameAndCardResults(renderedUserNameAndCardResults);
     }
 
     private void printWinningResult(BlackJackGame blackJackGame) {

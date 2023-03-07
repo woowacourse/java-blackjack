@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.user.Dealer;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,8 +13,8 @@ public class OutputView {
     private static final String DRAW_CARD_REQUEST_MESSAGE_FORMAT = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_DRAW_INFO_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
             + System.lineSeparator();
-    private static final String CARD_RESULT_MESSAGE_FORMAT = CARD_INFO_MESSAGE_FORMAT + " - 결과: %d";
-    private static final String WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
+    private static final String USER_NAME_AND_CARD_RESULT_MESSAGE_FORMAT = "%s카드: %s";
+    private static final String WINNING_RESULT_MESSAGE_FORMAT = "%s카드: %s";
     private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
     private static final String DELIMITER = ", ";
 
@@ -53,9 +52,9 @@ public class OutputView {
         System.out.println(DEALER_DRAW_INFO_MESSAGE);
     }
 
-    public void printCardResult(final String userName, final List<String> cardNames, int score) {
-        System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT, userName
-                , String.join(DELIMITER, cardNames), score));
+    public void printUserNameAndCardResults(final Map<String, String> renderedUserNameAndCardResults) {
+        renderedUserNameAndCardResults.forEach((name, renderedCardResult) ->
+                System.out.println(String.format(USER_NAME_AND_CARD_RESULT_MESSAGE_FORMAT, name, renderedCardResult)));
     }
 
     public void printWinningResult(final Map<String, String> winningResults) {
