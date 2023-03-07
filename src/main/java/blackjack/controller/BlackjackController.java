@@ -4,7 +4,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
-import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -14,7 +13,6 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -28,32 +26,26 @@ public class BlackjackController {
 
     public void run() {
         final Participants participants = makeParticipants();
-        final Deck deck = makeDeck();
-        final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+        final BlackjackGame blackjackGame = new BlackjackGame(participants, new Deck());
 
         startGame(blackjackGame);
         hitParticipants(blackjackGame);
 
-        final Map<Player, WinTieLose> playersResult = new HashMap<>();
-        final ResultGame resultGame = new ResultGame(participants, playersResult);
+        final ResultGame resultGame = new ResultGame(participants, new HashMap<>());
         displayAllResult(participants, resultGame);
     }
 
     private Participants makeParticipants() {
         final Dealer dealer = new Dealer(new ArrayList<>());
         final List<String> playerNames = inputView.readPlayers();
+
         return new Participants(dealer, playerNames);
     }
 
-    private Deck makeDeck() {
-        return new Deck();
-    }
-
     private void startGame(final BlackjackGame blackjackGame) {
-        final Participants participants = blackjackGame.getParticipants();
-
         blackjackGame.initialCardsToAllParticipant();
 
+        final Participants participants = blackjackGame.getParticipants();
         outputView.printInitialHands(participants);
     }
 
