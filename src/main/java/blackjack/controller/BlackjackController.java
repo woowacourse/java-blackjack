@@ -27,6 +27,40 @@ public class BlackjackController {
         printResult(blackjackGame);
     }
 
+    private void gameSetting(final BlackjackGame blackjackGame) {
+        for (Participant participant : blackjackGame.getParticipants()) {
+            blackjackGame.getTwoHitCards(participant);
+        }
+        outputView.printParticipants(blackjackGame.getParticipantsName());
+        outputView.printParticipantsCard(blackjackGame.findDealer(), blackjackGame.findPlayers());
+    }
+
+    private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards) {
+        List<Player> players = blackjackGame.findPlayers();
+        for (Player player : players) {
+            hitPlayerCard(player, cards);
+        }
+        blackjackGame.hitDealerCard(cards);
+        outputView.printHitDealerCount(blackjackGame.findDealer());
+    }
+
+    private void hitPlayerCard(final Player player, final Cards cards) {
+        while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
+            player.hit(cards.pick());
+            outputView.printCurrentCards(player);
+        }
+        if (player.decideHit()) {
+            outputView.printCurrentCards(player);
+        }
+    }
+
+    private void printResult(final BlackjackGame blackjackGame) {
+        for(Participant participant : blackjackGame.getParticipants()) {
+            outputView.printTotalCardsAndScore(participant);
+        }
+        outputView.printAllWinORLose(blackjackGame.generatePlayersResult());
+    }
+
     private List<String> inputPlayerNameCommand() {
         try {
             return inputView.readPlayerName();
@@ -43,39 +77,5 @@ public class BlackjackController {
             System.out.println(e.getMessage());
         }
         return inputHitCommand(player);
-    }
-
-    private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards) {
-        List<Player> players = blackjackGame.findPlayers();
-        for (Player player : players) {
-            hitPlayerCard(player, cards);
-        }
-        blackjackGame.hitDealerCard(cards);
-        outputView.printHitDealerCount(blackjackGame.findDealer());
-    }
-
-    private void printResult(final BlackjackGame blackjackGame) {
-        for(Participant participant : blackjackGame.getParticipants()) {
-            outputView.printTotalCardsAndScore(participant);
-        }
-        outputView.printAllWinORLose(blackjackGame.generatePlayersResult());
-    }
-
-    private void hitPlayerCard(final Player player, final Cards cards) {
-        while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
-            player.hit(cards.pick());
-            outputView.printCurrentCards(player);
-        }
-        if (player.decideHit()) {
-            outputView.printCurrentCards(player);
-        }
-    }
-
-    private void gameSetting(final BlackjackGame blackjackGame) {
-        for (Participant participant : blackjackGame.getParticipants()) {
-            blackjackGame.getTwoHitCards(participant);
-        }
-        outputView.printParticipants(blackjackGame.getParticipantsName());
-        outputView.printParticipantsCard(blackjackGame.findDealer(), blackjackGame.findPlayers());
     }
 }

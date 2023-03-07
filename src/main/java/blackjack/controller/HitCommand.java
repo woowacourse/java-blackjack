@@ -15,7 +15,7 @@ public enum HitCommand {
 
     public static HitCommand of(String inputCommand) {
         return Arrays.stream(values())
-                .filter(clientCommand -> clientCommand.command.equals(inputCommand))
+                .filter(clientCommand -> clientCommand.command.equalsIgnoreCase(inputCommand))
                 .findAny()
                 .get();
     }
