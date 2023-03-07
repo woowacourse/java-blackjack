@@ -1,6 +1,7 @@
 package domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.type.Letter;
 import domain.type.Suit;
@@ -12,13 +13,25 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     @Test
+    @DisplayName("플레이어 생성 테스트")
+    public void testCreate() {
+        //given
+        final Cards cards = Cards.makeEmptyCards();
+        final String name = "test";
+
+        //when
+        //then
+        assertDoesNotThrow(() -> new Player(cards, name));
+    }
+
+    @Test
     @DisplayName("21 이하일 경우 카드 추가를 테스트")
     public void testAddCardWhenUnder21() {
         //given
-        Set<Card> cardSet = new HashSet<>();
+        final Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.NINE));
-        Cards cards = new Cards(cardSet);
-        Player player = new Player(cards, "player");
+        final Cards cards = new Cards(cardSet);
+        final Player player = new Player(cards, "player");
 
         //when
         player.addCard(new Card(Suit.DIAMOND, Letter.NINE));
@@ -32,10 +45,10 @@ class PlayerTest {
     @DisplayName("21 초과일 경우 카드 추가를 테스트")
     public void testAddCardWhenOver21() {
         //given
-        Set<Card> cardSet = new HashSet<>();
+        final Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.TEN));
-        Cards cards = new Cards(cardSet);
-        Player player = new Player(cards, "player");
+        final Cards cards = new Cards(cardSet);
+        final Player player = new Player(cards, "player");
 
         //when
         player.addCard(new Card(Suit.SPADE, Letter.TEN));
@@ -43,5 +56,41 @@ class PlayerTest {
 
         //then
         assertThat(player.getScore().getValue()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트인지 테스트")
+    public void testIsBustTrue() {
+        //given
+        final Set<Card> cardSet = Set.of(
+            new Card(Suit.DIAMOND, Letter.TEN),
+            new Card(Suit.SPADE, Letter.TEN),
+            new Card(Suit.CLUB, Letter.TWO));
+        final Cards bustedCards = new Cards(cardSet);
+        final Player player = new Player(bustedCards, "test");
+
+        //when
+        final boolean result = player.isBust();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트가 아닌지 테스트")
+    public void testIsBustFalse() {
+        //given
+        final Set<Card> cardSet = Set.of(
+            new Card(Suit.DIAMOND, Letter.TEN),
+            new Card(Suit.SPADE, Letter.TEN),
+            new Card(Suit.CLUB, Letter.ACE));
+        final Cards bustedCards = new Cards(cardSet);
+        final Player player = new Player(bustedCards, "test");
+
+        //when
+        final boolean result = player.isBust();
+
+        //then
+        assertThat(result).isFalse();
     }
 }
