@@ -7,22 +7,15 @@ import java.util.List;
 import java.util.Queue;
 
 public class Deck {
-	private static final Queue<Card> deck;
+	private final Queue<Card> deck;
 
-	static {
-		deck = new LinkedList<>(makeDeck());
-	}
-
-	private Deck() {
-	}
-
-	private static List<Card> makeDeck() {
+	public Deck() {
 		List<Card> cards = new ArrayList<>();
 		for (Denomination denomination : Denomination.values()) {
 			makeCard(cards, denomination);
 		}
 		Collections.shuffle(cards);
-		return cards;
+		deck = new LinkedList<>(cards);
 	}
 
 	private static void makeCard(List<Card> cards, Denomination denomination) {
@@ -31,11 +24,11 @@ public class Deck {
 		}
 	}
 
-	public static Card pickCard() {
+	public Card pickCard() {
 		return deck.poll();
 	}
 
-	public static Queue<Card> getDeck() {
+	public Queue<Card> getDeck() {
 		return new LinkedList<>(deck);
 	}
 }
