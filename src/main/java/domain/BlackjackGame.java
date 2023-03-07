@@ -31,23 +31,23 @@ public class BlackjackGame {
     }
 
     public boolean hasAnyPlayerToDeal() {
-        return players.hasDrawablePlayer();
+        return players.hasAnyPlayerToDeal();
     }
 
-    public Player getPlayerToDeal() {
-        return players.getCurrentDrawablePlayer();
+    public Player getPlayerToDecide() {
+        return players.getPlayerToDecide();
     }
 
     public void hitOrStand(HitOrStand hitOrStand) {
         if (hitOrStand == HitOrStand.HIT) {
-            players.handOutCardToCurrentPlayer(deck.draw());
+            players.dealToCurrentPlayer(deck.draw());
             return;
         }
         players.standCurrentPlayer();
     }
 
-    public boolean isDealerDrawable() {
-        return dealer.isDrawable();
+    public boolean shouldDealerDrawCard() {
+        return dealer.shouldDrawCard();
     }
 
     public void dealCardToDealer() {
@@ -55,14 +55,14 @@ public class BlackjackGame {
     }
 
     public Map<String, GameOutcome> getPlayersOutcome() {
-        return players.battleWith(dealer);
+        return dealer.battleWith(players);
     }
 
     public List<Participant> getParticipants() {
         List<Participant> participants = players.getPlayers()
-                .stream()
-                .map(player -> (Participant) player)
-                .collect(Collectors.toList());
+                                                .stream()
+                                                .map(player -> (Participant) player)
+                                                .collect(Collectors.toList());
         participants.add(DEALER_POSITION, dealer);
         return participants;
     }

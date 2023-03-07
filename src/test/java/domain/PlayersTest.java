@@ -75,7 +75,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            boolean existingDrawablePlayer = players.hasDrawablePlayer();
+            boolean existingDrawablePlayer = players.hasAnyPlayerToDeal();
 
             //then
             assertThat(existingDrawablePlayer).isTrue();
@@ -95,7 +95,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            boolean existingDrawablePlayer = players.hasDrawablePlayer();
+            boolean existingDrawablePlayer = players.hasAnyPlayerToDeal();
 
             //then
             assertThat(existingDrawablePlayer).isFalse();
@@ -118,7 +118,7 @@ class PlayersTest {
             String expected = "포이";
 
             //when
-            String actual = players.getCurrentDrawablePlayer().name();
+            String actual = players.getPlayerToDecide().name();
 
             //then
             assertThat(actual).isEqualTo(expected);
@@ -140,7 +140,7 @@ class PlayersTest {
             players.receiveCard(deck);
 
             //when
-            ThrowingCallable throwingCallable = players::getCurrentDrawablePlayer;
+            ThrowingCallable throwingCallable = players::getPlayerToDecide;
 
             //then
             assertThatThrownBy(throwingCallable)

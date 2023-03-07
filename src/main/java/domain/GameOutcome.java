@@ -1,9 +1,24 @@
 package domain;
 
 public enum GameOutcome {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    WIN("승") {
+        @Override
+        public GameOutcome oppositeOutcome() {
+            return LOSE;
+        }
+    },
+    DRAW("무") {
+        @Override
+        public GameOutcome oppositeOutcome() {
+            return DRAW;
+        }
+    },
+    LOSE("패") {
+        @Override
+        public GameOutcome oppositeOutcome() {
+            return WIN;
+        }
+    },
     ;
 
     private final String value;
@@ -12,31 +27,23 @@ public enum GameOutcome {
         this.value = value;
     }
 
-    public static GameOutcome of(int criteria, int comparison) {
-        if (criteria > 21) {
+    public static GameOutcome of(int playerScore, int dealerScore) {
+        if (playerScore > 21) {
             return LOSE;
         }
-        if (comparison > 21) {
+        if (dealerScore > 21) {
             return WIN;
         }
-        if (criteria > comparison) {
+        if (playerScore > dealerScore) {
             return WIN;
         }
-        if (criteria < comparison) {
+        if (playerScore < dealerScore) {
             return LOSE;
         }
         return DRAW;
     }
 
-    public GameOutcome oppositeOutcome() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
+    public abstract GameOutcome oppositeOutcome();
 
     public String value() {
         return value;

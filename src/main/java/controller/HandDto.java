@@ -12,9 +12,9 @@ public class HandDto {
     public HandDto(Participant participant) {
         this.name = participant.name();
         this.cards = participant.getHand()
-                .stream()
-                .map(card -> String.join("", String.valueOf(card.score()), card.suit()))
-                .collect(Collectors.toUnmodifiableList());
+                                .stream()
+                                .map(card -> String.join("", String.valueOf(card.score()), card.suit()))
+                                .collect(Collectors.toUnmodifiableList());
     }
 
     public String name() {

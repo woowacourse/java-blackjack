@@ -21,12 +21,13 @@ public class InputView {
 
     private List<String> asList(String rawNames) {
         return Arrays.stream(rawNames.split(NAME_DELIMITER))
-                .map(String::trim)
-                .collect(Collectors.toUnmodifiableList());
+                     .map(String::trim)
+                     .collect(Collectors.toUnmodifiableList());
     }
 
     public String readHitOrStand(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine().trim();
+        return scanner.nextLine()
+                      .trim();
     }
 }

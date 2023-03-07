@@ -24,7 +24,8 @@ public class Name {
     }
 
     private void validateNoBlankEachSide(String value) {
-        if (value.trim().length() != value.length()) {
+        if (value.trim()
+                 .length() != value.length()) {
             throw new IllegalArgumentException("이름의 양쪽에 공백이 들어갈 수 없습니다.");
         }
     }

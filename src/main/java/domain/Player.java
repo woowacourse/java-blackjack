@@ -22,6 +22,10 @@ public class Player extends Participant {
         hitOrStand = HitOrStand.STAND;
     }
 
+    public GameOutcome computeWinLoss(int dealerScore) {
+        return GameOutcome.of(score(), dealerScore);
+    }
+
     @Override
     public String name() {
         return name.value();

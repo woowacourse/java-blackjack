@@ -16,8 +16,8 @@ public enum HitOrStand {
 
     public static HitOrStand from(String command) {
         return Arrays.stream(HitOrStand.values())
-                .filter(decision -> Objects.equals(decision.command, command))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("y나 n이어야 합니다."));
+                     .filter(decision -> Objects.equals(decision.command, command))
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException("y나 n이어야 합니다."));
     }
 }

@@ -1,14 +1,11 @@
 package controller;
 
-import domain.BlackjackGame;
-import domain.HitOrStand;
-import domain.Participant;
-import domain.Player;
-import domain.RandomShuffleStrategy;
-import java.util.List;
-import java.util.stream.Collectors;
+import domain.*;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -40,15 +37,15 @@ public class BlackjackController {
 
     private void dealCardsToPlayers(BlackjackGame blackjackGame) {
         while (blackjackGame.hasAnyPlayerToDeal()) {
-            Player playerToDeal = blackjackGame.getPlayerToDeal();
-            HitOrStand decision = HitOrStand.from(inputView.readHitOrStand(playerToDeal.name()));
+            Player playerToDecide = blackjackGame.getPlayerToDecide();
+            HitOrStand decision = HitOrStand.from(inputView.readHitOrStand(playerToDecide.name()));
             blackjackGame.hitOrStand(decision);
-            outputView.printCards(new HandDto(playerToDeal));
+            outputView.printCards(new HandDto(playerToDecide));
         }
     }
 
     private void dealCardsToDealer(BlackjackGame blackjackGame) {
-        while (blackjackGame.isDealerDrawable()) {
+        while (blackjackGame.shouldDealerDrawCard()) {
             blackjackGame.dealCardToDealer();
             outputView.printIfDealerReceivedCard();
         }
@@ -56,14 +53,14 @@ public class BlackjackController {
 
     private List<HandDto> toHandDtos(List<Participant> participants) {
         return participants.stream()
-                .map(HandDto::new)
-                .collect(Collectors.toUnmodifiableList());
+                           .map(HandDto::new)
+                           .collect(Collectors.toUnmodifiableList());
     }
 
     private List<HandScoreDto> toHandScoreDtos(List<Participant> participants) {
         return participants.stream()
-                .map(HandScoreDto::new)
-                .collect(Collectors.toUnmodifiableList());
+                           .map(HandScoreDto::new)
+                           .collect(Collectors.toUnmodifiableList());
     }
 }
 

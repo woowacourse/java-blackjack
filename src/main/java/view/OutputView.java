@@ -1,14 +1,13 @@
 package view;
 
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import controller.HandDto;
-import domain.GameOutcome;
 import controller.HandScoreDto;
+import domain.GameOutcome;
+
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.*;
 
 public class OutputView {
     private static final String NAME_CARD_DELIMITER = ":";
@@ -29,7 +28,8 @@ public class OutputView {
 
     private void printInitialCards(List<HandDto> handDtos) {
         handDtos.forEach(handDto -> {
-            if (handDto.name().equals("딜러")) {
+            if (handDto.name()
+                       .equals("딜러")) {
                 printFirstCard(handDto);
                 return;
             }
@@ -38,12 +38,12 @@ public class OutputView {
     }
 
     private void printFirstCard(HandDto handDto) {
-        System.out.println(generateCardsInfo(handDto.name(), handDto.cards().subList(0, 1)));
+        System.out.println(generateCardsInfo(handDto.name(), handDto.cards()
+                                                                    .subList(0, 1)));
     }
 
     public void printCards(HandDto handDto) {
-        System.out.println(generateCardsInfo(handDto.name(),
-                handDto.cards()));
+        System.out.println(generateCardsInfo(handDto.name(), handDto.cards()));
     }
 
     private String generateCardsInfo(String name, List<String> cards) {
@@ -77,8 +77,8 @@ public class OutputView {
 
     private Map<GameOutcome, Long> generateDealerOutcome(Map<String, GameOutcome> playerOutcomes) {
         return playerOutcomes.values()
-                .stream()
-                .collect(groupingBy(GameOutcome::oppositeOutcome, counting()));
+                             .stream()
+                             .collect(groupingBy(GameOutcome::oppositeOutcome, counting()));
     }
 
     private void printDealerOutcome(Map<GameOutcome, Long> dealerOutcome) {

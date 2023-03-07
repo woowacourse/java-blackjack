@@ -1,17 +1,23 @@
 package domain;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Players {
+import static java.util.stream.Collectors.*;
+
+public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶다.
     private final List<Player> players;
 
     private Players(List<Player> players) {
         validateNotEmpty(players);
         this.players = players;
+    }
+
+    public static Players from(List<String> names) {
+        return names.stream()
+                    .map(Player::new)
+                    .collect(collectingAndThen(toUnmodifiableList(), Players::new));
     }
 
     private void validateNotEmpty(List<Player> players) {
@@ -20,44 +26,38 @@ public class Players {
         }
     }
 
-    public static Players from(List<String> names) {
-        return names.stream()
-                .map(Player::new)
-                .collect(collectingAndThen(toUnmodifiableList(), Players::new));
-    }
-
     public void receiveCard(Deck deck) {
         players.forEach(player -> player.receiveCard(deck.draw()));
     }
 
-    public Player getCurrentDrawablePlayer() {
+    public Player getPlayerToDecide() {
+        Player player = players.stream()
+                               .filter(Player::isDrawable)
+                               .findFirst()
+                               .orElseThrow(() -> new IllegalStateException("카드를 받을 수 있는 플레이어가 없습니다."));
+        return player;
+    }
+
+    public boolean hasAnyPlayerToDeal() {
         return players.stream()
-                .filter(Player::isDrawable)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("카드를 받을 수 있는 플레이어가 없습니다."));
+                      .anyMatch(Player::isDrawable);
     }
 
-    public boolean hasDrawablePlayer() {
-            return players.stream()
-                    .anyMatch(Participant::isDrawable);
-    }
-
-    public void handOutCardToCurrentPlayer(Card card) {
-        getCurrentDrawablePlayer().receiveCard(card);
+    public void dealToCurrentPlayer(Card card) {
+        getPlayerToDecide().receiveCard(card);
     }
 
     public void standCurrentPlayer() {
-        getCurrentDrawablePlayer().stand();
+        getPlayerToDecide().stand();
+    }
+
+    public Map<String, GameOutcome> computeWinLoss(int dealerScore) {
+        return players.stream()
+                      .collect(toUnmodifiableMap(Player::name
+                              , player -> player.computeWinLoss(dealerScore)));
     }
 
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
-    }
-
-    public Map<String, GameOutcome> battleWith(Dealer dealer) {
-        int dealerScore = dealer.score();
-        return players.stream()
-                .collect(toUnmodifiableMap(Player::name
-                        , player-> GameOutcome.of(player.score(), dealerScore)));
     }
 }
