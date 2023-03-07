@@ -18,7 +18,7 @@ public class ParticipantName {
     }
 
     private void validateName(final String name) {
-        checkNull(name);
+        checkEmpty(name);
         checkName(name);
     }
 
@@ -29,7 +29,7 @@ public class ParticipantName {
         }
     }
 
-    private void checkNull(final String name) {
+    private void checkEmpty(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NULL_OR_BLANK_ERROR_MESSAGE);
         }
