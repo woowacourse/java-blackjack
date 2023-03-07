@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Result;
+import blackjack.domain.game.ResultType;
 
 import java.util.List;
 import java.util.Map;
@@ -65,21 +65,22 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(final List<Player> players, final Map<Result, Integer> dealerResult) {
-        for (final Result result : dealerResult.keySet()) {
-            generateDealerResult(dealerResult, result);
+    public static void printFinalResult(final Map<Player, ResultType> playerResult,
+                                        final Map<ResultType, Integer> dealerResult) {
+        for (final ResultType resultType : dealerResult.keySet()) {
+            generateDealerResult(dealerResult, resultType);
         }
         System.out.println(NEW_LINE + "## 최종 승패");
         System.out.println("딜러: " + finalResult);
-        for (final Player player : players) {
-            System.out.println(player.getName() + ": " + player.getResult().getValue());
+        for (final Player player : playerResult.keySet()) {
+            System.out.println(player.getName() + ": " + playerResult.get(player).getValue());
         }
     }
 
-    private static void generateDealerResult(final Map<Result, Integer> dealerResult, final Result result) {
-        if (dealerResult.get(result) != 0) {
-            finalResult.append(dealerResult.get(result))
-                    .append(result.getValue())
+    private static void generateDealerResult(final Map<ResultType, Integer> dealerResult, final ResultType resultType) {
+        if (dealerResult.get(resultType) != 0) {
+            finalResult.append(dealerResult.get(resultType))
+                    .append(resultType.getValue())
                     .append(" ");
         }
     }

@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Name {
 
-
     private static final String SPACE = " ";
     private static final int LENGTH_OF_MINIMUM_PLAYER_NAME = 1;
     private static final int LENGTH_OF_MAXIMUM_PLAYER_NAME = 5;

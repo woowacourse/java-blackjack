@@ -1,9 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.game;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShufflingMachine;
-import blackjack.domain.participant.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 
 public class BlackJackGame {
 
@@ -36,70 +42,60 @@ public class BlackJackGame {
         }
     }
 
-    public void findWinner() {
+    public Map<Player, ResultType> makePlayerResult() {
+        final Map<Player, ResultType> playerResult = new LinkedHashMap<>();
         final int sumOfDealer = dealer.calculateSumOfRank();
 
         for (final Player player : players.getPlayers()) {
             final int sumOfPlayer = player.calculateSumOfRank();
-            judgeResult(player, sumOfDealer, sumOfPlayer);
+            judgeResult(player, sumOfDealer, sumOfPlayer, playerResult);
         }
+
+        return playerResult;
     }
 
-    private void judgeResult(final Player player, final int sumOfDealer, final int sumOfPlayer) {
-        if (isBlackJackPlayer(player)) {
+    private void judgeResult(final Player player, final int sumOfDealer, final int sumOfPlayer,
+                             final Map<Player, ResultType> playerResult) {
+        if (isBlackJackPlayer(player, playerResult)) {
             return;
         }
-        if (isBustPlayer(player)) {
+        if (isBustPlayer(player, playerResult)) {
             return;
         }
-        judgeResultWhenPlayerIsNotBust(sumOfDealer, player, sumOfPlayer);
+        judgeResultWhenPlayerIsNotBust(sumOfDealer, player, sumOfPlayer, playerResult);
     }
 
-    private boolean isBlackJackPlayer(final Player player) {
+    private boolean isBlackJackPlayer(final Player player, final Map<Player, ResultType> playerResult) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
-            setUpResultWhenPush(player);
+            playerResult.put(player, ResultType.PUSH);
             return true;
         }
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            setUpResultWhenPlayerWin(player);
+            playerResult.put(player, ResultType.WIN);
             return true;
         }
         return false;
     }
 
-    private boolean isBustPlayer(final Player player) {
+    private boolean isBustPlayer(final Player player, final Map<Player, ResultType> playerResult) {
         if (player.isBust()) {
-            setUpResultWhenDealerWin(player);
+            playerResult.put(player, ResultType.LOSE);
             return true;
         }
         return false;
     }
 
-    private void judgeResultWhenPlayerIsNotBust(final int sumOfDealer, final Player player, final int sumOfPlayer) {
+    private void judgeResultWhenPlayerIsNotBust(final int sumOfDealer, final Player player, final int sumOfPlayer,
+                                                final Map<Player, ResultType> playerResult) {
         if (dealer.isBust() || sumOfPlayer > sumOfDealer) {
-            setUpResultWhenPlayerWin(player);
+            playerResult.put(player, ResultType.WIN);
             return;
         }
         if (dealer.isBlackJack() || sumOfPlayer < sumOfDealer) {
-            setUpResultWhenDealerWin(player);
+            playerResult.put(player, ResultType.LOSE);
             return;
         }
-        setUpResultWhenPush(player);
-    }
-
-    private void setUpResultWhenPush(final Player player) {
-        dealer.setResults(Result.PUSH);
-        player.setResult(Result.PUSH);
-    }
-
-    private void setUpResultWhenDealerWin(final Player player) {
-        dealer.setResults(Result.WIN);
-        player.setResult(Result.LOSE);
-    }
-
-    private void setUpResultWhenPlayerWin(final Player player) {
-        dealer.setResults(Result.LOSE);
-        player.setResult(Result.WIN);
+        playerResult.put(player, ResultType.PUSH);
     }
 
     public Dealer getDealer() {

@@ -1,14 +1,13 @@
-package blackjack.domain.participant;
+package blackjack.domain.game;
 
-public enum Result {
+public enum ResultType {
     WIN("승"),
     PUSH("무"),
-    LOSE("패"),
-    EMPTY("");
+    LOSE("패");
 
     private final String value;
 
-    Result(final String value) {
+    ResultType(final String value) {
         this.value = value;
     }
 

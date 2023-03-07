@@ -1,9 +1,12 @@
 package blackjack.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
-import blackjack.domain.BlackJackGame;
+import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.card.ShufflingMachine;
+import blackjack.domain.game.GameResult;
+import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -28,9 +31,10 @@ public class BlackJackGameController {
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
 
-        playBlackJackGame(blackJackGame, dealer, players);
+        final Map<Player, ResultType> playerResult = playBlackJackGame(blackJackGame, dealer, players);
+        final GameResult gameResult = new GameResult(playerResult);
 
-        printFinalResult(dealer, players);
+        printFinalResult(dealer, players, gameResult);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -51,19 +55,20 @@ public class BlackJackGameController {
         }
     }
 
-    private void playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer, final Players players) {
+    private Map<Player, ResultType> playBlackJackGame(final BlackJackGame blackJackGame, final Dealer dealer,
+                                                      final Players players) {
         blackJackGame.handOutCards(shufflingMachine);
 
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
         handOutCardToPlayers(blackJackGame, players);
         handOutCardToDealer(blackJackGame, dealer);
 
-        blackJackGame.findWinner();
+        return blackJackGame.makePlayerResult();
     }
 
-    private void printFinalResult(final Dealer dealer, final Players players) {
+    private void printFinalResult(final Dealer dealer, final Players players, final GameResult gameResult) {
         OutputView.printCardsWithSum(players.getPlayers(), dealer);
-        OutputView.printFinalResult(players.getPlayers(), dealer.getResults());
+        OutputView.printFinalResult(gameResult.getPlayerResult(), gameResult.findDealerResult());
     }
 
     private void handOutCardToPlayers(final BlackJackGame blackJackGame, final Players players) {
