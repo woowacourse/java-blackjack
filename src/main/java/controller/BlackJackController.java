@@ -19,9 +19,9 @@ public class BlackJackController {
         divideFirstCard(deck, participants);
 
         OutputView.printFirstCardStatus(participants);
+
         divideCard(deck, participants);
         divideCardForDealer(deck, dealer);
-
         OutputView.printScoreBoard(participants);
 
         OutputView.printFinalResult(participants);
@@ -43,14 +43,14 @@ public class BlackJackController {
     }
 
     private static void receiveCardForPlayer(final Deck deck, final Player player) {
-        while (canReceiveCard(player)) {
+        while (player.canReceiveCard() && isInputEqualsReceiveCardCommand(player)) {
             player.receiveCard(deck.pick());
             OutputView.printPlayerCardStatus(player);
         }
     }
 
-    private static boolean canReceiveCard(final Player player) {
-        return player.canReceiveCard() && isInputEqualsReceiveCardCommand(player);
+    private static boolean isInputEqualsReceiveCardCommand(final Player player) {
+        return RECEIVE_CARD_COMMAND.equals(InputView.getPlayerInputGetMoreCard(player.getName()));
     }
 
     private static void divideCardForDealer(final Deck deck, final Dealer dealer) {
@@ -58,9 +58,5 @@ public class BlackJackController {
             dealer.receiveCard(deck.pick());
             OutputView.printReceiveCardForDealer();
         }
-    }
-
-    private static boolean isInputEqualsReceiveCardCommand(final Player player) {
-        return RECEIVE_CARD_COMMAND.equals(InputView.getPlayerInputGetMoreCard(player.getName()));
     }
 }
