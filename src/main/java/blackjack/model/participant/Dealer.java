@@ -51,7 +51,7 @@ public class Dealer extends Participant {
         return ResultState.STAND;
     }
 
-    public Map<String, WinningResult> winningResults(Players players) {
+    public Map<String, WinningResult> participantWinningResults(Players players) {
         Map<String, WinningResult> playerResults = new HashMap<>();
         WinningResult totalResult = new WinningResult();
 

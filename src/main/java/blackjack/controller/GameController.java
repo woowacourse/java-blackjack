@@ -90,15 +90,13 @@ public class GameController {
     }
 
     private void printWinningResult(Players players, Dealer dealer) {
+        Map<String, WinningResult> results = dealer.participantWinningResults(players);
+
         outputView.printWinningResultMessage();
-        Map<String, WinningResult> results = dealer.winningResults(players);
-
-        WinningResult dealerResult = results.remove(dealer.getName());
-        outputView.printDealerWinningResult(dealerResult.getWin(), dealerResult.getDraw(), dealerResult.getLose());
-
+        outputView.printDealerWinningResult(results.remove(dealer.getName()).getResult());
         for (Map.Entry<String, WinningResult> playerResult : results.entrySet()) {
             WinningResult playerWinning = playerResult.getValue();
-            outputView.printPlayersWinningResult(playerResult.getKey(), playerWinning.getWin(), playerWinning.getDraw(), playerWinning.getLose());
+            outputView.printPlayersWinningResult(playerResult.getKey(), playerWinning.getResult());
         }
     }
 }

@@ -49,19 +49,19 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerWinningResult(int win, int draw, int lose) {
-        System.out.println("딜러: " + win + "승 " + draw + "무 " + lose + "패");
+    public void printDealerWinningResult(List<Integer> result) {
+        System.out.println("딜러: " + result.get(0) + "승 " + result.get(1) + "무 " + result.get(2) + "패");
     }
 
-    public void printPlayersWinningResult(String key, int win, int draw, int lose) {
-        System.out.println(key + ": " + winningResult(win, draw, lose));
+    public void printPlayersWinningResult(String key, List<Integer> result) {
+        System.out.println(key + ": " + winningResult(result));
     }
 
-    private String winningResult(int win, int draw, int lose) {
-        if (win > 0) {
+    private String winningResult(List<Integer> result) {
+        if (result.get(0) > 0) {
             return "승";
         }
-        if (draw > 0) {
+        if (result.get(1) > 0) {
             return "무";
         }
         return "패";
