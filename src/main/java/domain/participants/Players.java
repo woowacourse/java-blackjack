@@ -1,6 +1,7 @@
 package domain.participants;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -31,7 +32,8 @@ public class Players {
     }
 
     public List<Player> getPlayersWithOutDealer() {
-        return players.stream().filter(s -> !s.getName().equals(findDealer().getName())).collect(Collectors.toList());
+        return players.stream().filter(s -> !s.equals(findDealer()))
+                .collect(Collectors.toList());
     }
 
     public List<String> getPlayersName() {
