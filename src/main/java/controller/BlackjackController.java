@@ -1,16 +1,17 @@
 package controller;
 
-import domain.card.RandomShuffle;
 import domain.participant.Participant;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
 
+import java.util.Collections;
+
 public class BlackjackController {
 
     public void run() {
         try {
-            BlackjackService blackjackGame = BlackjackService.of(InputView.readPlayersName(), new RandomShuffle());
+            BlackjackService blackjackGame = BlackjackService.of(InputView.readPlayersName(), Collections::shuffle);
 
             prepare(blackjackGame);
             start(blackjackGame);

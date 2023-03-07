@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +24,7 @@ class PlayerTest {
         //when
 
         //then
-        assertDoesNotThrow(() -> Player.from(name, Hand.from(Deck.create(new RandomShuffle()))));
+        assertDoesNotThrow(() -> Player.from(name, Hand.from(Deck.create(Collections::shuffle))));
     }
 
     @ParameterizedTest
@@ -34,7 +35,7 @@ class PlayerTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Player.from(name, Hand.from(Deck.create(new RandomShuffle()))))
+        assertThatThrownBy(() -> Player.from(name, Hand.from(Deck.create(Collections::shuffle))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.");
     }
@@ -42,7 +43,7 @@ class PlayerTest {
     @Test
     void 카드를_뽑을_수_있다() {
         //given
-        Player player = Player.from("럿고", Hand.from(Deck.create(new RandomShuffle())));
+        Player player = Player.from("럿고", Hand.from(Deck.create(Collections::shuffle)));
         int beforeCount = player.getCards().size();
 
         //when
@@ -71,7 +72,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_이하라면_더_받을_수_있다() {
         //given
-        Player player = Player.from("연어", Hand.from(Deck.create(new RandomShuffle())));
+        Player player = Player.from("연어", Hand.from(Deck.create(notShuffle())));
 
         //when
 
@@ -82,7 +83,7 @@ class PlayerTest {
     @Test
     void 카드들의_합이_21_초과라면_더_받을_수_없다() {
         //given
-        Player player = Player.from("연어", Hand.from(Deck.create(new RandomShuffle())));
+        Player player = Player.from("연어", Hand.from(Deck.create(Collections::shuffle)));
         List<Card> cards = List.of(new Card(Rank.FIVE, Suit.CLUB),
                 new Card(Rank.TEN, Suit.HEART),
                 new Card(Rank.TEN, Suit.SPADE));
