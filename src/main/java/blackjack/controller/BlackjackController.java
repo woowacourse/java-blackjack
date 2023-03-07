@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
-import blackjack.util.CardPickerGenerator;
 import blackjack.util.RandomCardPickerGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,8 +18,8 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> playersName = inputPlayerNameCommand();
         Cards cards = Cards.create(new RandomCardPickerGenerator());
+        List<String> playersName = inputPlayerNameCommand();
         Participants participants = Participants.from(playersName);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
         gameSetting(participants, blackjackGame);
@@ -51,7 +50,7 @@ public class BlackjackController {
         for (Player player : players) {
             hitPlayerCard(player, cards);
         }
-        blackjackGame.dealerHitCard(cards);
+        blackjackGame.hitDealerCard(cards);
         outputView.printHitDealerCount(blackjackGame.findDealer());
     }
 

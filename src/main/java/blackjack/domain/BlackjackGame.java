@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.util.CardPickerGenerator;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,7 +33,7 @@ public class BlackjackGame {
         }
     }
 
-    public void dealerHitCard(final Cards cards) {
+    public void hitDealerCard(final Cards cards) {
         Dealer dealer = findDealer();
         while (dealer.decideHit()) {
             dealer.hit(cards.pick());
