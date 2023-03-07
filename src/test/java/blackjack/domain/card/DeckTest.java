@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,24 +16,21 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("카드를 포함하는지 확인")
-    void containsCard() {
-        //given
-        deck.addCard(new Card(Number.FIVE, Pattern.CLUB));
-
-        //expect
-        assertThat(deck.containsCard(new Card(Number.FIVE, Pattern.CLUB))).isTrue();
+    @DisplayName("Deck 생성 시 52장의 카드가 존재한다.")
+    void create() {
+        for (Number number : Number.values()) {
+            for (Suit suit : Suit.values()) {
+                Card card = Card.of(number, suit);
+                assertThat(deck.containsCard(card)).isTrue();
+            }
+        }
     }
 
     @Test
-    @DisplayName("뽑은 카드 추가시 예외 발생")
-    void addCard() {
-        // given
-        deck.addCard(new Card(Number.FIVE, Pattern.CLUB));
+    @DisplayName("무작위의 카드를 한 장 뽑은 후, deck에 존재하는지 확인한다.")
+    void drawACard() {
+        Card card = deck.drawACard();
 
-        // expect
-        assertThatIllegalArgumentException().isThrownBy(
-                () -> deck.addCard(new Card(Number.FIVE, Pattern.CLUB))
-        ).withMessage("[ERROR] 이미 뽑힌 카드입니다.");
+        assertThat(deck.containsCard(card)).isFalse();
     }
 }

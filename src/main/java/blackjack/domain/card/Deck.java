@@ -1,37 +1,34 @@
 package blackjack.domain.card;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
 
-    private final Set<Card> drawnCards = new HashSet<>();
+    private static final int FIRST_CARD = 0;
+    private static final int DECK_SIZE = 52;
 
-    public void addCard(Card card) {
-        validateContains(card);
-        drawnCards.add(card);
-    }
+    private static final List<Card> deck = new ArrayList<>(DECK_SIZE);
 
-    private void validateContains(final Card card) {
-        if (containsCard(card)) {
-            throw new IllegalArgumentException("[ERROR] 이미 뽑힌 카드입니다.");
+    public Deck() {
+        for (Number number : Number.values()) {
+            createCard(number);
         }
     }
 
-    public boolean containsCard(Card card) {
-        return drawnCards.contains(card);
+    private void createCard(final Number number) {
+        for (Suit suit : Suit.values()) {
+            deck.add(Card.of(number, suit));
+        }
     }
 
     public Card drawACard() {
-        Card card;
-        do {
-            Number number = Number.pickRandomNumber();
-            Pattern pattern = Pattern.pickRandomPattern();
+        Collections.shuffle(deck);
+        return deck.remove(FIRST_CARD);
+    }
 
-            card = new Card(number, pattern);
-        } while (containsCard(card));
-        addCard(card);
-
-        return card;
+    public boolean containsCard(Card card) {
+        return deck.contains(card);
     }
 }
