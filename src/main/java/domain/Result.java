@@ -30,7 +30,7 @@ public enum Result {
     }
 
     public BetAmount updateBalance(BetAmount betAmount, boolean isBlackjack) {
-        if (isBlackjack) {
+        if (isBlackjack && this == WIN) {
             return betAmount.applyRatio(this.ratio + BLACKJACK_BONUS_RATIO);
         }
 

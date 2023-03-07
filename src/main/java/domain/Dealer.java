@@ -27,6 +27,19 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
 
+        return competeByBlackjack(player);
+    }
+
+    private Result competeByBlackjack(Player player) {
+        if (this.isBlackjack() && player.isBlackjack()) {
+            return Result.DRAW;
+        }
+        if (this.isBlackjack()) {
+            return Result.WIN;
+        }
+        if (player.isBlackjack()) {
+            return Result.LOSE;
+        }
         return competeByScore(player.calculateScore());
     }
 
