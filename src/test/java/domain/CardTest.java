@@ -1,14 +1,11 @@
 package domain;
 
-import domain.Card;
-import domain.CardNumber;
-import domain.Symbol;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.assertj.core.api.Assertions.*;
 
 public class CardTest {
 
@@ -25,6 +22,6 @@ public class CardTest {
     @Test
     void 카드_정보_반환() {
         Card card = new Card(Symbol.HEART, CardNumber.ACE);
-        assertThat(card.getCardNumber()+card.getSymbol()).isEqualTo("A하트");
+        assertThat(card.getCardNumber() + card.getSymbol()).isEqualTo("A하트");
     }
 }

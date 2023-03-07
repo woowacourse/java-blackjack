@@ -27,7 +27,7 @@ public enum CardNumber {
         return number;
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 

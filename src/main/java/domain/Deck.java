@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
@@ -29,7 +27,7 @@ public class Deck {
 
     private static List<Card> generateCards(List<Symbol> symbols, List<CardNumber> cardNumbers) {
         List<Card> cards = new LinkedList<>();
-        if(Objects.isNull(symbols) || Objects.isNull(cardNumbers)) {
+        if (Objects.isNull(symbols) || Objects.isNull(cardNumbers)) {
             symbols = Arrays.stream(Symbol.values()).collect(Collectors.toList());
             cardNumbers = Arrays.stream(CardNumber.values()).collect(Collectors.toList());
         }

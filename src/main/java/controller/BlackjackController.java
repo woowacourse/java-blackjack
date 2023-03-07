@@ -43,7 +43,7 @@ public class BlackjackController {
 
     private void giveCardUntilImpossible(Player player) {
         String whetherDrawCard = HIT;
-        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player)).equals(HIT)){
+        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player)).equals(HIT)) {
             player.addCard(this.deck.draw());
             OutputView.printCardsStatusOfUser(player);
         }

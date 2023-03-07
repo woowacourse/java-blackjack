@@ -1,7 +1,5 @@
 package ui;
 
-import domain.Card;
-import domain.PlayerResultRepository;
 import domain.Result;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
@@ -25,7 +23,7 @@ public class OutputView {
 
     public static void printCardsStatusOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
-                .map((card)->{
+                .map((card) -> {
                     return card.getCardNumber() + card.getSymbol();
                 })
                 .collect(Collectors.toList());
@@ -35,7 +33,7 @@ public class OutputView {
 
     public static void printCardsStatusAndScoreOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
-                .map((card)->{
+                .map((card) -> {
                     return card.getCardNumber() + card.getSymbol();
                 })
                 .collect(Collectors.toList());
@@ -61,10 +59,11 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패", dealerWin, dealerLose);
-        if(dealerDraws > 0) {
+        if (dealerDraws > 0) {
             System.out.printf(" %d무", dealerDraws);
         }
         System.out.println();
-        repository.forEach((player, result) -> System.out.println(player.getNameValue()+ ": " + result.getKoreanText()));
+        repository.forEach(
+                (player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
     }
 }

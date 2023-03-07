@@ -1,9 +1,8 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Card;
-import domain.Deck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
