@@ -23,7 +23,7 @@ class GameTest {
     void init() {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            players.add(new Player(new Name("newName")));
+            players.add(new Player(new Name("newName" + i)));
         }
 
         gamePlayer = new GamePlayer(new Players(players), new Dealer());

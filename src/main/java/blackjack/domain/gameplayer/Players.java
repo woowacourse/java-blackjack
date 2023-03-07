@@ -11,6 +11,7 @@ public class Players implements Iterable<Player> {
 
     public Players(List<Player> players) {
         validatePlayersCount(players);
+        validateDuplicatedPlayerNames(players);
         this.players = players;
     }
 
@@ -18,6 +19,23 @@ public class Players implements Iterable<Player> {
         if (players.isEmpty() || players.size() > 6) {
             throw new IllegalArgumentException("게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.");
         }
+    }
+
+    private void validateDuplicatedPlayerNames(List<Player> players) {
+        if (hasDuplicatedNames(players)) {
+            throw new IllegalArgumentException("게임을 진행하는 플레이어의 이름은 중복이 없어야합니다.");
+        }
+    }
+
+    private boolean hasDuplicatedNames(List<Player> players) {
+        return getDistinctNameCount(players) != players.size();
+    }
+
+    private long getDistinctNameCount(List<Player> players) {
+        return players.stream()
+                .map(player -> player.showName())
+                .distinct()
+                .count();
     }
 
     public boolean getPlayerIsHit(int i) {
