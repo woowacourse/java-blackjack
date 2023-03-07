@@ -6,6 +6,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class BlackJackGame {
 
@@ -29,6 +30,13 @@ public class BlackJackGame {
             return;
         }
         participant.drawCard(deck.draw());
+    }
+
+    public Player findDrawablePlayer() {
+        return players().stream()
+                .filter(Player::isDrawable)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("카드를 받을 수 있는 플레이어가 존재하지 않습니다."));
     }
 
     public boolean existDrawablePlayer() {
