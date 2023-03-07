@@ -11,6 +11,7 @@ import java.util.Map;
 public class BlackJackController {
 
     private static final int INITIAL_CARD_COUNT = 2;
+    private static final String HIT_RESPONSE = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -96,7 +97,7 @@ public class BlackJackController {
     }
 
     private boolean isHit(String drawingInput) {
-        return drawingInput.equals("y");
+        return drawingInput.equals(HIT_RESPONSE);
     }
 
     private void dealerContinueDrawingCards(final Deck deck, final Participants participants) {
