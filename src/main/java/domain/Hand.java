@@ -62,11 +62,25 @@ public class Hand {
         return score() > 21;
     }
 
-    public boolean hasSameScoreWith(Hand other) {
+    public boolean isDrawAgainst(Hand other) {
+        if (this.isBust() && other.isBust()) {
+            return true;
+        }
+        return this.hasSameScoreWith(other);
+    }
+
+    public boolean isWinnerAgainst(Hand other) {
+        if (this.isBust()) {
+            return false;
+        }
+        return other.isBust() || this.hasScoreGreaterThan(other);
+    }
+
+    private boolean hasSameScoreWith(Hand other) {
         return score() == other.score();
     }
 
-    public boolean hasScoreGreaterThan(Hand other) {
+    private boolean hasScoreGreaterThan(Hand other) {
         return score() > other.score();
     }
 }

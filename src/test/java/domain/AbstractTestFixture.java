@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractTestFixture {
 
-    List<Card> createCards(String... letters) {
+    static List<Card> createCards(String... letters) {
         return Arrays.stream(letters)
-                .map(this::letterFrom)
-                .map(this::createCard)
+                .map(AbstractTestFixture::letterFrom)
+                .map(AbstractTestFixture::createCard)
                 .collect(Collectors.toList());
     }
 
-    Card createCard(Letter letter) {
+    static Card createCard(Letter letter) {
         return new Card(SPADE, letter);
     }
 
-    Letter letterFrom(String letter) {
+    static Letter letterFrom(String letter) {
         return Arrays.stream(Letter.values())
                 .filter(letterEnum -> letterEnum.getLetter().equals(letter))
                 .findFirst()

@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -33,44 +34,66 @@ public class HandTest extends AbstractTestFixture {
 
     static Stream<Arguments> test_score_with_a() {
         return Stream.of(
-                Arguments.of(21, new String[] {"J", "10", "A"}),
-                Arguments.of(21, new String[] {"7", "3", "A"}),
-                Arguments.of(13, new String[] {"A", "A", "A"}),
-                Arguments.of(21, new String[] {"A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"})
+                Arguments.of(21, createCards("J", "10", "A")),
+                Arguments.of(21, createCards("7", "3", "A")),
+                Arguments.of(13, createCards("A", "A", "A")),
+                Arguments.of(21, createCards("A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"))
         );
     }
 
     @ParameterizedTest(name = "A는 플레이어에게 유리하게 계산한다")
     @MethodSource
-    void test_score_with_a(int score, String[] letters) {
-        var hand = new Hand(createCards(letters));
+    void test_score_with_a(int score, List<Card> cards) {
+        var hand = new Hand(cards);
 
         assertThat(hand.score()).isEqualTo(score);
     }
 
-    @ParameterizedTest(name = "패의 점수가 같은지 알 수 있다.")
-    @CsvSource({"K,K,true", "K,A,false"})
-    void test_score_same(String letter, String otherLetter, boolean isScoreSame) {
-        var hand = new Hand(createCards(letter));
-        var otherHand = new Hand(createCards(otherLetter));
-
-        assertThat(hand.hasSameScoreWith(otherHand)).isEqualTo(isScoreSame);
-    }
-
-    @ParameterizedTest(name = "패의 점수가 더 큰지 알 수 있다.")
-    @CsvSource({"K,K,false", "K,A,false", "A,K,true"})
-    void test_score_greater(String letter, String otherLetter, boolean isScoreSame) {
-        var hand = new Hand(createCards(letter));
-        var otherHand = new Hand(createCards(otherLetter));
-
-        assertThat(hand.hasScoreGreaterThan(otherHand)).isEqualTo(isScoreSame);
-    }
-
     @ParameterizedTest(name = "패가 Bust인지 알 수 있다.")
     @CsvSource({"K,true", "A,false"})
-    void test_is_bust(String additionalLetter, boolean isScoreSame) {
+    void test_is_bust(String additionalLetter, boolean isBust) {
         var hand = new Hand(createCards("K", "K", additionalLetter));
 
-        assertThat(hand.isBust()).isEqualTo(isScoreSame);
+        assertThat(hand.isBust()).isEqualTo(isBust);
+    }
+
+    static Stream<Arguments> test_is_winner_against_other() {
+        return Stream.of(
+                Arguments.of(createCards("K", "10", "A"), createCards("J", "10"), true),
+                Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "Q"), true),
+                Arguments.of(createCards("K", "10"), createCards("K", "10", "A"), false),
+                Arguments.of(createCards("K", "10", "K"), createCards("K", "10", "Q"), false),
+                Arguments.of(createCards("K", "10", "Q"), createCards("K", "10", "A"), false),
+                Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "A"), false)
+        );
+    }
+
+    @ParameterizedTest(name = "다른 패와 비교해 승자인지 알 수 있다")
+    @MethodSource
+    void test_is_winner_against_other(List<Card> cards, List<Card> otherCards, boolean isWinner) {
+        var hand = new Hand(cards);
+        var other = new Hand(otherCards);
+
+        assertThat(hand.isWinnerAgainst(other)).isEqualTo(isWinner);
+    }
+
+    static Stream<Arguments> test_is_draw_against_other() {
+        return Stream.of(
+                Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "A"), true),
+                Arguments.of(createCards("K", "10", "K"), createCards("K", "10", "Q"), true),
+                Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "Q"), false),
+                Arguments.of(createCards("K", "10", "Q"), createCards("K", "10", "A"), false),
+                Arguments.of(createCards("K", "10", "A"), createCards("J", "10"), false),
+                Arguments.of(createCards("K", "10"), createCards("K", "10", "A"), false)
+        );
+    }
+
+    @ParameterizedTest(name = "다른 패와 비교해 무승부인지 알 수 있다")
+    @MethodSource
+    void test_is_draw_against_other(List<Card> cards, List<Card> otherCards, boolean isDraw) {
+        var hand = new Hand(cards);
+        var other = new Hand(otherCards);
+
+        assertThat(hand.isDrawAgainst(other)).isEqualTo(isDraw);
     }
 }
