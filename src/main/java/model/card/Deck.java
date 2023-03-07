@@ -1,6 +1,7 @@
 package model.card;
 
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Stream;
@@ -16,10 +17,10 @@ public class Deck {
         this.cards = new ArrayDeque<>(cards);
     }
 
-    public static Deck create(final ShuffleStrategy shuffleStrategy) {
+    public static Deck create() {
         final List<Card> cards = createCards();
 
-        shuffleStrategy.shuffle(cards);
+        Collections.shuffle(cards);
 
         return new Deck(cards);
     }
@@ -36,9 +37,6 @@ public class Deck {
     }
 
     public Card pick() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 덱이 비었습니다.");
-        }
         return cards.pop();
     }
 }

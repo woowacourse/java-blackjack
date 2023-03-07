@@ -35,7 +35,7 @@ class DealerTest {
     @Test
     void receiveInitialCards() {
         // given
-        dealer.receiveInitialCards(new Deck());
+        dealer.receiveInitialCards(Deck.create());
 
         // when, then
         assertThat(dealer.getHand().getCards()).hasSize(2);

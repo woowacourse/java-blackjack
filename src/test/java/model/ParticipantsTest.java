@@ -104,7 +104,7 @@ class ParticipantsTest {
     @Test
     void receiveInitialCards() {
         // given
-        participants.receiveInitialCards(new Deck());
+        participants.receiveInitialCards(Deck.create());
 
         // when, then
         assertAll(
