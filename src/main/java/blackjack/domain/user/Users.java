@@ -58,4 +58,8 @@ public class Users {
     public Map<String, WinningStatus> getWinningResult() {
         return players.getWinningResult(dealer);
     }
+
+    public boolean isPlayerBust(final String name) {
+        return players.isPlayerBust(name);
+    }
 }

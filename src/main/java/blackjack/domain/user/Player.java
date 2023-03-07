@@ -14,4 +14,8 @@ public class Player extends User {
     public CardGroup getFirstOpenCardGroup() {
         return getCardGroups().getSubCardGroup(FIRST_OPEN_CARD_COUNT);
     }
+
+    public boolean isSameName(final String name) {
+        return getName().equals(name);
+    }
 }

@@ -88,7 +88,7 @@ class BlackJackGameTest {
     void isBustTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new RandomDeckGenerator());
 
-        boolean isBust = blackJackGame.isBust("필립");
+        boolean isBust = blackJackGame.isPlayerBust("필립");
 
         assertThat(isBust).isFalse();
     }

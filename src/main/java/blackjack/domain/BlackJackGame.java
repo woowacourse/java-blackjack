@@ -33,8 +33,8 @@ public class BlackJackGame {
         return users.getPlayerNames();
     }
 
-    public boolean isBust(final String name) {
-        return users.getUser(name).getScore().isBust();
+    public boolean isPlayerBust(final String name) {
+        return users.isPlayerBust(name);
     }
 
     public int playDealerTurn() {

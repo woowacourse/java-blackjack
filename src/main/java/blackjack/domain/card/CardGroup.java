@@ -27,6 +27,10 @@ public class CardGroup {
         return Score.calculateScore(getTotalValue(), getAceCount());
     }
 
+    public boolean isBustScore() {
+        return getScore().isBust();
+    }
+
     private int getTotalValue() {
         return cards.stream()
                 .map(Card::getNumber)

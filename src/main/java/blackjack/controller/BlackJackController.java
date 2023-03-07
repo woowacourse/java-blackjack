@@ -58,7 +58,7 @@ public class BlackJackController {
     //TODO : indent 줄이기 + 메서드 라인 줄이기
     private DrawInput isContinuous(final String playerName, final BlackJackGame blackJackGame) {
         try {
-            if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isBust(playerName)) {
+            if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isPlayerBust(playerName)) {
                 return DrawInput.STAY;
             }
             outputView.printDrawCardRequestMessage(playerName);
