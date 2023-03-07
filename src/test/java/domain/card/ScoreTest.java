@@ -38,4 +38,19 @@ class ScoreTest {
         assertThat(actual)
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("subtract()는 호출하면, 인자로 넘긴 점수와 뺀 값을 가진 Score를 반환한다.")
+    void subtract_givenScore_thenReturnSubtractedScore() {
+        // given
+        Score otherScore = Score.create(3);
+        Score expected = Score.create(7);
+
+        // when
+        Score actual = score.subtract(otherScore);
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
 }
