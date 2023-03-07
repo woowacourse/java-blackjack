@@ -49,12 +49,12 @@ public final class MainController {
     }
 
     private void distributeCardToPlayer(final BlackJackGame blackJackGame, final Player player) {
-        boolean isRepeat = true;
+        boolean isRepeat = player.isHittable();
 
         while (isRepeat) {
             PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
             distributeByCommand(blackJackGame, player, command);
-            isRepeat = player.canReceive() && command.isHit();
+            isRepeat = player.isHittable() && command.isHit();
         }
     }
 
@@ -70,7 +70,7 @@ public final class MainController {
     private void distributeCardToDealer(final BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
 
-        while (dealer.isFillable()) {
+        while (dealer.isHittable()) {
             outputView.printFillDealerCards();
 
             blackJackGame.giveCardTo(dealer);

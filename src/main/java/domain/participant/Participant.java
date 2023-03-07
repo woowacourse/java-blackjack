@@ -4,7 +4,7 @@ import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     private final Name name;
     private final List<Card> cards;
@@ -17,6 +17,8 @@ public class Participant {
     public void receiveCard(Card card) {
         this.cards.add(card);
     }
+
+    abstract boolean isHittable();
 
     public int calculateScore() {
         boolean hasAce = hasAce();

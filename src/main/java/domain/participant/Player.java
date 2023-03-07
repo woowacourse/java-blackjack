@@ -11,7 +11,8 @@ public final class Player extends Participant {
         super(name, cards);
     }
 
-    public boolean canReceive() {
+    @Override
+    public boolean isHittable() {
         return this.calculateScore() < BUST_BOUNDARY_EXCLUSIVE;
     }
 }

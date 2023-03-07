@@ -12,7 +12,8 @@ public final class Dealer extends Participant {
         super(DEFAULT_DEALER, cards);
     }
 
-    public boolean isFillable() {
+    @Override
+    public boolean isHittable() {
         return calculateScore() <= FILL_BOUNDARY_INCLUSIVE;
     }
 }

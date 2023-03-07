@@ -20,7 +20,12 @@ class ParticipantTest {
         List<Card> initialCards = new ArrayList<>(
                 List.of(new Card(Value.TWO, Shape.SPADE), new Card(Value.FOUR, Shape.HEART)));
         Name mango = new Name("망고");
-        participant = new Participant(mango, initialCards);
+        participant = new Participant(mango, initialCards) {
+            @Override
+            boolean isHittable() {
+                return true;
+            }
+        };
     }
 
     @DisplayName("Ace 카드가 없는 경우, 카드의 숫자를 더해 계산할 수 있다.")
