@@ -2,11 +2,11 @@ package blackjack.controller;
 
 import static blackjack.controller.Repeater.repeatUntilNoException;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.DeckFactory;
-import blackjack.domain.participants.GameParticipants;
+import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.GameParticipants;
+import blackjack.domain.game.ResultOfGame;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.ResultOfGame;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

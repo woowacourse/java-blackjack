@@ -3,6 +3,8 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
+
+import blackjack.domain.game.ResultType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.ResultType;
+import blackjack.domain.game.ResultType;
 
 import java.util.Arrays;
 

@@ -1,6 +1,6 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.ResultType;
+import blackjack.domain.game.ResultType;
 
 import java.util.Map;
 import java.util.stream.Collectors;

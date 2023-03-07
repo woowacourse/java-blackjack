@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.game;
+
+import blackjack.domain.card.Card;
 
 import java.util.Queue;
 
@@ -8,7 +10,7 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    Deck(final Queue<Card> cards) {
+    public Deck(final Queue<Card> cards) {
         validateCards(cards);
         this.cards = cards;
     }

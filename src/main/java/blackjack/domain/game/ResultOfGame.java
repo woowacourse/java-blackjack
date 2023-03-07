@@ -1,6 +1,4 @@
-package blackjack.domain.participants;
-
-import blackjack.domain.ResultType;
+package blackjack.domain.game;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Symbol;
+import blackjack.domain.card.Symbol;
 
 import java.util.Arrays;
 

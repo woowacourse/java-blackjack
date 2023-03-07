@@ -1,12 +1,10 @@
-package blackjack.domain;
-
-import static blackjack.domain.BlackJackConstant.BLACKJACK;
+package blackjack.domain.participants;
 
 public class Player extends Participant {
 
     private final Name name;
 
-    protected Player(final String name) {
+    public Player(final String name) {
         this.name = new Name(name);
     }
 

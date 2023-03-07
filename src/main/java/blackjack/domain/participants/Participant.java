@@ -1,13 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.participants;
+
+import blackjack.domain.card.Card;
 
 import java.util.List;
 
 public abstract class Participant {
 
+    protected static final int BLACKJACK = 21;
     private final CardPocket cardPocket;
 
     protected Participant() {
-        cardPocket = CardPocket.empty();
+        cardPocket = new CardPocket();
     }
 
     public void drawCard(final Card card) {
@@ -15,11 +18,15 @@ public abstract class Participant {
     }
 
     public int currentScore() {
-        return cardPocket.calculateScore();
+        return cardPocket.getScore();
     }
 
     public List<Card> getCards() {
-        return cardPocket.getCards();
+        return cardPocket.getPossessedCards();
+    }
+
+    public boolean isBusted() {
+        return currentScore() > BLACKJACK;
     }
 
     public abstract boolean isDrawable();

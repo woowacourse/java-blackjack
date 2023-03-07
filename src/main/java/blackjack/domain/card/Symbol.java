@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 /**
  * 카드의 점수에 대한 정보를 담고 있는 클래스 입니다
  */
+
 public enum Symbol {
     ACE(1),
     TWO(2),
@@ -27,4 +28,5 @@ public enum Symbol {
     public int getScore() {
         return score;
     }
+
 }
