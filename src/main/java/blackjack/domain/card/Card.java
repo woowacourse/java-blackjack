@@ -12,8 +12,8 @@ public final class Card {
         this.suit = suit;
     }
 
-    public int convertToScore() {
-        return Number.getScoreOf(number);
+    public int score() {
+        return Number.scoreOf(number);
     }
 
     public boolean isAce() {

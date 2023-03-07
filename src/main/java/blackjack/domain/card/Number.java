@@ -27,11 +27,11 @@ public enum Number {
         this.state = state;
     }
 
-    public static int getScoreOf(final Number number) {
+    public static int scoreOf(final Number number) {
         return number.score;
     }
 
-    public static Number pickRandomNumber() {
+    public static Number pickRandom() {
         List<Number> numbers = Arrays.asList(Number.values());
         Collections.shuffle(numbers);
 
