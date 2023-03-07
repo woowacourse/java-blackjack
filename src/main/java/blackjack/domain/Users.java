@@ -51,8 +51,8 @@ public class Users {
         return status;
     }
 
-    public boolean isDealerOverDrawLimit() {
-        return BlackJackRule.getScore(getDealer()) > DEALER_DRAW_LIMIT;
+    public boolean isDealerUnderDrawLimit() {
+        return dealer.isUnderDrawLimit();
     }
 
     private User getDealer() {

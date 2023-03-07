@@ -9,8 +9,8 @@ public class BlackJackRule {
     }
 
     public static int getScore(final User user) {
-        int score = user.getScore();
-        int aceCount = user.getAceCount();
+        int score = user.getScore().getValue();
+        int aceCount = 1;
 
         while (score > BLACK_JACK_NUMBER && aceCount > 0) {
             score += ACE_OFFSET;

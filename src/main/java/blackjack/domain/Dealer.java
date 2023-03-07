@@ -4,6 +4,7 @@ public class Dealer extends User {
 
     public static final String DEALER_NAME = "딜러";
     private static final int FIRST_OPEN_CARD_COUNT = 1;
+    private static final int DRAW_LIMIT_SCORE = 16;
 
     public Dealer(CardGroup initialGroup) {
         super(DEALER_NAME, initialGroup);
@@ -38,5 +39,9 @@ public class Dealer extends User {
             return WinningStatus.TIE;
         }
         return WinningStatus.WIN;
+    }
+
+    public boolean isUnderDrawLimit() {
+        return !getScore().isBigger(new Score(DRAW_LIMIT_SCORE));
     }
 }

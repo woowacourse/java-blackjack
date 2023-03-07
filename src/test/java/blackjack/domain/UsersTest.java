@@ -100,7 +100,7 @@ class UsersTest {
     void isDealerOverDrawLimitTest() {
         final Users users = new Users(List.of("필립"), new Deck(new TestDeckGenerator(testCards)));
 
-        boolean dealerOverDrawLimit = users.isDealerOverDrawLimit();
+        boolean dealerOverDrawLimit = users.isDealerUnderDrawLimit();
 
         assertThat(dealerOverDrawLimit).isTrue();
     }

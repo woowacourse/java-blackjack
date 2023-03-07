@@ -29,12 +29,12 @@ public class BlackJackGame {
     }
 
     public boolean isBust(final String name) {
-        return BlackJackRule.isBust(users.getUser(name));
+        return users.getUser(name).getScore().isBust();
     }
 
     public int playDealerTurn() {
         int drawCount = 0;
-        while (!users.isDealerOverDrawLimit()) {
+        while (users.isDealerUnderDrawLimit()) {
             users.drawDealer(deck);
             drawCount++;
         }
@@ -61,6 +61,6 @@ public class BlackJackGame {
     }
 
     public boolean isBlackJackScore(final String name) {
-        return BlackJackRule.isBlackJackScore(users.getUser(name));
+        return users.getUser(name).getScore().isBlackJackScore();
     }
 }

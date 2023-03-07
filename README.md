@@ -40,7 +40,7 @@
     - [ ] user를 get하는 메서드를 지우고, 로직을 실행하도록 수정하기
     - [x] Car가 Ace인지 물어보는 메서드 만들기
 - [ ] playDealerTurn이 실행횟수를 반환하는 것을 분리하기
-- [ ] blackJackRule과 같은 유틸 클래스 없애기
+- [x] blackJackRule과 같은 유틸 클래스 없애기
 - [x] 플레이어의 수에 제한을 둬서 NPE 방지하기
 - [x] 출력할 때 딜러 먼저 나오게 수정하기
 - [ ] DrawInput의 위치 고민하기(패키지)
