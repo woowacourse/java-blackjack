@@ -31,7 +31,7 @@ public class Deck {
 
     private void createCard(final Number number) {
         for (Suit suit : Suit.values()) {
-            deck.add(Card.of(number, suit));
+            deck.add(new Card(number, suit));
         }
     }
 
