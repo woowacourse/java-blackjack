@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.card.Cards;
-import domain.card.shuffler.FixedCardsShuffler;
-import domain.participant.Participants;
+import domain.shuffler.FixedCardsShuffler;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

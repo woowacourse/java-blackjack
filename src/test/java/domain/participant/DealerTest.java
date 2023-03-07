@@ -6,7 +6,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Shape;
 import domain.card.Value;
-import domain.card.shuffler.FixedCardsShuffler;
+import domain.shuffler.FixedCardsShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

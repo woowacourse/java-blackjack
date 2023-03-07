@@ -6,7 +6,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Shape;
 import domain.card.Value;
-import domain.card.shuffler.FixedCardsShuffler;
+import domain.shuffler.FixedCardsShuffler;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.Arrays;

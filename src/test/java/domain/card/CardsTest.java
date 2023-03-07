@@ -3,7 +3,7 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.shuffler.CardsShuffler;
-import domain.card.shuffler.FixedCardsShuffler;
+import domain.shuffler.FixedCardsShuffler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
