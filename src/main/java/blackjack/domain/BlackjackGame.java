@@ -25,12 +25,12 @@ public class BlackjackGame {
 
     public void giveInitializedCards() {
         for (Player player : players.getPlayers()) {
-            giveFirstCard(player);
+            giveInitialCards(player);
         }
-        giveFirstCard(dealer);
+        giveInitialCards(dealer);
     }
 
-    private void giveFirstCard(User user) {
+    private void giveInitialCards(User user) {
         Deck deck = Deck.getInstance();
         for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIALIZED_CARDS; cardIndex++) {
             user.updateCardScore(deck.giveFirstCard());
