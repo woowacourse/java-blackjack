@@ -34,11 +34,15 @@ public class Hand {
     }
 
     public int calculateScore() {
-        Score score = Score.of(cards.stream().mapToInt(Card::getScore).toArray());
-        if (containsAce() && score.getValue() <= 11) {
-            return score.plus(10).getValue();
+        Score score = Score.of(mapCardsToNumbers());
+        if (containsAce() && score.getValue() > 21) {
+            return score.minus(10).getValue();
         }
         return score.getValue();
+    }
+
+    private int[] mapCardsToNumbers() {
+        return cards.stream().mapToInt(Card::getScore).toArray();
     }
 
     private boolean containsAce() {

@@ -30,7 +30,7 @@ class CardTest {
     void getScore() {
         Card card = new Card(ACE, HEART);
         int score = card.getScore();
-        assertThat(score).isEqualTo(1);
+        assertThat(score).isEqualTo(11);
     }
 
     @Test

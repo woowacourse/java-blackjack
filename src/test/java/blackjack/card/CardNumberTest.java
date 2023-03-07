@@ -23,9 +23,9 @@ class CardNumberTest {
     }
 
     @Test
-    @DisplayName("ACE의 value 1을 가져올 수 있다.")
+    @DisplayName("ACE의 value 11을 가져올 수 있다.")
     void getValueOne() {
-        assertThat(ACE.getValue()).isEqualTo(1);
+        assertThat(ACE.getValue()).isEqualTo(11);
     }
 
     @Test

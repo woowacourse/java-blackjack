@@ -60,4 +60,14 @@ class ScoreTest {
         //then
         assertDoesNotThrow(() -> Score.of(1, 2, 3, 4, 5));
     }
+
+    @DisplayName("값을 뺄 수 있다.")
+    @Test
+    void minus() {
+        //given
+        Score score = new Score(5);
+        //when
+        //then
+        assertThat(score.minus(1)).isEqualTo(new Score(4));
+    }
 }
