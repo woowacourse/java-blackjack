@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.Rank;
 import card.Suit;
-import player.Hand;
+import participants.Hand;
 
 class HandTest {
     Hand hand;

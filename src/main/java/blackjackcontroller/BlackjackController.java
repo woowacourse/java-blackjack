@@ -10,9 +10,9 @@ import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
 import dto.PlayerResultDto;
 import dto.PlayerWinningDto;
-import player.Dealer;
-import player.Name;
-import player.Players;
+import participants.Dealer;
+import participants.Name;
+import participants.Players;
 import view.InputView;
 import view.OutputView;
 

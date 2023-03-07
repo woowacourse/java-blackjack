@@ -1,8 +1,8 @@
 package dto;
 
 import blackjackgame.Result;
-import player.Name;
-import player.Player;
+import participants.Name;
+import participants.Player;
 
 public class PlayerWinningDto {
     private final Name name;

@@ -1,4 +1,4 @@
-package player;
+package participants;
 
 public class Name {
     public static final int MIN_NAME_LENGTH = 1;

@@ -23,11 +23,11 @@ import card.Suit;
 import deck.CardsGenerator;
 import deck.Deck;
 import dto.DealerWinningDto;
-import player.Count;
-import player.Dealer;
-import player.Name;
-import player.Player;
-import player.Players;
+import participants.Count;
+import participants.Dealer;
+import participants.Name;
+import participants.Player;
+import participants.Players;
 
 class BlackjackGameTest {
     BlackjackGame blackjackGame;

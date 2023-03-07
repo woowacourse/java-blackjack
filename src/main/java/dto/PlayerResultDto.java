@@ -3,8 +3,8 @@ package dto;
 import java.util.List;
 
 import card.Card;
-import player.Name;
-import player.Participant;
+import participants.Name;
+import participants.Participant;
 
 public class PlayerResultDto {
     private final Name name;

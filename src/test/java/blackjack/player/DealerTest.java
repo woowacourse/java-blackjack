@@ -16,8 +16,8 @@ import blackjackgame.Result;
 import card.Card;
 import card.Rank;
 import card.Suit;
-import player.Count;
-import player.Dealer;
+import participants.Count;
+import participants.Dealer;
 
 class DealerTest {
     @Test

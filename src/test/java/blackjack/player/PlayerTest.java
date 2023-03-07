@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.Rank;
 import card.Suit;
-import player.Name;
-import player.Player;
+import participants.Name;
+import participants.Player;
 
 class PlayerTest {
     @Test

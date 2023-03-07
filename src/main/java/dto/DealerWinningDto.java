@@ -3,9 +3,9 @@ package dto;
 import java.util.Map;
 
 import blackjackgame.Result;
-import player.Count;
-import player.Dealer;
-import player.Name;
+import participants.Count;
+import participants.Dealer;
+import participants.Name;
 
 public class DealerWinningDto {
     private final Name name;

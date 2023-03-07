@@ -1,4 +1,4 @@
-package player;
+package participants;
 
 public class Count {
     private int count = 0;

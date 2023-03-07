@@ -16,10 +16,10 @@ import card.Card;
 import card.Rank;
 import card.Suit;
 import dto.PlayerWinningDto;
-import player.Dealer;
-import player.Name;
-import player.Player;
-import player.Players;
+import participants.Dealer;
+import participants.Name;
+import participants.Player;
+import participants.Players;
 
 class PlayersTest {
     @DisplayName("생성할 수 있다")

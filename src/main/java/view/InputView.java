@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
-import player.Name;
+import participants.Name;
 
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);

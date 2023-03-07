@@ -1,8 +1,8 @@
 package dto;
 
 import card.Card;
-import player.Dealer;
-import player.Name;
+import participants.Dealer;
+import participants.Name;
 
 public class DealerFirstOpenDto {
     private final Name name;

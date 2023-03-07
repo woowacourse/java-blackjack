@@ -1,4 +1,4 @@
-package player;
+package participants;
 
 import static blackjackgame.Result.LOSE;
 import static blackjackgame.Result.TIE;

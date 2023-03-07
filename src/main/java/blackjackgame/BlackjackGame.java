@@ -10,10 +10,10 @@ import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
 import dto.PlayerResultDto;
 import dto.PlayerWinningDto;
-import player.Dealer;
-import player.Name;
-import player.Player;
-import player.Players;
+import participants.Dealer;
+import participants.Name;
+import participants.Player;
+import participants.Players;
 
 public class BlackjackGame {
     private static final int FIRST_DRAW_COUNT = 2;

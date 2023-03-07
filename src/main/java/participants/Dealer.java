@@ -1,4 +1,4 @@
-package player;
+package participants;
 
 import java.util.Map;
 
