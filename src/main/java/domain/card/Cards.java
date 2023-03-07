@@ -5,7 +5,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public final class Cards {
 
@@ -35,10 +34,6 @@ public final class Cards {
     }
 
     public Card getCard() {
-        try {
-            return cards.pop();
-        } catch (NoSuchElementException exception) {
-            throw new NoSuchElementException();
-        }
+        return cards.pop();
     }
 }
