@@ -28,9 +28,9 @@ public class CardDistributorTest {
     void distributeTwoCardWhenStartGame() {
         CardDistributor cardDistributor = new CardDistributor(InitialCardMaker.generate());
 
-        Cards cards = cardDistributor.distributeInitialCard();
+        Hand hand = cardDistributor.distributeInitialCard();
 
-        assertThat(cards.getSize()).isEqualTo(2);
+        assertThat(hand.getSize()).isEqualTo(2);
     }
 
     @Test

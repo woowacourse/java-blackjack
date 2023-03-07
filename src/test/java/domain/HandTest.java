@@ -9,16 +9,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardsTest {
+public class HandTest {
 
     @Test
-    @DisplayName("Cards 를 생성한다.")
+    @DisplayName("Hand 를 생성한다.")
     void createCardsSuccess() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
 
-        Cards cards = new Cards(initialCards);
+        Hand hand = new Hand(initialCards);
 
-        assertThat(cards.getSize()).isEqualTo(2);
+        assertThat(hand.getSize()).isEqualTo(2);
     }
 
     @Test
@@ -26,9 +26,9 @@ public class CardsTest {
     void calculateCardScorePlayer() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
 
-        Cards cards = new Cards(initialCards);
+        Hand hand = new Hand(initialCards);
 
-        assertThat(cards.calculateScore(21)).isEqualTo(13);
+        assertThat(hand.calculateScore(21)).isEqualTo(13);
     }
 
     @Test
@@ -36,9 +36,9 @@ public class CardsTest {
     void calculateCardScoreWhenAceDecreaseTwice() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK),new Card(Shape.HEART, Letter.ACE));
 
-        Cards cards = new Cards(initialCards);
+        Hand hand = new Hand(initialCards);
 
-        assertThat(cards.calculateScore(21)).isEqualTo(12);
+        assertThat(hand.calculateScore(21)).isEqualTo(12);
     }
 
     @Test
@@ -46,9 +46,9 @@ public class CardsTest {
     void calculateCardScoreOfDealer() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.NINE));
 
-        Cards cards = new Cards(initialCards);
+        Hand hand = new Hand(initialCards);
 
-        assertThat(cards.calculateScore(16)).isEqualTo(10);
+        assertThat(hand.calculateScore(16)).isEqualTo(10);
     }
 
     @Test
@@ -56,9 +56,9 @@ public class CardsTest {
     void calculateCardScoreOfDealerWhenBlackJack() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK));
 
-        Cards cards = new Cards(initialCards);
+        Hand hand = new Hand(initialCards);
 
-        assertThat(cards.calculateScore(16)).isEqualTo(21);
+        assertThat(hand.calculateScore(16)).isEqualTo(21);
     }
 
 }

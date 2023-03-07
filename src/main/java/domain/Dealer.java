@@ -5,12 +5,12 @@ public class Dealer extends Participant {
     private static final int MORE_CARD_LIMIT = 16;
     private static final Name DEALER_NAME = new Name("딜러");
 
-    public Dealer(Cards cards) {
-        super(DEALER_NAME, cards);
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     public Card showOneCard() {
-        return cards.getFirstCard();
+        return hand.getFirstCard();
     }
 
     public boolean isMoreCardAble() {
@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     public int getTotalScore() {
-        return cards.calculateScore(MORE_CARD_LIMIT);
+        return hand.calculateScore(MORE_CARD_LIMIT);
     }
 
 }

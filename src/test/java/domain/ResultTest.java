@@ -30,7 +30,7 @@ public class ResultTest {
             add(new Card(Shape.HEART, Letter.JACK));
             add(new Card(Shape.CLOVER, Letter.EIGHT));
         }};
-        dealer = new Dealer(new Cards(dealerCards));
+        dealer = new Dealer(new Hand(dealerCards));
         names = List.of("aa");
         players = createGamePlayers(names, playerCards);
     }
@@ -121,7 +121,7 @@ public class ResultTest {
     }
 
     private Player distributeInitialCardForPlayer(String playerName, List<Card> cards) {
-        return Player.of(new Name(playerName), new Cards(cards));
+        return Player.of(new Name(playerName), new Hand(cards));
     }
 
 }

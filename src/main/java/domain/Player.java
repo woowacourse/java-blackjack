@@ -6,13 +6,13 @@ public class Player extends Participant {
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
     private static final int BLACKJACK = 21;
 
-    private Player(Name name, Cards cards) {
-        super(name, cards);
+    private Player(Name name, Hand hand) {
+        super(name, hand);
         validate(name);
     }
 
-    public static Player of(Name name, Cards cards) {
-        return new Player(name, cards);
+    public static Player of(Name name, Hand hand) {
+        return new Player(name, hand);
     }
 
     private void validate(Name name) {
@@ -22,7 +22,7 @@ public class Player extends Participant {
     }
 
     public int getTotalScore() {
-        return cards.calculateScore(BLACKJACK);
+        return hand.calculateScore(BLACKJACK);
     }
 
     public boolean isMoreCardAble() {

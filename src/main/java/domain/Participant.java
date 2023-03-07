@@ -7,15 +7,15 @@ public abstract class Participant {
     private static final int BUST_LIMIT = 21;
 
     protected final Name name;
-    protected final Cards cards;
+    protected final Hand hand;
 
-    protected Participant(Name name, Cards cards) {
+    protected Participant(Name name, Hand hand) {
         this.name = name;
-        this.cards = cards;
+        this.hand = hand;
     }
 
     public void pick(Card card) {
-        cards.addNewCard(card);
+        hand.addNewCard(card);
     }
 
     public boolean isBust() {
@@ -26,12 +26,12 @@ public abstract class Participant {
 
     public abstract boolean isMoreCardAble();
 
-    public Cards getCards() {
-        return cards;
+    public Hand getHand() {
+        return hand;
     }
 
     public List<Card> getCardList() {
-        return List.copyOf(cards.getParticipantCards());
+        return List.copyOf(hand.getCards());
     }
 
     public Name getName() {
