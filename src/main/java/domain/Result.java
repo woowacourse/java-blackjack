@@ -2,17 +2,24 @@ package domain;
 
 public enum Result {
 
-    DRAW("무"),
-    WIN("승"),
-    LOSE("패");
+    DRAW {
+        @Override
+        public Result reverse() {
+            return DRAW;
+        }
+    },
+    WIN {
+        @Override
+        public Result reverse() {
+            return LOSE;
+        }
+    },
+    LOSE {
+        @Override
+        public Result reverse() {
+            return WIN;
+        }
+    };
 
-    private final String result;
-
-    Result(String result) {
-        this.result = result;
-    }
-
-    public String getResult() {
-        return result;
-    }
+    public abstract Result reverse();
 }
