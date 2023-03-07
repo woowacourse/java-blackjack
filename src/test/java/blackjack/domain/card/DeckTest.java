@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class DeckTest {
@@ -55,5 +56,16 @@ class DeckTest {
         Deck deck = new Deck(cards);
 
         assertThat(deck.isEmpty()).isFalse();
+    }
+
+    @DisplayName("덱이 비어있을 때 draw를 요청하면 예외를 발생시킨다.")
+    @Test
+    void Should_ThrowException_When_EmptyDraw() {
+        Stack<Card> cards = new Stack<>();
+        Deck deck = new Deck(cards);
+
+        assertThatThrownBy(() -> deck.draw())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱이 비어있습니다.");
     }
 }
