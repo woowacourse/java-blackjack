@@ -18,4 +18,8 @@ public enum ReceiveCommand {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요."));
     }
+
+    public static boolean isHit(final ReceiveCommand receiveCommand) {
+        return HIT.equals(receiveCommand);
+    }
 }
