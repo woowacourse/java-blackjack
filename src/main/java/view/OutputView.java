@@ -34,7 +34,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printNameAndHand(String name, List<Card> hand) {
+    private static void printNameAndHand(String name, List<Card> hand) {
         resetMessage();
         String printableHand = hand.stream()
             .map(OutputView::formatCard)
@@ -124,5 +124,22 @@ public class OutputView {
 
     public static void printLineSeparator() {
         System.out.print(System.lineSeparator());
+    }
+
+    public static void printDealerReadyStatus(String dealerName, List<Card> initialHand) {
+        printNameAndHand(dealerName, initialHand);
+    }
+
+    public static void printPlayersReadyStatus(List<String> playerNames, List<List<Card>> playerHands) {
+        for (int i = 0; i < playerNames.size(); i++) {
+            String currentPlayerName = playerNames.get(i);
+            List<Card> currentPlayerHand = playerHands.get(i);
+            printNameAndHand(currentPlayerName, currentPlayerHand);
+        }
+        printLineSeparator();
+    }
+
+    public static void printPlayerReadyStatus(String playerName, List<Card> playerHand) {
+        printNameAndHand(playerName, playerHand);
     }
 }

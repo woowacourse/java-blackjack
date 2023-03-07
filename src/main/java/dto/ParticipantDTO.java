@@ -1,9 +1,11 @@
 package dto;
 
+import domain.card.Card;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ParticipantDTO {
 
@@ -25,5 +27,13 @@ public class ParticipantDTO {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream().map(Player::getName).collect(Collectors.toList());
+    }
+
+    public List<List<Card>> getPlayerHands() {
+        return players.stream().map(Player::showHand).collect(Collectors.toList());
     }
 }

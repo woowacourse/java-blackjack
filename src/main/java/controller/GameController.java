@@ -7,7 +7,6 @@ import domain.user.Dealer;
 import domain.user.Player;
 import dto.ParticipantDTO;
 import java.util.List;
-import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -23,12 +22,10 @@ public class GameController {
         ParticipantDTO participantDTO = new ParticipantDTO();
         blackJackGame.initializeHand();
         blackJackGame.makeParticipants(participantDTO);
-        List<Player> players = participantDTO.getPlayers();
-        OutputView.printReady(players.stream().map(Player::getName).collect(Collectors.toList()));
+        OutputView.printReady(participantDTO.getPlayerNames());
         Dealer dealer = participantDTO.getDealer();
-        OutputView.printNameAndHand(dealer.getName(), dealer.faceUpInitialHand());
-        players.forEach((player) -> OutputView.printNameAndHand(player.getName(), player.faceUpInitialHand()));
-        OutputView.printLineSeparator();
+        OutputView.printDealerReadyStatus(dealer.getName(), dealer.faceUpInitialHand());
+        OutputView.printPlayersReadyStatus(participantDTO.getPlayerNames(), participantDTO.getPlayerHands());
     }
 
     public void play() {
@@ -44,7 +41,7 @@ public class GameController {
         String input = InputView.inputNeedMoreCard(player.getName());
         TurnAction action = TurnAction.getActionByInput(input);
         blackJackGame.playTurn(player, action);
-        OutputView.printNameAndHand(player.getName(), player.showHand());
+        OutputView.printPlayerReadyStatus(player.getName(), player.showHand());
     }
 
     private void dealerTurn() {
