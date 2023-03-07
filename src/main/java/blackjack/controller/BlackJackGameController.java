@@ -1,10 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.*;
 import blackjack.domain.gameplayer.Dealer;
-import blackjack.domain.card.Deck;
 import blackjack.domain.Game;
 import blackjack.domain.gameplayer.GamePlayer;
 import blackjack.domain.GameResult;
@@ -14,7 +11,6 @@ import blackjack.domain.gameplayer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
@@ -29,18 +25,7 @@ public class BlackJackGameController {
     }
 
     private static Deck generateDeck() {
-        Stack<Card> cards = new Stack<>();
-
-        for (CardNumber cardNumber : CardNumber.values()) {
-            generateCard(cards, cardNumber);
-        }
-        return new Deck(cards);
-    }
-
-    private static void generateCard(Stack<Card> cards, CardNumber cardNumber) {
-        for (CardSymbol cardSymbol : CardSymbol.values()) {
-            cards.add(new Card(cardNumber, cardSymbol));
-        }
+        return DeckFactory.createBlackJackDeck();
     }
 
     private static List<String> getCardNames(List<Card> cards) {
