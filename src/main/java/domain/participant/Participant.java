@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Participant {
 
-    private static final int BUST_BOUNDARY_EXCLUSIVE = 21;
-    private static final int BONUS_SCORE = 10;
     private final Name name;
     private final List<Card> cards;
 
@@ -41,7 +39,8 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_BOUNDARY_EXCLUSIVE;
+        Score score = new Score(calculateDefaultScore());
+        return score.isBust();
     }
 
     public String getName() {

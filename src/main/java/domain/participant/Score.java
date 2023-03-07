@@ -19,6 +19,14 @@ public final class Score {
         return this.add(BONUS);
     }
 
+    public boolean isBust() {
+        return this.isGreaterThan(BUST_BOUNDARY_EXCLUSIVE);
+    }
+
+    private boolean isGreaterThan(Score score) {
+        return this.value > score.value;
+    }
+
     private Score add(Score score) {
         return new Score(this.value + score.value);
     }
