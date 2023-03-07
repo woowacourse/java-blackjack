@@ -16,10 +16,8 @@ import domain.Players;
 import domain.Status;
 import domain.Type;
 import domain.Value;
-import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
-import dto.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -209,49 +207,119 @@ class BlackJackServiceTest {
     }
 
     @Test
-    @DisplayName("플레이어의 블랙잭 게임 승패 결과를 반환해준다.")
-    void returns_players_win_lose_result() {
+    @DisplayName("딜러, 플레이어 둘다 BUST라면, 플레이어는 배팅 금액을 그대로 돌려 받는다.")
+    void calculate_account_if_dealer_and_player_bust() {
         // given
         Card card1 = new Card(Type.CLUB, Value.EIGHT);
         Card card2 = new Card(Type.SPADE, Value.EIGHT);
+        Card card3 = new Card(Type.DIAMOND, Value.EIGHT);
+        List<Card> givenCards = List.of(card1, card2, card3);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        DrawnCards drawnCards = new DrawnCards(List.of(card1, card2));
-        DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
-
-        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
-        Players players = new Players(List.of(player));
+        int givenAccount = 1000;
         Dealer dealer = new Dealer(drawnCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), drawnCards);
+        Players players = new Players(List.of(player));
 
         // when
-        List<WinLoseResult> result = blackJackService.getWinLoseResults(dealer, players);
+        blackJackService.getWinLoseResults(dealer, players);
 
         // then
-        assertThat(result.get(0).getName()).isEqualTo(player.getName());
-        assertThat(result.get(0).isWin()).isFalse();
+        assertThat(player.getAccount()).isEqualTo(givenAccount);
     }
 
     @Test
-    @DisplayName("딜러의 블랙잭 게임의 승패 결과를 반환해준다.")
-    void returns_dealer_win_lose_result() {
+    @DisplayName("딜러, 플레이어 둘다 BUST가 아니고, 플레이어의 점수가 더 높은 경우 플레이어가 상금을 탄다.")
+    void calculate_account_if_dealer_and_player_not_bust_player_win() {
         // given
         Card card1 = new Card(Type.CLUB, Value.EIGHT);
         Card card2 = new Card(Type.SPADE, Value.EIGHT);
+        List<Card> givenCards = List.of(card1, card2);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
 
-        DrawnCards drawnCards = new DrawnCards(List.of(card1, card2));
-        DrawnCards emptyCards = new DrawnCards(new ArrayList<>());
-
-        Player player = new Player(new Status(new Name("pobi"), new Account(10000)), emptyCards);
+        int givenAccount = 1000;
+        Dealer dealer = new Dealer(new DrawnCards(List.of(card1)));
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), drawnCards);
         Players players = new Players(List.of(player));
-        Dealer dealer = new Dealer(drawnCards);
-
-        List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
 
         // when
-        DealerWinLoseResult dealerWinLoseResult = blackJackService.getDealerResult(winLoseResults, dealer);
+        blackJackService.getWinLoseResults(dealer, players);
 
         // then
-        assertThat(dealerWinLoseResult.getName()).isEqualTo(Message.DEALER_NAME.getMessage());
-        assertThat(dealerWinLoseResult.getWinCount()).isEqualTo(1);
-        assertThat(dealerWinLoseResult.getLoseCount()).isEqualTo(0);
+        assertThat(player.getAccount()).isEqualTo(1500);
+    }
+
+    @Test
+    @DisplayName("딜러, 플레이어 둘다 BUST가 아니고, 딜러의 점수가 더 높은 경우 딜러가 상금을 탄다.")
+    void calculate_account_if_dealer_and_player_not_bust_dealer_win() {
+        // given
+        Card card1 = new Card(Type.CLUB, Value.EIGHT);
+        Card card2 = new Card(Type.SPADE, Value.EIGHT);
+        List<Card> givenCards = List.of(card1, card2);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
+
+        int givenAccount = 1000;
+        Dealer dealer = new Dealer(drawnCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)),
+                new DrawnCards(List.of(card1)));
+        Players players = new Players(List.of(player));
+
+        // when
+        blackJackService.getWinLoseResults(dealer, players);
+
+        // then
+        assertThat(player.getAccount()).isEqualTo(0);
+        assertThat(dealer.getAccount()).isEqualTo(givenAccount);
+    }
+
+    @Test
+    @DisplayName("딜러가 파산이고, 플레이어는 파산이 아닌 경우 플레이어가 상금을 탄다.")
+    void calculate_account_if_dealer_bust_and_player_not_bust_player_win() {
+        // given
+        Card card1 = new Card(Type.CLUB, Value.EIGHT);
+        Card card2 = new Card(Type.SPADE, Value.EIGHT);
+        Card card3 = new Card(Type.SPADE, Value.EIGHT);
+        List<Card> givenCards = List.of(card1, card2, card3);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
+
+        int givenAccount = 1000;
+        int expectedPlayerAccount = (int) (givenAccount * 1.5);
+        int expectedDealerAccount = (int) (givenAccount * 0.5 * -1);
+
+        Dealer dealer = new Dealer(drawnCards);
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)),
+                new DrawnCards(List.of(card1)));
+        Players players = new Players(List.of(player));
+
+        // when
+        blackJackService.getWinLoseResults(dealer, players);
+
+        // then
+        assertThat(player.getAccount()).isEqualTo(expectedPlayerAccount);
+        assertThat(dealer.getAccount()).isEqualTo(expectedDealerAccount);
+    }
+
+    @Test
+    @DisplayName("딜러가 파산이 아니고, 플레이어는 파산인 경우 딜러가 상금을 탄다.")
+    void calculate_account_if_dealer_not_bust_and_player_bust_dealer_win() {
+        // given
+        Card card1 = new Card(Type.CLUB, Value.EIGHT);
+        Card card2 = new Card(Type.SPADE, Value.EIGHT);
+        Card card3 = new Card(Type.SPADE, Value.EIGHT);
+        List<Card> givenCards = List.of(card1, card2, card3);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
+
+        int givenAccount = 1000;
+
+        Dealer dealer = new Dealer(new DrawnCards(List.of(card1)));
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), drawnCards);
+        Players players = new Players(List.of(player));
+
+        // when
+        blackJackService.getWinLoseResults(dealer, players);
+
+        // then
+        assertThat(player.getAccount()).isEqualTo(0);
+        assertThat(dealer.getAccount()).isEqualTo(givenAccount);
     }
 }

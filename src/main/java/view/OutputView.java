@@ -1,5 +1,6 @@
 package view;
 
+import dto.BlackJackResult;
 import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
@@ -52,7 +53,7 @@ public class OutputView {
 
     public void printWinLoseResult(final List<WinLoseResult> winLoseResults,
                                    final DealerWinLoseResult dealerWinLoseResult) {
-        System.out.println(NEW_LINE + "## 최종 승패");
+        System.out.println(NEW_LINE + "## 최종 수익");
 
         System.out.println(
                 dealerWinLoseResult.getName() + RESULT_DELIMITER + dealerWinLoseResult.getWinCount() + "승 "
@@ -71,5 +72,11 @@ public class OutputView {
 
     public void printExceptionMessage(final String message) {
         System.out.println(message);
+    }
+
+    public void printResult(final List<BlackJackResult> results) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        results
+                .forEach(result -> System.out.println(result.getName() + ": " + (int) result.getAccount()));
     }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BUST_NUMBER = 21;
+
     protected final Status status;
     protected final DrawnCards drawnCards;
 
@@ -33,5 +35,9 @@ public abstract class Participant {
 
     public int getAccount() {
         return status.getAccount();
+    }
+
+    public boolean isBust() {
+        return drawnCards.calculateScore() > BUST_NUMBER;
     }
 }

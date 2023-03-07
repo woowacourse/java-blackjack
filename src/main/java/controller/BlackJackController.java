@@ -12,10 +12,8 @@ import domain.ParticipantGenerator;
 import domain.Player;
 import domain.Players;
 import domain.Status;
-import dto.DealerWinLoseResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
-import dto.WinLoseResult;
 import java.util.List;
 import service.BlackJackService;
 import view.InputView;
@@ -105,8 +103,7 @@ public class BlackJackController {
     }
 
     private void printWinLoseResult(final Dealer dealer, final Players players) {
-        List<WinLoseResult> winLoseResults = blackJackService.getWinLoseResults(dealer, players);
-        DealerWinLoseResult dealerWinLoseResult = blackJackService.getDealerResult(winLoseResults, dealer);
-        outputView.printWinLoseResult(winLoseResults, dealerWinLoseResult);
+        blackJackService.getWinLoseResults(dealer, players);
+        outputView.printResult(blackJackService.getGameResults(dealer, players));
     }
 }

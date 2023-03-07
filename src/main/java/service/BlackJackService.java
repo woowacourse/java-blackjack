@@ -1,17 +1,14 @@
 package service;
 
-import static java.util.stream.Collectors.toList;
-
 import domain.CardDeck;
 import domain.Dealer;
 import domain.DrawCommand;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
-import dto.DealerWinLoseResult;
+import dto.BlackJackResult;
 import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
-import dto.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,39 +85,70 @@ public class BlackJackService {
         cardInfos.add(DrawnCardsInfo.toDto(dealer));
     }
 
-    public List<WinLoseResult> getWinLoseResults(final Dealer dealer, final Players players) {
-        int dealerScore = dealer.calculateCardScore();
-        boolean isDealerBurst = dealerScore > BURST_NUMBER;
-
-        List<WinLoseResult> winLoseResults = players.stream()
-                .map(player -> calculateWinLose(dealerScore, isDealerBurst, player))
-                .collect(toList());
-
-        return winLoseResults;
+    public void getWinLoseResults(final Dealer dealer, final Players players) {
+        players.stream()
+                .forEach(player -> calculateWinLose(player, dealer));
     }
 
-    private WinLoseResult calculateWinLose(final int dealerScore, final boolean isDealerBurst, final Player player) {
+    private void calculateWinLose(final Player player, final Dealer dealer) {
         int playerScore = player.calculateCardScore();
-        if (playerScore > BURST_NUMBER) {
-            return WinLoseResult.toDto(player, false);
+        int dealerScore = dealer.calculateCardScore();
+        int playerAccount = player.getAccount();
+
+        if (isAllParticipantBust(player, dealer)) {
+            return;
         }
 
-        if (isDealerBurst) {
-            return WinLoseResult.toDto(player, true);
-
+        if (isPlayerAndDealerNotBust(player, dealer)) {
+            if (playerScore > dealerScore) {
+                winPlayer(player, dealer, playerAccount);
+                return;
+            }
+            winDealer(player, dealer, playerAccount);
         }
 
-        boolean isPlayerWin = playerScore > dealerScore;
-        return WinLoseResult.toDto(player, isPlayerWin);
+        if (isPlayerWin(player, dealer)) {
+            winPlayer(player, dealer, playerAccount);
+        }
+
+        if (isDealerWin(player, dealer)) {
+            winDealer(player, dealer, playerAccount);
+        }
     }
 
-    public DealerWinLoseResult getDealerResult(final List<WinLoseResult> winLoseResults, final Dealer dealer) {
-        int dealerLoseCount = (int) winLoseResults.stream()
-                .filter(WinLoseResult::isWin)
-                .count();
-        int dealerWinCount = winLoseResults.size() - dealerLoseCount;
+    private boolean isDealerWin(final Player player, final Dealer dealer) {
+        return player.isBust() && !dealer.isBust();
+    }
 
-        DealerWinLoseResult dealerWinLoseResult = DealerWinLoseResult.toDto(dealer, dealerWinCount, dealerLoseCount);
-        return dealerWinLoseResult;
+    private boolean isPlayerWin(final Player player, final Dealer dealer) {
+        return !player.isBust() && dealer.isBust();
+    }
+
+    private void winPlayer(final Player player, final Dealer dealer, final int playerAccount) {
+        player.winGame();
+        dealer.loseGame(playerAccount);
+    }
+
+    private void winDealer(final Player player, final Dealer dealer, final int playerAccount) {
+        player.bustAccount();
+        dealer.winGame(playerAccount);
+    }
+
+    private boolean isAllParticipantBust(final Player player, final Dealer dealer) {
+        return player.isBust() && dealer.isBust();
+    }
+
+    private boolean isPlayerAndDealerNotBust(final Player player, final Dealer dealer) {
+        return !player.isBust() && !dealer.isBust();
+    }
+
+    public List<BlackJackResult> getGameResults(final Dealer dealer, final Players players) {
+        List<BlackJackResult> blackJackResults = new ArrayList<>();
+        blackJackResults.add(BlackJackResult.toDto(dealer));
+
+        players.stream()
+                .forEach(player -> blackJackResults.add(BlackJackResult.toDto(player)));
+
+        return blackJackResults;
     }
 }
