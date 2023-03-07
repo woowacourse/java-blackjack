@@ -33,7 +33,6 @@ public class BlackJackGameController {
     }
 
     private List<String> requestPlayerNames() {
-        outputView.printRequestPlayerNames();
         return inputView.readPlayerNames();
     }
 
