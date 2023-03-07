@@ -1,11 +1,15 @@
 package domain.card;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Card {
+public final class Card {
+    private static final int CARD_SIZE = 52;
 
     private final CardPattern pattern;
     private final CardNumber number;
+    private static final Map<String, Card> CACHE = new ConcurrentHashMap<>(CARD_SIZE);
 
     private Card(final CardPattern pattern, final CardNumber number) {
         this.pattern = pattern;
@@ -13,7 +17,7 @@ public class Card {
     }
 
     public static Card create(final CardPattern pattern, final CardNumber number) {
-        return new Card(pattern, number);
+        return CACHE.computeIfAbsent(toKey(pattern, number), mapping -> new Card(pattern, number));
     }
 
     public boolean isAce() {
@@ -22,6 +26,10 @@ public class Card {
 
     public int findCardNumber() {
         return number.getNumber();
+    }
+
+    private static String toKey(final CardPattern pattern, final CardNumber number) {
+        return pattern.name() + number.name();
     }
 
     @Override
