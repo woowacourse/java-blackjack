@@ -60,4 +60,12 @@ public class Dealer extends Participant {
                 .filter(result::equals)
                 .count();
     }
+
+    public void updateBalance() {
+        for (Player player : resultMap.keySet()) {
+            Result resultOfPlayer = resultMap.get(player).convertToOpposite();
+
+            player.updateBetAmount(resultOfPlayer);
+        }
+    }
 }

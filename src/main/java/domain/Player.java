@@ -34,6 +34,14 @@ public class Player extends Participant {
         }
     }
 
+    public void updateBetAmount(Result result) {
+        betAmount = result.updateBalance(betAmount, cards.isBlackjack());
+    }
+
+    public int getMoney() {
+        return betAmount.getMoney();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
