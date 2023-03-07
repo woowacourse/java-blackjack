@@ -1,11 +1,11 @@
 package controller;
 
 import common.ExecuteContext;
-import domain.service.BlackJackResultMaker;
-import domain.service.CardDistributor;
 import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
+import domain.service.BlackJackResultMaker;
+import domain.service.CardDistributor;
 import domain.vo.Result;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +43,8 @@ public class BlackJackController {
     }
 
     private void giveInitialCards(final Dealer dealer, final List<Player> players) {
-        cardDistributor.giveInitCards(dealer, players);
+        cardDistributor.giveInitCards(dealer);
+        cardDistributor.giveInitCards(players);
         OutputView.printInitialCards(dealer, players);
     }
 
@@ -86,8 +87,8 @@ public class BlackJackController {
 
     private void printResult(final Dealer dealer, final List<Player> players) {
         final Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
-        final Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
         OutputView.printDealerResult(dealerResult);
+        final Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
         OutputView.printResult(playerResult);
     }
 }
