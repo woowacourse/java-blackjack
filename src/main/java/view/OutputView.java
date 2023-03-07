@@ -55,34 +55,20 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final Map<Name, Outcome> result) {
+    public static void printGameResult(final EnumMap<Outcome, Integer> dealerResult,
+                                       final Map<Name, Outcome> playerResult) {
         System.out.println("## 최종 승패");
-        printDealerResult(result);
-        printPlayerResult(result);
+        printDealerResult(dealerResult);
+        printPlayerResult(playerResult);
     }
 
-    private static void printDealerResult(final Map<Name, Outcome> result) {
-        EnumMap<Outcome, Integer> dealerResult = initializeDealerResult();
-        for (Name key : result.keySet()) {
-            final Outcome outcome = result.get(key);
-            dealerResult.put(outcome, dealerResult.get(outcome) + 1);
-        }
+    private static void printDealerResult(final EnumMap<Outcome, Integer> dealerResult) {
         printGameEachResult(
                 "딜러",
                 dealerResult.get(Outcome.LOSE),
                 dealerResult.get(Outcome.DRAW),
                 dealerResult.get(Outcome.WIN)
         );
-    }
-
-    private static EnumMap<Outcome, Integer> initializeDealerResult() {
-        EnumMap<Outcome, Integer> enumMap = new EnumMap<>(Outcome.class);
-
-        for (Outcome outcome : Outcome.values()) {
-            enumMap.put(outcome, 0);
-        }
-
-        return enumMap;
     }
 
     private static void printPlayerResult(final Map<Name, Outcome> result) {
