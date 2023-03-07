@@ -95,11 +95,11 @@ class UsersTest {
     void getWinningResultTest() {
         final Users users = new Users(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
 
-        Map<String, WinningStatus> winningResult = users.getWinningResult();
+        Map<String, GameResult> winningResult = users.getWinningResult();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.WIN);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.WIN);
+            softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
+            softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.WIN);
         });
     }
 

@@ -51,9 +51,9 @@ class DealerTest {
         final Dealer dealer = new Dealer(initialGroup);
         final Player player = new Player("필립", initialGroup);
 
-        WinningStatus winningStatus = dealer.comparePlayer(player);
+        GameResult gameResult = dealer.comparePlayer(player);
 
-        assertThat(winningStatus).isEqualTo(WinningStatus.TIE);
+        assertThat(gameResult).isEqualTo(GameResult.TIE);
     }
 
     @Test

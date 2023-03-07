@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.domain.CardNumber;
 import blackjack.domain.CardShape;
-import blackjack.domain.WinningStatus;
+import blackjack.domain.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,9 +38,9 @@ class ViewRendererTest {
     @Test
     @DisplayName("승리 결과 렌더링 테스트")
     void renderWinningResultTest() {
-        Map<String, WinningStatus> winningResult = Map.of(
-                "필립", WinningStatus.WIN,
-                "홍실", WinningStatus.TIE);
+        Map<String, GameResult> winningResult = Map.of(
+                "필립", GameResult.WIN,
+                "홍실", GameResult.TIE);
 
         Map<String, String> renderedWinningResult = ViewRenderer.renderWinningResult(winningResult);
 

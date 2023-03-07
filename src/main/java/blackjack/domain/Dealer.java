@@ -16,28 +16,28 @@ public class Dealer extends User {
         return List.of(getStatus().get(0));
     }
 
-    public WinningStatus comparePlayer(final Player player) {
+    public GameResult comparePlayer(final Player player) {
         if (BlackJackRule.isBust(this)) {
             return compareByBust(player);
         }
         return compareByScore(player);
     }
 
-    private WinningStatus compareByBust(final Player player) {
+    private GameResult compareByBust(final Player player) {
         if (BlackJackRule.isBust(player)) {
-            return WinningStatus.TIE;
+            return GameResult.TIE;
         }
-        return WinningStatus.WIN;
+        return GameResult.WIN;
     }
 
-    private WinningStatus compareByScore(final Player player) {
+    private GameResult compareByScore(final Player player) {
         if (BlackJackRule.getScore(this) > BlackJackRule.getScore(player)) {
-            return WinningStatus.LOSE;
+            return GameResult.LOSE;
         }
         if (BlackJackRule.getScore(this) == BlackJackRule.getScore(player)) {
-            return WinningStatus.TIE;
+            return GameResult.TIE;
         }
-        return WinningStatus.WIN;
+        return GameResult.WIN;
     }
 
     public boolean isOverDraw() {

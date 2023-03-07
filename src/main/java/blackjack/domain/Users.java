@@ -63,9 +63,9 @@ public class Users {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
     }
 
-    public Map<String, WinningStatus> getWinningResult() {
+    public Map<String, GameResult> getWinningResult() {
         final Dealer dealer = getDealer();
-        final Map<String, WinningStatus> winningResult = new HashMap<>();
+        final Map<String, GameResult> winningResult = new HashMap<>();
         for (final Player player : getPlayers()) {
             winningResult.put(player.getName(), dealer.comparePlayer(player));
         }

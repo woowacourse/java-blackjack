@@ -13,16 +13,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class BlackJackGameTest {
-    final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
-            new Card(CardShape.CLOVER, CardNumber.TEN),
-            new Card(CardShape.CLOVER, CardNumber.NINE),
-            new Card(CardShape.HEART, CardNumber.JACK),
-            new Card(CardShape.HEART, CardNumber.NINE),
-            new Card(CardShape.DIAMOND, CardNumber.FOUR),
-            new Card(CardShape.DIAMOND, CardNumber.TWO),
-            new Card(CardShape.DIAMOND, CardNumber.SIX),
-            new Card(CardShape.DIAMOND, CardNumber.SEVEN),
-            new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+    private final Card spadeAce = new Card(CardShape.SPADE, CardNumber.ACE);
+    private final Card cloverTen = new Card(CardShape.CLOVER, CardNumber.TEN);
+    private final Card cloverNine = new Card(CardShape.CLOVER, CardNumber.NINE);
+    private final Card heartJack = new Card(CardShape.HEART, CardNumber.JACK);
+    private final Card heartNine = new Card(CardShape.HEART, CardNumber.NINE);
+    private final Card diamondFour = new Card(CardShape.DIAMOND, CardNumber.FOUR);
+    private final Card diamondTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
+    private final Card diamondSix = new Card(CardShape.DIAMOND, CardNumber.SIX);
+    private final Card diamondSeven = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+    private final Card diamondEight = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
+
+    private final List<Card> testCards = List.of(
+            spadeAce, cloverTen, cloverNine, heartJack, heartNine, diamondFour, diamondTwo, diamondSix, diamondSeven, diamondEight);
+
 
     @Test
     @DisplayName("게임 초기화 테스트")
@@ -43,6 +48,7 @@ class BlackJackGameTest {
         List<Card> initialCards = blackJackGame.getInitialStatus().values().stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
+
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
     }
 
@@ -85,10 +91,7 @@ class BlackJackGameTest {
         blackJackGame.playPlayer("필립");
         List<Card> cards = blackJackGame.getStatus().get("필립");
 
-        assertThat(cards).containsExactly(new Card(CardShape.SPADE, CardNumber.ACE), // 필립
-                new Card(CardShape.CLOVER, CardNumber.TEN),
-                new Card(CardShape.HEART, CardNumber.NINE));
-
+        assertThat(cards).containsExactly(spadeAce, cloverTen, heartNine);
     }
 
     @Test
@@ -99,8 +102,7 @@ class BlackJackGameTest {
         CardResult philip = blackJackGame.getCardResult().get("필립");
 
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(philip.getCards()).contains(new Card(CardShape.SPADE, CardNumber.ACE)
-                    , new Card(CardShape.CLOVER, CardNumber.TEN));
+            softly.assertThat(philip.getCards()).contains(spadeAce, cloverTen);
             softly.assertThat(philip.getScore()).isEqualTo(21);
         });
     }
@@ -115,11 +117,11 @@ class BlackJackGameTest {
     void getWinningResultTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"), new TestDeckGenerator(testCards));
 
-        Map<String, WinningStatus> winningResult = blackJackGame.getWinningResult();
+        Map<String, GameResult> winningResult = blackJackGame.getWinningResult();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.WIN);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.WIN);
+            softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
+            softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.WIN);
         });
     }
 

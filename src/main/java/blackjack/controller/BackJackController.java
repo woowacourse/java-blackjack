@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.RandomDeckGenerator;
-import blackjack.domain.WinningStatus;
+import blackjack.domain.GameResult;
 import blackjack.dto.CardResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -81,7 +81,7 @@ public class BackJackController {
     }
 
     private void printWinningResult(BlackJackGame blackJackGame) {
-        Map<String, WinningStatus> winningResult = blackJackGame.getWinningResult();
+        Map<String, GameResult> winningResult = blackJackGame.getWinningResult();
         outputView.printWinningResult(ViewRenderer.renderWinningResult(winningResult));
     }
 }

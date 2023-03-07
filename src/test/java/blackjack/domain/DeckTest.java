@@ -8,11 +8,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckTest {
+    private final Card spadeAceCard = new Card(CardShape.SPADE, CardNumber.ACE);
+    private final Card cloverTenCard = new Card(CardShape.CLOVER, CardNumber.TEN);
+    private final Card cloverNineCard = new Card(CardShape.CLOVER, CardNumber.NINE);
+    private final Card heartJackCard = new Card(CardShape.HEART, CardNumber.JACK);
 
-    final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
-            new Card(CardShape.CLOVER, CardNumber.TEN),
-            new Card(CardShape.CLOVER, CardNumber.NINE),
-            new Card(CardShape.HEART, CardNumber.JACK));
+    private final List<Card> testCards = List.of(spadeAceCard, cloverTenCard, cloverNineCard, heartJackCard);
+
 
     @Test
     @DisplayName("덱에서 첫번째 카드를 하나 뽑는다")
