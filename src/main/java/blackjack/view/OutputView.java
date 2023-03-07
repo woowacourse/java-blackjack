@@ -23,6 +23,7 @@ public class OutputView {
     private static final String OPEN_CARD_MESSAGE_FORMAT = "%n%s와 %s에게 2장을 나누었습니다.%n";
     private static final String DEALER_HIT_RESULT_MESSAGE_FORMAT = "%s는 16 이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String FINAL_RESULT_HEADER = "%n## 최종 승패%n";
+    private static final String INPUT_ERROR_MESSAGE_FORMAT = "%n[입력 오류] %s%n";
 
     public static void showOpenCards(final String dealerName,
                                      final Map<String, List<Card>> openedCardsByParticipantName) {
@@ -87,5 +88,9 @@ public class OutputView {
 
     private static void showDealerJudgeResultStatistic(final DealerJudgeResultsStatistic dealerJudgeResultStats) {
         System.out.printf(KEY_VALUE_FORMAT, "딜러", JudgeResultWord.toStatisticWords(dealerJudgeResultStats));
+    }
+
+    public static void showInputErrorMessage(final String message) {
+        System.out.printf(INPUT_ERROR_MESSAGE_FORMAT, message);
     }
 }

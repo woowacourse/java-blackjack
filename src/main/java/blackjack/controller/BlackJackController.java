@@ -16,15 +16,20 @@ public class BlackJackController {
     private BlackJackGame blackJackGame;
 
     public void run() {
-        final List<String> playerNames = InputView.askPlayerNames();
-        initialize(playerNames);
+        final List<String> playerNames = enrollPlayerNames();
+        initializeGame(playerNames);
         startGame();
         hitOrStayForAvailablePlayers(playerNames);
         hitUntilDealerAvailable();
         totalUp();
     }
 
-    private void initialize(final List<String> playerNames) {
+    private List<String> enrollPlayerNames() {
+        return InputHandler.retryForIllegalArgument(InputView::askPlayerNames, this::initializeGame,
+                OutputView::showInputErrorMessage);
+    }
+
+    private void initializeGame(final List<String> playerNames) {
         blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DealerName, playerNames);
     }
 
@@ -49,7 +54,8 @@ public class BlackJackController {
 
     private HitCommand refreshHitCommand(final String playerName) {
         if (blackJackGame.isAvailable(playerName)) {
-            return InputView.askToHit(playerName);
+            return InputHandler.retryForIllegalArgument(playerName, InputView::askToHit,
+                    OutputView::showInputErrorMessage);
         }
         return HitCommand.NO;
     }
