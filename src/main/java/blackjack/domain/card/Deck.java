@@ -1,21 +1,26 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Deck {
 
     public static final int CARD_TOTAL_SIZE = 52;
     private static final int FIRST_CARD = 0;
     private static final int MIN_CARD_SIZE = 1;
-    private static List<Card> cards = new ArrayList<>();
 
-    public static void init() {
+    private static List<Card> cards;
+    private static final Deck deck = new Deck();
+
+    private Deck() {
         List<Card> createdCards = CardFactory.of();
         validate(createdCards);
         cards = createdCards;
         shuffleCards();
+    }
+
+    public static Deck getInstance() {
+        return deck;
     }
 
     private static void validate(List<Card> cards) {
@@ -24,11 +29,11 @@ public class Cards {
         }
     }
 
-    public static void shuffleCards() {
+    public void shuffleCards() {
         Collections.shuffle(cards);
     }
 
-    public static Card giveFirstCard() {
+    public Card giveFirstCard() {
         if (cards.size() < MIN_CARD_SIZE) {
             throw new IndexOutOfBoundsException("뽑을 수 있는 카드가 없습니다.");
         }

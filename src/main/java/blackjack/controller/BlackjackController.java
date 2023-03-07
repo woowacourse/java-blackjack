@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.factory.PlayersFactory;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Names;
@@ -63,7 +63,7 @@ public class BlackjackController {
     }
 
     private void stopServingCard(Player player) {
-        if (!player.isBust()) {
+        if (!player.isUnderBust()) {
             OutputView.printScoreUnderLimit();
         }
         OutputView.printPlayerCurrentCards(player);
@@ -77,15 +77,17 @@ public class BlackjackController {
     }
 
     public void giveAdditionalCardsToDealer(Dealer dealer) {
+        Deck deck = Deck.getInstance();
         while (dealer.hasUnderMinimumScore()) {
             OutputView.printDealerOneMore();
-            dealer.updateCardScore(Cards.giveFirstCard());
+            dealer.updateCardScore(deck.giveFirstCard());
         }
     }
 
     private void giveAdditionalCard(String answer, Player player) {
-        while (GameCommand.isContinue(answer) && player.isBust()) {
-            player.updateCardScore(Cards.giveFirstCard());
+        Deck deck = Deck.getInstance();
+        while (GameCommand.isContinue(answer) && player.isUnderBust()) {
+            player.updateCardScore(deck.giveFirstCard());
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());
         }

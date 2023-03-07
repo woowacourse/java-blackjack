@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -14,6 +14,7 @@ import java.util.List;
 public class BlackjackGame {
 
     public static final int NUMBER_OF_INITIALIZED_CARDS = 2;
+
     private final Players players;
     private final Dealer dealer;
 
@@ -23,7 +24,6 @@ public class BlackjackGame {
     }
 
     public void giveInitializedCards() {
-        Cards.init();
         for (Player player : players.getPlayers()) {
             giveFirstCard(player);
         }
@@ -31,8 +31,9 @@ public class BlackjackGame {
     }
 
     private void giveFirstCard(User user) {
+        Deck deck = Deck.getInstance();
         for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIALIZED_CARDS; cardIndex++) {
-            user.updateCardScore(Cards.giveFirstCard());
+            user.updateCardScore(deck.giveFirstCard());
         }
     }
 
@@ -59,5 +60,4 @@ public class BlackjackGame {
                 .forEach(result -> dealerResults.put(result, 0));
         return dealerResults;
     }
-
 }

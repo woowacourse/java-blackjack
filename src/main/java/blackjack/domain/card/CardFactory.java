@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.card.Cards.CARD_TOTAL_SIZE;
+import static blackjack.domain.card.Deck.CARD_TOTAL_SIZE;
 
 public class CardFactory {
 
