@@ -32,10 +32,6 @@ public class BlackJackGame {
         return users.getPlayerNames();
     }
 
-    public boolean isBust(final String name) {
-        return users.isBust(name);
-    }
-
     public int playDealerTurn() {
         int drawCount = 0;
         while (!users.isDealerOverDrawLimit()) {
@@ -54,7 +50,7 @@ public class BlackJackGame {
         final Map<String, List<Card>> handholdingCards = users.getHandholdingCards();
 
         for (final String name : handholdingCards.keySet()) {
-            cardResult.put(name, new CardResult(handholdingCards.get(name), users.getScore(name)));
+            cardResult.put(name, new CardResult(handholdingCards.get(name), users.getScore(name).getValue()));
         }
 
         return cardResult;
@@ -64,7 +60,8 @@ public class BlackJackGame {
         return users.getGameResult();
     }
 
-    public boolean isBlackJackScore(final String name) {
-        return users.isBlackJack(name);
+    public boolean isPossibleToDraw(final String name) {
+        final Score userScore = users.getScore(name);
+        return !userScore.isBust() && !userScore.isBlackJack();
     }
 }

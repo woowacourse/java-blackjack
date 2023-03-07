@@ -79,16 +79,6 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어 이름으로 bust됬는지 확인하는 기능 테스트")
-    void isBustTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new RandomDeckGenerator());
-
-        boolean isBust = blackJackGame.isBust("필립");
-
-        assertThat(isBust).isFalse();
-    }
-
-    @Test
     @DisplayName("플레이어 턴 진행 테스트")
     void playPlayerTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
@@ -128,16 +118,5 @@ class BlackJackGameTest {
             softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
             softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.WIN);
         });
-    }
-
-    @Test
-    @DisplayName("유저의 점수가 BlackJackNumber인지 확인하는 기능 테스트")
-    void isBlackJackScoreTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
-                new TestDeckGenerator(testCards));
-
-        boolean isBlackJack = blackJackGame.isBlackJackScore("필립");
-
-        assertThat(isBlackJack).isTrue();
     }
 }

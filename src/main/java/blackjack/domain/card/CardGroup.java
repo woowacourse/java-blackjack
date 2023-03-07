@@ -1,13 +1,11 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardGroup {
-
-    private static final int BLACK_JACK_NUMBER = 21;
-    private static final int ACE_OFFSET = -10;
-    private static final int NUMBER_OF_INITIAL_CARD_NUMBER = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -24,15 +22,15 @@ public class CardGroup {
         return List.copyOf(cards);
     }
 
-    public int getScore() {
-        int score = getTotalValue();
+    public Score getScore() {
+        int scoreValue = getTotalValue();
         final int aceCount = getAceCount();
 
-        for (int tryCount = 0; tryCount < aceCount && score > BLACK_JACK_NUMBER; tryCount++) {
-            score += ACE_OFFSET;
+        for (int tryCount = 0; tryCount < aceCount && scoreValue > Score.BLACKJACK_NUMBER; tryCount++) {
+            scoreValue += Score.ACE_OFFSET;
         }
 
-        return score;
+        return new Score(scoreValue, cards.size());
     }
 
     private int getTotalValue() {
@@ -46,13 +44,5 @@ public class CardGroup {
         return (int) cards.stream()
                 .filter(card -> card.getNumber() == CardNumber.ACE)
                 .count();
-    }
-
-    public boolean isBust() {
-        return getScore() > BLACK_JACK_NUMBER;
-    }
-
-    public boolean isBlackJack() {
-        return getScore() == BLACK_JACK_NUMBER && cards.size() == NUMBER_OF_INITIAL_CARD_NUMBER;
     }
 }

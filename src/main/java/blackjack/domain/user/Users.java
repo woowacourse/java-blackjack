@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
@@ -62,10 +63,11 @@ public class Users {
     }
 
     public Map<String, GameResult> getGameResult() {
-        final Dealer dealer = getDealer();
+        final Score dealerScore = getDealer().getScore();
         final Map<String, GameResult> gameResult = new HashMap<>();
         for (final Player player : getPlayers()) {
-            gameResult.put(player.getName(), dealer.comparePlayer(player));
+            final Score playerScore = player.getScore();
+            gameResult.put(player.getName(), playerScore.getResultByCompareWith(dealerScore));
         }
         return gameResult;
     }
@@ -77,20 +79,12 @@ public class Users {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public boolean isBust(final String name) {
-        return getUser(name).isBust();
-    }
-
     public void drawCard(final String userName, final Deck deck) {
         getUser(userName).drawCard(deck);
     }
 
-    public int getScore(final String name) {
+    public Score getScore(final String name) {
         return getUser(name).getScore();
-    }
-
-    public boolean isBlackJack(final String name) {
-        return getUser(name).isBlackJack();
     }
 
     private User getUser(final String name) {

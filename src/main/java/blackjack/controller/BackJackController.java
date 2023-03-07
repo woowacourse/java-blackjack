@@ -55,12 +55,12 @@ public class BackJackController {
     }
 
     private boolean isContinuous(String name, BlackJackGame blackJackGame) {
-        if (blackJackGame.isBlackJackScore(name) || blackJackGame.isBust(name)) {
-            return false;
+        if (blackJackGame.isPossibleToDraw(name)) {
+            outputView.printDrawCardRequestMessage(name);
+            outputView.printLineBreak();
+            return DrawInput.from(inputView.readDrawOrStay()).isDraw();
         }
-        outputView.printDrawCardRequestMessage(name);
-        outputView.printLineBreak();
-        return DrawInput.from(inputView.readDrawOrStay()).isDraw();
+        return false;
     }
 
     private void playDealerTurn(BlackJackGame blackJackGame) {

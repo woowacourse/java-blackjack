@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
@@ -40,17 +39,6 @@ class DealerTest {
         User dealer = new Dealer(initialGroup);
 
         assertThat(dealer.getInitialHoldingCards()).containsExactly(firstCard);
-    }
-
-    @Test
-    @DisplayName("플레이어와 비교해 플레이어의 승리여부 판단하는기능 테스트")
-    void comparePlayerTest() {
-        final Dealer dealer = new Dealer(initialGroup);
-        final Player player = new Player("필립", initialGroup);
-
-        GameResult gameResult = dealer.comparePlayer(player);
-
-        assertThat(gameResult).isEqualTo(GameResult.TIE);
     }
 
     @Test

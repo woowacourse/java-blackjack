@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -110,8 +111,8 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
 
         assertSoftly(softly -> {
-            softly.assertThat(users.getScore("필립")).isEqualTo(21);
-            softly.assertThat(users.getScore("홍실")).isEqualTo(19);
+            softly.assertThat(users.getScore("필립")).isEqualTo(new Score(21, 2));
+            softly.assertThat(users.getScore("홍실")).isEqualTo(new Score(19, 2));
         });
     }
 

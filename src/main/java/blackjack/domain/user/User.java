@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
@@ -16,16 +17,8 @@ public abstract class User {
         this.cardGroup = cardGroup;
     }
 
-    final public int getScore() {
+    final public Score getScore() {
         return cardGroup.getScore();
-    }
-
-    final public boolean isBust() {
-        return cardGroup.isBust();
-    }
-
-    final public boolean isBlackJack() {
-        return cardGroup.isBlackJack();
     }
 
     final public void drawCard(final Deck deck) {
