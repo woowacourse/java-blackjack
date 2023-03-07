@@ -24,8 +24,8 @@ public class Player {
         return Score.of(cards);
     }
 
-    public Cards getCards() {
-        return new Cards(Set.copyOf(cards.getCards()));
+    public Set<Card> getCards() {
+        return Set.copyOf(cards.getCards());
     }
 
     public String getName() {

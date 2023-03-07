@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     private static void printFirstCard(final Dealer dealer) {
-        final Card card = dealer.getCards().getCards()
+        final Card card = dealer.getCards()
             .stream()
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
@@ -56,7 +56,7 @@ public class OutputView {
 
     private static String stringifyCard(final Player player) {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
-        player.getCards().getCards()
+        player.getCards()
             .stream()
             .map(Card::toString)
             .forEach(stringJoiner::add);

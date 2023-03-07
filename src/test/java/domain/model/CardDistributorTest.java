@@ -23,7 +23,7 @@ class CardDistributorTest {
         cardDistributor.giveCard(player);
 
         //then
-        assertThat(player.getCards().getCards().size()).isEqualTo(1);
+        assertThat(player.getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -41,8 +41,8 @@ class CardDistributorTest {
         cardDistributor.giveInitCards(dealer, List.of(player1, player2));
 
         //then
-        assertThat(dealer.getCards().getCards().size()).isEqualTo(2);
-        assertThat(player1.getCards().getCards().size()).isEqualTo(2);
-        assertThat(player2.getCards().getCards().size()).isEqualTo(2);
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(player1.getCards().size()).isEqualTo(2);
+        assertThat(player2.getCards().size()).isEqualTo(2);
     }
 }
