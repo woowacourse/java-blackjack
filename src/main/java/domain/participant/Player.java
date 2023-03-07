@@ -3,7 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import java.util.List;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private Player(final String name) {
         super(name);
@@ -11,6 +11,7 @@ public class Player extends Participant {
 
     public static Player create(final String name) {
         validatePlayerName(name);
+
         return new Player(name);
     }
 
