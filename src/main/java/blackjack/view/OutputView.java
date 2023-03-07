@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String GIVE_START_CARD_COMPLETE_MESSAGE = "에게 2장을 나누었습니다.";
-    private static final String DEALER_CAN_PICK_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String DEALER_CAN_NOT_PICK_MESSAGE = "딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.";
+    private static final String DEALER_CAN_PICK_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_CAN_NOT_PICK_MESSAGE = "딜러는 %d이상이라 한장의 카드를 더 받지 못했습니다.";
     private static final String FINAL_RESULT_HEADER_MESSAGE = "## 최종 승패";
     private static final String CARD = "카드";
     private static final String ITEM_DELIMITER = ", ";
@@ -68,14 +68,14 @@ public class OutputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static void printDealerResult(boolean dealerCanPick) {
+    public static void printDealerTurnResult(boolean dealerCanPick, int dealerMaximumPoint) {
         System.out.println();
         if (dealerCanPick) {
-            System.out.println(DEALER_CAN_PICK_MESSAGE);
+            System.out.println(String.format(DEALER_CAN_PICK_MESSAGE, dealerMaximumPoint));
             System.out.println();
             return;
         }
-        System.out.println(DEALER_CAN_NOT_PICK_MESSAGE);
+        System.out.println(String.format(DEALER_CAN_NOT_PICK_MESSAGE, dealerMaximumPoint + 1));
         System.out.println();
     }
 
@@ -92,7 +92,7 @@ public class OutputView {
         System.out.println(RESULT_PREFIX + point);
     }
 
-    public static void printFinalRank(ChallengerResultDto challengerResultDto, DealerResultDto dealerResultDto) {
+    public static void printEndRank(ChallengerResultDto challengerResultDto, DealerResultDto dealerResultDto) {
         System.out.println();
         System.out.println(FINAL_RESULT_HEADER_MESSAGE);
         printDealerFinalRank(dealerResultDto);

@@ -27,11 +27,7 @@ public class BlackJackGame {
         players.pickStartCards(cardDeck);
     }
 
-    public boolean canPick(Player player) {
-        return player.canPick();
-    }
-
-    public void pick(Player player) {
+    public void hit(Player player) {
         Card pickedCard = cardDeck.pick();
         player.pickCard(pickedCard);
     }

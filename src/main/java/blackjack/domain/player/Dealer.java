@@ -6,7 +6,7 @@ public class Dealer extends Player {
 
     private static final String NAME = "딜러";
 
-    private static final int MAXIMUM_POINT = 16;
+    public static final int MAXIMUM_POINT = 16;
 
     public ResultType judge(Player challenger) {
         if (isBust() && challenger.isBust()) {

@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.common.exception.CustomException;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.ResultMap;
 import blackjack.domain.result.ResultType;
@@ -26,7 +27,6 @@ public class BlackJackController {
         start();
         takeTurn();
         showResult();
-        InputView.terminate();
     }
 
     private void init() {
@@ -78,7 +78,7 @@ public class BlackJackController {
     }
 
     private void takeEachChallengerTurn(Player player) {
-        if (blackJackGame.canPick(player)) {
+        if (player.canPick()) {
             checkChoice(player);
         }
     }
@@ -95,7 +95,7 @@ public class BlackJackController {
     private void inputChoice(Player player) {
         boolean choice = InputView.inputPlayerChoice(player.getName());
         if (choice) {
-            blackJackGame.pick(player);
+            blackJackGame.hit(player);
             OutputView.printChallengerStatusInGame(makePlayerStatusDto(player));
             takeEachChallengerTurn(player);
         }
@@ -105,9 +105,9 @@ public class BlackJackController {
         Player dealer = blackJackGame.getDealer();
         boolean dealerCanPick = dealer.canPick();
         if (dealerCanPick) {
-            blackJackGame.pick(dealer);
+            blackJackGame.hit(dealer);
         }
-        OutputView.printDealerResult(dealerCanPick);
+        OutputView.printDealerTurnResult(dealerCanPick, Dealer.MAXIMUM_POINT);
     }
 
     private void showResult() {
@@ -126,7 +126,7 @@ public class BlackJackController {
 
         ChallengerResultDto challengerResultDto = makeChallengerResultDto(resultMap, blackJackGame.getChallengers());
         DealerResultDto dealerResultDto = makeDealerResultDto(resultMap, blackJackGame.getDealer());
-        OutputView.printFinalRank(challengerResultDto, dealerResultDto);
+        OutputView.printEndRank(challengerResultDto, dealerResultDto);
     }
 
     private PlayerStatusDto makePlayerStatusDto(Player player) {
