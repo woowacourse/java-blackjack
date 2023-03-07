@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 class PlayerBetTest {
 
     @Nested
+    @DisplayName("craete() 테스트")
     class CreateMethodTest {
 
         @Test
@@ -38,7 +39,6 @@ class PlayerBetTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("천 원 단위로 배팅해주세요.");
         }
-
     }
 
     @Test
