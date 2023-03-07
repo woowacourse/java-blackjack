@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class Cards {
     }
 
     public Cards() {
-        this.cards = new ArrayList<>();
+        this.cards = Collections.emptyList();
     }
 
     public int calculateTotalScore() {
