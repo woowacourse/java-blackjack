@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static final String CARD_USER_DELIMITER = ": ";
-    public static final String DEALER_CARD = "딜러 카드: ";
     public static final String RESULT_DELIMITER = " - 결과: ";
     public static final String CARD_DELIMITER = "카드: ";
     public static final String RESULT_TITLE = "## 최종 승패";
@@ -52,11 +51,11 @@ public class OutputView {
                 .map(card -> card.getNumber().getNumber() + card.getSymbol().getSymbol())
                 .limit(1)
                 .collect(Collectors.joining(""));
-        System.out.println(DEALER_CARD + dealerCards);
+        System.out.println(dealer.getName() + CARD_DELIMITER + dealerCards);
     }
 
     public static void printScore(Dealer dealer, Players players) {
-        System.out.println(DEALER_CARD + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
+        System.out.println(dealer.getName() + CARD_DELIMITER + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName()
                     + CARD_USER_DELIMITER
