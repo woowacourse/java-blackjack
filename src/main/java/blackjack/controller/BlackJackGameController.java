@@ -1,15 +1,14 @@
 package blackjack.controller;
 
-import blackjack.domain.card.*;
-import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.Game;
-import blackjack.domain.gameplayer.GamePlayer;
 import blackjack.domain.GameResult;
-import blackjack.domain.gameplayer.Name;
-import blackjack.domain.gameplayer.Player;
-import blackjack.domain.gameplayer.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckFactory;
+import blackjack.domain.gameplayer.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +29,8 @@ public class BlackJackGameController {
 
     private static List<String> getCardNames(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString()).collect(
-                        Collectors.toList());
+                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
+                .collect(Collectors.toList());
     }
 
     public void run() {

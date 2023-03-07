@@ -1,7 +1,5 @@
 package techcourse.jcf.mission;
 
-import java.util.Objects;
-
 public interface SimpleList<T> {
 
     static <T> SimpleList<T> fromArrayToList(T[] arrays) {

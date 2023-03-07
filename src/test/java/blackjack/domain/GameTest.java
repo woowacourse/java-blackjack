@@ -1,11 +1,5 @@
 package blackjack.domain;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
@@ -14,6 +8,12 @@ import blackjack.domain.gameplayer.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class GameTest {
     private Deck deck;
