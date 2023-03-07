@@ -38,8 +38,8 @@ public class Players {
     }
 
     public boolean hasDrawablePlayer() {
-            return players.stream()
-                    .anyMatch(Participant::isDrawable);
+        return players.stream()
+                .anyMatch(Player::isDrawable);
     }
 
     public void handOutCardToCurrentPlayer(Card card) {
@@ -58,6 +58,6 @@ public class Players {
         int dealerScore = dealer.score();
         return players.stream()
                 .collect(toUnmodifiableMap(Player::name
-                        , player-> GameOutcome.of(player.score(), dealerScore)));
+                        , player -> GameOutcome.of(player.score(), dealerScore)));
     }
 }

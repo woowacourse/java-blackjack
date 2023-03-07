@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-    
+
     @Nested
     class 생성 {
         @Test
@@ -24,9 +24,10 @@ class PlayersTest {
 
             //then
             List<Player> playerList = players.getPlayers();
-            
+
             assertThat(playerList).containsSequence(new Player("에밀"), new Player("포이"));
         }
+
         @Test
         void should_예외를던진다_when_플레이어가0명인경우() {
             //given
@@ -41,6 +42,7 @@ class PlayersTest {
                     .hasMessage("플레이어는 1명 이상이어야 합니다.");
         }
     }
+
     @Nested
     class 카드받기 {
         @Test
@@ -92,6 +94,7 @@ class PlayersTest {
                 cards.add(new Card(Suit.SPADE, Number.JACK));
             });
             players.receiveCard(deck);
+            players.receiveCard(deck);
 
             //when
             boolean existingDrawablePlayer = players.hasDrawablePlayer();
@@ -106,8 +109,10 @@ class PlayersTest {
         @Test
         void should_카드를받을다음플레이어이름반환_when_카드를받을수있는플레이어가존재할시() {
             //given
-            Players players = Players.from(List.of("포이", "에밀"));
+            Players players = Players.from(List.of("포이"));
             String expected = "포이";
+            Deck deck = Deck.create();
+            players.receiveCard(deck);
 
             //when
             String actual = players.getCurrentDrawablePlayer().name();
@@ -119,13 +124,14 @@ class PlayersTest {
         @Test
         void should_예외를반환한다_when_카드를받을수있는플레이어가없을시() {
             //given
-            Players players = Players.from(List.of("포이", "에밀"));
+            Players players = Players.from(List.of("포이"));
             Deck deck = Deck.create();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(new Card(Suit.SPADE, Number.ACE));
                 cards.add(new Card(Suit.SPADE, Number.JACK));
             });
+            players.receiveCard(deck);
             players.receiveCard(deck);
 
             //when
