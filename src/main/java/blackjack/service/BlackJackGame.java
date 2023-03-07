@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.service;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
