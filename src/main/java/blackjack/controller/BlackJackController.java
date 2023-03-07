@@ -39,9 +39,6 @@ public class BlackJackController {
     }
 
     private void repeatHitOrStayUntilPlayerWants(String playerName) {
-        if (!blackJackGame.isAvailable(playerName)) {
-            return;
-        }
         HitCommand hitCommand = refreshHitCommand(playerName);
         while (hitCommand == HitCommand.YES) {
             blackJackGame.hitByName(playerName);
