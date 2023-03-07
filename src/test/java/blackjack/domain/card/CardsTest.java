@@ -56,6 +56,20 @@ public class CardsTest {
     }
 
     @Test
+    @DisplayName("Ace가 세 장 있는 경우 테스트")
+    void calculateToTalScore_AceAceAce() {
+        Cards cards = new Cards(List.of(
+                new Card(Number.ACE, Suit.HEART),
+                new Card(Number.ACE, Suit.SPADE),
+                new Card(Number.ACE, Suit.CLOVER)
+        ));
+
+        int result = cards.calculateTotalScore();
+
+        assertThat(result).isEqualTo(13);
+    }
+
+    @Test
     @DisplayName("Ace를 포함한 두 장의 카드의 총점이 21인 경우")
     void calculateTotalScore_containsAce_blackjack() {
         // given
