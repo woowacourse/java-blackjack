@@ -18,6 +18,10 @@ public final class Score {
         return CACHE.computeIfAbsent(score, mapping -> new Score(score));
     }
 
+    public Score add(final Score other) {
+        return new Score(this.score + other.score);
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) {

@@ -23,4 +23,19 @@ class ScoreTest {
         assertThat(score)
                 .isExactlyInstanceOf(Score.class);
     }
+
+    @Test
+    @DisplayName("add()는 호출하면, 인자로 넘긴 점수와 더한 값을 가진 Score를 반환한다.")
+    void add_givenScore_thenReturnAddedScore() {
+        // given
+        Score otherScore = Score.create(5);
+        Score expected = Score.create(15);
+
+        // when
+        Score actual = score.add(otherScore);
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
 }
