@@ -13,12 +13,6 @@ public class Dealer extends Participant {
         super(new Name(DEALER_NAME), cards);
     }
 
-    public List<String> getOneCard() {
-        final Card firstCard = this.getHand().get(0);
-
-        return List.of(firstCard.getCardName());
-    }
-
     @Override
     public boolean isHit() {
         return getScore() <= DEALER_HIT_SCORE;

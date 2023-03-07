@@ -1,11 +1,13 @@
 package blackjack.view;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -36,7 +38,12 @@ public class OutputView {
     }
 
     private String getNameAndCards(final Participant participant) {
-        return participant.getName() + COLON + String.join(COMMA, participant.getCardNames());
+        List<String> cardNames = participant.getHand()
+                .stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toUnmodifiableList());
+
+        return participant.getName() + COLON + String.join(COMMA, cardNames);
     }
 
     public void printAllCardsAndScore(final Participants participants) {

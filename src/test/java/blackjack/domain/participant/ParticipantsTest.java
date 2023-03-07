@@ -50,6 +50,22 @@ public class ParticipantsTest {
     }
 
     @Test
+    @DisplayName("모든 참여자를 반환하는 테스트")
+    void getAllTest() {
+        // given
+        List<String> playerNames = List.of("pobi", "crong");
+        Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+
+        // when
+        List<Participant> expected = List.of(dealer,
+                new Player(new Name("pobi"), new ArrayList<>()),
+                new Player(new Name("crong"), new ArrayList<>()));
+
+        // then
+        Assertions.assertThat(participants.getAll()).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("딜러를 반환하는 테스트")
     void getDealerTest() {
         List<String> playerNames = List.of("pobi", "crong");
@@ -84,11 +100,11 @@ public class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("플레이어들의 이름을 반환하는 테스트")
-    void getPlayerNames() {
+    @DisplayName("참여자들의 이름을 반환하는 테스트")
+    void getNamesTest() {
         List<String> playerNames = List.of("pobi", "crong");
         Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
 
-        Assertions.assertThat(participants.getPlayerNames()).contains("pobi", "crong");
+        Assertions.assertThat(participants.getNames()).contains("딜러", "pobi", "crong");
     }
 }

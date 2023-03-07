@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public abstract class Participant {
 
@@ -34,9 +34,16 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public List<String> getCardNames() {
-        return hand.getCards().stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toList());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && Objects.equals(hand, that.hand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand);
     }
 }
