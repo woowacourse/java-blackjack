@@ -50,7 +50,7 @@ public class DeckTest {
         List<Number> numbers = Number.getAll();
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            cards.add(new Card(symbols.get(i / 13), numbers.get(i % 13)));
+            cards.add(Card.of(symbols.get(i / 13), numbers.get(i % 13)));
         }
         return cards;
     }

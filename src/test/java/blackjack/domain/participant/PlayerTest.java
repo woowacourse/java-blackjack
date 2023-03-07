@@ -21,8 +21,8 @@ public class PlayerTest {
     void addCardInCards() {
         Player player = new Player(new Name("pobi"));
 
-        player.addCard(new Card(Symbol.CLOVER, Number.ACE));
-        player.addCard(new Card(Symbol.DIAMOND, Number.TEN));
+        player.addCard(Card.of(Symbol.CLOVER, Number.ACE));
+        player.addCard(Card.of(Symbol.DIAMOND, Number.TEN));
 
         assertThat(player.getCards().getCount()).isEqualTo(2);
     }
@@ -43,12 +43,12 @@ public class PlayerTest {
 
     static Stream<Arguments> generateCards() {
         return Stream.of(
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.CLOVER, Number.TWO)), 9),
-                Arguments.of(List.of(new Card(Symbol.HEART, Number.NINE), new Card(Symbol.HEART, Number.TWO)), 11),
-                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), 20),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.THREE), new Card(Symbol.CLOVER, Number.TWO)), 5),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.SEVEN), new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.DIAMOND, Number.SEVEN)), 21),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.TEN), new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.DIAMOND, Number.SEVEN)), 18)
+                Arguments.of(List.of(Card.of(Symbol.SPADE, Number.SEVEN), Card.of(Symbol.CLOVER, Number.TWO)), 9),
+                Arguments.of(List.of(Card.of(Symbol.HEART, Number.NINE), Card.of(Symbol.HEART, Number.TWO)), 11),
+                Arguments.of(List.of(Card.of(Symbol.DIAMOND, Number.TEN), Card.of(Symbol.SPADE, Number.TEN)), 20),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.THREE), Card.of(Symbol.CLOVER, Number.TWO)), 5),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.SEVEN), Card.of(Symbol.SPADE, Number.SEVEN), Card.of(Symbol.DIAMOND, Number.SEVEN)), 21),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.TEN), Card.of(Symbol.SPADE, Number.ACE), Card.of(Symbol.DIAMOND, Number.SEVEN)), 18)
         );
     }
 
@@ -66,12 +66,12 @@ public class PlayerTest {
 
     static Stream<Arguments> generateCardsAndFlag() {
         return Stream.of(
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.CLOVER, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.HEART, Number.NINE), new Card(Symbol.HEART, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), true),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.THREE), new Card(Symbol.CLOVER, Number.TWO)), true),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.SEVEN), new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.DIAMOND, Number.SEVEN)), false),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.TEN), new Card(Symbol.SPADE, Number.TEN), new Card(Symbol.DIAMOND, Number.SEVEN)), false)
+                Arguments.of(List.of(Card.of(Symbol.SPADE, Number.SEVEN), Card.of(Symbol.CLOVER, Number.TWO)), true),
+                Arguments.of(List.of(Card.of(Symbol.HEART, Number.NINE), Card.of(Symbol.HEART, Number.TWO)), true),
+                Arguments.of(List.of(Card.of(Symbol.DIAMOND, Number.TEN), Card.of(Symbol.SPADE, Number.TEN)), true),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.THREE), Card.of(Symbol.CLOVER, Number.TWO)), true),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.SEVEN), Card.of(Symbol.SPADE, Number.SEVEN), Card.of(Symbol.DIAMOND, Number.SEVEN)), false),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.TEN), Card.of(Symbol.SPADE, Number.TEN), Card.of(Symbol.DIAMOND, Number.SEVEN)), false)
         );
     }
 }

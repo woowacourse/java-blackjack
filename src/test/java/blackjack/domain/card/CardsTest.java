@@ -19,7 +19,7 @@ public class CardsTest {
         Cards cards = new Cards();
         int expectedSize = cards.getCount() + 1;
 
-        cards.add(new Card(Symbol.SPADE, Number.ACE));
+        cards.add(Card.of(Symbol.SPADE, Number.ACE));
 
         assertThat(cards.getCount()).isEqualTo(expectedSize);
     }
@@ -39,12 +39,12 @@ public class CardsTest {
 
     static Stream<Arguments> generateCards() {
         return Stream.of(
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.CLOVER, Number.TWO)), 9),
-                Arguments.of(List.of(new Card(Symbol.HEART, Number.NINE), new Card(Symbol.HEART, Number.TWO)), 11),
-                Arguments.of(List.of(new Card(Symbol.DIAMOND, Number.TEN), new Card(Symbol.SPADE, Number.TEN)), 20),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.THREE), new Card(Symbol.CLOVER, Number.TWO)), 5),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.SEVEN), new Card(Symbol.SPADE, Number.SEVEN), new Card(Symbol.DIAMOND, Number.SEVEN)), 21),
-                Arguments.of(List.of(new Card(Symbol.CLOVER, Number.TEN), new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.DIAMOND, Number.SEVEN)), 28)
+                Arguments.of(List.of(Card.of(Symbol.SPADE, Number.SEVEN), Card.of(Symbol.CLOVER, Number.TWO)), 9),
+                Arguments.of(List.of(Card.of(Symbol.HEART, Number.NINE), Card.of(Symbol.HEART, Number.TWO)), 11),
+                Arguments.of(List.of(Card.of(Symbol.DIAMOND, Number.TEN), Card.of(Symbol.SPADE, Number.TEN)), 20),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.THREE), Card.of(Symbol.CLOVER, Number.TWO)), 5),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.SEVEN), Card.of(Symbol.SPADE, Number.SEVEN), Card.of(Symbol.DIAMOND, Number.SEVEN)), 21),
+                Arguments.of(List.of(Card.of(Symbol.CLOVER, Number.TEN), Card.of(Symbol.SPADE, Number.ACE), Card.of(Symbol.DIAMOND, Number.SEVEN)), 28)
         );
     }
 
@@ -63,9 +63,9 @@ public class CardsTest {
 
     static Stream<Arguments> generateCardsWithACE() {
         return Stream.of(
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.CLOVER, Number.ACE)), 2),
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.HEART, Number.ACE), new Card(Symbol.CLOVER, Number.ACE)), 3),
-                Arguments.of(List.of(new Card(Symbol.SPADE, Number.ACE), new Card(Symbol.HEART, Number.ACE), new Card(Symbol.CLOVER, Number.ACE), new Card(Symbol.DIAMOND, Number.ACE)), 4)
+                Arguments.of(List.of(Card.of(Symbol.SPADE, Number.ACE), Card.of(Symbol.CLOVER, Number.ACE)), 2),
+                Arguments.of(List.of(Card.of(Symbol.SPADE, Number.ACE), Card.of(Symbol.HEART, Number.ACE), Card.of(Symbol.CLOVER, Number.ACE)), 3),
+                Arguments.of(List.of(Card.of(Symbol.SPADE, Number.ACE), Card.of(Symbol.HEART, Number.ACE), Card.of(Symbol.CLOVER, Number.ACE), Card.of(Symbol.DIAMOND, Number.ACE)), 4)
         );
     }
 }
