@@ -28,7 +28,7 @@ public class BlackJackGameController {
         this.outputView = outputView;
     }
 
-    private static Deck generateDeck() {
+    private Deck generateDeck() {
         Stack<Card> cards = new Stack<>();
 
         for (CardNumber cardNumber : CardNumber.values()) {
@@ -37,13 +37,13 @@ public class BlackJackGameController {
         return new Deck(cards);
     }
 
-    private static void generateCard(Stack<Card> cards, CardNumber cardNumber) {
+    private void generateCard(Stack<Card> cards, CardNumber cardNumber) {
         for (CardSymbol cardSymbol : CardSymbol.values()) {
             cards.add(new Card(cardNumber, cardSymbol));
         }
     }
 
-    private static List<String> getCardNames(List<Card> cards) {
+    private List<String> getCardNames(List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getCardNumberToString() + card.getCardSymbolToString()).collect(
                         Collectors.toList());

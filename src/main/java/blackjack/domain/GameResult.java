@@ -18,7 +18,7 @@ public class GameResult {
         accumulationResult(game);
     }
 
-    private static Map<String, Integer> initDealerResult() {
+    private Map<String, Integer> initDealerResult() {
         Map<String, Integer> dealerResult = new HashMap<>();
 
         dealerResult.put(WIN, 0);
@@ -27,7 +27,7 @@ public class GameResult {
         return dealerResult;
     }
 
-    private static String getPlayerWinWhenDealerLessThan21(int dealerScore, int playerScore) {
+    private String getPlayerWinWhenDealerLessThan21(int dealerScore, int playerScore) {
         if (playerScore > dealerScore) {
             return WIN;
         }
@@ -37,7 +37,7 @@ public class GameResult {
         return DRAW;
     }
 
-    private static String getPlayerWinWhenDealerOverThan21(int playerScore) {
+    private String getPlayerWinWhenDealerOverThan21(int playerScore) {
         if (playerScore <= BURST_NUMBER) {
             return WIN;
         }
