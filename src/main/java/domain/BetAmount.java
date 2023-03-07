@@ -22,6 +22,10 @@ public class BetAmount {
         if (money < MINIMUM || money > MAXIMUM) {
             throw new IllegalArgumentException("배팅 금액은 100원 이상, 1억 이하여야 합니다.");
         }
+
+        if (money % MINIMUM != 0) {
+            throw new IllegalArgumentException("배팅 금액은 100원 단위입니다.");
+        }
     }
 
     public BetAmount applyRatio(double ratio) {
