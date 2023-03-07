@@ -41,7 +41,7 @@ public class OutputView {
     private void printFirstDealerCardStatus(Participants participants) {
         Dealer dealer = participants.getDealer();
         Card dealerCard = dealer.getHand().getCards().get(0);
-        System.out.println(dealer.getName() + ": " + dealerCard.getValue() + dealerCard.getShape());
+        System.out.printf("%s: %s%s%n", dealer.getName(), dealerCard.getName(), dealerCard.getShape());
     }
 
     private void printFirstPlayerCardStatus(Participants participants) {
@@ -51,16 +51,14 @@ public class OutputView {
     }
 
     public void printPlayerCardStatus(Player player) {
-        System.out.println(player.getName() + ": " + getCardStatusForm(player.getHand()));
+        System.out.printf("%s: %s%n", player.getName(), getCardStatusForm(player.getHand()));
     }
 
     public void printDealerCardStatus(Dealer dealer) {
-        System.out.println(System.lineSeparator()
-                + dealer.getName()
-                + ": "
-                + getCardStatusForm(dealer.getHand())
-                + " - 결과: "
-                + dealer.getHand().getTotalValue());
+        System.out.printf("%n%s: %s - 결과:%s%n",
+                dealer.getName(),
+                getCardStatusForm(dealer.getHand()),
+                dealer.getHand().getTotalValue());
     }
 
     private String getCardStatusForm(Hand hand) {
@@ -83,12 +81,10 @@ public class OutputView {
 
     private void printPlayersScoreBoard(List<Player> players) {
         for (Player player : players) {
-            System.out.println(player.getName()
-                    + ": "
-                    + getCardStatusForm(player.getHand())
-                    + " - 결과: "
-                    + player.getHand().getTotalValue()
-            );
+            System.out.printf("%s: %s - 결과:%s%n",
+                    player.getName(),
+                    getCardStatusForm(player.getHand()),
+                    player.getHand().getTotalValue());
         }
     }
 

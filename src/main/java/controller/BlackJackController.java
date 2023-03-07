@@ -4,13 +4,11 @@ import model.card.Deck;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
-import ui.input.ReceiveCommand;
 import ui.input.InputView;
+import ui.input.ReceiveCommand;
 import ui.output.OutputView;
 
 import java.util.Arrays;
-
-import static ui.input.ReceiveCommand.HIT;
 
 public class BlackJackController {
 
@@ -56,10 +54,16 @@ public class BlackJackController {
     }
 
     private void receiveCardForPlayer(final Deck deck, final Player player) {
-        while (player.canReceiveCard()) {
+        boolean canReceive = player.canReceiveCard();
+        while (canReceive) {
             final ReceiveCommand inputCommand = getInputMoreCardCommand(player);
             receiveCardForPlayer(deck, player, inputCommand);
+            canReceive = canPlayerRecieveCard(player, inputCommand);
         }
+    }
+
+    private boolean canPlayerRecieveCard(final Player player, final ReceiveCommand receiveCommand) {
+        return player.canReceiveCard() && ReceiveCommand.isHit(receiveCommand);
     }
 
     private ReceiveCommand getInputMoreCardCommand(final Player player) {
@@ -73,7 +77,7 @@ public class BlackJackController {
     }
 
     private void receiveCardForPlayer(final Deck deck, final Player player, final ReceiveCommand receiveCommand) {
-        if (HIT.equals(receiveCommand)) {
+        if (ReceiveCommand.isHit(receiveCommand)) {
             player.receiveCard(deck.pick());
             outputView.printPlayerCardStatus(player);
         }
