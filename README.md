@@ -6,6 +6,31 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+## 그래프
+```mermaid
+graph TD
+    A[contrller] -.-> PS[Players]
+    A -.-> W[WinningResult]
+    A --> D[Dealer]
+    A -.-> CD[CardDeck]
+    
+    PS --> P[Player]
+    CD --> C[Card]
+    
+     Pa[Participant]--extends--- P
+     Pa[Participant]--extends--- D 
+    
+    D --> N[Name]
+    D --> H[HandCard]
+    P --> H
+    P --> N[Name]
+    D --> ST[State] 
+    P --> ST 
+
+    C --> S[CardSuit]
+    C --> Num[CardNumber]
+```
+
 ## 입력
 
 - [x] 참여자의 이름을 입력받는다
