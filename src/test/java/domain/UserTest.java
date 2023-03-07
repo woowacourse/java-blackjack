@@ -2,10 +2,14 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class UserTest extends AbstractTestFixture {
 
@@ -35,5 +39,57 @@ class UserTest extends AbstractTestFixture {
         user.drawCardFrom(deck);
 
         assertThat(user.getCards()).hasSize(1);
+    }
+
+    static Stream<Arguments> test_win_lose_draw() {
+        return Stream.of(
+                Arguments.of(
+                        new User("땡칠", createCards("K", "K")),
+                        new User("조이", createCards("K", "K")),
+                        Result.DRAW),
+                Arguments.of(
+                        new User("땡칠", createCards("K", "K")),
+                        new User("조이", createCards("A", "J")),
+                        Result.LOSE),
+                Arguments.of(
+                        new User("땡칠", createCards("A", "J")),
+                        new User("조이", createCards("A", "A")),
+                        Result.WIN)
+        );
+    }
+
+    @ParameterizedTest(name = "플레이어 간 승패를 알 수 있다")
+    @MethodSource
+    void test_win_lose_draw(Player player, Player other, Result result) {
+        assertThat(player.competeWith(other)).isEqualTo(result);
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
+    @Test
+    void test_all_busted_is_draw() {
+        var user = new User("조이", createCards("10", "K", "K"));
+        var dealer = new Dealer(createCards("K", "9", "9"));
+
+        assertThat(user.competeWith(dealer)).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("유저만 죽으면 딜러가 이긴다")
+    @Test
+    void test_user_busted_dealer_wins() {
+        var user = new User("조이", createCards("10", "K", "K"));
+        var dealer = new Dealer(createCards("K", "9"));
+
+        assertThat(user.competeWith(dealer)).isEqualTo(Result.LOSE);
+        assertThat(dealer.competeWith(user)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("딜러만 죽으면 유저가 이긴다")
+    @Test
+    void test_dealer_busted_user_wins() {
+        var user = new User("조이", createCards("A", "J"));
+        var dealer = new Dealer(createCards("K", "9", "10"));
+
+        assertThat(user.competeWith(dealer)).isEqualTo(Result.WIN);
+        assertThat(dealer.competeWith(user)).isEqualTo(Result.LOSE);
     }
 }

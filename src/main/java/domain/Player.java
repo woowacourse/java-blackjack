@@ -26,15 +26,18 @@ public abstract class Player {
         return hand.score();
     }
 
+
     Result competeWith(Player other) {
-        return hand.compareWith(other.hand);
+        if (hand.isDrawAgainst(other.hand)) {
+            return Result.DRAW;
+        }
+        if (hand.isWinnerAgainst(other.hand)) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
     }
 
     public abstract boolean canHit();
-
-    boolean isBusted() {
-        return hand.score() > 21;
-    }
 
     public List<Card> getCards() {
         return new ArrayList<>(hand.cards());
