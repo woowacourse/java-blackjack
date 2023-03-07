@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.Map;
-
 public enum WinningResult {
 
     WIN,
@@ -10,25 +8,6 @@ public enum WinningResult {
     ;
 
     public static final int WIN_MAX_NUMBER = 21;
-
-
-    public int getDealerLoseCount(final Map<Player, WinningResult> playersResult) {
-        return (int) playersResult.values().stream()
-                .filter(result -> result.equals(WIN))
-                .count();
-    }
-
-    public int getDealerWinCount(final Map<Player, WinningResult> playersResult) {
-        return (int) playersResult.values().stream()
-                .filter(result -> result.equals(LOSE))
-                .count();
-    }
-
-    public int getDealerPushCount(final Map<Player, WinningResult> playersResult) {
-        return (int) playersResult.values().stream()
-                .filter(result -> result.equals(PUSH))
-                .count();
-    }
 
     public static WinningResult calculateByBurst(int playerValue) {
         if (playerValue > WIN_MAX_NUMBER) {
@@ -55,5 +34,17 @@ public enum WinningResult {
             return WIN;
         }
         return PUSH;
+    }
+
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isLose() {
+        return this == LOSE;
+    }
+
+    public boolean isPush() {
+        return this == PUSH;
     }
 }

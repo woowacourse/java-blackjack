@@ -1,13 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Player;
-import blackjack.domain.WinningResult;
+import blackjack.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -61,20 +57,21 @@ public class OutputView {
         System.out.println(HIT_DEALER_MESSAGE.repeat(dealer.getCardsCount() - FIRST_CARD_COUNT));
     }
 
-    public void printAllWinORLose(final Map<Player, WinningResult> playerResult) {
-        printDealerWinORLose(playerResult);
-        for (Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + " : " + ViewWinningResult.getWinningResultName(playerResult.get(player)));
+    public void printAllWinORLose(final BlackjackGameResult blackjackGameResult) {
+        printDealerWinORLose(blackjackGameResult);
+        for (Player player : blackjackGameResult.getGameResult().keySet()) {
+            System.out.println(player.getName() + " : " +
+                    ViewWinningResult.getWinningResultName(blackjackGameResult.NameByPlayer(player)));
         }
     }
 
-    public void printDealerWinORLose(final Map<Player, WinningResult> playerResult) {
+    public void printDealerWinORLose(final BlackjackGameResult blackjackGameResult) {
         System.out.print("딜러: ");
-        System.out.print(WinningResult.WIN.getDealerWinCount(playerResult) +
+        System.out.print(blackjackGameResult.getDealerWinCount() +
                 ViewWinningResult.getWinningResultName(WinningResult.WIN));
-        System.out.print(WinningResult.PUSH.getDealerPushCount(playerResult) +
+        System.out.print(blackjackGameResult.getDealerPushCount() +
                 ViewWinningResult.getWinningResultName(WinningResult.PUSH));
-        System.out.println(WinningResult.LOSE.getDealerLoseCount(playerResult) +
+        System.out.println(blackjackGameResult.getDealerLoseCount() +
                 ViewWinningResult.getWinningResultName(WinningResult.LOSE));
     }
 

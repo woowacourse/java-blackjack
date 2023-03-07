@@ -23,8 +23,9 @@ public class BlackjackController {
         Participants participants = Participants.from(playersName);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
         gameSetting(blackjackGame);
+        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(blackjackGame.generatePlayersResult());
         hitParticipantsCard(blackjackGame, cards);
-        printResult(blackjackGame);
+        printResult(blackjackGame, blackjackGameResult);
     }
 
     private void gameSetting(final BlackjackGame blackjackGame) {
@@ -54,11 +55,11 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(final BlackjackGame blackjackGame) {
-        for(Participant participant : blackjackGame.getParticipants()) {
+    private void printResult(final BlackjackGame blackjackGame, final BlackjackGameResult blackjackGameResult) {
+        for (Participant participant : blackjackGame.getParticipants()) {
             outputView.printTotalCardsAndScore(participant);
         }
-        outputView.printAllWinORLose(blackjackGame.generatePlayersResult());
+        outputView.printAllWinORLose(blackjackGameResult);
     }
 
     private List<String> inputPlayerNameCommand() {
