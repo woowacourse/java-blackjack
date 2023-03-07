@@ -9,7 +9,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.Score;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerStateResponse;
@@ -125,7 +124,7 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    public List<PlayerResultResponse> getPlayerResultResponses(final Score dealerScore, final List<Player> players) {
+    public List<PlayerResultResponse> getPlayerResultResponses(final int dealerScore, final List<Player> players) {
         return players.stream()
                 .map(player -> new PlayerResultResponse(player.getName(), player.getWinningStatus(dealerScore)))
                 .collect(Collectors.toList());

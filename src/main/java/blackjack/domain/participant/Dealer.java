@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.Result;
 
 public class Dealer extends Participant {
 
@@ -29,6 +30,25 @@ public class Dealer extends Participant {
 
     private boolean isScoreLow() {
         return cards.calculateTotalScore() <= MAXIMUM_SCORE;
+    }
+
+    public Result compareScoreTo(Player player) {
+        int dealerScore = this.getScore();
+        int playerScore = player.getScore();
+
+        if (playerScore > 21) {
+            return Result.WIN;
+        }
+        if (dealerScore > 21) {
+            return Result.LOSE;
+        }
+        if (dealerScore > playerScore) {
+            return Result.WIN;
+        }
+        if (dealerScore < playerScore) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 
     @Override

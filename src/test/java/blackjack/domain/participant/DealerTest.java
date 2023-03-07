@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.card.Number.ACE;
+import static blackjack.domain.card.Number.JACK;
+import static blackjack.domain.card.Number.KING;
 import static blackjack.domain.card.Number.QUEEN;
 import static blackjack.domain.card.Number.SEVEN;
 import static blackjack.domain.card.Number.SIX;
@@ -12,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.Result;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -82,6 +85,21 @@ class DealerTest {
         ));
         final Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.getScore().getValue()).isEqualTo(15);
+        assertThat(dealer.getScore()).isEqualTo(15);
+    }
+
+    @Test
+    void 플레이어의_점수가_21_초과라면_딜러의_점수에_상관없이_딜러가_이긴다() {
+        final Cards cards = new Cards(List.of(
+                new Card(KING, CLOVER),
+                new Card(JACK, HEART),
+                new Card(QUEEN, DIAMOND)
+        ));
+        final Player player = new Player("kokodak", cards);
+        final Dealer dealer = new Dealer(cards);
+
+        Result result = dealer.compareScoreTo(player);
+
+        assertThat(result).isEqualTo(Result.WIN);
     }
 }
