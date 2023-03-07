@@ -5,7 +5,6 @@ import domain.player.DealerStatus;
 public class Score {
 
     private static final int DEALER_HIT_BOUNDARY = 16;
-    private static final int BUSTED_SCORE = -1;
     private static final int MAX_SCORE = 21;
 
     private final int value;
@@ -15,9 +14,6 @@ public class Score {
     }
 
     public static Score from(final int value) {
-        if (value > MAX_SCORE) {
-            return new Score(BUSTED_SCORE);
-        }
         return new Score(value);
     }
 
@@ -44,6 +40,6 @@ public class Score {
     }
 
     public boolean isBusted() {
-        return value == BUSTED_SCORE;
+        return value > MAX_SCORE;
     }
 }
