@@ -141,7 +141,7 @@ if [ "$cygwin" = "true" -o "$msys" = "true" ] ; then
         SEP="|"
     done
     OURCYGPATTERN="(^($ROOTDIRS))"
-    # Add a domain.user-defined pattern to the cygpath arguments
+    # Add a user-defined pattern to the cygpath arguments
     if [ "$GRADLE_CYGPATTERN" != "" ] ; then
         OURCYGPATTERN="$OURCYGPATTERN|($GRADLE_CYGPATTERN)"
     fi
