@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Participant {
 
-    private final Cards cards;
+    private Cards cards;
 
     public Participant(final Cards cards) {
         this.cards = cards;
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
+        cards = cards.add(card);
     }
 
     public int calculateTotalScore() {
