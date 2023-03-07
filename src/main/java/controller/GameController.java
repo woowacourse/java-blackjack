@@ -28,13 +28,13 @@ public class GameController {
         Participant currentParticipant = game.getCurrentParticipant();
         while (currentParticipant.isPlayer()) {
             boolean isHit = InputView.readAnswerForMoreCard(currentParticipant.getName());
-            game.run(currentParticipant, BlackJackAction.of(isHit));
+            game.play(currentParticipant, BlackJackAction.of(isHit));
             OutputView.printNameAndCards(currentParticipant.getName(), currentParticipant.getCards());
             currentParticipant = game.getCurrentParticipant();
         }
         while (game.isDealerNeedCard(currentParticipant)) {
             OutputView.printDealerReceivedCard();
-            game.run(currentParticipant, BlackJackAction.HIT);
+            game.play(currentParticipant, BlackJackAction.HIT);
         }
     }
     

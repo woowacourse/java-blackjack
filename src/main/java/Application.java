@@ -1,6 +1,4 @@
 import controller.GameController;
-import domain.Game;
-import view.InputView;
 
 public class Application {
 
