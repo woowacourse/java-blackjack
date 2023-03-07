@@ -29,8 +29,10 @@ public class Players {
         return dealer.getTotalScore() <= 16;
     }
 
-    public void battleAll(GameResult gameResult) {
+    public GameResult battleAll() {
+        GameResult gameResult = new GameResult();
         participants.forEach(participant -> dealer.battle(participant, gameResult));
+        return gameResult;
     }
 
     public Player findByName(String name) {

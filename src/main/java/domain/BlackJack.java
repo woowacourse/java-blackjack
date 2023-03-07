@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.CardRepository;
-import domain.gameresult.GameResult;
 import domain.gameresult.GameResultReadOnly;
 import domain.player.PlayerReadOnly;
 import domain.player.Players;
@@ -10,6 +9,7 @@ import domain.player.PlayersReadOnly;
 import java.util.List;
 
 public class BlackJack {
+    public static final int INITIALIZING_CARD_COUNT = 2;
     private final Players players;
     private final CardRepository cardRepository;
 
@@ -19,7 +19,7 @@ public class BlackJack {
     }
 
     public void initializeCardsOfPlayers() {
-        for (int count = 0; count < 2; count++) {
+        for (int count = 0; count < INITIALIZING_CARD_COUNT; count++) {
             giveCardToAllPlayers();
         }
     }
@@ -52,8 +52,6 @@ public class BlackJack {
     }
 
     public GameResultReadOnly battle() {
-        GameResult gameResult = new GameResult();
-        players.battleAll(gameResult);
-        return GameResultReadOnly.from(gameResult);
+        return GameResultReadOnly.from(players.battleAll());
     }
 }
