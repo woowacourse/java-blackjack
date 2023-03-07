@@ -1,10 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.DealerJudgeResultsStatistic;
-import blackjack.domain.FinalCards;
-import blackjack.domain.JudgeResult;
-import blackjack.domain.PlayerJudgeResults;
+import blackjack.domain.card.Card;
+import blackjack.domain.result.DealerJudgeResultsStatistic;
+import blackjack.domain.result.FinalCards;
+import blackjack.domain.result.JudgeResult;
+import blackjack.domain.result.PlayerJudgeResults;
+import blackjack.view.outputWord.DenominationWord;
+import blackjack.view.outputWord.JudgeResultWord;
+import blackjack.view.outputWord.SuitWord;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

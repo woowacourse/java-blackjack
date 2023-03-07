@@ -1,7 +1,7 @@
-package blackjack.view;
+package blackjack.view.outputWord;
 
-import blackjack.domain.DealerJudgeResultsStatistic;
-import blackjack.domain.JudgeResult;
+import blackjack.domain.result.DealerJudgeResultsStatistic;
+import blackjack.domain.result.JudgeResult;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 

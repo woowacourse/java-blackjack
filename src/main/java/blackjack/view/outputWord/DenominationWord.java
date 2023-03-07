@@ -1,6 +1,6 @@
-package blackjack.view;
+package blackjack.view.outputWord;
 
-import blackjack.domain.Denomination;
+import blackjack.domain.card.Denomination;
 import java.util.Arrays;
 
 public enum DenominationWord {

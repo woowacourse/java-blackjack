@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
-import static blackjack.domain.JudgeResult.LOSE;
-import static blackjack.domain.JudgeResult.PUSH;
-import static blackjack.domain.JudgeResult.WIN;
+import static blackjack.domain.result.JudgeResult.LOSE;
+import static blackjack.domain.result.JudgeResult.PUSH;
+import static blackjack.domain.result.JudgeResult.WIN;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

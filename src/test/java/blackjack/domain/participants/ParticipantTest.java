@@ -1,9 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
-import static blackjack.domain.Denomination.JACK;
-import static blackjack.domain.Suit.SPADE;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

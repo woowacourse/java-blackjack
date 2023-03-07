@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

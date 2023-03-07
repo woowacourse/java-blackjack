@@ -2,9 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.Card;
-import blackjack.domain.DealerJudgeResultsStatistic;
-import blackjack.domain.PlayerJudgeResults;
+import blackjack.domain.card.Card;
+import blackjack.domain.result.DealerJudgeResultsStatistic;
+import blackjack.domain.result.PlayerJudgeResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

@@ -1,7 +1,10 @@
 package blackjack.domain;
 
-import static blackjack.domain.Denomination.values;
+import static blackjack.domain.card.Denomination.values;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -1,13 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
-import static blackjack.domain.Denomination.QUEEN;
-import static blackjack.domain.Denomination.SEVEN;
-import static blackjack.domain.Denomination.SIX;
-import static blackjack.domain.Suit.CLUB;
-import static blackjack.domain.Suit.SPADE;
+import static blackjack.domain.card.Denomination.QUEEN;
+import static blackjack.domain.card.Denomination.SEVEN;
+import static blackjack.domain.card.Denomination.SIX;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.result.JudgeResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
