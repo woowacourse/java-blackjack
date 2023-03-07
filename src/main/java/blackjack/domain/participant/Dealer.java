@@ -19,10 +19,10 @@ public class Dealer extends Participant {
         return isUnderScore() && isUnderCount();
     }
 
-    public Card getFirst() {
+    public Card getFirstCard() {
         List<Card> cards = this.cards.getCards();
         if (cards.isEmpty()) {
-            throw new IllegalStateException("잘못된 접근입니다.");
+            throw new IllegalStateException("보유하고 있는 카드가 없습니다.");
         }
         return cards.get(FIRST_CARD_INDEX);
     }
