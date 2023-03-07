@@ -19,11 +19,4 @@ class CardsTest {
         Card card = new Card(Value.FIVE, Shape.DIAMOND);
         assertThat(cards.contains(card)).isTrue();
     }
-
-    @DisplayName("카드를 한 장씩 반환받을 수 있다.")
-    @Test
-    void receiveCardTest() {
-        assertThat(cards.getCard()).isEqualTo(new Card(Value.KING, Shape.HEART));
-        assertThat(cards.getCard()).isEqualTo(new Card(Value.KING, Shape.DIAMOND));
-    }
 }

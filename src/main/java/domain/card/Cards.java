@@ -2,8 +2,10 @@ package domain.card;
 
 import domain.card.shuffler.CardsShuffler;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Cards {
 
@@ -15,13 +17,10 @@ public final class Cards {
     }
 
     private static Deque<Card> initializeCards() {
-        Deque<Card> cards = new ArrayDeque<>();
-        for (Value value : Value.values()) {
-            for (Shape shape : Shape.values()) {
-                cards.push(new Card(value, shape));
-            }
-        }
-        return cards;
+        return Arrays.stream(Shape.values())
+                .flatMap(shape -> Arrays.stream(Value.values())
+                        .map(value -> new Card(value, shape)))
+                .collect(Collectors.toCollection(ArrayDeque::new));
     }
 
     public List<Card> giveInitialCards() {
