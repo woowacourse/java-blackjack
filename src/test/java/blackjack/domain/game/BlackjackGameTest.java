@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -23,7 +24,7 @@ public class BlackjackGameTest {
 
     @Test
     void 플레이어들을_반환한다() {
-        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"), ShuffledDeck.getInstance());
 
         final List<Player> players = blackjackGame.getPlayers();
 
@@ -32,14 +33,14 @@ public class BlackjackGameTest {
                 .containsExactly("딜러", "허브", "후추");
     }
 
-    private BlackjackGame generateBlackjackGame(final List<String> names) {
+    private BlackjackGame generateBlackjackGame(final List<String> names, Deck deck) {
         final Players players = Players.from(names);
-        return new BlackjackGame(players);
+        return new BlackjackGame(players, deck);
     }
 
     @Test
     void 딜러를_반환한다() {
-        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"), ShuffledDeck.getInstance());
 
         final Player dealer = blackjackGame.getDealer();
 
@@ -48,7 +49,6 @@ public class BlackjackGameTest {
 
     @Test
     void 플레이어들이_게임_시작_시_카드를_뽑는다() {
-        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"));
         final Deck deck = new FixedDeck(List.of(
                 new Card(ACE, DIAMOND),
                 new Card(JACK, CLOVER),
@@ -56,8 +56,9 @@ public class BlackjackGameTest {
                 new Card(EIGHT, SPADE),
                 new Card(KING, HEART)
         ));
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브", "후추"), deck);
 
-        blackjackGame.initialDraw(deck);
+        blackjackGame.initialDraw();
 
         final List<Player> players = blackjackGame.getPlayers();
         assertThat(players)
@@ -67,7 +68,6 @@ public class BlackjackGameTest {
 
     @Test
     void 딜러가_카드를_뽑는다() {
-        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"));
         final Deck deck = new FixedDeck(List.of(
                 new Card(JACK, CLOVER),
                 new Card(TWO, CLOVER),
@@ -75,9 +75,10 @@ public class BlackjackGameTest {
                 new Card(TWO, DIAMOND),
                 new Card(KING, HEART)
         ));
-        blackjackGame.initialDraw(deck);
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"), deck);
+        blackjackGame.initialDraw();
 
-        blackjackGame.drawByDealer(deck);
+        blackjackGame.drawByDealer();
 
         final Dealer dealer = blackjackGame.getDealer();
         assertThat(dealer.getCardCount()).isEqualTo(3);
@@ -85,7 +86,6 @@ public class BlackjackGameTest {
 
     @Test
     void 게임_결과를_반환한다() {
-        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"));
         final Deck deck = new FixedDeck(List.of(
                 new Card(JACK, CLOVER),
                 new Card(TWO, CLOVER),
@@ -93,8 +93,9 @@ public class BlackjackGameTest {
                 new Card(TWO, DIAMOND),
                 new Card(KING, HEART)
         ));
-        blackjackGame.initialDraw(deck);
-        blackjackGame.drawByDealer(deck);
+        final BlackjackGame blackjackGame = generateBlackjackGame(List.of("허브"), deck);
+        blackjackGame.initialDraw();
+        blackjackGame.drawByDealer();
 
         final BlackjackGameResult result = blackjackGame.play();
 

@@ -31,41 +31,33 @@ public class BlackjackController {
 
     private BlackjackGame generateBlackjackGame() {
         final Players players = repeatUntilGetValidInput(inputView::readPlayers);
-        return new BlackjackGame(players);
+        return new BlackjackGame(players, ShuffledDeck.getInstance());
     }
 
     private void initialDraw(final BlackjackGame blackjackGame) {
-        blackjackGame.initialDraw(ShuffledDeck.getInstance());
+        blackjackGame.initialDraw();
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 
     private void draw(final BlackjackGame blackjackGame) {
         final List<Player> players = blackjackGame.getPlayers();
         for (Player player : players) {
-            drawBy(player);
+            drawByGambler(blackjackGame, player);
         }
-        blackjackGame.drawByDealer(ShuffledDeck.getInstance());
+        blackjackGame.drawByDealer();
         outputView.printDealerDraw(blackjackGame.getDealer());
     }
 
-    private void drawBy(final Player player) {
+    private void drawByGambler(final BlackjackGame blackjackGame, final Player player) {
         while (isDrawable(player)) {
             final BlackjackCommand command = repeatUntilGetValidInput(() -> inputView.readCommand(player));
-            drawOnce(player, command);
+            blackjackGame.drawByGambler(player, command);
             outputView.printDrawResult(player);
         }
     }
 
     private boolean isDrawable(final Player player) {
         return player.isDrawable() && !player.isDealer();
-    }
-
-    private void drawOnce(final Player player, final BlackjackCommand command) {
-        if (command.isHit()) {
-            player.draw(ShuffledDeck.getInstance());
-            return;
-        }
-        player.stay();
     }
 
     private <T> T repeatUntilGetValidInput(final Supplier<T> supplier) {
