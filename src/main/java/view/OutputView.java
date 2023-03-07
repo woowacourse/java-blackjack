@@ -4,9 +4,9 @@ import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
-import controller.ParticipantDto;
+import controller.HandDto;
 import domain.GameOutcome;
-import controller.ParticipantDtoWithScore;
+import controller.HandScoreDto;
 import java.util.List;
 import java.util.Map;
 
@@ -15,35 +15,35 @@ public class OutputView {
 
     private static final String CARD_DELIMITER = ", ";
 
-    public void printParticipantsInitialCards(List<ParticipantDto> participantDtos) {
-        printInitialState(participantDtos);
-        printInitialCards(participantDtos);
+    public void printInitialHands(List<HandDto> handDtos) {
+        printInitialState(handDtos);
+        printInitialCards(handDtos);
     }
 
-    private void printInitialState(List<ParticipantDto> participantDtos) {
-        String initialState = participantDtos.stream()
-                .map(ParticipantDto::name)
-                .collect(joining(CARD_DELIMITER, "", "에게 2장을 나누었습니다."));
+    private void printInitialState(List<HandDto> handDtos) {
+        String initialState = handDtos.stream()
+                                      .map(HandDto::name)
+                                      .collect(joining(CARD_DELIMITER, "", "에게 2장을 나누었습니다."));
         System.out.println(initialState);
     }
 
-    private void printInitialCards(List<ParticipantDto> participantDtos) {
-        participantDtos.forEach(participantDto -> {
-            if (participantDto.name().equals("딜러")) {
-                printFirstCard(participantDto);
+    private void printInitialCards(List<HandDto> handDtos) {
+        handDtos.forEach(handDto -> {
+            if (handDto.name().equals("딜러")) {
+                printFirstCard(handDto);
                 return;
             }
-            printAllCards(participantDto);
+            printCards(handDto);
         });
     }
 
-    private void printFirstCard(ParticipantDto participantDto) {
-        System.out.println(generateCardsInfo(participantDto.name(), participantDto.cards().subList(0, 1)));
+    private void printFirstCard(HandDto handDto) {
+        System.out.println(generateCardsInfo(handDto.name(), handDto.cards().subList(0, 1)));
     }
 
-    public void printAllCards(ParticipantDto participantDto) {
-        System.out.println(generateCardsInfo(participantDto.name(),
-                participantDto.cards()));
+    public void printCards(HandDto handDto) {
+        System.out.println(generateCardsInfo(handDto.name(),
+                handDto.cards()));
     }
 
     private String generateCardsInfo(String name, List<String> cards) {
@@ -51,24 +51,24 @@ public class OutputView {
         return String.format("%s%s%s", name, NAME_CARD_DELIMITER, cardsInfo);
     }
 
-    public void printDealerHandOutInfo() {
+    public void printIfDealerReceivedCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printParticipantsScore(List<ParticipantDtoWithScore> participantDtosWithScore) {
-        for (ParticipantDtoWithScore participantDtoWithScore : participantDtosWithScore) {
+    public void printHandsWithScore(List<HandScoreDto> participantDtosWithScore) {
+        for (HandScoreDto participantDtoWithScore : participantDtosWithScore) {
             System.out.println(generateCardsAndScore(participantDtoWithScore));
         }
     }
 
-    private String generateCardsAndScore(ParticipantDtoWithScore participantDtoWithScore) {
+    private String generateCardsAndScore(HandScoreDto participantDtoWithScore) {
         String name = participantDtoWithScore.name();
         List<String> cards = participantDtoWithScore.cards();
         int score = participantDtoWithScore.score();
         return String.format("%s - 결과: %d", generateCardsInfo(name, cards), score);
     }
 
-    public void printGameOutcomes(Map<String, GameOutcome> playerOutcomes) {
+    public void printWinLossInfo(Map<String, GameOutcome> playerOutcomes) {
         System.out.println("## 최종 승패");
         Map<GameOutcome, Long> dealerOutcome = generateDealerOutcome(playerOutcomes);
         printDealerOutcome(dealerOutcome);

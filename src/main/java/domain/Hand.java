@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Hand {
+    private static final int BUST_LOWER_BOUND = 22;
     public static final int ADDITIONAL_SCORE_OF_ACE = 10;
+
     private final Deque<Card> cards;
 
     public Hand() {
@@ -32,7 +34,7 @@ public class Hand {
     }
 
     private int addExtraScoreIfAce(int score) {
-        if (score + ADDITIONAL_SCORE_OF_ACE > 21) {
+        if (score + ADDITIONAL_SCORE_OF_ACE >= BUST_LOWER_BOUND) {
             return score;
         }
         return score + ADDITIONAL_SCORE_OF_ACE;

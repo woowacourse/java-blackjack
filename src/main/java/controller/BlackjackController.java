@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.Decision;
+import domain.HitOrStand;
 import domain.Participant;
 import domain.Player;
 import domain.RandomShuffleStrategy;
@@ -21,47 +21,48 @@ public class BlackjackController {
     }
 
     public void run() {
-        BlackjackGame blackjackGame = initializeGame();
-        handOutCardsToPlayers(blackjackGame);
-        handOutCardsToDealer(blackjackGame);
-        outputView.printParticipantsScore(toParticipantDtosWithScore(blackjackGame.getParticipants()));
-        outputView.printGameOutcomes(blackjackGame.getPlayersOutcome());
+        BlackjackGame blackjackGame = startGame();
+        dealCardsToPlayers(blackjackGame);
+        dealCardsToDealer(blackjackGame);
+
+        outputView.printHandsWithScore(toHandScoreDtos(blackjackGame.getParticipants()));
+        outputView.printWinLossInfo(blackjackGame.getPlayersOutcome());
     }
 
-    private BlackjackGame initializeGame() {
+    private BlackjackGame startGame() {
         BlackjackGame blackjackGame = new BlackjackGame();
-        blackjackGame.setParticipants(inputView.readNames());
-        blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
+        blackjackGame.setParticipants(inputView.readPlayerNames());
+        blackjackGame.dealFirstHands(new RandomShuffleStrategy());
 
-        outputView.printParticipantsInitialCards(toParticipantDtos(blackjackGame.getParticipants()));
+        outputView.printInitialHands(toHandDtos(blackjackGame.getParticipants()));
         return blackjackGame;
     }
 
-    private void handOutCardsToPlayers(BlackjackGame blackjackGame) {
-        while (blackjackGame.hasDrawablePlayer()) {
-            Player currentDrawablePlayer = blackjackGame.getCurrentDrawablePlayer();
-            Decision decision = Decision.from(inputView.readDecision(currentDrawablePlayer.name()));
+    private void dealCardsToPlayers(BlackjackGame blackjackGame) {
+        while (blackjackGame.hasAnyPlayerToDeal()) {
+            Player playerToDeal = blackjackGame.getPlayerToDeal();
+            HitOrStand decision = HitOrStand.from(inputView.readHitOrStand(playerToDeal.name()));
             blackjackGame.hitOrStand(decision);
-            outputView.printAllCards(new ParticipantDto(currentDrawablePlayer));
+            outputView.printCards(new HandDto(playerToDeal));
         }
     }
 
-    private void handOutCardsToDealer(BlackjackGame blackjackGame) {
+    private void dealCardsToDealer(BlackjackGame blackjackGame) {
         while (blackjackGame.isDealerDrawable()) {
-            blackjackGame.handOutCardToDealer();
-            outputView.printDealerHandOutInfo();
+            blackjackGame.dealCardToDealer();
+            outputView.printIfDealerReceivedCard();
         }
     }
 
-    private List<ParticipantDto> toParticipantDtos(List<Participant> participants) {
+    private List<HandDto> toHandDtos(List<Participant> participants) {
         return participants.stream()
-                .map(ParticipantDto::new)
+                .map(HandDto::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<ParticipantDtoWithScore> toParticipantDtosWithScore(List<Participant> participants) {
+    private List<HandScoreDto> toHandScoreDtos(List<Participant> participants) {
         return participants.stream()
-                .map(ParticipantDtoWithScore::new)
+                .map(HandScoreDto::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 }

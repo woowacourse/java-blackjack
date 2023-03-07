@@ -3,19 +3,19 @@ package domain;
 import java.util.Arrays;
 import java.util.Objects;
 
-public enum Decision {
+public enum HitOrStand {
     HIT("y"),
     STAND("n"),
     ;
 
     private final String command;
 
-    Decision(String command) {
+    HitOrStand(String command) {
         this.command = command;
     }
 
-    public static Decision from(String command) {
-        return Arrays.stream(Decision.values())
+    public static HitOrStand from(String command) {
+        return Arrays.stream(HitOrStand.values())
                 .filter(decision -> Objects.equals(decision.command, command))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("y나 n이어야 합니다."));

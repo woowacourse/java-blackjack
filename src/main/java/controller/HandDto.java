@@ -1,15 +1,15 @@
 package controller;
 
 import domain.Participant;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ParticipantDto {
+public class HandDto {
     private final String name;
     private final List<String> cards;
 
-    public ParticipantDto(Participant participant) {
+    public HandDto(Participant participant) {
         this.name = participant.name();
         this.cards = participant.getHand()
                 .stream()

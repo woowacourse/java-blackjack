@@ -3,14 +3,14 @@ package controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Decision;
+import domain.HitOrStand;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class DecisionTest {
+class HitOrStandTest {
     @Nested
     class 반환 {
         @ParameterizedTest
@@ -19,7 +19,7 @@ class DecisionTest {
             //given
 
             //when
-            ThrowingCallable throwingCallable = () -> Decision.from(rawInput);
+            ThrowingCallable throwingCallable = () -> HitOrStand.from(rawInput);
 
             //then
             assertThatThrownBy(throwingCallable)
@@ -29,11 +29,11 @@ class DecisionTest {
 
         @ParameterizedTest
         @CsvSource(value = {"y:HIT", "n:STAND"}, delimiter = ':')
-        void should_정상생성_when_입력이y나n일경우(String decision, Decision expected) {
+        void should_정상생성_when_입력이y나n일경우(String decision, HitOrStand expected) {
             //given
 
             //when
-            Decision actual =  Decision.from(decision);
+            HitOrStand actual =  HitOrStand.from(decision);
 
             //then
             assertThat(actual).isEqualTo(expected);

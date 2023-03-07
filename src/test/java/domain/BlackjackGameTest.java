@@ -19,7 +19,7 @@ class BlackjackGameTest {
             //given
             BlackjackGame blackjackGame = new BlackjackGame();
             blackjackGame.setParticipants(List.of("포이", "에밀"));
-            blackjackGame.handOutInitialCards((cards) -> {
+            blackjackGame.dealFirstHands((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.JACK));
                 cards.add(Card.of(Suit.SPADE, Number.TEN));

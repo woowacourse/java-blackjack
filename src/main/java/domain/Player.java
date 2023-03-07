@@ -6,20 +6,20 @@ public class Player extends Participant {
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 21;
 
     private final Name name;
-    private Decision decision;
+    private HitOrStand hitOrStand;
 
     public Player(String inputName) {
         this.name = new Name(inputName);
-        this.decision = Decision.HIT;
+        this.hitOrStand = HitOrStand.HIT;
     }
 
     public void stand() {
-        decision = Decision.STAND;
+        hitOrStand = HitOrStand.STAND;
     }
 
     @Override
     public boolean isDrawable() {
-        return decision == Decision.HIT &&
+        return hitOrStand == HitOrStand.HIT &&
                 hand.calculateScore() < UPPER_BOUND_OF_DRAWABLE_SCORE;
     }
 

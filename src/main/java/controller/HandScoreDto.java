@@ -2,10 +2,10 @@ package controller;
 
 import domain.Participant;
 
-public class ParticipantDtoWithScore extends ParticipantDto {
+public class HandScoreDto extends HandDto {
     private final int score;
 
-    public ParticipantDtoWithScore(Participant participant) {
+    public HandScoreDto(Participant participant) {
         super(participant);
         this.score = participant.score();
     }

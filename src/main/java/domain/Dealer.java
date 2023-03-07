@@ -3,6 +3,7 @@ package domain;
 public class Dealer extends Participant {
 
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 17;
+    private static final String NAME = "딜러";
 
     @Override
     public boolean isDrawable() {
@@ -11,6 +12,6 @@ public class Dealer extends Participant {
 
     @Override
     public String name() {
-        return "딜러";
+        return NAME;
     }
 }
