@@ -10,7 +10,6 @@ public class Users {
 
 	private static final int PLAYER_MIN_SIZE = 1;
 	private static final int PLAYER_MAX_SIZE = 4;
-	private static final String DEALER_NAME = "딜러";
 
 	private final List<User> users;
 
@@ -24,7 +23,7 @@ public class Users {
 		for (String name : names) {
 			users.add(new Player(name));
 		}
-		users.add(new Dealer(DEALER_NAME));
+		users.add(new Dealer());
 		initTwoCards(users, deck);
 		return new Users(users);
 	}

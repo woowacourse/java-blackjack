@@ -4,8 +4,8 @@ public class Dealer extends User {
 
 	private static final int UNDER_OVER_SCORE = 17;
 
-	public Dealer(final String name) {
-		this.name = name;
+	public Dealer() {
+		super("딜러");
 	}
 
 	@Override
