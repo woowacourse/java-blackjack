@@ -46,4 +46,8 @@ abstract public class AbstractUser {
     public List<Card> getCards() {
         return this.cardHand.getCards();
     }
+
+    public boolean isBust() {
+        return this.cardHand.calculateScore() > BLACKJACK_SCORE;
+    }
 }

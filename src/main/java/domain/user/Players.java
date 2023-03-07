@@ -23,17 +23,14 @@ public class Players {
     }
 
     private Result calculateResult(Player player, Dealer dealer) {
-        if (player.calculateScore() > 21) {
+        if (player.isBust()) {
             return Result.LOSE;
         }
-        if (dealer.calculateScore() > 21) {
+        if (dealer.isBust() || player.calculateScore() > dealer.calculateScore()) {
             return Result.WIN;
         }
         if (player.calculateScore() == dealer.calculateScore()) {
             return Result.DRAW;
-        }
-        if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
         }
         return Result.LOSE;
     }
