@@ -16,9 +16,14 @@ public class BlackjackController {
     }
 
     public void run() {
-        Participants participants = getParticipants();
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        startGame(blackjackGame, participants);
+        try {
+            Participants participants = getParticipants();
+            BlackjackGame blackjackGame = new BlackjackGame(participants);
+            startGame(blackjackGame, participants);
+        } catch (IllegalArgumentException exception) {
+            outputView.printException(exception.getMessage());
+        }
+
     }
 
     private Participants getParticipants() {

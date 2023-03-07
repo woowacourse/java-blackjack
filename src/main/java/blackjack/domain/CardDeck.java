@@ -25,7 +25,11 @@ public class CardDeck {
     }
 
     public Card pick() {
-        return cards.remove(0);
+        try {
+            return cards.remove(0);
+        } catch (IndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException("모든 카드가 소진되어 게임을 종료합니다.");
+        }
     }
 
     public List<Card> pickTwice() {

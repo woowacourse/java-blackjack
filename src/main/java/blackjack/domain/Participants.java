@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participants {
+    private static final int MAX_PLAYER_COUNT = 10;
+
     private final List<Player> players;
     private final Dealer dealer;
 
@@ -15,9 +17,16 @@ public class Participants {
     }
 
     public static Participants from(List<String> names) {
+        validatePlayerCount(names);
         List<Player> players = getParticipantsByNames(stripNames(names));
         validateDuplicate(players);
         return new Participants(players);
+    }
+
+    private static void validatePlayerCount(List<String> names) {
+        if (names.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException("게임 참여자는 10명까지 입력 가능합니다.");
+        }
     }
 
     private static List<String> stripNames(List<String> names) {
