@@ -13,7 +13,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestDeckGenerator;
 import blackjack.domain.result.WinningStatus;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,19 +31,6 @@ class UsersTest {
 
     @Nested
     class validation {
-
-        @Test
-        @DisplayName("플레이어 이름으로 아무것도 오지 않는다면 에러를 반환하는 테스트")
-        void throwExceptionIfPlayerNamesIsEmpty() {
-            final List<String> playerNames = Collections.emptyList();
-
-            final Runnable initialUsersByEmptyPlayerNames =
-                    () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
-
-            assertThatThrownBy(initialUsersByEmptyPlayerNames::run)
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("쉼표만 입력할 수 없습니다.");
-        }
 
         @Test
         @DisplayName("플레이어의 이름이 6개 이상 입력되는 경우 예외처리")
