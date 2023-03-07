@@ -36,6 +36,9 @@ public class Deck {
     }
 
     public Card pick() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 덱이 비었습니다.");
+        }
         return cards.pop();
     }
 }
