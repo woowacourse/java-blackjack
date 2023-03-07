@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.game.ParticipantCards;
 
 import java.util.List;
 
@@ -11,15 +14,9 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    protected int getTotalPoint() {
+    public int getTotalPoint() {
         return cards.calculate();
     }
-
-    protected void hit(final Card card) {
-        cards.receive(card);
-    }
-
-    protected abstract boolean isHittable();
 
     public List<Card> open(final int cardCount) {
         return cards.open(cardCount);
@@ -32,4 +29,10 @@ public abstract class Participant {
     public Name getName() {
         return name;
     }
+
+    public void hit(final Card card) {
+        cards.receive(card);
+    }
+
+    public abstract boolean isHittable();
 }

@@ -1,8 +1,8 @@
 package blackjack.fixture;
 
-import blackjack.domain.Card;
-import blackjack.domain.Participant;
-import blackjack.domain.ParticipantCards;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.ParticipantCards;
+import blackjack.domain.participant.Participant;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public abstract class ParticipantFixture {
         ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, cards);
         return new Participant(participantsCards, "pobi") {
             @Override
-            protected boolean isHittable() {
+            public boolean isHittable() {
                 return false;
             }
         };

@@ -1,18 +1,21 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static blackjack.domain.ResultType.*;
+import blackjack.domain.game.ParticipantCards;
+import blackjack.domain.game.ResultType;
+
+import static blackjack.domain.game.ResultType.*;
 
 public class Dealer extends Participant {
     private static final int DEALER_MAX_HITTABLE_POINT = 16;
     private static final int BLACK_JACK_NUMBER = 21;
     private static final String DEFAULT_NAME = "딜러";
 
-    protected Dealer(final ParticipantCards cards) {
+    public Dealer(final ParticipantCards cards) {
         super(cards, DEFAULT_NAME);
     }
 
     @Override
-    protected boolean isHittable() {
+    public boolean isHittable() {
         return getTotalPoint() <= DEALER_MAX_HITTABLE_POINT;
     }
 
