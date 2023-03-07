@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Card {
 
     private final Number number;
-    private final Pattern pattern;
+    private final Suit suit;
 
     public Card(final Number number, final Pattern pattern) {
         this.number = number;
@@ -21,7 +21,7 @@ public class Card {
     }
 
     public String combineNumberAndPattern() {
-        return number.getState() + pattern.getName();
+        return number.getState() + suit.getName();
     }
 
     @Override
@@ -29,11 +29,11 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return number == card.number && pattern == card.pattern;
+        return number == card.number && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, pattern);
+        return Objects.hash(number, suit);
     }
 }
