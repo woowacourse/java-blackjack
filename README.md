@@ -37,3 +37,43 @@
 - [x] 딜러는 추가로 카드를 받았는 지에 대한 메세지를 출력할 수 있다.
 - [x] 게임이 끝난 뒤 딜러와 각 플레이어가 보유한 카드와 카드의 합을 출력할 수 있다.
 - [x] 게임의 최종 승패를 출력할 수 있다.
+
+
+## 1단계 미션 피드백 후 리팩토링 목록
+- 컨벤션
+  - [ ] 메서드 순서 정렬
+  - [ ] `static` 선언된 메소드 확인 후 제거
+  - [ ] 축약해서 사용한 메소드, 필드 네이밍 변경
+  - [ ] GameResult class getPlayerWinWhenDealerLessThan21 메소드 네이밍 변경
+
+
+- 검증
+  - [ ] 이름에 공백이 들어왔을 경우 검증 추가
+  - [ ] Deck이 비어있을 때 draw 메소드 사용하는 경우 검증 추가
+
+
+- 테스트 코드
+  - [ ] given when then 제거
+  - [ ] assertDoesNotThrow를 사용한 테스트 메서드 -> 생성한 객체의 상태를 체크해주는 방식으로 변경
+  - [ ] `@BeforeEach` 사용 부분 변경
+
+
+- 클래스 내부 로직 변경
+  - [ ] Card 생성하는 부분 `for문` -> `stream`으로 변경
+  - [ ] CardNumber enum class 필드 변경
+  - [ ] Deck class 필드 변경
+  - [ ] Dealer class calculateScore 메소드 로직 변경
+  - [ ] hasACE 메소드 내부 로직 변경
+  - [ ] GameResult class dealerResult.put(~) 올바른 결과가 출력되도록 변경
+  - [ ] Person interface -> abstract class로 변경
+  - [ ] 결과 타입에 대한 enum class 추가
+  - [ ] view 호출하는 로직 단순화
+
+
+- TODO
+  - [ ] 단순 패스를 해주는 로직 변경
+  - [ ] GamePlayer를 제거할 수 있는 방법
+  - [ ] Dealer, Player가 생성될 때 받도록 만들기
+
+
+
