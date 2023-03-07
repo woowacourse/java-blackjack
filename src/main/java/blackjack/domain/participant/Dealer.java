@@ -26,7 +26,7 @@ public class Dealer extends Participant {
     public Dealer(final Players players) {
         super(new Cards());
         this.players = players;
-        this.deck = new Deck();
+        this.deck = Deck.getInstance();
     }
 
     public void settingCards() {
