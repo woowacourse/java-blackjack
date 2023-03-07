@@ -4,7 +4,7 @@ import blackjack.domain.result.ResultType;
 
 public class Dealer extends Player {
 
-    private static final String NAME = "딜러";
+    public static final String NAME = "딜러";
 
     public static final int MAXIMUM_POINT = 16;
 

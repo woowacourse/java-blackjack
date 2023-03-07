@@ -53,6 +53,6 @@ public class Players {
         return players.stream()
                 .filter(player -> player.isDealer())
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
     }
 }
