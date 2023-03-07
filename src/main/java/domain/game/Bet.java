@@ -2,10 +2,11 @@ package domain.game;
 
 import java.text.MessageFormat;
 
-public class Bet {
+public final class Bet {
 
     public static final int MIN = 1_000;
     public static final int MAX = 1_000_000;
+
     private final int bet;
 
     private Bet(final int bet) {
