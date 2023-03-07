@@ -17,14 +17,17 @@
 - [x] Players 일급 컬렉션 사용
 
 - [ ] 매직 넘버 상수화
-- [ ] Hand(Cards) 구현
+- [] Hand(Cards) 구현
+  - [ ] Hand Test
 - [ ] 제약조건을 더 고려해보자
   - [ ] 인원수 제한 (카드는 52개임)
   - [ ] 입력값 검증(빈 문자열, 양쪽 공백)
 - [ ] Status를 이용한다. 
-- [ ] Score 원시 값 포장
-- [ ] denomination 가 점수를 가지게 한다.
-- [ ] dealer와 player의 중복 기능은 추상 클래스로 분리하고, 상속하게 한다.
+- [] Score 원시 값 포장
+  - [ ] Score Test
+- [x] denomination 가 점수를 가지게 한다.
+  - [ ] Denomination Test
+- [x] dealer와 player의 중복 기능은 추상 클래스로 분리하고, 상속하게 한다.
 - [ ] 메서드 위치 정렬
 
 
