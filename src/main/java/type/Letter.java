@@ -16,8 +16,8 @@ public enum Letter {
     QUEEN("Q", 10),
     JACK("J", 10);
 
-    final String expression;
-    final int score;
+    private final String expression;
+    private final int score;
 
     Letter(String expression, int score) {
         this.expression = expression;
