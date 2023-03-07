@@ -21,13 +21,13 @@ public class Participant {
 
     public int calculateScore() {
         boolean hasAce = hasAce();
-        int defaultScore = calculateDefaultScore();
-        boolean canAddBonusScore = defaultScore + BONUS_SCORE <= BUST_BOUNDARY_EXCLUSIVE;
+        Score defaultScore = new Score(calculateDefaultScore());
+        boolean canAddBonusScore = defaultScore.canAddBonusScore();
 
         if (hasAce && canAddBonusScore) {
-            defaultScore += BONUS_SCORE;
+            defaultScore = defaultScore.addBonusScore();
         }
-        return defaultScore;
+        return defaultScore.getValue();
     }
 
     private int calculateDefaultScore() {
