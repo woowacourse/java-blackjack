@@ -10,20 +10,17 @@ import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
 import dto.PlayerResultDto;
 import dto.PlayerWinningDto;
-import participants.Dealer;
 import participants.Name;
+import participants.Participants;
 import participants.Player;
-import participants.Players;
 
 public class BlackjackGame {
     private static final int FIRST_DRAW_COUNT = 2;
-    private final Players players;
-    private final Dealer dealer;
+    private final Participants participants;
     private final Deck deck;
 
-    public BlackjackGame(Players players, Dealer dealer, Deck deck) {
-        this.players = players;
-        this.dealer = dealer;
+    public BlackjackGame(Participants participants, Deck deck) {
+        this.participants = participants;
         this.deck = deck;
     }
 
@@ -31,7 +28,7 @@ public class BlackjackGame {
         validateDuplicatedName(names);
         validateMaxPlayer(names);
         for (String name : names) {
-            addPlayer(new Player(new Name(name)));
+            participants.addPlayer(new Player(new Name(name)));
         }
     }
 
@@ -48,18 +45,14 @@ public class BlackjackGame {
         }
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
     public void supplyCardsToDealer() {
         for (int i = 0; i < FIRST_DRAW_COUNT; i++) {
-            dealer.hit(deck.drawCard());
+            participants.giveCardToDealer(deck.drawCard());
         }
     }
 
     public void supplyCardsToPlayers() {
-        int playerCount = players.count();
+        int playerCount = participants.getPlayersCount();
         for (int i = 0; i < playerCount; i++) {
             supplyCardToPlayer(i);
         }
@@ -67,63 +60,63 @@ public class BlackjackGame {
 
     private void supplyCardToPlayer(int i) {
         for (int j = 0; j < FIRST_DRAW_COUNT; j++) {
-            players.takeCard(i, deck.drawCard());
+            participants.giveCardToPlayerByIndex(i, deck.drawCard());
         }
     }
 
     public void supplyAdditionalCard(int playerIndex) {
-        players.takeCard(playerIndex, deck.drawCard());
+        participants.giveCardToPlayerByIndex(playerIndex, deck.drawCard());
     }
 
     public boolean isBust(int playerIndex) {
-        return players.isBust(playerIndex);
+        return participants.isBustPlayerByIndex(playerIndex);
     }
 
     public int countPlayer() {
-        return players.count();
+        return participants.getPlayersCount();
     }
 
     public boolean canDealerHit() {
-        return !dealer.isBust() && dealer.isUnderScore();
+        return participants.canDealerHit();
     }
 
     public void supplyAdditionalCardToDealer() {
-        dealer.hit(deck.drawCard());
+        participants.giveCardToDealer(deck.drawCard());
     }
 
     public PlayerResultDto getDealerResult() {
-        return PlayerResultDto.from(dealer);
+        return participants.getDealerResult();
     }
 
     public List<PlayerResultDto> getPlayerResults() {
-        return players.getPlayerResults();
+        return participants.getPlayerResults();
     }
 
     public void calculateWinning() {
-        players.calculateWinning(dealer);
+        participants.calculateWinning();
     }
 
     public DealerWinningDto getDealerWinningResult() {
-        return DealerWinningDto.from(dealer);
+        return participants.getDealerWinningResult();
     }
 
     public List<PlayerWinningDto> getPlayerWinningResults() {
-        return players.getWinningResults();
+        return participants.getPlayerWinningResults();
     }
 
     public DealerFirstOpenDto getDealerFirstOpen() {
-        return DealerFirstOpenDto.from(dealer);
+        return participants.getDealerFirstOpen();
     }
 
     public List<PlayerOpenDto> getPlayersCards() {
-        return players.getPlayerCards();
+        return participants.getPlayersCards();
     }
 
     public PlayerOpenDto getPlayerCardsByIndex(int playerIndex) {
-        return getPlayersCards().get(playerIndex);
+        return participants.getPlayerCardsByIndex(playerIndex);
     }
 
     public Name findUserNameByIndex(int playerIndex) {
-        return players.findPlayer(playerIndex);
+        return participants.findUserNameByIndex(playerIndex);
     }
 }

@@ -12,6 +12,7 @@ import dto.PlayerResultDto;
 import dto.PlayerWinningDto;
 import participants.Dealer;
 import participants.Name;
+import participants.Participants;
 import participants.Players;
 import view.InputView;
 import view.OutputView;
@@ -28,10 +29,9 @@ public class BlackjackController {
     }
 
     private BlackjackGame initializeGame(CardsGenerator cardsGenerator) {
-        Dealer dealer = new Dealer();
-        Players players = new Players();
+        Participants participants = new Participants(new Dealer(), new Players());
         Deck deck = new Deck(cardsGenerator);
-        return new BlackjackGame(players, dealer, deck);
+        return new BlackjackGame(participants, deck);
     }
 
     public void run() {

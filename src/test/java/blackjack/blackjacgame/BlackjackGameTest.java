@@ -26,13 +26,15 @@ import dto.DealerWinningDto;
 import participants.Count;
 import participants.Dealer;
 import participants.Name;
+import participants.Participants;
 import participants.Player;
 import participants.Players;
 
 class BlackjackGameTest {
     BlackjackGame blackjackGame;
-    Players players;
     Dealer dealer;
+    Players players;
+    Participants participants;
     Deck deck;
 
     @BeforeEach
@@ -45,18 +47,18 @@ class BlackjackGameTest {
         );
         CardsGenerator fixedCardsGenerator = new FixedCardsGenerator(cards);
         deck = new Deck(fixedCardsGenerator);
-        players = new Players();
         dealer = new Dealer();
-        blackjackGame = new BlackjackGame(players, dealer, deck);
+        players = new Players();
+        participants = new Participants(dealer, players);
+        blackjackGame = new BlackjackGame(participants, deck);
     }
 
     @Test
     @DisplayName("플레이어를 만들고 플레이어즈에 추가한다.")
     void addPlayer() {
-        blackjackGame.addPlayer(new Player(new Name("폴로")));
-        blackjackGame.addPlayer(new Player(new Name("로지")));
+        blackjackGame.addPlayers(List.of("폴로", "로지"));
 
-        assertThat(players.count()).isEqualTo(2);
+        assertThat(participants.getPlayersCount()).isEqualTo(2);
     }
 
     @Test
@@ -93,8 +95,8 @@ class BlackjackGameTest {
     void supplyCardsToPlayers() {
         Player player1 = new Player(new Name("폴로"));
         Player player2 = new Player(new Name("로지"));
-        blackjackGame.addPlayer(player1);
-        blackjackGame.addPlayer(player2);
+        players.add(player1);
+        players.add(player2);
 
         blackjackGame.supplyCardsToPlayers();
 
@@ -109,7 +111,7 @@ class BlackjackGameTest {
     @DisplayName("인덱스에 해당하는 플레이어는 카드를 한장 추가로 받는다.")
     void supplyAdditionalCard() {
         Player player1 = new Player(new Name("폴로"));
-        blackjackGame.addPlayer(player1);
+        players.add(player1);
         blackjackGame.supplyCardsToPlayers();
 
         blackjackGame.supplyAdditionalCard(0);
@@ -129,10 +131,10 @@ class BlackjackGameTest {
         );
 
         Deck fixedDeck = new Deck(new FixedCardsGenerator(cards));
-        blackjackGame = new BlackjackGame(players, dealer, fixedDeck);
+        blackjackGame = new BlackjackGame(participants, fixedDeck);
 
         Player player1 = new Player(new Name("폴로"));
-        blackjackGame.addPlayer(player1);
+        players.add(player1);
         blackjackGame.supplyCardsToPlayers();
         blackjackGame.supplyAdditionalCard(0);
 
@@ -143,7 +145,7 @@ class BlackjackGameTest {
     @DisplayName("인덱스에 해당하는 플레이어가 버스트가 아닌경우 false를 반환한다.")
     void isBustFalse() {
         Player player1 = new Player(new Name("폴로"));
-        blackjackGame.addPlayer(player1);
+        players.add(player1);
         blackjackGame.supplyCardsToPlayers();
         blackjackGame.supplyAdditionalCard(0);
 
@@ -154,10 +156,7 @@ class BlackjackGameTest {
     @Test
     @DisplayName("현재 플레이어의 인원수를 반환한다.")
     void countPlayers() {
-        Player player1 = new Player(new Name("폴로"));
-        Player player2 = new Player(new Name("로지"));
-        blackjackGame.addPlayer(player1);
-        blackjackGame.addPlayer(player2);
+        blackjackGame.addPlayers(List.of("폴로", "로지"));
 
         assertThat(blackjackGame.countPlayer()).isEqualTo(2);
     }
