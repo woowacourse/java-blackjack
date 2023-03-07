@@ -1,10 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.TestDeckGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +17,7 @@ class DeckTest {
     @Test
     @DisplayName("덱에서 첫번째 카드를 하나 뽑는다")
     void drawTest() {
-        final Deck deck = new Deck(new TestDeckGenerator(testCards));
+        final Deck deck = new Deck(new TestNonShuffledDeckGenerator(testCards));
 
         final Card card = deck.draw();
 

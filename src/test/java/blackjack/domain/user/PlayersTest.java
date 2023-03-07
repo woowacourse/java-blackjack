@@ -8,7 +8,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomDeckGenerator;
-import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.CardResult;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getPlayerNameAndCardResultsTest() {
-        final Players players = new Players(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
+        final Players players = new Players(List.of("필립", "홍실"), new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
         final Map<String, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
 

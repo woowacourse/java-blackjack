@@ -9,7 +9,7 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.WinningStatus;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -61,7 +61,7 @@ class PlayerTest {
     void drawCardTest() {
         final Card card = new Card(CardShape.HEART, CardNumber.JACK);
         final User player = new Player(name, initialGroup);
-        final Deck deck = new Deck(new TestDeckGenerator(List.of(card)));
+        final Deck deck = new Deck(new TestNonShuffledDeckGenerator(List.of(card)));
 
         player.drawCard(deck);
 
@@ -136,7 +136,7 @@ class PlayerTest {
             final Player player = new Player("홍실", initialGroup);
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
 
-            player.drawCard(new Deck(new TestDeckGenerator(List.of(cardEight))));
+            player.drawCard(new Deck(new TestNonShuffledDeckGenerator(List.of(cardEight))));
 
             assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }

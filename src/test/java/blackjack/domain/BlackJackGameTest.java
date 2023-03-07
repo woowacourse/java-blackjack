@@ -5,7 +5,7 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.RandomDeckGenerator;
-import blackjack.domain.card.TestDeckGenerator;
+import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Dealer;
@@ -36,7 +36,7 @@ class BlackJackGameTest {
     @DisplayName("게임 초기화 테스트")
     void initGame() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
-                , new TestDeckGenerator(testCards));
+                , new TestNonShuffledDeckGenerator(testCards));
 
         assertThat(blackJackGame.getStatus().keySet())
                 .contains("필립", "홍실", "딜러");
@@ -46,7 +46,7 @@ class BlackJackGameTest {
     @DisplayName("유저들의 첫 패를 반환하는 기능 테스트")
     void getUsersInitialStatus() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
-                , new TestDeckGenerator(testCards));
+                , new TestNonShuffledDeckGenerator(testCards));
 
         final Map<String, CardGroup> firstOpenCardGroups = blackJackGame.getFirstOpenCardGroups();
 
@@ -66,7 +66,7 @@ class BlackJackGameTest {
         final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
                 new Card(CardShape.SPADE, CardNumber.TWO),
                 new Card(CardShape.SPADE, CardNumber.QUEEN));
-        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(), new TestDeckGenerator(cards));
+        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(), new TestNonShuffledDeckGenerator(cards));
 
         blackJackGame.drawDealer();
         final int dealerCardSize = blackJackGame.getStatus()
@@ -83,7 +83,7 @@ class BlackJackGameTest {
         final List<Card> cards = List.of(new Card(CardShape.SPADE, CardNumber.FIVE),
                 new Card(CardShape.SPADE, CardNumber.TWO),
                 new Card(CardShape.SPADE, CardNumber.QUEEN));
-        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(), new TestDeckGenerator(cards));
+        final BlackJackGame blackJackGame = new BlackJackGame(Collections.emptyList(), new TestNonShuffledDeckGenerator(cards));
 
         assertThat(blackJackGame.shouldDealerDraw()).isTrue();
     }
@@ -111,7 +111,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어 턴 진행 테스트")
     void playPlayerTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestNonShuffledDeckGenerator(testCards));
 
         blackJackGame.playPlayer("필립");
         List<Card> cards = blackJackGame.getStatus().get("필립").getCards();
@@ -122,7 +122,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("점수를 포함한 상태를 반환하는 기능 테스트")
     void getCardResult() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestNonShuffledDeckGenerator(testCards));
 
         final CardResult philip = blackJackGame.getUserNameAndCardResults().get("필립");
 
@@ -141,7 +141,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어들의 승리 여부 반환 테스트")
     void getWinningResultTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"), new TestDeckGenerator(testCards));
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"), new TestNonShuffledDeckGenerator(testCards));
 
         Map<String, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
 
@@ -161,7 +161,7 @@ class BlackJackGameTest {
                 new Card(CardShape.SPADE, CardNumber.JACK)
         );
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
-                new TestDeckGenerator(testCards));
+                new TestNonShuffledDeckGenerator(testCards));
 
         boolean isBlackJack = blackJackGame.isBlackJackScore("필립");
 
@@ -171,7 +171,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestNonShuffledDeckGenerator(testCards));
 
         final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
 
