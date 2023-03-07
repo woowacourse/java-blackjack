@@ -76,7 +76,6 @@ public class BlackJackController {
         }
     }
 
-    //TODO: 해당 로직 view로 분리하게 변경
     private void printCardResult(BlackJackGame blackJackGame) {
         final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer

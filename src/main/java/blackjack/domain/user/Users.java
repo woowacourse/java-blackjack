@@ -24,7 +24,8 @@ public class Users {
         usersFirstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
         final Map<String, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
         usersFirstOpenCardGroups.putAll(playerFirstOpenCardGroups);
-        return Map.copyOf(usersFirstOpenCardGroups);
+        System.out.println(usersFirstOpenCardGroups);
+        return Collections.unmodifiableMap(usersFirstOpenCardGroups);
     }
 
     public Map<String, CardGroup> getStatus() {

@@ -10,8 +10,8 @@ import blackjack.domain.card.CardShape;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import blackjack.domain.user.Dealer;
+import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class ViewRenderer {
     private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER = Map.of(
             WinningStatus.WIN, "승 ",
             WinningStatus.TIE, "무 ",
-            WinningStatus.LOSE, "패 "
+            WinningStatus.LOSE, "패"
     );
     private static final String CARD_RESULT_FORMAT = "%s - 결과: %d";
     private static final String BLANK = "";
@@ -53,13 +53,9 @@ public class ViewRenderer {
     }
 
     public static Map<String, List<String>> renderStatus(final Map<String, CardGroup> status) {
-        final Map<String, List<String>> renderedStatus = new HashMap<>();
-
-        for (final String name : status.keySet()) {
-            renderedStatus.put(name, renderCardsToString(status.get(name)));
-        }
-
-        return renderedStatus;
+        final Map<String, List<String>> renderedStatus = new LinkedHashMap<>();
+        status.forEach((name, cardGroup) -> renderedStatus.put(name, renderCardsToString(cardGroup)));
+        return Collections.unmodifiableMap(renderedStatus);
     }
 
     public static List<String> renderCardsToString(final CardGroup cardGroup) {

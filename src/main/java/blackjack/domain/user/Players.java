@@ -32,8 +32,10 @@ public class Players {
     }
 
     public Map<String, CardGroup> getFirstOpenCardGroup() {
-        return players.stream()
-                .collect(Collectors.toUnmodifiableMap(Player::getName, Player::getFirstOpenCardGroup));
+        final Map<String, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
+        players.forEach(player ->
+                firstOpenCardGroup.put(player.getName(), player.getFirstOpenCardGroup()));
+        return Collections.unmodifiableMap(firstOpenCardGroup);
     }
 
     public Map<String, CardGroup> getStatus() {
