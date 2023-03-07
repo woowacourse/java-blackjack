@@ -1,14 +1,16 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class DealerTest {
 
     @Test
@@ -26,11 +28,11 @@ public class DealerTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "A하트,5하트,11,5,1",
-            "9하트,10하트,9,10,0",
-            "A하트,10하트,11,10,-1"
+            "A하트,5하트,11,5,WIN",
+            "9하트,10하트,9,10,DRAW",
+            "A하트,10하트,11,10,LOSE"
     })
-    void 플레이어보다_21에_가깝다면_1을_반환한다(String card1, String card2, int cardValue1, int cardValue2, int expected) {
+    void 플레이어보다_21에_가깝다면_승리(String card1, String card2, int cardValue1, int cardValue2, Result expected) {
         Name dealerName = new Name("hamad");
         List<Card> dealerCardsByCardBox = new ArrayList<>();
         dealerCardsByCardBox.add(new Card("9하트", 9));
@@ -48,5 +50,20 @@ public class DealerTest {
         Player player = new Player(playerName, playerCards);
 
         assertThat(dealer.checkWinningResult(player)).isEqualTo(expected);
+    }
+
+    void 딜러의_카드총합이_16이하인지_판단(){
+        //given
+        Name dealerName = new Name("hamad");
+        List<Card> dealerCardsByCardBox = new ArrayList<>();
+        dealerCardsByCardBox.add(new Card("5하트", 5));
+        dealerCardsByCardBox.add(new Card("10하트", 10));
+        Cards dealerCards = new Cards(dealerCardsByCardBox);
+
+        Dealer dealer = new Dealer(dealerName, dealerCards);
+        //then
+        assertThat(dealer.isSumUnderStandard()).isTrue();
+
+
     }
 }

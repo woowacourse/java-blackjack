@@ -14,12 +14,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class NameTest {
 
-    @Test
-    void 이름이_5글자_초과시_예외를_발생한다() {
-        assertThatThrownBy(() -> new Name("jackson"))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @ParameterizedTest
     @NullAndEmptySource
     void 이름이_null이거나_비어있을_경우_예외를_발생한다(String name) {

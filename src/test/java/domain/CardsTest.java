@@ -1,6 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -55,5 +54,16 @@ public class CardsTest {
         Cards actual = new Cards(cards);
 
         assertThat(actual.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void 카드뭉치_총합이_21이넘고_A가_포함되면_A를_1로_취급한다() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card("A하트", 11));
+        cards.add(new Card("10하트", 10));
+        cards.add(new Card("3하트", 3));
+        Cards actual = new Cards(cards);
+
+        assertThat(actual.sumOfCards()).isEqualTo(14);
     }
 }
