@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.JudgeResult.LOSE;
-import static blackjack.domain.JudgeResult.PUSH;
-import static blackjack.domain.JudgeResult.WIN;
-
 import java.util.Map;
 
 public class PlayerJudgeResults {
@@ -14,19 +10,7 @@ public class PlayerJudgeResults {
         this.judgeResultsByPlayer = judgeResultsByPlayer;
     }
 
-    public int countDealerWins() {
-        return countByJudgeResult(LOSE);
-    }
-
-    public int countDealerPushes() {
-        return countByJudgeResult(PUSH);
-    }
-
-    public int countDealerLoses() {
-        return countByJudgeResult(WIN);
-    }
-
-    private int countByJudgeResult(JudgeResult judgeResult) {
+    public int collectCountByJudgeResult(JudgeResult judgeResult) {
         return (int) judgeResultsByPlayer.values()
                 .stream()
                 .filter(result -> result == judgeResult)

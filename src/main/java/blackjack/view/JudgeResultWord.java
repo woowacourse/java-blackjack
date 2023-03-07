@@ -1,7 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.DealerJudgeResultsStatistic;
 import blackjack.domain.JudgeResult;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum JudgeResultWord {
 
@@ -23,5 +25,19 @@ public enum JudgeResultWord {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 승리 결과가 존재하지 않습니다."));
         return resultWord.word;
+    }
+
+    public static String toStatisticWords(DealerJudgeResultsStatistic dealerJudgeResultStats) {
+        return Arrays.stream(values())
+                .map(word -> toStatisticWord(word.result, dealerJudgeResultStats.getCountBy(word.result)))
+                .filter(statisticWord -> !statisticWord.isEmpty())
+                .collect(Collectors.joining(" "));
+    }
+
+    private static String toStatisticWord(JudgeResult judgeResult, int count) {
+        if (count == 0) {
+            return "";
+        }
+        return count + toWord(judgeResult);
     }
 }
