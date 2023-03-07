@@ -12,7 +12,6 @@ import java.util.Map;
 public class BlackjackGameTest {
     private Dealer dealer;
     private Players players;
-    private BlackjackGame game;
     private CardDeck cardDeck;
 
     @BeforeEach
@@ -24,30 +23,50 @@ public class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("딜러에게 카드를 1장 나눠준다.")
+    @DisplayName("딜러에게 카드를 1장을 나눠준다.")
     void distributeDealerInitialCardsTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
 
-        Map<String, List<Card>> result = new LinkedHashMap<>();
-        result.put("딜러", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
-
         blackjackGame.distributeDealer();
 
+        Map<String, List<Card>> result = new LinkedHashMap<>();
+        result.put("딜러", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
         Assertions.assertThat(dealer.getInfo()).usingRecursiveComparison().isEqualTo(result);
     }
 
     @Test
-    @DisplayName("플레이어에게 카드를 1장 나눠준다.")
+    @DisplayName("플레이어들에게 카드를 1장을 나눠준다.")
     void distributePlayersInitialCardsTest() {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+
+        blackjackGame.distributePlayers();
 
         Map<String, List<Card>> result = new LinkedHashMap<>();
         result.put("pobi", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
         result.put("jason", List.of(new Card(CardNumber.TWO, CardPattern.SPADE)));
-
-        blackjackGame.distributePlayers();
-
         Assertions.assertThat(players.getInfo()).usingRecursiveComparison().isEqualTo(result);
+    }
+
+    @Test
+    @DisplayName("플레이어가 추가 카드를 받는다.")
+    void distributeByYesCommandTest() {
+        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        Player player = new Player("pobi");
+
+        blackjackGame.selectByPlayer(player, Command.YES);
+
+        Assertions.assertThat(player.getCardsSum()).isEqualTo(11);
+    }
+
+    @Test
+    @DisplayName("플레이어가 추가 카드를 받지 않는다.")
+    void distributeByNoCommandTest() {
+        BlackjackGame blackjackGame = new BlackjackGame(dealer, players, cardDeck);
+        Player player = new Player("pobi");
+
+        blackjackGame.selectByPlayer(player, Command.No);
+
+        Assertions.assertThat(player.getCardsSum()).isEqualTo(0);
     }
 
 }
