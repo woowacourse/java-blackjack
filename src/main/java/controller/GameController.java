@@ -2,7 +2,7 @@ package controller;
 
 import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
-import domain.card.CardManager;
+import domain.game.GameManager;
 import domain.participant.Result;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -33,11 +33,11 @@ public final class GameController {
     public void start() {
         final Participants participants = makeParticipants();
         final Deck deck = Deck.create(new RandomUniqueCardSelector());
-        final CardManager cardManager = CardManager.create(deck, participants);
+        final GameManager gameManager = GameManager.create(deck, participants);
 
-        startGame(participants, cardManager);
-        playForPlayers(participants, cardManager);
-        playForDealer(participants, cardManager);
+        startGame(participants, gameManager);
+        playForPlayers(participants, gameManager);
+        playForDealer(participants, gameManager);
         printGameResult(participants);
     }
 
@@ -48,11 +48,11 @@ public final class GameController {
                 outputView::printExceptionMessage);
     }
 
-    private void startGame(final Participants participants, final CardManager cardManager) {
+    private void startGame(final Participants participants, final GameManager gameManager) {
         final int size = participants.size();
 
         for (int participantOrder = 0; participantOrder < size; participantOrder++) {
-            cardManager.giveCards(participantOrder, START_GIVEN_COUNT);
+            gameManager.giveCards(participantOrder, START_GIVEN_COUNT);
         }
         printParticipantCards(participants);
     }
@@ -69,23 +69,23 @@ public final class GameController {
         outputView.printTotalParticipantCards(dealer, players);
     }
 
-    private void playForPlayers(final Participants participants, final CardManager cardManager) {
+    private void playForPlayers(final Participants participants, final GameManager gameManager) {
         final List<Participant> players = participants.findPlayers();
 
         for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
             final Participant player = players.get(playerIndex);
 
-            handleDrawCard(cardManager, playerIndex, player);
+            handleDrawCard(gameManager, playerIndex, player);
         }
     }
 
-    private void handleDrawCard(final CardManager cardManager, final int playerIndex, final Participant player) {
+    private void handleDrawCard(final GameManager gameManager, final int playerIndex, final Participant player) {
         DrawCardCommand drawCardCommand = DrawCardCommand.CARD_DRAW_AGAIN;
 
         while (canDrawCard(player, drawCardCommand)) {
             drawCardCommand = inputDrawCardCommand(player);
 
-            processDrawCard(cardManager, playerIndex, drawCardCommand);
+            processDrawCard(gameManager, playerIndex, drawCardCommand);
             outputView.printParticipantCards(player.getName(), player.getCard());
         }
     }
@@ -94,20 +94,20 @@ public final class GameController {
         return player.canDraw() && drawCardCommand.isDrawAgain();
     }
 
-    private void processDrawCard(final CardManager cardManager, final int playerIndex,
+    private void processDrawCard(final GameManager gameManager, final int playerIndex,
         final DrawCardCommand drawCardCommand) {
 
         if (drawCardCommand.isDrawAgain()) {
-            cardManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
+            gameManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
         }
     }
 
-    private void playForDealer(final Participants participants, final CardManager cardManager) {
+    private void playForDealer(final Participants participants, final GameManager gameManager) {
         final Dealer dealer = (Dealer) participants.findDealer();
         final String name = dealer.getName();
 
         while (dealer.canDraw()) {
-            cardManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
+            gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
             outputView.guideDealerGivenCard(name);
         }
     }

@@ -1,19 +1,20 @@
-package domain.card;
+package domain.game;
 
+import domain.card.Deck;
 import domain.participant.Participants;
 
-public class CardManager {
+public final class GameManager {
 
     private final Deck deck;
     private final Participants participants;
 
-    private CardManager(final Deck deck, final Participants participants) {
+    private GameManager(final Deck deck, final Participants participants) {
         this.deck = deck;
         this.participants = participants;
     }
 
-    public static CardManager create(final Deck deck, final Participants participants) {
-        return new CardManager(deck, participants);
+    public static GameManager create(final Deck deck, final Participants participants) {
+        return new GameManager(deck, participants);
     }
 
     public void giveCards(final int participantOrder, final int givenCount) {
