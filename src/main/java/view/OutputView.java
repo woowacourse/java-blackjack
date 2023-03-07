@@ -5,7 +5,6 @@ import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.participant.Participant;
 import domain.participant.Result;
-import domain.participant.Participants;
 import view.message.GameResultMessage;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
@@ -29,7 +28,7 @@ import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
 import static view.message.MessageFormatter.PLAYER_GAME_RESULT;
 import static view.message.MessageFormatter.START_CARD_MESSAGE;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String LINE_FEED = System.lineSeparator();
 
@@ -40,7 +39,7 @@ public class OutputView {
 
     public void guideDrawCard(final String name) {
         final String drawCardMessage = DRAW_CARD_CARD_MESSAGE.format(name,
-                CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+            CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
 
         print(drawCardMessage);
         print(LINE_FEED);
@@ -58,8 +57,7 @@ public class OutputView {
         print(LINE_FEED);
     }
 
-    public void printParticipantMessage(final Participants participants) {
-        final List<String> participantNames = participants.getParticipantNames();
+    public void printGiveParticipantStartCardMessage(final List<String> participantNames) {
         final String participantNameMessage = mapToParticipantNameMessage(participantNames);
 
         print(LINE_FEED);
@@ -67,15 +65,11 @@ public class OutputView {
         print(LINE_FEED);
     }
 
-    public void printTotalParticipantCards(final Participant dealer, final List<Participant> players) {
-        final String dealerStartCardMessage = mapToDealerStartCardMessage(dealer);
+    public void printTotalParticipantStartCards(final List<Participant> totalParticipants) {
+        final String totalParticipantStartCardsMessage =
+            mapToTotalParticipantStartCardsMessage(totalParticipants);
 
-        print(dealerStartCardMessage);
-        print(LINE_FEED);
-
-        final String totalPlayerStartCardsMessage = mapToTotalPlayerStartCardsMessage(players);
-
-        print(totalPlayerStartCardsMessage);
+        print(totalParticipantStartCardsMessage);
         print(LINE_FEED);
         print(LINE_FEED);
     }
@@ -90,10 +84,10 @@ public class OutputView {
 
     public void printCardResult(final List<Participant> totalParticipants) {
         final String cardsResultMessage = totalParticipants.stream()
-            .map(participant -> PARTICIPANT_CARD_RESULT
-                .format(participant.getName(), getCardsMessage(participant.getCard()),
-                    participant.calculateScore()))
-            .collect(Collectors.joining(LINE_FEED));
+                .map(participant -> PARTICIPANT_CARD_RESULT
+                        .format(participant.getName(), getCardsMessage(participant.getCard()),
+                                participant.calculateScore()))
+                .collect(Collectors.joining(LINE_FEED));
 
         print(LINE_FEED);
         print(cardsResultMessage);
@@ -121,24 +115,17 @@ public class OutputView {
         return DRAW_MESSAGE.format(namesMessage);
     }
 
-    private String mapToDealerStartCardMessage(final Participant dealer) {
-        final String dealerName = dealer.getName();
-        final String dealerCardsMessage = getCardsMessage(dealer.getStartCard());
-
-        return CARD_MESSAGE.format(dealerName, dealerCardsMessage);
-    }
-
-    private String mapToTotalPlayerStartCardsMessage(final List<Participant> players) {
+    private String mapToTotalParticipantStartCardsMessage(final List<Participant> players) {
         return players.stream()
-            .map(player -> START_CARD_MESSAGE.format(player.getName(),
-                getCardsMessage(player.getStartCard())))
-            .collect(Collectors.joining(LINE_FEED));
+                .map(player -> START_CARD_MESSAGE.format(player.getName(),
+                        getCardsMessage(player.getStartCard())))
+                .collect(Collectors.joining(LINE_FEED));
     }
 
     private String getCardsMessage(final List<Card> participantCards) {
         return participantCards.stream()
-            .map(this::getCardMessage)
-            .collect(Collectors.joining(", "));
+                .map(this::getCardMessage)
+                .collect(Collectors.joining(", "));
     }
 
     private String getCardMessage(final Card participantCard) {

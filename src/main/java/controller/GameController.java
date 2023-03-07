@@ -49,19 +49,16 @@ public final class GameController {
 
     private void startGame(final Participants participants, final GameManager gameManager) {
         gameManager.giveStartCards();
-        printParticipantCards(participants);
+
+        printTotalParticipantStartCards(participants);
     }
 
-    private void printParticipantCards(final Participants participants) {
-        outputView.printParticipantMessage(participants);
-        printAllParticipantCards(participants);
-    }
+    private void printTotalParticipantStartCards(final Participants participants) {
+        final List<String> participantNames = participants.getParticipantNames();
+        final List<Participant> totalParticipants = participants.getParticipants();
 
-    private void printAllParticipantCards(final Participants participants) {
-        final Participant dealer = participants.findDealer();
-        final List<Participant> players = participants.findPlayers();
-
-        outputView.printTotalParticipantCards(dealer, players);
+        outputView.printGiveParticipantStartCardMessage(participantNames);
+        outputView.printTotalParticipantStartCards(totalParticipants);
     }
 
     private void playForPlayers(final Participants participants, final GameManager gameManager) {
