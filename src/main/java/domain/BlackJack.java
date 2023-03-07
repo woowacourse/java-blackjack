@@ -82,7 +82,7 @@ public class BlackJack {
 
     public Card getDealerCardWithHidden() {
         Dealer dealer = users.getDealer();
-        return dealer.getCards().get(0);
+        return dealer.getVisibleCard();
     }
 
     public boolean isHittablePlayer(Player player) {
