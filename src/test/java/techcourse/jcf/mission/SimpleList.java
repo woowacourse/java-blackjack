@@ -49,5 +49,13 @@ public interface SimpleList<E> {
         }
         return copy;
     }
+
+    static <T> SimpleList<T> copy(SimpleList<? extends T> source, SimpleList<T> destination) {
+        SimpleList<T> copy = new SimpleArrayList<>(source.size());
+        for (int i = 0; i< source.size(); i++) {
+            destination.add(source.get(i));
+        }
+        return copy;
+    }
 }
 

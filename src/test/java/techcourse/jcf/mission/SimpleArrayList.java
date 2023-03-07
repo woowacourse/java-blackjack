@@ -17,6 +17,12 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this(10);
     }
 
+    public SimpleArrayList(E element) {
+        this.values = new Object[1];
+        this.size = 1;
+        this.values[0] = element;
+    }
+
     @Override
     public boolean add(E value) {
         try {

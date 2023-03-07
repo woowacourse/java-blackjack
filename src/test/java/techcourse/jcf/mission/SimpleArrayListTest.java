@@ -238,4 +238,20 @@ class SimpleArrayListTest {
         SimpleList<Integer> copy = SimpleList.filterNegative(simpleList);
         Assertions.assertEquals(2,  copy.size());
     }
+
+    class Printer { }
+    class LaserPrinter extends Printer { }
+    @DisplayName("SimpleList 제네릭 메서드 리스트 복사 테스트")
+
+    @Test
+    void SimpleList_제네릭_복사_테스트() {
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        SimpleList.copy(laserPrinters, printers);
+
+        System.out.println(printers.get(0) == laserPrinter); // true
+    }
 }
