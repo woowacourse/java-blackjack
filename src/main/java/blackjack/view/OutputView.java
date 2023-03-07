@@ -92,7 +92,6 @@ public class OutputView {
             String cardSuit = ViewCardSuit.getCardSuit(participant.getCardSuit(i));
             card.add(cardNumber + cardSuit);
         }
-        System.out.printf(String.join(", ",card));
-        System.out.println();
+        System.out.printf(String.join(", ",card)+NEW_LINE);
     }
 }

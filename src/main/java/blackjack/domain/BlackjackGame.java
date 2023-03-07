@@ -29,16 +29,16 @@ public class BlackjackGame {
         return playersResult;
     }
 
-    public void getTwoHitCards(final CardPickerGenerator cardPickerGenerator, final Participant participant) {
+    public void getTwoHitCards(final Participant participant) {
         for (int count = 0; count < FIRST_HIT_COUNT; count++) {
-            participant.hit(cards.pick(cardPickerGenerator));
+            participant.hit(cards.pick());
         }
     }
 
-    public void dealerHitCard(final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+    public void dealerHitCard(final Cards cards) {
         Dealer dealer = findDealer();
         while (dealer.decideHit()) {
-            dealer.hit(cards.pick(cardPickerGenerator));
+            dealer.hit(cards.pick());
         }
     }
 

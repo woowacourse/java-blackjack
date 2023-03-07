@@ -9,17 +9,19 @@ public class Cards {
 
     private static final int MAX_DECK_SIZE = 6;
     private final List<Card> cards;
+    private final CardPickerGenerator cardPickerGenerator;
 
-    private Cards(List<Card> cards) {
+    private Cards(List<Card> cards, CardPickerGenerator cardPickerGenerator) {
+        this.cardPickerGenerator = cardPickerGenerator;
         this.cards = cards;
     }
 
-    public static Cards create() {
+    public static Cards create(CardPickerGenerator cardPickerGenerator) {
         List<Card> deck = new ArrayList<>();
         for (int count = 0; count < MAX_DECK_SIZE; count++) {
             initCardNumber(deck);
         }
-        return new Cards(deck);
+        return new Cards(deck,cardPickerGenerator);
     }
 
     private static void initCardNumber(final List<Card> deck) {
@@ -34,7 +36,7 @@ public class Cards {
         }
     }
 
-    public Card pick(final CardPickerGenerator cardPickerGenerator) {
+    public Card pick() {
         return cards.remove(cardPickerGenerator.generator(cards.size()));
     }
 }

@@ -18,12 +18,11 @@ class BlackjackGameTest {
     void firstAllHit() {
         //given
         List<Integer> testData = settingTestData();
-        TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.from(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.create());
+        BlackjackGame game = new BlackjackGame(participants, Cards.create(new TestCardPickerGenerator(testData)));
         //when
         for (Participant participant : participants.getParticipants()) {
-            game.getTwoHitCards(testCardPickerGenerator,participant);
+            game.getTwoHitCards(participant);
         }
         //then
         for (Participant participant : participants.getParticipants()) {
@@ -41,11 +40,10 @@ class BlackjackGameTest {
     void playerResultTest() {
         //given
         List<Integer> testData = settingTestData();
-        TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.from(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.create());
+        BlackjackGame game = new BlackjackGame(participants, Cards.create(new TestCardPickerGenerator(testData)));
         for (Participant participant : participants.getParticipants()) {
-            game.getTwoHitCards(testCardPickerGenerator,participant);
+            game.getTwoHitCards(participant);
         }
 
         //when
@@ -69,11 +67,10 @@ class BlackjackGameTest {
     void dealerResultTest() {
         //given
         List<Integer> testData = settingTestData();
-        TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
         Participants participants = Participants.from(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.create());
+        BlackjackGame game = new BlackjackGame(participants, Cards.create(new TestCardPickerGenerator(testData)));
         for (Participant participant : participants.getParticipants()) {
-            game.getTwoHitCards(testCardPickerGenerator,participant);
+            game.getTwoHitCards(participant);
         }
 
         //when

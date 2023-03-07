@@ -19,13 +19,12 @@ public class BlackjackController {
     }
 
     public void run() {
-        CardPickerGenerator cardPickerGenerator = new RandomCardPickerGenerator();
         List<String> playersName = inputPlayerNameCommand();
-        Cards cards = Cards.create();
+        Cards cards = Cards.create(new RandomCardPickerGenerator());
         Participants participants = Participants.from(playersName);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
-        gameSetting(participants, cardPickerGenerator, blackjackGame);
-        hitParticipantsCard(blackjackGame, cards, cardPickerGenerator);
+        gameSetting(participants, blackjackGame);
+        hitParticipantsCard(blackjackGame, cards);
         printResult(participants, blackjackGame);
     }
 
@@ -47,12 +46,12 @@ public class BlackjackController {
         return inputHitCommand(player);
     }
 
-    private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+    private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards) {
         List<Player> players = blackjackGame.findPlayers();
         for (Player player : players) {
-            hitPlayerCard(player, cards, cardPickerGenerator);
+            hitPlayerCard(player, cards);
         }
-        blackjackGame.dealerHitCard(cards,cardPickerGenerator);
+        blackjackGame.dealerHitCard(cards);
         outputView.printHitDealerCount(blackjackGame.findDealer());
     }
 
@@ -63,9 +62,9 @@ public class BlackjackController {
         outputView.printAllWinORLose(blackjackGame.generatePlayersResult());
     }
 
-    private void hitPlayerCard(final Player player, final Cards cards, final CardPickerGenerator cardPickerGenerator) {
+    private void hitPlayerCard(final Player player, final Cards cards) {
         while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
-            player.hit(cards.pick(cardPickerGenerator));
+            player.hit(cards.pick());
             outputView.printCurrentCards(player);
         }
         if (player.decideHit()) {
@@ -73,9 +72,9 @@ public class BlackjackController {
         }
     }
 
-    private void gameSetting(final Participants participants, final CardPickerGenerator cardPickerGenerator, final BlackjackGame blackjackGame) {
+    private void gameSetting(final Participants participants, final BlackjackGame blackjackGame) {
         for (Participant participant : participants.getParticipants()) {
-            blackjackGame.getTwoHitCards(cardPickerGenerator,participant);
+            blackjackGame.getTwoHitCards(participant);
         }
         outputView.printParticipants(participants.getParticipantsName());
         outputView.printParticipantsCard(blackjackGame.findDealer(), blackjackGame.findPlayers());
