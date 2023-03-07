@@ -38,17 +38,16 @@ public class BlackjackGame {
         players.takeCard(deck, FIRST_DRAW_COUNT);
     }
 
-    public void supplyAdditionalCardsToPlayers(CardDecisionStrategy cardDecisionStrategy,
-                                               CardDisplayStrategy cardDisplayStrategy) {
+    public void supplyAdditionalCardToPlayersBy(CardDecisionStrategy cardDecisionStrategy,
+                                                CardDisplayStrategy cardDisplayStrategy) {
         players.hitAdditionalCard(deck, cardDecisionStrategy, cardDisplayStrategy);
     }
 
-    public boolean canDealerHit() {
-        return !dealer.isBust() && dealer.isUnderScore();
-    }
-
-    public void supplyAdditionalCardToDealer() {
-        dealer.hit(deck.drawCard());
+    public void supplyAdditionalCardToDealerAnd(CardDisplayStrategy dealerDisplayStrategy) {
+        while (dealer.isUnderScore()) {
+            dealer.hit(deck.drawCard());
+            dealerDisplayStrategy.display(dealer);
+        }
     }
 
     public ParticipantResultDto getDealerResult() {

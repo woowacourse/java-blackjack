@@ -5,6 +5,7 @@ import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -80,14 +81,30 @@ class BlackjackGameTest {
 
     }
 
-    @Test
-    @DisplayName("딜러에게 추가카드를 줄 수 있다.")
-    void supplyAdditionalCardToDealer() {
-        int beforeSize = dealer.showCards().size();
-        blackjackGame.supplyAdditionalCardToDealer();
-        int afterSize = dealer.showCards().size();
+    @DisplayName("딜러에게 추가 카드를 주는 기능")
+    @Nested
+    class SupplyAdditionalCardToDealer {
+        @Test
+        @DisplayName("언더 스코어가 아니면 카드를 주지 않는다.")
+        void doesNotSupply() {
+            dealer.hit(Arrays.asList(new Card(CardNumber.KING, Pattern.SPADE), new Card(CardNumber.KING, Pattern.HEART)));
+            int beforeSize = dealer.showCards().size();
+            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {});
+            int afterSize = dealer.showCards().size();
 
-        assertThat(afterSize - beforeSize).isEqualTo(1);
+            assertThat(afterSize).isEqualTo(beforeSize);
+        }
+
+        @Test
+        @DisplayName("언더 스코어 이면 카드를 받는다.")
+        void supply() {
+            dealer.hit(Arrays.asList(new Card(CardNumber.KING, Pattern.HEART), new Card(CardNumber.SIX, Pattern.DIAMOND)));
+            int beforeSize = dealer.showCards().size();
+            blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> {});
+            int afterSize = dealer.showCards().size();
+
+            assertThat(afterSize - beforeSize).isEqualTo(1);
+        }
     }
 
     @Test
@@ -106,37 +123,5 @@ class BlackjackGameTest {
         assertThat(dealerResult.get(WIN)).isEqualTo(2);
         assertThat(dealerResult.get(LOSE)).isEqualTo(1);
         assertThat(dealerResult.get(TIE)).isEqualTo(1);
-    }
-
-    @Nested
-    @DisplayName("딜러가 카드를 추가로 받을 수 있는지 확인하는 기능")
-    class canDealerHitTest {
-        @Test
-        @DisplayName("딜러가 버스트가 아니고 언더스코어인 경우")
-        void canDealerHitUnderScoreAndNotBust() {
-            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.TWO, Pattern.SPADE));
-
-            assertThat(blackjackGame.canDealerHit()).isTrue();
-        }
-
-        @Test
-        @DisplayName("딜러가 버스트인경우")
-        void cantDealerHitCuzBust() {
-            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.KING, Pattern.SPADE));
-            dealer.hit(new Card(CardNumber.TWO, Pattern.SPADE));
-
-            assertThat(blackjackGame.canDealerHit()).isFalse();
-        }
-
-        @Test
-        @DisplayName("버스트가 아니고, 언더스코어가 아닌경우")
-        void canDealerHit() {
-            dealer.hit(new Card(CardNumber.KING, Pattern.HEART));
-            dealer.hit(new Card(CardNumber.EIGHT, Pattern.SPADE));
-
-            assertThat(blackjackGame.canDealerHit()).isFalse();
-        }
     }
 }

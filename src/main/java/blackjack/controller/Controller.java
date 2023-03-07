@@ -50,11 +50,8 @@ public class Controller {
     }
 
     private void supplyAdditionalCards() {
-        blackjackGame.supplyAdditionalCardsToPlayers(this::readAddOrNot, this::showCurrentCards);
-        while (blackjackGame.canDealerHit()) {
-            blackjackGame.supplyAdditionalCardToDealer();
-            outputView.printDealerHitMessage();
-        }
+        blackjackGame.supplyAdditionalCardToPlayersBy(this::readAddOrNot, this::showCurrentCards);
+        blackjackGame.supplyAdditionalCardToDealerAnd(ignore -> outputView.printDealerHitMessage());
     }
 
     private AddCardOrNot readAddOrNot(Participant participant) {
