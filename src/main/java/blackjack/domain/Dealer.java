@@ -24,7 +24,8 @@ public class Dealer extends Participant {
         return WinResult.LOSE;
     }
 
-    public boolean isAvailable() {
+    @Override
+    public boolean canDraw() {
         int sum = computeSumOfCards();
         return sum < CARD_TAKE_LIMIT;
     }

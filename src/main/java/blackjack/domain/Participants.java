@@ -96,7 +96,7 @@ public class Participants {
     }
 
     private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
-        if (player.isAvailable()) {
+        if (player.canDraw()) {
             availablePlayerNames.add(player.getName());
         }
     }

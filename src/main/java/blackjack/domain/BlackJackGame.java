@@ -23,11 +23,15 @@ public class BlackJackGame {
         participants.handInitialCards(new Deck(cards));
     }
 
-    public boolean handOneCard(String playerName) {
+    public void handOneCard(String playerName) {
         Player player = participants.findPlayerBy(playerName);
         List<Card> card = deck.draw(1);
         player.take(card.get(0));
-        return player.isAvailable();
+    }
+
+    public boolean canDraw(String playerName) {
+        Player player = participants.findPlayerBy(playerName);
+        return player.canDraw();
     }
 
     public Map<String, List<Card>> openPlayersCards() {
@@ -51,7 +55,7 @@ public class BlackJackGame {
         Dealer dealer = participants.getDealer();
         int hitCount = 0;
 
-        while (dealer.isAvailable()) {
+        while (dealer.canDraw()) {
             List<Card> cards = deck.draw(1);
             dealer.take(cards.get(0));
             hitCount++;

@@ -57,9 +57,9 @@ public class BlackJackController {
         if (command.isStay()) {
             return;
         }
-        boolean keepGoing = blackJackGame.handOneCard(playerName);
+        blackJackGame.handOneCard(playerName);
         OutputView.showPlayerCard(playerName, blackJackGame.openPlayerCards(playerName));
-        if (keepGoing) {
+        if (blackJackGame.canDraw(playerName)) {
             hitOrStay(playerName);
         }
     }

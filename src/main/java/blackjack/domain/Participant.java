@@ -26,7 +26,7 @@ public class Participant {
         return sum;
     }
 
-    public boolean isAvailable() {
+    public boolean canDraw() {
         int sum = computeSumOfCards();
         return !isBlackJack(sum) && !isBust(sum);
     }
