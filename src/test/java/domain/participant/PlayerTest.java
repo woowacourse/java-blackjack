@@ -53,7 +53,7 @@ class PlayerTest {
         player.addCard(card);
 
         // then
-        final ParticipantCard participantCard = player.participantCard;
+        final ParticipantCard participantCard = player.card;
         final List<Card> cards = participantCard.getCards();
 
         assertThat(cards)

@@ -38,7 +38,7 @@ class DealerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         dealer.addCard(card);
-        final ParticipantCard participantCard = dealer.participantCard;
+        final ParticipantCard participantCard = dealer.card;
         final List<Card> cards = participantCard.getCards();
 
         // then
