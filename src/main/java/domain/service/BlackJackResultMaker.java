@@ -21,18 +21,18 @@ public class BlackJackResultMaker {
         if (isVictory(score, comparedScore)) {
             return Result.of(1, 0, 0);
         }
-        if (isDefeat(score, comparedScore)) {
-            return Result.of(0, 0, 1);
+        if (isDraw(score, comparedScore)) {
+            return Result.of(0, 1, 0);
         }
-        return Result.of(0, 1, 0);
+        return Result.of(0, 0, 1);
     }
 
     private boolean isVictory(final Score score, final Score comparedScore) {
         return !score.isBust() && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
     }
 
-    private boolean isDefeat(final Score score, final Score comparedScore) {
-        return score.isBust() && comparedScore.isBust() || score.getValue() < comparedScore.getValue();
+    private boolean isDraw(final Score score, final Score comparedScore) {
+        return score.isBust() && comparedScore.isBust() || score.getValue() == comparedScore.getValue();
     }
 
     public Result makeDealerResult(final Dealer dealer, final List<Player> players) {
@@ -52,9 +52,9 @@ public class BlackJackResultMaker {
         if (isVictory(score, comparedScore)) {
             return Result.of(oldResult.getVictory() + 1, oldResult.getDraw(), oldResult.getDefeat());
         }
-        if (isDefeat(score, comparedScore)) {
-            return Result.of(oldResult.getVictory(), oldResult.getDraw(), oldResult.getDefeat() + 1);
+        if (isDraw(score, comparedScore)) {
+            return Result.of(oldResult.getVictory(), oldResult.getDraw() + 1, oldResult.getDefeat());
         }
-        return Result.of(oldResult.getVictory(), oldResult.getDraw() + 1, oldResult.getDefeat());
+        return Result.of(oldResult.getVictory(), oldResult.getDraw(), oldResult.getDefeat() + 1);
     }
 }
