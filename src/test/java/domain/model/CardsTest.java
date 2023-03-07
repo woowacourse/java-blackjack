@@ -70,4 +70,32 @@ class CardsTest {
         assertThat(result1).isEqualTo(3);
         assertThat(result2).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("빈 값이 아님을 테스트")
+    public void testisNotEmptyTrue() {
+        //given
+        final Set<Card> cardSet = Set.of(new Card(Suit.CLUB, Letter.ACE), new Card(Suit.DIAMOND, Letter.ACE),
+            new Card(Suit.SPADE, Letter.ACE));
+        final Cards cards = new Cards(cardSet);
+
+        //when
+        final boolean result = cards.isNotEmpty();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("빈 값임을 테스트")
+    public void testisNotEmptyFalse() {
+        //given
+        final Cards cards = Cards.makeEmptyCards();
+
+        //when
+        final boolean result = cards.isNotEmpty();
+
+        //then
+        assertThat(result).isFalse();
+    }
 }
