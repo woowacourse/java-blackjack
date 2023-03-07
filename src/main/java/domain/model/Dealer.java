@@ -15,6 +15,7 @@ public class Dealer extends Player {
         super(new Cards(new HashSet<>()), DEALER_NAME);
     }
 
+    @Override
     public boolean canReceiveCard() {
         return super.getScore().getValue() <= MIN_SCORE_THRESHOLD;
     }

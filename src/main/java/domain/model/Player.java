@@ -28,8 +28,8 @@ public class Player {
         score = makeScore(cards);
     }
 
-    public boolean isBust() {
-        return score.isBust();
+    public boolean canReceiveCard() {
+        return !score.isBust();
     }
 
     public Cards getCards() {

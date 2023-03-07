@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     @Test
-    @DisplayName("21 이하의 점수에서의 bust 테스트")
-    public void testScore21NotBust() {
+    @DisplayName("21 이하의 점수에서의 canReceiveCard 테스트")
+    public void testScore21receivable() {
         //given
         Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.NINE));
@@ -26,12 +26,12 @@ class PlayerTest {
         player.addCard(new Card(Suit.SPADE, Letter.THREE));
 
         //then
-        assertFalse(player.isBust());
+        assertTrue(player.canReceiveCard());
     }
 
     @Test
-    @DisplayName("22 이상의 점수에서의 bust 테스트")
-    public void testScore22Bust() {
+    @DisplayName("22 이상의 점수에서의 canReceiveCard 테스트")
+    public void testScore22NotReceivable() {
         //given
         Set<Card> cardSet = new HashSet<>();
         cardSet.add(new Card(Suit.SPADE, Letter.TEN));
@@ -43,6 +43,6 @@ class PlayerTest {
         player.addCard(new Card(Suit.SPADE, Letter.TWO));
 
         //then
-        assertTrue(player.isBust());
+        assertFalse(player.canReceiveCard());
     }
 }
