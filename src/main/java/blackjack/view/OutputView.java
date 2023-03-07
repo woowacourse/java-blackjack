@@ -1,11 +1,7 @@
 package blackjack.view;
 
-import static blackjack.domain.participant.Result.DRAW;
-import static blackjack.domain.participant.Result.LOSE;
-import static blackjack.domain.participant.Result.WIN;
 import static java.text.MessageFormat.format;
 
-import blackjack.domain.participant.Result;
 import blackjack.view.dto.CardsResponse;
 import blackjack.view.dto.DealerResultResponse;
 import blackjack.view.dto.DealerStateResponse;
@@ -21,7 +17,8 @@ public class OutputView {
     private static final String RESULT_FORMAT = "{0}: {1}";
 
     public void printDealCards(
-            final ParticipantResponse dealer, final List<ParticipantResponse> players, final int count
+            final ParticipantResponse dealer, final List<ParticipantResponse> players,
+            final int count
     ) {
         System.out.println(LINE_SEPARATOR + format("{0}와 {1}에게 {2}장을 나누었습니다.",
                 dealer.getName(), getPlayerNamesFormat(players), count));
@@ -55,9 +52,8 @@ public class OutputView {
 
     public void printDealerDrawn(final DealerStateResponse dealerStateResponse) {
         if (dealerStateResponse.isDrawn()) {
-            System.out.println(
-                    LINE_SEPARATOR + format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.", dealerStateResponse.getLimit())
-            );
+            System.out.println(LINE_SEPARATOR + format("딜러는 {0}이하라 한장의 카드를 더 받았습니다.",
+                    dealerStateResponse.getLimit()));
         }
     }
 
@@ -70,21 +66,26 @@ public class OutputView {
         final CardsResponse cardsResponse = participant.getCardsResponse();
         final int totalScore = cardsResponse.getTotalScore();
 
-        System.out.println(format("{0} - {1}", getHandedCardsWithoutScore(participant), getScoreFormat(totalScore)));
+        System.out.println(format("{0} - {1}",
+                getHandedCardsWithoutScore(participant), getScoreFormat(totalScore)));
     }
 
     private String getScoreFormat(final int totalScore) {
         return format("결과: {0}", totalScore);
     }
 
-    public void printFinalResult(final DealerResultResponse dealer, final List<PlayerResultResponse> players) {
+    public void printFinalResult(
+            final DealerResultResponse dealer,
+            final List<PlayerResultResponse> players
+    ) {
         System.out.println(LINE_SEPARATOR + "## 최종 승패");
-        System.out.println(format(RESULT_FORMAT, dealer.getName(), getDealerResult(dealer.getResult())));
+        System.out.println(
+                format(RESULT_FORMAT, dealer.getName(), getDealerResult(dealer.getResult())));
         players.forEach(this::printPlayerResult);
     }
 
-    private String getDealerResult(final Map<Result, Integer> result) {
-        return format("{0}승 {1}무 {2}패", result.get(WIN), result.get(DRAW), result.get(LOSE));
+    private String getDealerResult(final Map<String, Integer> result) {
+        return format("{0}승 {1}무 {2}패", result.get("승"), result.get("무"), result.get("패"));
     }
 
     private void printPlayerResult(final PlayerResultResponse player) {

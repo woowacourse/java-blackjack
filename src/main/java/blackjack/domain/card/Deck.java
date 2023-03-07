@@ -14,8 +14,7 @@ public class Deck {
         final Stack<Card> pack = new Stack<>();
         final List<Card> cards = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Number.values())
-                        .map(number -> new Card(number, suit))
-                )
+                        .map(number -> new Card(number, suit)))
                 .collect(Collectors.toList());
         pack.addAll(cards);
         TRUMP = pack;

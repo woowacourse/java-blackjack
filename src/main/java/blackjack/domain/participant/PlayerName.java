@@ -28,7 +28,8 @@ public class PlayerName {
 
     private void validateLength(final String value) {
         if (value.length() > MAXIMUM_LENGTH) {
-            throw new IllegalArgumentException("이름은 " + MAXIMUM_LENGTH + "글자 이하여야 합니다. 현재 이름: " + value);
+            throw new IllegalArgumentException(
+                    "이름은 " + MAXIMUM_LENGTH + "글자 이하여야 합니다. 현재 이름: " + value);
         }
     }
 
