@@ -1,7 +1,7 @@
 package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,5 +16,13 @@ public class NamesTest {
         Names singleName = new Names(List.of("pobi"));
 
         assertThat(singleName.getNames()).isEqualTo(List.of(new Name("pobi")));
+    }
+
+    @Test
+    @DisplayName("중복될 시 예외처리 된다.")
+    void validateDuplicatedNames() {
+        assertThatThrownBy(() -> new Names(List.of("pobi", "neo", "pobi")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
     }
 }
