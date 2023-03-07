@@ -24,7 +24,7 @@ class HandTest {
             //then
             assertThat(hand).extracting("cards", InstanceOfAssertFactories.collection(Card.class))
                     .hasSize(expectedSize)
-                    .containsSequence(card2, card1);
+                    .contains(card2, card1);
         }
     }
 

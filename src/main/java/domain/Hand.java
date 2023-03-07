@@ -15,29 +15,26 @@ public class Hand {
     }
 
     public void add(Card card) {
-        if (card.isAce()) {
-            cards.addLast(card);
-            return;
-        }
-        cards.addFirst(card);
+        cards.add(card);
     }
 
     public int calculateScore() {
         int score = cards.stream()
-                .mapToInt(Card::score)
-                .sum();
-        Card lastCard = cards.getLast();
-        if (!lastCard.isAce()) {
-            return score;
-        }
-        return addExtraScoreIfAce(score);
+                         .mapToInt(Card::score)
+                         .sum();
+        return checkScoreIfHasAce(score);
     }
 
-    private int addExtraScoreIfAce(int score) {
-        if (score + ADDITIONAL_SCORE_OF_ACE >= BUST_LOWER_BOUND) {
-            return score;
+    private int checkScoreIfHasAce(int score) {
+        if (hasAce() && score + ADDITIONAL_SCORE_OF_ACE < BUST_LOWER_BOUND) {
+            return score + ADDITIONAL_SCORE_OF_ACE;
         }
-        return score + ADDITIONAL_SCORE_OF_ACE;
+        return score;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                    .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {
