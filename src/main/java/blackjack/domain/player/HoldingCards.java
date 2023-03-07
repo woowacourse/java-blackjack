@@ -1,9 +1,9 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HoldingCards {
 
@@ -42,7 +42,7 @@ public class HoldingCards {
     }
 
     private Score getSumOfContainingAce(Score score) {
-        Score scoreOfAddingAceAdditionalPoint = score.plus(new Score(10));
+        Score scoreOfAddingAceAdditionalPoint = score.plus(new Score(ACE_ADDITIONAL_POINT));
         if (scoreOfAddingAceAdditionalPoint.isBust()) {
             return score;
         }
