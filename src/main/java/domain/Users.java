@@ -18,14 +18,22 @@ public class Users {
 		this.users = users;
 	}
 
-	public static Users from(final List<String> names) {
+	public static Users from(final List<String> names, Deck deck) {
 		validate(names);
 		List<User> users = new ArrayList<>();
 		for (String name : names) {
 			users.add(new Player(name));
 		}
 		users.add(new Dealer(DEALER_NAME));
+		initTwoCards(users, deck);
 		return new Users(users);
+	}
+
+	private static void initTwoCards(final List<User> users, Deck deck) {
+		for(User user : users){
+			user.hit(deck.pickCard());
+			user.hit(deck.pickCard());
+		}
 	}
 
 	private static void validate(final List<String> names) {

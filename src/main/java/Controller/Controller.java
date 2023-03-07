@@ -6,6 +6,7 @@ import static view.OutputView.*;
 import java.util.List;
 
 import domain.BlackJack;
+import domain.Deck;
 import domain.Player;
 import domain.Users;
 
@@ -13,7 +14,7 @@ public class Controller {
 
 	private BlackJack blackJack;
 
-	public void run(){
+	public void run() {
 		ready();
 		play();
 		end();
@@ -21,8 +22,9 @@ public class Controller {
 
 	private void ready() {
 		List<String> playerNames = askPlayerNames();
-		Users players = Users.from(playerNames);
-		blackJack = new BlackJack(players);
+		Deck deck = new Deck();
+		Users players = Users.from(playerNames, deck);
+		blackJack = new BlackJack(players, deck);
 		printInitMessage(players);
 		printDealerCardHidden(blackJack.getDealerCardHidden());
 		printPlayerCards(blackJack.getPlayerToCard());

@@ -10,7 +10,8 @@ public class DeckTest {
     @DisplayName("카드를 52장 생성한다")
     @Test
     void makeCard() {
-        int size = Deck.getDeck().size();
+        Deck deck = new Deck();
+        int size = deck.getDeck().size();
 
         assertThat(size).isEqualTo(52);
     }

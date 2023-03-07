@@ -9,12 +9,6 @@ public abstract class User {
 
 	public User() {
 		cards = new Cards();
-		hitTwoCards();
-	}
-
-	private void hitTwoCards() {
-		hit(Deck.pickCard());
-		hit(Deck.pickCard());
 	}
 
 	public void hit(Card card) {

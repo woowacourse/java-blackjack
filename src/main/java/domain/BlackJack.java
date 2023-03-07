@@ -10,18 +10,20 @@ import java.util.Map;
 public class BlackJack {
 
 	private final Users users;
+	private final Deck deck;
 
-	public BlackJack(final Users users) {
+	public BlackJack(final Users users, final Deck deck) {
 		this.users = users;
+		this.deck = deck;
 	}
 
 	public void giveCard(Player player) {
-		player.hit(Deck.pickCard());
+		player.hit(deck.pickCard());
 	}
 
 	public void giveCardToDealer() {
 		Dealer dealer = users.getDealer();
-		dealer.hit(Deck.pickCard());
+		dealer.hit(deck.pickCard());
 	}
 
 	public Map<String, GameResult> calculatePlayerResults() {
