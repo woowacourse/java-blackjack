@@ -75,11 +75,29 @@ class ParticipantsTest {
         Dealer dealer = new Dealer(new InitialState(new Hand()));
         Player player1 = new Player(new Name("이리내"), new InitialState(new Hand()));
         Player player2 = new Player(new Name("이리내"), new InitialState(new Hand()));
+
+        //when
         List<Player> players = new ArrayList<>(List.of(player1, player2));
 
         //then
         assertThatThrownBy(() -> new Participants(dealer, players)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 중복될 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("플레이어가 0명일 경우 예외처리한다.")
+    void validate_player_count() {
+        //given
+        Dealer dealer = new Dealer(new InitialState(new Hand()));
+
+        //when
+        List<Player> players = new ArrayList<>();
+
+        //then
+        assertThatThrownBy(() -> new Participants(dealer, players)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임을 시작하려면 플레이어는 한명 이상이여야 합니다.");
+    }
+
+
 
 }
