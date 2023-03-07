@@ -1,6 +1,7 @@
 package model.user;
 
 import model.card.Card;
+import model.card.Deck;
 
 import java.util.Objects;
 
@@ -12,6 +13,11 @@ public class User {
     public User(final String name) {
         this.name = name;
         this.hand = Hand.create();
+    }
+
+    public void receiveInitialCards(final Deck deck) {
+        receiveCard(deck.pick());
+        receiveCard(deck.pick());
     }
 
     public void receiveCard(final Card card) {

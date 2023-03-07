@@ -27,8 +27,7 @@ public class Player implements Receivable {
     }
 
     public void receiveInitialCards(final Deck deck) {
-        receiveCard(deck.pick());
-        receiveCard(deck.pick());
+        user.receiveInitialCards(deck);
     }
 
     public void receiveCard(final Card card) {
