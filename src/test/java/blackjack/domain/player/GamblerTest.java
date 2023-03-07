@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Shape;
-import blackjack.domain.game.Result;
 import blackjack.util.FixedDeck;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

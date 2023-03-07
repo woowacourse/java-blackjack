@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.game.Result;
-
 public class Dealer extends Player {
     private static final int SCORE_LOWER_BOUND = 16;
     private static final int FIRST_CARD_INDEX = 0;

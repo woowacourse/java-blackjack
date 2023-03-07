@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Result;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

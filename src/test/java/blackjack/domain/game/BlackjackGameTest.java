@@ -15,7 +15,7 @@ import java.util.List;
 
 import static blackjack.domain.card.Rank.*;
 import static blackjack.domain.card.Shape.*;
-import static blackjack.domain.game.Result.WIN;
+import static blackjack.domain.player.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

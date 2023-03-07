@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.game.Result;
-
 public class Gambler extends Player {
 
     public Gambler(final String name) {

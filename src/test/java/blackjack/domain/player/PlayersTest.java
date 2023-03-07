@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.Result;
 import blackjack.util.FixedDeck;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,9 +16,9 @@ import java.util.stream.IntStream;
 
 import static blackjack.domain.card.Rank.*;
 import static blackjack.domain.card.Shape.*;
-import static blackjack.domain.game.Result.DRAW;
-import static blackjack.domain.game.Result.WIN;
 import static blackjack.domain.player.Players.from;
+import static blackjack.domain.player.Result.DRAW;
+import static blackjack.domain.player.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
