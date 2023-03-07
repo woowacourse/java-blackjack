@@ -1,9 +1,6 @@
 package domain.card;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Denomination {
     ACE("A", 11),
@@ -28,17 +25,15 @@ public enum Denomination {
         this.value = value;
     }
 
-//    public List<String> getDenominationNames() {
-//        return Arrays.stream(values())
-//                .map(denomination -> denomination.name)
-//                .collect(Collectors.toUnmodifiableList());
-//    }
-
     public String getName() {
         return name;
     }
 
-    public int getValueByName(String name) {
-        return valueOf(name).value;
+    public static int convertNumber(String name) {
+        return Arrays.stream(values())
+                .filter(card -> card.name.equals(name))
+                .map(card -> card.value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바른 카드 형식이 아닙니다."));
     }
 }

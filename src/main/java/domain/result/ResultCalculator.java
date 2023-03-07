@@ -34,7 +34,7 @@ public class ResultCalculator {
     }
 
     public void fight(Player player, Dealer dealer) {
-        int playerWinOrLose = checkBust(player.getMaxSum()) - checkBust(dealer.getMaxSum());
+        int playerWinOrLose = checkBust(player.calculateScore()) - checkBust(dealer.calculateScore());
         if (playerWinOrLose > 0) {
             playerWin(results.get(player.getName()), results.get(dealer.getName()));
         }

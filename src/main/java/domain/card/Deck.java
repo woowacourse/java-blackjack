@@ -1,21 +1,16 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Deck {
     private static final String KOREAN_REGEX = "[가-힣]+";
 
-    private final CardMaker cardMaker;
-    private final List<String> alreadyMakeCards;
+    private static final CardMaker cardMaker = new CardMaker();
+    private static final Set<String> alreadyMakeCards = new HashSet<>();
 
-    public Deck(CardMaker cardMaker) {
-        this.cardMaker = cardMaker;
-        alreadyMakeCards = new ArrayList<>();
-    }
-
-    public String drawCard() {
-        String popCardName = cardMaker.makeCard();
+    public static String drawCard() {
+        String popCardName = cardMaker.randomMakeCard();
         if (!alreadyMakeCards.contains(popCardName)) {
             alreadyMakeCards.add(popCardName);
             return popCardName;
@@ -23,11 +18,8 @@ public class Deck {
         return drawCard();
     }
 
-    public int extractCardNumber(String card) {
+    public static int extractCardNumber(String card) {
         String cardValue = card.replaceAll(KOREAN_REGEX, "");
-        if (SpecialCard.isSpecial(cardValue)) {
-            return SpecialCard.convertNumber(cardValue);
-        }
-        return Integer.parseInt(cardValue);
+        return Denomination.convertNumber(cardValue);
     }
 }

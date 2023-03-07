@@ -2,7 +2,6 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.RandomCardMaker;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -36,9 +35,8 @@ public class BlackJackGame {
     }
 
     private static Card generateCard() {
-        Deck deck = new Deck(new RandomCardMaker());
-        String s = deck.drawCard();
-        return new Card(s, deck.extractCardNumber(s));
+        String s = Deck.drawCard();
+        return new Card(s, Deck.extractCardNumber(s));
     }
 
     private void initSetting() {
@@ -83,7 +81,7 @@ public class BlackJackGame {
         do {
             OutputView.printInputReceiveYesOrNotMessage(player.getName());
             ResultView.printParticipantResult(player.getName(), player.getCardNames());
-        } while (player.isAbleToDraw() && isReceivable(player));
+        } while (player.playerAbleToDraw() && isReceivable(player));
     }
 
     private boolean isReceivable(Player player) {
@@ -95,7 +93,7 @@ public class BlackJackGame {
     }
 
     private void dealerDistributeOrNot() {
-        while (dealer.isAbleToDraw()) {
+        while (dealer.dealerMustDraw()) {
             BlackJackGame.distributeCard(dealer, 1);
             OutputView.printDealerReceivedMessage();
         }
@@ -103,9 +101,9 @@ public class BlackJackGame {
 
     private void printFinalGameStatus() {
         System.out.println();
-        ResultView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.getMaxSum());
+        ResultView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.calculateScore());
         for (Player player : players.getPlayers()) {
-            ResultView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.getMaxSum());
+            ResultView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.calculateScore());
         }
     }
 

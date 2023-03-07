@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Random;
 
 public class RandomEnumGenerator<T extends Enum<T>> {
-    private static final Random PRNG = new Random();
+    private static final Random random = new Random();
     private final T[] values;
 
     public RandomEnumGenerator(Class<T> e) {
@@ -11,6 +11,6 @@ public class RandomEnumGenerator<T extends Enum<T>> {
     }
 
     public T randomEnum() {
-        return values[PRNG.nextInt(values.length)];
+        return values[random.nextInt(values.length)];
     }
 }

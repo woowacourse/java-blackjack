@@ -8,7 +8,8 @@ public class Dealer extends Participant {
         super(new Name(DEALER_NAME));
     }
 
-    public boolean isAbleToDraw() {
-        return getMaxSum() > 0 && getMaxSum() < LIMIT_TAKE_CARD_VALUE;
+    public boolean dealerMustDraw() {
+        int score = calculateScore();
+        return score > 0 && score < LIMIT_TAKE_CARD_VALUE;
     }
 }

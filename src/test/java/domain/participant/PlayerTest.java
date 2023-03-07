@@ -23,7 +23,7 @@ public class PlayerTest {
         Player player = new Player(new Name("seongha"));
         player.drawCard(new Card("10다이아몬드", 10));
         player.drawCard(new Card("6다이아몬드", 6));
-        assertThat(player.isAbleToDraw()).isTrue();
+        assertThat(player.playerAbleToDraw()).isTrue();
     }
 
     @Test
@@ -33,6 +33,6 @@ public class PlayerTest {
         player.drawCard(new Card("10다이아몬드", 10));
         player.drawCard(new Card("6다이아몬드", 6));
         player.drawCard(new Card("8다이아몬드", 8));
-        assertThat(player.isAbleToDraw()).isFalse();
+        assertThat(player.playerAbleToDraw()).isFalse();
     }
 }
