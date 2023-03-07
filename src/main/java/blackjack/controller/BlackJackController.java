@@ -76,6 +76,13 @@ public class BlackJackController {
             final Player drawablePlayer = blackJackGame.findDrawablePlayer();
             final boolean drawState = inputView.readDrawState(drawablePlayer.getName());
             blackJackGame.drawOrNot(drawState, drawablePlayer);
+            printPlayerCards(drawState, drawablePlayer);
+        }
+    }
+
+    private void printPlayerCards(final boolean drawState, final Player player) {
+        if (drawState) {
+            outputView.printHandedCardsWithoutScore(ParticipantResponse.from(player));
         }
     }
 
