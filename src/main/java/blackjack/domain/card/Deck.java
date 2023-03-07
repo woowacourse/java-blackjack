@@ -12,7 +12,6 @@ public class Deck {
     private static Deck instance;
     private static final List<Card> deck = new ArrayList<>(DECK_SIZE);
 
-
     public static Deck getInstance() {
         if (instance == null) {
             instance = new Deck();
