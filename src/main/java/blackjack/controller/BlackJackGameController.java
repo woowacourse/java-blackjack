@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Command;
 import blackjack.domain.Game;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
@@ -93,7 +94,11 @@ public class BlackJackGameController {
     }
 
     private boolean isCheckPlayerCommand(Player player) {
-        return player.isHit() && inputView.readTryCommand(player.showName()).equals("y");
+        return player.isHit() && isCommandHit(player);
+    }
+
+    private boolean isCommandHit(Player player) {
+        return Command.findCommand(inputView.readTryCommand(player.showName())).equals(Command.HIT);
     }
 
     private void dealerTurn(Game game) {

@@ -18,7 +18,7 @@ public enum Command {
         return command;
     }
 
-    public Command findCommand(String command) {
+    public static Command findCommand(String command) {
         return Arrays.stream(values())
                 .filter(x -> x.getCommand().equals(command))
                 .findFirst()
