@@ -19,23 +19,23 @@ public final class Card {
     }
 
     public static Card of(final Shape shape, final Value value) {
-        return cache.computeIfAbsent(toKey(shape, value), ignored -> new Card(shape.getShape(), value.getValue()));
+        return cache.computeIfAbsent(toKey(shape, value), ignored -> new Card(shape.name(), value.name()));
     }
 
     private static String toKey(final Shape shape, final Value value) {
-        return shape.getShape() + value.getValue();
+        return shape.name() + value.name();
     }
 
     public int getDefaultScore() {
         return value.getDefaultScore();
     }
 
-    public String getValue() {
-        return value.getValue();
+    public Value getValue() {
+        return value;
     }
 
-    public String getShape() {
-        return shape.getShape();
+    public Shape getShape() {
+        return shape;
     }
 
     public boolean isAce() {

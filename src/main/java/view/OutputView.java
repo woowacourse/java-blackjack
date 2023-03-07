@@ -1,16 +1,19 @@
 package view;
 
 import domain.card.Card;
+import domain.card.Shape;
+import domain.card.Value;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.result.WinningStatus;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     private static final OutputView instance = new OutputView();
 
@@ -19,6 +22,37 @@ public class OutputView {
     }
 
     private OutputView() {
+    }
+
+    private static final Map<Shape, String> shapeDisplay = new EnumMap<>(Shape.class);
+    private static final Map<Value, String> valueDisplay = new EnumMap<>(Value.class);
+
+    static {
+        initializeShapeDisplay();
+        initializeValueDisplay();
+    }
+
+    private static void initializeShapeDisplay() {
+        shapeDisplay.put(Shape.SPADE, "스페이드");
+        shapeDisplay.put(Shape.CLOVER, "클로버");
+        shapeDisplay.put(Shape.DIAMOND, "클로버");
+        shapeDisplay.put(Shape.HEART, "하트");
+    }
+
+    private static void initializeValueDisplay() {
+        valueDisplay.put(Value.ACE, "A");
+        valueDisplay.put(Value.TWO, "2");
+        valueDisplay.put(Value.THREE, "3");
+        valueDisplay.put(Value.FOUR, "4");
+        valueDisplay.put(Value.FIVE, "5");
+        valueDisplay.put(Value.SIX, "6");
+        valueDisplay.put(Value.SEVEN, "7");
+        valueDisplay.put(Value.EIGHT, "8");
+        valueDisplay.put(Value.NINE, "9");
+        valueDisplay.put(Value.TEN, "10");
+        valueDisplay.put(Value.JACK, "J");
+        valueDisplay.put(Value.QUEEN, "Q");
+        valueDisplay.put(Value.KING, "K");
     }
 
     public void printInitialMessage(final List<Player> players) {
@@ -31,8 +65,8 @@ public class OutputView {
         List<Player> players = participants.getPlayers();
 
         Card dealerCard = dealer.getCards().get(0);
-        String dealerCardDisplay = String.format("%s: %s%s", dealer.getName(), dealerCard.getValue(),
-                dealerCard.getShape());
+        String dealerCardDisplay = String.format("%s: %s%s", dealer.getName(), valueDisplay.get(dealerCard.getValue()),
+                shapeDisplay.get(dealerCard.getShape()));
         System.out.println(dealerCardDisplay);
 
         for (Player player : players) {
@@ -58,7 +92,8 @@ public class OutputView {
 
     private String formatCardState(final Participant participant) {
         String cards = participant.getCards().stream()
-                .map(playerCard -> String.format("%s%s", playerCard.getValue(), playerCard.getShape()))
+                .map(card -> String.format("%s%s", valueDisplay.get(card.getValue()),
+                        shapeDisplay.get(card.getShape())))
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", participant.getName(), cards);
     }
