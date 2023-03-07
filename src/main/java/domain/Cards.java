@@ -1,8 +1,9 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
-public class CardDeck {
+public class Cards {
 
     private static final int BLACK_JACK = 21;
     private static final int NONE_ACE = 0;
@@ -10,7 +11,7 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck(List<Card> cards) {
+    public Cards(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -21,6 +22,7 @@ public class CardDeck {
     public int calculateScore(int limit) {
         int aceCount = 0;
         int sum = 0;
+
         for (Card card : cards) {
             aceCount = increaseAceCount(aceCount, card);
             sum += card.getLetterScore();
@@ -31,6 +33,18 @@ public class CardDeck {
 
     public void addNewCard(Card card) {
         cards.add(card);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card getCard() {
+        return cards.get(cards.size() - 1);
+    }
+
+    public void removeCard() {
+        cards.remove(cards.size() - 1);
     }
 
     private int increaseAceCount(int aceCount, Card card) {

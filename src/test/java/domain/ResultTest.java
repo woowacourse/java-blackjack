@@ -23,7 +23,7 @@ public class ResultTest {
     void setUp() {
         cards.add(new Card(Shape.CLOVER, Letter.JACK));
         cards.add(new Card(Shape.HEART, Letter.EIGHT));
-        dealer = new Dealer(new CardDeck(cards));
+        dealer = new Dealer(new Cards(cards));
         names = List.of("aa");
     }
 
@@ -97,18 +97,20 @@ public class ResultTest {
         assertThat(gameResult.get(new Name("aa"))).isEqualTo(GameResult.LOSE);
     }
 
-    private List<Card> generateCardsForTest(Card card) {
+    private Cards generateCardsForTest(Card card) {
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < 2; i++) {
             cards.add(card);
         }
 
-        return cards;
+        return new Cards(cards);
     }
 
     private void makePlayersBust() {
-        players.getPlayers().get(0).pick(new Card(Shape.HEART, Letter.KING));
+        players.getPlayers()
+                .get(0)
+                .pick(new Card(Shape.HEART, Letter.KING));
     }
 
 }

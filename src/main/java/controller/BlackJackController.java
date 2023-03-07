@@ -1,7 +1,7 @@
 package controller;
 
-import domain.CardDeck;
 import domain.CardDistributor;
+import domain.Cards;
 import domain.Dealer;
 import domain.Name;
 import domain.Participant;
@@ -9,7 +9,7 @@ import domain.Player;
 import domain.Players;
 import domain.Result;
 import dto.CardStatusDto;
-import util.CardDeckMaker;
+import util.CardsMaker;
 import view.InputView;
 import view.OutputView;
 
@@ -34,9 +34,9 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = requestPlayerName();
-        CardDistributor cardDistributor = new CardDistributor(CardDeckMaker.generate());
+        CardDistributor cardDistributor = new CardDistributor(CardsMaker.generate());
         Players players = Players.of(playerNames, cardDistributor);
-        Dealer dealer = new Dealer(new CardDeck(cardDistributor.distributeInitialCard()));
+        Dealer dealer = new Dealer(new Cards(cardDistributor.distributeInitialCard()));
         printInitialDistribution(players, dealer);
         progress(players, cardDistributor, dealer);
         end(players, dealer);
@@ -66,8 +66,7 @@ public class BlackJackController {
     }
 
     private List<CardStatusDto> getCardStatus(Participant participant) {
-        return participant.getCardDeck()
-                .getCards()
+        return participant.getCards()
                 .stream()
                 .map(CardStatusDto::new)
                 .collect(Collectors.toList());

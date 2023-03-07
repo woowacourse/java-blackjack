@@ -3,7 +3,7 @@ package domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.CardDeckMaker;
+import util.CardsMaker;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        distributor = new CardDistributor(CardDeckMaker.generate());
+        distributor = new CardDistributor(CardsMaker.generate());
     }
 
 

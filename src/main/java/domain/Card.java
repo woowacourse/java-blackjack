@@ -47,4 +47,11 @@ public class Card {
         return Objects.hash(shape, letter);
     }
 
+    @Override
+    public String toString() {
+        return "Card{" +
+                "shape=" + shape +
+                ", letter=" + letter +
+                '}';
+    }
 }

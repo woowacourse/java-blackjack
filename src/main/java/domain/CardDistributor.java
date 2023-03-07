@@ -1,24 +1,21 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CardDistributor {
 
-    private final List<Card> cards;
+    private final Cards cards;
 
-    public CardDistributor(List<Card> cards) {
+    public CardDistributor(Cards cards) {
         this.cards = cards;
-        shuffle(cards);
-    }
-
-    private void shuffle(List<Card> cards) {
-        Collections.shuffle(cards);
+        cards.shuffle();
     }
 
     public Card distribute() {
-        return cards.remove(cards.size() - 1);
+        Card card = cards.getCard();
+        cards.removeCard();
+        return card;
     }
 
     public List<Card> distributeInitialCard() {
@@ -31,8 +28,8 @@ public class CardDistributor {
         return initialCard;
     }
 
-    public int getDeckSize() {
-        return cards.size();
+    public int getCardsSize() {
+        return cards.getSize();
     }
 
 }

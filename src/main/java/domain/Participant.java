@@ -1,20 +1,22 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Participant {
 
     protected static final int BUST_LIMIT = 21;
 
 
     protected final Name name;
-    protected final CardDeck cardDeck;
+    protected final Cards cards;
 
-    protected Participant(Name name, CardDeck cardDeck) {
+    protected Participant(Name name, Cards cards) {
         this.name = name;
-        this.cardDeck = cardDeck;
+        this.cards = cards;
     }
 
     public void pick(Card card) {
-        cardDeck.addNewCard(card);
+        cards.addNewCard(card);
     }
 
     public boolean isBust() {
@@ -25,8 +27,8 @@ public abstract class Participant {
 
     public abstract boolean isMoreCardAble();
 
-    public CardDeck getCardDeck() {
-        return cardDeck;
+    public List<Card> getCards() {
+        return List.copyOf(cards.getCards());
     }
 
     public Name getName() {
