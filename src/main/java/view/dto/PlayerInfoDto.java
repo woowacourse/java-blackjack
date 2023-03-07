@@ -8,30 +8,30 @@ import view.mapper.CardTypeMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlayerInfoDTO {
+public class PlayerInfoDto {
 
     private final String playerName;
     private final List<String> cards;
     private final int result;
 
-    private PlayerInfoDTO(String playerName, List<String> cards, int result) {
+    private PlayerInfoDto(String playerName, List<String> cards, int result) {
         this.playerName = playerName;
         this.cards = cards;
         this.result = result;
     }
 
-    private PlayerInfoDTO(String playerName, List<String> cards) {
+    private PlayerInfoDto(String playerName, List<String> cards) {
         this.playerName = playerName;
         this.cards = List.copyOf(cards);
         result = 0;
     }
 
-    public static PlayerInfoDTO from(Player player) {
-        return new PlayerInfoDTO(player.getPlayerName().getValue(), mapToCards(player.getHand().getCards()));
+    public static PlayerInfoDto from(Player player) {
+        return new PlayerInfoDto(player.getPlayerName().getValue(), mapToCards(player.getHand().getCards()));
     }
 
-    public static PlayerInfoDTO of(Player player, int result) {
-        return new PlayerInfoDTO(player.getPlayerName().getValue(), mapToCards(player.getHand().getCards()), result);
+    public static PlayerInfoDto of(Player player, int result) {
+        return new PlayerInfoDto(player.getPlayerName().getValue(), mapToCards(player.getHand().getCards()), result);
     }
 
     private static List<String> mapToCards(List<Card> cards) {

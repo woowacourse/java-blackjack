@@ -4,7 +4,7 @@ import domain.strategy.NumberGenerator;
 import domain.user.Dealer;
 import domain.user.People;
 import domain.user.Player;
-import view.dto.PlayerInfoDTO;
+import view.dto.PlayerInfoDto;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class BlackjackGame {
 
     }
 
-    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerInfoDTO> outputPlayer) {
+    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerInfoDto> outputPlayer) {
         people.hitByCommandAllPlayers(inputCommand, outputPlayer, deck);
     }
 
