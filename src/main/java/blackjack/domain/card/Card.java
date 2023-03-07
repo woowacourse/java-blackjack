@@ -2,14 +2,14 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
 
     private final Number number;
     private final Suit suit;
 
-    public Card(final Number number, final Pattern pattern) {
+    public Card(final Number number, final Suit suit) {
         this.number = number;
-        this.pattern = pattern;
+        this.suit = suit;
     }
 
     public int convertToScore() {
