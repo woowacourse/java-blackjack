@@ -20,11 +20,15 @@ public class PlayingCards {
     public int getTotalScore() {
         int totalScore = calculateTotalScore();
 
-        if (isBurst(totalScore) && containsAce()) {
-            return totalScore - ACE_BOTH_SCORE_DIFFERENCE;
+        if (containsAce() && aceElevenScoreCase(totalScore) <= BLACKJACK_SCORE) {
+            return totalScore + ACE_BOTH_SCORE_DIFFERENCE;
         }
 
         return totalScore;
+    }
+    
+    private int aceElevenScoreCase(int totalScore) {
+        return totalScore + 10;
     }
     
     public boolean isBurst(int totalScore) {

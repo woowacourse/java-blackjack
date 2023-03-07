@@ -65,4 +65,24 @@ class PlayingCardsTest {
 
         assertThat(playingCards.isBurst(playingCards.getTotalScore())).isFalse();
     }
+    
+    @Test
+    @DisplayName("에이스 2장인 경우 12")
+    void aceAce() {
+        playingCards.addCard(new Card(Shape.HEART, Number.ACE));
+        playingCards.addCard(new Card(Shape.SPADE, Number.ACE));
+    
+        assertThat(playingCards.getTotalScore()).isEqualTo(12);
+    }
+    
+    @Test
+    @DisplayName("에이스 4장인 경우 12")
+    void aceAceAceAce() {
+        playingCards.addCard(new Card(Shape.HEART, Number.ACE));
+        playingCards.addCard(new Card(Shape.SPADE, Number.ACE));
+        playingCards.addCard(new Card(Shape.DIAMOND, Number.ACE));
+        playingCards.addCard(new Card(Shape.CLOVER, Number.ACE));
+        
+        assertThat(playingCards.getTotalScore()).isEqualTo(14);
+    }
 }
