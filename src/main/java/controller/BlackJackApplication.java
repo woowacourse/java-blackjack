@@ -31,9 +31,7 @@ public class BlackJackApplication {
     }
 
     private void initializeBlackjackGame(BlackJack blackJack) {
-        for (int count = 0; count < 2; count++) {
-            blackJack.initializeCardsOfPlayers();
-        }
+        blackJack.initializeCardsOfPlayers();
         OutputView.printPlayersInformation(blackJack.getPlayers());
     }
 
