@@ -38,9 +38,8 @@ public class BlackJackGameController {
     }
 
     private Game initGame() {
-        List<Player> players = initPlayers();
         Deck deck = initDeck();
-        GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
+        GamePlayer gamePlayer = new GamePlayer(new Players(initPlayers()), new Dealer());
         return new Game(deck, gamePlayer);
     }
 
@@ -58,6 +57,10 @@ public class BlackJackGameController {
         return playersName.stream()
                 .map(name -> new Player(new Name(name)))
                 .collect(Collectors.toList());
+    }
+
+    private Deck initDeck() {
+        return DeckFactory.createDeck(DeckType.BLACKJACK);
     }
 
     private void printStartCards(Game game) {
@@ -78,10 +81,6 @@ public class BlackJackGameController {
         return cards.stream()
                 .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
                 .collect(Collectors.toList());
-    }
-
-    private Deck initDeck() {
-        return DeckFactory.createDeck(DeckType.BLACKJACK);
     }
 
     private void play(Game game) {
