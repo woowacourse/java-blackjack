@@ -21,10 +21,8 @@ public class Controller {
 
     public void run() {
         Players players = setPlayers();
-
         BlackjackGame game = new BlackjackGame(players,
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
-
         distributeInitialCard(players, game);
         pollPlayerAdditionalCard(players, game);
         pollDealerAdditionalCard(players, game);
@@ -69,7 +67,6 @@ public class Controller {
         }
     }
 
-
     private void pollDealerAdditionalCard(Players players, BlackjackGame game) {
         Dealer dealer = players.findDealer();
         while (!dealer.isOverDealerStandard()) {
@@ -81,6 +78,6 @@ public class Controller {
     private void printResult(Players players, BlackjackGame game) {
         Dealer dealer = players.findDealer();
         outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
+        outputView.printWinnerResult(players, game);
     }
 }

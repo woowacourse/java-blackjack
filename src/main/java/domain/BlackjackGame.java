@@ -6,9 +6,7 @@ import domain.participants.Player;
 import domain.participants.Players;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
     private static final int BLACK_JACK = 21;
@@ -50,24 +48,17 @@ public class BlackjackGame {
         }
     }
 
-    public Map<String, List<Result>> getDealerResult() {
-        Map<String, List<Result>> dealerResult = new LinkedHashMap<>();
+    public List<Result> getDealerResult(Players players) {
         List<Result> dealerResults = new ArrayList<>();
-        for (String name : getPlayersResult().keySet()) {
-            Result result = getPlayersResult().get(name);
+        for (Player player : players.getPlayersWithOutDealer()) {
+            Result result = getPlayersResult(player);
             dealerResults.add(result.getReverseResult());
         }
-        dealerResult.put(players.findDealer().getName(), dealerResults);
-        return dealerResult;
+        return dealerResults;
     }
 
-    public Map<String, Result> getPlayersResult() {
-        Map<String, Result> result = new LinkedHashMap<>();
-        int dealerSum = players.findDealer().getCardsSum();
-        for (Player player : players.getPlayersWithOutDealer()) {
-            result.put(player.getName(), isPlayerWin(dealerSum, player.getCardsSum()));
-        }
-        return result;
+    public Result getPlayersResult(Player player) {
+        return isPlayerWin(players.findDealer().getCardsSum(),player.getCardsSum());
     }
 
     public Result isPlayerWin(int dealerSum, int playerSum) {

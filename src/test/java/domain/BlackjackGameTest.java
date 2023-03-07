@@ -64,11 +64,9 @@ public class BlackjackGameTest {
 
         blackjackGame.distributeInitialCard();
 
-        Map<String, Result> playerResult = new LinkedHashMap<>();
-        playerResult.put("pobi", Result.LOSE);
-        playerResult.put("jason", Result.LOSE);
+        Player pobi = players.getPlayersWithOutDealer().get(0);
 
-        Assertions.assertThat(blackjackGame.getPlayersResult()).isEqualTo(playerResult);
+        Assertions.assertThat(blackjackGame.getPlayersResult(pobi)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -78,11 +76,9 @@ public class BlackjackGameTest {
 
         blackjackGame.distributeInitialCard();
 
-        Map<String, List<Result>> playerResult = new LinkedHashMap<>();
+        Dealer dealer = players.findDealer();
 
-        playerResult.put(dealer.getName(), List.of(Result.WIN, Result.WIN));
-
-        Assertions.assertThat(blackjackGame.getDealerResult()).isEqualTo(playerResult);
+        Assertions.assertThat(blackjackGame.getDealerResult(players)).isEqualTo(List.of(Result.WIN,Result.WIN));
     }
 
 

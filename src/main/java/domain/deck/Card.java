@@ -16,9 +16,11 @@ public class Card {
     public int getCardValue() {
         return cardNumber.getValue();
     }
+
     public String getCardName() {
         return cardNumber.getName();
     }
+
     public String getCardPattern() {
         return cardPattern.getPattern();
     }

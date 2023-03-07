@@ -1,12 +1,12 @@
 package view;
 
+import domain.BlackjackGame;
 import domain.Result;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -52,15 +52,16 @@ public class OutputView {
         }
     }
 
-    public void printWinnerResult(Map<String, List<Result>> dealerResult, Map<String, Result> playerResult) {
+    public void printWinnerResult(Players players, BlackjackGame game) {
         System.out.println(FINAL_WIN_LOSE_RATIO_MESSAGE);
-        String name = dealerResult.keySet().stream().findFirst().get();
-        List<Result> dealerResults = dealerResult.get(name);
-        System.out.printf(DEALER_RESULT_MESSAGE, name,dealerResults.stream().filter(s -> s == Result.WIN).count(),
+        List<Result> dealerResults = game.getDealerResult(players);
+        System.out.printf(DEALER_RESULT_MESSAGE, players.findDealer().getName(),
+                dealerResults.stream().filter(s -> s == Result.WIN).count(),
                 dealerResults.stream().filter(s -> s == Result.DRAW).count(),
                 dealerResults.stream().filter(s -> s == Result.LOSE).count());
-        for (String key : playerResult.keySet()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, key, playerResult.get(key).getResult());
+        for (Player player : players.getPlayersWithOutDealer()) {
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(),
+                    game.getPlayersResult(player).getResult());
         }
     }
 }

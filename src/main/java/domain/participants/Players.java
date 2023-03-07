@@ -1,7 +1,5 @@
 package domain.participants;
 
-import domain.deck.Card;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

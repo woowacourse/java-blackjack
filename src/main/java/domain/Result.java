@@ -5,7 +5,7 @@ public enum Result {
     DRAW("무"),
     LOSE("패");
 
-    private String result;
+    private final String result;
 
     Result(String result) {
         this.result = result;
