@@ -48,7 +48,7 @@ class PlayersTest {
             //given
             List<String> playerNames = List.of("에밀", "포이");
             Players players = Players.from(playerNames);
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
 
             //when
             players.receiveCard(deck);
@@ -66,7 +66,7 @@ class PlayersTest {
         void should_hasDrawablePlayer가true반환_when_카드를뽑을수있는플레이어존재() {
             //given
             Players players = Players.from(List.of("포이"));
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.ACE));
@@ -85,7 +85,7 @@ class PlayersTest {
         void should_hasDrawablePlayer가false반환_when_카드를뽑을수있는플레이어없을때() {
             //given
             Players players = Players.from(List.of("포이"));
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.ACE));
@@ -108,7 +108,7 @@ class PlayersTest {
         void should_카드를받을다음플레이어이름반환_when_카드를받을수있는플레이어가존재할시() {
             //given
             Players players = Players.from(List.of("포이", "에밀"));
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.FOUR));
@@ -128,7 +128,7 @@ class PlayersTest {
         void should_예외를반환한다_when_카드를받을수있는플레이어가없을시() {
             //given
             Players players = Players.from(List.of("포이", "에밀"));
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
             deck.shuffle((cards) -> {
                 cards.clear();
                 cards.add(Card.of(Suit.SPADE, Number.ACE));

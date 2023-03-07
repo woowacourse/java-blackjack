@@ -13,7 +13,7 @@ class DeckTest {
         @Test
         void should_중복되는인스턴스가없어야한다_when_생성() {
             //given
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
 
             //when
 
@@ -28,7 +28,7 @@ class DeckTest {
         @Test
         void should_적절한카드반환_when_draw호출() {
             //given
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
             Card expected = Card.of(Suit.CLUB, Number.JACK);
 
             //when
@@ -44,7 +44,7 @@ class DeckTest {
         @Test
         void should_카드를섞는다_when_shuffle호출() {
             //given
-            Deck deck = Deck.create();
+            Deck deck = Deck.createFullDeck();
             Card expected = Card.of(Suit.SPADE, Number.ACE);
             ShuffleStrategy testShuffleStrategy = Collections::reverse;
 

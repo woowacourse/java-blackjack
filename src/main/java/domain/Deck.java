@@ -10,19 +10,19 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck create() {
+    public static Deck createFullDeck() {
         final LinkedList<Card> cards = new LinkedList<>();
-        addAllCards(cards);
+        fillAllCards(cards);
         return new Deck(cards);
     }
 
-    private static void addAllCards(LinkedList<Card> cards) {
+    private static void fillAllCards(LinkedList<Card> cards) {
         for (Suit suit : Suit.values()) {
-            addAllNumbersInSuit(cards, suit);
+            fillAllCardsOfSuit(cards, suit);
         }
     }
 
-    private static void addAllNumbersInSuit(LinkedList<Card> cards, Suit suit) {
+    private static void fillAllCardsOfSuit(LinkedList<Card> cards, Suit suit) {
         for (Number number : Number.values()) {
             cards.add(Card.of(suit, number));
         }

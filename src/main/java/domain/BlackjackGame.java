@@ -21,7 +21,7 @@ public class BlackjackGame {
     public void dealFirstHands(ShuffleStrategy shuffleStrategy) {
         Objects.requireNonNull(players, "플레이어가 없는 상태에서 카드를 나눠줄 수 없습니다.");
 
-        deck = Deck.create();
+        deck = Deck.createFullDeck();
         deck.shuffle(shuffleStrategy);
 
         dealer.receiveCard(deck.draw());
