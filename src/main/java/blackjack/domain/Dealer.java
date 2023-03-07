@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Dealer extends User {
 
     public static final String DEALER_NAME = "딜러";
@@ -17,24 +15,26 @@ public class Dealer extends User {
     }
 
     public WinningStatus comparePlayer(final Player player) {
-        if (BlackJackRule.isBust(this)) {
+        if (getScore().isBust()) {
             return compareByBust(player);
         }
         return compareByScore(player);
     }
 
     private WinningStatus compareByBust(final Player player) {
-        if (BlackJackRule.isBust(player)) {
+        if (player.getScore().isBust()) {
             return WinningStatus.TIE;
         }
         return WinningStatus.WIN;
     }
 
     private WinningStatus compareByScore(final Player player) {
-        if (BlackJackRule.isBust(player) || BlackJackRule.getScore(this) > BlackJackRule.getScore(player)) {
+        final Score playerScore = player.getScore();
+        final Score dealerScore = getScore();
+        if (playerScore.isBust() || dealerScore.isBigger(playerScore)) {
             return WinningStatus.LOSE;
         }
-        if (BlackJackRule.getScore(this) == BlackJackRule.getScore(player)) {
+        if (playerScore.isEqual(dealerScore)) {
             return WinningStatus.TIE;
         }
         return WinningStatus.WIN;

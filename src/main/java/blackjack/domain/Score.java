@@ -30,4 +30,12 @@ public class Score {
     public boolean isBlackJackScore() {
         return value == BLACK_JACK_NUMBER;
     }
+
+    public boolean isBigger(final Score score) {
+        return value > score.value;
+    }
+
+    public boolean isEqual(final Score score) {
+        return value == score.value;
+    }
 }
