@@ -17,7 +17,7 @@ public class Hand {
         this.cards = new HashSet<>(cards);
     }
 
-    public void add(Card card) {
+    public void hit(Card card) {
         cards.add(card);
     }
 

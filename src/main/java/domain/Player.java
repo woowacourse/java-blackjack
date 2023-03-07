@@ -14,12 +14,12 @@ public abstract class Player {
     }
 
     void addCard(Card card) {
-        hand.add(card);
+        hand.hit(card);
     }
 
-    public void drawCardFrom(Deck deck) {
+    public void drawFrom(Deck deck) {
         Card drawnCard = deck.draw();
-        hand.add(drawnCard);
+        hand.hit(drawnCard);
     }
 
     public int getScore() {

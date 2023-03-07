@@ -19,7 +19,7 @@ public class HandTest extends AbstractTestFixture {
     void test_add_card() {
         var card = createCard(Letter.ACE);
         var hand = new Hand();
-        hand.add(card);
+        hand.hit(card);
 
         assertThat(hand.cards()).containsExactly(card);
     }

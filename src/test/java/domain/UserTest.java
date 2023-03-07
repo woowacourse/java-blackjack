@@ -36,7 +36,7 @@ class UserTest extends AbstractTestFixture {
         var deck = new Deck();
         var user = new User("땡칠");
 
-        user.drawCardFrom(deck);
+        user.drawFrom(deck);
 
         assertThat(user.getCards()).hasSize(1);
     }
