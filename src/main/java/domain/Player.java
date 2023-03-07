@@ -18,7 +18,7 @@ public class Player extends Participant {
 
     public int bustAccount() {
         int account = status.getAccount();
-        status.bustAccount();
+        status.bustAccount(account);
         return account;
     }
 

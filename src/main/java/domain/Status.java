@@ -18,8 +18,8 @@ public class Status {
         return account.account();
     }
 
-    public void bustAccount() {
-        account.bust();
+    public void bustAccount(final int loseMoney) {
+        account.bust(loseMoney);
     }
 
     public void winGame(final int price) {

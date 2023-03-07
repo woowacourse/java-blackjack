@@ -15,10 +15,10 @@ public class AccountTest {
         Account account = new Account(givenAccount);
 
         // when
-        account.bust();
+        account.bust(givenAccount);
 
         // then
-        assertThat(account.account()).isEqualTo(0);
+        assertThat(account.account()).isEqualTo(givenAccount * -1);
     }
 
     @Test

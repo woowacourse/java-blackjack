@@ -268,7 +268,7 @@ class BlackJackServiceTest {
         blackJackService.calculateGameResults(dealer, players);
 
         // then
-        assertThat(player.getAccount()).isEqualTo(0);
+        assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
         assertThat(dealer.getAccount()).isEqualTo(givenAccount);
     }
 
@@ -319,7 +319,7 @@ class BlackJackServiceTest {
         blackJackService.calculateGameResults(dealer, players);
 
         // then
-        assertThat(player.getAccount()).isEqualTo(0);
+        assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
         assertThat(dealer.getAccount()).isEqualTo(givenAccount);
     }
 }

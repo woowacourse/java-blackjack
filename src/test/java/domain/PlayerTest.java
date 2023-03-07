@@ -83,13 +83,14 @@ class PlayerTest {
     @DisplayName("버스트시 금액을 모두 잃는다.")
     void losing_all_account_when_player_bust() {
         // given
-        Player player = new Player(new Status(new Name("pobi"), new Account(1000)), new DrawnCards(new ArrayList<>()));
+        int givenAccount = 1000;
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), new DrawnCards(new ArrayList<>()));
 
         // when
         player.bustAccount();
 
         // then
-        assertThat(player.getAccount()).isEqualTo(0);
+        assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
     }
 
     @Test

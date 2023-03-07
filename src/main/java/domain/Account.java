@@ -12,8 +12,8 @@ public class Account {
         return account;
     }
 
-    public void bust() {
-        account = 0;
+    public void bust(final int loseMoney) {
+        account = loseMoney * -1;
     }
 
     public void addAccount(final int winningMoney) {
