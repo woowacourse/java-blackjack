@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Score;
 
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class Participant {
     }
 
     public final int calculateScore() {
-        return card.calculateScore();
+        Score score = card.calculateScore();
+        return score.getScore();
     }
 
     public final boolean isBust() {

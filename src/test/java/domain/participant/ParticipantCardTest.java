@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
+import domain.card.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,11 +68,11 @@ class ParticipantCardTest {
         cards.forEach(participantCard::addCard);
 
         // when
-        final int score = participantCard.calculateScore();
+        final Score score = participantCard.calculateScore();
 
         // then
         assertThat(score)
-                .isSameAs(expected);
+                .isEqualTo(Score.create(expected));
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makeBustCard")

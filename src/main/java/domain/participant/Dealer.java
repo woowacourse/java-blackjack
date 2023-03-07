@@ -1,10 +1,11 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Score;
 
 public final class Dealer extends Participant {
 
-    private static final int STANDARD_GIVEN_SCORE = 16;
+    private static final Score STANDARD_GIVEN_SCORE = Score.create(16);
 
     private Dealer(final String name) {
         super(name);
@@ -19,6 +20,6 @@ public final class Dealer extends Participant {
     }
 
     public boolean canGiveCard() {
-        return card.calculateScore() <= STANDARD_GIVEN_SCORE;
+        return STANDARD_GIVEN_SCORE.isGreaterThanAndEqual(card.calculateScore());
     }
 }

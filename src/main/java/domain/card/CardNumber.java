@@ -5,24 +5,24 @@ import java.util.List;
 
 public enum CardNumber {
 
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    KING(10),
-    QUEEN(10),
-    JACK(10);
+    ACE(Score.create(1)),
+    TWO(Score.create(2)),
+    THREE(Score.create(3)),
+    FOUR(Score.create(4)),
+    FIVE(Score.create(5)),
+    SIX(Score.create(6)),
+    SEVEN(Score.create(7)),
+    EIGHT(Score.create(8)),
+    NINE(Score.create(9)),
+    TEN(Score.create(10)),
+    KING(Score.create(10)),
+    QUEEN(Score.create(10)),
+    JACK(Score.create(10));
 
-    private final int number;
+    private final Score score;
 
-    CardNumber(final int number) {
-        this.number = number;
+    CardNumber(final Score score) {
+        this.score = score;
     }
 
     public static List<CardNumber> getAll() {
@@ -33,7 +33,8 @@ public enum CardNumber {
         return this == ACE;
     }
 
-    public int getNumber() {
-        return number;
+    public Score getScore() {
+        int score = this.score.getScore();
+        return Score.create(score);
     }
 }

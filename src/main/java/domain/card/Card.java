@@ -25,7 +25,8 @@ public final class Card {
     }
 
     public int findCardNumber() {
-        return number.getNumber();
+        Score score = number.getScore();
+        return score.getScore();
     }
 
     private static String toKey(final CardPattern pattern, final CardNumber number) {

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,10 @@ import static domain.card.CardNumber.ACE;
 public class ParticipantCard {
 
     private static final int FIRST_CARD_INDEX = 0;
-    private static final int ACE_HIGH_POINTS = 11;
-    private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_SIZE = 2;
-
+    private static final Score ACE_HIGH_POINTS = Score.create(11);
+    private static final Score BLACKJACK_SCORE = Score.create(21);
+    
     private final List<Card> cards;
 
     private ParticipantCard() {
@@ -32,26 +33,26 @@ public class ParticipantCard {
         return cards.get(FIRST_CARD_INDEX);
     }
 
-    int calculateScore() {
-        int score = sumCards();
-        if (score <= ACE_HIGH_POINTS && hasAce()) {
-            score += (ACE_HIGH_POINTS - ACE.getNumber());
+    Score calculateScore() {
+        Score score = sumCards();
+        if (ACE_HIGH_POINTS.isGreaterThanAndEqual(score) && hasAce()) {
+            score = score.add(ACE_HIGH_POINTS.subtract(ACE.getScore()));
         }
         return score;
     }
 
     boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return calculateScore().isGreaterThan(BLACKJACK_SCORE);
     }
 
     boolean isBlackJack() {
-        return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
+        return cards.size() == BLACKJACK_SIZE && calculateScore().equals(BLACKJACK_SCORE);
     }
 
-    private int sumCards() {
+    private Score sumCards() {
         return cards.stream()
-                .mapToInt(Card::findCardNumber)
-                .sum();
+                .map(card -> Score.create(card.findCardNumber()))
+                .reduce(Score.create(0), Score::add);
     }
 
     private boolean hasAce() {
