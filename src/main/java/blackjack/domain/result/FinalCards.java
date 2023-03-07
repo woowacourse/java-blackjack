@@ -10,7 +10,6 @@ public class FinalCards {
     private final List<Card> cards;
     private final int sum;
 
-    // TODO final 일관성 있게 수정
     private FinalCards(final List<Card> cards, final int sum) {
         this.cards = cards;
         this.sum = sum;

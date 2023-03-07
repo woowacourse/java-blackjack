@@ -27,7 +27,6 @@ public enum DenominationWord {
         this.word = word;
     }
 
-    // TODO map으로 정의해서 시간복잡도 낮추기
     public static String toWord(Denomination findDenomination) {
         DenominationWord numberWord = Arrays.stream(values())
                 .filter(number -> number.denomination == findDenomination)

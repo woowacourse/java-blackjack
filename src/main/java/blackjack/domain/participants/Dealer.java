@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO 딜러 싱글톤 여부 검토
 public class Dealer extends Participant {
 
     private static final int CARD_TAKE_LIMIT = 17;
