@@ -1,11 +1,13 @@
 package blackjack.domain.user;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestDeckGenerator;
 import blackjack.domain.result.CardResult;
 import java.util.List;
@@ -39,5 +41,13 @@ public class PlayersTest {
             softly.assertThat(playerNameAndResults.get("홍실").getScore().getValue())
                     .isEqualTo(19);
         });
+    }
+
+    @Test
+    @DisplayName("플레이어들의 이름에 중복이 있는경우 예외처리하는 기능 테스트")
+    void throwExceptionIfPlayerNamesHasDuplicate() {
+        final List<String> playerNames = List.of("필립", "필립");
+
+        assertThatThrownBy(() -> new Players(playerNames, new Deck(new RandomDeckGenerator())));
     }
 }
