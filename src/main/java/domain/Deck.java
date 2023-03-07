@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -9,17 +8,17 @@ import java.util.Queue;
 public class Deck {
 	private final Queue<Card> deck;
 
-	public Deck() {
+	public Deck(ShuffleStrategy strategy) {
 		List<Card> cards = new ArrayList<>();
-		for (Denomination denomination : Denomination.values()) {
-			makeCard(cards, denomination);
+		for (Suits suit : Suits.values()) {
+			makeCard(cards, suit);
 		}
-		Collections.shuffle(cards);
+		strategy.shuffle(cards);
 		deck = new LinkedList<>(cards);
 	}
 
-	private static void makeCard(List<Card> cards, Denomination denomination) {
-		for (Suits suit : Suits.values()) {
+	private static void makeCard(List<Card> cards, Suits suit) {
+		for (Denomination denomination : Denomination.values()) {
 			cards.add(new Card(denomination, suit));
 		}
 	}

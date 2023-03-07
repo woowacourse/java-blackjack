@@ -25,7 +25,7 @@ public class UsersTest {
 
 	@BeforeEach
 	void init() {
-		deck = new Deck();
+		deck = new Deck(new RandomShuffleStrategy());
 	}
 
 	@DisplayName("참여 인원은 1명 이상 4명 이하이다")

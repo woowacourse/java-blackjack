@@ -13,20 +13,18 @@ public class BlackJackTest {
 
 	private Users users;
 	private BlackJack blackJack;
-	private Deck deck;
 
 	@BeforeEach
 	void setUsers() {
-		deck = new Deck();
-		users = Users.from(List.of("hongo"), deck);
+		Deck deck = new Deck(cards -> {
+		});
+		users = Users.from(List.of("hongo", "kiara"), deck);
 		blackJack = new BlackJack(users, deck);
 	}
 
 	@DisplayName("플레이어의 승부 결과를 반환한다")
 	@Test
 	void calculateGameResults() {
-		users = Users.from(List.of("hongo", "kiara"), deck);
-
 		// 카드 현황
 		// player1 : ACE(11), 2 => 13
 		// player2 : 3, 4       => 7
@@ -40,11 +38,12 @@ public class BlackJackTest {
 	@Test
 	void calculateGameResults_PUSH() {
 		Dealer dealer = users.getDealer();
-		dealer.hit(new Card(Denomination.SIX, Suits.DIAMOND));
+		dealer.hit(new Card(Denomination.TWO, Suits.DIAMOND));
 
 		// 카드 현황
-		// player : ACE(11), 2 => 13
-		// dealer : 3, 4, 6    => 13
+		// player1 : ACE(11), 2 => 13
+		// player2 : 3, 4       => 7
+		// dealer : 5, 6, 2   => 13
 		Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
 		assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
 	}

@@ -8,6 +8,7 @@ import java.util.List;
 import domain.BlackJack;
 import domain.Deck;
 import domain.Player;
+import domain.RandomShuffleStrategy;
 import domain.Users;
 
 public class Controller {
@@ -22,7 +23,7 @@ public class Controller {
 
 	private void ready() {
 		List<String> playerNames = askPlayerNames();
-		Deck deck = new Deck();
+		Deck deck = new Deck(new RandomShuffleStrategy());
 		Users players = Users.from(playerNames, deck);
 		blackJack = new BlackJack(players, deck);
 		printInitMessage(players);
