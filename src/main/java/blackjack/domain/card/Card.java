@@ -22,4 +22,8 @@ public class Card {
     public String getCardNumberToString() {
         return cardNumber.getNumber();
     }
+
+    public boolean isAce() {
+        return this.cardNumber.equals(CardNumber.ACE);
+    }
 }

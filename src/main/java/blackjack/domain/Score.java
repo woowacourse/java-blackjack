@@ -30,7 +30,7 @@ public class Score {
 
     private static boolean hasACE(List<Card> cards) {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.getNumber()));
+                .anyMatch(card -> card.isAce());
     }
 
     private static int getTotalScore(List<Card> cards) {

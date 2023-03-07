@@ -88,6 +88,21 @@ public class ScoreTest {
         assertThat(score.getScore()).isEqualTo(21);
     }
 
+    @DisplayName("A를 가지고 있을 때 플레이어의 점수 합이 11을 초과하면 A는 1점으로 간주한다.(ace, ace, ace, ace, 8)")
+    @Test
+    void Should_AIs1_When_ScoreMoreThan11_6() {
+        // given
+        Card card1 = new Card(CardNumber.ACE, CardSymbol.SPADES);
+        Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
+        Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+        Card card4 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
+        Card card5 = new Card(CardNumber.EIGHT, CardSymbol.CLUBS);
+
+        // when, then
+        Score score = Score.from(List.of(card1, card2, card3, card4, card5));
+        assertThat(score.getScore()).isEqualTo(12);
+    }
+
     @DisplayName("A를 가지고 있을 때 플레이어의 점수 합이 11을 초과하지 않으면 A는 11점으로 간주한다.(ace, 10)")
     @Test
     void Should_AIs11_When_ScoreLessThanOrEqual11() {
@@ -98,5 +113,18 @@ public class ScoreTest {
         // when, then
         Score score = Score.from(List.of(card1, card2));
         assertThat(score.getScore()).isEqualTo(21);
+    }
+
+    @DisplayName("A가 없을 때 점수 합이 11을 초과하더라도 점수의 합은 그대로 계산된다.")
+    @Test
+    void Should_Success_When_NoAce() {
+        // given
+        Card card1 = new Card(CardNumber.TEN, CardSymbol.SPADES);
+        Card card2 = new Card(CardNumber.TEN, CardSymbol.DIAMONDS);
+        Card card3 = new Card(CardNumber.TEN, CardSymbol.CLUBS);
+
+        // when, then
+        Score score = Score.from(List.of(card1, card2, card3));
+        assertThat(score.getScore()).isEqualTo(30);
     }
 }
