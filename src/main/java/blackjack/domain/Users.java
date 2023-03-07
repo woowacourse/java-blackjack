@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,20 +14,15 @@ public class Users {
     private static final int DEALER_DRAW_LIMIT = 16;
     private static final int NUMBER_OF_PLAYER_LIMIT = 5;
 
-    private final List<User> users;
+    private Dealer dealer;
+    private final List<Player> players;
 
     public Users(final List<String> playerNames, final Deck deck) {
         validatePlayerNames(playerNames);
-        this.users = List.copyOf(createUsers(playerNames, deck));
-    }
-
-    private List<User> createUsers(final List<String> playerNames, final Deck deck) {
-        final List<User> users = new ArrayList<>();
-        users.add(new Dealer(initCardGroup(deck)));
-        for (final String playerName : playerNames) {
-            users.add(new Player(playerName, initCardGroup(deck)));
-        }
-        return users;
+        dealer = new Dealer(initCardGroup(deck));
+        this.players = playerNames.stream()
+                .map(name -> new Player(name, initCardGroup(deck)))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void validatePlayerNames(final List<String> playerNames) {
@@ -45,13 +39,17 @@ public class Users {
     }
 
     public Map<String, List<Card>> getStatus() {
-        return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getStatus));
+        Map<String, List<Card>> status = players.stream()
+                .collect(Collectors.toMap(Player::getName, Player::getStatus));
+        status.put(dealer.getName(), dealer.getStatus());
+        return status;
     }
 
     public Map<String, List<Card>> getFirstOpenCardGroups() {
-        return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getFirstOpenCardGroup));
+        Map<String, List<Card>> firstOpenCardGroups = players.stream()
+                .collect(Collectors.toMap(User::getName, User::getFirstOpenCardGroup));
+        firstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
+        return firstOpenCardGroups;
     }
 
     public boolean isDealerOverDrawLimit() {
@@ -59,15 +57,11 @@ public class Users {
     }
 
     private User getDealer() {
-        return users.stream()
-                .filter(user -> user instanceof Dealer)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException(NOT_CONTAIN_DEALER));
+        return dealer;
     }
 
     public List<String> getPlayerNames() {
-        return users.stream()
-                .filter(user -> user instanceof Player)
+        return players.stream()
                 .map(User::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -77,7 +71,7 @@ public class Users {
     }
 
     public User getUser(final String name) {
-        return users.stream()
+        return players.stream()
                 .filter(user -> user.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
@@ -86,16 +80,9 @@ public class Users {
     public Map<String, WinningStatus> getWinningResult() {
         final Dealer dealer = (Dealer) getDealer();
         final Map<String, WinningStatus> winningResult = new HashMap<>();
-        for (final Player player : getPlayers()) {
+        for (final Player player : players) {
             winningResult.put(player.getName(), dealer.comparePlayer(player));
         }
         return winningResult;
-    }
-
-    private List<Player> getPlayers() {
-        return users.stream()
-                .filter(user -> user instanceof Player)
-                .map(user -> (Player) user)
-                .collect(Collectors.toUnmodifiableList());
     }
 }
