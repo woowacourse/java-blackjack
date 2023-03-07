@@ -31,7 +31,10 @@ public class Card {
 
     @Override
     public String toString() {
-        return value.getName() + shape.getShape();
+        return "Card{" +
+                "shape=" + shape +
+                ", value=" + value +
+                '}';
     }
 
     public int getValue() {
