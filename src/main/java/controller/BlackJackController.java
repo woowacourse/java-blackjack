@@ -4,14 +4,15 @@ import model.card.Deck;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
+import ui.input.ReceiveCommand;
 import ui.input.InputView;
 import ui.output.OutputView;
 
 import java.util.Arrays;
 
-public class BlackJackController {
+import static ui.input.ReceiveCommand.HIT;
 
-    private static final String RECEIVE_CARD_COMMAND = "y";
+public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -56,17 +57,23 @@ public class BlackJackController {
 
     private void receiveCardForPlayer(final Deck deck, final Player player) {
         while (player.canReceiveCard()) {
-            final String inputCommand = inputMoreCardCommand(player);
+            final ReceiveCommand inputCommand = getInputMoreCardCommand(player);
             receiveCardForPlayer(deck, player, inputCommand);
         }
     }
 
-    private String inputMoreCardCommand(final Player player) {
-        return inputView.getPlayerInputGetMoreCard(player.getName());
+    private ReceiveCommand getInputMoreCardCommand(final Player player) {
+        while (true) {
+            try {
+                return ReceiveCommand.of(inputView.getPlayerInputGetMoreCard(player.getName()));
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
-    private void receiveCardForPlayer(final Deck deck, final Player player, final String inputCommand) {
-        if (RECEIVE_CARD_COMMAND.equals(inputCommand)) {
+    private void receiveCardForPlayer(final Deck deck, final Player player, final ReceiveCommand receiveCommand) {
+        if (HIT.equals(receiveCommand)) {
             player.receiveCard(deck.pick());
             outputView.printPlayerCardStatus(player);
         }
