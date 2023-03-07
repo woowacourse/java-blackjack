@@ -43,7 +43,7 @@ public interface SimpleList<E> {
 
     static <E extends Number> SimpleList<E> filterNegative(SimpleList<E> simpleList) {
         for (int i = 0; i < simpleList.size(); i++) {
-            if (simpleList.get(i).doubleValue() < 0) {
+            if (simpleList.get(i).longValue() < 0L) {
                 simpleList.remove(i);
             }
         }

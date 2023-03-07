@@ -36,9 +36,6 @@ public class BlackJackGame {
     }
 
     private static Card generateCard() {
-//        String cardName = Deck.drawCard();
-//        int cardValue = Deck.extractCardNumber(cardName);
-//        return new Card(cardName, cardValue);
         Deck deck = new Deck(new RandomCardMaker());
         String s = deck.drawCard();
         return new Card(s, deck.extractCardNumber(s));

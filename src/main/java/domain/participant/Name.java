@@ -14,7 +14,7 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (name.isBlank() || isContainBlank(name)) {
+        if (name.isBlank() || hasSpace(name)) {
             throw new IllegalArgumentException(NAME_EMPTY_ERROR_MESSAGE);
         }
         if (!name.matches(NAME_REGEX_FORMAT)) {
@@ -22,7 +22,7 @@ public class Name {
         }
     }
 
-    private boolean isContainBlank(String name) {
+    private boolean hasSpace(String name) {
         return name.replaceAll("\\s", "").length() != name.length();
     }
 
