@@ -109,26 +109,16 @@ public class OutputView {
 
     private static void parseResultToMessage(StringBuilder stringBuilder, Integer winningCount, Result result) {
         if (winningCount > 0) {
-            stringBuilder.append(String.format("%d%s ", winningCount, parseResultToMessage(result)));
+            stringBuilder.append(String.format("%d%s ", winningCount, result.getDescription()));
         }
     }
 
     private static void printParticipantsGameResult(Map<String, Result> participantResults) {
         participantResults
                 .forEach(
-                        (name, result) -> println(String.format("%s: %s", name, parseResultToMessage(result)))
+                        (name, result) -> println(String.format("%s: %s", name, result.getDescription()))
                 );
 
-    }
-
-    private static String parseResultToMessage(Result result) {
-        if (result == Result.WIN) {
-            return "승";
-        }
-        if (result == Result.LOSE) {
-            return "패";
-        }
-        return "무";
     }
 
     public static void println(String message) {
