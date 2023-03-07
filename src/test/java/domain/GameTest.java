@@ -8,21 +8,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-
+    
     @Test
     @DisplayName("참가자에게 카드를 지급한다.")
     void dealTest() {
-        Dealer dealer = new Dealer();
-        Game game = new Game(Participants.of("echo"));
-        game.deal(dealer);
-        List<Card> readyCards = dealer.getReadyCards();
+        Game game = new Game("echo");
+        Participant currentParticipant = game.getCurrentParticipant();
+        List<Card> readyCards = currentParticipant.getReadyCards();
         Assertions.assertThat(readyCards).containsExactly(new Card(CardNumber.ACE, CardShape.SPADE));
     }
-
+    
     @Test
     @DisplayName("게임이 준비완료된 상태를 반환한다.")
     void readyResultTest() {
-        Game game = new Game(Participants.of("echo"));
+        Game game = new Game("echo");
         game.ready();
         List<Participant> readyResults = game.getAllParticipant();
         Participant dealer = readyResults.get(0);

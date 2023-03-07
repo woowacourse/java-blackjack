@@ -10,9 +10,6 @@ public class Game {
     private final Deck deck = new Deck();
     private final Participants participants;
     
-    public Game(Participants participants) {
-        this.participants = participants;
-    }
     
     public Game(String participantNames) {
         this.participants = Participants.of(participantNames);
@@ -28,7 +25,7 @@ public class Game {
         }));
     }
     
-    public void deal(Participant participant) {
+    private void deal(Participant participant) {
         participant.addCard(deck.draw());
     }
     
