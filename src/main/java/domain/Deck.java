@@ -31,7 +31,7 @@ public class Deck {
 
     public Card draw() {
         validateNotEmpty();
-        return cards.remove(pickRandomCard());
+        return cards.remove(pickRandomIndex());
     }
 
     private void validateNotEmpty() {
@@ -40,7 +40,7 @@ public class Deck {
         }
     }
 
-    private int pickRandomCard() {
+    private int pickRandomIndex() {
         return random.nextInt(cards.size());
     }
 
