@@ -19,18 +19,18 @@ public enum CardNumber {
     QUEEN(10),
     JACK(10);
 
-    private final int number;
+    private final int score;
 
-    CardNumber(final int number) {
-        this.number = number;
+    CardNumber(final int score) {
+        this.score = score;
     }
 
     static List<CardNumber> findTotalCardNumber() {
         return Arrays.asList(values());
     }
 
-    public int findNumber() {
-        return number;
+    public int score() {
+        return score;
     }
 
     boolean checkAce() {

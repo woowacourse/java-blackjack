@@ -50,7 +50,7 @@ public final class Card {
     }
 
     public int findCardNumber() {
-        return number.findNumber();
+        return number.score();
     }
 
     public boolean checkAce() {

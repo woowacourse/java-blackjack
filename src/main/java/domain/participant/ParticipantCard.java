@@ -36,7 +36,7 @@ public class ParticipantCard {
         int score = sumCards();
 
         if (score <= ACE_HIGH_POINTS && hasAce()) {
-            score += (ACE_HIGH_POINTS - ACE.findNumber());
+            score += (ACE_HIGH_POINTS - ACE.score());
         }
         return score;
     }
