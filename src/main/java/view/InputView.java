@@ -26,21 +26,9 @@ public class InputView {
         return playerNames;
     }
 
-    public boolean askForAnotherCard(String name) {
-        System.out.printf(ENTER_ADD_CARD_NOTICE, name);
-        String input = scanner.nextLine().strip();
-        validateResponse(input);
-
-        return isYes(input);
-    }
-
-    private boolean isYes(String input) {
-        return input.equals(YES);
-    }
-
     private List<String> splitWithComma(String input) {
         return Arrays.stream(input.split(DELIMITER))
-                        .map(String::strip)
+                .map(String::strip)
                 .collect(Collectors.toList());
     }
 
@@ -50,10 +38,22 @@ public class InputView {
         }
     }
 
+    public boolean askForAnotherCard(String name) {
+        System.out.printf(ENTER_ADD_CARD_NOTICE, name);
+        String input = scanner.nextLine().strip();
+        validateResponse(input);
+
+        return isYes(input);
+    }
+
     private void validateResponse(String response) {
         if (!(response.equals(NO) || response.equals(YES))) {
             throw new IllegalArgumentException("추가 카드에 대한 응답은 y와 n으로 해야합니다.");
         }
+    }
+
+    private boolean isYes(String input) {
+        return input.equals(YES);
     }
 
 }

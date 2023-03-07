@@ -13,6 +13,7 @@ public abstract class User {
     }
 
     abstract boolean canHit();
+
     public abstract String getName();
 
     public Result compare(User other) {

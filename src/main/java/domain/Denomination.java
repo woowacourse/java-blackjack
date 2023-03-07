@@ -3,7 +3,6 @@ package domain;
 import java.util.Arrays;
 
 public enum Denomination {
-
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -33,16 +32,16 @@ public enum Denomination {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 글자입니다"));
     }
 
+    public boolean isAce() {
+        return ACE == this;
+    }
+
     public String letter() {
         return letter;
     }
 
     public Score score() {
         return new Score(this.score);
-    }
-
-    public boolean isAce() {
-        return ACE == this;
     }
 
 }

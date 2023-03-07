@@ -34,10 +34,6 @@ public class Deck {
         return cards;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public Card drawCard() {
         validateNotEmpty();
 
@@ -52,6 +48,10 @@ public class Deck {
 
     private int pickRandomCard() {
         return random.nextInt(cards.size());
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
 }

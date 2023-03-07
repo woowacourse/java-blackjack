@@ -26,6 +26,12 @@ public class Application {
         return createPlayersWith(playerNames);
     }
 
+    private static List<Player> createPlayersWith(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
+    }
+
     private static void start(Game game) {
         Users users = game.getUsers();
         game.dealTwoCards();
@@ -37,26 +43,6 @@ public class Application {
             selectHitAndStand(game, user);
         }
         dealCardToDealer(game);
-    }
-
-    private static void printResult(Game game) {
-        Users users = game.getUsers();
-        outputView.printCardsAndScores(users);
-        outputView.printResultNotice();
-        outputView.printDealerResults(users.getDealerResults());
-        for (Player player : users.getPlayers()) {
-            String name = player.getName();
-            outputView.printResult(name, users.getUserResult(player));
-        }
-    }
-
-    private static void dealCardToDealer(Game game) {
-        if (game.canHitByDealerScore()) {
-            game.dealCardToDealer();
-            outputView.noticeDealerAccept();
-            return;
-        }
-        outputView.noticeDealerDecline();
     }
 
     private static void selectHitAndStand(Game game, Player player) {
@@ -75,9 +61,24 @@ public class Application {
         return false;
     }
 
-    private static List<Player> createPlayersWith(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+    private static void dealCardToDealer(Game game) {
+        if (game.canHitByDealerScore()) {
+            game.dealCardToDealer();
+            outputView.noticeDealerAccept();
+            return;
+        }
+        outputView.noticeDealerDecline();
     }
+
+    private static void printResult(Game game) {
+        Users users = game.getUsers();
+        outputView.printCardsAndScores(users);
+        outputView.printResultNotice();
+        outputView.printDealerResults(users.getDealerResults());
+        for (Player player : users.players()) {
+            String name = player.getName();
+            outputView.printResult(name, users.getUserResult(player));
+        }
+    }
+
 }

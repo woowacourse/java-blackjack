@@ -15,20 +15,20 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public String letter() {
-        return denomination.letter();
+    public boolean isAce() {
+        return denomination.isAce();
     }
 
-    public Suit suit() {
-        return suit;
+    public String letter() {
+        return denomination.letter();
     }
 
     public Score score() {
         return denomination.score();
     }
 
-    public boolean isAce() {
-        return denomination.isAce();
+    public Suit suit() {
+        return suit;
     }
 
 }

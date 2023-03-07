@@ -84,6 +84,7 @@ public class OutputView {
         long winCount = getCount(results, WIN);
         long loseCount = getCount(results, LOSE);
         long drawCount = getCount(results, DRAW);
+
         String result = winCount + WIN.message() + drawCount + DRAW.message() + loseCount + LOSE.message();
         System.out.println(DEALER_NOTICE + result);
     }
