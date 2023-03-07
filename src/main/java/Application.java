@@ -56,7 +56,6 @@ public class Application {
             game.dealCard(player);
             outputView.printPlayerCards(player);
         }
-        game.updateStatusToStay(player);
     }
 
     private static void dealCardToDealer(Game game) {
