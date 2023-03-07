@@ -19,26 +19,15 @@ public abstract class Participant {
     }
 
     public int calculateBlackjackScore() {
-        int sumOfScore = cards.getSumOfScore();
-
-        return applyAce(sumOfScore, cards.countAce());
-    }
-
-    private int applyAce(int score, int aceCount) {
-        while (score > BUST_LIMIT && aceCount > 0) {
-            score -= TrumpCardNumber.getAceGap();
-            aceCount--;
-        }
-
-        return score;
+        return Score.from(cards).getValue();
     }
 
     public boolean isBusted() {
         return calculateBlackjackScore() > BUST_LIMIT;
     }
 
-    public Result competeWith(Participant player) { // TODO: 2023/03/07 Score로 분리
-        if (player.isBusted()) {
+    public Result competeWith(Participant otherPlayer) {
+        if (otherPlayer.isBusted()) {
             return Result.WIN;
         }
 
@@ -46,20 +35,9 @@ public abstract class Participant {
             return Result.LOSE;
         }
 
-        return competeByScore(player.calculateBlackjackScore());
-    }
-
-    private Result competeByScore(int playerScore) {
-        int dealerScore = this.calculateBlackjackScore();
-
-        if (playerScore > dealerScore) {
-            return Result.LOSE;
-        }
-        if (playerScore < dealerScore) {
-            return Result.WIN;
-        }
-
-        return Result.DRAW;
+        Score score = Score.from(cards);
+        Score otherScore = Score.from(otherPlayer.cards);
+        return score.competeByScore(otherScore);
     }
 
     public List<Card> getCards() {
