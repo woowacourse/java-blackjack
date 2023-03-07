@@ -62,6 +62,6 @@ public class BlackJackGame {
 
     public boolean isPossibleToDraw(final String name) {
         final Score userScore = users.getScore(name);
-        return !userScore.isBust() && !userScore.isBlackJack();
+        return !userScore.isBust() && !userScore.isMaxNumber();
     }
 }

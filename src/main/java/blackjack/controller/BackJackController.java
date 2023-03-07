@@ -57,7 +57,6 @@ public class BackJackController {
     private boolean isContinuous(String name, BlackJackGame blackJackGame) {
         if (blackJackGame.isPossibleToDraw(name)) {
             outputView.printDrawCardRequestMessage(name);
-            outputView.printLineBreak();
             return DrawInput.from(inputView.readDrawOrStay()).isDraw();
         }
         return false;
