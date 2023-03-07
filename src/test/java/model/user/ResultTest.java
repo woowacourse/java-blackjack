@@ -3,14 +3,14 @@ package model.user;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static model.user.Score.LOSE;
-import static model.user.Score.TIE;
-import static model.user.Score.WIN;
-import static model.user.Score.judge;
+import static model.user.Result.LOSE;
+import static model.user.Result.TIE;
+import static model.user.Result.WIN;
+import static model.user.Result.judge;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class ScoreTest {
+class ResultTest {
 
     @DisplayName("딜러와 플레이어의 카드 총 합에 따라 Score를 반환한다.")
     @Test

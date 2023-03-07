@@ -1,6 +1,6 @@
 package model.user;
 
-public enum Score {
+public enum Result {
 
     WIN("승"),
     TIE("무승부"),
@@ -10,7 +10,7 @@ public enum Score {
 
     private final String name;
 
-    Score(String name) {
+    Result(String name) {
         this.name = name;
     }
 
@@ -18,7 +18,7 @@ public enum Score {
         return name;
     }
 
-    public static Score judge(final int dealerTotalValue, final int playerTotalValue) {
+    public static Result judge(final int dealerTotalValue, final int playerTotalValue) {
         if (dealerTotalValue > BUST_NUMBER || playerTotalValue > BUST_NUMBER) {
             return judgeOverBurst(dealerTotalValue, playerTotalValue);
         }
@@ -26,7 +26,7 @@ public enum Score {
         return judgeBelowBurst(dealerTotalValue, playerTotalValue);
     }
 
-    private static Score judgeOverBurst(final int dealerTotalValue, final int userTotalValue) {
+    private static Result judgeOverBurst(final int dealerTotalValue, final int userTotalValue) {
         if (userTotalValue > BUST_NUMBER && dealerTotalValue > BUST_NUMBER) {
             return TIE;
         }
@@ -34,7 +34,7 @@ public enum Score {
         return userTotalValue > BUST_NUMBER ? LOSE : WIN;
     }
 
-    private static Score judgeBelowBurst(final int dealerTotalValue, final int userTotalValue) {
+    private static Result judgeBelowBurst(final int dealerTotalValue, final int userTotalValue) {
         if (dealerTotalValue == userTotalValue) {
             return TIE;
         }
