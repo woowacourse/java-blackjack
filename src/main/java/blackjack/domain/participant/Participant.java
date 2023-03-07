@@ -12,15 +12,15 @@ abstract public class Participant {
         this.cards = cards;
     }
 
-    public void receiveCard(final Card card) {
+    final public void receiveCard(final Card card) {
         this.cards.add(card);
     }
 
-    public int calculateTotalScore() {
+    final public int calculateTotalScore() {
         return this.cards.calculateTotalScore();
     }
 
-    public List<Card> getCards() {
+    final public List<Card> getCards() {
         return cards.getCards();
     }
 }
