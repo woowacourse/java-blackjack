@@ -20,9 +20,17 @@ public class NamesTest {
 
     @Test
     @DisplayName("중복될 시 예외처리 된다.")
-    void validateDuplicatedNames() {
+    void validateDuplicatedNamesTest() {
         assertThatThrownBy(() -> new Names(List.of("pobi", "neo", "pobi")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("5개가 초과될 시 예외처리 된다.")
+    void validateNamesSizeTest() {
+        assertThatThrownBy(() -> new Names(List.of("pobi", "neo", "hiiro", "mako", "ako", "split")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 플레이어는 최대 5명입니다.");
     }
 }
