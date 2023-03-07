@@ -33,7 +33,7 @@ public class BlackJackGame {
     }
 
     public boolean isBust(final String name) {
-        return users.getUser(name).isBust();
+        return users.isBust(name);
     }
 
     public int playDealerTurn() {
@@ -46,7 +46,7 @@ public class BlackJackGame {
     }
 
     public void playPlayer(final String userName) {
-        users.getUser(userName).drawCard(deck);
+        users.drawCard(userName, deck);
     }
 
     public Map<String, CardResult> getCardResult() {
@@ -54,7 +54,7 @@ public class BlackJackGame {
         final Map<String, List<Card>> handholdingCards = users.getHandholdingCards();
 
         for (final String name : handholdingCards.keySet()) {
-            cardResult.put(name, new CardResult(handholdingCards.get(name), users.getUser(name).getScore()));
+            cardResult.put(name, new CardResult(handholdingCards.get(name), users.getScore(name)));
         }
 
         return cardResult;
@@ -65,6 +65,6 @@ public class BlackJackGame {
     }
 
     public boolean isBlackJackScore(final String name) {
-        return users.getUser(name).isBlackJack();
+        return users.isBlackJack(name);
     }
 }

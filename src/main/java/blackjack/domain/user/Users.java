@@ -61,13 +61,6 @@ public class Users {
         getDealer().drawCard(deck);
     }
 
-    public User getUser(final String name) {
-        return users.stream()
-                .filter(user -> user.getName().equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
-    }
-
     public Map<String, GameResult> getGameResult() {
         final Dealer dealer = getDealer();
         final Map<String, GameResult> gameResult = new HashMap<>();
@@ -82,5 +75,28 @@ public class Users {
                 .filter(user -> user instanceof Player)
                 .map(user -> (Player) user)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public boolean isBust(final String name) {
+        return getUser(name).isBust();
+    }
+
+    public void drawCard(final String userName, final Deck deck) {
+        getUser(userName).drawCard(deck);
+    }
+
+    public int getScore(final String name) {
+        return getUser(name).getScore();
+    }
+
+    public boolean isBlackJack(final String name) {
+        return getUser(name).isBlackJack();
+    }
+
+    private User getUser(final String name) {
+        return users.stream()
+                .filter(user -> user.getName().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
     }
 }

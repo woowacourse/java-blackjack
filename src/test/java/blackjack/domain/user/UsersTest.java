@@ -82,16 +82,6 @@ class UsersTest {
         assertThat(players).containsExactly("필립");
     }
 
-    @Test
-    @DisplayName("이름으로 유저를 반환하는 기능 테스트")
-    void getUserTest() {
-        final Users users = new Users(List.of("필립", "홍실"), new Deck(new RandomDeckGenerator()));
-
-        User philip = users.getUser("필립");
-
-        assertThat(philip.getName()).isEqualTo("필립");
-    }
-
     /*
     필립: 21
     홍실: 19
@@ -107,6 +97,21 @@ class UsersTest {
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
             softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.WIN);
+        });
+    }
+
+    /*
+    필립: 21
+    홍실: 19
+     */
+    @Test
+    @DisplayName("이름으로 점수 확인 테스트")
+    void getScoreTest() {
+        final Users users = new Users(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
+
+        assertSoftly(softly -> {
+            softly.assertThat(users.getScore("필립")).isEqualTo(21);
+            softly.assertThat(users.getScore("홍실")).isEqualTo(19);
         });
     }
 
