@@ -88,4 +88,10 @@ public class Participants {
     public List<Participant> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
+    }
 }
