@@ -2,10 +2,11 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import blackjack.strategy.CardPicker;
 
 public class BlackJackGame {
+
+    private static final int BURST_SCORE = 21;
 
     private final CardPool cardPool;
 
@@ -24,5 +25,9 @@ public class BlackJackGame {
 
     public int calculateScore(Participant participant) {
         return participant.calculateScore();
+    }
+
+    public boolean isBurst(int score) {
+        return BURST_SCORE < score;
     }
 }

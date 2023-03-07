@@ -5,11 +5,9 @@ import blackjack.domain.card.StandardCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.RandomCardPicker;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackGameTest {
 
@@ -43,5 +41,10 @@ class BlackJackGameTest {
         int score = blackJackGame.calculateScore(player);
 
         assertThat(score).isEqualTo(10);
+    }
+
+    @Test
+    void isBurst() {
+        assertThat(blackJackGame.isBurst(22)).isTrue();
     }
 }
