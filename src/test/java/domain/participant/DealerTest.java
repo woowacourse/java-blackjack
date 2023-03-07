@@ -30,7 +30,7 @@ class DealerTest {
     @DisplayName("addCard()는 카드를 건네주면 참가자의 카드에 추가한다")
     void addCard_givenCard_thenSuccess() {
         // when
-        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
+        final Card card = Card.of(CardPattern.HEART, CardNumber.ACE);
         dealer.addCard(card);
         final ParticipantCard participantCard = dealer.participantCard;
         final List<Card> cards = participantCard.getCards();
@@ -44,7 +44,7 @@ class DealerTest {
     @DisplayName("getStartCard()는 호출하면 딜러의 첫 번째 카드를 조회한다")
     void getStartCard_whenCall_thenReturnFirstCard() {
         // given
-        final Card card = Card.create(CardPattern.HEART, CardNumber.ACE);
+        final Card card = Card.of(CardPattern.HEART, CardNumber.ACE);
         dealer.addCard(card);
 
         // when

@@ -40,55 +40,55 @@ public final class ParticipantArguments {
 
     private static Stream<Arguments> makeCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), 16),
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, TWO), Card.create(SPADE, TWO)), 17)
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, THREE), Card.of(SPADE, QUEEN)), 16),
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, TWO), Card.of(SPADE, TWO)), 17)
         );
     }
 
     private static Stream<Arguments> makeBustCard() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), false),
-                Arguments.of(List.of(Card.create(HEART, QUEEN), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, TEN), Card.create(SPADE, TWO)), true)
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, THREE), Card.of(SPADE, QUEEN)), false),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, TEN), Card.of(SPADE, TWO)), true)
         );
     }
 
     private static Stream<Arguments> makeBlackJackCard() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(SPADE, TWO)), false),
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, QUEEN)), true)
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(SPADE, TWO)), false),
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, QUEEN)), true)
         );
     }
 
     private static Stream<Arguments> makePlayerCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), true),
-                Arguments.of(List.of(Card.create(HEART, QUEEN), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, TEN), Card.create(SPADE, TWO)), false)
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, THREE), Card.of(SPADE, QUEEN)), true),
+                Arguments.of(List.of(Card.of(HEART, QUEEN), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, TEN), Card.of(SPADE, TWO)), false)
         );
     }
 
     private static Stream<Arguments> makeDealerCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, THREE), Card.create(SPADE, QUEEN)), true),
-                Arguments.of(List.of(Card.create(HEART, ACE), Card.create(DIAMOND, TWO),
-                        Card.create(CLOVER, TWO), Card.create(SPADE, TWO)), false)
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, THREE), Card.of(SPADE, QUEEN)), true),
+                Arguments.of(List.of(Card.of(HEART, ACE), Card.of(DIAMOND, TWO),
+                        Card.of(CLOVER, TWO), Card.of(SPADE, TWO)), false)
         );
     }
 
     private static Stream<Arguments> makeParticipantsCards() {
         return Stream.of(
-                Arguments.of(List.of(Card.create(HEART, FOUR), Card.create(HEART, THREE)),
-                        List.of(Card.create(DIAMOND, THREE), Card.create(DIAMOND, TWO)), LOSE),
-                Arguments.of(List.of(Card.create(HEART, TWO), Card.create(HEART, THREE)),
-                        List.of(Card.create(DIAMOND, TWO), Card.create(DIAMOND, THREE)), DRAW),
-                Arguments.of(List.of(Card.create(HEART, TWO), Card.create(HEART, THREE)),
-                        List.of(Card.create(DIAMOND, FOUR), Card.create(DIAMOND, THREE)), WIN)
+                Arguments.of(List.of(Card.of(HEART, FOUR), Card.of(HEART, THREE)),
+                        List.of(Card.of(DIAMOND, THREE), Card.of(DIAMOND, TWO)), LOSE),
+                Arguments.of(List.of(Card.of(HEART, TWO), Card.of(HEART, THREE)),
+                        List.of(Card.of(DIAMOND, TWO), Card.of(DIAMOND, THREE)), DRAW),
+                Arguments.of(List.of(Card.of(HEART, TWO), Card.of(HEART, THREE)),
+                        List.of(Card.of(DIAMOND, FOUR), Card.of(DIAMOND, THREE)), WIN)
         );
     }
 }

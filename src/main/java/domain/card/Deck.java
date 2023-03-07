@@ -5,7 +5,7 @@ import domain.CardSelector;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Deck {
+public final class Deck {
 
     private final List<Card> deck;
     private final CardSelector cardSelector;
@@ -26,7 +26,7 @@ public class Deck {
     private static List<Card> makeCards(final List<CardPattern> cardPatterns, final List<CardNumber> cardNumbers) {
         return cardPatterns.stream()
                 .flatMap(pattern -> cardNumbers.stream()
-                        .map(number -> Card.create(pattern, number)))
+                        .map(number -> Card.of(pattern, number)))
                 .collect(Collectors.toList());
     }
 

@@ -65,7 +65,7 @@ class ParticipantsTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void addCard_givenParticipantOrderAndCard_thenSuccess(final int participantOrder) {
         // given
-        final Card card = Card.create(CardPattern.CLOVER, CardNumber.QUEEN);
+        final Card card = Card.of(CardPattern.CLOVER, CardNumber.QUEEN);
 
         // when, then
         assertThatCode(() -> participants.addCard(participantOrder, card))
