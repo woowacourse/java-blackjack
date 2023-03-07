@@ -11,7 +11,7 @@ public class DeckFactory {
         return null;
     }
 
-    public static Deck createBlackJackDeck() {
+    private static Deck createBlackJackDeck() {
         Stack<Card> cards = new Stack<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             generateCardByAllSymbol(cards, cardNumber);

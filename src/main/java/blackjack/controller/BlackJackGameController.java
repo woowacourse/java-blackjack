@@ -7,6 +7,7 @@ import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
+import blackjack.domain.card.DeckType;
 import blackjack.domain.gameplayer.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -83,7 +84,7 @@ public class BlackJackGameController {
     }
 
     private Deck initDeck() {
-        return DeckFactory.createBlackJackDeck();
+        return DeckFactory.createDeck(DeckType.BLACKJACK);
     }
 
     private void play(Game game) {
