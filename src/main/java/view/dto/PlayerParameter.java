@@ -36,7 +36,7 @@ public class PlayerParameter {
 
     private static List<String> mapToCards(List<Card> cards) {
         return cards.stream()
-                .map(it -> CardNumberMapper.getCardNumber(it.getNumber()) + CardTypeMapper.getCardName(it.getType()))
+                .map(it -> CardNumberMapper.getCardNumber(it.getDenomination()) + CardTypeMapper.getCardName(it.getSuit()))
                 .collect(Collectors.toList());
     }
 

@@ -22,7 +22,7 @@ public class Hand {
     public int sumCardNumbers() {
         int sum = 0;
         for (Card card : cards) {
-            sum += card.getNumber().value();
+            sum += card.getDenomination().value();
         }
 
         sum = decideAceNumber(sum, countAce());
@@ -44,7 +44,7 @@ public class Hand {
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber() == Denomination.ACE)
+                .filter(card -> card.getDenomination() == Denomination.ACE)
                 .count();
     }
 

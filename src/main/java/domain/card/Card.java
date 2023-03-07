@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Card {
 
-    private final Suit type;
-    private final Denomination number;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(final Suit type, final Denomination number) {
-        this.type = type;
-        this.number = number;
+    public Card(final Suit suit, final Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
-    public Suit getType() {
-        return type;
+    public Suit getSuit() {
+        return suit;
     }
 
     @Override
@@ -21,23 +21,23 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return type == card.type && number == card.number;
+        return suit == card.suit && denomination == card.denomination;
     }
 
-    public Denomination getNumber() {
-        return number;
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, number);
+        return Objects.hash(suit, denomination);
     }
 
     @Override
     public String toString() {
         return "Card{" +
-                "type=" + type +
-                ", number=" + number +
+                "suit=" + suit +
+                ", denomination=" + denomination +
                 '}';
     }
 }
