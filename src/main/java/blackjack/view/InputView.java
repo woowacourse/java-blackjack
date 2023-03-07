@@ -14,7 +14,11 @@ public class InputView {
 
     private static final String DELIMITER = ",";
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    public InputView(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public List<String> readNames() {
         printMessage(NAME_INPUT_MESSAGE);
