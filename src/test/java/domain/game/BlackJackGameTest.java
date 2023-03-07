@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.card.BlackJackScore;
 import domain.card.CardDeck;
 import domain.player.*;
 import org.junit.jupiter.api.*;
@@ -41,7 +42,7 @@ class BlackJackGameTest {
         // given
         final Dealer dealer = new Dealer(under16CardArea());
         BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());
-        final int before = dealer.score();
+        final BlackJackScore before = dealer.score();
 
         // when
         blackJackGame.hitForDealer();
@@ -163,7 +164,7 @@ class BlackJackGameTest {
             // given
             final Player 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            final int before = 코다.score();
+            final BlackJackScore before = 코다.score();
 
             // when
             blackJackGame.hitOrStayForParticipant(코다, HitState.HIT);
@@ -177,7 +178,7 @@ class BlackJackGameTest {
             // given
             final Player 코다 = 코다(under21CardArea());
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
-            final int before = 코다.score();
+            final BlackJackScore before = 코다.score();
 
             // when
             blackJackGame.hitOrStayForParticipant(코다, HitState.STAY);
