@@ -11,41 +11,44 @@ import java.util.Map;
 
 public class BlackJackGame {
 
-    private final Players players;
-    private final Dealer dealer;
+    private final Participants participants;
     private final Deck deck;
 
-    private BlackJackGame(Players players, Dealer dealer, Deck deck) {
-        this.players = players;
-        this.dealer = dealer;
+    private BlackJackGame(Participants participants, Deck deck) {
+        this.participants = participants;
         this.deck = deck;
     }
 
     public static BlackJackGame create(Players players) {
-        Dealer dealer = new Dealer();
+        Participants participants = Participants.create(players);
         Deck deck = Deck.create(CardFactory.createShuffledCard());
-        return new BlackJackGame(players, dealer, deck);
+
+        return new BlackJackGame(participants, deck);
     }
 
     public void setUp() {
-        for (Player player : getPlayers()) {
-            drawCardTo(player);
-            drawCardTo(player);
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
+
+        for (Player player : players) {
+            passCardTo(player);
+            passCardTo(player);
         }
-        drawCardTo(dealer);
-        drawCardTo(dealer);
+        passCardTo(dealer);
+        passCardTo(dealer);
     }
 
     public Map<Player, Result> calculateResult() {
         Map<Player, Result> result = new HashMap<>();
+        Dealer dealer = participants.getDealer();
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             result.put(player, Result.calculate(player, dealer));
         }
         return result;
     }
 
-    public void drawCardTo(Participant participant) {
+    public void passCardTo(Participant participant) {
         if (participant.canReceive()) {
             Card card = deck.draw();
             participant.addCard(card);
@@ -53,10 +56,10 @@ public class BlackJackGame {
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return participants.getPlayers();
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return participants.getDealer();
     }
 }
