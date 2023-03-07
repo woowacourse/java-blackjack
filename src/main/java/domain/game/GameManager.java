@@ -5,6 +5,8 @@ import domain.card.Deck;
 import domain.participant.Participant;
 import domain.participant.ParticipantOffset;
 import domain.participant.Participants;
+import domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +97,12 @@ public final class GameManager {
         return participants.findParticipantNameByOrder(participantOrder, offset);
     }
 
+    private BigDecimal calculateBenefit(final Participant participant, final GameResult gameResult) {
+        final Player player = (Player) participant;
+
+        return player.calculateBenefit(gameResult);
+    }
+
     public List<Participant> getParticipants() {
         return participants.getParticipants();
     }
@@ -103,11 +111,12 @@ public final class GameManager {
         return participants.getParticipantNames();
     }
 
-    public Map<String, GameResult> getTotalPlayerGameResult() {
+    public Map<String, BigDecimal> getTotalPlayerGameResult() {
         final Map<Participant, GameResult> gameResults = participants.calculatePlayerGameResult();
 
         return gameResults.keySet().stream()
-                .collect(Collectors.toMap(Participant::getName, gameResults::get,
+                .collect(Collectors.toMap(Participant::getName,
+                        participant -> calculateBenefit(participant, gameResults.get(participant)),
                         (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }

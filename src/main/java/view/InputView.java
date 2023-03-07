@@ -24,7 +24,7 @@ public final class InputView {
     }
 
     public int readPlayerBetAmount() {
-        final String betAmount = readConsole();
+        final String betAmount = readConsole().trim();
 
         return mapToBetAmount(betAmount);
     }

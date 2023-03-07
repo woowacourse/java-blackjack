@@ -4,12 +4,11 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.participant.Participant;
-import domain.game.GameResult;
-import view.message.GameResultMessage;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,20 +17,20 @@ import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
 import static controller.DrawCardCommand.CARD_DRAW_STOP;
 import static view.message.MessageFormatter.CARD_MESSAGE;
 import static view.message.MessageFormatter.DEALER_DRAW_MESSAGE;
-import static view.message.MessageFormatter.DEALER_GAME_RESULT;
 import static view.message.MessageFormatter.DRAW_CARD_CARD_MESSAGE;
 import static view.message.MessageFormatter.DRAW_MESSAGE;
 import static view.message.MessageFormatter.EXCEPTION_MESSAGE;
 import static view.message.MessageFormatter.FINAL_GAME_RESULT;
 import static view.message.MessageFormatter.PARTICIPANT_CARD_RESULT;
+import static view.message.MessageFormatter.PARTICIPANT_GAME_RESULT;
 import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
 import static view.message.MessageFormatter.PLAYER_BETTING_MESSAGE;
-import static view.message.MessageFormatter.PLAYER_GAME_RESULT;
 import static view.message.MessageFormatter.START_CARD_MESSAGE;
 
 public final class OutputView {
 
     private static final String LINE_FEED = System.lineSeparator();
+    private static final DecimalFormat benefitFormatter = new DecimalFormat("###,###원");
 
     public void guideParticipantsName() {
         print(PARTICIPANT_NAME_INPUT_MESSAGE.format());
@@ -101,12 +100,11 @@ public final class OutputView {
                                 participant.calculateScore()))
                 .collect(Collectors.joining(LINE_FEED));
 
-        print(LINE_FEED);
         print(cardsResultMessage);
         print(LINE_FEED);
     }
 
-    public void printFinalGameResult(final String dealerName, final Map<String, GameResult> totalPlayerGameResult) {
+    public void printFinalGameResult(final String dealerName, final Map<String, BigDecimal> totalPlayerGameResult) {
         printDealerGameResult(dealerName, totalPlayerGameResult);
         print(LINE_FEED);
 
@@ -149,24 +147,25 @@ public final class OutputView {
         return numberMessage.concat(patternMessage);
     }
 
-    private void printDealerGameResult(final String dealerName, final Map<String, GameResult> playerGameResults) {
-        final int dealerWinCount = Collections.frequency(playerGameResults.values(), GameResult.LOSE);
-        final int dealerLoseCount = Collections.frequency(playerGameResults.values(), GameResult.WIN);
-        final int drawCount = Collections.frequency(playerGameResults.values(), GameResult.DRAW);
+    private void printDealerGameResult(final String dealerName, final Map<String, BigDecimal> playerGameResults) {
+        final BigDecimal dealerBenefit = playerGameResults.keySet().stream()
+                .map(playerGameResults::get)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate();
         final String dealerGameResultMessage =
-                DEALER_GAME_RESULT.format(dealerName, dealerWinCount, dealerLoseCount, drawCount);
+                PARTICIPANT_GAME_RESULT.format(dealerName, benefitFormatter.format(dealerBenefit));
 
         print(dealerGameResultMessage);
     }
 
-    private String mapToPlayerGameResultMessage(final Map<String, GameResult> playerGameResults) {
+    private String mapToPlayerGameResultMessage(final Map<String, BigDecimal> playerGameResults) {
         return playerGameResults.keySet().stream()
                 .map(playerName -> mapToPlayerGameResultMessage(playerName, playerGameResults.get(playerName)))
                 .collect(Collectors.joining(LINE_FEED));
     }
 
-    private String mapToPlayerGameResultMessage(final String playerName, final GameResult playerGameResult) {
-        return PLAYER_GAME_RESULT.format(playerName, GameResultMessage.findMessage(playerGameResult));
+    private String mapToPlayerGameResultMessage(final String playerName, final BigDecimal benefit) {
+        return PARTICIPANT_GAME_RESULT.format(playerName, benefitFormatter.format(benefit));
     }
 
     private void print(final String message) {

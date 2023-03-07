@@ -7,6 +7,7 @@ import domain.game.GameManager;
 import domain.game.GameResult;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import java.math.BigDecimal;
 import view.InputView;
 import view.OutputView;
 
@@ -133,7 +134,7 @@ public final class GameController {
 
     private void printFinalGameResult(final GameManager gameManager) {
         final String dealerName = gameManager.findDealerName();
-        final Map<String, GameResult> totalPlayerGameResult = gameManager.getTotalPlayerGameResult();
+        final Map<String, BigDecimal> totalPlayerGameResult = gameManager.getTotalPlayerGameResult();
 
         outputView.guideFinalGameResult();
         outputView.printFinalGameResult(dealerName, totalPlayerGameResult);

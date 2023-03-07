@@ -10,9 +10,8 @@ public enum MessageFormatter {
     DRAW_CARD_CARD_MESSAGE("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)"),
     DEALER_DRAW_MESSAGE("%s는 16이하라 한장의 카드를 더 받았습니다."),
     PARTICIPANT_CARD_RESULT("%s 카드: %s - 결과: %d"),
-    FINAL_GAME_RESULT("## 최종 승패"),
-    DEALER_GAME_RESULT("%s: %d승 %d패 %d무"),
-    PLAYER_GAME_RESULT("%s: %s"),
+    FINAL_GAME_RESULT("## 최종 수익"),
+    PARTICIPANT_GAME_RESULT("%s: %s"),
     EXCEPTION_MESSAGE("[ERROR] %s");
 
     private final String message;
