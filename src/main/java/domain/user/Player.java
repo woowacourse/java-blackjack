@@ -8,21 +8,10 @@ import java.util.Objects;
 public class Player extends User {
     private final Name name;
     private PlayerStatus status = PlayerStatus.NORMAL;
-    private boolean isWinner = false;
 
     public Player(Name name, List<Card> firstTurnCards) {
         super(firstTurnCards);
         this.name = name;
-    }
-
-    @Override
-    public void win() {
-        isWinner = true;
-    }
-
-    @Override
-    public void lose() {
-        isWinner = false;
     }
 
     @Override
@@ -40,10 +29,6 @@ public class Player extends User {
     @Override
     public String getName() {
         return name.getName();
-    }
-
-    public boolean isWinner() {
-        return isWinner;
     }
 
     @Override
