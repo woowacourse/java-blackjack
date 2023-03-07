@@ -1,12 +1,13 @@
 package view;
 
+import domain.Result;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
-import domain.Result;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String INITIAL_DISTRIBUTE_MESSAGE = "%s와 %s에게 2장을 나누었습니다." + System.lineSeparator();
@@ -18,20 +19,22 @@ public class OutputView {
     private static final String SPLIT_DELIMITER = ", ";
     private static final String FINAL_WIN_LOSE_RATIO_MESSAGE = System.lineSeparator()+"## 최종 승패";
 
-
+    private String printCardsForm(Player player){
+        return player.getPlayerCards().stream()
+                .map(e->e.getCardName()+e.getCardPattern())
+                .collect(Collectors.joining(SPLIT_DELIMITER));
+}
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(INITIAL_DISTRIBUTE_MESSAGE, dealer.getName(), String.join(SPLIT_DELIMITER, players.getPlayersName()));
-        System.out.println(dealer.getName() + ": " + dealer.getInfo().get(dealer.getName()).get(0));
-        for (String name : players.getPlayersOwnCards().keySet()) {
-            List<String> value = players.getPlayersOwnCards().get(name);
-            System.out.println(name + "카드: " + String.join(SPLIT_DELIMITER, value));
+        System.out.println(dealer.getName() + ": " + printCardsForm(dealer).split(SPLIT_DELIMITER)[0]);
+        for (Player player : players.getPlayersWithOutDealer()) {
+            System.out.println(player.getName() + "카드: " + printCardsForm(player));
         }
     }
 
     public void printPlayerCardsInfo(Player player) {
-        System.out.println(player.getName() + "카드: " +
-                String.join(", ", player.getCardsFullName()));
+        System.out.println(player.getName() + "카드: " + printCardsForm(player));
     }
 
     public void printDistributeDealer(Dealer dealer) {
@@ -41,10 +44,11 @@ public class OutputView {
 
     public void printCardsResult(Dealer dealer, Players players) {
         System.out.println();
-        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), String.join(SPLIT_DELIMITER, dealer.getCardsFullName()), dealer.getCardsSum());
-        for (String name : players.getPlayersOwnCards().keySet()) {
-            List<String> value = players.getPlayersOwnCards().get(name);
-            System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, name, String.join(SPLIT_DELIMITER, value), players.getPlayerCardsSum(name));
+        System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), printCardsForm(dealer),
+                dealer.getCardsSum());
+        for (Player player : players.getPlayersWithOutDealer()) {
+            System.out.printf(PLAYER_CARDS_RESULT_MESSAGE,
+                    player.getName(), printCardsForm(player), player.getCardsSum());
         }
     }
 

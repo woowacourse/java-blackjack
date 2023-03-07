@@ -1,8 +1,12 @@
 package domain;
 
+import domain.deck.Card;
 import domain.deck.CardDeck;
+import domain.deck.CardNumber;
+import domain.deck.CardPattern;
 import domain.generator.CardGenerator;
 import domain.participants.Dealer;
+import domain.participants.Player;
 import domain.participants.Players;
 import domain.strategy.NoShuffleCardsStrategy;
 import org.assertj.core.api.Assertions;
@@ -30,12 +34,13 @@ public class BlackjackGameTest {
     void distributeDealerInitialCardsTest() {
         BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
-        Map<String, List<String>> result = new LinkedHashMap<>();
-        result.put("딜러", List.of("A스페이드"));
+        Dealer dealer = players.findDealer();
+        List<Card> playerCard = new ArrayList<>();
+        playerCard.add(new Card(CardNumber.ACE, CardPattern.SPADE));
 
         blackjackGame.distributeDealer();
 
-        Assertions.assertThat(dealer.getInfo()).usingRecursiveComparison().isEqualTo(result);
+        Assertions.assertThat(dealer.getPlayerCards()).usingRecursiveComparison().isEqualTo(playerCard);
     }
 
     @Test
@@ -43,13 +48,13 @@ public class BlackjackGameTest {
     void distributePlayersInitialCardsTest() {
         BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
 
-        Map<String, List<String>> result = new LinkedHashMap<>();
-        result.put("pobi", List.of("A스페이드"));
-        result.put("jason", List.of("2스페이드"));
+        Player playerPobi = players.getPlayersWithOutDealer().get(0);
+        List<Card> playerCard = new ArrayList<>();
+        playerCard.add(new Card(CardNumber.ACE, CardPattern.SPADE));
 
         blackjackGame.distributePlayers();
 
-        Assertions.assertThat(players.getPlayersOwnCards()).usingRecursiveComparison().isEqualTo(result);
+        Assertions.assertThat(playerPobi.getPlayerCards()).usingRecursiveComparison().isEqualTo(playerCard);
     }
 
     @Test

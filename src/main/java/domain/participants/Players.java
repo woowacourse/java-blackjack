@@ -1,5 +1,7 @@
 package domain.participants;
 
+import domain.deck.Card;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,24 +32,8 @@ public class Players {
         return (Dealer) players.get(0);
     }
 
-    public Map<String, List<String>> getPlayersOwnCards() {
-        Map<String, List<String>> ownCards = new LinkedHashMap<>();
-        for (Player player : getPlayersWithOutDealer()) {
-            ownCards.put(player.getName(), player.getCardsFullName());
-        }
-        return ownCards;
-    }
-
     public List<Player> getPlayersWithOutDealer() {
         return players.stream().filter(s -> !s.getName().equals(findDealer().getName())).collect(Collectors.toList());
-    }
-
-    public int getPlayerCardsSum(String playerName) {
-        return players.stream()
-                .filter(s -> s.getName().equals(playerName))
-                .findAny()
-                .get()
-                .getCardsSum();
     }
 
     public List<String> getPlayersName() {

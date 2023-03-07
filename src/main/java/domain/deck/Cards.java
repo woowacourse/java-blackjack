@@ -2,7 +2,6 @@ package domain.deck;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cards {
     private static final int BLACK_JACK = 21;
@@ -35,9 +34,7 @@ public class Cards {
         return cards.stream().filter(Card::isAce).count();
     }
 
-    public List<String> getCardsFullName() {
-        return cards.stream()
-                .map(Card::getCardFullName)
-                .collect(Collectors.toList());
+    public List<Card> getCards() {
+        return cards;
     }
 }

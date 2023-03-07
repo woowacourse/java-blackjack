@@ -22,12 +22,6 @@ public class Player {
         cards.add(card);
     }
 
-    public Map<String, List<String>> getInfo() {
-        Map<String, List<String>> info = new LinkedHashMap<>();
-        info.put(getName(), getCardsFullName());
-        return info;
-    }
-
     public int getCardsSum() {
         return cards.getSum();
     }
@@ -48,8 +42,8 @@ public class Player {
         return name.getName();
     }
 
-    public List<String> getCardsFullName() {
-        return cards.getCardsFullName();
+    public List<Card> getPlayerCards() {
+        return cards.getCards();
     }
 }
 

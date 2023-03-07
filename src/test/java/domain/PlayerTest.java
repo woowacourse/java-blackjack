@@ -23,7 +23,7 @@ public class PlayerTest {
         Player player = new Player("pobi");
         Card card = new Card(CardNumber.ACE, CardPattern.SPADE);
         player.addCard(card);
-        assertThat(player.getCardsFullName().get(0)).isEqualTo("A스페이드");
+        assertThat(player.getPlayerCards().get(0)).isEqualTo(card);
     }
 
     @Test
