@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class LetterTest {
 
     @ParameterizedTest(name = "문자에 따른 점수를 알 수 있다")
-    @CsvSource({"LETTER_A,1", "LETTER_2,2", "LETTER_3,3", "LETTER_4,4", "LETTER_5,5", "LETTER_6,6", "LETTER_7,7",
-            "LETTER_8,8", "LETTER_9,9", "LETTER_10,10", "LETTER_J,10", "LETTER_Q,10", "LETTER_K,10",})
+    @CsvSource({"ACE,1", "TWO,2", "THREE,3", "FOUR,4", "FIVE,5", "SIX,6", "SEVEN,7",
+            "EIGHT,8", "NINE,9", "TEN,10", "JACK,10", "QUEEN,10", "KING,10"})
     void test_letter_score(Letter letter, int expectedScore) {
         assertThat(letter.score()).isEqualTo(expectedScore);
     }

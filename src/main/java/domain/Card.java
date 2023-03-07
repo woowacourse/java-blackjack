@@ -22,7 +22,7 @@ public class Card {
         return letter.isA();
     }
 
-    public int getScore() {
+    public int score() {
         return letter.score();
     }
 }

@@ -40,7 +40,7 @@ public class Cards {
 
     private int getScoreSumOf(List<Card> cards) {
         return cards.stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::score)
                 .sum();
     }
 

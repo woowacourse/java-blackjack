@@ -11,8 +11,12 @@ public abstract class AbstractTestFixture {
     List<Card> createCards(String... letters) {
         return Arrays.stream(letters)
                 .map(this::letterFrom)
-                .map(letter -> new Card(SPADE, letter))
+                .map(this::createCard)
                 .collect(Collectors.toList());
+    }
+
+    Card createCard(Letter letter) {
+        return new Card(SPADE, letter);
     }
 
     Letter letterFrom(String letter) {
