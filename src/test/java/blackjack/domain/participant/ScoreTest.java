@@ -1,7 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.participant.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +41,7 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("ACE 가 4장일 경우")
+    @DisplayName("ACE만 4장일 경우")
     void calculateScoreOnlyAceTest() {
         Score score = new Score();
 

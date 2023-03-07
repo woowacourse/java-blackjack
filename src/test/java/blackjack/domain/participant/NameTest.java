@@ -1,7 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class NameTest {
 
     @ParameterizedTest
-    @DisplayName("유효성 검증 확인 - 이름에 공백만 들어가는 경우")
+    @DisplayName("이름이 공백인 경우 예외 처리 테스트")
     @ValueSource(strings = {"", "   ", "       "})
     void blankNameError(String input) {
         Assertions.assertThatThrownBy(() -> new Name(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("유효성 검증 확인 - 이름이 딜러인 경우")
+    @DisplayName("이름이 딜러인 경우 예외 처리 테스트")
     void dealerNameError() {
         Assertions.assertThatThrownBy(() -> new Name(Dealer.DEALER_NAME)).isInstanceOf(IllegalArgumentException.class);
     }
