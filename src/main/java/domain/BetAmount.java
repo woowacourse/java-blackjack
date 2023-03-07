@@ -5,8 +5,6 @@ import java.util.Objects;
 public class BetAmount {
     private static final int MINIMUM = 100;
     private static final int MAXIMUM = 100_000_000;
-    private static final int RATE_OF_WINNING = 2;
-    private static final double RATE_OF_BLACKJACK = 2.5;
 
     private final int money;
 
@@ -26,8 +24,8 @@ public class BetAmount {
         }
     }
 
-    public BetAmount receiveDouble() {
-        return new BetAmount(money * RATE_OF_WINNING);
+    public BetAmount applyRatio(double ratio) {
+        return new BetAmount((int) (money * ratio));
     }
 
     @Override
@@ -45,9 +43,5 @@ public class BetAmount {
 
     public int getMoney() {
         return money;
-    }
-
-    public BetAmount receiveWithBlackjack() {
-        return new BetAmount((int) (money * RATE_OF_BLACKJACK));
     }
 }

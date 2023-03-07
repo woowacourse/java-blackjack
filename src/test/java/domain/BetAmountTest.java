@@ -21,21 +21,13 @@ class BetAmountTest {
         assertDoesNotThrow(() -> BetAmount.from(money));
     }
 
-    @ParameterizedTest(name = "배팅 금액의 2배를 돌려받을 수 있다.")
-    @ValueSource(ints = {100, 2000, 30000, 100000000})
-    void receiveBetAmountSuccessTest(int money) {
+    @ParameterizedTest(name = "배율에 맞게 배팅금액을 돌려받을 수 있다.")
+    @ValueSource(ints = {100, 2000, 30000, 100000000},
+            doubles = {0, 1.5, 2.5})
+    void receiveBetAmountSuccessTest(int money, double ratio) {
         BetAmount betAmount = BetAmount.from(money);
 
-        assertThat(betAmount.receiveDouble().getMoney())
-                .isEqualTo(money * 2);
-    }
-
-    @ParameterizedTest(name = "배팅 금액의 1.5배를 추가로(2.5배) 돌려받을 수 있다.")
-    @ValueSource(ints = {100, 2000, 30000, 100000000})
-    void receiveWithBlackjackSuccessTest(int money) {
-        BetAmount betAmount = BetAmount.from(money);
-
-        assertThat(betAmount.receiveWithBlackjack().getMoney())
-                .isEqualTo((int) (money * 2.5));
+        assertThat(betAmount.applyRatio(ratio).getMoney())
+                .isEqualTo((int) (money * ratio));
     }
 }
