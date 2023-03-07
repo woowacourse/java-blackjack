@@ -24,10 +24,12 @@ public class BlackJackController {
         final Guests guests = generateGuests();
         final Dealer dealer = new Dealer();
         final Deck deck = new Deck();
-        setGame(guests, dealer, deck);
+
+        deck.initializePlayersCards(guests, dealer);
+        printFirstCards(guests, dealer);
 
         askGuestsHitCard(guests.getGuests(), deck);
-        askDealerHitCard(dealer, deck);
+        askDealerHitCardRepeat(dealer, deck);
 
         printPlayersCardScore(guests, dealer);
         printGameResult(guests, dealer);
@@ -46,8 +48,7 @@ public class BlackJackController {
         return guests;
     }
 
-    private void setGame(final Guests guests, final Dealer dealer, final Deck deck) {
-        deck.initPlayersCards(guests, dealer);
+    private void printFirstCards(final Guests guests, final Dealer dealer) {
         outputView.printFirstDealerCards(dealer.getName(), dealer.getCards());
         for (final Guest guest : guests.getGuests()) {
             outputView.printCards(guest.getName(), guest.getCards());
@@ -56,27 +57,22 @@ public class BlackJackController {
 
     private void askGuestsHitCard(final List<Guest> guests, final Deck deck) {
         for (Guest guest : guests) {
-            askGuestHitCardRepeat(deck, guest);
+            AddCardResponse addCardResponse = AddCardResponse.YES;
+            while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
+                addCardResponse = inputView.readWantMoreCard(guest.getName());
+                hitAndPrintCards(deck, guest, addCardResponse);
+            }
         }
     }
 
-    private void askGuestHitCardRepeat(final Deck deck, final Guest guest) {
-        AddCardResponse addCardResponse = AddCardResponse.YES;
-        while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
-            addCardResponse = inputView.readWantMoreCard(guest.getName());
-            askGuestHitCard(deck, guest, addCardResponse);
-        }
-    }
-
-    private void askGuestHitCard(final Deck deck, final Guest guest,
-        final AddCardResponse addCardResponse) {
+    private void hitAndPrintCards(Deck deck, Guest guest, AddCardResponse addCardResponse) {
         if (addCardResponse == AddCardResponse.YES) {
             deck.distributeCard(guest);
+            outputView.printCards(guest.getName(), guest.getCards());
         }
-        outputView.printCards(guest.getName(), guest.getCards());
     }
 
-    private void askDealerHitCard(final Dealer dealer, final Deck deck) {
+    private void askDealerHitCardRepeat(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
             deck.distributeCard(dealer);
             outputView.dealerAddCard();

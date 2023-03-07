@@ -37,7 +37,7 @@ public class Deck {
         }
     }
 
-    public void initPlayersCards(final Guests guests, final Dealer dealer) {
+    public void initializePlayersCards(final Guests guests, final Dealer dealer) {
         for (int count = 0; count < 2; count++) {
             distributeCard(dealer);
             guests.getGuests()
