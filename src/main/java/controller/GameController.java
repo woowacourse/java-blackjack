@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
 import domain.game.GameManager;
-import domain.game.GameResult;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import java.math.BigDecimal;
@@ -59,10 +58,15 @@ public final class GameController {
 
         for (int playerOrder = 0; playerOrder < playerSize; playerOrder++) {
             final String playerName = gameManager.findPlayerNameByOrder(playerOrder);
-            outputView.guideBetAmount(playerName);
-            int betAmount = inputView.readPlayerBetAmount();
+            Integer betAmount = readBetAmount(playerName);
             gameManager.bet(playerOrder, betAmount);
         }
+    }
+
+    private Integer readBetAmount(final String playerName) {
+        return InputProcessHandler.repeat(inputView::readPlayerBetAmount,
+                () -> outputView.guideBetAmount(playerName),
+                outputView::printExceptionMessage);
     }
 
     private void printTotalParticipantStartCards(final GameManager gameManager) {
@@ -86,7 +90,7 @@ public final class GameController {
         DrawCardCommand drawCardCommand = DrawCardCommand.CARD_DRAW_AGAIN;
 
         while (canDrawCard(gameManager, playerOrder, drawCardCommand)) {
-            drawCardCommand = inputDrawCardCommand(playerName);
+            drawCardCommand = readDrawCardCommand(playerName);
 
             processPlayerDrawCard(gameManager, playerOrder, drawCardCommand);
             printPlayerCards(gameManager, playerOrder, playerName);
@@ -99,7 +103,7 @@ public final class GameController {
         outputView.printParticipantCards(playerName, playerCards);
     }
 
-    private DrawCardCommand inputDrawCardCommand(final String playerName) {
+    private DrawCardCommand readDrawCardCommand(final String playerName) {
         return InputProcessHandler.repeat(inputView::readDrawCardCommand,
                 () -> outputView.guideDrawCard(playerName),
                 DrawCardCommand::findCardCommand,
