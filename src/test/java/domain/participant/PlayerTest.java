@@ -100,4 +100,15 @@ class PlayerTest {
         assertThat(actual.size())
                 .isSameAs(2);
     }
+
+    @Test
+    @DisplayName("getName()은 호출하면 플레이어의 이름을 반환한다")
+    void getName_whenCall_thenReturnPlayerName() {
+        // when
+        final String actual = player.getName();
+
+        // then
+        assertThat(actual)
+                .isEqualTo("a");
+    }
 }

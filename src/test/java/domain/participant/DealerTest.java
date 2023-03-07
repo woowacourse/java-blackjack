@@ -101,4 +101,18 @@ class DealerTest {
         assertThat(actual)
                 .isSameAs(expected);
     }
+
+    @Test
+    @DisplayName("getName()은 호출하면 딜러의 이름을 호출한다")
+    void getName_whenCall_thenReturnDealerName() {
+        // given
+        final Dealer dealer = Dealer.create();
+
+        // when
+        final String actual = dealer.getName();
+
+        // then
+        assertThat(actual)
+                .isEqualTo("딜러");
+    }
 }

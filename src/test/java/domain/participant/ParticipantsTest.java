@@ -163,4 +163,18 @@ class ParticipantsTest {
                 .forEach(player -> assertThat(actual.get(player))
                         .isSameAs(GameResult.DRAW));
     }
+
+    @ParameterizedTest(name = "getParticipantNames()는 호출하면 모든 참가자들의 이름을 반환한다")
+    @CsvSource(value = {"0:딜러", "1:a", "2:b", "3:c", "4:d", "5:e"}, delimiter = ':')
+    void getParticipantNames_whenCall_thenReturnParticipantNames(final int participantIndex, final String expected) {
+        // given
+        final List<String> participantNames = participants.getParticipantNames();
+
+        // when
+        final String actual = participantNames.get(participantIndex);
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
 }

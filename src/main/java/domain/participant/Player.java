@@ -7,14 +7,19 @@ public final class Player extends Participant {
 
     private static final int STANDARD_GIVEN_SCORE = 21;
 
-    private Player(final String name) {
-        super(name);
+    private final PlayerInfo playerInfo;
+
+    private Player(final PlayerInfo playerInfo) {
+        super();
+        this.playerInfo = playerInfo;
     }
 
     public static Player create(final String name) {
         validatePlayerName(name);
 
-        return new Player(name);
+        final PlayerInfo playerInfo = PlayerInfo.create(name);
+
+        return new Player(playerInfo);
     }
 
     private static void validatePlayerName(final String name) {
@@ -31,5 +36,10 @@ public final class Player extends Participant {
     @Override
     public List<Card> getStartCard() {
         return getCard();
+    }
+
+    @Override
+    public String getName() {
+        return playerInfo.getName();
     }
 }

@@ -6,14 +6,15 @@ import java.util.List;
 
 public final class Dealer extends Participant {
 
+    private static final ParticipantName dealerName = ParticipantName.create(DEALER_NAME);
+
     private static final int STANDARD_GIVEN_SCORE = 17;
 
-    private Dealer(final String name) {
-        super(name);
+    private Dealer() {
     }
 
     public static Dealer create() {
-        return new Dealer(DEALER_NAME);
+        return new Dealer();
     }
 
     public GameResult calculateResult(Participant player) {
@@ -53,5 +54,10 @@ public final class Dealer extends Participant {
     @Override
     public List<Card> getStartCard() {
         return List.of(participantCard.getFirstCard());
+    }
+
+    @Override
+    public String getName() {
+        return dealerName.getName();
     }
 }
