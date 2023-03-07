@@ -27,6 +27,10 @@ public final class GameManager {
         return new GameManager(deck, participants);
     }
 
+    public void bet(final int participantOrder, final int betAmount) {
+        participants.bet(participantOrder, betAmount, ParticipantOffset.PLAYER);
+    }
+
     public void giveStartCards() {
         final int totalParticipantSize = participants.size();
 

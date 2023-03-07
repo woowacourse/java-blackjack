@@ -34,16 +34,6 @@ public final class Participants {
         return new Participants(playerNames);
     }
 
-    public Map<Participant, GameResult> calculatePlayerGameResult() {
-        final Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
-        final int totalParticipantSize = participants.size();
-        final List<Participant> players = participants.subList(PLAYER_START_INDEX, totalParticipantSize);
-
-        return players.stream()
-                .collect(Collectors.toMap(Function.identity(), dealer::calculateResult,
-                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
-    }
-
     public void addCard(final int participantOrder, final Card card) {
         final Participant participant = participants.get(participantOrder);
 
@@ -55,6 +45,23 @@ public final class Participants {
         final Participant participant = participants.get(participantIndex);
 
         participant.addCard(card);
+    }
+
+    public void bet(final int participantOrder, final int betAmount, final ParticipantOffset offset) {
+        final int participantIndex = offset.mapToIndexFromOrder(participantOrder);
+        final Player player = (Player) participants.get(participantIndex);
+
+        player.bet(betAmount);
+    }
+
+    public Map<Participant, GameResult> calculatePlayerGameResult() {
+        final Dealer dealer = (Dealer) participants.get(DEALER_ORDER);
+        final int totalParticipantSize = participants.size();
+        final List<Participant> players = participants.subList(PLAYER_START_INDEX, totalParticipantSize);
+
+        return players.stream()
+                .collect(Collectors.toMap(Function.identity(), dealer::calculateResult,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 
     public boolean canDrawByOrder(final int participantOrder, final ParticipantOffset offset) {

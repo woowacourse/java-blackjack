@@ -28,6 +28,10 @@ public final class Player extends Participant {
         }
     }
 
+    public void bet(final int betAmount) {
+        playerInfo.bet(betAmount);
+    }
+
     @Override
     public boolean canDraw() {
         return participantCard.canDraw(STANDARD_GIVEN_SCORE);

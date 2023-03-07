@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class GameManagerTest {
@@ -139,5 +140,35 @@ class GameManagerTest {
         // then
         assertThat(playerCards)
                 .hasSize(1);
+    }
+
+    @Nested
+    @DisplayName("bet() 테스트")
+    class BetMethodTest {
+
+        private final GameManager gameManager = GameManager.create(deck, participants);
+
+        @Test
+        @DisplayName("유효한 배팅 금액을 전달하면 플레이어가 배팅금액을 배팅한다")
+        void create_givenValidMoney_thenInitPlayerBet() {
+            assertThatCode(() -> gameManager.bet(0, 1000))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("최소 금액을 배팅하지 않으면 예외가 발생한다")
+        void create_givenLessThanMinimumMoney_thenFail() {
+            assertThatThrownBy(() -> gameManager.bet(1, 0))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("최소 천 원 이상 배팅해주세요.");
+        }
+
+        @Test
+        @DisplayName("정해진 금액 단위로 배팅하지 않으면 예외가 발생한다")
+        void create_givenInvalidAmountUnit_thenFail() {
+            assertThatThrownBy(() -> gameManager.bet(1, 1100))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("천 원 단위로 배팅해주세요.");
+        }
     }
 }

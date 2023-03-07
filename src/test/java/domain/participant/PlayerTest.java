@@ -5,6 +5,7 @@ import domain.card.CardNumber;
 import domain.card.CardPattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -110,5 +112,33 @@ class PlayerTest {
         // then
         assertThat(actual)
                 .isEqualTo("a");
+    }
+
+    @Nested
+    @DisplayName("bet() 테스트")
+    class BetMethodTest {
+
+        @Test
+        @DisplayName("유효한 배팅 금액을 전달하면 PlayerBet을 초기화한다")
+        void create_givenValidMoney_thenInitPlayerBet() {
+            assertThatCode(() -> player.bet(1000))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        @DisplayName("최소 금액을 배팅하지 않으면 예외가 발생한다")
+        void create_givenLessThanMinimumMoney_thenFail() {
+            assertThatThrownBy(() -> player.bet(0))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("최소 천 원 이상 배팅해주세요.");
+        }
+
+        @Test
+        @DisplayName("정해진 금액 단위로 배팅하지 않으면 예외가 발생한다")
+        void create_givenInvalidAmountUnit_thenFail() {
+            assertThatThrownBy(() -> player.bet(1100))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("천 원 단위로 배팅해주세요.");
+        }
     }
 }
