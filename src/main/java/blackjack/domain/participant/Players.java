@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,25 +53,36 @@ public final class Players {
     }
 
     public Map<Player, Result> makeResult(final int dealerScore) {
-        Map<Player, Result> results = new HashMap<>();
+        Map<Player, Result> results = new LinkedHashMap<>();
 
         for (Player player : players) {
-            judge(results, dealerScore, player);
+            judge(results, player, dealerScore);
         }
         return results;
     }
 
-    private void judge(final Map<Player, Result> results, final int dealerScore, final Player player) {
-        if (dealerScore > BLACKJACK_SCORE && player.isBust()) {
-            results.put(player, DRAW);
-        }
+    private void judge(final Map<Player, Result> results, final Player player, final int dealerScore) {
         if (dealerScore > BLACKJACK_SCORE) {
-            results.put(player, WIN);
+            judgeToNotBust(results, player, dealerScore);
+            return;
         }
-        if (dealerScore <= BLACKJACK_SCORE && player.isBust()) {
+        judgeToBust(results, player);
+    }
+
+    private void judgeToNotBust(final Map<Player, Result> results, final Player player, final int dealerScore) {
+        if (player.isBust()) {
             results.put(player, LOSE);
+            return;
         }
         results.put(player, Result.from(player.calculateTotalScore(), dealerScore));
+    }
+
+    private void judgeToBust(final Map<Player, Result> results, final Player player) {
+        if (player.isBust()) {
+            results.put(player, DRAW);
+            return;
+        }
+        results.put(player, WIN);
     }
 
     public int size() {
