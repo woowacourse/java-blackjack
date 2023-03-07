@@ -46,11 +46,9 @@ public class Players {
 
     public Map<String, WinningStatus> getWinningResult(final Dealer dealer) {
         return players.stream()
-                .collect(Collectors.toUnmodifiableMap(Player::getName, dealer::comparePlayer));
-    }
-
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
+                .collect(Collectors.toUnmodifiableMap(
+                        Player::getName,
+                        player -> player.calculatePlayerWinningStatus(dealer)));
     }
 
     public boolean isPlayerBust(final String name) {

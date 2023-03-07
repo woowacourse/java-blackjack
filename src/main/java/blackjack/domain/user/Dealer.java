@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.result.Score;
-import blackjack.domain.result.WinningStatus;
 
 public class Dealer extends User {
 
@@ -17,32 +16,6 @@ public class Dealer extends User {
     @Override
     public CardGroup getFirstOpenCardGroup() {
         return getCardGroups().getSubCardGroup(FIRST_OPEN_CARD_COUNT);
-    }
-
-    public WinningStatus comparePlayer(final Player player) {
-        if (getScore().isBust()) {
-            return compareByBust(player);
-        }
-        return compareByScore(player);
-    }
-
-    private WinningStatus compareByBust(final Player player) {
-        if (player.getScore().isBust()) {
-            return WinningStatus.TIE;
-        }
-        return WinningStatus.WIN;
-    }
-
-    private WinningStatus compareByScore(final Player player) {
-        final Score playerScore = player.getScore();
-        final Score dealerScore = getScore();
-        if (playerScore.isBust() || dealerScore.isBigger(playerScore)) {
-            return WinningStatus.LOSE;
-        }
-        if (playerScore.isEqual(dealerScore)) {
-            return WinningStatus.TIE;
-        }
-        return WinningStatus.WIN;
     }
 
     public boolean isUnderDrawLimit() {
