@@ -2,6 +2,7 @@ package blackjack.view;
 
 
 import blackjack.domain.GameResult;
+import blackjack.view.exception.MessageDoesNotExistException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -26,7 +27,7 @@ public enum GameResultMessage {
         if (GAME_RESULT_MESSAGE.containsKey(gameResult)) {
             return GAME_RESULT_MESSAGE.get(gameResult);
         }
-        throw new IllegalArgumentException("해당 결과가 존재하지 않습니다");
+        throw new MessageDoesNotExistException();
     }
 
     public String getMessage() {

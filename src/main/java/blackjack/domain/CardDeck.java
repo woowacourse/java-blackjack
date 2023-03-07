@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.exception.NoMoreCardException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CardDeck {
 
     public Card pick() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("뽑을 수 있는 카드가 없습니다.");
+            throw new NoMoreCardException();
         }
         return cards.remove(0);
     }

@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.exception.NoMoreCardException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class CardDeckTest {
         CardDeck cardDeck = new CardDeck(List.of());
 
         assertThatThrownBy(() -> cardDeck.pick())
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NoMoreCardException.class)
                 .hasMessage("뽑을 수 있는 카드가 없습니다.");
     }
 }

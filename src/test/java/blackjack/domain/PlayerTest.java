@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.exception.ReservedPlayerNameException;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -69,7 +70,7 @@ public class PlayerTest {
     @DisplayName("이름이 딜러인 경우 예외를 발생시킨다")
     void reservedWordCreateException() {
         assertThatThrownBy(() -> new Player("딜러"))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ReservedPlayerNameException.class)
                 .hasMessage("이름은 딜러일 수 없습니다.");
     }
 }

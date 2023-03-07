@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.CardSuit;
+import blackjack.view.exception.MessageDoesNotExistException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -27,7 +28,7 @@ public enum CardSuitMessage {
         if (SUIT_MESSAGE.containsKey(cardSuit)) {
             return SUIT_MESSAGE.get(cardSuit);
         }
-        throw new IllegalArgumentException("해당 모양이 존재하지 않습니다");
+        throw new MessageDoesNotExistException();
     }
 
     public String getMessage() {

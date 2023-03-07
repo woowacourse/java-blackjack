@@ -16,8 +16,4 @@ public enum GameResult {
         }
         return GameResult.LOSE;
     }
-
-    public boolean isWin() {
-        return this == WIN;
-    }
 }

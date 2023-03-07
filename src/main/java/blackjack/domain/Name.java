@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.exception.InvalidPlayerNameException;
 import java.util.Objects;
 
 public class Name {
@@ -12,7 +13,7 @@ public class Name {
 
     private void validateBlank(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
+            throw new InvalidPlayerNameException();
         }
     }
 

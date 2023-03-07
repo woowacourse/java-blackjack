@@ -5,6 +5,7 @@ import blackjack.domain.BlackjackResult;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.exception.CustomException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -31,7 +32,7 @@ public class BlackjackController {
             outputView.printInitCards(participants);
             play(participants, blackjackGame);
             outputView.printCardResult(participants);
-        } catch (IllegalArgumentException e) {
+        } catch (CustomException e) {
             outputView.printError(e.getMessage());
         }
     }
@@ -45,7 +46,7 @@ public class BlackjackController {
         try {
             List<String> names = inputView.readNames();
             return Participants.from(names);
-        } catch (IllegalArgumentException e) {
+        } catch (CustomException e) {
             outputView.printError(e.getMessage());
             return getParticipants();
         }
@@ -72,7 +73,7 @@ public class BlackjackController {
         try {
             String inputCommand = inputView.readIsContinue(player.getName());
             return GameCommand.from(inputCommand);
-        } catch (IllegalArgumentException e) {
+        } catch (CustomException e) {
             outputView.printError(e.getMessage());
             return getGameCommand(player);
         }

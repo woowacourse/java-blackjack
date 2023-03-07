@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.exception.InvalidPlayerNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +23,7 @@ class NameTest {
     @DisplayName("이름에 공백 혹은 빈값만 들어온다면 예외를 발생시킨다")
     void createException(String name) {
         assertThatThrownBy(() -> new Name(name))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidPlayerNameException.class)
                 .hasMessage("이름은 공백일 수 없습니다.");
     }
 }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.exception.DuplicatePlayerNameException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ class ParticipantsTest {
         List<String> names = List.of("jamie", "jamie");
 
         assertThatThrownBy(() -> Participants.from(names))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicatePlayerNameException.class)
                 .hasMessage("중복인 이름은 입력하실 수 없습니다.");
     }
 }

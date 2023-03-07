@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.CardNumber;
+import blackjack.view.exception.MessageDoesNotExistException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -36,7 +37,7 @@ public enum CardNumberMessage {
         if (NUMBER_MESSAGE.containsKey(cardNumber)) {
             return NUMBER_MESSAGE.get(cardNumber);
         }
-        throw new IllegalArgumentException("해당 숫자가 존재하지 않습니다");
+        throw new MessageDoesNotExistException();
     }
 
     public String getMessage() {

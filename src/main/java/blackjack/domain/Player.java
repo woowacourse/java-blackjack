@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.exception.ReservedPlayerNameException;
+
 public class Player extends Participant {
     private static final String RESERVED_NAME = "딜러";
 
@@ -10,7 +12,7 @@ public class Player extends Participant {
 
     private void validateReservedName(String name) {
         if (RESERVED_NAME.equals(name)) {
-            throw new IllegalArgumentException("이름은 딜러일 수 없습니다.");
+            throw new ReservedPlayerNameException(name);
         }
     }
 

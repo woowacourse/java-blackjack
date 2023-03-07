@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.controller.exception.NotCommandException;
+
 public enum GameCommand {
     PLAY("y"),
     STOP("n");
@@ -17,7 +19,7 @@ public enum GameCommand {
         if (STOP.command.equalsIgnoreCase(command)) {
             return STOP;
         }
-        throw new IllegalArgumentException("y 또는 n를 입력해주세요.");
+        throw new NotCommandException();
     }
 
     public boolean isPlay() {
