@@ -47,13 +47,15 @@ public abstract class Participant {
         return totalSumAceCardValueOne;
     }
 
+    abstract boolean decideHit();
+
     public ParticipantName getParticipantName() {
         return participantName;
     }
-
     public String getName() {
         return participantName.getName();
     }
+
     public CardNumber getCardNumber(final int index) {
         return receivedCards.get(index).getCardNumber();
     }
@@ -61,6 +63,4 @@ public abstract class Participant {
     public CardSuit getCardSuit(final int index) {
         return receivedCards.get(index).getCardSuit();
     }
-
-    abstract boolean decideHit();
 }

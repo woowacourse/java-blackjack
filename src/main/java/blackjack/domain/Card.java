@@ -10,14 +10,6 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
-    }
-
-    public CardSuit getCardSuit() {
-        return cardSuit;
-    }
-
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -33,5 +25,13 @@ public class Card {
             return true;
         }
         return false;
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public CardSuit getCardSuit() {
+        return cardSuit;
     }
 }

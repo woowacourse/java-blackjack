@@ -17,10 +17,6 @@ public class ParticipantName {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     private void validateName(final String name) {
         checkNull(name);
         checkName(name);
@@ -54,5 +50,9 @@ public class ParticipantName {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public String getName() {
+        return name;
     }
 }
