@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.BlackJackReferee;
-import blackjack.domain.Deck;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.Map;
 

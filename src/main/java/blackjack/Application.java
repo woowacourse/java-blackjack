@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackJackController;
-import blackjack.domain.ShuffledDeckFactory;
+import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

@@ -3,7 +3,7 @@ package blackjack.controller;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.DeckFactory;
+import blackjack.domain.card.DeckFactory;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
