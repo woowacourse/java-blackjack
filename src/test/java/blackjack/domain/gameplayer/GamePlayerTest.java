@@ -43,31 +43,4 @@ class GamePlayerTest {
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
         assertDoesNotThrow(() -> gamePlayer.giveCardToPlayerByIndex(1, new Card(CardNumber.ACE, CardSymbol.HEARTS)));
     }
-
-    @DisplayName("게임 시작 시 딜러와 플레이어에게 카드 두 장을 나눠주는 메소드 테스트")
-    @Test
-    void Should_Success_When_init() {
-        GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
-        List<Card> cards = new ArrayList<>();
-        Card card1 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
-        Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
-        Card card3 = new Card(CardNumber.ACE, CardSymbol.SPADES);
-        Card card4 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-        Card card5 = new Card(CardNumber.TEN, CardSymbol.DIAMONDS);
-        Card card6 = new Card(CardNumber.TEN, CardSymbol.SPADES);
-        Card card7 = new Card(CardNumber.TEN, CardSymbol.CLUBS);
-        Card card8 = new Card(CardNumber.TEN, CardSymbol.HEARTS);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-        cards.add(card6);
-        cards.add(card7);
-        cards.add(card8);
-
-        assertDoesNotThrow(() -> gamePlayer.init(cards));
-    }
-
 }

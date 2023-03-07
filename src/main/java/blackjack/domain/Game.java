@@ -21,12 +21,20 @@ public class Game {
     }
 
     private void init() {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < gamePlayer.getPlayers().count() + 1; i++) {
-            cards.add(deck.draw());
-            cards.add(deck.draw());
+        initDealerCards();
+        initPlayerCards();
+    }
+
+    private void initPlayerCards() {
+        for (Player player : gamePlayer.getPlayers()) {
+            player.addCard(deck.draw());
+            player.addCard(deck.draw());
         }
-        gamePlayer.init(cards);
+    }
+
+    private void initDealerCards() {
+        giveCardToDealer();
+        giveCardToDealer();
     }
 
     public boolean isHitDealer() {
