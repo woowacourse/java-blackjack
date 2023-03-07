@@ -17,7 +17,7 @@ class ResultTest {
         final int defeat = 3;
 
         //when
-        final Result result = new Result(victory, draw, defeat);
+        final Result result = Result.of(victory, draw, defeat);
 
         //then
         assertThat(result.getVictory()).isEqualTo(victory);

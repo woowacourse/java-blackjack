@@ -4,26 +4,18 @@ import java.util.Objects;
 
 public class Result {
 
-    private int victory;
-    private int draw;
-    private int defeat;
+    private final int victory;
+    private final int draw;
+    private final int defeat;
 
-    public Result(final int victory, final int draw, final int defeat) {
+    private Result(final int victory, final int draw, final int defeat) {
         this.victory = victory;
         this.draw = draw;
         this.defeat = defeat;
     }
 
-    public void addVictory() {
-        victory++;
-    }
-
-    public void addDraw() {
-        draw++;
-    }
-
-    public void addDefeat() {
-        defeat++;
+    public static Result of(final int victory, final int draw, final int defeat) {
+        return new Result(victory, draw, defeat);
     }
 
     @Override
