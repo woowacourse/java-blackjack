@@ -23,7 +23,7 @@ public class BackJackController {
         playPlayerTurn(blackJackGame);
         playDealerTurn(blackJackGame);
         printCardResult(blackJackGame);
-        printWinningResult(blackJackGame);
+        printGameResult(blackJackGame);
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -80,8 +80,8 @@ public class BackJackController {
         outputView.printLineBreak();
     }
 
-    private void printWinningResult(BlackJackGame blackJackGame) {
-        Map<String, GameResult> winningResult = blackJackGame.getGameResult();
-        outputView.printWinningResult(ViewRenderer.renderWinningResult(winningResult));
+    private void printGameResult(BlackJackGame blackJackGame) {
+        Map<String, GameResult> gameResult = blackJackGame.getGameResult();
+        outputView.printWinningResult(ViewRenderer.renderWinningResult(gameResult));
     }
 }
