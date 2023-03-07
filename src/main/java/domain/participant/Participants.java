@@ -28,9 +28,11 @@ public class Participants {
         return new Participants(participants);
     }
 
-    public void addCard(final int participantOrder, final Card card) {
+    public void addCard(final int participantOrder, final Card... cards) {
         final Participant participant = participants.get(participantOrder);
-        participant.addCard(card);
+        for (Card card : cards) {
+            participant.addCard(card);
+        }
     }
 
     public Dealer getDealer() {

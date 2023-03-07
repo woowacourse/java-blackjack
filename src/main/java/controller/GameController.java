@@ -23,8 +23,6 @@ import static view.message.Message.DEALER_DRAW_MESSAGE;
 
 public class GameController {
 
-    private static final int START_GIVEN_COUNT = 2;
-    private static final int PARTICIPANT_GIVEN_COUNT = 1;
     private static final int PLAYER_ORDER_OFFSET = 1;
     private static final int DEALER_ORDER = 0;
 
@@ -63,7 +61,7 @@ public class GameController {
     private void handCards(final GameManager gameManager) {
         final int participantSize = gameManager.getParticipantSize();
         IntStream.range(0, participantSize)
-                .forEach(participantOrder -> gameManager.giveCards(participantOrder, START_GIVEN_COUNT));
+                .forEach(gameManager::handFirstCards);
     }
 
     private void printParticipantCards(final Participants participants) {
@@ -119,7 +117,7 @@ public class GameController {
         if (drawCardCommand.isDrawStop()) {
             return;
         }
-        gameManager.giveCards(playerIndex + PLAYER_ORDER_OFFSET, PARTICIPANT_GIVEN_COUNT);
+        gameManager.handCard(playerIndex + PLAYER_ORDER_OFFSET);
     }
 
     private boolean cannotDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
@@ -146,7 +144,7 @@ public class GameController {
         final Dealer dealer = participants.getDealer();
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canGiveCard()) {
-            gameManager.giveCards(DEALER_ORDER, PARTICIPANT_GIVEN_COUNT);
+            gameManager.handCard(DEALER_ORDER);
             OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(),
                     dealer.getName()) + System.lineSeparator());
         }

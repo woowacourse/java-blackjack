@@ -45,7 +45,7 @@ class GameManagerTest {
     @Test
     @DisplayName("giveCards()는 참가자의 순서를 받으면, 카드를 건네준다")
     void giveCards_givenParticipantOrder_thenSuccess() {
-        assertThatCode(() -> gameManager.giveCards(0, 2))
+        assertThatCode(() -> gameManager.handFirstCards(0))
                 .doesNotThrowAnyException();
     }
 }

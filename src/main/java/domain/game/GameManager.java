@@ -4,7 +4,7 @@ import domain.card.Deck;
 import domain.participant.Participants;
 
 public class GameManager {
-
+    
     private final Deck deck;
     private final Participants participants;
 
@@ -21,11 +21,12 @@ public class GameManager {
         return participants.size();
     }
 
-    public void giveCards(final int participantOrder, final int givenCount) {
-        int cardCount = 0;
 
-        while (cardCount++ < givenCount) {
-            participants.addCard(participantOrder, deck.draw());
-        }
+    public void handFirstCards(final int participantOrder) {
+        participants.addCard(participantOrder, deck.draw(), deck.draw());
+    }
+
+    public void handCard(final int participantOrder) {
+        participants.addCard(participantOrder, deck.draw());
     }
 }
