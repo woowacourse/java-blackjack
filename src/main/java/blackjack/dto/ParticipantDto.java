@@ -20,11 +20,15 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto from(Participant participant) {
-        return new ParticipantDto(participant.getName().getName(), makeCardUnits(participant.getHand()));
+        String participantName = participant.getName().getName();
+        List<String> participantCards = makeCardUnits(participant.getHand());
+        return new ParticipantDto(participantName, participantCards);
     }
 
     public static ParticipantDto of(Participant participant, Card card) {
-        return new ParticipantDto(participant.getName().getName(), Collections.singletonList((makeCardUnit(card.getNumber(), card.getSuit()))));
+        String participantName = participant.getName().getName();
+        List<String> participantCard = Collections.singletonList((makeCardUnit(card.getNumber(), card.getSuit())));
+        return new ParticipantDto(participantName, participantCard);
     }
 
     private static List<String> makeCardUnits(Hand hand) {
