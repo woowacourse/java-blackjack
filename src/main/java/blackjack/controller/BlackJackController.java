@@ -1,9 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.domain.result.Result.DRAW;
-import static blackjack.domain.result.Result.LOSE;
-import static blackjack.domain.result.Result.WIN;
-
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -14,7 +10,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerResultResponse;
@@ -22,9 +17,7 @@ import blackjack.view.dto.DealerStateResponse;
 import blackjack.view.dto.ParticipantResponse;
 import blackjack.view.dto.PlayerResultResponse;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -118,7 +111,7 @@ public class BlackJackController {
         final List<ParticipantResponse> participantResponses = getParticipantResponses(participants.getParticipants());
         participantResponses.forEach(outputView::printHandedCardsWithScore);
 
-        final DealerResultResponse dealerResultResponse = getDealerResultResponse(dealer, players);
+        final DealerResultResponse dealerResultResponse = getDealerResultResponse(blackJackGame);
         final List<PlayerResultResponse> playerResultResponses = getPlayerResultResponses(dealer, players);
 
         outputView.printResult(dealerResultResponse, playerResultResponses);
@@ -130,22 +123,10 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private DealerResultResponse getDealerResultResponse(final Dealer dealer, final List<Player> players) {
-        Map<Result, Integer> resultMap = initResultMap();
-        for (Player player : players) {
-            Result dealerResult = dealer.compareScoreTo(player);
-            Integer currentResultCount = resultMap.get(dealerResult);
-            resultMap.replace(dealerResult, currentResultCount + 1);
-        }
-        return DealerResultResponse.of(dealer, resultMap);
-    }
-
-    private Map<Result, Integer> initResultMap() {
-        Map<Result, Integer> resultMap = new EnumMap<>(Result.class);
-        resultMap.put(WIN, 0);
-        resultMap.put(DRAW, 0);
-        resultMap.put(LOSE, 0);
-        return resultMap;
+    private DealerResultResponse getDealerResultResponse(final BlackJackGame blackJackGame) {
+        final Dealer dealer = blackJackGame.dealer();
+        final List<Player> players = blackJackGame.players();
+        return DealerResultResponse.of(dealer, dealer.getDealerResult(players));
     }
 
     private List<PlayerResultResponse> getPlayerResultResponses(final Dealer dealer, final List<Player> players) {
