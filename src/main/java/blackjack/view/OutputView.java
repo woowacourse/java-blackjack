@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.player.*;
-import blackjack.domain.result.Result;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +9,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static final String CARD_USER_DELIMITER = ": ";
-    public static final String BLANK = " ";
     public static final String DEALER_CARD = "딜러 카드: ";
-    public static final String DEALER = "딜러: ";
     public static final String RESULT_DELIMITER = " - 결과: ";
     public static final String CARD_DELIMITER = "카드: ";
     public static final String RESULT_TITLE = "## 최종 승패";
@@ -59,27 +56,16 @@ public class OutputView {
     }
 
     public static void printScore(Dealer dealer, Players players) {
-        printEmptyLine();
         System.out.println(DEALER_CARD + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
         for (Player player : players.getPlayers()) {
-            System.out.println(getPlayerCards(player) + RESULT_DELIMITER + player.getTotalScore());
+            System.out.println(player.getName()
+                    + CARD_USER_DELIMITER
+                    + getPlayerCards(player)
+                    + RESULT_DELIMITER
+                    + player.getTotalScore()
+            );
         }
         printEmptyLine();
-    }
-
-    public static void printDealerResults(HashMap<Result, Integer> dealerResults) {
-        System.out.println(RESULT_TITLE);
-        System.out.print(DEALER);
-        dealerResults.keySet().stream()
-                .filter(result -> dealerResults.get(result) > 0)
-                .forEach(result -> System.out.print(dealerResults.get(result) + result.getResult() + BLANK));
-        printEmptyLine();
-    }
-
-    public static void printPlayersResults(HashMap<Player, Result> playerResults) {
-        for (Player player : playerResults.keySet()) {
-            System.out.println(player.getPlayerName() + CARD_USER_DELIMITER + playerResults.get(player).getResult());
-        }
     }
 
     public static void printDealerOneMore() {
@@ -90,5 +76,12 @@ public class OutputView {
         printEmptyLine();
         System.out.println("현재 카드 점수 총합은 21을 초과합니다.");
         printEmptyLine();
+    }
+
+    public static void printResults(HashMap<User, String> results) {
+        System.out.println(RESULT_TITLE);
+        for (User user : results.keySet()) {
+            System.out.println(user.getName() + CARD_USER_DELIMITER + results.get(user));
+        }
     }
 }

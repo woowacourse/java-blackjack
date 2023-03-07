@@ -2,29 +2,22 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.factory.PlayersFactory;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Names;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.player.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final int PLAYERS_RESULTS = 0;
-    private static final int DEALER_RESULTS = 1;
-
     private BlackjackGame blackjackGame;
 
     public void run() {
-        Players players = generatePlayers();
-        Dealer dealer = new Dealer();
-        ready(players, dealer);
+        ready(generatePlayers());
+        Players players = blackjackGame.getPlayers();
+        Dealer dealer = blackjackGame.getDealer();
         printNewCards(players, dealer);
         giveAdditionalCards(players, dealer);
         printFinalResults(dealer, players);
@@ -35,8 +28,8 @@ public class BlackjackController {
         return PlayersFactory.of(names);
     }
 
-    private void ready(Players players, Dealer dealer) {
-        blackjackGame = new BlackjackGame(players, dealer);
+    private void ready(Players players) {
+        blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitialCardsToUsers();
         OutputView.printReadyMessage(players.getPlayers().stream()
                 .map(Player::getPlayerName)
@@ -56,9 +49,8 @@ public class BlackjackController {
 
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
-        List<HashMap> results = blackjackGame.getResults();
-        OutputView.printDealerResults(results.get(DEALER_RESULTS));
-        OutputView.printPlayersResults(results.get(PLAYERS_RESULTS));
+        HashMap<User, String> results = blackjackGame.getResults();
+        OutputView.printResults(results);
     }
 
     private void stopServingCard(Player player) {
