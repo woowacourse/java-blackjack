@@ -22,8 +22,15 @@ public final class InputView {
         return List.of(input.split(","));
     }
 
-    public String readHit(String name) {
+    public boolean readHit(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), name);
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        if (input.equals("y")) {
+            return true;
+        }
+        if (input.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("y과 n 중 입력해 주세요!");
     }
 }
