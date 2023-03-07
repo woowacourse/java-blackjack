@@ -22,12 +22,4 @@ class NameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Name.BLANK_NAME_EXCEPTION_MESSAGE);
     }
-
-    @Test
-    @DisplayName("입력된 이름으로 딜러의 이름이 올 경우 예외처리")
-    void throwExceptionIfNameIsDealerName() {
-        assertThatThrownBy(() -> new Name(Dealer.DEALER_NAME))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Name.NAME_IS_DEALER_NAME_EXCEPTION_MESSAGE);
-    }
 }

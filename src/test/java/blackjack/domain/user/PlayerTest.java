@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import blackjack.domain.card.Card;
@@ -37,6 +38,13 @@ class PlayerTest {
             softly.assertThat(player.getName()).isEqualTo(name);
             softly.assertThat(player.getCardGroups().getCards()).containsExactly(cardKing, cardEight);
         });
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름으로 '딜러'가 들어오는 경우 예외처리하는 기능 테스트")
+    void throwExceptionWhenPlayerNameIsDealerName() {
+        assertThatThrownBy(() -> new Player("딜러", initialGroup)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Player.NAME_IS_DEALER_NAME_EXCEPTION_MESSAGE);
     }
 
     @Test
