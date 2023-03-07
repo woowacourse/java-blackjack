@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Participant {
     public static final int BLACK_JACK_NUMBER = 21;
     protected final Name name;
-    protected final Hand hand;
+    protected Hand hand;
 
     public Participant(Name name, Hand hand) {
         this.name = name;
@@ -19,11 +19,11 @@ public abstract class Participant {
     }
 
     public void hit(Card card) {
-        hand.add(card);
+        hand = hand.add(card);
     }
 
     public void hit(List<Card> cards) {
-        cards.forEach(hand::add);
+        hand = hand.add(cards.toArray(Card[]::new));
     }
 
     public int calculateScore() {
