@@ -24,7 +24,7 @@ class NameTest {
 
     @DisplayName("입력한 이름의 길이가 1 이상 10 이하라면 Name 객체를 생성한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"a", "fivee", "lengthTenn"})
+    @ValueSource(strings = {"a", "fivee", "lengthTenn", "딜러"})
     void generate_name(String name) {
         // when & then
         assertThatNoException()
