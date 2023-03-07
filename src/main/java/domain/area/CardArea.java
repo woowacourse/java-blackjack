@@ -8,9 +8,6 @@ import java.util.List;
 
 public class CardArea {
 
-    private static final int REMAIN_SCORE_ACE = 10;
-    private static final int ADD_ACE_BUST_OR_NOT = 11;
-
     private final List<Card> cards = new ArrayList<>();
 
     public List<Card> cards() {
@@ -22,28 +19,25 @@ public class CardArea {
     }
 
     public Score calculate() {
-        int aceCount = countAceCard();
-        int totalValue = sumTotalCardValue();
+        Score score = score();
 
-        while (aceCount > 0) {
-            if (totalValue <= ADD_ACE_BUST_OR_NOT) {
-                totalValue += REMAIN_SCORE_ACE;
-            }
-            aceCount--;
+        if (hasAce()) {
+            score = score.plusTenIfNotBurst();
         }
-        return new Score(totalValue);
+
+        return score;
     }
 
-    private int sumTotalCardValue() {
+    private Score score() {
         return cards.stream()
-                    .mapToInt(card -> card.cardValue().value())
-                    .sum();
+                    .map(card -> new Score(card.cardValue().value()))
+                    .reduce(Score.MIN, (Score::plus));
+
     }
 
-    private int countAceCard() {
-        return (int) cards.stream()
-                          .filter(card -> card.cardValue().isAce())
-                          .count();
+    private boolean hasAce() {
+        return cards.stream()
+                    .anyMatch(card -> card.cardValue().isAce());
     }
 
     public boolean canMoreCard() {
