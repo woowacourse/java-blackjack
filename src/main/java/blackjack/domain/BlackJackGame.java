@@ -31,6 +31,11 @@ public class BlackJackGame {
         participant.drawCard(deck.draw());
     }
 
+    public boolean existDrawablePlayer() {
+        return players().stream()
+                .anyMatch(Player::isDrawable);
+    }
+
     public Dealer dealer() {
         return participants.getDealer();
     }
