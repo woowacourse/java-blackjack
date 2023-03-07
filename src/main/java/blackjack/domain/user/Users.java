@@ -63,11 +63,11 @@ public class Users {
     }
 
     public Map<String, GameResult> getGameResult() {
-        final Score dealerScore = getDealer().getScore();
+        final Dealer dealer = getDealer();
         final Map<String, GameResult> gameResult = new HashMap<>();
         for (final Player player : getPlayers()) {
             final Score playerScore = player.getScore();
-            gameResult.put(player.getName(), playerScore.getResultByCompareWith(dealerScore));
+            gameResult.put(player.getName(), dealer.judgePlayerGameResult(playerScore));
         }
         return gameResult;
     }

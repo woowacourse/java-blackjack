@@ -12,12 +12,16 @@ public class Score {
     private final int value;
 
     public Score(int value, int numberOfCards) {
-        this.isBlackJack = isBlackJackCondition(value, numberOfCards);
         this.value = value;
+        this.isBlackJack = isBlackJackCondition(numberOfCards);
     }
 
-    private boolean isBlackJackCondition(int value, int numberOfCards) {
-        return value == BLACKJACK_NUMBER && numberOfCards == NUMBER_OF_INITIAL_CARD_NUMBER;
+    private boolean isBlackJackCondition(int numberOfCards) {
+        return isMaxNumber() && numberOfCards == NUMBER_OF_INITIAL_CARD_NUMBER;
+    }
+
+    public boolean isMaxNumber() {
+        return value == BLACKJACK_NUMBER;
     }
 
     public int getValue() {
@@ -30,46 +34,6 @@ public class Score {
 
     public boolean isBust() {
         return value > BLACKJACK_NUMBER;
-    }
-
-    public GameResult getResultByCompareWith(Score targetScore) {
-        if (this.isBust() || targetScore.isBust()) {
-            return compareByBustCondition(targetScore);
-        }
-        return compareByScore(targetScore);
-    }
-
-    private GameResult compareByBustCondition(final Score targetScore) {
-        if (this.isBust() && !targetScore.isBust()) {
-            return GameResult.LOSE;
-        }
-        if (!this.isBust() && targetScore.isBust()) {
-            return GameResult.WIN;
-        }
-        return GameResult.TIE;
-    }
-
-    private GameResult compareByScore(final Score targetScore) {
-        if (this.value < targetScore.value) {
-            return GameResult.LOSE;
-        }
-        if (this.value > targetScore.value) {
-            return GameResult.WIN;
-        }
-        if (value == BLACKJACK_NUMBER) {
-            return compareByBlackJackCondition(targetScore);
-        }
-        return GameResult.TIE;
-    }
-
-    private GameResult compareByBlackJackCondition(final Score targetScore) {
-        if (this.isBlackJack && !targetScore.isBlackJack) {
-            return GameResult.WIN;
-        }
-        if (!this.isBlackJack && targetScore.isBlackJack) {
-            return GameResult.LOSE;
-        }
-        return GameResult.TIE;
     }
 
     @Override
