@@ -14,16 +14,24 @@ public class Card {
     }
     
     public CardNumber getCardNumber() {
-        return number;
+        return this.number;
     }
     
     public CardShape getCardShape() {
-        return shape;
+        return this.shape;
+    }
+    
+    public int getScore() {
+        return this.number.getScore();
+    }
+    
+    public boolean isAce() {
+        return this.number == CardNumber.ACE;
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(number, shape);
+        return Objects.hash(this.number, this.shape);
     }
     
     @Override
@@ -31,10 +39,10 @@ public class Card {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
         Card card = (Card) o;
-        return number == card.number && shape == card.shape;
+        return this.number == card.number && this.shape == card.shape;
     }
 }
