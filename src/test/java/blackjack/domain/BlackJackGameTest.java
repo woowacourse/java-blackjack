@@ -47,4 +47,9 @@ class BlackJackGameTest {
     void isBurst() {
         assertThat(blackJackGame.isBurst(22)).isTrue();
     }
+
+    @Test
+    void isValidScore() {
+        assertThat(blackJackGame.isValidScore(20)).isTrue();
+    }
 }

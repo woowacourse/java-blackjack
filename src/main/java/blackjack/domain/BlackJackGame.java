@@ -30,4 +30,8 @@ public class BlackJackGame {
     public boolean isBurst(int score) {
         return BURST_SCORE < score;
     }
+
+    public boolean isValidScore(int score) {
+        return BURST_SCORE > score;
+    }
 }
