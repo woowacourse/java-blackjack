@@ -24,14 +24,19 @@ public final class GameController {
     }
 
     public void start() {
-        final Participants participants = makeParticipants();
-        final Deck deck = Deck.create(new RandomUniqueCardSelector());
-        final GameManager gameManager = GameManager.create(deck, participants);
+        final GameManager gameManager = makeGameManager();
 
-        startGame(participants, gameManager);
-        playForPlayers(participants, gameManager);
+        startGame(gameManager);
+        playForPlayers(gameManager);
         playForDealer(gameManager);
         printGameResult(gameManager);
+    }
+
+    private GameManager makeGameManager() {
+        final Participants participants = makeParticipants();
+        final Deck deck = Deck.create(new RandomUniqueCardSelector());
+
+        return GameManager.create(deck, participants);
     }
 
     private Participants makeParticipants() {
@@ -41,22 +46,22 @@ public final class GameController {
                 outputView::printExceptionMessage);
     }
 
-    private void startGame(final Participants participants, final GameManager gameManager) {
+    private void startGame(final GameManager gameManager) {
         gameManager.giveStartCards();
 
-        printTotalParticipantStartCards(participants);
+        printTotalParticipantStartCards(gameManager);
     }
 
-    private void printTotalParticipantStartCards(final Participants participants) {
-        final List<String> participantNames = participants.getParticipantNames();
-        final List<Participant> totalParticipants = participants.getParticipants();
+    private void printTotalParticipantStartCards(final GameManager gameManager) {
+        final List<Participant> participants = gameManager.getParticipants();
+        final List<String> participantsName = gameManager.getParticipantsName();
 
-        outputView.printGiveParticipantStartCardMessage(participantNames);
-        outputView.printTotalParticipantStartCards(totalParticipants);
+        outputView.printGiveParticipantStartCardMessage(participantsName);
+        outputView.printTotalParticipantStartCards(participants);
     }
 
-    private void playForPlayers(final Participants participants, final GameManager gameManager) {
-        final int playerSize = participants.playerSize();
+    private void playForPlayers(final GameManager gameManager) {
+        final int playerSize = gameManager.playerSize();
 
         for (int playerOrder = 0; playerOrder < playerSize; playerOrder++) {
             handleDrawCard(gameManager, playerOrder);

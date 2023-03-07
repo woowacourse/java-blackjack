@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class GameManager {
 
@@ -71,6 +70,10 @@ public final class GameManager {
         return participants.findPlayerCardsByOrder(playerOrder, ParticipantOffset.PLAYER);
     }
 
+    public int playerSize() {
+        return participants.playerSize();
+    }
+
     private void giveTwoCard(final int participantOrder) {
         int cardCount = 0;
 
@@ -91,6 +94,10 @@ public final class GameManager {
 
     public List<Participant> getParticipants() {
         return participants.getParticipants();
+    }
+
+    public List<String> getParticipantsName() {
+        return participants.getParticipantNames();
     }
 
     public Map<String, Result> getTotalPlayerGameResult() {
