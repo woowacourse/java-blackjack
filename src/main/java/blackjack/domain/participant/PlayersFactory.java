@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Cards;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ public class PlayersFactory {
 
     private static Players createPlayers(final List<String> names) {
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(new Participant(Cards.generateEmptyCards()), name))
                 .collect(Collectors.toList());
 
         return new Players(players);

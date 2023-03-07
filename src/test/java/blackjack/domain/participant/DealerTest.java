@@ -3,15 +3,17 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Dealer dealer = new Dealer();
+    private final Dealer dealer = new Dealer(new Participant(Cards.generateEmptyCards()));
 
     @BeforeEach
     void setUp() {
@@ -40,6 +42,6 @@ class DealerTest {
     @DisplayName("딜러가 갖고 있는 카드 중 하나 반환")
     void getOneCardToShow() {
         // expect
-        assertThat(dealer.getOneCardToShow()).isEqualTo(new Card(Number.Q, Pattern.CLUB));
+        assertThat(dealer.showInitCards()).isEqualTo(List.of(new Card(Number.Q, Pattern.CLUB)));
     }
 }

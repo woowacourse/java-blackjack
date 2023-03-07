@@ -16,8 +16,8 @@ public class OutputView {
         System.out.println("\n" + DEALER_NAME + "와 " + names + "에게 " + NUMBER_OF_SETTING_CARDS + "장을 나누었습니다.");
     }
 
-    public void printDealerInitCards(String card) {
-        System.out.println(DEALER_NAME + ": " + card);
+    public void printDealerInitCards(List<String> card) {
+        System.out.println(DEALER_NAME + ": " + String.join("", card));
     }
 
     public void printPlayersInitCards(Map<String, List<String>> initCards) {

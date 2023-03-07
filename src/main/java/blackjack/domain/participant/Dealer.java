@@ -1,21 +1,41 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import java.util.List;
 
-public class Dealer extends Participant {
+public class Dealer implements Decidable {
 
-    private static final int SPECIFIC_SCORE_OF_DEALER = 16;
+    private static final int DEALER_MIN_RECEIVE_CARD = 16;
 
-    public Dealer() {
-        super(Cards.generateEmptyCards());
+    private final Participant participant;
+
+    public Dealer(Participant participant) {
+        this.participant = participant ;
     }
 
-    public Card getOneCardToShow() {
-        return cards.getCards().get(0);
+    public void receiveCard(Card card) {
+        participant.receiveCard(card);
     }
 
+    public int calculateTotalScore() {
+        return participant.calculateTotalScore();
+    }
+
+    public boolean isBust() {
+        return participant.isBust();
+    }
+
+    @Override
+    public List<Card> showInitCards() {
+        return List.of(participant.getCards().get(0));
+    }
+
+    @Override
     public boolean canDraw() {
-        return cards.calculateScoreForBlackjack() <= SPECIFIC_SCORE_OF_DEALER;
+        return participant.calculateTotalScore() <= DEALER_MIN_RECEIVE_CARD;
+    }
+
+    public List<Card> getCards() {
+        return participant.getCards();
     }
 }

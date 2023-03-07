@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -11,6 +9,8 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.PlayersFactory;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashMap;
@@ -47,15 +47,11 @@ public class BlackjackController {
         List<String> playersName = inputView.receivePlayersName();
         Players players = PlayersFactory.from(playersName);
 
-        return new Participants(new Dealer(), players);
+        return new Participants(new Dealer(new Participant(Cards.generateEmptyCards())), players);
     }
 
     private void setInitCards(final Deck deck, final Participants participants) {
-        for (Participant participant : participants.getPlayers()) {
-            distributeTwoCards(deck, participant);
-        }
-        distributeTwoCards(deck, participants.getDealer());
-
+        participants.receiveCards(deck, NUMBER_OF_SETTING_CARDS);
         printParticipantsInitCards(participants);
     }
 
@@ -68,9 +64,7 @@ public class BlackjackController {
 
     private void printParticipantsInitCards(final Participants participants) {
         outputView.printDistributeCardsMessage(getPlayerNames(participants.getPlayers()));
-
-        Card card = participants.getDealer().getOneCardToShow();
-        outputView.printDealerInitCards(card.getCardInfo());
+        outputView.printDealerInitCards(getDealersCards(participants.getDealer()));
         outputView.printPlayersInitCards(getPlayersCards(participants.getPlayers()));
     }
 
@@ -83,7 +77,7 @@ public class BlackjackController {
     private void play(final Player player, final Deck deck) {
         boolean proceed = true;
 
-        while (proceed && !player.isBust()) {
+        while (proceed && player.canDraw()) {
             proceed = ask(player, deck);
             printBustMessage(player);
         }
@@ -97,26 +91,22 @@ public class BlackjackController {
             return false;
         }
 
-        giveOneMoreCard(player, deck);
+        player.receiveCard(deck.drawCard());
         outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
         return true;
     }
 
     private void printBustMessage(Player player) {
-        if (player.isBust()) {
+        if (!player.canDraw()) {
             outputView.printBustMessage();
         }
     }
 
     private void turnOfDealer(final Dealer dealer, final Deck deck) {
         while (dealer.canDraw()) {
-            giveOneMoreCard(dealer, deck);
+            dealer.receiveCard(deck.drawCard());
             outputView.printDealerDrawOneMoreCard();
         }
-    }
-
-    private void giveOneMoreCard(final Participant participant, final Deck deck) {
-        participant.receiveCard(deck.drawCard());
     }
 
     private void finishGame(final Participants participants) {
@@ -146,13 +136,20 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
+    private List<String> getDealersCards(final Dealer dealer) {
+        return dealer.showInitCards().stream()
+                .map(Card::getCardInfo)
+                .collect(Collectors.toList());
+    }
+
     private Map<String, List<String>> getPlayersCards(final List<Player> players) {
         Map<String, List<String>> playersCards = new HashMap<>();
 
         for (Player player : players) {
-            playersCards.put(player.getName(), player.getCards().getCards().stream()
-                    .map(Card::getCardInfo)
-                    .collect(Collectors.toList()));
+            playersCards.put(player.getName(),
+                    player.getCards().stream()
+                            .map(Card::getCardInfo)
+                            .collect(Collectors.toList()));
         }
 
         return playersCards;

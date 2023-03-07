@@ -2,10 +2,11 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.List;
 
-public abstract class Participant {
+public class Participant {
 
-    protected final Cards cards;
+    private final Cards cards;
 
     public Participant(final Cards cards) {
         this.cards = cards;
@@ -23,7 +24,7 @@ public abstract class Participant {
         return cards.isBust();
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }

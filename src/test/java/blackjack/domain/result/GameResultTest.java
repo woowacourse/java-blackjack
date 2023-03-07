@@ -4,9 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -25,7 +27,8 @@ class GameResultTest {
     @BeforeEach
     void setUp() {
         Players players = PlayersFactory.from(List.of("a", "b", "c"));
-        participants = new Participants(new Dealer(), players);
+        Dealer dealer = new Dealer(new Participant(Cards.generateEmptyCards()));
+        participants = new Participants(dealer, players);
 
         // player1 점수 : 20
         participants.getPlayers().get(0).receiveCard(new Card(Number.K, Pattern.CLUB));

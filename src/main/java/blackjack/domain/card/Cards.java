@@ -12,7 +12,7 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Cards generateEmptyCards() {
@@ -30,13 +30,9 @@ public class Cards {
     }
 
     private int calculate() {
-        int score = 0;
-
-        for (Card card : cards) {
-            score += card.convertToBlackjackScore();
-        }
-
-        return score;
+        return cards.stream()
+                .mapToInt(Card::convertToBlackjackScore)
+                .sum();
     }
 
     private boolean containsAce() {

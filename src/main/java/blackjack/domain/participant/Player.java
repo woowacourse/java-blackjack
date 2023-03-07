@@ -1,18 +1,21 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Card;
+import java.util.List;
 
-public class Player extends Participant {
+public class Player implements Decidable {
 
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 5;
+    private static final int PLAYER_MAX_RECEIVE_CARD = 21;
 
     private final String name;
+    private final Participant participant;
 
-    public Player(String name) {
-        super(Cards.generateEmptyCards());
+    public Player(Participant participant, String name) {
         validateNameLength(name);
         this.name = name;
+        this.participant = participant;
     }
 
     private void validateNameLength(final String name) {
@@ -23,7 +26,33 @@ public class Player extends Participant {
         }
     }
 
+    public void receiveCard(Card card) {
+        participant.receiveCard(card);
+    }
+
+    public int calculateTotalScore() {
+        return participant.calculateTotalScore();
+    }
+
+    public boolean isBust() {
+        return participant.isBust();
+    }
+
+    @Override
+    public List<Card> showInitCards() {
+        return participant.getCards();
+    }
+
+    @Override
+    public boolean canDraw() {
+        return participant.calculateTotalScore() <= PLAYER_MAX_RECEIVE_CARD;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return participant.getCards();
     }
 }
