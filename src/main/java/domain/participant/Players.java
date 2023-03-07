@@ -70,7 +70,7 @@ public class Players {
         }
     }
 
-    public void printFinalPlayerResults()  {
+    public void printFinalPlayerResults() {
         for (Player player : players) {
             OutputView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.calculateScore());
         }
