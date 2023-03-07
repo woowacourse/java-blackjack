@@ -1,7 +1,9 @@
 package blackjackgame.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 import blackjackgame.domain.player.Dealer;
@@ -9,32 +11,25 @@ import blackjackgame.domain.player.Guests;
 import blackjackgame.domain.player.Player;
 
 public class Deck {
-    private final List<Card> cards;
-    private int cursorIndex;
+    private final Deque<Card> cards;
 
     public Deck() {
-        this.cursorIndex = 0;
-        this.cards = generateCards();
-        Collections.shuffle(cards);
+        this(initializeCards());
     }
 
     public Deck(final List<Card> cards) {
-        this.cursorIndex = 0;
-        this.cards = cards;
+        this.cards = new ArrayDeque<>(cards);
     }
 
-    private List<Card> generateCards() {
+    private static List<Card> initializeCards() {
         List<Card> cards = new ArrayList<>();
         for (final Symbol symbol : Symbol.values()) {
-            addCard(cards, symbol);
+            for (final CardValue cardValue : CardValue.values()) {
+                cards.add(new Card(symbol, cardValue));
+            }
         }
+        Collections.shuffle(cards);
         return cards;
-    }
-
-    private void addCard(final List<Card> cards, final Symbol symbol) {
-        for (final CardValue cardValue : CardValue.values()) {
-            cards.add(new Card(symbol, cardValue));
-        }
     }
 
     public void initializePlayersCards(final Guests guests, final Dealer dealer) {
@@ -50,6 +45,9 @@ public class Deck {
     }
 
     public Card pickOne() {
-        return cards.get(cursorIndex++);
+        if(cards.peekFirst() == null){
+            throw new IndexOutOfBoundsException("카드가 비었습니다.");
+        }
+        return cards.removeFirst();
     }
 }
