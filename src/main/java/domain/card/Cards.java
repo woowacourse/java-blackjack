@@ -32,6 +32,6 @@ public final class Cards {
     }
 
     public Card getCard() {
-        return cards.pop();
+        return cards.peekLast();
     }
 }
