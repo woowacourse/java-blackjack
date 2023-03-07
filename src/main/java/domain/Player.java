@@ -20,7 +20,7 @@ public class Player {
     }
 
     public boolean isOverBlackJack() {
-        return cards.getSum() >= BlackjackGame.BLACK_JACK;
+        return cards.isOverBlackJack();
     }
 
     public String getName() {

@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
+    private static final int BLACK_JACK = 21;
     private static final int DECREASE_ACE_VALUE = -10;
+
     private List<Card> cards;
 
     public Cards() {
@@ -29,7 +31,7 @@ public class Cards {
 
     private int calculateAceValue(int sum) {
         int countAce = countAce();
-        while (countAce-- > 0 && sum > BlackjackGame.BLACK_JACK) {
+        while (countAce-- > 0 && sum > BLACK_JACK) {
             sum += DECREASE_ACE_VALUE;
         }
         return sum;
@@ -37,6 +39,10 @@ public class Cards {
 
     public int countAce() {
         return Math.toIntExact(cards.stream().filter(s -> s.isAce()).count());
+    }
+
+    public boolean isOverBlackJack(){
+        return getSum() > BLACK_JACK;
     }
 
     public List<Card> getCards() {

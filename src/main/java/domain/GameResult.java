@@ -3,7 +3,7 @@ package domain;
 import java.util.*;
 
 public class GameResult {
-    public final static int BLACK_JACK = 21;
+    private static final int BLACK_JACK = 21;
     private final Map<String, List<ResultType>> dealerResult;
     private final Map<String, ResultType> playerResult;
 
