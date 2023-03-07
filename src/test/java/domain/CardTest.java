@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -13,5 +15,12 @@ public class CardTest extends AbstractTestFixture{
     void test_card_score(Letter letter, int expectedScore) {
         var card = createCard(letter);
         assertThat(card.score()).isEqualTo(expectedScore);
+    }
+
+    @Test
+    @DisplayName("A인지 알 수 있다")
+    void test_is_A() {
+        var card = createCard(Letter.ACE);
+        assertThat(card.isA()).isTrue();
     }
 }
