@@ -18,8 +18,8 @@ public class Players {
     }
 
     public void hitAdditionalCard(Deck deck, CardDecisionStrategy cardDecisionStrategy,
-                                  Consumer<Player> showPlayerCards) {
-        players.forEach(player -> player.hitAdditionalCardFrom(deck, cardDecisionStrategy, showPlayerCards));
+                                  CardDisplayStrategy cardDisplayStrategy) {
+        players.forEach(player -> player.hitAdditionalCardFrom(deck, cardDecisionStrategy, cardDisplayStrategy));
     }
 
     public void takeCard(Deck deck, int size) {

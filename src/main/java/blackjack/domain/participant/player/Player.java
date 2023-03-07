@@ -1,7 +1,6 @@
 package blackjack.domain.participant.player;
 
 import static blackjack.controller.AddCardOrNot.NO;
-import static blackjack.controller.AddCardOrNot.YES;
 
 import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.Deck;
@@ -9,7 +8,6 @@ import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Participant;
-import java.util.function.Consumer;
 
 public class Player extends Participant {
     private WinningResult winningResult;
@@ -34,14 +32,15 @@ public class Player extends Participant {
         return winningResult;
     }
 
-    public void hitAdditionalCardFrom(Deck deck, CardDecisionStrategy cardDecisionStrategy, Consumer<Player> showPlayerCards) {
+    public void hitAdditionalCardFrom(Deck deck, CardDecisionStrategy cardDecisionStrategy,
+                                      CardDisplayStrategy cardDisplayStrategy) {
         while (!isBlackJack() && !isBust()) {
             AddCardOrNot addCardOrNot = cardDecisionStrategy.decide(this);
             if (addCardOrNot.equals(NO)) {
                 break;
             }
             hit(deck.drawCard());
-            showPlayerCards.accept(this);
+            cardDisplayStrategy.display(this);
         }
     }
 }

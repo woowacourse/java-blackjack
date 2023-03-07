@@ -52,24 +52,20 @@ public class Controller {
     }
 
     private void supplyAdditionalCards() {
-        supplyAdditionalCardToPlayers();
-        supplyAdditionalCardToDealer();
-    }
-
-    private void supplyAdditionalCardToPlayers() {
-        CardDecisionStrategy cardDecisionStrategy = (Participant participant) -> {
-            String command = inputView.readCommandToAddCardOrNot(participant.getName());
-            return AddCardOrNot.of(command);
-        };
-        Consumer<Player> showPlayerCards = (player) -> outputView.printPlayerCard(ParticipantCardsDto.from(player));
-        blackjackGame.supplyCardToPlayerNameOf(cardDecisionStrategy, showPlayerCards);
-    }
-
-    private void supplyAdditionalCardToDealer() {
+        blackjackGame.supplyAdditionalCardsToPlayers(this::readAddOrNot, this::showCurrentCards);
         while (blackjackGame.canDealerHit()) {
             blackjackGame.supplyAdditionalCardToDealer();
             outputView.printDealerHitMessage();
         }
+    }
+
+    private AddCardOrNot readAddOrNot(Participant participant) {
+        String command = inputView.readCommandToAddCardOrNot(participant.getName());
+        return AddCardOrNot.of(command);
+    }
+
+    private void showCurrentCards(Participant participant) {
+        outputView.printPlayerCard(ParticipantCardsDto.from(participant));
     }
 
     private void showFinalCards() {
