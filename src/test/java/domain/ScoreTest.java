@@ -119,4 +119,37 @@ class ScoreTest {
         assertFalse(origin1.isGreaterThan(other1));
         assertTrue(origin2.isGreaterThan(other2));
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "21,21,42",
+            "21,20,41"
+    })
+    @DisplayName("plus() : 두 점수를 더할 수 있다.")
+    void test_add(final int value, final int other, final int sum) throws Exception {
+        //given
+        final Score origin = new Score(value);
+        final Score resultScore = new Score(sum);
+
+        //when & then
+        assertEquals(origin.plus(new Score(other)), resultScore);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "20,2,20",
+            "21,2,21",
+            "19,2,21",
+            "19,3,19",
+            "18,4,18",
+    })
+    @DisplayName("plusIfNotBurst() : 다른 숫자를 더 할 때 bust 당하지 않으면 그 숫자를 더해줄 수 있다.")
+    void test_plusIfNotBurst(final int value, final int sum) throws Exception {
+        //given
+        final Score origin = new Score(value);
+        final Score result = new Score(sum);
+
+        //when & then
+        assertEquals(origin.plusTenIfNotBurst(), result);
+    }
 }

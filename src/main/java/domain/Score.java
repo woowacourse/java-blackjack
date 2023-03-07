@@ -4,7 +4,11 @@ import java.util.Objects;
 
 public class Score {
 
+    public static final Score MIN = new Score(0);
+
     private static final int UPPER_LIMIT_SCORE = 21;
+
+    private static final int REMAIN_SCORE_ACE = 10;
 
     private final int value;
 
@@ -43,6 +47,18 @@ public class Score {
 
     public boolean isGreaterThan(final Score other) {
         return value > other.value;
+    }
+
+    public Score plusTenIfNotBurst() {
+        if (value + REMAIN_SCORE_ACE <= UPPER_LIMIT_SCORE) {
+            return this.plus(new Score(10));
+        }
+
+        return this;
+    }
+
+    public Score plus(Score other) {
+        return new Score(value + other.value);
     }
 
     public int value() {
