@@ -48,6 +48,10 @@ public class BlackJackGame {
         return dealer().isDrawable();
     }
 
+    public Participants participants() {
+        return participants;
+    }
+
     public Dealer dealer() {
         return participants.getDealer();
     }

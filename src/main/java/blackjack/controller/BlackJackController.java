@@ -61,7 +61,7 @@ public class BlackJackController {
         drawCardForPlayers(blackJackGame);
         drawCardForDealer(blackJackGame);
 
-        printResult(participants);
+        printResult(blackJackGame);
     }
 
     private Participants gatherParticipants() {
@@ -110,14 +110,18 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(final Participants participants) {
+    private void printResult(final BlackJackGame blackJackGame) {
+        final Participants participants = blackJackGame.participants();
+        final Dealer dealer = blackJackGame.dealer();
+        final List<Player> players = blackJackGame.players();
+
         final List<ParticipantResponse> participantResponses = getParticipantResponses(participants.getParticipants());
         participantResponses.forEach(outputView::printHandedCardsWithScore);
 
-        final DealerResultResponse dealer = getDealerResultResponse(participants.getDealer(), participants.getPlayers());
-        final List<PlayerResultResponse> player = getPlayerResultResponses(participants.getDealer(), participants.getPlayers());
+        final DealerResultResponse dealerResultResponse = getDealerResultResponse(dealer, players);
+        final List<PlayerResultResponse> playerResultResponses = getPlayerResultResponses(dealer, players);
 
-        outputView.printResult(dealer, player);
+        outputView.printResult(dealerResultResponse, playerResultResponses);
     }
 
     private List<ParticipantResponse> getParticipantResponses(final List<Participant> participants) {
