@@ -29,20 +29,12 @@ public class OutputView {
 
     public void printPlayersInitCards(final List<Player> players) {
         for (Player player : players) {
-            String cards = player.getCards().stream()
-                    .map(Card::combineNumberAndPattern)
-                    .collect(joining(", "));
-
-            System.out.println(player.getName() + "카드: " + cards);
+            System.out.println(player.getName() + "카드: " + joiningCards(player.getCards()));
         }
     }
 
     public void printCurrentCards(final Player player) {
-        String cards = player.getCards().stream()
-                .map(Card::combineNumberAndPattern)
-                .collect(joining(", "));
-
-        System.out.println(player.getName() + "카드: " + cards);
+        System.out.println(player.getName() + "카드: " + joiningCards(player.getCards()));
     }
 
     public void printDealerDrawOneMoreCard() {
@@ -50,20 +42,14 @@ public class OutputView {
     }
 
     public void printDealerLastCards(final List<Card> finalCards, final int score) {
-        String cards = finalCards.stream()
-                .map(Card::combineNumberAndPattern)
-                .collect(joining(", "));
-
-        System.out.println("딜러 카드: " + cards + " - 결과: " + score);
+        System.out.println("딜러 카드: " + joiningCards(finalCards) + " - 결과: " + score);
     }
 
     public void printPlayerLastCards(final List<Player> players) {
         for (Player player : players) {
-            String cards = player.getCards().stream()
-                    .map(Card::combineNumberAndPattern)
-                    .collect(joining(", "));
-
-            System.out.println(player.getName() + "카드: " + cards + " - 결과: " + player.calculateTotalScore());
+            System.out.println(
+                    player.getName() + "카드: " + joiningCards(player.getCards())
+                            + " - 결과: " + player.calculateTotalScore());
         }
     }
 
@@ -80,5 +66,11 @@ public class OutputView {
         for (Player player : playerResults.keySet()) {
             System.out.println(player.getName() + ":" + playerResults.get(player));
         }
+    }
+
+    private String joiningCards(final List<Card> cards) {
+        return cards.stream()
+                .map(Card::combineNumberAndPattern)
+                .collect(joining(", "));
     }
 }
