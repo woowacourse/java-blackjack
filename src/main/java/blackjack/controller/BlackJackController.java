@@ -89,8 +89,8 @@ public class BlackJackController {
     private void drawCardForDealer(final BlackJackGame blackJackGame) {
         if (blackJackGame.isDealerDrawable()) {
             final Dealer dealer = blackJackGame.dealer();
-            blackJackGame.drawOrNot(true, dealer);
             outputView.printDealerCardDrawn(DealerStateResponse.from(dealer));
+            blackJackGame.drawOrNot(true, dealer);
         }
     }
 

@@ -17,10 +17,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String RESULT_FORMAT = "{0}: {1}";
-
-    public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players,
-                               final int count) {
+    public void printDealCards(final ParticipantResponse dealer, final List<ParticipantResponse> players, final int count) {
         System.out.println();
         System.out.println(format("{0}와 {1}에게 {2}장을 나누었습니다.",
                 dealer.getName(), getPlayerNamesFormat(players), count));
@@ -84,10 +81,10 @@ public class OutputView {
         Integer dealerDraw = resultMap.get(DRAW);
         Integer dealerLose = resultMap.get(LOSE);
 
-        System.out.println(format(RESULT_FORMAT + "{2}승 {3}무 {4}패", dealerName, dealerWin, dealerDraw, dealerLose));
+        System.out.println(format("{0}: {1}승 {2}무 {3}패", dealerName, dealerWin, dealerDraw, dealerLose));
     }
 
     private void printPlayerResult(final PlayerResultResponse player) {
-        System.out.println(format(RESULT_FORMAT, player.getName(), player.getResult().getName()));
+        System.out.println(format("{0}: {1}", player.getName(), player.getResult().getName()));
     }
 }
