@@ -13,8 +13,7 @@ public enum Message {
     CARD_DECK_INVALID_SIZE("전체 카드의 수는 52장이어야 합니다."),
     CARD_DECK_DUPLICATED("중복된 카드가 존재합니다."),
     COMMAND_NOT_PERMITTED("y혹은 n을 입력해주세요."),
-    BETTING_MONEY_NEED_MORE("배팅 금액은 최소 1000원입니다.")
-    ;
+    BETTING_MONEY_NEED_MORE("배팅 금액은 최소 1000원입니다.");
 
     private final String message;
 

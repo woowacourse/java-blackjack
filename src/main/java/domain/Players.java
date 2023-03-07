@@ -55,7 +55,7 @@ public class Players {
         boolean isValidate = players.stream()
                 .anyMatch(player -> player.getAccount() < MIN_BETTING_ACCOUNT);
 
-        if(isValidate) {
+        if (isValidate) {
             throw new IllegalArgumentException(Message.BETTING_MONEY_NEED_MORE.getMessage());
         }
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public class DrawnCards {
 
     private static final int GAP_OF_ACE_NUMBER = 10;
-    private static final int BURST_NUMBER = 21;
+    private static final int BUST_NUMBER = 21;
 
     private final List<Card> cards;
 
@@ -19,7 +19,7 @@ public class DrawnCards {
                 .mapToInt(Card::getScore)
                 .sum();
 
-        if (sum > BURST_NUMBER) {
+        if (sum > BUST_NUMBER) {
             sum = calculateAce(sum);
         }
 
@@ -31,7 +31,7 @@ public class DrawnCards {
                 .filter(Card::isAce)
                 .count();
 
-        while (countOfAce-- > 0 && sum > BURST_NUMBER) {
+        while (countOfAce-- > 0 && sum > BUST_NUMBER) {
             sum -= GAP_OF_ACE_NUMBER;
         }
         return sum;

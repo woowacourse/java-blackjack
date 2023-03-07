@@ -87,7 +87,7 @@ class BlackJackServiceTest {
 
     @Test
     @DisplayName("플레이어가 뽑은 수의 총합이 버스트 넘버 초과하면 false를 반환한다.")
-    void returns_false_when_player_cards_numbers_sum_over_burst() {
+    void returns_false_when_player_cards_numbers_sum_over_bust() {
         // given
         Card card1 = new Card(Type.CLUB, Value.EIGHT);
         Card card2 = new Card(Type.SPADE, Value.EIGHT);
@@ -126,7 +126,7 @@ class BlackJackServiceTest {
 
     @Test
     @DisplayName("플레이어가 카드를 더 뽑고 싶어하고, 플레이어의 카드 총 합이 버스트 넘버를 초과하지 않는다면 true를 반환한다.")
-    void returns_true_when_player_want_more_card_and_not_burst() {
+    void returns_true_when_player_want_more_card_and_not_bust() {
         // given
         Card card1 = new Card(Type.CLUB, Value.EIGHT);
         Card card2 = new Card(Type.SPADE, Value.EIGHT);
