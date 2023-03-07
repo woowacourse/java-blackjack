@@ -30,5 +30,4 @@ public class RandomCardGenerator implements CardGenerator {
     public Card generate() {
         return cards.poll();
     }
-
 }

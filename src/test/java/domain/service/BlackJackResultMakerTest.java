@@ -27,6 +27,8 @@ class BlackJackResultMakerTest {
         .mapToObj(i -> new Player(playerCards, "test"))
         .collect(Collectors.toList());
 
+
+
     @Test
     @DisplayName("플레이어들 승패 결과 만들기 테스트(플레이어 모두 승)")
     public void testMakeParticipantsResult() {
@@ -35,10 +37,10 @@ class BlackJackResultMakerTest {
         Map<Player, Result> results = blackJackResultMaker.makePlayersResult(dealer, players);
 
         //then
-        for (Player player : results.keySet()) {
+        results.keySet().forEach(player -> {
             assertThat(results.get(player).getVictory()).isEqualTo(1);
             assertThat(results.get(player).getDefeat()).isEqualTo(0);
-        }
+        });
     }
 
     @Test

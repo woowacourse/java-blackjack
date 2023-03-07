@@ -13,18 +13,18 @@ public class BlackJackResultMaker {
 
     public Map<Player, Result> makePlayersResult(final Dealer dealer, final List<Player> players) {
         return players.stream()
-            .collect(Collectors.toMap(player -> player,
-                player -> decide(player.getScore(), dealer.getScore()), (a, b) -> b, LinkedHashMap::new));
+            .collect(Collectors.toMap(player -> player, player -> decide(player.getScore(), dealer.getScore()),
+                (a, b) -> b, LinkedHashMap::new));
     }
 
     private Result decide(final Score score, final Score comparedScore) {
         if (isVictory(score, comparedScore)) {
             return new Result(1, 0, 0);
         }
-        if (isDraw(score, comparedScore)) {
-            return new Result(0, 1, 0);
+        if (isDefeat(score, comparedScore)) {
+            return new Result(0, 0, 1);
         }
-        return new Result(0, 0, 1);
+        return new Result(0, 1, 0);
     }
 
     private boolean isVictory(final Score score, final Score comparedScore) {
@@ -32,9 +32,9 @@ public class BlackJackResultMaker {
             && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
     }
 
-    private boolean isDraw(final Score score, final Score comparedScore) {
+    private boolean isDefeat(final Score score, final Score comparedScore) {
         return score.isBust()
-            && comparedScore.isBust() || score.getValue() == comparedScore.getValue();
+            && comparedScore.isBust() || score.getValue() < comparedScore.getValue();
     }
 
     public Result makeDealerResult(final Dealer dealer, final List<Player> players) {
@@ -51,14 +51,14 @@ public class BlackJackResultMaker {
     }
 
     private void addResult(final Score score, final Score comparedScore, final Result result) {
-        if (isDraw(score, comparedScore)) {
-            result.addDraw();
-            return;
-        }
         if (isVictory(score, comparedScore)) {
             result.addVictory();
             return;
         }
-        result.addDefeat();
+        if (isDefeat(score, comparedScore)) {
+            result.addDefeat();
+            return;
+        }
+        result.addDraw();
     }
 }
