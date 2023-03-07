@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.AceCard;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.card.StandardCard;
 import blackjack.domain.participant.Dealer;
@@ -9,6 +8,7 @@ import blackjack.strategy.RandomCardPicker;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,19 +57,30 @@ class BlackJackGameTest {
     }
 
     @Test
-    void isConitnueToHit() {
+    void isContinueToHit() {
         assertThat(blackJackGame.isContinueToHit(16)).isTrue();
     }
 
     @Test
-    void getResult() {
+    void getPlayersResult() {
         Players players = new Players("a,b");
         Dealer dealer = new Dealer();
         dealer.hit(new StandardCard(Pattern.CLUB, "9"));
         players.getPlayers().forEach(player -> player.hit(new StandardCard(Pattern.SPADE, "10")));
 
-        List<Result> result = blackJackGame.getResult(dealer, players);
+        List<Result> result = blackJackGame.getPlayersResult(dealer, players);
 
         assertThat(result).isEqualTo(List.of(Result.WIN, Result.WIN));
+    }
+
+    @Test
+    void getDealerResult() {
+        List<Result> results = List.of(Result.WIN, Result.WIN, Result.LOSE, Result.DRAW);
+
+        Map<String, Long> dealerResult = blackJackGame.getDealerResult(results);
+
+        assertThat(dealerResult.get(Result.WIN.getResult())).isEqualTo(2);
+        assertThat(dealerResult.get(Result.LOSE.getResult())).isEqualTo(1);
+        assertThat(dealerResult.get(Result.DRAW.getResult())).isEqualTo(1);
     }
 }
