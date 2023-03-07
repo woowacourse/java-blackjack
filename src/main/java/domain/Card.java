@@ -3,16 +3,32 @@ package domain;
 import type.Letter;
 import type.Shape;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Card {
 
+    private static final Map<Shape, Map<Letter, Card>> cardFactory = new HashMap<>();
+
     private final Shape shape;
     private final Letter letter;
 
-    public Card(Shape shape, Letter letter) {
+    private Card(Shape shape, Letter letter) {
         this.shape = shape;
         this.letter = letter;
+    }
+
+    public static Card of(Shape shape, Letter letter) {
+        return cardFactory.computeIfAbsent(shape,
+                ignored -> createMapAndPutCardIfAbsent(shape, letter))
+                .computeIfAbsent(letter, ignored -> new Card(shape, letter));
+    }
+
+    private static Map<Letter, Card> createMapAndPutCardIfAbsent(Shape shape, Letter letter) {
+        Map<Letter, Card> cardMapper = new HashMap<>();
+        cardMapper.put(letter, new Card(shape, letter));
+        return cardMapper;
     }
 
     public String getShapeName() {
@@ -54,4 +70,5 @@ public class Card {
                 ", letter=" + letter +
                 '}';
     }
+
 }

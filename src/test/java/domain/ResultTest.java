@@ -21,8 +21,8 @@ public class ResultTest {
 
     @BeforeEach
     void setUp() {
-        cards.add(new Card(Shape.CLOVER, Letter.JACK));
-        cards.add(new Card(Shape.HEART, Letter.EIGHT));
+        cards.add(Card.of(Shape.CLOVER, Letter.JACK));
+        cards.add(Card.of(Shape.HEART, Letter.EIGHT));
         dealer = new Dealer(new Cards(cards));
         names = List.of("aa");
     }
@@ -30,8 +30,8 @@ public class ResultTest {
     @Test
     @DisplayName("플레이어와 딜러가 모두 버스트인 경우를 확인한다.")
     void calculateGameResultWhenAllBust() {
-        dealer.pick(new Card(Shape.HEART, Letter.NINE));
-        players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.JACK))));
+        dealer.pick(Card.of(Shape.HEART, Letter.NINE));
+        players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
         makePlayersBust();
 
         Result result = new Result(dealer, players);
@@ -43,7 +43,7 @@ public class ResultTest {
     @Test
     @DisplayName("플레이어가 게임에서 비기는 경우를 확인한다.")
     void calculateGameResultWhenPlayerDraw() {
-        players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.NINE))));
+        players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.NINE))));
 
         Result result = new Result(dealer, players);
         Map<Name, GameResult> gameResult = result.getResult();
@@ -54,8 +54,8 @@ public class ResultTest {
     @Test
     @DisplayName("딜러만 버스트인 경우를 확인한다.")
     void calculateGameResultWhenDealerBust() {
-        players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.JACK))));
-        dealer.pick(new Card(Shape.HEART, Letter.QUEEN));
+        players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
+        dealer.pick(Card.of(Shape.HEART, Letter.QUEEN));
 
         Result result = new Result(dealer, players);
         Map<Name, GameResult> gameResult = result.getResult();
@@ -66,7 +66,7 @@ public class ResultTest {
     @Test
     @DisplayName("둘 다 버스트가 아니고 플레이어가 게임에서 이기는 경우를 확인한다.")
     void calculateGameResultWhenPlayerWin() {
-        players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.JACK))));
+        players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.JACK))));
 
         Result result = new Result(dealer, players);
         Map<Name, GameResult> gameResult = result.getResult();
@@ -77,7 +77,7 @@ public class ResultTest {
     @Test
     @DisplayName("플레이어만 버스트인 경우를 확인한다.")
     void calculateGameResultPlayerBust() {
-        players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.NINE))));
+        players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.NINE))));
         makePlayersBust();
         Result result = new Result(dealer, players);
 
@@ -89,7 +89,7 @@ public class ResultTest {
     @Test
     @DisplayName("둘 다 버스트가 아니고 플레이어가 게임에서 지는 경우를 확인한다.")
     void calculateGameResultWhenPlayerLose() {
-        players = Players.of(names, new CardDistributor(generateCardsForTest(new Card(Shape.HEART, Letter.TWO))));
+        players = Players.of(names, new CardDistributor(generateCardsForTest(Card.of(Shape.HEART, Letter.TWO))));
         Result result = new Result(dealer, players);
 
         Map<Name, GameResult> gameResult = result.getResult();
@@ -110,7 +110,7 @@ public class ResultTest {
     private void makePlayersBust() {
         players.getPlayers()
                 .get(0)
-                .pick(new Card(Shape.HEART, Letter.KING));
+                .pick(Card.of(Shape.HEART, Letter.KING));
     }
 
 }

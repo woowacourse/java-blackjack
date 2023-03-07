@@ -18,7 +18,7 @@ public class CardsMaker {
 
         for (Shape shape : Shape.values()) {
             Arrays.stream(Letter.values())
-                    .forEach(value -> cards.add(new Card(shape, value)));
+                    .forEach(value -> cards.add(Card.of(shape, value)));
         }
     }
 
