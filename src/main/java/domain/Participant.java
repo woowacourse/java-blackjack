@@ -8,7 +8,7 @@ public abstract class Participant {
     private static final int BUST_LIMIT = 21;
 
     protected final PlayerName playerName;
-    protected final Cards cards = new Cards();
+    protected final Cards cards = Cards.getDefault();
 
     public Participant(PlayerName playerName) {
         this.playerName = playerName;
@@ -37,7 +37,7 @@ public abstract class Participant {
         return calculateBlackjackScore() > BUST_LIMIT;
     }
 
-    public Result competeWith(Participant player) {
+    public Result competeWith(Participant player) { // TODO: 2023/03/07 Score로 분리
         if (player.isBusted()) {
             return Result.WIN;
         }

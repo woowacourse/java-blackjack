@@ -1,13 +1,20 @@
 package domain;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
     private final List<Card> cards;
 
-    public Cards() {
-        this.cards = new ArrayList<>();
+    private Cards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static Cards getDefault() {
+        List<Card> emptyCards = new ArrayList<>();
+        return new Cards(emptyCards);
     }
 
     public void add(Card card) {
