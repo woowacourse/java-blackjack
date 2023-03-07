@@ -11,10 +11,10 @@ public class OutputView {
     private static final String JOINING_DELIMITER = ", ";
     private static final String NAME_AND_VALUE_DELIMITER = ": ";
     private static final String CARD_NOTICE = "카드: ";
-    private static final String GIVE_TWO_CARDS_NOTICE = "딜러와 %s에게 2장을 나누었습니다.\n";
-    private static final String ACCEPTED_ADD_CARD_TO_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String DECLINED_ADD_CARD_TO_DEALER = "딜러는 16초과라 카드를 받지 않았습니다.";
-    private static final String FINAL_RESULT_NOTICE = "## 최종 승패";
+    private static final String GIVE_TWO_CARDS_NOTICE = "\n딜러와 %s에게 2장을 나누었습니다.\n";
+    private static final String ACCEPTED_ADD_CARD_TO_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DECLINED_ADD_CARD_TO_DEALER = "\n딜러는 16초과라 카드를 받지 않았습니다.\n";
+    private static final String FINAL_RESULT_NOTICE = "\n## 최종 승패";
     private static final String DEALER_NOTICE = "딜러: ";
     private static final String RESULT_NOTICE = " - 결과: ";
 
