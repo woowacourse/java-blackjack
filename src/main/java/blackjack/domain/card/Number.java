@@ -1,9 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public enum Number {
     ACE(1, "A"),
     TWO(2, "2"),
@@ -29,13 +25,6 @@ public enum Number {
 
     public static int scoreOf(final Number number) {
         return number.score;
-    }
-
-    public static Number pickRandom() {
-        List<Number> numbers = Arrays.asList(Number.values());
-        Collections.shuffle(numbers);
-
-        return numbers.get(0);
     }
 
     public String getState() {
