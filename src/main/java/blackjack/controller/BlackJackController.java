@@ -1,11 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -18,24 +15,11 @@ import blackjack.view.dto.ParticipantResponse;
 import blackjack.view.dto.PlayerResultResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
 
     private static final int INIT_DRAW_COUNT = 2;
-    private static final int DEALER_LIMIT = 16;
-    private static final Stack<Card> TRUMP;
-
-    static {
-        final Stack<Card> pack = new Stack<>();
-        for (final Suit suit : Suit.values()) {
-            for (final Number number : Number.values()) {
-                pack.add(new Card(number, suit));
-            }
-        }
-        TRUMP = pack;
-    }
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -47,7 +31,7 @@ public class BlackJackController {
 
     public void run() {
         final Participants participants = gatherParticipants();
-        final Deck deck = DeckFactory.createWithCount(TRUMP, 1);
+        final Deck deck = DeckFactory.createWithCount(1);
 
         final BlackJackGame blackJackGame = startBlackJackGame(participants, deck);
 
