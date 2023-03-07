@@ -15,10 +15,6 @@ public class Player {
         cards.add(card);
     }
 
-    public Card getCard(int index) {
-        return cards.getCard(index);
-    }
-
     public boolean isOverBlackJack() {
         return cards.isOverBlackJack();
     }

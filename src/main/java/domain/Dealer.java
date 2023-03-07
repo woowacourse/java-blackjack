@@ -28,10 +28,6 @@ public class Dealer {
         return info;
     }
 
-    public Card getCard(int index) {
-        return player.getCard(index);
-    }
-
     public List<Card> getCards() {
         return player.getCards();
     }
