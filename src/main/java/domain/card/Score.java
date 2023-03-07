@@ -29,7 +29,11 @@ public final class Score {
     public boolean isGreaterThan(final Score other) {
         return other.score < this.score;
     }
-    
+
+    public boolean isGreaterThanAndEqual(final Score other) {
+        return other.score <= this.score;
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) {

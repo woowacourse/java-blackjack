@@ -69,4 +69,18 @@ class ScoreTest {
         assertThat(actual)
                 .isEqualTo(expected);
     }
+
+    @ParameterizedTest(name = "isGreaterThanAndEqual()는 호출하면, 인자로 넘긴 점수와 비교해 크거나 같은지 판단한다.")
+    @CsvSource(value = {"3:true", "10:true", "12:false"}, delimiter = ':')
+    void isGreaterThanAndEqual_givenScore_thenReturnCompareResult(final int scoreValue, final boolean expected) {
+        // given
+        Score otherScore = Score.create(scoreValue);
+
+        // when
+        boolean actual = score.isGreaterThanAndEqual(otherScore);
+
+        // then
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
 }
