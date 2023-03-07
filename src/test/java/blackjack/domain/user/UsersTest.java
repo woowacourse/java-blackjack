@@ -132,7 +132,7 @@ class UsersTest {
     void getWinningResultTest() {
         final Users users = new Users(List.of("필립", "홍실"), new Deck(new TestDeckGenerator(testCards)));
 
-        Map<String, WinningStatus> winningResult = users.getWinningResult();
+        Map<String, WinningStatus> winningResult = users.getPlayersWinningResults();
 
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.LOSE);

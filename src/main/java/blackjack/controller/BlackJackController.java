@@ -84,7 +84,7 @@ public class BlackJackController {
     }
 
     private void printWinningResult(BlackJackGame blackJackGame) {
-        Map<String, WinningStatus> winningResult = blackJackGame.getWinningResult();
+        final Map<String, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
         outputView.printWinningResult(ViewRenderer.renderWinningResult(winningResult));
     }
 }

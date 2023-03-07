@@ -48,7 +48,7 @@ public class Users {
         dealer.drawCard(deck);
     }
 
-    public Map<String, WinningStatus> getWinningResult() {
+    public Map<String, WinningStatus> getPlayersWinningResults() {
         return players.getWinningResult(dealer);
     }
 

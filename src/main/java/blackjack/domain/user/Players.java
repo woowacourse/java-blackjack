@@ -50,10 +50,10 @@ public class Players {
     }
 
     public Map<String, WinningStatus> getWinningResult(final Dealer dealer) {
-        return players.stream()
-                .collect(Collectors.toUnmodifiableMap(
-                        Player::getName,
-                        player -> player.calculatePlayerWinningStatus(dealer)));
+        final Map<String, WinningStatus> playerWinningResult = new LinkedHashMap<>();
+        players.forEach(
+                player -> playerWinningResult.put(player.getName(), player.calculatePlayerWinningStatus(dealer)));
+        return Collections.unmodifiableMap(playerWinningResult);
     }
 
     public boolean isPlayerBust(final String name) {

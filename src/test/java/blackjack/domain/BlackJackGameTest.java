@@ -143,7 +143,7 @@ class BlackJackGameTest {
     void getWinningResultTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"), new TestDeckGenerator(testCards));
 
-        Map<String, WinningStatus> winningResult = blackJackGame.getWinningResult();
+        Map<String, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
 
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.LOSE);
