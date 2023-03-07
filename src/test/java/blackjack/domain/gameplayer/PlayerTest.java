@@ -43,7 +43,7 @@ class PlayerTest {
         tori.addCard(card3);
 
         // when, then
-        assertThat(tori.isHit()).isFalse();
+        assertThat(tori.canContinue()).isFalse();
 
     }
 
@@ -60,7 +60,7 @@ class PlayerTest {
         tori.addCard(card2);
 
         // when, then
-        assertThat(tori.isHit()).isTrue();
+        assertThat(tori.canContinue()).isTrue();
     }
 
     @DisplayName("플레이어가 가진 카드의 점수 합을 구할 수 있다.")

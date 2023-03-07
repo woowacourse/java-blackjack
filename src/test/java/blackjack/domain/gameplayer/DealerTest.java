@@ -109,7 +109,7 @@ class DealerTest {
         dealer.addCard(card2);
 
         // when, then
-        assertThat(dealer.isHit()).isFalse();
+        assertThat(dealer.canContinue()).isFalse();
     }
 
     @DisplayName("딜러는 카드의 합이 17을 초과하지 않는다면 카드를 지급 받을 수 있다.")
@@ -125,6 +125,6 @@ class DealerTest {
         dealer.addCard(card2);
 
         // when, then
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.canContinue()).isTrue();
     }
 }

@@ -11,7 +11,7 @@ public interface Person {
 
     List<Card> showCards();
 
-    boolean isHit();
+    boolean canContinue();
 
     Score calculateScore();
 }

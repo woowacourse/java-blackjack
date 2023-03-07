@@ -100,7 +100,7 @@ public class BlackJackGameController {
 
     private boolean isCheckPlayerCommand(Player player) {
         try {
-            return player.isHit() && isCommandHit(player);
+            return player.canContinue() && isCommandHit(player);
         } catch (IllegalArgumentException exception) {
             System.out.println("[ERROR] " + exception.getMessage());
             return isCheckPlayerCommand(player);

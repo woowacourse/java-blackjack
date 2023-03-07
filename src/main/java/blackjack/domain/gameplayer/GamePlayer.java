@@ -20,7 +20,7 @@ public class GamePlayer {
     }
 
     public boolean isHitDealer() {
-        return dealer.isHit();
+        return dealer.canContinue();
     }
 
     public Dealer getDealer() {
