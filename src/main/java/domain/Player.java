@@ -17,6 +17,11 @@ public abstract class Player {
         hand.add(card);
     }
 
+    public void drawCardFrom(Deck deck) {
+        Card drawnCard = deck.draw();
+        hand.add(drawnCard);
+    }
+
     public int getScore() {
         return hand.score();
     }

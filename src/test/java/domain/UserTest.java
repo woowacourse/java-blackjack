@@ -1,4 +1,5 @@
 package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -23,5 +24,16 @@ class UserTest extends AbstractTestFixture {
         var user = new User("조이", createCards("K", lastLetter));
 
         assertThat(user.canHit()).isEqualTo(canHit);
+    }
+
+    @Test
+    @DisplayName("덱에서 카드를 뽑을 수 있다")
+    void test_draw_from_deck() {
+        var deck = new Deck();
+        var user = new User("땡칠");
+
+        user.drawCardFrom(deck);
+
+        assertThat(user.getCards()).hasSize(1);
     }
 }
