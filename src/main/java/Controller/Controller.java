@@ -13,46 +13,45 @@ import domain.Users;
 
 public class Controller {
 
-	private BlackJack blackJack;
-
 	public void run() {
-		ready();
-		play();
-		end();
+		BlackJack blackJack = ready();
+		play(blackJack);
+		end(blackJack);
 	}
 
-	private void ready() {
+	private BlackJack ready() {
 		List<String> playerNames = askPlayerNames();
 		Deck deck = new Deck(new RandomShuffleStrategy());
 		Users players = Users.from(playerNames, deck);
-		blackJack = new BlackJack(players, deck);
+		BlackJack blackJack = new BlackJack(players, deck);
 		printInitMessage(players);
 		printDealerCardHidden(blackJack.getDealerCardHidden());
 		printPlayerCards(blackJack.getPlayerToCard());
+		return blackJack;
 	}
 
-	private void play() {
+	private void play(final BlackJack blackJack) {
 		for (Player player : blackJack.getPlayers()) {
-			askPlayerHit(player);
+			askPlayerHit(player, blackJack);
 		}
-		giveCardToDealer();
+		giveCardToDealer(blackJack);
 	}
 
-	private void askPlayerHit(final Player player) {
+	private void askPlayerHit(final Player player, final BlackJack blackJack) {
 		while (player.isHittable() && askIfHit(player)) {
 			blackJack.giveCard(player);
 			printEachPlayerCards(player.getName(), player.getCardNames());
 		}
 	}
 
-	private void giveCardToDealer() {
+	private void giveCardToDealer(final BlackJack blackJack) {
 		while (blackJack.isDealerHittable()) {
 			blackJack.giveCardToDealer();
 			printDealerHitMessage();
 		}
 	}
 
-	private void end() {
+	private void end(final BlackJack blackJack) {
 		printDealerCards(blackJack.getDealerCards(), blackJack.getDealerScore());
 		printPlayerCards(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
 		printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
