@@ -1,9 +1,8 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
-
-import blackjack.domain.card.Card;
 
 public class Hand {
     public static final int FIRST_CARD_INDEX = 0;

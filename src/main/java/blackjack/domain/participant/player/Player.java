@@ -5,8 +5,8 @@ import static blackjack.controller.AddCardOrNot.NO;
 import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.WinningResult;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 
 public class Player extends Participant {

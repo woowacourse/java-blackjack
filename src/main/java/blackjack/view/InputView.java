@@ -1,9 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Name;
 import java.util.List;
 import java.util.Scanner;
-
-import blackjack.domain.participant.Name;
 
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);

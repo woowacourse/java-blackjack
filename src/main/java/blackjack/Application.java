@@ -1,10 +1,10 @@
 package blackjack;
 
-import blackjack.domain.game.BlackjackGame;
 import blackjack.controller.Controller;
 import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.ShuffledCardsGenerator;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.player.Players;
 import blackjack.view.InputView;

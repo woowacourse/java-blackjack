@@ -1,10 +1,9 @@
 package blackjack.domain.deck;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-import blackjack.domain.card.Card;
 
 public class Deck {
     private final Stack<Card> cards;

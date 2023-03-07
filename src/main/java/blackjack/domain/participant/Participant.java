@@ -4,10 +4,9 @@ import static blackjack.domain.game.WinningResult.LOSE;
 import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.game.WinningResult;
 import java.util.List;
-
-import blackjack.domain.card.Card;
 
 public abstract class Participant {
     public static final int BLACK_JACK_NUMBER = 21;

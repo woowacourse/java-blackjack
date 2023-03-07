@@ -1,8 +1,7 @@
 package blackjack.domain.participant;
 
-import java.util.List;
-
 import blackjack.domain.card.Card;
+import java.util.List;
 
 public class ParticipantCardsDto {
     private final Name name;

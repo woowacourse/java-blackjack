@@ -1,12 +1,11 @@
 package blackjack.domain.participant.dealer;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import java.util.Map;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.participant.Hand;
 
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
