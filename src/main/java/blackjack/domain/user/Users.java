@@ -1,5 +1,9 @@
 package blackjack.domain.user;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.CardResult;
@@ -24,7 +28,6 @@ public class Users {
         usersFirstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
         final Map<String, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
         usersFirstOpenCardGroups.putAll(playerFirstOpenCardGroups);
-        System.out.println(usersFirstOpenCardGroups);
         return Collections.unmodifiableMap(usersFirstOpenCardGroups);
     }
 
@@ -50,6 +53,14 @@ public class Users {
 
     public Map<String, WinningStatus> getPlayersWinningResults() {
         return players.getWinningResult(dealer);
+    }
+
+    public Map<WinningStatus, Long> getDealersWinningResults() {
+        return getPlayersWinningResults()
+                .values()
+                .stream()
+                .collect(collectingAndThen(groupingBy(WinningStatus::opposite, counting()),
+                        Collections::unmodifiableMap));
     }
 
     public boolean isPlayerBust(final String name) {
