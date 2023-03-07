@@ -26,7 +26,7 @@ public abstract class Participant {
 
     public boolean hasAceCard() {
         return receivedCards.stream()
-                .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+                .anyMatch(card -> card.getCardNumber().isAce());
     }
 
     public int calculateCardNumberAceCardValueOne() {
