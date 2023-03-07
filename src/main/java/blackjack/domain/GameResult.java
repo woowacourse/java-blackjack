@@ -8,9 +8,7 @@ import java.util.Map;
 
 public class GameResult {
     private static final int BURST_NUMBER = 21;
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
-    private static final String DRAW = "무";
+
     private final Map<Result, Integer> dealerResult;
     private final Map<String, Result> playerResult;
 
@@ -29,23 +27,6 @@ public class GameResult {
         return dealerResult;
     }
 
-    private static String getPlayerWinWhenDealerLessThan21(int dealerScore, int playerScore) {
-        if (playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore < dealerScore) {
-            return LOSE;
-        }
-        return DRAW;
-    }
-
-    private static String getPlayerWinWhenDealerOverThan21(int playerScore) {
-        if (playerScore <= BURST_NUMBER) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
     private void accumulationResult(Game game) {
         int dealerScore = game.getDealerScore();
 
@@ -56,16 +37,6 @@ public class GameResult {
             playerResult.put(player.showName(), playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
         }
-    }
-
-    private String getPlayerWin(int dealerScore, int playerScore) {
-        if (dealerScore > BURST_NUMBER) {
-            return getPlayerWinWhenDealerOverThan21(playerScore);
-        }
-        if (playerScore <= BURST_NUMBER) {
-            return getPlayerWinWhenDealerLessThan21(dealerScore, playerScore);
-        }
-        return LOSE;
     }
 
     public Map<Result, Integer> getDealerResult() {
