@@ -13,7 +13,6 @@ public class Users {
     private static final String NOT_CONTAIN_USER_BY_NAME = "해당 이름의 유저를 찾을 수 없습니다.";
     private static final String PLAYER_NAMES_IS_EMPTY = "쉼표만 입력할 수 없습니다.";
     private static final String NUMBER_OF_PLAYER_OVER_LIMIT = "플레이어의 이름은 5개까지만 입력해야 합니다.";
-    private static final int DEALER_DRAW_LIMIT = 16;
     private static final int NUMBER_OF_PLAYER_LIMIT = 5;
 
     private Dealer dealer;
@@ -21,9 +20,9 @@ public class Users {
 
     public Users(final List<String> playerNames, final Deck deck) {
         validatePlayerNames(playerNames);
-        dealer = new Dealer(initCardGroup(deck));
+        dealer = new Dealer(deck.drawFirstCardGroup());
         this.players = playerNames.stream()
-                .map(name -> new Player(name, initCardGroup(deck)))
+                .map(name -> new Player(name, deck.drawFirstCardGroup()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -34,10 +33,6 @@ public class Users {
         if (playerNames.size() > NUMBER_OF_PLAYER_LIMIT) {
             throw new IllegalArgumentException(NUMBER_OF_PLAYER_OVER_LIMIT);
         }
-    }
-
-    private CardGroup initCardGroup(final Deck deck) {
-        return new CardGroup(deck.draw(), deck.draw());
     }
 
     public Map<String, CardGroup> getFirstOpenCardGroups() {
