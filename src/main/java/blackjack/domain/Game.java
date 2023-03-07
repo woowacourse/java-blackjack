@@ -26,8 +26,8 @@ public class Game {
 
     private void initPlayerCards() {
         for (Player player : gamePlayer.getPlayers()) {
-            player.addCard(deck.draw());
-            player.addCard(deck.draw());
+            giveCardTo(player);
+            giveCardTo(player);
         }
     }
 
