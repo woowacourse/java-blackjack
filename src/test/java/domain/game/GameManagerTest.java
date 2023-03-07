@@ -27,6 +27,15 @@ class GameManagerTest {
     }
 
     @Test
+    @DisplayName("giveStartCards()는 호출하면 모든 참가자들에게 카드를 2장씩 건네준다")
+    void giveCards_whenCall_thenSuccess() {
+        final GameManager gameManager = GameManager.create(deck, participants);
+
+        assertThatCode(gameManager::giveStartCards)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
     @DisplayName("giveCards()는 참가자의 순서를 받으면, 카드를 건네준다")
     void giveCards_givenParticipantOrder_thenSuccess() {
         final GameManager gameManager = GameManager.create(deck, participants);

@@ -17,7 +17,6 @@ import java.util.Map;
 
 public final class GameController {
 
-    private static final int START_GIVEN_COUNT = 2;
     private static final int PARTICIPANT_GIVEN_COUNT = 1;
     private static final int PLAYER_ORDER_OFFSET = 1;
     private static final int DEALER_ORDER = 0;
@@ -49,11 +48,7 @@ public final class GameController {
     }
 
     private void startGame(final Participants participants, final GameManager gameManager) {
-        final int size = participants.size();
-
-        for (int participantOrder = 0; participantOrder < size; participantOrder++) {
-            gameManager.giveCards(participantOrder, START_GIVEN_COUNT);
-        }
+        gameManager.giveStartCards();
         printParticipantCards(participants);
     }
 
