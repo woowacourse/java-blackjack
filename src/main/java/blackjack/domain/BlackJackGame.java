@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import blackjack.strategy.CardPicker;
 
 public class BlackJackGame {
@@ -19,5 +20,9 @@ public class BlackJackGame {
 
     public void hit(Participant participant, CardPicker cardPicker) {
         participant.hit(cardPool.draw(cardPicker));
+    }
+
+    public int calculateScore(Participant participant) {
+        return participant.calculateScore();
     }
 }

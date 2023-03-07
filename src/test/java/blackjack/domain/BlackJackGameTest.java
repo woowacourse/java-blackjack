@@ -1,11 +1,14 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Pattern;
+import blackjack.domain.card.StandardCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.RandomCardPicker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackGameTest {
@@ -19,7 +22,7 @@ class BlackJackGameTest {
 
         blackJackGame.initHit(players, dealer, new RandomCardPicker());
         players.getPlayers().stream().allMatch(player -> player.getCardDeck().getCardCount() == 2);
-        Assertions.assertThat(dealer.getCardDeck().getCardCount()).isEqualTo(2);
+        assertThat(dealer.getCardDeck().getCardCount()).isEqualTo(2);
     }
 
     @Test
@@ -28,6 +31,17 @@ class BlackJackGameTest {
 
         blackJackGame.hit(player, new RandomCardPicker());
 
-        Assertions.assertThat(player.getCardDeck().getCardCount()).isEqualTo(1);
+        assertThat(player.getCardDeck().getCardCount()).isEqualTo(1);
+    }
+
+    @Test
+    void calculateScore() {
+        Player player = new Player("a");
+        assertThat(blackJackGame.calculateScore(player)).isEqualTo(0);
+        player.hit(new StandardCard(Pattern.CLUB, "10"));
+
+        int score = blackJackGame.calculateScore(player);
+
+        assertThat(score).isEqualTo(10);
     }
 }
