@@ -16,12 +16,14 @@ public class Participant {
         this.card = ParticipantCard.create();
     }
 
-    public final void addCard(final Card card) {
-        this.card.addCard(card);
+    public static Dealer createDealer() {
+        return Dealer.create();
     }
 
-    public final List<Card> getCard() {
-        return List.copyOf(card.getCards());
+    public final void addCard(final Card... cards) {
+        for (Card card : cards) {
+            this.card.addCard(card);
+        }
     }
 
     public final int calculateScore() {
@@ -38,5 +40,9 @@ public class Participant {
 
     public final String getName() {
         return name.getName();
+    }
+
+    public final List<Card> getCard() {
+        return List.copyOf(card.getCards());
     }
 }

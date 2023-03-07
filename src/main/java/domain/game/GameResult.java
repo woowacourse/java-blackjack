@@ -1,14 +1,15 @@
 package domain.game;
 
+import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.Player;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GameResult {
+public final class GameResult {
 
     private final Map<Participant, Result> gameResults;
 
@@ -16,9 +17,7 @@ public class GameResult {
         this.gameResults = gameResults;
     }
 
-    public static GameResult create(final Participants participants) {
-        final Participant dealer = participants.getDealer();
-        final List<Participant> players = participants.getPlayer();
+    public static GameResult create(final Dealer dealer, final List<Player> players) {
         final Map<Participant, Result> gameResults = makeGameResults(dealer, players);
         return new GameResult(gameResults);
     }
@@ -29,7 +28,7 @@ public class GameResult {
                         (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 
-    private static Map<Participant, Result> makeGameResults(final Participant dealer, final List<Participant> players) {
+    private static Map<Participant, Result> makeGameResults(final Participant dealer, final List<Player> players) {
         Map<Participant, Result> gameResults = new LinkedHashMap<>();
         for (Participant player : players) {
             Result playerResult = calculateResult(dealer, player);

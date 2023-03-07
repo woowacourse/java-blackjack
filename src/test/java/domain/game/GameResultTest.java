@@ -1,6 +1,8 @@
 package domain.game;
 
-import domain.participant.Participants;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +18,12 @@ class GameResultTest {
     void create_givenParticipants_thenSuccess() {
         // given
         final List<String> playerName = List.of("a", "b", "c");
-        final Participants participants = Participants.create(playerName);
+        final Players players = Players.create(playerName);
+        final Dealer dealer = Participant.createDealer();
 
         // when, then
         final GameResult gameResult = assertDoesNotThrow(() ->
-                GameResult.create(participants));
+                GameResult.create(dealer, players.getPlayers()));
 
         assertThat(gameResult)
                 .isExactlyInstanceOf(GameResult.class);

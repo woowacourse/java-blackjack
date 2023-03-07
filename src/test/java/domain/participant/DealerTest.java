@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class DealerTest {
 
@@ -23,14 +22,6 @@ class DealerTest {
     void init() {
         card = Card.create(CardPattern.HEART, CardNumber.ACE);
         dealer = Dealer.create();
-    }
-
-    @Test
-    @DisplayName("create()는 호출하면, 딜러를 생성한다")
-    void create_whenCall_thenSuccess() {
-        final Dealer dealer = assertDoesNotThrow(Dealer::create);
-        assertThat(dealer)
-                .isExactlyInstanceOf(Dealer.class);
     }
 
     @Test

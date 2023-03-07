@@ -10,7 +10,7 @@ public final class Dealer extends Participant {
         super(name);
     }
 
-    public static Dealer create() {
+    static Dealer create() {
         return new Dealer(DEALER_NAME.getName());
     }
 

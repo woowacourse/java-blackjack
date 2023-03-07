@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.game.Result;
-import domain.participant.Participants;
+import domain.participant.Participant;
 import view.message.GameResultMessage;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
@@ -21,19 +21,17 @@ import static view.message.Message.FINAL_GAME_RESULT;
 import static view.message.Message.PARTICIPANT_CARD_RESULT;
 import static view.message.Message.PLAYER_GAME_RESULT;
 
-public class OutputView {
+public final class OutputView {
 
     public static void print(final String message) {
         System.out.println(message);
     }
 
-    public void printParticipantMessage(final Participants participants) {
-        final List<String> participantNames = participants.getParticipantNames();
-        final String participantNamesMessage = String.join(", ", participantNames)
-                .replace(",", "와");
-        final String participantNameMessage = String.format(System.lineSeparator() + DRAW_MESSAGE.getMessage(),
-                participantNamesMessage);
-        print(participantNameMessage);
+    public void printParticipantMessage(final List<Participant> participants) {
+        final String participantNamesMessage = makeParticipantNamesMessage(participants);
+        final String drawMessage = String.format(System.lineSeparator() +
+                DRAW_MESSAGE.getMessage(), participantNamesMessage);
+        print(drawMessage);
     }
 
     public void printDealerCard(final String dealerName, final Card dealerFirstCard) {
@@ -42,10 +40,10 @@ public class OutputView {
         print(dealerCardMessage);
     }
 
-    public void printPlayerCard(final String playerName, final List<Card> playerCards) {
+    public void printParticipantCard(final String playerName, final List<Card> playerCards) {
         final String cardsMessage = getCardsMessage(playerCards);
-        final String playerCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
-        print(playerCardMessage);
+        final String participantCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
+        print(participantCardMessage);
     }
 
     public void printCardResult(final String participantName,
@@ -60,6 +58,13 @@ public class OutputView {
         print(System.lineSeparator() + FINAL_GAME_RESULT.getMessage());
         printDealerGameResult(dealerName, playerGameResults);
         printPlayerGameResult(playerGameResults);
+    }
+
+    private String makeParticipantNamesMessage(final List<Participant> participants) {
+        return participants.stream()
+                .map(Participant::getName)
+                .collect(Collectors.joining(", "))
+                .replace(",", "와");
     }
 
     private String getCardMessage(final Card participantCard) {
