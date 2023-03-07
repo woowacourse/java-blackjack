@@ -24,11 +24,15 @@ public class CardDistributor {
             .forEach(this::giveCard);
     }
 
+    public void giveCard(final List<Player> players) {
+        players.forEach(this::giveCard);
+    }
+
     public void giveCard(final Player player) {
         player.addCard(cardGenerator.generate());
     }
 
-    public void giveCard(final List<Player> players) {
-        players.forEach(this::giveCard);
+    public boolean canGiveCard(final Player player) {
+        return player.canReceiveCard();
     }
 }

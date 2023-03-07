@@ -52,7 +52,7 @@ public class BlackJackController {
 
     private void getPlayerAdditionalCard(final Player player) {
         boolean hit = false;
-        while (!player.isBust() && (hit = getPlayerHitOrStand(player))) {
+        while (cardDistributor.canGiveCard(player) && (hit = getPlayerHitOrStand(player))) {
             cardDistributor.giveCard(player);
             OutputView.printCards(player);
         }
@@ -66,7 +66,7 @@ public class BlackJackController {
     }
 
     private void getDealerAdditionalCard(final Dealer dealer) {
-        while (dealer.canReceiveCard()) {
+        while (cardDistributor.canGiveCard(dealer)) {
             OutputView.printDealerReceptionNotice();
             cardDistributor.giveCard(dealer);
         }
@@ -78,7 +78,7 @@ public class BlackJackController {
 
     private void printResult(final Dealer dealer, final List<Player> players) {
         Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
-        Map<Player, Result> playerResult = blackJackResultMaker.makeParticipantsResult(dealer, players);
+        Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
         OutputView.printDealerResult(dealerResult, dealer);
         OutputView.printResult(playerResult);
     }
