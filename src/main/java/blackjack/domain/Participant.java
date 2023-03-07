@@ -9,34 +9,34 @@ public abstract class Participant {
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
 
     private final ParticipantName participantName;
-    private final List<Card> receivedCards;
+    private final List<Card> cards;
 
     public Participant(final ParticipantName participantName) {
-        this.receivedCards = new ArrayList<>();
+        this.cards = new ArrayList<>();
         this.participantName = participantName;
     }
 
     public void hit(final Card card) {
-        receivedCards.add(card);
+        cards.add(card);
     }
 
     public List<Card> getReceivedCards() {
-        return receivedCards;
+        return cards;
     }
 
     public boolean hasAceCard() {
-        return receivedCards.stream()
-                .anyMatch(card -> card.getCardNumber().isAce());
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public int calculateCardNumberAceCardValueOne() {
-        return receivedCards.stream()
+        return cards.stream()
             .mapToInt(card -> card.getCardNumber().getValue())
             .sum();
     }
 
     public boolean judgeBlackjack() {
-        return receivedCards.size() == 2 && calculateCardNumber() == 21;
+        return cards.size() == 2 && calculateCardNumber() == 21;
     }
 
     public int calculateCardNumber() {
@@ -57,10 +57,10 @@ public abstract class Participant {
     }
 
     public CardNumber getCardNumber(final int index) {
-        return receivedCards.get(index).getCardNumber();
+        return cards.get(index).getCardNumber();
     }
 
     public CardSuit getCardSuit(final int index) {
-        return receivedCards.get(index).getCardSuit();
+        return cards.get(index).getCardSuit();
     }
 }

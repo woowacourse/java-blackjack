@@ -10,6 +10,10 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
+    public boolean isAce() {
+        return cardNumber.isAce();
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();
