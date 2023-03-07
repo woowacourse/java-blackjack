@@ -2,11 +2,11 @@ package domain.player;
 
 import domain.card.CardArea;
 
-public class Player extends Participant {
+public class Gambler extends Participant {
 
     private HitState state = HitState.INIT;
 
-    public Player(final Name name, final CardArea cardArea) {
+    public Gambler(final Name name, final CardArea cardArea) {
         super(name, cardArea);
     }
 

@@ -2,9 +2,9 @@ package controller;
 
 import domain.card.CardDeck;
 import domain.game.BlackJackGame;
+import domain.player.Gambler;
 import domain.player.HitState;
 import domain.player.Name;
-import domain.player.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -25,7 +25,7 @@ public class BlackJackController {
         final List<Name> participantNames = withExceptionHandle(this::createParticipantNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, participantNames);
-        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
+        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
         return blackJackGame;
     }
 
@@ -38,15 +38,15 @@ public class BlackJackController {
 
     private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
         while (blackJackGame.existCanHitParticipant()) {
-            final Player canHitPlayer = blackJackGame.findCanHitParticipant();
-            final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitPlayer));
-            blackJackGame.hitOrStayForParticipant(canHitPlayer, hitState);
-            OutputView.showPlayerCardAreaState(canHitPlayer);
+            final Gambler canHitGambler = blackJackGame.findCanHitParticipant();
+            final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitGambler));
+            blackJackGame.hitOrStayForParticipant(canHitGambler, hitState);
+            OutputView.showPlayerCardAreaState(canHitGambler);
         }
     }
 
-    private HitState inputHitOrStay(final Player player) {
-        return HitState.hitWhenBooleanIsTrue(InputView.readWantHit(player));
+    private HitState inputHitOrStay(final Gambler gambler) {
+        return HitState.hitWhenBooleanIsTrue(InputView.readWantHit(gambler));
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
@@ -59,7 +59,7 @@ public class BlackJackController {
     private void statistic(final BlackJackGame blackJackGame) {
         OutputView.showGameStatistic(new GameStatisticResponse(
                 blackJackGame.dealer(),
-                blackJackGame.participants(),
+                blackJackGame.gamblers(),
                 blackJackGame.statistic()));
     }
 

@@ -19,13 +19,13 @@ import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("Player 은")
-class PlayerTest {
+@DisplayName("Gambler 은")
+class GamblerTest {
 
     @Test
     void 참가자는_상태를_바꿀_수_있다() {
         // given
-        final Player 코다 = 코다(equal16CardArea());
+        final Gambler 코다 = 코다(equal16CardArea());
 
         // when
         assertDoesNotThrow(() -> 코다.changeState(HitState.HIT));
@@ -35,7 +35,7 @@ class PlayerTest {
     @EnumSource(mode = EXCLUDE, names = {"STAY"})
     void 참가자는_버스트되지_않았으면서_STAY_를_원하지_않을_때_카드를_더_받을_수_있다(final HitState hitState) {
         // given
-        final Player 코다 = 코다(equal16CardArea());
+        final Gambler 코다 = 코다(equal16CardArea());
         코다.changeState(hitState);
 
         // when & then
@@ -46,7 +46,7 @@ class PlayerTest {
     @MethodSource("canNotMoreCard")
     void 참가자는_버스트되었거나_STAY_를_원한다면_카드를_더_받을_수_없다(final CardArea cardArea, final HitState hitState) {
         // given
-        final Player 코다 = 코다(cardArea);
+        final Gambler 코다 = 코다(cardArea);
         코다.changeState(hitState);
 
         // when & then

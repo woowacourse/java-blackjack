@@ -7,7 +7,7 @@ import domain.card.CardValue;
 import domain.player.Dealer;
 import domain.player.DealerCompeteResult;
 import domain.player.Participant;
-import domain.player.Player;
+import domain.player.Gambler;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -64,15 +64,15 @@ public class OutputView {
         DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.DRAW, "무");
     }
 
-    public static void printAfterFirstDeal(final Dealer dealer, final List<Player> players) {
-        final String message = String.format("\n%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), playerNames(players));
+    public static void printAfterFirstDeal(final Dealer dealer, final List<Gambler> gamblers) {
+        final String message = String.format("\n%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), playerNames(gamblers));
         System.out.println(message);
         showDealerCardAreaState(dealer);
-        players.forEach(OutputView::showPlayerCardAreaState);
+        gamblers.forEach(OutputView::showPlayerCardAreaState);
     }
 
-    private static String playerNames(final List<Player> players) {
-        return players.stream()
+    private static String playerNames(final List<Gambler> gamblers) {
+        return gamblers.stream()
                 .map(Participant::nameValue)
                 .collect(Collectors.joining(DELIMITER));
     }
@@ -85,8 +85,8 @@ public class OutputView {
     /**
      * 출력 : 말랑카드: 2 다이아, 잭 클로버
      */
-    public static void showPlayerCardAreaState(final Player player) {
-        final String message = makeCardAreaStateMessage(player);
+    public static void showPlayerCardAreaState(final Gambler gambler) {
+        final String message = makeCardAreaStateMessage(gambler);
         System.out.println(message);
     }
 
@@ -153,7 +153,7 @@ public class OutputView {
     }
 
     private static void showFinalDealerWinLose(final GameStatisticResponse gameStatisticResponse) {
-        final Map<Player, DealerCompeteResult> resultPerParticipant = gameStatisticResponse.dealerResultPerPlayer();
+        final Map<Gambler, DealerCompeteResult> resultPerParticipant = gameStatisticResponse.dealerResultPerPlayer();
         final Map<DealerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
                 .collect(Collectors.groupingBy(Function.identity(), counting()));
         final String dealerStatisticMessage = stringBuilder.append("딜러:")
@@ -173,9 +173,9 @@ public class OutputView {
     }
 
     private static void showFinalParticipantsWinLose(final GameStatisticResponse statistic) {
-        final Map<Player, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
-        final List<Player> players = statistic.players();
-        players.stream()
+        final Map<Gambler, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
+        final List<Gambler> gamblers = statistic.players();
+        gamblers.stream()
                 .map(it -> it.nameValue() + ": " + DEALER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
                 .forEach(System.out::println);
     }
