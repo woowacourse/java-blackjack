@@ -7,8 +7,8 @@ public class InputView {
     private static final InputView INSTANCE = new InputView();
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = ",";
-    public static final String HIT_COMMAND = "y";
-    public static final String STAY_COMMAND = "n";
+    private static final String HIT_COMMAND = "y";
+    private static final String STAY_COMMAND = "n";
     private static final String PLAYER_INTENTION_ERROR_MESSAGE = "y 혹은 n 만 입력 가능 합니다.";
 
     public static InputView getInstance() {
