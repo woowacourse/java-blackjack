@@ -69,9 +69,7 @@ public class OutputView {
 
     public static void printTotalCardState(final Dealer dealer, final List<Player> players) {
         printPlayerCardState(dealer);
-        for (Player player : players) {
-            printPlayerCardState(player);
-        }
+        players.forEach(OutputView::printPlayerCardState);
     }
 
     private static void printPlayerCardState(final Player player) {
@@ -85,9 +83,10 @@ public class OutputView {
     }
 
     public static void printResult(final Map<Player, Result> playerResults) {
-        for (Player player : playerResults.keySet()) {
-            System.out.println(player.getName() + COLON + stringifyResult(playerResults.get(player)));
-        }
+        playerResults.keySet()
+            .stream()
+            .map(player -> player.getName() + COLON + stringifyResult(playerResults.get(player)))
+            .forEach(System.out::println);
     }
 
     private static String stringifyResult(final Result result) {
@@ -102,11 +101,11 @@ public class OutputView {
     }
 
     private static String stringifyResultHistory(final Map<String, Integer> resultHistory) {
-        final StringJoiner sj = new StringJoiner(" ");
+        final StringJoiner stringJoiner = new StringJoiner(" ");
         resultHistory.keySet().stream()
             .filter(result -> resultHistory.get(result) != 0)
-            .forEach(result -> sj.add(resultHistory.get(result) + result));
-        return sj.toString();
+            .forEach(result -> stringJoiner.add(resultHistory.get(result) + result));
+        return stringJoiner.toString();
     }
 
     private static String stringifyOneResultHistory(final Map<String, Integer> resultHistory) {

@@ -19,7 +19,7 @@ public class InputView {
 
     public static List<String> inputNames() {
         System.out.println(INPUT_NAMES_REQUEST_MESSAGE);
-        String input = scanner.nextLine().replace(" ", "");
+        final String input = scanner.nextLine().replace(" ", "");
         checkBlank(input);
         return Arrays.stream(input.split(DELIMITER))
             .collect(Collectors.toList());
@@ -33,7 +33,7 @@ public class InputView {
 
     public static boolean inputCardIntent(final String name) {
         System.out.printf((INPUT_CARD_INTENT_REQUEST_MESSAGE) + NEW_LINE, name);
-        String input = scanner.nextLine();
+        final String input = scanner.nextLine();
         checkLetter(input, YES, NO);
         return input.equals(YES);
     }

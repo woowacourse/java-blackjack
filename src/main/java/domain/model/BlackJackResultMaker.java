@@ -41,7 +41,7 @@ public class BlackJackResultMaker {
     }
 
     private Result decide(final Score score, final List<Score> comparedScores) {
-        Result result = new Result(0, 0, 0);
+        final Result result = new Result(0, 0, 0);
         comparedScores.forEach(comparedScore -> addResult(score, comparedScore, result));
         return result;
     }

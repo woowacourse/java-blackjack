@@ -35,7 +35,7 @@ public class BlackJackController {
 
     private List<Player> getPlayers() {
         return ExecuteContext.workWithExecuteStrategy(() -> {
-            List<String> names = InputView.inputNames();
+            final List<String> names = InputView.inputNames();
             return names.stream()
                 .map(name -> new Player(Cards.makeEmptyCards(), name))
                 .collect(Collectors.toList());
@@ -85,8 +85,8 @@ public class BlackJackController {
     }
 
     private void printResult(final Dealer dealer, final List<Player> players) {
-        Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
-        Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
+        final Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
+        final Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
         OutputView.printDealerResult(dealerResult);
         OutputView.printResult(playerResult);
     }
