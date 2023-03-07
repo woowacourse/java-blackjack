@@ -15,15 +15,13 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String inputPlayersName = scanner.nextLine();
         inputValidator.validateInput(inputPlayersName);
-        List<String> playersName = Arrays.asList(inputPlayersName.split(DELIMITER, -1));
-        return playersName;
+        return Arrays.asList(inputPlayersName.split(DELIMITER, -1));
     }
 
     public String readHitCommand(final String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String inputHitCommand = scanner.nextLine();
         inputValidator.validateInput(inputHitCommand);
-        inputValidator.checkHitCommand(inputHitCommand);
         return inputHitCommand;
     }
 }
