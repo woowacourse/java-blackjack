@@ -20,4 +20,8 @@ public class Card {
     public String getValue() {
         return cardValue.getValue();
     }
+
+    public boolean isAce() {
+        return cardValue.getValue().equals(CardValue.ACE.getValue());
+    }
 }

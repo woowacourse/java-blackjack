@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import blackjackgame.domain.card.Card;
-import blackjackgame.domain.card.CardValue;
 
 public abstract class Player {
     private static final int ACE_BONUS_SCORE = 10;
@@ -21,9 +20,12 @@ public abstract class Player {
 
     public abstract String getName();
 
-    public int getScore() {
-        int totalScore = getBasicScore();
-        boolean hasAce = findAce();
+    public final int getScore() {
+        int totalScore = cards.stream()
+            .mapToInt(Card::getScore)
+            .sum();
+        boolean hasAce = cards.stream()
+            .anyMatch(Card::isAce);
 
         if (hasAce && totalScore <= MAX_BASIC_SCORE) {
             totalScore += ACE_BONUS_SCORE;
@@ -31,31 +33,15 @@ public abstract class Player {
         return totalScore;
     }
 
-    private boolean findAce() {
-        boolean hasAce = false;
-        for (final Card card : cards) {
-            hasAce |= (card.getValue().equals(CardValue.ACE.getValue()));
-        }
-        return hasAce;
-    }
-
-    private int getBasicScore() {
-        int basicScore = 0;
-        for (final Card card : cards) {
-            basicScore += card.getScore();
-        }
-        return basicScore;
-    }
-
-    public void addCard(final Card card) {
+    public final void addCard(final Card card) {
         cards.add(card);
     }
 
-    public int getSize() {
+    public final int getSize() {
         return cards.size();
     }
 
-    public List<List<String>> getCards() {
+    public final List<List<String>> getCards() {
         List<List<String>> playerCards = new ArrayList<>();
         for (final Card card : cards) {
             List<String> playerCard = new ArrayList<>();
