@@ -2,7 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardHolder;
-import domain.card.CardRepository;
+import domain.card.DeckOfCards;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.player.*;
@@ -23,7 +23,7 @@ class BlackJackTest {
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack(
                 new Players(makeDealer(), Participant.of(GIVEN_NAMES)),
-                CardRepository.create(maxIndex -> 0)
+                DeckOfCards.create(maxIndex -> 0)
         );
         blackJack.initializeCardsOfPlayers();
         List<PlayerReadOnly> players = blackJack.getPlayers().getAllPlayers();
@@ -41,7 +41,7 @@ class BlackJackTest {
         List<Participant> participants = Participant.of(GIVEN_NAMES);
         BlackJack blackJack = new BlackJack(
                 new Players(dealer, participants),
-                CardRepository.create(maxIndex -> 0)
+                DeckOfCards.create(maxIndex -> 0)
         );
         blackJack.giveCardToAllPlayers();
 
@@ -54,7 +54,7 @@ class BlackJackTest {
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
                 new Players(makeDealer(), Participant.of(GIVEN_NAMES)),
-                CardRepository.create(maxIndex -> 0)
+                DeckOfCards.create(maxIndex -> 0)
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
 
@@ -94,7 +94,7 @@ class BlackJackTest {
     @DisplayName("딜러에게 한 장의 카드를 추가한다.")
     void thenGiveDealerCard() {
         Dealer dealer = makeDealer();
-        BlackJack blackJack = new BlackJack(new Players(dealer, Participant.of(GIVEN_NAMES)), CardRepository.create(maxIndex -> 0));
+        BlackJack blackJack = new BlackJack(new Players(dealer, Participant.of(GIVEN_NAMES)), DeckOfCards.create(maxIndex -> 0));
         blackJack.giveCardToDealer();
         assertThat(dealer.getCards()).hasSize(1);
     }

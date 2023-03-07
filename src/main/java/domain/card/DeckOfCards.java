@@ -5,17 +5,17 @@ import domain.strategy.IndexGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardRepository {
+public class DeckOfCards {
     private final List<Card> cards;
     private final IndexGenerator indexGenerator;
 
-    private CardRepository(List<Card> cards, IndexGenerator indexGenerator) {
+    private DeckOfCards(List<Card> cards, IndexGenerator indexGenerator) {
         this.cards = cards;
         this.indexGenerator = indexGenerator;
     }
 
-    public static CardRepository create(IndexGenerator indexGenerator) {
-        return new CardRepository(initializeCards(), indexGenerator);
+    public static DeckOfCards create(IndexGenerator indexGenerator) {
+        return new DeckOfCards(initializeCards(), indexGenerator);
     }
 
     private static List<Card> initializeCards() {
