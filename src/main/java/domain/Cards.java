@@ -47,4 +47,13 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
+    public boolean isBlackjack() {
+        if (cards.size() == BlackjackRule.INITIAL_CARD_COUNT.getValue()
+                && calculateScore() == BlackjackRule.BUST_LIMIT.getValue()) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
