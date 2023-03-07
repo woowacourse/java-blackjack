@@ -36,7 +36,7 @@ public class PlayerTest {
             player.addCard(card);
         }
 
-        int score = player.calculateScore();
+        int score = player.calculateCurrentScore();
 
         assertThat(score).isEqualTo(expectedScore);
     }

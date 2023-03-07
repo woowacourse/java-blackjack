@@ -18,7 +18,7 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public int calculateScore() {
+    public int calculateCurrentScore() {
         int sum = cards.sum();
         int aceCount = cards.getAceCount();
 
@@ -27,6 +27,15 @@ public abstract class Participant {
             aceCount -= 1;
         }
         return sum;
+    }
+
+    public int calculateFinalScore() {
+        int finalScore = calculateCurrentScore();
+
+        if (finalScore > BLACK_JACK_SCORE) {
+            finalScore = 0;
+        }
+        return finalScore;
     }
 
     public abstract boolean canReceive();

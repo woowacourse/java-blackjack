@@ -13,7 +13,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        return calculateScore() < BLACK_JACK_SCORE;
+        return calculateCurrentScore() < BLACK_JACK_SCORE;
     }
 
     public String getName() {
