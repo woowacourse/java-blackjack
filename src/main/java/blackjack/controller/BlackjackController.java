@@ -7,7 +7,6 @@ import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -47,7 +46,7 @@ public class BlackjackController {
         blackjackGame.initialCardsToAllParticipant();
 
         final Participants participants = blackjackGame.getParticipants();
-        outputView.printInitialHands(participants);
+        outputView.printInitialHandOutMessage(participants);
     }
 
     private void hitParticipants(final BlackjackGame blackjackGame) {
@@ -67,7 +66,7 @@ public class BlackjackController {
     private void hitEachPlayer(final BlackjackGame blackjackGame, final Participant player) {
         while (!player.isBust() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
-            outputView.printParticipantCard(player);
+            outputView.printParticipantNameAndCards(player);
         }
     }
 
@@ -80,7 +79,7 @@ public class BlackjackController {
         final Participant dealer = blackjackGame.getParticipants().getDealer();
 
         while (dealer.isHit()) {
-            outputView.printDealerDrawCard(dealer);
+            outputView.printDealerDrawCard();
             blackjackGame.drawCard(dealer);
         }
     }
@@ -88,7 +87,7 @@ public class BlackjackController {
     private void displayParticipantsCardsAndScore(final BlackjackGame blackjackGame) {
         final Participants participants = blackjackGame.getParticipants();
 
-        outputView.printAllCardsAndScores(participants);
+        outputView.printAllCardsAndScore(participants);
     }
 
     private void displayAllResult(final Participants participants, final ResultGame resultGame) {

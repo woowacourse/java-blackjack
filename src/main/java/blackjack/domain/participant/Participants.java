@@ -48,6 +48,10 @@ public class Participants {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public List<Participant> getAll() {
+        return participants;
+    }
+
     public Participant getDealer() {
         return participants.get(0);
     }
@@ -56,7 +60,7 @@ public class Participants {
         return participants.subList(1, participants.size());
     }
 
-    public List<String> getPlayerNames() {
+    public List<String> getNames() {
         return participants.stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
