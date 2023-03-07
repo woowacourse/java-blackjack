@@ -5,6 +5,7 @@ import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.ShuffledCardsGenerator;
@@ -29,6 +30,18 @@ class PlayersTest {
     @Test
     void create() {
         assertThatCode(() -> new Players()).doesNotThrowAnyException();
+    }
+
+    @DisplayName("플레이어들의 이름은 중복될 수 없다.")
+    @Test
+    void cannotHaveSameName() {
+        Players players = new Players();
+        Player rosie = new Player(new Name("로지"));
+        Player rosy = new Player(new Name("로지"));
+        Players newPlayers = players.add(rosie);
+
+        assertThatThrownBy(()-> newPlayers.add(rosy))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

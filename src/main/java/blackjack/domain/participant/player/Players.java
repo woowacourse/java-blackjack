@@ -20,10 +20,17 @@ public class Players {
     }
 
 
-    public Players add(Player player) {
+    public Players add(Player newPlayer) {
+        if (nameAlreadyExists(newPlayer)) {
+            throw new IllegalArgumentException("플레이어의 이름은 중복일 수 없습니다.");
+        }
         ArrayList<Player> newPlayers = new ArrayList<>(players);
-        newPlayers.add(player);
+        newPlayers.add(newPlayer);
         return new Players(newPlayers);
+    }
+
+    private boolean nameAlreadyExists(Player newPlayer) {
+        return players.stream().anyMatch(player -> player.getName().equals(newPlayer.getName()));
     }
 
     public void hitAdditionalCard(Deck deck, CardDecisionStrategy cardDecisionStrategy,
