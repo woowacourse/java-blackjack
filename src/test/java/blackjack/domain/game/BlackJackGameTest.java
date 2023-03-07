@@ -48,7 +48,7 @@ public class BlackJackGameTest {
     void passExtraCardToDealer() {
         BlackJackGame blackJackGame = BlackJackGame.createByPlayerNames(names);
         Dealer dealer = blackJackGame.getDealer();
-        dealer.addCard(new Card(Symbol.SPADE, Number.TEN));
+        dealer.addCard(Card.of(Symbol.SPADE, Number.TEN));
         int beforeCount = dealer.getCards().getCount();
 
         blackJackGame.drawCard(dealer, 1);
@@ -61,8 +61,8 @@ public class BlackJackGameTest {
     void canNotPassExtraCardToDealer() {
         BlackJackGame blackJackGame = BlackJackGame.createByPlayerNames(names);
         Dealer dealer = blackJackGame.getDealer();
-        dealer.addCard(new Card(Symbol.SPADE, Number.TEN));
-        dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
+        dealer.addCard(Card.of(Symbol.SPADE, Number.TEN));
+        dealer.addCard(Card.of(Symbol.HEART, Number.SEVEN));
         int beforeCount = dealer.getCards().getCount();
 
         blackJackGame.drawCard(dealer, 1);
@@ -89,11 +89,11 @@ public class BlackJackGameTest {
     }
 
     private void setCards(Dealer dealer, Player gray, Player luca) {
-        dealer.addCard(new Card(Symbol.HEART, Number.TEN));
-        dealer.addCard(new Card(Symbol.HEART, Number.SEVEN));
-        gray.addCard(new Card(Symbol.SPADE, Number.ACE));
-        gray.addCard(new Card(Symbol.SPADE, Number.TEN));
-        luca.addCard(new Card(Symbol.DIAMOND, Number.SIX));
-        luca.addCard(new Card(Symbol.DIAMOND, Number.TEN));
+        dealer.addCard(Card.of(Symbol.HEART, Number.TEN));
+        dealer.addCard(Card.of(Symbol.HEART, Number.SEVEN));
+        gray.addCard(Card.of(Symbol.SPADE, Number.ACE));
+        gray.addCard(Card.of(Symbol.SPADE, Number.TEN));
+        luca.addCard(Card.of(Symbol.DIAMOND, Number.SIX));
+        luca.addCard(Card.of(Symbol.DIAMOND, Number.TEN));
     }*/
 }

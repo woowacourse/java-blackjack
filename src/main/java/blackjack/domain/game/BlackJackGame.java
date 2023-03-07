@@ -102,25 +102,28 @@ public class BlackJackGame {
 
     public PlayerNameCardsResponse findPlayerNameAndCards(int playerIndex) {
         Player player = players.getPlayers().get(playerIndex);
-        return new PlayerNameCardsResponse(player);
+        return convertNameCards(player);
     }
 
     public List<PlayerNameCardsResponse> findAllPlayerNameAndCards() {
         List<PlayerNameCardsResponse> allPlayerNameCards = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            allPlayerNameCards.add(new PlayerNameCardsResponse(player));
+            allPlayerNameCards.add(convertNameCards(player));
         }
         return allPlayerNameCards;
     }
 
     public DealerCardsScoreResponse findDealerCardsScore() {
-        return new DealerCardsScoreResponse(dealer);
+        return new DealerCardsScoreResponse(
+                dealer.getCards().getCards(),
+                dealer.calculateScore().getValue()
+        );
     }
 
     public List<PlayerNameCardsScoreResponse> findAllPlayerNameCardsScore() {
         List<PlayerNameCardsScoreResponse> allPlayerNameCardsScore = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            allPlayerNameCardsScore.add(new PlayerNameCardsScoreResponse(player));
+            allPlayerNameCardsScore.add(convertNameCardsScore(player));
         }
         return allPlayerNameCardsScore;
     }
@@ -132,11 +135,26 @@ public class BlackJackGame {
         return new DealerPlayerResultResponse(dealerResult, allPlayerResult);
     }
 
+    private PlayerNameCardsResponse convertNameCards(Player player) {
+        return new PlayerNameCardsResponse(
+                player.getName(),
+                player.getCards().getCards()
+        );
+    }
+
+    private PlayerNameCardsScoreResponse convertNameCardsScore(Player player) {
+        return new PlayerNameCardsScoreResponse(
+                player.getName(),
+                player.getCards().getCards(),
+                player.calculateScore().getValue()
+        );
+    }
+
     private Map<String, Result> calculatePlayerResult() {
         Map<String, Result> allPlayerResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             String name = player.getName();
-            Result result = Result.calculate(player, dealer);
+            Result result = Result.calculate(player.calculateScore(), dealer.calculateScore());
             allPlayerResult.put(name, result);
         }
         return allPlayerResult;
@@ -145,7 +163,7 @@ public class BlackJackGame {
     private Map<Result, Integer> calculateDealerResult() {
         Map<Result, Integer> dealerResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            Result result = Result.calculate(dealer, player);
+            Result result = Result.calculate(dealer.calculateScore(), player.calculateScore());
             int count = dealerResult.getOrDefault(result, 0);
             dealerResult.put(result, count + 1);
         }
