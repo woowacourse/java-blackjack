@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Score {
 
+    public static final Score BUST = new Score(21);
     private static final int MAX_ACE_SCORE = 11;
     private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;
 
@@ -37,6 +38,14 @@ public class Score {
         return cards.stream()
                 .map(card -> Collections.min(card.getScore()))
                 .reduce(0, Integer::sum);
+    }
+
+    public boolean isLessThan(Score other) {
+        return this.score < other.score;
+    }
+
+    public boolean isGreaterThan(Score other) {
+        return this.score > other.score;
     }
 
     public int getScore() {
