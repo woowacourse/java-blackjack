@@ -36,7 +36,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("draw상태의 플레이어는 버스트가 될 때까지 카드를 뽑을 수 있다.")
+    @DisplayName("draw 상태의 플레이어는 버스트가 될 때까지 카드를 뽑을 수 있다.")
     void player_can_draw_until_bust() {
         //given
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
