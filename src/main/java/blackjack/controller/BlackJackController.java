@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackManager;
 import blackjack.domain.game.BlackJackResults;
 import blackjack.domain.participant.Dealer;
@@ -14,8 +15,8 @@ import static blackjack.util.ExceptionTemplate.repeatAndPrintCause;
 public class BlackJackController {
     private final BlackJackManager blackJackManager;
 
-    public BlackJackController() {
-        this.blackJackManager = repeatAndPrintCause(() -> new BlackJackManager(InputView.readNames()));
+    public BlackJackController(final Deck deck) {
+        this.blackJackManager = repeatAndPrintCause(() -> new BlackJackManager(deck, InputView.readNames()));
     }
 
     public void inputHitCondition() {

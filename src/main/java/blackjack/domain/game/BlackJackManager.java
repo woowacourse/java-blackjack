@@ -12,11 +12,12 @@ import java.util.function.Predicate;
 import static blackjack.util.ExceptionTemplate.repeatAndPrintCause;
 
 public class BlackJackManager {
-    private final Deck deck = new Deck();
+    private final Deck deck;
     private final BlackJackParticipants participants;
 
-    public BlackJackManager(final List<String> names) {
-        this.participants = new BlackJackParticipants(deck, names);
+    public BlackJackManager(final Deck deck, final List<String> names) {
+        this.deck = deck;
+        this.participants = new BlackJackParticipants(this.deck, names);
     }
 
     public void hitByPlayer(final Predicate<String> checkHitCondition, final Consumer<Player> printPlayerCards) {
