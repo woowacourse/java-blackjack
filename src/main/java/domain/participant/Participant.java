@@ -21,16 +21,10 @@ public abstract class Participant {
     }
 
     protected Participant(Name name, Cards cards) {
-//        validateCardsSize(cards.size());
         this.name = name;
         this.cards = cards;
     }
 
-    private void validateCardsSize(final int size) {
-        if (size != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("유저는 카드 2장 이상을 갖고 있어야 합니다.");
-        }
-    }
     public void takeCard(final Card card) {
         this.cards = cards.add(card);
     }

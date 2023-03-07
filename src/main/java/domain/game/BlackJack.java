@@ -39,13 +39,13 @@ public final class BlackJack {
         player.takeCard(deck.drawCard());
     }
 
-    public int endDealerTurnAndCollectAdditionalCardCount() {
-        int additionalCardCount = 0;
+    public int getAdditionalCardCount() {
+        int count = 0;
         while (dealer.needMoreCard()) {
             dealer.takeCard(deck.drawCard());
-            additionalCardCount += 1;
+            count += 1;
         }
-        return additionalCardCount;
+        return count;
     }
 
     public Dealer getDealer() {
@@ -57,6 +57,6 @@ public final class BlackJack {
     }
 
     public GameResult getGameResult() {
-        return GameResult.create(dealer, players);
+        return GameResult.of(dealer, players);
     }
 }

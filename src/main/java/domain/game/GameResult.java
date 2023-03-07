@@ -21,7 +21,7 @@ public class GameResult {
         updateGameResult(Result.LOSE, players.findPlayersLowerThan(dealerPoint));
     }
 
-    public static GameResult create(final Dealer dealer, final Players players) {
+    public static GameResult of(final Dealer dealer, final Players players) {
         return new GameResult(dealer, players);
     }
 
