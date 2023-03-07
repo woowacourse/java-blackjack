@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
@@ -30,12 +31,14 @@ class NameTest {
     @DisplayName("이름에는 숫자나 특수문자가 들어갈 수 없다.")
     @Test
     void nameRegexTest() {
-        assertDoesNotThrow(() -> new Name("숫자가없는이름"));
-        assertThatThrownBy(() -> new Name("444"))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Name("이름4"))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Name("특수^"))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertAll(
+                () -> assertDoesNotThrow(() -> new Name("숫자가없는이름")),
+                () -> assertThatThrownBy(() -> new Name("444"))
+                        .isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(() -> new Name("이름4"))
+                        .isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(() -> new Name("특수^"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
     }
 }
