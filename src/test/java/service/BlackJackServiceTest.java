@@ -322,4 +322,27 @@ class BlackJackServiceTest {
         assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
         assertThat(dealer.getAccount()).isEqualTo(givenAccount);
     }
+
+    @Test
+    @DisplayName("딜러와 플레이어의 이름과 수익을 dto로 반환해준다.")
+    void returns_dto_of_players_and_dealer_name_and_account() {
+        // given
+        Card card1 = new Card(Type.CLUB, Value.EIGHT);
+        Card card2 = new Card(Type.SPADE, Value.EIGHT);
+        Card card3 = new Card(Type.SPADE, Value.EIGHT);
+        List<Card> givenCards = List.of(card1, card2, card3);
+        DrawnCards drawnCards = new DrawnCards(givenCards);
+
+        int givenAccount = 1000;
+
+        Dealer dealer = new Dealer(new DrawnCards(List.of(card1)));
+        Player player = new Player(new Status(new Name("pobi"), new Account(givenAccount)), drawnCards);
+        Players players = new Players(List.of(player));
+
+        // when
+        List<ParticipantResult> results = blackJackService.getParticipantResults(dealer, players);
+
+        // then
+        assertThat(results.size()).isEqualTo(2);
+     }
 }
