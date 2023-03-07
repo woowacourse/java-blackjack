@@ -42,7 +42,7 @@ public class BlackjackGame {
         player.addCard(cardDeck.poll());
     }
 
-    public void distributeByCommand(Player player, String command) {
+    public void distributeByCommand(Player player, boolean command) {
         if (player.isCommandYes(command)) {
             distributePlayer(player);
         }
@@ -58,14 +58,14 @@ public class BlackjackGame {
     }
 
     public Result getPlayersResult(Player player) {
-        return isPlayerWin(players.findDealer().getCardsSum(),player.getCardsSum());
+        return isPlayerWin(players.findDealer().getCardsSum(), player.getCardsSum());
     }
 
     public Result isPlayerWin(int dealerSum, int playerSum) {
-        if (playerSum > BLACK_JACK || (dealerSum > playerSum && !(dealerSum>BLACK_JACK))) {
+        if (playerSum > BLACK_JACK || (dealerSum > playerSum && !(dealerSum > BLACK_JACK))) {
             return Result.LOSE;
         }
-        if (dealerSum > BLACK_JACK || dealerSum<playerSum) {
+        if (dealerSum > BLACK_JACK || dealerSum < playerSum) {
             return Result.WIN;
         }
         return Result.DRAW;

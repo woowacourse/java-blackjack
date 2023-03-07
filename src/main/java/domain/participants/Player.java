@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player {
     private static final int BLACK_JACK = 21;
-    private static final String Y_COMMAND = "y";
+    private static final boolean Y_COMMAND = true;
     private final Name name;
     private final Cards cards;
 
@@ -28,12 +28,12 @@ public class Player {
         return getCardsSum() >= BLACK_JACK;
     }
 
-    public boolean canDrawCard(String command) {
+    public boolean canDrawCard(boolean command) {
         return !isOverPlayerBlackJack() && isCommandYes(command);
     }
 
-    public boolean isCommandYes(String command) {
-        return command.equals(Y_COMMAND);
+    public boolean isCommandYes(boolean command) {
+        return command == Y_COMMAND;
     }
 
     public String getName() {

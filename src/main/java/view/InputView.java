@@ -22,13 +22,13 @@ public class InputView {
         return Arrays.asList(names.split(SPLIT_DELIMITER));
     }
 
-    public String readCommand(String name) {
+    public boolean readCommand(String name) {
         System.out.println();
         System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
         String input = scanner.nextLine();
-        if(!input.equals("y") && !input.equals("n")){
+        if (!input.equals("y") && !input.equals("n")) {
             throw new IllegalArgumentException(INVALID_COMMAND);
         }
-        return input;
+        return true;
     }
 }
