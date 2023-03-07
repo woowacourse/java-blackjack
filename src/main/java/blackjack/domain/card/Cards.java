@@ -49,11 +49,6 @@ public final class Cards {
         this.cards.add(card);
     }
 
-    public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_SIZE_CONDITION
-                && BLACKJACK_SCORE_CONDITION == calculateTotalScore();
-    }
-
     public boolean isBust() {
         return BLACKJACK_SCORE_CONDITION < calculateTotalScore();
     }
