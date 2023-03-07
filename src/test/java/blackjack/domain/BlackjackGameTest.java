@@ -113,5 +113,4 @@ class BlackjackGameTest {
             return randomIndex.remove(0);
         }
     }
-
 }
