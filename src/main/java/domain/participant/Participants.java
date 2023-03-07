@@ -22,10 +22,9 @@ public class Participants {
     }
 
     public static Participants create(final List<String> playerNames) {
-        final List<String> trimPlayerNames = trimPlayerNames(playerNames);
-        validateDuplicateNames(trimPlayerNames);
-        validatePlayerCount(trimPlayerNames);
-        List<Participant> participants = makeParticipants(trimPlayerNames);
+        validateDuplicateNames(playerNames);
+        validatePlayerCount(playerNames);
+        List<Participant> participants = makeParticipants(playerNames);
         return new Participants(participants);
     }
 
@@ -56,10 +55,6 @@ public class Participants {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static List<String> trimPlayerNames(final List<String> playerNames) {
-        return playerNames.stream().map(String::trim)
-                .collect(Collectors.toUnmodifiableList());
-    }
 
     private static void validateDuplicateNames(final List<String> playerNames) {
         final Set<String> uniqueNames = new HashSet<>(playerNames);

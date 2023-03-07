@@ -50,7 +50,7 @@ public class GameController {
 
     private Participants makeParticipants() {
         return inputView.getInputWithRetry(() -> {
-            List<String> participantNames = inputView.getParticipantNames();
+            List<String> participantNames = inputView.getPlayerNames();
             return Participants.create(participantNames);
         });
     }
