@@ -1,16 +1,15 @@
 package blackjack.controller;
 
-import blackjack.model.card.Card;
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ResultDto;
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardSuit;
 import blackjack.model.participant.*;
 import blackjack.model.result.Result;
 import blackjack.model.state.InitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,39 +46,16 @@ public class GameController {
     }
 
     private void printInitialCardStatus(Participants participants) {
-        List<String> players = participants.getPlayers().stream()
+        List<String> playerNames = participants.getPlayers().stream()
                 .map(player -> player.getName().getName())
                 .collect(Collectors.toList());
-        outputView.printDistributionMessage(players);
-        outputView.printNameAndHand(convertToDealerNameAndHand(participants.getDealer()));
-        outputView.printNameAndHand(convertToPlayerNamesAndHands(participants.getPlayers()));
-    }
+        outputView.printDistributionMessage(playerNames);
 
-    private Map<String, List<String>> convertToDealerNameAndHand(Dealer dealer) {
-        String name = dealer.getName().getName();
-        Card card = dealer.getFirstCard();
+        Dealer dealer = participants.getDealer();
+        outputView.printNameAndHand(ParticipantDto.of(dealer, dealer.getFirstCard()));
 
-        Map<String, List<String>> nameAndHand = new HashMap<>();
-        nameAndHand.put(name, List.of(makeCardUnit(card.getNumber(), card.getSuit())));
-        return nameAndHand;
-    }
-
-    private Map<String, List<String>> convertToPlayerNamesAndHands(List<Player> players) {
-        HashMap<String, List<String>> namesAndHands = new HashMap<>();
-        for (Player player : players) {
-            namesAndHands.put(player.getName().getName(), makeParticipantCardUnits(player));
-        }
-        return namesAndHands;
-    }
-
-    private List<String> makeParticipantCardUnits(Participant participant) {
-        return participant.getHand().getCards().stream()
-                .map(card -> makeCardUnit(card.getNumber(), card.getSuit()))
-                .collect(Collectors.toList());
-    }
-
-    private String makeCardUnit(CardNumber number, CardSuit suit) {
-        return number.getSymbol() + suit.getSuit();
+        List<Player> players = participants.getPlayers();
+        players.forEach(player -> outputView.printNameAndHand(ParticipantDto.from(player)));
     }
 
     private void hitOrStand(CardDeck cardDeck, Participants participants) {
@@ -87,7 +63,7 @@ public class GameController {
             Player player = participants.getNextPlayer();
             boolean isHit = inputView.readHitOrStand(player.getName().getName());
             participants.hitOrStandByPlayer(cardDeck, player, isHit);
-            outputView.printNameAndHand(convertToParticipantNamesAndHands(player));
+            outputView.printNameAndHand(ParticipantDto.from(player));
         }
         outputView.printDealerHitMessage(participants.hitOrStandByDealer(cardDeck));
     }
@@ -96,16 +72,8 @@ public class GameController {
         for (Participant participant : participants.getParticipants()) {
             int score = participant.getScore();
             boolean isBlackjack = participant.isBlackjack();
-            outputView.printScoreResult(convertToParticipantNamesAndHands(participant), score, isBlackjack);
+            outputView.printScoreResult(ParticipantDto.from(participant), score, isBlackjack);
         }
-    }
-
-    private Map<String, List<String>> convertToParticipantNamesAndHands(Participant participant) {
-        HashMap<String, List<String>> nameAndHand = new HashMap<>();
-        String name = participant.getName().getName();
-        List<String> hand = makeParticipantCardUnits(participant);
-        nameAndHand.put(name, hand);
-        return nameAndHand;
     }
 
     private void printWinningResult(Map<Name, Result> playerResult) {
@@ -116,15 +84,9 @@ public class GameController {
         long dealerLose = playerResult.values().stream().filter(value -> value.equals(Result.WIN)).count();
         outputView.printDealerWinningResult(dealerWin, dealerTie, dealerLose);
 
-        outputView.printPlayersWinningResult(convertToNamesAndResults(playerResult));
-    }
-
-    private Map<String, String> convertToNamesAndResults(Map<Name, Result> playerResult) {
-        Map<String, String> result = new HashMap<>();
         for (Map.Entry<Name, Result> entry : playerResult.entrySet()) {
-            result.put(entry.getKey().getName(), entry.getValue().getResult());
+            outputView.printPlayerWinningResult(ResultDto.of(entry.getKey(), entry.getValue()));
         }
-        return result;
     }
 
 }

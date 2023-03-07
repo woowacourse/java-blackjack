@@ -1,7 +1,10 @@
 package blackjack.view;
 
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ResultDto;
+
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -32,32 +35,28 @@ public class OutputView {
         System.out.printf(DISTRIBUTION_MESSAGE_FORMAT, names);
     }
 
-    public void printNameAndHand(Map<String, List<String>> namesAndHands) {
-        for (Map.Entry<String, List<String>> entry : namesAndHands.entrySet()) {
-            String name = entry.getKey();
-            String hand = String.join(DELIMITER_COMMA, entry.getValue());
-            System.out.println(name + DELIMITER_COLON + hand);
-        }
+    public void printNameAndHand(ParticipantDto participant) {
+        String name = participant.getName();
+        String hand = String.join(DELIMITER_COMMA, participant.getCards());
+        System.out.println(name + DELIMITER_COLON + hand);
     }
 
     public void printDealerHitMessage(int hitCount) {
         System.out.println();
-        for(int i = 0; i < hitCount; i++){
+        for (int i = 0; i < hitCount; i++) {
             System.out.println(DEALER_HIT_MESSAGE);
         }
         System.out.println();
     }
 
-    public void printScoreResult(Map<String, List<String>> namesAndHands, int score, boolean isBlackjack) {
-        for (Map.Entry<String, List<String>> entry : namesAndHands.entrySet()) {
-            String name = entry.getKey();
-            String cards = String.join(DELIMITER_COMMA, entry.getValue());
-            String result = Integer.toString(score);
-            if(isBlackjack){
-                result += BLACKJACK_MARK;
-            }
-            System.out.printf(SCORE_RESULT_FORMAT, name, cards, result);
+    public void printScoreResult(ParticipantDto participant, int score, boolean isBlackjack) {
+        String name = participant.getName();
+        String hand = String.join(DELIMITER_COMMA, participant.getCards());
+        String result = Integer.toString(score);
+        if (isBlackjack) {
+            result += BLACKJACK_MARK;
         }
+        System.out.printf(SCORE_RESULT_FORMAT, name, hand, result);
     }
 
     public void printWinningResultMessage() {
@@ -69,9 +68,7 @@ public class OutputView {
         System.out.printf(DEALER_WINNING_RESULT_FORMAT, win, tie, lose);
     }
 
-    public void printPlayersWinningResult(Map<String, String> playerResult) {
-        for (Map.Entry<String, String> entry : playerResult.entrySet()) {
-            System.out.println(entry.getKey() + DELIMITER_COLON + entry.getValue());
-        }
+    public void printPlayerWinningResult(ResultDto result) {
+        System.out.println(result.getName() + DELIMITER_COLON + result.getResult());
     }
 }
