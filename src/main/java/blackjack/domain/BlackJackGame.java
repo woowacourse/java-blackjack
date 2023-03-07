@@ -44,6 +44,10 @@ public class BlackJackGame {
                 .anyMatch(Player::isDrawable);
     }
 
+    public boolean isDealerDrawable() {
+        return dealer().isDrawable();
+    }
+
     public Dealer dealer() {
         return participants.getDealer();
     }
