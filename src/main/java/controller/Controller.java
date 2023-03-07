@@ -24,7 +24,7 @@ public class Controller {
         selectAdditionalCard(players, game);
         addWhenUnderStandard(dealer, game);
         outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(game.getDealerResult(), game.getPlayersResult());
+        outputView.printWinnerResult(game.getGameResult());
     }
 
     private void distributeInitialCard(Dealer dealer, Players players, BlackjackGame game) {

@@ -24,9 +24,6 @@ public class BlackjackGame {
             distributeDealer();
             distributePlayers();
         }
-
-        List<CardNumber> list = new ArrayList<>();
-        list.add(CardNumber.ACE);
     }
 
     public void distributeDealer() {
@@ -43,41 +40,14 @@ public class BlackjackGame {
         player.addCard(cardDeck.poll());
     }
 
-    public Map<String, List<Result>> getDealerResult() {
-        Map<String, Result> playerResult = getPlayersResult();
-        Map<String, List<Result>> dealerResult = new LinkedHashMap<>();
-        List<Result> dealerResults = new ArrayList<>();
-        for (String name : playerResult.keySet()) {
-            Result result = playerResult.get(name);
-            dealerResults.add(result);
+    public void selectByPlayer(Player player, Command command) {
+        if (command.equals(Command.YES)) {
+            player.addCard(cardDeck.poll());
         }
-        dealerResult.put(dealer.getName(), dealerResults);
-        return dealerResult;
     }
 
-    public Map<String, Result> getPlayersResult() {
-        Map<String, Result> result = new LinkedHashMap<>();
-        int dealer = this.dealer.getCardsSum();
-        for (Player player : players.getPlayers()) {
-            result.put(player.getName(), isPlayerWin(dealer, player.getCardsSum()));
-        }
-        return result;
-    }
-
-    public Result isPlayerWin(int dealerSum, int playerSum) {
-        if (playerSum > BLACK_JACK) {
-            return Result.LOSE;
-        }
-        if (dealerSum > BLACK_JACK) {
-            return Result.WIN;
-        }
-        if (dealerSum > playerSum) {
-            return Result.LOSE;
-        }
-        if (dealerSum < playerSum) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
+    public GameResult getGameResult() {
+        return new GameResult(dealer, players);
     }
 
 }

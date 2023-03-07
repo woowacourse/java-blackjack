@@ -45,25 +45,27 @@ public class OutputView {
     public void printCardsResult(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), dealer.getCards()
-                .stream()
+                .stream().map(s -> s.getCardInfo())
                 .collect(Collectors.joining(SPLIT_DELIMITER)), dealer.getCardsSum());
         for (String key : players.getInfo().keySet()) {
-            List<String> value = players.getInfo().get(key);
+            List<Card> value = players.getInfo().get(key);
             System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, key, value.stream()
+                    .map(s -> s.getCardInfo())
                     .collect(Collectors.joining(SPLIT_DELIMITER)), players.getCardsSum(key));
         }
     }
 
-    public void printWinnerResult(Map<String, List<Result>> dealerResult, Map<String, Result> playerResult) {
+    public void printWinnerResult(GameResult gameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        String name = dealerResult.keySet().stream().findFirst().get();
-        List<Result> dealerResults = dealerResult.get(name);
-        System.out.printf(DEALER_RESULT_MESSAGE, name, dealerResults.stream().filter(s -> s == Result.LOSE).count(),
-                dealerResults.stream().filter(s -> s == Result.DRAW).count(),
-                dealerResults.stream().filter(s -> s == Result.WIN).count());
-        for (String key : playerResult.keySet()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, key, playerResult.get(key).getResult());
+        String dealerName = gameResult.getDealerResult().keySet().stream().findFirst().get();
+        System.out.printf(DEALER_RESULT_MESSAGE, dealerName,
+                gameResult.getDealerResultTypeCount(ResultType.WIN),
+                gameResult.getDealerResultTypeCount(ResultType.DRAW),
+                gameResult.getDealerResultTypeCount(ResultType.LOSE));
+        for (String playerName : gameResult.getPlayerResult().keySet()) {
+            System.out.printf(PLAYER_RESULT_MESSAGE, playerName,
+                    gameResult.getPlayerResult().get(playerName).getResultType());
         }
     }
 
