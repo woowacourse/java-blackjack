@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
-import blackjack.domain.card.Pattern;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,8 +64,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 점수가 16점 이하이면 16점을 초과할 때까지 계속해서 카드를 뽑는다.")
     void canDrawTest() {
-        dealer.receiveCard(new Card(Number.TWO, Pattern.HEART));
-        dealer.receiveCard(new Card(Number.THREE, Pattern.HEART));
+        dealer.receiveCard(new Card(Number.TWO, Suit.HEART));
+        dealer.receiveCard(new Card(Number.THREE, Suit.HEART));
         int initSize = dealer.getCards().size();
 
         while (dealer.canDraw()) {

@@ -32,12 +32,12 @@ class PlayersTest {
     @DisplayName("플레이어는 게임 시작 시 두 장의 카드를 받는다.")
     void receiveSettingCards() {
         List<Card> settingCards = List.of(
-                new Card(Number.THREE, Pattern.DIAMOND),
-                new Card(Number.J, Pattern.DIAMOND),
-                new Card(Number.Q, Pattern.DIAMOND),
-                new Card(Number.K, Pattern.DIAMOND),
-                new Card(Number.ACE, Pattern.HEART),
-                new Card(Number.J, Pattern.DIAMOND)
+                new Card(Number.THREE, Suit.DIAMOND),
+                new Card(Number.J, Suit.DIAMOND),
+                new Card(Number.Q, Suit.DIAMOND),
+                new Card(Number.K, Suit.DIAMOND),
+                new Card(Number.ACE, Suit.HEART),
+                new Card(Number.J, Suit.DIAMOND)
         );
 
         players.receiveSettingCards(settingCards);
@@ -54,16 +54,16 @@ class PlayersTest {
     void decideResult() {
         int dealerScore = 20;
 
-        player1.receiveCard(new Card(Number.TWO, Pattern.HEART));
-        player1.receiveCard(new Card(Number.EIGHT, Pattern.SPADE));
-        player1.receiveCard(new Card(Number.ACE, Pattern.CLUB));
+        player1.receiveCard(new Card(Number.TWO, Suit.HEART));
+        player1.receiveCard(new Card(Number.EIGHT, Suit.SPADE));
+        player1.receiveCard(new Card(Number.ACE, Suit.CLOVER));
 
-        player2.receiveCard(new Card(Number.SEVEN, Pattern.CLUB));
-        player2.receiveCard(new Card(Number.K, Pattern.SPADE));
+        player2.receiveCard(new Card(Number.SEVEN, Suit.CLOVER));
+        player2.receiveCard(new Card(Number.K, Suit.SPADE));
 
-        player3.receiveCard(new Card(Number.THREE, Pattern.HEART));
-        player3.receiveCard(new Card(Number.NINE, Pattern.SPADE));
-        player3.receiveCard(new Card(Number.EIGHT, Pattern.CLUB));
+        player3.receiveCard(new Card(Number.THREE, Suit.HEART));
+        player3.receiveCard(new Card(Number.NINE, Suit.SPADE));
+        player3.receiveCard(new Card(Number.EIGHT, Suit.CLOVER));
 
         Map<Player, Result> result = players.makeResult(dealerScore);
         assertAll(

@@ -20,7 +20,7 @@ class DeckTest {
     void create() {
         for (Number number : Number.values()) {
             for (Suit suit : Suit.values()) {
-                Card card = Card.of(number, suit);
+                Card card = new Card(number, suit);
                 assertThat(deck.containsCard(card)).isTrue();
             }
         }

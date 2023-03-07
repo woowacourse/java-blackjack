@@ -32,7 +32,7 @@ public class PlayerTest {
          List<Card> cards = player.getCards();
 
          // when
-         player.receiveCard(new Card(Number.ACE, Pattern.HEART));
+         player.receiveCard(new Card(Number.ACE, Suit.HEART));
 
          // then
          assertThat(cards.size()).isEqualTo(1);

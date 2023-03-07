@@ -12,7 +12,7 @@ public class CardsTest {
     @DisplayName("갖고 있는 Cards 중 Ace가 없는 경우의 총점 계산")
     void calculateTotalScore() {
         // given
-        Cards cards = new Cards(List.of(new Card(Number.K, Pattern.HEART), new Card(Number.FIVE, Pattern.DIAMOND)));
+        Cards cards = new Cards(List.of(new Card(Number.K, Suit.HEART), new Card(Number.FIVE, Suit.DIAMOND)));
 
         // when
         int totalScore = cards.calculateTotalScore();
@@ -26,9 +26,9 @@ public class CardsTest {
     void calculateTotalScore_containsAce_11() {
         // given
         Cards cards = new Cards(List.of(
-                new Card(Number.THREE, Pattern.HEART),
-                new Card(Number.ACE, Pattern.DIAMOND),
-                new Card(Number.FOUR, Pattern.CLUB))
+                new Card(Number.THREE, Suit.HEART),
+                new Card(Number.ACE, Suit.DIAMOND),
+                new Card(Number.FOUR, Suit.CLOVER))
         );
 
         // when
@@ -43,9 +43,9 @@ public class CardsTest {
     void calculateTotalScore_containsAce_1() {
         // given
         Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Pattern.HEART),
-                new Card(Number.EIGHT, Pattern.DIAMOND),
-                new Card(Number.SEVEN, Pattern.CLUB))
+                new Card(Number.ACE, Suit.HEART),
+                new Card(Number.EIGHT, Suit.DIAMOND),
+                new Card(Number.SEVEN, Suit.CLOVER))
         );
 
         // when
@@ -60,8 +60,8 @@ public class CardsTest {
     void calculateTotalScore_containsAce_blackjack() {
         // given
         Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Pattern.HEART),
-                new Card(Number.K, Pattern.DIAMOND)
+                new Card(Number.ACE, Suit.HEART),
+                new Card(Number.K, Suit.DIAMOND)
         ));
 
         // when
@@ -76,8 +76,8 @@ public class CardsTest {
     void isBlackjack() {
         // given
         Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Pattern.HEART),
-                new Card(Number.TEN, Pattern.DIAMOND)
+                new Card(Number.ACE, Suit.HEART),
+                new Card(Number.TEN, Suit.DIAMOND)
         ));
 
         // expect
@@ -90,9 +90,9 @@ public class CardsTest {
     void isBust() {
         // given
         Cards cards = new Cards(List.of(
-                new Card(Number.K, Pattern.HEART),
-                new Card(Number.TEN, Pattern.DIAMOND),
-                new Card(Number.J, Pattern.CLUB)
+                new Card(Number.K, Suit.HEART),
+                new Card(Number.TEN, Suit.DIAMOND),
+                new Card(Number.J, Suit.CLOVER)
         ));
 
         // expect
