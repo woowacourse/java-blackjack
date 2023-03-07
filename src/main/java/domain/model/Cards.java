@@ -26,6 +26,10 @@ public class Cards {
         cards.add(card);
     }
 
+    public boolean isNotEmpty() {
+        return !cards.isEmpty();
+    }
+
     public Set<Card> getCards() {
         return Set.copyOf(cards);
     }
