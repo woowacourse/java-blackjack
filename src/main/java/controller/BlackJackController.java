@@ -16,19 +16,17 @@ public class BlackJackController {
 
     public void run() {
         final BlackJackGame blackJackGame = withExceptionHandle(this::setUpGame);
-        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
         hitOrStayForParticipants(blackJackGame);
         hitOrStayForDealer(blackJackGame);
-        OutputView.showGameStatistic(new GameStatisticResponse(
-                blackJackGame.dealer(),
-                blackJackGame.participants(),
-                blackJackGame.statistic()));
+        statistic(blackJackGame);
     }
 
     private BlackJackGame setUpGame() {
         final List<Name> participantNames = withExceptionHandle(this::createParticipantNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-        return BlackJackGame.defaultSetting(cardDeck, participantNames);
+        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, participantNames);
+        OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.participants());
+        return blackJackGame;
     }
 
     private List<Name> createParticipantNames() {
@@ -56,6 +54,13 @@ public class BlackJackController {
             OutputView.printDealerOneMoreCard();
             blackJackGame.hitForDealer();
         }
+    }
+
+    private void statistic(final BlackJackGame blackJackGame) {
+        OutputView.showGameStatistic(new GameStatisticResponse(
+                blackJackGame.dealer(),
+                blackJackGame.participants(),
+                blackJackGame.statistic()));
     }
 
     private <T> T withExceptionHandle(final Supplier<T> supplier) {
