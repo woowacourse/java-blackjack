@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -29,7 +30,7 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int calculateScore() {

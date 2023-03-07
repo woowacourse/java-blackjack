@@ -2,9 +2,11 @@ package blackjack.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.InstanceOfAssertFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -108,6 +110,15 @@ class HandTest {
         Card card3 = newHand.pickFirstCard();
 
         assertThat(card3).isEqualTo(card);
+    }
+
+    @Test
+    @DisplayName("카드 리스트를 가져올 때 수정이 불가능하다.")
+    void cannotModifyCardList() {
+        Hand hand = new Hand();
+        List<Card> cards = hand.getCards();
+        assertThatThrownBy(() -> cards.add(new Card(CardNumber.KING, Pattern.DIAMOND)))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("에이스가 있을 때")
