@@ -20,14 +20,8 @@ public class CardPool {
         final Pattern[] values = Pattern.values();
 
         for (Pattern pattern : values) {
-            addAllCardByPattern(pattern);
+            cards.addAll(Card.create(pattern));
         }
-    }
-
-    private static void addAllCardByPattern(Pattern pattern) {
-        cards.add(new AceCard(pattern));
-        cards.addAll(StandardCard.createStandardCards(pattern));
-        cards.addAll(CourtCard.createCourtCards(pattern));
     }
 
     public static int getSize() {

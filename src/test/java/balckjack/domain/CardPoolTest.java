@@ -19,12 +19,12 @@ class CardPoolTest {
 
     @Test
     void drawAceCard() {
-        final AceCard target = new AceCard(Pattern.SPADE);
+        final Card target = new Card(Pattern.SPADE, Number.ACE);
         Assertions.assertThat(CardPool.getCards().contains(target)).isTrue();
         Card card = CardPool.draw(new StubCardPicker(target));
 
         Assertions.assertThat(CardPool.getCards().contains(card)).isFalse();
-        Assertions.assertThat(card).isInstanceOf(AceCard.class);
+        Assertions.assertThat(card.isAce()).isTrue();
         Assertions.assertThat(CardPool.getSize()).isEqualTo(51);
     }
 }

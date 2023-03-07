@@ -75,7 +75,7 @@ public class OutputView {
         final String cards = convertCardDeckString(participant.getCardDeck());
         String score = convertScoreToString(rawScore);
         System.out.println(
-            String.format("%s카드: %s - 결과 : %d", participant.getName().getValue(), cards, score));
+            String.format("%s카드: %s - 결과 : %s", participant.getName().getValue(), cards, score));
     }
 
     private static String convertScoreToString(int number) {

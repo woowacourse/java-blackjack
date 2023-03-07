@@ -1,22 +1,33 @@
 package balckjack.domain;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-abstract public class Card {
+public class Card {
 
-    protected final Pattern pattern;
-    protected final String symbol;
+    private final Pattern pattern;
+    private final Number number;
 
-    public Card(Pattern pattern, String symbol) {
-        validateSymbol(symbol);
+    public static List<Card> create(Pattern selectedPattern) {
+        return Arrays.stream(Number.values())
+            .map((number) -> new Card(selectedPattern, number))
+            .collect(Collectors.toList());
+    }
+
+    public Card(Pattern pattern, Number number) {
         this.pattern = pattern;
-        this.symbol = symbol;
+        this.number = number;
     }
 
-    protected void validateSymbol(String symbol) {
+    public boolean isAce() {
+        return number == Number.ACE;
     }
 
-    abstract protected int getValue();
+    public int getValue() {
+        return number.getValue();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -27,16 +38,16 @@ abstract public class Card {
             return false;
         }
         Card card = (Card) o;
-        return pattern == card.pattern && Objects.equals(symbol, card.symbol);
+        return pattern == card.pattern && Objects.equals(number, card.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pattern, symbol);
+        return Objects.hash(pattern, number);
     }
 
     @Override
     public String toString() {
-        return symbol + pattern.getName();
+        return number.getSymbol() + pattern.getName();
     }
 }

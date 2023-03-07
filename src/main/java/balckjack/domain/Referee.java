@@ -24,7 +24,7 @@ public class Referee {
      */
     public int calculateDeckScore(CardDeck deck) {
         int commonSum = calculateCommonCardScore(deck);
-        List<AceCard> aceCards = deck.extractAceCards();
+        List<Card> aceCards = deck.extractAceCards();
         int aceCardCount = aceCards.size();
 
         if (isBurst(commonSum, aceCardCount)) {
@@ -36,8 +36,8 @@ public class Referee {
 
     private int calculateCommonCardScore(CardDeck deck) {
         return deck.getCards().stream().filter(
-            (card) -> card.getValue() != MAX_ACE_VALUE
-        ).mapToInt(Card::getValue).sum();
+                (card) -> !card.isAce())
+            .mapToInt(Card::getValue).sum();
     }
 
     private boolean isBurst(int sum, int aceCardCount) {

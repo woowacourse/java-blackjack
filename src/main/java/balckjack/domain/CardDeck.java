@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 public class CardDeck {
 
-    public static String DELIMITER = ", ";
-
     private final List<Card> cards;
 
     public CardDeck() {
@@ -29,10 +27,10 @@ public class CardDeck {
         return cards;
     }
 
-    public List<AceCard> extractAceCards() {
+    public List<Card> extractAceCards() {
         return cards.stream()
-            .filter((card) -> card.getValue() == Referee.MAX_ACE_VALUE)
-            .map((card) -> (AceCard) card).collect(
-                Collectors.toList());
+            .filter(Card::isAce)
+            .collect(Collectors.toList());
     }
+
 }

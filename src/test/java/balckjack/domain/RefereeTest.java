@@ -19,17 +19,17 @@ class RefereeTest {
     @Test
     void testCommonCase() {
         CardDeck deck = new CardDeck();
-        deck.addCard(new CourtCard(Pattern.SPADE, "K"));
-        deck.addCard(new StandardCard(Pattern.SPADE, "4"));
+        deck.addCard(new Card(Pattern.SPADE, Number.KING));
+        deck.addCard(new Card(Pattern.SPADE, Number.FOUR));
         Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(14);
     }
 
     @Test
     void testBurstCase() {
         CardDeck deck = new CardDeck();
-        deck.addCard(new CourtCard(Pattern.SPADE, "K"));
-        deck.addCard(new CourtCard(Pattern.SPADE, "J"));
-        deck.addCard(new CourtCard(Pattern.SPADE, "Q"));
+        deck.addCard(new Card(Pattern.SPADE, Number.KING));
+        deck.addCard(new Card(Pattern.SPADE, Number.JACK));
+        deck.addCard(new Card(Pattern.SPADE, Number.QUEEN));
 
         Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(-1);
     }
@@ -41,18 +41,18 @@ class RefereeTest {
         @Test
         void testOneAceCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new CourtCard(Pattern.SPADE, "K"));
-            deck.addCard(new StandardCard(Pattern.SPADE, "4"));
-            deck.addCard(new AceCard(Pattern.HEART));
+            deck.addCard(new Card(Pattern.SPADE, Number.KING));
+            deck.addCard(new Card(Pattern.SPADE, Number.FOUR));
+            deck.addCard(new Card(Pattern.HEART, Number.ACE));
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(15);
         }
 
         @Test
         void testElevenAceCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new StandardCard(Pattern.SPADE, "2"));
-            deck.addCard(new StandardCard(Pattern.SPADE, "4"));
-            deck.addCard(new AceCard(Pattern.HEART));
+            deck.addCard(new Card(Pattern.SPADE, Number.TWO));
+            deck.addCard(new Card(Pattern.SPADE, Number.FOUR));
+            deck.addCard(new Card(Pattern.HEART, Number.ACE));
 
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(17);
         }
@@ -60,11 +60,11 @@ class RefereeTest {
         @Test
         void testManyAceCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new StandardCard(Pattern.SPADE, "2"));
-            deck.addCard(new AceCard(Pattern.HEART));
-            deck.addCard(new AceCard(Pattern.CLUB));
-            deck.addCard(new StandardCard(Pattern.SPADE, "4"));
-            deck.addCard(new AceCard(Pattern.DIAMOND));
+            deck.addCard(new Card(Pattern.SPADE, Number.TWO));
+            deck.addCard(new Card(Pattern.HEART, Number.ACE));
+            deck.addCard(new Card(Pattern.CLUB, Number.ACE));
+            deck.addCard(new Card(Pattern.SPADE, Number.FOUR));
+            deck.addCard(new Card(Pattern.DIAMOND, Number.ACE));
 
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(19);
         }
@@ -72,11 +72,11 @@ class RefereeTest {
         @Test
         void testManyAceBurstCase() {
             CardDeck deck = new CardDeck();
-            deck.addCard(new CourtCard(Pattern.SPADE, "K"));
-            deck.addCard(new AceCard(Pattern.SPADE));
-            deck.addCard(new AceCard(Pattern.HEART));
-            deck.addCard(new CourtCard(Pattern.SPADE, "J"));
-            deck.addCard(new AceCard(Pattern.CLUB));
+            deck.addCard(new Card(Pattern.SPADE, Number.KING));
+            deck.addCard(new Card(Pattern.SPADE, Number.ACE));
+            deck.addCard(new Card(Pattern.HEART, Number.ACE));
+            deck.addCard(new Card(Pattern.SPADE, Number.JACK));
+            deck.addCard(new Card(Pattern.CLUB, Number.ACE));
 
             Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(-1);
         }
@@ -90,33 +90,33 @@ class RefereeTest {
 
         Participant dealer = new Dealer();
         Players players = new Players("무민,아마란스,프리지아,수국");
-        Card card1 = new StandardCard(Pattern.CLUB, "10");
-        Card card2 = new StandardCard(Pattern.CLUB, "4");
-        Card card3 = new StandardCard(Pattern.CLUB, "6");
+        Card card1 = new Card(Pattern.CLUB, Number.TEN);
+        Card card2 = new Card(Pattern.CLUB, Number.FOUR);
+        Card card3 = new Card(Pattern.CLUB, Number.SIX);
 
         dealer.hit(new StubCardPicker(card1));
         dealer.hit(new StubCardPicker(card2));
         dealer.hit(new StubCardPicker(card3));
 
-        Card card4 = new StandardCard(Pattern.SPADE, "10");
-        Card card5 = new AceCard(Pattern.SPADE);
+        Card card4 = new Card(Pattern.SPADE, Number.TEN);
+        Card card5 = new Card(Pattern.SPADE, Number.ACE);
         players.getPlayers().get(0).hit(new StubCardPicker(card4));
         players.getPlayers().get(0).hit(new StubCardPicker(card5));
 
-        Card card7 = new StandardCard(Pattern.CLUB, "9");
+        Card card7 = new Card(Pattern.CLUB, Number.NINE);
         players.getPlayers().get(1).hit(new StubCardPicker(card7));
 
-        Card card8 = new StandardCard(Pattern.HEART, "10");
-        Card card9 = new StandardCard(Pattern.HEART, "4");
-        Card card10 = new StandardCard(Pattern.HEART, "6");
+        Card card8 = new Card(Pattern.HEART, Number.TEN);
+        Card card9 = new Card(Pattern.HEART, Number.FOUR);
+        Card card10 = new Card(Pattern.HEART, Number.SIX);
 
         players.getPlayers().get(2).hit(new StubCardPicker(card8));
         players.getPlayers().get(2).hit(new StubCardPicker(card9));
         players.getPlayers().get(2).hit(new StubCardPicker(card10));
 
-        Card card11 = new StandardCard(Pattern.HEART, "10");
-        Card card12 = new StandardCard(Pattern.DIAMOND, "10");
-        Card card13 = new CourtCard(Pattern.DIAMOND, "K");
+        Card card11 = new Card(Pattern.HEART, Number.TEN);
+        Card card12 = new Card(Pattern.DIAMOND, Number.TEN);
+        Card card13 = new Card(Pattern.DIAMOND, Number.KING);
 
         players.getPlayers().get(3).hit(new StubCardPicker(card11));
         players.getPlayers().get(3).hit(new StubCardPicker(card12));
@@ -135,33 +135,33 @@ class RefereeTest {
 
         Participant dealer = new Dealer();
         Players players = new Players("무민,아마란스,프리지아,수국");
-        Card card1 = new StandardCard(Pattern.CLUB, "10");
-        Card card2 = new StandardCard(Pattern.CLUB, "4");
-        Card card3 = new StandardCard(Pattern.CLUB, "9");
+        Card card1 = new Card(Pattern.CLUB, Number.TEN);
+        Card card2 = new Card(Pattern.CLUB, Number.FOUR);
+        Card card3 = new Card(Pattern.CLUB, Number.NINE);
 
         dealer.hit(new StubCardPicker(card1));
         dealer.hit(new StubCardPicker(card2));
         dealer.hit(new StubCardPicker(card3));
 
-        Card card4 = new StandardCard(Pattern.SPADE, "10");
-        Card card5 = new AceCard(Pattern.SPADE);
+        Card card4 = new Card(Pattern.SPADE, Number.TEN);
+        Card card5 = new Card(Pattern.SPADE, Number.ACE);
         players.getPlayers().get(0).hit(new StubCardPicker(card4));
         players.getPlayers().get(0).hit(new StubCardPicker(card5));
 
-        Card card7 = new StandardCard(Pattern.CLUB, "9");
+        Card card7 = new Card(Pattern.CLUB, Number.NINE);
         players.getPlayers().get(1).hit(new StubCardPicker(card7));
 
-        Card card8 = new StandardCard(Pattern.HEART, "10");
-        Card card9 = new StandardCard(Pattern.HEART, "4");
-        Card card10 = new StandardCard(Pattern.HEART, "6");
+        Card card8 = new Card(Pattern.HEART, Number.TEN);
+        Card card9 = new Card(Pattern.HEART, Number.FOUR);
+        Card card10 = new Card(Pattern.HEART, Number.SIX);
 
         players.getPlayers().get(2).hit(new StubCardPicker(card8));
         players.getPlayers().get(2).hit(new StubCardPicker(card9));
         players.getPlayers().get(2).hit(new StubCardPicker(card10));
 
-        Card card11 = new StandardCard(Pattern.HEART, "10");
-        Card card12 = new StandardCard(Pattern.DIAMOND, "10");
-        Card card13 = new CourtCard(Pattern.DIAMOND, "K");
+        Card card11 = new Card(Pattern.HEART, Number.TEN);
+        Card card12 = new Card(Pattern.DIAMOND, Number.TEN);
+        Card card13 = new Card(Pattern.DIAMOND, Number.KING);
 
         players.getPlayers().get(3).hit(new StubCardPicker(card11));
         players.getPlayers().get(3).hit(new StubCardPicker(card12));
