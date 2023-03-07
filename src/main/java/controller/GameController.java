@@ -47,9 +47,21 @@ public final class GameController {
     }
 
     private void startGame(final GameManager gameManager) {
+        bet(gameManager);
         gameManager.giveStartCards();
 
         printTotalParticipantStartCards(gameManager);
+    }
+
+    private void bet(final GameManager gameManager) {
+        final int playerSize = gameManager.playerSize();
+
+        for (int playerOrder = 0; playerOrder < playerSize; playerOrder++) {
+            final String playerName = gameManager.findPlayerNameByOrder(playerOrder);
+            outputView.guideBetAmount(playerName);
+            int betAmount = inputView.readPlayerBetAmount();
+            gameManager.bet(playerOrder, betAmount);
+        }
     }
 
     private void printTotalParticipantStartCards(final GameManager gameManager) {

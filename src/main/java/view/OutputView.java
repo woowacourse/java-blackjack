@@ -25,6 +25,7 @@ import static view.message.MessageFormatter.EXCEPTION_MESSAGE;
 import static view.message.MessageFormatter.FINAL_GAME_RESULT;
 import static view.message.MessageFormatter.PARTICIPANT_CARD_RESULT;
 import static view.message.MessageFormatter.PARTICIPANT_NAME_INPUT_MESSAGE;
+import static view.message.MessageFormatter.PLAYER_BETTING_MESSAGE;
 import static view.message.MessageFormatter.PLAYER_GAME_RESULT;
 import static view.message.MessageFormatter.START_CARD_MESSAGE;
 
@@ -34,6 +35,12 @@ public final class OutputView {
 
     public void guideParticipantsName() {
         print(PARTICIPANT_NAME_INPUT_MESSAGE.format());
+        print(LINE_FEED);
+    }
+
+    public void guideBetAmount(final String playerName) {
+        print(LINE_FEED);
+        print(PLAYER_BETTING_MESSAGE.format(playerName));
         print(LINE_FEED);
     }
 

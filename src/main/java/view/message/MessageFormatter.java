@@ -3,6 +3,7 @@ package view.message;
 public enum MessageFormatter {
 
     PARTICIPANT_NAME_INPUT_MESSAGE("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"),
+    PLAYER_BETTING_MESSAGE("%s의 배팅 금액은?"),
     DRAW_MESSAGE("%s에게 2장을 나누었습니다."),
     CARD_MESSAGE("%s: %s"),
     START_CARD_MESSAGE("%s 카드: %s"),
