@@ -41,6 +41,6 @@ class GamePlayerTest {
     @Test
     void Should_Success_When_GiveCardToPlayer() {
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
-        assertDoesNotThrow(() -> gamePlayer.giveCardToPlayerByIndex(1, new Card(CardNumber.ACE, CardSymbol.HEARTS)));
+        assertDoesNotThrow(() -> gamePlayer.giveCardTo(players.get(0), new Card(CardNumber.ACE, CardSymbol.HEARTS)));
     }
 }

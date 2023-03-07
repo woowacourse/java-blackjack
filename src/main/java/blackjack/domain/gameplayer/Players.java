@@ -42,10 +42,6 @@ public class Players implements Iterable<Player> {
                 .count();
     }
 
-    public void addCardToPlayer(int i, Card card) {
-        players.get(i).addCard(card);
-    }
-
     public void addCardToPlayer(Player player, Card card) {
         players.stream()
                 .filter(player::equals)

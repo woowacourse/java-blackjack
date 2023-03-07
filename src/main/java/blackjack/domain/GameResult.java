@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private static final int BURST_NUMBER = 21;
     private static final int INIT_NUMBER = 0;
 
     private final Map<Result, Integer> dealerResult;

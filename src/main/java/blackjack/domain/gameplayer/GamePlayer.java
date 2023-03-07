@@ -15,10 +15,6 @@ public class GamePlayer {
         dealer.addCard(card);
     }
 
-    public void giveCardToPlayerByIndex(int i, Card card) {
-        players.addCardToPlayer(i, card);
-    }
-
     public void giveCardTo(Player player, Card card) {
         players.addCardToPlayer(player, card);
     }

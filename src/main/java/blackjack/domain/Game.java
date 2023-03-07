@@ -52,7 +52,7 @@ public class Game {
         return gamePlayer.getPlayers();
     }
 
-    public Dealer getDealer() {
+    private Dealer getDealer() {
         return gamePlayer.getDealer();
     }
 
