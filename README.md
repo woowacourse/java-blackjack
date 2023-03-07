@@ -53,7 +53,7 @@
 - [x] BlackJackGame 생성
 - [x] 카드 shuffle 방식으로 변경
 - [x] validator 분리
-- [ ] EnumMap 적용
+- [x] EnumMap 적용
 - [ ] 메소드 이름 통일
 - [ ] 불필요한 생성자 제거
 - [ ] 변경에 따른 관련 코드 수정
