@@ -19,6 +19,6 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         // then
-        Assertions.assertThat(dealer.isUnderLimit()).isTrue();
+        Assertions.assertThat(dealer.hasUnderMinimumScore()).isTrue();
     }
 }

@@ -63,7 +63,7 @@ public class BlackjackController {
     }
 
     private void stopServingCard(Player player) {
-        if (!player.isUnderLimit()) {
+        if (!player.isBust()) {
             OutputView.printScoreUnderLimit();
         }
         OutputView.printPlayerCurrentCards(player);
@@ -77,14 +77,14 @@ public class BlackjackController {
     }
 
     public void giveAdditionalCardsToDealer(Dealer dealer) {
-        while (dealer.isUnderLimit()) {
+        while (dealer.hasUnderMinimumScore()) {
             OutputView.printDealerOneMore();
             dealer.updateCardScore(Cards.giveFirstCard());
         }
     }
 
     private void giveAdditionalCard(String answer, Player player) {
-        while (GameCommand.isContinue(answer) && player.isUnderLimit()) {
+        while (GameCommand.isContinue(answer) && player.isBust()) {
             player.updateCardScore(Cards.giveFirstCard());
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());

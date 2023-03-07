@@ -4,9 +4,7 @@ public class Dealer extends User {
 
     private static final int MINIMUM_SCORE = 17;
 
-    @Override
-    public boolean isUnderLimit() {
+    public boolean hasUnderMinimumScore() {
         return playerCards.getTotalScore() < MINIMUM_SCORE;
     }
-
 }

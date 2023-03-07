@@ -18,19 +18,19 @@ class PlayerTest {
         player.playerCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
 
         // then
-        Assertions.assertThat(player.isUnderLimit()).isTrue();
+        Assertions.assertThat(player.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("User의 total score가 21이 넘으면 false를 반환한다.")
     void total_score_over_21() {
         // given & when
-        Player player = new Player(new Name("메리"));
+        Player player = new Player(new Name("Merry"));
         player.playerCards.updateCardScore(new Card(CardNumber.KING, CardSymbol.HEART));
         player.playerCards.updateCardScore(new Card(CardNumber.FIVE, CardSymbol.HEART));
         player.playerCards.updateCardScore(new Card(CardNumber.KING, CardSymbol.HEART));
 
         // then
-        Assertions.assertThat(player.isUnderLimit()).isFalse();
+        Assertions.assertThat(player.isBust()).isFalse();
     }
 }
