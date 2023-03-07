@@ -125,7 +125,7 @@ public class BlackJackController {
 
     public List<PlayerResultResponse> getPlayerResultResponses(final Dealer dealer, final List<Player> players) {
         return players.stream()
-                .map(player -> PlayerResultResponse.of(player, dealer.compareScoreTo(player)))
+                .map(player -> PlayerResultResponse.of(player, dealer.compareScoreTo(player).reverseResult()))
                 .collect(Collectors.toList());
     }
 }

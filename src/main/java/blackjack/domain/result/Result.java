@@ -12,6 +12,16 @@ public enum Result {
         this.name = name;
     }
 
+    public Result reverseResult() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
     public String getName() {
         return name;
     }
