@@ -24,13 +24,9 @@ public abstract class User {
         return name.getValue();
     }
 
-    final public List<Card> getStatus() {
-        return cardGroup.getCards();
-    }
-
     final public CardGroup getCardGroups() {
         return cardGroup;
     }
 
-    abstract public List<Card> getFirstOpenCardGroup();
+    public abstract CardGroup getFirstOpenCardGroup();
 }

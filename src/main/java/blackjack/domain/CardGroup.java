@@ -6,9 +6,14 @@ import java.util.stream.Collectors;
 
 public class CardGroup {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    private CardGroup(final List<Card> cards) {
+        this.cards = cards;
+    }
 
     public CardGroup(final Card firstCard, final Card secondCard) {
+        cards = new ArrayList<>();
         cards.add(firstCard);
         cards.add(secondCard);
     }
@@ -34,10 +39,11 @@ public class CardGroup {
                 .count();
     }
 
-    public List<Card> subCardGroup(int size) {
-        return cards.stream()
+    public CardGroup getSubCardGroup(int size) {
+        final List<Card> subCardGroup = cards.stream()
                 .limit(size)
                 .collect(Collectors.toUnmodifiableList());
+        return new CardGroup(subCardGroup);
     }
 
     public List<Card> getCards() {

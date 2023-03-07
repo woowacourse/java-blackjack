@@ -71,6 +71,7 @@ class UsersTest {
                 , new Deck(new TestDeckGenerator(testCards)));
 
         List<Card> initialCards = users.getStatus().values().stream()
+                .map(CardGroup::getCards)
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
         assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards);
@@ -82,14 +83,14 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        final Map<String, List<Card>> firstOpenCardGroups = users.getFirstOpenCardGroups();
+        final Map<String, CardGroup> firstOpenCardGroups = users.getFirstOpenCardGroups();
 
         assertSoftly(softly -> {
-            softly.assertThat(firstOpenCardGroups.get("필립"))
+            softly.assertThat(firstOpenCardGroups.get("필립").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(firstOpenCardGroups.get("홍실"))
+            softly.assertThat(firstOpenCardGroups.get("홍실").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
-            softly.assertThat(firstOpenCardGroups.get("딜러"))
+            softly.assertThat(firstOpenCardGroups.get("딜러").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
         });
     }
@@ -111,7 +112,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립"), deck);
 
         users.drawDealer(deck);
-        int dealerCardCount = users.getStatus().get("딜러").size();
+        int dealerCardCount = users.getStatus().get("딜러").getCards().size();
 
         assertThat(dealerCardCount).isEqualTo(3);
     }

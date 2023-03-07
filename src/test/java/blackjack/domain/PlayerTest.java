@@ -29,7 +29,7 @@ class PlayerTest {
 
         assertSoftly(softly -> {
             softly.assertThat(player.getName()).isEqualTo(name);
-            softly.assertThat(player.getStatus()).containsExactly(firstCard, secondCard);
+            softly.assertThat(player.getCardGroups().getCards()).containsExactly(firstCard, secondCard);
         });
     }
 
@@ -51,7 +51,7 @@ class PlayerTest {
 
         player.drawCard(deck);
 
-        Assertions.assertThat(player.getStatus()).containsExactly(firstCard, secondCard, card);
+        Assertions.assertThat(player.getCardGroups().getCards()).containsExactly(firstCard, secondCard, card);
     }
 
     @Test
@@ -59,6 +59,6 @@ class PlayerTest {
     void getInitialStatus() {
         final User player = new Player(name, initialGroup);
 
-        assertThat(player.getFirstOpenCardGroup()).containsExactly(firstCard, secondCard);
+        assertThat(player.getFirstOpenCardGroup().getCards()).containsExactly(firstCard, secondCard);
     }
 }

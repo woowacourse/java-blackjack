@@ -10,8 +10,8 @@ public class Dealer extends User {
     }
 
     @Override
-    public List<Card> getFirstOpenCardGroup() {
-        return getCardGroups().subCardGroup(FIRST_OPEN_CARD_COUNT);
+    public CardGroup getFirstOpenCardGroup() {
+        return getCardGroups().getSubCardGroup(FIRST_OPEN_CARD_COUNT);
     }
 
     public WinningStatus comparePlayer(final Player player) {
