@@ -44,9 +44,9 @@ class WinningResultTest {
     }
 
     private void giveCardToParticipants() {
-        gitJjang.receiveCard(new Card("A", "스페이드")); // K, K, A => 21
-        poo.receiveCard(new Card("A", "하트")); // Q, Q, A => 21
-        kyle.receiveCard(new Card("7", "하트")); // Q, Q, 7 => 27
+        gitJjang.receiveCard(new Card("스페이드", "A")); // K, K, A => 21
+        poo.receiveCard(new Card("하트", "A")); // Q, Q, A => 21
+        kyle.receiveCard(new Card("하트", "7")); // Q, Q, 7 => 27
     }
 
     private Participants initializeParticipants() {

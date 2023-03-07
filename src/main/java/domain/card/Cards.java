@@ -6,7 +6,7 @@ import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
-public class Cards {
+public final class Cards {
 
     private final Stack<Card> cards;
 
@@ -18,7 +18,7 @@ public class Cards {
         Stack<Card> cards = new Stack<>();
         for (Value value : Value.values()) {
             for (Shape shape : Shape.values()) {
-                cards.push(new Card(value.getValue(), shape.getShape()));
+                cards.push(new Card(shape.getShape(), value.getValue()));
             }
         }
         return cards;

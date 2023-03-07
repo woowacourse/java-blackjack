@@ -16,8 +16,8 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        List<Card> gitJjangCards = new ArrayList<>(List.of(new Card("K", "하트"), new Card("3", "스페이드")));
-        List<Card> kyleCards = new ArrayList<>(List.of(new Card("4", "스페이드"), new Card("A", "클로버")));
+        List<Card> gitJjangCards = new ArrayList<>(List.of(new Card("하트", "K"), new Card("스페이드", "3")));
+        List<Card> kyleCards = new ArrayList<>(List.of(new Card("스페이드", "4"), new Card("클로버", "A")));
         gitJjang = new Player(new Name("깃짱"), gitJjangCards);
         kyle = new Player(new Name("카일"), kyleCards);
     }
@@ -32,16 +32,16 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
-        gitJjang.receiveCard(new Card("10", "하트"));
+        gitJjang.receiveCard(new Card("하트", "10"));
         assertThat(gitJjang.calculateScore()).isEqualTo(23);
 
-        kyle.receiveCard(new Card("4", "하트"));
+        kyle.receiveCard(new Card("하트", "4"));
         assertThat(kyle.calculateScore()).isEqualTo(19);
 
-        kyle.receiveCard(new Card("A", "다이아몬드"));
+        kyle.receiveCard(new Card("다이아몬드", "A"));
         assertThat(kyle.calculateScore()).isEqualTo(20);
 
-        kyle.receiveCard(new Card("9", "스페이드"));
+        kyle.receiveCard(new Card("스페이드", "9"));
         assertThat(kyle.calculateScore()).isEqualTo(19);
     }
 }

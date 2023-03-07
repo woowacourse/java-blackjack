@@ -2,8 +2,6 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Cards;
 import domain.card.shuffler.CardsShuffler;
 import domain.card.shuffler.FixedCardsShuffler;
 import org.junit.jupiter.api.DisplayName;
@@ -21,14 +19,14 @@ class CardsTest {
     @ParameterizedTest
     @CsvSource({"A,스페이드", "2,하트", "3,다이아몬드", "J,하트", "K,클로버"})
     void createCardsTest(String value, String shape) {
-        Card card = new Card(value, shape);
+        Card card = new Card(shape, value);
         assertThat(cards.contains(card)).isTrue();
     }
 
     @DisplayName("카드를 한 장씩 반환받을 수 있다.")
     @Test
     void receiveCardTest() {
-        assertThat(cards.getCard()).isEqualTo(new Card("K", "하트"));
-        assertThat(cards.getCard()).isEqualTo(new Card("K", "다이아몬드"));
+        assertThat(cards.getCard()).isEqualTo(new Card("하트", "K"));
+        assertThat(cards.getCard()).isEqualTo(new Card("다이아몬드", "K"));
     }
 }
