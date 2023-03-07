@@ -60,8 +60,8 @@ class CardsTest {
     @Test
     void 카드를_추가한다() {
         final Cards cards = new Cards(new ArrayList<>());
-
         final Card card = new Card(ACE, DIAMOND);
+
         cards.addCard(card);
 
         assertThat(cards.count()).isEqualTo(1);

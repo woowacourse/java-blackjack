@@ -25,11 +25,9 @@ public class Cards {
 
     public int calculateTotalScore() {
         final int score = getTotalScore();
-
         if (isExistAce() && isScoreUpdatable(score)) {
             return score + ACE_BONUS;
         }
-
         return score;
     }
 

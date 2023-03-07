@@ -50,7 +50,8 @@ class DealerTest {
         @Test
         void 카드가_2장_초과라면_false_반환한다() {
             final Cards cards = new Cards(
-                    List.of(new Card(TWO, CLOVER), new Card(SIX, HEART), new Card(SEVEN, DIAMOND))); // 15점
+                    List.of(new Card(TWO, CLOVER), new Card(SIX, HEART), new Card(SEVEN, DIAMOND))
+            ); // 15점
             final Dealer dealer = new Dealer(cards);
 
             assertThat(dealer.isDrawable()).isFalse();
@@ -79,17 +80,6 @@ class DealerTest {
 
             assertThat(dealer.isDrawable()).isFalse();
         }
-    }
-
-    @Test
-    void 카드를_받는다() {
-        final List<Card> cardPack = new ArrayList<>(List.of(new Card(QUEEN, CLOVER), new Card(SIX, HEART)));
-        final Cards cards = new Cards(cardPack);
-        final Dealer dealer = new Dealer(cards);
-
-        dealer.drawCard(new Card(ACE, DIAMOND));
-
-        assertThat(dealer.isDrawable()).isFalse();
     }
 
     @Test

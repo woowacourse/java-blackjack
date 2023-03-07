@@ -23,10 +23,8 @@ public class OutputView {
     ) {
         System.out.println(LINE_SEPARATOR + format("{0}와 {1}에게 {2}장을 나누었습니다.",
                 dealer.getName(), getPlayerNamesFormat(players), count));
-
         printHandedCardsWithoutScore(dealer);
         players.forEach(this::printHandedCardsWithoutScore);
-
         System.out.println();
     }
 
@@ -43,7 +41,6 @@ public class OutputView {
     private String getHandedCardsWithoutScore(final ParticipantResponse participant) {
         final CardsResponse cardsResponse = participant.getCardsResponse();
         final List<String> cardInfos = cardsResponse.getCardInfos();
-
         return format("{0}카드: {1}", participant.getName(), getCardInfosFormat(cardInfos));
     }
 
@@ -65,7 +62,6 @@ public class OutputView {
     private void printHandedCardsWithScore(final ParticipantResponse participant) {
         final CardsResponse cardsResponse = participant.getCardsResponse();
         final int totalScore = cardsResponse.getTotalScore();
-
         System.out.println(format("{0} - {1}", getHandedCardsWithoutScore(participant), getScoreFormat(totalScore)));
     }
 
