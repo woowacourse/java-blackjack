@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import blackjack.domain.participants.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -8,8 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -32,16 +33,16 @@ class PlayersTest {
 
             assertThatThrownBy(() -> Players.from(playerNames))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("사용자 수는 1 이상 5 이하여야 합니다. 현재 : 0 명입니다");
+                    .hasMessage("사용자 수는 1 이상 6 이하여야 합니다. 현재 : 0 명입니다");
         }
 
         @Test
-        void 플레이어의_수가_5명초과면_예외() {
-            final List<String> playerNames = List.of("pobi", "crong", "honux", "wannte", "디디", "누누");
+        void 플레이어의_수가_6명초과면_예외() {
+            final List<String> playerNames = List.of("pobi", "crong", "honux", "wannte", "디디", "누누", "이레");
 
             assertThatThrownBy(() -> Players.from(playerNames))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("사용자 수는 1 이상 5 이하여야 합니다. 현재 : 6 명입니다");
+                    .hasMessage("사용자 수는 1 이상 6 이하여야 합니다. 현재 : 7 명입니다");
         }
 
         @Test

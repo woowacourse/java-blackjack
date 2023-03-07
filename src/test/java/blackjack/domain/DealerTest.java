@@ -2,13 +2,19 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.participants.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -40,43 +46,44 @@ class DealerTest {
     }
 
     @Nested
-    @DisplayName("딜러를 통해 결과를 계산하면")
+    @DisplayName("플레이어의 승패 결과와 딜러의 승패는 반대이다")
     class CalculateResultTest {
 
         private final Dealer dealer = new Dealer();
-        private Player player;
+        private Map<String, ResultType> playerResult;
+
 
         @BeforeEach
         void setUp() {
             dealer.drawCard(new Card(Shape.DIAMOND, Symbol.FIVE));
-            player = new Player("pobi");
+            playerResult = Map.of("ire", ResultType.WIN, "kme", ResultType.LOSE, "SKFKS", ResultType.LOSE);
         }
 
         @Test
-        void 딜러가_이긴_경우() {
-            player.drawCard(new Card(Shape.DIAMOND, Symbol.FOUR));
-            dealer.calculateResult(player);
+        void 딜러가_이긴_횟수는_2이다() {
+            final int winCount = dealer.calculateResult(playerResult)
+                    .getOrDefault(ResultType.WIN, 0);
 
-            assertThat(dealer.getResult())
-                    .containsEntry(player.getName(), ResultType.WIN);
+            assertThat(winCount)
+                    .isEqualTo(2);
         }
 
         @Test
-        void 딜러가_비긴_경우() {
-            player.drawCard(new Card(Shape.DIAMOND, Symbol.FIVE));
-            dealer.calculateResult(player);
+        void 딜러가_비긴_횟수는_0이다() {
+            final int winCount = dealer.calculateResult(playerResult)
+                    .getOrDefault(ResultType.TIE, 0);
 
-            assertThat(dealer.getResult())
-                    .containsEntry(player.getName(), ResultType.TIE);
+            assertThat(winCount)
+                    .isEqualTo(0);
         }
 
         @Test
-        void 딜러가_진_경우() {
-            player.drawCard(new Card(Shape.DIAMOND, Symbol.SIX));
-            dealer.calculateResult(player);
+        void 딜러가_진_횟수는_1이다() {
+            final int winCount = dealer.calculateResult(playerResult)
+                    .getOrDefault(ResultType.LOSE, 0);
 
-            assertThat(dealer.getResult())
-                    .containsEntry(player.getName(), ResultType.LOSE);
+            assertThat(winCount)
+                    .isEqualTo(1);
         }
     }
 }
