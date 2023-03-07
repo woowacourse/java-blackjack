@@ -41,15 +41,7 @@ public class BlackjackGame {
     }
 
     private void initPlayerResult(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
-        if (dealerResult == WinningResult.WIN) {
-            playersResult.put(player, WinningResult.LOSE);
-        }
-        if (dealerResult == WinningResult.LOSE) {
-            playersResult.put(player, WinningResult.WIN);
-        }
-        if (dealerResult == WinningResult.PUSH) {
-            playersResult.put(player, WinningResult.PUSH);
-        }
+        playersResult.put(player, dealerResult.getPlayerResultByDealerResult());
     }
 
     public List<Player> findPlayers() {

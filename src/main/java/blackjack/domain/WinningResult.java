@@ -36,6 +36,13 @@ public enum WinningResult {
         return PUSH;
     }
 
+    public WinningResult getPlayerResultByDealerResult() {
+        if (this.isLose()) {
+            return WIN;
+        }
+        return PUSH;
+    }
+
     public boolean isWin() {
         return this == WIN;
     }
