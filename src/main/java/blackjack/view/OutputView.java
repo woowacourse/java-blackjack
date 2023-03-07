@@ -7,10 +7,10 @@ import static java.text.MessageFormat.format;
 
 import blackjack.domain.result.Result;
 import blackjack.view.dto.CardsResponse;
+import blackjack.view.dto.DealerResultResponse;
 import blackjack.view.dto.DealerStateResponse;
 import blackjack.view.dto.ParticipantResponse;
 import blackjack.view.dto.PlayerResultResponse;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,29 +69,22 @@ public class OutputView {
         return format("결과: {0}", totalScore);
     }
 
-    public void printResult(final String dealerName, final List<PlayerResultResponse> players) {
+    public void printResult(final DealerResultResponse dealer, final List<PlayerResultResponse> players) {
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.println(format(RESULT_FORMAT, dealerName, getDealerResult(players)));
+        printDealerResult(dealer);
         players.forEach(this::printPlayerResult);
     }
 
-    private String getDealerResult(final List<PlayerResultResponse> players) {
-        final Map<Result, Integer> playerResult = initPlayerResult();
-        for (PlayerResultResponse player : players) {
-            final Result result = player.getResult();
-            playerResult.put(result, playerResult.getOrDefault(result, 0) + 1);
-        }
+    private void printDealerResult(final DealerResultResponse dealer) {
+        String dealerName = dealer.getName();
+        Map<Result, Integer> resultMap = dealer.getResultMap();
 
-        return format("{0}승 {1}무 {2}패", playerResult.get(LOSE), playerResult.get(DRAW), playerResult.get(WIN));
-    }
+        Integer dealerWin = resultMap.get(WIN);
+        Integer dealerDraw = resultMap.get(DRAW);
+        Integer dealerLose = resultMap.get(LOSE);
 
-    private Map<Result, Integer> initPlayerResult() {
-        final Map<Result, Integer> playerResult = new HashMap<>();
-        for (final Result result : Result.values()) {
-            playerResult.put(result, 0);
-        }
-        return playerResult;
+        System.out.println(format(RESULT_FORMAT + "{2}승 {3}무 {4}패", dealerName, dealerWin, dealerDraw, dealerLose));
     }
 
     private void printPlayerResult(final PlayerResultResponse player) {
