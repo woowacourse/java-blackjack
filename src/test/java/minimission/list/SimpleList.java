@@ -23,6 +23,19 @@ public interface SimpleList<E> {
         
     }
     
+    static <E extends Number> SimpleList<E> filterNegative(SimpleList<E> doubleValues) {
+        SimpleList<E> tmpArr = new SimpleArrayList<>();
+    
+        for (int i = 0; i < doubleValues.size(); i++) {
+            E value = doubleValues.get(i);
+            if (value.doubleValue() >= 0) {
+                tmpArr.add(value);
+            }
+        }
+        
+        return tmpArr;
+    }
+    
     boolean add(E value);
 
     void add(int index, E value);

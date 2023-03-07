@@ -64,4 +64,16 @@ class ListStudy {
                 () -> assertThat(intTotal).isEqualTo(3)
         );
     }
+    
+    @Test
+    void generic_mission4() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
+    
+        final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
+        final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+        
+        assertThat(filteredDoubleValues.size()).isEqualTo(2);
+        assertThat(filteredIntValues.size()).isEqualTo(2);
+    }
 }
