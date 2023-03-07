@@ -14,7 +14,7 @@ public class GameResult {
     }
 
     public static GameResult from(final Participant participant) {
-        return new GameResult(participant.getCards(), participant.computeSumOfCards());
+        return new GameResult(participant.getCards(), participant.getSum());
     }
 
     public List<Card> getCards() {

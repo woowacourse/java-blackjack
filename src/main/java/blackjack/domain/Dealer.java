@@ -5,7 +5,7 @@ public class Dealer extends Participant {
     private static final int CARD_TAKE_LIMIT = 17;
 
     public boolean isUnderTakeLimit() {
-        return computeSumOfCards() < CARD_TAKE_LIMIT;
+        return hand.getSum() < CARD_TAKE_LIMIT;
     }
 
     public WinResult judge(Player player) {
@@ -26,7 +26,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        int sum = computeSumOfCards();
-        return sum < CARD_TAKE_LIMIT;
+        return hand.getSum() < CARD_TAKE_LIMIT;
     }
 }

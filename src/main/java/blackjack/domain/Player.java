@@ -18,4 +18,9 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean canDraw() {
+        return !hand.isBlackJack() && !hand.isBust();
+    }
 }

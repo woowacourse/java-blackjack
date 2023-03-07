@@ -19,34 +19,34 @@ class ParticipantTest {
     @DisplayName("참가자가 가지고 있는 카드의 합을 반환한다.")
     @Test
     void should_ReturnSumOfCards() {
-        Participant participant = new Participant();
+        Participant participant = new Dealer();
 
         participant.take(new Card(SPADE, JACK));
         participant.take(new Card(CLUB, QUEEN));
 
-        assertThat(participant.computeSumOfCards()).isEqualTo(20);
+        assertThat(participant.getSum()).isEqualTo(20);
     }
 
     @DisplayName("참가자 카드 중 ACE는 11을 기본값으로 한다.")
     @Test
     void should_defaultValueOfACE_Is_11() {
-        Participant participant = new Participant();
+        Participant participant = new Dealer();
 
         participant.take(new Card(SPADE, ACE));
         participant.take(new Card(CLUB, QUEEN));
 
-        assertThat(participant.computeSumOfCards()).isEqualTo(21);
+        assertThat(participant.getSum()).isEqualTo(21);
     }
 
     @DisplayName("참가자 카드 합이 21을 초과하면 ACE의 값을 1로 계산한다.")
     @Test
     void should_valueOfAce_Is_1_WhenSumOfCardsOver21() {
-        Participant participant = new Participant();
+        Participant participant = new Dealer();
 
         participant.take(new Card(SPADE, ACE));
         participant.take(new Card(SPADE, KING));
         participant.take(new Card(CLUB, QUEEN));
 
-        assertThat(participant.computeSumOfCards()).isEqualTo(21);
+        assertThat(participant.getSum()).isEqualTo(21);
     }
 }

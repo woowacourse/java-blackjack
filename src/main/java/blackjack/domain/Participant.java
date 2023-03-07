@@ -2,21 +2,15 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
-    private final Hand hand = new Hand();
+    protected final Hand hand = new Hand();
 
     public void take(Card card) {
         hand.add(card);
     }
 
-    public int computeSumOfCards() {
-        return hand.getSum();
-    }
-
-    public boolean canDraw() {
-        return !hand.isBlackJack() && !hand.isBust();
-    }
+    public abstract boolean canDraw();
 
     public boolean isBust() {
         return hand.isBust();
