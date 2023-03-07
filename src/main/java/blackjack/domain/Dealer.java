@@ -9,18 +9,18 @@ public class Dealer extends Participant {
     }
 
     public WinResult judge(Player player) {
-        int dealerSum = computeSumOfCards();
-        if (isBust(dealerSum)) {
+        if (isBust()) {
             return WinResult.WIN;
         }
 
-        int playerSum = player.computeSumOfCards();
-        if (playerSum == dealerSum) {
+        if (player.getSum() == getSum()) {
             return WinResult.PUSH;
         }
-        if (playerSum > dealerSum) {
+
+        if (player.getSum() > getSum()) {
             return WinResult.WIN;
         }
+
         return WinResult.LOSE;
     }
 

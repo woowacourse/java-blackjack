@@ -1,50 +1,32 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Participant {
 
-    private static final int BLACK_JACK = 21;
-    private static final int ACE_ADDITIONAL_VALUE = 10;
-
-    private final List<Card> cards = new ArrayList<>();
+    private final Hand hand = new Hand();
 
     public void take(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int computeSumOfCards() {
-        int sum = cards.stream()
-                .map(Card::getNumberValue)
-                .reduce(0, Integer::sum);
-
-        if (isBust(sum) && hasACE()) {
-            return (sum - ACE_ADDITIONAL_VALUE);
-        }
-
-        return sum;
+        return hand.getSum();
     }
 
     public boolean canDraw() {
-        int sum = computeSumOfCards();
-        return !isBlackJack(sum) && !isBust(sum);
+        return !hand.isBlackJack() && !hand.isBust();
     }
 
-    public boolean isBust(int sum) {
-        return sum > BLACK_JACK;
-    }
-
-    public boolean isBlackJack(int sum) {
-        return sum == BLACK_JACK;
-    }
-
-    private boolean hasACE() {
-        return cards.stream()
-                .anyMatch(Card::isACE);
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return hand.getCards();
+    }
+
+    public int getSum() {
+        return hand.getSum();
     }
 }
