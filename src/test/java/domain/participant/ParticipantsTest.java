@@ -72,23 +72,53 @@ class ParticipantsTest {
     }
 
     @Test
-    void 참가자의_승패를_구할_수_있다() {
+    void 딜러보다_점수가_높으면_WIN() {
         // given
-        Participants participants = Participants.of(List.of("배럴", "바란", "가비"));
+        Participants participants = Participants.of(List.of("배럴"));
         participants.getDealer().addCard(new Card(Denomination.NINE, Suit.SPADE));
         List<Participant> players = participants.getPlayers();
 
         // when
         players.get(0).addCard(new Card(Denomination.ACE, Suit.SPADE));
-        players.get(1).addCard(new Card(Denomination.TWO, Suit.SPADE));
-        players.get(2).addCard(new Card(Denomination.NINE, Suit.SPADE));
 
         // then
         assertThat(participants.getResult()).contains(
-                // 딜러 9 vs 배럴 ACE, 바란 2, 가비 9
-                Map.entry("배럴", PlayerGameResult.WIN),
-                Map.entry("바란", PlayerGameResult.LOSE),
-                Map.entry("가비", PlayerGameResult.DRAW)
+                // 딜러 9 vs 배럴 ACE
+                Map.entry("배럴", PlayerGameResult.WIN)
+        );
+    }
+
+    @Test
+    void 딜러와_점수가_같다면_DRAW() {
+        // given
+        Participants participants = Participants.of(List.of("둘리"));
+        participants.getDealer().addCard(new Card(Denomination.NINE, Suit.SPADE));
+        List<Participant> players = participants.getPlayers();
+
+        // when
+        players.get(0).addCard(new Card(Denomination.NINE, Suit.SPADE));
+
+        // then
+        assertThat(participants.getResult()).contains(
+                // 딜러 9 vs 둘리 9
+                Map.entry("둘리", PlayerGameResult.DRAW)
+        );
+    }
+
+    @Test
+    void 딜러보다_점수가_낮으면_LOSE() {
+        // given
+        Participants participants = Participants.of(List.of("패배자이름"));
+        participants.getDealer().addCard(new Card(Denomination.NINE, Suit.SPADE));
+        List<Participant> players = participants.getPlayers();
+
+        // when
+        players.get(0).addCard(new Card(Denomination.TWO, Suit.SPADE));
+
+        // then
+        assertThat(participants.getResult()).contains(
+                // 딜러 9 vs 패배자 1
+                Map.entry("패배자이름", PlayerGameResult.LOSE)
         );
     }
 }
