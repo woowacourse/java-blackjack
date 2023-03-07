@@ -5,6 +5,7 @@ import domain.card.Card;
 import domain.card.GameDeck;
 import domain.card.ShuffleDeckGenerator;
 import domain.game.BlackJackGame;
+import domain.game.GameResult;
 import domain.user.Dealer;
 import domain.user.Name;
 import domain.user.Player;
@@ -62,8 +63,9 @@ public class BlackJackGameController {
         progressPlayersTurn(blackJackGame);
         progressDealerTurn(blackJackGame);
         showUsersCardResult(blackJackGame);
-        blackJackGame.judgeWinner();
-        showFinalResult(blackJackGame);
+        GameResult gameResult = new GameResult(blackJackGame.getPlayerNames());
+        gameResult.saveResults(blackJackGame.getDealer(), blackJackGame.getPlayers());
+        showFinalResult(gameResult);
     }
 
     private void progressPlayersTurn(BlackJackGame blackJackGame) {
@@ -110,9 +112,7 @@ public class BlackJackGameController {
         outputView.printUsersCardResult(userResult);
     }
 
-    private void showFinalResult(BlackJackGame blackJackGame) {
-        Map<Boolean, Integer> dealerWinningRecord = blackJackGame.getDealer().getWinningRecord();
-        Map<String, Boolean> userFinalResult = blackJackGame.getUserFinalResult();
-        outputView.printFinalResult(dealerWinningRecord, userFinalResult);
+    private void showFinalResult(GameResult gameResult) {
+        outputView.printFinalResult(gameResult.getDealerResult(), gameResult.getPlayerResults());
     }
 }

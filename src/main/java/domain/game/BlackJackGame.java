@@ -4,12 +4,10 @@ import domain.card.GameDeck;
 import domain.user.Dealer;
 import domain.user.DealerStatus;
 import domain.user.Player;
-import domain.user.PlayerStatus;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private final List<Player> players;
@@ -32,56 +30,17 @@ public class BlackJackGame {
         }
     }
 
-    public void judgeWinner() {
-        for (Player player : players) {
-            compareDealerWithPlayer(player);
-        }
-    }
-
-    private void compareDealerWithPlayer(Player player) {
-        if (player.isUserStatus(PlayerStatus.BUST)) {
-            dealerWin(player);
-            return;
-        }
-        if (player.isUserStatus(PlayerStatus.NORMAL) && dealer.isUserStatus(DealerStatus.BUST)) {
-            playerWin(player);
-            return;
-        }
-        compareScore(player);
-    }
-
-    private void playerWin(Player player) {
-        dealer.lose();
-        player.win();
-    }
-
-    private void dealerWin(Player player) {
-        dealer.win();
-        player.lose();
-    }
-
-    private void compareScore(Player player) {
-        if (dealer.getScore() >= player.getScore()) {
-            dealerWin(player);
-        }
-        playerWin(player);
-    }
-
-    public Map<String, Boolean> getUserFinalResult() {
-        Map<String, Boolean> userFinalResult = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            userFinalResult.put(player.getName(), player.isWinner());
-        }
-
-        return userFinalResult;
-    }
-
     public Dealer getDealer() {
         return dealer;
     }
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 }
