@@ -53,16 +53,24 @@ public class BlackjackGame {
     }
 
     public List<Player> findPlayers() {
-        return participants.getParticipants().stream()
+        return getParticipants().stream()
                 .filter(participant -> !participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
                 .map(it -> (Player) it)
                 .collect(Collectors.toList());
     }
 
     public Dealer findDealer() {
-        return (Dealer) participants.getParticipants().stream()
+        return (Dealer) getParticipants().stream()
             .filter(participant -> participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
             .findFirst()
             .get();
+    }
+
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
+    }
+
+    public List<String> getParticipantsName() {
+        return participants.getParticipantsName();
     }
 }
