@@ -15,6 +15,17 @@ public class Card {
         return denomination.isAce();
     }
 
+    public int getScore() {
+        return denomination.getScore();
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -26,18 +37,6 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, suit);
-    }
-
-    public int getScore() {
-        return denomination.getScore();
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
-    public Suit getSuit() {
-        return suit;
     }
 }
 
