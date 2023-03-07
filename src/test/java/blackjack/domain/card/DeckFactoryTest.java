@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DeckFactoryTest {
-    
+
     @Test
     void 덱을_생성한다() {
         final Stack<Card> pack = new Stack<>();
         pack.add(new Card(ACE, SPADE));
-        
+
         final Deck deck = DeckFactory.createWithCount(pack, 1);
         deck.draw();
 

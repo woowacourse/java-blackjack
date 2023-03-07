@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.result.Result;
-import java.util.List;
 
 public abstract class Participant {
 
@@ -23,10 +21,6 @@ public abstract class Participant {
 
     public int getScore() {
         return cards.calculateTotalScore();
-    }
-
-    public Result getWinningStatus(final int score) {
-        return null;
     }
 
     public Cards getCards() {

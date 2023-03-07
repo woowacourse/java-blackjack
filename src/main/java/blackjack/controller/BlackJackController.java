@@ -112,10 +112,9 @@ public class BlackJackController {
         participantResponses.forEach(outputView::printHandedCardsWithScore);
 
         final Dealer dealer = participants.getDealer();
+        final List<PlayerResultResponse> player = getPlayerResultResponses(dealer, participants.getPlayers());
 
-        final List<PlayerResultResponse> playerResultResponses = getPlayerResultResponses(
-                dealer.getScore(), participants.getPlayers());
-        outputView.printResult(dealer.getName(), playerResultResponses);
+        outputView.printResult(dealer.getName(), player);
     }
 
     private List<ParticipantResponse> getParticipantResponses(final List<Participant> participants) {
@@ -124,9 +123,9 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    public List<PlayerResultResponse> getPlayerResultResponses(final int dealerScore, final List<Player> players) {
+    public List<PlayerResultResponse> getPlayerResultResponses(final Dealer dealer, final List<Player> players) {
         return players.stream()
-                .map(player -> new PlayerResultResponse(player.getName(), player.getWinningStatus(dealerScore)))
+                .map(player -> PlayerResultResponse.of(player, dealer.compareScoreTo(player)))
                 .collect(Collectors.toList());
     }
 }
