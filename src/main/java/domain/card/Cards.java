@@ -18,7 +18,7 @@ public final class Cards {
         Stack<Card> cards = new Stack<>();
         for (Value value : Value.values()) {
             for (Shape shape : Shape.values()) {
-                cards.push(new Card(shape.getShape(), value.getValue()));
+                cards.push(new Card(value, shape));
             }
         }
         return cards;

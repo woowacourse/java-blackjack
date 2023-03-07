@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Shape;
+import domain.card.Value;
 import domain.card.shuffler.FixedCardsShuffler;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -44,9 +46,9 @@ class WinningResultTest {
     }
 
     private void giveCardToParticipants() {
-        gitJjang.receiveCard(new Card("스페이드", "A")); // K, K, A => 21
-        poo.receiveCard(new Card("하트", "A")); // Q, Q, A => 21
-        kyle.receiveCard(new Card("하트", "7")); // Q, Q, 7 => 27
+        gitJjang.receiveCard(new Card(Value.ACE, Shape.SPADE)); // K, K, A => 21
+        poo.receiveCard(new Card(Value.ACE, Shape.HEART)); // Q, Q, A => 21
+        kyle.receiveCard(new Card(Value.SEVEN, Shape.HEART)); // Q, Q, 7 => 27
     }
 
     private Participants initializeParticipants() {

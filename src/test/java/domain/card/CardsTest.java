@@ -6,8 +6,6 @@ import domain.card.shuffler.CardsShuffler;
 import domain.card.shuffler.FixedCardsShuffler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 
 class CardsTest {
@@ -16,17 +14,16 @@ class CardsTest {
     private final Cards cards = new Cards(fixedShuffler);
 
     @DisplayName("52개의 카드를 생성할 수 있다.")
-    @ParameterizedTest
-    @CsvSource({"A,스페이드", "2,하트", "3,다이아몬드", "J,하트", "K,클로버"})
-    void createCardsTest(String value, String shape) {
-        Card card = new Card(shape, value);
+    @Test
+    void createCardsTest() {
+        Card card = new Card(Value.FIVE, Shape.DIAMOND);
         assertThat(cards.contains(card)).isTrue();
     }
 
     @DisplayName("카드를 한 장씩 반환받을 수 있다.")
     @Test
     void receiveCardTest() {
-        assertThat(cards.getCard()).isEqualTo(new Card("하트", "K"));
-        assertThat(cards.getCard()).isEqualTo(new Card("다이아몬드", "K"));
+        assertThat(cards.getCard()).isEqualTo(new Card(Value.KING, Shape.HEART));
+        assertThat(cards.getCard()).isEqualTo(new Card(Value.KING, Shape.DIAMOND));
     }
 }

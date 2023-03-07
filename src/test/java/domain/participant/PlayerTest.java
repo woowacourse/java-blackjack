@@ -3,6 +3,8 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.Shape;
+import domain.card.Value;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +18,10 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        List<Card> gitJjangCards = new ArrayList<>(List.of(new Card("하트", "K"), new Card("스페이드", "3")));
-        List<Card> kyleCards = new ArrayList<>(List.of(new Card("스페이드", "4"), new Card("클로버", "A")));
+        List<Card> gitJjangCards = new ArrayList<>(
+                List.of(new Card(Value.KING, Shape.HEART), new Card(Value.THREE, Shape.SPADE)));
+        List<Card> kyleCards = new ArrayList<>(
+                List.of(new Card(Value.FOUR, Shape.SPADE), new Card(Value.ACE, Shape.CLOVER)));
         gitJjang = new Player(new Name("깃짱"), gitJjangCards);
         kyle = new Player(new Name("카일"), kyleCards);
     }
@@ -32,16 +36,16 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
-        gitJjang.receiveCard(new Card("하트", "10"));
+        gitJjang.receiveCard(new Card(Value.TEN, Shape.HEART));
         assertThat(gitJjang.calculateScore()).isEqualTo(23);
 
-        kyle.receiveCard(new Card("하트", "4"));
+        kyle.receiveCard(new Card(Value.FOUR, Shape.HEART));
         assertThat(kyle.calculateScore()).isEqualTo(19);
 
-        kyle.receiveCard(new Card("다이아몬드", "A"));
+        kyle.receiveCard(new Card(Value.ACE, Shape.DIAMOND));
         assertThat(kyle.calculateScore()).isEqualTo(20);
 
-        kyle.receiveCard(new Card("스페이드", "9"));
+        kyle.receiveCard(new Card(Value.NINE, Shape.DIAMOND));
         assertThat(kyle.calculateScore()).isEqualTo(19);
     }
 }
