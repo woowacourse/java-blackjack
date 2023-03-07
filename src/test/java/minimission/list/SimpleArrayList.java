@@ -3,18 +3,21 @@ package minimission.list;
 import java.util.Arrays;
 
 public class SimpleArrayList<E> implements SimpleList<E> {
+    private static final int INITIAL_CAPACITY = 10;
     private Object[] array;
     private int size;
     
     public SimpleArrayList() {
-        this(new Object[]{});
+        array = new Object[INITIAL_CAPACITY];
+        size = 0;
     }
     
-    public SimpleArrayList(Object[] arrays) {
-        array = arrays;
+    @SuppressWarnings("unchecked")
+    public SimpleArrayList(E... arrays) {
+        array = (E[]) arrays;
         size = arrays.length;
     }
-
+    
     @Override
     public boolean add(E value) {
         ensureCapacity(size + 1);
@@ -50,7 +53,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
-        System.out.println(array[index]);
         return (E) array[index];
     }
 

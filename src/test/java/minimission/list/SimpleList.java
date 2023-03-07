@@ -1,20 +1,26 @@
 package minimission.list;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public interface SimpleList<E> {
     
     static <E> SimpleList<E> fromArrayToList(E[] arrays) {
         SimpleArrayList<E> simpleArrayList = new SimpleArrayList<>();
         
         for (E o : arrays) {
-            System.out.println(o.getClass().getName());
             simpleArrayList.add(o);
         }
         
         return simpleArrayList;
+    }
+    
+    static <E extends Number> double sum(SimpleList<E> values) {
+        double sum = 0.0;
+        
+        for (int i = 0; i < values.size(); i++) {
+            sum += values.get(i).doubleValue();
+        }
+        
+        return sum;
+        
     }
     
     boolean add(E value);

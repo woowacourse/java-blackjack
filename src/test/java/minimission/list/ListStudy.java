@@ -2,10 +2,8 @@ package minimission.list;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ListStudy {
@@ -51,6 +49,19 @@ class ListStudy {
         assertAll(
                 () -> assertThat(values.get(0)).isEqualTo("first"),
                 () -> assertThat(values.get(1)).isEqualTo("second")
+        );
+    }
+    
+    @Test
+    void generic_mission3() {
+        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
+    
+        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
+        final double intTotal = SimpleList.sum(intValues);  // 3
+        assertAll(
+                () -> assertThat(doubleTotal).isEqualTo(1.2),
+                () -> assertThat(intTotal).isEqualTo(3)
         );
     }
 }
