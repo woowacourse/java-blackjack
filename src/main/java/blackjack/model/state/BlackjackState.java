@@ -18,19 +18,5 @@ public class BlackjackState extends State {
     public boolean isFinished() {
         return true;
     }
-
-    @Override
-    public boolean isBlackjack() {
-        return true;
-    }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
-
-    @Override
-    public boolean isStand() {
-        return false;
-    }
+    
 }

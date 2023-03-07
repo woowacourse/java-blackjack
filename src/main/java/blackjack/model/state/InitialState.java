@@ -18,7 +18,7 @@ public class InitialState extends State {
             Card picked = cardDeck.pick();
             hand.add(picked);
         }
-        if (hand.getCardScore().getBigScore() == BLACKJACK_NUMBER) {
+        if (hand.getScore() == BLACKJACK_NUMBER) {
             return new BlackjackState(hand);
         }
         return new DrawState(hand);
@@ -29,18 +29,4 @@ public class InitialState extends State {
         return false;
     }
 
-    @Override
-    public boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
-
-    @Override
-    public boolean isStand() {
-        return false;
-    }
 }

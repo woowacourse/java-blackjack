@@ -1,7 +1,6 @@
 package blackjack.model.state;
 
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardScore;
 import blackjack.model.participant.Hand;
 
 public abstract class State {
@@ -17,14 +16,8 @@ public abstract class State {
 
     public abstract boolean isFinished();
 
-    public abstract boolean isBlackjack();
-
-    public abstract boolean isBust();
-
-    public abstract boolean isStand();
-
-    public CardScore getCardScore() {
-        return hand.getCardScore();
+    public int getOptimizedScore() {
+        return hand.getScore();
     }
 
     public Hand getHand() {

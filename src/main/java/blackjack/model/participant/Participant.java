@@ -1,14 +1,11 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.CardScore;
 import blackjack.model.state.State;
 
 import java.util.Objects;
 
 public abstract class Participant {
-
-    protected static final int BLACKJACK_NUMBER = 21;
 
     protected Name name;
     protected State currentState;
@@ -20,31 +17,36 @@ public abstract class Participant {
 
     abstract public void play(CardDeck cardDeck);
 
-    public boolean isBlackjack() {
-        return currentState.isBlackjack();
-    }
-
-    public boolean isBust() {
-        return currentState.isBust();
-    }
-
-    public boolean isStand() {
-        return currentState.isStand();
-    }
-
     public boolean isFinished() {
         return currentState.isFinished();
     }
 
-    public CardScore getCardScore() {
-        return currentState.getCardScore();
+    public boolean isBlackjack() {
+        if(isFinished()){
+            FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
+            return FinishedState.BLACKJACK.equals(state);
+        }
+        return false;
+    }
+
+    public boolean isBust() {
+        if(isFinished()){
+            FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
+            return FinishedState.BUST.equals(state);
+        }
+        return false;
+    }
+
+    public boolean isStand() {
+        if(isFinished()){
+            FinishedState state = FinishedState.checkFinishedState(currentState.getHand());
+            return FinishedState.STAND.equals(state);
+        }
+        return false;
     }
 
     public int getScore() {
-        if (isBust() || getCardScore().getBigScore() > BLACKJACK_NUMBER) {
-            return getCardScore().getSmallScore();
-        }
-        return getCardScore().getBigScore();
+        return currentState.getOptimizedScore();
     }
 
     public Name getName() {

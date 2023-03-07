@@ -2,14 +2,15 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardScore;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
+    protected static final int BLACKJACK_NUMBER = 21;
+    protected static final int BONUS_SCORE = 10;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -24,14 +25,31 @@ public class Hand {
         cards.add(card);
     }
 
-    public CardScore getCardScore() {
-        List<CardNumber> ownedNumbers = cards.stream()
+    public int getScore() {
+        int score = cards.stream()
+                .mapToInt(card -> card.getNumber().getScore())
+                .sum();
+        if(hasAceCard() && isNotBustEvenIfTakeBonusScore(score)){
+            return score + BONUS_SCORE;
+        }
+        return score;
+    }
+
+    private boolean hasAceCard(){
+        return cards.stream()
                 .map(Card::getNumber)
-                .collect(Collectors.toList());
-        return new CardScore(ownedNumbers);
+                .anyMatch(cardNumber -> cardNumber.equals(CardNumber.ACE));
+    }
+
+    private boolean isNotBustEvenIfTakeBonusScore(int score){
+        return score + BONUS_SCORE <= BLACKJACK_NUMBER;
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int size(){
+        return cards.size();
     }
 }

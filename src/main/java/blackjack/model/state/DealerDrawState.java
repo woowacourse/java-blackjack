@@ -21,21 +21,6 @@ public class DealerDrawState extends State {
         return false;
     }
 
-    @Override
-    public boolean isBlackjack() {
-        return false;
-    }
-
-    @Override
-    public boolean isBust() {
-        return false;
-    }
-
-    @Override
-    public boolean isStand() {
-        return false;
-    }
-
     public State transitStateOrNot() {
         if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
@@ -47,10 +32,10 @@ public class DealerDrawState extends State {
     }
 
     private boolean isScoreHigherThanBlackjackNumber() {
-        return hand.getCardScore().getSmallScore() > BLACKJACK_NUMBER;
+        return hand.getScore() > BLACKJACK_NUMBER;
     }
 
     private boolean isScoreHigherThanDealerHitNumber() {
-        return hand.getCardScore().getBigScore() > DEALER_HIT_NUMBER;
+        return hand.getScore() > DEALER_HIT_NUMBER;
     }
 }
