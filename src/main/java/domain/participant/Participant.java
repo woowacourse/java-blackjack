@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,14 +12,14 @@ public abstract class Participant {
 
     public Participant(final Name name, final List<Card> cards) {
         this.name = name;
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
+
+    abstract boolean isHittable();
 
     public void receiveCard(Card card) {
         this.cards.add(card);
     }
-
-    abstract boolean isHittable();
 
     public int calculateScore() {
         boolean hasAce = hasAce();

@@ -2,7 +2,6 @@ package domain.card;
 
 import domain.card.shuffler.CardsShuffler;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public final class Cards {
     }
 
     public List<Card> giveInitialCards() {
-        return new ArrayList<>(List.of(getCard(), getCard()));
+        return List.of(getCard(), getCard());
     }
 
     public boolean contains(final Card card) {

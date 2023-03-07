@@ -24,7 +24,7 @@ class NameTest {
         void invalidLengthTest() {
             assertThatThrownBy(() -> new Name("abcdefghijklm"))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 이름의 길이는 10글자 이하여야 합니다.");
+                    .hasMessageContaining("이름의 길이는 10글자 이하여야 합니다.");
         }
     }
 
