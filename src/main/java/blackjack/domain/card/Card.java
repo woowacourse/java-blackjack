@@ -43,4 +43,12 @@ public class Card {
     public Denomination getDenomination() {
         return denomination;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit=" + suit.name()+
+                ", denomination=" + denomination.name() +
+                '}';
+    }
 }
