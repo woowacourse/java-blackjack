@@ -19,7 +19,7 @@ public class CardFactory {
 
     private static void addCards(List<Card> createdCard, Symbol symbol) {
         for (Number number : Number.values()) {
-            createdCard.add(new Card(symbol, number));
+            createdCard.add(Card.of(symbol, number));
         }
     }
 }
