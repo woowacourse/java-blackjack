@@ -14,7 +14,7 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards generator() {
+    public static Cards create() {
         List<Card> deck = new ArrayList<>();
         for (int count = 0; count < MAX_DECK_SIZE; count++) {
             initCardNumber(deck);

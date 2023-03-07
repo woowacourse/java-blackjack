@@ -12,7 +12,7 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants generate(final List<String> playersName) {
+    public static Participants from(final List<String> playersName) {
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer(new ParticipantName("딜러")));
         for (String playerName : playersName) {

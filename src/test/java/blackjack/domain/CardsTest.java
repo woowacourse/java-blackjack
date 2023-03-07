@@ -12,7 +12,7 @@ class CardsTest {
     @DisplayName("랜덤의 카드를 뽑아서 비교")
     void create() {
         //give
-        Cards cards = Cards.generator();
+        Cards cards = Cards.create();
         Card card = new Card(CardNumber.ACE, CardSuit.SPADE);
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(0);
 

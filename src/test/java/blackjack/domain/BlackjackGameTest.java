@@ -19,8 +19,8 @@ class BlackjackGameTest {
         //given
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
-        Participants participants = Participants.generate(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
+        Participants participants = Participants.from(List.of("pobi", "ako"));
+        BlackjackGame game = new BlackjackGame(participants, Cards.create());
         //when
         game.initFirstHit(testCardPickerGenerator);
 
@@ -41,8 +41,8 @@ class BlackjackGameTest {
         //given
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
-        Participants participants = Participants.generate(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
+        Participants participants = Participants.from(List.of("pobi", "ako"));
+        BlackjackGame game = new BlackjackGame(participants, Cards.create());
         game.initFirstHit(testCardPickerGenerator);
 
         //when
@@ -67,8 +67,8 @@ class BlackjackGameTest {
         //given
         List<Integer> testData = settingTestData();
         TestCardPickerGenerator testCardPickerGenerator = new TestCardPickerGenerator(testData);
-        Participants participants = Participants.generate(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.generator());
+        Participants participants = Participants.from(List.of("pobi", "ako"));
+        BlackjackGame game = new BlackjackGame(participants, Cards.create());
         game.initFirstHit(testCardPickerGenerator);
 
         //when
