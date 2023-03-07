@@ -27,7 +27,7 @@ public class BlackjackGame {
         cardPack.shuffle(new MasterShuffleStrategy());
     }
 
-    public void initDraw(Dealer dealer, Players players) {
+    public void initDraw(final Dealer dealer, final Players players) {
         for (int currentCount = 0; currentCount < INIT_DRAW_COUNT; currentCount++) {
             dealer.drawCard(cardPack);
             playersDraw(players);
@@ -35,20 +35,20 @@ public class BlackjackGame {
     }
 
     private void playersDraw(final Players players) {
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             player.drawCard(cardPack);
         }
     }
 
-    public void playerDraw(Player player) {
+    public void playerDraw(final Player player) {
         player.drawCard(cardPack);
     }
 
-    public void dealerDraw(Dealer dealer) {
+    public void dealerDraw(final Dealer dealer) {
         dealer.drawCard(cardPack);
     }
 
-    public boolean isEnd(int score) {
+    public boolean isEnd(final int score) {
         return (score > MIN_DEALER_SCORE) || isBust(score);
     }
 
