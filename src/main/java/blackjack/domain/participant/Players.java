@@ -57,8 +57,8 @@ public class Players {
 
     void distributeInitialCards(final Deck deck) {
         for (final Player player : players) {
-            final Card firstCard = deck.removeCard();
-            final Card secondCard = deck.removeCard();
+            final Card firstCard = deck.popCard();
+            final Card secondCard = deck.popCard();
             player.drawInitialCard(firstCard, secondCard);
         }
     }

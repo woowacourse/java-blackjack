@@ -16,7 +16,7 @@ public class Participants {
 
     public void distributeInitialCards(final Deck deck) {
         players.distributeInitialCards(deck);
-        dealer.drawInitialCard(deck.removeCard(), deck.removeCard());
+        dealer.drawInitialCard(deck.popCard(), deck.popCard());
     }
 
     public Player findPlayerByName(final String playerName) {

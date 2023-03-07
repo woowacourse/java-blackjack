@@ -29,9 +29,9 @@ class DeckTest {
     void 제거_시도를_52번보다_많이_하면_예외() {
         final Deck deck = new ShuffledDeckFactory().generate();
         for (int i = 0; i < 52; i++) {
-            deck.removeCard();
+            deck.popCard();
         }
-        assertThatThrownBy(deck::removeCard)
+        assertThatThrownBy(deck::popCard)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("덱에 카드가 없습니다");
     }

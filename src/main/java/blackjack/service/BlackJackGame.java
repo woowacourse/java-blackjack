@@ -46,11 +46,11 @@ public class BlackJackGame {
     }
 
     public void drawPlayerCard(final String playerName) {
-        participants.drawPlayerCard(playerName, deck.removeCard());
+        participants.drawPlayerCard(playerName, deck.popCard());
     }
 
     public void drawDealerCard() {
-        participants.drawDealerCard(deck.removeCard());
+        participants.drawDealerCard(deck.popCard());
     }
 
     public boolean isDealerDrawable() {
