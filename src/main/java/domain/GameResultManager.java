@@ -25,7 +25,7 @@ public class GameResultManager {
     }
 
     public Map<Result, Integer> getDealerStatus(Map<Participant, Result> results) {
-        EnumMap<Result, Integer> DealerWinningStatus = new EnumMap<>(Result.class);
+        Map<Result, Integer> DealerWinningStatus = new EnumMap<>(Result.class);
 
         for (Result playerResult : results.values()) {
             judgeResult(DealerWinningStatus, playerResult);
@@ -42,7 +42,7 @@ public class GameResultManager {
         return playerResults;
     }
 
-    private void judgeResult(EnumMap<Result, Integer> result, Result playerResult) {
+    private void judgeResult(Map<Result, Integer> result, Result playerResult) {
         if (playerResult.equals(Result.WIN)) {
             result.put(Result.LOSE, result.getOrDefault(Result.LOSE, 0) + 1);
         }

@@ -38,7 +38,7 @@ public class Participants {
     }
 
     public List<Participant> findPlayers() {
-        ArrayList<Participant> players = new ArrayList<>();
+        List<Participant> players = new ArrayList<>();
         for (Participant participant : participants) {
             addParticipantIfPlayer(players, participant);
         }
@@ -51,7 +51,7 @@ public class Participants {
     }
 
     public Map<Participant, Integer> makePlayerFinalHandValue() {
-        final LinkedHashMap<Participant, Integer> participantsHandValue = new LinkedHashMap<>();
+        final Map<Participant, Integer> participantsHandValue = new LinkedHashMap<>();
         for (Participant participant : findPlayers()) {
             participantsHandValue.put(participant, participant.getHandValue());
         }
@@ -75,7 +75,7 @@ public class Participants {
         }
     }
 
-    private void addParticipantIfPlayer(ArrayList<Participant> players, Participant participant) {
+    private void addParticipantIfPlayer(List<Participant> players, Participant participant) {
         if (participant.getClass().equals(Player.class)) {
             players.add(participant);
         }
