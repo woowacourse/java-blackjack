@@ -8,11 +8,11 @@ import java.util.List;
 
 public class CardFactoryTest {
     @Test
-    @DisplayName("of()는 48개의 카드를 생성하여 반환한다.")
+    @DisplayName("of()는 52개의 카드를 생성하여 반환한다.")
     void make_48_pieces_of_cards() {
         // given & when
         List<Card> cards = CardFactory.of();
-        int expectedSize = 48;
+        int expectedSize = 52;
 
         // then
         Assertions.assertThat(cards).hasSize(expectedSize);
