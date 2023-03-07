@@ -13,7 +13,7 @@ public class Dealer extends Participant {
 
     public int calculateDealerCardNumber() {
         int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
-        if (hasAceCard() && getCardsCount() == FIRST_CARD_COUNT) {
+        if (hasAceCard() && isFirstTwoHit()) {
             return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
         }
         return calculateCardNumber();
@@ -29,6 +29,10 @@ public class Dealer extends Participant {
             return WinningResult.calculateByBlackjack(player.judgeBlackjack(), judgeBlackjack());
         }
         return WinningResult.calculateByNumber(playerValue, myValue);
+    }
+
+    private boolean isFirstTwoHit() {
+        return getCardsCount() == FIRST_CARD_COUNT;
     }
 
     @Override
