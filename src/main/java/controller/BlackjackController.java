@@ -14,6 +14,7 @@ import view.OutputView;
 
 public class BlackjackController {
     private static final int INITIAL_CARD_AMOUNT = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 

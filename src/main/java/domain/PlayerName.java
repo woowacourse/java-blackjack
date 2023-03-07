@@ -2,6 +2,7 @@ package domain;
 
 public class PlayerName {
     private static final int MAX_LENGTH = 5;
+
     private static final String NAME_NULL = "플레이어 이름은 null을 허용하지 않습니다.";
     private static final String INVALID_NAME_LENGTH = "이름 길이는 1자 이상 5자 이하여야 합니다.";
 

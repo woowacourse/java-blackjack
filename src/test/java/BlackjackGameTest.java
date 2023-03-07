@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
-
     @DisplayName("게임 참가자에게 카드를 나눠줄 수 있다.")
     @Test
     void handOutCardToSuccessTest() {
@@ -73,5 +72,4 @@ class BlackjackGameTest {
 
         assertPlayerCardSize(dealer, 2);
     }
-
 }

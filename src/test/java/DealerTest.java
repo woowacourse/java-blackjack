@@ -1,9 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Card;
-import domain.Dealer;
 import domain.Participant;
-import domain.PlayerName;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
 import org.junit.jupiter.api.DisplayName;

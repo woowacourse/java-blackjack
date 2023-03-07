@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BlackjackActionTest {
-
     @DisplayName("입력값에 따라 명령이 생성된다. y -> HIT")
     @Test
     void createCommandHitSuccessTest() {
@@ -26,10 +25,9 @@ class BlackjackActionTest {
     }
 
     @ParameterizedTest(name = "y 혹은 n 만 입력할 수 있다.")
-    @ValueSource(strings = {"yy","nn","hold","hit"})
+    @ValueSource(strings = {"yy", "nn", "hold", "hit"})
     void createCommandFailTest(String input) {
         Assertions.assertThatThrownBy(() -> BlackjackAction.from(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

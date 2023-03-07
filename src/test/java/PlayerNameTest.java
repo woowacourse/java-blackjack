@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerNameTest {
-
     @DisplayName("이름은 null을 허용하지 않는다.")
     @Test
     void createNameFailTestByNull() {
@@ -20,6 +19,4 @@ public class PlayerNameTest {
         Assertions.assertThatThrownBy(() -> new PlayerName(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-
 }

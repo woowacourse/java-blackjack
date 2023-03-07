@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
-
     private static final Card CLUB_ACE = new Card(TrumpCardType.CLUB, TrumpCardNumber.ACE);
     private static final Card HEART_THREE = new Card(TrumpCardType.HEART, TrumpCardNumber.THREE);
     private static final Card HEART_TEN = new Card(TrumpCardType.HEART, TrumpCardNumber.TEN);
@@ -135,5 +134,4 @@ class ParticipantTest {
         Result pobiResult = pobi.competeWith(crong);
         assertThat(pobiResult).isEqualTo(Result.LOSE);
     }
-
 }

@@ -15,6 +15,7 @@ public enum TrumpCardNumber {
     QUEEN("Q", 10),
     KING("K", 10),
     ;
+
     private static final int ACE_GAP = 10;
 
     private final String signature;

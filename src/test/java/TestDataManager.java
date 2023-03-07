@@ -9,7 +9,6 @@ import domain.PlayerNames;
 import java.util.List;
 
 public class TestDataManager {
-
     private static final String DEALER_NAME = "딜러";
 
     /**

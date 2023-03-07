@@ -33,7 +33,7 @@
 - [X] 클래스 이름 수정
   - [X] Number -> TrumpCardNumber
   - [X] Shape -> TrumpCardType
-- [ ] 코드 포맷 및 일관성 점검
+- [X] 코드 포맷 및 일관성 점검
 - [X] 가독성 개선
   - [X] 괄호의 꼬리물기 분리
   - [X] boolean 반환 메서드 논리 수정

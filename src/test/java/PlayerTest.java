@@ -32,5 +32,4 @@ class PlayerTest {
 
         assertThat(player.getInitialCards()).hasSize(2);
     }
-
 }

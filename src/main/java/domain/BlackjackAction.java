@@ -7,7 +7,6 @@ public enum BlackjackAction {
     HOLD("n"),
     ;
 
-    // TODO: 2023/03/06 View에 사용되는 예외처리만 존재
     private static final String COMMAND_INPUT_ERROR_MESSAGE = "y와 n만 입력 가능합니다.";
 
     private final String commandValue;
