@@ -8,6 +8,7 @@ import domain.game.BlackJackGame;
 import domain.game.GameResult;
 import domain.user.Dealer;
 import domain.user.Name;
+import domain.user.Names;
 import domain.user.Player;
 import domain.user.PlayerStatus;
 import domain.user.User;
@@ -43,13 +44,14 @@ public class BlackJackGameController {
 
     private List<Player> setUpPlayers(GameDeck gameDeck) {
         return readUsersName().stream()
-                .map(name -> new Player(new Name(name), gameDeck.drawForFirstTurn()))
+                .map(name -> new Player(name, gameDeck.drawForFirstTurn()))
                 .collect(Collectors.toList());
     }
 
-    private List<String> readUsersName() {
+    private List<Name> readUsersName() {
         outputView.printInputPlayerNameMessage();
-        return inputView.readPlayersName();
+        Names names = new Names(inputView.readPlayersName());
+        return names.getNames();
     }
 
     private void showSetUpResult(Dealer dealer, List<Player> players) {
