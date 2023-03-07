@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.domain.card.CardGroup;
@@ -9,7 +7,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
-import blackjack.domain.user.Dealer;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -25,15 +22,13 @@ public class ViewRenderer {
             CardShape.HEART, "하트"
     );
     private static final Map<CardNumber, String> CARD_NUMBER_STRING_MAPPER = new EnumMap<>(CardNumber.class);
-    private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER = Map.of(
-            WinningStatus.WIN, "승 ",
-            WinningStatus.TIE, "무 ",
-            WinningStatus.LOSE, "패"
-    );
+    private static final Map<WinningStatus, String> WINNING_STATUS_MAPPER = new LinkedHashMap<>();
     private static final String CARD_RESULT_FORMAT = "%s - 결과: %d";
-    private static final String BLANK = "";
 
     static {
+        WINNING_STATUS_MAPPER.put(WinningStatus.WIN, "승 ");
+        WINNING_STATUS_MAPPER.put(WinningStatus.TIE, "무 ");
+        WINNING_STATUS_MAPPER.put(WinningStatus.LOSE, "패");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.ACE, "A");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.TWO, "2");
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.THREE, "3");
@@ -65,44 +60,23 @@ public class ViewRenderer {
                 .collect(toUnmodifiableList());
     }
 
-    public static Map<String, String> renderWinningResult(Map<String, WinningStatus> winningResult) {
-        Map<String, String> renderedWinningResult = new LinkedHashMap<>();
-        Map<WinningStatus, Long> dealerWinningResult = winningResult.values().stream()
-                .collect(groupingBy(ViewRenderer::recursionWinningStatus, counting()));
-
-        renderedWinningResult.put(Dealer.DEALER_NAME, renderDealerWinningResult(dealerWinningResult));
-
-        for (String name : winningResult.keySet()) {
-            renderedWinningResult.put(name, WINNING_STATUS_MAPPER.get(winningResult.get(name)));
-        }
-
-        return renderedWinningResult;
+    public static Map<String, Long> renderDealerWinningResult(
+            final Map<WinningStatus, Long> dealerWinningResult) {
+        final Map<String, Long> renderedDealerWinningResult = new LinkedHashMap<>();
+        WINNING_STATUS_MAPPER.keySet()
+                .stream()
+                .filter(dealerWinningResult::containsKey)
+                .forEach(winningStatus -> renderedDealerWinningResult.put(WINNING_STATUS_MAPPER.get(winningStatus),
+                        dealerWinningResult.get(winningStatus)));
+        return Collections.unmodifiableMap(renderedDealerWinningResult);
     }
 
-    private static WinningStatus recursionWinningStatus(WinningStatus winningStatus) {
-        if (winningStatus == WinningStatus.WIN) {
-            return WinningStatus.LOSE;
-        }
-        if (winningStatus == WinningStatus.LOSE) {
-            return WinningStatus.WIN;
-        }
-        return winningStatus;
-    }
-
-    private static String renderDealerWinningResult(Map<WinningStatus, Long> dealerWinningResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(renderWinningStatus(WinningStatus.WIN, dealerWinningResult));
-        stringBuilder.append(renderWinningStatus(WinningStatus.TIE, dealerWinningResult));
-        stringBuilder.append(renderWinningStatus(WinningStatus.LOSE, dealerWinningResult));
-        return stringBuilder.toString();
-    }
-
-    private static String renderWinningStatus(final WinningStatus winningStatus
-            , final Map<WinningStatus, Long> dealerWinningResult) {
-        if (dealerWinningResult.containsKey(winningStatus)) {
-            return dealerWinningResult.get(winningStatus) + WINNING_STATUS_MAPPER.get(winningStatus);
-        }
-        return BLANK;
+    public static Map<String, String> renderPlayersWinningResults(
+            final Map<String, WinningStatus> playersWinningResults) {
+        final Map<String, String> renderedWinningResult = new LinkedHashMap<>();
+        playersWinningResults.forEach((name, winningStatus) ->
+                renderedWinningResult.put(name, WINNING_STATUS_MAPPER.get(winningStatus)));
+        return Collections.unmodifiableMap(renderedWinningResult);
     }
 
     public static Map<String, String> renderUserNameAndCardResults(

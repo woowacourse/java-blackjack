@@ -42,18 +42,32 @@ class ViewRendererTest {
     }
 
     @Test
-    @DisplayName("승리 결과 렌더링 테스트")
-    void renderWinningResultTest() {
-        Map<String, WinningStatus> winningResult = Map.of(
+    @DisplayName("플레이어의 승리 결과 렌더링 테스트")
+    void renderPlayersWinningResultsTest() {
+        final Map<String, WinningStatus> winningResult = Map.of(
                 "필립", WinningStatus.WIN,
                 "홍실", WinningStatus.TIE);
 
-        Map<String, String> renderedWinningResult = ViewRenderer.renderWinningResult(winningResult);
+        final Map<String, String> renderedWinningResult = ViewRenderer.renderPlayersWinningResults(winningResult);
 
         assertSoftly(softly -> {
-            softly.assertThat(renderedWinningResult.get("딜러")).isEqualTo("1무 1패 ");
             softly.assertThat(renderedWinningResult.get("필립")).isEqualTo("승 ");
             softly.assertThat(renderedWinningResult.get("홍실")).isEqualTo("무 ");
+        });
+    }
+
+    @Test
+    @DisplayName("딜러의 승리 결과 렌더링 테스트")
+    void renderDealerWinningResultTest() {
+        final Map<WinningStatus, Long> winningResult = Map.of(WinningStatus.WIN, (long) 3, WinningStatus.LOSE, (long) 2,
+                WinningStatus.TIE, (long) 4);
+
+        final Map<String, Long> renderedWinningResult = ViewRenderer.renderDealerWinningResult(winningResult);
+
+        assertSoftly(softly -> {
+            softly.assertThat(renderedWinningResult.get("승 ")).isEqualTo(3);
+            softly.assertThat(renderedWinningResult.get("무 ")).isEqualTo(4);
+            softly.assertThat(renderedWinningResult.get("패")).isEqualTo(2);
         });
     }
 }
