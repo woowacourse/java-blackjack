@@ -6,13 +6,13 @@ public enum Result {
     WIN("승"),
     LOSE("패");
 
-    private final String result;
+    private final String message;
 
-    Result(String result) {
-        this.result = result;
+    Result(String message) {
+        this.message = message;
     }
 
-    public String getResult() {
-        return result;
+    public String message() {
+        return message + " ";
     }
 }
