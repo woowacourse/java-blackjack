@@ -12,15 +12,15 @@ public class GameResult {
 
     private final Map<Participant, Result> gameResults;
 
-    private GameResult(Participant dealer, List<Participant> players) {
-        this.gameResults = new LinkedHashMap<>();
-        players.forEach(player -> calculateResult(dealer, player));
+    private GameResult(Map<Participant, Result> gameResults) {
+        this.gameResults = gameResults;
     }
 
     public static GameResult create(final Participants participants) {
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayer();
-        return new GameResult(dealer, players);
+        final Map<Participant, Result> gameResults = makeGameResults(dealer, players);
+        return new GameResult(gameResults);
     }
 
     public Map<String, Result> getPlayerGameResults() {
@@ -29,26 +29,33 @@ public class GameResult {
                         (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 
-    private void calculateResult(Participant dealer, Participant player) {
-        if (isDealerWin(dealer, player)) {
-            gameResults.put(player, Result.LOSE);
-            return;
+    private static Map<Participant, Result> makeGameResults(final Participant dealer, final List<Participant> players) {
+        Map<Participant, Result> gameResults = new LinkedHashMap<>();
+        for (Participant player : players) {
+            Result playerResult = calculateResult(dealer, player);
+            gameResults.put(player, playerResult);
         }
-        if (isPlayerWin(dealer, player)) {
-            gameResults.put(player, Result.WIN);
-            return;
-        }
-        gameResults.put(player, Result.DRAW);
+        return gameResults;
     }
 
-    private boolean isDealerWin(final Participant dealer, final Participant player) {
+    private static Result calculateResult(Participant dealer, Participant player) {
+        if (isDealerWin(dealer, player)) {
+            return Result.LOSE;
+        }
+        if (isPlayerWin(dealer, player)) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
+    }
+
+    private static boolean isDealerWin(final Participant dealer, final Participant player) {
         return player.isBust()
                 || dealer.isBlackJack()
                 || dealer.isBust() && player.isBust()
                 || !dealer.isBust() && dealer.calculateScore() > player.calculateScore();
     }
 
-    private boolean isPlayerWin(final Participant dealer, final Participant player) {
+    private static boolean isPlayerWin(final Participant dealer, final Participant player) {
         return dealer.isBust()
                 || player.isBlackJack()
                 || dealer.calculateScore() < player.calculateScore();
