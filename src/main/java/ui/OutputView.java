@@ -25,7 +25,9 @@ public class OutputView {
 
     public static void printCardsStatusOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
-                .map(Card::getText)
+                .map((card)->{
+                    return card.getCardNumber() + card.getSymbol();
+                })
                 .collect(Collectors.toList());
         System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
         System.out.println();
@@ -33,7 +35,9 @@ public class OutputView {
 
     public static void printCardsStatusAndScoreOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
-                .map(Card::getText)
+                .map((card)->{
+                    return card.getCardNumber() + card.getSymbol();
+                })
                 .collect(Collectors.toList());
         System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
         System.out.println(" - 결과: " + user.calculateScore());

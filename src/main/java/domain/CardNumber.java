@@ -15,16 +15,16 @@ public enum CardNumber {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String numberToPrint;
+    private final String number;
     private final int score;
 
-    CardNumber(String numberToPrint, int score) {
-        this.numberToPrint = numberToPrint;
+    CardNumber(String number, int score) {
+        this.number = number;
         this.score = score;
     }
 
-    public String getNumberToPrint() {
-        return numberToPrint;
+    public String getNumber() {
+        return number;
     }
 
     public int getScore(){

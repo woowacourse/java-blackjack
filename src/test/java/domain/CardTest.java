@@ -25,6 +25,6 @@ public class CardTest {
     @Test
     void 카드_정보_반환() {
         Card card = new Card(Symbol.HEART, CardNumber.ACE);
-        assertThat(card.getText()).isEqualTo("A하트");
+        assertThat(card.getCardNumber()+card.getSymbol()).isEqualTo("A하트");
     }
 }
