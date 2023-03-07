@@ -4,10 +4,8 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.ResultCalculator;
-import view.InputView;
 import view.OutputView;
 import view.ResultView;
 
@@ -22,7 +20,7 @@ public class BlackJackGame {
     }
 
     public void run() {
-        askEachPlayers();
+        players.askEachPlayers();
         dealerDistributeOrNot();
         printFinalGameStatus();
         printFinalFightResult();
@@ -35,8 +33,8 @@ public class BlackJackGame {
     }
 
     private static Card generateCard() {
-        String s = Deck.drawCard();
-        return new Card(s, Deck.extractCardNumber(s));
+        String card = Deck.drawCard();
+        return new Card(card, Deck.extractCardNumber(card));
     }
 
     private void initSetting() {
@@ -47,49 +45,13 @@ public class BlackJackGame {
     }
 
     private void initSettingCards(Players players, Dealer dealer) {
-//        Deck.shuffle();
         distributeCard(dealer, 2);
-        for (Player player : players.getPlayers()) {
-            distributeCard(player, 2);
-        }
+        players.initDistribute();
     }
 
     private void printInitMemberCards() {
         ResultView.printParticipantResult(dealer.getName(), dealer.getCardNames());
-        for (Player player : players.getPlayers()) {
-            ResultView.printParticipantResult(player.getName(), player.getCardNames());
-        }
-    }
-
-    private void askEachPlayers() {
-        System.out.println();
-        for (Player player : players.getPlayers()) {
-            askPlayerDistribute(player);
-        }
-    }
-
-    private void askPlayerDistribute(Player player) {
-        try {
-            checkAdditionalDistribute(player);
-        } catch (IllegalArgumentException e) {
-            OutputView.printMessage(e.getMessage());
-            askPlayerDistribute(player);
-        }
-    }
-
-    private void checkAdditionalDistribute(Player player) {
-        do {
-            OutputView.printInputReceiveYesOrNotMessage(player.getName());
-            ResultView.printParticipantResult(player.getName(), player.getCardNames());
-        } while (player.playerAbleToDraw() && isReceivable(player));
-    }
-
-    private boolean isReceivable(Player player) {
-        if (InputView.inputReceiveOrNot()) {
-            BlackJackGame.distributeCard(player, 1);
-            return true;
-        }
-        return false;
+        players.printInitPlayerCards();
     }
 
     private void dealerDistributeOrNot() {
@@ -102,9 +64,7 @@ public class BlackJackGame {
     private void printFinalGameStatus() {
         System.out.println();
         ResultView.printParticipantFinalResult(dealer.getName(), dealer.getCardNames(), dealer.calculateScore());
-        for (Player player : players.getPlayers()) {
-            ResultView.printParticipantFinalResult(player.getName(), player.getCardNames(), player.calculateScore());
-        }
+        players.printFinalPlayerResults();
     }
 
     private void printFinalFightResult() {
