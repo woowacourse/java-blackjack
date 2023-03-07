@@ -5,7 +5,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ExceptionHandler {
+public final class InputProcessHandler {
+
+    private InputProcessHandler() {
+        throw new IllegalStateException("해당 클래스는 인스턴스를 생성할 수 없습니다.");
+    }
 
     public static <Input, Output> Output repeat(Supplier<Input> inputSupplier, Runnable guideRunnable,
             Function<Input, Output> processFunction, Consumer<String> exceptionConsumer) {

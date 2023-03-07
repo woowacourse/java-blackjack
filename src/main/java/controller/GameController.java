@@ -5,11 +5,8 @@ import domain.card.Deck;
 import domain.card.RandomUniqueCardSelector;
 import domain.game.GameManager;
 import domain.participant.Result;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
@@ -38,7 +35,7 @@ public final class GameController {
     }
 
     private Participants makeParticipants() {
-        return ExceptionHandler.repeat(inputView::readParticipantNames,
+        return InputProcessHandler.repeat(inputView::readParticipantNames,
                 outputView::guideParticipantsName,
                 Participants::create,
                 outputView::printExceptionMessage);
@@ -85,7 +82,7 @@ public final class GameController {
     }
 
     private DrawCardCommand inputDrawCardCommand(final String playerName) {
-        return ExceptionHandler.repeat(inputView::readDrawCardCommand,
+        return InputProcessHandler.repeat(inputView::readDrawCardCommand,
                 () -> outputView.guideDrawCard(playerName),
                 DrawCardCommand::findCardCommand,
                 outputView::printExceptionMessage);
