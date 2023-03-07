@@ -28,4 +28,9 @@ public class Challenger extends Player {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
 }

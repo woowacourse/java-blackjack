@@ -25,6 +25,11 @@ class PlayerTest {
             public String getName() {
                 return null;
             }
+
+            @Override
+            public boolean isDealer() {
+                return false;
+            }
         };
     }
 

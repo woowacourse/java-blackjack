@@ -45,14 +45,14 @@ public class Players {
 
     public List<Player> getChallengers() {
         return players.stream()
-                .filter(player -> player instanceof Challenger)
+                .filter(player -> !player.isDealer())
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public Player getDealer() {
         return players.stream()
-                .filter(player -> player instanceof Dealer)
+                .filter(player -> player.isDealer())
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("딜러가 존재하지 않습니다."));
     }
 }

@@ -42,4 +42,9 @@ public class Dealer extends Player {
     public String getName() {
         return NAME;
     }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }
