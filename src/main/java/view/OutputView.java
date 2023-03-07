@@ -16,7 +16,7 @@ public class OutputView {
     private static final String NEW_LINE = "\n";
     private static final String PRINT_CARDS_MESSAGE = NEW_LINE + "딜러와 %s에게 2장을 나누었습니다.";
     private static final String COLON = ": ";
-    private static final String DEALER_RECEIVE_NOTICE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
+    private static final String DEALER_RECEIVE_NOTICE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_STATE_RESULT_SIGN = " - 결과: ";
     private static final String VICTORY = "승";
     private static final String DRAW = "무";
