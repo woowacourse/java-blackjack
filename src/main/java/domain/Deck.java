@@ -15,20 +15,20 @@ public class Deck {
 
     private List<Card> buildDeck() {
         var cards = new ArrayList<Card>();
-        var faces = List.of(Face.values());
+        var suits = List.of(Suit.values());
 
-        for (Face face : faces) {
-            cards.addAll(buildCardsFrom(face));
+        for (Suit suit : suits) {
+            cards.addAll(buildCardsFrom(suit));
         }
 
         return cards;
     }
 
-    private List<Card> buildCardsFrom(Face face) {
+    private List<Card> buildCardsFrom(Suit suit) {
         var cards = new ArrayList<Card>();
 
-        for (Letter letter : Letter.values()) {
-            cards.add(new Card(face, letter));
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(suit, denomination));
         }
 
         return cards;

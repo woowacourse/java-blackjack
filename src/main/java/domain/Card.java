@@ -2,32 +2,33 @@ package domain;
 
 public class Card {
 
-    private final Face face;
-    private final Letter letter;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(Face face, String letter) {
-        this.face = face;
-        this.letter = Letter.of(letter);
+    public Card(Suit suit, String letter) {
+        this.suit = suit;
+        this.denomination = Denomination.of(letter);
     }
 
-    public Card(Face face, Letter letter) {
-        this.face = face;
-        this.letter = letter;
+    public Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
-    public String getLetter() {
-        return letter.getLetter();
+    public String letter() {
+        return denomination.letter();
     }
 
-    public Letter letter() {
-        return letter;
+    public Suit suit() {
+        return suit;
     }
 
     public Face getFace() {
         return face;
     }
 
-    public boolean isNotA() {
-        return letter.isNotA();
+    public boolean isAce() {
+        return denomination.isAce();
     }
+
 }

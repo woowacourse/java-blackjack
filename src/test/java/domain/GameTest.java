@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.Face.HEART;
-import static domain.Face.SPADE;
+import static domain.Suit.HEART;
+import static domain.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 

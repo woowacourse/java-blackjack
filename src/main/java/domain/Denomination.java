@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Arrays;
 
-public enum Letter {
+public enum Denomination {
 
     LETTER_A("A", 11),
     LETTER_2("2", 2),
@@ -22,12 +22,12 @@ public enum Letter {
 
     private final int score;
 
-    Letter(String letter, int score) {
+    Denomination(String letter, int score) {
         this.letter = letter;
         this.score = score;
     }
 
-    public static Letter of(String letter) {
+    public static Denomination of(String letter) {
         return Arrays.stream(values())
                 .filter(letter1 -> letter1.getLetter().equals(letter))
                 .findFirst()
