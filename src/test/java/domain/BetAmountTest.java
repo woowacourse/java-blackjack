@@ -4,6 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BetAmountTest {
@@ -18,5 +19,14 @@ class BetAmountTest {
     @ValueSource(ints = {10, 100000000})
     void createBetAmountSuccessTest(int money) {
         assertDoesNotThrow(() -> new BetAmount(money));
+    }
+
+    @ParameterizedTest(name = "배팅 금액의 2배를 돌려받을 수 있다.")
+    @ValueSource(ints = {100, 2000, 30000})
+    void receiveBetAmountSuccessTest(int money) {
+        BetAmount betAmount = new BetAmount(money);
+
+        assertThat(betAmount.receiveDouble())
+                .isEqualTo(new BetAmount(money * 2));
     }
 }
