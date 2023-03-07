@@ -64,4 +64,20 @@ public class Players {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
     }
+
+    public void drawCard(final String userName, final Deck deck) {
+        players.stream()
+                .filter(player -> player.isSameName(userName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME))
+                .drawCard(deck);
+    }
+
+    public boolean isBlackJackScore(final String name) {
+        return players.stream()
+                .filter(player -> player.isSameName(name))
+                .map(Player::isBlackJackScore)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME));
+    }
 }

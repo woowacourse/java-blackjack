@@ -34,5 +34,9 @@ public abstract class User {
         return cardGroup.isBustScore();
     }
 
+    final public boolean isBlackJackScore() {
+        return cardGroup.isBlackJackScore();
+    }
+
     public abstract CardGroup getFirstOpenCardGroup();
 }

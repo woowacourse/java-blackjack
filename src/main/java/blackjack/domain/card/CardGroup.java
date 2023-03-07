@@ -31,6 +31,10 @@ public class CardGroup {
         return getScore().isBust();
     }
 
+    public boolean isBlackJackScore() {
+        return getScore().isBlackJackScore();
+    }
+
     private int getTotalValue() {
         return cards.stream()
                 .map(Card::getNumber)

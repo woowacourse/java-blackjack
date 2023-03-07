@@ -47,7 +47,7 @@ public class BlackJackGame {
     }
 
     public void playPlayer(final String userName) {
-        users.getUser(userName).drawCard(deck);
+        users.drawCard(userName, deck);
     }
 
     public Map<String, CardResult> getCardResult() {
@@ -66,6 +66,6 @@ public class BlackJackGame {
     }
 
     public boolean isBlackJackScore(final String name) {
-        return users.getUser(name).getScore().isBlackJackScore();
+        return users.isBlackJackScore(name);
     }
 }
