@@ -6,7 +6,7 @@ import domain.service.CardDistributor;
 import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Result;
+import domain.vo.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

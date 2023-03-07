@@ -1,5 +1,6 @@
 package domain.model;
 
+import domain.vo.Score;
 import java.util.Set;
 
 public class Player {

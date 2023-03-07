@@ -2,8 +2,8 @@ package domain.service;
 
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Result;
-import domain.model.Score;
+import domain.vo.Result;
+import domain.vo.Score;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

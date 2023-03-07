@@ -1,6 +1,9 @@
-package domain.model;
+package domain.vo;
 
+import domain.model.Card;
+import domain.model.Cards;
 import domain.type.Letter;
+import java.util.Objects;
 
 public class Score {
 
@@ -42,6 +45,23 @@ public class Score {
 
     public boolean isBust() {
         return value > MAX_VALUE;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Score score = (Score) o;
+        return getValue() == score.getValue();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getValue());
     }
 
     public int getValue() {

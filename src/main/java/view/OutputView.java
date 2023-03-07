@@ -3,7 +3,7 @@ package view;
 import domain.model.Card;
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.model.Result;
+import domain.vo.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
