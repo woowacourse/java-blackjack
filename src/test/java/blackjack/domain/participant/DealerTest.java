@@ -38,7 +38,7 @@ public class DealerTest {
         dealer.drawCard(card2);
 
         //then
-        Assertions.assertThat(dealer.canHit()).isTrue();
+        Assertions.assertThat(dealer.isNotBust()).isTrue();
     }
 
     @Test
@@ -54,6 +54,6 @@ public class DealerTest {
         dealer.drawCard(card2);
 
         //then
-        Assertions.assertThat(dealer.canHit()).isFalse();
+        Assertions.assertThat(dealer.isNotBust()).isFalse();
     }
 }

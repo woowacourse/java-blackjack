@@ -26,7 +26,6 @@ public class Participant {
     public boolean isBust() {
         return getTotalScore() > 21;
     }
-
     public String getName() {
         return name.getValue();
     }
@@ -41,7 +40,17 @@ public class Participant {
                 .collect(Collectors.toList());
     }
 
-    public boolean canHit() {
+    public boolean isNotBust() {
         return getTotalScore() <= 21;
+    }
+
+    public boolean isScoreBiggerThan(Participant participant){
+        return participant.getTotalScore()<this.getTotalScore();
+    }
+    public boolean isScoreSameWith(Participant participant){
+        return participant.getTotalScore()==this.getTotalScore();
+    }
+    public boolean isScoreSmallerThan(Participant participant){
+        return participant.getTotalScore()>this.getTotalScore();
     }
 }

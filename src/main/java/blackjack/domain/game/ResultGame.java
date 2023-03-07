@@ -23,18 +23,15 @@ public class ResultGame {
     }
 
     private void compareScore(final Player player) {
-        if (dealer.isBust()) {
             compareScoreWithBustDealer(player);
-            return;
-        }
-        if (player.isBust()) {
             compareScoreWithBustPlayer(player);
-            return;
-        }
-        compareScoreWithNotBustDealer(player);
+            compareScoreWithNotBustDealer(player);
     }
 
     private void compareScoreWithBustDealer(final Player player) {
+        if(dealer.isNotBust()) {
+            return;
+        }
         if (player.isBust()) {
             playersResult.put(player, WinTieLose.TIE);
             return;
@@ -43,6 +40,9 @@ public class ResultGame {
     }
 
     private void compareScoreWithBustPlayer(final Player player) {
+        if(player.isNotBust()) {
+            return;
+        }
         if (dealer.isBust()) {
             playersResult.put(player, WinTieLose.TIE);
             return;
@@ -52,14 +52,16 @@ public class ResultGame {
     }
 
     private void compareScoreWithNotBustDealer(final Player player) {
-        final int dealerScore = dealer.getTotalScore();
-        if (dealerScore == player.getTotalScore()) {
+        if(dealer.isBust()||player.isBust()) {
+            return;
+        }
+        if (player.isScoreSameWith(dealer)) {
             playersResult.put(player, WinTieLose.TIE);
         }
-        if (dealerScore < player.getTotalScore()) {
+        if (player.isScoreBiggerThan(dealer)) {
             playersResult.put(player, WinTieLose.WIN);
         }
-        if (dealerScore > player.getTotalScore()) {
+        if (player.isScoreSmallerThan(dealer)) {
             playersResult.put(player, WinTieLose.LOSE);
         }
     }

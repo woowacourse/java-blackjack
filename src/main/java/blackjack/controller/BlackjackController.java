@@ -80,7 +80,7 @@ public class BlackjackController {
     }
 
     private void hitEachPlayer(final BlackjackGame blackjackGame, final Player player) {
-        while (player.canHit() && isMoreHit(player)) {
+        while (player.isNotBust() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
             outputView.outputPlayerCard(player.getName(), player.getCardNames());
         }
@@ -94,7 +94,7 @@ public class BlackjackController {
     private void hitDealer(final BlackjackGame blackjackGame) {
         final Dealer dealer = blackjackGame.getParticipants().getDealer();
 
-        while (dealer.canHit()) {
+        while (dealer.isNotBust()) {
             outputView.outputDealerDrawCard(dealer.getName());
             blackjackGame.drawCard(dealer);
             outputView.changeLine();

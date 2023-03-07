@@ -41,6 +41,6 @@ public class BlackjackGame {
     }
 
     public boolean isPlayerCanPlay(final Participant participant) {
-        return participant.canHit();
+        return participant.isNotBust();
     }
 }

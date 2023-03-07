@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canHit() {
+    public boolean isNotBust() {
         return getTotalScore() <= 16;
     }
 }
