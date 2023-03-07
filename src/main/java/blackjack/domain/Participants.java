@@ -7,27 +7,34 @@ import java.util.Collections;
 import java.util.List;
 
 public class Participants {
-    private final List<Person> people = new ArrayList<>();
+    private final List<Person> participants = new ArrayList<>();
 
     public Participants(Dealer dealer, List<Player> players) {
-        this.people.add(dealer);
-        this.people.addAll(players);
+        this.participants.add(dealer);
+        this.participants.addAll(players);
     }
 
     public List<Person> getPlayers() {
-        return people.stream()
+        return participants.stream()
                 .filter(Person::isPlayer)
                 .collect(toList());
     }
 
     public Person getDealer() {
-        return people.stream()
+        return participants.stream()
                 .filter(Person::isDealer)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 딜러가 없습니다."));
     }
 
-    public List<Person> getPeople() {
-        return Collections.unmodifiableList(people);
+    public Person findByName(String name) {
+        return participants.stream()
+                .filter(person -> person.getName().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 이름과 일치하는 참가자가 없습니다."));
+    }
+
+    public List<Person> getParticipants() {
+        return Collections.unmodifiableList(participants);
     }
 }
