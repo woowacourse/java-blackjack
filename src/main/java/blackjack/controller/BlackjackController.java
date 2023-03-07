@@ -24,11 +24,8 @@ public class BlackjackController {
         Cards cards = Cards.generator();
         Participants participants = Participants.generate(playersName);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
-
         gameSetting(participants, cardPickerGenerator, blackjackGame);
-
         hitParticipantsCard(blackjackGame, cards, cardPickerGenerator);
-
         printResult(participants, blackjackGame);
     }
 
