@@ -1,9 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -11,24 +9,15 @@ public class Participants {
     private static final int INITIAL_HAND_OUT_COUNT = 2;
 
     private final Dealer dealer = new Dealer();
-    private final List<Player> players;
+    private final Players players;
 
-    private Participants(List<Player> players) {
+    private Participants(Players players) {
         this.players = players;
     }
 
     public static Participants of(List<String> playerNames) {
-        validatePlayerNames(playerNames);
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        Players players = Players.from(playerNames);
         return new Participants(players);
-    }
-
-    private static void validatePlayerNames(List<String> playerNames) {
-        if (playerNames.size() != new HashSet<>(playerNames).size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
-        }
     }
 
     public int getNeededNumberOfCards() {
@@ -36,15 +25,12 @@ public class Participants {
     }
 
     private int getNumberOfParticipants() {
-        return NUMBER_OF_DEALER + players.size();
+        return NUMBER_OF_DEALER + players.getNumberOfPlayers();
     }
 
     public void handInitialCards(Deck deck) {
         handInitialCards(dealer, deck);
-
-        for (Player player : players) {
-            handInitialCards(player, deck);
-        }
+        players.handInitialCards(deck);
     }
 
     private void handInitialCards(Participant participant, Deck deck) {
@@ -58,7 +44,7 @@ public class Participants {
     }
 
     public GameResult openPlayerGameResult(String playerName) {
-        Player player = findPlayerBy(playerName);
+        Player player = players.findPlayerByName(playerName);
         return GameResult.from(player);
     }
 
@@ -66,47 +52,24 @@ public class Participants {
         return dealer.getCards().get(0);
     }
 
-    public List<Card> openDealerCards() {
-        return dealer.getCards();
-    }
-
     public PlayerWinResults computePlayerWinResults() {
-        PlayerWinResults playerWinResults = new PlayerWinResults();
-        for (Player player : players) {
-            playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
-        }
-        return playerWinResults;
+        return players.computePlayerWinResults(dealer);
     }
 
-    public List<String> findNotBustPlayerNames() {
-        List<String> notBustPlayerNames = new ArrayList<>();
-        for (Player player : players) {
-            addAvailablePlayer(player, notBustPlayerNames);
-        }
-        return notBustPlayerNames;
-    }
-
-    private void addAvailablePlayer(Player player, List<String> availablePlayerNames) {
-        if (player.canDraw()) {
-            availablePlayerNames.add(player.getName());
-        }
+    public List<String> findCanDrawPlayerNames() {
+        return players.findCanDrawPlayerNames();
     }
 
     public List<Card> getDealerCards() {
         return new ArrayList<>(dealer.getCards());
     }
 
-    public List<List<Card>> getPlayersCards() {
-        return players.stream()
-                .map(Player::getCards)
-                .collect(Collectors.toList());
+    public List<Card> getPlayerCards(String playerName) {
+        return players.getPlayerCards(playerName);
     }
 
-    public Player findPlayerBy(String playerName) {
-        return players.stream()
-                .filter(player -> player.getName().equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
+    public Player findPlayerByName(String playerName) {
+        return players.findPlayerByName(playerName);
     }
 
     public Dealer getDealer() {
@@ -114,8 +77,6 @@ public class Participants {
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
+        return players.getPlayerNames();
     }
 }

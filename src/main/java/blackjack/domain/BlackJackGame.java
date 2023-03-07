@@ -23,13 +23,13 @@ public class BlackJackGame {
     }
 
     public void handOneCard(String playerName) {
-        Player player = participants.findPlayerBy(playerName);
+        Player player = participants.findPlayerByName(playerName);
         Card card = deck.draw();
         player.take(card);
     }
 
     public boolean canDraw(String playerName) {
-        Player player = participants.findPlayerBy(playerName);
+        Player player = participants.findPlayerByName(playerName);
         return player.canDraw();
     }
 
@@ -38,11 +38,11 @@ public class BlackJackGame {
     }
 
     public List<String> findNotBustPlayerNames() {
-        return participants.findNotBustPlayerNames();
+        return participants.findCanDrawPlayerNames();
     }
 
     public List<Card> openPlayerCards(String playerName) {
-        Player player = participants.findPlayerBy(playerName);
+        Player player = participants.findPlayerByName(playerName);
         return player.getCards();
     }
 
