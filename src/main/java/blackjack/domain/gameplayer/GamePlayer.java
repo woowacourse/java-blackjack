@@ -2,8 +2,6 @@ package blackjack.domain.gameplayer;
 
 import blackjack.domain.card.Card;
 
-import java.util.List;
-
 public class GamePlayer {
     private final Players players;
     private final Dealer dealer;

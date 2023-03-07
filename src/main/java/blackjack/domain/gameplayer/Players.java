@@ -42,10 +42,6 @@ public class Players implements Iterable<Player> {
                 .count();
     }
 
-    public boolean getPlayerIsHit(int i) {
-        return players.get(i).isHit();
-    }
-
     public void addCardToPlayer(int i, Card card) {
         players.get(i).addCard(card);
     }
@@ -54,10 +50,6 @@ public class Players implements Iterable<Player> {
         players.stream()
                 .filter(player::equals)
                 .forEach(x -> x.addCard(card));
-    }
-
-    public int count() {
-        return players.size();
     }
 
     public List<String> getPlayersName() {
