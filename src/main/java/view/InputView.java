@@ -27,7 +27,7 @@ public class InputView {
 
     private void validateYOrN(final String input) {
         if (!input.equals("y") && !input.equals("n")) {
-            throw new IllegalArgumentException("y 혹은 n 만 입력가능합니다.");
+            throw new IllegalArgumentException("y 혹은 n 만 입력가능합니다. 입력한 문자 : " +input);
         }
     }
 }

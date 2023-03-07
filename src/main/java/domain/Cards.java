@@ -6,13 +6,16 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
+    private static final int MAXINUM_SUM_OF_CARD = 21;
+    private static final int TREAT_A_AS_ONE = 10;
+
     private final List<Card> cards;
-    private boolean blackJack;
+    private final boolean blackJack;
 
     public Cards(final List<Card> cards) {
         validateDuplicated(cards);
         this.cards = cards;
-        this.blackJack = isTwentyOne();
+        this.blackJack = isMaximumNumber();
     }
 
     public int sumOfCards() {
@@ -20,16 +23,21 @@ public class Cards {
             int sum = calculateOddCardsSum();
             return checkOver21AndContainsA(sum);
         }
+        int sum = calculateSum();
+        return checkOver21AndContainsA(sum);
+    }
+
+    private int calculateSum() {
         int sum = 0;
         for (int i = 0; i < cards.size(); i += 2) {
             sum += cards.get(i).sum(cards.get(i + 1));
         }
-        return checkOver21AndContainsA(sum);
+        return sum;
     }
 
     private int checkOver21AndContainsA(final int sum) {
-        if (sum > 21 && containsA()) {
-            return sum - 10;
+        if (sum > MAXINUM_SUM_OF_CARD && containsA()) {
+            return sum - TREAT_A_AS_ONE;
         }
         return sum;
     }
@@ -66,21 +74,26 @@ public class Cards {
     private void validateDuplicated(final List<Card> cards) {
         int size = new HashSet<>(cards).size();
         if (cards.size() != size) {
-            throw new IllegalArgumentException();
+            int duplicatedCardsNum = cards.size() - size + 1;
+            throw new IllegalArgumentException(duplicatedCardsNum + "개의 카드가 중복됩니다");
         }
     }
 
-    public boolean isTwentyOne() {
-        return sumOfCards() == 21;
+    public boolean isMaximumNumber() {
+        return sumOfCards() == MAXINUM_SUM_OF_CARD;
     }
 
     public boolean isBlackJack() {
         return blackJack;
     }
 
-    public List<String> getCards() {
+    public List<String> copyCards() {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

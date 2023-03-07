@@ -12,12 +12,12 @@ public class Player {
         this.cards = cards;
     }
 
-    public boolean selectToPickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
-        return pickOtherCard(cardBox, generator);
+    public boolean selectToPickOtherCard(final CardBox cardBox, final int cardBoxIndex) {
+        return pickOtherCard(cardBox, cardBoxIndex);
     }
 
-    protected boolean pickOtherCard(final CardBox cardBox, final CardNumberGenerator generator) {
-        return cards.addCard(cardBox.get(generator.generateIndex()));
+    protected boolean pickOtherCard(final CardBox cardBox, final int cardBoxIndex) {
+        return cards.addCard(cardBox.get(cardBoxIndex));
     }
 
     public int sumOfPlayerCards() {
@@ -28,7 +28,11 @@ public class Player {
         return name.getName();
     }
 
-    public List<String> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
+    }
+
+    public List<String> copyCards() {
+        return cards.copyCards();
     }
 }

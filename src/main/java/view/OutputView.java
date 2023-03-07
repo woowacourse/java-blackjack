@@ -1,5 +1,6 @@
 package view;
 
+import domain.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -39,17 +40,17 @@ public class OutputView {
         System.out.println(name + "카드: " + cardsMessage + " - 결과 : " + cardSum);
     }
 
-    public void printWinningResult(final List<Integer> winningResult, final List<String> namesCopy) {
+    public void printWinningResult(final List<Result> winningResult, final List<String> namesCopy) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
 
         printDealerResult(winningResult);
 
         for (int i = 0; i < winningResult.size(); i++) {
-            printResult(winningResult, namesCopy, i);
+            printPlayerResult(winningResult, namesCopy, i);
         }
     }
 
-    private static void printDealerResult(final List<Integer> winningResult) {
+    private static void printDealerResult(final List<Result> winningResult) {
         int[] result = getDealerResult(winningResult);
         StringBuilder sb = makeStringOfDealerResult(result);
         System.out.println("딜러: " + sb);
@@ -57,6 +58,11 @@ public class OutputView {
 
     private static StringBuilder makeStringOfDealerResult(final int[] result) {
         StringBuilder sb = new StringBuilder();
+        addResultIfExists(result, sb);
+        return sb;
+    }
+
+    private static void addResultIfExists(int[] result, StringBuilder sb) {
         if (result[0] != 0) {
             sb.append(result[0]).append("승 ");
         }
@@ -66,38 +72,41 @@ public class OutputView {
         if (result[2] != 0) {
             sb.append(result[2]).append("패");
         }
-        return sb;
     }
 
-    private static void printResult(final List<Integer> winningResult, final List<String> namesCopy, final int i) {
+    private static void printPlayerResult(final List<Result> winningResult, final List<String> namesCopy, final int i) {
         System.out.print(namesCopy.get(i + 1) + ": ");
-        if (winningResult.get(i) == 1) {
-            System.out.print("패" + System.lineSeparator());
-        }
-        if (winningResult.get(i) == 0) {
-            System.out.print("무" + System.lineSeparator());
-        }
-        if (winningResult.get(i) == -1) {
+        printResultsIfExists(winningResult, i);
+    }
+
+    private static void printResultsIfExists(List<Result> winningResult, int i) {
+        if (winningResult.get(i) == Result.LOSE) {
             System.out.print("승" + System.lineSeparator());
         }
+        if (winningResult.get(i) == Result.DRAW) {
+            System.out.print("무" + System.lineSeparator());
+        }
+        if (winningResult.get(i) == Result.WIN) {
+            System.out.print("패" + System.lineSeparator());
+        }
     }
 
-    private static int[] getDealerResult(final List<Integer> winningResult) {
-        int[] result = new int[3];
+    private static int[] getDealerResult(final List<Result> winningResult) {
+        int[] results = new int[3];
 
-        winningResult.forEach(integer -> makeDealerResult(result, integer));
-        return result;
+        winningResult.forEach(result -> makeDealerResult(results, result));
+        return results;
     }
 
-    private static void makeDealerResult(final int[] result, final Integer integer) {
-        if (integer == 1) {
-            result[0] = result[0] + 1;
+    private static void makeDealerResult(final int[] results, final Result result) {
+        if (result == Result.WIN) {
+            results[0] = results[0] + 1;
             return;
         }
-        if (integer == 0) {
-            result[1] = result[1] + 1;
+        if (result == Result.DRAW) {
+            results[1] = results[1] + 1;
             return;
         }
-        result[2] = result[2] + 1;
+        results[2] = results[2] + 1;
     }
 }
