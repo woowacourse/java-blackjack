@@ -43,4 +43,14 @@ class NameTest {
 
         assertThat(name.getValue()).isEqualTo(expect);
     }
+
+    @DisplayName("이름 값이 같으면 동등하다.")
+    @Test
+    void equals() {
+        //given
+        Name rosie = new Name("로지");
+        //when
+        //then
+        assertThat(rosie).isEqualTo(new Name("로지"));
+    }
 }
