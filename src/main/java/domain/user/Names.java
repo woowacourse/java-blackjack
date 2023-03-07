@@ -7,10 +7,17 @@ public class Names {
     private final List<Name> names = new ArrayList<>();
 
     public Names(List<String> inputNames) {
+        validateDuplicatedName(inputNames);
         inputNames.forEach(name -> names.add(new Name(name)));
     }
 
     public List<Name> getNames() {
         return new ArrayList<>(names);
+    }
+
+    private void validateDuplicatedName(List<String> names) {
+        if(names.size() != names.stream().distinct().count()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
+        }
     }
 }
