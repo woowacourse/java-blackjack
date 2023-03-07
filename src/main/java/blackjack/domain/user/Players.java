@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Players {
 
-    private static final int MAX_PLAYER_COUNT = 13;
+    private static final int MAX_PLAYER_COUNT = 10;
 
     private final List<Player> players;
 
@@ -25,8 +25,10 @@ public class Players {
     }
 
     private void validateDuplicatedNames(final List<Player> players) {
-
-        final long count = players.stream().map(User::getName).distinct().count();
+        final long count = players.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
 
         if (count != players.size()) {
             throw new IllegalArgumentException("플레이어들의 이름은 고유하여야 합니다.");
@@ -34,6 +36,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return this.players;
+        return List.copyOf(players);
     }
 }

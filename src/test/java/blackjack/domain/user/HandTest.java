@@ -1,18 +1,15 @@
-package blackjack.domain.game;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ScoreRefereeTest {
+class HandTest {
 
     private static final int BUST_SCORE = -1;
     private static final int MAX_CARD_SCORE = 21;
@@ -20,14 +17,16 @@ class ScoreRefereeTest {
     @Test
     void 카드를_받아_점수를_계산한다() {
         //given
+        Hand hand = new Hand();
         CardNumber cardNumber = CardNumber.TWO;
         List<Card> cards = List.of(new Card(cardNumber, CardShape.CLOVER));
 
         // when
-        final int score = ScoreReferee.calculateScore(cards);
+        cards.forEach(hand::add);
 
         // then
-        Assertions.assertThat(score).isEqualTo(cardNumber.getScore());
+        Assertions.assertThat(hand.calculateScore())
+                .isEqualTo(cardNumber.getScore());
     }
 
     @Nested
@@ -36,45 +35,51 @@ class ScoreRefereeTest {
         @Test
         void _카드_총합이_21이_넘어가면_1로_취급한다() {
             // given
+            Hand hand = new Hand();
             Card cardTen = new Card(CardNumber.TEN, CardShape.CLOVER);
             Card cardNine = new Card(CardNumber.NINE, CardShape.CLOVER);
             Card cardAce = new Card(CardNumber.ACE, CardShape.CLOVER);
             List<Card> cards = List.of(cardTen, cardNine, cardAce);
 
             // when
-            final int score = ScoreReferee.calculateScore(cards);
+            cards.forEach(hand::add);
 
             // then
-            Assertions.assertThat(score).isEqualTo(20);
+            Assertions.assertThat(hand.calculateScore())
+                    .isEqualTo(20);
         }
 
         @Test
         void _카드_총합이_21이_넘어가지_않으면_11로_취급한다() {
             // given
+            Hand hand = new Hand();
             Card cardTen = new Card(CardNumber.TEN, CardShape.CLOVER);
             Card cardAce = new Card(CardNumber.ACE, CardShape.CLOVER);
             List<Card> cards = List.of(cardTen, cardAce);
 
             // when
-            final int score = ScoreReferee.calculateScore(cards);
+            cards.forEach(hand::add);
 
             // then
-            Assertions.assertThat(score).isEqualTo(MAX_CARD_SCORE);
+            Assertions.assertThat(hand.calculateScore())
+                    .isEqualTo(MAX_CARD_SCORE);
         }
     }
 
     @Test
     void _카드_총합이_21을_넘어가면_무조건_패배이다() {
         // given
+        Hand hand = new Hand();
         Card cardTen1 = new Card(CardNumber.TEN, CardShape.CLOVER);
         Card cardTen2 = new Card(CardNumber.TEN, CardShape.CLOVER);
         Card cardTen3 = new Card(CardNumber.TEN, CardShape.CLOVER);
         List<Card> cards = List.of(cardTen1, cardTen2, cardTen3);
 
         //when
-        final int score = ScoreReferee.calculateScore(cards);
+        cards.forEach(hand::add);
 
         //then
-        Assertions.assertThat(score).isEqualTo(BUST_SCORE);
+        Assertions.assertThat(hand.calculateScore())
+                .isEqualTo(BUST_SCORE);
     }
 }

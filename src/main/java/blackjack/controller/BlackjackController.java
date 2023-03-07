@@ -1,26 +1,23 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.game.ResultReferee;
-import blackjack.domain.game.ScoreBoard;
-import blackjack.domain.game.ScoreReferee;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
-import blackjack.domain.user.name.PlayerName;
-import blackjack.domain.user.name.UserName;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final int BUST_SCORE = -1;
+    public static final String DEFAULT_DEALER_NAME = "딜러";
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -30,72 +27,85 @@ public class BlackjackController {
     }
 
     public void run() {
+        Dealer dealer = new Dealer(DEFAULT_DEALER_NAME);
         Players players = getPlayers();
-        Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        startGame(players, dealer, blackjackGame);
-        processGame(players, dealer, blackjackGame);
+        initDraw(players, dealer, blackjackGame);
+        playerDraw(players, dealer, blackjackGame);
         endGame(players, dealer);
     }
 
-    private void startGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        blackjackGame.initGame(dealer);
-        players.getPlayers().forEach(blackjackGame::initGame);
-        outputView.printUsersCard(dealer, players);
+    private Players getPlayers() {
+        return repeatInput(() -> {
+            List<String> playerNames = inputView.readParticipantName();
+            return new Players(playerNames.stream()
+                    .map(Player::new)
+                    .collect(Collectors.toList()));
+        });
     }
 
-    private void processGame(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
+    private <T> T repeatInput(Supplier<T> input) {
+        try {
+            return input.get();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return repeatInput(input);
+        }
+    }
+
+    private void initDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
+        blackjackGame.initDraw(dealer, players);
+        outputView.printInitCards(dealer, players);
+    }
+
+    private void playerDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
+        players.getPlayers().forEach((player ->
+                processPlayerDraw(blackjackGame, player))
+        );
 
         processDealerDraw(dealer, blackjackGame);
     }
 
     private void processPlayerDraw(final BlackjackGame blackjackGame, final Player player) {
-        while (inputView.readCommand(player.getName()) && !isBust(player.showCards())) {
-            blackjackGame.draw(player);
-            outputView.printUserCards(player);
+        while (isCommandContinue(player) && isPlayerEnd(blackjackGame, player)) {
+            blackjackGame.playerDraw(player);
+            outputView.printParticipantCards(player.getName(), player.showCards());
         }
     }
 
+    private boolean isPlayerEnd(final BlackjackGame blackjackGame, final Player player) {
+        return !blackjackGame.isBust(player.getScore());
+    }
+
+    private boolean isCommandContinue(final Player player) {
+        return repeatInput(() -> inputView.readCommand(player.getName()));
+    }
+
     private void processDealerDraw(final Dealer dealer, final BlackjackGame blackjackGame) {
-        while (!blackjackGame.isDealerEnd(dealer)) {
-            blackjackGame.draw(dealer);
+        while (!blackjackGame.isEnd(dealer.getScore())) {
+            blackjackGame.dealerDraw(dealer);
             outputView.printDealerDraw();
         }
     }
 
     private void endGame(final Players players, final Dealer dealer) {
-        ScoreBoard scoreBoard = new ScoreBoard(dealer, players);
-        outputView.printCardResult(scoreBoard);
-
-        printResult(players, scoreBoard);
+        outputView.printCardResult(dealer, players);
+        printResult(dealer, players);
     }
 
-    private void printResult(final Players players, final ScoreBoard scoreBoard) {
-        ResultReferee referee = new ResultReferee(scoreBoard);
-        final Map<UserName, GameResult> playerScore = getPlayerScore(players, referee);
-        final Map<GameResult, Integer> dealerScore = referee.getDealerScore();
-        outputView.printGameResult(dealerScore, playerScore);
+    private void printResult(final Dealer dealer, final Players players) {
+        final Map<String, GameResult> playersResult = getPlayerScoreResult(dealer, players);
+        outputView.printGameResult(dealer.getResult(), playersResult);
     }
 
-    private boolean isBust(final List<Card> showCards) {
-        return ScoreReferee.calculateScore(showCards) == BUST_SCORE;
-    }
-
-    private Players getPlayers() {
-        final List<String> strings = inputView.readParticipantName();
-        return new Players(strings.stream()
-                .map(name -> new Player(new PlayerName(name)))
-                .collect(Collectors.toList()));
-    }
-
-    public Map<UserName, GameResult> getPlayerScore(final Players players, final ResultReferee referee) {
-        Map<UserName, GameResult> result = new HashMap<>();
+    private Map<String, GameResult> getPlayerScoreResult(final Dealer dealer, final Players players) {
+        Map<String, GameResult> result = new HashMap<>();
 
         players.getPlayers().forEach((player) -> {
-            final GameResult score = referee.askResultByUserName(player.getName());
-            result.put(player.getName(), score);
+            int playerScore = player.getScore();
+            GameResult gameResult = dealer.declareGameResult(playerScore);
+            result.put(player.getName(), gameResult);
         });
 
         return result;

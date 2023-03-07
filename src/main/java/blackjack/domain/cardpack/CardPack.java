@@ -3,7 +3,9 @@ package blackjack.domain.cardpack;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CardPack {
@@ -20,15 +22,10 @@ public class CardPack {
     }
 
     private void initCardsShape() {
-        for (final CardShape currentShape : CardShape.values()) {
-            matchingNumberByShape(currentShape);
-        }
-    }
-
-    private void matchingNumberByShape(final CardShape currentShape) {
-        for (final CardNumber currentNumber : CardNumber.values()) {
-            cards.add(new Card(currentNumber, currentShape));
-        }
+        Arrays.stream(CardShape.values())
+                .flatMap(cardShape -> Arrays.stream(CardNumber.values())
+                        .map(cardNumber -> new Card(cardNumber, cardShape)))
+                .forEach(cards::add);
     }
 
     public void shuffle(final ShuffleStrategy strategy) {
@@ -39,7 +36,10 @@ public class CardPack {
         return cards.size();
     }
 
-    public Card pop() {
+    public Card takeOne() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드를 모두 소진했습니다.");
+        }
         return cards.remove(cards.size() - 1);
     }
 }

@@ -3,7 +3,8 @@ package blackjack.domain.game;
 import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.cardpack.MasterShuffleStrategy;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.User;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.Players;
 
 public class BlackjackGame {
 
@@ -23,21 +24,35 @@ public class BlackjackGame {
     }
 
     private void initCardPack() {
-        this.cardPack.shuffle(new MasterShuffleStrategy());
+        cardPack.shuffle(new MasterShuffleStrategy());
     }
 
-    public void initGame(User user) {
+    public void initDraw(Dealer dealer, Players players) {
         for (int currentCount = 0; currentCount < INIT_DRAW_COUNT; currentCount++) {
-            draw(user);
+            dealer.drawCard(cardPack);
+            playersDraw(players);
         }
     }
 
-    public void draw(User user) {
-        user.drawCard(cardPack);
+    private void playersDraw(final Players players) {
+        for (Player player : players.getPlayers()) {
+            player.drawCard(cardPack);
+        }
     }
 
-    public boolean isDealerEnd(Dealer dealer) {
-        final int dealerScore = ScoreReferee.calculateScore(dealer.showCards());
-        return (dealerScore > MIN_DEALER_SCORE) || (dealerScore == BUST_SCORE);
+    public void playerDraw(Player player) {
+        player.drawCard(cardPack);
+    }
+
+    public void dealerDraw(Dealer dealer) {
+        dealer.drawCard(cardPack);
+    }
+
+    public boolean isEnd(int score) {
+        return (score > MIN_DEALER_SCORE) || isBust(score);
+    }
+
+    public boolean isBust(final int score) {
+        return score == BUST_SCORE;
     }
 }

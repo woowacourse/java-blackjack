@@ -17,18 +17,18 @@ public enum CardNumber {
     KING(10, "K");
 
     private final int score;
-    private final String name;
+    private final String view;
 
-    CardNumber(final int score, final String name) {
+    CardNumber(final int score, final String view) {
         this.score = score;
-        this.name = name;
+        this.view = view;
     }
 
     public int getScore() {
         return score;
     }
 
-    public String getName() {
-        return name;
+    public String getView() {
+        return view;
     }
 }

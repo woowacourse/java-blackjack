@@ -35,7 +35,7 @@ class CardPackTest {
 
         private void assertEqualsCardByShape(final CardShape shape) {
             for (int i = 0; i < 13; i++) {
-                Card card = cardPack.pop();
+                Card card = cardPack.takeOne();
                 Assertions.assertThat(card.getShape()).isEqualTo(shape);
             }
         }
@@ -44,9 +44,9 @@ class CardPackTest {
         void _52장까지만_생성된다() {
             Assertions.assertThatThrownBy(() -> {
                 for (int i = 0; i < 53; i++) {
-                    cardPack.pop();
+                    cardPack.takeOne();
                 }
-            }).isInstanceOf(IndexOutOfBoundsException.class);
+            }).isInstanceOf(IllegalStateException.class);
         }
     }
 
@@ -60,7 +60,7 @@ class CardPackTest {
         cardPack.shuffle(strategy);
 
         //then
-        Card card = cardPack.pop();
+        Card card = cardPack.takeOne();
         Assertions.assertThat(card.getShape()).isEqualTo(CardShape.SPADE);
         Assertions.assertThat(card.getNumber()).isEqualTo(CardNumber.ACE);
     }
@@ -72,7 +72,7 @@ class CardPackTest {
         int originSize = cardPack.size();
 
         //when
-        Card card = cardPack.pop();
+        Card card = cardPack.takeOne();
 
         // then
         Assertions.assertThat(cardPack.size()).isEqualTo(originSize - 1);
