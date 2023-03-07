@@ -59,8 +59,7 @@ public class BlackJackController {
     }
 
     private boolean isBurst(Referee referee, Player player) {
-        int score = referee.calculateDeckScore(player.getCardDeck());
-        if (score == Referee.BURST_CODE) {
+        if (referee.isBurst(player.getCardDeck())) {
             OutputView.printBurstMessage();
             return true;
         }
@@ -77,7 +76,7 @@ public class BlackJackController {
 
     private void tryDealerTurn(CardPicker cardPicker, Dealer dealer, Referee referee) {
         while (referee.calculateDeckScore(dealer.getCardDeck()) <= Referee.DEALER_HIT_NUMBER
-            && referee.calculateDeckScore(dealer.getCardDeck()) != Referee.BURST_CODE) {
+            && referee.isBurst(dealer.getCardDeck())) {
             dealer.hit(cardPicker);
             OutputView.printDealerPickMessage(dealer);
         }

@@ -31,7 +31,7 @@ class RefereeTest {
         deck.addCard(new Card(Pattern.SPADE, Number.JACK));
         deck.addCard(new Card(Pattern.SPADE, Number.QUEEN));
 
-        Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(-1);
+        Assertions.assertThat(referee.isBurst(deck)).isTrue();
     }
 
 
@@ -78,7 +78,7 @@ class RefereeTest {
             deck.addCard(new Card(Pattern.SPADE, Number.JACK));
             deck.addCard(new Card(Pattern.CLUB, Number.ACE));
 
-            Assertions.assertThat(referee.calculateDeckScore(deck)).isEqualTo(-1);
+            Assertions.assertThat(referee.isBurst(deck)).isTrue();
         }
     }
 

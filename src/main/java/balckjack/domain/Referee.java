@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class Referee {
 
-    public static final int BURST_CODE = -1;
     public static final int DEALER_HIT_NUMBER = 16;
     public static final int MAX_ACE_VALUE = 11;
 
@@ -26,10 +25,6 @@ public class Referee {
         int commonSum = calculateCommonCardScore(deck);
         List<Card> aceCards = deck.extractAceCards();
         int aceCardCount = aceCards.size();
-
-        if (isBurst(commonSum, aceCardCount)) {
-            return BURST_CODE;
-        }
         int aceSum = calculateAceCardScore(commonSum, aceCardCount);
         return commonSum + aceSum;
     }
@@ -40,8 +35,8 @@ public class Referee {
             .mapToInt(Card::getValue).sum();
     }
 
-    private boolean isBurst(int sum, int aceCardCount) {
-        return sum + aceCardCount * MIN_ACE_VALUE > BLACKJACK_SCORE;
+    public boolean isBurst(CardDeck deck) {
+        return calculateDeckScore(deck) > BLACKJACK_SCORE;
     }
 
     private int calculateAceCardScore(int commonSum, int aceCardCount) {
@@ -80,8 +75,11 @@ public class Referee {
     }
 
     private Result compareScore(int dealerScore, int playerScore) {
-        if (playerScore == BURST_CODE) {
+        if (playerScore > BLACKJACK_SCORE) {
             return Result.LOSE;
+        }
+        if (dealerScore > BLACKJACK_SCORE) {
+            return Result.WIN;
         }
         if (playerScore > dealerScore) {
             return Result.WIN;
