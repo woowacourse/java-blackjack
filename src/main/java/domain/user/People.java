@@ -2,7 +2,7 @@ package domain.user;
 
 import domain.game.Deck;
 import domain.game.GameResult;
-import view.dto.PlayerDTO;
+import view.dto.PlayerInfoDTO;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public class People {
         return GameResult.makeDealerRecord(record);
     }
 
-    public void hitByCommandAllPlayers(Function<String, String> inputCommand, Consumer<PlayerDTO> outputPlayer, Deck deck) {
+    public void hitByCommandAllPlayers(Function<String, String> inputCommand, Consumer<PlayerInfoDTO> outputPlayer, Deck deck) {
         players.forEach(player -> player.hitByCommand(inputCommand, outputPlayer, deck));
     }
 

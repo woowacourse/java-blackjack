@@ -1,6 +1,6 @@
 package view;
 
-import view.dto.PlayerDTO;
+import view.dto.PlayerInfoDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -8,22 +8,22 @@ import java.util.StringJoiner;
 
 public class OutputView {
 
-    public void printGameStarted(PlayerDTO dealer, List<PlayerDTO> players) {
+    public void printGameStarted(PlayerInfoDTO dealer, List<PlayerInfoDTO> players) {
         StringJoiner stringJoiner = new StringJoiner(", ");
         players.forEach(player -> stringJoiner.add(player.getPlayerName()));
         System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName(), stringJoiner);
 
         printNameAndCard(dealer);
-        for (PlayerDTO player : players) {
+        for (PlayerInfoDTO player : players) {
             printNameAndCard(player);
         }
     }
 
-    public void printNameAndCard(PlayerDTO player) {
+    public void printNameAndCard(PlayerInfoDTO player) {
         System.out.println(makeNameAndCardMessage(player));
     }
 
-    public String makeNameAndCardMessage(PlayerDTO player) {
+    public String makeNameAndCardMessage(PlayerInfoDTO player) {
         String cardStr = player.getPlayerName() + "카드: ";
         StringJoiner stringJoiner = new StringJoiner(", ");
 
@@ -36,7 +36,7 @@ public class OutputView {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerRecord(PlayerDTO dealer, Map<String, Integer> dealerRecord) {
+    public void printDealerRecord(PlayerInfoDTO dealer, Map<String, Integer> dealerRecord) {
         System.out.println("## 최종 승패");
         System.out.print(dealer.getPlayerName() + " : ");
 
@@ -54,14 +54,14 @@ public class OutputView {
         }
     }
 
-    public void printGameScore(PlayerDTO dealerParameter, List<PlayerDTO> playersParameter) {
+    public void printGameScore(PlayerInfoDTO dealerParameter, List<PlayerInfoDTO> playersParameter) {
         printScore(dealerParameter);
-        for (PlayerDTO playerDTO : playersParameter) {
-            printScore(playerDTO);
+        for (PlayerInfoDTO playerInfoDTO : playersParameter) {
+            printScore(playerInfoDTO);
         }
     }
 
-    private void printScore(PlayerDTO playerDTO) {
-        System.out.println(makeNameAndCardMessage(playerDTO) + " - 결과 : " + playerDTO.getResult());
+    private void printScore(PlayerInfoDTO playerInfoDTO) {
+        System.out.println(makeNameAndCardMessage(playerInfoDTO) + " - 결과 : " + playerInfoDTO.getResult());
     }
 }
