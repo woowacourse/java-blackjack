@@ -3,7 +3,7 @@ package domain.game;
 import domain.strategy.NumberGenerator;
 import domain.user.People;
 import domain.user.Player;
-import view.dto.PlayerParameter;
+import view.dto.PlayerDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class BlackjackGame {
         return people;
     }
 
-    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerParameter> outputPlayer) {
+    public void hitAllPlayersByCommand(Function<String, String> inputCommand, Consumer<PlayerDTO> outputPlayer) {
         people.hitByCommandAllPlayers(inputCommand, outputPlayer, deck);
     }
 }

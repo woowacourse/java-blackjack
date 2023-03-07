@@ -7,7 +7,7 @@ import domain.user.People;
 import domain.user.Player;
 import view.InputView;
 import view.OutputView;
-import view.dto.PlayerParameter;
+import view.dto.PlayerDTO;
 import view.mapper.GameResultMapper;
 
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class BlackjackController {
         blackjackGame.startHit();
 
         outputView.printPlayersInfoWhenGameStarted(
-                PlayerParameter.from(blackjackGame.getPeople().getDealer()),
+                PlayerDTO.from(blackjackGame.getPeople().getDealer()),
                 makePlayersParameter(blackjackGame.getPeople()));
 
         blackjackGame.hitAllPlayersByCommand(
@@ -40,12 +40,12 @@ public class BlackjackController {
         blackjackGame.letDealerHitUntilThreshold(outputView::printDealerHitMessage);
 
         outputView.printGameScore(
-                PlayerParameter.of(blackjackGame.getPeople().getDealer(),
+                PlayerDTO.of(blackjackGame.getPeople().getDealer(),
                         blackjackGame.getPeople().getDealer().sumHand()),
                 makePlayersParameterWithResult(blackjackGame.getPeople())
         );
 
-        outputView.printDealerRecord(PlayerParameter.from(blackjackGame.getPeople().getDealer()), makeDealerRecord());
+        outputView.printDealerRecord(PlayerDTO.from(blackjackGame.getPeople().getDealer()), makeDealerRecord());
         outputView.printPlayerRecord(makeAllPlayerRecordMap());
     }
 
@@ -62,15 +62,15 @@ public class BlackjackController {
         return strMap;
     }
 
-    private List<PlayerParameter> makePlayersParameterWithResult(People people) {
+    private List<PlayerDTO> makePlayersParameterWithResult(People people) {
         return people.getPlayers().stream()
-                .map(it -> PlayerParameter.of(it, it.sumHand()))
+                .map(it -> PlayerDTO.of(it, it.sumHand()))
                 .collect(Collectors.toList());
     }
 
-    private List<PlayerParameter> makePlayersParameter(People people) {
+    private List<PlayerDTO> makePlayersParameter(People people) {
         return people.getPlayers().stream()
-                .map(PlayerParameter::from)
+                .map(PlayerDTO::from)
                 .collect(Collectors.toList());
     }
 

@@ -1,14 +1,14 @@
 package domain.user;
 
-import domain.game.GameRule;
-
 public class Dealer extends Player {
+
+    private static final int DEALER_HIT_LIMIT = 16;
 
     public Dealer(String playerName, Hand hand) {
         super(playerName, hand);
     }
 
     public boolean canHit() {
-        return sumHand() <= GameRule.DEALER_HIT_LIMIT.getNumber();
+        return sumHand() <= DEALER_HIT_LIMIT;
     }
 }

@@ -1,8 +1,9 @@
 package view;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -22,18 +23,9 @@ public class InputView {
         String line = scanner.nextLine();
         validator.validateNotBlank(line);
 
-        String[] splitNames = line.split(",");
-
-        return trimList(List.of(splitNames));
-    }
-
-    private List<String> trimList(List<String> list) {
-        List<String> trimmedList = new ArrayList<>();
-        for (String element : list) {
-            trimmedList.add(element.trim());
-        }
-
-        return trimmedList;
+        return Arrays.stream(line.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     public String inputCardCommand(String player) {

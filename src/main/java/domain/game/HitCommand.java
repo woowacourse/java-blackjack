@@ -3,8 +3,8 @@ package domain.game;
 import java.util.Arrays;
 
 public enum HitCommand {
-    y("y"),
-    n("n");
+    Y("y"),
+    N("n");
 
     private static final String WRONG_COMMAND_ERROR_MESSAGE = "[ERROR] 잘못된 명령어 입니다.";
 

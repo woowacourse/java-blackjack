@@ -2,12 +2,14 @@ package domain.user;
 
 import domain.card.Card;
 import domain.card.Denomination;
-import domain.game.GameRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int MIN_ACE = 1;
 
     private final List<Card> cards;
 
@@ -31,15 +33,15 @@ public class Hand {
     }
 
     private int decideAceNumber(int sum, int unDecidedAceCount) {
-        if (sum > GameRule.BLACKJACK.getNumber() && unDecidedAceCount > 0) {
-            sum = sum - (Denomination.ACE.value() - GameRule.MIN_ACE.getNumber());
+        if (sum > BLACKJACK_NUMBER && unDecidedAceCount > 0) {
+            sum = sum - (Denomination.ACE.value() - MIN_ACE);
             return decideAceNumber(sum, unDecidedAceCount - 1);
         }
         return sum;
     }
 
     public boolean isOverBlackjack() {
-        return sumCardNumbers() > GameRule.BLACKJACK.getNumber();
+        return sumCardNumbers() > BLACKJACK_NUMBER;
     }
 
     private int countAce() {
