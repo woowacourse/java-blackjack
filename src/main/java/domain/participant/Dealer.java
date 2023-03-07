@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class Dealer extends Participant {
 
-    private static final int STANDARD_GIVEN_SCORE = 16;
+    private static final int STANDARD_GIVEN_SCORE = 17;
 
     private Dealer(final String name) {
         super(name);
@@ -29,7 +29,7 @@ public final class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        return participantCard.calculateScore() <= STANDARD_GIVEN_SCORE;
+        return participantCard.canDraw(STANDARD_GIVEN_SCORE);
     }
 
     private boolean checkDealerWin(final ParticipantCard playerCard) {
@@ -38,7 +38,7 @@ public final class Dealer extends Participant {
         return playerCard.checkBust()
                 || dealerCard.checkBlackJack()
                 || dealerCard.checkBust() && playerCard.checkBust()
-                || !dealerCard.checkBust() && dealerCard.calculateScore() > playerCard.calculateScore();
+                || !dealerCard.checkBust() && dealerCard.checkGreaterScoreThan(playerCard);
     }
 
     private boolean checkPlayerWin(final ParticipantCard playerCard) {
@@ -46,7 +46,7 @@ public final class Dealer extends Participant {
 
         return dealerCard.checkBust()
                 || playerCard.checkBlackJack()
-                || dealerCard.calculateScore() < playerCard.calculateScore();
+                || playerCard.checkGreaterScoreThan(dealerCard);
     }
 
     @Override

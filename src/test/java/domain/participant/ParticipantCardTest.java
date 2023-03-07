@@ -62,16 +62,18 @@ class ParticipantCardTest {
 
     @ParameterizedTest(name = "calculateScore()는 호출하면 점수를 계산한다")
     @MethodSource(value = "domain.helper.ParticipantArguments#makeCards")
-    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expected) {
+    void calculateScore_whenCall_thenReturnScore(final List<Card> cards, final int expectedScore) {
         // given
         cards.forEach(participantCard::addCard);
 
         // when
-        final int score = participantCard.calculateScore();
+        final ParticipantScore actual = participantCard.calculateScore();
 
         // then
-        assertThat(score)
-                .isSameAs(expected);
+        final ParticipantScore expected = ParticipantScore.scoreOf(expectedScore);
+
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "checkBust()는 호출하면 버스트인지 여부를 반환한다")

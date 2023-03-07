@@ -5,6 +5,8 @@ import java.util.List;
 
 public final class Player extends Participant {
 
+    private static final int STANDARD_GIVEN_SCORE = 21;
+
     private Player(final String name) {
         super(name);
     }
@@ -23,7 +25,7 @@ public final class Player extends Participant {
 
     @Override
     public boolean canDraw() {
-        return !participantCard.checkBust();
+        return participantCard.canDraw(STANDARD_GIVEN_SCORE);
     }
 
     @Override

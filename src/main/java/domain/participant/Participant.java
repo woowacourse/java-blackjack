@@ -22,7 +22,9 @@ public abstract class Participant {
     }
 
     public final int calculateScore() {
-        return participantCard.calculateScore();
+        final ParticipantScore participantScore = participantCard.calculateScore();
+
+        return participantScore.score();
     }
 
     public abstract boolean canDraw();

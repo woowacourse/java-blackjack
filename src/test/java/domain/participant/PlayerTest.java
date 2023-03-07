@@ -63,11 +63,11 @@ class PlayerTest {
         cards.forEach(player::addCard);
 
         // when
-        final int score = player.calculateScore();
+        final int actual = player.calculateScore();
 
         // then
-        assertThat(score)
-                .isSameAs(expected);
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 
     @MethodSource(value = "domain.helper.ParticipantArguments#makePlayerCards")

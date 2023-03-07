@@ -65,11 +65,11 @@ class DealerTest {
         cards.forEach(dealer::addCard);
 
         // when
-        final int score = dealer.calculateScore();
+        final int actual = dealer.calculateScore();
 
         // then
-        assertThat(score)
-            .isSameAs(expected);
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "canDraw()는 호출하면 딜러가 카드를 한 장 더 받을지 여부를 반환한다")
