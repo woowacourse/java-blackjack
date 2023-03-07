@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Players {
+public final class Players {
 
     private static final int MIN_PLAYER_COUNT = 2;
     private static final int MAX_PLAYER_COUNT = 8;
