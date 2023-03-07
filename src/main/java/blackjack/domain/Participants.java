@@ -55,12 +55,6 @@ public class Participants {
         }
     }
 
-    public Map<String, List<Card>> openPlayerCards() {
-        Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
-        players.forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
-        return cardsByParticipants;
-    }
-
     public GameResult openDealerGameResult() {
         return GameResult.from(dealer);
     }
