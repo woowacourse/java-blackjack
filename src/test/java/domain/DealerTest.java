@@ -52,7 +52,8 @@ public class DealerTest {
         assertThat(dealer.checkWinningResult(player)).isEqualTo(expected);
     }
 
-    void 딜러의_카드총합이_16이하인지_판단(){
+    @Test
+     void 딜러의_카드총합이_16이하인지_판단(){
         //given
         Name dealerName = new Name("hamad");
         List<Card> dealerCardsByCardBox = new ArrayList<>();
@@ -63,7 +64,5 @@ public class DealerTest {
         Dealer dealer = new Dealer(dealerName, dealerCards);
         //then
         assertThat(dealer.isSumUnderStandard()).isTrue();
-
-
     }
 }
