@@ -1,4 +1,4 @@
-package balckjack.view;
+package balckjack.controller;
 
 import java.util.Arrays;
 
