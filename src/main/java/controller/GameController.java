@@ -38,7 +38,6 @@ public final class GameController {
         final GameManager gameManager = makeGameManager(dealer, players, deck);
         gameManager.handFirstCards();
         printParticipantCards(gameManager, dealer, players);
-
         drawPlayersCard(players, gameManager);
         handleDealerCards(dealer, gameManager);
         printGameResult(gameManager);
