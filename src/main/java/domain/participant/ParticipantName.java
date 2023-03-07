@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.util.Objects;
 
-public class ParticipantName {
+public final class ParticipantName {
 
     private static final int MAX_LENGTH = 20;
 

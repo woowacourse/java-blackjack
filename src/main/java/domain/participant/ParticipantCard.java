@@ -5,7 +5,7 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticipantCard {
+public final class ParticipantCard {
 
     private static final int BLACKJACK_SIZE = 2;
     private static final int FIRST_CARD_INDEX = 0;
