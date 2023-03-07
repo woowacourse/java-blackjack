@@ -26,9 +26,12 @@ public class InputView {
         System.out.println();
         System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
         String input = scanner.nextLine();
-        if (!input.equals("y") && !input.equals("n")) {
-            throw new IllegalArgumentException(INVALID_COMMAND);
+        if(input.equals("y")) {
+            return true;
         }
-        return true;
+        else if(input.equals("n")){
+            return false;
+        }
+        throw new IllegalArgumentException(INVALID_COMMAND);
     }
 }
