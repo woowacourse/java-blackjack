@@ -65,10 +65,6 @@ public class Participants {
         }
     }
 
-    public boolean isDealerStand() {
-        return dealer.isStand() || dealer.isBust();
-    }
-
     public Map<String, PlayerGameResult> getResult() {
         Map<String, PlayerGameResult> result = new LinkedHashMap<>();
 
@@ -81,17 +77,21 @@ public class Participants {
         return result;
     }
 
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(Participant::getName)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isDealerStand() {
+        return dealer.isStand() || dealer.isBust();
+    }
+
     public Participant getDealer() {
         return dealer;
     }
 
     public List<Participant> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public List<String> getPlayersName() {
-        return players.stream()
-                .map(Participant::getName)
-                .collect(Collectors.toList());
     }
 }
