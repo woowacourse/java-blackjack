@@ -5,17 +5,15 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.result.GameResult;
 
-import java.util.List;
-
 public class BlackJackGame {
     public static final int INITIAL_CARD_COUNT = 2;
 
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(List<String> playerNames) {
+    public BlackJackGame(Participants participants) {
         deck = new Deck();
-        participants = new Participants(playerNames);
+        this.participants = participants;
 
     }
 

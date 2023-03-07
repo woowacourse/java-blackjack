@@ -6,6 +6,7 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Result;
+import blackjack.util.Retryable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -24,12 +25,16 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(requestPlayerNames());
+        BlackJackGame blackJackGame = new BlackJackGame(generateParticipants());
         blackJackGame.drawInitialCards();
         showInitialCards(blackJackGame.getParticipants());
 
         playTurn(blackJackGame);
         closeGame(blackJackGame);
+    }
+
+    private Participants generateParticipants() {
+        return Retryable.retryWhenIllegalArgumentException(() -> new Participants(requestPlayerNames()));
     }
 
     private List<String> requestPlayerNames() {
@@ -60,10 +65,15 @@ public class BlackJackGameController {
     }
 
     private void playEachPlayerTurn(final BlackJackGame blackJackGame, final Player player) {
-        while (player.isAbleToReceive() && inputView.readIsHit(player.getName())) {
+        while (player.isAbleToReceive() && requestIsHit(player.getName())) {
+
             blackJackGame.drawNewCard(player);
             showEachPlayerCards(player);
         }
+    }
+
+    private boolean requestIsHit(String playerName) {
+        return Retryable.retryWhenIllegalArgumentException(() -> inputView.readIsHit(playerName));
     }
 
     private void showEachPlayerCards(final Player player) {
