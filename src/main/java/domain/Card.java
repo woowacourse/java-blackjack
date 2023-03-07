@@ -11,27 +11,13 @@ public class Card {
     private final Suit suit;
     private final Number number;
 
-    static {
-        for (Suit suit : Suit.values()) {
-            cacheCardsOfSuit(suit);
-        }
-    }
-
-    private static void cacheCardsOfSuit(Suit suit) {
-        for (Number number : Number.values()) {
-            Integer key = toKey(suit, number);
-            Card card = new Card(suit, number);
-            CACHE.put(key, card);
-        }
-    }
-
     private Card(Suit suit, Number number) {
         this.suit = suit;
         this.number = number;
     }
 
     public static Card of(Suit suit, Number number) {
-        return CACHE.get(toKey(suit, number));
+        return CACHE.computeIfAbsent(toKey(suit, number), ignored -> new Card(suit, number));
     }
 
     private static Integer toKey(Suit suit, Number number) {
