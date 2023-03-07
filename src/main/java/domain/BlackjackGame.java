@@ -41,22 +41,6 @@ public class BlackjackGame {
     }
 
     public void calculateAllResults(PlayerResultRepository playerResultRepository) {
-        this.players.getPlayers().forEach(player -> playerResultRepository.save(player, calculateResult(player)));
-    }
-
-    private Result calculateResult(Player player) {
-        if (player.calculateScore() > 21) {
-            return Result.LOSE;
-        }
-        if (dealer.calculateScore() > 21) {
-            return Result.WIN;
-        }
-        if (player.calculateScore() == dealer.calculateScore()) {
-            return Result.DRAW;
-        }
-        if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
+        this.players.calculateAllResults(playerResultRepository, this.dealer);
     }
 }
