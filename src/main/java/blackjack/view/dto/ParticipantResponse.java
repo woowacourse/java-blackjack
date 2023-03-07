@@ -1,5 +1,6 @@
 package blackjack.view.dto;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Participant;
 
 public class ParticipantResponse {
@@ -13,9 +14,9 @@ public class ParticipantResponse {
     }
 
     public static ParticipantResponse from(final Participant participant) {
-        return new ParticipantResponse(
-                participant.getName(), CardsResponse.of(participant.getScore(), participant.getCards())
-        );
+        final String name = participant.getName();
+        final Cards cards = participant.getCards();
+        return new ParticipantResponse(name, CardsResponse.from(cards));
     }
 
     public String getName() {

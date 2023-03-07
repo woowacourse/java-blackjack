@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -58,6 +59,12 @@ public class Cards {
 
     public int count() {
         return cards.size();
+    }
+
+    public List<String> getCardInfos() {
+        return cards.stream()
+                .map(card -> card.getNumberName() + card.getSuitName())
+                .collect(Collectors.toList());
     }
 
     public List<Card> getCards() {

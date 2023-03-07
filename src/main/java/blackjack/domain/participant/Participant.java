@@ -29,8 +29,8 @@ public abstract class Participant {
         return null;
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 
     public abstract boolean isDrawable();
