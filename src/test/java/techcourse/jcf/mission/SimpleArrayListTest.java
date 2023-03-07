@@ -17,6 +17,8 @@ class SimpleArrayListTest {
 
         Integer first = values.get(0);
         Integer second = values.get(1);
+        System.out.println(first);
+        System.out.println(second);
     }
 
     @Test
@@ -24,6 +26,7 @@ class SimpleArrayListTest {
         final String[] arrays = {"first", "second"};
 
         final SimpleList<String> values = SimpleList.fromArrayToList(arrays);
+        System.out.println(values);
     }
 
     @Test
@@ -44,5 +47,19 @@ class SimpleArrayListTest {
 
         final SimpleList<Double> filteredDoubleValues = SimpleList.filterNegative(doubleValues);
         final SimpleList<Integer> filteredIntValues = SimpleList.filterNegative(intValues);
+        System.out.println(filteredDoubleValues);
+        System.out.println(filteredIntValues);
+    }
+
+    @Test
+    void mission5() {
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        SimpleList.copy(laserPrinters, printers);
+
+        System.out.println(printers.get(0) == laserPrinter); // true
     }
 }

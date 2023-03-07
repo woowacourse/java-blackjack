@@ -16,18 +16,8 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.elementData = EMPTY_ELEMENT_DATA;
     }
 
-    public SimpleArrayList(E[] elementData) {
-        this.elementData = elementData;
-        this.size = elementData.length;
-    }
-
-    public SimpleArrayList(E e1, E e2) {
-        this.elementData = new Object[]{e1, e2};
-        this.size = elementData.length;
-    }
-
-    public SimpleArrayList(E e1, E e2, E e3) {
-        this.elementData = new Object[]{e1, e2, e3};
+    public SimpleArrayList(E... elements) {
+        this.elementData = elements;
         this.size = elementData.length;
     }
 
