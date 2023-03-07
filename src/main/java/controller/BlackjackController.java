@@ -1,5 +1,6 @@
 package controller;
 
+import domain.card.RandomShuffle;
 import domain.participant.Participant;
 import service.BlackjackService;
 import view.InputView;
@@ -9,7 +10,7 @@ public class BlackjackController {
 
     public void run() {
         try {
-            BlackjackService blackjackGame = BlackjackService.of(InputView.readPlayersName());
+            BlackjackService blackjackGame = BlackjackService.of(InputView.readPlayersName(), new RandomShuffle());
 
             prepare(blackjackGame);
             start(blackjackGame);

@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Deck;
-import domain.card.ShuffleStrategyImpl;
+import domain.card.RandomShuffle;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -22,7 +22,7 @@ class ParticipantsTest {
         //when
 
         //then
-        assertDoesNotThrow(() -> Participants.of(List.of(names.split(",")), Deck.create(new ShuffleStrategyImpl())));
+        assertDoesNotThrow(() -> Participants.of(List.of(names.split(",")), Deck.create(new RandomShuffle())));
     }
 
     @ParameterizedTest
@@ -33,7 +33,7 @@ class ParticipantsTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Participants.of(List.of(names.split(",")), Deck.create(new ShuffleStrategyImpl())))
+        assertThatThrownBy(() -> Participants.of(List.of(names.split(",")), Deck.create(new RandomShuffle())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다");
     }
@@ -46,7 +46,7 @@ class ParticipantsTest {
         //when
 
         //then
-        assertThatThrownBy(() -> Participants.of(names, Deck.create(new ShuffleStrategyImpl())))
+        assertThatThrownBy(() -> Participants.of(names, Deck.create(new RandomShuffle())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 중복될 수 없습니다");
     }
@@ -57,7 +57,7 @@ class ParticipantsTest {
         List<String> players = List.of("연어", "가비");
 
         //when
-        Participants participants = Participants.of(players, Deck.create(new ShuffleStrategyImpl()));
+        Participants participants = Participants.of(players, Deck.create(new RandomShuffle()));
 
         //then
         assertThat(participants.getDealer().getCards()).hasSize(2);
