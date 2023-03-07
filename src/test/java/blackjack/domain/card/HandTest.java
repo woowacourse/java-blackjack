@@ -50,8 +50,8 @@ public class HandTest {
 
     @ParameterizedTest
     @MethodSource("generateHandWithACE")
-    @DisplayName("에이스가 포함된 카드의 줌수 합을 계산한다.")
-    void getSumWithACE(List<Card> createdHand, int expectedCount) {
+    @DisplayName("에이스의 카드 개수를 구한다.")
+    void countACE(List<Card> createdHand, int expectedCount) {
         Hand hand = new Hand();
 
         for (Card card : createdHand) {

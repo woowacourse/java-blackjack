@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -51,6 +54,20 @@ public class DealerTest {
                 Arguments.of(List.of(Card.of(Suit.CLOVER, Denomination.SEVEN), Card.of(Suit.SPADE, Denomination.SEVEN), Card.of(Suit.DIAMOND, Denomination.SEVEN)), 21),
                 Arguments.of(List.of(Card.of(Suit.CLOVER, Denomination.TEN), Card.of(Suit.SPADE, Denomination.ACE), Card.of(Suit.DIAMOND, Denomination.SEVEN)), 18)
         );
+    }
+
+    @Test
+    @DisplayName("딜러는 처음 받은 2장 중 첫장의 카드를 공개한다")
+    void getFirstCard() {
+        Dealer dealer = new Dealer();
+        Card firstCard = Card.of(Suit.CLOVER, Denomination.ACE);
+        Card secondCard = Card.of(Suit.DIAMOND, Denomination.TEN);
+        dealer.addCard(firstCard);
+        dealer.addCard(secondCard);
+
+        Card dealerFirstCard = dealer.getFirst();
+
+        assertThat(dealerFirstCard).isSameAs(firstCard);
     }
 
     @ParameterizedTest
