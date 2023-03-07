@@ -29,20 +29,38 @@ public class BlackjackController {
     }
 
     private BlackjackGame initializeGame() {
-        List<String> playerNames = inputView.readNames();
-        BlackjackGame blackjackGame = BlackjackGame.createWithPlayerNames(playerNames);
+        BlackjackGame blackjackGame = createGame();
         blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
 
         outputView.printParticipantsInitialCards(toParticipantDtos(blackjackGame.getParticipants()));
         return blackjackGame;
     }
 
+    private BlackjackGame createGame() {
+        try {
+            List<String> playerNames = inputView.readNames();
+            return BlackjackGame.createWithPlayerNames(playerNames);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return createGame();
+        }
+    }
+
     private void handOutCardsToPlayers(BlackjackGame blackjackGame) {
         while (blackjackGame.hasDrawablePlayer()) {
             Player currentDrawablePlayer = blackjackGame.getCurrentDrawablePlayer();
-            Decision decision = Decision.from(inputView.readDecision(currentDrawablePlayer.name()));
+            Decision decision = getDecision(currentDrawablePlayer);
             blackjackGame.hitOrStand(decision);
             outputView.printAllCards(new ParticipantDto(currentDrawablePlayer));
+        }
+    }
+
+    private Decision getDecision(Player currentDrawablePlayer) {
+        try {
+            return Decision.from(inputView.readDecision(currentDrawablePlayer.name()));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getDecision(currentDrawablePlayer);
         }
     }
 
@@ -64,5 +82,6 @@ public class BlackjackController {
                 .map(ParticipantDtoWithScore::new)
                 .collect(Collectors.toUnmodifiableList());
     }
+
 }
 
