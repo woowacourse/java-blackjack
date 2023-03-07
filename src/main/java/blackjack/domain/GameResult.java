@@ -11,8 +11,8 @@ public class GameResult {
     private static final String WIN = "승";
     private static final String LOSE = "패";
     private static final String DRAW = "무";
-    private final Map<String, Integer> dealerResult;
-    private final Map<String, String> playerResult;
+    private final Map<Result, Integer> dealerResult;
+    private final Map<String, Result> playerResult;
 
     public GameResult(Game game) {
         this.dealerResult = initDealerResult();
@@ -20,12 +20,12 @@ public class GameResult {
         accumulationResult(game);
     }
 
-    private static Map<String, Integer> initDealerResult() {
-        Map<String, Integer> dealerResult = new HashMap<>();
+    private static Map<Result, Integer> initDealerResult() {
+        Map<Result, Integer> dealerResult = new HashMap<>();
 
-        dealerResult.put(WIN, 0);
-        dealerResult.put(LOSE, 0);
-        dealerResult.put(DRAW, 0);
+        for (Result result: Result.values()) {
+            dealerResult.put(result, 0);
+        }
         return dealerResult;
     }
 
@@ -51,10 +51,10 @@ public class GameResult {
 
         for (Player player : game.getPlayers()) {
             int playerScore = player.calculateScore();
-            String playerWin = getPlayerWin(dealerScore, playerScore);
-
+            Result playerWin = Result.getLeftResult(playerScore, dealerScore, BURST_NUMBER);
+            Result dealerWin = Result.getLeftResult(dealerScore, playerScore, BURST_NUMBER);
             playerResult.put(player.showName(), playerWin);
-            dealerResult.put(playerWin, dealerResult.get(playerWin) + 1);
+            dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
         }
     }
 
@@ -68,11 +68,11 @@ public class GameResult {
         return LOSE;
     }
 
-    public Map<String, Integer> getDealerResult() {
+    public Map<Result, Integer> getDealerResult() {
         return dealerResult;
     }
 
-    public Map<String, String> getPlayerResult() {
+    public Map<String, Result> getPlayerResult() {
         return playerResult;
     }
 }

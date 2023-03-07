@@ -25,14 +25,14 @@ public enum Result {
         return LOSE;
     }
 
-    public static Result getLeftResultWhenRightScoreOverStandard(int score, int standard) {
+    private static Result getLeftResultWhenRightScoreOverStandard(int score, int standard) {
         if (score <= standard) {
             return WIN;
         }
         return DRAW;
     }
 
-    public static Result getLeftResultWhenRightScoreLessThanStandard(int leftScore, int rightScore) {
+    private static Result getLeftResultWhenRightScoreLessThanStandard(int leftScore, int rightScore) {
         if (leftScore > rightScore) {
             return WIN;
         }

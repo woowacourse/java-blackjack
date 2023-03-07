@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Command;
 import blackjack.domain.Game;
 import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
@@ -10,7 +11,9 @@ import blackjack.domain.gameplayer.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
@@ -126,8 +129,24 @@ public class BlackJackGameController {
 
         GameResult gameResult = new GameResult(game);
         outputView.printEndMsg();
-        outputView.printDealerWinningResult(gameResult.getDealerResult());
-        outputView.printPlayerWinningResult(gameResult.getPlayerResult());
+        outputView.printDealerWinningResult(getFormattedDealerResult(gameResult.getDealerResult()));
+        outputView.printPlayerWinningResult(getFormattedPlayerResult(gameResult.getPlayerResult()));
+    }
+
+    private Map<String, Integer> getFormattedDealerResult(Map<Result, Integer> dealerResult) {
+        Map<String, Integer> formattedDealerResult = new HashMap<>();
+        for (Result result : dealerResult.keySet()) {
+            formattedDealerResult.put(result.getResult(), dealerResult.get(result));
+        }
+        return formattedDealerResult;
+    }
+
+    private Map<String, String> getFormattedPlayerResult(Map<String, Result> playerResult) {
+        Map<String, String> formattedPlayerResult = new HashMap<>();
+        for (String playerName : playerResult.keySet()) {
+            formattedPlayerResult.put(playerName, playerResult.get(playerName).getResult());
+        }
+        return formattedPlayerResult;
     }
 
     private void printOnePlayerResult(Player player) {
