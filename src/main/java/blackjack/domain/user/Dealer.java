@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.BlackJackRule;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
@@ -22,30 +21,30 @@ public class Dealer extends User {
     }
 
     public GameResult comparePlayer(final Player player) {
-        if (BlackJackRule.isBust(this)) {
+        if (this.isBust()) {
             return compareByBust(player);
         }
         return compareByScore(player);
     }
 
     private GameResult compareByBust(final Player player) {
-        if (BlackJackRule.isBust(player)) {
+        if (player.isBust()) {
             return GameResult.TIE;
         }
         return GameResult.WIN;
     }
 
     private GameResult compareByScore(final Player player) {
-        if (BlackJackRule.getScore(this) > BlackJackRule.getScore(player)) {
+        if (this.getScore() > player.getScore()) {
             return GameResult.LOSE;
         }
-        if (BlackJackRule.getScore(this) == BlackJackRule.getScore(player)) {
+        if (this.getScore() == player.getScore()) {
             return GameResult.TIE;
         }
         return GameResult.WIN;
     }
 
     public boolean isOverDraw() {
-        return BlackJackRule.getScore(this) > DEALER_DRAW_LIMIT;
+        return this.getScore() > DEALER_DRAW_LIMIT;
     }
 }

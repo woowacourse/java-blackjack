@@ -43,14 +43,6 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
-    void getAceCountTest() {
-        final User dealer = new Dealer(initialGroup);
-
-        assertThat(dealer.getAceCount()).isEqualTo(1);
-    }
-
-    @Test
     @DisplayName("플레이어와 비교해 플레이어의 승리여부 판단하는기능 테스트")
     void comparePlayerTest() {
         final Dealer dealer = new Dealer(initialGroup);

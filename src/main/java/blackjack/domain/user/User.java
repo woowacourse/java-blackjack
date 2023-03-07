@@ -17,7 +17,15 @@ public abstract class User {
     }
 
     final public int getScore() {
-        return cardGroup.getTotalValue();
+        return cardGroup.getScore();
+    }
+
+    final public boolean isBust() {
+        return cardGroup.isBust();
+    }
+
+    final public boolean isBlackJack() {
+        return cardGroup.isBlackJack();
     }
 
     final public void drawCard(final Deck deck) {
@@ -30,10 +38,6 @@ public abstract class User {
 
     final public List<Card> getStatus() {
         return cardGroup.getCards();
-    }
-
-    final public int getAceCount() {
-        return cardGroup.getAceCount();
     }
 
     abstract protected List<Card> getInitialStatus();

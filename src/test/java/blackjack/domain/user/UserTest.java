@@ -10,8 +10,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -60,12 +64,48 @@ class UserTest {
         Assertions.assertThat(user.getStatus()).containsExactly(spadeAce, cloverEight, heartJack);
     }
 
-    @Test
-    @DisplayName("Ace의 개수를 반환하는 기능 테스트")
-    void getAceCountTest() {
-        final User user = new TestUser(initialGroup);
+    @DisplayName("버스트 확인 테스트")
+    @ParameterizedTest(name = "isBust() - {1}")
+    @MethodSource("provideForIsBustTest")
+    void isBustTest(final Deck deck, final boolean expectedIsBustValue) {
+        User user = new TestUser(initialGroup);
 
-        assertThat(user.getAceCount()).isEqualTo(1);
+        user.drawCard(deck);
+        user.drawCard(deck);
+
+        assertThat(user.isBust()).isEqualTo(expectedIsBustValue);
+    }
+
+    private static Stream<Arguments> provideForIsBustTest() {
+        return Stream.of(
+                Arguments.of(new Deck(new TestDeckGenerator(List.of(
+                        new Card(CardShape.HEART, CardNumber.TWO),
+                        new Card(CardShape.DIAMOND, CardNumber.TWO)
+                ))), false),
+                Arguments.of(new Deck(new TestDeckGenerator(List.of(
+                        new Card(CardShape.HEART, CardNumber.TEN),
+                        new Card(CardShape.DIAMOND, CardNumber.JACK)
+                ))), true)
+        );
+    }
+
+    @Test
+    @DisplayName("블랙잭 확인 테스트 - 블랙잭인경우")
+    void isBlackJackTrueTest() {
+        CardGroup blackJackGroup = new CardGroup(
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.JACK));
+        User blackJackUser = new TestUser(blackJackGroup);
+
+        assertThat(blackJackUser.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭 확인 테스트 - 블랙잭인경우")
+    void isBlackJackFalseTest() {
+        User user = new TestUser(initialGroup);
+
+        assertThat(user.isBlackJack()).isFalse();
     }
 
     private class TestUser extends User {
