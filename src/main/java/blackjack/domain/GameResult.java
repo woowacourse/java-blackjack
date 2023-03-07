@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.gameplayer.Player;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -47,10 +49,11 @@ public class GameResult {
     private void accumulationResult(Game game) {
         int dealerScore = game.getDealerScore();
 
-        for (int i = 0; i < game.getPlayersCount(); i++) {
-            int playerScore = game.getPlayerScoreByIndex(i);
+        for (Player player : game.getPlayers()) {
+            int playerScore = player.calculateScore();
             String playerWin = getPlayerWin(dealerScore, playerScore);
-            playerResult.put(game.showPlayerNameByIndex(i), playerWin);
+
+            playerResult.put(player.showName(), playerWin);
             dealerResult.put(playerWin, dealerResult.get(playerWin) + 1);
         }
     }
