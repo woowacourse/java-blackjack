@@ -8,7 +8,7 @@ public enum JudgeResult {
 
     WIN((self, counter) -> self > counter),
     PUSH(Objects::equals),
-    LOSE((self, counter) -> self > counter);
+    LOSE((self, counter) -> self < counter);
 
     private final BiPredicate<Integer, Integer> scoreComparer;
 
