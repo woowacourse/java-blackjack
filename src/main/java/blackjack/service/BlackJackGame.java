@@ -1,5 +1,7 @@
 package blackjack.service;
 
+import blackjack.domain.BlackJackRule;
+import blackjack.domain.BlackJackRuleImpl;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
@@ -15,6 +17,7 @@ import blackjack.response.PlayerCardsResponse;
 import blackjack.response.PlayersCardsResponse;
 import blackjack.response.PlayersCardsResponse.CardsScore;
 import blackjack.response.ResultTypeResponse;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +93,14 @@ public class BlackJackGame {
     }
 
     public FinalResultResponse createFinalResultResponse() {
-        final Map<String, ResultType> playersToResult = participants.calculateFinalResult();
+        final BlackJackRule blackJackRule = new BlackJackRuleImpl();
+        final ParticipantResults participantResults = new ParticipantResults();
+        final Dealer dealer = participants.getDealer();
+        participants.getPlayers().getPlayers().forEach(player -> {
+            final ResultType resultType = blackJackRule.calculateDealerResult(dealer, player);
+            participantResults.addPlayerResult(player.getName(), resultType);
+        });
+        final Map<String, ResultType> playersToResult = participantResults.getPlayerNameToResultType();
         final Map<String, ResultTypeResponse> playersToResultResponse = generatePlayersResult(playersToResult);
         final Map<ResultTypeResponse, Long> dealerResult = generateDealerResult(playersToResult);
         return new FinalResultResponse(playersToResultResponse, dealerResult);
@@ -113,5 +123,18 @@ public class BlackJackGame {
                 .collect(Collectors.groupingBy(
                         result -> ResultTypeResponse.from(result.getValue()),
                         Collectors.counting()));
+    }
+
+    private static class ParticipantResults {
+
+        private final Map<String, ResultType> playerNameToResultType = new HashMap<>();
+
+        void addPlayerResult(final String playerName, final ResultType resultType) {
+            playerNameToResultType.put(playerName, resultType);
+        }
+
+        Map<String, ResultType> getPlayerNameToResultType() {
+            return playerNameToResultType;
+        }
     }
 }
