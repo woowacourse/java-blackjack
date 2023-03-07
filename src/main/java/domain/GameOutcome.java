@@ -6,6 +6,7 @@ public enum GameOutcome {
     LOSE("패"),
     ;
 
+    private static final int UPPER_BOUND_OF_NOT_BUST = 21;
     private final String value;
 
     GameOutcome(String value) {
@@ -13,10 +14,10 @@ public enum GameOutcome {
     }
 
     public static GameOutcome of(int criteria, int comparison) {
-        if (criteria > 21) {
+        if (criteria > UPPER_BOUND_OF_NOT_BUST) {
             return LOSE;
         }
-        if (comparison > 21) {
+        if (comparison > UPPER_BOUND_OF_NOT_BUST) {
             return WIN;
         }
         if (criteria > comparison) {

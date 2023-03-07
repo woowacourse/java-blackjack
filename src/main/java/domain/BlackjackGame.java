@@ -1,12 +1,10 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
-
-    private static final int DEALER_POSITION = 0;
 
     private final Players players;
     private final Dealer dealer;
@@ -62,11 +60,8 @@ public class BlackjackGame {
     }
 
     public List<Participant> getParticipants() {
-        List<Participant> participants = players.getPlayers()
-                .stream()
-                .map(player -> (Participant) player)
-                .collect(Collectors.toList());
-        participants.add(DEALER_POSITION, dealer);
+        List<Participant> participants = new ArrayList<>(List.of(dealer));
+        participants.addAll(players.getPlayers());
         return participants;
     }
 }
