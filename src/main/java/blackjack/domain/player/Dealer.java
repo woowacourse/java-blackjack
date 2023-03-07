@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 public class Dealer extends User {
 
-    private static final int MINIMUM_SCORE = 17;
+    public static final int MINIMUM_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
@@ -10,6 +10,6 @@ public class Dealer extends User {
     }
 
     public boolean hasUnderMinimumScore() {
-        return hand.getTotalScore() < MINIMUM_SCORE;
+        return hand.getTotalScore() <= MINIMUM_SCORE;
     }
 }

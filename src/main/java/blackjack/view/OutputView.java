@@ -69,12 +69,12 @@ public class OutputView {
     }
 
     public static void printDealerOneMore() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.MINIMUM_SCORE);
     }
 
     public static void printScoreUnderLimit() {
         printEmptyLine();
-        System.out.println("현재 카드 점수 총합은 21을 초과합니다.");
+        System.out.printf("현재 카드 점수 총합은 %d을 초과합니다.%n", User.BUST);
         printEmptyLine();
     }
 

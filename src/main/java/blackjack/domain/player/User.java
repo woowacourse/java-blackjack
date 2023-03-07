@@ -6,7 +6,7 @@ import blackjack.domain.card.Deck;
 import java.util.List;
 
 public abstract class User {
-    protected static final int BUST = 21;
+    public static final int BUST = 21;
 
     protected final Hand hand;
     protected final Name name;
