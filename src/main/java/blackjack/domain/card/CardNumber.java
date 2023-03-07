@@ -18,6 +18,7 @@ public enum CardNumber {
     QUEEN("Q", List.of(10)),
     KING("K", List.of(10));
 
+    private static final String INVALID_NUMBER_MESSAGE = "숫자를 찾을 수 없습니다.";
 
     private final String number;
     private final List<Integer> score;
@@ -32,7 +33,7 @@ public enum CardNumber {
                 .filter(cardNumber -> cardNumber.getNumber().equals(number))
                 .map(CardNumber::getScore)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("숫자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_NUMBER_MESSAGE));
     }
 
     public String getNumber() {
