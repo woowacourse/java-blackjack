@@ -37,9 +37,7 @@ public class BlackJackController {
     }
 
     private void hitOrStay(String playerName) {
-        String toTakeKeyword = InputView.askToTake(playerName);
-        // TODO 키워드 Enum으로 분리, HIT or STAY 여부 도메인에서 관리
-        if (toTakeKeyword.equals("n")) {
+        if (InputView.askToHit(playerName) == HitCommand.NO) {
             return;
         }
         boolean keepGoing = blackJackGame.handOneCard(playerName);
