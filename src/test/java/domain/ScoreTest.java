@@ -137,13 +137,13 @@ class ScoreTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "20,2,20",
-            "21,2,21",
-            "19,2,21",
-            "19,3,19",
-            "18,4,18",
+            "10,20",
+            "12,12",
+            "11,21",
+            "13,13",
+            "14,14",
     })
-    @DisplayName("plusIfNotBurst() : 다른 숫자를 더 할 때 bust 당하지 않으면 그 숫자를 더해줄 수 있다.")
+    @DisplayName("plusTenIfNotBurst() : 다른 숫자를 더 할 때 bust 당하지 않으면 그 숫자를 더해줄 수 있다.")
     void test_plusIfNotBurst(final int value, final int sum) throws Exception {
         //given
         final Score origin = new Score(value);
