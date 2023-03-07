@@ -1,13 +1,19 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.result.FinalCards;
 import blackjack.domain.result.PlayerJudgeResults;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
+
+    private static final int INITIAL_HAND_OUT_COUNT = 2;
+    private static final int HIT_CARD_COUNT = 1;
 
     private final Deck deck;
     private final Participants participants;
@@ -18,38 +24,58 @@ public class BlackJackGame {
     }
 
     public void handOut() {
-        participants.handOut(deck);
+        deck.handCardsTo(participants.dealer(), INITIAL_HAND_OUT_COUNT);
+        deck.handCardsTo(participants.players(), INITIAL_HAND_OUT_COUNT);
     }
 
-    public void handOneCard(String playerName) {
-        participants.handCardsByPlayerName(playerName, deck.draw(1));
+    public void hitByName(String participantName) {
+        Participant participant = participants.findParticipantByName(participantName);
+        hit(participant);
     }
 
-    public Map<String, List<Card>> openHandOutCards() {
-        return participants.openHandOutCardsByName();
-    }
-
-    public List<String> findAvailablePlayerNames() {
-        return participants.findAvailablePlayerNames();
-    }
-
-    public boolean isAvailablePlayer(String name) {
-        return participants.isAvailablePlayer(name);
-    }
-
-    public List<Card> openCardsByName(String participantName) {
-        return participants.findHandCardsByName(participantName);
+    private void hit(Participant participant) {
+        deck.handCardsTo(participant, HIT_CARD_COUNT);
     }
 
     public int hitOrStayForDealer() {
-        return participants.repeatHandToDealerUntilAvailable(deck);
+        int hitCount = 0;
+        Dealer dealer = participants.dealer();
+        while (dealer.isAvailable()) {
+            hit(dealer);
+            hitCount++;
+        }
+        return hitCount;
+    }
+
+    public Map<String, List<Card>> openHandOutCards() {
+        Dealer dealer = participants.dealer();
+        Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
+        cardsByParticipants.put(dealer.getName(), List.of(dealer.openFirstCard()));
+        participants.players()
+                .forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
+        return cardsByParticipants;
+    }
+
+    public List<Card> openCardsByName(String participantName) {
+        Participant participant = participants.findParticipantByName(participantName);
+        return participant.getCards();
+    }
+
+    public boolean isAvailable(String participantName) {
+        Participant participant = participants.findParticipantByName(participantName);
+        return participant.isAvailable();
     }
 
     public Map<String, FinalCards> openAllFinalCards() {
-        return participants.openFinalCardsByName();
+        Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
+        Dealer dealer = participants.dealer();
+        finalCardsByPlayerName.put(dealer.getName(), FinalCards.of(dealer));
+        participants.players()
+                .forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.of(player)));
+        return finalCardsByPlayerName;
     }
 
     public PlayerJudgeResults computeJudgeResultsByPlayer() {
-        return participants.computeJudgeResultsByPlayer();
+        return new PlayerJudgeResults(participants.collectPlayerJudgeResults());
     }
 }

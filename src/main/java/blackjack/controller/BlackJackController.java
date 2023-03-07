@@ -16,15 +16,15 @@ public class BlackJackController {
     private BlackJackGame blackJackGame;
 
     public void run() {
-        initialize();
+        List<String> playerNames = InputView.askPlayerNames();
+        initialize(playerNames);
         startGame();
-        hitOrStayForAvailablePlayers(blackJackGame.findAvailablePlayerNames());
+        hitOrStayForAvailablePlayers(playerNames);
         hitUntilDealerAvailable();
         totalUp();
     }
 
-    private void initialize() {
-        List<String> playerNames = InputView.askPlayerNames();
+    private void initialize(List<String> playerNames) {
         blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DealerName, playerNames);
     }
 
@@ -39,16 +39,19 @@ public class BlackJackController {
     }
 
     private void repeatHitOrStayUntilPlayerWants(String playerName) {
+        if (!blackJackGame.isAvailable(playerName)) {
+            return;
+        }
         HitCommand hitCommand = refreshHitCommand(playerName);
         while (hitCommand == HitCommand.YES) {
-            blackJackGame.handOneCard(playerName);
+            blackJackGame.hitByName(playerName);
             OutputView.showPlayerCard(playerName, blackJackGame.openCardsByName(playerName));
             hitCommand = refreshHitCommand(playerName);
         }
     }
 
     private HitCommand refreshHitCommand(String playerName) {
-        if (blackJackGame.isAvailablePlayer(playerName)) {
+        if (blackJackGame.isAvailable(playerName)) {
             return InputView.askToHit(playerName);
         }
         return HitCommand.NO;

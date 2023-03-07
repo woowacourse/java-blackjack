@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-abstract class Participant {
+public abstract class Participant {
 
     private final String name;
     private final Hand hand;
@@ -46,7 +46,7 @@ abstract class Participant {
         return hand.cards();
     }
 
-    abstract boolean isAvailable();
+    public abstract boolean isAvailable();
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Player;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +22,16 @@ public class Deck {
             drawnCards.add(takeOutOneCard());
         }
         return drawnCards;
+    }
+
+    public void handCardsTo(Participant participant, int count) {
+        for (Card card : draw(count)) {
+            participant.take(card);
+        }
+    }
+
+    public void handCardsTo(List<Player> players, int eachCount) {
+        players.forEach(player -> handCardsTo(player, eachCount));
     }
 
     private Card takeOutOneCard() {
