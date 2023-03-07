@@ -2,7 +2,8 @@ package controller;
 
 import domain.DrawCommand;
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.GameDeck;
+import domain.card.ShuffleDeckGenerator;
 import domain.game.BlackJackGame;
 import domain.user.Dealer;
 import domain.user.Name;
@@ -32,16 +33,16 @@ public class BlackJackGameController {
     }
 
     private BlackJackGame setUp() {
-        Cards cards = new Cards();
-        Dealer dealer = new Dealer(cards.drawForFirstTurn());
-        List<Player> players = setUpPlayers(cards);
+        GameDeck gameDeck = new GameDeck(new ShuffleDeckGenerator());
+        Dealer dealer = new Dealer(gameDeck.drawForFirstTurn());
+        List<Player> players = setUpPlayers(gameDeck);
         showSetUpResult(dealer, players);
-        return new BlackJackGame(players, dealer, cards);
+        return new BlackJackGame(players, dealer, gameDeck);
     }
 
-    private List<Player> setUpPlayers(Cards cards) {
+    private List<Player> setUpPlayers(GameDeck gameDeck) {
         return readUsersName().stream()
-                .map(name -> new Player(new Name(name), cards.drawForFirstTurn()))
+                .map(name -> new Player(new Name(name), gameDeck.drawForFirstTurn()))
                 .collect(Collectors.toList());
     }
 

@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.card.Cards;
+import domain.card.GameDeck;
 import domain.user.Dealer;
 import domain.user.DealerStatus;
 import domain.user.Player;
@@ -14,21 +14,21 @@ import java.util.Map;
 public class BlackJackGame {
     private final List<Player> players;
     private final Dealer dealer;
-    private final Cards cards;
+    private final GameDeck gameDeck;
 
-    public BlackJackGame(List<Player> players, Dealer dealer, Cards cards) {
+    public BlackJackGame(List<Player> players, Dealer dealer, GameDeck gameDeck) {
         this.players = new ArrayList<>(players);
         this.dealer = dealer;
-        this.cards = cards;
+        this.gameDeck = gameDeck;
     }
 
     public void drawOneMoreCardForPlayer(Player player) {
-        player.receiveCard(cards.drawCard());
+        player.receiveCard(gameDeck.drawCard());
     }
 
     public void drawCardUntilOverSixteen() {
         while (dealer.isUserStatus(DealerStatus.UNDER_SEVENTEEN)) {
-            dealer.receiveCard(cards.drawCard());
+            dealer.receiveCard(gameDeck.drawCard());
         }
     }
 
