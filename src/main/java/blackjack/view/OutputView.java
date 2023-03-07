@@ -15,7 +15,7 @@ public class OutputView {
 
     public static void printBlackJackResults(BlackJackResults blackJackResults) {
         System.out.println("\n## 최종 승패");
-        System.out.println(createBlackJackResult(blackJackResults));
+        System.out.println(makeBlackJackResultFormat(blackJackResults));
     }
 
     public static void printParticipantsInitCards(final Dealer dealer, final List<Player> players) {
@@ -46,7 +46,7 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n" + System.lineSeparator(), hitCount);
     }
 
-    private static String createBlackJackResult(BlackJackResults blackJackResults) {
+    private static String makeBlackJackResultFormat(BlackJackResults blackJackResults) {
         Map<Name, MatchResults> participants = blackJackResults.getParticipants();
         StringBuilder stringBuilder = new StringBuilder();
 
