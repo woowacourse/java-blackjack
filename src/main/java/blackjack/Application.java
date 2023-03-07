@@ -9,6 +9,6 @@ public class Application {
 
     public static void main(final String[] args) {
         final BlackJackController blackJackController = new BlackJackController(new InputView(), new OutputView());
-        blackJackController.play(new ShuffledDeckFactory());
+        blackJackController.generate(new ShuffledDeckFactory());
     }
 }
