@@ -84,11 +84,40 @@ class PlayerTest {
             new Card(Suit.DIAMOND, Letter.TEN),
             new Card(Suit.SPADE, Letter.TEN),
             new Card(Suit.CLUB, Letter.ACE));
-        final Cards bustedCards = new Cards(cardSet);
-        final Player player = new Player(bustedCards, "test");
+        final Cards notBustedCards = new Cards(cardSet);
+        final Player player = new Player(notBustedCards, "test");
 
         //when
         final boolean result = player.isBust();
+
+        //then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드가 비지 않았음을 테스트")
+    public void testCardsIsNotEmptyTrue() {
+        //given
+        final Set<Card> cardSet = Set.of(
+            new Card(Suit.CLUB, Letter.ACE));
+        final Cards cards = new Cards(cardSet);
+        final Player player = new Player(cards, "test");
+
+        //when
+        final boolean result = player.cardsIsNotEmpty();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드가 비었음을 테스트")
+    public void testCardsIsNotEmptyFalse() {
+        //given
+        final Player player = new Player(Cards.makeEmptyCards(), "test");
+
+        //when
+        final boolean result = player.cardsIsNotEmpty();
 
         //then
         assertThat(result).isFalse();
