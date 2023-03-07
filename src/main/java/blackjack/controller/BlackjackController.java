@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class BlackjackController {
 
     private static final int NUMBER_OF_SETTING_CARDS = 2;
-    private static final String NO_ANSWER_ABOUT_ONE_MORE_CARD = "n";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -77,9 +76,9 @@ public class BlackjackController {
     }
 
     private boolean ask(final Player player, final Deck deck) {
-        String answer = inputView.askReceiveMoreCard(player.getName());
+        Boolean answer = inputView.askReceiveMoreCard(player.getName());
 
-        if (answer.equals(NO_ANSWER_ABOUT_ONE_MORE_CARD)) {
+        if (!answer) {
             outputView.printCurrentCards(player.getName(), getCurrentCards(player.getCards()));
             return false;
         }

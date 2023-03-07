@@ -21,7 +21,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public String askReceiveMoreCard(String playerName) {
+    public Boolean askReceiveMoreCard(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 " + YES_ANSWER_ABOUT_ONE_MORE_CARD
                 + ", 아니오는 " + NO_ANSWER_ABOUT_ONE_MORE_CARD + ")");
         String input = getInput();
@@ -29,7 +29,7 @@ public class InputView {
         isBlank(input);
         validateCorrectResponse(input);
 
-        return input;
+        return input.equals(YES_ANSWER_ABOUT_ONE_MORE_CARD);
     }
 
     private String getInput() {
