@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gameplayer;
 
 public class Name {
     private final String name;

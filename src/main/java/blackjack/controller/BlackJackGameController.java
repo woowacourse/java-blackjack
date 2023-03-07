@@ -1,16 +1,16 @@
 package blackjack.controller;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardSymbol;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSymbol;
+import blackjack.domain.gameplayer.Dealer;
+import blackjack.domain.card.Deck;
 import blackjack.domain.Game;
-import blackjack.domain.GamePlayer;
+import blackjack.domain.gameplayer.GamePlayer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Name;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.gameplayer.Name;
+import blackjack.domain.gameplayer.Player;
+import blackjack.domain.gameplayer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

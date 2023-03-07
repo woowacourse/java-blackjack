@@ -1,18 +1,19 @@
-package blackjack.domain;
+package blackjack.domain.gameplayer;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Player implements Person {
+public class Dealer implements Person {
+    private static final int DEALER_STOP_HIT_BOUND = 17;
     private static final int BURST_NUMBER = 21;
-    private static final int ACE_MAX_NUMBER = 11;
     private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;
-    private final Name name;
     private final List<Card> cards;
 
-    public Player(Name name) {
-        this.name = name;
+    public Dealer() {
         this.cards = new ArrayList<>();
     }
 
@@ -22,28 +23,19 @@ public class Player implements Person {
     }
 
     @Override
-    public List<Card> showCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public String showName() {
-        return name.getName();
-    }
-
-    @Override
     public boolean isHit() {
         int totalScore = calculateScore();
-        return totalScore < BURST_NUMBER;
+        return totalScore < DEALER_STOP_HIT_BOUND;
     }
 
     @Override
     public int calculateScore() {
         int totalScore = cards.stream()
-                .map(card -> Collections.min(card.getScore()))
+                .map(card -> Collections.max(card.getScore()))
                 .reduce(0, Integer::sum);
 
-        if (totalScore <= ACE_MAX_NUMBER && hasACE()) {
-            return totalScore + DIFFERENCE_WITH_ACE_NUMBER;
+        if (totalScore > BURST_NUMBER && hasACE()) {
+            return totalScore - DIFFERENCE_WITH_ACE_NUMBER;
         }
         return totalScore;
     }
@@ -51,5 +43,14 @@ public class Player implements Person {
     private boolean hasACE() {
         return cards.stream()
                 .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.getNumber()));
+    }
+
+    @Override
+    public List<Card> showCards() {
+        return List.of(cards.get(0));
+    }
+
+    public List<Card> showAllCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
