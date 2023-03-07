@@ -1,6 +1,7 @@
 package blackjack.domain.participant.player;
 
 import static blackjack.controller.AddCardOrNot.NO;
+import static blackjack.domain.participant.dealer.Dealer.DEALER_NAME;
 
 import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.Deck;
@@ -14,6 +15,9 @@ public class Player extends Participant {
 
     public Player(Name name) {
         super(name, new Hand());
+        if (name.getValue().equals(DEALER_NAME)){
+            throw new IllegalArgumentException("플레이어의 이름은 '딜러'일 수 없습니다.");
+        }
     }
 
     public void win() {

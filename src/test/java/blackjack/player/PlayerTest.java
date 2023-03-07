@@ -2,6 +2,7 @@ package blackjack.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.CardsGenerator;
@@ -29,6 +30,15 @@ class PlayerTest {
 
         assertThatCode(() -> new Player(name))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름이 '딜러'일 때 예외가 발생한다.")
+    void cannotCreateSameName() {
+        Name name = new Name("딜러");
+
+        assertThatThrownBy(()-> new Player(name))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
