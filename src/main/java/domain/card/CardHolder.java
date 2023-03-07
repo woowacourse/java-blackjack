@@ -23,13 +23,13 @@ public class CardHolder {
     }
 
     public int getTotalScore() {
-        int totalScoreExceptAce = getTotalScoreExceptAce();
+        int totalScore = getTotalScoreExceptAce();
 
-        if (containsAce()) {
-            return getTotalScoreContainingAce(totalScoreExceptAce);
+        for (int aceCount = 0; aceCount < containsAce(); aceCount++) {
+            totalScore = getTotalScoreContainingAce(totalScore);
         }
 
-        return totalScoreExceptAce;
+        return totalScore;
     }
 
     private int getTotalScoreExceptAce() {
@@ -38,8 +38,10 @@ public class CardHolder {
                 .sum();
     }
 
-    private boolean containsAce() {
-        return cards.stream().anyMatch(Card::isAce);
+    private int containsAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     private int getTotalScoreContainingAce(int totalScore) {
