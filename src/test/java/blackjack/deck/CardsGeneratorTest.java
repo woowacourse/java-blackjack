@@ -2,15 +2,13 @@ package blackjack.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Stack;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.ShuffledCardsGenerator;
+import java.util.Stack;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class CardsGeneratorTest {
     CardsGenerator cardsGenerator;

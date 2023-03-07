@@ -5,22 +5,18 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.controller.AddCardOrNot;
-import blackjack.domain.deck.CardsGenerator;
-import blackjack.domain.deck.Deck;
-import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
-import java.util.List;
-import java.util.Stack;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
+import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
+import java.util.List;
+import java.util.Stack;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class PlayerTest {
     @Test

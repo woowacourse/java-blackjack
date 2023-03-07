@@ -5,28 +5,25 @@ import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.assertj.core.api.InstanceOfAssertFactories;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
-import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
-import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.CardsGenerator;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.dealer.Dealer;
 import blackjack.domain.participant.dealer.DealerWinningDto;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.player.Player;
 import blackjack.domain.participant.player.Players;
+import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
+import java.util.Arrays;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
     BlackjackGame blackjackGame;

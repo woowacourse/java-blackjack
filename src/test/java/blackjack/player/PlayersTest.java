@@ -7,23 +7,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.ShuffledCardsGenerator;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.dealer.Dealer;
+import blackjack.domain.participant.player.Player;
+import blackjack.domain.participant.player.PlayerWinningDto;
+import blackjack.domain.participant.player.Players;
 import java.util.List;
-
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Pattern;
-import blackjack.domain.participant.dealer.Dealer;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.player.Player;
-import blackjack.domain.participant.player.PlayerWinningDto;
-import blackjack.domain.participant.player.Players;
 
 class PlayersTest {
     @DisplayName("생성할 수 있다")

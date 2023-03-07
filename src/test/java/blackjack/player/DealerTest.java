@@ -6,17 +6,15 @@ import static blackjack.domain.game.WinningResult.WIN;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import java.util.Map;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
+import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.dealer.Dealer;
+import java.util.Map;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class DealerTest {
     @Test

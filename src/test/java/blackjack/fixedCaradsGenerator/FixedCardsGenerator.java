@@ -1,11 +1,10 @@
 package blackjack.fixedCaradsGenerator;
 
-import java.util.Stack;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.CardsGenerator;
+import java.util.Stack;
 
 public class FixedCardsGenerator implements CardsGenerator {
     @Override
