@@ -1,7 +1,7 @@
 package domain.fixture;
 
-import domain.area.CardArea;
 import domain.card.Card;
+import domain.card.CardArea;
 import domain.card.CardValue;
 
 import static domain.card.CardShape.DIAMOND;

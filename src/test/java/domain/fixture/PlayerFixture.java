@@ -1,6 +1,6 @@
 package domain.fixture;
 
-import domain.area.CardArea;
+import domain.card.CardArea;
 import domain.player.Name;
 import domain.player.Player;
 

@@ -1,6 +1,6 @@
 package controller;
 
-import domain.deck.CardDeck;
+import domain.card.CardDeck;
 import domain.game.BlackJackGame;
 import domain.player.HitState;
 import domain.player.Name;

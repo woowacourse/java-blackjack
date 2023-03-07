@@ -1,6 +1,4 @@
-package domain.area;
-
-import domain.card.Card;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;

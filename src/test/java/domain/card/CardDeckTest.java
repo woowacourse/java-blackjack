@@ -1,8 +1,5 @@
-package domain.deck;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.CardShape;
-import domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

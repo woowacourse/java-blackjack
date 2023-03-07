@@ -1,7 +1,7 @@
 package domain.player;
 
-import domain.area.CardArea;
 import domain.card.Card;
+import domain.card.CardArea;
 import domain.card.CardShape;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.area.CardArea;
+import domain.card.CardArea;
 
 public class Player extends Participant {
 

@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.deck.CardDeck;
+import domain.card.CardDeck;
 import domain.player.*;
 import org.junit.jupiter.api.*;
 

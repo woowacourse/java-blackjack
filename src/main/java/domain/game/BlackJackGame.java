@@ -1,7 +1,7 @@
 package domain.game;
 
-import domain.area.CardArea;
-import domain.deck.CardDeck;
+import domain.card.CardArea;
+import domain.card.CardDeck;
 import domain.player.*;
 
 import java.util.*;

@@ -65,38 +65,29 @@ public class OutputView {
     }
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Player> players) {
-        System.out.printf("\n%s와 %s 에게 2장을 나누었습니다.\n",
-                dealer.nameValue(),
-                players.stream()
-                        .map(Participant::nameValue)
-                        .collect(Collectors.joining(DELIMITER))
-        );
+        final String message = String.format("\n%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), playerNames(players));
+        System.out.println(message);
         showDealerCardAreaState(dealer);
-        showPlayersCardAreaState(players);
+        players.forEach(OutputView::showPlayerCardAreaState);
+    }
+
+    private static String playerNames(final List<Player> players) {
+        return players.stream()
+                .map(Participant::nameValue)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     // ex: 딜러카드: 2 다이아
     private static void showDealerCardAreaState(final Dealer dealer) {
-        System.out.printf("%s: %s\n",
-                dealer.nameValue(),
-                makeCardMessage(dealer.firstCard()));
-    }
-
-    /**
-     * 말랑카드: 2 다이아, 잭 클로버
-     * 코다카드: ACE 다이아, 잭 클로버
-     */
-    private static void showPlayersCardAreaState(final List<Player> players) {
-        players.stream()
-                .map(OutputView::makeCardAreaStateMessage)
-                .forEach(System.out::println);
+        System.out.println(dealer.nameValue() + ": " + makeCardMessage(dealer.firstCard()));
     }
 
     /**
      * 출력 : 말랑카드: 2 다이아, 잭 클로버
      */
-    public static void showPlayerCardAreaState(final Participant participant) {
-        System.out.println(makeCardAreaStateMessage(participant));
+    public static void showPlayerCardAreaState(final Player player) {
+        final String message = makeCardAreaStateMessage(player);
+        System.out.println(message);
     }
 
     /* 말랑카드: 2 다이아, 잭 클로버 */

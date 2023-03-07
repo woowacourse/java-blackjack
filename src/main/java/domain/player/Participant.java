@@ -1,7 +1,7 @@
 package domain.player;
 
-import domain.area.CardArea;
 import domain.card.Card;
+import domain.card.CardArea;
 
 public abstract class Participant {
 

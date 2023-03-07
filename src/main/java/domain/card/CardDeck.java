@@ -1,8 +1,4 @@
-package domain.deck;
-
-import domain.card.Card;
-import domain.card.CardShape;
-import domain.card.CardValue;
+package domain.card;
 
 import java.util.*;
 import java.util.stream.Stream;

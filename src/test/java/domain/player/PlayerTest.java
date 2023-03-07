@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.area.CardArea;
+import domain.card.CardArea;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
