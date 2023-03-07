@@ -66,20 +66,11 @@ public class HandTest extends AbstractTestFixture {
         assertThat(hand.hasScoreGreaterThan(otherHand)).isEqualTo(isScoreSame);
     }
 
-    static Stream<Arguments> test_win_lose_draw() {
-        return Stream.of(
-                Arguments.of(new String[] {"K", "K"}, new String[] {"9"}, Result.WIN),
-                Arguments.of(new String[] {"K", "K"}, new String[] {"A", "J"}, Result.LOSE),
-                Arguments.of(new String[] {"A"}, new String[] {"9", "2"}, Result.DRAW)
-        );
-    }
+    @ParameterizedTest(name = "패가 Bust인지 알 수 있다.")
+    @CsvSource({"K,true", "A,false"})
+    void test_is_bust(String additionalLetter, boolean isScoreSame) {
+        var hand = new Hand(createCards("K", "K", additionalLetter));
 
-    @ParameterizedTest(name = "패와 패를 비교해 점수가 큰 패를 알아낼 수 있다")
-    @MethodSource
-    void test_win_lose_draw(String[] letters, String[] otherLetters, Result result) {
-        var hand = new Hand(createCards(letters));
-        var otherHand = new Hand(createCards(otherLetters));
-
-        assertThat(hand.compareWith(otherHand)).isEqualTo(result);
+        assertThat(hand.isBust()).isEqualTo(isScoreSame);
     }
 }

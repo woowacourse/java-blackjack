@@ -49,16 +49,16 @@ public class Hand {
     }
 
     public Result compareWith(Hand other) {
-        if ((isBusted() && other.isBusted()) || score() == other.score()) {
+        if ((isBust() && other.isBust()) || score() == other.score()) {
             return Result.DRAW;
         }
-        if (!isBusted() && (other.isBusted() || score() > other.score())) {
+        if (!isBust() && (other.isBust() || score() > other.score())) {
             return Result.WIN;
         }
         return Result.LOSE;
     }
 
-    private boolean isBusted() {
+    public boolean isBust() {
         return score() > 21;
     }
 
