@@ -19,6 +19,7 @@ public class OutputView {
     private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "\n딜러와 ";
     private static final String COLON = ": ";
     private static final String NEW_LINE = "\n";
+    private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     private OutputView() {
     }
@@ -131,4 +132,9 @@ public class OutputView {
             printScore(player);
         }
     }
+
+    public static void printDealerHitMessage() {
+        System.out.println(DEALER_HIT);
+    }
+
 }

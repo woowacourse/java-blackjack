@@ -4,23 +4,18 @@ import domain.Dealer;
 import domain.Gambler;
 import domain.Player;
 import domain.Players;
-import view.InputView;
-import view.OutputView;
 
 import java.util.Map;
 
 import static view.InputView.printErrorMessage;
 import static view.InputView.readIsHit;
+import static view.OutputView.printDealerHitMessage;
 import static view.OutputView.printSingleGambler;
 
 public class Blackjack {
 
-    //TODO: view 의존성 분리 고민
-    private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
-
     private final Players players;
     private final Dealer dealer;
-    private Result result;
 
     public Blackjack(Players players, Dealer dealer) {
         this.players = players;
@@ -30,7 +25,6 @@ public class Blackjack {
     public void play() {
         playersHitOrStand();
         dealerHitOrStand();
-        this.result = new Result(players, dealer);
     }
 
     private void playersHitOrStand() {
@@ -81,10 +75,10 @@ public class Blackjack {
 
     private void dealerHit() {
         dealer.pickCard();
-        System.out.println(DEALER_HIT);
+        printDealerHitMessage();
     }
 
-    public Map<Gambler, Integer> getResultMap() {
-        return result.getResult();
+    public Result getResult(Players players, Dealer dealer){
+        return new Result(players,dealer);
     }
 }
