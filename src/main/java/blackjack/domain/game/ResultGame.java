@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 
@@ -14,21 +15,21 @@ public class ResultGame {
     private static final Integer BLACKJACK_SCORE = 21;
     private static final String NOT_FIND_RESULT_ERROR_MESSAGE = "점수에 해당하는 승무패를 구할 수 없습니다.";
 
-    private final Map<Player, WinTieLose> playersResult;
+    private final Map<Participant, WinTieLose> playersResult;
     private final Participants participants;
 
-    public ResultGame(final Participants participants, final Map<Player, WinTieLose> playersResult) {
+    public ResultGame(final Participants participants, final Map<Participant, WinTieLose> playersResult) {
         this.participants = participants;
         this.playersResult = playersResult;
         calculateResult();
     }
 
     private void calculateResult() {
-        final Dealer dealer = participants.getDealer();
+        final Participant dealer = participants.getDealer();
         final int dealerScore = dealer.getScore();
-        final List<Player> players = participants.getPlayers();
+        final List<Participant> players = participants.getPlayers();
 
-        for (final Player player : players) {
+        for (final Participant player : players) {
             final int playerScore = player.getScore();
 
             playersResult.put(player, getPlayerResult(playerScore, dealerScore));
@@ -94,7 +95,7 @@ public class ResultGame {
                 .count();
     }
 
-    public WinTieLose getPlayerResult(final Player player) {
+    public WinTieLose getPlayerResult(final Participant player) {
         return playersResult.get(player);
     }
 }

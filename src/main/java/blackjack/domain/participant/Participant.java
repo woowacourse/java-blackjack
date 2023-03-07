@@ -6,23 +6,25 @@ import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participant {
+public abstract class Participant {
 
     private final Name name;
-    private final Hand cards;
+    private final Hand hand;
 
     public Participant(final Name name, final List<Card> cards) {
         this.name = name;
-        this.cards = new Hand(cards);
+        this.hand = new Hand(cards);
     }
 
     public void draw(final Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public int getScore() {
-        return cards.getScore();
+        return hand.getScore();
     }
+
+    public abstract boolean isHit();
 
     public boolean isBust() {
         return getScore() > 21;
@@ -32,12 +34,16 @@ public class Participant {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public List<String> getCardName(int index) {
+        return List.of(hand.getCards().get(index).getCardName());
+    }
+
+    public List<Card> getHand() {
+        return hand.getCards();
     }
 
     public List<String> getCardNames() {
-        return cards.getCards().stream()
+        return hand.getCards().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
     }

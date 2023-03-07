@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Letter;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +23,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException
 public class ResultGameTest {
     private Dealer dealer;
     private Participants participants;
-    private Map<Player, WinTieLose> playersResult;
+    private Map<Participant, WinTieLose> playersResult;
 
 
     @BeforeEach
     void setting() {
         dealer = new Dealer(new ArrayList<>());
-        participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
+        participants = new Participants(dealer, List.of("pobi", "crong", "dali"), new ArrayList<>());
         playersResult = new HashMap<>();
     }
 
@@ -42,9 +43,9 @@ public class ResultGameTest {
     @DisplayName("플레이어가 버스트일 때")
     class PlayerBust {
         Dealer dealer = new Dealer(new ArrayList<>());
-        Participants participants = new Participants(dealer, List.of("pobi"));
-        Map<Player, WinTieLose> playersResult = new HashMap<>();
-        Player player;
+        Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        Map<Participant, WinTieLose> playersResult = new HashMap<>();
+        Participant player;
 
         @BeforeEach
         void initialPlayerBust() {
@@ -82,9 +83,9 @@ public class ResultGameTest {
     @DisplayName("플레이어가 블랙잭일 때")
     class PlayerNormal {
         Dealer dealer = new Dealer(new ArrayList<>());
-        Participants participants = new Participants(dealer, List.of("pobi"));
-        Map<Player, WinTieLose> playersResult = new HashMap<>();
-        Player player;
+        Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        Map<Participant, WinTieLose> playersResult = new HashMap<>();
+        Participant player;
 
         @BeforeEach
         void initialPlayerBust() {
@@ -133,9 +134,9 @@ public class ResultGameTest {
     @DisplayName("플레이어가 블랙잭이 아닐 때")
     class PlayerBlackjack {
         Dealer dealer = new Dealer(new ArrayList<>());
-        Participants participants = new Participants(dealer, List.of("pobi"));
-        Map<Player, WinTieLose> playersResult = new HashMap<>();
-        Player player;
+        Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        Map<Participant, WinTieLose> playersResult = new HashMap<>();
+        Participant player;
 
         @BeforeEach
         void initialPlayerBust() {
@@ -196,7 +197,7 @@ public class ResultGameTest {
     void getDealerCountTest() {
         // given
         dealer.draw(new Card(Shape.CLOVER, Letter.EIGHT));
-        Player player = participants.getPlayers().get(0);
+        Participant player = participants.getPlayers().get(0);
         player.draw(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
@@ -211,7 +212,7 @@ public class ResultGameTest {
     void getPlayerResultTest() {
         // given
         dealer.draw(new Card(Shape.CLOVER, Letter.EIGHT));
-        Player player = participants.getPlayers().get(0);
+        Participant player = participants.getPlayers().get(0);
         player.draw(new Card(Shape.CLOVER, Letter.NINE));
 
         // when

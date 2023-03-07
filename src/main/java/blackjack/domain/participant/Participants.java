@@ -10,14 +10,14 @@ public class Participants {
     private static final String EMPTY_ERROR_MESSAGE = "참가자들이 존재하지 않습니다.";
     private static final String DUPLICATE_ERROR_MESSAGE = "중복된 이름이 존재합니다.";
 
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final List<Participant> participants;
 
-    public Participants(final Dealer dealer, final List<String> playerNames) {
+    public Participants(final Dealer dealer, final List<String> playerNames, final List<Participant> participants) {
         validate(playerNames);
 
-        this.dealer = dealer;
-        this.players = makePlayers(playerNames);
+        this.participants = participants;
+        participants.add(dealer);
+        participants.addAll(makePlayers(playerNames));
     }
 
     private void validate(final List<String> playerNames) {
@@ -48,20 +48,16 @@ public class Participants {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public Participant getDealer() {
+        return participants.get(0);
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public String getDealerName() {
-        return dealer.getName();
+    public List<Participant> getPlayers() {
+        return participants.subList(1, participants.size());
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
+        return participants.stream()
                 .map(Participant::getName)
                 .collect(Collectors.toList());
     }

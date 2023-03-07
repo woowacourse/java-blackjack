@@ -5,6 +5,7 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Order;
 import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -39,7 +40,7 @@ public class BlackjackController {
         final Dealer dealer = new Dealer(new ArrayList<>());
         final List<String> playerNames = inputView.readPlayers();
 
-        return new Participants(dealer, playerNames);
+        return new Participants(dealer, playerNames, new ArrayList<>());
     }
 
     private void startGame(final BlackjackGame blackjackGame) {
@@ -56,27 +57,27 @@ public class BlackjackController {
     }
 
     private void hitPlayers(final BlackjackGame blackjackGame) {
-        final List<Player> players = blackjackGame.getParticipants().getPlayers();
+        final List<Participant> players = blackjackGame.getParticipants().getPlayers();
 
-        for (final Player player : players) {
+        for (final Participant player : players) {
             hitEachPlayer(blackjackGame, player);
         }
     }
 
-    private void hitEachPlayer(final BlackjackGame blackjackGame, final Player player) {
+    private void hitEachPlayer(final BlackjackGame blackjackGame, final Participant player) {
         while (!player.isBust() && isMoreHit(player)) {
             blackjackGame.drawCard(player);
             outputView.printParticipantCard(player);
         }
     }
 
-    private boolean isMoreHit(final Player player) {
+    private boolean isMoreHit(final Participant player) {
         final Order order = Order.from(inputView.readOrderCard(player.getName()));
         return order.isYES();
     }
 
     private void hitDealer(final BlackjackGame blackjackGame) {
-        final Dealer dealer = blackjackGame.getParticipants().getDealer();
+        final Participant dealer = blackjackGame.getParticipants().getDealer();
 
         while (dealer.isHit()) {
             outputView.printDealerDrawCard(dealer);

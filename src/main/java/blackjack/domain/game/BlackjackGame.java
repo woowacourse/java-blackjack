@@ -26,8 +26,8 @@ public class BlackjackGame {
     }
 
     public void initialCardsToAllParticipant() {
-        final Dealer dealer = participants.getDealer();
-        final List<Player> players = participants.getPlayers();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
 
         drawCard(dealer, START_CARD_DRAW_COUNT);
         players.forEach(player -> drawCard(player, START_CARD_DRAW_COUNT));

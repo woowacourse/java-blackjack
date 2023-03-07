@@ -21,7 +21,7 @@ public class BlackjackGameTest {
     @BeforeEach
     void setting() {
         dealer = new Dealer(new ArrayList<>());
-        participants = new Participants(dealer, List.of("pobi", "crong"));
+        participants = new Participants(dealer, List.of("pobi", "crong"), new ArrayList<>());
         deck = new Deck();
     }
 
@@ -41,9 +41,9 @@ public class BlackjackGameTest {
         blackjackGame.initialCardsToAllParticipant();
 
         // then
-        assertThat(dealer.getCards().size()).isEqualTo(2);
+        assertThat(dealer.getHand().size()).isEqualTo(2);
         participants.getPlayers().forEach(player -> {
-            assertThat(player.getCards().size()).isEqualTo(2);
+            assertThat(player.getHand().size()).isEqualTo(2);
         });
     }
 
@@ -57,7 +57,7 @@ public class BlackjackGameTest {
         blackjackGame.drawCard(dealer);
 
         // then
-        assertThat(dealer.getCards().size()).isEqualTo(1);
+        assertThat(dealer.getHand().size()).isEqualTo(1);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BlackjackGameTest {
         blackjackGame.drawCard(dealer, 10);
 
         // then
-        assertThat(dealer.getCards().size()).isEqualTo(10);
+        assertThat(dealer.getHand().size()).isEqualTo(10);
     }
 
     @Test

@@ -31,7 +31,7 @@ public class OutputView {
     }
 
     private void printSplitMessage(final Participants participants) {
-        final String dealerName = participants.getDealerName();
+        final String dealerName = participants.getDealer().getName();
         final List<String> playerNames = participants.getPlayerNames();
 
         final String message = dealerName + DEALER_AND_PLAYER_DELIMITER +
@@ -40,11 +40,11 @@ public class OutputView {
     }
 
     public void printAllParticipantCard(final Participants participants) {
-        final Dealer dealer = participants.getDealer();
-        final List<Player> players = participants.getPlayers();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
 
-        printParticipantCard(dealer, dealer.getOneCard());
-        for (final Player player : players) {
+        printParticipantCard(dealer, dealer.getCardName(0));
+        for (final Participant player : players) {
             printParticipantCard(player);
         }
         System.out.printf(NEW_LINE);
@@ -75,17 +75,17 @@ public class OutputView {
     }
 
     public void printParticipantsResult(final Participants participants, final ResultGame resultGame) {
-        final Dealer dealer = participants.getDealer();
-        final List<Player> players = participants.getPlayers();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
 
         System.out.println(NEW_LINE + NEW_LINE + FINAL_RESULT_MESSAGE);
         printDealerResult(dealer, resultGame);
-        for (final Player player : players) {
+        for (final Participant player : players) {
             printPlayerResult(player, resultGame);
         }
     }
 
-    private void printDealerResult(final Dealer dealer, final ResultGame resultGame) {
+    private void printDealerResult(final Participant dealer, final ResultGame resultGame) {
         final String dealerName = dealer.getName();
         final int win = resultGame.getDealerCount(WinTieLose.WIN);
         final int tie = resultGame.getDealerCount(WinTieLose.TIE);
@@ -97,7 +97,7 @@ public class OutputView {
                 + lose + LOSE_MESSAGE);
     }
 
-    private void printPlayerResult(final Player player, final ResultGame resultGame) {
+    private void printPlayerResult(final Participant player, final ResultGame resultGame) {
         final String playerName = player.getName();
         final String result = resultGame.getPlayerResult(player).getValue();
 
@@ -105,11 +105,11 @@ public class OutputView {
     }
 
     public void printAllCardsAndScores(final Participants participants) {
-        final Dealer dealer = participants.getDealer();
-        final List<Player> players = participants.getPlayers();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
 
         printParticipantCardsAndScores(dealer);
-        for (final Player player : players) {
+        for (final Participant player : players) {
             printParticipantCardsAndScores(player);
         }
     }
