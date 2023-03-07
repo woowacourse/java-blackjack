@@ -28,6 +28,12 @@ public class Players implements Iterable<Player> {
         players.get(i).addCard(card);
     }
 
+    public void addCardToPlayer(Player player, Card card) {
+        players.stream()
+                .filter(player::equals)
+                .forEach(x -> x.addCard(card));
+    }
+
     public Player getPlayer(int i) {
         return players.get(i);
     }

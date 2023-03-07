@@ -21,6 +21,10 @@ public class GamePlayer {
         players.addCardToPlayer(i, card);
     }
 
+    public void giveCardTo(Player player, Card card) {
+        players.addCardToPlayer(player, card);
+    }
+
     public void init(List<Card> cards) {
         initDealer(cards.subList(0, 2));
         initPlayer(cards.subList(2, cards.size()));

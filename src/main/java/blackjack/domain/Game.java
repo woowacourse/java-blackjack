@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.GamePlayer;
+import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Players;
 
 import java.util.ArrayList;
@@ -36,8 +37,12 @@ public class Game {
         return gamePlayer.isHitDealer();
     }
 
-    public void giveCardToPlayerByIndex(int i) {
+    public void giveCardTo(int i) {
         gamePlayer.giveCardToPlayerByIndex(i, deck.draw());
+    }
+
+    public void giveCardTo(Player player) {
+        gamePlayer.giveCardTo(player, deck.draw());
     }
 
     public void giveCardToDealer() {
