@@ -38,6 +38,9 @@ public final class PlayerBet {
         final BigDecimal ratio = new BigDecimal(prizeRatio);
         final BigDecimal prize = bet.multiply(ratio);
 
-        return prize.remainder(bet);
+        if (prize.compareTo(BigDecimal.ZERO) < 0) {
+            return prize;
+        }
+        return prize.subtract(bet);
     }
 }

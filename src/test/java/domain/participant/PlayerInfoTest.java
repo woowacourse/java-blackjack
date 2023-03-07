@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -86,19 +87,18 @@ class PlayerInfoTest {
 
     }
 
-    @Test
-    @DisplayName("calculateBenefit()은 게임 결과를 건네주면 순이익을 반환한다")
-    void calculateBenefit_givenGameResult_thenReturnBenefit() {
+    @ParameterizedTest(name = "calculateBenefit()은 게임 결과를 건네주면 순이익을 반환한다")
+    @CsvSource(value = {"BLACKJACK_WIN:1500.0", "WIN:1000", "DRAW:0", "LOSE:-1000"}, delimiter = ':')
+    void calculateBenefit_givenGameResult_thenReturnBenefit(final GameResult gameResult, final String expectedValue) {
         // given
         final PlayerInfo playerInfo = PlayerInfo.create("a");
-        final GameResult gameResult = GameResult.BLACKJACK_WIN;
         playerInfo.bet(1000);
 
         // when
         final BigDecimal actual = playerInfo.calculateBenefit(gameResult);
 
         // then
-        final BigDecimal expected = new BigDecimal("500.0");
+        final BigDecimal expected = new BigDecimal(expectedValue);
 
         assertThat(actual)
                 .isEqualTo(expected);
