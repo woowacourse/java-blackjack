@@ -38,8 +38,8 @@ public class BlackjackController {
         Map<Player, Stake> playerStakes = readStakes(players);
         drawInitialCards(players, dealer);
 
-        playersHitOrStand(players);
-        dealerHitOrStand(dealer);
+        readPlayersHit(players);
+        drawIfDealerCanHit(dealer);
 
         printScores(players, dealer);
         getResult(dealer, players, playerStakes);
@@ -71,45 +71,41 @@ public class BlackjackController {
         }
     }
 
-    private void playersHitOrStand(Players players) {
+    private void readPlayersHit(Players players) {
         for (Player player : players.getPlayers()) {
-            playerHitOrStand(player);
+            readPlayerHit(player);
         }
     }
 
-    private void playerHitOrStand(Player player) {
+    private void readPlayerHit(Player player) {
         boolean canHit;
         do {
-            canHit = getIsHit(player);
-            playerHit(player, canHit);
+            canHit = repeatReadCanHit(player);
+            drawIfHit(player, canHit);
             printSinglePlayer(player);
         } while (canHit && player.isNotBusted());
     }
 
-    private boolean getIsHit(Player player) {
+    private boolean repeatReadCanHit(Player player) {
         try {
             return readIsHit(player);
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            return getIsHit(player);
+            return repeatReadCanHit(player);
         }
     }
 
-    private void playerHit(Player player, boolean canHit) {
+    private void drawIfHit(Player player, boolean canHit) {
         if (canHit) {
             player.drawCard(deck.pickCard());
         }
     }
 
-    private void dealerHitOrStand(Dealer dealer) {
-        while (dealer.isHittable() && dealer.isNotBusted()) {
-            dealerHit(dealer);
+    private void drawIfDealerCanHit(Dealer dealer) {
+        while (dealer.isHittable()) {
+            printDealerDrawMessage();
+            dealer.drawCard(deck.pickCard());
         }
-    }
-
-    private void dealerHit(Dealer dealer) {
-        dealer.drawCard(deck.pickCard());
-        printDealerDrawMessage();
     }
 
     private void printScores(Players players, Dealer dealer) {
