@@ -6,7 +6,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return UPPER_BOUND_OF_DRAWABLE_SCORE > hand.calculateScore();
+        return UPPER_BOUND_OF_DRAWABLE_SCORE > score();
     }
 
     @Override

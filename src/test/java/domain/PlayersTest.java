@@ -57,7 +57,7 @@ class PlayersTest {
 
             //then
             assertThat(players).extracting("players", collection(Player.class))
-                    .filteredOn((player) -> player.getHand().size() == 1)
+                    .filteredOn((player) -> player.hand().size() == 1)
                     .hasSize(2);
         }
     }

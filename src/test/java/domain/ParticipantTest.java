@@ -18,7 +18,7 @@ class ParticipantTest {
 
             //when
             participant.receiveCard(card);
-            List<Card> hand = participant.getHand();
+            List<Card> hand = participant.hand();
 
             //then
             assertThat(hand).hasSize(1)
