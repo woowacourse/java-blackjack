@@ -35,7 +35,7 @@ class BlackJackResultMakerTest {
     public void testMakeParticipantsResult() {
         //given
         //when
-        Map<Player, Result> results = blackJackResultMaker.makeParticipantsResult(dealer, players);
+        Map<Player, Result> results = blackJackResultMaker.makePlayersResult(dealer, players);
 
         //then
         for (Player player : results.keySet()) {
@@ -66,7 +66,7 @@ class BlackJackResultMakerTest {
 
         //when
         Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
-        Map<Player, Result> playerResults = blackJackResultMaker.makeParticipantsResult(dealer, players);
+        Map<Player, Result> playerResults = blackJackResultMaker.makePlayersResult(dealer, players);
 
         //then
         assertThat(dealerResult.getVictory()).isEqualTo(0);

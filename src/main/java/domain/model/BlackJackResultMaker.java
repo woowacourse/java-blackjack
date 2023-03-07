@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackResultMaker {
 
-    public Map<Player, Result> makeParticipantsResult(final Dealer dealer, final List<Player> players) {
+    public Map<Player, Result> makePlayersResult(final Dealer dealer, final List<Player> players) {
         Map<Player, Result> results = new LinkedHashMap<>();
         for (Player player : players) {
             results.put(player, Result.decide(player.getScore(), dealer.getScore()));
