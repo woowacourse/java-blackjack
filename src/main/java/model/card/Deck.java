@@ -1,7 +1,6 @@
 package model.card;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,10 +16,10 @@ public class Deck {
         this.cards = new ArrayDeque<>(cards);
     }
 
-    public static Deck create() {
+    public static Deck create(final ShuffleStrategy shuffleStrategy) {
         final List<Card> cards = createCards();
 
-        Collections.shuffle(cards);
+        shuffleStrategy.shuffle(cards);
 
         return new Deck(cards);
     }
