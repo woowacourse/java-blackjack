@@ -8,14 +8,14 @@ public class Money {
         this.value = value;
     }
 
-    public Money earn(final int value) {
-        validateEarnValueIsNegative(value);
-        return new Money(this.value + value);
+    public Money earn(final Money money) {
+        validateEarnValueIsNegative(money);
+        return new Money(this.value + money.value);
     }
 
-    public Money spend(final int value) {
-        validateEnoughMoney(value);
-        return new Money(this.value - value);
+    public Money spend(final Money money) {
+        validateEnoughMoney(money);
+        return new Money(this.value - money.value);
     }
 
     public int getValue() {
@@ -28,14 +28,14 @@ public class Money {
         }
     }
 
-    private void validateEarnValueIsNegative(final int value) {
-        if (value < 0) {
+    private void validateEarnValueIsNegative(final Money money) {
+        if (money.value < 0) {
             throw new IllegalArgumentException("번 금액이 음수일 수 없습니다.");
         }
     }
 
-    private void validateEnoughMoney(final int value) {
-        if (this.value - value < 0) {
+    private void validateEnoughMoney(final Money money) {
+        if (this.value - money.value < 0) {
             throw new IllegalArgumentException("지불할 현금이 부족합니다.");
         }
     }
