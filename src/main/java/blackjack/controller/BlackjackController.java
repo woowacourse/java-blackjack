@@ -63,7 +63,7 @@ public class BlackjackController {
 
     private void hitEachPlayer(final Participant player, final Deck deck) {
         while (player.isHit() && isMoreHit(player)) {
-            player.drawCard(deck);
+            player.drawCard(deck.draw());
             outputView.printParticipantNameAndCards(player);
         }
     }
@@ -78,7 +78,7 @@ public class BlackjackController {
 
         while (dealer.isHit()) {
             outputView.printDealerDrawCard();
-            dealer.drawCard(deck);
+            dealer.drawCard(deck.draw());
         }
     }
 

@@ -56,7 +56,7 @@ public class Participants {
 
     public void draw(final Deck deck, final int count) {
         for(int i = 0; i < count; i++) {
-            participants.forEach(participant -> participant.drawCard(deck));
+            participants.forEach(participant -> participant.drawCard(deck.draw()));
         }
     }
 
