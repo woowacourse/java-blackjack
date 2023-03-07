@@ -21,36 +21,36 @@ public class OutputView {
     private static final String DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
 
-    public static void printDivideTwoCard(List<Player> players) {
+    public void printDivideTwoCard(List<Player> players) {
         String playersNameForm = players.stream()
-                .map(player -> player.getName())
+                .map(Player::getName)
                 .collect(joining(", "));
         System.out.println(System.lineSeparator() + String.format(DIVIDE_CARDS_MESSAGE, playersNameForm));
     }
 
-    public static void printFirstCardStatus(Participants participants) {
+    public void printFirstCardStatus(Participants participants) {
         printFirstDealerCardStatus(participants);
         printFirstPlayerCardStatus(participants);
         System.out.print(System.lineSeparator());
     }
 
-    private static void printFirstDealerCardStatus(Participants participants) {
+    private void printFirstDealerCardStatus(Participants participants) {
         Dealer dealer = participants.getDealer();
         Card dealerCard = dealer.getHand().getCards().get(0);
         System.out.println(dealer.getName() + ": " + dealerCard.getValue() + dealerCard.getShape());
     }
 
-    private static void printFirstPlayerCardStatus(Participants participants) {
+    private void printFirstPlayerCardStatus(Participants participants) {
         for (Player player : participants.getPlayers()) {
             printPlayerCardStatus(player);
         }
     }
 
-    public static void printPlayerCardStatus(Player player) {
+    public void printPlayerCardStatus(Player player) {
         System.out.println(player.getName() + ": " + getCardStatusForm(player.getHand()));
     }
 
-    public static void printDealerCardStatus(Dealer dealer) {
+    public void printDealerCardStatus(Dealer dealer) {
         System.out.println(System.lineSeparator()
                 + dealer.getName()
                 + ": "
@@ -59,17 +59,17 @@ public class OutputView {
                 + dealer.getHand().getTotalValue());
     }
 
-    private static String getCardStatusForm(Hand hand) {
+    private String getCardStatusForm(Hand hand) {
         return hand.getCards().stream()
                 .map(card -> card.getName() + card.getShape())
                 .collect(joining(", "));
     }
 
-    public static void printReceiveCardForDealer() {
+    public void printReceiveCardForDealer() {
         System.out.println(System.lineSeparator() + DEALER_GET_CARD);
     }
 
-    public static void printScoreBoard(Participants participants) {
+    public void printScoreBoard(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
 
@@ -77,7 +77,7 @@ public class OutputView {
         printPlayersScoreBoard(players);
     }
 
-    private static void printPlayersScoreBoard(List<Player> players) {
+    private void printPlayersScoreBoard(List<Player> players) {
         for (Player player : players) {
             System.out.println(player.getName()
                     + ": "
@@ -88,7 +88,7 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(final Participants participants) {
+    public void printFinalResult(final Participants participants) {
         final Dealer dealer = participants.getDealer();
         final int dealerTotalValue = dealer.calculateTotalValue();
 
@@ -97,7 +97,7 @@ public class OutputView {
         printPlayersFinalResult(dealerTotalValue, participants.getPlayers());
     }
 
-    private static void printDealerFinalResult(final Participants participants, final int dealerTotalValue) {
+    private void printDealerFinalResult(final Participants participants, final int dealerTotalValue) {
         final Dealer dealer = participants.getDealer();
         final List<Player> players = participants.getPlayers();
 
@@ -106,20 +106,20 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    private static Map<Result, Long> createDealerFinalResult(final int dealerTotalValue, final List<Player> players) {
+    private Map<Result, Long> createDealerFinalResult(final int dealerTotalValue, final List<Player> players) {
         return players.stream()
                 .map(player -> judge(player.calculateTotalValue(), dealerTotalValue))
                 .collect(groupingBy(Function.identity(), counting()));
     }
 
-    private static void createDealerFinalResultForm(final Map<Result, Long> dealerResult, final Dealer dealer) {
+    private void createDealerFinalResultForm(final Map<Result, Long> dealerResult, final Dealer dealer) {
         System.out.printf("%s: ", dealer.getName());
         for (final Result result : Result.values()) {
             createDealerFinalResultForm(dealerResult, result);
         }
     }
 
-    private static void createDealerFinalResultForm(final Map<Result, Long> dealerResult, final Result result) {
+    private void createDealerFinalResultForm(final Map<Result, Long> dealerResult, final Result result) {
         final String scoreName = result.getName();
 
         if (dealerResult.containsKey(result)) {
@@ -127,7 +127,7 @@ public class OutputView {
         }
     }
 
-    private static void printPlayersFinalResult(final int dealerTotalValue, final List<Player> players) {
+    private void printPlayersFinalResult(final int dealerTotalValue, final List<Player> players) {
         for (final Player player : players) {
             final Result playerResult = judge(dealerTotalValue, player.calculateTotalValue());
             System.out.printf("%s: %s%n", player.getName(), playerResult.getName());
