@@ -4,8 +4,8 @@ import blackjack.common.exception.CustomException;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.Results;
+import blackjack.domain.result.ResultMap;
+import blackjack.domain.result.ResultType;
 import blackjack.dto.ChallengerResultDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.PlayerStatusDto;
@@ -122,10 +122,10 @@ public class BlackJackController {
     }
 
     private void showRank() {
-        Results results = blackJackGame.makeResult();
+        ResultMap resultMap = blackJackGame.makeResult();
 
-        ChallengerResultDto challengerResultDto = makeChallengerResultDto(results, blackJackGame.getChallengers());
-        DealerResultDto dealerResultDto = makeDealerResultDto(results, blackJackGame.getDealer());
+        ChallengerResultDto challengerResultDto = makeChallengerResultDto(resultMap, blackJackGame.getChallengers());
+        DealerResultDto dealerResultDto = makeDealerResultDto(resultMap, blackJackGame.getDealer());
         OutputView.printFinalRank(challengerResultDto, dealerResultDto);
     }
 
@@ -144,21 +144,21 @@ public class BlackJackController {
         return cardInfo;
     }
 
-    private ChallengerResultDto makeChallengerResultDto(Results results, List<Player> challengers) {
-        Map<String, String> nameAndRanks = new LinkedHashMap<>();
+    private ChallengerResultDto makeChallengerResultDto(ResultMap resultMap, List<Player> challengers) {
+        Map<String, String> nameAndResult = new LinkedHashMap<>();
         for (Player challenger : challengers) {
-            Result challengerResult = results.getChallengerResult(challenger);
-            nameAndRanks.put(challenger.getName(), challengerResult.getLabel());
+            ResultType challengerResultType = resultMap.getChallengerResult(challenger);
+            nameAndResult.put(challenger.getName(), challengerResultType.getLabel());
         }
-        return new ChallengerResultDto(nameAndRanks);
+        return new ChallengerResultDto(nameAndResult);
     }
 
-    private DealerResultDto makeDealerResultDto(Results results, Player dealer) {
+    private DealerResultDto makeDealerResultDto(ResultMap resultMap, Player dealer) {
         String dealerName = dealer.getName();
-        Map<Result, Integer> dealerResult = results.getDealerResult();
-        int winCount = dealerResult.getOrDefault(Result.WIN, 0);
-        int drawCount = dealerResult.getOrDefault(Result.DRAW, 0);
-        int loseCount = dealerResult.getOrDefault(Result.LOSE, 0);
+        Map<ResultType, Integer> dealerResult = resultMap.getDealerResult();
+        int winCount = dealerResult.getOrDefault(ResultType.WIN, 0);
+        int drawCount = dealerResult.getOrDefault(ResultType.DRAW, 0);
+        int loseCount = dealerResult.getOrDefault(ResultType.LOSE, 0);
         return new DealerResultDto(dealerName, winCount, drawCount, loseCount);
     }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 public class Challenger extends Player {
 
     private static final String INVALID_NAME = "딜러";
-    private static final int MAXIMUM_POINT = 21;
 
     private final String name;
 
@@ -25,7 +24,7 @@ public class Challenger extends Player {
     public Boolean canPick() {
         List<Integer> sumPossibility = holdingCards.getSums();
         return sumPossibility.stream()
-                .anyMatch(sum -> sum <= MAXIMUM_POINT);
+                .anyMatch(sum -> sum <= BLACKJACK_POINT);
     }
 
     @Override

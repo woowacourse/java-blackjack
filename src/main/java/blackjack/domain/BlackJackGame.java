@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultMap;
 import java.util.List;
 
 public class BlackJackGame {
@@ -36,8 +36,8 @@ public class BlackJackGame {
         player.pick(pickedCard);
     }
 
-    public Result makeResult() {
-        return Result.from(players);
+    public ResultMap makeResult() {
+        return ResultMap.from(players);
     }
 
     public Player getDealer() {

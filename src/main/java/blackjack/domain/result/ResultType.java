@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public enum Rank {
+public enum ResultType {
 
     WIN("승"),
     DRAW("무"),
@@ -8,15 +8,15 @@ public enum Rank {
 
     private final String label;
 
-    Rank(String label) {
+    ResultType(String label) {
         this.label = label;
     }
 
-    public Rank getOpposite() {
-        if (this.equals(Rank.WIN)) {
+    public ResultType getOpposite() {
+        if (this.equals(ResultType.WIN)) {
             return LOSE;
         }
-        if (this.equals(Rank.LOSE)) {
+        if (this.equals(ResultType.LOSE)) {
             return WIN;
         }
         return DRAW;

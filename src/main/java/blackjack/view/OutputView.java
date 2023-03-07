@@ -126,9 +126,9 @@ public class OutputView {
     }
 
     private static void printChallengersFinalRank(ChallengerResultDto challengerResultDto) {
-        Map<String, String> nameAndRanks = challengerResultDto.getNameAndRanks();
-        for (String name : nameAndRanks.keySet()) {
-            System.out.println(name + PLAYER_NAME_AND_CARDS_PARTITION + nameAndRanks.get(name));
+        Map<String, String> nameAndResult = challengerResultDto.getNameAndResult();
+        for (String name : nameAndResult.keySet()) {
+            System.out.println(name + PLAYER_NAME_AND_CARDS_PARTITION + nameAndResult.get(name));
         }
     }
 }

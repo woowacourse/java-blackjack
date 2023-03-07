@@ -15,6 +15,7 @@ public class CardDeck {
     private CardDeck(List<Card> cards) {
         this.cards = cards;
     }
+
     public static CardDeck create() {
         return Arrays.stream(Shape.values())
                 .flatMap(shape -> Arrays.stream(Symbol.values()).map(symbol -> new Card(shape, symbol)))
