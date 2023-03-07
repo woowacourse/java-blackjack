@@ -38,8 +38,8 @@ public class Score {
 
     private static int getTotalScore(List<Card> cards) {
         return cards.stream()
-                .map(card -> Collections.min(card.getScore()))
-                .reduce(0, Integer::sum);
+                .mapToInt(card -> Collections.min(card.getScore()))
+                .sum();
     }
 
     public boolean isLessThan(Score other) {
