@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
 
+    private Players players;
+    private Dealer dealer;
     private Participants participants;
 
     @BeforeEach
@@ -25,8 +27,8 @@ class ParticipantsTest {
         Player player2 = new Player(new Name("dino"), new HandCards(cards2));
         List<Player> gamePlayers = List.of(player1, player2);
 
-        Players players = new Players(gamePlayers);
-        Dealer dealer = new Dealer(new HandCards(cards3));
+        this.players = new Players(gamePlayers);
+        this.dealer = new Dealer(new HandCards(cards3));
         this.participants = new Participants(players, dealer);
     }
 
@@ -40,5 +42,11 @@ class ParticipantsTest {
         Assertions.assertThat(seonghaCardNames).contains("6클로버", "10스페이드");
         Assertions.assertThat(dinoCardNames).contains("9클로버", "7스페이드");
         Assertions.assertThat(dealerCardNames).contains("5클로버", "6스페이드");
+    }
+
+    @Test
+    @DisplayName("딜러 이름으로 딜러를 찾아서 반환한다.")
+    void findDealerByDealerName() {
+        Assertions.assertThat(participants.findDealerByDealerName("딜러")).isEqualTo(dealer);
     }
 }
