@@ -8,8 +8,8 @@ public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer() {
-        super(new Name(DEALER_NAME));
+    public Dealer(final List<Card> cards) {
+        super(new Name(DEALER_NAME), cards);
     }
 
     public List<String> getOneCard() {

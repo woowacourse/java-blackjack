@@ -31,7 +31,7 @@ public class Deck {
 
         this.cards.addAll(cards);
     }
-    
+
     private void validate(final List<Card> cards) {
         validateDuplicateCard(cards);
     }

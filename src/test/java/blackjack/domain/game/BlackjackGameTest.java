@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -19,7 +20,7 @@ public class BlackjackGameTest {
 
     @BeforeEach
     void setting() {
-        dealer = new Dealer();
+        dealer = new Dealer(new ArrayList<>());
         participants = new Participants(dealer, List.of("pobi", "crong"));
         deck = new Deck();
     }

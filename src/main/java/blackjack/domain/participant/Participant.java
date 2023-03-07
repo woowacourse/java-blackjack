@@ -11,9 +11,9 @@ public class Participant {
     private final Name name;
     private final Hand cards;
 
-    public Participant(final Name name) {
+    public Participant(final Name name, final List<Card> cards) {
         this.name = name;
-        this.cards = new Hand();
+        this.cards = new Hand(cards);
     }
 
     public void drawCard(final Card card) {

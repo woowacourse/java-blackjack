@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class ResultGameTest {
 
     @BeforeEach
     void setting() {
-        dealer = new Dealer();
+        dealer = new Dealer(new ArrayList<>());
         participants = new Participants(dealer, List.of("pobi", "crong", "dali"));
         playersResult = new HashMap<>();
     }
@@ -40,7 +41,7 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 버스트일 때")
     class PlayerBust {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         Participants participants = new Participants(dealer, List.of("pobi"));
         Map<Player, WinTieLose> playersResult = new HashMap<>();
         Player player;
@@ -80,7 +81,7 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 블랙잭일 때")
     class PlayerNormal {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         Participants participants = new Participants(dealer, List.of("pobi"));
         Map<Player, WinTieLose> playersResult = new HashMap<>();
         Player player;
@@ -131,7 +132,7 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 블랙잭이 아닐 때")
     class PlayerBlackjack {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         Participants participants = new Participants(dealer, List.of("pobi"));
         Map<Player, WinTieLose> playersResult = new HashMap<>();
         Player player;

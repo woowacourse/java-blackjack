@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,14 +13,14 @@ public class HandTest {
     @Test
     @DisplayName("패 생성 테스트")
     void constructCardsTest() {
-        assertThatNoException().isThrownBy(() -> new Hand());
+        assertThatNoException().isThrownBy(() -> new Hand(new ArrayList<>()));
     }
 
     @Test
     @DisplayName("카드를 추가한다")
     void addCardsTest() {
         // given
-        Hand cards = new Hand();
+        Hand cards = new Hand(new ArrayList<>());
         Card card = new Card(Shape.CLOVER, Letter.ACE);
         List<Card> expectedCards = List.of(card);
 
@@ -34,7 +35,7 @@ public class HandTest {
     @DisplayName("카드의 총 합을 반환한다")
     void calculateTotalScoreTest() {
         // given
-        Hand cards = new Hand();
+        Hand cards = new Hand(new ArrayList<>());
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
         int expectedValue = card1.getValue() + card2.getValue();
@@ -51,7 +52,7 @@ public class HandTest {
     @DisplayName("패를 반환한다")
     void getCardsTest() {
         // given
-        Hand cards = new Hand();
+        Hand cards = new Hand(new ArrayList<>());
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
 
@@ -67,7 +68,7 @@ public class HandTest {
     @DisplayName("에이스 2장 일때 합 12가 되는지 테스트")
     void calculateTotalOver21Test() {
         // given
-        Hand cards = new Hand();
+        Hand cards = new Hand(new ArrayList<>());
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.ACE);
 
@@ -83,7 +84,7 @@ public class HandTest {
     @DisplayName("에이스 2장에 기본 19 일때 합 21가 되는지 테스트")
     void calculateTotalOver21Test2() {
         // given
-        Hand cards = new Hand();
+        Hand cards = new Hand(new ArrayList<>());
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
         Card card3 = new Card(Shape.CLOVER, Letter.ACE);

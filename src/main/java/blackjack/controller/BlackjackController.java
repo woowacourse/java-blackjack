@@ -11,6 +11,7 @@ import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class BlackjackController {
     }
 
     private Participants makeParticipants() {
-        final Dealer dealer = new Dealer();
+        final Dealer dealer = new Dealer(new ArrayList<>());
         final List<String> playerNames = inputView.readPlayers();
         return new Participants(dealer, playerNames);
     }
