@@ -1,13 +1,17 @@
 package minimission.list;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class ListStudy {
+class ListStudy {
     @Test
     public void arrayList() {
-        SimpleList values = new CustomLinkedList();
+        SimpleList values = new SimpleLinkedList();
 
         values.add("first");
         values.add("second");
@@ -24,7 +28,7 @@ public class ListStudy {
     }
     
     @Test
-    void generic() {
+    void generic_mission1() {
         SimpleList<Integer> values = new SimpleArrayList<>();
         values.add(1);
         values.add(2);
@@ -35,6 +39,18 @@ public class ListStudy {
         assertAll(
                 () -> assertThat(first).isEqualTo(1),
                 () -> assertThat(second).isEqualTo(2)
+        );
+    }
+    
+    @Test
+    void generic_mission2() {
+        final String[] arrays = {"first", "second"};
+    
+        final SimpleList<String> values = SimpleList.fromArrayToList(arrays);
+    
+        assertAll(
+                () -> assertThat(values.get(0)).isEqualTo("first"),
+                () -> assertThat(values.get(1)).isEqualTo("second")
         );
     }
 }

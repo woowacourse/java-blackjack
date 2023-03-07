@@ -1,10 +1,10 @@
 package minimission.list;
 
-public class CustomLinkedList<E> implements SimpleList<E> {
+public class SimpleLinkedList<E> implements SimpleList<E> {
     private Node head;
     private int size;
 
-    public CustomLinkedList() {
+    public SimpleLinkedList() {
         head = null;
         size = 0;
     }

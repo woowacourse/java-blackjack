@@ -1,13 +1,18 @@
 package minimission.list;
 
+import java.util.Arrays;
+
 public class SimpleArrayList<E> implements SimpleList<E> {
-    private static final int INITIAL_CAPACITY = 10;
     private Object[] array;
     private int size;
-
+    
     public SimpleArrayList() {
-        array = new Object[INITIAL_CAPACITY];
-        size = 0;
+        this(new Object[]{});
+    }
+    
+    public SimpleArrayList(Object[] arrays) {
+        array = arrays;
+        size = arrays.length;
     }
 
     @Override
@@ -45,6 +50,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index is out of range");
         }
+        System.out.println(array[index]);
         return (E) array[index];
     }
 
@@ -113,5 +119,13 @@ public class SimpleArrayList<E> implements SimpleList<E> {
             System.arraycopy(array, 0, newArray, 0, size);
             array = newArray;
         }
+    }
+    
+    @Override
+    public String toString() {
+        return "SimpleArrayList{" +
+                "array=" + Arrays.toString(array) +
+                ", size=" + size +
+                '}';
     }
 }
