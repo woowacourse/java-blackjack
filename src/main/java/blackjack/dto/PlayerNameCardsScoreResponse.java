@@ -2,6 +2,8 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerNameCardsScoreResponse {
@@ -12,7 +14,7 @@ public class PlayerNameCardsScoreResponse {
 
     public PlayerNameCardsScoreResponse(String name, List<Card> cards, int score) {
         this.name = name;
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
         this.score = score;
     }
 
@@ -21,7 +23,7 @@ public class PlayerNameCardsScoreResponse {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int getScore() {

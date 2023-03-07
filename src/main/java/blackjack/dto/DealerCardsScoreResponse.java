@@ -2,6 +2,8 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DealerCardsScoreResponse {
@@ -10,12 +12,12 @@ public class DealerCardsScoreResponse {
     private final int score;
 
     public DealerCardsScoreResponse(List<Card> cards, int score) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
         this.score = score;
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int getScore() {

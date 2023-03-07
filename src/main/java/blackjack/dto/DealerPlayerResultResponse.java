@@ -2,6 +2,8 @@ package blackjack.dto;
 
 import blackjack.domain.game.Result;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DealerPlayerResultResponse {
@@ -10,15 +12,15 @@ public class DealerPlayerResultResponse {
     private final Map<String, Result> playerResult;
 
     public DealerPlayerResultResponse(Map<Result, Integer> dealerResult, Map<String, Result> playerResult) {
-        this.dealerResult = dealerResult;
-        this.playerResult = playerResult;
+        this.dealerResult = new LinkedHashMap<>(dealerResult);
+        this.playerResult = new LinkedHashMap<>(playerResult);
     }
 
     public Map<Result, Integer> getDealerResult() {
-        return dealerResult;
+        return Collections.unmodifiableMap(dealerResult);
     }
 
     public Map<String, Result> getPlayerResult() {
-        return playerResult;
+        return Collections.unmodifiableMap(playerResult);
     }
 }
