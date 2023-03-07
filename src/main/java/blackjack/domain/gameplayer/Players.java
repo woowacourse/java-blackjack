@@ -14,9 +14,13 @@ public class Players implements Iterable<Player> {
     private final List<Player> players;
 
     public Players(List<Player> players) {
+        validate(players);
+        this.players = players;
+    }
+
+    private void validate(List<Player> players) {
         validatePlayersCount(players);
         validateDuplicatedPlayerNames(players);
-        this.players = players;
     }
 
     private void validatePlayersCount(List<Player> players) {
