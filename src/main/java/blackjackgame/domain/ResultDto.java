@@ -5,13 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjackgame.domain.player.Guest;
-import blackjackgame.domain.player.Name;
 
 public class ResultDto {
-    private final Map<Guest, GameOutcome> guestsResult;
+    private final Map<String, GameOutcome> guestsResult;
     private final Map<GameOutcome, Integer> dealerResult;
 
-    public ResultDto(Map<Guest, GameOutcome> guestsResult, Map<GameOutcome, Integer> dealerResult) {
+    public ResultDto(Map<String, GameOutcome> guestsResult, Map<GameOutcome, Integer> dealerResult) {
         this.guestsResult = guestsResult;
         this.dealerResult = dealerResult;
     }
@@ -20,11 +19,10 @@ public class ResultDto {
         return new ResultDto(getGuests(result.getGuests()), getDealer(result.getDealer()));
     }
 
-    private static Map<Guest, GameOutcome> getGuests(Map<Guest, GameOutcome> guestsResult) {
-        Map<Guest, GameOutcome> result = new LinkedHashMap<>();
+    private static Map<String, GameOutcome> getGuests(Map<Guest, GameOutcome> guestsResult) {
+        Map<String, GameOutcome> result = new LinkedHashMap<>();
         for (final Guest guest : guestsResult.keySet()) {
-            Guest copyGuest = new Guest(new Name(guest.getName()), Collections.emptyList());
-            result.put(copyGuest, guestsResult.get(guest));
+            result.put(guest.getName(), guestsResult.get(guest));
         }
         return Collections.unmodifiableMap(result);
 
@@ -42,7 +40,7 @@ public class ResultDto {
         return dealerResult;
     }
 
-    public Map<Guest, GameOutcome> getGuestsResult() {
+    public Map<String, GameOutcome> getGuestsResult() {
         return guestsResult;
     }
 }

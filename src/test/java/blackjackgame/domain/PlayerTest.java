@@ -76,7 +76,7 @@ class PlayerTest {
     }
 
     @DisplayName("플레이어가 카드 중에 에이스가 있을때 총합이 10을 넘지 않으면 총합에 10을 더한다.")
-    @ParameterizedTest(name = "플레이어가 가진 카드의 합은 {1}이다.")
+    @ParameterizedTest(name = "플레이어가 가진 카드의 합은 {2}이다.")
     @MethodSource("cardDummy")
     void Should_ReturnScore_When_Request(List<Card> initCards, List<Card> additionCards, int expected) {
         Player player = new Dealer(initCards);

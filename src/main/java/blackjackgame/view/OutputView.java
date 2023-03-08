@@ -5,7 +5,6 @@ import java.util.Map;
 
 import blackjackgame.domain.GameOutcome;
 import blackjackgame.domain.ResultDto;
-import blackjackgame.domain.player.Guest;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
@@ -50,12 +49,12 @@ public class OutputView {
         }
     }
 
-    private void appendGuestsResult(final Map<Guest, GameOutcome> result, final StringBuilder stringBuilder) {
-        for (final Guest guest : result.keySet()) {
+    private void appendGuestsResult(final Map<String, GameOutcome> result, final StringBuilder stringBuilder) {
+        for (final String guestName : result.keySet()) {
             stringBuilder.append(System.lineSeparator());
-            stringBuilder.append(guest.getName())
+            stringBuilder.append(guestName)
                 .append(": ")
-                .append(result.get(guest).getOutcome());
+                .append(result.get(guestName).getOutcome());
         }
     }
 }

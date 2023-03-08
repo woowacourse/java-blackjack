@@ -58,7 +58,7 @@ public class BlackJackController {
             .collect(Collectors.toList());
 
         List<Guest> guests = names.stream()
-            .map(name-> new Guest(name, deck.firstPickCards()))
+            .map(name -> new Guest(name, deck.firstPickCards()))
             .collect(Collectors.toList());
         return new Guests(guests);
     }
