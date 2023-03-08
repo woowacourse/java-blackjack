@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public final class Cards {
 
-    private static final int ACE_ADDITIONAL_VALUE = 10;
-    private static final int ACE_MAX_VALUE = 11;
+    private static final int ACE_ADDITIONAL_SCORE = 10;
+    private static final int MAX_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -22,8 +22,8 @@ public final class Cards {
     public int calculateScore() {
         final int score = sumScore();
 
-        if (hasAce() && isAceValueEleven(score)) {
-            return score + ACE_ADDITIONAL_VALUE;
+        if (hasAce() && plusTenIfNotBust(score)) {
+            return score + ACE_ADDITIONAL_SCORE;
         }
         return score;
     }
@@ -39,16 +39,20 @@ public final class Cards {
                 .anyMatch(this::isAce);
     }
 
-    private boolean isAce(Card card) {
+    private boolean isAce(final Card card) {
         return card.getNumber() == Number.ACE;
     }
 
-    private boolean isAceValueEleven(final int sum) {
-        return sum <= ACE_MAX_VALUE;
+    private boolean plusTenIfNotBust(final int sum) {
+        return sum + ACE_ADDITIONAL_SCORE <= MAX_SCORE;
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public int getCardsSize() {
+        return cards.size();
     }
 
     public List<String> getCardNames() {
