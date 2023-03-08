@@ -15,8 +15,15 @@ public class BlackjackGame {
     private final Participants participants;
 
     public BlackjackGame(String[] names, Shuffler shuffler) {
+        validateNumberOfPlayer(names);
         this.participants = createParticipants(names);
         this.deck = new Deck(shuffler);
+    }
+
+    private void validateNumberOfPlayer(String[] names) {
+        if (names.length < 1) {
+            throw new IllegalArgumentException("[ERROR] 참여할 사람은 한 명 이상이어야 합니다.");
+        }
     }
 
     public Participants createParticipants(String[] names) {

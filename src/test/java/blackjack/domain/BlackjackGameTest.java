@@ -23,6 +23,18 @@ class BlackjackGameTest {
     )));
 
     @Test
+    @DisplayName("입력받은 플레이어의 수가 1명 미만이면 예외가 발생한다.")
+    void createZeroPlayer() {
+        // given
+        String[] names = {};
+
+        // expect
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new BlackjackGame(names, mockDeckMaker))
+                .withMessage("[ERROR] 참여할 사람은 한 명 이상이어야 합니다.");
+    }
+
+    @Test
     @DisplayName("입력받은 플레이어 이름에 중복돤 이름이 없으면 예외가 발생하지 않는다.")
     void createParticipants_success() {
         // given

@@ -14,6 +14,8 @@ import static java.util.stream.Collectors.toList;
 
 public class BlackJackController {
 
+    private static final String DEALER_NAME = "딜러";
+
     private final BlackjackGame blackjackGame;
 
     public BlackJackController() {
@@ -43,6 +45,7 @@ public class BlackJackController {
         List<String> playersName = personStatusDtos.stream()
                 .map(PersonStatusDto::getName)
                 .collect(toList());
+        playersName.remove(DEALER_NAME);
         OutputView.printDefaultDrawCardMessage(playersName);
 
         for (PersonStatusDto personStatusDto : personStatusDtos) {
