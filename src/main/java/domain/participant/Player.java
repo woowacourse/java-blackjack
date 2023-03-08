@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.ExceptionCode;
+
 import java.util.ArrayList;
 
 public class Player extends Participant {

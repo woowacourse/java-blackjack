@@ -1,6 +1,6 @@
 package view;
 
-import domain.participant.ExceptionCode;
+import domain.ExceptionCode;
 
 import java.util.Collections;
 import java.util.Map;

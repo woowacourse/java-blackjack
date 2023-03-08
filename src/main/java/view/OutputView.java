@@ -2,7 +2,7 @@ package view;
 
 import domain.Card;
 import domain.Result;
-import domain.participant.ExceptionCode;
+import domain.ExceptionCode;
 
 import java.util.ArrayList;
 import java.util.List;
