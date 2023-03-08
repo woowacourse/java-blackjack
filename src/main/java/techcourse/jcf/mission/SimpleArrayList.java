@@ -16,20 +16,20 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.elementData = EMPTY_ELEMENT_DATA;
     }
 
-    public SimpleArrayList(E... elements) {
+    public SimpleArrayList(final E... elements) {
         this.elementData = elements;
         this.size = elementData.length;
     }
 
     @Override
-    public boolean add(E value) {
+    public boolean add(final E value) {
         resizeCapacity(size + 1);
         elementData[size++] = value;
         return true;
     }
 
     @Override
-    public void add(int index, E value) {
+    public void add(final int index, final E value) {
         validateIndexRange(index);
         resizeCapacity(size + 1);
         fastAdd(index);
@@ -37,47 +37,48 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         size++;
     }
 
-    private void resizeCapacity(int minCapacity) {
-        int newCapacity = computeCapacity(elementData, minCapacity);
+    private void resizeCapacity(final int minCapacity) {
+        final int newCapacity = computeCapacity(elementData, minCapacity);
         if (newCapacity > elementData.length) {
             elementData = Arrays.copyOf(elementData, newCapacity);
         }
     }
 
-    private int computeCapacity(Object[] elementData, int minCapacity) {
+    private int computeCapacity(final Object[] elementData, final int minCapacity) {
         if (elementData == EMPTY_ELEMENT_DATA) {
             return Math.max(DEFAULT_CAPACITY, minCapacity);
         }
         return minCapacity;
     }
 
-    private void fastAdd(int index) {
+    private void fastAdd(final int index) {
         for (int i = size; i > index; i--) {
             elementData[i] = elementData[i - 1];
         }
     }
 
     @Override
-    public E set(int index, E value) {
+    public E set(final int index, final E value) {
         validateIndexRange(index);
-        E previous = (E) elementData[index];
+        @SuppressWarnings("unchecked") final E previous = (E) elementData[index];
         elementData[index] = value;
         return previous;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public E get(int index) {
+    public E get(final int index) {
         validateIndexRange(index);
         return (E) elementData[index];
     }
 
     @Override
-    public boolean contains(E value) {
+    public boolean contains(final E value) {
         return Arrays.asList(elementData).contains(value);
     }
 
     @Override
-    public int indexOf(E value) {
+    public int indexOf(final E value) {
         for (int i = 0; i < size; i++) {
             if (Objects.equals(elementData[i], value)) {
                 return i;
@@ -97,8 +98,8 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public boolean remove(E value) {
-        int index = indexOf(value);
+    public boolean remove(final E value) {
+        final int index = indexOf(value);
         if (index > -1) {
             fastRemove(index);
             return true;
@@ -107,14 +108,14 @@ public class SimpleArrayList<E> implements SimpleList<E> {
     }
 
     @Override
-    public E remove(int index) {
+    public E remove(final int index) {
         validateIndexRange(index);
-        E oldValue = (E) elementData[index];
+        @SuppressWarnings("unchecked") final E oldValue = (E) elementData[index];
         fastRemove(index);
         return oldValue;
     }
 
-    private void fastRemove(int index) {
+    private void fastRemove(final int index) {
         for (int i = index; i < size - 1; i++) {
             elementData[i] = elementData[i + 1];
         }
@@ -127,7 +128,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         size = 0;
     }
 
-    private void validateIndexRange(int index) {
+    private void validateIndexRange(final int index) {
         if (index < 0 || index + 1 > size) {
             throw new IndexOutOfBoundsException("인덱스의 범위가 올바르지 않습니다. index: " + index);
         }
