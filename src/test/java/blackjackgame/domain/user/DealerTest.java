@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjackgame.domain.card.CloverCard;
 import blackjackgame.domain.card.HeartCard;
 import blackjackgame.domain.card.SpadeCard;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +48,17 @@ class DealerTest {
         UserStatus result = dealer.getStatus();
 
         assertThat(result).isEqualTo(DealerStatus.UNDER_MIN_SCORE);
+    }
+
+    @DisplayName("처음으로 받은 2장의 카드 외에 추가로 뽑은 카드가 몇 장인지 반환한다.")
+    @Test
+    void getExtraDrawCount_drawTwoMoreCards() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(List.of(CloverCard.CLOVER_TWO, SpadeCard.SPADE_TWO));
+
+        dealer.receiveCards(List.of(CloverCard.CLOVER_FIVE, SpadeCard.SPADE_TEN));
+        int extraDrawCount = dealer.getExtraDrawCount();
+
+        assertThat(extraDrawCount).isEqualTo(2);
     }
 }

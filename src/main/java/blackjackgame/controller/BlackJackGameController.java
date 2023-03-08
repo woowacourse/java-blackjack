@@ -20,8 +20,6 @@ import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
 
 public class BlackJackGameController {
-    private static final int INITIAL_CARD_COUNT = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -99,9 +97,7 @@ public class BlackJackGameController {
     private void progressDealerTurn(BlackJackGame blackJackGame) {
         blackJackGame.drawDealerCardUntilSatisfyingCondition();
 
-        Dealer dealer = blackJackGame.getDealer();
-        int dealerDrawCount = dealer.getCards().size() - INITIAL_CARD_COUNT;
-
+        int dealerDrawCount = blackJackGame.getDealerExtraDrawCount();
         if (dealerDrawCount > 0) {
             outputView.printDealerDrawResult(dealerDrawCount);
         }

@@ -90,6 +90,10 @@ public class BlackJackGame {
         return setUpResult;
     }
 
+    public int getDealerExtraDrawCount() {
+        return dealer.getExtraDrawCount();
+    }
+
     public Map<NameDto, Result> getPlayerFinalResult() {
         return players.getPlayerFinalResult();
     }
