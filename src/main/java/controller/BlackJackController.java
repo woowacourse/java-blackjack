@@ -5,10 +5,8 @@ import domain.deck.CardDeck;
 import domain.player.Name;
 import domain.player.Player;
 import domain.player.dealer.Dealer;
-import domain.player.dealer.DealerResult;
 import domain.player.participant.Money;
 import domain.player.participant.Participant;
-import domain.player.participant.ParticipantResult;
 import view.InputView;
 import view.OutputView;
 
@@ -16,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.counting;
 
 public class BlackJackController {
 
@@ -37,13 +33,8 @@ public class BlackJackController {
         hittingPlayer(cardTable, participants, dealer);
         printStateAfterHit(participants, dealer);
 
-        final Map<Participant, Money> participantsResult =
-                cardTable.determineBettingMoney(participants, dealer);
-
-        for (final Participant participant : participantsResult.keySet()) {
-            System.out.print(participant.name().value() + " : " );
-            System.out.println(participantsResult.get(participant).value());
-        }
+        final Map<Participant, Money> participantsResult = cardTable.determineBettingMoney(participants, dealer);
+        OutputView.showBettingMoneyBoard(participantsResult);
     }
 
     private static List<Player> createPlayers(final List<Participant> participants, final Dealer dealer) {
@@ -75,13 +66,6 @@ public class BlackJackController {
                             return new Participant(name, Money.wons(bettingMoney));
                         })
                         .collect(Collectors.toList());
-    }
-
-    private static void printPlayerScoreBoard(final List<Participant> participants,
-                                              final Map<Participant, ParticipantResult> playersResult,
-                                              final Map<DealerResult, Long> scoreBoard) {
-        OutputView.showDealerScoreBoard(scoreBoard);
-        OutputView.showParticipantsScoreBoard(playersResult, participants);
     }
 
     private static void printStateAfterHit(final List<Participant> participants, final Dealer dealer) {

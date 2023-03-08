@@ -5,9 +5,8 @@ import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.player.Player;
 import domain.player.dealer.Dealer;
-import domain.player.dealer.DealerResult;
+import domain.player.participant.Money;
 import domain.player.participant.Participant;
-import domain.player.participant.ParticipantResult;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -18,8 +17,6 @@ public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
-    private static final Map<ParticipantResult, String> PARTICIPANT_RESULT_MAP = new EnumMap<>(ParticipantResult.class);
-    private static final Map<DealerResult, String> DEALER_RESULT_MAP = new EnumMap<>(DealerResult.class);
 
     private static final String DELIM = ", ";
     private static final String CARD_INFORMATION_FORMAT = "카드: ";
@@ -30,8 +27,6 @@ public class OutputView {
     static {
         makeShapeMessage();
         makeValueMessage();
-        makeParticipantResultMessage();
-        makeDealerResultMessage();
     }
 
     private OutputView() {
@@ -58,18 +53,6 @@ public class OutputView {
         VALUE_MESSAGE_MAP.put(CardValue.QUEEN, "퀸");
         VALUE_MESSAGE_MAP.put(CardValue.JACK, "잭");
         VALUE_MESSAGE_MAP.put(CardValue.ACE, "A");
-    }
-
-    private static void makeParticipantResultMessage() {
-        PARTICIPANT_RESULT_MAP.put(ParticipantResult.WINNER, "승");
-        PARTICIPANT_RESULT_MAP.put(ParticipantResult.LOSER, "패");
-        PARTICIPANT_RESULT_MAP.put(ParticipantResult.DRAWER, "무");
-    }
-
-    private static void makeDealerResultMessage() {
-        DEALER_RESULT_MAP.put(DealerResult.WINNER, "승");
-        DEALER_RESULT_MAP.put(DealerResult.LOSER, "패");
-        DEALER_RESULT_MAP.put(DealerResult.DRAWER, "무");
     }
 
     public static void showDealtCardTo(final List<? extends Player> participants) {
@@ -128,31 +111,19 @@ public class OutputView {
         System.out.println(message);
     }
 
+    public static void showBettingMoneyBoard(final Map<Participant, Money> bettingMoneyBoard) {
+        System.out.println("## 최종 수익");
+
+        for (final Participant participant : bettingMoneyBoard.keySet()) {
+            System.out.println(participant.name().value() + COLON + bettingMoneyBoard.get(participant).value());
+        }
+    }
+
     private static String getPlayerName(final Player player) {
         return player.name().value();
     }
 
     public static void dealerOneMoreCard() {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    public static void showDealerScoreBoard(final Map<DealerResult, Long> scoreBoard) {
-
-        System.out.println(scoreBoard.keySet()
-                                     .stream()
-                                     .map(dealerResult -> scoreBoard.get(dealerResult)
-                                             + DEALER_RESULT_MAP.get(dealerResult))
-                                     .collect(Collectors.joining(EMPTY_DELIM, DEALER_INFORMATION_FORMAT, "")));
-    }
-
-    public static void showParticipantsScoreBoard(final Map<Participant, ParticipantResult> scoreBoard,
-                                                  final List<Participant> participants) {
-
-        participants.stream()
-                    .map(participant -> getPlayerName(participant)
-                            + COLON
-                            + PARTICIPANT_RESULT_MAP.get(scoreBoard.get(participant))
-                    )
-                    .forEach(System.out::println);
     }
 }
