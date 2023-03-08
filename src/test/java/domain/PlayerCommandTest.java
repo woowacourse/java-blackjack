@@ -14,7 +14,9 @@ class PlayerCommandTest {
     void convertCommandTest() {
         assertThat(PlayerCommand.from("y")).isEqualTo(PlayerCommand.HIT);
         assertThat(PlayerCommand.from("n")).isEqualTo(PlayerCommand.STAND);
-        assertThatThrownBy(() -> PlayerCommand.from("깃짱"))
-                .isInstanceOf(NoSuchElementException.class);
+        String command = "a";
+        assertThatThrownBy(() -> PlayerCommand.from(command))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessageContaining(String.format(PlayerCommand.COMMAND_ERROR_MESSAGE, command));
     }
 }

@@ -23,7 +23,7 @@ class NameTest {
         void invalidLengthTest() {
             assertThatThrownBy(() -> new Name("abcdefghijklm"))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 이름의 길이는 10글자 이하여야 합니다.");
+                    .hasMessageContaining(Name.LENGTH_ERROR_MESSAGE);
         }
     }
 
@@ -32,10 +32,13 @@ class NameTest {
     void nameRegexTest() {
         assertDoesNotThrow(() -> new Name("숫자가없는이름"));
         assertThatThrownBy(() -> new Name("444"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
         assertThatThrownBy(() -> new Name("이름4"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
         assertThatThrownBy(() -> new Name("특수^"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
     }
 }

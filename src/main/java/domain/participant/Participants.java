@@ -9,7 +9,7 @@ public class Participants {
 
     private static final int MIN_SIZE_EXCLUSIVE = 1;
     private static final int MAX_SIZE_EXCLUSIVE = 7;
-    private static final String SIZE_ERROR_MESSAGE = "[ERROR] 전체 플레이어의 수는 1명 이상 7명 이하여야 합니다!";
+    public static final String SIZE_ERROR_MESSAGE = "[ERROR] 전체 플레이어의 수는 1명 이상 7명 이하여야 합니다!";
 
     private final List<Player> players;
     private final Dealer dealer;

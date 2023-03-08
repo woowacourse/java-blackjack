@@ -17,8 +17,10 @@ class ParticipantsTest {
         Deck deck = new Deck(new FixedDeckShuffler());
         assertDoesNotThrow(() -> new Participants(List.of("깃짱", "망고"), deck));
         assertThatThrownBy(() -> new Participants(List.of(), deck))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Participants.SIZE_ERROR_MESSAGE);
         assertThatThrownBy(() -> new Participants(List.of("깃짱", "망고", "저문", "이리내", "디노", "오잉", "체인저", "토리"), deck))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Participants.SIZE_ERROR_MESSAGE);
     }
 }
