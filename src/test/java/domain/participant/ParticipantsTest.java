@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.card.Cards;
@@ -15,10 +16,13 @@ class ParticipantsTest {
     @Test
     void validateSizeTest() {
         Cards cards = new Cards(new FixedCardsShuffler());
-        assertDoesNotThrow(() -> new Participants(List.of("깃짱", "망고"), cards));
-        assertThatThrownBy(() -> new Participants(List.of(), cards))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Participants(List.of("깃짱", "망고", "저문", "이리내", "디노", "오잉", "체인저", "토리"), cards))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertAll(
+                () -> assertDoesNotThrow(() -> new Participants(List.of("깃짱", "망고"), cards)),
+                () -> assertThatThrownBy(() -> new Participants(List.of(), cards))
+                        .isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(
+                        () -> new Participants(List.of("깃짱", "망고", "저문", "이리내", "디노", "오잉", "체인저", "토리"), cards))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
     }
 }
