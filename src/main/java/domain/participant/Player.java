@@ -1,7 +1,5 @@
 package domain.participant;
 
-import view.ErrorMessage;
-
 import java.util.ArrayList;
 
 public class Player extends Participant {
@@ -26,31 +24,31 @@ public class Player extends Participant {
 
     private static void validateNotNull(String name) {
         if (name == null) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_IS_NULL.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.NAME_IS_NULL.getExceptionCode());
         }
     }
 
     private static void validateNotEmpty(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_IS_EMPTY.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.NAME_IS_EMPTY.getExceptionCode());
         }
     }
 
     private static void validateNoDealer(String name) {
         if (name.equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_IS_DEALER.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.PLAYER_INVALID_NAME.getExceptionCode());
         }
     }
 
     private static void validateDoesNotContainComma(String name) {
         if (name.contains(INVALID_NAME_CHARACTER)) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_CONTAINS_COMMA.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.NOT_CONTAINS_COMMA_PLAYER_NAME.getExceptionCode());
         }
     }
 
     private static void validateNameLength(String name) {
         if (name.length() > MAX_PLAYER_NAME_LENGTH) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_NAME_LENGTH.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.OUT_OF_RANGE_PLAYER_NAME_LENGTH.getExceptionCode());
         }
     }
 }

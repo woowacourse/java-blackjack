@@ -1,9 +1,11 @@
 package domain.participant;
 
 import domain.Deck;
-import view.ErrorMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -11,6 +13,7 @@ public class Participants {
     private static final int MAXIMUM_PLAYER_COUNT = 7;
 
     private final List<Participant> participants;
+
 
     private Participants(List<Participant> participants) {
         this.participants = participants;
@@ -32,10 +35,10 @@ public class Participants {
 
     public Participant findDealer() {
         return participants.stream()
-            .filter(participant -> participant.getClass().equals(Dealer.class))
-            .findFirst()
-            .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_DEALER.getMessage())
-            );
+                .filter(participant -> participant.getClass().equals(Dealer.class))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(ExceptionCode.NO_DEALER.getExceptionCode())
+                );
     }
 
     public List<Participant> findPlayers() {
@@ -66,13 +69,13 @@ public class Participants {
 
     private static void validateNumberOfNames(List<String> names) {
         if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_OF_PLAYER.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.OUT_OF_RANGE_PLAYER_COUNT.getExceptionCode());
         }
     }
 
     private static void validateNoDuplication(List<String> names) {
         if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_IS_DUPLICATED.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.DUPLICATE_PLAYERS_NAME.getExceptionCode());
         }
     }
 

@@ -1,6 +1,9 @@
 package controller;
 
-import domain.*;
+import domain.Deck;
+import domain.GameResult;
+import domain.RandomShuffleStrategy;
+import domain.Result;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import view.InputView;

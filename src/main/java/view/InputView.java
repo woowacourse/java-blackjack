@@ -1,5 +1,7 @@
 package view;
 
+import domain.participant.ExceptionCode;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +38,7 @@ public class InputView {
 
     private void validateDrawingCardRequest(String drawingCardRequest) {
         if (!drawingCardRequest.equals(HIT_REQUEST) && !drawingCardRequest.equals(STAY_REQUEST)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DRAWING_CARD_REQUEST.getMessage());
+            throw new IllegalArgumentException(ExceptionCode.INVALID_HIT_OR_STAY.getExceptionCode());
         }
     }
 }

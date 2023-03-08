@@ -2,6 +2,7 @@ package view;
 
 import domain.Card;
 import domain.Result;
+import domain.participant.ExceptionCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,9 @@ public class OutputView {
     }
 
     public void printExceptionMessage(IllegalArgumentException e) {
-        System.out.println(e.getMessage());
+        final ExceptionCode exceptionCode = ExceptionCode.getExceptionCodeName(e.getMessage());
+        final String exceptionMessage = ExceptionMessage.getExceptionMessage(exceptionCode);
+
+        System.out.println(exceptionMessage);
     }
 }
