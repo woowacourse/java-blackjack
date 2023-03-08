@@ -1,53 +1,179 @@
 package blackjack.domain.result;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
 
-    private Result result;
     private Players players;
+    private Result result;
 
-    @BeforeEach
     void setPlayers() {
-        players = Players.from(List.of("oing", "ditoo"));
-
-        Card heartKing = new Card(Shape.HEART, Number.KING);
-        Card heartSeven = new Card(Shape.HEART, Number.SEVEN);
-        Card heartThree = new Card(Shape.HEART, Number.THREE);
-
-        players.getDealer().pick(heartSeven);
-        players.getChallengers().get(0).pick(heartThree);
-        players.getChallengers().get(1).pick(heartKing);
-        result = Result.from(players);
+        players = Players.from(List.of("ditoo", "bada", "oing"));
+        setBustedChallenger(players.getChallengers().get(0));
+        setBlackjackChallenger(players.getChallengers().get(1));
+        setLowPointChallenger(players.getChallengers().get(2));
     }
 
-    @Test
-    @DisplayName("도전자들의 승패가 올바르게 계산되는지 확인한다")
-    void check_challengers_result() {
-        Player oing = players.getChallengers().get(0);
-        Player ditoo = players.getChallengers().get(1);
+    void setBustedChallenger(Player bustedChallenger) {
+        Card cloverKing = new Card(Shape.CLOVER, Number.KING);
+        Card cloverSeven = new Card(Shape.CLOVER, Number.SEVEN);
+        Card cloverEight = new Card(Shape.CLOVER, Number.EIGHT);
 
-        assertThat(result.getChallengerResult(oing)).isEqualTo(Rank.LOSE);
-        assertThat(result.getChallengerResult(ditoo)).isEqualTo(Rank.WIN);
+        bustedChallenger.pickStartCards(cloverKing, cloverSeven);
+        bustedChallenger.pick(cloverEight);
     }
 
-    @Test
-    @DisplayName("딜러의 승패가 올바르게 계산되는지 확인한다")
-    void check_dealer_result() {
-        assertThat(result.getDealerWinCount()).isEqualTo(1);
-        assertThat(result.getDealerDrawCount()).isZero();
-        assertThat(result.getDealerLoseCount()).isEqualTo(1);
+    void setBlackjackChallenger(Player blackjackChallenger) {
+        Card heartQueen = new Card(Shape.HEART, Number.QUEEN);
+        Card heartAce = new Card(Shape.HEART, Number.ACE);
+
+        blackjackChallenger.pickStartCards(heartQueen, heartAce);
+    }
+
+    void setLowPointChallenger(Player lowPointChallenger) {
+        Card diamondTwo = new Card(Shape.DIAMOND, Number.TWO);
+        Card diamondEight = new Card(Shape.DIAMOND, Number.EIGHT);
+
+        lowPointChallenger.pickStartCards(diamondTwo, diamondEight);
+    }
+
+    @Nested
+    @DisplayName("딜러가 bust 라면")
+    class DealerBust {
+
+        @BeforeEach
+        void setup() {
+            setPlayers();
+            setDealer();
+            setResult();
+        }
+
+        void setDealer() {
+            Player dealer = players.getDealer();
+
+            Card spadeKing = new Card(Shape.SPADE, Number.KING);
+            Card spadeFive = new Card(Shape.SPADE, Number.FIVE);
+            Card spadeJack = new Card(Shape.SPADE, Number.JACK);
+
+            dealer.pickStartCards(spadeKing, spadeFive);
+            dealer.pick(spadeJack);
+        }
+
+        void setResult() {
+            result = Result.from(players);
+        }
+
+        @Test
+        @DisplayName("bust인 도전자는 딜러와 비긴다")
+        void busted_challenger_draw_with_dealer() {
+            Player bustedChallenger = players.getChallengers().get(0);
+
+            assertThat(result.getChallengerResult(bustedChallenger)).isEqualTo(Rank.DRAW);
+        }
+
+        @Test
+        @DisplayName("blackjack인 도전자는 딜러를 이긴다")
+        void blackjack_challenger_win_dealer() {
+            Player blackjackChallenger = players.getChallengers().get(1);
+
+            assertThat(result.getChallengerResult(blackjackChallenger)).isEqualTo(Rank.WIN);
+        }
+
+        @Test
+        @DisplayName("작은 점수를 획득한 도전자는 딜러를 이긴다")
+        void low_point_challenger_win_dealer() {
+            Player lowPointChallenger = players.getChallengers().get(2);
+
+            assertThat(result.getChallengerResult(lowPointChallenger)).isEqualTo(Rank.WIN);
+        }
+
+        @Test
+        @DisplayName("딜러는 1무 2패 이다")
+        void dealer_result() {
+            assertThat(result.getDealerWinCount()).isZero();
+            assertThat(result.getDealerDrawCount()).isEqualTo(1);
+            assertThat(result.getDealerLoseCount()).isEqualTo(2);
+        }
+    }
+
+    @Nested
+    @DisplayName("딜러가 19점 이라면")
+    class DealerPointIsTwenty {
+
+        @BeforeEach
+        void setup() {
+            setPlayers();
+            setDealer();
+            setResult();
+        }
+
+        void setDealer() {
+            Player dealer = players.getDealer();
+
+            Card spadeKing = new Card(Shape.SPADE, Number.KING);
+            Card spadeNine = new Card(Shape.SPADE, Number.NINE);
+
+            dealer.pickStartCards(spadeKing, spadeNine);
+        }
+
+        void setResult() {
+            result = Result.from(players);
+        }
+
+        @Test
+        @DisplayName("bust인 도전자는 딜러에게 진다")
+        void busted_challenger_draw_with_dealer() {
+            Player bustedChallenger = players.getChallengers().get(0);
+
+            assertThat(result.getChallengerResult(bustedChallenger)).isEqualTo(Rank.LOSE);
+        }
+
+        @Test
+        @DisplayName("blackjack인 도전자는 딜러를 이긴다")
+        void blackjack_challenger_win_dealer() {
+            Player blackjackChallenger = players.getChallengers().get(1);
+
+            assertThat(result.getChallengerResult(blackjackChallenger)).isEqualTo(Rank.WIN);
+        }
+
+        @Test
+        @DisplayName("작은 점수를 획득한 도전자는 딜러에게 진다")
+        void low_point_challenger_win_dealer() {
+            Player lowPointChallenger = players.getChallengers().get(2);
+
+            assertThat(result.getChallengerResult(lowPointChallenger)).isEqualTo(Rank.LOSE);
+        }
+
+        @Test
+        @DisplayName("같은 점수의 도전자는 딜러와 비긴다")
+        void draw_with_same_score() {
+            Player sameScoreChallenger = players.getChallengers().get(2);
+            Card diamondNine = new Card(Shape.DIAMOND, Number.NINE);
+            sameScoreChallenger.pick(diamondNine);
+            result = Result.from(players);
+
+            assertThat(result.getChallengerResult(sameScoreChallenger)).isEqualTo(Rank.DRAW);
+            assertThat(result.getDealerDrawCount()).isEqualTo(1);
+        }
+
+        @Test
+        @DisplayName("딜러는 2승 1패 이다")
+        void dealer_result() {
+            assertThat(result.getDealerWinCount()).isEqualTo(2);
+            assertThat(result.getDealerDrawCount()).isZero();
+            assertThat(result.getDealerLoseCount()).isEqualTo(1);
+        }
     }
 }
