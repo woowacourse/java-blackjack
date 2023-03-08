@@ -23,6 +23,10 @@ public abstract class Participant {
         return cards.isNotEmpty();
     }
 
+    public boolean canReceiveCard() {
+        return Score.of(cards).isStand();
+    }
+
     public Score getScore() {
         return Score.of(cards);
     }
