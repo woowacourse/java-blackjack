@@ -18,18 +18,6 @@ public class BattingMoney {
         return amount;
     }
 
-    public BattingMoney plus(final BattingMoney battingMoney) {
-        return new BattingMoney(amount + battingMoney.amount);
-    }
-
-    public BattingMoney minus(final BattingMoney battingMoney) {
-        return new BattingMoney(amount - battingMoney.amount);
-    }
-
-    public BattingMoney times(final double times) {
-        return new BattingMoney(amount * times);
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
