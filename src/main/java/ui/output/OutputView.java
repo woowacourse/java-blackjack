@@ -5,7 +5,6 @@ import model.user.Dealer;
 import model.user.Hand;
 import model.user.Participants;
 import model.user.Player;
-import model.user.Score;
 
 import java.util.List;
 
@@ -83,38 +82,13 @@ public class OutputView {
         );
     }
 
-    public static void printResult(final Participants participants, final int dealerCardTotalValue) {
-        List<Score> dealerResult = participants.getFinalResult();
-
-        int dealerWinCount = getDealerScoreCount(dealerResult, Score.LOSE);
-        int dealerLoseCount = getDealerScoreCount(dealerResult, Score.WIN);
-        int dealerTieCount = getDealerScoreCount(dealerResult, Score.TIE);
+    public static void printGameResult(Participants participants) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println("딜러: " + participants.getDealerProfit());
 
         List<Player> players = participants.getPlayers();
-
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.println(getDealerResultForm(dealerWinCount, dealerLoseCount, dealerTieCount) + System.lineSeparator());
-        printPlayersResult(dealerCardTotalValue, players);
-    }
-
-    private static void printPlayersResult(final int dealerCardTotalValue, final List<Player> players) {
         for (Player player : players) {
-            Score score = player.judgeResult(dealerCardTotalValue);
-            System.out.printf("%s: %s\n", player.getName(), score.getName());
+            System.out.println(player.getName() + ": " + player.getMoney());
         }
     }
-
-    private static String getDealerResultForm(final int dealerWinCount, final int dealerLoseCount, final int dealerTieCount) {
-        if (dealerTieCount == 0) {
-            return String.format("딜러: %d승 %d패", dealerWinCount, dealerLoseCount);
-        }
-        return String.format("딜러: %d승 %d패 %d무", dealerWinCount, dealerLoseCount, dealerTieCount);
-    }
-
-    private static int getDealerScoreCount(final List<Score> dealerResult, final Score score) {
-        return (int) dealerResult.stream()
-                .filter(result -> result == score)
-                .count();
-    }
-
 }

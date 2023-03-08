@@ -17,13 +17,24 @@ public class BlackJackController {
         final Participants participants = getParticipants();
         final Dealer dealer = participants.getDealer();
 
+        proceed(deck, participants, dealer);
+
+        OutputView.printScoreBoard(participants);
+        OutputView.printGameResult(participants);
+    }
+
+    private Participants getParticipants() {
+        List<Player> players = InputView.getPlayersName().stream()
+                .map(playerName -> Player.from(playerName, InputView.getBatingMoney(playerName)))
+                .collect(Collectors.toList());
+        return Participants.from(players);
+    }
+
+    private void proceed(Deck deck, Participants participants, Dealer dealer) {
         divideFirstCard(deck, participants);
         OutputView.printFirstCardStatus(participants);
         divideCard(deck, participants);
         divideCardForDealer(deck, dealer);
-
-        OutputView.printScoreBoard(participants);
-        OutputView.printResult(participants, dealer.getTotalValue());
     }
 
     private void divideCardForDealer(Deck deck, Dealer dealer) {
@@ -58,13 +69,6 @@ public class BlackJackController {
     private void divideFirstCard(Deck deck, Participants participants) {
         OutputView.printDivideTwoCard(participants.getPlayers());
         participants.receiveInitialCards(deck);
-    }
-
-    private Participants getParticipants() {
-        List<Player> players = InputView.getPlayersName().stream()
-                .map(playerName -> Player.from(playerName, InputView.getBatingMoney(playerName)))
-                .collect(Collectors.toList());
-        return Participants.from(players);
     }
 
 }

@@ -5,6 +5,7 @@ import model.card.Deck;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.util.List;
 import static model.card.Shape.CLOVER;
 import static model.card.Shape.DIAMOND;
 import static model.card.Shape.SPADE;
+import static model.card.Value.ACE;
 import static model.card.Value.FIVE;
 import static model.card.Value.FOUR;
 import static model.card.Value.JACK;
@@ -109,6 +111,25 @@ class ParticipantsTest {
         assertAll(
                 () -> assertThat(bebe.getHand().getCards()).hasSize(2),
                 () -> assertThat(dealer.getHand().getCards()).hasSize(2)
+        );
+    }
+
+    @DisplayName("게임의 결과를 계산해 딜러의 수익을 구한다.")
+    @Test
+    void getDealerProfit() {
+        // given
+        dealer.receiveCard(new Card(SPADE, FIVE));
+        bebe.receiveCard(new Card(SPADE, FOUR));
+
+        // when, then
+        assertAll(
+                () -> Assertions.assertThat(participants.getDealerProfit())
+                        .isEqualTo(1000),
+                () -> {
+                    bebe.receiveCard(new Card(CLOVER, ACE));
+                    Assertions.assertThat(participants.getDealerProfit())
+                            .isEqualTo(-1000);
+                }
         );
     }
 }

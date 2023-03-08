@@ -35,6 +35,29 @@ public class Participants {
         dealer.receiveInitialCards(deck);
     }
 
+    public int getDealerProfit() {
+        List<Score> finalResult = getFinalResult();
+        int dealerMoney = 0;
+        for (int i = 0, size = finalResult.size(); i < size; i++) {
+            Player player = players.get(i);
+            Score score = finalResult.get(i);
+            dealerMoney = calculateUserMoney(dealerMoney, player, score);
+        }
+        return dealerMoney;
+    }
+
+    private static int calculateUserMoney(int dealerMoney, Player player, Score score) {
+        if (score == Score.WIN) {
+            dealerMoney -= player.getMoney();
+            player.lose();
+        }
+        if (score == Score.LOSE){
+            dealerMoney += player.getMoney();
+        }
+        return dealerMoney;
+    }
+
+
     public List<Player> getPlayers() {
         return this.players;
     }
