@@ -1,6 +1,8 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
+import blackjack.dto.HandResult;
+import blackjack.dto.HandStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,8 +44,14 @@ public abstract class Participant {
         return name;
     }
 
-    public List<Card> getCards() {
+    public List<Card> cards() {
         return hand.cards();
+    }
+
+    public abstract HandStatus toHandStatus();
+
+    public HandResult toHandResult() {
+        return new HandResult(getName(), cards(), computeCardsScore());
     }
 
     public abstract boolean isAvailable();

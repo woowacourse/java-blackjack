@@ -1,15 +1,17 @@
 package blackjack.domain.participants;
 
+import static blackjack.domain.card.Denomination.JACK;
 import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.SIX;
 import static blackjack.domain.card.Suit.CLUB;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.result.JudgeResult;
+import blackjack.dto.HandStatus;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -24,14 +26,6 @@ class DealerTest {
     @BeforeEach
     void setUpDealer() {
         dealer = new Dealer("딜러");
-    }
-
-    @DisplayName("카드를 가지고 있지 않을 때 첫번째 카드를 요청하면 예외를 발생한다.")
-    @Test
-    void should_ThrowException_When_OpenFirstCardFromEmptyCards() {
-        assertThatThrownBy(() -> dealer.openFirstCard())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("딜러가 아직 카드를 가지고 있지 않습니다.");
     }
 
     @DisplayName("딜러의 카드 합이 17 미만이면 참을 반환한다.")
@@ -58,9 +52,25 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(CLUB, SEVEN));
 
-        Player player = new Player("pobi");
+        final Player player = new Player("pobi");
         player.take(new Card(SPADE, QUEEN));
         player.take(new Card(CLUB, SIX));
         assertThat(dealer.judge(player)).isEqualTo(JudgeResult.LOSE);
     }
+
+
+    @DisplayName("딜러는 카드 오픈 시 첫 번째 카드 상태만 확인한다.")
+    @Test
+    void should_OpenOnlyFirstCard_When_DealerOpenHandStatus() {
+        final Card card = new Card(SPADE, JACK);
+        final Participant dealer = new Dealer("딜러");
+        dealer.take(card);
+
+        final HandStatus status = dealer.toHandStatus();
+        final List<Card> openedCards = status.getCards();
+
+        assertThat(openedCards).containsExactly(card);
+    }
+
+    // TODO isAvaliable 테스트
 }

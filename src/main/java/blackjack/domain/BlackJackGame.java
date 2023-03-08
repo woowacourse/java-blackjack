@@ -4,11 +4,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
-import blackjack.domain.result.FinalCards;
+import blackjack.dto.HandResult;
+import blackjack.dto.HandStatus;
 import blackjack.dto.TotalGameResult;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
 
@@ -47,18 +47,18 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public Map<String, List<Card>> openHandOutCards() {
+    public List<HandStatus> openHandStatuses() {
         final Dealer dealer = participants.dealer();
-        final Map<String, List<Card>> cardsByParticipants = new LinkedHashMap<>();
-        cardsByParticipants.put(dealer.getName(), List.of(dealer.openFirstCard()));
+        final List<HandStatus> handStatuses = new ArrayList<>();
+        handStatuses.add(dealer.toHandStatus());
         participants.players()
-                .forEach(player -> cardsByParticipants.put(player.getName(), player.getCards()));
-        return cardsByParticipants;
+                .forEach(player -> handStatuses.add(player.toHandStatus()));
+        return handStatuses;
     }
 
     public List<Card> openCardsByName(final String participantName) {
         final Participant participant = participants.findParticipantByName(participantName);
-        return participant.getCards();
+        return participant.cards();
     }
 
     public boolean isAvailable(final String participantName) {
@@ -66,13 +66,12 @@ public class BlackJackGame {
         return participant.isAvailable();
     }
 
-    public Map<String, FinalCards> openAllFinalCards() {
-        final Map<String, FinalCards> finalCardsByPlayerName = new LinkedHashMap<>();
+    public List<HandResult> openHandResults() {
         final Dealer dealer = participants.dealer();
-        finalCardsByPlayerName.put(dealer.getName(), FinalCards.of(dealer));
-        participants.players()
-                .forEach(player -> finalCardsByPlayerName.put(player.getName(), FinalCards.of(player)));
-        return finalCardsByPlayerName;
+        final List<HandResult> handResults = new ArrayList<>();
+        handResults.add(dealer.toHandResult());
+        participants.players().forEach(player -> handResults.add(player.toHandResult()));
+        return handResults;
     }
 
     public TotalGameResult computeTotalGameResult() {

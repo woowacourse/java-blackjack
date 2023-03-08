@@ -20,6 +20,7 @@ public class Hand {
     }
 
     public int sumScore() {
+        validateStatus();
         final int sum = cards.stream()
                 .mapToInt(Card::getDenominationValue)
                 .sum();
@@ -49,6 +50,14 @@ public class Hand {
     }
 
     public List<Card> cards() {
+        validateStatus();
         return new ArrayList<>(cards);
+    }
+
+
+    private void validateStatus() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 존재하지 않는 핸드입니다.");
+        }
     }
 }

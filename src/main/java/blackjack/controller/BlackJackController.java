@@ -2,11 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.card.Card;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
 
@@ -16,7 +14,7 @@ public class BlackJackController {
     public void run() {
         final List<String> playerNames = enrollPlayerNames();
         initializeGame(playerNames);
-        startGame();
+        startGame(playerNames);
         hitOrStayForAvailablePlayers(playerNames);
         hitUntilDealerAvailable();
         endGame();
@@ -31,10 +29,9 @@ public class BlackJackController {
         blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DealerName, playerNames);
     }
 
-    private void startGame() {
+    private void startGame(final List<String> playerNames) {
         blackJackGame.handOut();
-        final Map<String, List<Card>> allOpenedCardsByParticipantName = blackJackGame.openHandOutCards();
-        OutputView.showOpenCards(DealerName, allOpenedCardsByParticipantName);
+        OutputView.showOpenCards(DealerName, playerNames, blackJackGame.openHandStatuses());
     }
 
     private void hitOrStayForAvailablePlayers(final List<String> playerNames) {
@@ -64,7 +61,7 @@ public class BlackJackController {
     }
 
     private void endGame() {
-        OutputView.showAllFinalCards(blackJackGame.openAllFinalCards());
+        OutputView.showHandStatuses(blackJackGame.openHandResults());
         OutputView.showTotalGameResult(blackJackGame.computeTotalGameResult());
     }
 }

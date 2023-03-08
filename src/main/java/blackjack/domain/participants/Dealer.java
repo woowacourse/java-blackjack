@@ -1,7 +1,7 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.result.JudgeResult;
+import blackjack.dto.HandStatus;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +38,8 @@ public class Dealer extends Participant {
         return computeCardsScore() < CARD_TAKE_LIMIT;
     }
 
-    public Card openFirstCard() {
-        final List<Card> cards = getCards();
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("딜러가 아직 카드를 가지고 있지 않습니다.");
-        }
-        return getCards().get(INITIAL_DEALER_CARD_OPEN_INDEX);
+    @Override
+    public HandStatus toHandStatus() {
+        return new HandStatus(getName(), List.of(cards().get(INITIAL_DEALER_CARD_OPEN_INDEX)));
     }
 }
