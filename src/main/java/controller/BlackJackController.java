@@ -58,11 +58,11 @@ public class BlackJackController {
         while (canReceive) {
             final ReceiveCommand inputCommand = getInputMoreCardCommand(player);
             receiveCardForPlayer(deck, player, inputCommand);
-            canReceive = canPlayerRecieveCard(player, inputCommand);
+            canReceive = canPlayerReceiveCard(player, inputCommand);
         }
     }
 
-    private boolean canPlayerRecieveCard(final Player player, final ReceiveCommand receiveCommand) {
+    private boolean canPlayerReceiveCard(final Player player, final ReceiveCommand receiveCommand) {
         return player.canReceiveCard() && ReceiveCommand.isHit(receiveCommand);
     }
 
