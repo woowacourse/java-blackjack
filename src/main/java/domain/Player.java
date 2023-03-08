@@ -43,6 +43,4 @@ public class Player implements Gambler {
     public boolean isBustedGambler() {
         return this.cards.isBusted(cards.calculateScore());
     }
-
-
 }

@@ -24,6 +24,7 @@ public class OutputView {
     private static final String COLON = ": ";
     private static final String NEW_LINE = "\n";
     private static final String DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final int PLAYER_WIN = 1;
 
     private OutputView() {
     }
@@ -120,7 +121,7 @@ public class OutputView {
     }
 
     public static String resolveOutcome(int winCount) {
-        if (winCount == 1) {
+        if (winCount == PLAYER_WIN) {
             return WIN;
         }
         return LOSE;

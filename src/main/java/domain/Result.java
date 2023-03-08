@@ -1,4 +1,4 @@
-package game;
+package domain;
 
 import domain.Dealer;
 import domain.Gambler;

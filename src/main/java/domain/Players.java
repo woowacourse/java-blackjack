@@ -13,9 +13,24 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
+    public Players(List<Player> players) {
+        List<String> playerNames = getPlayerNames(players);
         validatePlayers(playerNames);
-        this.players = createPlayers(playerNames);
+        this.players = players;
+    }
+//
+//    public Players(List<String> playerNames) {
+//        validatePlayers(playerNames);
+//        this.players = createPlayers(playerNames);
+//    }
+
+    private List<String> getPlayerNames(List<Player> players) {
+        List<String> playerNames = new ArrayList<>();
+
+        for(Player player : players){
+            playerNames.add(player.getName());
+        }
+        return playerNames;
     }
 
     private void validatePlayers(List<String> playerNames) {
