@@ -1,5 +1,6 @@
 package view;
 
+import common.ExecuteContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,11 +19,14 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> inputNames() {
-        System.out.println(INPUT_NAMES_REQUEST_MESSAGE);
-        final String input = scanner.nextLine().replace(" ", "");
-        checkBlank(input);
-        return Arrays.stream(input.split(DELIMITER))
-            .collect(Collectors.toList());
+        return ExecuteContext.workWithExecuteStrategy(() -> {
+                System.out.println(INPUT_NAMES_REQUEST_MESSAGE);
+                final String input = scanner.nextLine().replace(" ", "");
+                checkBlank(input);
+                return Arrays.stream(input.split(DELIMITER))
+                    .collect(Collectors.toList());
+            }
+        );
     }
 
     private static void checkBlank(final String input) {
@@ -32,10 +36,13 @@ public class InputView {
     }
 
     public static boolean inputCardIntent(final String name) {
-        System.out.printf(NEW_LINE + INPUT_CARD_INTENT_REQUEST_MESSAGE + NEW_LINE, name);
-        final String input = scanner.nextLine();
-        checkLetter(input, YES, NO);
-        return input.equals(YES);
+        return ExecuteContext.workWithExecuteStrategy(() -> {
+                System.out.printf(NEW_LINE + INPUT_CARD_INTENT_REQUEST_MESSAGE + NEW_LINE, name);
+                final String input = scanner.nextLine();
+                checkLetter(input, YES, NO);
+                return input.equals(YES);
+            }
+        );
     }
 
     private static void checkLetter(final String input, final String... expectedLetters) {

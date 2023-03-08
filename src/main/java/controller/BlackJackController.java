@@ -1,6 +1,5 @@
 package controller;
 
-import common.ExecuteContext;
 import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
@@ -25,7 +24,7 @@ public class BlackJackController {
 
     public void play() {
         final List<Player> players = getPlayers();
-        final Dealer dealer = new Dealer(Cards.makeEmptyCards());
+        final Dealer dealer = new Dealer();
         giveInitialCards(dealer, players);
         getPlayerAdditionalCard(players);
         getDealerAdditionalCard(dealer);
@@ -34,12 +33,10 @@ public class BlackJackController {
     }
 
     private List<Player> getPlayers() {
-        return ExecuteContext.workWithExecuteStrategy(() -> {
-            final List<String> names = InputView.inputNames();
-            return names.stream()
-                .map(name -> new Player(Cards.makeEmptyCards(), name))
-                .collect(Collectors.toList());
-        });
+        final List<String> names = InputView.inputNames();
+        return names.stream()
+            .map(name -> new Player(Cards.makeEmptyCards(), name))
+            .collect(Collectors.toList());
     }
 
     private void giveInitialCards(final Dealer dealer, final List<Player> players) {
@@ -61,7 +58,7 @@ public class BlackJackController {
     }
 
     private boolean getIntentReceiveCard(final Player player) {
-        return ExecuteContext.workWithExecuteStrategy(() -> InputView.inputCardIntent(player.getName()));
+        return InputView.inputCardIntent(player.getName());
     }
 
     private boolean giveCard(final Player player) {
