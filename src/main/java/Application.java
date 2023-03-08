@@ -18,7 +18,7 @@ public class Application {
         Application application = new Application();
         try {
             application.run();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             OutputView.printError(e);
         }
     }
