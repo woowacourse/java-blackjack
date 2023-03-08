@@ -18,6 +18,7 @@ public class OutputView {
     private static final String CARD_RESULT_MESSAGE_FORMAT = CARD_INFO_MESSAGE_FORMAT + " - 결과: %d";
     private static final String WINNING_RESULT_MESSAGE_FORMAT = "%s: %s";
     private static final String WINNING_RESULT_INFO_MESSAGE = "## 최종 승패";
+    private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
 
     public void printPlayerNameRequestMessage() {
@@ -36,12 +37,19 @@ public class OutputView {
     }
 
     public void printCards(HoldingCards holdingCards) {
-        System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, holdingCards.getName()
-                , String.join(DELIMITER,ViewRenderer.renderCardsToString(holdingCards.getCards()))));
+        System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, dealerNameConvertor(holdingCards.getName())
+                , String.join(DELIMITER, ViewRenderer.renderCardsToString(holdingCards.getCards()))));
+    }
+
+    private String dealerNameConvertor(final String name) {
+        if (name.equals(Dealer.DEALER_NAME_CODE)) {
+            return DEALER_NAME;
+        }
+        return name;
     }
 
     private void printInitialStatusInfoMessage(List<String> playerNames) {
-        System.out.println(String.format(INITIAL_STATUS_INFO_MESSAGE_FORMAT, Dealer.DEALER_NAME_CODE
+        System.out.println(String.format(INITIAL_STATUS_INFO_MESSAGE_FORMAT, DEALER_NAME
                 , String.join(DELIMITER, playerNames)));
     }
 
@@ -56,7 +64,7 @@ public class OutputView {
     public void printCarAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
         for (CardAndScoreResult result : cardAndScoreResult) {
             System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
-                    result.getName(), String.join(DELIMITER, ViewRenderer.renderCardsToString(result.getCards())),
+                    dealerNameConvertor(result.getName()), String.join(DELIMITER, ViewRenderer.renderCardsToString(result.getCards())),
                     result.getScoreValue()));
         }
     }
@@ -64,7 +72,7 @@ public class OutputView {
     public void printFinalResult(final List<FinalResult> finalResults) {
         System.out.println(WINNING_RESULT_INFO_MESSAGE);
         for (FinalResult finalResult : finalResults) {
-            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, finalResult.getName(),
+            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, dealerNameConvertor(finalResult.getName()),
                     ViewRenderer.renderFinalResult(finalResult)));
         }
     }
