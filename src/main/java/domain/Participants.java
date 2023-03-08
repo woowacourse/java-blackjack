@@ -1,82 +1,54 @@
 package domain;
 
 import domain.user.Dealer;
-import domain.user.Participant;
+import domain.user.Playable;
+import domain.user.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class Participants {
-
-    private final Map<Participant, GameStatus> participantStatuses = new LinkedHashMap<>();
-
-    private Participants(List<Participant> participants) {
-        initializeParticipantStatues(participants);
+public class Participants implements Iterable<Playable> {
+    
+    private final Dealer dealer;
+    private final List<Player> players;
+    
+    private Participants(final Dealer dealer, final List<Player> players) {
+        this.dealer = dealer;
+        this.players = players;
     }
-
-    private void initializeParticipantStatues(List<Participant> participants) {
-        participants.forEach(
-            (participant) -> participantStatuses.put(participant, new GameStatus(ParticipantStatus.NOT_BUST, 0)));
-        participantStatuses.put(new Dealer(), new GameStatus(ParticipantStatus.NOT_BUST, 0));
+    
+    public static Participants of(final String participantNames) {
+        String[] names = participantNames.split(",");
+        List<Player> players = Arrays.stream(names)
+                .map(Player::new)
+                .collect(Collectors.toList());
+        return new Participants(new Dealer(), players);
     }
-
-    public static Participants of(String participantNames) {
-        String[] split = participantNames.split(",");
-        return new Participants(Arrays.stream(split).map(Participant::new).collect(Collectors.toList()));
+    
+    public Dealer getDealer() {
+        return this.dealer;
     }
-
-    public void update(Participant participant) {
-        int score = participant.calculateScore();
-        ParticipantStatus statusByScore = getStatusByScore(score);
-        if (participant.hasAce() && score == 11) {
-            participantStatuses.put(participant, new GameStatus(ParticipantStatus.BLACK_JACK, 21));
-            return;
-        }
-        GameStatus prevGameStatus = participantStatuses.get(participant);
-        GameStatus newGameStatus = new GameStatus(statusByScore, score);
-        if (prevGameStatus.equals(newGameStatus)) {
-            newGameStatus = new GameStatus(ParticipantStatus.STAND, score);
-        }
-        participantStatuses.put(participant, newGameStatus);
+    
+    public List<Player> getPlayers() {
+        return new ArrayList<Player>(this.players);
     }
-
-    public GameStatus getGameStatusByParticipant(Participant participant) {
-        return participantStatuses.get(participant);
+    
+    @Override
+    public Iterator<Playable> iterator() {
+        return this.getParticipants().iterator();
     }
-
-    public ParticipantStatus getStatusByScore(int score) {
-        if (score > 21) {
-            return ParticipantStatus.BUST;
-        }
-        if (score == 21) {
-            return ParticipantStatus.BLACK_JACK;
-        }
-        return ParticipantStatus.NOT_BUST;
+    
+    private List<Playable> getParticipants() {
+        ArrayList<Playable> participants = new ArrayList<>();
+        participants.add(this.dealer);
+        participants.addAll(this.players);
+        return participants;
     }
-
-    public List<Participant> getAllParticipantsDealerInLastIndex() {
-        return new ArrayList<>(participantStatuses.keySet());
-    }
-
-    public Participant getCurrentParticipant() {
-        Optional<Entry<Participant, GameStatus>> currentParticipantEntry = participantStatuses.entrySet()
-            .stream()
-            .filter((entry) -> entry.getValue().isAbleToHit())
-            .findFirst();
-        if (currentParticipantEntry.isEmpty()) {
-            throw new IllegalStateException();
-        }
-        return currentParticipantEntry.get().getKey();
-    }
-
-    public GameResult compareWithDealer(Participant participant) {
-        GameStatus dealerGameStatus = participantStatuses.get(new Dealer());
-        GameStatus playerGameStatus = participantStatuses.get(participant);
-        return GameResult.from(playerGameStatus.compareTo(dealerGameStatus));
+    
+    public Stream<Playable> stream() {
+        return this.getParticipants().stream();
     }
 }
