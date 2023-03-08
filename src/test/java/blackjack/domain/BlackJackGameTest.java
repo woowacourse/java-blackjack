@@ -43,12 +43,18 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("canPick()에 대한 테스트")
-    void can_pick() {
+    @DisplayName("bust가 아닌 경우에 카드를 뽑을 수 있다")
+    void can_pick_when_not_bust() {
         Player ditoo = blackJackGame.getChallengers().get(0);
-        Score holdingCardsPoint = ditoo.getTotalPoint();
 
         assertThat(blackJackGame.canPick(ditoo)).isTrue();
+    }
+
+    @Test
+    @DisplayName("bust인 경우에 카드를 뽑을 수 없다")
+    void can_not_pick_when_bust() {
+        Player ditoo = blackJackGame.getChallengers().get(0);
+        Score holdingCardsPoint = ditoo.getTotalPoint();
 
         while (!holdingCardsPoint.isBust()) {
             blackJackGame.pick(ditoo);
@@ -59,7 +65,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("getDealer()에 대한 테스트")
+    @DisplayName("딜러만 선택하는 기능에 대한 테스트")
     void get_dealer() {
         Player dealer = blackJackGame.getDealer();
 
@@ -67,7 +73,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("getChallengers()에 대한 테스트")
+    @DisplayName("도전자만 선택하는 기능 대한 테스트")
     void get_challengers() {
         List<Player> challengers = blackJackGame.getChallengers();
 
