@@ -18,18 +18,10 @@ public class CardDeck {
 
     public static CardDeck create() {
         List<Card> cards = Arrays.stream(Shape.values())
-                .map(CardDeck::makeCardsOfSameShape)
-                .flatMap(List::stream)
+                .flatMap(shape ->
+                        Arrays.stream(Number.values()).map(number -> new Card(shape, number)))
                 .collect(Collectors.toList());
         return new CardDeck(cards);
-    }
-
-    private static List<Card> makeCardsOfSameShape(final Shape shape) {
-        List<Card> cards = new ArrayList<>();
-        for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
-        }
-        return cards;
     }
 
     public void shuffle() {
