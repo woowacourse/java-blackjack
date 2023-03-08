@@ -20,4 +20,5 @@ public class ResultOfGame {
     public Map<ResultType, Integer> getDealerResult() {
         return new LinkedHashMap<>(dealerResult);
     }
+
 }

@@ -8,4 +8,5 @@ public enum Shape {
     DIAMOND,
     SPADE,
     CLOVER
+
 }

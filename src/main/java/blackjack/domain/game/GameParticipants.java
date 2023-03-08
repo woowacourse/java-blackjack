@@ -60,17 +60,15 @@ public class GameParticipants {
         return dealer.currentScore();
     }
 
-
     public Map<Map<String, List<Card>>, Integer> findPlayerStatusByName() {
         return players.findPlayerStatusByName();
     }
 
-
-    //
     public ResultOfGame findResultOfGame() {
         final Map<String, ResultType> playerResult = players.calculateResult(new GameReferee(dealer));
         final Map<ResultType, Integer> dealerResult = dealer.calculateResult(playerResult);
 
         return new ResultOfGame(playerResult, dealerResult);
     }
+
 }

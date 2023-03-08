@@ -5,6 +5,7 @@ import blackjack.domain.card.Symbol;
 import java.util.Arrays;
 
 public enum OutputViewSymbol {
+
     ACE("A", Symbol.ACE),
     TWO("2", Symbol.TWO),
     THREE("3", Symbol.THREE),
@@ -37,4 +38,5 @@ public enum OutputViewSymbol {
     public String getPrintSymbol() {
         return printSymbol;
     }
+
 }

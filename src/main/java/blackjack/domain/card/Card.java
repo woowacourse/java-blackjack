@@ -20,4 +20,5 @@ public class Card {
     public Shape getShape() {
         return shape;
     }
+
 }

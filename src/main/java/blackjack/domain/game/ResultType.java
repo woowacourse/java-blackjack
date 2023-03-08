@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 public enum ResultType {
+
     WIN,
     TIE,
     LOSE;
@@ -14,4 +15,5 @@ public enum ResultType {
         }
         return WIN;
     }
+
 }

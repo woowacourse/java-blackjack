@@ -27,4 +27,5 @@ public class Deck {
     public Card popCard() {
         return cards.remove();
     }
+
 }

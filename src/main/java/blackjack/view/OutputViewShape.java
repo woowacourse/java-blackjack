@@ -5,6 +5,7 @@ import blackjack.domain.card.Shape;
 import java.util.Arrays;
 
 public enum OutputViewShape {
+
     HEART("하트", Shape.HEART),
     DIAMOND("다이아몬드", Shape.DIAMOND),
     SPADE("스페이드", Shape.SPADE),
@@ -29,4 +30,5 @@ public enum OutputViewShape {
     public String getPrintShape() {
         return printShape;
     }
+
 }

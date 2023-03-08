@@ -5,6 +5,7 @@ import blackjack.domain.game.ResultType;
 import java.util.Arrays;
 
 public enum OutputViewResultType {
+
     WIN("승 ", ResultType.WIN),
     TIE("무 ", ResultType.TIE),
     LOSE("패 ", ResultType.LOSE);
@@ -27,4 +28,5 @@ public enum OutputViewResultType {
     public String getPrintResultType() {
         return printResultType;
     }
+    
 }

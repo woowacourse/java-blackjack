@@ -11,4 +11,5 @@ public class Application {
         final BlackJackController blackJackController = new BlackJackController(new InputView(), new OutputView());
         blackJackController.generate(new ShuffledDeckFactory());
     }
+
 }

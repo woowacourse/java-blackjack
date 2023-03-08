@@ -21,8 +21,10 @@ public class InputView {
     }
 
     public DrawCommand inputCommand(final String playerName) {
-        System.out.println(String.format(INPUT_COMMAND_MESSAGE, playerName));
+        System.out.printf((INPUT_COMMAND_MESSAGE) + "%n", playerName);
+        System.out.println();
         final String input = scanner.nextLine();
         return DrawCommand.from(input);
     }
+
 }

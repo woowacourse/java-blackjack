@@ -3,6 +3,7 @@ package blackjack.view;
 import java.util.Arrays;
 
 public enum DrawCommand {
+
     DRAW("y"),
     STAY("n");
     public final String command;
@@ -17,4 +18,5 @@ public enum DrawCommand {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y, n 만 입력 가능합니다"));
     }
+
 }
