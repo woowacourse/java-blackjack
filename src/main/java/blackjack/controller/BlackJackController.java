@@ -1,23 +1,24 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.BlackJackGame;
+import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.dto.DealerResultResponse;
 import blackjack.view.dto.DealerStateResponse;
 import blackjack.view.dto.ParticipantResponse;
-import blackjack.view.dto.PlayerResultResponse;
+import blackjack.view.dto.ParticipantResultResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-
-    private static final int TRUMP_COUNT = 1;
-    private static final int INITIAL_DRAW_COUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -28,73 +29,85 @@ public class BlackJackController {
     }
 
     public void run() {
+        final BlackJackGame blackJackGame = createBlackJackGame();
+        initialGame(blackJackGame);
+
+        drawCardsForPlayers(blackJackGame);
+        drawCardsForDealer(blackJackGame);
+
+        printResult(blackJackGame);
+    }
+
+    private BlackJackGame createBlackJackGame() {
         final Participants participants = new Participants(new Dealer(), gatherPlayers());
-        final Deck deck = Deck.createUsingTrump(TRUMP_COUNT);
-
-        dealCards(participants, deck);
-
-        drawCard(participants.getPlayers(), deck);
-        drawCard(participants.getDealer(), deck);
-
-        printResult(participants);
+        final Betting betting = makeBet(participants.getPlayers());
+        return new BlackJackGame(participants, betting);
     }
 
     private List<Player> gatherPlayers() {
-        final List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream()
+        return inputView.readPlayerNames()
+                .stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
 
-    private void dealCards(final Participants participants, final Deck deck) {
-        participants.drawCard(deck, INITIAL_DRAW_COUNT);
-
-        final ParticipantResponse dealerResponse = ParticipantResponse.hiddenForDealer(participants.getDealer());
-        final List<ParticipantResponse> playerResponse = getParticipantResponses(participants.getPlayers());
-
-        outputView.printDealCards(dealerResponse, playerResponse, INITIAL_DRAW_COUNT);
+    private Betting makeBet(final List<Player> players) {
+        final Map<Player, Profit> betting = new HashMap<>();
+        players.forEach(player -> betting.put(player, new Profit(inputView.readBetting(player.getName()))));
+        return new Betting(betting);
     }
 
-    private List<ParticipantResponse> getParticipantResponses(final List<? extends Participant> participants) {
+    private void initialGame(final BlackJackGame blackJackGame) {
+        blackJackGame.initialDraw();
+        final ParticipantResponse dealer = ParticipantResponse.hiddenForDealer(blackJackGame.getDealer());
+        final List<ParticipantResponse> players = createParticipantResponses(blackJackGame.getPlayers());
+        outputView.printDealCards(dealer, players, blackJackGame.getInitialDrawCount());
+    }
+
+    private List<ParticipantResponse> createParticipantResponses(final List<? extends Participant> participants) {
         return participants.stream()
                 .map(ParticipantResponse::from)
                 .collect(Collectors.toList());
     }
 
-    private void drawCard(final List<Player> players, final Deck deck) {
-        players.forEach(player -> drawCard(player, deck));
+    private void drawCardsForPlayers(final BlackJackGame blackJackGame) {
+        final List<Player> players = blackJackGame.getPlayers();
+        players.forEach(player -> drawCard(player, blackJackGame));
     }
 
-    private void drawCard(final Player player, final Deck deck) {
+    private void drawCard(final Player player, final BlackJackGame blackJackGame) {
         while (player.isDrawable() && inputView.readMoreDraw(player.getName())) {
-            player.drawCard(deck.draw());
-            outputView.printHandedCardsWithoutScore(ParticipantResponse.from(player));
+            blackJackGame.dealCard(player);
+            outputView.printCardsWithoutScore(ParticipantResponse.from(player));
         }
     }
 
-    private void drawCard(final Dealer dealer, final Deck deck) {
+    private void drawCardsForDealer(final BlackJackGame blackJackGame) {
+        final Dealer dealer = blackJackGame.getDealer();
         if (dealer.isDrawable()) {
-            dealer.drawCard(deck.draw());
+            blackJackGame.dealCard(dealer);
             outputView.printDealerDrawn(new DealerStateResponse(true, dealer.getMaximumDrawableScore()));
         }
+        blackJackGame.applyPlayersProfit();
     }
 
-    private void printResult(final Participants participants) {
-        final List<ParticipantResponse> participantResponses = getParticipantResponses(participants.getParticipants());
-        outputView.printHandedCardsWithScore(participantResponses);
-
-        final Dealer dealer = participants.getDealer();
-        final List<Player> players = participants.getPlayers();
-
-        final List<PlayerResultResponse> playerResults = getPlayerResults(dealer, players);
-        final DealerResultResponse dealerResult = DealerResultResponse.of(dealer, playerResults);
-
-        outputView.printFinalResult(dealerResult, playerResults);
+    private void printResult(final BlackJackGame blackJackGame) {
+        final List<ParticipantResponse> participants = createParticipantResponses(blackJackGame.getParticipants());
+        outputView.printCardsWithScore(participants);
+        outputView.printFinalResult(createParticipantResultResponses(blackJackGame));
     }
 
-    private List<PlayerResultResponse> getPlayerResults(final Dealer dealer, final List<Player> players) {
-        return players.stream()
-                .map(player -> PlayerResultResponse.of(dealer, player))
+    private List<ParticipantResultResponse> createParticipantResultResponses(final BlackJackGame blackJackGame) {
+        final List<ParticipantResultResponse> participants = new ArrayList<>();
+        participants.add(ParticipantResultResponse.forDealer(blackJackGame));
+        participants.addAll(createPlayerResultResponses(blackJackGame));
+        return participants;
+    }
+
+    private List<ParticipantResultResponse> createPlayerResultResponses(final BlackJackGame blackJackGame) {
+        return blackJackGame.getPlayers()
+                .stream()
+                .map(player -> ParticipantResultResponse.forPlayer(player, blackJackGame))
                 .collect(Collectors.toList());
     }
 }
