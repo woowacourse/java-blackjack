@@ -24,7 +24,7 @@ import domain.Number;
 import domain.Suit;
 import java.util.Map;
 
-public class Converter {
+public class PrintConverter {
 
     public static final Map<Number, String> NUMBER_MAP = Map.ofEntries(
         Map.entry(A, "A"), Map.entry(TWO, "2"), Map.entry(THREE, "3"),
