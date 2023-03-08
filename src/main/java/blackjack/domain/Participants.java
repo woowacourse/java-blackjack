@@ -29,13 +29,13 @@ public class Participants {
     }
 
     public void handInitialCards(Deck deck) {
-        handInitialCards(dealer, deck);
+        handInitialCardsToDealer(deck);
         players.handInitialCards(deck);
     }
 
-    private void handInitialCards(Participant participant, Deck deck) {
+    private void handInitialCardsToDealer(Deck deck) {
         for (int i = 0; i < INITIAL_HAND_OUT_COUNT; i++) {
-            participant.take(deck.draw());
+            dealer.take(deck.draw());
         }
     }
 

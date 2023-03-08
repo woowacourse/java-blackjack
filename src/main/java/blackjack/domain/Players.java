@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class Players {
 
+    private static final int INITIAL_HAND_OUT_COUNT = 2;
+
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -51,12 +53,12 @@ public class Players {
 
     public void handInitialCards(Deck deck) {
         for (Player player : players) {
-            handInitialCards(player, deck);
+            handInitialCardsToPlayer(player, deck);
         }
     }
 
-    private void handInitialCards(Player player, Deck deck) {
-        for (int i = 0; i < 2; i++) {
+    private void handInitialCardsToPlayer(Player player, Deck deck) {
+        for (int i = 0; i < INITIAL_HAND_OUT_COUNT; i++) {
             player.take(deck.draw());
         }
     }
