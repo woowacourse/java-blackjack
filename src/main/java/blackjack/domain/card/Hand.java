@@ -1,11 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.Score;
+
 import java.util.List;
 import java.util.Objects;
 
 public class Hand {
 
-    private static final int BLACKJACK_NUMBER = 21;
     private static final int ZERO = 0;
     private static final int ACE_NUMBER_DIFFERENCE = 10;
 
@@ -23,40 +24,38 @@ public class Hand {
         return cards;
     }
 
-    public int getScore() {
+    public Score getScore() {
         final int aceCount = getAceCardCount();
-        final int score = originalScore();
+        final Score score = originalScore();
 
         return calculateScore(aceCount, score);
     }
 
-    private int calculateScore(int aceCount, int score) {
+    private Score calculateScore(int aceCount, Score score) {
         if (isNeedDowngradeScoreAceCard(aceCount, score)) {
             return scoreWithDowngradeScoreAceCard(aceCount, score);
         }
         return score;
     }
 
-    private int originalScore() {
-        return cards.stream()
+    private Score originalScore() {
+        final int score = cards.stream()
                 .map(Card::getValue)
                 .reduce(ZERO, Integer::sum);
+
+        return new Score(score);
     }
 
-    private int scoreWithDowngradeScoreAceCard(int aceCount, int totalScore) {
+    private Score scoreWithDowngradeScoreAceCard(int aceCount, Score totalScore) {
         while (isNeedDowngradeScoreAceCard(aceCount, totalScore)) {
-            totalScore -= ACE_NUMBER_DIFFERENCE;
+            totalScore = totalScore.minus(ACE_NUMBER_DIFFERENCE);
             aceCount--;
         }
         return totalScore;
     }
 
-    private boolean isNeedDowngradeScoreAceCard(final int aceCount, final int totalScore) {
-        return isExistAceCard(aceCount) && isExceedBlackjackScore(totalScore);
-    }
-
-    private boolean isExceedBlackjackScore(final int totalScore) {
-        return totalScore > BLACKJACK_NUMBER;
+    private boolean isNeedDowngradeScoreAceCard(final int aceCount, final Score totalScore) {
+        return isExistAceCard(aceCount) && totalScore.isBust();
     }
 
     private boolean isExistAceCard(final int aceCount) {

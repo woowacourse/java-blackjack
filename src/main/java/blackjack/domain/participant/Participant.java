@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.game.Score;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +21,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public int getScore() {
+    public Score getScore() {
         return hand.getScore();
     }
 

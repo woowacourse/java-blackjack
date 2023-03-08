@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,14 +39,14 @@ public class HandTest {
         Hand cards = new Hand(new ArrayList<>());
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        int expectedValue = card1.getValue() + card2.getValue();
+        Score expected = new Score(21);
 
         // when
         cards.add(card1);
         cards.add(card2);
 
         // that
-        assertThat(expectedValue).isEqualTo(cards.getScore());
+        assertThat(cards.getScore()).isEqualTo(expected);
     }
 
     @Test
@@ -75,9 +76,10 @@ public class HandTest {
         // when
         cards.add(card1);
         cards.add(card2);
+        Score expected = new Score(12);
 
         // that
-        assertThat(cards.getScore()).isEqualTo(12);
+        assertThat(cards.getScore()).isEqualTo(expected);
     }
 
     @Test
@@ -89,13 +91,15 @@ public class HandTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
         Card card3 = new Card(Shape.CLOVER, Letter.ACE);
         Card card4 = new Card(Shape.CLOVER, Letter.NINE);
+
         // when
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
         cards.add(card4);
+        Score expected = new Score(21);
 
         // that
-        assertThat(cards.getScore()).isEqualTo(21);
+        assertThat(cards.getScore()).isEqualTo(expected);
     }
 }
