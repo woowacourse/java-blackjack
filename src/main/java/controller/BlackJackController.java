@@ -1,30 +1,27 @@
 package controller;
 
-import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.service.BlackJackResultMaker;
-import domain.service.CardDistributor;
+import domain.model.Players;
+import domain.service.BlackJackGame;
 import domain.vo.Result;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import view.InputView;
-import view.OutputView;
+import java.util.stream.IntStream;
+import view.IOView;
 
 public class BlackJackController {
 
-    private final CardDistributor cardDistributor;
-    private final BlackJackResultMaker blackJackResultMaker;
+    private final BlackJackGame blackJackGame;
+    private final IOView ioView;
 
-    public BlackJackController(final CardDistributor cardDistributor, final BlackJackResultMaker blackJackResultMaker) {
-        this.cardDistributor = cardDistributor;
-        this.blackJackResultMaker = blackJackResultMaker;
+    public BlackJackController(final BlackJackGame blackJackGame, final IOView ioView) {
+        this.blackJackGame = blackJackGame;
+        this.ioView = ioView;
     }
 
     public void play() {
-        final List<Player> players = getPlayers();
-        final Dealer dealer = new Dealer();
+        final Players players = getPlayers();
+        final Dealer dealer = Dealer.withEmptyCards();
         giveInitialCards(dealer, players);
         getPlayerAdditionalCard(players);
         getDealerAdditionalCard(dealer);
@@ -32,49 +29,48 @@ public class BlackJackController {
         printResult(dealer, players);
     }
 
-    private List<Player> getPlayers() {
-        final List<String> names = InputView.inputNames();
-        return names.stream()
-            .map(name -> new Player(Cards.makeEmptyCards(), name))
-            .collect(Collectors.toList());
+    private Players getPlayers() {
+        return Players.from(ioView.inputNames());
     }
 
-    private void giveInitialCards(final Dealer dealer, final List<Player> players) {
-        cardDistributor.giveInitCards(dealer);
-        cardDistributor.giveInitCards(players);
-        OutputView.printInitialCards(dealer, players);
+    private void giveInitialCards(final Dealer dealer, final Players players) {
+        blackJackGame.giveInitCards(dealer);
+        blackJackGame.giveInitCards(players);
+        ioView.printInitialCards(dealer, players);
     }
 
-    private void getPlayerAdditionalCard(final List<Player> players) {
-        players.forEach(this::getPlayerAdditionalCard);
+    private void getPlayerAdditionalCard(final Players players) {
+        IntStream.range(0, players.size())
+            .mapToObj(players::get)
+            .forEach(this::getPlayerAdditionalCard);
     }
 
     private void getPlayerAdditionalCard(final Player player) {
         while (player.canReceiveCard() && getIntentReceiveCard(player)) {
-            cardDistributor.giveCard(player);
-            OutputView.printCard(player);
+            blackJackGame.giveCard(player);
+            ioView.printCard(player);
         }
     }
 
     private boolean getIntentReceiveCard(final Player player) {
-        return InputView.inputCardIntent(player.getName());
+        return ioView.inputCardIntent(player.getName());
     }
 
     private void getDealerAdditionalCard(final Dealer dealer) {
         while (dealer.canReceiveCard()) {
-            OutputView.printDealerReceiveNotice();
-            cardDistributor.giveCard(dealer);
+            ioView.printDealerReceiveNotice();
+            blackJackGame.giveCard(dealer);
         }
     }
 
-    private void printTotalCardState(final Dealer dealer, final List<Player> players) {
-        OutputView.printTotalCardState(dealer, players);
+    private void printTotalCardState(final Dealer dealer, final Players players) {
+        ioView.printTotalCardState(dealer, players);
     }
 
-    private void printResult(final Dealer dealer, final List<Player> players) {
-        final Result dealerResult = blackJackResultMaker.makeDealerResult(dealer, players);
-        OutputView.printDealerResult(dealerResult);
-        final Map<Player, Result> playerResult = blackJackResultMaker.makePlayersResult(dealer, players);
-        OutputView.printResult(playerResult);
+    private void printResult(final Dealer dealer, final Players players) {
+        final Result dealerResult = blackJackGame.makeDealerResult(dealer, players);
+        ioView.printDealerResult(dealerResult);
+        final Map<Player, Result> playerResult = blackJackGame.makePlayersResult(dealer, players);
+        ioView.printResult(playerResult);
     }
 }
