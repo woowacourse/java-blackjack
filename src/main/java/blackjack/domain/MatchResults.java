@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MatchResults {
     private final List<ResultType> results;
@@ -15,9 +13,7 @@ public class MatchResults {
         this(List.of(results));
     }
 
-    public Map<ResultType, Integer> getResults() {
-        Map<ResultType, Integer> resultsCount = new LinkedHashMap<>();
-        results.forEach(result -> resultsCount.put(result, resultsCount.getOrDefault(result, 0) + 1));
-        return resultsCount;
+    public List<ResultType> getResults() {
+        return results;
     }
 }
