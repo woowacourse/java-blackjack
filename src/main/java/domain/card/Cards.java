@@ -32,6 +32,8 @@ public final class Cards {
     }
 
     public Card getCard() {
-        return cards.peekLast();
+        Card lastCard = cards.getLast();
+        cards.pollLast();
+        return lastCard;
     }
 }

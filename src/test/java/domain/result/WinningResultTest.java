@@ -54,7 +54,6 @@ class WinningResultTest {
     private Participants initializeParticipants() {
         List<String> names = Arrays.asList("깃짱", "이리내", "푸우", "카일");
         Cards cards = new Cards(new FixedCardsShuffler());
-
         Participants participants = new Participants(names, cards);
 
         gitJjang = participants.getPlayers().get(0); // K, K
