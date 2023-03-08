@@ -46,7 +46,6 @@ class UsersTest {
                     .hasMessage("플레이어의 이름은 5개까지만 입력해야 합니다.");
         }
 
-        //TODO : 내부의 상태를 검증하는 방법으로 테스트 유효성 확인
         @Test
         @DisplayName("조건을 만족하는 경우 정상적으로 Users가 생성된다.")
         void initialUsersSuccess() {
