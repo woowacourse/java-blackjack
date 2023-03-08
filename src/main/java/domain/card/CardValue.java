@@ -23,7 +23,7 @@ public enum CardValue {
         this.extraScore = extraScore;
     }
     public boolean isAce() {
-        return this.equals(ACE);
+        return this == ACE;
     }
 
     public int getScore() {

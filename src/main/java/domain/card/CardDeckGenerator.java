@@ -14,7 +14,7 @@ public class CardDeckGenerator {
 
     public static CardDeck create() {
         List<Card> cards = Arrays.stream(CardType.values())
-                .flatMap(cardType -> createCard(cardType))
+                .flatMap(CardDeckGenerator::createCard)
                 .collect(toList());
 
         return CardDeck.createShuffled(cards);
