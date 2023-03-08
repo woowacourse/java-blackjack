@@ -61,6 +61,6 @@ public class UsersTest {
 
         users.hitCardByName("hongo", new Card(Denomination.JACK, Suits.HEART));
         Player player = users.getPlayers().get(0);
-        assertThat(player.getScore()).isEqualTo(10);
+        assertThat(player.getScore()).isEqualTo(new Score(10));
     }
 }

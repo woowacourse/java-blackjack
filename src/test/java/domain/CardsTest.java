@@ -39,7 +39,7 @@ public class CardsTest {
     void getSumOfScores() {
         addCards(List.of(TWO, THREE));
 
-        assertThat(cards.getSumOfScores()).isEqualTo(5);
+        assertThat(cards.getSumOfScores()).isEqualTo(new Score(5));
     }
 
     @DisplayName("ACE가 존재할 경우, 점수 합에 10을 더한 점수가 21 이하인 경우 ACE를 11점으로 계산한다")
@@ -47,7 +47,7 @@ public class CardsTest {
     void aceIs11_IfSumOfScores21OrLess() {
         addCards(List.of(FOUR, SIX, ACE));
 
-        assertThat(cards.getSumOfScores()).isEqualTo(21);
+        assertThat(cards.getSumOfScores()).isEqualTo(new Score(21));
     }
 
     @DisplayName("ACE가 존재할 경우, 점수 합에 10을 더한 점수가 21을 넘으면 ACE를 1점으로 계산한다")
@@ -55,7 +55,7 @@ public class CardsTest {
     void aceIs1_IfSumOfScoresOver21() {
         addCards(List.of(FIVE, SIX, ACE));
 
-        assertThat(cards.getSumOfScores()).isEqualTo(12);
+        assertThat(cards.getSumOfScores()).isEqualTo(new Score(12));
     }
 
     @DisplayName("카드의 점수 합이 n점 이상인지 확인한다")
@@ -63,8 +63,8 @@ public class CardsTest {
     void checkScoreMoreThanN() {
         addCards(List.of(TWO, THREE));
 
-        assertThat(cards.isUnder(5)).isFalse();
-        assertThat(cards.isUnder(6)).isTrue();
+        assertThat(cards.isUnder(new Score(5))).isFalse();
+        assertThat(cards.isUnder(new Score(6))).isTrue();
     }
 
     private void addCards(List<Denomination> denominations) {

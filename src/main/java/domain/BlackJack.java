@@ -53,10 +53,10 @@ public class BlackJack {
     public Map<String, GameResult> calculatePlayerResults() {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
-        int dealerScore = dealer.getScore();
+        int dealerScore = dealer.getScore().value();
         Map<String, GameResult> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
-            playerResults.put(player.getName(), comparePlayerWithDealer(player.getScore(), dealerScore));
+            playerResults.put(player.getName(), comparePlayerWithDealer(player.getScore().value(), dealerScore));
         }
         return playerResults;
     }
@@ -100,7 +100,7 @@ public class BlackJack {
         List<Player> players = users.getPlayers();
         Map<String, Integer> playerToScore = new LinkedHashMap<>();
         for (Player player : players) {
-            playerToScore.put(player.getName(), player.getScore());
+            playerToScore.put(player.getName(), player.getScore().value());
         }
         return playerToScore;
     }
@@ -114,7 +114,7 @@ public class BlackJack {
     }
 
     public int getDealerScore() {
-        return users.getDealer().getScore();
+        return users.getDealer().getScore().value();
     }
 
     public boolean isHittableDealer() {

@@ -22,8 +22,8 @@ public enum Denomination {
         this.point = point;
     }
 
-    public int getScore() {
-        return score;
+    public Score getScore() {
+        return new Score(score);
     }
 
     public String getPoint() {

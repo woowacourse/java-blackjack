@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.Card;
 import domain.Cards;
+import domain.Score;
 import java.util.List;
 
 public abstract class User {
@@ -17,10 +18,12 @@ public abstract class User {
     }
 
     abstract public boolean isHittable();
+
     abstract public boolean isDealer();
+
     abstract public boolean isPlayer();
 
-    public int getScore() {
+    public Score getScore() {
         return cards.getSumOfScores();
     }
 }

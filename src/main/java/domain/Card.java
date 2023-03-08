@@ -12,7 +12,7 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return denomination.getScore();
     }
 

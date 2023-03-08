@@ -76,8 +76,8 @@ public class BlackJackTest {
         List<Player> players = users.getPlayers();
 
         Player player = players.get(0);
-        int oldScore = player.getScore();
+        int oldScore = player.getScore().value();
         blackJack.giveCard("hongo");
-        assertThat(player.getScore()).isGreaterThan(oldScore);
+        assertThat(player.getScore().value()).isGreaterThan(oldScore);
     }
 }
