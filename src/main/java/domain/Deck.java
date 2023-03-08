@@ -1,16 +1,17 @@
 package domain;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Deck {
 
-    private static final Queue<Card> DECK;
+    private static Queue<Card> DECK;
 
-    static {
+    public Deck() {
         DECK = createDeck();
-    }
-
-    private Deck() {
     }
 
     /*TODO: 중간 변수로 List가 있는 게 마음에 들지 않아요.

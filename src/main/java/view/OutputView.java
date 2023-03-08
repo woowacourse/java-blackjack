@@ -1,6 +1,10 @@
 package view;
 
-import domain.*;
+import domain.Card;
+import domain.Dealer;
+import domain.Gambler;
+import domain.Player;
+import domain.Players;
 
 import java.util.ArrayList;
 import java.util.List;

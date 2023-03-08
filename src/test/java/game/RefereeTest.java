@@ -1,6 +1,13 @@
 package game;
 
-import domain.*;
+import domain.Card;
+import domain.Cards;
+import domain.Dealer;
+import domain.Denomination;
+import domain.Gambler;
+import domain.Player;
+import domain.PlayerName;
+import domain.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +21,13 @@ class RefereeTest {
     void decideWinner_메서드로_승리한_Dealer의_value_증가() {
         //given
         Cards cards = new Cards(List.of(
-                        new Card(Suit.CLOVER, Denomination.TWO),
-                        new Card(Suit.CLOVER, Denomination.FIVE)));
+                new Card(Suit.CLOVER, Denomination.TWO),
+                new Card(Suit.CLOVER, Denomination.FIVE)));
         Player player = new Player(new PlayerName("judy"), cards);
         Dealer dealer = new Dealer(new Cards(List.of(new Card(Suit.CLOVER, Denomination.KING))));
 
         Map<Gambler, Integer> result = new LinkedHashMap<>();
-        result.put(dealer,0);
+        result.put(dealer, 0);
 
         //when
         Referee.decideWinner(player, dealer, result);

@@ -15,6 +15,7 @@ class DealerTest {
     @Test
     void 점수가_16이하면_카드를_뽑는다() {
         //given,when
+        new Deck();
         Dealer dealer = new Dealer(new Cards(new ArrayList<>()));
         int expected = 1;
         int actual = dealer.getCardsSize();

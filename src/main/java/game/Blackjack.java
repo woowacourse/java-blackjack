@@ -1,11 +1,8 @@
 package game;
 
 import domain.Dealer;
-import domain.Gambler;
 import domain.Player;
 import domain.Players;
-
-import java.util.Map;
 
 import static view.InputView.printErrorMessage;
 import static view.InputView.readIsHit;
@@ -78,7 +75,7 @@ public class Blackjack {
         printDealerHitMessage();
     }
 
-    public Result getResult(Players players, Dealer dealer){
-        return new Result(players,dealer);
+    public Result getResult(Players players, Dealer dealer) {
+        return new Result(players, dealer);
     }
 }

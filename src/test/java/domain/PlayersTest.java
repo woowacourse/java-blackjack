@@ -37,6 +37,7 @@ class PlayersTest {
     @Test
     void 올바른_입력이_들어왔을_때_잘_생성되는지_확인한다() {
         //given
+        new Deck();
         List<String> playerNames = List.of("judy", "kevin");
         Players players = new Players(playerNames);
 
@@ -51,6 +52,6 @@ class PlayersTest {
         }
 
         //then
-        Assertions.assertArrayEquals(expected,actual);
+        Assertions.assertArrayEquals(expected, actual);
     }
 }
