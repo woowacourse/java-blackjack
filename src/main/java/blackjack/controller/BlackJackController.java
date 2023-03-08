@@ -49,8 +49,7 @@ public class BlackJackController {
     private void dealCards(final Participants participants, final Deck deck) {
         participants.drawCard(deck, INITIAL_DRAW_COUNT);
 
-        final ParticipantResponse dealerResponse = ParticipantResponse
-                .hiddenForDealer(participants.getDealer(), INITIAL_DRAW_COUNT);
+        final ParticipantResponse dealerResponse = ParticipantResponse.hiddenForDealer(participants.getDealer());
         final List<ParticipantResponse> playerResponse = getParticipantResponses(participants.getPlayers());
 
         outputView.printDealCards(dealerResponse, playerResponse, INITIAL_DRAW_COUNT);

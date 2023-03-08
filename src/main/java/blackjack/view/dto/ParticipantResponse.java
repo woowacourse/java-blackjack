@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ParticipantResponse {
 
+    private static final int HIDDEN_SCORE = -1;
+
     private final String name;
     private final CardsResponse cardsResponse;
 
@@ -20,9 +22,9 @@ public class ParticipantResponse {
         return new ParticipantResponse(participant.getName(), cardsResponse);
     }
 
-    public static ParticipantResponse hiddenForDealer(final Dealer dealer, final int count) {
-        final List<Card> hiddenCards = dealer.getCards().subList(0, count - 1);
-        final CardsResponse cardsResponse = CardsResponse.of(-1, hiddenCards);
+    public static ParticipantResponse hiddenForDealer(final Dealer dealer) {
+        final List<Card> hiddenCards = dealer.getHiddenCards();
+        final CardsResponse cardsResponse = CardsResponse.of(HIDDEN_SCORE, hiddenCards);
         return new ParticipantResponse(dealer.getName(), cardsResponse);
     }
 

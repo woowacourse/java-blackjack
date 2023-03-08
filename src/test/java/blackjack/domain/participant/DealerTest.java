@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -177,5 +178,16 @@ class DealerTest {
                 assertThat(dealer.showResult(16)).isEqualTo(DRAW);
             }
         }
+    }
+
+    @Test
+    void 마지막_카드는_숨겨진_카드목록을_확인한다() {
+        final Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(ACE, HEART));
+        dealer.drawCard(new Card(FIVE, DIAMOND));
+
+        final List<Card> hiddenCards = dealer.getHiddenCards();
+
+        assertThat(hiddenCards).hasSize(1);
     }
 }

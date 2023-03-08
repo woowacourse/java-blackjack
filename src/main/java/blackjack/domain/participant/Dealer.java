@@ -1,5 +1,8 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import java.util.List;
+
 public class Dealer extends Participant {
 
     private static final String NAME = "딜러";
@@ -47,6 +50,10 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
         return Result.DRAW;
+    }
+
+    public List<Card> getHiddenCards() {
+        return getCards().subList(0, cards.count() - 1);
     }
 
     public int getMaximumDrawableScore() {
