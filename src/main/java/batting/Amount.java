@@ -29,12 +29,6 @@ public class Amount {
     }
 
     public int calculateRewardByResult(Result result) {
-        if (result.equals(Result.WIN)) {
-            return amount * 2;
-        }
-        if (result.equals(Result.LOSE)) {
-            return amount * -2;
-        }
-        return amount;
+        return result.getRate() * amount;
     }
 }
