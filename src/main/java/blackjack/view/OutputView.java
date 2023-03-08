@@ -21,9 +21,8 @@ public final class OutputView {
         String names = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(joining(", "));
-        int initCardCount = INIT_CARD_COUNT;
 
-        System.out.println(System.lineSeparator() + dealer.getName() + "와 " + names + "에게 " + initCardCount + "장을 나누었습니다." + System.lineSeparator());
+        System.out.println(System.lineSeparator() + dealer.getName() + "와 " + names + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다." + System.lineSeparator());
     }
 
     public static void printParticipantsInitCards(final Dealer dealer, final Players players) {
