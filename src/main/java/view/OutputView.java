@@ -6,6 +6,7 @@ import domain.card.CardPattern;
 import domain.participant.Participant;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import view.message.DrawCardCommandSelector;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
 
@@ -13,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
-import static controller.DrawCardCommand.CARD_DRAW_STOP;
 import static view.message.MessageFormatter.CARD_MESSAGE;
 import static view.message.MessageFormatter.DEALER_DRAW_MESSAGE;
 import static view.message.MessageFormatter.DRAW_CARD_CARD_MESSAGE;
@@ -45,7 +44,7 @@ public final class OutputView {
 
     public void guideDrawCard(final String name) {
         final String drawCardMessage = DRAW_CARD_CARD_MESSAGE.format(name,
-            CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
+            DrawCardCommandSelector.CARD_DRAW_AGAIN.command(), DrawCardCommandSelector.CARD_DRAW_STOP.command());
 
         print(drawCardMessage);
         print(LINE_FEED);

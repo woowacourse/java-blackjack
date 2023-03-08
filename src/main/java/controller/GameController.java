@@ -12,6 +12,7 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.Map;
+import view.message.DrawCardCommandSelector;
 
 public final class GameController {
 
@@ -87,12 +88,12 @@ public final class GameController {
 
     private void handleDrawCard(final GameManager gameManager, final int playerOrder) {
         final String playerName = gameManager.findPlayerNameByOrder(playerOrder);
-        DrawCardCommand drawCardCommand = DrawCardCommand.CARD_DRAW_AGAIN;
+        DrawCardCommand drawable = DrawCardCommand.CARD_DRAW_AGAIN;
 
-        while (canDrawCard(gameManager, playerOrder, drawCardCommand)) {
-            drawCardCommand = readDrawCardCommand(playerName);
+        while (canDrawCard(gameManager, playerOrder, drawable)) {
+            drawable = readDrawable(playerName);
 
-            processPlayerDrawCard(gameManager, playerOrder, drawCardCommand);
+            processPlayerDrawCard(gameManager, playerOrder, drawable);
             printPlayerCards(gameManager, playerOrder, playerName);
         }
     }
@@ -103,16 +104,15 @@ public final class GameController {
         outputView.printParticipantCards(playerName, playerCards);
     }
 
-    private DrawCardCommand readDrawCardCommand(final String playerName) {
+    private DrawCardCommand readDrawable(final String playerName) {
         return InputProcessHandler.repeat(inputView::readDrawCardCommand,
                 () -> outputView.guideDrawCard(playerName),
-                DrawCardCommand::findCardCommand,
+                DrawCardCommandSelector::findDrawable,
                 outputView::printExceptionMessage);
     }
 
-    private boolean canDrawCard(final GameManager gameManager, final int playerOrder,
-            final DrawCardCommand drawCardCommand) {
-        return gameManager.canPlayerDrawByOrder(playerOrder) && drawCardCommand.isDrawAgain();
+    private boolean canDrawCard(final GameManager gameManager, final int playerOrder, final DrawCardCommand command) {
+        return gameManager.canPlayerDrawByOrder(playerOrder) & command.isDrawAgain();
     }
 
     private void processPlayerDrawCard(final GameManager gameManager, final int playerOrder,

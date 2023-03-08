@@ -24,7 +24,7 @@ public final class InputView {
     }
 
     public int readPlayerBetAmount() {
-        final String betAmount = readConsole().trim();
+        final String betAmount = readConsole();
 
         return mapToBetAmount(betAmount);
     }
@@ -34,7 +34,7 @@ public final class InputView {
 
         validateBlank(command);
 
-        return command.trim();
+        return command;
     }
 
     private void validateBlank(String input) {
@@ -53,9 +53,9 @@ public final class InputView {
 
     private String readConsole() {
         try {
-            return bufferedReader.readLine();
+            return bufferedReader.readLine().trim();
         } catch (IOException e) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+            throw new IllegalArgumentException("잘못된 입력입니다.", e);
         }
     }
 }
