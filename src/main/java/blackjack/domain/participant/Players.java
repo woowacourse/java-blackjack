@@ -4,10 +4,8 @@ import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Result;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public final class Players {
 
@@ -50,10 +48,6 @@ public final class Players {
         if (cards.size() != players.size() * INIT_CARD_COUNT) {
             throw new IllegalArgumentException("[ERROR] 초기 세팅 카드의 개수는 인원수의 " + INIT_CARD_COUNT + "배여야 합니다. 입력값:" + cards);
         }
-    }
-
-    public Map<Player, Result> makeResult(final int dealerScore) {
-        return Result.makeResult(this.players, dealerScore);
     }
 
     public int size() {

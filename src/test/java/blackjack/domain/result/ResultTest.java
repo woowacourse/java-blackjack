@@ -51,7 +51,7 @@ class ResultTest {
         player3.receiveCard(new Card(Number.NINE, Suit.SPADE));
         player3.receiveCard(new Card(Number.EIGHT, Suit.CLOVER));
 
-        Map<Player, Result> result = players.makeResult(dealerScore);
+        Map<Player, Result> result = Result.makeResult(players, dealerScore);
         assertAll(
                 () -> assertThat(result.get(player1)).isEqualTo(Result.WIN),
                 () -> assertThat(result.get(player2)).isEqualTo(Result.LOSE),

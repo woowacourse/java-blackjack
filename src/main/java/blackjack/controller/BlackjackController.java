@@ -68,7 +68,7 @@ public class BlackjackController {
     private void finishGame() {
         printParticipantsLastCards(dealer, players);
 
-        Map<Player, Result> playerResults = players.makeResult(dealer.totalScore());
+        Map<Player, Result> playerResults = Result.makeResult(players, dealer.totalScore());
         printGameResult(Result.resultOfDealer(playerResults), playerResults);
     }
 }
