@@ -1,14 +1,17 @@
 package view;
 
+import dto.PlayerDto;
+import dto.ResultDto;
+
 import java.util.List;
 
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public static void printPlayerCards(final String name, final List<String> cards) {
-        final String playerCards = convertCardsFormat(cards);
-        System.out.printf("%s 카드: %s%n", name, playerCards);
+    public static void printPlayerCards(final PlayerDto playerDto) {
+        final String playerCards = convertCardsFormat(playerDto.getCards());
+        System.out.printf("%s 카드: %s%n", playerDto.getName(), playerCards);
     }
 
     public static void printSetupGame(final List<String> names) {
@@ -17,25 +20,24 @@ public final class OutputView {
     }
 
     public static void printDealerHit() {
-        System.out.printf("%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printPlayerScore(final String name, final List<String> cards, final int playerScore) {
-        final String playerCards = convertCardsFormat(cards);
-        System.out.printf("%s 카드: %s - 결과: %d%n", name, playerCards, playerScore);
-
+    public static void printPlayerScore(final PlayerDto playerDto) {
+        final String playerCards = convertCardsFormat(playerDto.getCards());
+        System.out.printf("%s 카드: %s - 결과: %d%n", playerDto.getName(), playerCards, playerDto.getScore());
     }
 
-    public static void printGameResult(final List<String> winners, final List<String> losers) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.printf("딜러: %d승 %d패%n", winners.size(), losers.size());
+    public static void printLineSeparator() {
+        System.out.print(System.lineSeparator());
+    }
 
-        for (String winner : winners) {
-            System.out.printf("%s: 승%n", winner);
-        }
-        for (String loser : losers) {
-            System.out.printf("%s: 패%n", loser);
-        }
+    public static void printGameResult(final ResultDto result) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.printf("딜러: %d%n", result.getDealerResult());
+
+        result.getParticipantsResult()
+                .forEach((name, revenue) -> System.out.printf("%s: %d%n", name, revenue));
     }
 
     public static void printExceptionMessage(final String message) {
