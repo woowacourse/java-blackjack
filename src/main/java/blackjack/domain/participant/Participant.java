@@ -6,8 +6,8 @@ import blackjack.domain.game.ParticipantCards;
 import java.util.List;
 
 public abstract class Participant {
-    protected final Name name;
     protected final ParticipantCards cards;
+    protected final Name name;
 
     protected Participant(final ParticipantCards cards, final String name) {
         this.cards = cards;
@@ -15,7 +15,7 @@ public abstract class Participant {
     }
 
     public int getTotalPoint() {
-        return cards.calculate();
+        return cards.getMaxValueNearBlackJack();
     }
 
     public List<Card> open(final int cardCount) {

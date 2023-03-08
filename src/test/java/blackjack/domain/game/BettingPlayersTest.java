@@ -18,9 +18,9 @@ class BettingPlayersTest {
     @DisplayName("생성한다.")
     void create() {
         final Deck deck = new Deck();
-        final ParticipantCards participantsCards1 = ParticipantCardsFixture.createParticipantsCards(deck.draw(), deck.draw(), List.of());
-        final ParticipantCards participantsCards2 = ParticipantCardsFixture.createParticipantsCards(deck.draw(), deck.draw(), List.of());
-        final ParticipantCards participantsCards3 = ParticipantCardsFixture.createParticipantsCards(deck.draw(), deck.draw(), List.of());
+        final ParticipantCards participantsCards1 = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
+        final ParticipantCards participantsCards2 = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
+        final ParticipantCards participantsCards3 = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
         final Player player1 = new Player(participantsCards1, "헤나01");
         final Player player2 = new Player(participantsCards2, "헤나02");
         final Player player3 = new Player(participantsCards3, "헤나03");
@@ -41,7 +41,7 @@ class BettingPlayersTest {
     @DisplayName("돈 목록이 비어있을 경우 예외가 발생한다.")
     void throwExceptionWhenMoneysIsEmpty() {
         final Deck deck = new Deck();
-        final ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(deck.draw(), deck.draw(), List.of());
+        final ParticipantCards participantsCards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
         final Player player = new Player(participantsCards, "헤나");
 
         assertThatThrownBy(() -> new BettingPlayers(List.of(player), Collections.emptyList()))

@@ -19,7 +19,7 @@ class PlayerTest {
     @MethodSource("isHittableDummy")
     @DisplayName("플레이어가 카드를 뽑을 수 있는지 확인한다.")
     void isHittable(final Card cardOne, final Card cardTwo, final List<Card> additionalCards, final boolean expected) {
-        Participant player = new Player(ParticipantCardsFixture.createParticipantsCards(cardOne, cardTwo, additionalCards), "베로");
+        Participant player = new Player(ParticipantCardsFixture.create(cardOne, cardTwo, additionalCards), "베로");
 
         assertThat(player.isHittable()).isEqualTo(expected);
     }

@@ -60,7 +60,7 @@ class ParticipantCardsTest {
     @DisplayName("가지고 있는 카드의 합을 계산한다.")
     void calculate(final List<Card> cards, final int expectedSum) {
         ParticipantCards participantCards = new ParticipantCards(cards);
-        int cardSum = participantCards.calculate();
+        int cardSum = participantCards.getMaxValueNearBlackJack();
 
         assertThat(cardSum).isEqualTo(expectedSum);
     }
@@ -69,7 +69,7 @@ class ParticipantCardsTest {
     @MethodSource("isBustDummy")
     @DisplayName("가지고 있는 카드가 버스트인지 판단한다.")
     void isBust(final Card one, final Card two, final List<Card> additionalCards, final boolean expected) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(one, two, additionalCards);
+        ParticipantCards participantsCards = ParticipantCardsFixture.create(one, two, additionalCards);
         boolean isBust = participantsCards.isBust();
 
         assertThat(isBust).isEqualTo(expected);
