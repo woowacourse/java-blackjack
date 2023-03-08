@@ -1,14 +1,9 @@
 package domain;
 
-import domain.Dealer;
-import domain.Gambler;
-import domain.Player;
-import domain.Players;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static game.Referee.decideWinner;
+import static domain.Referee.decideWinner;
 
 public class Result {
 

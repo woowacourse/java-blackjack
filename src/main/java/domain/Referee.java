@@ -1,8 +1,4 @@
-package game;
-
-import domain.Dealer;
-import domain.Gambler;
-import domain.Player;
+package domain;
 
 import java.util.Map;
 

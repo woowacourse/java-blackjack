@@ -11,11 +11,25 @@ class DeckTest {
 
     @Test
     void initDeck_카드갯수_테스트() {
-        //given, when
+        //given
         Deck deck = new Deck();
-        int size = Deck.getDeck().size();
+
+        //when
+        int size = getSize(deck);
         int expected = 52;
+
         //then
         assertThat(size).isEqualTo(expected);
+    }
+
+    private int getSize(Deck deck) {
+        int size = 0;
+        boolean flag = true;
+
+        while (flag) {
+            deck.pickCard();
+            size++;
+        }
+        return size;
     }
 }
