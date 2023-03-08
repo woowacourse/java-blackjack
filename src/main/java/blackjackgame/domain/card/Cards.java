@@ -9,8 +9,8 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(CardsGenerator shuffledCardsGenerator) {
-        this.cards = shuffledCardsGenerator.generate();
+    public Cards(CardsGenerator cardsGenerator) {
+        this.cards = cardsGenerator.generate();
     }
 
 
