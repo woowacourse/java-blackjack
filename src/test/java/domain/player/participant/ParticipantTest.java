@@ -2,6 +2,8 @@ package domain.player.participant;
 
 import domain.card.Card;
 import domain.player.Name;
+import domain.player.participant.betresult.BetResultState;
+import domain.player.participant.betresult.BreakEvenState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import static domain.card.CardShape.CLOVER;
 import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.ACE;
 import static domain.card.CardValue.TEN;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -39,5 +42,20 @@ class ParticipantTest {
 
         // then
         assertFalse(participant.canHit());
+    }
+
+    @Test
+    @DisplayName("determineBetState() : 참여자는 베팅 결과를 결정할 수 있다.")
+    void test_determineBetState() throws Exception {
+        //given
+        assertThat(participant).extracting("betResultState")
+                               .isNull();
+
+        //when
+        participant.determineBetState(new BreakEvenState());
+
+        //then
+        assertThat(participant).extracting("betResultState")
+                               .isInstanceOf(BetResultState.class);
     }
 }
