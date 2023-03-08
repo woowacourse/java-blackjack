@@ -22,12 +22,13 @@ public class OutputView {
     private static final String WIN = "승";
     private static final String DRAW = "무";
     private static final String LOSE = "패";
+    private static final String ENTER_LINE = System.lineSeparator();
 
     private OutputView() {
     }
 
     public static void printStartMessage(List<String> playersName) {
-        System.out.println("\n딜러와 " + String.join(", ", playersName) + "에게 2장을 나누었습니다.");
+        System.out.println(ENTER_LINE + "딜러와 " + String.join(", ", playersName) + "에게 2장을 나누었습니다.");
     }
 
     public static void printDealerCard(Participant dealer) {
@@ -91,12 +92,12 @@ public class OutputView {
     }
 
     public static void printDealerHit() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(ENTER_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printAllHands(Participant dealer, List<Participant> players) {
         String dealerCards = makeCardsView(dealer.getCards());
-        System.out.println("\n" + dealer.getName() + " 카드: " + dealerCards + " - 결과: " + dealer.calculateScore());
+        System.out.println(ENTER_LINE + dealer.getName() + " 카드: " + dealerCards + " - 결과: " + dealer.calculateScore());
 
         players.stream()
                 .map(player -> makePlayerHandView(player) + " - 결과: " + player.calculateScore())
@@ -104,7 +105,7 @@ public class OutputView {
     }
 
     public static void printParticipantsResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println("\n## 최종 승패");
+        System.out.println(ENTER_LINE + "## 최종 승패");
         printDealerResult(playersResult);
         printPlayersResult(playersResult);
     }

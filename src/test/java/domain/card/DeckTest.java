@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("덱은 ")
+@DisplayName("Deck은 ")
 class DeckTest {
 
     @Test
-    void 덱은_52가지_종류의_카드가_있다() {
+    void _52가지_종류의_카드가_있다() {
         //given
         Deck deck = Deck.create();
 

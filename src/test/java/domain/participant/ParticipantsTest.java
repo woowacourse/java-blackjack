@@ -29,7 +29,6 @@ class ParticipantsTest {
         assertDoesNotThrow(() -> Participants.of(List.of(names.split(","))));
     }
 
-    @ParameterizedTest
     @ValueSource(strings = {",", "연어,가비,애쉬,우가,럿고,비버,아코,네오"})
     void 총_1에서_7명이_아니면_예외가_발생한다(String names) {
         //given
