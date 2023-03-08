@@ -23,11 +23,16 @@ public class OutputView {
         System.out.println(System.lineSeparator() + "딜러와 " + names + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다." + System.lineSeparator());
     }
 
-    public void printDealerInitCards(final Card card) {
+    public void printParticipantsInitCards(final Card dealerCard, final List<Player> players) {
+        printDealerInitCards(dealerCard);
+        printPlayersInitCards(players);
+    }
+
+    private void printDealerInitCards(final Card card) {
         System.out.println("딜러: " + card.combineNumberAndPattern());
     }
 
-    public void printPlayersInitCards(final List<Player> players) {
+    private void printPlayersInitCards(final List<Player> players) {
         for (Player player : players) {
             System.out.println(player.getName() + "카드: " + joiningCards(player.getCards()));
         }
@@ -42,11 +47,16 @@ public class OutputView {
         System.out.println("[System]: " + "딜러는 " + DEALER_CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
-    public void printDealerLastCards(final List<Card> finalCards, final int score) {
-        System.out.println("딜러 카드: " + joiningCards(finalCards) + " - 결과: " + score);
+    public void printParticipantsLastCards(final List<Card> dealerCards, final int score, final List<Player> players) {
+        printDealerLastCards(dealerCards, score);
+        printPlayerLastCards(players);
     }
 
-    public void printPlayerLastCards(final List<Player> players) {
+    private void printDealerLastCards(final List<Card> dealerCards, final int score) {
+        System.out.println("딜러 카드: " + joiningCards(dealerCards) + " - 결과: " + score);
+    }
+
+    private void printPlayerLastCards(final List<Player> players) {
         for (Player player : players) {
             System.out.println(
                     player.getName() + "카드: " + joiningCards(player.getCards())
