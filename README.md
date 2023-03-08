@@ -65,8 +65,8 @@
   - [x] Card 생성하는 부분 `for문` -> `stream`으로 변경
   - [x] CardNumber enum class 필드 변경
   - [ ] Deck class 필드 변경
-  - [ ] Dealer class calculateScore 메소드 로직 변경
-  - [ ] hasACE 메소드 내부 로직 변경
+  - [x] Dealer, Player class calculateScore 메소드 로직 변경
+  - [x] hasACE 메소드 위치 변경
   - [ ] GameResult class dealerResult.put(~) 올바른 결과가 출력되도록 변경
   - [ ] Person interface -> abstract class로 변경
   - [ ] 결과 타입에 대한 enum class 추가

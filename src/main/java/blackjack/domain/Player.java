@@ -50,6 +50,6 @@ public class Player implements Person {
 
     private boolean hasACE() {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.number()));
+                .anyMatch(Card::isACE);
     }
 }

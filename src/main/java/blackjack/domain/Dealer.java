@@ -39,7 +39,7 @@ public class Dealer implements Person {
 
     private boolean hasACE() {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.number()));
+                .anyMatch(Card::isACE);
     }
 
     @Override

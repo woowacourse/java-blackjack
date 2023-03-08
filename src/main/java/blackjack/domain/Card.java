@@ -1,12 +1,16 @@
 package blackjack.domain;
 
 public class Card {
-    private final CardSymbol cardSymbol;
     private final CardNumber cardNumber;
+    private final CardSymbol cardSymbol;
 
     public Card(CardNumber cardNumber, CardSymbol cardSymbol) {
         this.cardNumber = cardNumber;
         this.cardSymbol = cardSymbol;
+    }
+
+    public boolean isACE() {
+        return cardNumber.number().equals(CardNumber.ACE.number());
     }
 
     public int getScore(String number) {
