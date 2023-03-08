@@ -47,7 +47,7 @@ public class BlackJack {
     }
 
     public List<User> getUserOf(Result result) {
-        final ArrayList<User> resultUsers = new ArrayList<>();
+        final List<User> resultUsers = new ArrayList<>();
         for (User user : users.getUsers()) {
             if (Result.of(user.getGamePoint(), dealer.getGamePoint()) == result) {
                 resultUsers.add(user);
@@ -61,7 +61,7 @@ public class BlackJack {
     }
 
     public Map<Result, Integer> getDealerResult() {
-        final HashMap<Result, Integer> resultMap = new HashMap<>();
+        final Map<Result, Integer> resultMap = new HashMap<>();
         resultMap.put(Result.WIN, getUserOf(Result.LOSE).size());
         resultMap.put(Result.LOSE, getUserOf(Result.WIN).size());
         resultMap.put(Result.DRAW, getUserOf(Result.DRAW).size());

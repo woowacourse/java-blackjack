@@ -19,7 +19,7 @@ public class RandomDeck implements Deck {
     }
 
     private List<Card> getAllKindCard() {
-        final ArrayList<Card> cardsData = new ArrayList<>();
+        final List<Card> cardsData = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             makeCardsOf(cardsData, shape);
         }
