@@ -7,7 +7,8 @@ public class Guest extends Player {
 
     private final Name name;
 
-    public Guest(final Name name) {
+    public Guest(final Name name, final Card firstCard, final Card secondCard) {
+        super(firstCard, secondCard);
         this.name = name;
     }
 

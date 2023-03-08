@@ -1,7 +1,6 @@
 package blackjackgame.controller;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import blackjackgame.domain.Dealer;
 import blackjackgame.domain.Deck;
@@ -22,10 +21,10 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Guests guests = generateGuests();
-        final Dealer dealer = new Dealer();
         final Deck deck = new Deck();
-        initGame(guests, dealer, deck);
+        final Guests guests = generateGuests(deck);
+        final Dealer dealer = new Dealer(deck.pickOne(), deck.pickOne());
+        printFirstHand(guests, dealer);
 
         askGuestsHitCard(guests.getGuests(), deck);
         askDealerHitCard(dealer, deck);
@@ -34,22 +33,17 @@ public class BlackJackController {
         printGameResult(guests, dealer);
     }
 
-    private Guests generateGuests() {
+    private Guests generateGuests(final Deck deck) {
         try {
             List<String> guestNames = inputView.readGuestsName();
-            return new Guests(guestNames);
+            return new Guests(guestNames, deck);
         } catch (IllegalArgumentException e) {
             inputView.printErrorMsg(e.getMessage());
-            return generateGuests();
+            return generateGuests(deck);
         }
     }
 
-    private void initGame(final Guests guests, final Dealer dealer, final Deck deck) {
-        IntStream.range(0, 2).forEach(
-                count -> {
-                    dealer.addCard(deck.pickOne());
-                    guests.getGuests().forEach(guest -> guest.addCard(deck.pickOne()));
-                });
+    private void printFirstHand(final Guests guests, final Dealer dealer) {
         outputView.printFirstDealerCards(dealer.getName(), DataTransformController.transformCards(dealer.getCards()));
         for (final Guest guest : guests.getGuests()) {
             outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));

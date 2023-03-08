@@ -9,11 +9,9 @@ class GuestTest {
     @DisplayName("게스트가 가진 카드들의 합이 21미만이면, true를 반환한다.")
     @Test
     void Should_PickOneCard_When_ScoreUnder21() {
-        Player guest = new Guest(new Name("name"));
-        Card spade5Card = new Card(Symbol.SPADE, CardValue.FIVE);
-        Card clover8Card = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        guest.addCard(spade5Card);
-        guest.addCard(clover8Card);
+        Card spade5 = new Card(Symbol.SPADE, CardValue.FIVE);
+        Card clover8 = new Card(Symbol.CLOVER, CardValue.EIGHT);
+        Player guest = new Guest(new Name("name"), spade5, clover8);
 
         assertThat(guest.canHit()).isEqualTo(true);
     }
@@ -21,14 +19,12 @@ class GuestTest {
     @DisplayName("게스트가 가진 카드들의 합이 21이면, false를 반환한다.")
     @Test
     void Should_PickOneCard_When_ScoreIs21() {
-        Player guest = new Guest(new Name("name"));
-        Card spadeJCard = new Card(Symbol.SPADE, CardValue.JACK);
-        Card cloverKCard = new Card(Symbol.CLOVER, CardValue.KING);
-        Card heartACard = new Card(Symbol.HEART, CardValue.ACE);
+        Card spadeJ = new Card(Symbol.SPADE, CardValue.JACK);
+        Card cloverK = new Card(Symbol.CLOVER, CardValue.KING);
+        Card heartA = new Card(Symbol.HEART, CardValue.ACE);
 
-        guest.addCard(spadeJCard);
-        guest.addCard(cloverKCard);
-        guest.addCard(heartACard);
+        Player guest = new Guest(new Name("name"), spadeJ, cloverK);
+        guest.addCard(heartA);
 
         assertThat(guest.canHit()).isEqualTo(false);
     }
@@ -36,14 +32,12 @@ class GuestTest {
     @DisplayName("게스트가 가진 카드들의 합이 21을 초과하면, false를 반환한다.")
     @Test
     void Should_PickOneCard_When_ScoreOver21() {
-        Player guest = new Guest(new Name("name"));
-        Card spadeJCard = new Card(Symbol.SPADE, CardValue.JACK);
-        Card cloverKCard = new Card(Symbol.CLOVER, CardValue.KING);
-        Card heartKCard = new Card(Symbol.HEART, CardValue.KING);
+        Card spadeJ = new Card(Symbol.SPADE, CardValue.JACK);
+        Card cloverK = new Card(Symbol.CLOVER, CardValue.KING);
+        Card heartK = new Card(Symbol.HEART, CardValue.KING);
 
-        guest.addCard(spadeJCard);
-        guest.addCard(cloverKCard);
-        guest.addCard(heartKCard);
+        Player guest = new Guest(new Name("name"), spadeJ, cloverK);
+        guest.addCard(heartK);
 
         assertThat(guest.canHit()).isEqualTo(false);
     }

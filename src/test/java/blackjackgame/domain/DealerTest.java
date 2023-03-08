@@ -10,11 +10,9 @@ class DealerTest {
     @DisplayName("딜러가 가진 카드들의 합이 16이하면, true를 반환한다.")
     @Test
     void Should_PickOneCard_When_ScoreUnder16() {
-        Player dealer = new Dealer();
-        Card spade5Card = new Card(Symbol.SPADE, CardValue.FIVE);
-        Card clover8Card = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        dealer.addCard(spade5Card);
-        dealer.addCard(clover8Card);
+        Card spade5 = new Card(Symbol.SPADE, CardValue.FIVE);
+        Card clover8 = new Card(Symbol.CLOVER, CardValue.EIGHT);
+        Player dealer = new Dealer(spade5, clover8);
 
         assertThat(dealer.canHit()).isEqualTo(true);
     }
@@ -22,11 +20,9 @@ class DealerTest {
     @DisplayName("딜러가 가진 카드들의 합이 17이상이면, true를 반환한다.")
     @Test
     void Should_PickOneCard_When_ScoreOver17() {
-        Player dealer = new Dealer();
-        Card spadeJCard = new Card(Symbol.SPADE, CardValue.JACK);
-        Card cloverKCard = new Card(Symbol.CLOVER, CardValue.KING);
-        dealer.addCard(spadeJCard);
-        dealer.addCard(cloverKCard);
+        Card spadeJ = new Card(Symbol.SPADE, CardValue.JACK);
+        Card cloverK = new Card(Symbol.CLOVER, CardValue.KING);
+        Player dealer = new Dealer(spadeJ, cloverK);
 
         assertThat(dealer.canHit()).isEqualTo(false);
     }

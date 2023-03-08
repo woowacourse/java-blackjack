@@ -9,8 +9,8 @@ public abstract class Player {
 
     private final List<Card> cards;
 
-    public Player() {
-        this.cards = new ArrayList<>();
+    public Player(final Card firstCard, final Card secondCard) {
+        this.cards = new ArrayList<>(List.of(firstCard, secondCard));
     }
 
     public abstract boolean canHit();
@@ -42,10 +42,6 @@ public abstract class Player {
 
     public void addCard(final Card card) {
         cards.add(card);
-    }
-
-    public int getSize() {
-        return cards.size();
     }
 
     public List<Card> getCards() {

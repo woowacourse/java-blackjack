@@ -9,17 +9,17 @@ public class Guests {
 
     private final List<Guest> guests;
 
-    public Guests(final List<String> playerNames) {
+    public Guests(final List<String> playerNames, final Deck deck) {
         validateGuestNumbers(playerNames);
 
-        this.guests = generateGuests(playerNames);
+        this.guests = generateGuests(playerNames, deck);
     }
 
-    private List<Guest> generateGuests(final List<String> playerNames) {
+    private List<Guest> generateGuests(final List<String> playerNames, final Deck deck) {
         validateDuplicate(playerNames);
 
         return playerNames.stream()
-                .map(playerName -> new Guest(new Name(playerName)))
+                .map(playerName -> new Guest(new Name(playerName), deck.pickOne(), deck.pickOne()))
                 .collect(Collectors.toUnmodifiableList());
     }
 

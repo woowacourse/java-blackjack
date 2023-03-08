@@ -10,11 +10,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GuestsTest {
+    private final Deck deck = new Deck();
+
     @DisplayName("참여자가 1명 미만이면 예외를 던지는지 확인한다.")
     @Test
     void Should_ThrowException_When_GuestsNumbersUnderRange() {
         List<String> inputNames = Collections.emptyList();
-        assertThatThrownBy(() -> new Guests(inputNames))
+        assertThatThrownBy(() -> new Guests(inputNames, deck))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참여자는", "이상", "이하여야 합니다.");
     }
@@ -24,7 +26,7 @@ class GuestsTest {
     void Should_ThrowException_When_GuestsNumberOverRange() {
         List<String> inputNames = List.of("name1", "name2", "name3", "name4", "name5", "name6", "name7",
                 "name8", "name9", "name10", "name11");
-        assertThatThrownBy(() -> new Guests(inputNames))
+        assertThatThrownBy(() -> new Guests(inputNames, deck))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참여자는", "이상", "이하여야 합니다.");
     }
@@ -34,6 +36,6 @@ class GuestsTest {
     void Should_ThrowException_When_DuplicateGuestNames() {
         List<String> inputNames = List.of("name1", "name1");
 
-        assertThrows(IllegalArgumentException.class, () -> new Guests(inputNames));
+        assertThrows(IllegalArgumentException.class, () -> new Guests(inputNames, deck));
     }
 }
