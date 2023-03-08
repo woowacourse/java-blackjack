@@ -1,5 +1,8 @@
 package domain;
 
+import view.RankMessage;
+import view.SuitMessage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,7 +55,9 @@ public class Hand {
     public List<String> getCardNames() {
         List<String> cards = new ArrayList<>();
         for (Card card : hand) {
-            cards.add(card.getRank().getName() + card.getSuit().getShape());
+            final String rankMessage = RankMessage.getRankMessage(card.getRank());
+            final String suitMessage = SuitMessage.getSuitMessage(card.getSuit());
+            cards.add(rankMessage + suitMessage);
         }
         return cards;
     }

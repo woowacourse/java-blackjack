@@ -50,8 +50,10 @@ public class OutputView {
     }
 
     private void summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
-        for (Card participantCard : participantCards) {
-            cardNames.add(participantCard.getRank().getName() + participantCard.getSuit().getShape());
+        for (Card card : participantCards) {
+            final String rankMessage = RankMessage.getRankMessage(card.getRank());
+            final String suitMessage = SuitMessage.getSuitMessage(card.getSuit());
+            cardNames.add(rankMessage + suitMessage);
         }
     }
 
