@@ -24,7 +24,7 @@ public class OutputView {
     private static final String NAME_CARD_DELIMITER = "카드 : ";
     private static final String CARD_SCORE_DELIMITER = " - 결과: ";
 
-    public void printInputPlayerNameMessage() {
+    public void printInputPlayerNamesMessage() {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
     }
 

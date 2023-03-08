@@ -60,7 +60,7 @@ public class BlackJackGameController {
     }
 
     private List<String> readUsersName() {
-        outputView.printInputPlayerNameMessage();
+        outputView.printInputPlayerNamesMessage();
         return inputView.readPlayerNames();
     }
 
