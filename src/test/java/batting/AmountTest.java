@@ -1,9 +1,14 @@
 package batting;
 
+import static blackjackgame.Result.LOSE;
+import static blackjackgame.Result.TIE;
+import static blackjackgame.Result.WIN;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class AmountTest {
@@ -28,5 +33,33 @@ class AmountTest {
         assertThatThrownBy(() -> new Amount(120))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("100원 단위로 입력 가능합니다.");
+    }
+
+    @Nested
+    @DisplayName("Result에 따라 최종금액을 계산한다.")
+    class calculateRewardByResult {
+        @Test
+        @DisplayName("이긴 경우 원래금액의 2배를 반환한다.")
+        void win() {
+            Amount amount = new Amount(1000);
+
+            assertThat(amount.calculateRewardByResult(WIN)).isEqualTo(2000);
+        }
+
+        @Test
+        @DisplayName("진경우 원래금액의 -2배를 반환한다")
+        void lose() {
+            Amount amount = new Amount(1000);
+
+            assertThat(amount.calculateRewardByResult(LOSE)).isEqualTo(-2000);
+        }
+
+        @Test
+        @DisplayName("비긴 경우 원래금액을 반환한다.")
+        void tie() {
+            Amount amount = new Amount(1000);
+
+            assertThat(amount.calculateRewardByResult(TIE)).isEqualTo(1000);
+        }
     }
 }

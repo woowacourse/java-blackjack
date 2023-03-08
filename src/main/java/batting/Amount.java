@@ -1,5 +1,7 @@
 package batting;
 
+import blackjackgame.Result;
+
 public class Amount {
     public static final int MIN_AMOUNT_UNIT = 100;
     private final int amount;
@@ -24,5 +26,15 @@ public class Amount {
         if (amount < MIN_AMOUNT_UNIT) {
             throw new IllegalArgumentException("100이상의 정수만 입력 가능합니다.");
         }
+    }
+
+    public int calculateRewardByResult(Result result) {
+        if (result.equals(Result.WIN)) {
+            return amount * 2;
+        }
+        if (result.equals(Result.LOSE)) {
+            return amount * -2;
+        }
+        return amount;
     }
 }
