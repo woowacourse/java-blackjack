@@ -32,4 +32,20 @@ public class MoneyTest {
         assertThat(money.getValue()).isEqualTo(prize);
     }
 
+    @Test
+    void 더한_값을_반환한다() {
+        final Money money = Money.initialBet(1000);
+
+        Money result = money.plus(Money.initialBet(1500));
+
+        assertThat(result.getValue()).isEqualTo(2500);
+    }
+
+    @Test
+    void 값이_0인_Money를_반환한다() {
+        final Money money = Money.ZERO;
+
+        assertThat(money.getValue()).isEqualTo(0);
+    }
+
 }

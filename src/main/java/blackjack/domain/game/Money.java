@@ -4,6 +4,7 @@ import blackjack.domain.player.Result;
 import java.math.BigDecimal;
 
 public class Money {
+    public static final Money ZERO = new Money(0);
     private static final int INITIAL_BET_LOWER_BOUND = 100;
     static final String INVALID_INITIAL_BET_VALUE = "초기값은 " + INITIAL_BET_LOWER_BOUND + "이상이어야 합니다.";
 
@@ -27,6 +28,11 @@ public class Money {
     public Money calculatePrize(final Result result) {
         final BigDecimal prize = value.multiply(BigDecimal.valueOf(result.getRatio()));
         return new Money(prize.intValue());
+    }
+
+    public Money plus(final Money other) {
+        final BigDecimal result = value.add(other.value);
+        return new Money(result.intValue());
     }
 
     public int getValue() {
