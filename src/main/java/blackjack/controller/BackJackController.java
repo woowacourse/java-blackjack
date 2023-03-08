@@ -5,6 +5,7 @@ import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.dto.CardAndScoreResult;
 import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
+import blackjack.util.RepeatValidator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -26,9 +27,11 @@ public class BackJackController {
 
     private BlackJackGame initBlackJackGame() {
         outputView.printPlayerNameRequestMessage();
-        final List<String> names = inputView.readPlayerNames();
-        outputView.printLineBreak();
-        return new BlackJackGame(names, new RandomDeckGenerator());
+        return RepeatValidator.readUntilValidate(() -> {
+            final List<String> names = inputView.readPlayerNames();
+            outputView.printLineBreak();
+            return new BlackJackGame(names, new RandomDeckGenerator());
+        });
     }
 
     private void printInitialStatus(BlackJackGame blackJackGame) {
@@ -55,7 +58,7 @@ public class BackJackController {
     private boolean isContinuous(String name, BlackJackGame blackJackGame) {
         if (blackJackGame.isPossibleToDraw(name)) {
             outputView.printDrawCardRequestMessage(name);
-            return DrawInput.from(inputView.readDrawOrStay()).isDraw();
+            return RepeatValidator.readUntilValidate(() -> DrawInput.from(inputView.readDrawOrStay()).isDraw());
         }
         return false;
     }
