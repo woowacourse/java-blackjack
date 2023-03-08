@@ -1,0 +1,35 @@
+package blackjack.domain.game;
+
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import blackjack.domain.player.Result;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
+public class MoneyTest {
+
+    @Test
+    void 초기_베팅_금액이_100_보다_작은_경우_예외를_던진다() {
+        assertThatThrownBy(() -> Money.initialBet(99))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Money.INVALID_INITIAL_BET_VALUE);
+    }
+
+    @ParameterizedTest(name = "Result를 입력받아 계산된 Money를 반환한다. 입력: {0}, 결과: {1}")
+    @CsvSource({"BLACKJACK_WIN,15000", "WIN,10000", "PUSH,0", "LOSE,-10000"})
+    void Money는_Result를_입력받아_계산된_Money를_반환한다(final Result result, final int prize) {
+        final Money bet = Money.initialBet(10000);
+
+        final Money money = bet.calculatePrize(result);
+
+        assertThat(money.getValue()).isEqualTo(prize);
+    }
+
+}
