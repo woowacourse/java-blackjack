@@ -18,8 +18,4 @@ public class CardTest {
         }
     }
 
-    @Test
-    @DisplayName("")
-    void Test() {}
-
 }
