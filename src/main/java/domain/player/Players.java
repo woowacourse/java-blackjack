@@ -28,8 +28,8 @@ public class Players {
         }
     }
 
-    public boolean isOver21(final String playerName) {
-        if(findPlayer(playerName).isOver21()) {
+    public boolean isLargerThanBlackJackNumber(final String playerName) {
+        if(findPlayer(playerName).isLargerThanBlackJackNumber()) {
             return true;
         }
         return false;

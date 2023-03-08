@@ -33,7 +33,7 @@ public class Player {
         return dealerScore == hand.score();
     }
 
-    public boolean isOver21() {
+    public boolean isLargerThanBlackJackNumber() {
         if (getScore() > BLACK_JACK_NUMBER) {
             return true;
         }

@@ -46,8 +46,8 @@ public class BlackJackGame {
         return Outcome.decidePlayersOutcome(findDealer().getScore(), this.players.getPlayersWithOutDealer());
     }
 
-    public boolean isOver21(final String playerName) {
-        if(players.isOver21(playerName)) {
+    public boolean isLargerThanBlackJackNumber(final String playerName) {
+        if(players.isLargerThanBlackJackNumber(playerName)) {
             return true;
         }
         return false;
