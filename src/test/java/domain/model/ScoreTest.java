@@ -129,4 +129,41 @@ class ScoreTest {
         //then
         assertThat(result).isTrue();
     }
+
+    @Test
+    @DisplayName("스탠드가 맞는지 테스트")
+    public void testIsStandTrue() {
+        //given
+        final Set<Card> cardSet = Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.DIAMOND, Letter.TEN),
+            new Card(Suit.SPADE, Letter.ACE));
+        final Cards cards = new Cards(cardSet);
+        final Score score = Score.of(cards);
+
+        //when
+        final boolean result = score.isStand();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("스탠드가 아닌지 테스트")
+    public void testIsStandFalse() {
+        //given
+        final Set<Card> cardSet = Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.DIAMOND, Letter.TEN),
+            new Card(Suit.SPADE, Letter.ACE),
+            new Card(Suit.SPADE, Letter.TWO));
+        final Cards cards = new Cards(cardSet);
+        final Score score = Score.of(cards);
+
+        //when
+        final boolean result = score.isStand();
+
+        //then
+        assertThat(result).isFalse();
+    }
 }

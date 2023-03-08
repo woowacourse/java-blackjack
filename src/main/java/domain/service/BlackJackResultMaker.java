@@ -28,7 +28,7 @@ public class BlackJackResultMaker {
     }
 
     private boolean isVictory(final Score score, final Score comparedScore) {
-        return !score.isBust() && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
+        return score.isStand() && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
     }
 
     private boolean isDraw(final Score score, final Score comparedScore) {

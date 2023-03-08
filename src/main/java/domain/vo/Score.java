@@ -47,6 +47,10 @@ public class Score {
         return value > MAX_VALUE;
     }
 
+    public boolean isStand() {
+        return value <= MAX_VALUE;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
