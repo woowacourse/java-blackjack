@@ -27,10 +27,6 @@ public class Dealer implements Player {
         return cards.getFirstCard();
     }
 
-    public boolean needCardToGetResult() {
-        return canReceive();
-    }
-
     public List<Card> openCards() {
         return cards.getCards();
     }

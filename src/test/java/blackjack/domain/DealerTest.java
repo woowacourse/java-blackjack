@@ -129,21 +129,6 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 카드를 받을 수 있을 때 까지 카드를 받아야한다.")
-    void needCardTest() {
-        final List<Card> data = List.of(
-                new Card(Shape.HEART, CardNumber.TEN),
-                new Card(Shape.HEART, CardNumber.SIX)
-        );
-
-        final Dealer dealer = new Dealer(data);
-        assertThat(dealer.needCardToGetResult()).isTrue();
-
-        dealer.draw(new Card(Shape.HEART, CardNumber.ACE));
-        assertThat(dealer.needCardToGetResult()).isFalse();
-    }
-
-    @Test
     @DisplayName("딜러의 카드가 결론나면 카드를 얻을 수 있다.")
     void openCardsTest() {
         final List<Card> data = List.of(

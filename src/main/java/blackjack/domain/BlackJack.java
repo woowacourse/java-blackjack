@@ -35,7 +35,7 @@ public class BlackJack {
 
     public int giveCardToDealerUntilDontNeed(Deck deck) {
         int additionalCardCount = 0;
-        while (dealer.needCardToGetResult()) {
+        while (dealer.canReceive()) {
             dealer.draw(deck.drawCard());
             additionalCardCount += 1;
         }
