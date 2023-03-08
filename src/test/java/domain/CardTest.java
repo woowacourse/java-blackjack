@@ -19,7 +19,18 @@ public class CardTest {
 
         assertThat(card.getShape()).isEqualTo(Shape.DIAMOND);
         assertThat(card.getLetter().getExpression()).isEqualTo("2");
-        assertThat(card.getLetter().getScore()).isEqualTo(Score.from(2));
+        assertThat(card.getScore()).isEqualTo(Score.from(2));
+    }
+
+    @Test
+    @DisplayName("Card의 Shape 이 ACE 임을 확인한다.")
+    void createAceCard() {
+        Shape shape = Shape.DIAMOND;
+        Letter letter = Letter.ACE;
+
+        Card card = new Card(shape, letter);
+
+        assertThat(card.isAce()).isTrue();
     }
 
 }

@@ -69,4 +69,14 @@ public class HandTest {
         assertThat(hand.calculateScore(limit)).isEqualTo(expectedScore);
     }
 
+    @Test
+    @DisplayName("참여자가 가지고 있는 첫 번째 카드를 반환한다.")
+    void getFirstCardOfParticipant() {
+        List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
+
+        Hand hand = new Hand(initialCards);
+
+        assertThat(hand.getFirstCard()).isEqualTo(new Card(Shape.DIAMOND, Letter.TWO));
+    }
+
 }
