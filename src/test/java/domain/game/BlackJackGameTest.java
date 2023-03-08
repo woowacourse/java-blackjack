@@ -2,11 +2,16 @@ package domain.game;
 
 import domain.card.BlackJackScore;
 import domain.card.CardDeck;
-import domain.player.*;
+import domain.player.Dealer;
+import domain.player.Gambler;
+import domain.player.HitState;
+import domain.player.Name;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.GamblerFixture.*;
@@ -29,12 +34,16 @@ class BlackJackGameTest {
         final int before = cardDeck.cards().size();
 
         // when
-        BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, names);
+        BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, makeBattingMoneyMapFromNames(names));
 
         // then
         assertThat(cardDeck.cards().size()).isEqualTo(before - (names.size() * 2 + 2));
         blackJackGame.gamblers().forEach(it -> assertThat(it.cardArea().cards().size()).isEqualTo(2));
         assertThat(blackJackGame.dealer().cardArea().cards().size()).isEqualTo(2);
+    }
+
+    private static Map<Name, BattingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
+        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BattingMoney.of(10)));
     }
 
     @Test
@@ -52,25 +61,25 @@ class BlackJackGameTest {
     }
 
     @Test
-    void 게임_결과를_통계낼_수_있다() {
+    void 참가자별_수익을_낼_수_있다() {
         // given
 
         // 말랑 - 20(무), 콩떡 - 30(패), 코다 - 21(승)
         // 딜러 - 20
         final Gambler 말랑 = 말랑(equal20CardArea());
         final Gambler 콩떡 = 콩떡(over21CardArea());
-        final Gambler 코다 = 코다(equal21CardArea());
+        final Gambler 코다 = 코다(equal21CardAreaNonBlackJack());
         final Dealer dealer = new Dealer(equal20CardArea());
 
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
 
         // when
-        final Map<Gambler, GamblerCompeteResult> statistic = blackJackGame.statistic();
+        final Map<Gambler, Revenue> revenue = blackJackGame.revenue();
 
         // then
-        assertThat(statistic.get(말랑)).isEqualTo(GamblerCompeteResult.DRAW);
-        assertThat(statistic.get(콩떡)).isEqualTo(GamblerCompeteResult.LOSE);
-        assertThat(statistic.get(코다)).isEqualTo(GamblerCompeteResult.WIN);
+        assertThat(revenue.get(말랑)).isEqualTo(Revenue.draw(말랑.battingMoney()));
+        assertThat(revenue.get(콩떡)).isEqualTo(Revenue.lose(콩떡.battingMoney()));
+        assertThat(revenue.get(코다)).isEqualTo(Revenue.defaultWin(코다.battingMoney()));
     }
 
     @Nested

@@ -2,7 +2,10 @@ package domain.game;
 
 import domain.card.CardArea;
 import domain.card.CardDeck;
-import domain.player.*;
+import domain.player.Dealer;
+import domain.player.Gambler;
+import domain.player.HitState;
+import domain.player.Name;
 
 import java.util.*;
 
@@ -24,17 +27,18 @@ public class BlackJackGame {
         this.cardDeck = cardDeck;
     }
 
-    public static BlackJackGame defaultSetting(final CardDeck cardDeck, final List<Name> gamblerNames) {
-        validateGamblersSize(gamblerNames);
-        final List<Gambler> gamblers = gamblerNames
-                .stream()
-                .map(it -> new Gambler(it, new CardArea(cardDeck.draw(), cardDeck.draw())))
-                .collect(toList());
+    public static BlackJackGame defaultSetting(final CardDeck cardDeck, final Map<Name, BattingMoney> battingMoneyMap) {
+        validateGamblersSize(battingMoneyMap.keySet());
         final Dealer dealer = new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
+        final List<Gambler> gamblers = battingMoneyMap
+                .keySet()
+                .stream()
+                .map(name -> new Gambler(name, new CardArea(cardDeck.draw(), cardDeck.draw()), battingMoneyMap.get(name)))
+                .collect(toList());
         return new BlackJackGame(gamblers, dealer, cardDeck);
     }
 
-    private static void validateGamblersSize(final List<Name> gamblerNames) {
+    private static void validateGamblersSize(final Collection<Name> gamblerNames) {
         if (gamblerNames.size() > MAX_PARTICIPANT_COUNT_INCLUDE) {
             throw new IllegalArgumentException(String.format("참가자는 %d명 이하여야 합니다.", MAX_PARTICIPANT_COUNT_INCLUDE));
         }
@@ -81,7 +85,7 @@ public class BlackJackGame {
         dealer.hit(cardDeck.draw());
     }
 
-    public Map<Gambler, GamblerCompeteResult> statistic() {
+    public Map<Gambler, Revenue> revenue() {
         return gamblers.stream()
                 .collect(toMap(
                         identity(),

@@ -48,10 +48,14 @@ public class CardAreaFixture {
         return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
     }
 
-    public static CardArea equal21CardArea() {
+    public static CardArea equal21CardAreaNonBlackJack() {
         final CardArea cardArea = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
         cardArea.addCard(new Card(DIAMOND, TWO));
         return cardArea;
+    }
+
+    public static CardArea equal21CardAreaBlackJack() {
+        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, ACE));
     }
 
     public static CardArea equal22CardArea() {

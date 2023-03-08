@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardArea;
 import domain.card.CardShape;
+import domain.game.Revenue;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -83,24 +84,25 @@ class DealerTest {
         cardArea22.addCard(new Card(DIAMOND, TWO));
 
         return Stream.of(
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("17", new Dealer(equal17CardArea())), WIN),
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("22", new Dealer(equal22CardArea())), LOSE),
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("21", new Dealer(equal21CardArea())), WIN),
-                Arguments.of(Named.of("22", 말랑(equal22CardArea())), Named.of("22", new Dealer(equal22CardArea())), WIN),
-                Arguments.of(Named.of("22", 말랑(equal22CardArea())), Named.of("19", new Dealer(equal19CardArea())), WIN),
-                Arguments.of(Named.of("21", 말랑(equal21CardArea())), Named.of("21", new Dealer(equal21CardArea())), DRAW),
-                Arguments.of(Named.of("21", 말랑(equal21CardArea())), Named.of("20", new Dealer(equal20CardArea())), LOSE),
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("16", new Dealer(equal16CardArea())), DRAW)
+                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("17", new Dealer(equal17CardArea())), LOSE),
+                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("22", new Dealer(equal22CardArea())), WIN),
+                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), LOSE),
+                Arguments.of(Named.of("22", 말랑(equal22CardArea())), Named.of("22", new Dealer(equal22CardArea())), LOSE),
+                Arguments.of(Named.of("22", 말랑(equal22CardArea())), Named.of("19", new Dealer(equal19CardArea())), LOSE),
+                Arguments.of(Named.of("21", 말랑(equal21CardAreaNonBlackJack())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), DRAW),
+                Arguments.of(Named.of("21", 말랑(equal21CardAreaNonBlackJack())), Named.of("20", new Dealer(equal20CardArea())), WIN),
+                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("16", new Dealer(equal16CardArea())), DRAW),
+                Arguments.of(Named.of("21", 말랑(equal21CardAreaBlackJack())), Named.of("20", new Dealer(equal20CardArea())), BLACK_JACK_WIN)
         );
     }
 
-    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 딜러는 {2} 이다")
+    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 참가자는 {2} 이다")
     @MethodSource("playerAndDealerAndResult")
-    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Participant participant, final Dealer dealer, final GamblerCompeteResult gamblerCompeteResult) {
+    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Gambler gambler, final Dealer dealer, final GamblerCompeteResult gamblerCompeteResult) {
         // when
-        final GamblerCompeteResult judge = dealer.compete(participant);
+        final Revenue revenue = dealer.compete(gambler);
 
         // then
-        assertThat(judge).isEqualTo(gamblerCompeteResult.reverse());
+        assertThat(revenue).isEqualTo(gamblerCompeteResult.revenue(gambler));
     }
 }
