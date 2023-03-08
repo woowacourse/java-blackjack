@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     private void printDealerNameAndCard(Participant dealer, Card card) {
-        System.out.println(dealer.getName() + COLON + card.getCardName());
+        System.out.println(NEW_LINE + dealer.getName() + COLON + card.getCardName());
     }
 
     public void printParticipantNameAndCards(final Participant participant) {
@@ -55,6 +55,7 @@ public class OutputView {
     }
 
     public void printAllCardsAndScore(final Participants participants) {
+        System.out.printf(NEW_LINE);
         participants.getAll().forEach(this::printCardsAndScore);
     }
 
@@ -63,7 +64,7 @@ public class OutputView {
     }
 
     private String getScore(final Participant participant) {
-        return String.valueOf(participant.getScore());
+        return String.valueOf(participant.getScore().getValue());
     }
 
     public void printDealerDrawCard() {
@@ -74,7 +75,7 @@ public class OutputView {
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
 
-        System.out.println(NEW_LINE + NEW_LINE + FINAL_RESULT_MESSAGE);
+        System.out.println(NEW_LINE + FINAL_RESULT_MESSAGE);
         printDealerResult(dealer, resultGame);
         for (final Participant player : players) {
             printPlayerResult(player, resultGame);
