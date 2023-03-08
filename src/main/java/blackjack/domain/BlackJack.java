@@ -1,13 +1,14 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.UserDto;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJack {
 
@@ -53,8 +54,16 @@ public class BlackJack {
         return resultUsers;
     }
 
-    public UserDto getUserDtoBy(Name user) {
-        return new UserDto(users.finUserByName(user));
+    public User getUser(Name user) {
+        return users.finUserByName(user);
+    }
+
+    public Map<Result, Integer> getDealerResult() {
+        final HashMap<Result, Integer> resultMap = new HashMap<>();
+        resultMap.put(Result.WIN, getUserOf(Result.LOSE).size());
+        resultMap.put(Result.LOSE, getUserOf(Result.WIN).size());
+        resultMap.put(Result.DRAW, getUserOf(Result.DRAW).size());
+        return resultMap;
     }
 
     public Dealer getDealer() {

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -130,5 +131,41 @@ public class BlackJackTest {
                 () -> assertThat(blackJack.getUserOf(Result.DRAW)).allSatisfy((user) -> user.isNameOf(new Name("Draw"))),
                 () -> assertThat(blackJack.getUserOf(Result.LOSE)).allSatisfy((user) -> user.isNameOf(new Name("Lose")))
         );
+    }
+
+    @Test
+    @DisplayName("딜러의 결과를 알 수 있다.")
+    void getDealerResultTest() {
+        final Name 승리자 = new Name("Win");
+        final Name 승리자2 = new Name("Win2");
+        final Name 패배자 = new Name("Lose");
+        final Name 비긴자 = new Name("Draw");
+
+        Integer[] 승리자카드 = {1, 10};
+        Integer[] 승리자2카드 = {1, 10};
+        Integer[] 패배자카드 = {10, 9};
+        Integer[] 비긴자카드 = {10, 10};
+        Integer[] 딜러카드 = {10, 10};
+
+        final ArrayList<Integer> 테스트덱 = new ArrayList<>(Arrays.asList(승리자카드));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(승리자2카드)));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(패배자카드)));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(비긴자카드)));
+        테스트덱.addAll(new ArrayList<>(Arrays.asList(딜러카드)));
+
+        final BlackJack blackJack = new BlackJack(List.of(승리자, 승리자2, 비긴자, 패배자), new TestDeck(테스트덱));
+
+        final HashMap<Result, Integer> dealerLose = new HashMap<>();
+        dealerLose.put(Result.LOSE, 2);
+
+        final HashMap<Result, Integer> dealerWin = new HashMap<>();
+        dealerWin.put(Result.WIN, 1);
+
+        final HashMap<Result, Integer> dealerDraw = new HashMap<>();
+        dealerDraw.put(Result.DRAW, 1);
+
+        assertThat(blackJack.getDealerResult()).containsAllEntriesOf(dealerDraw);
+        assertThat(blackJack.getDealerResult()).containsAllEntriesOf(dealerWin);
+        assertThat(blackJack.getDealerResult()).containsAllEntriesOf(dealerLose);
     }
 }
