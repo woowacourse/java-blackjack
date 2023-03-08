@@ -20,14 +20,6 @@ public class Participants {
         return new Participants(players);
     }
 
-    public int getNeededNumberOfCards() {
-        return INITIAL_HAND_OUT_COUNT * getNumberOfParticipants();
-    }
-
-    private int getNumberOfParticipants() {
-        return NUMBER_OF_DEALER + players.getNumberOfPlayers();
-    }
-
     public void handInitialCards(Deck deck) {
         handInitialCardsToDealer(deck);
         players.handInitialCards(deck);

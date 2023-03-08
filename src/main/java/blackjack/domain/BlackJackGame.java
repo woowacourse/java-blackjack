@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
@@ -14,12 +13,7 @@ public class BlackJackGame {
     }
 
     public void handInitialCards() {
-        int neededNumberOfCards = participants.getNeededNumberOfCards();
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < neededNumberOfCards; i++) {
-            cards.add(deck.draw());
-        }
-        participants.handInitialCards(new Deck(cards));
+        participants.handInitialCards(deck);
     }
 
     public void handOneCard(Player player) {
