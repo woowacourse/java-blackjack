@@ -76,7 +76,7 @@ class ParticipantsTest {
 
     @DisplayName("플레이어의 점수가 딜러보다 낮으면 플레이어가 패배하는 결과를 반환한다.")
     @Test
-    void 플레이어_패배() {
+    void 플레이어_패배_점수() {
         // given
         Player player = new Player("Player");
         Participants participants = new Participants(new Players(List.of(player)), new Dealer());
@@ -90,5 +90,64 @@ class ParticipantsTest {
         Map<Player, Result> results = participants.calculateAllResults();
         // then
         assertThat(results.get(player)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("플레이어의 점수가 딜러보다 낮으면 플레이어가 패배하는 결과를 반환한다.")
+    @Test
+    void 플레이어_패배_버스트() {
+        // given
+        Player player = new Player("Player");
+        Participants participants = new Participants(new Players(List.of(player)), new Dealer());
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
+                new Card(Suit.CLOVER, Rank.KING), // Player1에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.KING), // Player1에게 주어지는 카드 1
+                new Card(Suit.CLOVER, Rank.FIVE), // 딜러에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.FIVE) // 딜러에게 주어지는 카드 1
+        )));
+        player.addCard(new Card(Suit.CLOVER, Rank.TWO));
+        // when
+        Map<Player, Result> results = participants.calculateAllResults();
+        // then
+        assertThat(results.get(player)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("딜러의 점수가 16 이하이면 hit 한다.")
+    @Test
+    void 딜러_히트() {
+        // given
+        Participants participants = Participants.of(List.of("Player"));
+        Deck determinedDeck = DeterminedDeck.of(List.of(
+                new Card(Suit.CLOVER, Rank.ACE), // 딜러가 hit할 카드
+                new Card(Suit.CLOVER, Rank.FOUR), // Player에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.FIVE), // Player에게 주어지는 카드 1
+                new Card(Suit.CLOVER, Rank.TEN), // 딜러에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.SIX) // 딜러에게 주어지는 카드 1
+        ));
+        participants.drawInitialCardsEachParticipant(determinedDeck);
+        // when
+        participants.hitOrStayByDealer(determinedDeck);
+        Dealer dealer = participants.getDealer();
+        // then
+        assertThat(dealer.calculateScore()).isEqualTo(17);
+    }
+
+    @DisplayName("딜러의 점수가 17 이상이면 stay 한다.")
+    @Test
+    void 딜러_스테이() {
+        // given
+        Participants participants = Participants.of(List.of("Player"));
+        Deck determinedDeck = DeterminedDeck.of(List.of(
+                new Card(Suit.CLOVER, Rank.ACE), // 딜러가 hit할 카드
+                new Card(Suit.CLOVER, Rank.FOUR), // Player에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.FIVE), // Player에게 주어지는 카드 1
+                new Card(Suit.CLOVER, Rank.TEN), // 딜러에게 주어지는 카드 2
+                new Card(Suit.CLOVER, Rank.SEVEN) // 딜러에게 주어지는 카드 1
+        ));
+        participants.drawInitialCardsEachParticipant(determinedDeck);
+        // when
+        participants.hitOrStayByDealer(determinedDeck);
+        Dealer dealer = participants.getDealer();
+        // then
+        assertThat(dealer.calculateScore()).isEqualTo(17);
     }
 }
