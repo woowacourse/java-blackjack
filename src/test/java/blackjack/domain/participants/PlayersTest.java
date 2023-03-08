@@ -1,8 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.participants.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

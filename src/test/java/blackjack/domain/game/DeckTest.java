@@ -1,13 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
-import blackjack.domain.game.Deck;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -26,4 +25,5 @@ class DeckTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 숫자가 52장이 아닙니다");
     }
+
 }

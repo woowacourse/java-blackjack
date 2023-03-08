@@ -1,13 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.stream.IntStream;
-
-import blackjack.domain.participants.Name;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.IntStream;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -30,4 +29,5 @@ class NameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이 100글자를 초과했습니다");
     }
+
 }
