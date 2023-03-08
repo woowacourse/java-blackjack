@@ -9,18 +9,14 @@ import domain.Player;
 import domain.Players;
 import domain.Result;
 import dto.CardStatusDto;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import type.Answer;
 import util.InitialCardMaker;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
 
-    private static final String DELIMITER = ",";
-    private static final int LIMIT_REMOVED = -1;
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
@@ -110,14 +106,8 @@ public class BlackJackController {
                 getCardStatusFromCards(player.getCardList()));
     }
 
-    private List<String> requestPlayerName() {
-        return Arrays.stream(inputView.requestPlayerName().split(DELIMITER, LIMIT_REMOVED))
-                .map(String::trim)
-                .collect(Collectors.toList());
-    }
-
     private Players createGamePlayers(CardDistributor cardDistributor) {
-        List<String> playerNames = requestPlayerName();
+        List<String> playerNames = inputView.requestPlayerName();
         List<Player> players = playerNames.stream()
                 .map(name -> distributeInitialCardForPlayer(name, cardDistributor))
                 .collect(Collectors.toList());
