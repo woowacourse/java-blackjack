@@ -16,7 +16,8 @@ public enum ExceptionMessage {
     NAME_IS_DUPLICATED(ExceptionCode.DUPLICATE_PLAYERS_NAME,"이름이 중복되었습니다."),
     NAME_CONTAINS_COMMA(ExceptionCode.NOT_CONTAINS_COMMA_PLAYER_NAME,"이름에 쉼표(,)가 들어갈 수 없습니다."),
     INVALID_NAME_LENGTH(ExceptionCode.OUT_OF_RANGE_PLAYER_NAME_LENGTH,"이름의 길이는 10자 이하여야 합니다."),
-    NO_DEALER(ExceptionCode.NO_DEALER,"딜러가 존재하지 않습니다.");
+    NO_DEALER(ExceptionCode.NO_DEALER,"딜러가 존재하지 않습니다."),
+    WRONG_ACCESS(ExceptionCode.WRONG_ACCESS, "플레이어가 접근할 수 없는 메서드입니다.");
 
     private final ExceptionCode exceptionCode;
     private final String message;

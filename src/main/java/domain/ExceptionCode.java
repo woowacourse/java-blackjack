@@ -15,7 +15,8 @@ public enum ExceptionCode  {
     NAME_IS_EMPTY("NAME_IS_EMPTY"),
     NAME_IS_NULL("NAME_IS_NULL"),
     NO_DEALER("NO_DEALER"),
-    INVALID_HIT_OR_STAY("INVALID_HIT_OR_STAY");
+    INVALID_HIT_OR_STAY("INVALID_HIT_OR_STAY"),
+    WRONG_ACCESS("WRONG_ACCESS");
 
     private final String exceptionCode;
 

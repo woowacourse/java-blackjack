@@ -53,4 +53,9 @@ public class Player extends Participant {
             throw new IllegalArgumentException(ExceptionCode.OUT_OF_RANGE_PLAYER_NAME_LENGTH.getExceptionCode());
         }
     }
+
+    @Override
+    public boolean shouldHit() {
+        throw new UnsupportedOperationException();
+    }
 }

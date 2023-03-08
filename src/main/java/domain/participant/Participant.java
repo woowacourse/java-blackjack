@@ -40,4 +40,6 @@ public abstract class Participant {
     public boolean isBust() {
         return hand.calculateValue() > BUST_BOUNDARY_VALUE;
     }
+
+    abstract public boolean shouldHit();
 }
