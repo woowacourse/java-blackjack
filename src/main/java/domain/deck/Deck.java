@@ -3,6 +3,7 @@ package domain.deck;
 import java.util.*;
 
 public class Deck {
+
     private Deque<Card> cards;
 
     public Deck() {
@@ -11,7 +12,6 @@ public class Deck {
 
     private Deque<Card> initCards() {
         Deque<Card> cards = new ArrayDeque<>();
-
         for (Suit suit : Suit.values()) {
             pushCards(cards, suit);
         }
@@ -27,7 +27,7 @@ public class Deck {
 
     private void pushCards(final Deque<Card> cards, final Suit suit) {
         for (Rank rank : Rank.values()) {
-            cards.push(Card.getCard(suit, rank));
+            cards.push(Card.of(suit, rank));
         }
     }
 
