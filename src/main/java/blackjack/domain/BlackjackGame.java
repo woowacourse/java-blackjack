@@ -18,10 +18,9 @@ public class BlackjackGame {
 
     public Map<Player, WinningResult> generatePlayersResult() {
         Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
-        Dealer dealer = findDealer();
         List<Player> players = findPlayers();
         for (Player player : players) {
-            WinningResult dealerResult = dealer.judgeWinOrLose(player);
+            WinningResult dealerResult = findDealer().judgeWinOrLose(player);
             initPlayerResult(playersResult, player, dealerResult);
         }
         return playersResult;
