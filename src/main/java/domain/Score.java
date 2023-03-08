@@ -9,6 +9,7 @@ public class Score {
     private static final Score UPPER_LIMIT_SCORE = new Score(21);
 
     private static final Score REMAIN_SCORE_ACE = new Score(10);
+    private static final Score BLACKJACK = new Score(21);
 
     private final int value;
 
@@ -65,5 +66,9 @@ public class Score {
 
     public int value() {
         return value;
+    }
+
+    public boolean isBlackjack() {
+        return this.equals(BLACKJACK);
     }
 }

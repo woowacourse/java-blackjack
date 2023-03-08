@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -153,5 +154,17 @@ class ScoreTest {
 
         //when & then
         assertEquals(origin.plusTenIfNotBurst(), result);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "21 -> true",
+            "20 -> false",
+            "0 -> false",
+    }, delimiterString = " -> ")
+    @DisplayName("isBlackjack() : 점수가 21이면 블랙잭이라고 할 수 있다.")
+    void test_isBlackjack(final int value, final boolean isBlackjack) throws Exception {
+        //when & then
+        assertEquals(new Score(value).isBlackjack(), isBlackjack);
     }
 }
