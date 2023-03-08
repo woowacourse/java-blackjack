@@ -27,8 +27,6 @@ public final class Cards {
     }
 
     public Card getCard() {
-        Card lastCard = cards.getLast();
-        cards.pollLast();
-        return lastCard;
+        return cards.removeLast();
     }
 }
