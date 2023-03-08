@@ -12,7 +12,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.of(Name.from("pobi"), BetAmount.from(10000));
+        player = Player.of(Name.from("pobi"), BettingMoney.from(10000));
     }
 
     @DisplayName("플레이어는 카드를 받을 수 있다.")

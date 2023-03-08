@@ -5,13 +5,13 @@ import java.util.Objects;
 public class Player extends Participant {
     private static final String UNAVAILABLE_NAME = "'%s'라는 이름은 사용할 수 없습니다.";
 
-    private BetAmount betAmount;
+    private BettingMoney betAmount;
 
     private Player(Name name) {
         super(name);
     }
 
-    private Player(Name name, BetAmount betAmount) {
+    private Player(Name name, BettingMoney betAmount) {
         super(name);
         this.betAmount = betAmount;
     }
@@ -22,7 +22,7 @@ public class Player extends Participant {
         return new Player(name);
     }
 
-    public static Player of(Name name, BetAmount betAmount) {
+    public static Player of(Name name, BettingMoney betAmount) {
         validateNameIsNotSameDealer(name);
 
         return new Player(name, betAmount);

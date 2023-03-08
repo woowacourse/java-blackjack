@@ -2,20 +2,20 @@ package domain;
 
 import java.util.Objects;
 
-public class BetAmount {
+public class BettingMoney {
     private static final int MINIMUM = 100;
     private static final int MAXIMUM = 100_000_000;
 
     private final int money;
 
-    private BetAmount(int money) {
+    private BettingMoney(int money) {
         this.money = money;
     }
 
-    public static BetAmount from(int money) {
+    public static BettingMoney from(int money) {
         validate(money);
 
-        return new BetAmount(money);
+        return new BettingMoney(money);
     }
 
     private static void validate(int money) {
@@ -28,15 +28,15 @@ public class BetAmount {
         }
     }
 
-    public BetAmount applyRatio(double ratio) {
-        return new BetAmount((int) (money * ratio));
+    public BettingMoney applyRatio(double ratio) {
+        return new BettingMoney((int) (money * ratio));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BetAmount betAmount = (BetAmount) o;
+        BettingMoney betAmount = (BettingMoney) o;
         return money == betAmount.money;
     }
 

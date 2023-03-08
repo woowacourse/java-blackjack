@@ -25,7 +25,7 @@ class ResultTest {
     void updateBalanceSuccessTest(Result result) {
         int money = 10000;
         boolean isBlackjack = false;
-        BetAmount betAmount = BetAmount.from(money);
+        BettingMoney betAmount = BettingMoney.from(money);
 
         assertThat(result.updateBalance(betAmount, isBlackjack).getMoney())
                 .isEqualTo((int) (result.getRatio() * money));
@@ -36,7 +36,7 @@ class ResultTest {
     void updateBalanceWithBlackjackSuccessTest() {
         int money = 10000;
         boolean isBlackjack = true;
-        BetAmount betAmount = BetAmount.from(money);
+        BettingMoney betAmount = BettingMoney.from(money);
 
         assertThat(Result.WIN.updateBalance(betAmount, isBlackjack).getMoney())
                 .isEqualTo((int) ((Result.WIN.getRatio() + BONUS_RATIO) * money));
