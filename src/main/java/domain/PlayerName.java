@@ -14,20 +14,20 @@ public class PlayerName {
     }
 
     private void validatePlayerName(String name) {
-        validateBlank(name);
         validateNull(name);
+        validateBlank(name);
         validateEmpty(name);
+    }
+
+    private void validateNull(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException(NULL_ERROR_GUIDE_MESSAGE);
+        }
     }
 
     private void validateBlank(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(BLANK_ERROR_GUIDE_MESSAGE);
-        }
-    }
-
-    private void validateNull(String name) {
-        if (name.equals(null)) {
-            throw new IllegalArgumentException(NULL_ERROR_GUIDE_MESSAGE);
         }
     }
 
@@ -40,4 +40,5 @@ public class PlayerName {
     public String getName() {
         return name;
     }
+
 }
