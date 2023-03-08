@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 public class Game {
 
     private final Deck deck;
-
     private final Dealer dealer;
     private final List<User> users;
 
@@ -26,11 +25,11 @@ public class Game {
         }
     }
 
-    public void dealTo(Player user) {
-        user.drawFrom(deck);
+    public void dealTo(Player player) {
+        player.drawFrom(deck);
     }
 
-    public Result getResultOf(Player user) {
+    public Result getResultOf(User user) {
         return user.competeWith(dealer);
     }
 
