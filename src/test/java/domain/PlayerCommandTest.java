@@ -9,11 +9,21 @@ import org.junit.jupiter.api.Test;
 
 class PlayerCommandTest {
 
-    @DisplayName("y를 입력하면 HIT, n을 입력하면 STAND로 변환할 수 있다.")
+    @DisplayName("y를 입력하면 HIT으로 변환할 수 있다.")
     @Test
-    void convertCommandTest() {
+    void convertHitCommandTest() {
         assertThat(PlayerCommand.from("y")).isEqualTo(PlayerCommand.HIT);
+    }
+
+    @DisplayName("n을 입력하면 STAND로 변환할 수 있다.")
+    @Test
+    void convertStandCommandTest() {
         assertThat(PlayerCommand.from("n")).isEqualTo(PlayerCommand.STAND);
+    }
+
+    @DisplayName("y나 n이 아닌 커맨드를 입력하면 예외 처리한다.")
+    @Test
+    void convertInvalidCommandTest() {
         String command = "a";
         assertThatThrownBy(() -> PlayerCommand.from(command))
                 .isInstanceOf(NoSuchElementException.class)

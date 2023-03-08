@@ -27,18 +27,29 @@ class NameTest {
         }
     }
 
+    @Nested
     @DisplayName("이름에는 숫자나 특수문자가 들어갈 수 없다.")
-    @Test
-    void nameRegexTest() {
-        assertDoesNotThrow(() -> new Name("숫자가없는이름"));
-        assertThatThrownBy(() -> new Name("444"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
-        assertThatThrownBy(() -> new Name("이름4"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
-        assertThatThrownBy(() -> new Name("특수^"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
+    class FormatTest {
+        @DisplayName("이름에 숫자나 특수문자가 들어가지 않으면 생성에 성공한다.")
+        @Test
+        void validFormatTest() {
+            assertDoesNotThrow(() -> new Name("숫자가없는이름"));
+        }
+
+        @DisplayName("이름에 숫자가 들어가면 예외 처리한다.")
+        @Test
+        void invalidFormatWithNumberTest() {
+            assertThatThrownBy(() -> new Name("이름4"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
+        }
+
+        @DisplayName("이름에 특수 문자가 들어가면 예외 처리한다.")
+        @Test
+        void invalidFormatWithSpecialCharacterTest() {
+            assertThatThrownBy(() -> new Name("특수^"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(Name.FORMAT_ERROR_MESSAGE);
+        }
     }
 }
