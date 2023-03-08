@@ -12,7 +12,7 @@ public class ParticipantCard {
 
     private static final int FIRST_CARD_INDEX = 0;
     private static final int BLACKJACK_SIZE = 2;
-    private static final Score ACE_HIGH_POINTS = Score.create(11);
+    private static final Score ACE_HIGH_SCORE = Score.create(11);
     private static final Score BLACKJACK_SCORE = Score.create(21);
 
     private final List<Card> cards;
@@ -35,8 +35,8 @@ public class ParticipantCard {
 
     Score calculateScore() {
         Score score = sumCards();
-        if (ACE_HIGH_POINTS.isGreaterThanAndEqual(score) && hasAce()) {
-            score = score.add(ACE_HIGH_POINTS.subtract(ACE.getScore()));
+        if (ACE_HIGH_SCORE.isGreaterThanAndEqual(score) && hasAce()) {
+            score = score.add(ACE_HIGH_SCORE.subtract(ACE.getScore()));
         }
         return score;
     }
