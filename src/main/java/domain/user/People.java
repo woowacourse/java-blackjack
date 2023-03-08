@@ -40,7 +40,7 @@ public class People {
     }
 
     public void letDealerHitUntilThreshold(Deck deck) {
-        while (dealer.canHit()) {
+        if (dealer.canHit()) {
             dealer.draw(deck.serve());
         }
     }
