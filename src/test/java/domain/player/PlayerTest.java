@@ -70,4 +70,25 @@ public class PlayerTest {
         int dealerScore = 19;
         assertFalse(player.isDraw(dealerScore));
     }
+
+    @DisplayName("플레리어의 점수가 21보다 작을 때 false를 반환한다")
+    @Test
+    void isLargerThanBlackJackNumberFalseTest() {
+        Player player = new Player("hardy");
+        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
+        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.KING));
+
+        assertFalse(player.isLargerThanBlackJackNumber());
+    }
+
+    @DisplayName("플레리어의 점수가 21보다 작을 때 false를 반환한다")
+    @Test
+    void isLargerThanBlackJackNumberTrueTest() {
+        Player player = new Player("hardy");
+        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.QUEEN));
+        player.drawCard(Card.getCard(Suit.DIAMOND, Rank.KING));
+        player.drawCard(Card.getCard(Suit.HEART, Rank.QUEEN));
+
+        assertTrue(player.isLargerThanBlackJackNumber());
+    }
 }
