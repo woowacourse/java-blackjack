@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.List;
-import java.util.stream.IntStream;
-
 public enum CardNumber {
     ACE(1, "A"),
     TWO(2, "2"),
@@ -27,27 +24,11 @@ public enum CardNumber {
         this.number = number;
     }
 
-    public static int getMaxValueNearBlackJack(final List<CardNumber> numbers, final int blackJack) {
-        final int aceCount = (int) numbers.stream()
-                .filter(number -> number == ACE)
-                .count();
-
-        final int sumBeforeOptimize = numbers.stream()
-                .mapToInt(number -> number.value)
-                .sum();
-
-        return IntStream.range(0, aceCount)
-                .reduce(sumBeforeOptimize, (before, after) -> optimizeMaxValue(before, blackJack));
-    }
-
     public String getNumber() {
         return number;
     }
 
-    private static int optimizeMaxValue(final int before, final int blackJack) {
-        if (before + ACE_CONVERT_NUMBER <= blackJack) {
-            return before + ACE_CONVERT_NUMBER;
-        }
-        return before;
+    public int getValue() {
+        return value;
     }
 }
