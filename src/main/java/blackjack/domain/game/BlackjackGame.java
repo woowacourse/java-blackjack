@@ -6,24 +6,20 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.view.Order;
 
 import java.util.List;
 
 public class BlackjackGame {
 
-    private final Participants participants;
     private final Deck deck;
 
     public BlackjackGame(final Participants participants, final Deck deck) {
-        this.participants = participants;
         this.deck = deck;
     }
 
-    public Participants getParticipants() {
-        return participants;
-    }
 
-    public void giveTwoCardEveryone() {
+    public void giveTwoCardEveryone(Participants participants) {
         final Dealer dealer = participants.getDealer();
         giveTwoCard(dealer);
 
@@ -40,7 +36,19 @@ public class BlackjackGame {
         participant.drawCard(deck.drawCard());
     }
 
-    public boolean isPlayerCanPlay(final Participant participant) {
+    public boolean isPlayerCanPlay(final Participant participant, final Order order) {
+        if(participant.isBust()||!order.isYES()){
+            return false;
+        }
+        participant.drawCard(deck.drawCard());
         return participant.isNotBust();
+    }
+
+    public boolean playDealer(Dealer dealer){
+        if(dealer.canNotHit()) {
+            return false;
+        }
+        dealer.drawCard(deck.drawCard());
+        return true;
     }
 }

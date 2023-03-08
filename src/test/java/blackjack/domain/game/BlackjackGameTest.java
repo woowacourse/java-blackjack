@@ -37,7 +37,7 @@ public class BlackjackGameTest {
     @DisplayName("모두에게 카드 두장을 나누어 주는지 테스트")
     void giveTwoCardEveryoneTest() {
         BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
-        blackjackGame.giveTwoCardEveryone();
+        blackjackGame.giveTwoCardEveryone(participants);
         assertThat(dealer.getCards().size()).isEqualTo(2);
         participants.getPlayers().forEach(player -> {
             assertThat(player.getCards().size()).isEqualTo(2);
@@ -51,13 +51,5 @@ public class BlackjackGameTest {
         blackjackGame.drawCard(dealer);
 
         assertThat(dealer.getCards().size()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("참가자들 반환 테스트")
-    void getParticipantsTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
-
-        assertThat(blackjackGame.getParticipants()).isEqualTo(participants);
     }
 }

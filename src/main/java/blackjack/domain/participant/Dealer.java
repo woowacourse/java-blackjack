@@ -17,8 +17,5 @@ public class Dealer extends Participant {
         return List.of(firstCard.getCardName());
     }
 
-    @Override
-    public boolean isNotBust() {
-        return getTotalScore() <= 16;
-    }
+    public boolean canNotHit(){return getTotalScore() > 16;}
 }
