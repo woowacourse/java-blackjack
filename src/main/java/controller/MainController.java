@@ -9,6 +9,7 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import view.InputView;
 import view.OutputView;
 
@@ -26,7 +27,7 @@ public class MainController {
 
     public void run() {
         Deck deck = new Deck(deckShuffler);
-        Participants participants = new Participants(inputView.readPlayerNames(), deck);
+        Participants participants = initializeParticipants(deck);
         Dealer dealer = participants.getDealer();
 
         outputView.printInitialState(participants);
@@ -34,6 +35,15 @@ public class MainController {
 
         outputView.printFinalState(participants);
         printFinalResult(participants, dealer);
+    }
+
+    private Participants initializeParticipants(Deck deck) {
+        try {
+            return new Participants(inputView.readPlayerNames(), deck);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return initializeParticipants(deck);
+        }
     }
 
     private void receiveAdditionalCard(Deck deck, Participants participants, Dealer dealer) {
@@ -77,10 +87,19 @@ public class MainController {
     private void repeatReceiveCard(Deck deck, Player player) {
         boolean repeat = true;
         while (repeat) {
-            PlayerCommand command = PlayerCommand.from(inputView.readHit(player.getName()));
+            PlayerCommand command = initializeCommand(player.getName());
             player.receiveAdditionalCard(command, deck);
             repeat = player.calculateScore() < 21 && command.isHit();
             outputView.printSingleState(player);
+        }
+    }
+
+    private PlayerCommand initializeCommand(String playerName) {
+        try {
+            return PlayerCommand.from(inputView.readHit(playerName));
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+            return initializeCommand(playerName);
         }
     }
 
