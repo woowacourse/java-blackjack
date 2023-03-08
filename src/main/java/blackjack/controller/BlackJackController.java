@@ -13,7 +13,6 @@ public class BlackJackController {
 
     public void run() {
         final List<String> playerNames = enrollPlayerNames();
-        initializeGame(playerNames);
         startGame(playerNames);
         hitOrStayForAvailablePlayers(playerNames);
         hitUntilDealerAvailable();
