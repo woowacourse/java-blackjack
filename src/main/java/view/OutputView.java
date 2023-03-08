@@ -22,6 +22,7 @@ public class OutputView {
 
     private static final String EMPTY = "";
     private static final String DELIMITER = ", ";
+    private static final String NEW_LINE = System.lineSeparator();
 
     static {
         makeShapeMessage();
@@ -52,8 +53,8 @@ public class OutputView {
     }
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Gambler> gamblers) {
-        final String message = String.format("\n%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), gamblerNames(gamblers));
-        System.out.println(message);
+        final String message = String.format("%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), gamblerNames(gamblers));
+        System.out.println(NEW_LINE + message);
         showDealerCardAreaState(dealer);
         gamblers.forEach(OutputView::showGamblerCardAreaState);
     }
@@ -90,7 +91,7 @@ public class OutputView {
     }
 
     public static void printDealerOneMoreCard() {
-        System.out.println("\n딜러는 16 이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(NEW_LINE + "딜러는 16 이하라 한장의 카드를 더 받았습니다.");
     }
 
     /**
@@ -134,7 +135,7 @@ public class OutputView {
     }
 
     private static void showFinalWinLose(final GameStatisticResponse statistic) {
-        System.out.println("\n## 최종 수익");
+        System.out.println(NEW_LINE + "## 최종 수익");
         showFinalDealerRevenue(statistic);
         showFinalGamblersRevenue(statistic);
     }
