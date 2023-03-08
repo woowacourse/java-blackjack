@@ -22,7 +22,7 @@ public class InputView {
 
     public int readBettingMoneyByName(final String name) {
         System.out.println(name + "의 배팅 금액은?");
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public String readChoiceOfDrawCard(final String name) {

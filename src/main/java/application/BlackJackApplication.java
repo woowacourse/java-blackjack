@@ -2,6 +2,7 @@ package application;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.BlackJackBettingMachine;
 import domain.BlackJackGame;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
@@ -9,9 +10,11 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.ParticipantGenerator;
 import domain.participant.Players;
+import dto.response.BattingResultDto;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import dto.response.WinLoseResult;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -20,20 +23,40 @@ public class BlackJackApplication {
 
     private final InputView inputView;
     private final OutputView outputView;
+    //TODO: 생성 위치 고민
+    private final BlackJackBettingMachine blackJackBettingMachine;
 
-    public BlackJackApplication(final InputView inputView,
-                                final OutputView outputView) {
+
+    public BlackJackApplication(InputView inputView, OutputView outputView,
+                                BlackJackBettingMachine blackJackBettingMachine) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackJackBettingMachine = blackJackBettingMachine;
     }
 
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
 
+        for (String playerName : blackJackGame.getPlayersName()) {
+            int bettingMoney = inputView.readBettingMoneyByName(playerName);
+            blackJackBettingMachine.betMoney(playerName, bettingMoney);
+        }
+
         splitCards(blackJackGame);
         drawCards(blackJackGame);
+
+
+
         printParticipantResults(blackJackGame);
-        printWinLoseResult(blackJackGame);
+
+        List<BattingResultDto> battingResultDtos = new ArrayList<>();
+        for (String playerName : blackJackGame.getPlayersName()) {
+            int bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
+            double result = blackJackGame.getResult(playerName, bettingMoney);
+            battingResultDtos.add(new BattingResultDto(playerName, result));
+        }
+
+        outputView.printBattingResults(battingResultDtos);
     }
 
     private BlackJackGame createBlackJackGame() {

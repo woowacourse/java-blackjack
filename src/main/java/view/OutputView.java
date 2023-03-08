@@ -1,5 +1,6 @@
 package view;
 
+import dto.response.BattingResultDto;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import dto.response.WinLoseResult;
@@ -70,5 +71,21 @@ public class OutputView {
 
     public void printExceptionMessage(final String message) {
         System.out.println(message);
+    }
+
+    //TODO:반환 타입이나 양식 수정
+    public void printBattingResults(List<BattingResultDto> battingResultDtos) {
+        double dealerBattingResult = battingResultDtos
+                .stream()
+                .mapToDouble(BattingResultDto::getMoney)
+                .sum() * -1;
+
+        System.out.println("최종 수익");
+        System.out.println("딜러: " + dealerBattingResult);
+        battingResultDtos.forEach(OutputView::printPlayerBattingResult);
+    }
+
+    private static void printPlayerBattingResult(BattingResultDto battingResultDto) {
+        System.out.println(battingResultDto.getName() + ": " + battingResultDto.getMoney());
     }
 }
