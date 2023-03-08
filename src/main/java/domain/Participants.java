@@ -35,12 +35,12 @@ public class Participants {
                 .orElseThrow(() -> new IllegalArgumentException("참가중인 플레이어가 아닙니다"));
     }
 
-    void dealCardsFrom(Deck deck) {
-        for (User user : users) {
-            user.addCard(deck.draw());
-        }
-        dealer.addCard(deck.draw());
-    }
+    // void dealCardsFrom(Deck deck) {
+    //     for (User user : users) {
+    //         user.addCard(deck.draw());
+    //     }
+    //     dealer.addCard(deck.draw());
+    // }
 
     List<Result> getDealerResults() {
         List<Result> results = new ArrayList<>();

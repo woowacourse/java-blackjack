@@ -19,9 +19,8 @@ public class HandTest extends AbstractTestFixture {
     void test_add_card() {
         var card = createCard(Letter.ACE);
         var hand = new Hand();
-        hand.hit(card);
 
-        assertThat(hand.cards()).containsExactly(card);
+        assertThat(hand.hit(card).cards()).containsExactly(card);
     }
 
     @ParameterizedTest(name = "점수를 계산한다")

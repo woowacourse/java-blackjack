@@ -19,12 +19,10 @@ public class Hand {
         this.cards = new HashSet<>(cards);
     }
 
-    public void hit(Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> cards() {
-        return new ArrayList<>(cards);
+    public Hand hit(Card card) {
+        Set<Card> hitCards = new HashSet<>(cards);
+        hitCards.add(card);
+        return new Hand(hitCards);
     }
 
     public int score() {
@@ -66,6 +64,10 @@ public class Hand {
             return false;
         }
         return other.isBust() || this.hasScoreGreaterThan(other);
+    }
+
+    public List<Card> cards() {
+        return new ArrayList<>(cards);
     }
 
     private boolean hasSameScoreWith(Hand other) {
