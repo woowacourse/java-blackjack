@@ -32,12 +32,17 @@ public final class Players {
     public void receiveSettingCards(final List<Card> cards) {
         validateSize(cards);
 
-        int playerIndex = 0;
-        for (int cardIndex = 0; cardIndex < cards.size(); cardIndex += INIT_CARD_COUNT) {
-            Player player = players.get(playerIndex);
-            player.receiveCard(cards.get(cardIndex));
-            player.receiveCard(cards.get(cardIndex + 1));
-            playerIndex++;
+        int cardIndex = 0;
+        for (Player player : players) {
+            List<Card> twoCards = List.of(cards.get(cardIndex), cards.get(cardIndex + 1));
+            distribute(player, twoCards);
+            cardIndex += INIT_CARD_COUNT;
+        }
+    }
+
+    private void distribute(final Player player, final List<Card> cards) {
+        for (Card card : cards) {
+            player.receiveCard(card);
         }
     }
 
