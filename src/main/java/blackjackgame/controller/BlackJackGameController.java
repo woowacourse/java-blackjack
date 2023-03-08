@@ -42,16 +42,16 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Cards cards = new Cards(new ShuffledCardsGenerator());
         Dealer dealer = new Dealer();
-        Players players = repeat(this::setUpPlayers);
+        Players players = repeatForValidInput(this::setUpPlayers);
         return new BlackJackGame(players, dealer, cards);
     }
 
-    private <T> T repeat(Supplier<T> supplier) {
+    private <T> T repeatForValidInput(Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
-            return repeat(supplier);
+            return repeatForValidInput(supplier);
         }
     }
 
@@ -72,7 +72,7 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (isLessThanBustScore(player) && DrawCommand.DRAW == repeat(() -> readDrawCommand(player))) {
+        while (isLessThanBustScore(player) && DrawCommand.DRAW == repeatForValidInput(() -> readDrawCommand(player))) {
             blackJackGame.drawOneMoreCard(player);
             printDrawResult(player);
         }
