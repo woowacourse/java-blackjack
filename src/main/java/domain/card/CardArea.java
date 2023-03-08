@@ -12,7 +12,7 @@ public class CardArea {
 
     private final List<Card> cards = new ArrayList<>();
 
-    private CardArea(final Card firstCard, final Card secondCard) {
+    public CardArea(final Card firstCard, final Card secondCard) {
         cards.addAll(List.of(firstCard, secondCard));
     }
 

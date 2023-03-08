@@ -26,10 +26,10 @@ public class BlackJackGame {
 
     public static BlackJackGame defaultSetting(final CardDeck cardDeck, final Map<Name, BettingMoney> battingMoneyMap) {
         validateGamblersSize(battingMoneyMap.keySet());
-        final Dealer dealer = new Dealer(CardArea.withTwoCard(cardDeck));
+        final Dealer dealer = new Dealer(cardDeck.createCardArea());
         final List<Gambler> gamblers = battingMoneyMap.entrySet()
                 .stream()
-                .map(entry -> new Gambler(entry.getKey(), CardArea.withTwoCard(cardDeck), entry.getValue()))
+                .map(entry -> new Gambler(entry.getKey(), cardDeck.createCardArea(), entry.getValue()))
                 .collect(toList());
         return new BlackJackGame(gamblers, dealer, cardDeck);
     }

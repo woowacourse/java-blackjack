@@ -34,6 +34,10 @@ public class CardDeck {
                 .map(value -> new Card(shape, value));
     }
 
+    public CardArea createCardArea() {
+        return new CardArea(draw(), draw());
+    }
+
     public List<Card> cards() {
         return new ArrayList<>(cards);
     }
