@@ -23,7 +23,7 @@ public class ResultDto {
     private static Map<Guest, GameOutcome> getGuests(Map<Guest, GameOutcome> guestsResult) {
         Map<Guest, GameOutcome> result = new LinkedHashMap<>();
         for (final Guest guest : guestsResult.keySet()) {
-            Guest copyGuest = new Guest(new Name(guest.getName()));
+            Guest copyGuest = new Guest(new Name(guest.getName()),Collections.emptyList());
             result.put(copyGuest, guestsResult.get(guest));
         }
         return Collections.unmodifiableMap(result);

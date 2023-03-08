@@ -1,13 +1,17 @@
 package blackjackgame.domain.player;
 
+import java.util.List;
 import java.util.Objects;
+
+import blackjackgame.domain.card.Card;
 
 public class Guest extends Player {
     private static final int BLACKJACK_MAX_SCORE = 21;
 
     private final Name name;
 
-    public Guest(final Name name) {
+    public Guest(final Name name, final List<Card> cards) {
+        super(cards);
         this.name = name;
     }
 

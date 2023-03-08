@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import blackjackgame.domain.Judge;
 import blackjackgame.domain.Result;
+import blackjackgame.domain.ResultDto;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.player.Dealer;
 import blackjackgame.domain.player.Guest;
@@ -24,11 +25,10 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Guests guests = generateGuests();
-        final Dealer dealer = new Dealer();
         final Deck deck = new Deck();
+        final Guests guests = generateGuests(deck);
+        final Dealer dealer = new Dealer(deck.firstPickCards());
 
-        deck.initializePlayersCards(guests, dealer);
         printFirstCards(guests, dealer);
 
         askGuestsHitCard(guests.getGuests(), deck);
@@ -38,11 +38,11 @@ public class BlackJackController {
         judgeAndPrintResult(guests, dealer);
     }
 
-    private Guests generateGuests() {
+    private Guests generateGuests(Deck deck) {
         Guests guests = null;
         do {
             try {
-                guests = getGuests();
+                guests = getGuests(deck);
             } catch (IllegalArgumentException e) {
                 inputView.printErrorMsg(e.getMessage());
             }
@@ -50,10 +50,16 @@ public class BlackJackController {
         return guests;
     }
 
-    private Guests getGuests() {
+    private Guests getGuests(Deck deck) {
         List<String> guestNames = inputView.readGuestsName();
-        List<Name> names = guestNames.stream().map(Name::new).collect(Collectors.toList());
-        List<Guest> guests = names.stream().map(Guest::new).collect(Collectors.toList());
+
+        List<Name> names = guestNames.stream()
+            .map(Name::new)
+            .collect(Collectors.toList());
+
+        List<Guest> guests = names.stream()
+            .map(name-> new Guest(name, deck.firstPickCards()))
+            .collect(Collectors.toList());
         return new Guests(guests);
     }
 
@@ -76,14 +82,14 @@ public class BlackJackController {
 
     private void hitAndPrintCards(Deck deck, Guest guest, AddCardResponse addCardResponse) {
         if (addCardResponse == AddCardResponse.YES) {
-            deck.distributeCard(guest);
+            guest.addCard(deck.pickOne());
             outputView.printCards(guest.getName(), guest.getCards());
         }
     }
 
     private void askDealerHitCardRepeat(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
-            deck.distributeCard(dealer);
+            dealer.addCard(deck.pickOne());
             outputView.dealerAddCard();
         }
     }
@@ -102,6 +108,7 @@ public class BlackJackController {
         Judge judge = new Judge(dealer, guests);
         Result result = new Result(judge.guestsResult());
         result.generateDealer();
-        outputView.printResult(result.getDealer(), result.getGuests());
+
+        outputView.printResult(ResultDto.from(result));
     }
 }
