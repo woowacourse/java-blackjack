@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Score {
     private static final int BLACKJACK = 21;
-    private static final int DEALER_MIN_SCORE = 17;
+    private static final int DEALER_REQUIRED_MIN_SCORE = 17;
     private static final int INITIAL_ACE_COUNT = 0;
     private static final int ACE_ONE = 1;
 
@@ -66,7 +66,7 @@ public class Score {
         if (score > BLACKJACK) {
             return DealerStatus.BUST;
         }
-        if (score < DEALER_MIN_SCORE) {
+        if (score < DEALER_REQUIRED_MIN_SCORE) {
             return DealerStatus.UNDER_MIN_SCORE;
         }
         return DealerStatus.NORMAL;
