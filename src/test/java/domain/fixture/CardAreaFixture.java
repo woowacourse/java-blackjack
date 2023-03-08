@@ -1,9 +1,7 @@
 package domain.fixture;
 
-import domain.card.BlackJackScore;
 import domain.card.Card;
 import domain.card.CardArea;
-import domain.card.CardValue;
 
 import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
@@ -11,75 +9,56 @@ import static domain.card.CardValue.*;
 public class CardAreaFixture {
 
     public static CardArea over21CardArea() {
-        final CardArea cardArea = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
+        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TEN));
         cardArea.addCard(new Card(DIAMOND, TEN));
         return cardArea;
     }
 
     public static CardArea under21CardArea() {
-        return new CardArea(new Card(DIAMOND, CardValue.TWO), new Card(DIAMOND, CardValue.TWO));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TWO, TWO));
     }
 
     public static CardArea under16CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, CardValue.TWO));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TWO));
     }
 
     public static CardArea over16CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, CardValue.SEVEN));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, SEVEN));
     }
 
     public static CardArea equal16CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, SIX));
     }
 
     public static CardArea equal17CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, SEVEN));
     }
 
     public static CardArea equal18CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, EIGHT));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, EIGHT));
     }
 
     public static CardArea equal19CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, NINE));
     }
 
     public static CardArea equal20CardArea() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TEN));
     }
 
     public static CardArea equal21CardAreaNonBlackJack() {
-        final CardArea cardArea = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
+        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(NINE, TEN));
         cardArea.addCard(new Card(DIAMOND, TWO));
         return cardArea;
     }
 
     public static CardArea equal21CardAreaBlackJack() {
-        return new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, ACE));
+        return CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, ACE));
     }
 
     public static CardArea equal22CardArea() {
-        final CardArea cardArea = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, NINE));
+        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(NINE, TEN));
         cardArea.addCard(new Card(DIAMOND, THREE));
         return cardArea;
-    }
-
-    public static CardArea scoreOf(final int score) {
-        return new FixedCardArea(score);
-    }
-
-    static class FixedCardArea extends CardArea {
-
-        private final int value;
-
-        public FixedCardArea(final int value) {
-            super(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
-            this.value = value;
-        }
-
-        @Override
-        public BlackJackScore calculate() {
-            return BlackJackScore.of(value);
-        }
     }
 }

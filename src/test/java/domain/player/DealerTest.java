@@ -2,7 +2,8 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardArea;
-import domain.card.CardShape;
+import domain.fixture.CardAreaFixture;
+import domain.fixture.CardDeckFixture;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -26,12 +27,7 @@ class DealerTest {
     @Test
     void 딜러는_16이하면_카드를_더_받을_수_있다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SIX)
-        );
-
-        final Participant dealer = new Dealer(cardArea);
+        final Participant dealer = new Dealer(CardAreaFixture.under16CardArea());
 
         // when & then
         assertTrue(dealer.canHit());
@@ -40,12 +36,7 @@ class DealerTest {
     @Test
     void 딜러는_16초과면_카드를_더_받을_수_없다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN)
-        );
-
-        final Participant dealer = new Dealer(cardArea);
+        final Participant dealer = new Dealer(CardAreaFixture.over16CardArea());
 
         // when & then
         assertFalse(dealer.canHit());
@@ -54,15 +45,11 @@ class DealerTest {
     @Test
     void 딜러는_첫_장만_보여줄_수_있다() {
         // given
-        final CardArea cardArea = new CardArea(
-                new Card(CardShape.CLOVER, TEN),
-                new Card(CardShape.CLOVER, SEVEN)
-        );
-
+        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, JACK));
         final Dealer dealer = new Dealer(cardArea);
 
         // then
-        assertEquals(dealer.firstCard(), new Card(CardShape.CLOVER, TEN));
+        assertEquals(dealer.firstCard().cardValue(), TEN);
     }
 
     @Test
@@ -79,8 +66,9 @@ class DealerTest {
     }
 
     static Stream<Arguments> playerAndDealerAndResult() {
-        final CardArea cardArea22 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
-        cardArea22.addCard(new Card(DIAMOND, TWO));
+        // given
+        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TEN));
+        cardArea.addCard(new Card(DIAMOND, TWO));
         final BettingMoney money = BettingMoney.of(1000);
         return Stream.of(
                 Arguments.of(

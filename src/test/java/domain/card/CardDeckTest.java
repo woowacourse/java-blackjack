@@ -22,7 +22,7 @@ class CardDeckTest {
     @Test
     void 카드를_종류별로_값_별로_한장씩_모두_가진_채로_생성한다() {
         // given
-        CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+        CardDeck cardDeck = CardDeck.shuffledFullCardDeck(new RandomCardShuffler());
 
         // when
         final Map<CardShape, List<Card>> result = cardDeck.cards()
@@ -42,7 +42,7 @@ class CardDeckTest {
     @Test
     void 카드를_한_장씩_꺼낼_수_있다() {
         // given
-        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck(new RandomCardShuffler());
         final int before = cardDeck.cards().size();
 
         // when

@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.BlackJackScore;
 import domain.card.CardDeck;
+import domain.card.RandomCardShuffler;
 import domain.player.*;
 import org.junit.jupiter.api.*;
 
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("BlackJackGame 은")
 class BlackJackGameTest {
 
-    private final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+    private final CardDeck cardDeck = CardDeck.shuffledFullCardDeck(new RandomCardShuffler());
 
     @Test
     void 기본_세팅_시_참여자의_이름과_배팅_금액과_게임에서_사용할_카드_덱을_받아_딜러와_참여자들을_생성한다() {
@@ -47,7 +48,7 @@ class BlackJackGameTest {
         void 딜러의_점수가_16점_이하가_아니라면_Hit_을_하고_true_를_반환한다() {
             // given
             final Dealer dealer = new Dealer(under16CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, cardDeck);
             final BlackJackScore before = dealer.score();
 
             // when
@@ -62,7 +63,7 @@ class BlackJackGameTest {
         void 딜러의_점수가_16점_초과라면_Hit_을_하지_않고_false_를_반환한다() {
             // given
             final Dealer dealer = new Dealer(over16CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, cardDeck);
             final BlackJackScore before = dealer.score();
 
             // when
@@ -85,7 +86,7 @@ class BlackJackGameTest {
         final Gambler 코다 = 코다(equal21CardAreaNonBlackJack());
         final Dealer dealer = new Dealer(equal20CardArea());
 
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, cardDeck);
 
         // when
         final Map<Participant, Revenue> revenue = blackJackGame.revenue();
@@ -107,7 +108,7 @@ class BlackJackGameTest {
             // given
             final Gambler 말랑 = 말랑(under21CardArea());
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), cardDeck);
             blackJackGame.gamblers().forEach(it -> it.changeState(HitState.STAY));
 
             // when & then
@@ -119,7 +120,7 @@ class BlackJackGameTest {
             // given
             final Gambler 말랑 = 말랑(over21CardArea());
             final Gambler 코다 = 코다(over21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), cardDeck);
 
             // when & then
             assertThat(blackJackGame.existCanHitGambler()).isFalse();
@@ -130,7 +131,7 @@ class BlackJackGameTest {
             // given
             final Gambler 말랑 = 말랑(under21CardArea());
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), cardDeck);
             말랑.changeState(HitState.HIT);
 
             // when & then
@@ -142,7 +143,7 @@ class BlackJackGameTest {
             // given
             final Gambler 말랑 = 말랑(under21CardArea());
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), cardDeck);
 
             // when & then
             assertThat(blackJackGame.existCanHitGambler()).isTrue();
@@ -158,7 +159,7 @@ class BlackJackGameTest {
             // given
             final Gambler 말랑 = 말랑(over21CardArea());
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), cardDeck);
 
             // when
             Gambler canHit = blackJackGame.findCanHitGambler();
@@ -172,7 +173,7 @@ class BlackJackGameTest {
             // given
             final Gambler 말랑 = 말랑(over21CardArea());
             final Gambler 코다 = 코다(over21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), cardDeck);
 
             // when & then
             assertThatThrownBy(blackJackGame::findCanHitGambler)
@@ -188,7 +189,7 @@ class BlackJackGameTest {
         void 주어진_참가자가_Hit_을_원한다면_카드를_제공한다() {
             // given
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), cardDeck);
             final BlackJackScore before = 코다.score();
 
             // when
@@ -202,7 +203,7 @@ class BlackJackGameTest {
         void 주어진_참가자가_Hit_을_원하지_않는다면_카드를_제공하지_않는다() {
             // given
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(under21CardArea()), cardDeck);
             final BlackJackScore before = 코다.score();
 
             // when
@@ -221,8 +222,8 @@ class BlackJackGameTest {
         void 딜러의_카드가_16_점_이하이면_항상_Hit_을_더_해야한다() {
             // given
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame1 = new BlackJackGame(List.of(코다), new Dealer(under16CardArea()), CardDeck.shuffledFullCardDeck());
-            BlackJackGame blackJackGame2 = new BlackJackGame(List.of(코다), new Dealer(equal16CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame1 = new BlackJackGame(List.of(코다), new Dealer(under16CardArea()), cardDeck);
+            BlackJackGame blackJackGame2 = new BlackJackGame(List.of(코다), new Dealer(equal16CardArea()), cardDeck);
 
             // when & then
             assertThat(blackJackGame1.hitForDealerWhenShouldMoreHit()).isTrue();
@@ -233,7 +234,7 @@ class BlackJackGameTest {
         void 딜러의_카드가_16_점_초과이면_항상_Hit_을_더_하지_않는다() {
             // given
             final Gambler 코다 = 코다(under21CardArea());
-            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(over16CardArea()), CardDeck.shuffledFullCardDeck());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(over16CardArea()), cardDeck);
 
             // when & then
             assertThat(blackJackGame.hitForDealerWhenShouldMoreHit()).isFalse();

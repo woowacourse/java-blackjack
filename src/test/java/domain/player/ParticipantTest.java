@@ -2,17 +2,18 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardArea;
-import domain.fixture.CardAreaFixture;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
+
+import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardShape.SPADE;
-import static domain.card.CardValue.TEN;
+import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.equal16CardArea;
+import static domain.fixture.CardDeckFixture.cardDeck;
 import static domain.fixture.GamblerFixture.말랑;
 import static domain.fixture.GamblerFixture.코다;
 import static domain.fixture.NameFixture.코다이름;
@@ -54,18 +55,32 @@ class ParticipantTest {
     }
 
     @ParameterizedTest(name = "버스트에 상관없이 점수가 큰 수가 더 크다. 예를 들어 {0} 은 {1} 보다 높은 점수이다")
-    @CsvSource(value = {
-            "1 > 0",
-            "10 > 9",
-            "19 > 17",
-            "21 > 20",
-            "25 > 21",
-    }, delimiterString = " > ")
-    void 점수_비교를_할_수_있다(final int large, final int small) {
-        final Participant 말랑 = 말랑(CardAreaFixture.scoreOf(large));
-        final Participant 코다 = 코다(CardAreaFixture.scoreOf(small));
+    @MethodSource("scoreCardArea")
+    void 점수_비교를_할_수_있다(final CardArea large, final CardArea small) {
+        final Participant 말랑 = 말랑(large);
+        final Participant 코다 = 코다(small);
 
         // when & then
         assertThat(말랑.isLargerScoreThan(코다)).isTrue();
+    }
+
+    static Stream<Arguments> scoreCardArea() {
+        final CardArea cardArea25 = CardArea.withTwoCard(cardDeck(TEN, TWO));
+        cardArea25.addCard(new Card(DIAMOND, FIVE));
+
+        return Stream.of(
+                Arguments.of(
+                        Named.of("5", CardArea.withTwoCard(cardDeck(TWO, FIVE))),
+                        Named.of("4", CardArea.withTwoCard(cardDeck(TWO, TWO)))
+                ),
+                Arguments.of(
+                        Named.of("21", CardArea.withTwoCard(cardDeck(TEN, ACE))),
+                        Named.of("20", CardArea.withTwoCard(cardDeck(TEN, TEN)))
+                ),
+                Arguments.of(
+                        Named.of("25", cardArea25),
+                        Named.of("21", CardArea.withTwoCard(cardDeck(TWO, ACE)))
+                )
+        );
     }
 }
