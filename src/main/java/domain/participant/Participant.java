@@ -25,6 +25,10 @@ public abstract class Participant {
         return drawnCards.calculateScore();
     }
 
+    public final boolean isBlackJack() {
+        return drawnCards.isBlackJack();
+    }
+
     public abstract List<Card> openDrawnCards();
 
     public abstract boolean isDrawable();
@@ -32,6 +36,7 @@ public abstract class Participant {
     protected final boolean isBurst() {
         return calculateScore() > BURST_NUMBER;
     }
+
 
     public String getName() {
         return name.getName();
