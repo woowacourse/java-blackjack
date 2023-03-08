@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import domain.GameResult;
 import domain.User;
 import domain.Users;
 
@@ -62,41 +61,28 @@ public class OutputView {
 			+ String.join(", ", cardNames);
 	}
 
-	public static void printGameResult(final Map<GameResult, Integer> dealerResult,
-		final Map<String, GameResult> playerResults) {
+	public static void printGameResult(final Map<String, String> dealerResult,
+		final Map<String, String> playerResults) {
 		System.out.println();
 		System.out.println("## 최종 승패");
 		printDealerResult(dealerResult);
 		printPlayerResults(playerResults);
 	}
 
-	private static void printDealerResult(final Map<GameResult, Integer> dealerResult) {
-		StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
-		for (GameResult gameResult : dealerResult.keySet()) {
-			int count = dealerResult.getOrDefault(gameResult, 0);
-			dealerResultMessage.append(getDealerEachResult(gameResult.getName(), count));
-		}
-		System.out.println(dealerResultMessage);
+	private static void printDealerResult(final Map<String, String> dealerResult) {
+		String name = dealerResult.keySet().toArray()[0].toString();
+		String result = dealerResult.values().toArray()[0].toString();
+		System.out.println(name + ": " + result);
 	}
 
-	private static String getDealerEachResult(final String gameResultName, final int count) {
-		if (count != 0) {
-			return count + gameResultName + " ";
+	private static void printPlayerResults(final Map<String, String> playerResults) {
+		for (String player : playerResults.keySet()) {
+			System.out.println(player + ": " + playerResults.get(player));
 		}
-		return "";
-	}
-
-	private static void printPlayerResults(final Map<String, GameResult> playerResults) {
-		playerResults.forEach((playerName, gameResult) ->
-			System.out.println(playerName + ": " + gameResult.getName()));
 	}
 
 	public static void printDealerHitMessage() {
 		System.out.println();
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-	}
-
-	public static void printErrorMessage(String message) {
-		System.out.println(message);
 	}
 }

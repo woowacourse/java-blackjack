@@ -26,37 +26,58 @@ public class BlackJack {
 		dealer.hit(deck.pickCard());
 	}
 
-	public Map<String, GameResult> calculatePlayerResults() {
-		Map<String, GameResult> playerResult = new LinkedHashMap<>();
+	public Map<String, String> calculatePlayerResults() {
+		Map<String, String> playerResult = new LinkedHashMap<>();
 		List<Player> players = users.getPlayers();
 		Dealer dealer = users.getDealer();
 		int dealerScore = dealer.getScore();
 		for (Player player : players) {
-			playerResult.put(player.getName(), comparePlayerWithDealer(player.getScore(), dealerScore));
+			playerResult.put(player.getName(), comparePlayerWithDealer(player.getScore(), dealerScore).getName());
 		}
-
 		return playerResult;
 	}
 
-	public Map<GameResult, Integer> calculateDealerResult() {
-		Map<GameResult, Integer> dealerResult = new HashMap<>();
-		Map<String, GameResult> playerResults = calculatePlayerResults();
-		playerResults.values().forEach(result -> convertResult(result, dealerResult));
+	public Map<String, String> calculateDealerResult() {
+		Map<String, Integer> result = new LinkedHashMap<>();
+		Map<String, String> playerResults = calculatePlayerResults();
+		calculateResults(result, playerResults);
+		return joinWinning(result);
+	}
 
+	private void calculateResults(Map<String, Integer> result, Map<String, String> playerResults) {
+		for (GameResult value : values()) {
+			result.put(value.getName(), 0);
+		}
+		for (String winning : playerResults.values()) {
+			String dealerWinning = convert(winning);
+			result.replace(dealerWinning, result.getOrDefault(dealerWinning, 0) + 1);
+		}
+	}
+
+	private String convert(String winning) {
+		if (winning.equals(WIN.getName()))
+			return LOSE.getName();
+		if (winning.equals(LOSE.getName()))
+			return WIN.getName();
+		return PUSH.getName();
+	}
+
+	private Map<String, String> joinWinning(Map<String, Integer> result) {
+		Map<String, String> dealerResult = new HashMap<>();
+		StringBuilder sb = new StringBuilder();
+		for (String winning : result.keySet()) {
+			join(result, sb, winning);
+		}
+		dealerResult.put("딜러", sb.toString());
 		return dealerResult;
 	}
 
-	private void convertResult(final GameResult playerResult, final Map<GameResult, Integer> dealerResult) {
-		Map<GameResult, GameResult> converter = Map.of(
-			WIN, LOSE,
-			LOSE, WIN,
-			PUSH, PUSH
-		);
-		GameResult convertedResult = converter.get(playerResult);
-		dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
+	private static void join(Map<String, Integer> result, StringBuilder sb, String winning) {
+		if (result.get(winning) > 0)
+			sb.append(result.get(winning).toString()).append(winning).append(' ');
 	}
 
-	public boolean isDealerHittable(){
+	public boolean isDealerHittable() {
 		return users.getDealer().isHittable();
 	}
 
@@ -83,7 +104,7 @@ public class BlackJack {
 		return playerWithScore;
 	}
 
-	public List<Player> getPlayers(){
+	public List<Player> getPlayers() {
 		return users.getPlayers();
 	}
 

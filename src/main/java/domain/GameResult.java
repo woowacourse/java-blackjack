@@ -1,9 +1,9 @@
 package domain;
 
 public enum GameResult {
-    LOSE("패"),
+    WIN("승"),
     PUSH("무"),
-    WIN("승");
+    LOSE("패");
 
     private static final int BLACK_JACK_SCORE = 21;
 

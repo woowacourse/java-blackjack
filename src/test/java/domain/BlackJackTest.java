@@ -29,9 +29,9 @@ public class BlackJackTest {
 		// player1 : ACE(11), 2 => 13
 		// player2 : 3, 4       => 7
 		// dealer  : 5, 6       => 11
-		Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-		assertThat(gameResults.get("hongo")).isEqualTo(GameResult.WIN);
-		assertThat(gameResults.get("kiara")).isEqualTo(GameResult.LOSE);
+		Map<String, String> gameResults = blackJack.calculatePlayerResults();
+		assertThat(gameResults.get("hongo")).isEqualTo("승");
+		assertThat(gameResults.get("kiara")).isEqualTo("패");
 	}
 
 	@DisplayName("플레이어와 딜러의 점수가 같을 경우 무승부(PUSH)를 반환한다")
@@ -44,8 +44,8 @@ public class BlackJackTest {
 		// player1 : ACE(11), 2 => 13
 		// player2 : 3, 4       => 7
 		// dealer : 5, 6, 2   => 13
-		Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-		assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
+		Map<String, String> gameResults = blackJack.calculatePlayerResults();
+		assertThat(gameResults.get("hongo")).isEqualTo("무");
 	}
 
 	@DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
@@ -63,8 +63,8 @@ public class BlackJackTest {
 		// 카드 현황
 		// player : ACE(1), 2, 10, 10  => 23
 		// dealer : 3, 4, 5, 10        => 22
-		Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-		assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
+		Map<String, String> gameResults = blackJack.calculatePlayerResults();
+		assertThat(gameResults.get("hongo")).isEqualTo("무");
 	}
 
 	@DisplayName("유저가 요청하면 카드를 하나 더 준다")
