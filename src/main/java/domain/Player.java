@@ -4,7 +4,7 @@ public class Player extends Participant {
 
     private static final Name BAN_NAME = new Name("딜러");
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
-    private static final int BLACKJACK = 21;
+    private static final Score MORE_CARD_LIMIT = new Score(21);
 
     private Player(Name name, Hand hand) {
         super(name, hand);
@@ -21,12 +21,12 @@ public class Player extends Participant {
         }
     }
 
-    public int getTotalScore() {
-        return hand.calculateScore(BLACKJACK);
+    public boolean isMoreCardAble() {
+        return MORE_CARD_LIMIT.isGreaterThan(getTotalScore());
     }
 
-    public boolean isMoreCardAble() {
-        return getTotalScore() < BLACKJACK;
+    public Score getTotalScore() {
+        return hand.calculateScore(MORE_CARD_LIMIT);
     }
 
 }

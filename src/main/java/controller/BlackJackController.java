@@ -67,7 +67,7 @@ public class BlackJackController {
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameToValue(),
                 CardStatusConverter.convertToCardStatus(participant.getCardList()),
-                participant.getTotalScore());
+                participant.getTotalScoreToValue());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {

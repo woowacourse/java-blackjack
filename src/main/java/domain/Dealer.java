@@ -2,7 +2,7 @@ package domain;
 
 public class Dealer extends Participant {
 
-    private static final int MORE_CARD_LIMIT = 16;
+    private static final Score MORE_CARD_LIMIT = new Score(16);
     private static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer(Hand hand) {
@@ -14,10 +14,10 @@ public class Dealer extends Participant {
     }
 
     public boolean isMoreCardAble() {
-        return getTotalScore() <= MORE_CARD_LIMIT;
+        return getTotalScore().isLessThanOrEqual(MORE_CARD_LIMIT);
     }
 
-    public int getTotalScore() {
+    public Score getTotalScore() {
         return hand.calculateScore(MORE_CARD_LIMIT);
     }
 

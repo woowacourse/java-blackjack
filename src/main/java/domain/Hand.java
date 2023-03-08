@@ -4,10 +4,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int BLACK_JACK = 21;
-    private static final int NONE_ACE = 0;
-    private static final int ACE_DECREASE = 10;
-
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
@@ -18,40 +14,25 @@ public class Hand {
         return cards.size();
     }
 
-    public int calculateScore(int limit) {
-        int aceCount = 0;
-        int sum = 0;
-        for (Card card : cards) {
-            aceCount = increaseAceCount(aceCount, card);
-            sum += card.getValue().getScore();
-        }
-
-        return decreaseScoreByAce(sum, limit, aceCount);
+    public Score calculateScore(Score limit) {
+        Score score = new Score(calculateTotalCardScoreSum());
+        return score.decreaseScoreByAce(limit, calculateAceCount());
     }
 
     public void addNewCard(Card card) {
         cards.add(card);
     }
 
-    private int increaseAceCount(int aceCount, Card card) {
-        if (card.isAce()) {
-            aceCount++;
-        }
-
-        return aceCount;
+    private int calculateTotalCardScoreSum() {
+        return cards.stream()
+                .mapToInt(card -> card.getValue().getScore())
+                .sum();
     }
 
-    private int decreaseScoreByAce(int sum, int limit, int aceCount) {
-        while (isScoreDecreasableByAce(sum, limit, aceCount)) {
-            sum -= ACE_DECREASE;
-            aceCount--;
-        }
-
-        return sum;
-    }
-
-    private boolean isScoreDecreasableByAce(int sum, int limit, int aceCount) {
-        return sum != BLACK_JACK && limit < sum && NONE_ACE < aceCount;
+    private int calculateAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public List<Card> getCards() {

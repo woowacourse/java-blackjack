@@ -4,8 +4,6 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BUST_LIMIT = 21;
-
     protected final Name name;
     protected final Hand hand;
 
@@ -19,10 +17,14 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return getTotalScore() > BUST_LIMIT;
+        return getTotalScore().isBust();
     }
 
-    public abstract int getTotalScore();
+    public int getTotalScoreToValue() {
+        return getTotalScore().getValue();
+    }
+
+    public abstract Score getTotalScore();
 
     public abstract boolean isMoreCardAble();
 
