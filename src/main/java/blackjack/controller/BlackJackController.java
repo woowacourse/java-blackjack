@@ -79,6 +79,9 @@ public class BlackJackController {
             blackJackGame.pick(player);
             OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
         }
+        if (blackJackGame.canPick(player)) {
+            OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
+        }
     }
 
     private boolean chooseGonnaPick(Player player) {
