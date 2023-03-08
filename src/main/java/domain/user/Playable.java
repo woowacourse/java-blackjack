@@ -3,7 +3,7 @@ package domain.user;
 import domain.Card.Card;
 import domain.Card.CardCollection;
 
-public interface Participant2 {
+public interface Playable {
     
     void addCard(Card card);
     
@@ -13,4 +13,11 @@ public interface Participant2 {
     
     boolean isAbleToDraw();
     
+    ParticipantStatus getStatus();
+    
+    int getScore();
+    
+    boolean isBust();
+    
+    String getName();
 }
