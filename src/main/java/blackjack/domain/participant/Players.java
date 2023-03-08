@@ -56,33 +56,33 @@ public final class Players {
         Map<Player, Result> results = new LinkedHashMap<>();
 
         for (Player player : players) {
-            judge(results, player, dealerScore);
+            results.put(player, compare(player, dealerScore));
         }
         return results;
     }
 
-    private void judge(final Map<Player, Result> results, final Player player, final int dealerScore) {
-        if (dealerScore < BLACKJACK_SCORE) {
-            judgeToNotBust(results, player, dealerScore);
-            return;
+    private Result compare(final Player player, final int dealerScore) {
+        if (dealerScore > BLACKJACK_SCORE) {
+            return judgeToBust(player);
         }
-        judgeToBust(results, player);
+        return judgeToNotBust(player.calculateTotalScore(), dealerScore);
     }
 
-    private void judgeToNotBust(final Map<Player, Result> results, final Player player, final int dealerScore) {
+    private Result judgeToBust(final Player player) {
         if (player.isBust()) {
-            results.put(player, LOSE);
-            return;
+            return DRAW;
         }
-        results.put(player, Result.from(player.calculateTotalScore(), dealerScore));
+        return WIN;
     }
 
-    private void judgeToBust(final Map<Player, Result> results, final Player player) {
-        if (player.isBust()) {
-            results.put(player, DRAW);
-            return;
+    private Result judgeToNotBust(final int playerScore, int dealerScore) {
+        if (playerScore < dealerScore) {
+            return LOSE;
         }
-        results.put(player, WIN);
+        if (playerScore == dealerScore) {
+            return DRAW;
+        }
+        return WIN;
     }
 
     public int size() {
