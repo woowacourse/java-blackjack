@@ -4,6 +4,7 @@ import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
 import domain.game.Outcome;
+import domain.player.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -94,8 +95,12 @@ public class MainController {
     }
 
     private void outputGameResult() {
-        final EnumMap<Outcome, Integer> dealerOutcome = blackJackGame.decideDealerOutcome();
-        final Map<String, Outcome> playersOutcome = blackJackGame.decidePlayersOutcome();
+        final int dealerScore = blackJackGame.findDealer().getScore();
+        final List<Player> playersWithOutDealer = blackJackGame.getPlayersWithOutDealer();
+
+        final EnumMap<Outcome, Integer> dealerOutcome = Outcome.decideDealerOutcome(dealerScore, playersWithOutDealer);
+        final Map<String, Outcome> playersOutcome = Outcome.decidePlayersOutcome(dealerScore, playersWithOutDealer);
+
         OutputView.printEmptyLine();
         OutputView.printGameResult(dealerOutcome, playersOutcome);
     }

@@ -48,4 +48,15 @@ public enum Outcome {
         }
         return Outcome.LOSE;
     }
+
+    public static EnumMap<Outcome, Integer> decideDealerOutcome(final int dealerScore, final List<Player> players) {
+        Map<String, Outcome> playerOutcome = decidePlayersOutcome(dealerScore, players);
+        EnumMap<Outcome, Integer> dealerOutcome = initializeOutcomes();
+        for (String key : playerOutcome.keySet()) {
+            Outcome outcome = playerOutcome.get(key);
+            Outcome dealerEachOutcome = reverseOutcome(outcome);
+            dealerOutcome.put(dealerEachOutcome, dealerOutcome.get(dealerEachOutcome) + 1);
+        }
+        return dealerOutcome;
+    }
 }

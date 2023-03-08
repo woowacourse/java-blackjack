@@ -3,11 +3,10 @@ package domain.game;
 import domain.deck.Card;
 import domain.deck.Deck;
 import domain.player.Dealer;
+import domain.player.Player;
 import domain.player.Players;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
     private final Deck deck;
@@ -27,23 +26,8 @@ public class BlackJackGame {
         return findDealer().isDealerDraw();
     }
 
-    private Dealer findDealer() {
+    public Dealer findDealer() {
         return players.findDealer();
-    }
-
-    public EnumMap<Outcome, Integer> decideDealerOutcome() {
-        Map<String, Outcome> playerOutcome = decidePlayersOutcome();
-        EnumMap<Outcome, Integer> dealerOutcome = Outcome.initializeOutcomes();
-        for (String key : playerOutcome.keySet()) {
-            Outcome outcome = playerOutcome.get(key);
-            Outcome dealerEachOutcome = Outcome.reverseOutcome(outcome);
-            dealerOutcome.put(dealerEachOutcome, dealerOutcome.get(dealerEachOutcome) + 1);
-        }
-        return dealerOutcome;
-    }
-
-    public Map<String, Outcome> decidePlayersOutcome() {
-        return Outcome.decidePlayersOutcome(findDealer().getScore(), this.players.getPlayersWithOutDealer());
     }
 
     public boolean isEqualOrLargerThanBlackJackNumber(final String playerName) {
@@ -59,5 +43,9 @@ public class BlackJackGame {
 
     public int getScore(final String playerName) {
         return players.findPlayer(playerName).getScore();
+    }
+
+    public List<Player> getPlayersWithOutDealer() {
+        return players.getPlayersWithOutDealer();
     }
 }
