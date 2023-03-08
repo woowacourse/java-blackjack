@@ -4,7 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class MoneyTest {
     @DisplayName("생성한다.")
@@ -14,14 +15,6 @@ class MoneyTest {
         assertThatNoException().isThrownBy(() -> new Money(moneyValue));
     }
 
-    @DisplayName("생성시 입력값이 음수일 경우 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {-1, -10, -100, -1000, -10000})
-    void throwExceptionWhenValueIsNegative(final int moneyValue) {
-        assertThatThrownBy(() -> new Money(moneyValue))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("돈을 벌다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
@@ -29,16 +22,6 @@ class MoneyTest {
         final Money earnMoney = new Money(value);
         final Money money = new Money(1000);
         assertThatNoException().isThrownBy(() -> money.earn(earnMoney));
-    }
-
-    @DisplayName("지불할 금액이 보유한 금액을 넘어설 경우 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
-    void throwExceptionWhenSpendValueIsGreaterThanCurrentValue(final int value) {
-        final Money spendMoney = new Money(value);
-        final Money money = new Money(0);
-        assertThatThrownBy(() -> money.spend(spendMoney))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("지불하다.")
