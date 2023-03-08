@@ -8,6 +8,9 @@ public enum Result {
     TIE,
     DEFEAT;
 
+    private static final int TIE_DIFF = 0;
+    private static final int MAKE_INDEX = 1;
+
     public static Result of(final Dealer dealer, final Participant participant) {
         if (participant.isBust()) {
             return Result.DEFEAT;
@@ -19,8 +22,9 @@ public enum Result {
     }
 
     private static Result judgeResult(final int dealerScore, final int participantScore) {
+        final int scoreDiff = dealerScore - participantScore;
         final Result[] values = Result.values();
-        final int index = Math.min(Math.max(dealerScore - participantScore, -1), 1) + 1;
+        final int index = Integer.compare(scoreDiff, TIE_DIFF) + MAKE_INDEX;
 
         return values[index];
     }
