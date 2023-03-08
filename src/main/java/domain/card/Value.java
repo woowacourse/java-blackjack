@@ -26,6 +26,6 @@ public enum Value {
     }
 
     public boolean isAce() {
-        return this.equals(ACE);
+        return this == ACE;
     }
 }

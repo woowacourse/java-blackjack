@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public final class Cards {
 
-
     private final Deque<Card> cards;
 
     public Cards(CardsShuffler shuffler) {
@@ -25,10 +24,6 @@ public final class Cards {
 
     public List<Card> giveInitialCards() {
         return List.of(getCard(), getCard());
-    }
-
-    public boolean contains(final Card card) {
-        return cards.contains(card);
     }
 
     public Card getCard() {
