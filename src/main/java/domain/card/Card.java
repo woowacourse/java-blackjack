@@ -8,42 +8,42 @@ import java.util.stream.Collectors;
 
 public final class Card {
 
-    private static final Map<CardPattern, Map<CardNumber, Card>> cache;
+    private static final Map<CardPattern, Map<Denomination, Card>> cache;
 
     static {
         final List<CardPattern> cardPatterns = CardPattern.findAllCardPattern();
-        final List<CardNumber> cardNumbers = CardNumber.findTotalCardNumber();
+        final List<Denomination> denominations = Denomination.findTotalCardNumber();
 
-        cache = makeCacheCards(cardPatterns, cardNumbers);
+        cache = makeCacheCards(cardPatterns, denominations);
     }
 
     private final CardPattern pattern;
-    private final CardNumber number;
+    private final Denomination number;
 
-    private Card(final CardPattern pattern, final CardNumber number) {
+    private Card(final CardPattern pattern, final Denomination number) {
         this.pattern = pattern;
         this.number = number;
     }
 
-    private static Map<CardPattern, Map<CardNumber, Card>> makeCacheCards(final List<CardPattern> cardPatterns,
-            final List<CardNumber> cardNumbers) {
+    private static Map<CardPattern, Map<Denomination, Card>> makeCacheCards(final List<CardPattern> cardPatterns,
+            final List<Denomination> denominations) {
         return cardPatterns.stream()
                 .collect(Collectors.toMap(Function.identity(),
-                        pattern -> makeCacheCardNumbers(pattern, cardNumbers)));
+                        pattern -> makeCacheCardNumbers(pattern, denominations)));
     }
 
-    private static Map<CardNumber, Card> makeCacheCardNumbers(final CardPattern cardPattern,
-            final List<CardNumber> cardNumbers) {
-        return cardNumbers.stream()
+    private static Map<Denomination, Card> makeCacheCardNumbers(final CardPattern cardPattern,
+            final List<Denomination> denominations) {
+        return denominations.stream()
                 .collect(Collectors.toMap(Function.identity(),
                         number -> new Card(cardPattern, number)));
     }
 
-    public static Card of(final CardPattern cardPattern, final CardNumber cardNumber) {
+    public static Card of(final CardPattern cardPattern, final Denomination denomination) {
         try {
-            final Map<CardNumber, Card> cardNumbers = cache.get(cardPattern);
+            final Map<Denomination, Card> cardNumbers = cache.get(cardPattern);
 
-            return cardNumbers.get(cardNumber);
+            return cardNumbers.get(denomination);
         } catch (NullPointerException e) {
             throw new IllegalStateException("존재하지 않는 카드입니다", e);
         }
@@ -61,7 +61,7 @@ public final class Card {
         return pattern;
     }
 
-    public CardNumber getCardNumber() {
+    public Denomination getCardNumber() {
         return number;
     }
 

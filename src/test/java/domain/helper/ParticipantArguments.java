@@ -1,14 +1,14 @@
 package domain.helper;
 
-import static domain.card.CardNumber.ACE;
-import static domain.card.CardNumber.FOUR;
-import static domain.card.CardNumber.JACK;
-import static domain.card.CardNumber.KING;
-import static domain.card.CardNumber.QUEEN;
-import static domain.card.CardNumber.SIX;
-import static domain.card.CardNumber.TEN;
-import static domain.card.CardNumber.THREE;
-import static domain.card.CardNumber.TWO;
+import static domain.card.Denomination.ACE;
+import static domain.card.Denomination.FOUR;
+import static domain.card.Denomination.JACK;
+import static domain.card.Denomination.KING;
+import static domain.card.Denomination.QUEEN;
+import static domain.card.Denomination.SIX;
+import static domain.card.Denomination.TEN;
+import static domain.card.Denomination.THREE;
+import static domain.card.Denomination.TWO;
 import static domain.card.CardPattern.CLOVER;
 import static domain.card.CardPattern.DIAMOND;
 import static domain.card.CardPattern.HEART;

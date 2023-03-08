@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardNumber;
+import domain.card.Denomination;
 import domain.card.CardPattern;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +48,7 @@ class PlayerTest {
     @DisplayName("addCard()는 카드를 건네주면 참가자의 카드에 추가한다")
     void addCard_givenCard_thenSuccess() {
         // when
-        final Card card = Card.of(CardPattern.HEART, CardNumber.ACE);
+        final Card card = Card.of(CardPattern.HEART, Denomination.ACE);
         player.addCard(card);
 
         // then
@@ -91,8 +91,8 @@ class PlayerTest {
     @DisplayName("getStartCard()는 호출하면 딜러의 첫 번째 카드를 조회한다")
     void getStartCard_whenCall_thenReturnStartCard() {
         // given
-        final Card firstCard = Card.of(CardPattern.HEART, CardNumber.ACE);
-        final Card secondCard = Card.of(CardPattern.HEART, CardNumber.TWO);
+        final Card firstCard = Card.of(CardPattern.HEART, Denomination.ACE);
+        final Card secondCard = Card.of(CardPattern.HEART, Denomination.TWO);
         player.addCard(firstCard);
         player.addCard(secondCard);
 

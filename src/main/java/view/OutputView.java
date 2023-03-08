@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.card.CardNumber;
+import domain.card.Denomination;
 import domain.card.CardPattern;
 import domain.participant.Participant;
 import java.math.BigDecimal;
@@ -138,9 +138,9 @@ public final class OutputView {
     }
 
     private String getCardMessage(final Card participantCard) {
-        final CardNumber cardNumber = participantCard.getCardNumber();
+        final Denomination denomination = participantCard.getCardNumber();
         final CardPattern cardPattern = participantCard.getCardPattern();
-        final String numberMessage = NumberMessage.findMessage(cardNumber);
+        final String numberMessage = NumberMessage.findMessage(denomination);
         final String patternMessage = PatternMessage.findMessage(cardPattern);
 
         return numberMessage.concat(patternMessage);
