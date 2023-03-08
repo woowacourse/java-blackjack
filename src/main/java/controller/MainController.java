@@ -63,7 +63,7 @@ public class MainController {
     }
 
     private boolean isOneMore(final String playerName) {
-        if (!blackJackGame.isLargerThanBlackJackNumber(playerName) && InputView.readAnswer()) {
+        if (!blackJackGame.isEqualOrLargerThanBlackJackNumber(playerName) && InputView.readAnswer()) {
             blackJackGame.drawCard(playerName);
             OutputView.printPlayerCard(playerName, blackJackGame.getCards(playerName));
             return true;

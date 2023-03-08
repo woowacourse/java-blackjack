@@ -28,8 +28,8 @@ public class Players {
         }
     }
 
-    public boolean isLargerThanBlackJackNumber(final String playerName) {
-        if (findPlayer(playerName).isLargerThanBlackJackNumber()) {
+    public boolean isEqualOrLargerThanBlackJackNumber(final String playerName) {
+        if (findPlayer(playerName).isEqualOrLargerThanBlackJackNumber()) {
             return true;
         }
         return false;

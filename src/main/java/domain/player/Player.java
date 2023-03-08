@@ -33,8 +33,8 @@ public class Player {
         return dealerScore == hand.score();
     }
 
-    public boolean isLargerThanBlackJackNumber() {
-        if (getScore() > BLACK_JACK_NUMBER) {
+    public boolean isEqualOrLargerThanBlackJackNumber() {
+        if (getScore() >= BLACK_JACK_NUMBER) {
             return true;
         }
         return false;
