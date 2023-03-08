@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 public class GameTest extends AbstractTestFixture {
 
@@ -14,12 +12,12 @@ public class GameTest extends AbstractTestFixture {
     @DisplayName("카드를 2번 돌린다")
     void test_deal_two_cards() {
         var dealer = new Dealer();
-        var participants = createParticipantsFrom(dealer, new User("조이"), new User("땡칠"));
-        var game = new Game(participants, new Deck());
+        // var participants = createParticipantsFrom(dealer, new User("조이"), new User("땡칠"));
+        var game = createGameFrom(dealer, new User("조이"), new User("땡칠"));
 
-        game.dealCardsTwice();
+        game.dealTwice();
 
-        for (User user : participants.getUsers()) {
+        for (var user : game.getUsers()) {
             assertThat(user.getCards()).hasSize(2);
         }
         assertThat(dealer.getCards()).hasSize(2);
@@ -30,11 +28,11 @@ public class GameTest extends AbstractTestFixture {
     void test_dealing_card_to_not_playing_throws() {
         var participant = new User("조이", createCards("10", "2"));
         var notParticipant = new User("참가자아님");
-        var participants = createParticipantsFrom(new Dealer(createCards("K")), participant);
+        // var participants = createParticipantsFrom(new Dealer(createCards("K")), participant);
 
-        var game = new Game(participants, new Deck());
+        var game = createGameFrom(new Dealer(createCards("K")), participant);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> game.dealCardTo(notParticipant));
+                .isThrownBy(() -> game.dealTo(notParticipant));
     }
 }
