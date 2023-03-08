@@ -6,6 +6,7 @@ import domain.player.Name;
 import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.dealer.DealerResult;
+import domain.player.participant.Money;
 import domain.player.participant.Participant;
 import domain.player.participant.ParticipantResult;
 import view.InputView;
@@ -30,15 +31,19 @@ public class BlackJackController {
         final List<Player> players = createPlayers(participants, dealer);
 
         deal(cardTable, players);
-
         printStateAfterDeal(participants, dealer);
+        cardTable.matchAfterFirstDeal(participants, dealer);
+
         hittingPlayer(cardTable, participants, dealer);
         printStateAfterHit(participants, dealer);
 
-        final Map<Participant, ParticipantResult> participantsResult = cardTable.determineWinner(participants, dealer);
-        final Map<DealerResult, Long> scoreBoard = countDealerResult(participantsResult);
+        final Map<Participant, Money> participantsResult =
+                cardTable.determineBettingMoney(participants, dealer);
 
-        printPlayerScoreBoard(participants, participantsResult, scoreBoard);
+        for (final Participant participant : participantsResult.keySet()) {
+            System.out.print(participant.name().value() + " : " );
+            System.out.println(participantsResult.get(participant).value());
+        }
     }
 
     private static List<Player> createPlayers(final List<Participant> participants, final Dealer dealer) {
@@ -65,7 +70,10 @@ public class BlackJackController {
         return InputView.readParticipantsName()
                         .stream()
                         .map(Name::new)
-                        .map(Participant::new)
+                        .map(name -> {
+                            final int bettingMoney = InputView.readBettingMoney(name);
+                            return new Participant(name, Money.wons(bettingMoney));
+                        })
                         .collect(Collectors.toList());
     }
 
@@ -87,15 +95,6 @@ public class BlackJackController {
         OutputView.showStateOf(participants);
     }
 
-    private static Map<DealerResult, Long> countDealerResult(
-            final Map<Participant, ParticipantResult> playersResult) {
-        return playersResult.keySet()
-                            .stream()
-                            .collect(Collectors.groupingBy(participant -> playersResult.get(participant)
-                                                                                       .convertToDealerResult(),
-                                                           counting()));
-    }
-
     private void hittingPlayer(final CardTable cardTable, final List<Participant> participants, final Dealer dealer) {
         hitForParticipants(cardTable, participants);
         hitForDealer(cardTable, dealer);
@@ -104,21 +103,23 @@ public class BlackJackController {
     private void hitForDealer(final CardTable cardTable, final Dealer dealer) {
         do {
             OutputView.dealerOneMoreCard();
-        } while (cardTable.dealCardTo(dealer));
+        } while (dealer.canHit() && cardTable.dealCardTo(dealer));
     }
 
     private void hitForParticipants(final CardTable cardTable, final List<Participant> participants) {
-        participants.forEach(participant -> hitForParticipant(cardTable, participant));
+        participants.stream()
+                    .filter(Participant::hasNotBetState)
+                    .forEach(participant -> hitForParticipant(cardTable, participant));
     }
 
     private void hitForParticipant(final CardTable cardTable, final Participant participant) {
-        while (inputHitOrStay(participant)) {
+        while (participant.canHit() && selectHitOrStand(participant)) {
             cardTable.dealCardTo(participant);
             OutputView.showStateOf(participant);
         }
     }
 
-    private boolean inputHitOrStay(final Participant participant) {
-        return InputView.readMoreCard(participant).equals("y");
+    private boolean selectHitOrStand(final Participant participant) {
+        return InputView.readMoreCard(participant);
     }
 }
