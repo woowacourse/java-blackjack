@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 
 public enum HandsState {
 
-    BUST(x -> x > 21),
-    BLACKJACK(x -> x == 21),
-    IN_PLAY(x -> x <= 21),
+    BUST(score -> score > 21),
+    MAX_SCORE(score -> score == 21),
+    IN_PLAY(score -> score < 21),
     ;
 
     private final Predicate<Integer> calculator;
@@ -18,8 +18,8 @@ public enum HandsState {
 
     public static HandsState from(int score) {
         return Arrays.stream(HandsState.values())
-                .filter(i->i.calculator.test(score))
+                .filter(i -> i.calculator.test(score))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("값이 올바르지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("점수 값이 올바르지 않습니다."));
     }
 }

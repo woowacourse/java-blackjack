@@ -26,6 +26,10 @@ public final class BlackjackGame {
         return new BlackjackGame(Deck.from(new RandomCardGenerator()));
     }
 
+    public static BlackjackGame from(Deck deck) {
+        return new BlackjackGame(deck);
+    }
+
     public void distributeInitialCards(Participants participants, Dealer dealer) {
         dealer.takeCard(deck.distributeCard());
         participants.getParticipants()

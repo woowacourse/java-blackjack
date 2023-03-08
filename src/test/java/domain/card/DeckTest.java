@@ -1,7 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Deck;
-import domain.card.RandomCardGenerator;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +29,7 @@ class DeckTest {
         Deck deck = Deck.from(new RandomCardGenerator());
 
         //when
-        deck.dealCard();
+        deck.distributeCard();
 
         //then
         assertThat(deck)

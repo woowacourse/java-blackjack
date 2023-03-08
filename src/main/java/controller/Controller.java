@@ -1,102 +1,99 @@
 package controller;
 
-import domain.card.CardGenerator;
-import domain.card.Deck;
-import domain.player.Dealer;
-import domain.player.Participant;
-import domain.player.Participants;
-import domain.result.Result;
+import dto.PlayerDto;
+import domain.player.BetAmount;
+import domain.player.*;
+import service.BlackjackGame;
 import view.InputView;
 import view.OutputView;
 
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public final class Controller {
 
-    private final Deck deck;
-
-    public Controller(final CardGenerator cardGenerator) {
-        this.deck = Deck.from(cardGenerator);
-    }
-
     public void run() {
-        Participants participants = retryOnError(() -> Participants.from(InputView.readPlayerNames()));
-        Dealer dealer = Dealer.create();
-
-        initGame(participants, dealer);
-        playGame(participants, dealer);
-        printResult(participants, dealer);
-    }
-
-    private <T> T retryOnError(Supplier<T> supplier) {
         try {
-            return supplier.get();
+            final Names names = Names.from(InputView.readPlayerNames());
+            final Participants participants = createParticipants(names);
+            final Dealer dealer = Dealer.create();
+            final BlackjackGame blackjackGame = BlackjackGame.from();
+
+            initGame(blackjackGame, participants, dealer);
+            distributeCards(blackjackGame, participants, dealer);
+            printPlayerCardsAndScore(participants, dealer);
+            printRevenue(blackjackGame, participants, dealer);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
-            return retryOnError(supplier);
         }
     }
 
-    private void initGame(final Participants participants, final Dealer dealer) {
+    private Participants createParticipants(final Names names) {
+        return Participants.from(names.getNames()
+                .stream()
+                .map(this::createParticipant)
+                .collect(Collectors.toList()));
+    }
+
+    public Participant createParticipant(final String name) {
+        return Participant.from(name, BetAmount.from(InputView.readBetValue(name)));
+    }
+
+    private void initGame(final BlackjackGame blackjackGame, final Participants participants, final Dealer dealer) {
         OutputView.printSetupGame(participants.getNames());
-        dealer.takeCard(deck.dealCard());
+        blackjackGame.distributeInitialCards(participants, dealer);
+        printInitialCard(participants, dealer);
+    }
 
-        participants.drawCard(deck);
-
-        OutputView.printPlayerCards(dealer.getName(), dealer.revealCards());
+    private void printInitialCard(final Participants participants, final Dealer dealer) {
+        printPlayerCards(dealer);
         participants.getParticipants()
                 .forEach(this::printPlayerCards);
     }
 
-    private void printPlayerCards(final Participant participant) {
-        OutputView.printPlayerCards(participant.getName(), participant.revealCards());
+    private void printPlayerCards(Player player) {
+        OutputView.printPlayerCards(PlayerDto.from(player));
     }
 
-    private void playGame(final Participants participants, final Dealer dealer) {
-        participants.getParticipants()
-                .forEach(this::playParticipantTurn);
-
-        playDealerTurn(dealer);
+    private void distributeCards(final BlackjackGame blackjackGame, final Participants participants, final Dealer dealer) {
+        for (Participant participant : participants.getParticipants()) {
+            playParticipantTurn(blackjackGame, participant);
+        }
+        playDealerTurn(blackjackGame, dealer);
     }
 
-    private void playParticipantTurn(final Participant participant) {
-        while (participant.isInPlaying(isHit(participant))) {
-            participant.takeCard(deck.dealCard());
-
-            OutputView.printPlayerCards(participant.getName(), participant.showCardNames());
+    private void playParticipantTurn(final BlackjackGame blackjackGame, final Participant participant) {
+        while (participant.isInPlaying() && isHit(participant)) {
+            blackjackGame.distributeCard(participant);
+            OutputView.printPlayerCards(PlayerDto.from(participant));
         }
     }
 
     private boolean isHit(final Participant participant) {
-        if (participant.isBust() || participant.isBlackjack()) {
-            return false;
-        }
-        return retryOnError(InputView.readCommand(participant.getName())::isValue);
+        return InputView.readCommand(PlayerDto.from(participant));
     }
 
-    private void playDealerTurn(final Dealer dealer) {
-        while (dealer.isInPlaying(dealer.dealerIsHit())) {
-            dealer.takeCard(deck.dealCard());
+    private void playDealerTurn(final BlackjackGame blackjackGame, final Dealer dealer) {
+        blackjackGame.distributeCard(dealer);
+
+        while (dealer.isInPlaying()) {
+            blackjackGame.distributeCard(dealer);
             OutputView.printDealerHit();
         }
+
+        OutputView.printLineSeparator();
     }
 
-    private void printResult(final Participants participants, final Dealer dealer) {
-        OutputView.printPlayerScore(dealer.getName(),
-                dealer.showCardNames(),
-                dealer.getScore());
-
+    private void printPlayerCardsAndScore(final Participants participants, final Dealer dealer) {
+        printParticipantCards(dealer);
         participants.getParticipants()
-                .forEach(this::printPlayerScore);
-
-        Result result = participants.getResult(dealer);
-
-        OutputView.printGameResult(result.getWinners(), result.getLosers());
+                .forEach(this::printParticipantCards);
     }
 
-    private void printPlayerScore(final Participant participant) {
-        OutputView.printPlayerScore(participant.getName(),
-                participant.showCardNames(),
-                participant.getScore());
+    private void printParticipantCards(Player player) {
+        OutputView.printPlayerScore(PlayerDto.from(player));
+    }
+
+    private void printRevenue(final BlackjackGame blackjackGame, final Participants participants, final Dealer dealer) {
+        OutputView.printGameResult(blackjackGame.calculateRevenues(participants, dealer));
     }
 }

@@ -2,28 +2,25 @@ package domain.player;
 
 import domain.card.Cards;
 
-import java.util.List;
-
 public final class Participant extends Player {
 
-    public static final int CARD_RENEWAL_COUNT = 2;
+    private final BetAmount betAmount;
 
-    private Participant(final String name, final Cards cards) {
+    private Participant(final String name, final BetAmount betAmount, final Cards cards) {
         super(name, cards);
+        this.betAmount = betAmount;
     }
 
-    public static Participant from(final String name) {
-        return new Participant(name, new Cards());
+    public static Participant from(final String name, final BetAmount betAmount) {
+        return new Participant(name, betAmount, new Cards());
+    }
+
+    public int getBetValue() {
+        return betAmount.getValue();
     }
 
     @Override
-    public boolean isInPlaying(boolean isHit) {
-        return isHit && HandsState.from(cards.calculateScore()) == HandsState.IN_PLAY;
-    }
-
-    @Override
-    public List<String> revealCards() {
-        return cards.getCardNames()
-                .subList(0, CARD_RENEWAL_COUNT);
+    public boolean isInPlaying() {
+        return HandsState.from(super.getScore()) == HandsState.IN_PLAY;
     }
 }
