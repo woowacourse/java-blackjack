@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -72,5 +74,22 @@ public class RevenueTest {
 
         // then
         assertThat(blackJackWin.amount()).isEqualTo(revenueAmount);
+    }
+
+    @Test
+    void Revenue_끼리는_뺄_수_있다() {
+        // given
+        final Revenue revenue1 = revenue(1000);
+        final Revenue revenue2 = revenue(3000);
+
+        // when
+        final Revenue result = revenue1.minus(revenue2);
+
+        // then
+        assertThat(result.amount()).isEqualTo(-2000);
+    }
+
+    private Revenue revenue(final int amount) {
+        return Revenue.defaultWin(BattingMoney.of(amount));
     }
 }

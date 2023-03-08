@@ -26,6 +26,14 @@ public class Revenue {
         return new Revenue(money.amount() * 1.5);
     }
 
+    public static Revenue zero() {
+        return new Revenue(0);
+    }
+
+    public Revenue minus(final Revenue revenue) {
+        return new Revenue(amount - revenue.amount());
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

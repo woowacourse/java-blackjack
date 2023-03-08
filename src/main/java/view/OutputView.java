@@ -149,19 +149,15 @@ public class OutputView {
     }
 
     private static void showFinalDealerRevenue(final GameStatisticResponse gameStatisticResponse) {
-        final int sum = (int) gameStatisticResponse.gamblerRevenueMap()
-                .values()
-                .stream()
-                .mapToDouble(Revenue::amount)
-                .sum();
-        System.out.println("딜러: " + sum * -1);
+        final Revenue dealerRevenue = gameStatisticResponse.participantRevenueMap().remove(gameStatisticResponse.dealer());
+        System.out.println("딜러: " + dealerRevenue.amount());
     }
 
     private static void showFinalGamblersRevenue(final GameStatisticResponse statistic) {
-        final Map<Gambler, Revenue> gamblerRevenueMap = statistic.gamblerRevenueMap();
+        final Map<Participant, Revenue> gamblerRevenueMap = statistic.participantRevenueMap();
         final List<Gambler> gamblers = statistic.gamblers();
         gamblers.stream()
-                .map(it -> it.nameValue() + ": " +gamblerRevenueMap.get(it).amount())
+                .map(it -> it.nameValue() + ": " + gamblerRevenueMap.get(it).amount())
                 .forEach(System.out::println);
     }
 }

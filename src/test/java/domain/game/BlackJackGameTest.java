@@ -2,10 +2,7 @@ package domain.game;
 
 import domain.card.BlackJackScore;
 import domain.card.CardDeck;
-import domain.player.Dealer;
-import domain.player.Gambler;
-import domain.player.HitState;
-import domain.player.Name;
+import domain.player.*;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -74,7 +71,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
 
         // when
-        final Map<Gambler, Revenue> revenue = blackJackGame.revenue();
+        final Map<Participant, Revenue> revenue = blackJackGame.revenue();
 
         // then
         assertThat(revenue.get(말랑)).isEqualTo(Revenue.draw(말랑.battingMoney()));

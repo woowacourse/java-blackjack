@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.CardArea;
 import domain.game.Revenue;
 
+import static domain.player.GamblerCompeteResult.*;
+
 public class Dealer extends Participant {
 
     private static final Name DEALER_NAME = Name.of("딜러");
@@ -26,12 +28,12 @@ public class Dealer extends Participant {
             return revenueForWin(gambler);
         }
         if (gambler.isBust()) {
-            return GamblerCompeteResult.LOSE.revenue(gambler);
+            return LOSE.revenue(gambler);
         }
         if (isLargerScoreThan(gambler)) {
-            return GamblerCompeteResult.LOSE.revenue(gambler);
+            return LOSE.revenue(gambler);
         }
-        return GamblerCompeteResult.DRAW.revenue(gambler);
+        return DRAW.revenue(gambler);
     }
 
     private boolean isGamblerWin(final Gambler gambler) {
@@ -43,8 +45,8 @@ public class Dealer extends Participant {
 
     private Revenue revenueForWin(final Gambler gambler) {
         if (gambler.isBlackJack()) {
-            return GamblerCompeteResult.BLACK_JACK_WIN.revenue(gambler);
+            return BLACK_JACK_WIN.revenue(gambler);
         }
-        return GamblerCompeteResult.WIN.revenue(gambler);
+        return WIN.revenue(gambler);
     }
 }

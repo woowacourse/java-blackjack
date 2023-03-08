@@ -3,6 +3,7 @@ package controller;
 import domain.game.Revenue;
 import domain.player.Dealer;
 import domain.player.Gambler;
+import domain.player.Participant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,14 @@ public class GameStatisticResponse {
 
     private final Dealer dealer;
     private final List<Gambler> gamblers;
-    private final Map<Gambler, Revenue> gamblerRevenueMap;
+    private final Map<Participant, Revenue> participantRevenueMap;
 
     public GameStatisticResponse(final Dealer dealer,
                                  final List<Gambler> gamblers,
-                                 final Map<Gambler, Revenue> gamblerRevenueMap) {
+                                 final Map<Participant, Revenue> participantRevenueMap) {
         this.dealer = dealer;
         this.gamblers = new ArrayList<>(gamblers);
-        this.gamblerRevenueMap = gamblerRevenueMap;
+        this.participantRevenueMap = participantRevenueMap;
     }
 
     public Dealer dealer() {
@@ -30,7 +31,7 @@ public class GameStatisticResponse {
         return new ArrayList<>(gamblers);
     }
 
-    public Map<Gambler, Revenue> gamblerRevenueMap() {
-        return gamblerRevenueMap;
+    public Map<Participant, Revenue> participantRevenueMap() {
+        return participantRevenueMap;
     }
 }

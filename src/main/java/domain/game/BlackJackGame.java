@@ -2,10 +2,7 @@ package domain.game;
 
 import domain.card.CardArea;
 import domain.card.CardDeck;
-import domain.player.Dealer;
-import domain.player.Gambler;
-import domain.player.HitState;
-import domain.player.Name;
+import domain.player.*;
 
 import java.util.*;
 
@@ -85,11 +82,14 @@ public class BlackJackGame {
         dealer.hit(cardDeck.draw());
     }
 
-    public Map<Gambler, Revenue> revenue() {
-        return gamblers.stream()
-                .collect(toMap(
-                        identity(),
-                        dealer::compete
-                ));
+    public Map<Participant, Revenue> revenue() {
+        final Map<Participant, Revenue> participantRevenue = gamblers.stream()
+                .collect(toMap(identity(),
+                        dealer::compete));
+        final Revenue reduce = participantRevenue.values()
+                .stream()
+                .reduce(Revenue.zero(), Revenue::minus);
+        participantRevenue.put(dealer, reduce);
+        return participantRevenue;
     }
 }
