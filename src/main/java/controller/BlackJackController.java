@@ -24,7 +24,7 @@ public class BlackJackController {
         try {
             initializeGame();
             startGame();
-        } catch (RuntimeException e) {
+        } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
         }
     }
