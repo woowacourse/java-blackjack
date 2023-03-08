@@ -44,11 +44,11 @@ public class BlackJackController {
     private void playPlayersTurn(final BlackJackGame blackJackGame) {
         final List<String> playerNames = blackJackGame.getPlayerNames();
         for (final String playerName : playerNames) {
-            playFor(blackJackGame, playerName);
+            playPlayerTurn(blackJackGame, playerName);
         }
     }
 
-    private void playFor(final BlackJackGame blackJackGame, final String playerName) {
+    private void playPlayerTurn(final BlackJackGame blackJackGame, final String playerName) {
         while (repeat(this::isContinuous, playerName, blackJackGame).isDraw()) {
             blackJackGame.playPlayer(playerName);
             CardGroup userCards = blackJackGame.getStatus().get(playerName);
