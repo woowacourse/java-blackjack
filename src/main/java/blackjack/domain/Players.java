@@ -98,4 +98,8 @@ public class Players {
                 .filter(Player::canHit)
                 .collect(Collectors.toList());
     }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
+    }
 }

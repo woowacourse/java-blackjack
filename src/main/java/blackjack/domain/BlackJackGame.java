@@ -68,4 +68,8 @@ public class BlackJackGame {
     public List<String> getPlayerNames() {
         return participants.getPlayerNames();
     }
+
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
+    }
 }

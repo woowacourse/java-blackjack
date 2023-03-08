@@ -44,12 +44,12 @@ public class BlackJackController {
         Card dealerFirstCard = blackJackGame.openDealerFirstCard();
         OutputView.showDealerFirstCard(dealerFirstCard);
 
-        playerNames.forEach(this::openPlayerCards);
+        List<Player> players = blackJackGame.getPlayers();
+        players.forEach(this::openPlayerCards);
     }
 
-    private void openPlayerCards(String playerName) {
-        List<Card> playerCards = blackJackGame.openPlayerCards(playerName);
-        OutputView.showPlayerCard(playerName, playerCards);
+    private void openPlayerCards(Player player) {
+        OutputView.showPlayerCard(player.getName(), player.getCards());
     }
 
     private void hitOrStayForCanHitPlayers(List<Player> players) {
