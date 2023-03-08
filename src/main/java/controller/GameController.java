@@ -10,7 +10,7 @@ import domain.user.Playable;
 import domain.user.Player;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Function;
 import view.InputView;
 import view.OutputView;
 
@@ -38,23 +38,27 @@ public class GameController {
         this.loopUntilDealStop(game.getDealer(), d -> this.dealDealerMoreCard(game, d));
     }
     
-    private void loopUntilDealStop(Playable participant, Consumer<Playable> consumer) {
+    private void loopUntilDealStop(Playable participant, Function<Playable, Boolean> function) {
+        boolean isDealContinued;
         do {
-            consumer.accept(participant);
-        } while (participant.isAbleToDraw());
+            isDealContinued = function.apply(participant);
+        } while (participant.isAbleToDraw() && isDealContinued);
     }
     
-    private void dealPlayerMoreCard(Game game, Playable player) {
+    private boolean dealPlayerMoreCard(Game game, Playable player) {
         boolean isHit = InputView.readAnswerForMoreCard(player.getName());
         if (BlackJackAction.of(isHit) == BlackJackAction.HIT) {
             game.deal(player);
             OutputView.printNameAndCards(player.getName(), player.getCards());
+            return true;
         }
+        return false;
     }
     
-    private void dealDealerMoreCard(Game game, Playable dealer) {
+    private boolean dealDealerMoreCard(Game game, Playable dealer) {
         game.deal(dealer);
         OutputView.printDealerReceivedCard();
+        return true;
     }
     
     
