@@ -2,7 +2,6 @@ package domain;
 
 public class Player extends Participant {
 
-    private static final Name BAN_NAME = new Name("딜러");
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
     private static final Score MORE_CARD_LIMIT = new Score(21);
 
@@ -16,7 +15,7 @@ public class Player extends Participant {
     }
 
     private void validate(Name name) {
-        if (name.equals(BAN_NAME)) {
+        if (name.equals(Name.DEALER)) {
             throw new IllegalArgumentException(BAN_NAME_ERROR_MESSAGE);
         }
     }
