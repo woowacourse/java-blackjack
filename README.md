@@ -6,6 +6,75 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+```mermaid
+classDiagram
+    Participant <|-- Dealer
+    Participant <|-- Player
+    class Participant {
+        #Name name
+        #Cards cards
+        *isPlayer()
+        *isDealer()
+        *getStartCards()
+        *canDrawCard()
+    }
+    class Dealer {
+        
+    }
+    class Player {
+        -validateBlacklist()
+        +matchGame(Dealer dealer)
+    }
+    class Participants {
+        -List~Participant~ participant
+        -validateDuplicatePlayer(List~Player~ players)
+        +getPlayers()
+        +getDealer()
+        +getPlayers()
+    }
+    class BlackJackGame {
+        -Participants participants
+        -Deck deck
+        +getPlayerNames()
+    }
+    class Name {
+        -String name
+        -validateBlankName(String name)
+        -validateNameLength(String name)
+    }
+    class Cards {
+        -List~Card~ cards
+        +addCard(Card card)
+        +getScore()
+    }
+    class Card {
+        -Suit suit
+        -Rank rank
+    }
+    class Deck {
+        -Deque~Card~ deck
+        +drawCard()
+        +drawCards(int count)
+    }
+    class Score {
+        -int value
+        +isWinTo(Score other)
+    }
+    class Rank {
+        <<enumeration>>
+        ACE
+        ...
+        KING
+    }
+    class Suit {
+        <<enumeration>>
+        SPADE
+        DIAMOND
+        HEAT
+        CLOVER
+    }
+```
+
 ## 기능 요구 사항
 
 ### 게임 진행
