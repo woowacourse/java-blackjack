@@ -18,6 +18,10 @@ public class Money {
         return new Money(this.value - money.value);
     }
 
+    public Money times(final double value) {
+        return new Money((int) (this.value * value));
+    }
+
     public int getValue() {
         return value;
     }
