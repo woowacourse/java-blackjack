@@ -6,7 +6,7 @@ import domain.strategy.RandomNumberGenerator;
 import domain.user.Player;
 import view.InputView;
 import view.OutputView;
-import view.dto.PlayerInfoDto;
+import view.dto.PlayerDto;
 import view.mapper.GameResultMapper;
 
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class BlackjackController {
 
     private void gameStarted() {
         outputView.printGameStarted(
-                PlayerInfoDto.from(blackjackGame.getDealer()),
+                PlayerDto.from(blackjackGame.getDealer()),
                 makePlayersParameter(blackjackGame.getPlayers()));
     }
 
@@ -59,11 +59,11 @@ public class BlackjackController {
     }
 
     private void printGameResult() {
-        outputView.printGameScore(PlayerInfoDto.of(blackjackGame.getDealer(), blackjackGame.getDealerSumHand()),
+        outputView.printGameScore(PlayerDto.of(blackjackGame.getDealer(), blackjackGame.getDealerSumHand()),
                 makePlayersParameterWithResult(blackjackGame.getPlayers())
         );
 
-        outputView.printDealerRecord(PlayerInfoDto.from(blackjackGame.getDealer()), makeDealerRecord());
+        outputView.printDealerRecord(PlayerDto.from(blackjackGame.getDealer()), makeDealerRecord());
         outputView.printPlayerRecord(makeAllPlayerRecordMap());
     }
 
@@ -80,15 +80,15 @@ public class BlackjackController {
         return strMap;
     }
 
-    private List<PlayerInfoDto> makePlayersParameterWithResult(List<Player> players) {
+    private List<PlayerDto> makePlayersParameterWithResult(List<Player> players) {
         return players.stream()
-                .map(it -> PlayerInfoDto.of(it, it.sumHand()))
+                .map(it -> PlayerDto.of(it, it.sumHand()))
                 .collect(Collectors.toList());
     }
 
-    private List<PlayerInfoDto> makePlayersParameter(List<Player> players) {
+    private List<PlayerDto> makePlayersParameter(List<Player> players) {
         return players.stream()
-                .map(PlayerInfoDto::from)
+                .map(PlayerDto::from)
                 .collect(Collectors.toList());
     }
 

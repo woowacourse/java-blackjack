@@ -3,7 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.game.Deck;
 import domain.game.HitCommand;
-import view.dto.PlayerInfoDto;
+import view.dto.PlayerDto;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -22,21 +22,21 @@ public class Player {
         hand.add(card);
     }
 
-    public void hitByCommand(Function<String, String> inputCommand, Consumer<PlayerInfoDto> outputPlayer, Deck deck) {
+    public void hitByCommand(Function<String, String> inputCommand, Consumer<PlayerDto> outputPlayer, Deck deck) {
         boolean hittable;
         do {
             hittable = hitByCondition(outputPlayer, inputCommand, deck);
         } while (hittable);
     }
 
-    private boolean hitByCondition(Consumer<PlayerInfoDto> outputPlayer, Function<String, String> inputCommand, Deck deck) {
+    private boolean hitByCondition(Consumer<PlayerDto> outputPlayer, Function<String, String> inputCommand, Deck deck) {
         HitCommand hitCommand = HitCommand.findCommand(inputCommand.apply(playerName.getValue()));
         if (hitCommand == HitCommand.N) {
             return false;
         }
 
         draw(deck.serve());
-        outputPlayer.accept(PlayerInfoDto.from(this));
+        outputPlayer.accept(PlayerDto.from(this));
 
         return isBust();
     }
