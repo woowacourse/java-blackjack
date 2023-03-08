@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
@@ -11,10 +10,6 @@ public abstract class Player {
     public Player(String name, List<Card> cards) {
         this.name = name;
         this.hand = new Hand(cards);
-    }
-
-    void addCard(Card card) {
-        hand.hit(card);
     }
 
     public void drawFrom(Deck deck) {
@@ -40,10 +35,6 @@ public abstract class Player {
 
     public Hand hand() {
         return hand;
-    }
-
-    public List<Card> getCards() {
-        return new ArrayList<>(hand.cards());
     }
 
     public String getName() {
