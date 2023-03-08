@@ -14,7 +14,7 @@ public class Card {
     }
 
     public String getCardSymbolToString() {
-        return cardSymbol.getSymbol();
+        return cardSymbol.symbol();
     }
 
     public String getCardNumberToString() {

@@ -13,7 +13,7 @@ public enum CardSymbol {
         this.symbol = symbol;
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 }
