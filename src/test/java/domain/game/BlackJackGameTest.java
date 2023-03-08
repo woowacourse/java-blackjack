@@ -14,8 +14,7 @@ import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.GamblerFixture.*;
 import static domain.fixture.NameFixture.말랑이름;
 import static domain.fixture.NameFixture.코다이름;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -74,9 +73,11 @@ class BlackJackGameTest {
         final Map<Participant, Revenue> revenue = blackJackGame.revenue();
 
         // then
-        assertThat(revenue.get(말랑)).isEqualTo(Revenue.draw(말랑.battingMoney()));
-        assertThat(revenue.get(콩떡)).isEqualTo(Revenue.lose(콩떡.battingMoney()));
-        assertThat(revenue.get(코다)).isEqualTo(Revenue.defaultWin(코다.battingMoney()));
+        assertThat(revenue).contains(
+                entry(말랑, Revenue.draw(말랑.battingMoney())),
+                entry(콩떡, Revenue.lose(콩떡.battingMoney())),
+                entry(코다, Revenue.defaultWin(코다.battingMoney()))
+        );
     }
 
     @Nested

@@ -84,15 +84,51 @@ class DealerTest {
         cardArea22.addCard(new Card(DIAMOND, TWO));
         final BattingMoney money = BattingMoney.of(1000);
         return Stream.of(
-                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("17", new Dealer(equal17CardArea())), Named.of("패배", lose(money))),
-                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("22", new Dealer(equal22CardArea())), Named.of("승리", defaultWin(money))),
-                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), Named.of("패배", lose(money))),
-                Arguments.of(Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())), Named.of("22", new Dealer(equal22CardArea())), Named.of("패배", lose(money))),
-                Arguments.of(Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())), Named.of("19", new Dealer(equal19CardArea())), Named.of("패배", lose(money))),
-                Arguments.of(Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), Named.of("무승부", draw(money))),
-                Arguments.of(Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())), Named.of("20", new Dealer(equal20CardArea())), Named.of("승리", defaultWin(money))),
-                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("16", new Dealer(equal16CardArea())), Named.of("무승부", draw(money))),
-                Arguments.of(Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaBlackJack())), Named.of("20", new Dealer(equal20CardArea())), Named.of("블랙잭 승리", blackJackWin(money)))
+                Arguments.of(
+                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
+                        Named.of("17", new Dealer(equal17CardArea())),
+                        Named.of("패배", lose(money))
+                ),
+                Arguments.of(
+                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
+                        Named.of("22", new Dealer(equal22CardArea())),
+                        Named.of("승리", defaultWin(money))
+                ),
+                Arguments.of(
+                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
+                        Named.of("21", new Dealer(equal21CardAreaNonBlackJack())),
+                        Named.of("패배", lose(money))
+                ),
+                Arguments.of(
+                        Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())),
+                        Named.of("22", new Dealer(equal22CardArea())),
+                        Named.of("패배", lose(money))
+                ),
+                Arguments.of(
+                        Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())),
+                        Named.of("19", new Dealer(equal19CardArea())),
+                        Named.of("패배", lose(money))
+                ),
+                Arguments.of(
+                        Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())),
+                        Named.of("21", new Dealer(equal21CardAreaNonBlackJack())),
+                        Named.of("무승부", draw(money))
+                ),
+                Arguments.of(
+                        Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())),
+                        Named.of("20", new Dealer(equal20CardArea())),
+                        Named.of("승리", defaultWin(money))
+                ),
+                Arguments.of(
+                        Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
+                        Named.of("16", new Dealer(equal16CardArea())),
+                        Named.of("무승부", draw(money))
+                ),
+                Arguments.of(
+                        Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaBlackJack())),
+                        Named.of("20", new Dealer(equal20CardArea())),
+                        Named.of("블랙잭 승리", blackJackWin(money))
+                )
         );
     }
 
