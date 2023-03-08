@@ -14,7 +14,7 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    protected int getTotalPoint() {
+    public int getTotalPoint() {
         return cards.calculate();
     }
 
