@@ -34,8 +34,16 @@ public class Player extends Participant {
         }
     }
 
-    public void updateBetAmount(Result result) {
-        betAmount = result.updateBalance(betAmount, cards.isBlackjack());
+    // TODO: 2023-03-07  배팅 금액을 업데이트 할 필요가 있을까 ?
+//    public void updateBetAmount(Result result) {
+//        betAmount = result.updateBalance(betAmount, cards.isBlackjack());
+//    }
+
+    public int getProfit(Result result) {
+        int currentMoney = result.updateBalance(betAmount, this.isBlackjack()).getMoney();
+        int bettingMoney = betAmount.getMoney();
+
+        return currentMoney - bettingMoney;
     }
 
     public int getMoney() {
