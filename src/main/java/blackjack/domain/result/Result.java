@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import static blackjack.domain.participant.Dealer.BLACKJACK_SCORE;
-
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +9,8 @@ public enum Result {
     WIN,
     DRAW,
     LOSE;
+
+    private static final int BLACKJACK_SCORE = 21;
 
     public static Map<Player, Result> makeResult(final List<Player> players, final int dealerScore) {
         Map<Player, Result> results = new LinkedHashMap<>();

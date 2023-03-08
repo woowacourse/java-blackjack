@@ -3,8 +3,8 @@ package blackjack.view;
 import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
-import static blackjack.domain.participant.Dealer.DEALER_CAN_DRAW_SCORE;
-import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
+import static blackjack.domain.participant.Dealer.CAN_DRAW_SCORE;
+import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.result.Result;
@@ -44,7 +44,7 @@ public class OutputView {
     }
 
     public void printDealerDrawOneMoreCard() {
-        System.out.println("[System]: " + "딜러는 " + DEALER_CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
+        System.out.println("[System]: " + "딜러는 " + CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
     public void printParticipantsLastCards(final List<Card> dealerCards, final int score, final List<Player> players) {

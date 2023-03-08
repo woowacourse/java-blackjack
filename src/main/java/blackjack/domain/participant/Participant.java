@@ -6,6 +6,8 @@ import java.util.List;
 
 abstract public class Participant {
 
+    public static final int INIT_CARD_COUNT = 2;
+
     protected final Cards cards;
 
     public Participant(final Cards cards) {
