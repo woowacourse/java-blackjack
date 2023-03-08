@@ -4,25 +4,24 @@ import blackjackgame.domain.Suit;
 import blackjackgame.domain.Denomination;
 
 public enum DiamondCard implements Card {
-    DIAMOND_ACE(Suit.DIAMOND, Denomination.ACE),
-    DIAMOND_TWO(Suit.DIAMOND, Denomination.TWO),
-    DIAMOND_THREE(Suit.DIAMOND, Denomination.THREE),
-    DIAMOND_FOUR(Suit.DIAMOND, Denomination.FOUR),
-    DIAMOND_FIVE(Suit.DIAMOND, Denomination.FIVE),
-    DIAMOND_SIX(Suit.DIAMOND, Denomination.SIX),
-    DIAMOND_SEVEN(Suit.DIAMOND, Denomination.SEVEN),
-    DIAMOND_EIGHT(Suit.DIAMOND, Denomination.EIGHT),
-    DIAMOND_NINE(Suit.DIAMOND, Denomination.NINE),
-    DIAMOND_TEN(Suit.DIAMOND, Denomination.TEN),
-    DIAMOND_JACK(Suit.DIAMOND, Denomination.JACK),
-    DIAMOND_QUEEN(Suit.DIAMOND, Denomination.QUEEN),
-    DIAMOND_KING(Suit.DIAMOND, Denomination.KING);
+    DIAMOND_ACE(Denomination.ACE),
+    DIAMOND_TWO(Denomination.TWO),
+    DIAMOND_THREE(Denomination.THREE),
+    DIAMOND_FOUR(Denomination.FOUR),
+    DIAMOND_FIVE(Denomination.FIVE),
+    DIAMOND_SIX(Denomination.SIX),
+    DIAMOND_SEVEN(Denomination.SEVEN),
+    DIAMOND_EIGHT(Denomination.EIGHT),
+    DIAMOND_NINE(Denomination.NINE),
+    DIAMOND_TEN(Denomination.TEN),
+    DIAMOND_JACK(Denomination.JACK),
+    DIAMOND_QUEEN(Denomination.QUEEN),
+    DIAMOND_KING(Denomination.KING);
 
-    private final Suit suit;
+    private final Suit suit = Suit.DIAMOND;
     private final Denomination denomination;
 
-    DiamondCard(Suit suit, Denomination denomination) {
-        this.suit = suit;
+    DiamondCard(Denomination denomination) {
         this.denomination = denomination;
     }
 
