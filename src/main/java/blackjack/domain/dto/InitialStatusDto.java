@@ -16,17 +16,9 @@ public class InitialStatusDto {
     private final CardDto dealerCard;
     private final List<UserDto> usersData;
 
-    public InitialStatusDto(BlackJack blackJack) {
-        this.dealerCard = new CardDto(blackJack.getDealer().getFirstCard());
-        this.usersData = makeUsersDto(blackJack.getUsers());
-    }
-
-    private List<UserDto> makeUsersDto(final Users users) {
-        final ArrayList<UserDto> userDtos = new ArrayList<>();
-        for (User user : users.getUsers()) {
-            userDtos.add(new UserDto(user));
-        }
-        return userDtos;
+    public InitialStatusDto(CardDto cardDto, List<UserDto> userDtos) {
+        this.dealerCard = cardDto;
+        this.usersData = userDtos;
     }
 
     public CardDto getDealerCard() {

@@ -2,10 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.RandomDeck;
-import blackjack.domain.dto.FinalStatusDto;
-import blackjack.domain.dto.GameResultDto;
-import blackjack.domain.dto.InitialStatusDto;
-import blackjack.domain.dto.UserDto;
+import blackjack.domain.dto.*;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -35,13 +32,13 @@ public class BlackJackController {
 
     private BlackJack makeBlackJackBy(final List<Name> namesByView) {
         final BlackJack blackJack = new BlackJack(namesByView, randomDeck);
-        outputView.printInitialStatus(new InitialStatusDto(blackJack));
+        outputView.printInitialStatus(DtoParser.getInitializeDto(blackJack));
         return blackJack;
     }
 
     private void printCompletedGame(final BlackJack blackJack) {
-        outputView.printFinalPlayersStatus(new FinalStatusDto(blackJack));
-        outputView.printResult(new GameResultDto(blackJack));
+        outputView.printFinalPlayersStatus(DtoParser.getFinalStatusDto(blackJack));
+        outputView.printResult(DtoParser.getGameResultDto(blackJack));
     }
 
     private void finalizeDealerCardStatus(final BlackJack blackJack) {
@@ -58,7 +55,7 @@ public class BlackJackController {
     private void drawCardUntilWanted(BlackJack blackJack, final Name name) {
         while (getCardWantFromConsole(name)) {
             blackJack.giveCard(name, randomDeck);
-            outputView.printCardsOf(blackJack.getUserDtoBy(name));
+            outputView.printCardsOf(DtoParser.getUserDto(blackJack.getUser(name)));
             if (blackJack.isBust(name)) {
                 break;
             }

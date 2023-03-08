@@ -1,8 +1,6 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.BlackJack;
 import blackjack.domain.Users;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 
 import java.util.HashMap;
@@ -13,18 +11,10 @@ public class FinalStatusDto {
     private final Integer dealerScore;
     private final Map<UserDto, Integer> userScores;
 
-    public FinalStatusDto(BlackJack blackJack) {
-        this.dealer = new UserDto(blackJack.getDealer());
-        this.dealerScore = blackJack.getDealer().getGamePoint().getValue();
-        this.userScores = makeUsersStatus(blackJack.getUsers());
-    }
-
-    private Map<UserDto, Integer> makeUsersStatus(final Users users) {
-        final HashMap<UserDto, Integer> usersInfo = new HashMap<>();
-        for (User user : users.getUsers()) {
-            usersInfo.put(new UserDto(user), user.getGamePoint().getValue());
-        }
-        return usersInfo;
+    public FinalStatusDto(UserDto dealer, int dealerScore, Map<UserDto, Integer> userScores) {
+        this.dealer = dealer;
+        this.dealerScore = dealerScore;
+        this.userScores = userScores;
     }
 
     public Integer getDealerScore() {
