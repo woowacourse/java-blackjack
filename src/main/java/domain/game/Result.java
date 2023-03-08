@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.card.Score;
 import domain.player.Dealer;
 import domain.player.Participant;
 
@@ -21,8 +22,8 @@ public enum Result {
         return judgeResult(dealer.getScore(), participant.getScore());
     }
 
-    private static Result judgeResult(final int dealerScore, final int participantScore) {
-        final int scoreDiff = dealerScore - participantScore;
+    private static Result judgeResult(final Score dealerScore, final Score participantScore) {
+        final int scoreDiff = dealerScore.scoreGap(participantScore);
         final Result[] values = Result.values();
         final int index = Integer.compare(scoreDiff, TIE_DIFF) + MAKE_INDEX;
 
