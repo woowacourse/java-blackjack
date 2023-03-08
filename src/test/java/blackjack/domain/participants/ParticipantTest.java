@@ -37,7 +37,7 @@ class ParticipantTest {
 
     @DisplayName("참가자는 카드를 받으면 마지막 위치에 저장한다.")
     @Test
-    void should_addCard_At_LastIndex() {
+    void should_AddCard_At_LastIndex() {
         final Card card = new Card(SPADE, JACK);
 
         player.take(card);

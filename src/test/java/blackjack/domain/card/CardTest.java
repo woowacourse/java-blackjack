@@ -12,7 +12,7 @@ class CardTest {
 
     @DisplayName("카드를 생성한다.")
     @Test
-    void should_createCard() {
+    void should_CreateCard() {
         assertThatCode(() -> new Card(Suit.SPADE, Denomination.ACE))
                 .doesNotThrowAnyException();
     }
