@@ -5,13 +5,13 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Score;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class WinningResult {
 
     private final Map<Player, WinningStatus> playersResult = new HashMap<>();
-    private final Map<WinningStatus, Integer> dealerResult = new HashMap<>();
 
     public WinningResult(final Participants participants) {
         computeWinningResult(participants);
@@ -22,8 +22,6 @@ public final class WinningResult {
         for (Player player : participants.getPlayers()) {
             WinningStatus playerWinningStatus = compete(player, dealer);
             playersResult.put(player, playerWinningStatus);
-            WinningStatus dealerWinningStatus = playerWinningStatus.reverse();
-            dealerResult.put(dealerWinningStatus, dealerResult.getOrDefault(dealerWinningStatus, 0) + 1);
         }
     }
 
@@ -58,6 +56,11 @@ public final class WinningResult {
     }
 
     public Map<WinningStatus, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
+        Map<WinningStatus, Integer> dealerResult = new EnumMap<>(WinningStatus.class);
+        for (WinningStatus playerWinningStatus : playersResult.values()) {
+            WinningStatus winningStatus = playerWinningStatus.reverse();
+            dealerResult.put(winningStatus, dealerResult.getOrDefault(winningStatus, 0) + 1);
+        }
+        return dealerResult;
     }
 }
