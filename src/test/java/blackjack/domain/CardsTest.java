@@ -46,4 +46,56 @@ class CardsTest {
         assertThat(score.getScore())
                 .isEqualTo(expect);
     }
+
+    @Test
+    @DisplayName("카드가 2장이고, 21점이면 블랙잭이여야 한다.")
+    void isBlackjack_twoCardsAnd21Score() {
+        // given
+        Cards cards = new Cards(List.of(
+                Card.of(Suit.DIAMOND, Rank.ACE),
+                Card.of(Suit.DIAMOND, Rank.KING)
+        ));
+
+        // when
+        Score score = cards.getScore();
+
+        // then
+        assertThat(score.isBlackjack())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 2장이여도 21점이 아니면 블랙잭이 아니여야 한다.")
+    void isBlackjack_false() {
+        // given
+        Cards cards = new Cards(List.of(
+                Card.of(Suit.DIAMOND, Rank.KING),
+                Card.of(Suit.DIAMOND, Rank.KING)
+        ));
+
+        // when
+        Score score = cards.getScore();
+
+        // then
+        assertThat(score.isBlackjack())
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("카드의 점수가 21점이어도 2장이 아니면 블랙잭이 아니여야 한다.")
+    void isBlackjak_falseNotTwoCards() {
+        // given
+        Cards cards = new Cards(List.of(
+                Card.of(Suit.DIAMOND, Rank.ACE),
+                Card.of(Suit.DIAMOND, Rank.EIGHT),
+                Card.of(Suit.DIAMOND, Rank.TWO)
+        ));
+
+        // when
+        Score score = cards.getScore();
+
+        // then
+        assertThat(score.isBlackjack())
+                .isFalse();
+    }
 }

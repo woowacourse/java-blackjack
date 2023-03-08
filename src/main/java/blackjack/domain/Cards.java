@@ -25,7 +25,7 @@ public class Cards {
         if (hasAce()) {
             score = calculateAce(score);
         }
-        return new Score(score, isBlackjack());
+        return new Score(score, isBlackjack(score));
     }
 
     private boolean hasAce() {
@@ -40,8 +40,8 @@ public class Cards {
         return score;
     }
 
-    private boolean isBlackjack() {
-        return cards.size() == BLACKJACK_REQUIRE_COUNT;
+    private boolean isBlackjack(int score) {
+        return score == MAX_SCORE && cards.size() == BLACKJACK_REQUIRE_COUNT;
     }
 
     public List<Card> getCards() {
