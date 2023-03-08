@@ -22,6 +22,10 @@ public final class Cards {
         sumScore();
     }
 
+    public boolean isBust() {
+        return !score.isUnderMaxScore();
+    }
+
     private void sumScore() {
         final int newScore = cards.stream()
                 .mapToInt(Card::getScore)
@@ -44,8 +48,8 @@ public final class Cards {
 
     public Score getScore() {
         if (hasAce() && score.canAddBonusScore()) {
-            return score.getScoreWithBonusScore();
+            return Score.from(score.getScoreWithBonusScore());
         }
-        return score.getScore();
+        return score;
     }
 }
