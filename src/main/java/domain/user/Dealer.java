@@ -7,12 +7,15 @@ public class Dealer extends User {
     private static final int UPPER_LIMIT_TO_DRAW = 16;
 
     public Dealer() {
-        super.userName = new DealerName(DEALER_NAME);
-        super.hand = new Hand();
+        this(new DealerName(DEALER_NAME), new Hand());
     }
 
     public Dealer(Hand hand) {
-        super.userName = new DealerName(DEALER_NAME);
+        this(new DealerName(DEALER_NAME), hand);
+    }
+
+    public Dealer(DealerName dealerName, Hand hand) {
+        super.userName = dealerName;
         super.hand = hand;
     }
 

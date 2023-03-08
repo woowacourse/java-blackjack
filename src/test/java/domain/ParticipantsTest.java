@@ -16,7 +16,7 @@ class ParticipantsTest {
     @Test
     void 초기_카드_지급() {
         // given
-        Participants participants = Participants.of(List.of("name1", "name2"));
+        Participants participants = Participants.from(List.of("name1", "name2"));
         participants.drawInitialCardsEachParticipant(new ShuffledDeck());
         // when
         Dealer dealer = participants.getDealer();
@@ -29,7 +29,7 @@ class ParticipantsTest {
     @DisplayName("모든 플레이어의 결과를 반환한다.")
     @Test
     void 결과_계산() {
-        Participants participants = Participants.of(List.of("Player1", "Player2", "Player3"));
+        Participants participants = Participants.from(List.of("Player1", "Player2", "Player3"));
         participants.drawInitialCardsEachParticipant(new ShuffledDeck());
 
         Map<Player, Result> results = participants.calculateAllResults();
@@ -44,7 +44,7 @@ class ParticipantsTest {
         // given
         Player player = new Player("Player");
         Participants participants = new Participants(new Players(List.of(player)), new Dealer());
-        participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.from(List.of(
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 1
                 new Card(Suit.CLOVER, Rank.FOUR), // 딜러에게 주어지는 카드 2
@@ -62,7 +62,7 @@ class ParticipantsTest {
         // given
         Player player = new Player("Player");
         Participants participants = new Participants(new Players(List.of(player)), new Dealer());
-        participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.from(List.of(
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 1
                 new Card(Suit.CLOVER, Rank.FIVE), // 딜러에게 주어지는 카드 2
@@ -80,7 +80,7 @@ class ParticipantsTest {
         // given
         Player player = new Player("Player");
         Participants participants = new Participants(new Players(List.of(player)), new Dealer());
-        participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.from(List.of(
                 new Card(Suit.CLOVER, Rank.FOUR), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 1
                 new Card(Suit.CLOVER, Rank.FIVE), // 딜러에게 주어지는 카드 2
@@ -98,7 +98,7 @@ class ParticipantsTest {
         // given
         Player player = new Player("Player");
         Participants participants = new Participants(new Players(List.of(player)), new Dealer());
-        participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
+        participants.drawInitialCardsEachParticipant(DeterminedDeck.from(List.of(
                 new Card(Suit.CLOVER, Rank.KING), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.KING), // Player1에게 주어지는 카드 1
                 new Card(Suit.CLOVER, Rank.FIVE), // 딜러에게 주어지는 카드 2
@@ -115,8 +115,8 @@ class ParticipantsTest {
     @Test
     void 딜러_히트() {
         // given
-        Participants participants = Participants.of(List.of("Player"));
-        Deck determinedDeck = DeterminedDeck.of(List.of(
+        Participants participants = Participants.from(List.of("Player"));
+        Deck determinedDeck = DeterminedDeck.from(List.of(
                 new Card(Suit.CLOVER, Rank.ACE), // 딜러가 hit할 카드
                 new Card(Suit.CLOVER, Rank.FOUR), // Player에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player에게 주어지는 카드 1
@@ -135,8 +135,8 @@ class ParticipantsTest {
     @Test
     void 딜러_스테이() {
         // given
-        Participants participants = Participants.of(List.of("Player"));
-        Deck determinedDeck = DeterminedDeck.of(List.of(
+        Participants participants = Participants.from(List.of("Player"));
+        Deck determinedDeck = DeterminedDeck.from(List.of(
                 new Card(Suit.CLOVER, Rank.ACE), // 딜러가 hit할 카드
                 new Card(Suit.CLOVER, Rank.FOUR), // Player에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player에게 주어지는 카드 1

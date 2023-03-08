@@ -12,7 +12,7 @@ public class DeterminedDeck implements Deck {
         this.deck = cards;
     }
 
-    public static DeterminedDeck of(List<Card> cards) {
+    public static DeterminedDeck from(List<Card> cards) {
         return new DeterminedDeck(generateCardDummy(cards));
     }
 

@@ -10,7 +10,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> nameValues) {
+    public static Players from(List<String> nameValues) {
         return new Players(generatePlayers(nameValues));
     }
 

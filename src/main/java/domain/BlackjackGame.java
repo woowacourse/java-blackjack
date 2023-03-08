@@ -9,9 +9,13 @@ public class BlackjackGame {
     private final Participants participants;
     private final Deck deck;
 
-    public BlackjackGame(List<String> nameValues) {
-        this.participants = Participants.of(nameValues);
-        this.deck = new ShuffledDeck();
+    public BlackjackGame(Participants participants, Deck deck) {
+        this.participants = participants;
+        this.deck = deck;
+    }
+
+    public static BlackjackGame from(List<String> nameValues) {
+        return new BlackjackGame(Participants.from(nameValues), new ShuffledDeck());
     }
 
     public void initializeGame() {

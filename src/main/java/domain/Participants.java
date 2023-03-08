@@ -19,8 +19,8 @@ public class Participants {
         this.dealer = dealer;
     }
 
-    public static Participants of(List<String> nameValues) {
-        return new Participants(Players.of(nameValues), new Dealer());
+    public static Participants from(List<String> nameValues) {
+        return new Participants(Players.from(nameValues), new Dealer());
     }
 
     public void drawInitialCardsEachParticipant(Deck deck) {
