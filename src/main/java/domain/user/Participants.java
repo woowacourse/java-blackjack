@@ -1,8 +1,5 @@
-package domain;
+package domain.user;
 
-import domain.user.Dealer;
-import domain.user.Playable;
-import domain.user.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;

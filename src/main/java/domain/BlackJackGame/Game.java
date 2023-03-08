@@ -1,8 +1,9 @@
-package domain;
+package domain.BlackJackGame;
 
+import domain.BlackJackGame.GameResult.Result;
 import domain.Card.Deck;
-import domain.GameResult2.Result;
 import domain.user.Dealer;
+import domain.user.Participants;
 import domain.user.Playable;
 import domain.user.Player;
 import java.util.List;
@@ -29,10 +30,10 @@ public class Game {
         participant.addCard(this.deck.draw());
     }
     
-    public GameResult2 generateGameResult() {
+    public GameResult generateGameResult() {
         Dealer dealer = this.participants.getDealer();
         List<Player> players = this.participants.getPlayers();
-        GameResult2 gameResult = new GameResult2();
+        GameResult gameResult = new GameResult();
         for (Player player : players) {
             gameResult.accumulate(player, this.comparePlayerWithDealer(player, dealer));
         }

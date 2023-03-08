@@ -1,4 +1,4 @@
-package domain;
+package domain.BlackJackGame;
 
 public enum BlackJackAction {
     HIT, STAND;
