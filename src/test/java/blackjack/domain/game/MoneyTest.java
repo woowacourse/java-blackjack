@@ -33,12 +33,12 @@ public class MoneyTest {
     }
 
     @Test
-    void 더한_값을_반환한다() {
+    void 뺀_값을_반환한다() {
         final Money money = Money.initialBet(1000);
 
-        Money result = money.plus(Money.initialBet(1500));
+        Money result = money.minus(Money.initialBet(1500));
 
-        assertThat(result.getValue()).isEqualTo(2500);
+        assertThat(result.getValue()).isEqualTo(-500);
     }
 
     @Test
@@ -47,5 +47,4 @@ public class MoneyTest {
 
         assertThat(money.getValue()).isEqualTo(0);
     }
-
 }

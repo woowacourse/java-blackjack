@@ -30,8 +30,8 @@ public class Money {
         return new Money(prize.intValue());
     }
 
-    public Money plus(final Money other) {
-        final BigDecimal result = value.add(other.value);
+    public Money minus(final Money other) {
+        final BigDecimal result = value.subtract(other.value);
         return new Money(result.intValue());
     }
 
