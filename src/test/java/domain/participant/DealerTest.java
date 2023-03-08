@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class DealerTest {
@@ -192,5 +193,13 @@ class DealerTest {
         // then
         assertThat(actual)
                 .isEqualTo("딜러");
+    }
+
+    @Test
+    @DisplayName("calculateBenefit()는 호출하면 예외가 발생한다.")
+    void calculateBenefit_whenCall_thenFail() {
+        assertThatThrownBy(() -> dealer.calculateBenefit(GameResult.LOSE))
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("딜러는 게임 결과에 따른 배당을 받을 수 없습니다.");
     }
 }

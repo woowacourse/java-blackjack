@@ -2,6 +2,8 @@ package domain.participant;
 
 import domain.card.Card;
 
+import domain.game.GameResult;
+import java.math.BigDecimal;
 import java.util.List;
 
 public abstract class Participant {
@@ -23,6 +25,10 @@ public abstract class Participant {
 
         return participantScore.score();
     }
+
+    public abstract GameResult calculateResult(Participant participant);
+
+    public abstract BigDecimal calculateBenefit(final GameResult gameResult);
 
     public abstract boolean canDraw();
 
