@@ -19,12 +19,12 @@ public class BlackJackResultMaker {
 
     private Result decide(final Score score, final Score comparedScore) {
         if (isVictory(score, comparedScore)) {
-            return Result.of(1, 0, 0);
+            return Result.victory();
         }
         if (isDraw(score, comparedScore)) {
-            return Result.of(0, 1, 0);
+            return Result.draw();
         }
-        return Result.of(0, 0, 1);
+        return Result.defeat();
     }
 
     private boolean isVictory(final Score score, final Score comparedScore) {
@@ -41,7 +41,7 @@ public class BlackJackResultMaker {
     }
 
     private Result decide(final Score score, final List<Score> comparedScores) {
-        Result result = Result.of(0, 0, 0);
+        Result result = Result.empty();
         for (Score comparedScore : comparedScores) {
             result = addResult(score, result, comparedScore);
         }
@@ -50,11 +50,11 @@ public class BlackJackResultMaker {
 
     private Result addResult(final Score score, final Result oldResult, final Score comparedScore) {
         if (isVictory(score, comparedScore)) {
-            return Result.of(oldResult.getVictory() + 1, oldResult.getDraw(), oldResult.getDefeat());
+            return oldResult.addVictory();
         }
         if (isDraw(score, comparedScore)) {
-            return Result.of(oldResult.getVictory(), oldResult.getDraw() + 1, oldResult.getDefeat());
+            return oldResult.addDraw();
         }
-        return Result.of(oldResult.getVictory(), oldResult.getDraw(), oldResult.getDefeat() + 1);
+        return oldResult.addDefeat();
     }
 }
