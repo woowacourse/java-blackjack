@@ -29,7 +29,7 @@ class ParticipantTest {
             final Participant participant = Participant.of("준팍", 21);
 
             //when
-            final boolean keepGaming = participant.isKeepGaming(isHit);
+            final boolean keepGaming = participant.isHit(isHit);
 
             //then
             assertThat(keepGaming).isTrue();
@@ -42,7 +42,7 @@ class ParticipantTest {
             final Participant participant = Participant.of("준팍", 22);
 
             //when
-            final boolean keepGaming = participant.isKeepGaming(isHit);
+            final boolean keepGaming = participant.isHit(isHit);
 
             //then
             assertThat(keepGaming).isFalse();
@@ -62,7 +62,7 @@ class ParticipantTest {
             final Participant participant = Participant.of("준팍", 21);
 
             //when
-            final boolean keepGaming = participant.isKeepGaming(isHit);
+            final boolean keepGaming = participant.isHit(isHit);
 
             //then
             assertThat(keepGaming).isFalse();
@@ -75,7 +75,7 @@ class ParticipantTest {
             final Participant participant = Participant.of("준팍", 22);
 
             //when
-            final boolean keepGaming = participant.isKeepGaming(isHit);
+            final boolean keepGaming = participant.isHit(isHit);
 
             //then
             assertThat(keepGaming).isFalse();
