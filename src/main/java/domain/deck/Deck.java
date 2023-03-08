@@ -2,7 +2,7 @@ package domain.deck;
 
 import java.util.*;
 
-public class Deck {
+public final class Deck {
 
     private Deque<Card> cards;
 
