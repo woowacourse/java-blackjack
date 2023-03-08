@@ -23,36 +23,36 @@ public class BlackJackController {
         OutputView.printResult(participants);
     }
 
-    private static void divideCardForDealer(Deck deck, Dealer dealer) {
+    private void divideCardForDealer(Deck deck, Dealer dealer) {
         if (dealer.canReceiveCard()) {
             dealer.receiveCard(deck.pick());
             OutputView.printReceiveCardForDealer();
         }
     }
 
-    private static void divideCard(Deck deck, Participants participants) {
+    private void divideCard(Deck deck, Participants participants) {
         for (Player player : participants.getPlayers()) {
             receiveCardForPlayer(deck, player);
         }
     }
 
-    private static void receiveCardForPlayer(Deck deck, Player player) {
+    private void receiveCardForPlayer(Deck deck, Player player) {
         while (canReceiveCard(player)) {
             player.receiveCard(deck.pick());
             OutputView.printPlayerCardStatus(player);
         }
     }
 
-    private static boolean canReceiveCard(Player player) {
+    private boolean canReceiveCard(Player player) {
         return player.canReceiveCard() && isInputEqualsReceiveCardCommand(player);
     }
 
-    private static boolean isInputEqualsReceiveCardCommand(Player player) {
+    private boolean isInputEqualsReceiveCardCommand(Player player) {
         return InputView.getPlayerInputGetMoreCard(player.getName());
     }
 
 
-    private static void divideFirstCard(Deck deck, Participants participants) {
+    private void divideFirstCard(Deck deck, Participants participants) {
         OutputView.printDivideTwoCard(participants.getPlayers());
         participants.receiveInitialCards(deck);
     }

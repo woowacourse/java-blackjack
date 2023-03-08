@@ -46,12 +46,8 @@ public class OutputView {
     }
 
     public static void printDealerCardStatus(final Dealer dealer) {
-        System.out.println(System.lineSeparator()
-                + dealer.getName()
-                + ": "
-                + getCardStatusForm(dealer.getHand())
-                + " - 결과: "
-                + dealer.getHand().getTotalValue());
+        System.out.println();
+        printParticipantsScoreBoard(dealer.getName(), dealer.getHand());
     }
 
     private static String getCardStatusForm(final Hand hand) {
@@ -74,13 +70,17 @@ public class OutputView {
 
     private static void printPlayersScoreBoard(final List<Player> players) {
         for (Player player : players) {
-            System.out.println(player.getName()
-                            + ": "
-                            + getCardStatusForm(player.getHand())
-                            + " - 결과: "
-                            + player.getHand().getTotalValue()
-            );
+            printParticipantsScoreBoard(player.getName(), player.getHand());
         }
+    }
+
+    private static void printParticipantsScoreBoard(String name, Hand hand) {
+        System.out.println(name
+                + ": "
+                + getCardStatusForm(hand)
+                + " - 결과: "
+                + hand.getTotalValue()
+        );
     }
 
     public static void printResult(final Participants participants) {
