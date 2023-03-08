@@ -23,7 +23,7 @@ public class Dealer extends Participant {
         return playerJudgeResults;
     }
 
-    public JudgeResult judge(final Player player) {
+    private JudgeResult judge(final Player player) {
         if (player.isBust()) {
             return JudgeResult.LOSE;
         }

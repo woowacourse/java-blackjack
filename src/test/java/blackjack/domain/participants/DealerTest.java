@@ -5,13 +5,16 @@ import static blackjack.domain.card.Denomination.QUEEN;
 import static blackjack.domain.card.Denomination.SEVEN;
 import static blackjack.domain.card.Denomination.SIX;
 import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.result.JudgeResult.LOSE;
+import static blackjack.domain.result.JudgeResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.JudgeResult;
 import blackjack.dto.HandStatus;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -46,16 +49,21 @@ class DealerTest {
         assertThat(dealer.isAbleToHit()).isFalse();
     }
 
-    @DisplayName("합을 비교해 최종 승패를 결정한다.")
+    @DisplayName("플레이어들을 전달받아 판정 결과들을 반환한다.")
     @Test
-    void should_ReturnJudgeResult_When_Given_Player() {
+    void should_ReturnPlayerJudgeResults_When_Given_Players() {
         dealer.take(new Card(SPADE, QUEEN));
-        dealer.take(new Card(CLUB, SEVEN));
+        dealer.take(new Card(SPADE, SEVEN));
 
-        final Player player = new Player("pobi");
-        player.take(new Card(SPADE, QUEEN));
-        player.take(new Card(CLUB, SIX));
-        assertThat(dealer.judge(player)).isEqualTo(JudgeResult.LOSE);
+        final Player player1 = new Player("pobi");
+        final Player player2 = new Player("wony");
+        player1.take(new Card(CLUB, QUEEN));
+        player1.take(new Card(CLUB, SIX));
+        player2.take(new Card(DIAMOND, QUEEN));
+        player2.take(new Card(DIAMOND, JACK));
+        
+        assertThat(dealer.judgeAllPlayersResult(new Players(List.of(player1, player2))))
+                .containsExactlyEntriesOf(Map.of("pobi", LOSE, "wony", WIN));
     }
 
     @DisplayName("딜러는 카드 오픈 시 첫 번째 카드 상태만 확인한다.")
@@ -77,7 +85,7 @@ class DealerTest {
         final Card card1 = new Card(SPADE, JACK);
         final Card card2 = new Card(SPADE, SIX);
         final Participant dealer = new Dealer("딜러");
-        
+
         dealer.take(card1);
         dealer.take(card2);
 
