@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
@@ -26,5 +27,13 @@ class NameTest {
     @Test
     void Should_Success_When_HaveBlankCenter() {
         assertThat(new Name("na me").getName()).isEqualTo("na me");
+    }
+
+    @Test
+    @DisplayName("이름에 공백이 들어오면 예외 처리된다.")
+    void Should_ThrowException_When_NameisBlank() {
+        assertThatThrownBy(() -> new Name("   "))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("공백은 이름이 될 수 없습니다.");
     }
 }
