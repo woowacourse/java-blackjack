@@ -27,11 +27,11 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("빈 카드 뭉치 생성 테스트")
     public void testMakeEmptyCards() {
         //given
         //when
-        final Cards cards = Cards.makeEmptyCards();
+        final Cards cards = Cards.makeEmpty();
 
         //then
         assertThat(cards.getCards().isEmpty()).isTrue();
@@ -88,14 +88,29 @@ class CardsTest {
 
     @Test
     @DisplayName("빈 값임을 테스트")
-    public void testisNotEmptyFalse() {
+    public void testIsNotEmptyFalse() {
         //given
-        final Cards cards = Cards.makeEmptyCards();
+        final Cards cards = Cards.makeEmpty();
 
         //when
         final boolean result = cards.isNotEmpty();
 
         //then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("사이즈 반환 테스트")
+    public void testSize() {
+        //given
+        Cards cards = Cards.makeEmpty();
+        cards.add(new Card(Suit.DIAMOND, Letter.TEN));
+        cards.add(new Card(Suit.CLUB, Letter.TEN));
+
+        //when
+        int size = cards.size();
+
+        //then
+        assertThat(size).isEqualTo(2);
     }
 }

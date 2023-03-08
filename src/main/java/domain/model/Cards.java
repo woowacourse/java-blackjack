@@ -12,7 +12,7 @@ public class Cards {
         this.cards = cards;
     }
 
-    public static Cards makeEmptyCards() {
+    public static Cards makeEmpty() {
         return new Cards(new HashSet<>());
     }
 
@@ -28,6 +28,10 @@ public class Cards {
 
     public boolean isNotEmpty() {
         return !cards.isEmpty();
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public Set<Card> getCards() {

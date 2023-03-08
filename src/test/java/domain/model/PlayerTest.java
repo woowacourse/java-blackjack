@@ -16,7 +16,7 @@ class PlayerTest {
     @DisplayName("플레이어 생성 테스트")
     public void testCreate() {
         //given
-        final Cards cards = Cards.makeEmptyCards();
+        final Cards cards = Cards.makeEmpty();
         final String name = "test";
 
         //when
@@ -114,7 +114,7 @@ class PlayerTest {
     @DisplayName("플레이어의 카드가 비었음을 테스트")
     public void testCardsIsNotEmptyFalse() {
         //given
-        final Player player = new Player(Cards.makeEmptyCards(), "test");
+        final Player player = new Player(Cards.makeEmpty(), "test");
 
         //when
         final boolean result = player.cardsIsNotEmpty();

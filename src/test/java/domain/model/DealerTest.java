@@ -20,7 +20,7 @@ public class DealerTest {
         //given
         //when
         //then
-        assertDoesNotThrow(() -> new Dealer(Cards.makeEmptyCards()));
+        assertDoesNotThrow(() -> new Dealer(Cards.makeEmpty()));
     }
 
     @Test

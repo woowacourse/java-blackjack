@@ -11,14 +11,10 @@ public class Score {
     private static final int ACE_SUB_NUMBER = 1;
     private final int value;
 
-    private Score(final int value) {
+    public Score(final int value) {
         this.value = value;
     }
-
-    public static Score of(final int value) {
-        return new Score(value);
-    }
-
+    
     public static Score of(final Cards cards) {
         final int score = getInitialScore(cards);
         final int aceCount = cards.count(Letter.ACE);
