@@ -40,7 +40,7 @@ public class BlackJackGame {
     public int hitOrStayForDealer() {
         int hitCount = 0;
         final Dealer dealer = participants.dealer();
-        while (dealer.isAvailable()) {
+        while (dealer.isAbleToHit()) {
             hit(dealer);
             hitCount++;
         }
@@ -63,7 +63,7 @@ public class BlackJackGame {
 
     public boolean isAvailable(final String participantName) {
         final Participant participant = participants.findParticipantByName(participantName);
-        return participant.isAvailable();
+        return participant.isAbleToHit();
     }
 
     public List<HandResult> openHandResults() {

@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.TEN;
 import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,5 +52,17 @@ class PlayerTest {
         assertThat(openedCards).containsExactly(card1, card2);
     }
 
-    // TODO isAvaliable 테스트
+
+    @DisplayName("플레이어는 카드 합이 21 미만이면 히트 가능하다.")
+    @Test
+    void should_ReturnTrue_OfIsAbleToHit_When_HandSumUnder17() {
+        final Card card1 = new Card(SPADE, JACK);
+        final Card card2 = new Card(SPADE, TEN);
+        final Player player = new Player("이름");
+        
+        player.take(card1);
+        player.take(card2);
+
+        assertThat(player.isAbleToHit()).isTrue();
+    }
 }

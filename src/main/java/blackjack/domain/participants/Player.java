@@ -9,7 +9,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean isAvailable() {
+    public boolean isAbleToHit() {
         return isSafe();
     }
 

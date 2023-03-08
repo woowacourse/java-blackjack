@@ -34,7 +34,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isAvailable() {
+    public boolean isAbleToHit() {
         return computeCardsScore() < CARD_TAKE_LIMIT;
     }
 

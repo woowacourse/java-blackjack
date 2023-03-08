@@ -34,7 +34,7 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(CLUB, SIX));
 
-        assertThat(dealer.isAvailable()).isTrue();
+        assertThat(dealer.isAbleToHit()).isTrue();
     }
 
     @DisplayName("딜러의 카드 합이 17 이상이면 거짓을 반환한다.")
@@ -43,7 +43,7 @@ class DealerTest {
         dealer.take(new Card(SPADE, QUEEN));
         dealer.take(new Card(CLUB, SEVEN));
 
-        assertThat(dealer.isAvailable()).isFalse();
+        assertThat(dealer.isAbleToHit()).isFalse();
     }
 
     @DisplayName("합을 비교해 최종 승패를 결정한다.")
@@ -58,7 +58,6 @@ class DealerTest {
         assertThat(dealer.judge(player)).isEqualTo(JudgeResult.LOSE);
     }
 
-
     @DisplayName("딜러는 카드 오픈 시 첫 번째 카드 상태만 확인한다.")
     @Test
     void should_OpenOnlyFirstCard_When_DealerOpenHandStatus() {
@@ -72,5 +71,16 @@ class DealerTest {
         assertThat(openedCards).containsExactly(card);
     }
 
-    // TODO isAvaliable 테스트
+    @DisplayName("딜러는 카드 합이 17 미만이면 히트 가능하다.")
+    @Test
+    void should_ReturnTrue_OfIsAbleToHit_When_HandSumUnder17() {
+        final Card card1 = new Card(SPADE, JACK);
+        final Card card2 = new Card(SPADE, SIX);
+        final Participant dealer = new Dealer("딜러");
+        
+        dealer.take(card1);
+        dealer.take(card2);
+
+        assertThat(dealer.isAbleToHit()).isTrue();
+    }
 }

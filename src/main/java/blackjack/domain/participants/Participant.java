@@ -54,7 +54,7 @@ public abstract class Participant {
         return new HandResult(getName(), cards(), computeCardsScore());
     }
 
-    public abstract boolean isAvailable();
+    public abstract boolean isAbleToHit();
 
     @Override
     public boolean equals(final Object o) {
