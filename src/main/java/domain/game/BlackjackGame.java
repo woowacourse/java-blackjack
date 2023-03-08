@@ -58,7 +58,7 @@ public class BlackjackGame {
         return people.getDealer();
     }
 
-    public int getDealerSumHand() {
+    public int sumDealerHand() {
         return getDealer().sumHand();
     }
 }

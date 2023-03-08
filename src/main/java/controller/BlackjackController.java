@@ -45,7 +45,7 @@ public class BlackjackController {
     private void gameStarted() {
         outputView.printGameStarted(
                 PlayerDto.from(blackjackGame.getDealer()),
-                makePlayersParameter(blackjackGame.getPlayers()));
+                makePlayersDto(blackjackGame.getPlayers()));
     }
 
     private void hitPlayers() {
@@ -59,8 +59,8 @@ public class BlackjackController {
     }
 
     private void printGameResult() {
-        outputView.printGameScore(PlayerDto.of(blackjackGame.getDealer(), blackjackGame.getDealerSumHand()),
-                makePlayersParameterWithResult(blackjackGame.getPlayers())
+        outputView.printGameScore(PlayerDto.of(blackjackGame.getDealer(), blackjackGame.sumDealerHand()),
+                makePlayersDtoWithResult(blackjackGame.getPlayers())
         );
 
         outputView.printDealerRecord(PlayerDto.from(blackjackGame.getDealer()), makeDealerRecord());
@@ -80,13 +80,13 @@ public class BlackjackController {
         return strMap;
     }
 
-    private List<PlayerDto> makePlayersParameterWithResult(List<Player> players) {
+    private List<PlayerDto> makePlayersDtoWithResult(List<Player> players) {
         return players.stream()
                 .map(it -> PlayerDto.of(it, it.sumHand()))
                 .collect(Collectors.toList());
     }
 
-    private List<PlayerDto> makePlayersParameter(List<Player> players) {
+    private List<PlayerDto> makePlayersDto(List<Player> players) {
         return players.stream()
                 .map(PlayerDto::from)
                 .collect(Collectors.toList());
