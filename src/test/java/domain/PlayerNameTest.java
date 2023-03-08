@@ -13,8 +13,8 @@ class PlayerNameTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @ValueSource(strings = {"", " "})
-    void 올바른_playerName이_아니라면_예외처리(String nameInput) {
+    @ValueSource(strings = {" "})
+    void playerName_예외처리_테스트(String nameInput) {
         assertThatThrownBy(() -> new PlayerName(nameInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
