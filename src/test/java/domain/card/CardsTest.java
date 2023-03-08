@@ -13,10 +13,15 @@ class CardsTest {
     private final CardsShuffler fixedShuffler = new FixedCardsShuffler();
     private final Cards cards = new Cards(fixedShuffler);
 
-    @DisplayName("52개의 카드를 생성할 수 있다.")
+    @DisplayName("처음에 2장의 카드를 받을 수 있다.")
     @Test
-    void createCardsTest() {
-        Card card = new Card(Value.FIVE, Shape.DIAMOND);
-        assertThat(cards.contains(card)).isTrue();
+    void createCardsSizeTest() {
+        assertThat(cards.giveInitialCards().size()).isEqualTo(2);
+    }
+
+    @DisplayName("카드를 뒤에서 1장 받을 수 있다.")
+    @Test
+    void getOneCardTest() {
+        assertThat(cards.getCard()).isEqualTo(new Card(Value.KING, Shape.HEART));
     }
 }
