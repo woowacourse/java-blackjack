@@ -9,7 +9,7 @@ import static blackjack.domain.ResultType.*;
 
 public class Dealer extends Participant {
     private static final int DEALER_MAX_HITTABLE_POINT = 16;
-    private static final int INITIAL_CARD_COUNT = 1;
+    private static final int INITIAL_OPEN_CARD_COUNT = 1;
     private static final int MAX_POINT_NOT_BUST = 21;
     private static final String DEFAULT_NAME = "딜러";
 
@@ -19,7 +19,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> initialOpen() {
-        return cards.open(INITIAL_CARD_COUNT);
+        return cards.open(INITIAL_OPEN_CARD_COUNT);
     }
 
     @Override
