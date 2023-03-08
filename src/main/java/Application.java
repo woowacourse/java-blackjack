@@ -1,5 +1,4 @@
 import controller.Controller;
-import domain.card.RandomCardGenerator;
 import view.InputView;
 import view.OutputView;
 

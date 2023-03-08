@@ -19,7 +19,7 @@ public enum Result {
         if (dealer.isBust()) {
             return Result.VICTORY;
         }
-        return judgeResult(dealer.getScore(), participant.getScore());
+        return judgeResult(dealer.score(), participant.score());
     }
 
     private static Result judgeResult(final Score dealerScore, final Score participantScore) {

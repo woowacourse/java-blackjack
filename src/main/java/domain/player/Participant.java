@@ -28,7 +28,7 @@ public final class Participant extends Player {
 
     @Override
     public boolean canHit() {
-        return getScore().isUnderMaxScore();
+        return score().isUnderMaxScore();
     }
 
     private static void validateImpersonate(final String name) {

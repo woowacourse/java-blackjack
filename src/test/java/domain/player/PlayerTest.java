@@ -42,7 +42,7 @@ class PlayerTest {
         ranks.forEach(i -> player.takeCard(deck.dealCard()));
 
         //when
-        final Score score = player.getScore();
+        final Score score = player.score();
 
         //then
         assertThat(score).isEqualTo(Score.from(18));

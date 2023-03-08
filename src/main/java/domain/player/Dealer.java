@@ -26,6 +26,6 @@ public final class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return getScore().isUnderThan(STAY_SCORE);
+        return score().isUnderThan(STAY_SCORE);
     }
 }

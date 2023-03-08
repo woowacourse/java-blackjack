@@ -32,8 +32,12 @@ public abstract class Player {
         return cards.getCards();
     }
 
-    public final Score getScore() {
+    public final Score score() {
         return cards.getScore();
+    }
+
+    public final int getScore() {
+        return score().getScore();
     }
 
     public final String getName() {

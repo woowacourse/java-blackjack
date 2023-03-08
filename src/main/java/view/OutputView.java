@@ -18,14 +18,10 @@ public final class OutputView {
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", participants);
     }
 
-    public void printDealerCard(Card card) {
-        System.out.printf("딜러 : %s%s%n", card.getRank().getSymbol(), card.getSuit());
-    }
-
-    public void printPlayerCards(final List<Participant> participants) {
-        participants.forEach(
-                participant -> System.out.printf(
-                        "%s 카드: %s%n", participant.getName(), convertCardsFormat(participant.getCards())
+    public void printPlayerCards(final List<Player> players) {
+        players.forEach(
+                player -> System.out.printf(
+                        "%s 카드: %s%n", player.getName(), convertCardsFormat(player.showCards())
                 ));
     }
 

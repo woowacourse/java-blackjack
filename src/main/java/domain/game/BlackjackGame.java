@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.card.Card;
 import domain.card.CardGenerator;
 import domain.card.Deck;
 import domain.player.Dealer;
@@ -55,11 +54,11 @@ public final class BlackjackGame {
     public void playDealerTurn(Consumer<Boolean> consumer) {
         final Dealer dealer = getDealer();
 
-        while (dealer.isHit()) {
-            consumer.accept(dealer.isHit());
+        while (dealer.canHit()) {
+            consumer.accept(dealer.canHit());
             dealer.takeCard(this.deck.dealCard());
         }
-        consumer.accept(dealer.isHit());
+        consumer.accept(dealer.canHit());
     }
 
     public Results judgeResult() {
@@ -84,7 +83,7 @@ public final class BlackjackGame {
     }
 
     private void playParticipantTurn(final Participant participant, final Predicate<Participant> hitOrStay, final Consumer<Participant> print) {
-        while (participant.isKeepGaming(hitOrStay.test(participant))) {
+        while (participant.isHit(hitOrStay.test(participant))) {
             participant.takeCard(deck.dealCard());
             print.accept(participant);
         }
@@ -101,10 +100,6 @@ public final class BlackjackGame {
 
     public Dealer getDealer() {
         return (Dealer) players.get(DEALER_INDEX);
-    }
-
-    public Card getDealerCard() {
-        return getDealer().getFirstCard();
     }
 
     public List<Player> getPlayers() {

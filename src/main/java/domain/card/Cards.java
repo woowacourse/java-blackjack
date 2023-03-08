@@ -48,7 +48,7 @@ public final class Cards {
 
     public Score getScore() {
         if (hasAce() && score.canAddBonusScore()) {
-            return Score.from(score.getScoreWithBonusScore());
+            return new Score(score.getScoreWithBonusScore());
         }
         return score;
     }
