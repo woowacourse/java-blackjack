@@ -56,7 +56,7 @@
 ### 1단계 리팩토링 요구 사항
 #### 리팩토링
 - [ ]  BlackjackGame 클래스를 통한 controller 책임 분리
-- [ ]  에러 메세지 형식 통일 및 출력
+- [x]  에러 메세지 형식 통일 및 상수화
 - [ ]  initializeDeck 로직 수정 (Card 생성받는 부분)
 - [ ]  shuffleDeck 메서드가 인자로 Deck을 받고, Deck을 반환하도록 변경
 - [ ]  FixedDeckShuffler 클래스 위치 이동
