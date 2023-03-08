@@ -38,12 +38,12 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public GameResult computeDealerGameResult() {
-        return participants.openDealerGameResult();
-    }
-
     public PlayerWinResults computePlayerWinResults() {
         return participants.computePlayerWinResults();
+    }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 
     public List<String> getPlayersName() {

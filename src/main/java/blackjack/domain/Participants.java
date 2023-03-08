@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Participants {
 
-    private static final int NUMBER_OF_DEALER = 1;
     private static final int INITIAL_HAND_OUT_COUNT = 2;
 
     private final Dealer dealer = new Dealer();
@@ -29,10 +28,6 @@ public class Participants {
         for (int i = 0; i < INITIAL_HAND_OUT_COUNT; i++) {
             dealer.take(deck.draw());
         }
-    }
-
-    public GameResult openDealerGameResult() {
-        return GameResult.from(dealer);
     }
 
     public Card openDealerFirstCard() {

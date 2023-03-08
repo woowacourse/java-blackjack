@@ -7,7 +7,7 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Card;
-import blackjack.domain.GameResult;
+import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.PlayerWinResults;
 import blackjack.domain.WinResult;
@@ -31,6 +31,13 @@ public class OutputView {
 
     public static void showDealerFirstCard(Card card) {
         System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toCardName(card));
+    }
+
+    public static void showDealerGameResult(Dealer dealer) {
+        System.out.printf(GAME_RESULT_FORMAT,
+                DEALER_NAME,
+                joinAllCardsName(dealer.getCards()),
+                dealer.getSum());
     }
 
     public static void showPlayerCard(Player player) {
@@ -61,11 +68,6 @@ public class OutputView {
             return;
         }
         System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
-    }
-
-    public static void showDealerGameResult(GameResult dealerResult) {
-        System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardsName(dealerResult.getCards()),
-                dealerResult.getSum());
     }
 
     public static void showFinalResult(PlayerWinResults playerWinResults) {

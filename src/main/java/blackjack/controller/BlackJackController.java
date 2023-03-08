@@ -62,7 +62,7 @@ public class BlackJackController {
     }
 
     private void showResult() {
-        OutputView.showDealerGameResult(blackJackGame.computeDealerGameResult());
+        OutputView.showDealerGameResult(blackJackGame.getDealer());
 
         List<Player> players = blackJackGame.getPlayers();
         players.forEach(OutputView::showPlayerGameResult);
