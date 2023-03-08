@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
+    private static final int INITIAL_CARD_COUNT = 2;
+
     private final Players players;
     private final Dealer dealer;
     private final Cards cards;
@@ -25,12 +27,12 @@ public class BlackJackGame {
 
     public void drawDefaultCard() {
         drawPlayersDefaultCard();
-        dealer.receiveCards(cards.drawTwoCards());
+        dealer.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
     }
 
     private void drawPlayersDefaultCard() {
         for (Player player : players.getPlayers()) {
-            player.receiveCards(cards.drawTwoCards());
+            player.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
         }
     }
 
@@ -91,7 +93,7 @@ public class BlackJackGame {
     }
 
     public int getDealerExtraDrawCount() {
-        return dealer.getExtraDrawCount();
+        return dealer.getExtraDrawCount(INITIAL_CARD_COUNT);
     }
 
     public Map<NameDto, Result> getPlayerFinalResult() {

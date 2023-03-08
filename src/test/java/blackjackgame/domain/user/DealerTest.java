@@ -50,14 +50,14 @@ class DealerTest {
         assertThat(result).isEqualTo(DealerStatus.UNDER_MIN_SCORE);
     }
 
-    @DisplayName("처음으로 받은 2장의 카드 외에 추가로 뽑은 카드가 몇 장인지 반환한다.")
+    @DisplayName("처음으로 받은 카드 외에 추가로 뽑은 카드가 몇 장인지 반환한다.")
     @Test
     void getExtraDrawCount_drawTwoMoreCards() {
         Dealer dealer = new Dealer();
         dealer.receiveCards(List.of(CloverCard.CLOVER_TWO, SpadeCard.SPADE_TWO));
 
         dealer.receiveCards(List.of(CloverCard.CLOVER_FIVE, SpadeCard.SPADE_TEN));
-        int extraDrawCount = dealer.getExtraDrawCount();
+        int extraDrawCount = dealer.getExtraDrawCount(2);
 
         assertThat(extraDrawCount).isEqualTo(2);
     }

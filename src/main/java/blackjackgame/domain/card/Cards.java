@@ -20,11 +20,12 @@ public class Cards {
         return cards.remove(CARD_ON_TOP_INDEX);
     }
 
-    public List<Card> drawTwoCards() {
-        List<Card> twoCards = new ArrayList<>();
-        twoCards.add(drawCard());
-        twoCards.add(drawCard());
+    public List<Card> drawCards(int count) {
+        List<Card> cards = new ArrayList<>();
+        for (int cardCount = 0; cardCount < count; cardCount++) {
+            cards.add(drawCard());
+        }
 
-        return twoCards;
+        return cards;
     }
 }

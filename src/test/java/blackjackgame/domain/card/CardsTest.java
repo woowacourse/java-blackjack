@@ -40,7 +40,7 @@ class CardsTest {
     void drawTwoCardsTest() {
         Cards cards = new Cards(shuffledCardsGenerator);
 
-        List<Card> firstTurnCards = cards.drawTwoCards();
+        List<Card> firstTurnCards = cards.drawCards(2);
 
         assertThat(firstTurnCards.size()).isEqualTo(2);
     }

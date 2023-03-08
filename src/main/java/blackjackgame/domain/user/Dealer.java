@@ -9,7 +9,6 @@ import java.util.Map;
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
     private static final int RECORD_INITIAL_VALUE = 0;
-    private static final int INITIAL_CARD_COUNT = 2;
 
     private DealerStatus status = DealerStatus.UNDER_MIN_SCORE;
     private Map<Result, Integer> winningRecord;
@@ -58,8 +57,8 @@ public class Dealer extends User {
         winningRecord.put(Result.LOSE, winningRecord.getOrDefault(Result.LOSE, RECORD_INITIAL_VALUE) + 1);
     }
 
-    public int getExtraDrawCount() {
-        return getCards().size() - INITIAL_CARD_COUNT;
+    public int getExtraDrawCount(int initialCardCount) {
+        return getCards().size() - initialCardCount;
     }
 
     @Override
