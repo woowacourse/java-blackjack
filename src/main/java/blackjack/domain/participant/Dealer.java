@@ -15,6 +15,7 @@ public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final int MAXIMUM_CARD_COUNT = 2;
     private static final int THRESHOLD_SCORE = 16;
+    private static final int MAXIMUM_SCORE = 21;
 
     public Dealer() {
         super();
@@ -59,10 +60,10 @@ public class Dealer extends Participant {
         final int dealerScore = this.getScore();
         final int playerScore = player.getScore();
 
-        if (playerScore > 21) {
+        if (playerScore > MAXIMUM_SCORE) {
             return Result.WIN;
         }
-        if (dealerScore > 21) {
+        if (dealerScore > MAXIMUM_SCORE) {
             return Result.LOSE;
         }
         if (dealerScore > playerScore) {
