@@ -7,6 +7,8 @@ import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,16 +17,22 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
+    private Dealer dealer;
+
+    @BeforeEach
+    void setup() {
+        dealer = new Dealer();
+    }
+
     @ParameterizedTest
     @MethodSource("provideCards")
     @DisplayName("가진 카드의 합이 16 초과인지 확인한다")
     void checking_sum_is_over_16(List<Card> cards, boolean expected) {
-        Player player = new Dealer();
         for (Card card : cards) {
-            player.pick(card);
+            dealer.pick(card);
         }
 
-        assertThat(player.canPick()).isEqualTo(expected);
+        assertThat(dealer.canPick()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideCards() {
@@ -45,7 +53,13 @@ class DealerTest {
     @Test
     @DisplayName("딜러의 이름은 '딜러'이다")
     void dealer_name_is_dealer() {
-        Player dealer = new Dealer();
         assertThat(dealer.getName()).isEqualTo("딜러");
+    }
+
+    @Test
+    @DisplayName("딜러는 도전자가 아니다")
+    void dealer_is_not_challenger() {
+        assertThat(dealer.isDealer()).isTrue();
+        assertThat(dealer.isChallenger()).isFalse();
     }
 }
