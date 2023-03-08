@@ -10,7 +10,7 @@ class AmountTest {
     @Test
     @DisplayName("숫자를 입력받아 인스턴스를 생성한다.")
     void create() {
-        assertThatCode(() -> new Amount(120))
+        assertThatCode(() -> new Amount(100))
                 .doesNotThrowAnyException();
     }
 
@@ -21,5 +21,12 @@ class AmountTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("100이상의 정수만 입력 가능합니다.");
     }
-    
+
+    @Test
+    @DisplayName("입력받은 숫자가 100단위가 아닌 경우 예외를 던진다.")
+    void createAmountUnit() {
+        assertThatThrownBy(() -> new Amount(120))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("100원 단위로 입력 가능합니다.");
+    }
 }
