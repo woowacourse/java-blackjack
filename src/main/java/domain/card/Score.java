@@ -30,12 +30,16 @@ public final class Score {
         return this.score <= MAX_SCORE - BONUS_SCORE;
     }
 
-    public Score getScore() {
-        return this;
+    public int scoreGap(Score score) {
+        return this.score - score.score;
     }
 
-    public Score getScoreWithBonusScore() {
-        return Score.from(score + BONUS_SCORE);
+    public int getScore() {
+        return score;
+    }
+
+    public int getScoreWithBonusScore() {
+        return score + BONUS_SCORE;
     }
 
     @Override
