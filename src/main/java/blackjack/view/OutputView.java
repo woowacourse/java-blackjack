@@ -3,10 +3,10 @@ package blackjack.view;
 import static java.lang.String.format;
 import static java.lang.String.join;
 
-import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.game.Bets;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,13 +21,8 @@ public class OutputView {
     private static final String PLAYER_SCORE_MESSAGE_FORMAT = " - 결과: %d";
     private static final String ERROR_MESSAGE = "[ERROR] ";
     private static final String DEALER_DRAW_MESSAGE = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String GAME_RESULT_MESSAGE = NEW_LINE + "##최종 승패";
-    private static final String GAME_RESULT_PLAYER_MESSAGE_FORMAT = "%s: %s";
-    private static final String WIN_MESSAGE = "승";
-    private static final String PUSH_MESSAGE = "무";
-    private static final String LOSE_MESSAGE = "패";
-    private static final String GAME_RESULT_DEALER_MESSAGE_FORMAT =
-            "딜러: %d" + WIN_MESSAGE + " %d" + PUSH_MESSAGE + " %d" + LOSE_MESSAGE;
+    private static final String GAME_RESULT_MESSAGE = NEW_LINE + "## 최종 수익";
+    private static final String GAME_RESULT_MESSAGE_FORMAT = "%s: %s";
 
     public void printInitialDraw(final List<Player> players) {
         System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
@@ -77,40 +72,16 @@ public class OutputView {
         return format(PLAYER_SCORE_MESSAGE_FORMAT, player.calculateScore());
     }
 
-    public void printGameResult(final BlackjackGameResult result) {
+    public void printGameResult(final Bets bets) {
         System.out.println(GAME_RESULT_MESSAGE);
-        System.out.println(generateDealerResultMessage(result));
-        final Map<Player, Result> gameResult = result.getResult();
-        for (final Player player : gameResult.keySet()) {
-            System.out.println(generatePlayerResultMessage(gameResult, player));
-        }
+        System.out.println(String.format(GAME_RESULT_MESSAGE_FORMAT, "딜러", bets.getDealerProfit().getValue()));
+        System.out.println(generateGameResultMessage(bets.getBets()));
     }
 
-    private static String generateDealerResultMessage(final BlackjackGameResult result) {
-        return String.format(
-                GAME_RESULT_DEALER_MESSAGE_FORMAT,
-                result.getDealerWinCount(),
-                result.getDealerPushCount(),
-                result.getDealerLoseCount()
-        );
-    }
-
-    private String generatePlayerResultMessage(final Map<Player, Result> gameResult, final Player player) {
-        return String.format(
-                GAME_RESULT_PLAYER_MESSAGE_FORMAT,
-                player.getName(),
-                generateResultMessage(gameResult.get(player))
-        );
-    }
-
-    private String generateResultMessage(final Result result) {
-        if (result == Result.WIN) {
-            return WIN_MESSAGE;
-        }
-        if (result == Result.PUSH) {
-            return PUSH_MESSAGE;
-        }
-        return LOSE_MESSAGE;
+    private String generateGameResultMessage(final Map<Player, Money> bets) {
+        return bets.keySet().stream()
+                .map(player -> String.format(GAME_RESULT_MESSAGE_FORMAT, player.getName(), bets.get(player).getValue()))
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     public void printError(final String message) {

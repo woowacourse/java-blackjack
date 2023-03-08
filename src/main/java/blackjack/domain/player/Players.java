@@ -83,13 +83,13 @@ public class Players {
 
     public Map<Player, Result> play() {
         final Map<Player, Result> result = new LinkedHashMap<>();
-        for (Player player : getGambler()) {
+        for (Player player : getGamblers()) {
             result.put(player, player.play(getDealer().hand));
         }
         return result;
     }
 
-    private List<Player> getGambler() {
+    public List<Player> getGamblers() {
         return players.stream()
                 .filter(player -> !player.isDealer())
                 .collect(Collectors.toList());

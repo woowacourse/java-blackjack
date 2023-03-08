@@ -8,9 +8,11 @@ import java.util.List;
 
 public class BlackjackGame {
     private final Players players;
-
-    public BlackjackGame(final Players players) {
+    private final Bets bets;
+    
+    public BlackjackGame(final Players players, final Bets bets) {
         this.players = players;
+        this.bets = bets;
     }
 
     public void initialDraw(final Deck deck) {
@@ -29,8 +31,9 @@ public class BlackjackGame {
         players.stay(player);
     }
 
-    public BlackjackGameResult play() {
-        return new BlackjackGameResult(players.play());
+    public Bets play() {
+        bets.calculateProfit(players.play());
+        return bets;
     }
 
     public List<Player> getPlayers() {

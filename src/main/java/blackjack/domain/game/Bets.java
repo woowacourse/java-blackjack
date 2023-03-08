@@ -12,12 +12,11 @@ public class Bets {
         bets = new LinkedHashMap<>(initialBets);
     }
 
-    public Bets calculateProfit(final Map<Player, Result> results) {
+    public void calculateProfit(final Map<Player, Result> results) {
         for (Player player : results.keySet()) {
             final Result result = results.get(player);
-            bets.computeIfPresent(player, (key, value) -> value.calculatePrize(result));
+            bets.computeIfPresent(player, (ignore, money) -> money.calculatePrize(result));
         }
-        return new Bets(bets);
     }
 
     public Map<Player, Money> getBets() {

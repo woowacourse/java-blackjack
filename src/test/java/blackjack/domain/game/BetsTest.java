@@ -24,9 +24,9 @@ public class BetsTest {
         initialBets.put(pepper, Money.initialBet(100));
         final Bets bets = new Bets(initialBets);
 
-        final Bets result = bets.calculateProfit(Map.of(herb, Result.BLACKJACK_WIN, pepper, Result.PUSH));
+        bets.calculateProfit(Map.of(herb, Result.BLACKJACK_WIN, pepper, Result.PUSH));
 
-        assertThat(result.getBets().values())
+        assertThat(bets.getBets().values())
                 .extracting(Money::getValue)
                 .containsExactly(1500, 0);
     }

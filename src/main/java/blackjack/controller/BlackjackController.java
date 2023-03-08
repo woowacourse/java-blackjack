@@ -1,12 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.card.ShuffledDeck;
+import blackjack.domain.game.Bets;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.BlackjackGameResult;
+import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -27,13 +30,35 @@ public class BlackjackController {
 
     private BlackjackGame initializeGame() {
         final Players players = createPlayers(new Retry());
-        return new BlackjackGame(players);
+        final Bets bets = createBets(new Retry(), players);
+
+        return new BlackjackGame(players, bets);
     }
 
     private Players createPlayers(final Retry retry) {
         while (retry.isRepeatable()) {
             try {
                 return Players.from(inputView.readPlayers());
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+                retry.decrease();
+            }
+        }
+        throw new IllegalArgumentException(retry.getFailMessage());
+    }
+
+    private Bets createBets(final Retry retry, Players players) {
+        final Map<Player, Money> result = new LinkedHashMap<>();
+        for (final Player player : players.getGamblers()) {
+            result.put(player, readPlayerBet(retry, player));
+        }
+        return new Bets(result);
+    }
+
+    private Money readPlayerBet(final Retry retry, final Player player) {
+        while (retry.isRepeatable()) {
+            try {
+                return Money.initialBet(inputView.readBet(player));
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 retry.decrease();
@@ -91,7 +116,7 @@ public class BlackjackController {
     }
 
     private void play(final BlackjackGame blackjackGame) {
-        final BlackjackGameResult result = blackjackGame.play();
-        outputView.printGameResult(result);
+        final Bets bets = blackjackGame.play();
+        outputView.printGameResult(bets);
     }
 }
