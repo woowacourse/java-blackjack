@@ -2,14 +2,12 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.DealerHandScoreResponse;
-import blackjack.dto.DealerPlayerResultResponse;
-import blackjack.dto.PlayerNameHandResponse;
-import blackjack.dto.PlayerNameHandScoreResponse;
+import blackjack.dto.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -89,8 +87,9 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    public Card findDealerFirstCard() {
-        return dealer.getFirst();
+    public CardDTO findDealerFirstCard() {
+        Card card = dealer.getFirst();
+        return new CardDTO(card.getSuit(), card.getDenomination());
     }
 
     public boolean canPassPlayerCard(int playerIndex) {
@@ -116,7 +115,7 @@ public class BlackJackGame {
 
     public DealerHandScoreResponse findDealerHandScore() {
         return new DealerHandScoreResponse(
-                dealer.getHand().getHand(),
+                convertCardDTO(dealer.getHand()),
                 dealer.calculateScore().getValue()
         );
     }
@@ -139,16 +138,22 @@ public class BlackJackGame {
     private PlayerNameHandResponse convertNameHand(Player player) {
         return new PlayerNameHandResponse(
                 player.getName(),
-                player.getHand().getHand()
+                convertCardDTO(player.getHand())
         );
     }
 
     private PlayerNameHandScoreResponse convertNameHandScore(Player player) {
         return new PlayerNameHandScoreResponse(
                 player.getName(),
-                player.getHand().getHand(),
+                convertCardDTO(player.getHand()),
                 player.calculateScore().getValue()
         );
+    }
+
+    private List<CardDTO> convertCardDTO(Hand hand) {
+        return hand.getHand().stream()
+                .map(card -> new CardDTO(card.getSuit(), card.getDenomination()))
+                .collect(Collectors.toList());
     }
 
     private Map<String, Result> calculatePlayerResult() {
