@@ -46,13 +46,22 @@ public class GameController {
     }
     
     private boolean dealPlayerMoreCard(Game game, Playable player) {
-        boolean isHit = InputView.readAnswerForMoreCard(player.getName());
+        boolean isHit = this.readAnswerMoreCardUntilValid(player.getName());
         if (BlackJackAction.of(isHit) == BlackJackAction.HIT) {
             game.deal(player);
             OutputView.printNameAndCards(player.getName(), player.getCards());
             return true;
         }
         return false;
+    }
+    
+    private boolean readAnswerMoreCardUntilValid(String name) {
+        try {
+            return InputView.readAnswerForMoreCard(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return this.readAnswerMoreCardUntilValid(name);
+        }
     }
     
     private boolean dealDealerMoreCard(Game game, Playable dealer) {
