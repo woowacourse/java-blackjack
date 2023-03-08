@@ -1,7 +1,6 @@
 package dto.response;
 
 import domain.card.Card;
-import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import view.CardNameRender;
@@ -16,14 +15,14 @@ public class DrawnCardsInfo {
         this.drawnCards = drawnCards;
     }
 
-    public static DrawnCardsInfo toDto(final Participant participant, List<Card> drawnCards) {
+    public static DrawnCardsInfo toDto(final String playerName, List<Card> drawnCards) {
         List<String> cardInfos = new ArrayList<>();
 
         for (Card drawnCard : drawnCards) {
             cardInfos.add(renderCardName(drawnCard));
         }
 
-        return new DrawnCardsInfo(participant.getName(), cardInfos);
+        return new DrawnCardsInfo(playerName, cardInfos);
     }
 
     private static String renderCardName(Card drawnCard) {

@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import domain.BlackJackBettingMachine;
 import domain.BlackJackGame;
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
@@ -73,8 +74,18 @@ public class BlackJackApplication {
     }
 
     private void splitCards(BlackJackGame blackJackGame) {
-        List<DrawnCardsInfo> drawnCardsInfos = blackJackGame.splitCards();
-        outputView.printCardSplitMessage(drawnCardsInfos);
+        blackJackGame.splitCards();
+
+        List<Card> dealerOpenCard = blackJackGame.getDealerOpenCard();
+        DrawnCardsInfo dealerCardInfo = DrawnCardsInfo.toDto(blackJackGame.getDealerName(), dealerOpenCard);
+
+        List<DrawnCardsInfo> playerCardInfos = new ArrayList<>();
+        for (String playerName : blackJackGame.getPlayersName()) {
+            List<Card> openCards = blackJackGame.getOpenCardsByName(playerName);
+            playerCardInfos.add(DrawnCardsInfo.toDto(playerName, openCards));
+        }
+
+        outputView.printCardSplitMessage(dealerCardInfo, playerCardInfos);
     }
 
     private void drawCards(BlackJackGame blackJackGame) {

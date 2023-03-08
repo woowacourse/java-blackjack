@@ -2,6 +2,7 @@ package domain;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -26,35 +27,32 @@ public class BlackJackGame {
         this.cardDeck = cardDeck;
     }
 
-    public List<DrawnCardsInfo> splitCards() {
-        splitEachParticipant(dealer, cardDeck);
+    public void splitCards() {
+        splitEachParticipant(dealer);
         players.stream()
-                .forEach(player -> splitEachParticipant(player, cardDeck));
-
-        return getDrawnCardsInfos(dealer, players);
+                .forEach(this::splitEachParticipant);
     }
 
-    private void splitEachParticipant(final Participant participant, final CardDeck cardDeck) {
+    public List<Card> getOpenCardsByName(String name) {
+        Player player = players.findPlayerByName(name);
+        return player.openDrawnCards();
+    }
+
+    public List<Card> getDealerOpenCard() {
+        return dealer.openDrawnCards();
+    }
+
+    private void splitEachParticipant(final Participant participant) {
         for (int i = 0; i < NUMBER_OF_SPLIT_CARDS; i++) {
             participant.drawCard(cardDeck.draw());
         }
     }
 
-    private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer,
-                                                    final Players players) {
-        List<DrawnCardsInfo> cardInfos = new ArrayList<>();
-        cardInfos.add(DrawnCardsInfo.toDto(dealer, dealer.openDrawnCards()));
-
-        players.stream()
-                .forEach(player -> cardInfos.add(DrawnCardsInfo.toDto(player, player.openDrawnCards())));
-
-        return cardInfos;
-    }
 
     public DrawnCardsInfo drawPlayerCardByName(final String playerName) {
         Player player = players.findPlayerByName(playerName);
         player.drawCard(cardDeck.draw());
-        return DrawnCardsInfo.toDto(player, player.openDrawnCards());
+        return DrawnCardsInfo.toDto(player.getName(), player.openDrawnCards());
     }
 
     public boolean canPlayerDrawMore(final String playerName) {

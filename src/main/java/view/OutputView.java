@@ -3,7 +3,6 @@ package view;
 import dto.response.BattingResultDto;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
-import dto.response.WinLoseResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,19 +10,20 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.getProperty("line.separator");
-    public static final String WIN = "승";
-    public static final String LOSE = "패";
 
-    public void printCardSplitMessage(final List<DrawnCardsInfo> infos) {
-        String names = infos.stream()
-                .filter(info -> !info.getName().equals("딜러"))
-                .map(info -> info.getName())
+    public void printCardSplitMessage(DrawnCardsInfo dealerCardInfo, final List<DrawnCardsInfo> playerCardInfos) {
+        String names = playerCardInfos.stream()
+                .map(DrawnCardsInfo::getName)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println(NEW_LINE + "딜러와 " + names + "에게 2장을 나누었습니다.");
 
-        infos.forEach(info -> System.out.println(info.getName() + ": " + getCardsInfo(info.getDrawnCards())));
-        System.out.println();
+        printCardInfo(dealerCardInfo);
+        playerCardInfos.forEach(this::printCardInfo);
+    }
+
+    private void printCardInfo(DrawnCardsInfo cardInfo) {
+        System.out.println(cardInfo.getName() + ": " + getCardsInfo(cardInfo.getDrawnCards()));
     }
 
     public void printPlayerCardInfo(final DrawnCardsInfo info) {
@@ -45,34 +45,6 @@ public class OutputView {
                         " - 결과: " + result.getScore()));
     }
 
-    public void printWinLoseResult(final String dealerName,
-                                   final List<WinLoseResult> winLoseResults) {
-        System.out.println(NEW_LINE + "## 최종 승패");
-
-        int dealerLoseCount = (int) winLoseResults.stream()
-                .filter(WinLoseResult::isWin)
-                .count();
-        int dealerWinCount = winLoseResults.size() - dealerLoseCount;
-
-        System.out.println(dealerName + ": " + dealerWinCount + "승 " + dealerLoseCount + "패");
-        winLoseResults.forEach(result -> printPlayerWinLoseResult(result));
-    }
-
-    private void printPlayerWinLoseResult(WinLoseResult result) {
-        System.out.println(result.getName() + ": " + getWinLoseFormat(result.isWin()));
-    }
-
-    private String getWinLoseFormat(boolean isWin) {
-        if (isWin) {
-            return WIN;
-        }
-        return LOSE;
-    }
-
-    public void printExceptionMessage(final String message) {
-        System.out.println(message);
-    }
-
     public void printBattingResults(List<BattingResultDto> battingResultDtos) {
         int dealerBattingResult = battingResultDtos
                 .stream()
@@ -86,5 +58,9 @@ public class OutputView {
 
     private static void printPlayerBattingResult(BattingResultDto battingResultDto) {
         System.out.println(battingResultDto.getName() + ": " + battingResultDto.getMoney());
+    }
+
+    public void printExceptionMessage(final String message) {
+        System.out.println(message);
     }
 }
