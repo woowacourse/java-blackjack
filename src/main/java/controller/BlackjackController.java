@@ -6,6 +6,7 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -28,13 +29,31 @@ public class BlackjackController {
     }
 
     private Players createPlayers() {
+        Names names = createNames();
+
+        return Players.from(names.getNames().stream()
+                .map(name -> Player.of(name, createBetAmount(name)))
+                .collect(Collectors.toList()));
+    }
+
+    private Names createNames() {
         return retryOnInvalidUserInput(
-                () -> Players.from(Names.from(readPlayerNames()))
+                () -> Names.from(readPlayerNames())
+        );
+    }
+
+    private BettingMoney createBetAmount(Name name) {
+        return retryOnInvalidUserInput(
+                () -> BettingMoney.from(readBetAmount(name))
         );
     }
 
     private List<String> readPlayerNames() {
         return inputView.requestPlayerNames();
+    }
+
+    private int readBetAmount(Name name) {
+        return inputView.requestBetAmount(name.getName());
     }
 
     private void play(BlackjackGame blackjackGame) {
