@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,37 +24,24 @@ public class Participants {
         return new Participants(users);
     }
 
-    Player find(Player player) {
-        if (dealer.equals(player)) {
-            return dealer;
-        }
-        return users.stream()
-                .filter(someUser -> someUser.equals(player))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("참가중인 플레이어가 아닙니다"));
+    public boolean has(Player player) {
+        return isExistingDealer(player) || isExistingUser(player);
     }
 
-    // void dealCardsFrom(Deck deck) {
-    //     for (User user : users) {
-    //         user.addCard(deck.draw());
-    //     }
-    //     dealer.addCard(deck.draw());
-    // }
-
-    List<Result> getDealerResults() {
-        List<Result> results = new ArrayList<>();
-
+    public void dealFrom(Deck deck) {
         for (User user : users) {
-            results.add(dealer.competeWith(user));
+            user.drawFrom(deck);
         }
-        return results;
+        dealer.drawFrom(deck);
     }
 
-    public List<Player> getPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users);
-        return players;
+    private boolean isExistingUser(Player player) {
+        return users.stream()
+                .anyMatch(someUser -> someUser.equals(player));
+    }
+
+    private boolean isExistingDealer(Player player) {
+        return dealer.equals(player);
     }
 
     public List<User> getUsers() {
