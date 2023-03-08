@@ -1,5 +1,8 @@
 package domain;
 
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

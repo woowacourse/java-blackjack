@@ -1,8 +1,12 @@
-package domain;
+package domain.participant;
+
+import domain.Card;
+import domain.Hand;
 
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
+    protected static final String DEALER_NAME = "딜러";
     private static final int BUST_BOUNDARY_VALUE = 21;
 
     private final Hand hand;
@@ -33,7 +37,7 @@ public class Participant {
         return name;
     }
 
-    boolean isBust() {
+    public boolean isBust() {
         return hand.calculateValue() > BUST_BOUNDARY_VALUE;
     }
 }

@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.Deck;
 import view.ErrorMessage;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class Participants {
         validate(names);
         List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
-        names.forEach(name -> participants.add(new Player(name)));
+        names.forEach(name -> participants.add(Player.create(name)));
         return new Participants(participants);
     }
 

@@ -1,6 +1,8 @@
 package controller;
 
 import domain.*;
+import domain.participant.Participant;
+import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
