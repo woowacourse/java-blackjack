@@ -71,4 +71,14 @@ public class DealerTest {
         assertThat(dealer.isMoreCardAble()).isTrue();
     }
 
+    @Test
+    @DisplayName("딜러의 카드는 첫 번째 한 장만 보여주어야 한다.")
+    void showOnlyOneCardOfDealer() {
+        Dealer dealer = new Dealer(new Hand(cards));
+
+        Card card = dealer.showOneCard();
+
+        assertThat(card).isEqualTo(new Card(Shape.DIAMOND, Letter.TWO));
+    }
+
 }
