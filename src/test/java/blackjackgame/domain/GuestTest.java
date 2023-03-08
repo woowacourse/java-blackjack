@@ -22,7 +22,7 @@ class GuestTest {
     void Should_CanPickMoreCard_When_ScoreUnder21() {
         Card five = new Card(Symbol.SPADE, CardValue.FIVE);
         Card eight = new Card(Symbol.CLOVER, CardValue.EIGHT);
-        Player guest = new Guest(new Name("name"), Arrays.asList(five,eight));
+        Player guest = new Guest(new Name("name"), Arrays.asList(five, eight));
 
         assertThat(guest.canHit()).isTrue();
     }
@@ -34,7 +34,7 @@ class GuestTest {
         Card five = new Card(Symbol.CLOVER, CardValue.FIVE);
         Card ten = new Card(Symbol.HEART, CardValue.TEN);
 
-        Player guest = new Guest(new Name("name"), new ArrayList<>(List.of(jack,five)));
+        Player guest = new Guest(new Name("name"), new ArrayList<>(List.of(jack, five)));
         guest.addCard(ten);
 
         assertThat(guest.canHit()).isFalse();
