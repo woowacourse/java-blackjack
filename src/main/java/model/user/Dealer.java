@@ -10,7 +10,7 @@ public class Dealer {
     private final User user;
 
     public Dealer() {
-        this.user = new User("딜러", 0);
+        this.user = new User("딜러");
     }
 
     public boolean canReceiveCard() {
@@ -36,7 +36,7 @@ public class Dealer {
     }
 
     public Hand getHand() {
-        return user.getInventory().getHand();
+        return user.getHand();
     }
 
 }

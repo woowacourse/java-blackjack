@@ -8,9 +8,11 @@ public class Player {
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
 
     private final User user;
+    private final int money;
 
     private Player(final String name, final int money) {
-        this.user = new User(name, money);
+        this.user = new User(name);
+        this.money = money;
     }
 
     public static Player from(String playerName, int money) {
@@ -18,11 +20,11 @@ public class Player {
     }
 
     public boolean canReceiveCard() {
-         Receivable receivable = () -> CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
+         Receivable receivable = () -> CAN_RECEIVE_MAX_NUMBER >= getCardTotalValue();
          return receivable.canReceiveCard();
     }
 
-    private int calculateTotalValue() {
+    public int getCardTotalValue() {
         return user.getCardTotalValue();
     }
 
@@ -44,6 +46,10 @@ public class Player {
     }
 
     public Hand getHand() {
-        return user.getInventory().getHand();
+        return user.getHand();
+    }
+
+    public int getMoney() {
+        return this.money;
     }
 }

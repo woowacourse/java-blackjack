@@ -26,7 +26,7 @@ class UserTest {
 
     @BeforeEach
     void init() {
-        user = new User("bebe", 0);
+        user = new User("bebe");
     }
 
     @DisplayName("플레이어가 카드를 받는지 테스트한다")
@@ -40,7 +40,7 @@ class UserTest {
         user.receiveCard(cloverAce);
 
         // when, then
-        assertThat(user.getInventory().getHand().getCards()).containsExactly(spadeFive, cloverAce);
+        assertThat(user.getHand().getCards()).containsExactly(spadeFive, cloverAce);
     }
 
     @DisplayName("user의 카드 값의 총 합을 반환한다.")
