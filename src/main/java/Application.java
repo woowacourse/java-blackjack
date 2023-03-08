@@ -58,7 +58,7 @@ public class Application {
             draw(cardDeck, player);
         }
 
-        if (dealer.canAddCard()) {
+        while (dealer.canAddCard()) {
             Card card = dealer.pickCard(cardDeck);
             dealer.hit(card);
             OutputView.printHit();
