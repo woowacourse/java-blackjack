@@ -53,7 +53,7 @@ public class BlackjackController {
     }
 
     private int readBetAmount(Name name) {
-        return inputView.requestBetAmount(name.getName());
+        return inputView.requestBettingMoney(name.getName());
     }
 
     private void play(BlackjackGame blackjackGame) {
