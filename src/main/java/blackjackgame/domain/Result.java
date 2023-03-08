@@ -24,8 +24,8 @@ public class Result {
 
     private Map<Guest, GameOutcome> generateGuestsResult(final Dealer dealer, final List<Guest> guests) {
         int dealerScore = dealer.getScore();
-        return new HashMap<>(guests.stream()
-                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealerScore, guest.getScore()))));
+        return guests.stream()
+                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealerScore, guest.getScore()), (guest1,guest2) -> guest1, LinkedHashMap::new));
     }
 
     private GameOutcome judgeGuestResult(final int dealerScore, final int guestScore) {
@@ -58,7 +58,7 @@ public class Result {
     }
 
     public Map<Guest, GameOutcome> getGuestsResult() {
-        return Map.copyOf(guestsResult);
+        return Collections.unmodifiableMap(guestsResult);
     }
 
     public Map<GameOutcome, Integer> getDealerResult() {
