@@ -36,20 +36,15 @@ public class BlackJackController {
         }
     }
 
-    private void playGame() {
-        drawMoreCardForPlayers();
-        OutputView.printDealerDrawCardMessage(blackJackService.drawMoreCardForDealer());
-    }
-
-    private void finishGame() {
-        printAllTotalStatues(blackJackService.getAllParticipantTotalResponse());
-        OutputView.printTotalGameResult(blackJackService.getTotalGameResult());
-    }
-
     private void printAllParticipantStatues(List<ParticipantStatusResponse> participantStatusResponse) {
         for (ParticipantStatusResponse response : participantStatusResponse) {
             OutputView.printParticipantStatus(response);
         }
+    }
+
+    private void playGame() {
+        drawMoreCardForPlayers();
+        OutputView.printDealerDrawCardMessage(blackJackService.drawMoreCardForDealer());
     }
 
     private void drawMoreCardForPlayers() {
@@ -68,6 +63,11 @@ public class BlackJackController {
 
     private boolean decideDraw(String playerName) {
         return InputView.readDrawCardDecision(playerName);
+    }
+
+    private void finishGame() {
+        printAllTotalStatues(blackJackService.getAllParticipantTotalResponse());
+        OutputView.printTotalGameResult(blackJackService.getTotalGameResult());
     }
 
     private void printAllTotalStatues(List<ParticipantTotalStatusResponse> responses) {
