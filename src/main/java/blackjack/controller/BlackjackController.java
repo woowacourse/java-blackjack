@@ -30,7 +30,7 @@ public class BlackjackController {
         startGame(participants, deck);
         hitParticipants(participants, deck);
 
-        final ResultGame resultGame = new ResultGame(participants, new HashMap<>());
+        final ResultGame resultGame = new ResultGame(new HashMap<>());
         displayAllResult(participants, resultGame);
     }
 
@@ -87,6 +87,7 @@ public class BlackjackController {
     }
 
     private void displayAllResult(final Participants participants, final ResultGame resultGame) {
+        resultGame.calculateResult(participants);
         outputView.printParticipantsResult(participants, resultGame);
     }
 }

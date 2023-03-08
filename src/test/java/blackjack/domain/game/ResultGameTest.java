@@ -35,7 +35,7 @@ public class ResultGameTest {
     @Test
     @DisplayName("생성자 테스트")
     void constructorTest() {
-        assertThatNoException().isThrownBy(() -> new ResultGame(participants, playersResult));
+        assertThatNoException().isThrownBy(() -> new ResultGame(playersResult));
     }
 
     @Nested
@@ -62,7 +62,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
 
@@ -73,7 +74,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
     }
@@ -102,7 +104,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
 
@@ -113,7 +116,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
 
@@ -124,7 +128,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
     }
@@ -153,7 +158,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
 
@@ -164,7 +170,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
 
@@ -175,7 +182,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
 
@@ -186,7 +194,8 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            ResultGame resultGame = new ResultGame(participants, playersResult);
+            ResultGame resultGame = new ResultGame(playersResult);
+            resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
     }
@@ -200,7 +209,8 @@ public class ResultGameTest {
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
-        ResultGame resultGame = new ResultGame(participants, playersResult);
+        ResultGame resultGame = new ResultGame(playersResult);
+        resultGame.calculateResult(participants);
 
         // then
         assertThat(resultGame.getDealerCount(WinTieLose.WIN)).isEqualTo(2);
@@ -215,7 +225,8 @@ public class ResultGameTest {
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
-        ResultGame resultGame = new ResultGame(participants, playersResult);
+        ResultGame resultGame = new ResultGame(playersResult);
+        resultGame.calculateResult(participants);
 
         // then
         assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);

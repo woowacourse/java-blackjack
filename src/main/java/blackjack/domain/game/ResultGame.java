@@ -11,40 +11,31 @@ import static blackjack.domain.game.WinTieLose.*;
 public class ResultGame {
 
     private static final Integer BLACKJACK_SCORE = 21;
-    private static final String NOT_FIND_RESULT_ERROR_MESSAGE = "점수에 해당하는 승무패를 구할 수 없습니다.";
 
     private final Map<Participant, WinTieLose> playersResult;
-    private final Participants participants;
 
-    public ResultGame(final Participants participants, final Map<Participant, WinTieLose> playersResult) {
-        this.participants = participants;
+    public ResultGame(final Map<Participant, WinTieLose> playersResult) {
         this.playersResult = playersResult;
-        calculateResult();
     }
 
-    private void calculateResult() {
+    public void calculateResult(final Participants participants) {
         final Participant dealer = participants.getDealer();
-        final int dealerScore = dealer.getScore();
         final List<Participant> players = participants.getPlayers();
 
+        final int dealerScore = dealer.getScore();
         for (final Participant player : players) {
-            final int playerScore = player.getScore();
-
-            playersResult.put(player, getPlayerResult(playerScore, dealerScore));
+            playersResult.put(player, getPlayerResult(player.getScore(), dealerScore));
         }
     }
 
     private WinTieLose getPlayerResult(final int playerScore, final int dealerScore) {
-        if (isExceedScore(playerScore, BLACKJACK_SCORE)) {
-            return getResultWhenPlayerBustScore(dealerScore);
+        if ((playerScore > BLACKJACK_SCORE && dealerScore > BLACKJACK_SCORE) || playerScore == dealerScore) {
+            return TIE;
         }
-        if (isEqualScore(playerScore, BLACKJACK_SCORE)) {
-            return getResultWhenPlayerBlackjackScore(playerScore, dealerScore);
+        if (playerScore <= BLACKJACK_SCORE && (dealerScore > BLACKJACK_SCORE || playerScore > dealerScore)) {
+            return WIN;
         }
-        if (isLessScore(playerScore, BLACKJACK_SCORE)) {
-            return getResultWhenPlayerNormalScore(playerScore, dealerScore);
-        }
-        throw new IllegalArgumentException(NOT_FIND_RESULT_ERROR_MESSAGE);
+        return LOSE;
     }
 
     private WinTieLose getResultWhenPlayerBustScore(final int dealerScore) {
