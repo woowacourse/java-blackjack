@@ -1,80 +1,86 @@
 package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
+
     @Test
-    @DisplayName("한장의 카드가 주어지면 카드의 랭크만큼 숫자를 더한다.")
-    void givenCard_thenSumScore() {
+    @DisplayName("스코어가 21 초과면 true를 반환한다")
+    void givenOverBustNumber_thenReturnFalse() {
         //given
-        final Score score = Score.from(0);
+        final Score score = Score.from(22);
 
         //when
-        final Card spadeEight = Card.of(Suit.SPADE, Rank.EIGHT);
-        score.sumScore(spadeEight);
-
+        final boolean result = score.isOverMaxScore();
         //then
-        assertThat(score.getScore())
-                .isEqualTo(8);
+        assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("여러장의 카드가 주어지면 각 카드들의 랭크만큼 숫자를 더한다.")
-    void givenCards_thenSumScore() {
+    @DisplayName("스코어가 22 이하면 false를 반환한다")
+    void givenUnderBustNumber_thenReturnTrue() {
         //given
-        final Score score = Score.from(8);
+        final Score score = Score.from(21);
 
         //when
-        final Card eight = Card.of(Suit.SPADE, Rank.EIGHT);
-        final Card six = Card.of(Suit.HEARTS, Rank.SIX);
-        final Card seven = Card.of(Suit.CLUBS, Rank.SEVEN);
-        score.sumScore(eight, six, seven);
-
+        final boolean result = score.isOverMaxScore();
         //then
-        assertThat(score.getScore())
-                .isEqualTo(8 + 8 + 6 + 7);
+        assertThat(result).isFalse();
     }
 
-    @Nested
-    @DisplayName("ace를 뽑았을 때,")
-    class IsSoftTest {
-        @Test
-        @DisplayName("점수 총합이 11이하면 ace의 값을 11로 계산한다")
-        void givenAceAndUnderElevenScore_thenAceScoreEleven() {
-            //given
-            final Score score = Score.from(0);
+    @Test
+    @DisplayName("스코어가 12 이상이면 false를 반환한다")
+    void givenOverTwelve_thenReturnFalse() {
+        //given
+        final Score score = Score.from(12);
 
-            //when
-            final Card ace = Card.of(Suit.SPADE, Rank.ACE);
-            final Card two = Card.of(Suit.HEARTS, Rank.TWO);
-            final Card three = Card.of(Suit.CLUBS, Rank.THREE);
-            score.sumScore(ace, two, three);
+        //when
+        final boolean result = score.canAddBonusScore();
 
+        //then
+        assertThat(result).isFalse();
+    }
 
-            //then
-            assertThat(score.getScore())
-                    .isEqualTo(16);
-        }
+    @Test
+    @DisplayName("스코어가 11 이하면 true를 반환한다")
+    void givenUnderEleven_thenReturnTrue() {
+        //given
+        final Score score = Score.from(11);
 
-        @Test
-        @DisplayName("점수 총합이 12이상이면 ace의 값을 1로 계산한다")
-        void givenAceAndOverTwelveScore_thenAceScoreOne() {
-            //given
-            final Score score = Score.from(0);
+        //when
+        final boolean result = score.canAddBonusScore();
 
-            //when
-            final Card ace = Card.of(Suit.SPADE, Rank.ACE);
-            final Card six = Card.of(Suit.HEARTS, Rank.SIX);
-            final Card seven = Card.of(Suit.CLUBS, Rank.SEVEN);
-            score.sumScore(ace, six, seven);
+        //then
+        assertThat(result).isTrue();
+    }
 
+    @Test
+    @DisplayName("getScore를 호출하면 자기 자신을 반환한다.")
+    void getScoreTest() {
+        //given
+        final Score score = Score.from(21);
 
-            //then
-            assertThat(score.getScore()).isEqualTo(14);
-        }
+        //when
+        final Score newScore = score.getScore();
+
+        //then
+        assertThat(score).isEqualTo(newScore);
+    }
+
+    @Test
+    @DisplayName("getScoreWithBonusScore를 호출하면 10을 더해준 스코어를 반환한다.")
+    void getScoreWithBonusScoreTest() {
+        //given
+        final Score score = Score.from(11);
+        final Score expectResult = Score.from(21);
+
+        //when
+        final Score scoreWithBonusScore = score.getScoreWithBonusScore();
+
+        //then
+        assertThat(scoreWithBonusScore).isEqualTo(expectResult);
     }
 }

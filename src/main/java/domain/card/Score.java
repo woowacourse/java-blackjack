@@ -1,52 +1,37 @@
 package domain.card;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public final class Score {
 
-    private static final int SOFT_ADD = 10;
-    private static final int SOFT_CONDITION = 21 - SOFT_ADD;
+    private static final int BONUS_SCORE = 10;
+    private static final int MAX_SCORE = 21;
 
-    private int score;
-    private boolean hasAce;
+    private final int score;
 
-    private Score(final int score, final boolean hasAce) {
+
+    public Score(final int score) {
         this.score = score;
-        this.hasAce = hasAce;
     }
 
     public static Score from(final int score) {
-        return new Score(score, false);
+        return new Score(score);
     }
 
-    public void sumScore(Card... cards) {
-        hasAce(cards);
-        score += Arrays.stream(cards)
-                .mapToInt(Card::getScore)
-                .sum();
+    public boolean isOverMaxScore() {
+        return score > MAX_SCORE;
     }
 
-    private void hasAce(Card... cards) {
-        if (!hasAce) {
-            hasAce = Arrays.stream(cards)
-                    .anyMatch(this::isAce);
-        }
+    public boolean canAddBonusScore() {
+        return this.score <= MAX_SCORE - BONUS_SCORE;
     }
 
-    private boolean isAce(Card card) {
-        return card.getRank() == Rank.ACE;
+    public Score getScore() {
+        return this;
     }
 
-    private static boolean isHard(final int sum) {
-        return sum <= SOFT_CONDITION;
-    }
-
-    public int getScore() {
-        if (hasAce && isHard(score)) {
-            return score + SOFT_ADD;
-        }
-        return score;
+    public Score getScoreWithBonusScore() {
+        return Score.from(score + BONUS_SCORE);
     }
 
     @Override
@@ -54,11 +39,11 @@ public final class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Score score1 = (Score) o;
-        return score == score1.score && hasAce == score1.hasAce;
+        return score == score1.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, hasAce);
+        return Objects.hash(score);
     }
 }
