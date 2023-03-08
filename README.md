@@ -6,6 +6,45 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+## 클래스 다이어그램
+```mermaid
+classDiagram-v2
+    note "주요 클래스"
+    BlackjackGame <-- Participants
+    BlackjackGame <-- Deck
+    Participants <-- Dealer
+    Participants <-- Players
+    Players <-- Player
+    Hand <-- Card
+    Card <-- Suit
+    Card <-- Rank
+    Deck <-- Card
+    Player <-- Hand
+    Dealer <-- Hand
+```
+
+```mermaid
+classDiagram-v2
+    note "User 관련 클래스"
+    User <|-- Player
+    User <|-- Dealer
+    Deck <|.. ShuffledDeck
+    <<interface>> Deck
+    class User {
+    +UserName userName
+    +Hand hand
+    }
+```
+
+```mermaid
+classDiagram-v2
+    note "UserName 관련 클래스"
+    UserName <|.. PlayerName
+    UserName <|.. DealerName
+    Player *-- PlayerName
+    Dealer *-- DealerName
+    <<interface>> UserName
+```
 
 ## 기능 구현 목록
 
