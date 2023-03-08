@@ -44,7 +44,7 @@ public class Money {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Money money = (Money) o;
-        return Objects.equals(value, money.value);
+        return value.compareTo(money.value) == 0;
     }
 
     @Override
