@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.LOSE;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 
-import blackjack.domain.Result;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;

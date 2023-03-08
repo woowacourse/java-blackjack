@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.LOSE;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.Result;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;

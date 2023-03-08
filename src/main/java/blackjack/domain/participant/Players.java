@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.LOSE;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 import static blackjack.domain.participant.Dealer.BLACKJACK_SCORE;
 import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Result;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import static blackjack.domain.Result.DRAW;
-import static blackjack.domain.Result.LOSE;
-import static blackjack.domain.Result.WIN;
+import static blackjack.domain.result.Result.DRAW;
+import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.Result.WIN;
 import static blackjack.domain.participant.Dealer.DEALER_CAN_DRAW_SCORE;
 import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.Result;
+import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
 import java.util.List;
