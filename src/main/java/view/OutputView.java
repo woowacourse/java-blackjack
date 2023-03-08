@@ -28,7 +28,9 @@ public final class OutputView {
     private static final ValueDisplay valueDisplay = new ValueDisplay();
 
     public void printInitialMessage(final List<Player> players) {
-        String playerNames = players.stream().map(Participant::getName).collect(Collectors.joining(", "));
+        String playerNames = players.stream()
+                .map(Participant::getName)
+                .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), playerNames);
     }
 
@@ -87,19 +89,25 @@ public final class OutputView {
 
     private void printDealerResult(final Map<WinningStatus, Integer> dealerResult) {
         StringBuilder dealerDisplay = new StringBuilder();
+        dealerDisplay.append(formatCountDisplay(dealerResult));
+        System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
+    }
+
+    private static String formatCountDisplay(final Map<WinningStatus, Integer> dealerResult) {
+        StringBuilder countDisplay = new StringBuilder();
         int winCount = dealerResult.getOrDefault(WinningStatus.WIN, 0);
         int tieCount = dealerResult.getOrDefault(WinningStatus.DRAW, 0);
         int loseCount = dealerResult.getOrDefault(WinningStatus.LOSE, 0);
         if (winCount >= 1) {
-            dealerDisplay.append(winCount).append("승");
+            countDisplay.append(winCount).append("승");
         }
         if (tieCount >= 1) {
-            dealerDisplay.append(tieCount).append("무");
+            countDisplay.append(tieCount).append("무");
         }
         if (loseCount >= 1) {
-            dealerDisplay.append(loseCount).append("패");
+            countDisplay.append(loseCount).append("패");
         }
-        System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
+        return countDisplay.toString();
     }
 
     private void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
