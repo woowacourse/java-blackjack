@@ -28,8 +28,8 @@ public class CardTable {
         return new CardTable(cardDeck);
     }
 
-    public Map<Participant, Money> determineBettingMoney(final List<Participant> participants,
-                                                         final Dealer dealer) {
+    public Map<Participant, Money> determineParticipantsBettingMoney(final List<Participant> participants,
+                                                                     final Dealer dealer) {
         return participants.stream()
                            .collect(Collectors.toMap(
                                    Function.identity(),
@@ -38,6 +38,17 @@ public class CardTable {
                                        return participant.determineBetMoney();
                                    })
                            );
+    }
+
+    public Money determineDealerMoney(final List<Participant> participants, final Dealer dealer) {
+
+        final Map<Participant, Money> participantsResultMoney = determineParticipantsBettingMoney(participants, dealer);
+
+        return participantsResultMoney.keySet()
+                                      .stream()
+                                      .map(Participant::determineBetMoney)
+                                      .reduce(Money.wons(0), Money::plus)
+                                      .lose();
     }
 
     private void matchAfterFinalDeal(final Dealer dealer, final Participant participant) {

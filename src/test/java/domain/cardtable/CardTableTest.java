@@ -30,6 +30,7 @@ import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -58,14 +59,14 @@ class CardTableTest {
     }
 
     @Test
-    @DisplayName("determineBettingMoney() : 참여자가 bust 일 경우에는 참여자가 무조건 게임에서 진다.")
+    @DisplayName("determineParticipantsBettingMoney() : 참여자가 bust 일 경우에는 참여자가 무조건 게임에서 진다.")
     void test_matchBetween_bust_participant_must_lose_participant() throws Exception {
         //given
         participant.hit(new Card(SPADE, TEN));
 
         //when
         final Map<Participant, Money> gameResultMoney =
-                cardTable.determineBettingMoney(List.of(participant), dealer);
+                cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
 
         //then
         assertAll(
@@ -75,14 +76,14 @@ class CardTableTest {
     }
 
     @Test
-    @DisplayName("determineBettingMoney() : 딜러는 bust 이면서 참여자가 bust 가 아니면 참여자가 무조건 게임에서 이긴다.")
+    @DisplayName("determineParticipantsBettingMoney() : 딜러는 bust 이면서 참여자가 bust 가 아니면 참여자가 무조건 게임에서 이긴다.")
     void test_matchBetween_bust_dealer_must_lose_dealer() throws Exception {
         //given
         dealer.hit(new Card(SPADE, TEN));
 
         //when
         final Map<Participant, Money> gameResultMoney =
-                cardTable.determineBettingMoney(List.of(participant), dealer);
+                cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
 
         //then
         assertAll(
@@ -93,14 +94,14 @@ class CardTableTest {
 
     @ParameterizedTest
     @MethodSource("makeBothNotBust")
-    @DisplayName("determineBettingMoney() : 딜러, 참여자 모두 버스트가 아닐 때 점수가 높은 쪽이 이기고, 같으면 무승부이다.")
+    @DisplayName("determineParticipantsBettingMoney() : 딜러, 참여자 모두 버스트가 아닐 때 점수가 높은 쪽이 이기고, 같으면 무승부이다.")
     void test_matchBetween_not_bust_win_higher_score_or_draw_same_score(
             final Participant participant, final Dealer dealer,
             final Money resultBettingMoney) throws Exception {
 
         //when
         final Map<Participant, Money> gameResultMoney =
-                cardTable.determineBettingMoney(List.of(participant), dealer);
+                cardTable.determineParticipantsBettingMoney(List.of(participant), dealer);
 
         //then
         assertAll(
@@ -238,5 +239,17 @@ class CardTableTest {
                 Arguments.of(participant2, dealer2, new WinState()),
                 Arguments.of(participant3, dealer3, new LoseState())
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("makeBothNotBust")
+    @DisplayName("determineDealerMoney() : 딜러가 얻은/잃은 금액을 알 수 있다.")
+    void test_determineDealerMoney(final Participant participant, final Dealer dealer,
+                                   final Money resultBettingMoney) throws Exception {
+        //when
+        final Money dealerMoney = cardTable.determineDealerMoney(List.of(participant), dealer);
+
+        //then
+        assertEquals(resultBettingMoney.lose(), dealerMoney);
     }
 }
