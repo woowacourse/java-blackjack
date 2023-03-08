@@ -97,15 +97,13 @@ public class BlackJackController {
         boolean isCardRequested = true;
 
         while (player.isMoreCardAble() && isCardRequested) {
-            String answer = inputView.askMoreCard(player.getNameToValue());
-            Answer.validate(answer);
-            pickPlayerCardIfRequested(cardDistributor, player, answer);
-            isCardRequested = Answer.isMoreCardRequested(answer);
+            isCardRequested = inputView.askMoreCard(player.getNameToValue());
+            pickPlayerCardIfRequested(cardDistributor, player, isCardRequested);
         }
     }
 
-    private void pickPlayerCardIfRequested(CardDistributor cardDistributor, Player player, String answer) {
-        if (Answer.isMoreCardRequested(answer) && cardDistributor.isCardLeft()) {
+    private void pickPlayerCardIfRequested(CardDistributor cardDistributor, Player player, boolean isCardRequested) {
+        if (isCardRequested && cardDistributor.isCardLeft()) {
             player.pick(cardDistributor.distribute());
         }
         outputView.printCardStatus(player.getNameToValue(),

@@ -33,7 +33,7 @@ public class OutputView {
 
     private List<String> convertCardStatus(List<CardStatusDto> cardStatuses) {
         return cardStatuses.stream()
-                .map(card -> card.getLetter() + card.getShape())
+                .map(cardStatus -> cardStatus.getLetter() + cardStatus.getShape())
                 .collect(Collectors.toList());
     }
 
