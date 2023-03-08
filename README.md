@@ -42,10 +42,11 @@
 graph TD
     BlackJackController --> InputView
     BlackJackController --> OutputView
-    BlackJackController --> Participants
-    BlackJackController --> Deck
-    BlackJackController --> Betting
+    BlackJackController --> BlackJackGame
     InputView --> Parser
+    BlackJackGame --> Participants
+    BlackJackGame --> Deck
+    BlackJackGame --> Betting
     Participants --> Participant
     Betting --> Profit
     Participant --> Player
@@ -63,8 +64,8 @@ graph TD
 ### 참가자
 
 - [x] 카드를 받는다.
+- [x] 블랙잭 여부를 확인한다.
 - [x] 점수를 확인한다.
-- [x] 카드 추가 여부를 결정한다.
 - [x] 여러 명일 수 있다.
     - [x] 딜러는 포함되어야 한다.
     - [x] 중복되는 이름은 가질 수 없다.
@@ -76,6 +77,14 @@ graph TD
     - [x] 최소 1자, 최대 10자까지 가능하다.
     - [x] 중간 공백은 허용한다.
     - [x] `딜러`라는 이름은 가질 수 없다.
+
+### 딜러
+
+- [x] `딜러`라는 이름을 가진다.
+- [x] 딜러인지를 확인한다.
+- [x] 카드 추가 여부를 확인한다.
+- [x] 블랙잭 게임 결과를 보여준다.
+- [x] 숨겨진 카드 패를 드러낸다.
 
 ### 카드
 
@@ -97,8 +106,8 @@ graph TD
 ### 수익
 
 - [x] 1.5배가 된다.
-- [x] 수익이 반전된다.
-    - 수익이 +인 경우 -가 되고, 수익이 -인 경우 +가 된다.
+- [x] 수익을 잃는다.
+    - 수익이 양수일 때 음수가 되고, 수익이 음수일 때 유지한다.
 
 ### 베팅
 

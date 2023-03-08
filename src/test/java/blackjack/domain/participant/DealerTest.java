@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static blackjack.domain.card.Number.ACE;
 import static blackjack.domain.card.Number.FIVE;
+import static blackjack.domain.card.Number.NINE;
 import static blackjack.domain.card.Number.QUEEN;
 import static blackjack.domain.card.Number.SEVEN;
 import static blackjack.domain.card.Number.SIX;
@@ -189,5 +190,40 @@ class DealerTest {
         final List<Card> hiddenCards = dealer.getHiddenCards();
 
         assertThat(hiddenCards).hasSize(1);
+    }
+
+    @Nested
+    class isBlackJack_메서드는 {
+
+        @Test
+        void 카드가_2장이고_점수가_21점이면_true_반환한다() {
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(ACE, HEART));
+            dealer.drawCard(new Card(QUEEN, DIAMOND));
+            //21점
+
+            assertThat(dealer.isBlackJack()).isTrue();
+        }
+
+        @Test
+        void 카드가_3장_이상이고_점수가_21점이면_false_반환한다() {
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(SEVEN, HEART));
+            dealer.drawCard(new Card(NINE, DIAMOND));
+            dealer.drawCard(new Card(FIVE, DIAMOND));
+            //21점
+
+            assertThat(dealer.isBlackJack()).isFalse();
+        }
+
+        @Test
+        void 카드가_2장이고_점수가_21점이_아니면_false_반환한다() {
+            final Dealer dealer = new Dealer();
+            dealer.drawCard(new Card(SEVEN, HEART));
+            dealer.drawCard(new Card(NINE, DIAMOND));
+            //16점
+
+            assertThat(dealer.isBlackJack()).isFalse();
+        }
     }
 }

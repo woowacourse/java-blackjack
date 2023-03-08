@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.betting.Betting;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +46,17 @@ public class Participants {
     public void drawCard(final Deck deck, final int count) {
         for (int i = 0; i < count; i++) {
             participants.forEach(participant -> participant.drawCard(deck.draw()));
+        }
+    }
+
+    public void receiveBlackJackBonus(final Betting betting) {
+        final List<Player> players = getPlayers();
+        players.forEach(player -> calculateBlackJackBonus(player, betting));
+    }
+
+    private void calculateBlackJackBonus(final Player player, final Betting betting) {
+        if (player.isBlackJack()) {
+            betting.addBlackJackBonus(player);
         }
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 public abstract class Participant {
 
     protected static final int BLACK_JACK_SCORE = 21;
+    protected static final int BLACK_JACK_CARD_COUNT = 2;
 
     protected final Cards cards;
 
@@ -19,6 +20,10 @@ public abstract class Participant {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없습니다.");
         }
         cards.addCard(card);
+    }
+
+    public boolean isBlackJack() {
+        return cards.count() == BLACK_JACK_CARD_COUNT && cards.calculateTotalScore() == BLACK_JACK_SCORE;
     }
 
     public int getScore() {

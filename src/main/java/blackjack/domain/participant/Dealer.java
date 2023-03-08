@@ -7,9 +7,6 @@ public class Dealer extends Participant {
 
     private static final String NAME = "딜러";
     private static final int MAXIMUM_DRAWABLE_SCORE = 16;
-    private static final int MAXIMUM_DRAWABLE_CARD_COUNT = 2;
-
-    private final String name = NAME;
 
     public Dealer() {
         super();
@@ -21,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     private boolean isDrawableCardCount() {
-        return cards.count() <= MAXIMUM_DRAWABLE_CARD_COUNT;
+        return cards.count() <= BLACK_JACK_CARD_COUNT;
     }
 
     private boolean isDrawableScore() {
@@ -35,7 +32,7 @@ public class Dealer extends Participant {
 
     @Override
     public String getName() {
-        return name;
+        return NAME;
     }
 
     public Result showResult(final int score) {
