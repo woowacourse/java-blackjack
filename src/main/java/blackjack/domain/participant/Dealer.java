@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
-
 public class Dealer extends Participant {
 
     private static final String NAME = "딜러";
@@ -12,10 +10,6 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super();
-    }
-
-    public Dealer(final Cards cards) {
-        super(cards);
     }
 
     @Override

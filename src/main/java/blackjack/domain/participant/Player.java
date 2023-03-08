@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -8,11 +7,7 @@ public class Player extends Participant {
     private final PlayerName name;
 
     public Player(final String name) {
-        this(name, new Cards());
-    }
-
-    public Player(final String name, final Cards cards) {
-        super(cards);
+        super();
         this.name = new PlayerName(name);
     }
 

@@ -11,11 +11,7 @@ public abstract class Participant {
     protected final Cards cards;
 
     protected Participant() {
-        this(new Cards());
-    }
-
-    protected Participant(final Cards cards) {
-        this.cards = cards;
+        this.cards = new Cards();
     }
 
     public void drawCard(final Card card) {
