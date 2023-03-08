@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Denomination;
 import domain.card.Suits;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

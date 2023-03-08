@@ -15,7 +15,7 @@ public enum Result {
 
     private final String name;
 
-    Result(String name) {
+    Result(final String name) {
         this.name = name;
     }
 

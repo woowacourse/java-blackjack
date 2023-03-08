@@ -17,15 +17,15 @@ public class Score {
         return isLessThan(BLACK_JACK_SCORE);
     }
 
-    public boolean isLessThan(Score other) {
-        return other.value > this.value;
-    }
-
-    public boolean isGreaterThan(Score other) {
+    public boolean isGreaterThan(final Score other) {
         return other.value < this.value;
     }
 
-    public Score add(Score addValue) {
+    public boolean isLessThan(final Score other) {
+        return other.value > this.value;
+    }
+
+    public Score add(final Score addValue) {
         return new Score(this.value + addValue.value);
     }
 
@@ -38,13 +38,13 @@ public class Score {
         return !scoreAddedAceOffSet.isBust();
     }
 
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Score other = (Score) obj;
         return this.value == other.value;
-    }
-
-    public int value() {
-        return value;
     }
 }

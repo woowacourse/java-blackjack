@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Score;
 
 public class Dealer extends User {

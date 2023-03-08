@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Referee {
-    public static Map<String, Result> judgeTotalPlayerResult(List<Player> players, Dealer dealer) {
+    public static Map<String, Result> judgeTotalPlayerResult(final List<Player> players, final Dealer dealer) {
         Map<String, Result> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
             playerResults.put(player.getName(), judgePlayerResult(player.getScore(), dealer.getScore()));
@@ -27,7 +27,7 @@ public class Referee {
         return Result.WIN;
     }
 
-    public static Map<Result, Integer> judgeTotalDealerResult(Map<String, Result> playerResults) {
+    public static Map<Result, Integer> judgeTotalDealerResult(final Map<String, Result> playerResults) {
         Map<Result, Integer> totalDealerResult = new HashMap<>();
         playerResults.values().forEach(playerResult -> calculateResultCountOfDealer(totalDealerResult, playerResult));
         return totalDealerResult;

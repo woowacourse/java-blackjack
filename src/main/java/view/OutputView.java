@@ -3,7 +3,6 @@ package view;
 import domain.card.Card;
 import domain.dto.CardNames;
 import domain.game.Result;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,12 +60,12 @@ public class OutputView {
         StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
         for (Result result : Result.values()) {
             int count = dealerResult.getOrDefault(result, 0);
-            dealerResultMessage.append(getDealerEachResult(result.getName(), count));
+            dealerResultMessage.append(getDealerResultCountMessage(result.getName(), count));
         }
         System.out.println(dealerResultMessage);
     }
 
-    private static String getDealerEachResult(final String gameResultName, final int count) {
+    private static String getDealerResultCountMessage(final String gameResultName, final int count) {
         if (count != 0) {
             return count + gameResultName + " ";
         }
@@ -83,12 +82,12 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printInitMessage(List<String> playerNames) {
+    public static void printInitHitMessage(final List<String> playerNames) {
         System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.println(message);
     }
 }

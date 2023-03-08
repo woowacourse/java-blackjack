@@ -30,9 +30,13 @@ public class BlackJackController {
         List<String> playerNames = InputView.askPlayerNames();
         Users users = Users.from(playerNames);
         blackJack = BlackJack.of(users, new RandomDeckGenerator().generateDeck());
-        OutputView.printInitMessage(playerNames);
+        printInitMessages(playerNames);
+    }
+
+    private void printInitMessages(final List<String> playerNames){
+        OutputView.printInitHitMessage(playerNames);
         OutputView.printDealerCardWithHidden(blackJack.getDealerCardWithHidden());
-        OutputView.printPlayerCards(blackJack.getPlayerToCard());
+        OutputView.printPlayerCards(blackJack.getPlayerToCardNames());
     }
 
     private void playGame() {
@@ -68,7 +72,7 @@ public class BlackJackController {
 
     private void endGame() {
         OutputView.printDealerCardWithScore(blackJack.getDealerCardNames(), blackJack.getDealerScore());
-        OutputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
+        OutputView.printPlayerCardWithScore(blackJack.getPlayerToCardNames(), blackJack.getPlayerToScore());
         Map<String, Result> playerTotalResults = blackJack.calculateTotalPlayerResults();
         OutputView.printGameResult(blackJack.calculateTotalDealerResult(playerTotalResults), playerTotalResults);
     }

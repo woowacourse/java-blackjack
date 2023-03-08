@@ -6,7 +6,7 @@ import java.util.Stack;
 public class Deck {
     private final Stack<Card> unusedCards;
 
-    public Deck(Stack<Card> unusedCards) {
+    public Deck(final Stack<Card> unusedCards) {
         this.unusedCards = unusedCards;
     }
 

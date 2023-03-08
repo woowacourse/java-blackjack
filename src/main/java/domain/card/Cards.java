@@ -12,10 +12,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public Score getSumOfScores() {
         Score sumScore = cards.stream().map(Card::getScore).reduce((a, b) -> a.add(b)).get();
         if (isContainAce() && sumScore.isAddableAceOffSet()) {
@@ -28,7 +24,7 @@ public class Cards {
         return cards.stream().anyMatch(card2 -> card2.getDenomination() == Denomination.ACE);
     }
 
-    public boolean isUnder(Score other) {
+    public boolean isUnder(final Score other) {
         return getSumOfScores().isLessThan(other);
     }
 
@@ -36,11 +32,15 @@ public class Cards {
         return getSumOfScores().isAddable();
     }
 
-    public Card get(int index){
+    public Card get(final int index) {
         return cards.get(index);
     }
 
-    public List<String> getCardNames(){
+    public List<String> getCardNames() {
         return cards.stream().map(Card::getCardName).collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

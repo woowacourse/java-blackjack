@@ -1,15 +1,16 @@
 package domain.card;
 
-import java.util.List;
-
 public class Card {
-
     private final Denomination denomination;
     private final Suits suit;
 
-    public Card(Denomination denomination, Suits suit) {
+    public Card(final Denomination denomination, final Suits suit) {
         this.denomination = denomination;
         this.suit = suit;
+    }
+
+    public String getCardName() {
+        return denomination.getPoint() + suit.getName();
     }
 
     public Score getScore() {
@@ -22,9 +23,5 @@ public class Card {
 
     public Suits getSuit() {
         return suit;
-    }
-
-    public String getCardName() {
-        return denomination.getPoint() + suit.getName();
     }
 }

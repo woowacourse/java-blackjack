@@ -26,19 +26,19 @@ public class BlackJack {
         return new BlackJack(users, deck);
     }
 
-    private static void initCards(Users users, Deck deck) {
+    private static void initCards(final Users users, final Deck deck) {
         for (Player player : users.getPlayers()) {
             hitTwoCards(player, deck);
         }
         hitTwoCards(users.getDealer(), deck);
     }
 
-    private static void hitTwoCards(User user, Deck deck) {
+    private static void hitTwoCards(final User user, final Deck deck) {
         user.hit(deck.pickCard());
         user.hit(deck.pickCard());
     }
 
-    public void giveCard(String playerName) {
+    public void giveCard(final String playerName) {
         users.hitCardByName(playerName, deck.pickCard());
     }
 
@@ -47,26 +47,12 @@ public class BlackJack {
         dealer.hit(deck.pickCard());
     }
 
-    public Map<String, Result> calculateTotalPlayerResults() {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-        return Referee.judgeTotalPlayerResult(players, dealer);
-    }
-
-    public Map<Result, Integer> calculateTotalDealerResult(Map<String, Result> totalPlayerResult) {
-        return Referee.judgeTotalDealerResult(totalPlayerResult);
-    }
-
     public Card getDealerCardWithHidden() {
         Dealer dealer = users.getDealer();
         return dealer.getVisibleCard();
     }
 
-    public boolean isHittablePlayer(Player player) {
-        return player.isHittable();
-    }
-
-    public Map<String, CardNames> getPlayerToCard() {
+    public Map<String, CardNames> getPlayerToCardNames() {
         List<Player> players = users.getPlayers();
         Map<String, CardNames> playerToCard = new LinkedHashMap<>();
         for (Player player : players) {
@@ -76,29 +62,43 @@ public class BlackJack {
         return playerToCard;
     }
 
-    public Map<String, Integer> getPlayerToScore() {
-        List<Player> players = users.getPlayers();
-        Map<String, Integer> playerToScore = new LinkedHashMap<>();
-        for (Player player : players) {
-            playerToScore.put(player.getName(), player.getScore().value());
-        }
-        return playerToScore;
+    public CardNames getDealerCardNames() {
+        Cards dealerCards = users.getDealer().getCards();
+        return new CardNames(dealerCards.getCardNames());
     }
 
     public List<Player> getHittablePlayers() {
         return users.getHittablePlayers();
     }
 
-    public CardNames getDealerCardNames() {
-        Cards dealerCards = users.getDealer().getCards();
-        return new CardNames(dealerCards.getCardNames());
-    }
-
-    public int getDealerScore() {
-        return users.getDealer().getScore().value();
+    public boolean isHittablePlayer(final Player player) {
+        return player.isHittable();
     }
 
     public boolean isHittableDealer() {
         return users.isHittableDealer();
+    }
+
+    public Map<String, Integer> getPlayerToScore() {
+        List<Player> players = users.getPlayers();
+        Map<String, Integer> playerToScore = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerToScore.put(player.getName(), player.getScore().getValue());
+        }
+        return playerToScore;
+    }
+
+    public int getDealerScore() {
+        return users.getDealer().getScore().getValue();
+    }
+
+    public Map<String, Result> calculateTotalPlayerResults() {
+        List<Player> players = users.getPlayers();
+        Dealer dealer = users.getDealer();
+        return Referee.judgeTotalPlayerResult(players, dealer);
+    }
+
+    public Map<Result, Integer> calculateTotalDealerResult(final Map<String, Result> totalPlayerResult) {
+        return Referee.judgeTotalDealerResult(totalPlayerResult);
     }
 }

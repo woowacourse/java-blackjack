@@ -14,7 +14,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> names) {
+    public static Players of(final List<String> names) {
         validate(names);
         List<Player> players = names.stream()
                 .map(Player::new)
@@ -41,7 +41,7 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers(){
+    public List<Player> getPlayers() {
         return players;
     }
 }

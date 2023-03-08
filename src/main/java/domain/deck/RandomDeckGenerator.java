@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class RandomDeckGenerator implements DeckGenerator {
-    private static void addCard(Stack<Card> cards, Suits suits) {
+    private static void addCard(final Stack<Card> cards, final Suits suits) {
         for (Denomination denomination : Denomination.values()) {
             cards.push(new Card(denomination, suits));
         }
