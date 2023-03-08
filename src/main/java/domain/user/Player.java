@@ -42,7 +42,7 @@ public class Player extends User {
 
     @Override
     public boolean isHittable() {
-        return !cards.isBust();
+        return cards.isAddable();
     }
 
     @Override

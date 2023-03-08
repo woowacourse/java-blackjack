@@ -1,21 +1,16 @@
 package domain;
 
-import static domain.GameResult.LOSE;
-import static domain.GameResult.PUSH;
-import static domain.GameResult.WIN;
-import static domain.GameResult.comparePlayerWithDealer;
-
 import domain.deck.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import result.Referee;
+import result.Result;
 
 public class BlackJack {
-
     private final Users users;
     private final Deck deck;
 
@@ -50,32 +45,14 @@ public class BlackJack {
         dealer.hit(deck.pickCard());
     }
 
-    public Map<String, GameResult> calculatePlayerResults() {
+    public Map<String, Result> calculateTotalPlayerResults() {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
-        int dealerScore = dealer.getScore().value();
-        Map<String, GameResult> playerResults = new LinkedHashMap<>();
-        for (Player player : players) {
-            playerResults.put(player.getName(), comparePlayerWithDealer(player.getScore().value(), dealerScore));
-        }
-        return playerResults;
+        return Referee.judgeTotalPlayerResult(players, dealer);
     }
 
-    public Map<GameResult, Integer> calculateDealerResult() {
-        Map<GameResult, Integer> dealerResult = new HashMap<>();
-        Map<String, GameResult> playerResults = calculatePlayerResults();
-        playerResults.values().forEach(result -> convertResult(result, dealerResult));
-        return dealerResult;
-    }
-
-    private void convertResult(final GameResult playerResult, final Map<GameResult, Integer> dealerResult) {
-        Map<GameResult, GameResult> converter = Map.of(
-                WIN, LOSE,
-                LOSE, WIN,
-                PUSH, PUSH
-        );
-        GameResult convertedResult = converter.get(playerResult);
-        dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
+    public Map<Result, Integer> calculateTotalDealerResult(Map<String, Result> totalPlayerResult) {
+        return Referee.judgeTotalDealerResult(totalPlayerResult);
     }
 
     public Card getDealerCardWithHidden() {

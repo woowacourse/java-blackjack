@@ -34,4 +34,8 @@ public class Cards {
     public boolean isBust() {
         return getSumOfScores().isBust();
     }
+
+    public boolean isAddable() {
+        return getSumOfScores().isAddable();
+    }
 }

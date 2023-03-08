@@ -10,11 +10,23 @@ public class Score {
     }
 
     public boolean isBust() {
-        return !isLessThan(BLACK_JACK_SCORE) && !equals(BLACK_JACK_SCORE);
+        return isGreaterThan(BLACK_JACK_SCORE);
+    }
+
+    public boolean isAddable() {
+        return isLessThan(BLACK_JACK_SCORE);
+    }
+
+    public boolean isBlackJack() {
+        return equals(BLACK_JACK_SCORE);
     }
 
     public boolean isLessThan(Score other) {
         return other.value > this.value;
+    }
+
+    public boolean isGreaterThan(Score other) {
+        return other.value < this.value;
     }
 
     public Score add(Score addValue) {

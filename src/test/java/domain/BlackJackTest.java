@@ -10,6 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import result.Result;
 
 public class BlackJackTest {
     private Users users;
@@ -33,9 +34,9 @@ public class BlackJackTest {
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
         // dealer  : 5, 6       => 11
-        Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-        assertThat(gameResults.get("hongo")).isEqualTo(GameResult.WIN);
-        assertThat(gameResults.get("kiara")).isEqualTo(GameResult.LOSE);
+        Map<String, Result> results = blackJack.calculateTotalPlayerResults();
+        assertThat(results.get("hongo")).isEqualTo(Result.WIN);
+        assertThat(results.get("kiara")).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어와 딜러의 점수가 같을 경우 무승부(PUSH)를 반환한다")
@@ -47,8 +48,8 @@ public class BlackJackTest {
         // 카드 현황
         // player : ACE(11), 2 => 13
         // dealer : 3, 4, 6    => 13
-        Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-        assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
+        Map<String, Result> results = blackJack.calculateTotalPlayerResults();
+        assertThat(results.get("hongo")).isEqualTo(Result.PUSH);
     }
 
     @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
@@ -66,8 +67,8 @@ public class BlackJackTest {
         // 카드 현황
         // player : ACE(1), 2, 10, 10  => 23
         // dealer : 3, 4, 5, 10        => 22
-        Map<String, GameResult> gameResults = blackJack.calculatePlayerResults();
-        assertThat(gameResults.get("hongo")).isEqualTo(GameResult.PUSH);
+        Map<String, Result> results = blackJack.calculateTotalPlayerResults();
+        assertThat(results.get("hongo")).isEqualTo(Result.PUSH);
     }
 
     @DisplayName("유저가 요청하면 카드를 하나 더 준다")

@@ -6,6 +6,8 @@ import domain.Users;
 import domain.deck.RandomDeckGenerator;
 import domain.user.Player;
 import java.util.List;
+import java.util.Map;
+import result.Result;
 import view.InputView;
 import view.OutputView;
 
@@ -64,6 +66,7 @@ public class BlackJackController {
     private void endGame() {
         OutputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
-        OutputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
+        Map<String, Result> playerTotalResults = blackJack.calculateTotalPlayerResults();
+        OutputView.printGameResult(blackJack.calculateTotalDealerResult(playerTotalResults), playerTotalResults);
     }
 }

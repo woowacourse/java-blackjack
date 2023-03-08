@@ -1,10 +1,10 @@
 package view;
 
 import domain.Card;
-import domain.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import result.Result;
 
 public class OutputView {
 
@@ -53,19 +53,19 @@ public class OutputView {
         return cardName.get(0) + cardName.get(1);
     }
 
-    public static void printGameResult(final Map<GameResult, Integer> dealerResult,
-                                       final Map<String, GameResult> playerResults) {
+    public static void printGameResult(final Map<Result, Integer> dealerResult,
+                                       final Map<String, Result> playerResults) {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerResult(dealerResult);
         printPlayerResults(playerResults);
     }
 
-    private static void printDealerResult(final Map<GameResult, Integer> dealerResult) {
+    private static void printDealerResult(final Map<Result, Integer> dealerResult) {
         StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
-        for (GameResult gameResult : dealerResult.keySet()) {
-            int count = dealerResult.getOrDefault(gameResult, 0);
-            dealerResultMessage.append(getDealerEachResult(gameResult.getName(), count));
+        for (Result result : dealerResult.keySet()) {
+            int count = dealerResult.getOrDefault(result, 0);
+            dealerResultMessage.append(getDealerEachResult(result.getName(), count));
         }
         System.out.println(dealerResultMessage);
     }
@@ -77,7 +77,7 @@ public class OutputView {
         return "";
     }
 
-    private static void printPlayerResults(final Map<String, GameResult> playerResults) {
+    private static void printPlayerResults(final Map<String, Result> playerResults) {
         playerResults.forEach((playerName, gameResult) ->
                 System.out.println(playerName + ": " + gameResult.getName()));
     }
