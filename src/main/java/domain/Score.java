@@ -4,8 +4,9 @@ import java.util.Objects;
 
 public class Score {
 
-    private static final Score BLACKJACK = new Score(21);
-    private static final Score ACE_DECREASE = new Score(10);
+    public static final Score INITIAL_SCORE = Score.from(0);
+    private static final Score BLACKJACK = Score.from(21);
+    private static final Score ACE_DECREASE = Score.from(10);
     private static final int NONE_ACE_COUNT = 0;
 
     private final int value;
@@ -19,7 +20,7 @@ public class Score {
     }
 
     public Score add(Score other) {
-        return new Score(this.getValue() + other.getValue());
+        return Score.from(this.getValue() + other.getValue());
     }
 
     public boolean isLessThanOrEqual(Score compareTarget) {
@@ -49,7 +50,7 @@ public class Score {
     }
 
     private Score minus(Score other) {
-        return new Score(this.getValue() - other.getValue());
+        return Score.from(this.getValue() - other.getValue());
     }
 
     public boolean isBust() {

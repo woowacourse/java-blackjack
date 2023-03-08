@@ -24,7 +24,7 @@ public class Hand {
     }
 
     private Score calculateCardScoreSum() {
-        Score sum = Score.from(0);
+        Score sum = Score.INITIAL_SCORE;
         for (Card card : cards) {
             sum = sum.add(card.getScore());
         }
