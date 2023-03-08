@@ -6,11 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class NameTest {
 
     @Nested
-    @DisplayName("이름의 길이가 10글자 이하여야 이름을 생성할 수 있다.")
+    @DisplayName("이름의 길이가 1글자 이상, 10글자 이하여야 이름을 생성할 수 있다.")
     class LengthTest {
         @DisplayName("이름을 생성할 수 있다.")
         @Test
@@ -20,10 +22,19 @@ class NameTest {
 
         @DisplayName("10글자를 초과하는 문자로는 이름을 생성할 수 없다.")
         @Test
-        void invalidLengthTest() {
+        void invalidOverLengthTest() {
             assertThatThrownBy(() -> new Name("abcdefghijklm"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(Name.LENGTH_ERROR_MESSAGE);
+        }
+
+        @DisplayName("이름에는 null이나 빈 값이 들어올 수 없다.")
+        @ParameterizedTest
+        @NullAndEmptySource
+        void invalidLengthTestWithNull(String inputName) {
+            assertThatThrownBy(() -> new Name(inputName))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("[ERROR] 이름에는 null이나 빈 값이 들어갈 수 없습니다.");
         }
     }
 
