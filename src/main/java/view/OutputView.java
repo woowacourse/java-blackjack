@@ -73,11 +73,10 @@ public class OutputView {
         System.out.println(message);
     }
 
-    //TODO:반환 타입이나 양식 수정
     public void printBattingResults(List<BattingResultDto> battingResultDtos) {
-        double dealerBattingResult = battingResultDtos
+        int dealerBattingResult = battingResultDtos
                 .stream()
-                .mapToDouble(BattingResultDto::getMoney)
+                .mapToInt(BattingResultDto::getMoney)
                 .sum() * -1;
 
         System.out.println("최종 수익");

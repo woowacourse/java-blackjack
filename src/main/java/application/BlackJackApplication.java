@@ -13,7 +13,6 @@ import domain.participant.Players;
 import dto.response.BattingResultDto;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
-import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -37,33 +36,17 @@ public class BlackJackApplication {
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
 
-        for (String playerName : blackJackGame.getPlayersName()) {
-            int bettingMoney = inputView.readBettingMoneyByName(playerName);
-            blackJackBettingMachine.betMoney(playerName, bettingMoney);
-        }
-
+        betEachPlayer(blackJackGame);
         splitCards(blackJackGame);
         drawCards(blackJackGame);
-
-
-
         printParticipantResults(blackJackGame);
-
-        List<BattingResultDto> battingResultDtos = new ArrayList<>();
-        for (String playerName : blackJackGame.getPlayersName()) {
-            int bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
-            double result = blackJackGame.getResult(playerName, bettingMoney);
-            battingResultDtos.add(new BattingResultDto(playerName, result));
-        }
-
-        outputView.printBattingResults(battingResultDtos);
+        printBattingResults(blackJackGame);
     }
 
     private BlackJackGame createBlackJackGame() {
         CardDeck cardDeck = CardDeckGenerator.create();
         Dealer dealer = ParticipantGenerator.createDealer();
         Players players = createPlayers();
-
         return new BlackJackGame(players, dealer, cardDeck);
     }
 
@@ -79,6 +62,13 @@ public class BlackJackApplication {
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return createPlayers();
+        }
+    }
+
+    private void betEachPlayer(BlackJackGame blackJackGame) {
+        for (String playerName : blackJackGame.getPlayersName()) {
+            int bettingMoney = inputView.readBettingMoneyByName(playerName);
+            blackJackBettingMachine.betMoney(playerName, bettingMoney);
         }
     }
 
@@ -126,8 +116,14 @@ public class BlackJackApplication {
         outputView.printParticipantResults(participantResults);
     }
 
-    private void printWinLoseResult(BlackJackGame blackJackGame) {
-        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults();
-        outputView.printWinLoseResult(blackJackGame.getDealerName(), winLoseResults);
+    private void printBattingResults(BlackJackGame blackJackGame) {
+        List<BattingResultDto> battingResultDtos = new ArrayList<>();
+        for (String playerName : blackJackGame.getPlayersName()) {
+            int bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
+            int result = blackJackGame.getResult(playerName, bettingMoney);
+            battingResultDtos.add(new BattingResultDto(playerName, result));
+        }
+
+        outputView.printBattingResults(battingResultDtos);
     }
 }

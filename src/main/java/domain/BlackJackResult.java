@@ -6,17 +6,17 @@ public enum BlackJackResult {
 
     WIN(money -> money),
     LOSE(money -> money * -1),
-    BLACKJACK(money -> money * 1.5),
-    EACH_BLACKJACK(money -> money),
+    BLACKJACK(money -> (int) (money * 1.5)),
+    EACH_BLACKJACK(money -> 0),
     BURST(money -> money * -1);
 
-    private Function<Double, Double> expression;
+    private Function<Integer, Integer> expression;
 
-    BlackJackResult(Function<Double, Double> expression) {
+    BlackJackResult(Function<Integer, Integer> expression) {
         this.expression = expression;
     }
 
-    public double calculatePrize(double money) {
+    public int calculatePrize(int money) {
         return expression.apply(money);
     }
 }

@@ -31,7 +31,6 @@ public class Player extends Participant {
 
         if (dealer.isBurst()) {
             return true;
-
         }
 
         return this.calculateScore() > dealer.calculateScore();

@@ -101,7 +101,7 @@ public class BlackJackGame {
     }
 
     //TODO: 메소드명 변경 고민
-    public double getResult(String name, int betMoney) {
+    public int getResult(String name, int betMoney) {
         Player player = players.findPlayerByName(name);
         BlackJackResult result = player.getResult(dealer);
         return result.calculatePrize(betMoney);

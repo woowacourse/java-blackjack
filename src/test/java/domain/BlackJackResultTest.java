@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class BlackJackResultTest {
 
     @Test
-    @DisplayName("승리하면 돈을 그대로 받는다.")
+    @DisplayName("승리하면 배팅한 금액만큼 돈을 더 받는다.")
     void win_case() {
         // given
         BlackJackResult win = BlackJackResult.WIN;
@@ -63,7 +63,7 @@ class BlackJackResultTest {
         // when
         double actual = win.calculatePrize(givenMoney);
         // then
-        assertThat(actual).isEqualTo(1000);
+        assertThat(actual).isEqualTo(0);
     }
 }
 

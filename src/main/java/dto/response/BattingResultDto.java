@@ -3,9 +3,9 @@ package dto.response;
 public class BattingResultDto {
 
     private final String name;
-    private final double money;
+    private final int money;
 
-    public BattingResultDto(String name, double money) {
+    public BattingResultDto(String name, int money) {
         this.name = name;
         this.money = money;
     }
@@ -14,7 +14,7 @@ public class BattingResultDto {
         return name;
     }
 
-    public double getMoney() {
+    public int getMoney() {
         return money;
     }
 }
