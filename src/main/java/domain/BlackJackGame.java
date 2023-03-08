@@ -31,16 +31,26 @@ public class BlackJackGame {
         return participants.getPlayers();
     }
 
-    public void distributeCard(Participant participant) {
-        participant.takeCard(deck.drawCard());
+    public boolean canPlayerDrawCard(Player player) {
+        return player.checkCardsCondition();
+    }
+
+    public AdditionalDrawStatus distributePlayerCardOrPass(Player player, String receiveOrNot) {
+        AdditionalDrawStatus additionalDrawStatus = AdditionalDrawStatus.PASS;
+        if (receiveOrNot.equals("y")) {
+            player.takeCard(deck.drawCard());
+            additionalDrawStatus = AdditionalDrawStatus.DRAW;
+        }
+        return additionalDrawStatus;
+    }
+
+    public void distributeDealerCard() {
+        Dealer dealer = participants.getDealer();
+        dealer.takeCard(deck.drawCard());
     }
 
     public boolean canDealerDrawCard() {
         return participants.canDealerDrawCard();
-    }
-
-    public Dealer getDealer() {
-        return participants.getDealer();
     }
 
     public int getDealerCardValueSum() {
