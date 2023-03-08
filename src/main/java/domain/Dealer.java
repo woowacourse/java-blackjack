@@ -58,8 +58,16 @@ public class Dealer extends Participant {
         return Result.DRAW;
     }
 
-    public Map<Player, Result> getGameResult() {
-        return Collections.unmodifiableMap(resultMap);
+    public int getProfit() {
+        int playersProfit = calculatePlayersProfit();
+
+        return playersProfit * SIGN_REVERSE;
+    }
+
+    private int calculatePlayersProfit() {
+        return resultMap.keySet().stream()
+                .mapToInt(player -> player.getProfit(resultMap.get(player).convertToOpposite()))
+                .sum();
     }
 
     public Card getFirstCard() {
@@ -76,25 +84,7 @@ public class Dealer extends Participant {
                 .count();
     }
 
-    // TODO: 2023-03-07 수익률 계산 iterator 사용 ?
-    public int getProfit() {
-        int playersProfit = calculatePlayersProfit();
-
-        return playersProfit * SIGN_REVERSE;
+    public Map<Player, Result> getGameResult() {
+        return Collections.unmodifiableMap(resultMap);
     }
-
-    private int calculatePlayersProfit() {
-        return resultMap.keySet().stream()
-                .mapToInt(player -> player.getProfit(resultMap.get(player).convertToOpposite()))
-                .sum();
-    }
-
-    // TODO: 2023-03-07 사용자의 배팅 금액을 업데이트할 필요가 있는가 ?
-//    public void updateBalance() {
-//        for (Player player : resultMap.keySet()) {
-//            Result resultOfPlayer = resultMap.get(player).convertToOpposite();
-//
-//            player.updateBetAmount(resultOfPlayer);
-//        }
-//    }
 }

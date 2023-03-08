@@ -42,14 +42,14 @@ public class BlackjackController {
         );
     }
 
+    private List<String> readPlayerNames() {
+        return inputView.requestPlayerNames();
+    }
+
     private BettingMoney createBetAmount(Name name) {
         return retryOnInvalidUserInput(
                 () -> BettingMoney.from(readBetAmount(name))
         );
-    }
-
-    private List<String> readPlayerNames() {
-        return inputView.requestPlayerNames();
     }
 
     private int readBetAmount(Name name) {

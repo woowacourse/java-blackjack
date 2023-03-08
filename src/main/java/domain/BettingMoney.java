@@ -3,6 +3,8 @@ package domain;
 import java.util.Objects;
 
 public class BettingMoney {
+    private static final String INVALID_RANGE = "배팅 금액은 100원 이상, 1억 이하여야 합니다.";
+    private static final String INVALID_UNIT = "배팅 금액은 100원 단위입니다.";
     private static final int MINIMUM = 100;
     private static final int MAXIMUM = 100_000_000;
 
@@ -19,17 +21,28 @@ public class BettingMoney {
     }
 
     private static void validate(int money) {
-        if (money < MINIMUM || money > MAXIMUM) {
-            throw new IllegalArgumentException("배팅 금액은 100원 이상, 1억 이하여야 합니다.");
-        }
+        validateRange(money);
+        validateUnit(money);
+    }
 
+    private static void validateRange(int money) {
+        if (money < MINIMUM || money > MAXIMUM) {
+            throw new IllegalArgumentException(INVALID_RANGE);
+        }
+    }
+
+    private static void validateUnit(int money) {
         if (money % MINIMUM != 0) {
-            throw new IllegalArgumentException("배팅 금액은 100원 단위입니다.");
+            throw new IllegalArgumentException(INVALID_UNIT);
         }
     }
 
     public BettingMoney applyRatio(double ratio) {
         return new BettingMoney((int) (money * ratio));
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     @Override
@@ -43,9 +56,5 @@ public class BettingMoney {
     @Override
     public int hashCode() {
         return Objects.hash(money);
-    }
-
-    public int getMoney() {
-        return money;
     }
 }
