@@ -23,7 +23,7 @@ public class PlayerTest {
 
         Player player = new Player(name, cards);
 
-        assertThat(player.sumOfPlayerCards()).isEqualTo(cards.sumOfCards());
+        assertThat(player.sumOfCards()).isEqualTo(cards.sumOfCards());
     }
 
     @Test

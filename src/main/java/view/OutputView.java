@@ -17,14 +17,13 @@ public class OutputView {
 
 
     public void printCardsPerPlayer(final List<String> namesCopy, final List<List<String>> cardsCardsCopy) {
-        printCardsPerDealer(namesCopy.get(0), cardsCardsCopy.get(0));
-        for (int i = 1; i < namesCopy.size(); i++) {
+        for (int i = 0; i < namesCopy.size(); i++) {
             printCurrentPlayerResult(namesCopy.get(i), cardsCardsCopy.get(i));
         }
     }
 
-    private void printCardsPerDealer(final String dealer, final List<String> dealerCards) {
-        System.out.println(dealer + ": " + dealerCards.get(0));
+    public void printCardsPerDealer(final String dealer, final List<String> dealerCards) {
+        System.out.println(dealer + ": " + String.join(", ", dealerCards.get(0)));
     }
 
     public void printCurrentPlayerResult(final String name, final List<String> cards) {
@@ -76,7 +75,7 @@ public class OutputView {
     }
 
     private static void printResult(final List<Integer> winningResult, final List<String> namesCopy, final int i) {
-        System.out.print(namesCopy.get(i + 1) + ": ");
+        System.out.print(namesCopy.get(i) + ": ");
         if (winningResult.get(i) == 1) {
             System.out.print("패" + NEW_LINE);
         }

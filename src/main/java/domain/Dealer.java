@@ -1,16 +1,19 @@
 package domain;
 
-public class Dealer {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Dealer extends Participant {
 
     private static final int ADD_CARD_MINIMUM_CONDITION = 17;
     private static final int BURST_CONDITION = 21;
     private static final String DEALER_DEFAULT_NAME = "딜러";
+    private static final int FIRST_CARD_INDEX = 0;
 
-    private final Player player;
     private final CardBox cardBox;
 
     public Dealer(final CardBox cardBox, final Cards cardss) {
-        this.player = new Player(new Name(DEALER_DEFAULT_NAME), cardss);
+        super(new Name(DEALER_DEFAULT_NAME), cardss);
         this.cardBox = cardBox;
     }
 
@@ -19,12 +22,12 @@ public class Dealer {
     }
 
     public boolean isSumUnderStandard() {
-        return player.sumOfPlayerCards() < ADD_CARD_MINIMUM_CONDITION;
+        return sumOfCards() < ADD_CARD_MINIMUM_CONDITION;
     }
 
     public int checkWinningResult(final Player player) {
-        int sumOfDealerCards = this.player.sumOfPlayerCards();
-        int sumOfPlayerCards = player.sumOfPlayerCards();
+        int sumOfDealerCards = this.sumOfCards();
+        int sumOfPlayerCards = player.sumOfCards();
         return compareDealerToPlayer(sumOfDealerCards, sumOfPlayerCards);
     }
 
@@ -39,19 +42,11 @@ public class Dealer {
         return Integer.compare(sumOfDealerCards, sumOfPlayerCards);
     }
 
-    public boolean addCard(final Card card) {
-        return player.addCard(card);
-    }
-
-    public String getName() {
-        return player.getName();
-    }
-
-    public Cards getCards() {
-        return player.getCards();
-    }
-
-    public int sumOfCards() {
-        return player.sumOfPlayerCards();
+    @Override
+    public List<String> printInitCards() {
+        List<String> dealerCardsToString = cards.cardsToString();
+        List<String> cardsToString = new ArrayList<>();
+        cardsToString.add(dealerCardsToString.get(FIRST_CARD_INDEX));
+        return cardsToString;
     }
 }

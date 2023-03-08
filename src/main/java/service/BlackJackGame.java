@@ -5,6 +5,7 @@ import domain.CardBox;
 import domain.Cards;
 import domain.Dealer;
 import domain.Name;
+import domain.Participant;
 import domain.Participants;
 import domain.Player;
 import domain.Players;
@@ -39,8 +40,9 @@ public class BlackJackGame {
     private Participants makeParticipants() {
         List<Name> names = getNames();
         Dealer dealer = makeDealer();
-        Players players = initPlayers(dealer, names);
-        return new Participants(dealer, players);
+        List<Participant> participantsByPlayer = initPlayers(dealer, names);
+        participantsByPlayer.add(0, dealer);
+        return new Participants(participantsByPlayer);
     }
 
     private List<Name> getNames() {
@@ -56,23 +58,24 @@ public class BlackJackGame {
         return new Dealer(cardBox, cardss);
     }
 
-    private Players initPlayers(final Dealer dealer, final List<Name> names) {
-        List<Player> players = new ArrayList<>();
+    private List<Participant> initPlayers(final Dealer dealer, final List<Name> names) {
+        List<Participant> participants = new ArrayList<>();
         for (Name name : names) {
-            players.add(makePlayer(dealer, name));
+            participants.add(makePlayer(dealer, name));
         }
         Card drewInitLastCardOfDealer = dealer.draw();
         dealer.addCard(drewInitLastCardOfDealer);
-        return new Players(players);
+        return participants;
     }
 
     private void printInitGameMessage(final Participants participants) {
-        outputView.printPlayerNames(participants.getNames());
-        outputView.printCardsPerPlayer(participants.getNames(), copiedBoxedCards(participants.getCards()));
+        outputView.printPlayerNames(participants.getPlayerNames());
+        outputView.printCardsPerDealer(participants.getDealerName(), participants.getDealer().printInitCards());
+        outputView.printCardsPerPlayer(participants.getPlayerNames(), copiedBoxedCards(participants.getPlayers()));
     }
 
     private void askPlayer(final Participants participants) {
-        for (Player player : participants.getPlayers()) {
+        for (Player player : participants.getPlayersToList()) {
             drawCard(player, participants.getDealer());
         }
     }
@@ -99,9 +102,9 @@ public class BlackJackGame {
         Dealer dealer = participants.getDealer();
         outputView.printAllCardResult(dealer.getName(), dealer.getCards().cardsToString(), dealer.sumOfCards());
 
-        for (final Player player : participants.getPlayers()) {
+        for (final Player player : participants.getPlayersToList()) {
             outputView.printAllCardResult(player.getName(), player.getCards().cardsToString(),
-                    player.sumOfPlayerCards());
+                    player.sumOfCards());
         }
     }
 
@@ -125,13 +128,11 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private List<List<String>> copiedBoxedCards(final List<Cards> cardsCards) {
-        return cardsCards.stream()
-                .map(Cards::cardsToString)
-                .collect(Collectors.toList());
+    private List<List<String>> copiedBoxedCards(final Players players) {
+        return players.cardsToString();
     }
 
     private void printWinningResult(final Participants participants) {
-        outputView.printWinningResult(participants.getWinningResult(), participants.getNames());
+        outputView.printWinningResult(participants.getWinningResult(), participants.getPlayerNames());
     }
 }

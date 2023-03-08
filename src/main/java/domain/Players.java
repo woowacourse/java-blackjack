@@ -45,7 +45,7 @@ public class Players {
     }
 
     public int getCardsSum(final int index) {
-        return players.get(index).sumOfPlayerCards();
+        return players.get(index).sumOfCards();
     }
 
     public boolean isNotBurst(final int index) {
@@ -60,5 +60,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<List<String>> cardsToString() {
+        return players.stream()
+                .map(Player::printInitCards)
+                .collect(Collectors.toList());
     }
 }

@@ -1,32 +1,15 @@
 package domain;
 
-public class Player {
+import java.util.List;
 
-    private final Name name;
-    private final Cards cards;
+public class Player extends Participant {
 
     public Player(final Name name, final Cards cards) {
-        this.name = name;
-        this.cards = cards;
+        super(name, cards);
     }
 
-    public boolean addCard(final Card card) {
-        return cards.addCard(card);
-    }
-
-    public int sumOfPlayerCards() {
-        return cards.sumOfCards();
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public Cards getCards() {
-        return cards;
-    }
-
-    public boolean isNotBurst() {
-        return cards.isNotBurst();
+    @Override
+    public List<String> printInitCards() {
+        return cards.cardsToString();
     }
 }

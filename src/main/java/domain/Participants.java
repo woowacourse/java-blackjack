@@ -2,6 +2,8 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author 우가
@@ -13,31 +15,28 @@ public class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    public Participants(final Dealer dealer, final Players players) {
-        this.dealer = dealer;
-        this.players = players;
+    public Participants(final List<Participant> participants) {
+        this.dealer = (Dealer) participants.get(0);
+        this.players = convertPlayers(participants);
     }
 
-    public List<String> getNames() {
-        String dealerName = dealer.getName();
-        List<String> playersName = players.getNames();
-        playersName.add(0, dealerName);
-        return playersName;
+    private Players convertPlayers(final List<Participant> participants) {
+        List<Player> players = IntStream.range(1, participants.size())
+                .mapToObj(i -> (Player) participants.get(i))
+                .collect(Collectors.toList());
+        return new Players(players);
     }
 
-    public List<Cards> getCards() {
-        Cards cards = dealer.getCards();
-        List<Cards> cardss = players.getCardss();
-        cardss.add(0, cards);
-        return cardss;
+    public List<String> getPlayerNames() {
+        return players.getNames();
     }
 
-    public List<Player> getPlayers() {
-        return players.getPlayers();
+    public List<Cards> getPlayerCards() {
+        return players.getCardss();
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public Players getPlayers() {
+        return players;
     }
 
     public List<Integer> getWinningResult() {
@@ -46,5 +45,17 @@ public class Participants {
             winningResult.add(dealer.checkWinningResult(players.getPlayer(index)));
         }
         return winningResult;
+    }
+
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayersToList() {
+        return players.getPlayers();
     }
 }
