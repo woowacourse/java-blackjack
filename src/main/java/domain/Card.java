@@ -22,6 +22,10 @@ public class Card {
         return letter;
     }
 
+    public Score getScore() {
+        return letter.getScore();
+    }
+
     public boolean isAce() {
         return letter == Letter.ACE;
     }

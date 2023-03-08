@@ -15,7 +15,7 @@ public class Hand {
     }
 
     public Score calculateScore(Score limit) {
-        Score score = new Score(calculateTotalCardScoreSum());
+        Score score = calculateCardScoreSum();
         return score.decreaseScoreByAce(limit, calculateAceCount());
     }
 
@@ -23,10 +23,12 @@ public class Hand {
         cards.add(card);
     }
 
-    private int calculateTotalCardScoreSum() {
-        return cards.stream()
-                .mapToInt(card -> card.getValue().getScore())
-                .sum();
+    private Score calculateCardScoreSum() {
+        Score sum = Score.from(0);
+        for (Card card : cards) {
+            sum = sum.add(card.getScore());
+        }
+        return sum;
     }
 
     private int calculateAceCount() {

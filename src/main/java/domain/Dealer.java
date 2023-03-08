@@ -2,7 +2,7 @@ package domain;
 
 public class Dealer extends Participant {
 
-    private static final Score MORE_CARD_LIMIT = new Score(16);
+    private static final Score MORE_CARD_LIMIT = Score.from(16);
 
     public Dealer(Hand hand) {
         super(Name.DEALER, hand);

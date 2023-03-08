@@ -10,8 +10,16 @@ public class Score {
 
     private final int value;
 
-    public Score(int value) {
+    private Score(int value) {
         this.value = value;
+    }
+
+    public static Score from(int value) {
+        return new Score(value);
+    }
+
+    public Score add(Score other) {
+        return new Score(this.getValue() + other.getValue());
     }
 
     public boolean isLessThanOrEqual(Score compareTarget) {
@@ -40,8 +48,8 @@ public class Score {
         return this.getValue() > compareTarget.getValue();
     }
 
-    private Score minus(Score minusScore) {
-        return new Score(this.getValue() - minusScore.getValue());
+    private Score minus(Score other) {
+        return new Score(this.getValue() - other.getValue());
     }
 
     public boolean isBust() {

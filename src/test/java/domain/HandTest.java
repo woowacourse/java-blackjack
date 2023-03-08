@@ -25,8 +25,8 @@ public class HandTest {
     @DisplayName("Player 의 카드 점수를 계산한다.")
     void calculateCardScorePlayer() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.TWO), new Card(Shape.HEART, Letter.ACE));
-        Score limit = new Score(21);
-        Score expectedScore = new Score(13);
+        Score limit = Score.from(21);
+        Score expectedScore = Score.from(13);
 
         Hand hand = new Hand(initialCards);
 
@@ -37,8 +37,8 @@ public class HandTest {
     @DisplayName("Player 의 Ace 를 2개 낮춰야 하는 경우 카드 점수를 계산한다.")
     void calculateCardScoreWhenAceDecreaseTwice() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK),new Card(Shape.HEART, Letter.ACE));
-        Score limit = new Score(21);
-        Score expectedScore = new Score(12);
+        Score limit = Score.from(21);
+        Score expectedScore = Score.from(12);
 
         Hand hand = new Hand(initialCards);
 
@@ -49,8 +49,8 @@ public class HandTest {
     @DisplayName("Dealer 의 카드 점수를 계산한다.")
     void calculateCardScoreOfDealer() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.NINE));
-        Score limit = new Score(16);
-        Score expectedScore = new Score(10);
+        Score limit = Score.from(16);
+        Score expectedScore = Score.from(10);
 
         Hand hand = new Hand(initialCards);
 
@@ -61,8 +61,8 @@ public class HandTest {
     @DisplayName("블랙잭일 때 Dealer 의 카드 점수를 계산한다.")
     void calculateCardScoreOfDealerWhenBlackJack() {
         List<Card> initialCards = List.of(new Card(Shape.DIAMOND, Letter.ACE), new Card(Shape.DIAMOND, Letter.JACK));
-        Score limit = new Score(16);
-        Score expectedScore = new Score(21);
+        Score limit = Score.from(16);
+        Score expectedScore = Score.from(21);
 
         Hand hand = new Hand(initialCards);
 
