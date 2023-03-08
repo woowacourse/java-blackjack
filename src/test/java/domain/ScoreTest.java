@@ -63,4 +63,13 @@ class ScoreTest {
         assertThat(smallerOrEqual).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("score는 같은 value를 다시 호출하면 같은 객체를 리턴한다")
+    void cacheScoreTest() {
+        Score from = Score.from(20);
+        Score from1 = Score.from(20);
+
+        assertThat(from).isSameAs(from1);
+    }
+
 }

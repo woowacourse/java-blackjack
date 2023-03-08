@@ -2,9 +2,14 @@ package domain.score;
 
 import domain.player.DealerStatus;
 
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class Score {
 
     private static final int MAX_SCORE = 21;
+    private static final Map<Integer, Score> cache = new ConcurrentHashMap<>();
 
     private final int value;
 
@@ -13,7 +18,10 @@ public class Score {
     }
 
     public static Score from(final int value) {
-        return new Score(value);
+        if (!cache.containsKey(value)) {
+            cache.put(value, new Score(value));
+        }
+        return cache.get(value);
     }
 
     public DealerStatus compareScore(final Score score) {
@@ -40,5 +48,18 @@ public class Score {
 
     public boolean isBusted() {
         return value > MAX_SCORE;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score = (Score) o;
+        return value == score.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
