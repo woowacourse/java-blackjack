@@ -42,10 +42,6 @@ public class BlackJackGame {
         return participants.openDealerGameResult();
     }
 
-    public GameResult computePlayerGameResult(String playerName) {
-        return participants.openPlayerGameResult(playerName);
-    }
-
     public PlayerWinResults computePlayerWinResults() {
         return participants.computePlayerWinResults();
     }

@@ -35,11 +35,6 @@ public class Participants {
         return GameResult.from(dealer);
     }
 
-    public GameResult openPlayerGameResult(String playerName) {
-        Player player = players.findPlayerByName(playerName);
-        return GameResult.from(player);
-    }
-
     public Card openDealerFirstCard() {
         return dealer.getCards().get(0);
     }

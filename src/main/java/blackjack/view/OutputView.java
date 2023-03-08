@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.Card;
 import blackjack.domain.GameResult;
+import blackjack.domain.Player;
 import blackjack.domain.PlayerWinResults;
 import blackjack.domain.WinResult;
 
@@ -59,11 +60,11 @@ public class OutputView {
                 dealerResult.getSum());
     }
 
-    public static void showPlayerGameResult(String playerName, GameResult playerResult) {
+    public static void showPlayerGameResult(Player player) {
         System.out.printf(GAME_RESULT_FORMAT,
-                playerName,
-                joinAllCardNames(playerResult.getCards()),
-                playerResult.getSum()
+                player.getName(),
+                joinAllCardNames(player.getCards()),
+                player.getSum()
         );
     }
 
