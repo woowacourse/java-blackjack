@@ -8,7 +8,7 @@ public class ResultOfGame {
     private final Map<String, ResultType> playerResult;
     private final Map<ResultType, Integer> dealerResult;
 
-    ResultOfGame(final Map<String, ResultType> playerResult, final Map<ResultType, Integer> dealerResult) {
+    public ResultOfGame(final Map<String, ResultType> playerResult, final Map<ResultType, Integer> dealerResult) {
         this.playerResult = playerResult;
         this.dealerResult = dealerResult;
     }
