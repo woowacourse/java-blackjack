@@ -8,7 +8,7 @@ public class Player implements Playable {
     
     public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
     public static final String EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있습니다.";
-    public static final int DRAWABLE_EXCLUSIVE_BOUNDARY = 21;
+    public static final int PLAYER_DRAWABLE_BOUNDARY = 21;
     private final String name;
     
     private CardCollection hand = new CardCollection();
@@ -44,7 +44,7 @@ public class Player implements Playable {
     
     @Override
     public boolean isAbleToDraw() {
-        return this.hand.calculateScore() < DRAWABLE_EXCLUSIVE_BOUNDARY;
+        return this.hand.calculateScore() < PLAYER_DRAWABLE_BOUNDARY;
     }
     
     @Override

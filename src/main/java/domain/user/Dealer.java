@@ -5,6 +5,8 @@ import domain.Card.CardCollection;
 
 public class Dealer implements Playable {
     
+    public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
+    public static final int DEALER_DRAWABLE_BOUNDARY = 17;
     private final String name = "딜러";
     private CardCollection hand = new CardCollection();
     
@@ -16,7 +18,7 @@ public class Dealer implements Playable {
     @Override
     public CardCollection getReadyCards() {
         if (this.hand.size() != 2) {
-            throw new IllegalStateException("처음에는 2장의 카드만 가질 수 있습니다.");
+            throw new IllegalStateException(FIRST_HAND_STATUS_ERROR_MESSAGE);
         }
         return new CardCollection().add(this.hand.get(0));
     }
@@ -28,7 +30,7 @@ public class Dealer implements Playable {
     
     @Override
     public boolean isAbleToDraw() {
-        return this.hand.calculateScore() < 17;
+        return this.hand.calculateScore() < DEALER_DRAWABLE_BOUNDARY;
     }
     
     @Override
