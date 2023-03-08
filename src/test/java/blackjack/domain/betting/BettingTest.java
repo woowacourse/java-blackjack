@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 class BettingTest {
 
     @Nested
-    class earnBlackJackBonus_메서드는 {
+    class addBlackJackBonus_메서드는 {
 
         @Test
         void 플레이어가_존재하지_않으면_예외를_던진다() {
@@ -30,11 +30,11 @@ class BettingTest {
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             final Betting betting = new Betting(expectedProfit);
 
-            assertThatThrownBy(() -> betting.getProfit(player)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> betting.addBlackJackBonus(player)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
-        void 플레이어가_존재하면_블랙잭_보너스를_획득한다() {
+        void 플레이어가_존재하면_블랙잭_보너스를_추가한다() {
             final Player player = new Player("toney");
             player.drawCard(new Card(QUEEN, CLOVER));
             player.drawCard(new Card(ACE, HEART));
@@ -42,14 +42,14 @@ class BettingTest {
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             expectedProfit.put(player, new Profit(10000));
             final Betting betting = new Betting(expectedProfit);
-            betting.earnBlackJackBonus(player);
+            betting.addBlackJackBonus(player);
 
-            assertThat(betting.getProfit(player).getValue()).isEqualTo(15000);
+            assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(15000);
         }
     }
 
     @Test
-    void 플레이어가_베팅에_실패한다() {
+    void 플레이어가_베팅에_실패하면_수익을_잃는다() {
         final Player player = new Player("toney");
         player.drawCard(new Card(QUEEN, CLOVER));
         player.drawCard(new Card(ACE, HEART));
@@ -59,7 +59,32 @@ class BettingTest {
         final Betting betting = new Betting(expectedProfit);
         betting.fail(player);
 
-        assertThat(betting.getProfit(player).getValue()).isEqualTo(-10000);
+        assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(-10000);
+    }
+
+    @Nested
+    class getPlayerProfit_메서드는 {
+
+        @Test
+        void 플레이어가_존재하지_않으면_예외를_던진다() {
+            final Player player = new Player("toney");
+
+            final Map<Player, Profit> expectedProfit = new HashMap<>();
+            final Betting betting = new Betting(expectedProfit);
+
+            assertThatThrownBy(() -> betting.getPlayerProfit(player)).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 플레이어가_존재하면_수익을_확인한다() {
+            final Player player = new Player("toney");
+
+            final Map<Player, Profit> expectedProfit = new HashMap<>();
+            expectedProfit.put(player, new Profit(10000));
+            final Betting betting = new Betting(expectedProfit);
+
+            assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(10000);
+        }
     }
 
     @Nested

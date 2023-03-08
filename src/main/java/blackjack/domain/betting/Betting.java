@@ -11,7 +11,7 @@ public class Betting {
         this.expectedProfit = expectedProfit;
     }
 
-    public void earnBlackJackBonus(final Player player) {
+    public void addBlackJackBonus(final Player player) {
         validateExistPlayer(player);
         final Profit profit = expectedProfit.get(player);
         expectedProfit.put(player, profit.increaseFiftyPercent());
@@ -26,22 +26,22 @@ public class Betting {
     public void fail(final Player player) {
         validateExistPlayer(player);
         final Profit profit = expectedProfit.get(player);
-        expectedProfit.put(player, profit.reverse());
+        expectedProfit.put(player, profit.loss());
+    }
+
+    public Profit getPlayerProfit(final Player player) {
+        validateExistPlayer(player);
+        return expectedProfit.get(player);
     }
 
     public Profit getDealerProfit() {
         final int playerProfit = calculatePlayerProfit();
-        return new Profit(playerProfit).reverse();
+        return new Profit(-playerProfit);
     }
 
     private int calculatePlayerProfit() {
         return expectedProfit.values().stream()
                 .mapToInt(Profit::getValue)
                 .sum();
-    }
-
-    public Profit getProfit(final Player player) {
-        validateExistPlayer(player);
-        return expectedProfit.get(player);
     }
 }
