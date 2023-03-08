@@ -2,7 +2,6 @@ package controller;
 
 import domain.Cards;
 import domain.Dealer;
-import domain.Deck;
 import domain.Players;
 
 import java.util.ArrayList;
@@ -20,15 +19,12 @@ public class EntityCreator {
     }
 
     private Players getValidPlayerNames() {
-        Players players;
-
         try {
-            players = new Players(readPlayerNames());
+            return new Players(readPlayerNames());
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            players = getValidPlayerNames();
+            return getValidPlayerNames();
         }
-        return players;
     }
 
     public Dealer getDealer() {
