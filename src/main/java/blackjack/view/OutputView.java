@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String OUTPUT_DISTRIBUTE_MESSAGE = System.lineSeparator() + "딜러와 %s에게 2장을 나누었습니다.";
-
     private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DELIMITER_BETWEEN_CARDS = ", ";
     private static final String DELIMITER = ": ";
@@ -118,59 +117,4 @@ public class OutputView {
         System.out.println(exception.getMessage());
     }
 
-
-    //dto 버전
-//    public void printInitialCards(final InitialCardDto initialCardDto) {
-//        final Map<String, List<Card>> playerNameToCards = initialCardDto.getPlayerNameToCards();
-//        printInitialMessage(playerNameToCards);
-//        printInitialDealerCard(initialCardDto.getDealerCard());
-//        playerNameToCards.forEach(System.out.println(this::printPlayerCard));
-//    }
-
-    //dto 버전
-//    public void printCardStatusOfPlayer(final PlayerCardDto playerCardDto) {
-//        final String name = playerCardDto.getName();
-//        final String cards = playerCardDto.getCards()
-//                .stream()
-//                .map(this::convertCard)
-//                .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-//        System.out.println(name + DELIMITER + cards);
-//    }
-
-    //dto버전
-//    public void printFinalStatusOfDealer(final CardsScoreDto dealer) {
-//        final String cards = dealer.getCards()
-//                .stream()
-//                .map(this::convertCard)
-//                .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-//        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + dealer.getScore());
-//    }
-
-//    public void printFinalStatusOfPlayers(final PlayerCardsScoreDto playerCardsScoreDto) {
-//        playerCardsScoreDto.getPlayerNameToResult()
-//                .forEach(this::printFinalStatusOfPlayer);
-//    }
-//
-//    private void printFinalStatusOfPlayer(final String name, final CardsScoreDto cardsScoreDto) {
-//        final String cards = cardsScoreDto.getCards()
-//                .stream()
-//                .map(this::convertCard)
-//                .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-//        System.out.println(name + CARD + DELIMITER + cards + RESULT + cardsScoreDto.getScore());
-//    }
-
-    //dto버전
-    //    public void printFinalResult(final FinalResultDto finalResultDto) {
-//        System.out.println("## 최종 승패");
-//        System.out.print(DEALER + DELIMITER);
-//        printDealerResult(finalResultDto.getDealerResult());
-//        printPlayersResult(finalResultDto.getPlayersResult());
-//    }
-
-//    public void printFinalResult(final FinalResultDto finalResultDto) {
-//        System.out.println("## 최종 승패");
-//        System.out.print(DEALER + DELIMITER);
-//        printDealerResult(finalResultDto.getDealerResult());
-//        printPlayersResult(finalResultDto.getPlayersResult());
-//    }
 }

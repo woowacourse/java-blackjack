@@ -98,31 +98,4 @@ public class BlackJackController {
         outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
     }
 
-    //dto
-//    private void printPlayerResult(final String playerName, final Players players) {
-//        final PlayerCardDto playerCardDto = new PlayerCardDto(playerName,
-//                players.findCardsByPlayerName(playerName));
-//        outputView.printCardStatusOfPlayer(playerCardDto);
-//    }
-
-//    private void printStatusOfGameByDto(final BlackJackGame blackJackGame) {
-//        outputView.printFinalStatusOfDealer(
-//                new CardsScoreDto(dealer.getCards(), dealer.currentScore()));
-//        outputView.printFinalStatusOfPlayers(createPlayerCardDto(players));
-//    }
-
-//    private PlayerCardsScoreDto createPlayerCardDto(final Players players) {
-//        final Map<String, CardsScoreDto> playerNameToResult = new LinkedHashMap<>();
-//
-//        for (final String playerName : players.findPlayerNames()) {
-//            final CardsScoreDto playerCardDto = new CardsScoreDto(
-//                    players.findCardsByPlayerName(playerName),
-//                    players.getPlayerScoreByName(playerName)
-//            );
-//            playerNameToResult.put(playerName, playerCardDto);
-//        }
-//
-//        return new PlayerCardsScoreDto(playerNameToResult);
-//    }
-
 }
