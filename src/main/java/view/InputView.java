@@ -20,6 +20,11 @@ public class InputView {
         return Arrays.asList(splitNames);
     }
 
+    public int readBettingMoneyByName(final String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        return scanner.nextInt();
+    }
+
     public String readChoiceOfDrawCard(final String name) {
         System.out.println(name + generatePreposition(name) + " 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
