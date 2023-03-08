@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.deck.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -64,11 +65,12 @@ public class BlackJack {
         return player.isHittable();
     }
 
-    public Map<String, List<Card>> getPlayerToCard() {
+    public Map<String, List<String>> getPlayerToCard() {
         List<Player> players = users.getPlayers();
-        Map<String, List<Card>> playerToCard = new LinkedHashMap<>();
+        Map<String, List<String>> playerToCard = new LinkedHashMap<>();
         for (Player player : players) {
-            playerToCard.put(player.getName(), player.getCards());
+            Cards playerCards = player.getCards();
+            playerToCard.put(player.getName(), playerCards.getCardNames());
         }
         return playerToCard;
     }
@@ -86,8 +88,9 @@ public class BlackJack {
         return users.getHittablePlayers();
     }
 
-    public List<Card> getDealerCards() {
-        return users.getDealer().getCards();
+    public List<String> getDealerCardNames() {
+        Cards dealerCards = users.getDealer().getCards();
+        return dealerCards.getCardNames();
     }
 
     public int getDealerScore() {

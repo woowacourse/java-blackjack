@@ -13,8 +13,8 @@ public abstract class User {
         cards.addCard(card);
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 
     abstract public boolean isHittable();

@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Score;
 
 public class Dealer extends User {
@@ -24,6 +25,6 @@ public class Dealer extends User {
     }
 
     public Card getVisibleCard() {
-        return this.getCards().get(VISIBLE_CARD_INDEX);
+        return cards.get(VISIBLE_CARD_INDEX);
     }
 }

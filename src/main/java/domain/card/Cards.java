@@ -3,6 +3,7 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
     private final List<Card> cards = new ArrayList<>();
@@ -31,11 +32,15 @@ public class Cards {
         return getSumOfScores().isLessThan(other);
     }
 
-    public boolean isBust() {
-        return getSumOfScores().isBust();
-    }
-
     public boolean isAddable() {
         return getSumOfScores().isAddable();
+    }
+
+    public Card get(int index){
+        return cards.get(index);
+    }
+
+    public List<String> getCardNames(){
+        return cards.stream().map(Card::getCardName).collect(Collectors.toUnmodifiableList());
     }
 }

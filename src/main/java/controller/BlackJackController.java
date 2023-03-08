@@ -1,6 +1,7 @@
 package controller;
 
 import domain.HitCommand;
+import domain.card.Cards;
 import domain.deck.RandomDeckGenerator;
 import domain.game.BlackJack;
 import domain.game.Result;
@@ -47,7 +48,8 @@ public class BlackJackController {
         String playerName = player.getName();
         while (blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit()) {
             blackJack.giveCard(playerName);
-            OutputView.printEachPlayerCards(playerName, player.getCards());
+            Cards playerCards = player.getCards();
+            OutputView.printEachPlayerCards(playerName, playerCards.getCardNames());
         }
     }
 
@@ -64,7 +66,7 @@ public class BlackJackController {
     }
 
     private void endGame() {
-        OutputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
+        OutputView.printDealerCardWithScore(blackJack.getDealerCardNames(), blackJack.getDealerScore());
         OutputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
         Map<String, Result> playerTotalResults = blackJack.calculateTotalPlayerResults();
         OutputView.printGameResult(blackJack.calculateTotalDealerResult(playerTotalResults), playerTotalResults);

@@ -24,7 +24,7 @@ public class Card {
         return suit;
     }
 
-    public List<String> getCardName() {
-        return List.of(denomination.getPoint(), suit.getName());
+    public String getCardName() {
+        return denomination.getPoint() + suit.getName();
     }
 }
