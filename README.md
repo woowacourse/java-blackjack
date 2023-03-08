@@ -62,7 +62,7 @@
 - [x] printInitialMessage 메서드 로직 수정 (딜러 이름 출력하도록)
 - [x] shuffleDeck 메서드 이동 (DeckShuffler 삭제)
 - [x] Card 생성 시 불필요한 연산 제거
-- [ ] 이름으로 공백이 입력되는 경우에 대한 검증 추가
+- [x] 이름으로 공백이 입력되는 경우에 대한 검증 추가
 - [ ] BlackjackGame 클래스를 통한 controller 책임 분리
 - [ ] 승무패 카운트 계산하는 로직 이동
 
@@ -75,6 +75,4 @@
 - DeckTest
   - [x] 52개의 카드가 다 생성되었는지 확인하도록 테스트 수정
 - NameTest
-  - [ ] NullAndEmptySource를 활용해서 null 및 빈값 테스트 추가
-  - [ ] 공백만 여러 개 들어오는 경우에 대해 테스트 추가
-  - [ ] 지정한 최소 글자 아래의 글자가 들어오는 경우 테스트 추가
+  - [x] NullAndEmptySource를 활용해서 null 및 빈값 테스트 추가

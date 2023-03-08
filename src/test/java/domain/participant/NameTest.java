@@ -34,7 +34,7 @@ class NameTest {
         void invalidLengthTestWithNull(String inputName) {
             assertThatThrownBy(() -> new Name(inputName))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 이름에는 null이나 빈 값이 들어갈 수 없습니다.");
+                    .hasMessageContaining(Name.NULL_ERROR_MESSAGE);
         }
     }
 
