@@ -10,15 +10,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-public class DeckTest {
+public class ShuffledDeckTest {
     @DisplayName("카드 생성 후 52장 반환 확인")
     @Test
     void 카드에서_생성_후_52장_반환_확인() {
-        Deck deck = new Deck();
+        Deck shuffledDeck = new ShuffledDeck();
         for (int i = 0; i < 52; i++) {
-            deck.draw();
+            shuffledDeck.draw();
         }
-        assertThatThrownBy(deck::draw)
+        assertThatThrownBy(shuffledDeck::draw)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("덱이 비었습니다.");
     }
@@ -27,12 +27,12 @@ public class DeckTest {
     @Test
     void 중복된_카드_반환_확인() {
         // given
-        Deck deck = new Deck();
+        Deck shuffledDeck = new ShuffledDeck();
         Set<Card> cardsDeduplicated = new HashSet<>();
         List<Card> cards = new ArrayList<>();
         // when
         for (int i = 0; i < 52; i++) {
-            Card card = deck.draw();
+            Card card = shuffledDeck.draw();
             cardsDeduplicated.add(card);
             cards.add(card);
         }

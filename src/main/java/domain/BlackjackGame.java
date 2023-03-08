@@ -11,7 +11,7 @@ public class BlackjackGame {
 
     public BlackjackGame(List<String> nameValues) {
         this.participants = new Participants(nameValues);
-        this.deck = new Deck();
+        this.deck = new ShuffledDeck();
     }
 
     public void initializeGame() {
