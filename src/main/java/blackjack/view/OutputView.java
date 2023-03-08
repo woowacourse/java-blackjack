@@ -22,7 +22,7 @@ public class OutputView {
         System.out.println(format("{0}와 {1}에게 {2}장을 나누었습니다.",
                 dealer.getName(), getPlayerNamesFormat(players), count));
 
-        printHandedCardsWithoutScore(dealer);
+        printInitialHandedCardsForDealer(dealer);
         players.forEach(this::printHandedCardsWithoutScore);
     }
 
@@ -30,6 +30,13 @@ public class OutputView {
         return players.stream()
                 .map(ParticipantResponse::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    private void printInitialHandedCardsForDealer(final ParticipantResponse dealer) {
+        final CardsResponse cards = dealer.getCardsResponse();
+        final List<String> cardInfos = cards.getCardInfos();
+
+        System.out.println(format("{0}카드: {1}", dealer.getName(), cardInfos.get(0)));
     }
 
     public void printHandedCardsWithoutScore(final ParticipantResponse participant) {
