@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.domain.Card;
+import blackjack.domain.Name;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.dto.ParticipantStatusResponse;
@@ -33,7 +34,11 @@ class BlackJackServiceTest {
         // then
         assertThat(blackJackService.getPlayersName())
                 .hasSize(3)
-                .containsExactly("glen", "pobi", "encho");
+                .containsExactly(
+                        new Name("glen"),
+                        new Name("pobi"),
+                        new Name("encho")
+                );
     }
 
     @Test
@@ -46,7 +51,7 @@ class BlackJackServiceTest {
         blackJackService.setupGame(new ShuffledDeckGenerator(), names);
 
         // then
-        assertThat(blackJackService.getParticipantStatusResponseByName("glen").getCards())
+        assertThat(blackJackService.getParticipantStatusResponseByName(new Name("glen")).getCards())
                 .hasSize(2);
     }
 
@@ -55,12 +60,13 @@ class BlackJackServiceTest {
     void drawMoreCardByName_success() {
         // given
         blackJackService.setupGame(new ShuffledDeckGenerator(), List.of("glen", "pobi"));
+        Name name = new Name("glen");
 
         // when
-        blackJackService.drawMoreCardByName("glen");
+        blackJackService.drawMoreCardByName(name);
 
         // then
-        ParticipantStatusResponse response = blackJackService.getParticipantStatusResponseByName("glen");
+        ParticipantStatusResponse response = blackJackService.getParticipantStatusResponseByName(name);
         assertThat(response.getCards())
                 .hasSize(3);
     }
@@ -71,13 +77,14 @@ class BlackJackServiceTest {
         // given
         blackJackService.setupGame(new MockDeckGenerator(Card.of(Suit.DIAMOND, Rank.KING), 52),
                 List.of("glen", "pobi"));
+        Name name = new Name("glen");
 
         // when
-        blackJackService.drawMoreCardByName("glen");
+        blackJackService.drawMoreCardByName(name);
 
         // then
         assertThatIllegalStateException().isThrownBy(() -> {
-            blackJackService.drawMoreCardByName("glen");
+            blackJackService.drawMoreCardByName(name);
         }).withMessage("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
     }
 }

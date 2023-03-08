@@ -16,11 +16,11 @@ public class ParticipantStatusResponse {
     }
 
     public static ParticipantStatusResponse of(Participant participant) {
-        return new ParticipantStatusResponse(participant.getName(), getCardsStatus(participant.getCards()));
+        return new ParticipantStatusResponse(participant.getName().getName(), getCardsStatus(participant.getCards()));
     }
 
     public static ParticipantStatusResponse ofStart(Participant participant) {
-        return new ParticipantStatusResponse(participant.getName(), getCardsStatus(participant.getStartCards()));
+        return new ParticipantStatusResponse(participant.getName().getName(), getCardsStatus(participant.getStartCards()));
     }
 
     private static List<String> getCardsStatus(List<Card> cards) {

@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.Name;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
@@ -29,7 +30,7 @@ public class BlackJackService {
         this.participants = new Participants(dealer, players);
     }
 
-    public void drawMoreCardByName(String playerName) {
+    public void drawMoreCardByName(Name playerName) {
         Participant participant = participants.findByName(playerName);
         validateOverScore(participant);
         participant.addCard(deck.drawCard());
@@ -50,7 +51,7 @@ public class BlackJackService {
         return false;
     }
 
-    public List<String> getPlayersName() {
+    public List<Name> getPlayersName() {
         return participants.getPlayers().stream()
                 .map(Participant::getName)
                 .collect(toList());
@@ -68,7 +69,7 @@ public class BlackJackService {
                 .collect(toList());
     }
 
-    public ParticipantStatusResponse getParticipantStatusResponseByName(String name) {
+    public ParticipantStatusResponse getParticipantStatusResponseByName(Name name) {
         Participant participant = participants.findByName(name);
         return ParticipantStatusResponse.of(participant);
     }
@@ -77,7 +78,7 @@ public class BlackJackService {
         Dealer dealer = participants.getDealer();
         return participants.getPlayers()
                 .stream()
-                .map(player -> new PlayerGameResult(player.getName(), player.matchGame(dealer)))
+                .map(player -> PlayerGameResult.of(player.getName(), player.matchGame(dealer)))
                 .collect(collectingAndThen(toList(), TotalGameResult::of));
     }
 }

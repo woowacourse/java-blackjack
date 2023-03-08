@@ -1,7 +1,9 @@
 package blackjack.controller;
 
+import blackjack.domain.Name;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
+import blackjack.dto.PlayerNamesResponse;
 import blackjack.service.BlackJackService;
 import blackjack.service.DeckGenerator;
 import blackjack.view.InputView;
@@ -23,7 +25,7 @@ public class BlackJackController {
 
     private void setupGame(DeckGenerator deckGenerator) {
         repeat(() -> blackJackService.setupGame(deckGenerator, InputView.readPlayerNames()));
-        OutputView.printStartDrawCardMessage(blackJackService.getPlayersName());
+        OutputView.printStartDrawCardMessage(PlayerNamesResponse.of(blackJackService.getPlayersName()));
         printAllParticipantStatues(blackJackService.getStartStatusResponse());
     }
 
@@ -48,12 +50,12 @@ public class BlackJackController {
     }
 
     private void drawMoreCardForPlayers() {
-        for (String playerName : blackJackService.getPlayersName()) {
+        for (Name playerName : blackJackService.getPlayersName()) {
             repeat(() -> drawMoreCard(playerName));
         }
     }
 
-    private void drawMoreCard(String playerName) {
+    private void drawMoreCard(Name playerName) {
         while (decideDraw(playerName)) {
             blackJackService.drawMoreCardByName(playerName);
             OutputView.printParticipantStatus(blackJackService.getParticipantStatusResponseByName(playerName));
@@ -61,8 +63,8 @@ public class BlackJackController {
         OutputView.printParticipantStatus(blackJackService.getParticipantStatusResponseByName(playerName));
     }
 
-    private boolean decideDraw(String playerName) {
-        return InputView.readDrawCardDecision(playerName);
+    private boolean decideDraw(Name playerName) {
+        return InputView.readDrawCardDecision(playerName.getName());
     }
 
     private void finishGame() {

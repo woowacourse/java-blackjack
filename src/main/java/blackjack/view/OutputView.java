@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.dto.ParticipantStatusResponse;
 import blackjack.dto.ParticipantTotalStatusResponse;
 import blackjack.dto.PlayerGameResult;
+import blackjack.dto.PlayerNamesResponse;
 import blackjack.dto.TotalGameResult;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printStartDrawCardMessage(final List<String> playerNames) {
-        final String names = String.join(", ", playerNames);
+    public static void printStartDrawCardMessage(final PlayerNamesResponse response) {
+        final String names = String.join(", ", response.getNames());
         System.out.println(LINE_SEPARATOR + "딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 

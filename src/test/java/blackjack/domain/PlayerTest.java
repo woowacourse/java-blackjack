@@ -151,7 +151,7 @@ class PlayerTest {
         Player player = new Player("123", Collections.emptyList());
 
         // expect
-        assertThat(player.getName())
+        assertThat(player.getName().getName())
                 .isEqualTo("123");
     }
     

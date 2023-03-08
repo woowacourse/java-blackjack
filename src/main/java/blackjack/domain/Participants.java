@@ -43,9 +43,9 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
-    public Participant findByName(String playerName) {
+    public Participant findByName(Name playerName) {
         return participants.stream()
-                .filter(participant -> participant.isNameMatch(playerName))
+                .filter(participant -> participant.isSameName(playerName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 이름의 플레이어가 없습니다."));
     }
