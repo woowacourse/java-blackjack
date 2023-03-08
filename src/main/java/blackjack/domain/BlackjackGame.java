@@ -5,10 +5,11 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.player.User;
 import blackjack.domain.result.Result;
+import blackjack.domain.result.UserResult;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class BlackjackGame {
 
@@ -35,32 +36,29 @@ public class BlackjackGame {
         }
     }
 
-    public HashMap<User, String> getResults() {
-        HashMap<User, String> results = new HashMap<>();
-        HashMap<Result, Integer> dealerResults = initializedResults();
-        calculateResults(results, dealerResults);
-        String dealerResult = dealerResults.keySet().stream()
-                        .map(result -> result.getResult() + dealerResults.get(result))
-                        .collect(Collectors.joining(" "));
-        results.put(dealer, dealerResult);
-        return results;
+    public UserResult getResults() {
+        HashMap<User, List<Result>> userResults = initializeResults();
+        calculateResults(userResults);
+        return new UserResult(userResults);
     }
 
-    private void calculateResults(HashMap<User, String> results, HashMap<Result, Integer> dealerResults) {
+    private void calculateResults(HashMap<User, List<Result>> userResults) {
         int dealerScore = dealer.getTotalScore();
         for (Player player : players.getPlayers()) {
             Result playerResult = Result.calculateResult(player.getTotalScore(), dealerScore);
             Result dealerResult = playerResult.ofOppositeResult();
-            results.put(player, playerResult.getResult());
-            dealerResults.put(dealerResult, dealerResults.get(dealerResult) + 1);
+            userResults.get(player).add(playerResult);
+            userResults.get(dealer).add(dealerResult);
         }
     }
 
-    private HashMap<Result, Integer> initializedResults() {
-        HashMap<Result, Integer> dealerResults = new HashMap<>();
-        Arrays.stream(Result.values())
-                .forEach(result -> dealerResults.put(result, 0));
-        return dealerResults;
+    private HashMap<User, List<Result>> initializeResults() {
+        HashMap<User, List<Result>> userResults = new HashMap<>();
+        userResults.put(dealer, new ArrayList<>());
+        for (Player player : players.getPlayers()) {
+            userResults.put(player, new ArrayList<>());
+        }
+        return userResults;
     }
 
     public Dealer getDealer() {

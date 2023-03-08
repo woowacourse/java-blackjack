@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.player.*;
+import blackjack.domain.result.UserResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -77,10 +78,11 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printResults(HashMap<User, String> results) {
+    public static void printResults(UserResult results) {
         System.out.println(RESULT_TITLE);
-        for (User user : results.keySet()) {
-            System.out.println(user.getName() + CARD_USER_DELIMITER + results.get(user));
+        HashMap<User, String> userResults = results.getResults();
+        for (User user : userResults.keySet()) {
+            System.out.println(user.getName() + CARD_USER_DELIMITER + userResults.get(user));
         }
     }
 }

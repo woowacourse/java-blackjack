@@ -3,11 +3,11 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.factory.PlayersFactory;
 import blackjack.domain.player.*;
+import blackjack.domain.result.UserResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -49,7 +49,7 @@ public class BlackjackController {
 
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
-        HashMap<User, String> results = blackjackGame.getResults();
+        UserResult results = blackjackGame.getResults();
         OutputView.printResults(results);
     }
 
