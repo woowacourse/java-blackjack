@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public class Player implements Playable {
     
+    public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
+    public static final String EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있습니다.";
+    public static final int DRAWABLE_EXCLUSIVE_BOUNDARY = 21;
     private final String name;
     
     private CardCollection hand = new CardCollection();
@@ -17,7 +20,7 @@ public class Player implements Playable {
     
     private void validateName(final String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("이름이 비어있습니다.");
+            throw new IllegalArgumentException(EMPTY_NAME_ERROR_MESSAGE);
         }
     }
     
@@ -29,7 +32,7 @@ public class Player implements Playable {
     @Override
     public CardCollection getReadyCards() {
         if (this.hand.size() != 2) {
-            throw new IllegalStateException("처음에는 2장의 카드만 가질 수 있습니다.");
+            throw new IllegalStateException(FIRST_HAND_STATUS_ERROR_MESSAGE);
         }
         return this.hand;
     }
@@ -41,7 +44,7 @@ public class Player implements Playable {
     
     @Override
     public boolean isAbleToDraw() {
-        return this.hand.calculateScore() <= 21;
+        return this.hand.calculateScore() < DRAWABLE_EXCLUSIVE_BOUNDARY;
     }
     
     @Override
