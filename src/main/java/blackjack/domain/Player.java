@@ -15,6 +15,10 @@ public class Player extends Participant {
         }
     }
 
+    public boolean isYourName(String name) {
+        return this.name.equals(name);
+    }
+
     public String getName() {
         return name;
     }

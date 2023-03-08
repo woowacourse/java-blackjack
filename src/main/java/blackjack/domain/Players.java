@@ -29,7 +29,7 @@ public class Players {
 
     public Player findPlayerByName(String playerName) {
         return players.stream()
-                .filter(player -> player.getName().equals(playerName))
+                .filter(player -> player.isYourName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
     }
