@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static domain.card.CardShape.CLOVER;
+import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -159,5 +160,29 @@ class CardAreaTest {
 
         // when & then
         assertFalse(cardArea.isBust());
+    }
+
+    @ParameterizedTest(name = "카드가 2장이면서 21인 경우 블랙잭이다. 예를 들어 {0} 과 {1} 이라면 블랙잭이다")
+    @CsvSource({
+            "ACE,TEN",
+            "ACE,JACK",
+            "QUEEN,ACE",
+    })
+    void 카드가_2장이면서_21인_경우_블랙잭이다(final CardValue cardValue1, final CardValue cardValue2) {
+        // given
+        final CardArea cardArea = new CardArea(new Card(DIAMOND, cardValue1), new Card(DIAMOND, cardValue2));
+
+        // when & then
+        assertThat(cardArea.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void 카드가_2장이_아닌_경우_21이라도_블랙잭은_아니다() {
+        // given
+        final CardArea cardArea = new CardArea(new Card(DIAMOND, TWO), new Card(DIAMOND, ACE));
+        cardArea.addCard(new Card(DIAMOND, EIGHT));
+
+        // when & then
+        assertThat(cardArea.isBlackJack()).isFalse();
     }
 }

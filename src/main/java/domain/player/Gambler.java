@@ -22,4 +22,8 @@ public class Gambler extends Participant {
     public void changeState(final HitState hitState) {
         state = hitState;
     }
+
+    public boolean isBlackJack() {
+        return cardArea.isBlackJack();
+    }
 }

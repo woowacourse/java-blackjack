@@ -8,6 +8,7 @@ import static domain.card.BlackJackScore.BLACK_JACK_SCORE;
 public class CardArea {
 
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -51,5 +52,9 @@ public class CardArea {
 
     public Card firstCard() {
         return cards.get(FIRST_CARD_INDEX);
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_CARD_COUNT && calculate().isBlackJackScore();
     }
 }
