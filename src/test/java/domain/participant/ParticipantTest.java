@@ -40,8 +40,8 @@ class ParticipantTest {
         participant.takeCard(card2);
         participant.takeCard(card3);
 
-        assertThat(participant.getCardValueSum()).isEqualTo(14);
-        assertThat(participant.getCardValueSum()).isNotEqualTo(24);
+        assertThat(participant.selectNotBustCardValueSum()).isEqualTo(14);
+        assertThat(participant.selectNotBustCardValueSum()).isNotEqualTo(24);
     }
 
     @Test
@@ -56,6 +56,6 @@ class ParticipantTest {
         participant.takeCard(card2);
         participant.takeCard(card3);
 
-        assertThat(participant.getCardValueSum()).isEqualTo(24);
+        assertThat(participant.selectNotBustCardValueSum()).isEqualTo(24);
     }
 }

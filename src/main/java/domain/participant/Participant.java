@@ -24,7 +24,7 @@ public abstract class Participant {
         handCards.addCard(card);
     }
 
-    public int getCardValueSum() {
+    public int selectNotBustCardValueSum() {
         List<Integer> totalValues = new ArrayList<>();
         totalValues.add(INIT_VALUE_FOR_ADD);
         List<Integer> handCardValues = handCards.getValues();
@@ -37,9 +37,7 @@ public abstract class Participant {
 
     private void addNotAceValueToTotalValues(List<Integer> totalValues, Integer handValue) {
         if (handValue != Denomination.ACE_VALUE) {
-            List<Integer> sumValueWithoutAce = totalValues.stream()
-                    .map(value -> value + handValue)
-                    .collect(Collectors.toList());
+            List<Integer> sumValueWithoutAce = addValueToTotalValues(totalValues, handValue);
             totalValues.clear();
             totalValues.addAll(sumValueWithoutAce);
         }
@@ -47,47 +45,39 @@ public abstract class Participant {
 
     private void addAceValueToTotalValues(List<Integer> totalValues, Integer handValue) {
         if (handValue == Denomination.ACE_VALUE) {
-            List<Integer> aceValueSum = getAceValueSum(totalValues);
-            List<Integer> anotherAceValueSum = getAnotherAceValueSum(totalValues);
+            List<Integer> aceValueSum = addValueToTotalValues(totalValues, Denomination.ACE_VALUE);
+            List<Integer> anotherAceValueSum =  addValueToTotalValues(totalValues, Denomination.ANOTHER_ACE_VALUE);
             totalValues.clear();
             totalValues.addAll(aceValueSum);
             totalValues.addAll(anotherAceValueSum);
         }
     }
 
-    private List<Integer> getAceValueSum(List<Integer> totalValues) {
+    private List<Integer> addValueToTotalValues(List<Integer> totalValues, int addValue) {
         return totalValues.stream()
-                .map(value -> value + Denomination.ACE_VALUE)
-                .filter(value -> value < MIN_BUST_VALUE)
-                .collect(Collectors.toList());
-    }
-
-    private List<Integer> getAnotherAceValueSum(List<Integer> totalValues) {
-        return totalValues.stream()
-                .map(value -> value + Denomination.ANOTHER_ACE_VALUE)
-                .filter(value -> value < MIN_BUST_VALUE)
+                .map(value -> value + addValue)
                 .collect(Collectors.toList());
     }
 
     private int getCardValueSumMax(List<Integer> totalValues, List<Integer> handCardValues) {
         int maxSumValue = 0;
         if (handCardValues.contains(Denomination.ACE_VALUE)) {
-            maxSumValue = getCardValueSum(totalValues);
+            maxSumValue = selectNotBustCardValueSum(totalValues);
         }
         if (!handCardValues.contains(Denomination.ACE_VALUE)) {
-            maxSumValue = getJustSumValue(totalValues);
+            maxSumValue = selectMaxCardValueSum(totalValues);
         }
         return maxSumValue;
     }
 
-    private Integer getCardValueSum(List<Integer> totalValues) {
+    private Integer selectNotBustCardValueSum(List<Integer> totalValues) {
         return totalValues.stream()
                 .filter(value -> value < MIN_BUST_VALUE)
                 .max(Integer::compare)
                 .orElse(MIN_BUST_VALUE);
     }
 
-    private int getJustSumValue(List<Integer> totalValues) {
+    private int selectMaxCardValueSum(List<Integer> totalValues) {
         int optimalSumValue;
         optimalSumValue = totalValues.stream()
                 .max(Integer::compare)

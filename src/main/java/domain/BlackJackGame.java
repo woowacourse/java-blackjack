@@ -49,7 +49,7 @@ public class BlackJackGame {
 
     public int findPlayerCardValueSumByPlayerName(String playerName) {
         Player findPlayer = participants.findPlayerByPlayerName(playerName);
-        return findPlayer.getCardValueSum();
+        return findPlayer.selectNotBustCardValueSum();
     }
 
     public Map<String, String> calculateResult() {
