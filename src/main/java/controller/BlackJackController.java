@@ -9,6 +9,7 @@ import domain.participant.Name;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,12 @@ public final class BlackJackController {
     }
 
     private BlackJack createBlackJack() {
-        return BlackJack.getInstance(userNameRequest(), new Deck());
+        final List<Name> playerNames = userNameRequest();
+        final List<Integer> bets = new ArrayList<>();
+        for (Name playerName : playerNames) {
+            bets.add(inputView.betRequest(playerName));
+        }
+        return BlackJack.getInstance(playerNames, bets, new Deck());
     }
 
     public void process() {

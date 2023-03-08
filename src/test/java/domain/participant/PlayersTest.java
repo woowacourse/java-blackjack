@@ -19,17 +19,19 @@ class PlayersTest {
     @ValueSource(ints = {2, 3, 4, 5})
     void validPlayersTest(int value) {
         final List<Name> names = new ArrayList<>();
+        final List<Integer> bets = new ArrayList<>();
         for (int i = 0; i < value; i++) {
             names.add(Name.of("hi" + i));
+            bets.add(10000 * (i + 1));
         }
-        assertDoesNotThrow(() -> Players.create(names));
+        assertDoesNotThrow(() -> Players.create(names, bets));
     }
 
     @DisplayName("플레이어는 한 명 이하이면 예외가 발생한다.")
     @Test
     void invalidPlayersTest() {
         final List<Name> names = Collections.emptyList();
-        assertThatThrownBy(() -> Players.create(names))
+        assertThatThrownBy(() -> Players.create(names, Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("1명 이상일 때 게임을 실행할 수 있습니다.");
     }
@@ -41,7 +43,7 @@ class PlayersTest {
                 Name.of("hi"),
                 Name.of("hi")
         );
-        assertThatThrownBy(() -> Players.create(names))
+        assertThatThrownBy(() -> Players.create(names, Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름은 사용할 수 없습니다.");
     }

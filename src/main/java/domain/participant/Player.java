@@ -5,22 +5,23 @@ import domain.card.Cards;
 
 public final class Player extends Participant {
 
-    private Player(final Name name) {
-        super(name);
+
+    protected Player(final Name name, final int bet) {
+        super(name, bet);
     }
 
-    private Player(final Name name, final Cards cards) {
-        super(name, cards);
+    protected Player(final Name name, final Cards cards, final int bet) {
+        super(name, cards, bet);
     }
 
-    public static Player of(final Name name) {
+    public static Player of(final Name name, final int bet) {
         validateName(name);
-        return new Player(name);
+        return new Player(name, bet);
     }
 
-    public static Player create(final Name name, final Cards cards) {
+    public static Player create(final Name name, final Cards cards, final int bet) {
         validateName(name);
-        return new Player(name, cards);
+        return new Player(name, cards, bet);
     }
 
     private static void validateName(final Name name) {

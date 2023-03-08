@@ -4,8 +4,7 @@ import java.text.MessageFormat;
 
 public final class Bet {
 
-    public static final int MIN = 1_000;
-    public static final int MAX = 1_000_000;
+    public static final int MAX = 100_000_000;
     public static final double BONUS_RATE = 1.5;
 
     private final int bet;
@@ -21,11 +20,11 @@ public final class Bet {
     }
 
     private void validatePrice(final int bet) {
-        if (bet < MIN || bet > MAX) {
+        if (bet > MAX) {
             throw new IllegalArgumentException(
                     MessageFormat.format(
-                            "{0}원 미만 {1}초과의 베팅은 할 수 없습니다.",
-                            MIN, MAX
+                            "{0}초과의 베팅은 할 수 없습니다.",
+                            MAX
                     )
             );
         }

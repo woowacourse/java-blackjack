@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.game.Bet;
 import domain.game.Deck;
 import domain.game.GamePoint;
 import domain.card.Card;
@@ -14,15 +15,18 @@ public abstract class Participant {
 
     private final Name name;
     protected Cards cards;
+    private final Bet bet;
 
-    protected Participant(Name name) {
+    protected Participant(Name name, int bet) {
         this.name = name;
         this.cards = Cards.create(Collections.emptyList());
+        this.bet = Bet.of(bet);
     }
 
-    protected Participant(Name name, Cards cards) {
+    protected Participant(Name name, Cards cards, int bet) {
         this.name = name;
         this.cards = cards;
+        this.bet = Bet.of(bet);
     }
 
     public void takeCard(final Card card) {

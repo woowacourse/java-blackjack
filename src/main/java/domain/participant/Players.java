@@ -3,9 +3,12 @@ package domain.participant;
 import domain.game.Deck;
 import domain.game.GamePoint;
 
+import java.time.chrono.MinguoDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public final class Players {
 
@@ -17,12 +20,13 @@ public final class Players {
         this.players = players;
     }
 
-    public static Players create(final List<Name> names) {
+    public static Players create(final List<Name> names, final List<Integer> bets) {
         validatePlayersCount(names);
         validateDuplicateName(names);
-        final List<Player> players = names.stream()
-                .map(Player::of)
+        final List<Player> players = IntStream.range(0, names.size())
+                .mapToObj(index -> Player.of(names.get(index), bets.get(index)))
                 .collect(Collectors.toList());
+
         return new Players(players);
     }
 

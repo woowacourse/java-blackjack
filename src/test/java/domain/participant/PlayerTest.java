@@ -28,13 +28,13 @@ class PlayerTest {
                 Card.create(CardShape.HEART, CardNumber.of(1)),
                 Card.create(CardShape.HEART, CardNumber.of(2))
         );
-        player = Player.create(Name.of("HK"), Cards.create(initialData));
+        player = Player.create(Name.of("HK"), Cards.create(initialData), 10_000);
     }
 
     @DisplayName("플레이어는 '딜러'라는 이름을 가지면 예외가 발생한다.")
     @Test
     void invalidNameTest() {
-        assertThatThrownBy(() -> Player.of(Name.of("딜러")))
+        assertThatThrownBy(() -> Player.of(Name.of("딜러"), 10_000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("'딜러'라는 이름을 가질 수 없습니다.");
     }
