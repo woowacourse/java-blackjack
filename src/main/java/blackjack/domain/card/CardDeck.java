@@ -1,34 +1,33 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.exception.NoMoreCardException;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
-    private CardDeck(List<Card> cards) {
+    private CardDeck(Deque<Card> cards) {
         this.cards = cards;
     }
 
     public static CardDeck create() {
-        return Arrays.stream(Shape.values())
+        List<Card> cards = Arrays.stream(Shape.values())
                 .flatMap(shape -> Arrays.stream(Symbol.values()).map(symbol -> new Card(shape, symbol)))
-                .collect(collectingAndThen(toList(), CardDeck::new));
-    }
-
-    public void shuffle() {
+                .collect(toList());
         Collections.shuffle(cards);
+        return new CardDeck(new ArrayDeque<>(cards));
     }
 
     public Card pick() {
         validateCardExist();
-        return cards.remove(0);
+        return cards.remove();
     }
 
     private void validateCardExist() {
