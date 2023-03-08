@@ -1,19 +1,53 @@
 package domain.user;
 
 import domain.Card.Card;
-import java.util.List;
+import domain.Card.CardCollection;
 
-public class Dealer extends Participant {
+public class Dealer implements Playable {
     
-    public Dealer() {
-        super(DEALER_NAME);
+    private final String name = "딜러";
+    private CardCollection hand = new CardCollection();
+    
+    @Override
+    public void addCard(final Card card) {
+        this.hand = this.hand.add(card);
     }
     
     @Override
-    public List<Card> getReadyCards() {
-        if (cards.size() < 1) {
-            throw new IllegalStateException();
+    public CardCollection getReadyCards() {
+        if (this.hand.size() != 2) {
+            throw new IllegalStateException("처음에는 2장의 카드만 가질 수 있습니다.");
         }
-        return List.of(cards.get(0));
+        return new CardCollection().add(this.hand.get(0));
+    }
+    
+    @Override
+    public CardCollection getCards() {
+        return this.hand;
+    }
+    
+    @Override
+    public boolean isAbleToDraw() {
+        return this.hand.calculateScore() < 17;
+    }
+    
+    @Override
+    public ParticipantStatus getStatus() {
+        return ParticipantStatus.of(this.hand.calculateScore());
+    }
+    
+    @Override
+    public int getScore() {
+        return this.hand.calculateScore();
+    }
+    
+    @Override
+    public boolean isBust() {
+        return this.getStatus().isBust();
+    }
+    
+    @Override
+    public String getName() {
+        return this.name;
     }
 }
