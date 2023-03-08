@@ -6,6 +6,7 @@ import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Users;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.HoldingCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +22,24 @@ public class BlackJackGame {
         this.users = new Users(playerNames, deck);
     }
 
-    public Map<String, List<Card>> getHandholdingCards() {
-        return users.getHandholdingCards();
+    public HoldingCards getHandholdingCards(String name) {
+        final List<Card> hands = users.getHandholdingCards(name);
+        return new HoldingCards(name, hands);
     }
 
-    public Map<String, List<Card>> getInitialHoldingCards() {
-        return users.getInitialHoldingStatus();
+    public List<HoldingCards> getInitialHoldingCards() {
+        final List<HoldingCards> initialHoldingCards = new ArrayList<>();
+
+        initialHoldingCards.add(new HoldingCards(Dealer.DEALER_NAME_CODE, users.getInitialHoldingCards(Dealer.DEALER_NAME_CODE)));
+        for (String name : users.getPlayerNames()) {
+            initialHoldingCards.add(new HoldingCards(name, users.getInitialHoldingCards(name)));
+        }
+        return initialHoldingCards;
     }
+
+//    public Map<String, List<Card>> getInitialHoldingCards() {
+//        return users.getInitialHoldingStatus();
+//    }
 
     public List<String> getPlayerNames() {
         return users.getPlayerNames();
@@ -47,13 +59,12 @@ public class BlackJackGame {
     }
 
     public List<CardAndScoreResult> getCardAndScoreResult() {
-        final Map<String, List<Card>> hands = users.getHandholdingCards();
         final List<CardAndScoreResult> results = new ArrayList<>();
 
         results.add(new CardAndScoreResult(Dealer.DEALER_NAME_CODE,
-                hands.get(Dealer.DEALER_NAME_CODE), users.getScore(Dealer.DEALER_NAME_CODE)));
+                users.getHandholdingCards(Dealer.DEALER_NAME_CODE), users.getScore(Dealer.DEALER_NAME_CODE)));
         for (String name : users.getPlayerNames()) {
-            results.add(new CardAndScoreResult(name, hands.get(name), users.getScore(name)));
+            results.add(new CardAndScoreResult(name, users.getHandholdingCards(name), users.getScore(name)));
         }
         return results;
     }

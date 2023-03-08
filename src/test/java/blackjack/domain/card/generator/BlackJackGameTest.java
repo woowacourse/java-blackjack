@@ -5,8 +5,8 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.user.Dealer;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.HoldingCards;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BlackJackGameTest {
 
@@ -38,11 +39,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("게임 초기화 테스트")
     void initGame() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
-                , new TestDeckGenerator(testCards));
-
-        assertThat(blackJackGame.getHandholdingCards().keySet())
-                .contains("필립", "홍실", Dealer.DEALER_NAME_CODE);
+        assertDoesNotThrow(() -> new BlackJackGame(List.of("필립", "홍실"), new TestDeckGenerator(testCards)));
     }
 
     @Test
@@ -51,7 +48,8 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestDeckGenerator(testCards));
 
-        List<Card> initialCards = blackJackGame.getInitialHoldingCards().values().stream()
+        List<Card> initialCards = blackJackGame.getInitialHoldingCards().stream()
+                .map(HoldingCards::getCards)
                 .flatMap(List::stream)
                 .collect(Collectors.toUnmodifiableList());
 
@@ -85,7 +83,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
 
         blackJackGame.playPlayer("필립");
-        List<Card> cards = blackJackGame.getHandholdingCards().get("필립");
+        List<Card> cards = blackJackGame.getHandholdingCards("필립").getCards();
 
         assertThat(cards).containsExactly(spadeAce, cloverTen, heartNine);
     }

@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.user.Dealer;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.HoldingCards;
 
 import java.util.List;
 import java.util.Map;
@@ -23,19 +24,20 @@ public class OutputView {
         System.out.println(PLAYER_NAME_REQUEST_MESSAGE);
     }
 
-    public void printInitialStatus(Map<String, List<String>> initialStatus) {
-        List<String> playerNames = initialStatus.keySet().stream()
-                .filter(name -> !name.equals(Dealer.DEALER_NAME_CODE))
+    public void printInitialHoldingCards(final List<HoldingCards> initialHoldingCards) {
+        List<String> playerNames = initialHoldingCards.stream()
+                .map(HoldingCards::getName)
                 .collect(Collectors.toUnmodifiableList());
-
         printInitialStatusInfoMessage(playerNames);
-        printCards(Dealer.DEALER_NAME_CODE, initialStatus.get(Dealer.DEALER_NAME_CODE));
-        playerNames.forEach(name -> printCards(name, initialStatus.get(name)));
+
+        for (HoldingCards cards : initialHoldingCards) {
+            printCards(cards);
+        }
     }
 
-    public void printCards(String name, List<String> cardNames) {
-        System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, name
-                , String.join(DELIMITER, cardNames)));
+    public void printCards(HoldingCards holdingCards) {
+        System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, holdingCards.getName()
+                , ViewRenderer.renderCardsToString(holdingCards.getCards())));
     }
 
     private void printInitialStatusInfoMessage(List<String> playerNames) {
@@ -51,17 +53,17 @@ public class OutputView {
         System.out.println(DEALER_DRAW_INFO_MESSAGE);
     }
 
-    public void printWinningResult(final Map<String, String> winningResults) {
-        System.out.println(WINNING_RESULT_INFO_MESSAGE);
-        for (String name : winningResults.keySet()) {
-            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, name, winningResults.get(name)));
-        }
-    }
-
     public void printCarAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
         for (CardAndScoreResult result : cardAndScoreResult) {
             System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
                     result.getName(), ViewRenderer.renderCardsToString(result.getCards()), result.getScoreValue()));
+        }
+    }
+
+    public void printWinningResult(final Map<String, String> winningResults) {
+        System.out.println(WINNING_RESULT_INFO_MESSAGE);
+        for (String name : winningResults.keySet()) {
+            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, name, winningResults.get(name)));
         }
     }
 

@@ -2,9 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.GameResult;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.HoldingCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
@@ -34,7 +34,7 @@ public class BackJackController {
     }
 
     private void printInitialStatus(BlackJackGame blackJackGame) {
-        outputView.printInitialStatus(ViewRenderer.renderStatus(blackJackGame.getInitialHoldingCards()));
+        outputView.printInitialHoldingCards(blackJackGame.getInitialHoldingCards());
         outputView.printLineBreak();
     }
 
@@ -49,8 +49,8 @@ public class BackJackController {
     private void playFor(BlackJackGame blackJackGame, String name) {
         while (isContinuous(name, blackJackGame)) {
             blackJackGame.playPlayer(name);
-            List<Card> userCards = blackJackGame.getHandholdingCards().get(name);
-            outputView.printCards(name, ViewRenderer.renderCardsToString(userCards));
+            final HoldingCards handholdingCards = blackJackGame.getHandholdingCards(name);
+            outputView.printCards(handholdingCards);
         }
     }
 

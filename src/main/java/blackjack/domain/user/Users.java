@@ -29,14 +29,12 @@ public class Users {
         return new CardGroup(deck.draw(), deck.draw());
     }
 
-    public Map<String, List<Card>> getHandholdingCards() {
-        return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getHandholdingCards));
+    public List<Card> getHandholdingCards(final String name) {
+        return getUser(name).getHandholdingCards();
     }
 
-    public Map<String, List<Card>> getInitialHoldingStatus() {
-        return users.stream()
-                .collect(Collectors.toUnmodifiableMap(User::getName, User::getInitialHoldingCards));
+    public List<Card> getInitialHoldingCards(final String name) {
+        return getUser(name).getInitialHoldingCards();
     }
 
     public boolean isDealerOverDrawLimit() {

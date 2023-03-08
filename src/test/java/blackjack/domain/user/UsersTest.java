@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -33,10 +32,8 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getHandholdingCards().values().stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
-        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards);
+        List<Card> initialCards = users.getHandholdingCards("필립");
+        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
     }
 
     @Test
@@ -45,10 +42,8 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getInitialHoldingStatus().values().stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
-        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 5));
+        List<Card> initialCards = users.getInitialHoldingCards("필립");
+        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
     }
 
     @Test
@@ -68,7 +63,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립"), deck);
 
         users.drawDealer(deck);
-        int dealerCardCount = users.getHandholdingCards().get(Dealer.DEALER_NAME_CODE).size();
+        int dealerCardCount = users.getHandholdingCards(Dealer.DEALER_NAME_CODE).size();
 
         assertThat(dealerCardCount).isEqualTo(3);
     }
