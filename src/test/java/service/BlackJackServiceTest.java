@@ -20,6 +20,7 @@ import dto.DrawnCardsInfo;
 import dto.ParticipantResult;
 import java.util.ArrayList;
 import java.util.List;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,9 +43,11 @@ class BlackJackServiceTest {
         List<DrawnCardsInfo> result = blackJackService.splitCards(dealer, players, cardDeck);
 
         // then
-        assertThat(result.size()).isEqualTo(2);
-        assertThat(result.get(0).getName()).isEqualTo(Message.DEALER_NAME.getMessage());
-        assertThat(result.get(1).getName()).isEqualTo(player.getName());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(result.size()).isEqualTo(2);
+        softAssertions.assertThat(result.get(0).getName()).isEqualTo(Message.DEALER_NAME.getMessage());
+        softAssertions.assertThat(result.get(1).getName()).isEqualTo(player.getName());
+        softAssertions.assertAll();
     }
 
     @Test
@@ -62,8 +65,10 @@ class BlackJackServiceTest {
         DrawnCardsInfo result = blackJackService.drawCards(cardDeck, player, drawCommand);
 
         // then
-        assertThat(player.openDrawnCards().size()).isEqualTo(1);
-        assertThat(result.getDrawnCards().size()).isEqualTo(1);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(player.openDrawnCards().size()).isEqualTo(1);
+        softAssertions.assertThat(result.getDrawnCards().size()).isEqualTo(1);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -81,8 +86,10 @@ class BlackJackServiceTest {
         DrawnCardsInfo result = blackJackService.drawCards(cardDeck, player, drawCommand);
 
         // then
-        assertThat(player.openDrawnCards().size()).isEqualTo(0);
-        assertThat(result.getDrawnCards().size()).isEqualTo(0);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(player.openDrawnCards().size()).isEqualTo(0);
+        softAssertions.assertThat(result.getDrawnCards().size()).isEqualTo(0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -199,11 +206,13 @@ class BlackJackServiceTest {
         List<ParticipantResult> result = blackJackService.getParticipantResults(dealer, players);
 
         // then
-        assertThat(result.size()).isEqualTo(2);
-        assertThat(result.get(0).getName()).isEqualTo(dealer.getName());
-        assertThat(result.get(0).getScore()).isEqualTo(dealer.calculateCardScore());
-        assertThat(result.get(1).getName()).isEqualTo(player.getName());
-        assertThat(result.get(1).getScore()).isEqualTo(player.calculateCardScore());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(result.size()).isEqualTo(2);
+        softAssertions.assertThat(result.get(0).getName()).isEqualTo(dealer.getName());
+        softAssertions.assertThat(result.get(0).getScore()).isEqualTo(dealer.calculateCardScore());
+        softAssertions.assertThat(result.get(1).getName()).isEqualTo(player.getName());
+        softAssertions.assertThat(result.get(1).getScore()).isEqualTo(player.calculateCardScore());
+        softAssertions.assertAll();
     }
 
     @Test
@@ -268,8 +277,10 @@ class BlackJackServiceTest {
         blackJackService.calculateGameResults(dealer, players);
 
         // then
-        assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
-        assertThat(dealer.getAccount()).isEqualTo(givenAccount);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
+        softAssertions.assertThat(dealer.getAccount()).isEqualTo(givenAccount);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -295,8 +306,11 @@ class BlackJackServiceTest {
         blackJackService.calculateGameResults(dealer, players);
 
         // then
-        assertThat(player.getAccount()).isEqualTo(expectedPlayerAccount);
-        assertThat(dealer.getAccount()).isEqualTo(expectedDealerAccount);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(player.getAccount()).isEqualTo(expectedPlayerAccount);
+        softAssertions.assertThat(dealer.getAccount()).isEqualTo(expectedDealerAccount);
+        softAssertions.assertAll();
+
     }
 
     @Test
@@ -319,8 +333,10 @@ class BlackJackServiceTest {
         blackJackService.calculateGameResults(dealer, players);
 
         // then
-        assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
-        assertThat(dealer.getAccount()).isEqualTo(givenAccount);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(player.getAccount()).isEqualTo(givenAccount * -1);
+        softAssertions.assertThat(dealer.getAccount()).isEqualTo(givenAccount);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -344,5 +360,5 @@ class BlackJackServiceTest {
 
         // then
         assertThat(results.size()).isEqualTo(2);
-     }
+    }
 }
