@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackController {
 
+    private static final int TRUMP_COUNT = 1;
     private static final int INITIAL_DRAW_COUNT = 2;
 
     private final InputView inputView;
@@ -28,7 +29,7 @@ public class BlackJackController {
 
     public void run() {
         final Participants participants = new Participants(new Dealer(), gatherPlayers());
-        final Deck deck = Deck.createUsingTrump(1);
+        final Deck deck = Deck.createUsingTrump(TRUMP_COUNT);
 
         dealCards(participants, deck);
 
