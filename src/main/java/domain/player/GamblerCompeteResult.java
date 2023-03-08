@@ -1,19 +1,22 @@
 package domain.player;
 
+import domain.game.BattingMoney;
+import domain.game.Revenue;
+
+import java.util.function.Function;
+
 public enum GamblerCompeteResult {
-    WIN,
-    LOSE,
-    DRAW,
+
+    BLACK_JACK_WIN(Revenue::blackJackWin),
+    WIN(Revenue::defaultWin),
+    LOSE(Revenue::lose),
+    DRAW(Revenue::draw),
     ;
 
-    public GamblerCompeteResult reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return this;
+    private final Function<BattingMoney, Revenue> revenueFunction;
+
+    GamblerCompeteResult(final Function<BattingMoney, Revenue> revenueFunction) {
+        this.revenueFunction = revenueFunction;
     }
 
     public boolean isWin() {
@@ -22,5 +25,9 @@ public enum GamblerCompeteResult {
 
     public boolean isLose() {
         return this == LOSE;
+    }
+
+    public Revenue revenue(final Gambler gambler) {
+        return revenueFunction.apply(gambler.battingMoney());
     }
 }
