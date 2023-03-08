@@ -3,8 +3,8 @@ package domain.cardtable;
 import domain.deck.CardDeck;
 import domain.player.Player;
 import domain.player.dealer.Dealer;
+import domain.player.participant.Money;
 import domain.player.participant.Participant;
-import domain.player.participant.ParticipantResult;
 import domain.player.participant.betresult.BetResultState;
 import domain.player.participant.betresult.BreakEvenState;
 import domain.player.participant.betresult.LoseState;
@@ -28,29 +28,35 @@ public class CardTable {
         return new CardTable(cardDeck);
     }
 
-    public Map<Participant, ParticipantResult> determineWinner(final List<Participant> participants,
-                                                               final Dealer dealer) {
+    public Map<Participant, Money> determineBettingMoney(final List<Participant> participants,
+                                                         final Dealer dealer) {
         return participants.stream()
                            .collect(Collectors.toMap(
                                    Function.identity(),
-                                   participant -> matchBetween(participant, dealer))
+                                   participant -> {
+                                       matchAfterFinalDeal(dealer, participant);
+                                       return participant.determineBetMoney();
+                                   })
                            );
     }
 
-    private ParticipantResult matchBetween(final Participant participant, final Dealer dealer) {
+    private void matchAfterFinalDeal(final Dealer dealer, final Participant participant) {
+        if (participant.hasNotBetState()) {
+            participant.determineBetState(matchBetween(participant, dealer));
+        }
+    }
+
+    private BetResultState matchBetween(final Participant participant, final Dealer dealer) {
         if (participant.isBust()) {
-            return ParticipantResult.LOSER;
+            return new LoseState();
         }
         if (dealer.isBust()) {
-            return ParticipantResult.WINNER;
+            return new BreakEvenState();
         }
-        if (participant.score().isGreaterThan(dealer.score())) {
-            return ParticipantResult.WINNER;
+        if (participant.score().isLessThan(dealer.score())) {
+            return new LoseState();
         }
-        if (participant.score().equals(dealer.score())) {
-            return ParticipantResult.DRAWER;
-        }
-        return ParticipantResult.LOSER;
+        return new BreakEvenState();
     }
 
     public boolean dealCardTo(Player player) {

@@ -53,7 +53,7 @@ class CardTableTest {
         cardDeck = CardDeck.shuffledFullCardDeck();
         cardTable = CardTable.readyToPlayBlackjack(cardDeck);
 
-        participant = new Participant(new Name("name"), Money.wons(0));
+        participant = new Participant(new Name("name"), Money.wons(10000));
         participant.hit(new Card(CLOVER, TEN));
         participant.hit(new Card(CLOVER, NINE));
 
@@ -63,61 +63,61 @@ class CardTableTest {
     }
 
     @Test
-    @DisplayName("matchBetween() : 참여자가 bust 일 경우에는 참여자가 무조건 게임에서 진다.")
+    @DisplayName("determineBettingMoney() : 참여자가 bust 일 경우에는 참여자가 무조건 게임에서 진다.")
     void test_matchBetween_bust_participant_must_lose_participant() throws Exception {
         //given
         participant.hit(new Card(SPADE, TEN));
 
         //when
-        final Map<Participant, ParticipantResult> gameResult =
-                cardTable.determineWinner(List.of(participant), dealer);
+        final Map<Participant, Money> gameResultMoney =
+                cardTable.determineBettingMoney(List.of(participant), dealer);
 
         //then
         assertAll(
-                () -> assertThat(gameResult).hasSize(1),
-                () -> assertThat(gameResult).containsValue(LOSER)
+                () -> assertThat(gameResultMoney).hasSize(1),
+                () -> assertThat(gameResultMoney).containsValue(Money.wons(-10000))
         );
     }
 
     @Test
-    @DisplayName("matchBetween() : 딜러는 bust 이면서 참여자가 bust 가 아니면 참여자가 무조건 게임에서 이긴다.")
+    @DisplayName("determineBettingMoney() : 딜러는 bust 이면서 참여자가 bust 가 아니면 참여자가 무조건 게임에서 이긴다.")
     void test_matchBetween_bust_dealer_must_lose_dealer() throws Exception {
         //given
         dealer.hit(new Card(SPADE, TEN));
 
         //when
-        final Map<Participant, ParticipantResult> gameResult =
-                cardTable.determineWinner(List.of(participant), dealer);
+        final Map<Participant, Money> gameResultMoney =
+                cardTable.determineBettingMoney(List.of(participant), dealer);
 
         //then
         assertAll(
-                () -> assertThat(gameResult).hasSize(1),
-                () -> assertThat(gameResult).containsValue(WINNER)
+                () -> assertThat(gameResultMoney).hasSize(1),
+                () -> assertThat(gameResultMoney).containsValue(Money.wons(10000))
         );
     }
 
     @ParameterizedTest
     @MethodSource("makeBothNotBust")
-    @DisplayName("matchBetween() : 딜러, 참여자 모두 버스트가 아닐 때 점수가 높은 쪽이 이기고, 같으면 무승부이다.")
+    @DisplayName("determineBettingMoney() : 딜러, 참여자 모두 버스트가 아닐 때 점수가 높은 쪽이 이기고, 같으면 무승부이다.")
     void test_matchBetween_not_bust_win_higher_score_or_draw_same_score(
             final Participant participant, final Dealer dealer,
-            final ParticipantResult participantResult) throws Exception {
+            final Money resultBettingMoney) throws Exception {
 
         //when
-        final Map<Participant, ParticipantResult> gameResult = cardTable.determineWinner(
-                List.of(participant), dealer);
+        final Map<Participant, Money> gameResultMoney =
+                cardTable.determineBettingMoney(List.of(participant), dealer);
 
         //then
         assertAll(
-                () -> assertThat(gameResult).hasSize(1),
-                () -> assertThat(gameResult).containsValue(participantResult)
+                () -> assertThat(gameResultMoney).hasSize(1),
+                () -> assertThat(gameResultMoney).containsValue(resultBettingMoney)
         );
     }
 
     static Stream<Arguments> makeBothNotBust() {
 
         //무승부
-        final Participant participant1 = new Participant(new Name("name1"), Money.wons(0));
+        final Participant participant1 = new Participant(new Name("name1"), Money.wons(10000));
         participant1.hit(new Card(DIAMOND, TEN));
         participant1.hit(new Card(SPADE, TEN));
 
@@ -126,7 +126,7 @@ class CardTableTest {
         dealer1.hit(new Card(CLOVER, TEN));
 
         //참여자가 이길 경우
-        final Participant participant2 = new Participant(new Name("name2"), Money.wons(0));
+        final Participant participant2 = new Participant(new Name("name2"), Money.wons(1000));
         participant2.hit(new Card(SPADE, TEN));
         participant2.hit(new Card(DIAMOND, TEN));
 
@@ -135,7 +135,7 @@ class CardTableTest {
         dealer2.hit(new Card(CLOVER, NINE));
 
         //딜러가 이길 경우
-        final Participant participant3 = new Participant(new Name("name3"), Money.wons(0));
+        final Participant participant3 = new Participant(new Name("name3"), Money.wons(4000));
         participant3.hit(new Card(SPADE, TEN));
         participant3.hit(new Card(DIAMOND, NINE));
 
@@ -144,9 +144,9 @@ class CardTableTest {
         dealer3.hit(new Card(CLOVER, TEN));
 
         return Stream.of(
-                Arguments.of(participant1, dealer1, DRAWER),
-                Arguments.of(participant2, dealer2, WINNER),
-                Arguments.of(participant3, dealer3, LOSER)
+                Arguments.of(participant1, dealer1, Money.wons(10000)),
+                Arguments.of(participant2, dealer2, Money.wons(1000)),
+                Arguments.of(participant3, dealer3, Money.wons(-4000))
         );
     }
 
@@ -241,8 +241,7 @@ class CardTableTest {
         return Stream.of(
                 Arguments.of(participant1, dealer1, new BreakEvenState()),
                 Arguments.of(participant2, dealer2, new WinState()),
-                Arguments.of(participant3, dealer3, new LoseState()),
-                Arguments.of(participant3, dealer3, null)
+                Arguments.of(participant3, dealer3, new LoseState())
         );
     }
 }
