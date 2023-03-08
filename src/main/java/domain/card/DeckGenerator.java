@@ -1,8 +1,8 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class DeckGenerator {
 
@@ -10,8 +10,8 @@ public class DeckGenerator {
         return new Deck(generateCards());
     }
 
-    private List<Card> generateCards() {
-        List<Card> cards = new ArrayList<>();
+    private Stack<Card> generateCards() {
+        Stack<Card> cards = new Stack<>();
         for (Suit suit : Suit.values()) {
             addCardBySuit(cards, suit);
         }

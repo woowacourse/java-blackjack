@@ -1,19 +1,18 @@
 package domain.card;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 public class Deck {
 
-    public final Queue<Card> cards;
+    public final Stack<Card> cards;
 
-    public Deck(final List<Card> cards) {
-        this.cards = new LinkedList<>(cards);
+    public Deck(final Stack<Card> cards) {
+        this.cards = cards;
     }
 
     public Card drawCard() {
-        return cards.poll();
+        return cards.pop();
     }
 
     public List<Card> getCards() {
