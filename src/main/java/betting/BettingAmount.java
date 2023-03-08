@@ -1,18 +1,19 @@
-package batting;
+package betting;
 
 import blackjackgame.Result;
 
-public class Amount {
+public class BettingAmount {
     public static final int MIN_AMOUNT_UNIT = 100;
+    public static final int MAX_AMOUNT_UNIT = 100_000;
     private final int amount;
 
-    public Amount(int amount) {
+    public BettingAmount(int amount) {
         validate(amount);
         this.amount = amount;
     }
 
     private void validate(int amount) {
-        validateNegative(amount);
+        validateAmount(amount);
         validateUnit(amount);
     }
 
@@ -22,13 +23,16 @@ public class Amount {
         }
     }
 
-    private void validateNegative(int amount) {
-        if (amount < MIN_AMOUNT_UNIT) {
+    private void validateAmount(int amount) {
+        if (amount < MIN_AMOUNT_UNIT || amount > MAX_AMOUNT_UNIT) {
             throw new IllegalArgumentException("100이상의 정수만 입력 가능합니다.");
         }
     }
 
     public int calculateRewardByResult(Result result) {
+        if (result == null) {
+            throw new IllegalArgumentException("결과가 생성되지 않았습니다.");
+        }
         return result.getRate() * amount;
     }
 }
