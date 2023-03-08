@@ -14,11 +14,11 @@ public class Dealer {
     }
 
     public boolean canReceiveCard() {
-        Receivable receivable = () -> CAN_RECEIVE_DEALER_MAX_NUMBER >= getTotalValue();
+        Receivable receivable = () -> CAN_RECEIVE_DEALER_MAX_NUMBER >= getCardTotalValue();
         return receivable.canReceiveCard();
     }
 
-    public int getTotalValue() {
+    public int getCardTotalValue() {
         return user.getCardTotalValue();
     }
 
@@ -39,4 +39,7 @@ public class Dealer {
         return user.getHand();
     }
 
+    public boolean isBlackJack() {
+        return getCardTotalValue() == 21;
+    }
 }

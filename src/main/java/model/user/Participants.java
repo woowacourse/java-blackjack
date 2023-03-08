@@ -21,7 +21,7 @@ public class Participants {
     }
 
     public List<Score> getFinalResult() {
-        return createFinalResultWithoutDealer(dealer.getTotalValue());
+        return createFinalResultWithoutDealer(dealer.getCardTotalValue());
     }
 
     private List<Score> createFinalResultWithoutDealer(final int dealerTotalValue) {
@@ -33,6 +33,16 @@ public class Participants {
     public void receiveInitialCards(final Deck deck) {
         players.forEach(player -> player.receiveInitialCards(deck));
         dealer.receiveInitialCards(deck);
+        ifPlayerBlackJackReceiveMoney();
+    }
+
+    public void ifPlayerBlackJackReceiveMoney() {
+        boolean dealerResult = dealer.isBlackJack();
+        for (Player player : players) {
+            if (player.isBlackJack() && !dealerResult) {
+                player.receiveMoney();
+            }
+        }
     }
 
     public int getDealerProfit() {
@@ -49,10 +59,10 @@ public class Participants {
     private static int calculateUserMoney(int dealerMoney, Player player, Score score) {
         if (score == Score.WIN) {
             dealerMoney -= player.getMoney();
-            player.lose();
         }
         if (score == Score.LOSE){
             dealerMoney += player.getMoney();
+            player.lose();
         }
         return dealerMoney;
     }

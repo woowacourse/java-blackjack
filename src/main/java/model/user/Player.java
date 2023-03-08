@@ -8,7 +8,7 @@ public class Player {
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
 
     private final User user;
-    private int money;
+    private long money;
 
     private Player(final String name, final int money) {
         this.user = new User(name);
@@ -49,7 +49,7 @@ public class Player {
         return user.getHand();
     }
 
-    public int getMoney() {
+    public long getMoney() {
         return this.money;
     }
 
@@ -57,4 +57,11 @@ public class Player {
         this.money = -this.money;
     }
 
+    public boolean isBlackJack() {
+        return getCardTotalValue() == 21;
+    }
+
+    public void receiveMoney() {
+        this.money *= 1.5;
+    }
 }

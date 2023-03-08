@@ -132,4 +132,19 @@ class ParticipantsTest {
                 }
         );
     }
+
+    @DisplayName("플레이어가 처음 받은 패에서 블랙잭이면 딜러에게 배팅 금액의 1.5배를 받는다.")
+    @Test
+    void ifPlayerBlackJackReceiveMoney() {
+        // given
+        bebe.receiveCard(new Card(CLOVER, ACE));
+        bebe.receiveCard(new Card(CLOVER, JACK));
+
+        // when
+        participants.ifPlayerBlackJackReceiveMoney();
+
+        // then
+        Assertions.assertThat(bebe.getMoney()).isEqualTo(1500);
+
+    }
 }

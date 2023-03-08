@@ -37,16 +37,16 @@ public class BlackJackController {
         divideCardForDealer(deck, dealer);
     }
 
+    private void divideCard(Deck deck, Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            receiveCardForPlayer(deck, player);
+        }
+    }
+
     private void divideCardForDealer(Deck deck, Dealer dealer) {
         if (dealer.canReceiveCard()) {
             dealer.receiveCard(deck.pick());
             OutputView.printReceiveCardForDealer();
-        }
-    }
-
-    private void divideCard(Deck deck, Participants participants) {
-        for (Player player : participants.getPlayers()) {
-            receiveCardForPlayer(deck, player);
         }
     }
 
