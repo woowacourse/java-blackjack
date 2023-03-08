@@ -90,4 +90,10 @@ public class Players {
             canDrawPlayerNames.add(player.getName());
         }
     }
+
+    public List<Player> findCanHitPlayers() {
+        return players.stream()
+                .filter(Player::canHit)
+                .collect(Collectors.toList());
+    }
 }

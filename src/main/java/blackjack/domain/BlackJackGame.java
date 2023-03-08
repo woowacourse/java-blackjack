@@ -22,23 +22,17 @@ public class BlackJackGame {
         participants.handInitialCards(new Deck(cards));
     }
 
-    public void handOneCard(String playerName) {
-        Player player = participants.findPlayerByName(playerName);
+    public void handOneCard(Player player) {
         Card card = deck.draw();
         player.take(card);
-    }
-
-    public boolean canHit(String playerName) {
-        Player player = participants.findPlayerByName(playerName);
-        return player.canHit();
     }
 
     public Card openDealerFirstCard() {
         return participants.openDealerFirstCard();
     }
 
-    public List<String> findNotBustPlayerNames() {
-        return participants.findCanDrawPlayerNames();
+    public List<Player> findCanHitPlayers() {
+        return participants.findCanHitPlayer();
     }
 
     public List<Card> openPlayerCards(String playerName) {

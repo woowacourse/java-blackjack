@@ -6,6 +6,7 @@ import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.GameResult;
+import blackjack.domain.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -29,7 +30,9 @@ public class BlackJackController {
         blackJackGame.handInitialCards();
         openInitialCards();
 
-        hitOrStayForNotBustPlayers(blackJackGame.findNotBustPlayerNames());
+        List<Player> canHitPlayers = blackJackGame.findCanHitPlayers();
+        hitOrStayForCanHitPlayers(canHitPlayers);
+
         int hitCount = blackJackGame.hitOrStayForDealer();
         OutputView.showDealerHitResult(hitCount);
     }
@@ -49,19 +52,19 @@ public class BlackJackController {
         OutputView.showPlayerCard(playerName, playerCards);
     }
 
-    private void hitOrStayForNotBustPlayers(List<String> playerNames) {
-        playerNames.forEach(this::hitOrStay);
+    private void hitOrStayForCanHitPlayers(List<Player> players) {
+        players.forEach(this::hitOrStay);
     }
 
-    private void hitOrStay(String playerName) {
-        Command command = InputView.askToTake(playerName);
+    private void hitOrStay(Player player) {
+        Command command = InputView.askToTake(player.getName());
         if (command.isStay()) {
             return;
         }
-        blackJackGame.handOneCard(playerName);
-        OutputView.showPlayerCard(playerName, blackJackGame.openPlayerCards(playerName));
-        if (blackJackGame.canHit(playerName)) {
-            hitOrStay(playerName);
+        blackJackGame.handOneCard(player);
+        OutputView.showPlayerCard(player.getName(), blackJackGame.openPlayerCards(player.getName()));
+        if (player.canHit()) {
+            hitOrStay(player);
         }
     }
 

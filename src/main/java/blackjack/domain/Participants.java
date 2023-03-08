@@ -79,4 +79,8 @@ public class Participants {
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
     }
+
+    public List<Player> findCanHitPlayer() {
+        return players.findCanHitPlayers();
+    }
 }

@@ -16,12 +16,12 @@ public class Hand {
         cards.add(card);
     }
 
-    public boolean isBust() {
-        return sum > BLACK_JACK;
-    }
-
     public boolean isBlackJack() {
         return sum == BLACK_JACK;
+    }
+
+    public boolean isBust() {
+        return sum > BLACK_JACK;
     }
 
     private boolean hasACE() {
