@@ -3,10 +3,12 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.ParticipantCards;
 import blackjack.domain.game.ResultType;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,13 +17,23 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class DealerTest {
+    @Test
+    @DisplayName("생성한다.")
+    void create() {
+        final Deck deck = new Deck();
+        final ParticipantCards participantCards = new ParticipantCards(List.of(deck.draw(), deck.draw()));
+
+        assertThatNoException().isThrownBy(() -> new Dealer(participantCards));
+    }
+
     @ParameterizedTest
     @MethodSource("isHittableDummy")
     @DisplayName("딜러가 카드를 뽑을 수 있는지 확인한다.")
     void isHittable(final Card cardOne, final Card cardTwo, final List<Card> additionalCards, final boolean expected) {
-        Participant player = new Dealer(ParticipantCardsFixture.createParticipantsCards(cardOne, cardTwo, additionalCards));
+        Participant player = new Dealer(ParticipantCardsFixture.create(cardOne, cardTwo, additionalCards));
 
         assertThat(player.isHittable()).isEqualTo(expected);
     }
@@ -38,8 +50,8 @@ class DealerTest {
             final List<Card> dealerAdditionalCards,
             final ResultType expectedResult
     ) {
-        ParticipantCards participantsCards = ParticipantCardsFixture.createParticipantsCards(playerCard1, playerCard2, playerAdditionalCards);
-        ParticipantCards dealerCards = ParticipantCardsFixture.createParticipantsCards(dealerCard1, dealerCard2, dealerAdditionalCards);
+        ParticipantCards participantsCards = ParticipantCardsFixture.create(playerCard1, playerCard2, playerAdditionalCards);
+        ParticipantCards dealerCards = ParticipantCardsFixture.create(dealerCard1, dealerCard2, dealerAdditionalCards);
 
         Player player = new Player(participantsCards, "베로");
         Dealer dealer = new Dealer(dealerCards);
