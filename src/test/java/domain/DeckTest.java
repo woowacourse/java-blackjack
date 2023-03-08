@@ -24,12 +24,10 @@ class DeckTest {
 
     private int getSize(Deck deck) {
         int size = 0;
-        boolean flag = true;
-
-        while (flag) {
-            deck.pickCard();
+        while (deck.pickCard() != null) {
             size++;
         }
+
         return size;
     }
 }
