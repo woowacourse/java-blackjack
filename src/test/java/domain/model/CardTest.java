@@ -61,19 +61,4 @@ class CardTest {
         //then
         assertEquals(hashCode1, hashCode2);
     }
-
-    @Test
-    @DisplayName("card toString 테스트")
-    public void testToString() {
-        //given
-        final Suit diamond = Suit.DIAMOND;
-        final Letter two = Letter.TWO;
-        final Card card = new Card(diamond, two);
-
-        //when
-        final boolean result = card.toString().equals(two.getSign() + diamond.getName());
-
-        //then
-        assertTrue(result);
-    }
 }

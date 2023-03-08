@@ -35,12 +35,15 @@ public class Card {
         return Objects.hash(suit, letter);
     }
 
-    @Override
-    public String toString() {
-        return letter.getSign() + suit.getName();
-    }
-
     public int getNumber() {
         return letter.getNumber();
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Letter getLetter() {
+        return letter;
     }
 }

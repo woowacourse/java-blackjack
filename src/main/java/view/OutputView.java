@@ -45,7 +45,7 @@ public class OutputView {
             .stream()
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
-        System.out.println(DEALER_NAME + COLON + card);
+        System.out.println(DEALER_NAME + COLON + makeCardView(card));
     }
 
     public static void printCard(final Player player) {
@@ -57,9 +57,13 @@ public class OutputView {
         final StringJoiner stringJoiner = new StringJoiner(DELIMITER);
         participant.getCards()
             .stream()
-            .map(Card::toString)
+            .map(OutputView::makeCardView)
             .forEach(stringJoiner::add);
         return stringJoiner.toString();
+    }
+
+    private static String makeCardView(final Card card) {
+        return LetterView.from(card.getLetter()).getSign() + SuitView.from(card.getSuit()).getSign();
     }
 
     public static void printDealerReceiveNotice() {
