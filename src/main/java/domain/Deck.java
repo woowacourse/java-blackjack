@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class Deck {
 
-    private static Queue<Card> DECK;
+    private static Queue<Card> DECK = createDeck();
 
     public Deck() {
         DECK = createDeck();

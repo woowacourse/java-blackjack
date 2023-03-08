@@ -15,7 +15,6 @@ public class EntityCreator {
     private final Dealer dealer;
 
     public EntityCreator() {
-        new Deck();
         this.players = getValidPlayerNames();
         this.dealer = new Dealer(new Cards(new ArrayList<>()));
     }
