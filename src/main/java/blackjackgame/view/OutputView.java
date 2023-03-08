@@ -88,10 +88,10 @@ public class OutputView {
         System.out.print(NEWLINE);
     }
 
-    public void printFinalResult(Map<Result, Integer> dealerResult, Map<NameDto, Result> userResult) {
+    public void printFinalResult(Map<Result, Integer> dealerResult, Map<NameDto, Result> playerFinalResult) {
         System.out.println(FINAL_RESULT_NOTICE_MESSAGE);
         printDealerFinalResult(dealerResult);
-        printPlayerFinalResult(userResult);
+        printPlayerFinalResult(playerFinalResult);
     }
 
     private void printDealerFinalResult(Map<Result, Integer> dealerResult) {
@@ -101,10 +101,10 @@ public class OutputView {
                 dealerResult.get(Result.LOSE));
     }
 
-    private void printPlayerFinalResult(Map<NameDto, Result> userResult) {
-        for (Entry<NameDto, Result> userFinalResult : userResult.entrySet()) {
-            String playerName = userFinalResult.getKey().getName();
-            String result = userFinalResult.getValue().getResult();
+    private void printPlayerFinalResult(Map<NameDto, Result> playerFinalResult) {
+        for (Entry<NameDto, Result> resultEntry : playerFinalResult.entrySet()) {
+            String playerName = resultEntry.getKey().getName();
+            String result = resultEntry.getValue().getResult();
             System.out.println(playerName + ": " + result);
         }
     }
