@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.Stack;
@@ -54,5 +55,19 @@ class DeckTest {
         Deck deck = new Deck(cards);
 
         assertThat(deck.isEmpty()).isFalse();
+    }
+
+    @DisplayName("덱이 비어 있는 상태에서 카드를 뽑을 경우 오류 발생")
+    @Test
+    void Should_ThrowException_When_DrawWhenDeckIsEmpty() {
+        Stack<Card> cards = new Stack<>();
+        cards.add(new Card(CardNumber.ACE, CardSymbol.CLUBS));
+        Deck deck = new Deck(cards);
+
+        deck.draw();
+
+        assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("더 이상 카드를 뽑을 수 없습니다.");
     }
 }

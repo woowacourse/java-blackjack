@@ -12,7 +12,14 @@ public class Deck {
     }
 
     public Card draw() {
+        validateDeckIsEmpty();
         return cards.pop();
+    }
+
+    private void validateDeckIsEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("더 이상 카드를 뽑을 수 없습니다.");
+        }
     }
 
     public boolean isEmpty() {
