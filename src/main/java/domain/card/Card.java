@@ -10,17 +10,6 @@ public final class Card {
         this.shape = shape;
         this.value = value;
     }
-    public int getDefaultScore() {
-        return value.getDefaultScore();
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public Shape getShape() {
-        return shape;
-    }
 
     public boolean isAce() {
         return value.isAce();
@@ -41,5 +30,17 @@ public final class Card {
     @Override
     public int hashCode() {
         return Objects.hash(value, shape);
+    }
+
+    public int getDefaultScore() {
+        return value.getDefaultScore();
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public Shape getShape() {
+        return shape;
     }
 }
