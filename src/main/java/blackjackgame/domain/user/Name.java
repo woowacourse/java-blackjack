@@ -7,7 +7,6 @@ public class Name {
 
     public Name(String name) {
         validateName(name);
-
         this.name = name;
     }
 

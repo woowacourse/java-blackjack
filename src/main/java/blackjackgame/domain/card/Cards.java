@@ -13,7 +13,6 @@ public class Cards {
         this.cards = cardsGenerator.generate();
     }
 
-
     public Card drawCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.NO_MORE_CARD.getMessage());
