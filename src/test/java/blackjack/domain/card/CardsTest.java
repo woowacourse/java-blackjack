@@ -15,10 +15,10 @@ public class CardsTest {
         Cards cards = new Cards(List.of(new Card(Number.K, Pattern.HEART), new Card(Number.FIVE, Pattern.DIAMOND)));
 
         // when
-        int totalScore = cards.calculateScoreForBlackjack();
+        Score totalScore = cards.calculateScoreForBlackjack();
 
         // then
-        assertThat(totalScore).isEqualTo(15);
+        assertThat(totalScore.getValue()).isEqualTo(15);
     }
 
     @Test
@@ -32,10 +32,10 @@ public class CardsTest {
         );
 
         // when
-        int totalScore = cards.calculateScoreForBlackjack();
+        Score totalScore = cards.calculateScoreForBlackjack();
 
         // then
-        assertThat(totalScore).isEqualTo(18);
+        assertThat(totalScore.getValue()).isEqualTo(18);
     }
 
     @Test
@@ -49,10 +49,10 @@ public class CardsTest {
         );
 
         // when
-        int totalScore = cards.calculateScoreForBlackjack();
+        Score totalScore = cards.calculateScoreForBlackjack();
 
         // then
-        assertThat(totalScore).isEqualTo(16);
+        assertThat(totalScore.getValue()).isEqualTo(16);
     }
 
     @Test
@@ -65,10 +65,10 @@ public class CardsTest {
         ));
 
         // when
-        int totalScore = cards.calculateScoreForBlackjack();
+        Score totalScore = cards.calculateScoreForBlackjack();
 
         // then
-        assertThat(totalScore).isEqualTo(21);
+        assertThat(totalScore.getValue()).isEqualTo(21);
      }
 
     @Test

@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -103,7 +104,7 @@ public class BlackjackController {
 
     private void finishGame(final Participants participants) {
         List<Player> players = participants.getPlayers();
-        List<Integer> scores = getPlayersScore(players);
+        List<Score> scores = getPlayersScore(players);
         Dealer dealer = participants.getDealer();
 
         outputView.printDealerFinalCards(getCurrentCards(dealer.getCards()), dealer.calculateTotalScore());
@@ -148,7 +149,7 @@ public class BlackjackController {
         return playersCards;
     }
 
-    private List<Integer> getPlayersScore(final List<Player> players) {
+    private List<Score> getPlayersScore(final List<Player> players) {
         return players.stream()
                 .map(Player::calculateTotalScore)
                 .collect(Collectors.toList());

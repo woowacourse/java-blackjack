@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public class Score {
 
-
-    private static final int MIN_SCORE = 0;
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
 
@@ -13,10 +11,6 @@ public class Score {
 
     public Score(int value) {
         this.value = value;
-    }
-
-    public static Score min() {
-        return new Score(MIN_SCORE);
     }
 
     public Score plusIfSoftHand() {
@@ -50,5 +44,9 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }

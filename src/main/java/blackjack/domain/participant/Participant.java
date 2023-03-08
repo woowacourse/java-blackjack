@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
 import java.util.List;
 
 public class Participant {
@@ -16,7 +17,7 @@ public class Participant {
         cards = cards.add(card);
     }
 
-    public int calculateTotalScore() {
+    public Score calculateTotalScore() {
         return this.cards.calculateScoreForBlackjack();
     }
 

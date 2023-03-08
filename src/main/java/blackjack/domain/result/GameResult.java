@@ -4,6 +4,7 @@ import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
 
+import blackjack.domain.card.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -37,7 +38,7 @@ public class GameResult {
         if (isParticipantBust(player, dealer, playersResult)) {
             return;
         }
-        int dealerScore = dealer.calculateTotalScore();
+        Score dealerScore = dealer.calculateTotalScore();
         compareIfNotBust(player, dealerScore, playersResult);
     }
 

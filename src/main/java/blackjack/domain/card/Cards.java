@@ -7,7 +7,6 @@ import java.util.List;
 public class Cards {
 
     private final List<Card> cards;
-    private final Score score = Score.min();
 
     public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -17,14 +16,14 @@ public class Cards {
         return new Cards(new ArrayList<>());
     }
 
-    public int calculateScoreForBlackjack() {
-        Score sum = calculate();
+    public Score calculateScoreForBlackjack() {
+        Score score = calculate();
 
         if (containsAce()) {
-            return sum.plusIfSoftHand().getValue();
+            return score.plusIfSoftHand();
         }
 
-        return sum.getValue();
+        return score;
     }
 
     private Score calculate() {
@@ -39,7 +38,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        Score currentScore = new Score(calculateScoreForBlackjack());
+        Score currentScore = calculateScoreForBlackjack();
         return currentScore.isBust();
     }
 

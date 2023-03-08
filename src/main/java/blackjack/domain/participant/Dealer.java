@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 import java.util.List;
 
 public class Dealer implements Decidable {
@@ -17,7 +18,7 @@ public class Dealer implements Decidable {
         participant.receiveCard(card);
     }
 
-    public int calculateTotalScore() {
+    public Score calculateTotalScore() {
         return participant.calculateTotalScore();
     }
 

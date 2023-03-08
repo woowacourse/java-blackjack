@@ -48,7 +48,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Number.K, Pattern.CLUB));
 
         // then
-        assertThat(player.calculateTotalScore()).isEqualTo(20);
+        assertThat(player.calculateTotalScore().getValue()).isEqualTo(20);
     }
 
     @Test
