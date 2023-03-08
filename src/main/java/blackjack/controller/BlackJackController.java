@@ -52,7 +52,7 @@ public class BlackJackController {
         while (repeat(this::isContinuous, playerName, blackJackGame).isDraw()) {
             blackJackGame.playPlayer(playerName);
             final CardGroup userCards = blackJackGame.getCardGroupBy(playerName);
-            outputView.printCards(playerName, ViewRenderer.renderCardGroupToString(userCards));
+            outputView.printCardGroup(playerName, ViewRenderer.renderCardGroup(userCards));
         }
     }
 

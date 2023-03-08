@@ -49,11 +49,11 @@ public class ViewRenderer {
 
     public static Map<String, List<String>> renderStatus(final Map<String, CardGroup> status) {
         final Map<String, List<String>> renderedStatus = new LinkedHashMap<>();
-        status.forEach((name, cardGroup) -> renderedStatus.put(name, renderCardGroupToString(cardGroup)));
+        status.forEach((name, cardGroup) -> renderedStatus.put(name, renderCardGroup(cardGroup)));
         return Collections.unmodifiableMap(renderedStatus);
     }
 
-    public static List<String> renderCardGroupToString(final CardGroup cardGroup) {
+    public static List<String> renderCardGroup(final CardGroup cardGroup) {
         return cardGroup.getCards().stream()
                 .map(card -> CARD_NUMBER_STRING_MAPPER.get(card.getNumber())
                         + CARD_SHAPE_STRING_MAPPER.get(card.getShape()))
@@ -90,7 +90,7 @@ public class ViewRenderer {
     }
 
     private static String renderCardResults(final CardResult cardResult) {
-        final List<String> cardNames = renderCardGroupToString(cardResult.getCards());
+        final List<String> cardNames = renderCardGroup(cardResult.getCards());
         return String.format(CARD_RESULT_FORMAT, String.join(", ", cardNames)
                 , cardResult.getScore().getValue());
     }

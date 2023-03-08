@@ -31,12 +31,12 @@ public class OutputView {
                 .collect(Collectors.toUnmodifiableList());
 
         printInitialStatusInfoMessage(playerNames);
-        printCards(Dealer.DEALER_NAME, initialStatus.get(Dealer.DEALER_NAME));
-        playerNames.forEach(name -> printCards(name, initialStatus.get(name)));
+        printCardGroup(Dealer.DEALER_NAME, initialStatus.get(Dealer.DEALER_NAME));
+        playerNames.forEach(name -> printCardGroup(name, initialStatus.get(name)));
         printLineBreak();
     }
 
-    public void printCards(String name, List<String> cardNames) {
+    public void printCardGroup(String name, List<String> cardNames) {
         System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, name
                 , String.join(DELIMITER, cardNames)));
     }
