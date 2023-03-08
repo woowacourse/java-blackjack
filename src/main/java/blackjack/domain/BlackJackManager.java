@@ -1,69 +1,25 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.ParticipantCards;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.dto.BlackJackGameResultDTO;
+import blackjack.dto.ParticipantEntireStatusDTO;
+import blackjack.dto.ParticipantStatusDTO;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class BlackJackManager {
-    private static final int INITIAL_CARD_COUNT = 2;
-
     private final Deck deck;
+    private final Participants participants;
 
-    public BlackJackManager() {
+    public BlackJackManager(final List<String> playerNames) {
         this.deck = new Deck();
+        this.participants = new Participants(deck, playerNames);
     }
 
-    public void run() {
-        Dealer dealer = new Dealer(makeInitialCards());
-        List<Player> players = createPlayers();
-        OutputView.printParticipantsInitCards(dealer, players);
-
-        playGame(dealer, players);
-
-        showParticipantStatus(dealer, players);
-        showGameResult(dealer, players);
-    }
-
-    private ParticipantCards makeInitialCards() {
-        List<Card> initialCards = new ArrayList<>();
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            initialCards.add(deck.draw());
-        }
-        return new ParticipantCards(initialCards);
-    }
-
-    private List<Player> createPlayers() {
-        List<String> names = InputView.readNames();
-        List<Player> players = new ArrayList<>();
-        for (final String name : names) {
-            players.add(new Player(makeInitialCards(), name));
-        }
-        return players;
-    }
-
-    private void playGame(final Dealer dealer, final List<Player> players) {
-        for (Player player : players) {
-            hitBy(player);
-        }
-        hitBy(dealer);
-    }
-
-    private void hitBy(final Player player) {
-        while (player.isHittable() && InputView.checkPlayerAdditionalHit(player.getName().getValue())) {
-            player.hit(deck.draw());
-            OutputView.printParticipantsCards(player);
-        }
-        if (player.isHittable()) {
-            OutputView.printParticipantsCards(player);
-        }
-    }
-
-    private void hitBy(final Dealer dealer) {
+    public void hitByDealer(final Consumer<Integer> printDealerHit) {
+        Dealer dealer = participants.getDealer();
         int hitCount = 0;
         while (dealer.isHittable()) {
             dealer.hit(deck.draw());
@@ -71,17 +27,44 @@ public class BlackJackManager {
         }
 
         if (hitCount > 0) {
-            OutputView.printDealerHit(hitCount);
+            printDealerHit.accept(hitCount);
         }
     }
 
-    private void showParticipantStatus(final Dealer dealer, final List<Player> players) {
-        OutputView.printParticipantCardWithResult(dealer, dealer.getTotalPoint());
-        players.forEach(player -> OutputView.printParticipantCardWithResult(player, player.getTotalPoint()));
+    public void hitByPlayers(final Predicate<String> checkPlayerHit, final Consumer<ParticipantStatusDTO> printPlayerCards) {
+        participants.getPlayers()
+                .forEach(player -> hitByPlayer(player, checkPlayerHit, printPlayerCards));
     }
 
-    private void showGameResult(final Dealer dealer, final List<Player> players) {
-        BlackJackResults blackJackResults = new BlackJackResults(dealer, players);
-        OutputView.printBlackJackResults(blackJackResults);
+    public void showGameResult(final Consumer<BlackJackGameResultDTO> printGameResults) {
+        BlackJackResults blackJackResults = new BlackJackResults(participants.getDealer(), participants.getPlayers());
+        printGameResults.accept(BlackJackGameResultDTO.of(blackJackResults));
+    }
+
+    private void hitByPlayer(
+            final Player player,
+            final Predicate<String> checkPlayerHit,
+            final Consumer<ParticipantStatusDTO> printPlayerCards
+    ) {
+        while (player.isHittable() && checkPlayerHit.test(player.getName().getValue())) {
+            player.hit(deck.draw());
+            printPlayerCards.accept(ParticipantStatusDTO.of(player));
+        }
+        if (player.isHittable()) {
+            printPlayerCards.accept(ParticipantStatusDTO.of(player));
+        }
+    }
+
+    public void showParticipantStatus(final Consumer<ParticipantEntireStatusDTO> printParticipantStatus) {
+        printParticipantStatus.accept(ParticipantEntireStatusDTO.of(participants.getDealer()));
+        participants.getPlayers().forEach(player -> printParticipantStatus.accept(ParticipantEntireStatusDTO.of(player)));
+    }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
+    }
+
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
     }
 }
