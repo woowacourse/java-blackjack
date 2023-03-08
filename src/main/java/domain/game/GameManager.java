@@ -58,10 +58,6 @@ public final class GameManager {
         return drawCardCount;
     }
 
-    private BigDecimal calculateBenefit(final Participant player, final GameResult gameResult) {
-        return player.calculateBenefit(gameResult);
-    }
-
     public boolean canPlayerDrawByOrder(final int playerOrder) {
         return canDrawByOrder(playerOrder, ParticipantOffset.PLAYER);
     }
@@ -78,6 +74,18 @@ public final class GameManager {
         return participants.findPlayerCardsByOrder(playerOrder, ParticipantOffset.PLAYER);
     }
 
+    private BigDecimal calculateBenefit(final Participant player, final GameResult gameResult) {
+        return player.calculateBenefit(gameResult);
+    }
+
+    private boolean canDrawByOrder(final int participantOrder, final ParticipantOffset offset) {
+        return participants.canDrawByOrder(participantOrder, offset);
+    }
+
+    private String findNameByOrder(final int participantOrder, final ParticipantOffset offset) {
+        return participants.findParticipantNameByOrder(participantOrder, offset);
+    }
+
     public int playerSize() {
         return participants.playerSize();
     }
@@ -90,14 +98,6 @@ public final class GameManager {
 
             participants.addCard(participantOrder, drawCard);
         }
-    }
-
-    private boolean canDrawByOrder(final int participantOrder, final ParticipantOffset offset) {
-        return participants.canDrawByOrder(participantOrder, offset);
-    }
-
-    private String findNameByOrder(final int participantOrder, final ParticipantOffset offset) {
-        return participants.findParticipantNameByOrder(participantOrder, offset);
     }
 
     public List<Participant> getParticipants() {
