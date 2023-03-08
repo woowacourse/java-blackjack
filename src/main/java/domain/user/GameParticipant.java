@@ -36,10 +36,6 @@ public class GameParticipant {
         dealer.draw(deck.serve());
     }
 
-    public void letPlayerToHit(final Player player, final Deck deck) {
-        player.draw(deck.serve());
-    }
-
     public void letDealerHitUntilThreshold(final Deck deck) {
         while (dealer.needsHit()) {
             dealer.draw(deck.serve());

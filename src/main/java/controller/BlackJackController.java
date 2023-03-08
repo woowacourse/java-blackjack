@@ -65,7 +65,7 @@ public class BlackJackController {
     }
 
     private boolean needToQuit(Player player) {
-        if (blackjackGame.isBurst(player)) {
+        if (player.isBurst()) {
             return true;
         }
 

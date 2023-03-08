@@ -36,12 +36,8 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isBurst(final Player player) {
-        return gameParticipant.isBurst(player);
-    }
-
     public void hitFor(final Player player) {
-        gameParticipant.letPlayerToHit(player, deck);
+        player.draw(deck.serve());
     }
 
     public Map<Player, GameResult> getGameResultForAllPlayer() {
