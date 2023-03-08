@@ -1,6 +1,7 @@
 package view;
 
 import domain.BlackjackGameResult;
+import domain.BlackjackScore;
 import domain.Card;
 import domain.Participant;
 import domain.Participants;
@@ -79,8 +80,9 @@ public class OutputView {
     }
 
     private String getCardsWithScoreFormat(Participant participant) {
+        BlackjackScore participantScore = participant.calculateBlackjackScore();
         return String.format(Format.CARDS_WITH_SCORE.format,
-                participant.getName(), getCardsFormat(participant.getCards()), participant.calculateBlackjackScore());
+                participant.getName(), getCardsFormat(participant.getCards()), participantScore.getValue());
     }
 
     public void printFinalResult(Participant dealer, BlackjackGameResult blackjackGameResult) {

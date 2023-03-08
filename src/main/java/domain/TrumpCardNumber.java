@@ -1,7 +1,6 @@
 package domain;
 
 public enum TrumpCardNumber {
-    ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -14,24 +13,19 @@ public enum TrumpCardNumber {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
+    ACE("A", 11),
     ;
 
-    private static final int ACE_GAP = 10;
-
     private final String signature;
-    private final int score;
+    private final int number;
 
-    TrumpCardNumber(String signature, int score) {
+    TrumpCardNumber(String signature, int number) {
         this.signature = signature;
-        this.score = score;
+        this.number = number;
     }
 
-    public static int getAceGap() {
-        return ACE_GAP;
-    }
-
-    public int getScore() {
-        return score;
+    public int getNumber() {
+        return number;
     }
 
     public String getSignature() {

@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-    private static final int BUST_LIMIT = 21;
-
     protected final PlayerName playerName;
     protected final Cards cards = Cards.getDefault();
 
@@ -18,12 +16,18 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public int calculateBlackjackScore() {
-        return Score.from(cards).getValue();
+    public void receive(Cards cards) {
+        for (Card card : cards.getCards()) {
+            this.receive(card);
+        }
+    }
+
+    public BlackjackScore calculateBlackjackScore() {
+        return BlackjackScore.from(cards);
     }
 
     public boolean isBusted() {
-        return calculateBlackjackScore() > BUST_LIMIT;
+        return calculateBlackjackScore().isGreaterThan(BlackjackScore.getMaxScore());
     }
 
     public Result competeWith(Participant otherPlayer) {
@@ -35,17 +39,9 @@ public abstract class Participant {
             return Result.LOSE;
         }
 
-        Score score = Score.from(cards);
-        Score otherScore = Score.from(otherPlayer.cards);
-        return score.competeByScore(otherScore);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
-    }
-
-    public String getName() {
-        return playerName.getName();
+        BlackjackScore blackjackScore = BlackjackScore.from(cards);
+        BlackjackScore otherBlackjackScore = BlackjackScore.from(otherPlayer.cards);
+        return blackjackScore.compete(otherBlackjackScore);
     }
 
     public abstract List<Card> getInitialCards();
@@ -67,5 +63,13 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(playerName, getCards());
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards.getCards());
+    }
+
+    public String getName() {
+        return playerName.getName();
     }
 }

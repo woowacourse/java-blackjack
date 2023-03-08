@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Cards {
@@ -15,14 +16,13 @@ public class Cards {
         return new Cards(emptyCards);
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public static Cards of(Card... cards) {
+        List<Card> newCards = new ArrayList<>(Arrays.asList(cards));
+        return new Cards(newCards);
     }
 
-    public int getSumOfScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public int countAce() {

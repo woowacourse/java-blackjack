@@ -14,7 +14,7 @@ public class Card {
     }
 
     public int getScore() {
-        return trumpCardNumber.getScore();
+        return trumpCardNumber.getNumber();
     }
 
     public String getTypeName() {

@@ -1,6 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Card;
+import domain.Cards;
 import domain.Participant;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
@@ -17,8 +18,7 @@ class DealerTest {
     @Test
     void isAbleToReceiveCardWhenUnderMoreCardLimitTest() {
         Participant dealer = TestDataManager.getDealer();
-        dealer.receive(CLUB_ACE);
-        dealer.receive(HEART_THREE);
+        dealer.receive(Cards.of(CLUB_ACE, HEART_THREE));
 
         assertThat(dealer.isAbleToReceiveCard()).isTrue();
     }
