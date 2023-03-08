@@ -21,7 +21,7 @@ public class Deck {
         return new Deck(createdCard);
     }
 
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(cards);
     }
 

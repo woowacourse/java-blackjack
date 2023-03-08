@@ -1,6 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Card {
 
@@ -61,7 +64,7 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "suit=" + suit.name()+
+                "suit=" + suit.name() +
                 ", denomination=" + denomination.name() +
                 '}';
     }
