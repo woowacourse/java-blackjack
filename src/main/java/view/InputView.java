@@ -16,9 +16,16 @@ public class InputView {
     public static List<String> readNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.next();
+        validateNull(input);
         validateBlank(input);
         return Arrays.stream(input.split(DELIMITER))
             .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static void validateNull(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+        }
     }
 
     private static void validateBlank(String input) {
