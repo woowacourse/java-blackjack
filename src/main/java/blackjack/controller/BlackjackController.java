@@ -28,8 +28,7 @@ public class BlackjackController {
     }
 
     private void settingGame() {
-        dealer.settingSelfCards();
-        dealer.settingPlayersCards();
+        dealer.settingCards();
 
         outputView.printDistributeCardsMessage(dealer.getPlayers());
         outputView.printDealerInitCards(dealer.showOneCard());
@@ -50,13 +49,13 @@ public class BlackjackController {
             outputView.printCurrentCards(player);
             return false;
         }
-        dealer.giveACard(player);
+        dealer.giveCard(player);
         return true;
     }
 
     private void turnOfDealer() {
         while (dealer.canDraw()) {
-            dealer.drawACard();
+            dealer.drawCard();
             outputView.printDealerDrawOneMoreCard();
         }
     }
