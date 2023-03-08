@@ -63,7 +63,7 @@
 
 - 클래스 내부 로직 변경
   - [x] Card 생성하는 부분 `for문` -> `stream`으로 변경
-  - [ ] CardNumber enum class 필드 변경
+  - [x] CardNumber enum class 필드 변경
   - [ ] Deck class 필드 변경
   - [ ] Dealer class calculateScore 메소드 로직 변경
   - [ ] hasACE 메소드 내부 로직 변경

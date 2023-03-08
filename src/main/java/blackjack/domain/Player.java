@@ -39,8 +39,8 @@ public class Player implements Person {
     @Override
     public int calculateScore() {
         int totalScore = cards.stream()
-                .map(card -> Collections.min(card.getScore()))
-                .reduce(0, Integer::sum);
+                .mapToInt(card -> card.getScore(card.getCardNumberToString()))
+                .sum();
 
         if (totalScore <= ACE_MAX_NUMBER && hasACE()) {
             return totalScore + DIFFERENCE_WITH_ACE_NUMBER;
@@ -50,6 +50,6 @@ public class Player implements Person {
 
     private boolean hasACE() {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.getNumber()));
+                .anyMatch(card -> card.getCardNumberToString().equals(CardNumber.ACE.number()));
     }
 }
