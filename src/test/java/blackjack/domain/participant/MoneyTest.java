@@ -19,18 +19,35 @@ class MoneyTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
     void earn(final int value) {
-        final Money earnMoney = new Money(value);
         final Money money = new Money(1000);
-        assertThatNoException().isThrownBy(() -> money.earn(earnMoney));
+        final Money earnMoney = new Money(value);
+        final Money currentMoney = money.earn(earnMoney);
+
+        final int expected = money.getValue() + value;
+        assertThat(currentMoney.getValue()).isEqualTo(expected);
     }
 
     @DisplayName("지불하다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 10, 100, 1000, 10000, 100000})
     void spend(final int value) {
-        final Money spendMoney = new Money(value);
         final Money money = new Money(Integer.MAX_VALUE);
-        assertThatNoException().isThrownBy(() -> money.spend(spendMoney));
+        final Money spendMoney = new Money(value);
+        final Money currentMoney = money.spend(spendMoney);
+
+        final int expected = money.getValue() - value;
+        assertThat(currentMoney.getValue()).isEqualTo(expected);
+    }
+
+    @DisplayName("곱하다.")
+    @ParameterizedTest
+    @ValueSource(doubles = {1.1, 1.2, 1.5, 10.5, 100.123})
+    void times(final double timesValue) {
+        final Money money = new Money(10000);
+        final Money currentMoney = money.times(timesValue);
+
+        final int expected = (int) (money.getValue() * timesValue);
+        assertThat(currentMoney.getValue()).isEqualTo(expected);
     }
 
     @DisplayName("현금을 확인한다.")
