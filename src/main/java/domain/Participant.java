@@ -6,7 +6,6 @@ public abstract class Participant {
 
     protected static final int BUST_LIMIT = 21;
 
-
     protected final Name name;
     protected final Cards cards;
 
