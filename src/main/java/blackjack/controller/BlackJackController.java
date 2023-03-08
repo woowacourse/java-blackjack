@@ -78,10 +78,9 @@ public class BlackJackController {
     }
 
     private void passExtraCardToDealer() {
-        if (blackJackGame.canPassDealerCard()) {
+        while (blackJackGame.canPassDealerCard()) {
             blackJackGame.passDealerCard();
             outputView.showDealerDrawPossible();
-            return;
         }
         outputView.showDealerDrawImpossible();
     }

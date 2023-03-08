@@ -9,9 +9,9 @@ import java.util.List;
 public class PlayerNameHandResponse {
 
     private final String name;
-    private final List<Card> hand;
+    private final List<CardDTO> hand;
 
-    public PlayerNameHandResponse(String name, List<Card> hand) {
+    public PlayerNameHandResponse(String name, List<CardDTO> hand) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
     }
@@ -20,7 +20,7 @@ public class PlayerNameHandResponse {
         return name;
     }
 
-    public List<Card> getHand() {
+    public List<CardDTO> getHand() {
         return Collections.unmodifiableList(hand);
     }
 }

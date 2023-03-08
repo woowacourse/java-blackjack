@@ -2,10 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Result;
-import blackjack.dto.DealerHandScoreResponse;
-import blackjack.dto.DealerPlayerResultResponse;
-import blackjack.dto.PlayerNameHandResponse;
-import blackjack.dto.PlayerNameHandScoreResponse;
+import blackjack.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,13 +34,13 @@ public class OutputView {
         printMessage(message);
     }
 
-    public void showDealerFirstCard(Card dealerFirstCard) {
+    public void showDealerFirstCard(CardDTO dealerFirstCard) {
         System.out.println(DEALER_NAME + DELIMITER + mapCard(dealerFirstCard));
     }
 
     public void showPlayerNameHand(PlayerNameHandResponse playerNameHand) {
         String name = playerNameHand.getName();
-        List<Card> hand = playerNameHand.getHand();
+        List<CardDTO> hand = playerNameHand.getHand();
         printMessage(name + CARD + DELIMITER + convertCard(hand));
     }
 
@@ -58,7 +55,7 @@ public class OutputView {
     }
 
     public void showTotalScoreDealer(DealerHandScoreResponse dealerHandScore) {
-        List<Card> hand = dealerHandScore.getHand();
+        List<CardDTO> hand = dealerHandScore.getHand();
         int score = dealerHandScore.getScore();
         printMessage(LINE_SEPARATOR);
         printMessage(DEALER_NAME + DELIMITER + convertCard(hand) + RESULT_MESSAGE + score);
@@ -66,7 +63,7 @@ public class OutputView {
 
     public void showTotalScorePlayer(PlayerNameHandScoreResponse playerNameHandScore) {
         String name = playerNameHandScore.getName();
-        List<Card> hand = playerNameHandScore.getHand();
+        List<CardDTO> hand = playerNameHandScore.getHand();
         int score = playerNameHandScore.getScore();
         printMessage(name + DELIMITER + convertCard(hand) + RESULT_MESSAGE + score);
     }
@@ -104,13 +101,13 @@ public class OutputView {
         printMessage(name + DELIMITER + ResultMapper.map(result));
     }
 
-    private String convertCard(List<Card> inputHand) {
+    private String convertCard(List<CardDTO> inputHand) {
         return inputHand.stream()
                 .map(this::mapCard)
                 .collect(Collectors.joining(JOINER));
     }
 
-    private String mapCard(Card card) {
+    private String mapCard(CardDTO card) {
         return NumberMapper.map(card.getDenomination()) + SuitMapper.map(card.getSuit());
     }
 
