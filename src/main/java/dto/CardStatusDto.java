@@ -13,7 +13,7 @@ public class CardStatusDto {
     }
 
     public static CardStatusDto from(Card card) {
-        return new CardStatusDto(card.getValue().getExpression(), card.getShape().getName());
+        return new CardStatusDto(card.getLetter().getExpression(), card.getShape().getName());
     }
 
     public String getLetter() {

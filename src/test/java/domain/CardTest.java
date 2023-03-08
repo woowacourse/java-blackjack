@@ -18,8 +18,8 @@ public class CardTest {
         Card card = new Card(diamond, two);
 
         assertThat(card.getShape()).isEqualTo(Shape.DIAMOND);
-        assertThat(card.getValue().getExpression()).isEqualTo("2");
-        assertThat(card.getValue().getScore()).isEqualTo(2);
+        assertThat(card.getLetter().getExpression()).isEqualTo("2");
+        assertThat(card.getLetter().getScore()).isEqualTo(new Score(2));
     }
 
 }

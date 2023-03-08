@@ -18,7 +18,7 @@ public class Card {
         return shape;
     }
 
-    public Letter getValue() {
+    public Letter getLetter() {
         return letter;
     }
 
