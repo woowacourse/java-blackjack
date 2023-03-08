@@ -84,7 +84,7 @@ public class OutputView {
     }
 
     public static void printResult(final Participants participants) {
-        List<Score> dealerResult = participants.getFinalResult(participants.getDealer());
+        List<Score> dealerResult = participants.getFinalResult();
 
         int dealerWinCount = getDealerScoreCount(dealerResult, Score.LOSE);
         int dealerLoseCount = getDealerScoreCount(dealerResult, Score.WIN);

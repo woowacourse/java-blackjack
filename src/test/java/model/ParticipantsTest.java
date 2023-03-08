@@ -49,10 +49,10 @@ class ParticipantsTest {
 
         // when, then
         assertAll(
-                () -> assertThat(participants.getFinalResult(dealer)).containsExactly(LOSE),
+                () -> assertThat(participants.getFinalResult()).containsExactly(LOSE),
                 () -> {
             bebe.receiveCard(new Card(CLOVER, TWO));
-            assertThat(participants.getFinalResult(dealer)).containsExactly(WIN);
+            assertThat(participants.getFinalResult()).containsExactly(WIN);
         });
     }
 
@@ -69,7 +69,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(participants.getFinalResult(dealer)).containsExactly(TIE);
+        assertThat(participants.getFinalResult()).containsExactly(TIE);
     }
 
     @Test
@@ -83,7 +83,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, THREE));
 
         // when, then
-        assertThat(participants.getFinalResult(dealer)).containsExactly(LOSE);
+        assertThat(participants.getFinalResult()).containsExactly(LOSE);
     }
 
     @Test
@@ -97,7 +97,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(SPADE, KING));
 
         // when, then
-        assertThat(participants.getFinalResult(dealer)).containsExactly(WIN);
+        assertThat(participants.getFinalResult()).containsExactly(WIN);
     }
 
     @DisplayName("receiveInitialCards가 두 장의 카드를 주는지 확인한다.")

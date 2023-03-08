@@ -27,7 +27,7 @@ public class Participants {
         return new Participants(playersName, new Dealer());
     }
 
-    public List<Score> getFinalResult(final Dealer dealer) {
+    public List<Score> getFinalResult() {
         return createFinalResultWithoutDealer(dealer.calculateTotalValue());
     }
 
