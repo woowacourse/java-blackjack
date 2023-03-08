@@ -129,8 +129,8 @@ public class BlackJackGame {
     }
 
     public DealerPlayerResultResponse findDealerPlayerResult() {
-        Map<Result, Integer> dealerResult = calculateDealerResult();
         Map<String, Result> allPlayerResult = calculatePlayerResult();
+        Map<Result, Integer> dealerResult = calculateDealerResult(allPlayerResult);
 
         return new DealerPlayerResultResponse(dealerResult, allPlayerResult);
     }
@@ -160,16 +160,16 @@ public class BlackJackGame {
         Map<String, Result> allPlayerResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             String name = player.getName();
-            Result result = Result.calculate(player.calculateScore(), dealer.calculateScore());
+            Result result = Result.calculatePlayerResult(player.calculateScore(), dealer.calculateScore());
             allPlayerResult.put(name, result);
         }
         return allPlayerResult;
     }
 
-    private Map<Result, Integer> calculateDealerResult() {
+    private Map<Result, Integer> calculateDealerResult(Map<String, Result> allPlayerResult) {
         Map<Result, Integer> dealerResult = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            Result result = Result.calculate(dealer.calculateScore(), player.calculateScore());
+        for (String playerName : allPlayerResult.keySet()) {
+            Result result = allPlayerResult.get(playerName);
             int count = dealerResult.getOrDefault(result, 0);
             dealerResult.put(result, count + 1);
         }

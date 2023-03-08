@@ -7,9 +7,19 @@ public enum Result {
     DRAW,
     LOSE;
 
-    private static final int BLACKJACK_CHECK_SUM = 21;
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
-    public static Result calculate(Score targetScore, Score oppositeScore) {
+    public static Result calculatePlayerResult(Score playerScore, Score dealerScore) {
+        if (isBust(playerScore)) {
+            return LOSE;
+        }
+        if (isBust(dealerScore)) {
+            return WIN;
+        }
+        return calculateResultByScore(playerScore, dealerScore);
+    }
+
+    private static Result calculateResultByScore(Score targetScore, Score oppositeScore) {
         if (targetScore.isGreaterThan(oppositeScore)) {
             return WIN;
         }
@@ -19,10 +29,17 @@ public enum Result {
         return DRAW;
     }
 
-    private static int calculateFinalScore(int sum) {
-        if (sum > BLACKJACK_CHECK_SUM) {
-            sum = 0;
+    private static boolean isBust(Score score) {
+        return score.isGreaterThan(BLACKJACK_SCORE);
+    }
+
+    public static Result oppositeResult(Result result) {
+        if (result.equals(WIN)) {
+            return LOSE;
         }
-        return sum;
+        if (result.equals(LOSE)) {
+            return WIN;
+        }
+        return DRAW;
     }
 }
