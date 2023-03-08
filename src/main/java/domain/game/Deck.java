@@ -41,7 +41,7 @@ public class Deck {
     }
 
     public Card serve() {
-        shuffleStrategy.shuffle(cards);
-        return cards.get(TOP_CARD);
+        List<Card> shuffledCards = shuffleStrategy.shuffle(cards);
+        return shuffledCards.get(TOP_CARD);
     }
 }
