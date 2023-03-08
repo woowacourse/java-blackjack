@@ -1,4 +1,4 @@
-package domain.player;
+package domain.game;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("Money 는")
-class MoneyTest {
+@DisplayName("BattingMoney 는")
+class BattingMoneyTest {
 
     @Test
     void 금액을_가지고_생성된다() {
@@ -20,21 +20,21 @@ class MoneyTest {
         final int amount = 1000;
 
         // when
-        Money money = Money.of(amount);
+        BattingMoney battingMoney = BattingMoney.of(amount);
 
         // then
-        assertThat(money.amount()).isEqualTo(amount);
+        assertThat(battingMoney.amount()).isEqualTo(amount);
     }
 
     @Test
     void 같은_금액인_경우_동등하다() {
         // given
         final int amount = 1000;
-        Money money1 = Money.of(amount);
-        Money money2 = Money.of(amount);
+        BattingMoney battingMoney1 = BattingMoney.of(amount);
+        BattingMoney battingMoney2 = BattingMoney.of(amount);
 
         // when & then
-        assertThat(money1).isEqualTo(money2);
+        assertThat(battingMoney1).isEqualTo(battingMoney2);
     }
 
     @ParameterizedTest(name = "돈을 더할 수 있다. {0}원 + {1}원은 {2}원이다")
@@ -45,12 +45,12 @@ class MoneyTest {
     })
     void 돈을_더할_수_있다(final int beforeAmount, final int addedAmount, final int afterAmount) {
         // given
-        Money before = Money.of(beforeAmount);
-        Money added = Money.of(addedAmount);
-        Money after = Money.of(afterAmount);
+        BattingMoney before = BattingMoney.of(beforeAmount);
+        BattingMoney added = BattingMoney.of(addedAmount);
+        BattingMoney after = BattingMoney.of(afterAmount);
 
         // when
-        Money result = before.plus(added);
+        BattingMoney result = before.plus(added);
 
         // then
         assertThat(result).isEqualTo(after);
@@ -64,12 +64,12 @@ class MoneyTest {
     })
     void 돈을_뺄_수_있다(final int beforeAmount, final int minusAmount, final int afterAmount) {
         // given
-        Money before = Money.of(beforeAmount);
-        Money minus = Money.of(minusAmount);
-        Money after = Money.of(afterAmount);
+        BattingMoney before = BattingMoney.of(beforeAmount);
+        BattingMoney minus = BattingMoney.of(minusAmount);
+        BattingMoney after = BattingMoney.of(afterAmount);
 
         // when
-        Money result = before.minus(minus);
+        BattingMoney result = before.minus(minus);
 
         // then
         assertThat(result).isEqualTo(after);
@@ -83,11 +83,11 @@ class MoneyTest {
     })
     void 돈을_곱할_수_있다(final int beforeAmount, final double times, final int afterAmount) {
         // given
-        Money before = Money.of(beforeAmount);
-        Money after = Money.of(afterAmount);
+        BattingMoney before = BattingMoney.of(beforeAmount);
+        BattingMoney after = BattingMoney.of(afterAmount);
 
         // when
-        Money result = before.times(times);
+        BattingMoney result = before.times(times);
 
         // then
         assertThat(result).isEqualTo(after);
