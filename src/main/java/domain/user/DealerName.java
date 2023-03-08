@@ -1,12 +1,6 @@
 package domain.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DealerName implements UserName {
-    private static final List<String> PROHIBITED_NAMES = new ArrayList<>() {{
-        add("딜러");
-    }};
 
     private final String value;
 
