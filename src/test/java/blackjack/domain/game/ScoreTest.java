@@ -61,4 +61,17 @@ class ScoreTest {
 
         Assertions.assertThat(originalScore.isEqualsTo(otherScore)).isTrue();
     }
+
+    @Test
+    @DisplayName("점수 값을 가져오는 테스트")
+    void getValueTest() {
+        // given
+        int value = 20;
+
+        // when
+        Score actual = new Score(value);
+
+        // then
+        Assertions.assertThat(actual.getValue()).isEqualTo(value);
+    }
 }
