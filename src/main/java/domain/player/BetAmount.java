@@ -1,0 +1,34 @@
+package domain.player;
+
+public class BetAmount {
+
+    public final int amount;
+
+    private BetAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public static BetAmount from(String amount) {
+        validateNumber(amount);
+        validatePositiveNumber(Integer.parseInt(amount));
+        return new BetAmount(Integer.parseInt(amount));
+    }
+
+    private static void validateNumber(final String amount) {
+        try {
+            Integer.parseInt(amount);
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException("베팅 금액은 숫자만 입력할 수 있습니다.");
+        }
+    }
+
+    private static void validatePositiveNumber(final int amount) {
+        if (amount < 1000) {
+            throw new IllegalArgumentException("베팅 최소 금액은 1000원 입니다.");
+        }
+    }
+
+    public int getValue() {
+        return amount;
+    }
+}
