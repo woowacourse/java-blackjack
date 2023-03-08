@@ -14,6 +14,9 @@ import static view.OutputView.printDealerHitMessage;
 import static view.OutputView.printSingleGambler;
 
 public class Blackjack {
+    //TODO: Blackjack testcode 작성
+    //TODO: 모든 class들 testcode 확인하고 부족한 부분 작성해보기
+    //TODO: 질문 >> blackjack이 result를 가지는 게 맞는가?
 
     private final Players players;
     private final Dealer dealer;

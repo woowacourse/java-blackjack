@@ -2,7 +2,6 @@ package controller;
 
 import domain.Dealer;
 import domain.Players;
-import domain.Result;
 import game.Blackjack;
 
 import static view.OutputView.printGamblersCards;

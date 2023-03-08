@@ -27,7 +27,7 @@ public class Players {
     private List<String> getPlayerNames(List<Player> players) {
         List<String> playerNames = new ArrayList<>();
 
-        for(Player player : players){
+        for (Player player : players) {
             playerNames.add(player.getName());
         }
         return playerNames;
