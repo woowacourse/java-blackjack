@@ -103,4 +103,18 @@ class DealerTest {
         //then
         assertThat(dealerStats).containsValue(DealerStatus.WIN);
     }
+
+    @Test
+    @DisplayName("player가 blackjack이라면 BLACKJACK_LOSE를 반환한다")
+    void blackjackLoseTest() {
+        //given
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of("jude"));
+        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.ACE));
+        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
+        //when
+        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
+        //then
+        assertThat(dealerStats).containsValue(DealerStatus.BLACKJACK_LOSE);
+    }
 }
