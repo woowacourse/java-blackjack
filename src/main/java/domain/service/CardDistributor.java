@@ -16,12 +16,12 @@ public class CardDistributor {
     }
 
     public void giveCard(final Participant participant) {
-        checkBust(participant);
+        checkCanReceiveCard(participant);
         participant.addCard(cardGenerator.generate());
     }
 
-    private static void checkBust(final Participant participant) {
-        if (participant.isBust()) {
+    private static void checkCanReceiveCard(final Participant participant) {
+        if (participant.canNotReceiveCard()) {
             throw new IllegalArgumentException(CANNOT_GIVE_CARD_ERROR_MESSAGE);
         }
     }
@@ -33,8 +33,15 @@ public class CardDistributor {
     }
 
     public void giveInitCards(final Players players) {
+        checkCardEmpty(players);
         IntStream.range(0, INIT_DEAL_COUNT)
             .forEach(count -> players.addAll(cardGenerator.generate(players.size())));
+    }
+
+    private void checkCardEmpty(final Players players) {
+        IntStream.range(0, players.size())
+            .mapToObj(players::get)
+            .forEach(this::checkCardEmpty);
     }
 
     private void checkCardEmpty(final Participant participant) {

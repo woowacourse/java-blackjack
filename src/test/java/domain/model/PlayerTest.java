@@ -59,8 +59,8 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 버스트인지 테스트")
-    public void testIsBustTrue() {
+    @DisplayName("플레이어가 카드를 받을 수 있는 상태인지 테스트")
+    public void testCanReceiveCardTrue() {
         //given
         final Set<Card> cardSet = Set.of(
             new Card(Suit.DIAMOND, Letter.TEN),
@@ -70,15 +70,15 @@ class PlayerTest {
         final Player player = new Player(bustedCards, "test");
 
         //when
-        final boolean result = player.isBust();
+        final boolean result = player.canReceiveCard();
 
         //then
         assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("플레이어가 버스트가 아닌지 테스트")
-    public void testIsBustFalse() {
+    @DisplayName("플레이어가 카드를 받을 수 없는 상태인지 테스트")
+    public void testCanReceiveCardFalse() {
         //given
         final Set<Card> cardSet = Set.of(
             new Card(Suit.DIAMOND, Letter.TEN),
@@ -88,7 +88,7 @@ class PlayerTest {
         final Player player = new Player(notBustedCards, "test");
 
         //when
-        final boolean result = player.isBust();
+        final boolean result = player.canNotReceiveCard();
 
         //then
         assertThat(result).isFalse();

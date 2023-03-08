@@ -24,6 +24,10 @@ class CardDistributorTest {
         final Card card = new Card(Suit.CLUB, Letter.ACE);
         cardDistributor = new CardDistributor(new CardGenerator() {
             @Override
+            public void reset() {
+            }
+
+            @Override
             public Card generate() {
                 return card;
             }

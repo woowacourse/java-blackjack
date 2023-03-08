@@ -15,16 +15,16 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public boolean isBust() {
-        return Score.of(cards).isBust();
-    }
-
     public boolean cardsIsNotEmpty() {
         return cards.isNotEmpty();
     }
 
     public boolean canReceiveCard() {
         return Score.of(cards).isStand();
+    }
+
+    public boolean canNotReceiveCard() {
+        return Score.of(cards).isBust();
     }
 
     public Score getScore() {
