@@ -1,5 +1,6 @@
-package blackjack.view;
+package blackjack.view.message;
 
+import blackjack.constants.ErrorCode;
 import blackjack.domain.CardSuit;
 import blackjack.view.exception.MessageDoesNotExistException;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public enum CardSuitMessage {
         if (SUIT_MESSAGE.containsKey(cardSuit)) {
             return SUIT_MESSAGE.get(cardSuit);
         }
-        throw new MessageDoesNotExistException();
+        throw new MessageDoesNotExistException(ErrorCode.NOT_EXIST_MESSAGE);
     }
 
     public String getMessage() {

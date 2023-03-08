@@ -31,7 +31,6 @@ class ParticipantsTest {
         List<String> names = List.of("jamie", "jamie");
 
         assertThatThrownBy(() -> Participants.from(names))
-                .isInstanceOf(DuplicatePlayerNameException.class)
-                .hasMessage("중복인 이름은 입력하실 수 없습니다.");
+                .isInstanceOf(DuplicatePlayerNameException.class);
     }
 }

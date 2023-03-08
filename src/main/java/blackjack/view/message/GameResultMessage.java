@@ -1,6 +1,7 @@
-package blackjack.view;
+package blackjack.view.message;
 
 
+import blackjack.constants.ErrorCode;
 import blackjack.domain.GameResult;
 import blackjack.view.exception.MessageDoesNotExistException;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public enum GameResultMessage {
         if (GAME_RESULT_MESSAGE.containsKey(gameResult)) {
             return GAME_RESULT_MESSAGE.get(gameResult);
         }
-        throw new MessageDoesNotExistException();
+        throw new MessageDoesNotExistException(ErrorCode.NOT_EXIST_MESSAGE);
     }
 
     public String getMessage() {

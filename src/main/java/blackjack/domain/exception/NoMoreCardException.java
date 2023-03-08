@@ -1,8 +1,10 @@
 package blackjack.domain.exception;
 
+import blackjack.constants.ErrorCode;
+
 public class NoMoreCardException extends CustomException {
 
-    public NoMoreCardException() {
-        super("뽑을 수 있는 카드가 없습니다.");
+    public NoMoreCardException(ErrorCode errorCode) {
+        super(errorCode);
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.constants.ErrorCode;
 import blackjack.domain.exception.DuplicatePlayerNameException;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +25,7 @@ public class Participants {
 
     private static void validateDuplicate(List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
-            throw new DuplicatePlayerNameException();
+            throw new DuplicatePlayerNameException(ErrorCode.DUPLICATE_NAME);
         }
     }
 

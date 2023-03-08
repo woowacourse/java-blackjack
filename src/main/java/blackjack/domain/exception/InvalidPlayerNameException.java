@@ -1,8 +1,10 @@
 package blackjack.domain.exception;
 
+import blackjack.constants.ErrorCode;
+
 public class InvalidPlayerNameException extends CustomException {
 
-    public InvalidPlayerNameException() {
-        super("이름은 공백일 수 없습니다.");
+    public InvalidPlayerNameException(ErrorCode errorCode) {
+        super(errorCode);
     }
 }

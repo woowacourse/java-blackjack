@@ -23,7 +23,6 @@ class NameTest {
     @DisplayName("이름에 공백 혹은 빈값만 들어온다면 예외를 발생시킨다")
     void createException(String name) {
         assertThatThrownBy(() -> new Name(name))
-                .isInstanceOf(InvalidPlayerNameException.class)
-                .hasMessage("이름은 공백일 수 없습니다.");
+                .isInstanceOf(InvalidPlayerNameException.class);
     }
 }

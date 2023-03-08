@@ -1,6 +1,7 @@
 package blackjack.controller;
 
-import blackjack.controller.exception.NotCommandException;
+import blackjack.constants.ErrorCode;
+import blackjack.controller.exception.InvalidCommandException;
 
 public enum GameCommand {
     PLAY("y"),
@@ -19,7 +20,7 @@ public enum GameCommand {
         if (STOP.command.equalsIgnoreCase(command)) {
             return STOP;
         }
-        throw new NotCommandException();
+        throw new InvalidCommandException(ErrorCode.INVALID_COMMAND);
     }
 
     public boolean isPlay() {

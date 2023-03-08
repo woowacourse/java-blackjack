@@ -1,8 +1,15 @@
 package blackjack.domain.exception;
 
-public class CustomException extends RuntimeException {
+import blackjack.constants.ErrorCode;
 
-    public CustomException(String message) {
-        super(message);
+public class CustomException extends RuntimeException {
+    private final ErrorCode errorCode;
+
+    public CustomException(ErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
     }
 }

@@ -1,11 +1,13 @@
 package blackjack.controller;
 
+import blackjack.controller.exception.InvalidCommandException;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.BlackjackResult;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.exception.CustomException;
+import blackjack.domain.exception.NoMoreCardException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -32,8 +34,8 @@ public class BlackjackController {
             outputView.printInitCards(participants);
             play(participants, blackjackGame);
             outputView.printCardResult(participants);
-        } catch (CustomException e) {
-            outputView.printError(e.getMessage());
+        } catch (NoMoreCardException e) {
+            outputView.printError(e.getErrorCode());
         }
     }
 
@@ -47,7 +49,7 @@ public class BlackjackController {
             List<String> names = inputView.readNames();
             return Participants.from(names);
         } catch (CustomException e) {
-            outputView.printError(e.getMessage());
+            outputView.printError(e.getErrorCode());
             return getParticipants();
         }
     }
@@ -73,8 +75,8 @@ public class BlackjackController {
         try {
             String inputCommand = inputView.readIsContinue(player.getName());
             return GameCommand.from(inputCommand);
-        } catch (CustomException e) {
-            outputView.printError(e.getMessage());
+        } catch (InvalidCommandException e) {
+            outputView.printError(e.getErrorCode());
             return getGameCommand(player);
         }
     }

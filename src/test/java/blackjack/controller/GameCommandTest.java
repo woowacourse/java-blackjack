@@ -3,7 +3,7 @@ package blackjack.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.controller.exception.NotCommandException;
+import blackjack.controller.exception.InvalidCommandException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,8 +15,7 @@ class GameCommandTest {
     @DisplayName("올바른 입력값이 아니면 예외가 발생한다")
     void wrongInputTest() {
         assertThatThrownBy(() -> GameCommand.from("a"))
-                .isInstanceOf(NotCommandException.class)
-                .hasMessage("y 또는 n를 입력해주세요.");
+                .isInstanceOf(InvalidCommandException.class);
     }
 
     @ParameterizedTest

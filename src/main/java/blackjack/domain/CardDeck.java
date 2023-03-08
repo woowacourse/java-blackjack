@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.constants.ErrorCode;
 import blackjack.domain.exception.NoMoreCardException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class CardDeck {
 
     public Card pick() {
         if (cards.isEmpty()) {
-            throw new NoMoreCardException();
+            throw new NoMoreCardException(ErrorCode.EMPTY_CARD);
         }
         return cards.remove(0);
     }

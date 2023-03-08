@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
+    protected static final String DEALER_NAME = "딜러";
 
     private final PlayerCards playerCards;
     private final Name name;

@@ -1,9 +1,9 @@
 package blackjack.domain;
 
+import blackjack.constants.ErrorCode;
 import blackjack.domain.exception.ReservedPlayerNameException;
 
 public class Player extends Participant {
-    private static final String RESERVED_NAME = "딜러";
 
     public Player(String name) {
         super(new Name(name));
@@ -11,8 +11,8 @@ public class Player extends Participant {
     }
 
     private void validateReservedName(String name) {
-        if (RESERVED_NAME.equals(name)) {
-            throw new ReservedPlayerNameException(name);
+        if (DEALER_NAME.equals(name)) {
+            throw new ReservedPlayerNameException(ErrorCode.RESERVED_NAME);
         }
     }
 

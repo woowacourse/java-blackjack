@@ -2,12 +2,16 @@ package blackjack.view;
 
 import static java.text.MessageFormat.format;
 
+import blackjack.constants.ErrorCode;
 import blackjack.domain.BlackjackResult;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.view.message.CardMessageConvertor;
+import blackjack.view.message.ErrorCodeMessage;
+import blackjack.view.message.GameResultMessage;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -80,7 +84,7 @@ public class OutputView {
         return GameResultMessage.from(gameResult).getMessage();
     }
 
-    public void printError(String message) {
-        System.out.println(format("[ERROR] {0}", message));
+    public void printError(ErrorCode errorCode) {
+        System.out.println(format("[ERROR] {0}", ErrorCodeMessage.from(errorCode).getMessage()));
     }
 }

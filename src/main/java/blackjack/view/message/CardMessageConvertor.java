@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.message;
 
 import blackjack.domain.Card;
 

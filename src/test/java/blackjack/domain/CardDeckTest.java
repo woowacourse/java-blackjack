@@ -34,7 +34,6 @@ class CardDeckTest {
         CardDeck cardDeck = new CardDeck(List.of());
 
         assertThatThrownBy(() -> cardDeck.pick())
-                .isInstanceOf(NoMoreCardException.class)
-                .hasMessage("뽑을 수 있는 카드가 없습니다.");
+                .isInstanceOf(NoMoreCardException.class);
     }
 }

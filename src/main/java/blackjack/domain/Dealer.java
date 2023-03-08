@@ -3,7 +3,7 @@ package blackjack.domain;
 public class Dealer extends Participant {
 
     public Dealer() {
-        super(new Name("딜러"));
+        super(new Name(DEALER_NAME));
     }
 
     @Override
