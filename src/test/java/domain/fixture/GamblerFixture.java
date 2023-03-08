@@ -1,7 +1,7 @@
 package domain.fixture;
 
 import domain.card.CardArea;
-import domain.game.BattingMoney;
+import domain.player.BattingMoney;
 import domain.player.Gambler;
 import domain.player.Name;
 

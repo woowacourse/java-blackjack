@@ -1,8 +1,5 @@
 package domain.player;
 
-import domain.game.BattingMoney;
-import domain.game.Revenue;
-
 import java.util.function.Function;
 
 public enum GamblerCompeteResult {

@@ -1,7 +1,6 @@
 package domain.player;
 
 import domain.card.CardArea;
-import domain.game.BattingMoney;
 
 public class Gambler extends Participant {
 

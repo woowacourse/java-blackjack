@@ -2,7 +2,6 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardArea;
-import domain.game.Revenue;
 
 import static domain.player.GamblerCompeteResult.*;
 

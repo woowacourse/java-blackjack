@@ -4,7 +4,7 @@ import controller.GameStatisticResponse;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
-import domain.game.Revenue;
+import domain.player.Revenue;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.GamblerCompeteResult;

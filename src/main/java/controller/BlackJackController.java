@@ -1,7 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
-import domain.game.BattingMoney;
+import domain.player.BattingMoney;
 import domain.game.BlackJackGame;
 import domain.player.Gambler;
 import domain.player.HitState;
