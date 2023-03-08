@@ -18,4 +18,8 @@ public class GamblerFixture {
     public static Gambler 코다(final CardArea cardArea) {
         return new Gambler(Name.of("코다"), cardArea, BattingMoney.of(100));
     }
+
+    public static Gambler gamblerWithMoneyAndCardArea(final BattingMoney battingMoney, final CardArea cardArea) {
+        return new Gambler(Name.of("말랑"), cardArea, battingMoney);
+    }
 }

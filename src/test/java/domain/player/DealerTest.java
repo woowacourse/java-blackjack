@@ -14,8 +14,8 @@ import java.util.stream.Stream;
 import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.*;
-import static domain.fixture.GamblerFixture.말랑;
-import static domain.player.GamblerCompeteResult.*;
+import static domain.fixture.GamblerFixture.gamblerWithMoneyAndCardArea;
+import static domain.player.Revenue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,28 +82,28 @@ class DealerTest {
     static Stream<Arguments> playerAndDealerAndResult() {
         final CardArea cardArea22 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
         cardArea22.addCard(new Card(DIAMOND, TWO));
-
+        final BattingMoney money = BattingMoney.of(1000);
         return Stream.of(
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("17", new Dealer(equal17CardArea())), LOSE),
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("22", new Dealer(equal22CardArea())), WIN),
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), LOSE),
-                Arguments.of(Named.of("22", 말랑(equal22CardArea())), Named.of("22", new Dealer(equal22CardArea())), LOSE),
-                Arguments.of(Named.of("22", 말랑(equal22CardArea())), Named.of("19", new Dealer(equal19CardArea())), LOSE),
-                Arguments.of(Named.of("21", 말랑(equal21CardAreaNonBlackJack())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), DRAW),
-                Arguments.of(Named.of("21", 말랑(equal21CardAreaNonBlackJack())), Named.of("20", new Dealer(equal20CardArea())), WIN),
-                Arguments.of(Named.of("16", 말랑(equal16CardArea())), Named.of("16", new Dealer(equal16CardArea())), DRAW),
-                Arguments.of(Named.of("21", 말랑(equal21CardAreaBlackJack())), Named.of("20", new Dealer(equal20CardArea())), BLACK_JACK_WIN)
+                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("17", new Dealer(equal17CardArea())), Named.of("패배", lose(money))),
+                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("22", new Dealer(equal22CardArea())), Named.of("승리", defaultWin(money))),
+                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), Named.of("패배", lose(money))),
+                Arguments.of(Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())), Named.of("22", new Dealer(equal22CardArea())), Named.of("패배", lose(money))),
+                Arguments.of(Named.of("22", gamblerWithMoneyAndCardArea(money, equal22CardArea())), Named.of("19", new Dealer(equal19CardArea())), Named.of("패배", lose(money))),
+                Arguments.of(Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())), Named.of("21", new Dealer(equal21CardAreaNonBlackJack())), Named.of("무승부", draw(money))),
+                Arguments.of(Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaNonBlackJack())), Named.of("20", new Dealer(equal20CardArea())), Named.of("승리", defaultWin(money))),
+                Arguments.of(Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())), Named.of("16", new Dealer(equal16CardArea())), Named.of("무승부", draw(money))),
+                Arguments.of(Named.of("21", gamblerWithMoneyAndCardArea(money, equal21CardAreaBlackJack())), Named.of("20", new Dealer(equal20CardArea())), Named.of("블랙잭 승리", blackJackWin(money)))
         );
     }
 
-    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 참가자는 {2} 이다")
+    @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 참가자는 {2}이다")
     @MethodSource("playerAndDealerAndResult")
-    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Gambler gambler, final Dealer dealer, final GamblerCompeteResult gamblerCompeteResult) {
+    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Gambler gambler, final Dealer dealer, final Revenue actualRevenue) {
         // when
         final Revenue revenue = dealer.compete(gambler);
 
         // then
-        assertThat(revenue).isEqualTo(gamblerCompeteResult.revenue(gambler));
+        assertThat(revenue).isEqualTo(actualRevenue);
     }
 
     @SuppressWarnings("NonAsciiCharacters")
@@ -148,7 +148,7 @@ class DealerTest {
             final BattingMoney money = BattingMoney.of(battingAmount);
 
             // when
-            final Revenue defaultWin = Revenue.defaultWin(money);
+            final Revenue defaultWin = defaultWin(money);
 
             // then
             assertThat(defaultWin.amount()).isEqualTo(revenueAmount);
@@ -185,7 +185,7 @@ class DealerTest {
         }
 
         private Revenue revenue(final int amount) {
-            return Revenue.defaultWin(BattingMoney.of(amount));
+            return defaultWin(BattingMoney.of(amount));
         }
     }
 }

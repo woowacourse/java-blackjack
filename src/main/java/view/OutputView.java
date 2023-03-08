@@ -4,11 +4,10 @@ import controller.GameStatisticResponse;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
-import domain.player.Revenue;
 import domain.player.Dealer;
 import domain.player.Gambler;
-import domain.player.GamblerCompeteResult;
 import domain.player.Participant;
+import domain.player.Revenue;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -20,7 +19,6 @@ public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
-    private static final Map<GamblerCompeteResult, String> GAMBLER_COMPETE_MESSAGE_MAP = new EnumMap<>(GamblerCompeteResult.class);
 
     private static final String EMPTY = "";
     private static final String DELIMITER = ", ";
@@ -28,7 +26,6 @@ public class OutputView {
     static {
         makeShapeMessage();
         makeValueMessage();
-        makePlayerResultMessage();
     }
 
     private static void makeShapeMessage() {
@@ -52,12 +49,6 @@ public class OutputView {
         VALUE_MESSAGE_MAP.put(CardValue.QUEEN, "퀸");
         VALUE_MESSAGE_MAP.put(CardValue.JACK, "잭");
         VALUE_MESSAGE_MAP.put(CardValue.ACE, "A");
-    }
-
-    private static void makePlayerResultMessage() {
-        GAMBLER_COMPETE_MESSAGE_MAP.put(GamblerCompeteResult.WIN, "승");
-        GAMBLER_COMPETE_MESSAGE_MAP.put(GamblerCompeteResult.LOSE, "패");
-        GAMBLER_COMPETE_MESSAGE_MAP.put(GamblerCompeteResult.DRAW, "무");
     }
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Gambler> gamblers) {
