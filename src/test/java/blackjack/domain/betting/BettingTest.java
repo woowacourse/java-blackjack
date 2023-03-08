@@ -47,6 +47,20 @@ class BettingTest {
             assertThat(betting.getProfit(player).getValue()).isEqualTo(15000);
         }
     }
+
+    @Test
+    void 플레이어가_베팅에_실패한다() {
+        final Player player = new Player("toney");
+        player.drawCard(new Card(QUEEN, CLOVER));
+        player.drawCard(new Card(ACE, HEART));
+
+        final Map<Player, Profit> expectedProfit = new HashMap<>();
+        expectedProfit.put(player, new Profit(10000));
+        final Betting betting = new Betting(expectedProfit);
+        betting.fail(player);
+
+        assertThat(betting.getProfit(player).getValue()).isEqualTo(-10000);
+    }
 }
 
 class Betting {
@@ -67,6 +81,12 @@ class Betting {
         if (!expectedProfit.containsKey(player)) {
             throw new IllegalArgumentException("베팅하지 않은 플레이어입니다.");
         }
+    }
+
+    public void fail(final Player player) {
+        validateExistPlayer(player);
+        final Profit profit = expectedProfit.get(player);
+        expectedProfit.put(player, profit.reverse());
     }
 
     public Profit getProfit(final Player player) {
