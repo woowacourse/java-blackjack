@@ -1,7 +1,11 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.Card;
 import domain.Participant;
+import domain.ParticipantName;
+import domain.Player;
+import domain.PlayerNames;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
 import org.junit.jupiter.api.DisplayName;
@@ -31,5 +35,14 @@ class PlayerTest {
         player.receive(HEART_TEN);
 
         assertThat(player.getInitialCards()).hasSize(2);
+    }
+
+
+    @DisplayName("플레이어의 이름은 \"딜러\"일 수 없다.")
+    @Test
+    void createPlayerNamesFailTestWithExistedName() {
+        ParticipantName dealerName = ParticipantName.getDealerName();
+        assertThatThrownBy(() -> Player.from(dealerName))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

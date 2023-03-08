@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-    protected final PlayerName playerName;
+    protected final ParticipantName participantName;
     protected final Cards cards = Cards.getDefault();
 
-    public Participant(PlayerName playerName) {
-        this.playerName = playerName;
+    protected Participant(ParticipantName participantName) {
+        this.participantName = participantName;
     }
 
     public void receive(Card card) {
@@ -57,12 +57,12 @@ public abstract class Participant {
             return false;
         }
         Participant that = (Participant) o;
-        return playerName.equals(that.playerName) && getCards().equals(that.getCards());
+        return participantName.equals(that.participantName) && getCards().equals(that.getCards());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerName, getCards());
+        return Objects.hash(participantName, getCards());
     }
 
     public List<Card> getCards() {
@@ -70,6 +70,6 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return playerName.getName();
+        return participantName.getName();
     }
 }

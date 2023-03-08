@@ -7,8 +7,8 @@ public class Dealer extends Participant {
     private static final int INITIAL_CARD_INDEX = 1;
     private static final BlackjackScore MORE_CARD_LIMIT_SCORE = BlackjackScore.from(16);
 
-    public Dealer(PlayerName playerName) {
-        super(playerName);
+    public Dealer() {
+        super(ParticipantName.getDealerName());
     }
 
     public boolean isAbleToReceiveCard() {

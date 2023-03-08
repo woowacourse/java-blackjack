@@ -4,8 +4,6 @@ import java.util.List;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_AMOUNT = 2;
-    private static final String DEALER_NAME_VALUE = "딜러";
-    private static final PlayerName DEALER_NAME = new PlayerName(DEALER_NAME_VALUE);
 
     private final Deck deck;
     private final Participants participants;
@@ -16,7 +14,7 @@ public class BlackjackGame {
     }
 
     public static BlackjackGame from(Participants participants, Deck deck) {
-        Dealer dealer = new Dealer(DEALER_NAME);
+        Dealer dealer = new Dealer();
         participants.addDealer(dealer);
 
         return new BlackjackGame(deck, participants);

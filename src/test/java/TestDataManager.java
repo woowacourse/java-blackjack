@@ -4,12 +4,11 @@ import domain.DeckFactory;
 import domain.Participant;
 import domain.Participants;
 import domain.Player;
-import domain.PlayerName;
+import domain.ParticipantName;
 import domain.PlayerNames;
 import java.util.List;
 
 public class TestDataManager {
-    private static final String DEALER_NAME = "딜러";
 
     /**
      * pobi와 crong, royce가 참가한 BlackjackGame을 반환합니다.
@@ -22,10 +21,10 @@ public class TestDataManager {
     }
 
     public static Participant getPlayerWithName(String name) {
-        return new Player(new PlayerName(name));
+        return Player.from(new ParticipantName(name));
     }
 
     public static Participant getDealer() {
-        return new Dealer(new PlayerName(DEALER_NAME));
+        return new Dealer();
     }
 }

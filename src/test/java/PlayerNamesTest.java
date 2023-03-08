@@ -17,13 +17,6 @@ public class PlayerNamesTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("예약된 이름인 \"딜러\"는 사용할 수 없습니다.")
-    @Test
-    void createPlayerNamesFailTestWithExistedName() {
-        assertThatThrownBy(() -> PlayerNames.from(List.of("딜러", "pobi")))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @ParameterizedTest(name = "참여자 수가 0명이거나  8명보다 많으면 생성할 수 없습니다.")
     @ValueSource(ints = {0, 9})
     void createPlayerNamesFailTestByNumberOfPlayers(int count) {

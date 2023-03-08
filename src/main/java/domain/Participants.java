@@ -13,7 +13,7 @@ public class Participants {
     public static Participants from(PlayerNames playerNames) {
         return new Participants(playerNames.getNames()
                 .stream()
-                .map(Player::new)
+                .map(Player::from)
                 .collect(Collectors.toList()));
     }
 
