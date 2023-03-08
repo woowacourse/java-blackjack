@@ -44,10 +44,10 @@ graph TD
     BlackJackController --> OutputView
     BlackJackController --> Participants
     BlackJackController --> Deck
-    BlackJackController --> Bet
+    BlackJackController --> Betting
     InputView --> Parser
     Participants --> Participant
-    Bet --> Profit
+    Betting --> Profit
     Participant --> Player
     Participant --> Dealer
     Participant --> Cards
@@ -97,7 +97,7 @@ graph TD
 ### 수익
 
 - [x] 1.5배가 된다.
-- [ ] 수익이 반전된다.
+- [x] 수익이 반전된다.
     - 수익이 +인 경우 -가 되고, 수익이 -인 경우 +가 된다.
 
 ### 베팅
