@@ -1,11 +1,12 @@
 package domain.game;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
@@ -25,5 +26,14 @@ class BetTest {
         assertThatThrownBy(() -> Bet.of(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("1,000원 미만 1,000,000초과의 베팅은 할 수 없습니다.");
+    }
+
+    @DisplayName("보너스를 받으면 베팅한 금액의 1.5배를 가진다.")
+    @Test
+    void bonus() {
+        final Bet bet = Bet.of(10_000);
+        assertThat(bet.applyBonus())
+                .extracting("bet")
+                .isEqualTo(15_000);
     }
 }

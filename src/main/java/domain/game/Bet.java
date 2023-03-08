@@ -28,4 +28,8 @@ public final class Bet {
             );
         }
     }
+
+    public Bet applyBonus() {
+        return of((int) (bet * 1.5));
+    }
 }
