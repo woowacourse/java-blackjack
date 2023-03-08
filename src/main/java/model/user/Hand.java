@@ -24,15 +24,18 @@ public class Hand {
     }
 
     public int getTotalValue() {
-        int totalValue = calculateTotalValue();
+        int totalValue = sumCardsValue();
+        return calculateCardsValue(totalValue);
+    }
+
+    private int calculateCardsValue(int totalValue) {
         if (totalValue > BUST_NUMBER && isIncludeAce()) {
             return totalValue - 10;
         }
-
         return totalValue;
     }
 
-    private int calculateTotalValue() {
+    private int sumCardsValue() {
         return cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();

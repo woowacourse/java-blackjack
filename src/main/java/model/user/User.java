@@ -5,23 +5,19 @@ import model.card.Card;
 public class User {
 
     private final String name;
-    private final Hand hand;
+    private final Inventory inventory;
 
-    public User(final String name) {
+    public User(final String name, final int money) {
         this.name = name;
-        this.hand = Hand.create();
+        this.inventory = new Inventory(Hand.create(), money);
     }
 
     public void receiveCard(final Card card) {
-        this.hand.receiveCard(card);
-    }
-
-    public int calculateTotalValue() {
-        return hand.getTotalValue();
+        this.inventory.addCard(card);
     }
 
     public Score judgeResult(int dealerTotalValue) {
-        final int playerTotalValue = calculateTotalValue();
+        final int playerTotalValue = getCardTotalValue();
         return Score.judge(dealerTotalValue, playerTotalValue);
     }
 
@@ -29,11 +25,11 @@ public class User {
         return this.name;
     }
 
-    public Hand getHand() {
-        return this.hand;
+    public Inventory getInventory() {
+        return this.inventory;
     }
 
     public int getCardTotalValue() {
-        return hand.getTotalValue();
+        return inventory.getCardTotalValue();
     }
 }

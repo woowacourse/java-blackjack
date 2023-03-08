@@ -7,14 +7,17 @@ import model.user.Player;
 import ui.input.InputView;
 import ui.output.OutputView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BlackJackController {
 
     public void start() {
         final Deck deck = new Deck();
         final Participants participants = getParticipants();
         final Dealer dealer = participants.getDealer();
-        divideFirstCard(deck, participants);
 
+        divideFirstCard(deck, participants);
         OutputView.printFirstCardStatus(participants);
         divideCard(deck, participants);
         divideCardForDealer(deck, dealer);
@@ -58,7 +61,10 @@ public class BlackJackController {
     }
 
     private Participants getParticipants() {
-        return Participants.from(InputView.getPlayersName());
+        List<Player> players = InputView.getPlayersName().stream()
+                .map(playerName -> Player.from(playerName, InputView.getBatingMoney(playerName)))
+                .collect(Collectors.toList());
+        return Participants.from(players);
     }
 
 }

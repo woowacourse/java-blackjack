@@ -4,7 +4,6 @@ import model.card.Deck;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class Participants {
@@ -12,19 +11,13 @@ public class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    private Participants(final List<String> playersName, final Dealer dealer) {
-        this.players = createPlayers(playersName);
+    private Participants(final List<Player> players, final Dealer dealer) {
+        this.players = players;
         this.dealer = dealer;
     }
 
-    private static List<Player> createPlayers(List<String> playersName) {
-        return playersName.stream()
-                .map(Player::new)
-                .collect(toList());
-    }
-
-    public static Participants from(final List<String> playersName) {
-        return new Participants(playersName, new Dealer());
+    public static Participants from(final List<Player> players) {
+        return new Participants(players, new Dealer());
     }
 
     public List<Score> getFinalResult() {

@@ -30,7 +30,6 @@ public enum Score {
         if (userTotalValue > BUST_NUMBER && dealerTotalValue > BUST_NUMBER) {
             return LOSE;
         }
-
         if (userTotalValue > BUST_NUMBER) return LOSE;
         return WIN;
     }

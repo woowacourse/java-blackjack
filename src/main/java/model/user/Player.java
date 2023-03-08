@@ -9,8 +9,12 @@ public class Player {
 
     private final User user;
 
-    public Player(final String name) {
-        this.user = new User(name);
+    private Player(final String name, final int money) {
+        this.user = new User(name, money);
+    }
+
+    public static Player from(String playerName, int money) {
+        return new Player(playerName, money);
     }
 
     public boolean canReceiveCard() {
@@ -40,6 +44,6 @@ public class Player {
     }
 
     public Hand getHand() {
-        return user.getHand();
+        return user.getInventory().getHand();
     }
 }

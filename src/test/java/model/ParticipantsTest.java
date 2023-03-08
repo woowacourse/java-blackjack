@@ -22,7 +22,6 @@ import static model.card.Value.NINE;
 import static model.card.Value.THREE;
 import static model.card.Value.TWO;
 import static model.user.Score.LOSE;
-import static model.user.Score.TIE;
 import static model.user.Score.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -35,7 +34,7 @@ class ParticipantsTest {
 
     @BeforeEach
     void init() {
-        participants = Participants.from(List.of("bebe"));
+        participants = Participants.from(List.of(Player.from("bebe", 1000)));
         dealer = participants.getDealer();
         bebe = participants.getPlayers().get(0);
     }
@@ -57,7 +56,7 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 비긴 결과가 반환된다.")
+    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 패배한 결과가 반환된다.")
     void whenOverBurstNumberFindWinPlayer() {
         // given
         dealer.receiveCard(new Card(SPADE, KING));
@@ -69,7 +68,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(participants.getFinalResult()).containsExactly(TIE);
+        assertThat(participants.getFinalResult()).containsExactly(LOSE);
     }
 
     @Test
