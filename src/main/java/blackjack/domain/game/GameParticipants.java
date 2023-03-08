@@ -39,12 +39,12 @@ public class GameParticipants {
         return players.isPlayerDrawable(playerName);
     }
 
-    public void drawCardOf(final String playerName, final Card card) {
-        players.drawCardOf(playerName, card);
+    public void drawCardOfPlayerByName(final String playerName, final Card card) {
+        players.drawCardOfPlayerByName(playerName, card);
     }
 
-    public List<Card> findCardsByPlayerName(final String name) {
-        return players.findCardsByPlayerName(name);
+    public List<Card> findCardsOfPlayerByName(final String name) {
+        return players.findCardsOfPlayerByName(name);
     }
 
     public int findDealerDrawCount(final Deck deck) {

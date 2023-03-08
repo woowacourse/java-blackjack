@@ -36,7 +36,6 @@ public class BlackJackController {
         printResult(blackJackGame);
     }
 
-    //todo: deckFactory 확인하기 및 리팩토링 하기
     private BlackJackGame createBlackJackGame(final DeckFactory deckFactory) {
         final GameParticipants gameParticipants = new GameParticipants(createPlayers());
         return new BlackJackGame(gameParticipants, deckFactory.generate());
@@ -72,8 +71,8 @@ public class BlackJackController {
         DrawCommand playerInput = DrawCommand.DRAW;
         while (blackJackGame.isPlayerDrawable(playerName) && playerInput == DrawCommand.DRAW) {
             playerInput = inputDrawCommand(playerName);
-            blackJackGame.drawCardOf(playerName, playerInput);
-            outputView.printCardStatusOfPlayer(playerName, blackJackGame.findCardsByPlayerName(playerName));
+            blackJackGame.drawCardOfPlayerByName(playerName, playerInput);
+            outputView.printCurrentCardsOfPlayer(playerName, blackJackGame.findCardsOfPlayerByName(playerName));
         }
     }
 

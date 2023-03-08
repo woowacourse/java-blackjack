@@ -20,6 +20,23 @@ public class BlackJackGame {
         gameParticipants.distributeInitialCards(deck);
     }
 
+
+    /**
+     * 질문 :
+     * find로 시작하는 메서드의 경우 대부분 view에 필요한 값을 반환하고
+     * gameParticipants의 메서드를 그대로 리턴합니다.
+     * <p>
+     * 예를들어, 딜러의 initial 카드 + 플레이어의 initial 카드를 gameParticipants에서 받아오고
+     * 이를 조합하여 일종의 dto와 같은, view를 위한 객체(예를들면 InitialCardsOfGame)를 블랙잭 내부에서 생성해 컨트롤러에 반환하는 것은
+     * 문제가 없을까요?
+     * 예시)
+     * `public InitialCardsOfGame findInitialCardsOfGame() {
+     * Card initialCardOfDealer = gameParticipants.getDealerCards().get(0);
+     * Map<String, List<Card>> initialCardsOfPlayers = gameParticipants.getPlayerCards();
+     * return new InitialCardsOfGame(initialCardOfDealer, initialCardsOfPlayers);`
+     * }
+     */
+
     public Card findDealerInitialCard() {
         return gameParticipants.findDealerCard()
                 .get(0);
@@ -37,21 +54,20 @@ public class BlackJackGame {
         return gameParticipants.isPlayerDrawable(playerName);
     }
 
-    public void drawCardOf(final String playerName, final DrawCommand drawCommand) {
+    public void drawCardOfPlayerByName(final String playerName, final DrawCommand drawCommand) {
         if (drawCommand == DrawCommand.DRAW) {
-            gameParticipants.drawCardOf(playerName, deck.popCard());
+            gameParticipants.drawCardOfPlayerByName(playerName, deck.popCard());
         }
     }
 
-    public List<Card> findCardsByPlayerName(final String playerName) {
-        return gameParticipants.findCardsByPlayerName(playerName);
+    public List<Card> findCardsOfPlayerByName(final String playerName) {
+        return gameParticipants.findCardsOfPlayerByName(playerName);
     }
 
     public int findDealerDrawCount() {
         return gameParticipants.findDealerDrawCount(deck);
     }
 
-    //최종 결과
     public List<Card> findDealerCard() {
         return gameParticipants.findDealerCard();
     }
@@ -64,7 +80,6 @@ public class BlackJackGame {
         return gameParticipants.findPlayerStatusByName();
     }
 
-    //
     public ResultOfGame findResultOfGame() {
         return gameParticipants.findResultOfGame();
     }

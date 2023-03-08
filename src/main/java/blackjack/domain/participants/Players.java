@@ -83,7 +83,7 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
     }
 
-    public void drawCardOf(final String playerName, final Card card) {
+    public void drawCardOfPlayerByName(final String playerName, final Card card) {
         final Player targetPlayer = players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findFirst()
@@ -92,7 +92,7 @@ public class Players {
         targetPlayer.drawCard(card);
     }
 
-    public List<Card> findCardsByPlayerName(final String playerName) {
+    public List<Card> findCardsOfPlayerByName(final String playerName) {
         return players.stream()
                 .filter(player -> player.hasName(playerName))
                 .findAny()
@@ -123,14 +123,5 @@ public class Players {
                         (x, y) -> y,
                         LinkedHashMap::new));
     }
-
-    //DTO 위한 GETTER
-//    public int getPlayerScoreByName(final String name) {
-//        return players.stream()
-//                .filter(player -> player.hasName(name))
-//                .findFirst()
-//                .map(Participant::currentScore)
-//                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PLAYER));
-//    }
 
 }
