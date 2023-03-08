@@ -14,8 +14,8 @@ class ScoreTest {
     @DisplayName("내 점수가 다른 점수보다 낮거나 같으면 거짓이 반환되어야 한다.")
     void isOverThan_lowerThanOther(int input) {
         // given
-        Score myScore = new Score(input);
-        Score otherScore = new Score(5);
+        Score myScore = new Score(input, false);
+        Score otherScore = new Score(5, false);
 
         // expect
         assertThat(myScore.isWinTo(otherScore))
@@ -26,8 +26,8 @@ class ScoreTest {
     @DisplayName("내 점수가 다른 점수보다 높으면 참이 반환되어야 한다.")
     void isOverThan_overThanOther() {
         // given
-        Score myScore = new Score(10);
-        Score otherScore = new Score(9);
+        Score myScore = new Score(10, false);
+        Score otherScore = new Score(9, false);
 
         // expect
         assertThat(myScore.isWinTo(otherScore))
@@ -39,8 +39,8 @@ class ScoreTest {
     @DisplayName("상대방의 점수가 bust면 점수에 상관없이 참이 반환되어야 한다.")
     void isOverThan_otherScoreBust(int input) {
         // given
-        Score myScore = new Score(input);
-        Score otherScore = new Score(22);
+        Score myScore = new Score(input, false);
+        Score otherScore = new Score(22, false);
 
         // expect
         assertThat(myScore.isWinTo(otherScore))
@@ -51,8 +51,8 @@ class ScoreTest {
     @DisplayName("나의 점수가 bust면 점수에 상관없이 거짓이 반환되어야 한다.")
     void isOverThan_myScoreBust() {
         // given
-        Score myScore = new Score(22);
-        Score otherScore = new Score(1);
+        Score myScore = new Score(22, false);
+        Score otherScore = new Score(1, false);
 
         // expect
         assertThat(myScore.isWinTo(otherScore))

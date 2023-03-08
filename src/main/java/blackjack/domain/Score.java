@@ -8,10 +8,6 @@ public class Score {
     private final int score;
     private final boolean isBlackjack;
 
-    public Score(int score) {
-        this(score, false);
-    }
-
     public Score(int score, boolean isBlackjack) {
         this.score = score;
         this.isBlackjack = isBlackjack;
