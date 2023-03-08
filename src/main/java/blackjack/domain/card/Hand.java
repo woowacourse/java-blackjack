@@ -33,7 +33,7 @@ public class Hand {
 
     private Score calculateScore(int aceCount, Score score) {
         if (isNeedDowngradeScoreAceCard(aceCount, score)) {
-            return scoreWithDowngradeScoreAceCard(aceCount, score);
+            return calculateScoreRegardAce(aceCount, score);
         }
         return score;
     }
@@ -46,7 +46,7 @@ public class Hand {
         return new Score(score);
     }
 
-    private Score scoreWithDowngradeScoreAceCard(int aceCount, Score totalScore) {
+    private Score calculateScoreRegardAce(int aceCount, Score totalScore) {
         while (isNeedDowngradeScoreAceCard(aceCount, totalScore)) {
             totalScore = totalScore.minus(ACE_NUMBER_DIFFERENCE);
             aceCount--;
