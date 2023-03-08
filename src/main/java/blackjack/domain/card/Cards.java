@@ -21,15 +21,19 @@ public final class Cards {
     }
 
     public int calculateTotalScore() {
-        int score = cards.stream()
-                .mapToInt(Card::score)
-                .sum();
+        int score = preCalculate();
 
         if (containsAce()) {
             score = plusScoreIfNotBust(score);
         }
 
         return score;
+    }
+
+    private int preCalculate() {
+        return cards.stream()
+                .mapToInt(Card::score)
+                .sum();
     }
 
     private boolean containsAce() {
