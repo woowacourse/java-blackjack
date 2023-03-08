@@ -18,7 +18,6 @@ public class TotalGameResult {
         return new TotalGameResult(dealerGameResult, playerGameResults);
     }
 
-
     public int getDealerGameResult() {
         return dealerGameResult;
     }

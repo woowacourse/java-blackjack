@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.function.IntUnaryOperator;
 
 public enum GameResult {
-    WIN("승", money -> money),
+    WIN("승", IntUnaryOperator.identity()),
     LOSE("패", money -> -money),
     DRAW("무", money -> 0),
     BLACKJACK("블랙잭", money -> (int) (money * 1.5));

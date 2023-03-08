@@ -29,11 +29,6 @@ public class Player extends Participant {
         return getGameResult(dealerScore, myScore);
     }
 
-    public Bet matchGameWithBet(Dealer dealer) {
-        GameResult gameResult = matchGame(dealer);
-        return bet.calculateResult(gameResult);
-    }
-
     private GameResult getGameResult(Score dealerScore, Score myScore) {
         if (isBlackjack(myScore, dealerScore)) {
             return GameResult.BLACKJACK;
@@ -45,6 +40,11 @@ public class Player extends Participant {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
+    }
+
+    public Bet matchGameWithBet(Dealer dealer) {
+        GameResult gameResult = matchGame(dealer);
+        return bet.calculateResult(gameResult);
     }
 
     private boolean isBlackjack(Score myScore, Score dealerScore) {
