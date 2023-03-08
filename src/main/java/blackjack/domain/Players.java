@@ -79,26 +79,6 @@ public class Players {
         playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
     }
 
-    public List<String> findCanDrawPlayerNames() {
-        List<String> canDrawPlayerNames = new ArrayList<>();
-        for (Player player : players) {
-            addCanDrawPlayer(player, canDrawPlayerNames);
-        }
-        return canDrawPlayerNames;
-    }
-
-    private void addCanDrawPlayer(Player player, List<String> canDrawPlayerNames) {
-        if (player.canHit()) {
-            canDrawPlayerNames.add(player.getName());
-        }
-    }
-
-    public List<Player> findCanHitPlayers() {
-        return players.stream()
-                .filter(Player::canHit)
-                .collect(Collectors.toList());
-    }
-
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
     }

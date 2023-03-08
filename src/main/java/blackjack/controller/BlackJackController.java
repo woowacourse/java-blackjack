@@ -30,8 +30,7 @@ public class BlackJackController {
         blackJackGame.handInitialCards();
         openInitialCards();
 
-        List<Player> canHitPlayers = blackJackGame.findCanHitPlayers();
-        hitOrStayForCanHitPlayers(canHitPlayers);
+        blackJackGame.getPlayers().forEach(this::hitOrStay);
 
         int hitCount = blackJackGame.hitOrStayForDealer();
         OutputView.showDealerHitResult(hitCount);
@@ -52,20 +51,19 @@ public class BlackJackController {
         OutputView.showPlayerCard(player.getName(), player.getCards());
     }
 
-    private void hitOrStayForCanHitPlayers(List<Player> players) {
-        players.forEach(this::hitOrStay);
-    }
-
     private void hitOrStay(Player player) {
+        if (!player.canHit()) {
+            return;
+        }
+
         Command command = InputView.askToTake(player.getName());
         if (command.isStay()) {
             return;
         }
+
         blackJackGame.handOneCard(player);
         OutputView.showPlayerCard(player.getName(), player.getCards());
-        if (player.canHit()) {
-            hitOrStay(player);
-        }
+        hitOrStay(player);
     }
 
     private void showResult() {

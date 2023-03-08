@@ -56,10 +56,6 @@ public class Participants {
         return players.computePlayerWinResults(dealer);
     }
 
-    public List<String> findCanDrawPlayerNames() {
-        return players.findCanDrawPlayerNames();
-    }
-
     public List<Card> getDealerCards() {
         return new ArrayList<>(dealer.getCards());
     }
@@ -78,10 +74,6 @@ public class Participants {
 
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
-    }
-
-    public List<Player> findCanHitPlayer() {
-        return players.findCanHitPlayers();
     }
 
     public List<Player> getPlayers() {

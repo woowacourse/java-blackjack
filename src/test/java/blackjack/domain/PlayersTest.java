@@ -68,23 +68,4 @@ class PlayersTest {
             assertThat(players.getPlayerCards(playerName)).hasSize(2);
         }
     }
-
-    @Test
-    void findCanDrawPlayerNames() {
-        Player a = players.findPlayerByName("a");
-        Player b = players.findPlayerByName("b");
-        Player c = players.findPlayerByName("c");
-
-        a.take(new Card(SPADE, TEN));
-        a.take(new Card(SPADE, QUEEN));
-        a.take(new Card(SPADE, TWO));
-
-        b.take(new Card(SPADE, ACE));
-        b.take(new Card(SPADE, JACK));
-
-        c.take(new Card(DIAMOND, TEN));
-        c.take(new Card(DIAMOND, QUEEN));
-
-        assertThat(players.findCanDrawPlayerNames()).containsExactly("c");
-    }
 }

@@ -31,10 +31,6 @@ public class BlackJackGame {
         return participants.openDealerFirstCard();
     }
 
-    public List<Player> findCanHitPlayers() {
-        return participants.findCanHitPlayer();
-    }
-
     public int hitOrStayForDealer() {
         Dealer dealer = participants.getDealer();
         int hitCount = 0;
