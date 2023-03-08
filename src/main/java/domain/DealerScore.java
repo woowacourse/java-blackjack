@@ -1,13 +1,12 @@
-package view;
+package domain;
 
-import domain.GameResult;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class DealerScore {
 
-    private final Map<GameResult, Integer> result = new HashMap<>();
+    private final Map<GameResult, Integer> result = new EnumMap<>(GameResult.class);
 
     public DealerScore(List<PlayerScore> results) {
         init(results);

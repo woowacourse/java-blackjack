@@ -1,6 +1,4 @@
-package view;
-
-import domain.GameResult;
+package domain;
 
 public class PlayerScore {
 
