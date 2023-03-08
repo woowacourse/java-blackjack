@@ -3,9 +3,9 @@ package domain.game;
 import java.util.Map;
 
 public enum Result {
-    LOSE("패"),
+    WIN("승"),
     PUSH("무"),
-    WIN("승");
+    LOSE("패");
 
     private static final Map<Result, Result> opponentPair = Map.of(
             WIN, LOSE,

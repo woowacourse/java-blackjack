@@ -59,7 +59,7 @@ public class OutputView {
 
     private static void printDealerResult(final Map<Result, Integer> dealerResult) {
         StringBuilder dealerResultMessage = new StringBuilder("딜러: ");
-        for (Result result : dealerResult.keySet()) {
+        for (Result result : Result.values()) {
             int count = dealerResult.getOrDefault(result, 0);
             dealerResultMessage.append(getDealerEachResult(result.getName(), count));
         }
