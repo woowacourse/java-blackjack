@@ -2,12 +2,9 @@ package domain.player;
 
 import domain.card.Cards;
 
-import java.util.List;
-
 public final class Dealer extends Player {
 
     private static final String DEALER_NAME = "딜러";
-    public static final int CARD_RENEWAL_COUNT = 1;
     private static final int DEALER_STAY_NUMBER = 17;
 
 
@@ -19,18 +16,8 @@ public final class Dealer extends Player {
         return new Dealer(DEALER_NAME, new Cards());
     }
 
-    public boolean dealerIsHit() {
-        return cards.calculateScore() < DEALER_STAY_NUMBER;
-    }
-
     @Override
-    public boolean isInPlaying(boolean isHit) {
-        return isHit;
-    }
-
-    @Override
-    public List<String> revealCards() {
-        return cards.getCardNames()
-                .subList(0, CARD_RENEWAL_COUNT);
+    public boolean isInPlaying() {
+        return getScore() < DEALER_STAY_NUMBER;
     }
 }
