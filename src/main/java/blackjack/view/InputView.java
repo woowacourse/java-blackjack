@@ -13,7 +13,7 @@ public class InputView {
 
     public List<String> readPlayerNames() {
         final String nameInput = SCANNER.nextLine();
-        return Arrays.stream(nameInput.split(DELIMITER)).collect(Collectors.toUnmodifiableList());
+        return Arrays.stream(nameInput.split(DELIMITER, -1)).collect(Collectors.toUnmodifiableList());
     }
 
     public String readDrawOrStay() {

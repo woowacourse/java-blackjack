@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Dealer extends User {
 
-    public static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME_CODE = "dealer";
     private static final int DEALER_DRAW_SCORE_VALUE_LIMIT = 16;
 
     public Dealer(CardGroup initialGroup) {
-        super(DEALER_NAME, initialGroup);
+        super(DEALER_NAME_CODE, initialGroup);
     }
 
     @Override

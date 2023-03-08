@@ -73,7 +73,7 @@ public class ViewRenderer {
         Map<GameResult, Long> dealerWinningResult = winningResult.values().stream()
                 .collect(groupingBy(ViewRenderer::recursionWinningStatus, counting()));
 
-        renderedWinningResult.put(Dealer.DEALER_NAME, renderDealerWinningResult(dealerWinningResult));
+        renderedWinningResult.put(Dealer.DEALER_NAME_CODE, renderDealerWinningResult(dealerWinningResult));
 
         for (String name : winningResult.keySet()) {
             renderedWinningResult.put(name, WINNING_STATUS_MAPPER.get(winningResult.get(name)));

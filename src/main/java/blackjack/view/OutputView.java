@@ -24,11 +24,11 @@ public class OutputView {
 
     public void printInitialStatus(Map<String, List<String>> initialStatus) {
         List<String> playerNames = initialStatus.keySet().stream()
-                .filter(name -> !name.equals(Dealer.DEALER_NAME))
+                .filter(name -> !name.equals(Dealer.DEALER_NAME_CODE))
                 .collect(Collectors.toUnmodifiableList());
 
         printInitialStatusInfoMessage(playerNames);
-        printCards(Dealer.DEALER_NAME, initialStatus.get(Dealer.DEALER_NAME));
+        printCards(Dealer.DEALER_NAME_CODE, initialStatus.get(Dealer.DEALER_NAME_CODE));
         playerNames.forEach(name -> printCards(name, initialStatus.get(name)));
     }
 
@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     private void printInitialStatusInfoMessage(List<String> playerNames) {
-        System.out.println(String.format(INITIAL_STATUS_INFO_MESSAGE_FORMAT, Dealer.DEALER_NAME
+        System.out.println(String.format(INITIAL_STATUS_INFO_MESSAGE_FORMAT, Dealer.DEALER_NAME_CODE
                 , String.join(DELIMITER, playerNames)));
     }
 
