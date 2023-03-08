@@ -25,7 +25,8 @@ public class RandomCardGenerator implements CardGenerator {
         reset();
     }
 
-    private void reset() {
+    @Override
+    public void reset() {
         Arrays.stream(Letter.values())
             .forEach(
                 letter -> Arrays.stream(Suit.values())
