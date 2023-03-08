@@ -27,6 +27,10 @@ public abstract class Participant {
 
     public abstract boolean isHit();
 
+    public Card getCard(int index) {
+        return hand.getCards().get(index);
+    }
+
     public String getName() {
         return name.getValue();
     }

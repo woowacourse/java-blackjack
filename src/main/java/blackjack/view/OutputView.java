@@ -26,11 +26,19 @@ public class OutputView {
 
     public void printInitialHandOutMessage(final Participants participants) {
         System.out.println(getParticipantsList(participants) + GIVE_TWO_CARD_MESSAGE);
-        participants.getAll().forEach(this::printParticipantNameAndCards);
+
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
+        printDealerNameAndCard(dealer, dealer.getCard(0));
+        players.forEach(this::printParticipantNameAndCards);
     }
 
     private String getParticipantsList(final Participants participants) {
         return String.join(COMMA, participants.getNames());
+    }
+
+    private void printDealerNameAndCard(Participant dealer, Card card) {
+        System.out.println(dealer.getName() + COLON + card.getCardName());
     }
 
     public void printParticipantNameAndCards(final Participant participant) {
