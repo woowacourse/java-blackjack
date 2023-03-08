@@ -4,8 +4,9 @@ import domain.card.CardArea;
 
 public class Gambler extends Participant {
 
-    private HitState state = HitState.INIT;
     private final BettingMoney bettingMoney;
+
+    private HitState state = HitState.INIT;
 
     public Gambler(final Name name, final CardArea cardArea, final BettingMoney bettingMoney) {
         super(name, cardArea);

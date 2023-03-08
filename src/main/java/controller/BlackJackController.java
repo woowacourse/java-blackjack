@@ -1,8 +1,8 @@
 package controller;
 
 import domain.card.CardDeck;
-import domain.player.BettingMoney;
 import domain.game.BlackJackGame;
+import domain.player.BettingMoney;
 import domain.player.Gambler;
 import domain.player.HitState;
 import domain.player.Name;
@@ -13,9 +13,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public class BlackJackController {
@@ -29,9 +29,9 @@ public class BlackJackController {
 
     private BlackJackGame setUpGame() {
         final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
-        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final Map<Name, BettingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
 
+        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
         final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBattingMoneyMap);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
         return blackJackGame;
@@ -41,7 +41,7 @@ public class BlackJackController {
         return InputView.readParticipantsName()
                 .stream()
                 .map(Name::of)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private Map<Name, BettingMoney> batting(final List<Name> gamblerNames) {
@@ -73,11 +73,13 @@ public class BlackJackController {
     }
 
     private void statistic(final BlackJackGame blackJackGame) {
-
-        OutputView.showGameStatistic(new GameStatisticResponse(
-                blackJackGame.dealer(),
-                blackJackGame.gamblers(),
-                blackJackGame.revenue()));
+        OutputView.showGameStatistic(
+                new GameStatisticResponse(
+                        blackJackGame.dealer(),
+                        blackJackGame.gamblers(),
+                        blackJackGame.revenue()
+                )
+        );
     }
 
     private <T> T withExceptionHandle(final Supplier<T> supplier) {
