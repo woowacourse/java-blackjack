@@ -22,4 +22,14 @@ public enum JudgeResult {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("판정 결과로 해당하는 값을 찾을 수 없습니다."));
     }
+
+    public static JudgeResult counter(final JudgeResult judgeResult) {
+        if (judgeResult == WIN) {
+            return LOSE;
+        }
+        if (judgeResult == LOSE) {
+            return WIN;
+        }
+        return PUSH;
+    }
 }
