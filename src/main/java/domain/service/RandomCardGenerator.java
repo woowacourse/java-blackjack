@@ -4,9 +4,12 @@ import domain.model.Card;
 import domain.type.Letter;
 import domain.type.Suit;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RandomCardGenerator implements CardGenerator {
 
@@ -33,5 +36,12 @@ public class RandomCardGenerator implements CardGenerator {
     @Override
     public Card generate() {
         return cards.poll();
+    }
+
+    @Override
+    public List<Card> generate(final int size) {
+        return IntStream.range(0, size)
+            .mapToObj(i -> generate())
+            .collect(Collectors.toList());
     }
 }
