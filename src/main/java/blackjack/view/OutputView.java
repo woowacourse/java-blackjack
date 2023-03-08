@@ -8,6 +8,7 @@ import static blackjack.domain.result.Result.WIN;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.Result;
 import java.util.List;
@@ -15,18 +16,18 @@ import java.util.Map;
 
 public final class OutputView {
 
-    public void printDistributeCardsMessage(final List<Player> players) {
-        String names = players.stream()
+    public void printDistributeCardsMessage(final Dealer dealer) {
+        String names = dealer.getPlayers().stream()
                 .map(Player::getName)
                 .collect(joining(", "));
         int initCardCount = INIT_CARD_COUNT;
 
-        System.out.println(System.lineSeparator() + "딜러와 " + names + "에게 " + initCardCount + "장을 나누었습니다." + System.lineSeparator());
+        System.out.println(System.lineSeparator() + dealer.getName() + "와 " + names + "에게 " + initCardCount + "장을 나누었습니다." + System.lineSeparator());
     }
 
-    public void printParticipantsInitCards(final Card dealerCard, final List<Player> players) {
-        printDealerInitCards(dealerCard);
-        printPlayersInitCards(players);
+    public void printParticipantsInitCards(final Dealer dealer) {
+        printDealerInitCards(dealer.getOnlyOneCard());
+        printPlayersInitCards(dealer.getPlayers());
     }
 
     private void printDealerInitCards(final Card card) {
@@ -44,13 +45,13 @@ public final class OutputView {
         System.out.println(player.getName() + "카드: " + joiningCards(player.getCards()));
     }
 
-    public void printDealerDrawOneMoreCard() {
-        System.out.println("[System]: " + "딜러는 " + CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
+    public void printDealerDrawOneMoreCard(final Dealer dealer) {
+        System.out.println("[System]: " + dealer.getName() + "는 " + CAN_DRAW_SCORE + "이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
-    public void printParticipantsLastCards(final List<Card> dealerCards, final int score, final List<Player> players) {
-        printDealerLastCards(dealerCards, score);
-        printPlayerLastCards(players);
+    public void printParticipantsLastCards(final Dealer dealer) {
+        printDealerLastCards(dealer.getCards(), dealer.totalScore());
+        printPlayerLastCards(dealer.getPlayers());
     }
 
     private void printDealerLastCards(final List<Card> dealerCards, final int score) {

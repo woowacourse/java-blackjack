@@ -109,4 +109,8 @@ public final class Dealer {
     public List<Card> getCards() {
         return participant.getCards();
     }
+
+    public String getName() {
+        return NAME;
+    }
 }
