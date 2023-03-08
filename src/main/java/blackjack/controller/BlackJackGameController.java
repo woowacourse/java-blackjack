@@ -13,6 +13,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -29,18 +30,12 @@ public class BlackJackGameController {
     }
 
     private Deck generateDeck() {
-        Stack<Card> cards = new Stack<>();
+        List<Card> cards = Arrays.stream(CardNumber.values())
+                .flatMap(cardNumber -> Arrays.stream(CardSymbol.values())
+                        .map(cardSymbol -> new Card(cardNumber, cardSymbol)))
+                .collect(Collectors.toList());
 
-        for (CardNumber cardNumber : CardNumber.values()) {
-            generateCard(cards, cardNumber);
-        }
-        return new Deck(cards);
-    }
-
-    private void generateCard(Stack<Card> cards, CardNumber cardNumber) {
-        for (CardSymbol cardSymbol : CardSymbol.values()) {
-            cards.add(new Card(cardNumber, cardSymbol));
-        }
+        return new Deck((Stack<Card>) cards);
     }
 
     private List<String> getCardNames(List<Card> cards) {
