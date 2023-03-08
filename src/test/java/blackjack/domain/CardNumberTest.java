@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class CardNumberTest {
     @DisplayName("카드 숫자를 입력하면 해당하는 점수를 받을 수 있다.")
     @ParameterizedTest
-    @CsvSource(value = {"A:1", "2:2", "J:10"}, delimiter = ':')
+    @CsvSource(value = {"A:11", "2:2", "J:10"}, delimiter = ':')
     void Should_GetScore_When_InputNumber(String number, int score) {
         assertThat(CardNumber.scoreByNumber(number)).isEqualTo(score);
     }
