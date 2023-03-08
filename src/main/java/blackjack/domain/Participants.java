@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
@@ -38,24 +37,12 @@ public class Participants {
         return players.computePlayerWinResults(dealer);
     }
 
-    public List<Card> getDealerCards() {
-        return new ArrayList<>(dealer.getCards());
-    }
-
-    public List<Card> getPlayerCards(String playerName) {
-        return players.getPlayerCards(playerName);
-    }
-
-    public Player findPlayerByName(String playerName) {
-        return players.findPlayerByName(playerName);
-    }
-
     public Dealer getDealer() {
         return dealer;
     }
 
     public List<String> getPlayerNames() {
-        return players.getPlayerNames();
+        return players.getPlayersName();
     }
 
     public List<Player> getPlayers() {

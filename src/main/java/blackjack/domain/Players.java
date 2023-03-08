@@ -29,28 +29,6 @@ public class Players {
         }
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
-    public Player findPlayerByName(String playerName) {
-        return players.stream()
-                .filter(player -> player.isYourName(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
-    }
-
-    public List<Card> getPlayerCards(String playerName) {
-        Player player = findPlayerByName(playerName);
-        return player.getCards();
-    }
-
-    public int getNumberOfPlayers() {
-        return players.size();
-    }
-
     public void handInitialCards(Deck deck) {
         for (Player player : players) {
             handInitialCardsToPlayer(player, deck);
@@ -77,6 +55,12 @@ public class Players {
             return;
         }
         playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
+    }
+
+    public List<String> getPlayersName() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {

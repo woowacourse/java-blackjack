@@ -29,26 +29,21 @@ class PlayersTest {
 
     @Test
     void should_HaveMatchedName_When_FindPlayerByName() {
-        Player player = players.findPlayerByName("a");
+        Player player = players.getPlayers().get(0);
         assertThat(player.getName()).isEqualTo("a");
     }
 
     @Test
     void should_HaveAllNameOfPlayers_When_GetPlayerNames() {
-        assertThat(players.getPlayerNames()).containsExactly("a", "b", "c");
+        assertThat(players.getPlayersName()).containsExactly("a", "b", "c");
     }
 
     @Test
     void should_HaveAllCardsOfPlayer_When_GetPlayerCards() {
-        Player player = players.findPlayerByName("a");
+        Player player = players.getPlayers().get(0);
         player.take(new Card(SPADE, ACE));
         player.take(new Card(SPADE, TWO));
-        assertThat(players.getPlayerCards("a")).containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
-    }
-
-    @Test
-    void should_Return_NumberOfPlayers() {
-        assertThat(players.getNumberOfPlayers()).isEqualTo(3);
+        assertThat(players.getPlayers().get(0).getCards()).containsExactly(new Card(SPADE, ACE), new Card(SPADE, TWO));
     }
 
     @Test
@@ -62,10 +57,6 @@ class PlayersTest {
                 new Card(SPADE, SIX)
         ));
         players.handInitialCards(mockDeckGenerator.generate());
-
-        List<String> playerNames = players.getPlayerNames();
-        for (String playerName : playerNames) {
-            assertThat(players.getPlayerCards(playerName)).hasSize(2);
-        }
+        players.getPlayers().forEach(player -> assertThat(player.getCards()).hasSize(2));
     }
 }

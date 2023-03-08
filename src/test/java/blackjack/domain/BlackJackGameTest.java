@@ -29,8 +29,8 @@ class BlackJackGameTest {
         )));
         participants.handInitialCards(mockGenerator.generate());
 
-        List<Card> odoCards = participants.findPlayerByName("odo").getCards();
-        List<Card> doyCards = participants.findPlayerByName("doy").getCards();
+        List<Card> odoCards = participants.getPlayers().get(0).getCards();
+        List<Card> doyCards = participants.getPlayers().get(1).getCards();
 
         assertThat(odoCards)
                 .containsExactly(new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));

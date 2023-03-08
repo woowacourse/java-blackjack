@@ -31,9 +31,7 @@ class ParticipantsTest {
 
         participants.handInitialCards(new BlackJackDeckGenerator().generate());
 
-        assertThat(participants.getDealerCards()).hasSize(2);
-        for (String playerName : playerNames) {
-            assertThat(participants.getPlayerCards(playerName)).hasSize(2);
-        }
+        assertThat(participants.getDealer().getCards()).hasSize(2);
+        participants.getPlayers().forEach(player -> assertThat(player.getCards()).hasSize(2));
     }
 }
