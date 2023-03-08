@@ -11,4 +11,19 @@ public class Dealer extends Player {
     public boolean isDealerDraw() {
         return getScore() < STOP_LOWER_BOUND;
     }
+
+    @Override
+    public boolean isWin(int dealerScore) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isDraw(int dealerScore) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isLargerThanBlackJackNumber() {
+        throw new UnsupportedOperationException();
+    }
 }
