@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -50,13 +51,21 @@ class ScoreTest {
         assertDoesNotThrow(() -> Score.of(1, 2, 3, 4, 5));
     }
 
-    @DisplayName("값을 뺄 수 있다.")
-    @Test
-    void minus() {
-        //given
-        Score score = new Score(5);
-        //when
-        //then
-        assertThat(score.minus(1)).isEqualTo(new Score(4));
+    @DisplayName("에이스를 가졌을 때")
+    @Nested
+    class GetValueWithBonus {
+        @DisplayName("합한 점수가 21점 이하일 경우 빼지 않는다.")
+        @Test
+        void addTen() {
+            Score score = Score.of(11,4, 5);
+            assertThat(score.getValueIncludingAce().getValue()).isEqualTo(20);
+        }
+
+        @DisplayName("합한 점수가 21점 초과일 경우 10을 뺀다.")
+        @Test
+        void dontAdd() {
+            Score score = Score.of(11, 10, 2);
+            assertThat(score.getValueIncludingAce().getValue()).isEqualTo(13);
+        }
     }
 }

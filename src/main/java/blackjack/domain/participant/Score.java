@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Score {
+    private final int BLACKJACK = 21;
     private final int value;
 
     public static Score of(int... values) {
@@ -36,7 +37,10 @@ public class Score {
         return Objects.hash(value);
     }
 
-    public Score minus(int decrement) {
-        return new Score(value - decrement);
+    public Score getValueIncludingAce() {
+        if (value > BLACKJACK) {
+            return new Score(value - 10);
+        }
+        return this;
     }
 }

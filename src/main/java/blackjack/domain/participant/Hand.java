@@ -35,8 +35,8 @@ public class Hand {
 
     public int calculateScore() {
         Score score = Score.of(mapCardsToNumbers());
-        if (containsAce() && score.getValue() > 21) {
-            return score.minus(10).getValue();
+        if (containsAce()) {
+            return score.getValueIncludingAce().getValue();
         }
         return score.getValue();
     }
