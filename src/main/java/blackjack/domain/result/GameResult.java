@@ -22,7 +22,7 @@ public class GameResult {
         this.participants = participants;
     }
 
-    public Map<Player, Result> decidePlayersResult() {
+    public Map<Player, Result> makePlayersResult() {
         Map<Player, Result> playersResult = new HashMap<>();
         Dealer dealer = participants.getDealer();
 

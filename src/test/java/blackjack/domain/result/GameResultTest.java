@@ -46,7 +46,7 @@ class GameResultTest {
         participants.getDealer().receiveCard(new Card(Number.NINE, Pattern.DIAMOND));
 
         gameResult = new GameResult(participants);
-        playerResultMap = gameResult.decidePlayersResult();
+        playerResultMap = gameResult.makePlayersResult();
     }
 
     @Test

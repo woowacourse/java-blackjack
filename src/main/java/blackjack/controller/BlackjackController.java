@@ -116,7 +116,7 @@ public class BlackjackController {
     private void showResult(final Participants participants) {
         GameResult gameResult = new GameResult(participants);
 
-        Map<Player, Result> playerResult = gameResult.decidePlayersResult();
+        Map<Player, Result> playerResult = gameResult.makePlayersResult();
         Map<Player, Result> reversePlayerResult = gameResult.reverseResult(playerResult);
         List<Integer> dealerResultCount = gameResult.getDealerResultCount(reversePlayerResult);
 
