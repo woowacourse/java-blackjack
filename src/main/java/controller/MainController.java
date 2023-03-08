@@ -15,21 +15,19 @@ public final class MainController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardsShuffler cardsShuffler;
 
-    public MainController(final InputView inputView, final OutputView outputView, final CardsShuffler cardsShuffler) {
+    public MainController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardsShuffler = cardsShuffler;
     }
 
-    public void run() {
-        BlackJackGame blackJackGame = createBlackJackGame();
+    public void run(CardsShuffler cardsShuffler) {
+        BlackJackGame blackJackGame = createBlackJackGame(cardsShuffler);
         playGame(blackJackGame);
         showResult(blackJackGame);
     }
 
-    private BlackJackGame createBlackJackGame() {
+    private BlackJackGame createBlackJackGame(CardsShuffler cardsShuffler) {
         Cards cards = new Cards(cardsShuffler);
         Participants participants = new Participants(inputView.readPlayerNames(), cards);
         BlackJackGame blackJackGame = new BlackJackGame(participants, cards);
