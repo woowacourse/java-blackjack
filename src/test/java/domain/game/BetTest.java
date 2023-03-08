@@ -1,12 +1,21 @@
 package domain.game;
 
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
@@ -42,4 +51,39 @@ class BetTest {
         assertThat(bet.applyBust())
                 .isEqualTo(-10_000);
     }
+
+    @Nested
+    class BetDealerPlayersTest {
+        private BlackJack blackJack;
+
+        @BeforeEach
+        void init() {
+            final List<Name> names = List.of(Name.of("a"), Name.of("b"), Name.of("c"));
+            final List<Integer> bets = List.of(1000, 2000, 3000);
+            blackJack = BlackJack.getInstance(names, bets, new Deck());
+
+            final Players players = Players.create(names, bets);
+        }
+
+
+        @DisplayName("딜러는 플레이어들이 베팅한 금액의 합계만큼 베팅 금액을 가진다.")
+        @Test
+        void dealerBetTest() {
+            assertThat(blackJack).extracting("dealer")
+                    .extracting("bet")
+                    .extracting("bet")
+                    .isEqualTo(6000);
+        }
+
+        @DisplayName("플레이어들은 각각 베팅 금액을 가지고 있다.")
+        @Test
+        void playerBetTest() {
+            final Players players = blackJack.getPlayers();
+            final List<Player> list = players.getPlayers();
+            assertThat(list.get(0).getBet()).isEqualTo(Bet.of(1000));
+            assertThat(list.get(1).getBet()).isEqualTo(Bet.of(2000));
+            assertThat(list.get(2).getBet()).isEqualTo(Bet.of(3000));
+        }
+    }
+
 }

@@ -15,8 +15,8 @@ public final class BlackJack {
     private final Players players;
     private final Deck deck;
 
-    private BlackJack(List<Name> playerNames, List<Integer> bets, Deck deck) {
-        this.dealer = Dealer.create();
+    private BlackJack(final List<Name> playerNames, final List<Integer> bets, final Deck deck) {
+        this.dealer = Dealer.create(bets);
         this.players = Players.create(playerNames, bets);
         this.deck = deck;
         initGame(deck, INITIAL_DRAW_CARD_COUNT);
@@ -27,11 +27,13 @@ public final class BlackJack {
         players.takeCard(deck, count);
     }
 
-    public static BlackJack getInstance(final List<Name> playerNames,final List<Integer> bets, final Deck deck) {
+    public static BlackJack getInstance(final List<Name> playerNames,
+                                        final List<Integer> bets,
+                                        final Deck deck) {
         return new BlackJack(playerNames, bets, deck);
     }
 
-    public boolean isBusted(Participant participant) {
+    public boolean isBusted(final Participant participant) {
         return participant.isBusted();
     }
 

@@ -5,7 +5,6 @@ import domain.card.Cards;
 
 public final class Player extends Participant {
 
-
     protected Player(final Name name, final int bet) {
         super(name, bet);
     }

@@ -4,14 +4,13 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.Cards;
 import domain.card.CardShape;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.*;
+import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardsTest {

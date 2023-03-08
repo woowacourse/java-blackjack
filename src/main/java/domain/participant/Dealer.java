@@ -13,8 +13,8 @@ public final class Dealer extends Participant {
         super(name, bet);
     }
 
-    public static Dealer create() {
-        return new Dealer(Name.of(DEALER_NAME), 0);
+    public static Dealer create(List<Integer> bets) {
+        return new Dealer(Name.of(DEALER_NAME), bets.stream().mapToInt(m -> m).sum());
     }
 
     public boolean needMoreCard() {

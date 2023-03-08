@@ -1,6 +1,7 @@
 package domain.game;
 
 import java.text.MessageFormat;
+import java.util.Objects;
 
 public final class Bet {
 
@@ -8,7 +9,6 @@ public final class Bet {
     public static final double BONUS_RATE = 1.5;
 
     private final int bet;
-    private int profit;
 
     private Bet(final int bet) {
         validatePrice(bet);
@@ -31,12 +31,27 @@ public final class Bet {
     }
 
     public int applyBonus() {
-        this.profit = (int) (bet * BONUS_RATE);
-        return profit;
+        return  (int) (bet * BONUS_RATE);
     }
 
     public int applyBust() {
-        this.profit = -bet;
-        return profit;
+        return -bet;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Bet bet1 = (Bet) o;
+        return bet == bet1.bet;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bet);
     }
 }

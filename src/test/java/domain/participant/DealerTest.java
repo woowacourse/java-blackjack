@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ class DealerTest {
 
     @BeforeEach
     void init() {
-        dealer = Dealer.create();
+        dealer = Dealer.create(Collections.emptyList());
     }
 
     @DisplayName("딜러의 이름은 '딜러'다.")
