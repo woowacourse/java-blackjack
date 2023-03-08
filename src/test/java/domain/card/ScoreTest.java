@@ -8,27 +8,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ScoreTest {
 
     @Test
-    @DisplayName("스코어가 21 초과면 true를 반환한다")
+    @DisplayName("스코어가 22 미만이면 true를 반환한다")
     void givenOverBustNumber_thenReturnFalse() {
         //given
         final Score score = Score.from(22);
 
         //when
-        final boolean result = score.isOverMaxScore();
+        final boolean result = score.isUnderMaxScore();
         //then
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @Test
-    @DisplayName("스코어가 22 이하면 false를 반환한다")
+    @DisplayName("스코어가 22 이상이면 false를 반환한다")
     void givenUnderBustNumber_thenReturnTrue() {
         //given
         final Score score = Score.from(21);
 
         //when
-        final boolean result = score.isOverMaxScore();
+        final boolean result = score.isUnderMaxScore();
         //then
-        assertThat(result).isFalse();
+        assertThat(result).isTrue();
     }
 
     @Test

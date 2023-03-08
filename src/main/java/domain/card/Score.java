@@ -18,8 +18,12 @@ public final class Score {
         return new Score(score);
     }
 
-    public boolean isOverMaxScore() {
-        return score > MAX_SCORE;
+    public boolean isUnderThan(final int compare) {
+        return score < compare;
+    }
+
+    public boolean isUnderMaxScore() {
+        return score <= MAX_SCORE;
     }
 
     public boolean canAddBonusScore() {
