@@ -34,22 +34,15 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("참가자들에게 2장의 카드를 나눠준다.")
+    @DisplayName("참가자들과 본인에게 2장의 카드를 나눠준다.")
     void distributeTwoCards() {
-        dealer.settingPlayersCards();
+        dealer.settingCards();
 
         assertAll(
+                () -> assertThat(dealer.getCards().size()).isEqualTo(2),
                 () -> assertThat(player1.getCards().size()).isEqualTo(2),
                 () -> assertThat(player2.getCards().size()).isEqualTo(2)
         );
-    }
-
-    @Test
-    @DisplayName("딜러가 자신의 카드 2장을 가져온다.")
-    void drawSelfCards() {
-        dealer.settingSelfCards();
-
-        assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
     @Test

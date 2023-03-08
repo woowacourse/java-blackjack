@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
+import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Dealer extends Participant {
 
@@ -28,20 +31,23 @@ public final class Dealer extends Participant {
         this.deck = Deck.getInstance();
     }
 
-    public void settingPlayersCards() {
-        List<Card> cards = new ArrayList<>();
-        int targetSize = players.size() * INIT_CARD_COUNT;
-
-        while (cards.size() < targetSize) {
-            cards.add(deck.drawACard());
-        }
-
-        players.receiveSettingCards(cards);
+    public void settingCards() {
+        settingPlayersCards();
+        settingSelfCards();
     }
 
-    public void settingSelfCards() {
-        for (int count = 0; count < INIT_CARD_COUNT; count++) {
-            receiveCard(deck.drawACard());
+    private void settingPlayersCards() {
+        List<Card> initCards = IntStream.range(0, players.size() * INIT_CARD_COUNT)
+                .mapToObj(x -> deck.drawACard())
+                .collect(toList());
+
+        players.receiveSettingCards(initCards);
+    }
+
+    private void settingSelfCards() {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            Card drawCard = deck.drawACard();
+            this.receiveCard(drawCard);
         }
     }
 
