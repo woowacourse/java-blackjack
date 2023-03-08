@@ -106,7 +106,7 @@ public class PlayersTest {
 
         final List<Player> result = players.getPlayers();
 
-        assertThat(result).extracting(Player::getName)
+        assertThat(result).extracting(Player::getNameValue)
                 .containsExactly("딜러", "후추", "허브");
     }
 
@@ -117,7 +117,7 @@ public class PlayersTest {
 
         final List<Player> result = players.getGamblers();
 
-        assertThat(result).extracting(Player::getName)
+        assertThat(result).extracting(Player::getNameValue)
                 .containsExactly("후추", "허브");
     }
 
@@ -128,7 +128,7 @@ public class PlayersTest {
 
         final Player player = players.getDealer();
 
-        assertThat(player.getName()).isEqualTo("딜러");
+        assertThat(player.getNameValue()).isEqualTo("딜러");
     }
 
     @Test

@@ -84,7 +84,7 @@ public class BlackjackGameTest {
         final List<Player> players = blackjackGame.getPlayers();
 
         assertThat(players)
-                .extracting(Player::getName)
+                .extracting(Player::getNameValue)
                 .containsExactly("딜러", "허브", "후추");
     }
 

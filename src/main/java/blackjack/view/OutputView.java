@@ -31,7 +31,7 @@ public class OutputView {
 
     private String generateNames(final List<Player> players) {
         return players.stream()
-                .map(Player::getName)
+                .map(Player::getNameValue)
                 .collect(Collectors.joining(DELIMITER));
     }
 
@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     private String generatePlayerMessage(final Player player, final String message) {
-        return format(PLAYER_CARD_MESSAGE_FORMAT, player.getName(), message);
+        return format(PLAYER_CARD_MESSAGE_FORMAT, player.getNameValue(), message);
     }
 
     private String generateCardMessage(final Player player) {
@@ -80,7 +80,11 @@ public class OutputView {
 
     private String generateGameResultMessage(final Map<Player, Money> bets) {
         return bets.keySet().stream()
-                .map(player -> String.format(GAME_RESULT_MESSAGE_FORMAT, player.getName(), bets.get(player).getValue()))
+                .map(player -> String.format(
+                        GAME_RESULT_MESSAGE_FORMAT,
+                        player.getNameValue(),
+                        bets.get(player).getValue())
+                )
                 .collect(Collectors.joining(NEW_LINE));
     }
 

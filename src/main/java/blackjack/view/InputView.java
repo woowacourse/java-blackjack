@@ -32,13 +32,13 @@ public class InputView {
     }
 
     public String readCommand(final Player player) {
-        System.out.println(player.getName() + INPUT_PLAYER_COMMAND_MESSAGE);
+        System.out.println(player.getNameValue() + INPUT_PLAYER_COMMAND_MESSAGE);
 
         return scanner.nextLine();
     }
 
     public int readBet(final Player player) {
-        System.out.println(player.getName() + INPUT_PLAYER_BET_MESSAGE);
+        System.out.println(player.getNameValue() + INPUT_PLAYER_BET_MESSAGE);
 
         try {
             return Integer.parseInt(scanner.nextLine());

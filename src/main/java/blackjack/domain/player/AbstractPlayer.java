@@ -20,38 +20,43 @@ public abstract class AbstractPlayer implements Player {
     abstract public boolean isDealer();
 
     @Override
-    public void initialDraw(final Deck deck) {
+    public final void initialDraw(final Deck deck) {
         draw(deck);
         draw(deck);
     }
 
     @Override
-    public void draw(final Deck deck) {
+    public final void draw(final Deck deck) {
         hand.add(deck.draw());
     }
 
     @Override
-    public int calculateScore() {
+    public final int calculateScore() {
         return hand.calculateScore();
     }
 
     @Override
-    public void stay() {
+    public final void stay() {
         hand.stay();
     }
 
     @Override
-    public Result play(final Hand hand) {
+    public final Result play(final Hand hand) {
         return this.hand.play(hand);
     }
 
     @Override
-    public String getName() {
+    public final Name name() {
+        return name;
+    }
+
+    @Override
+    public final String getNameValue() {
         return name.getValue();
     }
 
     @Override
-    public List<String> getCardLetters() {
+    public final List<String> getCardLetters() {
         return hand.getCardLetters();
     }
 }

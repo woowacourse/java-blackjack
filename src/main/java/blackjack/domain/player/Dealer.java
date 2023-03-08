@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Hand;
 
-public class Dealer extends AbstractPlayer {
+public final class Dealer extends AbstractPlayer {
     private static final int SCORE_LOWER_BOUND = 16;
 
     private Dealer(final Name name, final Hand hand) {

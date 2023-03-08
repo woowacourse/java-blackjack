@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface Player {
 
-    void initialDraw(Deck deck);
-
-    void draw(final Deck deck);
-
     boolean isDrawable();
 
     boolean isDealer();
+
+    void initialDraw(Deck deck);
+
+    void draw(final Deck deck);
 
     int calculateScore();
 
@@ -20,7 +20,9 @@ public interface Player {
 
     Result play(final Hand hand);
 
-    String getName();
+    Name name();
+
+    String getNameValue();
 
     List<String> getCardLetters();
 }
