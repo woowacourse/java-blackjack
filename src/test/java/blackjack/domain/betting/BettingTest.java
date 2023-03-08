@@ -61,36 +61,34 @@ class BettingTest {
 
         assertThat(betting.getProfit(player).getValue()).isEqualTo(-10000);
     }
-}
 
-class Betting {
+    @Nested
+    class getDealerProfit_메서드는 {
 
-    private final Map<Player, Profit> expectedProfit;
+        @Test
+        void 플레이어들의_지출보다_수입이_더_크면_지출이_발생한다() {
+            final Player firstPlayer = new Player("toney");
+            final Player secondPlayer = new Player("dazzle");
 
-    public Betting(final Map<Player, Profit> expectedProfit) {
-        this.expectedProfit = expectedProfit;
-    }
+            final Map<Player, Profit> expectedProfit = new HashMap<>();
+            expectedProfit.put(firstPlayer, new Profit(20000));
+            expectedProfit.put(secondPlayer, new Profit(-10000));
+            final Betting betting = new Betting(expectedProfit);
 
-    public void earnBlackJackBonus(final Player player) {
-        validateExistPlayer(player);
-        final Profit profit = expectedProfit.get(player);
-        expectedProfit.put(player, profit.increaseFiftyPercent());
-    }
-
-    private void validateExistPlayer(final Player player) {
-        if (!expectedProfit.containsKey(player)) {
-            throw new IllegalArgumentException("베팅하지 않은 플레이어입니다.");
+            assertThat(betting.getDealerProfit().getValue()).isEqualTo(-10000);
         }
-    }
 
-    public void fail(final Player player) {
-        validateExistPlayer(player);
-        final Profit profit = expectedProfit.get(player);
-        expectedProfit.put(player, profit.reverse());
-    }
+        @Test
+        void 플레이어들의_수입보다_지출이_더_크면_수입이_발생한다() {
+            final Player firstPlayer = new Player("toney");
+            final Player secondPlayer = new Player("dazzle");
 
-    public Profit getProfit(final Player player) {
-        validateExistPlayer(player);
-        return expectedProfit.get(player);
+            final Map<Player, Profit> expectedProfit = new HashMap<>();
+            expectedProfit.put(firstPlayer, new Profit(-20000));
+            expectedProfit.put(secondPlayer, new Profit(10000));
+            final Betting betting = new Betting(expectedProfit);
+
+            assertThat(betting.getDealerProfit().getValue()).isEqualTo(10000);
+        }
     }
 }
