@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.dto.CardNames;
 import domain.game.Result;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,16 @@ public class OutputView {
         System.out.println("딜러: " + getCardName(card));
     }
 
-    public static void printPlayerCards(final Map<String, List<String>> playerToCard) {
+    public static void printPlayerCards(final Map<String, CardNames> playerToCard) {
         playerToCard.forEach((playerName, cards) ->
                 System.out.println(getEachPlayerCards(playerName, cards)));
     }
 
-    public static void printDealerCardWithScore(final List<String> cards, final int score) {
+    public static void printDealerCardWithScore(final CardNames cards, final int score) {
         printCardWithScore("딜러 ", cards, score);
     }
 
-    public static void printPlayerCardWithScore(final Map<String, List<String>> playerToCard,
+    public static void printPlayerCardWithScore(final Map<String, CardNames> playerToCard,
                                                 final Map<String, Integer> playerToScore) {
         playerToCard.forEach((playerName, cards) -> {
             int score = playerToScore.get(playerName);
@@ -29,18 +30,18 @@ public class OutputView {
         });
     }
 
-    public static void printEachPlayerCards(final String playerName, final List<String> cards) {
+    public static void printEachPlayerCards(final String playerName, final CardNames cards) {
         System.out.println(getEachPlayerCards(playerName, cards));
     }
 
-    private static void printCardWithScore(final String playerName, final List<String> cards, final int score) {
+    private static void printCardWithScore(final String playerName, final CardNames cards, final int score) {
         System.out.println(getEachPlayerCards(playerName, cards) + " - 결과: " + score);
     }
 
-    private static String getEachPlayerCards(final String playerName, final List<String> cardNames) {
+    private static String getEachPlayerCards(final String playerName, final CardNames cardNames) {
         StringBuilder stringBuilder = new StringBuilder(playerName);
         stringBuilder.append("카드: ");
-        stringBuilder.append(String.join(", ", cardNames));
+        stringBuilder.append(String.join(", ", cardNames.getCardNames()));
         return stringBuilder.toString();
     }
 
