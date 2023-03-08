@@ -19,9 +19,7 @@ class CardsTest {
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
 
         //when
-        for (int i = 0; i < ranks.size(); i++) {
-            cards.takeCard(deck.dealCard());
-        }
+        ranks.forEach(i -> cards.takeCard(deck.dealCard()));
         final List<Card> result =
                 List.of(Card.of(Suit.CLUBS, Rank.EIGHT), Card.of(Suit.CLUBS, Rank.SIX), Card.of(Suit.CLUBS, Rank.SEVEN));
 
@@ -54,9 +52,7 @@ class CardsTest {
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
 
         //when
-        for (int i = 0; i < ranks.size(); i++) {
-            cards.takeCard(deck.dealCard());
-        }
+        ranks.forEach(i -> cards.takeCard(deck.dealCard()));
 
         //then
         assertThat(cards.getScore()).isEqualTo(Score.from(5 + 6 + 7));
@@ -76,9 +72,7 @@ class CardsTest {
             final List<Rank> ranks = List.of(Rank.ACE, Rank.TWO, Rank.THREE);
             final Deck deck = Deck.from(TestCardGenerator.from(ranks));
 
-            for (int i = 0; i < ranks.size(); i++) {
-                cards.takeCard(deck.dealCard());
-            }
+            ranks.forEach(i -> cards.takeCard(deck.dealCard()));
 
 
             //then
@@ -95,9 +89,7 @@ class CardsTest {
             //when
             final List<Rank> ranks = List.of(Rank.ACE, Rank.FIVE, Rank.SIX);
             final Deck deck = Deck.from(TestCardGenerator.from(ranks));
-            for (int i = 0; i < ranks.size(); i++) {
-                cards.takeCard(deck.dealCard());
-            }
+            ranks.forEach(i -> cards.takeCard(deck.dealCard()));
 
 
             //then

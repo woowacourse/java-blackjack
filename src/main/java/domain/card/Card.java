@@ -16,6 +16,18 @@ public final class Card {
         return new Card(suit, rank);
     }
 
+    public String getSuit() {
+        return suit.getName();
+    }
+
+    public int getScore() {
+        return rank.getScore();
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -27,17 +39,5 @@ public final class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, rank);
-    }
-
-    public String getSuit() {
-        return suit.getName();
-    }
-
-    public int getScore() {
-        return rank.getScore();
-    }
-
-    public Rank getRank() {
-        return rank;
     }
 }
