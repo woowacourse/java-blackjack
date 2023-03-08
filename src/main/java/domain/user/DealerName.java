@@ -1,6 +1,6 @@
 package domain.user;
 
-public class DealerName implements UserName {
+public final class DealerName implements UserName {
 
     private final String value;
 

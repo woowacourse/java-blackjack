@@ -5,7 +5,7 @@ import domain.user.Player;
 import java.util.List;
 import java.util.Map;
 
-public class BlackjackGame {
+public final class BlackjackGame {
     private final Participants participants;
     private final Deck deck;
 

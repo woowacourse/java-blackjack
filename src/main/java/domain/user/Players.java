@@ -3,7 +3,7 @@ package domain.user;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public final class Players {
     private final List<Player> players;
 
     public Players(List<Player> players) {

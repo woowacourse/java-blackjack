@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
     public static final int UPPER_LIMIT_TO_ADD = 11;
     public static final int ACE_BONUS = 10;
     private final List<Card> cards;

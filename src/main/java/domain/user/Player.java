@@ -2,7 +2,7 @@ package domain.user;
 
 import domain.Hand;
 
-public class Player extends User {
+public final class Player extends User {
 
     public Player(String nameValue) {
         this(new PlayerName(nameValue), new Hand());

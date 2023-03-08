@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class ShuffledDeck implements Deck {
+public final class ShuffledDeck implements Deck {
     private final Deque<Card> deck = new ArrayDeque<>();
 
     public ShuffledDeck() {

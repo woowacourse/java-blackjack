@@ -5,7 +5,7 @@ import java.util.Deque;
 import java.util.EmptyStackException;
 import java.util.List;
 
-public class DeterminedDeck implements Deck {
+public final class DeterminedDeck implements Deck {
     private final Deque<Card> deck;
 
     public DeterminedDeck(Deque<Card> cards) {

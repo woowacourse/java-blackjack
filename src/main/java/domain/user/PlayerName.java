@@ -3,7 +3,7 @@ package domain.user;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerName implements UserName {
+public final class PlayerName implements UserName {
     private static final List<String> PROHIBITED_NAMES = new ArrayList<>() {{
         add("딜러");
     }};
