@@ -39,20 +39,20 @@ public class OutputView {
         printFirstPlayerCardStatus(blackJackGameResponse.getPlayerResponses());
         System.out.print(System.lineSeparator());
     }
-
     private void printFirstDealerCardStatus(final UserResponse dealerResponse) {
         System.out.printf("%s: %s%n", dealerResponse.getName(), rendDealerFirstCardStatus(dealerResponse.getCardResponse()));
     }
 
     private void printFirstPlayerCardStatus(List<UserResponse> playerResponses) {
-        playerResponses.forEach(playerResponse ->
-                System.out.printf("%s: %s%n",
-                        playerResponse.getName(),
-                        rendCardStatus(playerResponse.getCardResponse())));
+        playerResponses.forEach(this::printUserCardStatus);
     }
 
     public void printPlayerCardStatus(final UserResponse playerResponse) {
-        System.out.printf("%s: %s%n", playerResponse.getName(), rendCardStatus(playerResponse.getCardResponse()));
+        printUserCardStatus(playerResponse);
+    }
+
+    public void printUserCardStatus(final UserResponse userResponse) {
+        System.out.printf("%s: %s%n", userResponse.getName(), rendCardStatus(userResponse.getCardResponse()));
     }
 
     public void printReceiveCardForDealer() {
