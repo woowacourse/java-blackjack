@@ -19,6 +19,10 @@ public class Players {
     }
 
     private void validatePlayerCount(final List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("플레이어들은 1명 이상이어야합니다.");
+        }
+
         if (players.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("플레이어들은 13명 이하여야 합니다.");
         }

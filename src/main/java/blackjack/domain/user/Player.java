@@ -18,7 +18,6 @@ public class Player {
     }
 
     private void validateName(final String name) {
-
         final String candidateName = name.trim();
 
         validateBlank(candidateName);
@@ -51,7 +50,7 @@ public class Player {
     public List<Card> showCards() {
         return List.copyOf(participant.showCards());
     }
-    
+
     public int getScore() {
         return participant.getScore();
     }

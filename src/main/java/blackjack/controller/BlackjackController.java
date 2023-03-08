@@ -8,7 +8,7 @@ import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -68,7 +68,7 @@ public class BlackjackController {
     }
 
     private void processPlayerDraw(final BlackjackGame blackjackGame, final Player player) {
-        while (isCommandContinue(player) && isPlayerEnd(blackjackGame, player)) {
+        while (isPlayerEnd(blackjackGame, player) && isCommandContinue(player)) {
             blackjackGame.playerDraw(player);
             outputView.printParticipantCards(player.getName(), player.showCards());
         }
@@ -100,7 +100,7 @@ public class BlackjackController {
     }
 
     private Map<String, GameResult> getPlayerScoreResult(final Dealer dealer, final Players players) {
-        Map<String, GameResult> result = new HashMap<>();
+        Map<String, GameResult> result = new LinkedHashMap<>();
 
         players.getPlayers().forEach((player) -> {
             int playerScore = player.getScore();

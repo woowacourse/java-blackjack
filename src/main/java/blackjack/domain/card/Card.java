@@ -20,6 +20,10 @@ public class Card {
         return shape;
     }
 
+    public boolean isAce() {
+        return number.isAce();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

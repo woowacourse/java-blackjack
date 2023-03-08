@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class Hand {
+public class Cards {
 
     private static final int MAX_NUMBER = 21;
     private static final int BUST_NUMBER = -1;
@@ -16,7 +16,7 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand() {
+    public Cards() {
         this.cards = new ArrayList<>();
     }
 
@@ -44,7 +44,7 @@ public class Hand {
 
     private List<Card> getAcePack() {
         return cards.stream()
-                .filter(card -> CardNumber.ACE.equals(card.getNumber()))
+                .filter(Card::isAce)
                 .collect(toList());
     }
 

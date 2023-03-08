@@ -8,23 +8,23 @@ import java.util.List;
 public class Participant {
 
     private final String name;
-    private final Hand hand;
+    private final Cards cards;
 
     public Participant(final String name) {
         this.name = name.trim();
-        this.hand = new Hand();
+        this.cards = new Cards();
     }
 
     public void drawCard(final CardPack cardPack) {
-        hand.add(cardPack.takeOne());
+        cards.add(cardPack.takeOne());
     }
 
     public List<Card> showCards() {
-        return hand.getCards();
+        return cards.getCards();
     }
 
     public int getScore() {
-        return hand.calculateScore();
+        return cards.calculateScore();
     }
 
     public String getName() {

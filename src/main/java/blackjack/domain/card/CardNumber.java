@@ -24,6 +24,10 @@ public enum CardNumber {
         this.view = view;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getScore() {
         return score;
     }
