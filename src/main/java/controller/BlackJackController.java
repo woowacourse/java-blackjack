@@ -73,8 +73,7 @@ public class BlackJackController {
     private void dealerDrawCardStep(BlackJackGame blackJackGame) {
         while (blackJackGame.canDealerDrawCard()) {
             OutputView.printDealerReceivedMessage();
-            Dealer dealer = blackJackGame.findDealerByDealerName(Constants.DEALER_NAME);
-            blackJackGame.distributeCard(dealer);
+            blackJackGame.distributeCard(blackJackGame.getDealer());
         }
     }
 

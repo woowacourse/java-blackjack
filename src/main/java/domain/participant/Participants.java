@@ -50,13 +50,6 @@ public class Participants {
         return dealer.checkCardsCondition();
     }
 
-    public Dealer findDealerByDealerName(String dealerName) {
-        if (dealerName.equals(Constants.DEALER_NAME)) {
-            return dealer;
-        }
-        throw new IllegalArgumentException(NOT_MATCH_DEALER_NAME);
-    }
-
     public List<String> getPlayerNames() {
         return players.getPlayerNames();
     }
