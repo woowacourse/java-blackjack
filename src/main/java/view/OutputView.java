@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     
+    public static final String FINAL_STATUS_MESSAGE = "## 최종 승패";
+    public static final String DEALER_GET_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    
     public static void printReadyMessage(Participants participants) {
         List<String> participantNames = participants.stream().map(Playable::getName).collect(Collectors.toList());
         StringBuilder stringBuilder = new StringBuilder();
@@ -22,12 +25,12 @@ public class OutputView {
     }
     
     public static void printDealerReceivedCard() {
-        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(System.lineSeparator() + DEALER_GET_CARD_MESSAGE);
     }
     
     
     public static void printDealerGameResult(HashMap<Result, Integer> dealerResult) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
+        System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
         int winCount = dealerResult.get(Result.WIN);
         int loseCount = dealerResult.get(Result.LOSE);
         int drawCount = dealerResult.get(Result.DRAW);
@@ -75,7 +78,7 @@ public class OutputView {
     }
     
     public static void printPlayersGameResult(final HashMap<String, Result> resultMap) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
+        System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
         resultMap.forEach((name, result) -> {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(name);
