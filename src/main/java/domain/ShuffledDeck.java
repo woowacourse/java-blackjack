@@ -1,26 +1,31 @@
 package domain;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EmptyStackException;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ShuffledDeck implements Deck {
-    private final Stack<Card> deck = new Stack<>();
+    private final Deque<Card> deck = new ArrayDeque<>();
 
     public ShuffledDeck() {
         generateCards();
     }
 
     private void generateCards() {
+        List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()){
-            addCardsWithSymbolOf(suit);
+            addCardsWithSymbolOf(suit, cards);
         }
-        Collections.shuffle(this.deck);
+        Collections.shuffle(cards);
+        this.deck.addAll(cards);
     }
 
-    private void addCardsWithSymbolOf(Suit suit){
+    private void addCardsWithSymbolOf(Suit suit, List<Card> cards){
         for (Rank rank : Rank.values()){
-            this.deck.push(new Card(suit, rank));
+            cards.add(new Card(suit, rank));
         }
     }
 
@@ -28,7 +33,7 @@ public class ShuffledDeck implements Deck {
     public Card draw() {
         try {
             return this.deck.pop();
-        } catch (EmptyStackException e) {
+        } catch (NoSuchElementException e) {
             throw new IllegalStateException("덱이 비었습니다.");
         }
     }

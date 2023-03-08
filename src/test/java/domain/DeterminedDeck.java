@@ -1,13 +1,14 @@
 package domain;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.EmptyStackException;
 import java.util.List;
-import java.util.Stack;
 
 public class DeterminedDeck implements Deck {
-    private final Stack<Card> deck;
+    private final Deque<Card> deck;
 
-    public DeterminedDeck(Stack<Card> cards) {
+    public DeterminedDeck(Deque<Card> cards) {
         this.deck = cards;
     }
 
@@ -15,8 +16,8 @@ public class DeterminedDeck implements Deck {
         return new DeterminedDeck(generateCardDummy(cards));
     }
 
-    private static Stack<Card> generateCardDummy(List<Card> cards) {
-        Stack<Card> cardDummy = new Stack<>();
+    private static Deque<Card> generateCardDummy(List<Card> cards) {
+        Deque<Card> cardDummy = new ArrayDeque<>();
         cards.forEach(cardDummy::push);
         return cardDummy;
     }
