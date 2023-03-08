@@ -55,7 +55,7 @@ public class Participants {
     }
 
     public int getDealerCardValueSum() {
-        return dealer.selectNotBustCardValueSum();
+        return dealer.getOptimalCardValueSum();
     }
 
     public Players getPlayers() {

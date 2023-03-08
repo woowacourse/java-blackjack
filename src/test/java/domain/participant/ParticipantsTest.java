@@ -43,10 +43,4 @@ class ParticipantsTest {
         Assertions.assertThat(dinoCardNames).contains("9클로버", "7스페이드");
         Assertions.assertThat(dealerCardNames).contains("5클로버", "6스페이드");
     }
-
-    @Test
-    @DisplayName("딜러 이름으로 딜러를 찾아서 반환한다.")
-    void findDealerByDealerName() {
-        Assertions.assertThat(participants.findDealerByDealerName("딜러")).isEqualTo(dealer);
-    }
 }

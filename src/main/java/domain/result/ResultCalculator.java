@@ -29,8 +29,8 @@ public class ResultCalculator {
         GameResult gameResult = GameResult.WIN;
         ResultCount playerResultCount = results.get(player);
         ResultCount dealerResultCount = results.get(dealer);
-        int playerCardValueSum = player.selectNotBustCardValueSum();
-        int dealerCardValueSum = dealer.selectNotBustCardValueSum();
+        int playerCardValueSum = player.getOptimalCardValueSum();
+        int dealerCardValueSum = dealer.getOptimalCardValueSum();
         gameResult = judgeGameResult(gameResult, playerCardValueSum, dealerCardValueSum);
         resultCalculate(gameResult, playerResultCount, dealerResultCount);
     }

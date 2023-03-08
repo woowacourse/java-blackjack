@@ -24,7 +24,7 @@ public abstract class Participant {
         handCards.addCard(card);
     }
 
-    public int selectNotBustCardValueSum() {
+    public int getOptimalCardValueSum() {
         List<Integer> totalValues = new ArrayList<>();
         totalValues.add(INIT_VALUE_FOR_ADD);
         List<Integer> handCardValues = handCards.getValues();

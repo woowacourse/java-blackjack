@@ -10,6 +10,6 @@ public class Dealer extends Participant {
     }
 
     public boolean checkCardsCondition() {
-        return selectNotBustCardValueSum() < LIMIT_TAKE_CARD_VALUE;
+        return getOptimalCardValueSum() < LIMIT_TAKE_CARD_VALUE;
     }
 }
