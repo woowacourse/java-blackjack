@@ -5,9 +5,14 @@ import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.participant.Participant;
 import domain.player.participant.ParticipantResult;
+import domain.player.participant.betresult.BetResultState;
+import domain.player.participant.betresult.BreakEvenState;
+import domain.player.participant.betresult.LoseState;
+import domain.player.participant.betresult.WinState;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -54,5 +59,29 @@ public class CardTable {
             return true;
         }
         return false;
+    }
+
+    public void matchAfterFirstDeal(final List<Participant> participants,
+                                    final Dealer dealer) {
+        participants.forEach(
+                participant -> matchFirstDealBetween(participant, dealer).
+                        ifPresent(participant::determineBetState)
+        );
+    }
+
+    private Optional<BetResultState> matchFirstDealBetween(final Participant participant, final Dealer dealer) {
+        if (participant.isBlackjack() && dealer.isBlackjack()) {
+            return Optional.of(new BreakEvenState());
+        }
+
+        if (participant.isBlackjack() && !dealer.isBlackjack()) {
+            return Optional.of(new WinState());
+        }
+
+        if (!participant.isBlackjack() && dealer.isBlackjack()) {
+            return Optional.of(new LoseState());
+        }
+
+        return Optional.empty();
     }
 }

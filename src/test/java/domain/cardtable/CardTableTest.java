@@ -1,12 +1,16 @@
 package domain.cardtable;
 
 import domain.card.Card;
-import domain.card.CardShape;
 import domain.deck.CardDeck;
 import domain.player.Name;
 import domain.player.dealer.Dealer;
+import domain.player.participant.Money;
 import domain.player.participant.Participant;
 import domain.player.participant.ParticipantResult;
+import domain.player.participant.betresult.BetResultState;
+import domain.player.participant.betresult.BreakEvenState;
+import domain.player.participant.betresult.LoseState;
+import domain.player.participant.betresult.WinState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +26,7 @@ import static domain.card.CardShape.CLOVER;
 import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardShape.HEART;
 import static domain.card.CardShape.SPADE;
+import static domain.card.CardValue.ACE;
 import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.TEN;
 import static domain.player.participant.ParticipantResult.DRAWER;
@@ -29,6 +34,7 @@ import static domain.player.participant.ParticipantResult.LOSER;
 import static domain.player.participant.ParticipantResult.WINNER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -47,7 +53,7 @@ class CardTableTest {
         cardDeck = CardDeck.shuffledFullCardDeck();
         cardTable = CardTable.readyToPlayBlackjack(cardDeck);
 
-        participant = new Participant(new Name("name"));
+        participant = new Participant(new Name("name"), Money.wons(0));
         participant.hit(new Card(CLOVER, TEN));
         participant.hit(new Card(CLOVER, NINE));
 
@@ -97,7 +103,7 @@ class CardTableTest {
             final Participant participant, final Dealer dealer,
             final ParticipantResult participantResult) throws Exception {
 
-        //when & then
+        //when
         final Map<Participant, ParticipantResult> gameResult = cardTable.determineWinner(
                 List.of(participant), dealer);
 
@@ -111,27 +117,27 @@ class CardTableTest {
     static Stream<Arguments> makeBothNotBust() {
 
         //무승부
-        final Participant participant1 = new Participant(new Name("name1"));
-        participant1.hit(new Card(CardShape.DIAMOND, TEN));
-        participant1.hit(new Card(CardShape.SPADE, TEN));
+        final Participant participant1 = new Participant(new Name("name1"), Money.wons(0));
+        participant1.hit(new Card(DIAMOND, TEN));
+        participant1.hit(new Card(SPADE, TEN));
 
         final Dealer dealer1 = new Dealer();
         dealer1.hit(new Card(HEART, TEN));
         dealer1.hit(new Card(CLOVER, TEN));
 
         //참여자가 이길 경우
-        final Participant participant2 = new Participant(new Name("name2"));
-        participant2.hit(new Card(CardShape.SPADE, TEN));
-        participant2.hit(new Card(CardShape.DIAMOND, TEN));
+        final Participant participant2 = new Participant(new Name("name2"), Money.wons(0));
+        participant2.hit(new Card(SPADE, TEN));
+        participant2.hit(new Card(DIAMOND, TEN));
 
         final Dealer dealer2 = new Dealer();
         dealer2.hit(new Card(HEART, TEN));
         dealer2.hit(new Card(CLOVER, NINE));
 
         //딜러가 이길 경우
-        final Participant participant3 = new Participant(new Name("name3"));
-        participant3.hit(new Card(CardShape.SPADE, TEN));
-        participant3.hit(new Card(CardShape.DIAMOND, NINE));
+        final Participant participant3 = new Participant(new Name("name3"), Money.wons(0));
+        participant3.hit(new Card(SPADE, TEN));
+        participant3.hit(new Card(DIAMOND, NINE));
 
         final Dealer dealer3 = new Dealer();
         dealer3.hit(new Card(HEART, TEN));
@@ -153,6 +159,90 @@ class CardTableTest {
                 () -> assertFalse(cardTable.dealCardTo(dealer)),
                 () -> assertThat(participant.cardArea().cards()).hasSize(3),
                 () -> assertThat(dealer.cardArea().cards()).hasSize(2)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("afterFirstDeal")
+    @DisplayName("matchAfterFirstDeal() : 처음 두장씩 받고 블랙잭 여부에 따라 승부가 결정날 수 있다.")
+    void test_matchAfterFirstDeal(final Participant participant,
+                                  final Dealer dealer,
+                                  final BetResultState betResultState) throws Exception {
+        //when
+        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
+
+        //then
+        assertThat(participant).extracting("betResultState")
+                               .isNotNull()
+                               .isInstanceOf(betResultState.getClass());
+    }
+
+    @Test
+    @DisplayName("matchAfterFirstDeal() : 딜러, 참여자가 모두 블랙잭이 아닐 경우 승부가 결정나지 않는다.")
+    void test_test_matchAfterFirstDeal_stateNull() throws Exception {
+        //given
+        final Participant participant = new Participant(new Name("name4"), Money.wons(0));
+        participant.hit(new Card(HEART, TEN));
+        participant.hit(new Card(CLOVER, NINE));
+
+        final Dealer dealer = new Dealer();
+        dealer.hit(new Card(DIAMOND, TEN));
+        dealer.hit(new Card(DIAMOND, NINE));
+
+        //when
+        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
+
+        //then
+        assertThat(participant).extracting("betResultState")
+                               .isNull();
+    }
+
+    static Stream<Arguments> afterFirstDeal() {
+
+        /**
+         * 참여자 : 블랙잭
+         * 딜러 : 블랙잭
+         * 결과 : 무승부
+         */
+        final Participant participant1 = new Participant(new Name("name1"), Money.wons(0));
+        participant1.hit(new Card(DIAMOND, TEN));
+        participant1.hit(new Card(DIAMOND, ACE));
+
+        final Dealer dealer1 = new Dealer();
+        dealer1.hit(new Card(HEART, TEN));
+        dealer1.hit(new Card(HEART, ACE));
+
+        /**
+         * 참여자 : 블랙잭
+         * 딜러 : 블랙잭 X
+         * 결과 : 참여자 승리
+         */
+        final Participant participant2 = new Participant(new Name("name2"), Money.wons(0));
+        participant2.hit(new Card(DIAMOND, TEN));
+        participant2.hit(new Card(DIAMOND, ACE));
+
+        final Dealer dealer2 = new Dealer();
+        dealer2.hit(new Card(HEART, TEN));
+        dealer2.hit(new Card(CLOVER, NINE));
+
+        /**
+         * 참여자 : 블랙잭 X
+         * 딜러 : 블랙잭
+         * 결과 : 딜러 승
+         */
+        final Participant participant3 = new Participant(new Name("name3"), Money.wons(0));
+        participant3.hit(new Card(HEART, TEN));
+        participant3.hit(new Card(CLOVER, NINE));
+
+        final Dealer dealer3 = new Dealer();
+        dealer3.hit(new Card(DIAMOND, TEN));
+        dealer3.hit(new Card(DIAMOND, ACE));
+
+        return Stream.of(
+                Arguments.of(participant1, dealer1, new BreakEvenState()),
+                Arguments.of(participant2, dealer2, new WinState()),
+                Arguments.of(participant3, dealer3, new LoseState()),
+                Arguments.of(participant3, dealer3, null)
         );
     }
 }

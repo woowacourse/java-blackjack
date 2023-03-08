@@ -35,4 +35,8 @@ public abstract class Player {
     public Score score() {
         return cardArea.calculate();
     }
+
+    public boolean isBlackjack() {
+        return cardArea.isBlackjack();
+    }
 }
