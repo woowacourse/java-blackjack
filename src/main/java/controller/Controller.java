@@ -2,6 +2,7 @@ package controller;
 
 import domain.Dealer;
 import domain.Players;
+import domain.Result;
 import game.Blackjack;
 
 import static view.OutputView.printGamblersCards;
@@ -24,7 +25,6 @@ public class Controller {
         blackjack.play();
 
         printScores(players, dealer);
-        //TODO: getResult라는 네이밍이 혼동을 주진 않을까요? 사실상 생성이자 getter이기도 해서.. 어떻게 생각하시나요?
-        printResult(blackjack.getResult(players, dealer).getResult());
+        printResult(blackjack.getResult());
     }
 }
