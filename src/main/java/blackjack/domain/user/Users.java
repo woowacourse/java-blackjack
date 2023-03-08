@@ -31,12 +31,8 @@ public class Users {
         return Collections.unmodifiableMap(usersFirstOpenCardGroups);
     }
 
-    public Map<String, CardGroup> getStatus() {
-        final Map<String, CardGroup> usersStatus = new LinkedHashMap<>();
-        usersStatus.put(dealer.getName(), dealer.getCardGroups());
-        final Map<String, CardGroup> playersStatus = players.getStatus();
-        usersStatus.putAll(playersStatus);
-        return Map.copyOf(usersStatus);
+    public CardGroup getCardGroupBy(final String name) {
+        return players.getCardGroupBy(name);
     }
 
     public boolean isDealerUnderDrawLimit() {

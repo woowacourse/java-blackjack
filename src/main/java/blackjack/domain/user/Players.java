@@ -46,9 +46,13 @@ public class Players {
         return Collections.unmodifiableMap(firstOpenCardGroup);
     }
 
-    public Map<String, CardGroup> getStatus() {
+
+    public CardGroup getCardGroupBy(final String name) {
         return players.stream()
-                .collect(Collectors.toUnmodifiableMap(Player::getName, Player::getCardGroups));
+                .filter(player -> player.isSameName(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE))
+                .getCardGroups();
     }
 
     public List<String> getPlayerNames() {

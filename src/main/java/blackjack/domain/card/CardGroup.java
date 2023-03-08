@@ -27,14 +27,6 @@ public class CardGroup {
         return Score.calculateScore(getTotalValue(), getAceCount());
     }
 
-    public boolean isBustScore() {
-        return getScore().isBust();
-    }
-
-    public boolean isBlackJackScore() {
-        return getScore().isBlackJackScore();
-    }
-
     private int getTotalValue() {
         return cards.stream()
                 .map(Card::getNumber)
@@ -47,6 +39,15 @@ public class CardGroup {
                 .filter(Card::isAce)
                 .count();
     }
+
+    public boolean isBustScore() {
+        return getScore().isBust();
+    }
+
+    public boolean isBlackJackScore() {
+        return getScore().isBlackJackScore();
+    }
+
 
     public CardGroup getSubCardGroup(int size) {
         final List<Card> subCardGroup = cards.stream()

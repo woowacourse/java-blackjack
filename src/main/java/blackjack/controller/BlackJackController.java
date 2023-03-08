@@ -51,8 +51,8 @@ public class BlackJackController {
     private void playPlayerTurn(final BlackJackGame blackJackGame, final String playerName) {
         while (repeat(this::isContinuous, playerName, blackJackGame).isDraw()) {
             blackJackGame.playPlayer(playerName);
-            CardGroup userCards = blackJackGame.getStatus().get(playerName);
-            outputView.printCards(playerName, ViewRenderer.renderCardsToString(userCards));
+            final CardGroup userCards = blackJackGame.getCardGroupBy(playerName);
+            outputView.printCards(playerName, ViewRenderer.renderCardGroupToString(userCards));
         }
     }
 

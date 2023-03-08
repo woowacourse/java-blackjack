@@ -38,7 +38,7 @@ class ViewRendererTest {
         final CardGroup cardGroup = new CardGroup(new Card(CardShape.SPADE, CardNumber.ACE),
                 new Card(CardShape.DIAMOND, CardNumber.TWO));
 
-        List<String> renderedCardNames = ViewRenderer.renderCardsToString(cardGroup);
+        List<String> renderedCardNames = ViewRenderer.renderCardGroupToString(cardGroup);
 
         assertThat(renderedCardNames).contains("A스페이드", "2다이아몬드");
     }

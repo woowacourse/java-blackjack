@@ -19,8 +19,8 @@ public class BlackJackGame {
         this.users = new Users(playerNames, deck);
     }
 
-    public Map<String, CardGroup> getStatus() {
-        return users.getStatus();
+    public CardGroup getCardGroupBy(final String name) {
+        return users.getCardGroupBy(name);
     }
 
     public Map<String, CardGroup> getFirstOpenCardGroups() {

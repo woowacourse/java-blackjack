@@ -16,7 +16,6 @@ import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -59,16 +58,15 @@ class UsersTest {
     }
 
     @Test
-    @DisplayName("유저들의 현 패를 반환하는 기능 테스트")
+    @DisplayName("유저들의 이름을 받고 CardGroup을 반환하는 기능 테스트")
     void getUsersStatus() {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
-        List<Card> initialCards = users.getStatus().values().stream()
-                .map(CardGroup::getCards)
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
-        assertThat(initialCards).containsExactlyInAnyOrderElementsOf(testCards);
+        final CardGroup philipCardGroup = users.getCardGroupBy("필립");
+
+        assertThat(philipCardGroup.getCards())
+                .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
     }
 
     @Test
@@ -106,9 +104,12 @@ class UsersTest {
         final Users users = new Users(List.of("필립"), deck);
 
         users.drawDealer(deck);
-        int dealerCardCount = users.getStatus().get("딜러").getCards().size();
+        final CardResult cardResult = users.getUserNameAndCardResults().get("딜러");
 
-        assertThat(dealerCardCount).isEqualTo(3);
+        assertThat(cardResult.getCards().getCards())
+                .containsExactly(new Card(CardShape.SPADE, CardNumber.ACE)
+                        , new Card(CardShape.CLOVER, CardNumber.TEN)
+                        , new Card(CardShape.HEART, CardNumber.NINE));
     }
 
     @Test
