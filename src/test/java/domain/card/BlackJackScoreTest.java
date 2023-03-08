@@ -135,5 +135,4 @@ class BlackJackScoreTest {
         // when & then
         assertThat(score.isDealerShouldHitScore()).isFalse();
     }
-
 }
