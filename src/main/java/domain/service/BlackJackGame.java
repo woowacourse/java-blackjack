@@ -21,11 +21,8 @@ public class BlackJackGame {
         cardDistributor.giveCard(participant);
     }
 
-    public void giveInitCards(final Participant participant) {
+    public void giveInitCards(final Participant participant, final Players players) {
         cardDistributor.giveInitCards(participant);
-    }
-
-    public void giveInitCards(final Players players) {
         cardDistributor.giveInitCards(players);
     }
 

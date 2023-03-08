@@ -34,8 +34,7 @@ public class BlackJackController {
     }
 
     private void giveInitialCards(final Dealer dealer, final Players players) {
-        blackJackGame.giveInitCards(dealer);
-        blackJackGame.giveInitCards(players);
+        blackJackGame.giveInitCards(dealer, players);
         ioView.printInitialCards(dealer, players);
     }
 
