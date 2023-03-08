@@ -62,7 +62,7 @@ public final class Players {
     }
 
     private void judge(final Map<Player, Result> results, final Player player, final int dealerScore) {
-        if (dealerScore > BLACKJACK_SCORE) {
+        if (dealerScore < BLACKJACK_SCORE) {
             judgeToNotBust(results, player, dealerScore);
             return;
         }

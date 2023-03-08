@@ -70,9 +70,8 @@ class PlayersTest {
     void decideResult() {
         int dealerScore = 20;
 
-        player1.receiveCard(new Card(Number.TWO, Suit.HEART));
-        player1.receiveCard(new Card(Number.EIGHT, Suit.SPADE));
-        player1.receiveCard(new Card(Number.ACE, Suit.CLOVER));
+        player1.receiveCard(new Card(Number.ACE, Suit.HEART));
+        player1.receiveCard(new Card(Number.TEN, Suit.SPADE));
 
         player2.receiveCard(new Card(Number.SEVEN, Suit.CLOVER));
         player2.receiveCard(new Card(Number.K, Suit.SPADE));
