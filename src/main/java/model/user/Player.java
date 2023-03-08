@@ -3,7 +3,7 @@ package model.user;
 import model.card.Card;
 import model.card.Deck;
 
-public class Player implements Receivable {
+public class Player {
 
     private static final int CAN_RECEIVE_MAX_NUMBER = 21;
 
@@ -13,9 +13,9 @@ public class Player implements Receivable {
         this.user = new User(name);
     }
 
-    @Override
     public boolean canReceiveCard() {
-        return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
+         Receivable receivable = () -> CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
+         return receivable.canReceiveCard();
     }
 
     private int calculateTotalValue() {

@@ -83,7 +83,7 @@ public class OutputView {
         );
     }
 
-    public static void printResult(final Participants participants) {
+    public static void printResult(final Participants participants, final int dealerCardTotalValue) {
         List<Score> dealerResult = participants.getFinalResult();
 
         int dealerWinCount = getDealerScoreCount(dealerResult, Score.LOSE);
@@ -93,22 +93,22 @@ public class OutputView {
         List<Player> players = participants.getPlayers();
 
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.println(getDealerResultForm(dealerWinCount, dealerLoseCount, dealerTieCount));
-        printPlayersResult(participants, players);
+        System.out.println(getDealerResultForm(dealerWinCount, dealerLoseCount, dealerTieCount) + System.lineSeparator());
+        printPlayersResult(dealerCardTotalValue, players);
     }
 
-    private static void printPlayersResult(final Participants participants, final List<Player> players) {
+    private static void printPlayersResult(final int dealerCardTotalValue, final List<Player> players) {
         for (Player player : players) {
-            Score score = player.judgeResult(participants.getDealer().calculateTotalValue());
+            Score score = player.judgeResult(dealerCardTotalValue);
             System.out.printf("%s: %s\n", player.getName(), score.getName());
         }
     }
 
     private static String getDealerResultForm(final int dealerWinCount, final int dealerLoseCount, final int dealerTieCount) {
         if (dealerTieCount == 0) {
-            return String.format("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
+            return String.format("딜러: %d승 %d패", dealerWinCount, dealerLoseCount);
         }
-        return String.format("딜러: %d승 %d패 %d무\n", dealerWinCount, dealerLoseCount, dealerTieCount);
+        return String.format("딜러: %d승 %d패 %d무", dealerWinCount, dealerLoseCount, dealerTieCount);
     }
 
     private static int getDealerScoreCount(final List<Score> dealerResult, final Score score) {

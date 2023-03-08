@@ -51,9 +51,9 @@ class ParticipantsTest {
         assertAll(
                 () -> assertThat(participants.getFinalResult()).containsExactly(LOSE),
                 () -> {
-            bebe.receiveCard(new Card(CLOVER, TWO));
-            assertThat(participants.getFinalResult()).containsExactly(WIN);
-        });
+                    bebe.receiveCard(new Card(CLOVER, TWO));
+                    assertThat(participants.getFinalResult()).containsExactly(WIN);
+                });
     }
 
     @Test

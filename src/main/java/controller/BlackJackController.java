@@ -20,7 +20,7 @@ public class BlackJackController {
         divideCardForDealer(deck, dealer);
 
         OutputView.printScoreBoard(participants);
-        OutputView.printResult(participants);
+        OutputView.printResult(participants, dealer.getTotalValue());
     }
 
     private void divideCardForDealer(Deck deck, Dealer dealer) {
