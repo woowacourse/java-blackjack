@@ -31,13 +31,15 @@ public enum Score {
             return LOSE;
         }
 
-        return userTotalValue > BUST_NUMBER ? LOSE : WIN;
+        if (userTotalValue > BUST_NUMBER) return LOSE;
+        return WIN;
     }
 
     private static Score judgeBelowBurst(final int dealerTotalValue, final int userTotalValue) {
         if (dealerTotalValue == userTotalValue) {
             return TIE;
         }
-        return dealerTotalValue < userTotalValue ? WIN : LOSE;
+        if (dealerTotalValue < userTotalValue) return WIN;
+        return LOSE;
     }
 }
