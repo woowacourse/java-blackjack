@@ -4,10 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.game.GameResult;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
 import blackjack.domain.user.Score;
+import blackjack.dto.DealerDto;
+import blackjack.dto.PlayerDto;
 
 import java.util.List;
 import java.util.Map;
@@ -19,15 +18,15 @@ public class OutputView {
     public static final String DELIMITER_COMMA = ", ";
     public static final String DELIMITER_COLON = ": ";
 
-    public void printInitCards(final Dealer dealer, final Players players) {
+    public void printInitCards(final DealerDto dealer, final List<PlayerDto> players) {
         final List<String> playerNames = extractPlayerNames(players);
         final String dealerName = dealer.getName();
 
         System.out.println(dealerName + "와 " + String.join(DELIMITER_COMMA, playerNames) + "에게 2장을 나누었습니다.");
 
         printDealerCards(dealer);
-        players.getPlayers().forEach(player -> {
-            printParticipantCards(player.getName(), player.showCards());
+        players.forEach(player -> {
+            printParticipantCards(player.getName(), player.getCards());
         });
     }
 
@@ -48,15 +47,15 @@ public class OutputView {
         return number.getView() + shape.getView();
     }
 
-    public void printDealerCards(final Dealer dealer) {
-        List<Card> cards = dealer.showCards();
+    public void printDealerCards(final DealerDto dealer) {
+        List<Card> cards = dealer.getCards();
         Card dealerCard = cards.get(0);
         System.out.println(dealer.getName() + "카드: " + toCardView(dealerCard));
     }
 
-    private static List<String> extractPlayerNames(final Players players) {
-        return players.getPlayers().stream()
-                .map(Player::getName)
+    private static List<String> extractPlayerNames(final List<PlayerDto> players) {
+        return players.stream()
+                .map(PlayerDto::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -64,10 +63,10 @@ public class OutputView {
         System.out.println(DEALER_DEFAULT_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printCardResult(final Dealer dealer, final Players players) {
+    public void printCardResult(final DealerDto dealer, final List<PlayerDto> players) {
         System.out.println();
-        System.out.println(dealer.getName() + "카드: " + toCardsView(dealer.showCards()) + " - 결과: " + toScoreView(dealer.getScore()));
-        players.getPlayers().forEach(player -> System.out.println(player.getName() + "카드: " + toCardsView(player.showCards()) + " - 결과: " + toScoreView(player.getScore())));
+        System.out.println(dealer.getName() + "카드: " + toCardsView(dealer.getCards()) + " - 결과: " + toScoreView(dealer.getScore()));
+        players.forEach(player -> System.out.println(player.getName() + "카드: " + toCardsView(player.getCards()) + " - 결과: " + toScoreView(player.getScore())));
         System.out.println();
     }
 

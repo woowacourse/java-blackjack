@@ -5,6 +5,8 @@ import blackjack.domain.game.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.dto.DealerDto;
+import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -46,12 +48,17 @@ public class BlackjackController {
 
     private void initDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         blackjackGame.initDraw(dealer, players);
-        outputView.printInitCards(dealer, players);
+
+        DealerDto dealerDto = new DealerDto(dealer);
+        List<PlayerDto> playersDto = players.getPlayers().stream()
+                .map(PlayerDto::new)
+                .collect(Collectors.toList());
+
+        outputView.printInitCards(dealerDto, playersDto);
     }
 
     private void playerDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
-
         processDealerDraw(dealer, blackjackGame);
     }
 
@@ -74,7 +81,13 @@ public class BlackjackController {
     }
 
     private void endGame(final Players players, final Dealer dealer) {
-        outputView.printCardResult(dealer, players);
+        DealerDto dealerDto = new DealerDto(dealer);
+
+        List<PlayerDto> playersDto = players.getPlayers().stream()
+                .map(PlayerDto::new)
+                .collect(Collectors.toList());
+
+        outputView.printCardResult(dealerDto, playersDto);
         printResult(dealer, players);
     }
 
