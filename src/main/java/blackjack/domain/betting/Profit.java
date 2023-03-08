@@ -12,8 +12,11 @@ public class Profit {
         return new Profit(value + (int) (value * 0.5));
     }
 
-    public Profit reverse() {
-        return new Profit(-value);
+    public Profit loss() {
+        if (value > 0) {
+            return new Profit(-value);
+        }
+        return this;
     }
 
     public int getValue() {

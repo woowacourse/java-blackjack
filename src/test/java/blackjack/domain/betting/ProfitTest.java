@@ -24,24 +24,24 @@ class ProfitTest {
     }
 
     @Nested
-    class reverse_메서드는 {
+    class loss_메서드는 {
 
         @Test
         void 수익이_양수인_경우_음수가_된다() {
             final Profit profit = new Profit(10000);
 
-            final Profit reverse = profit.reverse();
+            final Profit reverse = profit.loss();
 
             assertThat(reverse.getValue()).isEqualTo(-10000);
         }
 
         @Test
-        void 수익이_음수인_경우_양수가_된다() {
+        void 수익이_음수인_경우_유지한다() {
             final Profit profit = new Profit(-10000);
 
-            final Profit reverse = profit.reverse();
+            final Profit reverse = profit.loss();
 
-            assertThat(reverse.getValue()).isEqualTo(10000);
+            assertThat(reverse.getValue()).isEqualTo(-10000);
         }
     }
 }
