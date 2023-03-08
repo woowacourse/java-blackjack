@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
+import domain.card.CardShuffler;
 import domain.game.BlackJackGame;
 import domain.player.BettingMoney;
 import domain.player.Gambler;
@@ -20,6 +21,12 @@ import static java.util.stream.Collectors.toMap;
 
 public class BlackJackController {
 
+    private final CardShuffler cardShuffler;
+
+    public BlackJackController(final CardShuffler cardShuffler) {
+        this.cardShuffler = cardShuffler;
+    }
+
     public void run() {
         final BlackJackGame blackJackGame = setUpGame();
         hitOrStayForGamblers(blackJackGame);
@@ -31,7 +38,7 @@ public class BlackJackController {
         final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
         final Map<Name, BettingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
 
-        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
+        final CardDeck cardDeck = CardDeck.shuffledFullCardDeck(cardShuffler);
         final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBattingMoneyMap);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
         return blackJackGame;
