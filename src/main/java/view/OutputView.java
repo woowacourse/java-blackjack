@@ -26,6 +26,10 @@ public class OutputView {
     private static final String DIVIDE_DELIMITER = ", ";
     private static final StringBuilder message = new StringBuilder();
 
+    private static void resetMessage() {
+        message.setLength(0);
+    }
+
     public static void printReady(List<String> playerNames) {
         resetMessage();
         String printablePlayerNames = String.join(DIVIDE_DELIMITER, playerNames);
@@ -34,22 +38,29 @@ public class OutputView {
         System.out.println(message);
     }
 
+    public static void printDealerReadyStatus(String dealerName, List<Card> dealerHand) {
+        printNameAndHand(dealerName, dealerHand);
+    }
+
+    public static void printPlayersReadyStatus(List<String> playerNames, List<List<Card>> playerHands) {
+        for (int i = 0; i < playerNames.size(); i++) {
+            String currentPlayerName = playerNames.get(i);
+            List<Card> currentPlayerHand = playerHands.get(i);
+            printPlayerReadyStatus(currentPlayerName, currentPlayerHand);
+        }
+        printLineSeparator();
+    }
+
+    public static void printPlayerReadyStatus(String playerName, List<Card> playerHand) {
+        printNameAndHand(playerName, playerHand);
+    }
+
     private static void printNameAndHand(String name, List<Card> hand) {
         resetMessage();
         String printableHand = hand.stream()
             .map(OutputView::formatCard)
             .collect(Collectors.joining(DIVIDE_DELIMITER));
         message.append(name).append(COLON).append(printableHand);
-        System.out.println(message);
-    }
-
-    public static void printNameAndHandAndPoint(String name, List<Card> hand, int point) {
-        resetMessage();
-        String printableHand = hand.stream()
-            .map(OutputView::formatCard)
-            .collect(Collectors.joining(DIVIDE_DELIMITER));
-        message.append(name).append(CARD).append(COLON).append(printableHand);
-        message.append(RESULT + COLON).append(point);
         System.out.println(message);
     }
 
@@ -76,10 +87,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER_GET_CARD);
     }
 
-    public static void printDealerGameResult(GameResult dealerResult, int playerCount) {
-        int winCount = dealerResult.getWinCount();
-        int loseCount = dealerResult.getLoseCount();
-        int drawCount = playerCount - winCount - loseCount;
+    public static void printDealerGameResult(long winCount, long drawCount, long loseCount) {
         resetMessage();
         message.append(System.lineSeparator()).append(FINAL_RESULT).append(System.lineSeparator());
         message.append(DEALER + COLON);
@@ -87,28 +95,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printPlayerBoxResult(String name, GameResult gameResult) {
-        resetMessage();
-        message.append(name).append(COLON);
-        message.append(addPlayerResultMessage(gameResult.getWinCount(), gameResult.getLoseCount()));
-        System.out.println(message);
-    }
-
-    private static void resetMessage() {
-        message.setLength(0);
-    }
-
-    private static String addPlayerResultMessage(int winCount, int loseCount) {
-        if (winCount == 1) {
-            return WIN;
-        }
-        if (loseCount == 1) {
-            return LOSE;
-        }
-        return DRAW;
-    }
-
-    private static String addDealerResultMessage(int winCount, int drawCount, int loseCount) {
+    private static String addDealerResultMessage(long winCount, long drawCount, long loseCount) {
         String printResult = "";
         if (winCount > 0) {
             printResult += winCount + WIN;
@@ -122,24 +109,42 @@ public class OutputView {
         return printResult;
     }
 
+    public static void printPlayerGameResult(String name, GameResult gameResult) {
+        resetMessage();
+        message.append(name).append(COLON);
+        message.append(addPlayerResult(gameResult));
+        System.out.println(message);
+    }
+
+    private static String addPlayerResult(GameResult gameResult) {
+        if (gameResult == GameResult.WIN) {
+            return WIN;
+        }
+        if (gameResult == GameResult.LOSE) {
+            return LOSE;
+        }
+        return DRAW;
+    }
+
+    public static void printDealerNameAndHandAndPoint(String dealerName, List<Card> dealerHand, int dealerPoint) {
+        printNameAndHandAndPoint(dealerName, dealerHand, dealerPoint);
+    }
+
+    public static void printPlayerNameAndHandAndPoint(String playerName, List<Card> playerHand, int playerPoint) {
+        printNameAndHandAndPoint(playerName, playerHand, playerPoint);
+    }
+
     public static void printLineSeparator() {
         System.out.print(System.lineSeparator());
     }
 
-    public static void printDealerReadyStatus(String dealerName, List<Card> initialHand) {
-        printNameAndHand(dealerName, initialHand);
-    }
-
-    public static void printPlayersReadyStatus(List<String> playerNames, List<List<Card>> playerHands) {
-        for (int i = 0; i < playerNames.size(); i++) {
-            String currentPlayerName = playerNames.get(i);
-            List<Card> currentPlayerHand = playerHands.get(i);
-            printNameAndHand(currentPlayerName, currentPlayerHand);
-        }
-        printLineSeparator();
-    }
-
-    public static void printPlayerReadyStatus(String playerName, List<Card> playerHand) {
-        printNameAndHand(playerName, playerHand);
+    private static void printNameAndHandAndPoint(String name, List<Card> hand, int point) {
+        resetMessage();
+        String printableHand = hand.stream()
+            .map(OutputView::formatCard)
+            .collect(Collectors.joining(DIVIDE_DELIMITER));
+        message.append(name).append(CARD).append(COLON).append(printableHand);
+        message.append(RESULT + COLON).append(point);
+        System.out.println(message);
     }
 }

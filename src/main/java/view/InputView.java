@@ -21,4 +21,8 @@ public class InputView {
     private static String readLine() {
         return scanner.nextLine();
     }
+
+    public static void printErrorMessage(Exception exception) {
+        System.out.println(exception.getMessage());
+    }
 }

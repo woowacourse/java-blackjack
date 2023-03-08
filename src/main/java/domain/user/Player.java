@@ -1,9 +1,8 @@
 package domain.user;
 
+import domain.Hand;
+import domain.PlayerName;
 import domain.card.Card;
-import domain.card.Denomination;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,56 +10,35 @@ public class Player {
 
     protected static final String DEALER_NAME = "딜러";
     public static final int INITIAL_HAND_COUNT = 2;
-    protected final String name;
-    protected final List<Card> hand = new ArrayList<>();
+    protected final PlayerName name;
+    protected Hand hand = Hand.valueOf(null);
 
     public Player(String name) {
-        this.name = name;
+        this.name = new PlayerName(name);
     }
 
     public void dealt(Card card) {
-        hand.add(card);
+        hand = hand.add(card);
     }
 
-    public List<Card> faceUpInitialHand() {
-        if (hand.size() < INITIAL_HAND_COUNT) {
+    public List<Card> getInitialHand() {
+        if (hand == null || hand.getSize() < INITIAL_HAND_COUNT) {
             throw new IllegalStateException("모든 플레이어는 카드 두장을 받고 시작해야 합니다.");
         }
-        return List.of(hand.get(0), hand.get(1));
+        List<Card> card = hand.getAllCards();
+        return List.of(card.get(0), card.get(1));
     }
 
-    public List<Card> showHand() {
-        return Collections.unmodifiableList(hand);
-    }
-
-    public int calculatePoint() {
-        int point = 0;
-        for (Card card : hand) {
-            point += card.getDenomination().getPoint();
-        }
-        if (hasAce()) {
-            return calculateAce(point);
-        }
-        return point;
-    }
-
-    public boolean hasAce() {
-        return hand.stream().anyMatch((card) -> card.getDenomination() == Denomination.ACE);
-    }
-
-    protected int calculateAce(int point) {
-        if (point + 10 <= 21) {
-            return point + 10;
-        }
-        return point;
-    }
-
-    public boolean isPlayer() {
-        return !name.equals(DEALER_NAME);
+    public List<Card> getHand() {
+        return hand.getAllCards();
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
+    }
+
+    public int getPoint() {
+        return hand.calculatePoint();
     }
 
     @Override
@@ -78,6 +56,14 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+            "name='" + name + '\'' +
+            ", hand=" + hand +
+            '}';
     }
 }
 

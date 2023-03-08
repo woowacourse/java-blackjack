@@ -10,30 +10,11 @@ public class Dealer extends Player {
     }
 
     @Override
-    public int calculatePoint() {
-        int point = 0;
-        for (Card card : hand) {
-            point += card.getDenomination().getPoint();
-        }
-        if (hasAce()) {
-            return calculateAce(point);
-        }
-        return point;
-    }
-
-    @Override
-    protected int calculateAce(int point) {
-        if (point > 6) {
-            return point + 10;
-        }
-        return point;
-    }
-
-    @Override
-    public List<Card> faceUpInitialHand() {
-        if (hand.size() < 2) {
+    public List<Card> getInitialHand() {
+        if (hand == null || hand.getSize() < INITIAL_HAND_COUNT) {
             throw new IllegalStateException("딜러는 카드 두장을 받고 시작해야 합니다.");
         }
-        return List.of(hand.get(0));
+        List<Card> card = hand.getAllCards();
+        return List.of(card.get(0));
     }
 }

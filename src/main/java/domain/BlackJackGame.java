@@ -1,66 +1,106 @@
 package domain;
 
-import domain.box.GameBoxes;
+import domain.board.DealerBoard;
+import domain.board.GameBoard;
+import domain.board.PlayerBoard;
+import domain.board.PlayerBoards;
+import domain.card.Card;
 import domain.card.Deck;
+import domain.user.Dealer;
 import domain.user.Player;
-import dto.ParticipantDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private static final int DEALER_THRESHOLDS = 16;
     private final Deck deck = new Deck();
-    private final GameBoxes gameBoxes;
+    private final GameBoard gameBoard;
 
-    public BlackJackGame(String participantNames) {
-        this.gameBoxes = GameBoxes.of(participantNames);
+    private BlackJackGame(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public static BlackJackGame from(PlayerBoards playerBoards) {
+        DealerBoard dealerBoard = new DealerBoard(new Dealer(), PlayerStatus.HIT_ABLE);
+        return new BlackJackGame(new GameBoard(playerBoards, dealerBoard));
     }
 
     public void initializeHand() {
         deck.shuffle();
-        List<Player> playersAndDealerAtLast = gameBoxes.getPlayersAndDealerAtLast();
-        dealToAll(playersAndDealerAtLast);
-        dealToAll(playersAndDealerAtLast);
+        DealerBoard dealerBoard = gameBoard.getDealerBoard();
+        dealTo(dealerBoard.getDealer());
+        dealTo(dealerBoard.getDealer());
+        dealerBoard.update();
+        gameBoard.getPlayerBoards().forEach((playerBoard -> {
+            dealTo(playerBoard.getPlayer());
+            dealTo(playerBoard.getPlayer());
+            playerBoard.update(TurnAction.HIT);
+        }));
     }
 
-    private void dealToAll(List<Player> targets) {
-        targets.forEach(this::dealTo);
-        targets.forEach(gameBoxes::updatePlayerBox);
+    private void dealTo(Player player) {
+        player.dealt(deck.draw());
     }
 
-    private void dealTo(Player participant) {
-        participant.dealt(deck.draw());
-    }
-
-    public void playTurn(Player player, TurnAction turnAction) {
+    public void playerPlay(TurnAction turnAction) {
+        PlayerBoard currentPlayerBoard = getCurrentPlayerBoard();
         if (turnAction == TurnAction.HIT) {
-            dealTo(player);
+            dealTo(currentPlayerBoard.getPlayer());
         }
-        gameBoxes.updatePlayerBox(player);
+        currentPlayerBoard.update(turnAction);
     }
 
-    public Player getCurrentPlayer() {
-        return gameBoxes.getCurrentTurnPlayer();
+    public PlayerBoard getCurrentPlayerBoard() {
+        return gameBoard.getCurrentTurnPlayerBoard();
     }
 
-    public boolean isDealerUnderThresholds(Player dealer) {
-        return dealer.calculatePoint() <= DEALER_THRESHOLDS;
+    public boolean dealerNeedMoreCard() {
+        return gameBoard.dealerNeedMoreCard();
     }
 
-    public void makeParticipants(ParticipantDTO participantDTO) {
-        gameBoxes.setParticipantDTO(participantDTO);
+    public List<String> getPlayerNames() {
+        return gameBoard.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public GameResult getDealerGameResult(List<GameResult> playerBoxResults) {
-        GameResult dealerBoxResult = new GameResult(0, 0);
-        for (GameResult playerBoxResult : playerBoxResults) {
-            dealerBoxResult = dealerBoxResult.addReversed(playerBoxResult);
-        }
-        return dealerBoxResult;
+    public List<List<Card>> getPlayerInitialHand() {
+        return gameBoard.getPlayers().stream().map(Player::getInitialHand).collect(Collectors.toList());
     }
 
-    public List<GameResult> getPlayerGameResults(List<Player> players) {
-        return players.stream().map(gameBoxes::getGameResult).collect(Collectors.toList());
+    public String getDealerName() {
+        return gameBoard.getDealer().getName();
+    }
+
+    public List<Card> getDealerInitialHand() {
+        return gameBoard.getDealer().getInitialHand();
+    }
+
+
+    public Dealer getDealer() {
+        return gameBoard.getDealer();
+    }
+
+    public boolean isGameLeft() {
+        return gameBoard.isGameLeft();
+    }
+
+    public void dealerPlay() {
+        dealTo(gameBoard.getDealer());
+        gameBoard.getDealerBoard().update();
+    }
+
+//    public GameResult getDealerGameResult(List<GameResult> playerBoxResults) {
+//        GameResult dealerBoxResult = new GameResult(0, 0);
+//        for (GameResult playerBoxResult : playerBoxResults) {
+//            dealerBoxResult = dealerBoxResult.addReversed(playerBoxResult);
+//        }
+//        return dealerBoxResult;
+//    }
+
+    public List<GameResult> getPlayersGameResult() {
+        return gameBoard.getPlayersGameResult();
+    }
+
+    public List<Player> getPlayers() {
+        return gameBoard.getPlayers();
     }
 }

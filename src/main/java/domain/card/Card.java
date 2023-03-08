@@ -36,4 +36,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(denomination, suit);
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+            "denomination=" + denomination +
+            ", suit=" + suit +
+            '}';
+    }
 }
