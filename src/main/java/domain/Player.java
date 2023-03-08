@@ -40,7 +40,7 @@ public class Player extends Participant {
 //    }
 
     public int getProfit(Result result) {
-        int currentMoney = result.updateBalance(betAmount, this.isBlackjack()).getMoney();
+        int currentMoney = result.payOut(betAmount, this.isBlackjack()).getMoney();
         int bettingMoney = betAmount.getMoney();
 
         return currentMoney - bettingMoney;
