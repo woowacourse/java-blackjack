@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +24,10 @@ class ResultTest {
     private Player player2;
     private Player player3;
     private Players players;
-    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         players = new Players(List.of("1", "2", "3"));
-        dealer = new Dealer();
         player1 = players.getPlayers().get(0);
         player2 = players.getPlayers().get(1);
         player3 = players.getPlayers().get(2);
