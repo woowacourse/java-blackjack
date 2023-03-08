@@ -8,6 +8,7 @@ import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -39,5 +40,12 @@ class DealerTest {
                                 new Card(Shape.CLOVER, Number.SEVEN)),
                         false)
         );
+    }
+
+    @Test
+    @DisplayName("딜러의 이름은 '딜러'이다")
+    void dealer_name_is_dealer() {
+        Player dealer = new Dealer();
+        assertThat(dealer.getName()).isEqualTo("딜러");
     }
 }
