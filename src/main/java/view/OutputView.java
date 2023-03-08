@@ -1,11 +1,11 @@
 package view;
 
 import domain.card.Card;
-import domain.card.Shape;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.result.WinningResult;
 import domain.result.WinningStatus;
 import java.util.List;
 import java.util.Map;
@@ -75,11 +75,17 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + System.lineSeparator());
     }
 
-    public void printFinalResult() {
+    public void printResult(final WinningResult winningResult) {
+        printFinalResult();
+        printDealerResult(winningResult.getDealerResult());
+        printPlayerResult(winningResult.getPlayersResult());
+    }
+
+    private void printFinalResult() {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerResult(final Map<WinningStatus, Integer> dealerResult) {
+    private void printDealerResult(final Map<WinningStatus, Integer> dealerResult) {
         StringBuilder dealerDisplay = new StringBuilder();
         int winCount = dealerResult.getOrDefault(WinningStatus.WIN, 0);
         int tieCount = dealerResult.getOrDefault(WinningStatus.DRAW, 0);
@@ -96,7 +102,7 @@ public final class OutputView {
         System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
     }
 
-    public void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
+    private void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
         for (Player player : playersResult.keySet()) {
             WinningStatus winningStatus = playersResult.get(player);
             System.out.printf("%s: %s" + System.lineSeparator(), player.getName(),

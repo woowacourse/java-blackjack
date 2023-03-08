@@ -82,8 +82,6 @@ public final class MainController {
 
         WinningResult winningResult = new WinningResult(blackJackGame.getParticipants());
 
-        outputView.printFinalResult();
-        outputView.printDealerResult(winningResult.getDealerResult());
-        outputView.printPlayerResult(winningResult.getPlayersResult());
+        outputView.printResult(winningResult);
     }
 }
