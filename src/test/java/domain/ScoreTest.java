@@ -68,4 +68,16 @@ class ScoreTest {
         assertThat(from).isSameAs(from1);
     }
 
+    @Test
+    @DisplayName("value가 같으면 비긴다.")
+    void drawTest() {
+        //given
+        Score score1 = Score.from(10);
+        Score score2 = Score.from(10);
+        //when
+        DealerStatus dealerStatus = score1.compareScore(score2);
+        //then
+        assertThat(dealerStatus).isEqualTo(DealerStatus.DRAW);
+    }
+
 }
