@@ -23,23 +23,23 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
 
-    public void printPlayersName(List<String> participantNames) {
+    public static void printPlayersName(List<String> participantNames) {
         printEmptyLine();
         String participants = String.join(DELIMITER, participantNames);
         System.out.printf(INIT_FINISHIED_MESSAGE, participants);
     }
 
-    public void printParticipantCard(String name, List<String> participantsHand) {
+    public static void printParticipantCard(String name, List<String> participantsHand) {
         String cards = String.join(DELIMITER, participantsHand);
         System.out.printf((PARTICIPANT_CARD_FORMAT), name, cards);
     }
 
-    public void printDealerPickCardMessage() {
+    public static void printDealerPickCardMessage() {
         System.out.println(DEALER_HIT_MESSAGE);
         printEmptyLine();
     }
 
-    public void printParticipantHandValue(String participantName, int handValue, List<Card> participantCards, boolean isBust) {
+    public static void printParticipantHandValue(String participantName, int handValue, List<Card> participantCards, boolean isBust) {
         List<String> cardNames = new ArrayList<>();
         summariseParticipantHand(participantCards, cardNames);
         String cards = String.join(DELIMITER, cardNames);
@@ -50,7 +50,7 @@ public class OutputView {
         System.out.printf((PARTICIPANT_HAND_SUM), participantName, cards, handValue);
     }
 
-    private void summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
+    private static void summariseParticipantHand(final List<Card> participantCards, final List<String> cardNames) {
         for (Card card : participantCards) {
             final String rankMessage = RankMessage.getRankMessage(card.getRank());
             final String suitMessage = SuitMessage.getSuitMessage(card.getSuit());
@@ -58,23 +58,23 @@ public class OutputView {
         }
     }
 
-    public void printEmptyLine() {
+    public static void printEmptyLine() {
         System.out.println();
     }
 
-    public void printDealerResult(Map<Result, Integer> dealerResult) {
+    public static void printDealerResult(Map<Result, Integer> dealerResult) {
         System.out.printf((DEALER_RESULT_FORMAT),
                 dealerResult.getOrDefault(Result.WIN,0),
                 dealerResult.getOrDefault(Result.TIE,0),
                 dealerResult.getOrDefault(Result.LOSE,0));
     }
 
-    public void printPlayerResult(String name, Result result) {
+    public static void printPlayerResult(String name, Result result) {
         final String resultMessage = exchangeResultMessage(result);
         System.out.printf((RESULT_FORMAT), name, resultMessage);
     }
 
-    private String exchangeResultMessage(final Result result) {
+    private static String exchangeResultMessage(final Result result) {
         if (result.equals(Result.WIN)) {
             return WIN_MESSAGE;
         }
@@ -84,12 +84,12 @@ public class OutputView {
         return TIE_MESSAGE;
     }
 
-    public void printResultInfo() {
+    public static void printResultInfo() {
         printEmptyLine();
         System.out.println(RESULT_TAG);
     }
 
-    public void printExceptionMessage(IllegalArgumentException e) {
+    public static void printExceptionMessage(IllegalArgumentException e) {
         final ExceptionCode exceptionCode = ExceptionCode.getExceptionCodeName(e.getMessage());
         final String exceptionMessage = ExceptionMessage.getExceptionMessage(exceptionCode);
 

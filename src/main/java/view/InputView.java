@@ -14,29 +14,29 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final Scanner scanner = new Scanner(System.in);
 
-    private void askInputNames() {
+    private static void askInputNames() {
         System.out.println(ASK_INPUT_NAMES_MESSAGE);
     }
 
-    public List<String> requestNames() {
+    public static List<String> requestNames() {
         askInputNames();
         return Arrays.asList(scanner.nextLine().split(DELIMITER, -1));
     }
 
 
 
-    private void askDrawingCard(String name) {
+    private static void askDrawingCard(String name) {
         System.out.printf(HIT_OR_STAY_REQUEST_MESSAGE, name);
     }
 
-    public String requestDrawingCard(String name) {
+    public static String requestDrawingCard(String name) {
         askDrawingCard(name);
         String drawingCardRequest = scanner.nextLine();
         validateDrawingCardRequest(drawingCardRequest);
         return drawingCardRequest;
     }
 
-    private void validateDrawingCardRequest(String drawingCardRequest) {
+    private static void validateDrawingCardRequest(String drawingCardRequest) {
         if (!drawingCardRequest.equals(HIT_REQUEST) && !drawingCardRequest.equals(STAY_REQUEST)) {
             throw new IllegalArgumentException(ExceptionCode.INVALID_HIT_OR_STAY.getExceptionCode());
         }

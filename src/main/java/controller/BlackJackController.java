@@ -18,20 +18,16 @@ public class BlackJackController {
     private static final int INITIAL_CARD_COUNT = 2;
     private static final String HIT_RESPONSE = "y";
 
-    private final InputView inputView;
-    private final OutputView outputView;
-
+    private final Deck deck;
     public BlackJackController() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
+        deck = Deck.from(new RandomShuffleStrategy());
     }
 
     public void run() {
-        Deck deck = Deck.from(new RandomShuffleStrategy());
         Participants participants = makeParticipants();
 
         dealInitialCards(deck, participants);
-        outputView.printPlayersName(participants.getPlayersName());
+        OutputView.printPlayersName(participants.getPlayersName());
         showParticipantsInitCardsStatus(participants);
 
         play(deck, participants);
@@ -42,9 +38,9 @@ public class BlackJackController {
 
     private Participants makeParticipants() {
         try {
-            return Participants.from(inputView.requestNames());
+            return Participants.from(InputView.requestNames());
         } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e);
+            OutputView.printExceptionMessage(e);
             return makeParticipants();
         }
     }
@@ -63,9 +59,9 @@ public class BlackJackController {
         insertPlayersCardsStatus(participants, participantsHands);
 
         for (Map.Entry<String, List<String>> participantHand : participantsHands.entrySet()) {
-            outputView.printParticipantCard(participantHand.getKey(), participantHand.getValue());
+            OutputView.printParticipantCard(participantHand.getKey(), participantHand.getValue());
         }
-        outputView.printEmptyLine();
+        OutputView.printEmptyLine();
     }
 
     private static void insertPlayersCardsStatus(final Participants participants, final Map<String, List<String>> participantsHands) {
@@ -89,15 +85,15 @@ public class BlackJackController {
         try {
             drawCardByInput(player, deck);
         } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e);
+            OutputView.printExceptionMessage(e);
             playerHitOrStay(player, deck);
         }
     }
 
     private void drawCardByInput(Participant player, Deck deck) {
-        while (isHit(inputView.requestDrawingCard(player.getName()))) {
+        while (isHit(InputView.requestDrawingCard(player.getName()))) {
             player.receiveCard(deck.draw());
-            outputView.printParticipantCard(player.getName(), player.getCardNames());
+            OutputView.printParticipantCard(player.getName(), player.getCardNames());
         }
     }
 
@@ -108,19 +104,19 @@ public class BlackJackController {
     private void dealerContinueDrawingCards(final Deck deck, final Participants participants) {
         while (participants.shouldDealerHit()) {
             participants.findDealer().receiveCard(deck.draw());
-            outputView.printDealerPickCardMessage();
+            OutputView.printDealerPickCardMessage();
         }
     }
 
     private void showResults(GameResult gameResult) {
         showParticipantsScore(gameResult);
-        outputView.printResultInfo();
+        OutputView.printResultInfo();
         showParticipantsWinningStatus(gameResult);
     }
 
     private void showParticipantsScore(final GameResult gameResult) {
         for (Map.Entry<Participant, Boolean> participantScore : gameResult.getParticipantsBustStatus().entrySet()) {
-            outputView.printParticipantHandValue(
+            OutputView.printParticipantHandValue(
                     participantScore.getKey().getName(),
                     participantScore.getKey().getHandValue(),
                     participantScore.getKey().getCards(),
@@ -131,9 +127,9 @@ public class BlackJackController {
     private void showParticipantsWinningStatus(final GameResult gameResult) {
         Map<Participant, Result> playerResults = gameResult.getPlayerStatus();
         Map<Result, Integer> dealerResults = gameResult.getDealerStatus(playerResults);
-        outputView.printDealerResult(dealerResults);
+        OutputView.printDealerResult(dealerResults);
         for (Map.Entry<Participant, Result> playerResult : playerResults.entrySet()) {
-            outputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
+            OutputView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
         }
     }
 }
