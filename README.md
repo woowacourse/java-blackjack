@@ -10,10 +10,9 @@
 - [x] `Card`를 받는다.
 
 ### Dealer
-- [ ] "딜러" 라는 이름을 가진다.
-- [x] `Players`를 가진다.
+- [x] "딜러" 라는 이름을 가진다.
 - [x] `Deck`을 가진다.
-- [ ] `Participant`를 가진다.
+- [x] `Participant`를 가진다.
 - [x] 초기 게임 세팅을 한다.
 - [x] `Player`에게 카드를 한 장 준다.
 - [x] 최종 승패를 결정한다.
@@ -21,11 +20,12 @@
 
 ### Player
 - [x] 이름의 길이는 최소 1글자에서 최대 5글자이다.
-- [ ] `Participant`를 가진다.
+- [x] `Participant`를 가진다.
 
 ### Players
 - [x] 입력된 이름들로 `Player`를 만들어 가진다.
   - [X] 최소 2명에서 최대 8명의 `Players`를 생성한다.
+- [x] `Dealer`의 점수와 `Player`들의 점수를 비교하여 결과를 확인한다.
 
 ### Card
 - [x] `Number`와 `Pattern`을 가진다.
