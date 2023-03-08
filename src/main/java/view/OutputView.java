@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.user.CardPool;
 import domain.user.Dealer;
 import domain.game.GameResult;
 import domain.user.Player;
@@ -19,23 +20,30 @@ public class OutputView {
         players.forEach(player -> stringJoiner.add(player.getPlayerName().getName()));
         System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealer.getPlayerName().getName(), stringJoiner);
 
-        printPlayerCardWithName(dealer);
+        printDealerCardWithName(dealer);
         for (Player player : players) {
             printPlayerCardWithName(player);
         }
     }
 
-    public void printPlayerCardWithName(final Player player) {
-        System.out.println(makePlayerCardMessageWithName(player));
+    private void printDealerCardWithName(final Dealer dealer) {
+        System.out.println(makePlayerName(dealer) + makePlayerCardMessage(dealer.getHiddenCardPool()));
     }
 
-    public String makePlayerCardMessageWithName(final Player player) {
-        String cardStr = player.getPlayerName().getName() + "카드: ";
+    public void printPlayerCardWithName(final Player player) {
+        System.out.println(makePlayerName(player) + makePlayerCardMessage(player.getCardPool()));
+    }
+
+    private String makePlayerName(final Player player) {
+        return player.getPlayerName().getName();
+    }
+
+    public String makePlayerCardMessage(final CardPool cardPool) {
         StringJoiner stringJoiner = new StringJoiner(", ");
-        for (Card card : player.getCardPool().getCards()) {
+        for (Card card : cardPool.getCards()) {
             stringJoiner.add(CardNumberMapper.ofCardNumber(card.getNumber()) + CardTypeMapper.ofCardType(card.getType()));
         }
-        return cardStr + stringJoiner;
+        return "카드: " + stringJoiner;
     }
 
     public void printDealerHitMessage() {
@@ -44,7 +52,7 @@ public class OutputView {
 
     public void printDealerRecord(final Dealer dealer, final Map<GameResult, Integer> dealerRecord) {
         System.out.println("## 최종 승패");
-        System.out.print(dealer.getPlayerName().getName() + " : ");
+        System.out.print(makePlayerName(dealer)+ " : ");
 
         for (GameResult gameResult : dealerRecord.keySet()) {
             if (dealerRecord.get(gameResult) != 0) {
@@ -56,7 +64,7 @@ public class OutputView {
 
     public void printPlayerRecord(final Map<Player, GameResult> gameResultMap) {
         for (Player player : gameResultMap.keySet()) {
-            System.out.println(player.getPlayerName().getName() + " : " + GameResultMapper.getGameResult(gameResultMap.get(player)));
+            System.out.println(makePlayerName(player) + " : " + GameResultMapper.getGameResult(gameResultMap.get(player)));
         }
     }
 
@@ -68,7 +76,7 @@ public class OutputView {
     }
 
     private void printScore(final Player player) {
-        System.out.println(makePlayerCardMessageWithName(player) + " - 결과 : " + player.sumCardPool());
+        System.out.println(makePlayerName(player) + makePlayerCardMessage(player.getCardPool()) + " - 결과 : " + player.sumCardPool());
     }
 
     public void printExceptionMessage(String message) {
