@@ -8,8 +8,17 @@ import java.util.stream.Collectors;
 
 public class Player extends User {
 
+    static final String NAME_EQUAL_DEALER_CODE_EXCEPTION_MESSAGE = "이름은 딜러코드(" + Dealer.DEALER_NAME_CODE + ") 와 같을 수 없습니다.";
+
     public Player(String name, CardGroup cardGroup) {
         super(name, cardGroup);
+        validateIsNameDealerCode(name);
+    }
+
+    private void validateIsNameDealerCode(final String name) {
+        if (name.equals(Dealer.DEALER_NAME_CODE)) {
+            throw new IllegalArgumentException(NAME_EQUAL_DEALER_CODE_EXCEPTION_MESSAGE);
+        }
     }
 
     @Override

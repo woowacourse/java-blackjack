@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.user.Dealer;
+import blackjack.dto.CardAndScoreResult;
 
 import java.util.List;
 import java.util.Map;
@@ -50,15 +51,17 @@ public class OutputView {
         System.out.println(DEALER_DRAW_INFO_MESSAGE);
     }
 
-    public void printCardResult(final String name, final List<String> cardNames, int score) {
-        System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT, name
-                , String.join(DELIMITER, cardNames), score));
-    }
-
     public void printWinningResult(final Map<String, String> winningResults) {
         System.out.println(WINNING_RESULT_INFO_MESSAGE);
         for (String name : winningResults.keySet()) {
             System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, name, winningResults.get(name)));
+        }
+    }
+
+    public void printCarAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
+        for (CardAndScoreResult result : cardAndScoreResult) {
+            System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
+                    result.getName(), ViewRenderer.renderCardsToString(result.getCards()), result.getScoreValue()));
         }
     }
 

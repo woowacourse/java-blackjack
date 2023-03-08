@@ -4,6 +4,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +46,7 @@ class ViewRendererTest {
         Map<String, String> renderedWinningResult = ViewRenderer.renderWinningResult(winningResult);
 
         assertSoftly(softly -> {
-            softly.assertThat(renderedWinningResult.get("딜러")).isEqualTo("1무 1패 ");
+            softly.assertThat(renderedWinningResult.get(Dealer.DEALER_NAME_CODE)).isEqualTo("1무 1패 ");
             softly.assertThat(renderedWinningResult.get("필립")).isEqualTo("승 ");
             softly.assertThat(renderedWinningResult.get("홍실")).isEqualTo("무 ");
         });

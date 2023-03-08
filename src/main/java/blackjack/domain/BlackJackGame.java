@@ -3,10 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Users;
-import blackjack.dto.CardResult;
+import blackjack.dto.CardAndScoreResult;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,15 +46,16 @@ public class BlackJackGame {
         users.drawCard(userName, deck);
     }
 
-    public Map<String, CardResult> getCardResult() {
-        final Map<String, CardResult> cardResult = new HashMap<>();
-        final Map<String, List<Card>> handholdingCards = users.getHandholdingCards();
+    public List<CardAndScoreResult> getCardAndScoreResult() {
+        final Map<String, List<Card>> hands = users.getHandholdingCards();
+        final List<CardAndScoreResult> results = new ArrayList<>();
 
-        for (final String name : handholdingCards.keySet()) {
-            cardResult.put(name, new CardResult(handholdingCards.get(name), users.getScore(name).getValue()));
+        results.add(new CardAndScoreResult(Dealer.DEALER_NAME_CODE,
+                hands.get(Dealer.DEALER_NAME_CODE), users.getScore(Dealer.DEALER_NAME_CODE)));
+        for (String name : users.getPlayerNames()) {
+            results.add(new CardAndScoreResult(name, hands.get(name), users.getScore(name)));
         }
-
-        return cardResult;
+        return results;
     }
 
     public Map<String, GameResult> getGameResult() {

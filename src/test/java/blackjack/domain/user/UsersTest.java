@@ -68,7 +68,7 @@ class UsersTest {
         final Users users = new Users(List.of("필립"), deck);
 
         users.drawDealer(deck);
-        int dealerCardCount = users.getHandholdingCards().get("딜러").size();
+        int dealerCardCount = users.getHandholdingCards().get(Dealer.DEALER_NAME_CODE).size();
 
         assertThat(dealerCardCount).isEqualTo(3);
     }

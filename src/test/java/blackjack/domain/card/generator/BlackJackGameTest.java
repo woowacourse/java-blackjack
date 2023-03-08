@@ -5,7 +5,8 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.dto.CardResult;
+import blackjack.domain.user.Dealer;
+import blackjack.dto.CardAndScoreResult;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class BlackJackGameTest {
                 , new TestDeckGenerator(testCards));
 
         assertThat(blackJackGame.getHandholdingCards().keySet())
-                .contains("필립", "홍실", "딜러");
+                .contains("필립", "홍실", Dealer.DEALER_NAME_CODE);
     }
 
     @Test
@@ -94,11 +95,12 @@ class BlackJackGameTest {
     void getCardResult() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new TestDeckGenerator(testCards));
 
-        CardResult philip = blackJackGame.getCardResult().get("필립");
+        CardAndScoreResult philip = blackJackGame.getCardAndScoreResult().get(1);
 
         SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(philip.getName()).isEqualTo("필립");
             softly.assertThat(philip.getCards()).contains(spadeAce, cloverTen);
-            softly.assertThat(philip.getScore()).isEqualTo(21);
+            softly.assertThat(philip.getScoreValue()).isEqualTo(21);
         });
     }
 

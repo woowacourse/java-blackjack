@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.generator.RandomDeckGenerator;
-import blackjack.dto.CardResult;
+import blackjack.dto.CardAndScoreResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
@@ -71,11 +71,8 @@ public class BackJackController {
     }
 
     private void printCardResult(BlackJackGame blackJackGame) {
-        final Map<String, CardResult> cardResult = blackJackGame.getCardResult();
-        for (final String name : cardResult.keySet()) {
-            final CardResult cardDto = cardResult.get(name);
-            outputView.printCardResult(name, ViewRenderer.renderCardsToString(cardDto.getCards()), cardDto.getScore());
-        }
+        final List<CardAndScoreResult> cardAndScoreResult = blackJackGame.getCardAndScoreResult();
+        outputView.printCarAndScoreResult(cardAndScoreResult);
         outputView.printLineBreak();
     }
 
