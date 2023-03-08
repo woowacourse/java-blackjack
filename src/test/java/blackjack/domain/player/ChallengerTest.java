@@ -26,7 +26,7 @@ class ChallengerTest {
 
     @ParameterizedTest
     @MethodSource("provideCards")
-    @DisplayName("가진 카드의 합이 21 초과인지 확인한다")
+    @DisplayName("카드를 뽑을 수 있는지 확인한다.")
     void checking_sum_is_over_21(List<Card> cards, boolean expected) {
         Player player = new Challenger("neo");
         for (Card card : cards) {
