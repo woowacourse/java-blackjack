@@ -7,6 +7,7 @@ public class Stake {
     private static final int MIN_BET = 100;
     private static final int MAX_BET = 100_000;
     private static final int PLAYER_NEGATE = -1;
+
     private final int value;
 
     public Stake(final int value) {
