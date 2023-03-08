@@ -1,42 +1,35 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.result.Result.DRAW;
-import static blackjack.domain.result.Result.LOSE;
-import static blackjack.domain.result.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 class DealerTest {
 
     private Player player1;
     private Player player2;
-    private Player player3;
+    private Players players;
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        Players players = new Players(List.of("1", "2", "3"));
-        dealer = new Dealer(players);
+        players = new Players(List.of("1", "2", "3"));
+        dealer = new Dealer();
         player1 = players.getPlayers().get(0);
         player2 = players.getPlayers().get(1);
-        player3 = players.getPlayers().get(2);
     }
 
     @Test
     @DisplayName("참가자들과 본인에게 2장의 카드를 나눠준다.")
     void distributeTwoCards() {
-        dealer.settingCards();
+        dealer.settingCards(players);
 
         assertAll(
                 () -> assertThat(dealer.getCards().size()).isEqualTo(2),
@@ -70,21 +63,5 @@ class DealerTest {
         );
     }
 
-    @Test
-    @DisplayName("플레이어의 결과를 이용하여 딜러의 승패를 결정한다.")
-    void makeSelfResultTest() {
-        Map<Player, Result> resultsFromPlayer = new HashMap<>() {{
-            put(player1, WIN);
-            put(player2, DRAW);
-            put(player3, LOSE);
-        }};
 
-        Map<Result, Integer> dealerResult = dealer.countSelfResults(resultsFromPlayer);
-
-        assertAll(
-                () -> assertThat(dealerResult.get(WIN)).isEqualTo(1),
-                () -> assertThat(dealerResult.get(DRAW)).isEqualTo(1),
-                () -> assertThat(dealerResult.get(LOSE)).isEqualTo(1)
-        );
-    }
 }

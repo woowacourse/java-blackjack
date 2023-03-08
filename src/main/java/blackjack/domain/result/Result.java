@@ -44,4 +44,29 @@ public enum Result {
         }
         return WIN;
     }
+
+    public static Map<Result, Integer> resultOfDealer(final Map<Player, Result> playerResults) {
+        Map<Result, Integer> dealerResults = new LinkedHashMap<>() {{
+            put(WIN, 0);
+            put(DRAW, 0);
+            put(LOSE, 0);
+        }};
+
+        for (Result playerResult : playerResults.values()) {
+            compareToPlayerResult(dealerResults, playerResult);
+        }
+        return dealerResults;
+    }
+
+    private static void compareToPlayerResult(final Map<Result, Integer> dealerResult, final Result playerResult) {
+        if (playerResult == WIN) {
+            dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
+            return;
+        }
+        if (playerResult == DRAW) {
+            dealerResult.put(DRAW, dealerResult.get(DRAW) + 1);
+            return;
+        }
+        dealerResult.put(WIN, dealerResult.get(WIN) + 1);
+    }
 }

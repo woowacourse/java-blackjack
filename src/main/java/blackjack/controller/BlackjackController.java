@@ -1,25 +1,31 @@
 package blackjack.controller;
 
-import blackjack.domain.result.Result;
+import static blackjack.view.InputView.askReceiveMoreCard;
+import static blackjack.view.InputView.receivePlayersName;
+import static blackjack.view.OutputView.printCurrentCards;
+import static blackjack.view.OutputView.printDealerDrawOneMoreCard;
+import static blackjack.view.OutputView.printDistributeCardsMessage;
+import static blackjack.view.OutputView.printGameResult;
+import static blackjack.view.OutputView.printParticipantsInitCards;
+import static blackjack.view.OutputView.printParticipantsLastCards;
+
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.domain.result.Result;
 import java.util.Map;
 
 public class BlackjackController {
 
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
+    private Players players;
     private Dealer dealer;
 
     public void run() {
-        Players players = new Players(inputView.receivePlayersName());
-        dealer = new Dealer(players);
+        players = new Players(receivePlayersName());
+        dealer = new Dealer();
 
         settingGame();
-        for (Player player : dealer.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             play(player);
         }
         turnOfDealer();
@@ -28,10 +34,10 @@ public class BlackjackController {
     }
 
     private void settingGame() {
-        dealer.settingCards();
+        dealer.settingCards(players);
 
-        outputView.printDistributeCardsMessage(dealer);
-        outputView.printParticipantsInitCards(dealer);
+        printDistributeCardsMessage(dealer, players);
+        printParticipantsInitCards(dealer, players);
     }
 
     private void play(Player player) {
@@ -41,11 +47,11 @@ public class BlackjackController {
     }
 
     private boolean ask(Player player) {
-        outputView.printCurrentCards(player);
-        boolean receive = inputView.askReceiveMoreCard(player.getName());
+        printCurrentCards(player);
+        boolean receive = askReceiveMoreCard(player.getName());
 
         if (!receive) {
-            outputView.printCurrentCards(player);
+            printCurrentCards(player);
             return false;
         }
         dealer.giveCard(player);
@@ -55,14 +61,14 @@ public class BlackjackController {
     private void turnOfDealer() {
         while (dealer.canDraw()) {
             dealer.drawCard();
-            outputView.printDealerDrawOneMoreCard(dealer);
+            printDealerDrawOneMoreCard(dealer);
         }
     }
 
     private void finishGame() {
-        outputView.printParticipantsLastCards(dealer);
+        printParticipantsLastCards(dealer, players);
 
-        Map<Player, Result> playerResults = dealer.requestResultToPlayers();
-        outputView.printGameResult(dealer.countSelfResults(playerResults), playerResults);
+        Map<Player, Result> playerResults = players.makeResult(dealer.totalScore());
+        printGameResult(Result.resultOfDealer(playerResults), playerResults);
     }
 }
