@@ -6,7 +6,7 @@ import java.util.List;
 public final class Cards {
 
     private final List<Card> cards;
-    private final Score score;
+    private Score score;
 
     private Cards(final int score) {
         this.cards = new ArrayList<>();
@@ -19,14 +19,33 @@ public final class Cards {
 
     public void takeCard(final Card card) {
         cards.add(card);
-        score.sumScore(card);
+        sumScore();
+    }
+
+    private void sumScore() {
+        final int newScore = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+        score = Score.from(newScore);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(this::isAce);
+    }
+
+    private boolean isAce(Card card) {
+        return card.getRank() == Rank.ACE;
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    public int getScore() {
+    public Score getScore() {
+        if (hasAce() && score.canAddBonusScore()) {
+            return score.getScoreWithBonusScore();
+        }
         return score.getScore();
     }
 }
