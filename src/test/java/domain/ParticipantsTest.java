@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,5 +23,19 @@ class ParticipantsTest {
         // then
         assertThat(dealer.getCards()).hasSize(2);
         players.forEach(player -> assertThat(player.getCards()).hasSize(2));
+    }
+
+    @DisplayName("모든 플레이어의 결과를 계산한다.")
+    @Test
+    void 결과_계산() {
+        Participants participants = new Participants(List.of("name1", "name2"));
+        participants.drawInitialCardsEachParticipant(new Deck());
+
+        Map<Player, Result> results = participants.calculateAllResults();
+        List<Player> players = participants.getPlayers();
+
+        players.forEach(player -> {
+            assertThat(results.get(player)).isInstanceOf(Result.class);
+        });
     }
 }
