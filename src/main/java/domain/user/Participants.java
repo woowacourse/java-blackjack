@@ -20,6 +20,7 @@ public class Participants implements Iterable<Playable> {
     public static Participants of(final String participantNames) {
         String[] names = participantNames.split(",");
         List<Player> players = Arrays.stream(names)
+                .map(String::trim)
                 .map(Player::new)
                 .collect(Collectors.toList());
         return new Participants(new Dealer(), players);
@@ -30,7 +31,7 @@ public class Participants implements Iterable<Playable> {
     }
     
     public List<Player> getPlayers() {
-        return new ArrayList<Player>(this.players);
+        return new ArrayList<>(this.players);
     }
     
     @Override
