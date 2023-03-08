@@ -10,8 +10,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        final int currentScore = currentScore();
-        return currentScore < BLACKJACK;
+        return !isBusted();
     }
 
     public String getName() {

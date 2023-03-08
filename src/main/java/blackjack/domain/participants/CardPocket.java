@@ -51,6 +51,10 @@ public class CardPocket {
         return score + BIGGER_VALUE_OF_ACE;
     }
 
+    public boolean isBusted() {
+        return getScore() > BLACKJACK;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

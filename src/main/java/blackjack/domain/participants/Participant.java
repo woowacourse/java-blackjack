@@ -6,7 +6,6 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected static final int BLACKJACK = 21;
     private final CardPocket cardPocket;
 
     protected Participant() {
@@ -26,8 +25,9 @@ public abstract class Participant {
     }
 
     public boolean isBusted() {
-        return currentScore() > BLACKJACK;
+        return cardPocket.isBusted();
     }
 
     public abstract boolean isDrawable();
+
 }
