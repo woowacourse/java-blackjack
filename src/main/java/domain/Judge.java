@@ -2,6 +2,8 @@ package domain;
 
 public class Judge {
 
+    private Judge() {}
+
     public static GameResult of(Dealer dealer, Player player) {
         int dealerScore = dealer.getCards().getScore();
         int playerScore = player.getCards().getScore();
