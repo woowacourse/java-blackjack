@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Card;
 import domain.CardDistributor;
 import domain.Dealer;
 import domain.Name;
@@ -7,11 +8,11 @@ import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Result;
+import dto.CardStatusDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import type.Answer;
-import util.CardStatusConverter;
 import util.InitialCardMaker;
 import view.InputView;
 import view.OutputView;
@@ -64,8 +65,14 @@ public class BlackJackController {
 
     private void printFinalCard(Participant participant) {
         outputView.printCardAndScore(participant.getNameToValue(),
-                CardStatusConverter.convertToCardStatus(participant.getCardList()),
+                getCardStatusFromCards(participant.getCardList()),
                 participant.getTotalScoreToValue());
+    }
+
+    private List<CardStatusDto> getCardStatusFromCards(List<Card> cards) {
+        return cards.stream()
+                .map(CardStatusDto::from)
+                .collect(Collectors.toList());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
@@ -76,13 +83,13 @@ public class BlackJackController {
 
     private void printDealerInitialCard(Dealer dealer) {
         outputView.printCardStatus(dealer.getNameToValue(),
-                CardStatusConverter.convertToCardStatus(List.of(dealer.showOneCard())));
+                getCardStatusFromCards(List.of(dealer.showOneCard())));
     }
 
     private void printPlayersInitialCard(Players players) {
         for (Participant player : players.getPlayers()) {
             outputView.printCardStatus(player.getNameToValue(),
-                    CardStatusConverter.convertToCardStatus(player.getCardList()));
+                    getCardStatusFromCards(player.getCardList()));
         }
     }
 
@@ -102,7 +109,7 @@ public class BlackJackController {
             player.pick(cardDistributor.distribute());
         }
         outputView.printCardStatus(player.getNameToValue(),
-                CardStatusConverter.convertToCardStatus(player.getCardList()));
+                getCardStatusFromCards(player.getCardList()));
     }
 
     private List<String> requestPlayerName() {
