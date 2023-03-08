@@ -9,15 +9,15 @@ class SimpleListTest {
 
     @Test
     public void simpleArrayListTest() {
-        simpleListTest(new SimpleArrayList());
+        simpleListTest(new SimpleArrayList<>());
     }
 
     @Test
     public void simpleLinkedListTest() {
-        simpleListTest(new SimpleLinkedList());
+        simpleListTest(new SimpleLinkedList<>());
     }
 
-    private void simpleListTest(SimpleList values) {
+    private void simpleListTest(SimpleList<String> values) {
         assertThat(values.add("first")).isTrue();
         assertThat(values.add("second")).isTrue();
         assertDoesNotThrow(() -> values.add(0, "zero"));
