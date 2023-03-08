@@ -19,7 +19,6 @@ public class OutputView {
     private static final String POSTFIX_INITIAL_PICK_GUIDE_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String PREFIX_INITIAL_PICK_GUIDE_MESSAGE = "딜러와 ";
     private static final String COLON = ": ";
-    private static final String NEW_LINE = System.lineSeparator();
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String BUSTED_RESULT_GUIDE_MESSAGE = "Busted";
     private static final int FIRST_INDEX_CARD = 0;
@@ -119,6 +118,6 @@ public class OutputView {
     }
 
     private static void printNewLine() {
-        System.out.print(NEW_LINE);
+        System.out.println();
     }
 }

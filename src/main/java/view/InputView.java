@@ -16,7 +16,6 @@ public class InputView {
     private static final String INPUT_Y_OR_N_ERROR_GUIDE_MESSAGE = "[ERROR] y 혹은 n 을 입력해야 합니다.";
     private static final String PLAYER_NAME_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String STAND_GUIDE_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private static final String NEW_LINE = System.lineSeparator();
 
     private InputView() {
     }
@@ -62,6 +61,6 @@ public class InputView {
     }
 
     private static void printNewLine() {
-        System.out.print(NEW_LINE);
+        System.out.println();
     }
 }
