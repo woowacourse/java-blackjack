@@ -73,4 +73,54 @@ class DrawnCardsTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @DisplayName("BlackJack이라면 true를 반환한다.")
+    @Test
+    void is_blackJack() {
+        // given
+        List<Card> cards = new ArrayList<>();
+
+        cards.add(new Card(CardType.SPADE, CardValue.ACE));
+        cards.add(new Card(CardType.SPADE, CardValue.TEN));
+
+        DrawnCards drawnCards = new DrawnCards(cards);
+        // when
+        boolean actual = drawnCards.isBlackJack();
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("점수가 21점이 아니라면 블랙잭이 아니다.")
+    @Test
+    void is_not_blackJack_by_score() {
+
+        // given
+        List<Card> cards = new ArrayList<>();
+
+        cards.add(new Card(CardType.SPADE, CardValue.ACE));
+        cards.add(new Card(CardType.SPADE, CardValue.TWO));
+
+        DrawnCards drawnCards = new DrawnCards(cards);
+        // when
+        boolean actual = drawnCards.isBlackJack();
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("카드가 2장이 아니라면 블랙잭이 아니다.")
+    @Test
+    void is_not_blackJack_by_card_size() {
+        // given
+        List<Card> cards = new ArrayList<>();
+
+        cards.add(new Card(CardType.SPADE, CardValue.TEN));
+        cards.add(new Card(CardType.SPADE, CardValue.NINE));
+        cards.add(new Card(CardType.SPADE, CardValue.TWO));
+
+        DrawnCards drawnCards = new DrawnCards(cards);
+        // when
+        boolean actual = drawnCards.isBlackJack();
+        // then
+        assertThat(actual).isFalse();
+    }
 }
