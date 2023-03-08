@@ -25,12 +25,12 @@ public class Blackjack {
     }
 
     public void play() {
-        playersHitOrStand();
-        dealerHitOrStand();
+        hitOrStandByPlayers();
+        hitOrStandByDealer();
         createResult();
     }
 
-    private void playersHitOrStand() {
+    private void hitOrStandByPlayers() {
         for (Player player : players.getPlayers()) {
             playerHitOrStand(player);
         }
@@ -70,7 +70,7 @@ public class Blackjack {
         }
     }
 
-    private void dealerHitOrStand() {
+    private void hitOrStandByDealer() {
         while (dealer.getScore() <= dealer.getPickBoundary()) {
             dealerHit();
         }
@@ -81,8 +81,8 @@ public class Blackjack {
         printDealerHitMessage();
     }
 
-    public void createResult(){
-        new Result(players, dealer);
+    public void createResult() {
+        result = new Result(players, dealer);
     }
 
     public Map<Gambler, Integer> getResult() {
