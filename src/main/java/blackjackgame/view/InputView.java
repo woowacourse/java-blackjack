@@ -22,10 +22,10 @@ public class InputView {
         }
     }
 
-    public AddCardResponse readWantMoreCard(final String playerName) {
-        System.out.printf(AddCardResponse.printAddCardResponse(playerName));
+    public AddCardRequest readWantMoreCard(final String playerName) {
+        System.out.printf(AddCardRequest.printAddCardRequest(playerName));
         try {
-            return AddCardResponse.validate(scanner.nextLine());
+            return AddCardRequest.validate(scanner.nextLine());
         } catch (IllegalArgumentException e) {
             printErrorMsg(e.getMessage());
             return readWantMoreCard(playerName);

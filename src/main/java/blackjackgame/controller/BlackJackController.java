@@ -7,7 +7,7 @@ import blackjackgame.domain.Deck;
 import blackjackgame.domain.Guest;
 import blackjackgame.domain.Guests;
 import blackjackgame.domain.Result;
-import blackjackgame.view.AddCardResponse;
+import blackjackgame.view.AddCardRequest;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
 
@@ -44,9 +44,9 @@ public class BlackJackController {
     }
 
     private void printFirstHand(final Guests guests, final Dealer dealer) {
-        outputView.printFirstDealerCards(dealer.getName(), DataTransformController.transformCards(dealer.getCards()));
+        outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.transformCards(dealer.getCards()));
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.transformCards(guest.getCards()));
         }
     }
 
@@ -57,19 +57,19 @@ public class BlackJackController {
     }
 
     private void askGuestHitCardRepeat(final Deck deck, final Guest guest) {
-        AddCardResponse addCardResponse = AddCardResponse.YES;
-        while (guest.canHit() && addCardResponse == AddCardResponse.YES) {
-            addCardResponse = inputView.readWantMoreCard(guest.getName());
-            askGuestHitCard(deck, guest, addCardResponse);
+        AddCardRequest addCardRequest = AddCardRequest.YES;
+        while (guest.canHit() && addCardRequest == AddCardRequest.YES) {
+            addCardRequest = inputView.readWantMoreCard(guest.getName());
+            askGuestHitCard(deck, guest, addCardRequest);
         }
     }
 
     private void askGuestHitCard(final Deck deck, final Guest guest,
-                                 final AddCardResponse addCardResponse) {
-        if (addCardResponse == AddCardResponse.YES) {
+                                 final AddCardRequest addCardRequest) {
+        if (addCardRequest == AddCardRequest.YES) {
             guest.addCard(deck.pickOne());
         }
-        outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));
+        outputView.printCards(guest.getName(), BlackJackGameDataAssembler.transformCards(guest.getCards()));
     }
 
     private void askDealerHitCard(final Dealer dealer, final Deck deck) {
@@ -80,18 +80,18 @@ public class BlackJackController {
     }
 
     private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
-        outputView.printCards(dealer.getName(), DataTransformController.transformCards(dealer.getCards()));
+        outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.transformCards(dealer.getCards()));
         outputView.printScore(dealer.getScore());
 
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), DataTransformController.transformCards(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.transformCards(guest.getCards()));
             outputView.printScore(guest.getScore());
         }
     }
 
     private void printGameResult(final Guests guests, final Dealer dealer) {
         Result result = new Result(dealer, guests.getGuests());
-        outputView.printResult(DataTransformController.transformDealerResult(result.getDealerResult()),
-                DataTransformController.transformGuestsResult(result.getGuestsResult()));
+        outputView.printResult(BlackJackGameDataAssembler.transformDealerResult(result.getDealerResult()),
+                BlackJackGameDataAssembler.transformGuestsResult(result.getGuestsResult()));
     }
 }

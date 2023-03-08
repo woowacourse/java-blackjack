@@ -9,7 +9,7 @@ import blackjackgame.dto.GuestResultDto;
 
 import java.util.*;
 
-public class DataTransformController {
+public class BlackJackGameDataAssembler {
     public static List<CardDto> transformCards(List<Card> cards) {
         List<CardDto> playerCards = new ArrayList<>();
         for (final Card card : cards) {
