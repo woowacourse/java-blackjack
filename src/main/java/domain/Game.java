@@ -39,13 +39,6 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
-    public List<Player> getPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(users);
-        return players;
-    }
-
     public List<User> getUsers() {
         return new ArrayList<>(users);
     }

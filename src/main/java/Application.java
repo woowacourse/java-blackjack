@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,8 @@ public class Application {
 
         start(game);
         play(game);
+
+        printCardsAndScores(game);
         printResult(game);
     }
 
@@ -44,10 +47,12 @@ public class Application {
         selectHitOrStand(game, game.getDealer());
     }
 
-    private static void printResult(Game game) {
-        var playerDtos = createDtosOf(game.getPlayers());
-        OUTPUT_VIEW.printCardsAndScores(playerDtos);
+    private static void printCardsAndScores(Game game) {
+        List<Player> players = joinPlayers(game.getDealer(), game.getUsers());
+        OUTPUT_VIEW.printCardsAndScores(createDtosOf(players));
+    }
 
+    private static void printResult(Game game) {
         OUTPUT_VIEW.printDealerResults(game.getDealerResults());
         for (var user : game.getUsers()) {
             OUTPUT_VIEW.printResult(user.getName(), game.getResultOf(user));
@@ -68,6 +73,13 @@ public class Application {
             ++hitCount;
         }
         OUTPUT_VIEW.noticeDealerHitOrStand(hitCount);
+    }
+
+    private static List<Player> joinPlayers(Dealer dealer, List<User> users) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(users);
+        return players;
     }
 
     private static List<PlayerDto> createDtosOf(List<? extends Player> players) {
