@@ -3,7 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-import blackjack.service.MockDeckGenerator;
+import blackjack.controller.MockDeckGenerator;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

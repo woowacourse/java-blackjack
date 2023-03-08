@@ -1,4 +1,4 @@
-package blackjack.service;
+package blackjack.controller;
 
 import static java.util.stream.Collectors.toList;
 
