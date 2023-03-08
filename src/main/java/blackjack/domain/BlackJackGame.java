@@ -38,6 +38,10 @@ public class BlackJackGame {
         return hitCount;
     }
 
+    public List<Result> getPlayersResult() {
+        return Referee.getPlayersResult(participants);
+    }
+
     public PlayerWinResults computePlayerWinResults() {
         return participants.computePlayersWinResult();
     }

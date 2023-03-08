@@ -68,5 +68,6 @@ public class BlackJackController {
         players.forEach(OutputView::showPlayerGameResult);
 
         OutputView.showFinalResult(blackJackGame.computePlayerWinResults());
+        OutputView.showPlayersResult(blackJackGame.getPlayersResult());
     }
 }
