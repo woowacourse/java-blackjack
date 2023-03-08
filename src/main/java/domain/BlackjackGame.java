@@ -46,6 +46,10 @@ public class BlackjackGame {
         }
     }
 
+    public int getParticipantHitCardCount(Participant participant) {
+        return participant.getCards().size() - INITIAL_CARD_AMOUNT;
+    }
+
     public Participant getDealer() {
         return participants.getDealer();
     }

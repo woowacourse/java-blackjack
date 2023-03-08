@@ -13,8 +13,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-    private static final int INITIAL_CARD_AMOUNT = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -77,7 +75,7 @@ public class BlackjackController {
         Participant dealer = blackjackGame.getDealer();
         blackjackGame.handOutAdditionalCardToDealer();
 
-        int hitCardCount = dealer.getCards().size() - INITIAL_CARD_AMOUNT;
+        int hitCardCount = blackjackGame.getParticipantHitCardCount(dealer);
         outputView.printDealerHitCount(hitCardCount);
     }
 
