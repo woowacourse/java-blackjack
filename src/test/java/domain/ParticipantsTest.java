@@ -3,15 +3,12 @@ package domain;
 import domain.Card.Card;
 import domain.Card.CardNumber;
 import domain.Card.CardShape;
-import domain.user.Dealer;
-import domain.user.Participant;
-import java.util.stream.Stream;
+import domain.user.ParticipantStatus;
+import domain.user.Participants;
+import domain.user.Player;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 
 class ParticipantsTest {
     
@@ -19,70 +16,26 @@ class ParticipantsTest {
     @Test
     void create() {
         Participants participants = Participants.of("echo,split");
-        Assertions.assertThat(participants)
-                .extracting("participantStatuses")
-                .asInstanceOf(InstanceOfAssertFactories.map(Participant.class, GameStatus.class))
-                .containsKeys(new Participant("echo"), new Participant("split"));
+        Assertions.assertThat(participants.getPlayers())
+                .extracting("name")
+                .containsExactly("echo", "split");
+        Assertions.assertThat(participants.getDealer())
+                .extracting("name")
+                .isEqualTo("딜러");
     }
     
     @DisplayName("참가자의 게임 상태 업데이트 기능 구현")
     @Test
     void updateTest() {
-        Participant participant = new Participant("echo");
-        Participants participants = Participants.of("echo, split");
-        participant.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
-        participant.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
-        participant.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
-        participants.update(participant);
-        GameStatus gameStatus = participants.getGameStatusByParticipant(participant);
-        Assertions.assertThat(gameStatus)
-                .extracting("participantStatus")
-                .isEqualTo(ParticipantStatus.BUST);
-        Assertions.assertThat(gameStatus)
-                .extracting("score")
-                .isEqualTo(30);
-    }
-    
-    @DisplayName("현재 게임을 진행해야하는 플레이어를 준다.")
-    @TestFactory
-    Stream<DynamicTest> getCurrentParticipant() {
-        Participants participants = Participants.of("firstPlayer,secondPlayer,thirdPlayer");
-        return Stream.of(
-                DynamicTest.dynamicTest("처음에는 첫 참가자를 반환한다.",
-                        () -> Assertions.assertThat(participants.getCurrentParticipant())
-                                .isEqualTo(new Participant("firstPlayer"))),
-                DynamicTest.dynamicTest("앞에 참가자가 카드를 더 이상 못 뽑을 경우 다음 참가자를 반환한다.", () -> {
-                    Participant firstPlayer = participants.getCurrentParticipant();
-                    firstPlayer.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
-                    firstPlayer.addCard(new Card(CardNumber.QUEEN, CardShape.HEART));
-                    firstPlayer.addCard(new Card(CardNumber.ACE, CardShape.DIAMOND));
-                    participants.update(firstPlayer);
-                    Assertions.assertThat(participants.getCurrentParticipant())
-                            .isEqualTo(new Participant("secondPlayer"));
-                }),
-                DynamicTest.dynamicTest("두번째 참가자가 아무 카드도 받지 않는 경우 다음 참가자를 반환한다.", () -> {
-                    Participant secondPlayer = participants.getCurrentParticipant();
-                    participants.update(secondPlayer);
-                    Assertions.assertThat(participants.getCurrentParticipant())
-                            .isEqualTo(new Participant("thirdPlayer"));
-                }),
-                DynamicTest.dynamicTest("반환할 플레이어가 없는 경우, 딜러를 반환한다.", () -> {
-                    Participant thirdPlayer = participants.getCurrentParticipant();
-                    thirdPlayer.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
-                    thirdPlayer.addCard(new Card(CardNumber.QUEEN, CardShape.HEART));
-                    thirdPlayer.addCard(new Card(CardNumber.JACK, CardShape.DIAMOND));
-                    participants.update(thirdPlayer);
-                    Assertions.assertThat(participants.getCurrentParticipant()).isEqualTo(new Dealer());
-                }),
-                DynamicTest.dynamicTest("반환할 참가자가 없는 경우, 예외를 발생시킨다.", () -> {
-                    Participant dealer = participants.getCurrentParticipant();
-                    dealer.addCard(new Card(CardNumber.JACK, CardShape.SPADE));
-                    dealer.addCard(new Card(CardNumber.QUEEN, CardShape.HEART));
-                    dealer.addCard(new Card(CardNumber.JACK, CardShape.DIAMOND));
-                    participants.update(dealer);
-                    Assertions.assertThatThrownBy(participants::getCurrentParticipant)
-                            .isExactlyInstanceOf(IllegalStateException.class);
-                })
-        );
+        Participants players = Participants.of("echo,split");
+        Player player = players.getPlayers().get(0);
+        player.addCard(new Card(CardNumber.KING, CardShape.SPADE));
+        Assertions.assertThat(player.getStatus()).isEqualTo(ParticipantStatus.NOT_BUST);
+        player.addCard(new Card(CardNumber.ACE, CardShape.HEART));
+        Assertions.assertThat(player.getStatus()).isEqualTo(ParticipantStatus.BLACKJACK);
+        player.addCard(new Card(CardNumber.KING, CardShape.DIAMOND));
+        player.addCard(new Card(CardNumber.KING, CardShape.DIAMOND));
+        Assertions.assertThat(player.getStatus()).isEqualTo(ParticipantStatus.BUST);
+        
     }
 }
