@@ -6,7 +6,6 @@ import domain.player.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -17,8 +16,7 @@ public class InputView {
     public static List<String> readParticipantsName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         final String input = scanner.nextLine();
-        return Arrays.stream(input.split(DELIMITER))
-                .collect(Collectors.toList());
+        return Arrays.asList(input.split(DELIMITER));
     }
 
     public static boolean readWantHit(final Gambler gambler) {
