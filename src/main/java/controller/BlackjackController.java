@@ -1,6 +1,7 @@
 package controller;
 
-import domain.*;
+import domain.blackjack.BlackjackGame;
+import domain.player.*;
 import view.InputView;
 import view.OutputView;
 

@@ -1,4 +1,8 @@
-package domain;
+package domain.player;
+
+import domain.blackjack.BlackjackRule;
+import domain.blackjack.Result;
+import domain.card.Card;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -1,5 +1,10 @@
-package domain;
+package domain.blackjack;
 
+import domain.blackjack.BlackjackGame;
+import domain.player.Names;
+import domain.player.Participant;
+import domain.player.Player;
+import domain.player.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

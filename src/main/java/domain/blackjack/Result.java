@@ -1,4 +1,6 @@
-package domain;
+package domain.blackjack;
+
+import domain.player.BettingMoney;
 
 public enum Result {
     WIN("승", 2.0),

@@ -1,5 +1,10 @@
-package domain;
+package domain.player;
 
+import domain.blackjack.Result;
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardShape;
+import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

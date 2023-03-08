@@ -1,5 +1,9 @@
-package domain;
+package domain.card;
 
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardShape;
+import domain.card.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,6 @@
-package domain;
+package domain.player;
+
+import domain.blackjack.Result;
 
 import java.util.Objects;
 

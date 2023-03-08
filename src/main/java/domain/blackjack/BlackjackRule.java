@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjack;
 
 public enum BlackjackRule {
     DEALER_STANDARD_OF_HIT(17),
