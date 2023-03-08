@@ -36,7 +36,7 @@ public class Hand {
         if (other.state.isBlackjack()) {
             return Result.PUSH;
         }
-        return Result.WIN;
+        return Result.BLACKJACK_WIN;
     }
 
     private Result playWithScore(final Hand other) {

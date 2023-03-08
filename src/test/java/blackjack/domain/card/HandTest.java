@@ -2,6 +2,10 @@ package blackjack.domain.card;
 
 import static blackjack.domain.card.Rank.ACE;
 import static blackjack.domain.card.Shape.HEART;
+import static blackjack.domain.player.Result.BLACKJACK_WIN;
+import static blackjack.domain.player.Result.LOSE;
+import static blackjack.domain.player.Result.PUSH;
+import static blackjack.domain.player.Result.WIN;
 import static blackjack.util.CardFixtures.ACE_SPADE;
 import static blackjack.util.CardFixtures.EIGHT_SPADE;
 import static blackjack.util.CardFixtures.JACK_CLOVER;
@@ -49,19 +53,18 @@ public class HandTest {
 
     static Stream<Arguments> playBlackjackSource() {
         return Stream.of(
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_SPADE, JACK_SPADE), Result.PUSH),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, JACK_HEART), Result.WIN),
-                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), Result.WIN),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, ACE_SPADE), Result.LOSE),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), List.of(JACK_SPADE, ACE_SPADE), Result.LOSE),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, EIGHT_SPADE), Result.WIN),
-                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, JACK_HEART), Result.PUSH),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, JACK_HEART), Result.LOSE),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), Result.WIN),
-                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(JACK_SPADE, SEVEN_SPADE),
-                        Result.LOSE),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(ACE_SPADE, JACK_SPADE), PUSH),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, JACK_HEART), BLACKJACK_WIN),
+                Arguments.of(List.of(ACE_SPADE, JACK_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), BLACKJACK_WIN),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, ACE_SPADE), LOSE),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART, JACK_CLOVER), List.of(JACK_SPADE, ACE_SPADE), LOSE),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, EIGHT_SPADE), WIN),
+                Arguments.of(List.of(JACK_SPADE, JACK_HEART), List.of(JACK_SPADE, JACK_HEART), PUSH),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, JACK_HEART), LOSE),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE), List.of(JACK_SPADE, SIX_SPADE, JACK_HEART), WIN),
+                Arguments.of(List.of(JACK_SPADE, SEVEN_SPADE, KING_SPADE), List.of(JACK_SPADE, SEVEN_SPADE), LOSE),
                 Arguments.of(List.of(JACK_SPADE, SIX_SPADE, KING_SPADE), List.of(JACK_SPADE, SIX_SPADE, KING_SPADE),
-                        Result.LOSE)
+                        LOSE)
         );
     }
 

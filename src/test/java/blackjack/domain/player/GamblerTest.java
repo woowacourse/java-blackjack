@@ -99,6 +99,6 @@ public class GamblerTest {
 
         final Result result = gambler.play(hand);
 
-        assertThat(result).isEqualTo(Result.WIN);
+        assertThat(result).isEqualTo(Result.BLACKJACK_WIN);
     }
 }
