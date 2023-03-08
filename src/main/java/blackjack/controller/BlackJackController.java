@@ -43,11 +43,7 @@ public class BlackJackController {
         OutputView.showDealerFirstCard(dealerFirstCard);
 
         List<Player> players = blackJackGame.getPlayers();
-        players.forEach(this::openPlayerCards);
-    }
-
-    private void openPlayerCards(Player player) {
-        OutputView.showPlayerCard(player.getName(), player.getCards());
+        players.forEach(OutputView::showPlayerCard);
     }
 
     private void hitOrStay(Player player) {
@@ -61,7 +57,7 @@ public class BlackJackController {
         }
 
         blackJackGame.handOneCard(player);
-        OutputView.showPlayerCard(player.getName(), player.getCards());
+        OutputView.showPlayerCard(player);
         hitOrStay(player);
     }
 

@@ -33,15 +33,23 @@ public class OutputView {
         System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toCardName(card));
     }
 
-    public static void showPlayerCard(String playerName, List<Card> playerCard) {
-        System.out.printf(KEY_VALUE_FORMAT, playerName, joinAllCardNames(playerCard));
+    public static void showPlayerCard(Player player) {
+        System.out.printf(KEY_VALUE_FORMAT, player.getName(), joinAllCardsName(player.getCards()));
+    }
+
+    public static void showPlayerGameResult(Player player) {
+        System.out.printf(GAME_RESULT_FORMAT,
+                player.getName(),
+                joinAllCardsName(player.getCards()),
+                player.getSum()
+        );
     }
 
     private static String toCardName(Card card) {
         return NumberWord.toWord(card.getNumber()) + SymbolWord.toWord(card.getSymbol());
     }
 
-    private static String joinAllCardNames(List<Card> cards) {
+    private static String joinAllCardsName(List<Card> cards) {
         List<String> cardNames = cards.stream()
                 .map(OutputView::toCardName)
                 .collect(Collectors.toList());
@@ -56,16 +64,8 @@ public class OutputView {
     }
 
     public static void showDealerGameResult(GameResult dealerResult) {
-        System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardNames(dealerResult.getCards()),
+        System.out.printf(GAME_RESULT_FORMAT, DEALER_NAME, joinAllCardsName(dealerResult.getCards()),
                 dealerResult.getSum());
-    }
-
-    public static void showPlayerGameResult(Player player) {
-        System.out.printf(GAME_RESULT_FORMAT,
-                player.getName(),
-                joinAllCardNames(player.getCards()),
-                player.getSum()
-        );
     }
 
     public static void showFinalResult(PlayerWinResults playerWinResults) {
