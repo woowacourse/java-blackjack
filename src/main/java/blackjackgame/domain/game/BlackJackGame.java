@@ -98,6 +98,10 @@ public class BlackJackGame {
         return players.getPlayerFinalResult();
     }
 
+    public Map<Result, Integer> getWinningRecord() {
+        return dealer.getWinningRecord();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
