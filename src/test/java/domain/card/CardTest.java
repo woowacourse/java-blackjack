@@ -1,5 +1,7 @@
 package domain.card;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -28,5 +30,19 @@ class CardTest {
 
         assertThat(actual)
                 .isSameAs(expected);
+    }
+
+    @Test
+    @DisplayName("findCardScore()는 호출하면, 점수를 반환한다")
+    void findCardScore_whenCall_thenReturnScore() {
+        // given
+        final Card card = Card.create(CardPattern.HEART, CardNumber.QUEEN);
+
+        // when
+        Score cardScore = card.findCardScore();
+
+        // then
+        assertThat(cardScore)
+                .isSameAs(Score.create(10));
     }
 }

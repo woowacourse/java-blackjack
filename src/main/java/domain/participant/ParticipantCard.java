@@ -14,7 +14,7 @@ public class ParticipantCard {
     private static final int BLACKJACK_SIZE = 2;
     private static final Score ACE_HIGH_POINTS = Score.create(11);
     private static final Score BLACKJACK_SCORE = Score.create(21);
-    
+
     private final List<Card> cards;
 
     private ParticipantCard() {
@@ -51,7 +51,7 @@ public class ParticipantCard {
 
     private Score sumCards() {
         return cards.stream()
-                .map(card -> Score.create(card.findCardNumber()))
+                .map(Card::findCardScore)
                 .reduce(Score.create(0), Score::add);
     }
 

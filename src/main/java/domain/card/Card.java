@@ -24,9 +24,8 @@ public final class Card {
         return number.isAce();
     }
 
-    public int findCardNumber() {
-        Score score = number.getScore();
-        return score.getScore();
+    public Score findCardScore() {
+        return number.getScore();
     }
 
     private static String toKey(final CardPattern pattern, final CardNumber number) {
