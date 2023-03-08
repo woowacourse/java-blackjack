@@ -8,7 +8,6 @@ import blackjackgame.domain.game.BlackJackGame;
 import blackjackgame.domain.game.Result;
 import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.Player;
-import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.User;
 import blackjackgame.domain.user.dto.NameDto;
@@ -72,17 +71,13 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (isLessThanBustScore(player) && DrawCommand.DRAW == repeatForValidInput(() -> readDrawCommand(player))) {
+        while (player.isLessThanBustScore() && DrawCommand.DRAW == repeatForValidInput(() -> readDrawCommand(player))) {
             blackJackGame.drawOneMoreCard(player);
             printDrawResult(player);
         }
-        if (isLessThanBustScore(player)) {
+        if (player.isLessThanBustScore()) {
             printDrawResult(player);
         }
-    }
-
-    private boolean isLessThanBustScore(Player player) {
-        return PlayerStatus.NORMAL == player.getStatus();
     }
 
     private DrawCommand readDrawCommand(Player player) {

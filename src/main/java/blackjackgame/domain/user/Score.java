@@ -72,6 +72,10 @@ public class Score {
         return DealerStatus.NORMAL;
     }
 
+    public boolean isLessThanBustScore() {
+        return score < BLACKJACK;
+    }
+
     public int getScore() {
         return score;
     }

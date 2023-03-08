@@ -41,6 +41,10 @@ public class Player extends User {
         result = Result.LOSE;
     }
 
+    public boolean isLessThanBustScore() {
+        return score.isLessThanBustScore();
+    }
+
     @Override
     public UserStatus getStatus() {
         return status;
