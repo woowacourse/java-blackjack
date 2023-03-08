@@ -17,9 +17,7 @@ public class Deck {
     private static Stack<Card> initializeDeck() {
         Stack<Card> deck = new Stack<>();
         Arrays.stream(Value.values())
-                .map(Value::getValue)
                 .forEach(value -> Arrays.stream(Shape.values())
-                        .map(Shape::getShape)
                         .forEach(shape -> deck.push(new Card(value, shape))));
         return deck;
     }

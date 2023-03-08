@@ -61,8 +61,7 @@
 - [x] 실패 검증 테스트에서 어떤 예외 메세지 포함하는지 검증하도록 수정
 - [x] printInitialMessage 메서드 로직 수정 (딜러 이름 출력하도록)
 - [x] shuffleDeck 메서드 이동 (DeckShuffler 삭제)
-- [ ] FixedDeckShuffler 클래스 위치 이동
-- [ ] initializeDeck 로직 수정 (Card 생성받는 부분)
+- [x] Card 생성 시 불필요한 연산 제거
 - [ ] 이름으로 공백이 입력되는 경우에 대한 검증 추가
 - [ ] BlackjackGame 클래스를 통한 controller 책임 분리
 - [ ] 승무패 카운트 계산하는 로직 이동

@@ -3,6 +3,8 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.Shape;
+import domain.card.Value;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +17,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-        List<Card> initialCards = new ArrayList<>(List.of(new Card("2", "스페이드"), new Card("4", "하트")));
+        List<Card> initialCards = new ArrayList<>(List.of(new Card(Value.TWO, Shape.SPADE), new Card(Value.FOUR, Shape.HEART)));
         Name mango = new Name("망고");
         participant = new Participant(mango, initialCards);
     }
@@ -29,15 +31,15 @@ class ParticipantTest {
     @DisplayName("Ace 카드가 있는 경우, 상황에 따라 1로 계산할 수 있다.")
     @Test
     void aceScoreOneTest() {
-        participant.receiveCard(new Card("9", "스페이드"));
-        participant.receiveCard(new Card("A", "클로버"));
+        participant.receiveCard(new Card(Value.NINE, Shape.SPADE));
+        participant.receiveCard(new Card(Value.ACE, Shape.CLOVER));
         assertThat(participant.calculateScore()).isEqualTo(16);
     }
 
     @DisplayName("Ace 카드가 있는 경우, 상황에 따라 11로 계산할 수 있다.")
     @Test
     void aceScoreElevenTest(){
-        participant.receiveCard(new Card("A", "하트"));
+        participant.receiveCard(new Card(Value.ACE, Shape.HEART));
         assertThat(participant.calculateScore()).isEqualTo(17);
     }
 }

@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.PlayerCommand;
+import domain.card.Shape;
+import domain.card.Value;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +19,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        List<Card> cards = new ArrayList<>(List.of(new Card("K", "하트"), new Card("3", "스페이드")));
+        List<Card> cards = new ArrayList<>(List.of(new Card(Value.KING, Shape.HEART), new Card(Value.THREE, Shape.SPADE)));
         player = new Player(new Name("깃짱"), cards);
     }
 
