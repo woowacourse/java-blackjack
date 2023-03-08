@@ -74,12 +74,12 @@ public class BlackJackGame {
         }
     }
 
-    public boolean isDealerShouldMoreHit() {
-        return dealer.canHit();
-    }
-
-    public void hitForDealer() {
-        dealer.hit(cardDeck.draw());
+    public boolean hitForDealerWhenShouldMoreHit() {
+        if (dealer.canHit()) {
+            dealer.hit(cardDeck.draw());
+            return true;
+        }
+        return false;
     }
 
     public Map<Participant, Revenue> revenue() {

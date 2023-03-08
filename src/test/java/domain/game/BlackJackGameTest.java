@@ -42,18 +42,38 @@ class BlackJackGameTest {
         return names.stream().collect(Collectors.toMap(Function.identity(), it -> BettingMoney.of(10)));
     }
 
-    @Test
-    void hitForDealer_시_딜러에_hit_한다() {
-        // given
-        final Dealer dealer = new Dealer(under16CardArea());
-        BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());
-        final BlackJackScore before = dealer.score();
+    @Nested
+    @DisplayName("hitForDealerWhenShouldMoreHit() 테스트")
+    public class HitForDealerWhenShouldMoreHitTest {
+        @Test
+        void 딜러의_점수가_16점_이하가_아니라면_Hit_을_하고_true_를_반환한다() {
+            // given
+            final Dealer dealer = new Dealer(under16CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());
+            final BlackJackScore before = dealer.score();
 
-        // when
-        blackJackGame.hitForDealer();
+            // when
+            final boolean result = blackJackGame.hitForDealerWhenShouldMoreHit();
 
-        // then
-        assertThat(dealer.score()).isNotEqualTo(before);
+            // then
+            assertThat(dealer.score()).isNotEqualTo(before);
+            assertThat(result).isTrue();
+        }
+
+        @Test
+        void 딜러의_점수가_16점_초과라면_Hit_을_하지_않고_false_를_반환한다() {
+            // given
+            final Dealer dealer = new Dealer(over16CardArea());
+            BlackJackGame blackJackGame = new BlackJackGame(List.of(코다(under21CardArea())), dealer, CardDeck.shuffledFullCardDeck());
+            final BlackJackScore before = dealer.score();
+
+            // when
+            final boolean result = blackJackGame.hitForDealerWhenShouldMoreHit();
+
+            // then
+            assertThat(dealer.score()).isEqualTo(before);
+            assertThat(result).isFalse();
+        }
     }
 
     @Test
@@ -207,8 +227,8 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame2 = new BlackJackGame(List.of(코다), new Dealer(equal16CardArea()), CardDeck.shuffledFullCardDeck());
 
             // when & then
-            assertThat(blackJackGame1.isDealerShouldMoreHit()).isTrue();
-            assertThat(blackJackGame2.isDealerShouldMoreHit()).isTrue();
+            assertThat(blackJackGame1.hitForDealerWhenShouldMoreHit()).isTrue();
+            assertThat(blackJackGame2.hitForDealerWhenShouldMoreHit()).isTrue();
         }
 
         @Test
@@ -218,7 +238,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(List.of(코다), new Dealer(over16CardArea()), CardDeck.shuffledFullCardDeck());
 
             // when & then
-            assertThat(blackJackGame.isDealerShouldMoreHit()).isFalse();
+            assertThat(blackJackGame.hitForDealerWhenShouldMoreHit()).isFalse();
         }
     }
 }

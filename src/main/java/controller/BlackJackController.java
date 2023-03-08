@@ -67,9 +67,8 @@ public class BlackJackController {
     }
 
     private void hitOrStayForDealer(final BlackJackGame blackJackGame) {
-        while (blackJackGame.isDealerShouldMoreHit()) {
+        while (blackJackGame.hitForDealerWhenShouldMoreHit()) {
             OutputView.printDealerOneMoreCard();
-            blackJackGame.hitForDealer();
         }
     }
 
