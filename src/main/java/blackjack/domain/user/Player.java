@@ -30,7 +30,7 @@ public class Player extends User {
         return getName().equals(name);
     }
 
-    public WinningStatus calculatePlayerWinningStatus(final Dealer dealer) {
+    public WinningStatus calculateWinningStatus(final Dealer dealer) {
         if (dealer.isBust()) {
             return compareByBust();
         }

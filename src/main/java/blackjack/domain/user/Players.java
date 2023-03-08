@@ -60,7 +60,7 @@ public class Players {
     public Map<String, WinningStatus> getWinningResult(final Dealer dealer) {
         final Map<String, WinningStatus> playerWinningResult = new LinkedHashMap<>();
         players.forEach(
-                player -> playerWinningResult.put(player.getName(), player.calculatePlayerWinningStatus(dealer)));
+                player -> playerWinningResult.put(player.getName(), player.calculateWinningStatus(dealer)));
         return Collections.unmodifiableMap(playerWinningResult);
     }
 

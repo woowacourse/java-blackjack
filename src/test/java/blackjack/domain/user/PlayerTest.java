@@ -88,7 +88,7 @@ class PlayerTest {
             final Dealer dealer = new Dealer(bustCardGroup);
             final Player player = new Player("제이미", bustCardGroup);
 
-            assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
+            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }
 
         @Test
@@ -99,7 +99,7 @@ class PlayerTest {
             final Dealer dealer = new Dealer(bustCardGroup);
             final Player player = new Player("제이미", initialGroup);
 
-            assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
+            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
         }
 
         @Test
@@ -108,7 +108,7 @@ class PlayerTest {
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
             final Player player = new Player("필립", initialGroup);
 
-            assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.TIE);
+            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.TIE);
         }
 
         @Test
@@ -118,7 +118,7 @@ class PlayerTest {
                     (new Card(CardShape.HEART, CardNumber.FIVE), new Card(CardShape.CLOVER, CardNumber.EIGHT)));
             final Player player = new Player("제이미", initialGroup);
 
-            assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
+            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
         }
 
         @Test
@@ -127,7 +127,7 @@ class PlayerTest {
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardKing));
             final Player player = new Player("홍실", initialGroup);
 
-            assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
+            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }
 
         @Test
@@ -138,7 +138,7 @@ class PlayerTest {
 
             player.drawCard(new Deck(new TestNonShuffledDeckGenerator(List.of(cardEight))));
 
-            assertThat(player.calculatePlayerWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
+            assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }
     }
 }
