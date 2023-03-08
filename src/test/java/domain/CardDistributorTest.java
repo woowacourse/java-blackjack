@@ -46,4 +46,28 @@ public class CardDistributorTest {
                 .hasMessageContaining("모든 참여자에게 카드를 분배할 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("카드 분배기에 분배 가능한 카드가 남아있는지 확인한다.")
+    void checkCardDistributorHasCardLeft() {
+        ArrayList<Card> cards = new ArrayList<>() {{
+            add(new Card(Shape.CLOVER, Letter.ACE));
+        }};
+        CardDistributor cardDistributor = new CardDistributor(cards);
+
+        assertThat(cardDistributor.isCardLeft()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 분배기에 분배 가능한 카드가 없는지 확인한다.")
+    void checkCardDistributorNoCardLeft() {
+        ArrayList<Card> cards = new ArrayList<>() {{
+            add(new Card(Shape.CLOVER, Letter.ACE));
+        }};
+        CardDistributor cardDistributor = new CardDistributor(cards);
+
+        cardDistributor.distribute();
+
+        assertThat(cardDistributor.isCardLeft()).isFalse();
+    }
+
 }
