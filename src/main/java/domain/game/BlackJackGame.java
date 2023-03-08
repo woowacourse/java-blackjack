@@ -24,7 +24,7 @@ public class BlackJackGame {
         this.cardDeck = cardDeck;
     }
 
-    public static BlackJackGame defaultSetting(final CardDeck cardDeck, final Map<Name, BattingMoney> battingMoneyMap) {
+    public static BlackJackGame defaultSetting(final CardDeck cardDeck, final Map<Name, BettingMoney> battingMoneyMap) {
         validateGamblersSize(battingMoneyMap.keySet());
         final Dealer dealer = new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
         final List<Gambler> gamblers = battingMoneyMap

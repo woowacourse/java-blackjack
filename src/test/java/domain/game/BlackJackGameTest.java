@@ -38,8 +38,8 @@ class BlackJackGameTest {
         assertThat(blackJackGame.dealer().cardArea().cards().size()).isEqualTo(2);
     }
 
-    private static Map<Name, BattingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
-        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BattingMoney.of(10)));
+    private static Map<Name, BettingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
+        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BettingMoney.of(10)));
     }
 
     @Test

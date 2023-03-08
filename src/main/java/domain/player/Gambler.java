@@ -5,15 +5,15 @@ import domain.card.CardArea;
 public class Gambler extends Participant {
 
     private HitState state = HitState.INIT;
-    private final BattingMoney battingMoney;
+    private final BettingMoney bettingMoney;
 
-    public Gambler(final Name name, final CardArea cardArea, final BattingMoney battingMoney) {
+    public Gambler(final Name name, final CardArea cardArea, final BettingMoney bettingMoney) {
         super(name, cardArea);
-        this.battingMoney = battingMoney;
+        this.bettingMoney = bettingMoney;
     }
 
-    public BattingMoney battingMoney() {
-        return battingMoney;
+    public BettingMoney battingMoney() {
+        return bettingMoney;
     }
 
     @Override

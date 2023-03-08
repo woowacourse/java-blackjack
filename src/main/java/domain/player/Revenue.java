@@ -10,19 +10,19 @@ public class Revenue {
         this.amount = amount;
     }
 
-    public static Revenue lose(final BattingMoney money) {
+    public static Revenue lose(final BettingMoney money) {
         return new Revenue(money.amount() * -1);
     }
 
-    public static Revenue defaultWin(final BattingMoney money) {
+    public static Revenue defaultWin(final BettingMoney money) {
         return new Revenue(money.amount());
     }
 
-    public static Revenue draw(final BattingMoney money) {
+    public static Revenue draw(final BettingMoney money) {
         return new Revenue(0);
     }
 
-    public static Revenue blackJackWin(final BattingMoney money) {
+    public static Revenue blackJackWin(final BettingMoney money) {
         return new Revenue(money.amount() * 1.5);
     }
 

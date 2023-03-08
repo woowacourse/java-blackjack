@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("BattingMoney 는")
-class BattingMoneyTest {
+@DisplayName("BettingMoney 는")
+class BettingMoneyTest {
 
     @Test
     void 금액을_가지고_생성된다() {
@@ -18,20 +18,20 @@ class BattingMoneyTest {
         final int amount = 1000;
 
         // when
-        BattingMoney battingMoney = BattingMoney.of(amount);
+        BettingMoney bettingMoney = BettingMoney.of(amount);
 
         // then
-        assertThat(battingMoney.amount()).isEqualTo(amount);
+        assertThat(bettingMoney.amount()).isEqualTo(amount);
     }
 
     @Test
     void 같은_금액인_경우_동등하다() {
         // given
         final int amount = 1000;
-        BattingMoney battingMoney1 = BattingMoney.of(amount);
-        BattingMoney battingMoney2 = BattingMoney.of(amount);
+        BettingMoney bettingMoney1 = BettingMoney.of(amount);
+        BettingMoney bettingMoney2 = BettingMoney.of(amount);
 
         // when & then
-        assertThat(battingMoney1).isEqualTo(battingMoney2);
+        assertThat(bettingMoney1).isEqualTo(bettingMoney2);
     }
 }

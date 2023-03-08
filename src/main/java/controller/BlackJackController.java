@@ -1,7 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
-import domain.player.BattingMoney;
+import domain.player.BettingMoney;
 import domain.game.BlackJackGame;
 import domain.player.Gambler;
 import domain.player.HitState;
@@ -30,7 +30,7 @@ public class BlackJackController {
     private BlackJackGame setUpGame() {
         final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-        final Map<Name, BattingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
+        final Map<Name, BettingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
 
         final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBattingMoneyMap);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
@@ -44,10 +44,10 @@ public class BlackJackController {
                 .collect(Collectors.toList());
     }
 
-    private Map<Name, BattingMoney> batting(final List<Name> gamblerNames) {
+    private Map<Name, BettingMoney> batting(final List<Name> gamblerNames) {
         return gamblerNames.stream()
                 .collect(toMap(identity(),
-                        name -> withExceptionHandle(() -> BattingMoney.of(InputView.readBattingMoney(name))),
+                        name -> withExceptionHandle(() -> BettingMoney.of(InputView.readBattingMoney(name))),
                         (a, b) -> b,
                         LinkedHashMap::new
                 ));

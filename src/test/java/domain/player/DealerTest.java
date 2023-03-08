@@ -82,7 +82,7 @@ class DealerTest {
     static Stream<Arguments> playerAndDealerAndResult() {
         final CardArea cardArea22 = new CardArea(new Card(DIAMOND, TEN), new Card(DIAMOND, TEN));
         cardArea22.addCard(new Card(DIAMOND, TWO));
-        final BattingMoney money = BattingMoney.of(1000);
+        final BettingMoney money = BettingMoney.of(1000);
         return Stream.of(
                 Arguments.of(
                         Named.of("16", gamblerWithMoneyAndCardArea(money, equal16CardArea())),
@@ -155,7 +155,7 @@ class DealerTest {
         })
         void lose_시_수익은_기존_배팅_금액만큼_차감된_값이다(final int battingAmount, final int revenueAmount) {
             // given
-            final BattingMoney money = BattingMoney.of(battingAmount);
+            final BettingMoney money = BettingMoney.of(battingAmount);
 
             // when
             final Revenue lose = Revenue.lose(money);
@@ -167,7 +167,7 @@ class DealerTest {
         @Test
         void draw_시_수익은_0원이다() {
             // when
-            final Revenue draw = Revenue.draw(BattingMoney.of(100));
+            final Revenue draw = Revenue.draw(BettingMoney.of(100));
 
             // then
             assertThat(draw.amount()).isEqualTo(0);
@@ -181,7 +181,7 @@ class DealerTest {
         })
         void 이긴_경우_블랙잭이_아니라면_수익은_배팅한_금액과_같다(final int battingAmount, final int revenueAmount) {
             // given
-            final BattingMoney money = BattingMoney.of(battingAmount);
+            final BettingMoney money = BettingMoney.of(battingAmount);
 
             // when
             final Revenue defaultWin = defaultWin(money);
@@ -198,7 +198,7 @@ class DealerTest {
         })
         void 이긴_경우_블랙잭이라면_수익은_배팅한_금액의_일점오배와_같다(final int battingAmount, final int revenueAmount) {
             // given
-            final BattingMoney money = BattingMoney.of(battingAmount);
+            final BettingMoney money = BettingMoney.of(battingAmount);
 
             // when
             final Revenue blackJackWin = Revenue.blackJackWin(money);
@@ -221,7 +221,7 @@ class DealerTest {
         }
 
         private Revenue revenue(final int amount) {
-            return defaultWin(BattingMoney.of(amount));
+            return defaultWin(BettingMoney.of(amount));
         }
     }
 }
