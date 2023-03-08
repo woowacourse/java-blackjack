@@ -48,7 +48,7 @@ class DealerTest {
     @Test
     @DisplayName("플레이어에게 카드 한 장을 더 준다.")
     void giveOneMoreCard() {
-        dealer.giveACard(player1);
+        dealer.giveCard(player1);
 
         assertThat(player1.getCards().size()).isEqualTo(1);
     }
@@ -61,7 +61,7 @@ class DealerTest {
         int initSize = dealer.getCards().size();
 
         while (dealer.canDraw()) {
-            dealer.drawACard();
+            dealer.drawCard();
         }
 
         assertAll(

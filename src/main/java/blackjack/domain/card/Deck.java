@@ -35,7 +35,7 @@ public class Deck {
         }
     }
 
-    public Card drawACard() {
+    public Card drawCard() {
         Collections.shuffle(deck);
         return deck.remove(FIRST_CARD);
     }

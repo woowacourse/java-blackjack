@@ -29,7 +29,7 @@ class DeckTest {
     @Test
     @DisplayName("무작위의 카드를 한 장 뽑은 후, deck에 존재하는지 확인한다.")
     void drawACard() {
-        Card selectedCard = deck.drawACard();
+        Card selectedCard = deck.drawCard();
 
         assertThat(deck.containsCard(selectedCard)).isFalse();
     }
