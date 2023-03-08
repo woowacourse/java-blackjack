@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,8 @@ public class BlackJack {
     }
 
     public void giveCard(Name user, Deck deck) {
-        users.giveCardByName(user, deck.drawCard());
+        final User targetUser = users.finUserByName(user);
+        targetUser.draw(deck.drawCard());
     }
 
     public int giveCardToDealerUntilDontNeed(Deck deck) {

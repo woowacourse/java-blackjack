@@ -51,7 +51,7 @@ public class BlackJackTest {
         final BlackJack blackJack = new BlackJack(List.of(푸우), new TestDeck(Arrays.asList(10, 3, 10, 10)));
         blackJack.giveCard(푸우, new TestDeck(Arrays.asList(2)));
 
-        final List<Card> 푸우카드 = blackJack.getUsers().getCardsOf(푸우);
+        final List<Card> 푸우카드 = blackJack.getUsers().finUserByName(푸우).getCards().getCards();
 
         assertThat(푸우카드.contains(new Card(Shape.HEART, CardNumber.TWO))).isTrue();
     }

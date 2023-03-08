@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
+import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.GamePoint;
@@ -12,9 +13,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Users {
-    private static final int USER_HAVE_BIGGER_POINT = 1;
-    private static final int USER_HAVE_SAME_POINT = 0;
-    private static final int USER_HAVE_LOWER_POINT = -1;
     private final List<User> users;
 
     public Users(final List<Name> userNames, Deck deck) {
@@ -39,15 +37,6 @@ public class Users {
         return new Cards(cards);
     }
 
-    public List<Card> getCardsOf(final Name user) {
-        final User targetUser = finUserByName(user);
-        return targetUser.openCards();
-    }
-
-    public void giveCardByName(final Name userName, final Card card) {
-        final User findUser = finUserByName(userName);
-        findUser.draw(card);
-    }
 
     public User finUserByName(final Name userName) {
         return users.stream()

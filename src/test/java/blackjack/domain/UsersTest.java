@@ -4,6 +4,7 @@ import blackjack.domain.card.*;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,24 +51,8 @@ public class UsersTest {
     @Test
     @DisplayName("유저 이름으로 유저의 카드들을 가져온다.")
     void getCardsOfTest() {
-        final List<Card> 푸우카드 = HupkAndPooh.getCardsOf(new Name("푸우"));
+        final List<Card> 푸우카드 = HupkAndPooh.finUserByName(new Name("푸우")).getCards().getCards();
         assertThat(푸우카드.containsAll(푸우.getCards().getCards()));
     }
 
-    @Test
-    void giveCardByNameTest() {
-        final Name 푸우이름 = new Name("푸우");
-        HupkAndPooh.giveCardByName(푸우이름, CARD_9);
-        final User 푸우 = HupkAndPooh.getUsers().stream()
-                .filter(user -> user.isNameOf(푸우이름))
-                .findAny()
-                .get();
-        assertThat(푸우.getCards().getCards().contains(CARD_9)).isTrue();
-    }
-
-    @Test
-    void checkBustByTest() {
-        HupkAndPooh.giveCardByName(new Name("푸우"), CARD_9);
-        assertThat(HupkAndPooh.checkBustBy(new Name("푸우"))).isTrue();
-    }
 }

@@ -1,9 +1,5 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.Users;
-import blackjack.domain.user.User;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class FinalStatusDto {
