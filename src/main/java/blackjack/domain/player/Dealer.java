@@ -8,7 +8,7 @@ public class Dealer extends Player {
 
     @Override
     public Boolean canPick() {
-        Score score = holdingCards.getDefaultSum();
+        Score score = holdingCards.getSum();
         return score.getValue() <= MAXIMUM_POINT_TO_PICK;
     }
 
