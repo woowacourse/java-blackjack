@@ -6,5 +6,4 @@ public enum Suit {
     CLOVER,
     DIAMOND,
     SPADE
-
 }
