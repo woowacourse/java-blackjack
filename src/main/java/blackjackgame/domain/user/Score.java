@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Score {
     private static final int BLACKJACK = 21;
     private static final int DEALER_MIN_SCORE = 17;
-    private static final int ZERO = 0;
+    private static final int INITIAL_ACE_COUNT = 0;
     private static final int ACE_ONE = 1;
 
     private int score;
@@ -47,7 +47,7 @@ public class Score {
     }
 
     private int calculateAceAsOne(int aceCount, int score) {
-        while (aceCount > ZERO && score > BLACKJACK) {
+        while (aceCount > INITIAL_ACE_COUNT && score > BLACKJACK) {
             score -= Denomination.ACE.getScore();
             score += ACE_ONE;
             aceCount--;
