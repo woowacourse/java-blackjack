@@ -7,6 +7,7 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import view.InputView;
@@ -40,7 +41,7 @@ public class MainController {
 
     private void printFinalResult(BlackJackGame blackJackGame) {
         Map<Player, WinningStatus> playersResult = blackJackGame.calculatePlayersResult();
-        Map<WinningStatus, Integer> dealerResult = blackJackGame.calculateDealerResult(playersResult);
+        List<Integer> dealerResult = blackJackGame.calculateDealerResult(playersResult);
         outputView.printFinalResultMessage();
         outputView.printDealerResult(dealerResult);
         outputView.printPlayerResult(playersResult);

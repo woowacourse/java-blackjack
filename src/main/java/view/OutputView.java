@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String WINNING_KEYWORD = "승,무,패";
     private static final String WIN_KEYWORD = "승";
     private static final String TIE_KEYWORD = "무";
     private static final String LOSE_KEYWORD = "패";
@@ -82,33 +83,13 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerResult(final Map<WinningStatus, Integer> dealerResult) {
+    public void printDealerResult(final List<Integer> dealerResult) {
         StringBuilder dealerDisplay = new StringBuilder();
-        calculateWinCount(dealerResult, dealerDisplay);
-        calculateTieCount(dealerResult, dealerDisplay);
-        calculateLoseCount(dealerResult, dealerDisplay);
+        List<String> winningKeyword = List.of(WINNING_KEYWORD.split(","));
+        for (int i = 0; i < dealerResult.size(); i++) {
+            dealerDisplay.append(dealerResult.get(i)).append(winningKeyword.get(i));
+        }
         System.out.printf("딜러: %s" + System.lineSeparator(), dealerDisplay);
-    }
-
-    private void calculateWinCount(Map<WinningStatus, Integer> dealerResult, StringBuilder dealerDisplay) {
-        int winCount = dealerResult.getOrDefault(WinningStatus.WIN, 0);
-        if (winCount >= 1) {
-            dealerDisplay.append(winCount).append(WIN_KEYWORD);
-        }
-    }
-
-    private void calculateTieCount(Map<WinningStatus, Integer> dealerResult, StringBuilder dealerDisplay) {
-        int tieCount = dealerResult.getOrDefault(WinningStatus.TIE, 0);
-        if (tieCount >= 1) {
-            dealerDisplay.append(tieCount).append(TIE_KEYWORD);
-        }
-    }
-
-    private void calculateLoseCount(Map<WinningStatus, Integer> dealerResult, StringBuilder dealerDisplay) {
-        int loseCount = dealerResult.getOrDefault(WinningStatus.LOSE, 0);
-        if (loseCount >= 1) {
-            dealerDisplay.append(loseCount).append(LOSE_KEYWORD);
-        }
     }
 
     public void printPlayerResult(final Map<Player, WinningStatus> playersResult) {
