@@ -28,13 +28,13 @@ public class GameResult {
         dealerResult.put(Result.LOSE, 0);
         for (Result result : this.resultCacheMap.values()) {
             if (result == Result.WIN) {
-                dealerResult.put(Result.WIN, dealerResult.get(Result.WIN) + 1);
+                dealerResult.put(Result.LOSE, dealerResult.get(Result.LOSE) + 1);
             }
             if (result == Result.DRAW) {
                 dealerResult.put(Result.DRAW, dealerResult.get(Result.DRAW) + 1);
             }
             if (result == Result.LOSE) {
-                dealerResult.put(Result.LOSE, dealerResult.get(Result.LOSE) + 1);
+                dealerResult.put(Result.WIN, dealerResult.get(Result.WIN) + 1);
             }
         }
         return dealerResult;
