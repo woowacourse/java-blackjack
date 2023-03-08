@@ -9,13 +9,10 @@ public class CardDeck {
 
     public CardDeck() {
         cardDeck = new Stack<>();
-        List<Card> cards = new ArrayList<>();
-
-        for (CardSuit suit : CardSuit.values()) {
-            for (CardNumber number : CardNumber.values()) {
-                cards.add(Card.of(suit, number));
-            }
-        }
+        List<Card> cards = Arrays.stream(CardSuit.values())
+                .flatMap(suit->Arrays.stream(CardNumber.values())
+                        .map(number->Card.of(suit, number)))
+                .collect(Collectors.toList());
         Collections.shuffle(cards);
         cards.forEach(cardDeck::push);
     }
