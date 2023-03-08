@@ -29,7 +29,7 @@ public class Players {
     }
 
     public boolean isLargerThanBlackJackNumber(final String playerName) {
-        if(findPlayer(playerName).isLargerThanBlackJackNumber()) {
+        if (findPlayer(playerName).isLargerThanBlackJackNumber()) {
             return true;
         }
         return false;
@@ -57,7 +57,7 @@ public class Players {
 
     public List<Player> getPlayersWithOutDealer() {
         return players.stream()
-                .filter(player -> player.getName() != "딜러")
+                .filter(player -> !(player instanceof Dealer))
                 .map(player -> {
                     Player copyPlayer = new Player(player.getName());
                     player.getCards().forEach(copyPlayer::drawCard);
