@@ -39,7 +39,7 @@ public class BlackJackGame {
     }
 
     public PlayerWinResults computePlayerWinResults() {
-        return participants.computePlayerWinResults();
+        return participants.computePlayersWinResult();
     }
 
     public Dealer getDealer() {

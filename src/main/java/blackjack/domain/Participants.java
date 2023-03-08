@@ -33,8 +33,16 @@ public class Participants {
         return dealer.getCards().get(0);
     }
 
-    public PlayerWinResults computePlayerWinResults() {
-        return players.computePlayerWinResults(dealer);
+    public PlayerWinResults computePlayersWinResult() {
+        PlayerWinResults playerWinResults = new PlayerWinResults();
+        for (Player player : players.getPlayers()) {
+            if (player.isBust()) {
+                playerWinResults.addResultByPlayerName(player.getName(), WinResult.LOSE);
+                continue;
+            }
+            playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
+        }
+        return playerWinResults;
     }
 
     public Dealer getDealer() {

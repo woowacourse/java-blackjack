@@ -41,22 +41,6 @@ public class Players {
         }
     }
 
-    public PlayerWinResults computePlayerWinResults(Dealer dealer) {
-        PlayerWinResults playerWinResults = new PlayerWinResults();
-        for (Player player : players) {
-            addResult(playerWinResults, player, dealer);
-        }
-        return playerWinResults;
-    }
-
-    private void addResult(PlayerWinResults playerWinResults, Player player, Dealer dealer) {
-        if (player.isBust()) {
-            playerWinResults.addResultByPlayerName(player.getName(), WinResult.LOSE);
-            return;
-        }
-        playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
-    }
-
     public List<String> getPlayersName() {
         return players.stream()
                 .map(Player::getName)
