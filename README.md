@@ -64,7 +64,7 @@
 - 클래스 내부 로직 변경
   - [x] Card 생성하는 부분 `for문` -> `stream`으로 변경
   - [x] CardNumber enum class 필드 변경
-  - [ ] Deck class 필드 변경
+  - [x] Deck class 필드 변경
   - [x] Dealer, Player class calculateScore 메소드 로직 변경
   - [x] hasACE 메소드 위치 변경
   - [ ] GameResult class dealerResult.put(~) 올바른 결과가 출력되도록 변경

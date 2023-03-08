@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,31 +11,25 @@ class DeckTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewDeck() {
-        Stack<Card> cards = new Stack<>();
-        cards.add(new Card(CardNumber.ACE, CardSymbol.CLUBS));
-        assertDoesNotThrow(() -> new Deck(cards));
+        assertDoesNotThrow(Deck::new);
     }
 
     @DisplayName("덱의 가장 위쪽에 위치하는 카드를 뽑을 수 있다.")
     @Test
     void Should_Draw_When_HIT() {
-        Stack<Card> cards = new Stack<>();
-
-        Card card1 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
-        Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
-
-        cards.add(card1);
-        cards.add(card2);
-
-        Deck deck = new Deck(cards);
-
-        assertThat(cards).contains(deck.draw());
+        Deck deck = new Deck();
+        assertThat(deck.draw().getCardNumberToString()).isEqualTo("A");
     }
 
     @DisplayName("덱이 비어있다면 true를 반환할 수 있다.")
     @Test
     void Should_ReturnTrue_When_Empty() {
-        Deck deck = new Deck(new Stack<>());
+        Deck deck = new Deck();
+
+        int size = deck.size();
+        for (int i = 0; i < size; i++) {
+            deck.draw();
+        }
 
         assertThat(deck.isEmpty()).isTrue();
     }
@@ -44,15 +37,7 @@ class DeckTest {
     @DisplayName("덱이 비어있지 않다면 false를 반환할 수 있다.")
     @Test
     void Should_ReturnFalse_When_NotEmpty() {
-        Stack<Card> cards = new Stack<>();
-
-        Card card1 = new Card(CardNumber.ACE, CardSymbol.CLUBS);
-        Card card2 = new Card(CardNumber.ACE, CardSymbol.DIAMONDS);
-
-        cards.add(card1);
-        cards.add(card2);
-
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck();
 
         assertThat(deck.isEmpty()).isFalse();
     }
@@ -60,11 +45,12 @@ class DeckTest {
     @DisplayName("덱이 비어 있는 상태에서 카드를 뽑을 경우 오류 발생")
     @Test
     void Should_ThrowException_When_DrawWhenDeckIsEmpty() {
-        Stack<Card> cards = new Stack<>();
-        cards.add(new Card(CardNumber.ACE, CardSymbol.CLUBS));
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck();
 
-        deck.draw();
+        int size = deck.size();
+        for (int i = 0; i < size; i++) {
+            deck.draw();
+        }
 
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalArgumentException.class)

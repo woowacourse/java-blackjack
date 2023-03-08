@@ -1,19 +1,29 @@
 package blackjack.domain;
 
+import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
-    private final Stack<Card> cards;
+    private final Deque<Card> cards;
 
-    public Deck(Stack<Card> cards) {
-        this.cards = (Stack<Card>) cards.clone();
-        Collections.shuffle(this.cards);
+    private Deck(Deque<Card> cards) {
+        this.cards = cards;
+    }
+
+    public Deck() {
+        this(Arrays.stream(CardNumber.values())
+                .flatMap(cardNumber -> Arrays.stream(CardSymbol.values())
+                        .map(cardSymbol -> new Card(cardNumber, cardSymbol)))
+                .collect(Collectors.toCollection(ArrayDeque::new)));
     }
 
     public Card draw() {
         validateDeckIsEmpty();
-        return cards.pop();
+        return cards.remove();
     }
 
     private void validateDeckIsEmpty() {
@@ -22,7 +32,15 @@ public class Deck {
         }
     }
 
+    public void shuffleDeck() {
+        Collections.shuffle((List<?>) this.cards);
+    }
+
     public boolean isEmpty() {
         return cards.isEmpty();
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

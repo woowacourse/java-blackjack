@@ -1,8 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.Card;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardSymbol;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Game;
@@ -13,9 +11,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
@@ -27,15 +23,6 @@ public class BlackJackGameController {
     public BlackJackGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-    }
-
-    private Deck generateDeck() {
-        List<Card> cards = Arrays.stream(CardNumber.values())
-                .flatMap(cardNumber -> Arrays.stream(CardSymbol.values())
-                        .map(cardSymbol -> new Card(cardNumber, cardSymbol)))
-                .collect(Collectors.toList());
-
-        return new Deck((Stack<Card>) cards);
     }
 
     private List<String> getCardNames(List<Card> cards) {
@@ -102,7 +89,8 @@ public class BlackJackGameController {
 
     private Game generateGame() {
         List<Player> players = generatePlayers();
-        Deck deck = generateDeck();
+        Deck deck = new Deck();
+        deck.shuffleDeck();
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
         return new Game(deck, gamePlayer);
     }
