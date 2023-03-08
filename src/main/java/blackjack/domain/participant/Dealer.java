@@ -33,7 +33,7 @@ public final class Dealer {
         participant.receiveCard(card);
     }
 
-    public int calculateTotalScore() {
+    public int totalScore() {
         return participant.calculateTotalScore();
     }
 
@@ -57,7 +57,7 @@ public final class Dealer {
         }
     }
 
-    public Card showOneCard() {
+    public Card getOnlyOneCard() {
         return participant.getCards().get(0);
     }
 

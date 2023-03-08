@@ -66,7 +66,7 @@ class DealerTest {
 
         assertAll(
                 () -> assertThat(initSize).isNotEqualTo(dealer.getCards().size()),
-                () -> assertThat(dealer.calculateTotalScore()).isGreaterThan(16)
+                () -> assertThat(dealer.totalScore()).isGreaterThan(16)
         );
     }
 
