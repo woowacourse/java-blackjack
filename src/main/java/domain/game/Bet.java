@@ -6,8 +6,10 @@ public final class Bet {
 
     public static final int MIN = 1_000;
     public static final int MAX = 1_000_000;
+    public static final double BONUS_RATE = 1.5;
 
     private final int bet;
+    private int profit;
 
     private Bet(final int bet) {
         validatePrice(bet);
@@ -29,7 +31,13 @@ public final class Bet {
         }
     }
 
-    public Bet applyBonus() {
-        return of((int) (bet * 1.5));
+    public int applyBonus() {
+        this.profit = (int) (bet * BONUS_RATE);
+        return profit;
+    }
+
+    public int applyBust() {
+        this.profit = -bet;
+        return profit;
     }
 }

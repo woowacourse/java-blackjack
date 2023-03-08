@@ -33,7 +33,14 @@ class BetTest {
     void bonus() {
         final Bet bet = Bet.of(10_000);
         assertThat(bet.applyBonus())
-                .extracting("bet")
                 .isEqualTo(15_000);
+    }
+
+    @DisplayName("버스트가 나면 베팅한 금액을 모두 잃는다.")
+    @Test
+    void bust() {
+        final Bet bet = Bet.of(10_000);
+        assertThat(bet.applyBust())
+                .isEqualTo(-10_000);
     }
 }
