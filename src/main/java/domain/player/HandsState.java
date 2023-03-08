@@ -16,7 +16,7 @@ public enum HandsState {
         this.calculator = calculator;
     }
 
-    public static HandsState from(int score) {
+    public static HandsState from(final int score) {
         return Arrays.stream(HandsState.values())
                 .filter(i -> i.calculator.test(score))
                 .findAny()

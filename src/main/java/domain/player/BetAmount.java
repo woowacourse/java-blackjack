@@ -1,6 +1,6 @@
 package domain.player;
 
-public class BetAmount {
+public final class BetAmount {
 
     public final int amount;
 
@@ -8,7 +8,7 @@ public class BetAmount {
         this.amount = amount;
     }
 
-    public static BetAmount from(String amount) {
+    public static BetAmount from(final String amount) {
         validateNumber(amount);
         validatePositiveNumber(Integer.parseInt(amount));
         return new BetAmount(Integer.parseInt(amount));

@@ -3,15 +3,15 @@ package domain.player;
 import java.util.HashSet;
 import java.util.List;
 
-public class Names {
+public final class Names {
 
     private final List<String> names;
 
-    private Names(List<String> names) {
+    private Names(final List<String> names) {
         this.names = names;
     }
 
-    public static Names from(List<String> names) {
+    public static Names from(final List<String> names) {
         validateDuplicate(names);
         return new Names(names);
     }

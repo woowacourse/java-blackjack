@@ -39,7 +39,7 @@ public final class Cards {
                 .anyMatch(this::isAce);
     }
 
-    private boolean isAce(Card card) {
+    private boolean isAce(final Card card) {
         return card.getNumber() == Number.ACE;
     }
 

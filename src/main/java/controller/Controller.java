@@ -34,7 +34,7 @@ public final class Controller {
                 .collect(Collectors.toList()));
     }
 
-    public Participant createParticipant(final String name) {
+    private Participant createParticipant(final String name) {
         return Participant.from(name, BetAmount.from(InputView.readBetValue(name)));
     }
 
@@ -50,7 +50,7 @@ public final class Controller {
                 .forEach(this::printPlayerCards);
     }
 
-    private void printPlayerCards(Player player) {
+    private void printPlayerCards(final Player player) {
         OutputView.printPlayerCards(PlayerDto.from(player));
     }
 
@@ -89,7 +89,7 @@ public final class Controller {
                 .forEach(this::printParticipantCards);
     }
 
-    private void printParticipantCards(Player player) {
+    private void printParticipantCards(final Player player) {
         OutputView.printPlayerScore(PlayerDto.from(player));
     }
 

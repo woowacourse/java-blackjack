@@ -4,7 +4,8 @@ import domain.player.Player;
 
 import java.util.List;
 
-public class PlayerDto {
+public final class PlayerDto {
+
     private final String name;
     private final List<String> cards;
     private final int score;

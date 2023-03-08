@@ -22,26 +22,26 @@ public final class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame from() {
-        return new BlackjackGame(Deck.from(new RandomCardGenerator()));
-    }
-
-    public static BlackjackGame from(Deck deck) {
+    public static BlackjackGame from(final Deck deck) {
         return new BlackjackGame(deck);
     }
 
-    public void distributeInitialCards(Participants participants, Dealer dealer) {
+    public static BlackjackGame from() {
+        return BlackjackGame.from(Deck.from(new RandomCardGenerator()));
+    }
+
+    public void distributeInitialCards(final Participants participants,final Dealer dealer) {
         dealer.takeCard(deck.distributeCard());
         participants.getParticipants()
                 .forEach(this::distributeTwoCards);
     }
 
-    private void distributeTwoCards(Player player) {
+    private void distributeTwoCards(final Player player) {
         player.takeCard(deck.distributeCard());
         player.takeCard(deck.distributeCard());
     }
 
-    public void distributeCard(Player player) {
+    public void distributeCard(final Player player) {
         player.takeCard(deck.distributeCard());
     }
 
@@ -60,12 +60,12 @@ public final class BlackjackGame {
                 ));
     }
 
-    private int calculateParticipantRevenue(Participant participant, final Dealer dealer) {
+    private int calculateParticipantRevenue(final Participant participant, final Dealer dealer) {
         return calculateGameResult(dealer, participant)
                 .getWinningAmount(participant.getBetValue()) - participant.getBetValue();
     }
 
-    private int calculateDealerRevenue(Map<String, Integer> participantsResult) {
+    private int calculateDealerRevenue(final Map<String, Integer> participantsResult) {
         return participantsResult.values()
                 .stream()
                 .mapToInt(Integer::intValue)
@@ -88,7 +88,7 @@ public final class BlackjackGame {
         return !dealer.isBust() && dealer.getScore() > participant.getScore();
     }
 
-    private boolean isDraw(Dealer dealer, Participant participant) {
+    private boolean isDraw(final Dealer dealer, final Participant participant) {
         return participant.getScore() == dealer.getScore();
     }
 }

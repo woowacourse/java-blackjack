@@ -16,7 +16,7 @@ public enum GameResult {
         this.calculator = calculator;
     }
 
-    public int getWinningAmount(int betValue) {
+    public int getWinningAmount(final int betValue) {
         return calculator.apply(betValue);
     }
 }
