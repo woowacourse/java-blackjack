@@ -36,8 +36,8 @@ public class Participants {
         }
     }
 
-    public void drawCard(final Deck deck, int count) {
-        while (count-- > 0) {
+    public void drawCard(final Deck deck, final int drawCount) {
+        for (int i = 0; i < drawCount; i++) {
             participants.forEach(participant -> participant.drawCard(deck.draw()));
         }
     }
