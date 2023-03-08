@@ -11,7 +11,7 @@ public class BlackJackController {
 
     public void start(final Deck deck) {
         final Participants participants = getParticipants();
-        final Dealer dealer = new Dealer();
+        final Dealer dealer = participants.getDealer();
         divideFirstCard(deck, participants);
 
         OutputView.printFirstCardStatus(participants);
