@@ -10,6 +10,7 @@ import domain.Result;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import type.Answer;
 import util.CardStatusConverter;
 import util.InitialCardMaker;
 import view.InputView;
@@ -17,11 +18,8 @@ import view.OutputView;
 
 public class BlackJackController {
 
-    private static final String MORE_CARD = "y";
-    private static final String CARD_STOP = "n";
     private static final String DELIMITER = ",";
     private static final int LIMIT_REMOVED = -1;
-    private static final String INVALID_MORE_CARD_ERROR_MESSAGE = "y 나 n 만을 입력해주세요.";
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
@@ -93,25 +91,18 @@ public class BlackJackController {
 
         while (player.isMoreCardAble() && isCardRequested) {
             String answer = inputView.askMoreCard(player.getNameToValue());
-            validateCardAnswer(answer);
-            isCardRequested = isNoStop(cardDistributor, player, answer);
+            Answer.validate(answer);
+            pickPlayerCardIfRequested(cardDistributor, player, answer);
+            isCardRequested = Answer.isMoreCardRequested(answer);
         }
     }
 
-    private void validateCardAnswer(String answer) {
-        if (answer.equals(MORE_CARD) || answer.equals(CARD_STOP)) {
-            return;
-        }
-        throw new IllegalArgumentException(INVALID_MORE_CARD_ERROR_MESSAGE);
-    }
-
-    private boolean isNoStop(CardDistributor cardDistributor, Player player, String answer) {
-        if (answer.equals(MORE_CARD) && cardDistributor.isCardLeft()) {
+    private void pickPlayerCardIfRequested(CardDistributor cardDistributor, Player player, String answer) {
+        if (Answer.isMoreCardRequested(answer) && cardDistributor.isCardLeft()) {
             player.pick(cardDistributor.distribute());
         }
         outputView.printCardStatus(player.getNameToValue(),
                 CardStatusConverter.convertToCardStatus(player.getCardList()));
-        return answer.equals(MORE_CARD);
     }
 
     private List<String> requestPlayerName() {
