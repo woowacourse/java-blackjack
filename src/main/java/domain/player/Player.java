@@ -2,12 +2,11 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Score;
 
 import java.util.List;
 
 public abstract class Player {
-
-    private static final int BUST_NUMBER = 22;
 
     private final Name name;
     private final Cards cards;
@@ -17,9 +16,9 @@ public abstract class Player {
         this.cards = cards;
     }
 
-    public final boolean isBust() {
-        return getScore() >= BUST_NUMBER;
-    }
+    public abstract boolean canHit();
+
+    public abstract List<Card> showCards();
 
     public final void takeCard(final Card card) {
         cards.takeCard(card);
@@ -29,7 +28,7 @@ public abstract class Player {
         return cards.getCards();
     }
 
-    public final int getScore() {
+    public final Score getScore() {
         return cards.getScore();
     }
 
