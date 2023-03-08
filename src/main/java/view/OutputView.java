@@ -15,7 +15,9 @@ public class OutputView {
     public static final String DEALER_GET_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     
     public static void printReadyMessage(Participants participants) {
-        List<String> participantNames = participants.stream().map(Playable::getName).collect(Collectors.toList());
+        List<String> participantNames = participants.stream()
+                .map(Playable::getName)
+                .collect(Collectors.toList());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ");
         List<String> playerNames = participantNames.subList(1, participantNames.size());
@@ -70,13 +72,6 @@ public class OutputView {
                 + card.getCardShape().getName();
     }
     
-    public static void printParticipantsNameAndCards(Participants participants) {
-        participants.forEach(
-                (participant) -> OutputView.printNameAndCards(participant.getName(),
-                        participant.getCards()));
-        System.out.println();
-    }
-    
     public static void printPlayersGameResult(final HashMap<String, Result> resultMap) {
         System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
         resultMap.forEach((name, result) -> {
@@ -103,7 +98,9 @@ public class OutputView {
     public static void printNameCardsScore(String name, CardCollection cards, int score) {
         String formattedNameAndScore = name
                 + ": "
-                + cards.stream().map(OutputView::formatCard).collect(Collectors.joining(", "))
+                + cards.stream()
+                .map(OutputView::formatCard)
+                .collect(Collectors.joining(", "))
                 + " - "
                 + "결과: "
                 + score;
