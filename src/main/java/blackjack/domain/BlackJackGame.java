@@ -5,7 +5,8 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.result.FinalCards;
-import blackjack.domain.result.PlayerJudgeResults;
+import blackjack.domain.result.GameResultComputer;
+import blackjack.domain.result.JudgeResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class BlackJackGame {
 
     private final Deck deck;
     private final Participants participants;
+    private GameResultComputer gameResultComputer;
 
     public BlackJackGame(final DeckGenerator deckGenerator, final String dealerName, final List<String> playerNames) {
         this.deck = deckGenerator.generate();
@@ -75,7 +77,23 @@ public class BlackJackGame {
         return finalCardsByPlayerName;
     }
 
-    public PlayerJudgeResults computeJudgeResultsByPlayer() {
-        return new PlayerJudgeResults(participants.collectPlayerJudgeResults());
+    public void updateGameResultComputer() {
+        gameResultComputer = new GameResultComputer(participants.collectPlayerJudgeResults());
+    }
+
+    public Map<String, JudgeResult> computeJudgeResultsByPlayer() {
+        validateGameResultComputer();
+        return gameResultComputer.getJudgeResultsByPlayer();
+    }
+
+    public Map<JudgeResult, Integer> computeDealerJudgeResultsStatistic() {
+        validateGameResultComputer();
+        return gameResultComputer.countDealerJudgeResults();
+    }
+
+    private void validateGameResultComputer() {
+        if (gameResultComputer == null) {
+            throw new IllegalStateException("게임 결과 계산기 업데이트를 해야 결과를 조회할 수 있습니다.");
+        }
     }
 }

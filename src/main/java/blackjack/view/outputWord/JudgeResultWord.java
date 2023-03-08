@@ -1,8 +1,8 @@
 package blackjack.view.outputWord;
 
-import blackjack.domain.result.DealerJudgeResultsStatistic;
 import blackjack.domain.result.JudgeResult;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum JudgeResultWord {
@@ -27,10 +27,10 @@ public enum JudgeResultWord {
         return resultWord.word;
     }
 
-    public static String toStatisticWords(final DealerJudgeResultsStatistic dealerJudgeResultStats) {
-        return Arrays.stream(values())
-                .map(word -> toStatisticWord(word.result, dealerJudgeResultStats.getCountBy(word.result)))
-                .filter(statisticWord -> !statisticWord.isEmpty())
+    public static String toStatisticWords(final Map<JudgeResult, Integer> dealerJudgeResultStatistic) {
+        return dealerJudgeResultStatistic.entrySet()
+                .stream()
+                .map(entry -> toStatisticWord(entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining(" "));
     }
 
