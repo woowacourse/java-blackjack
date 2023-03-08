@@ -23,11 +23,15 @@ public class Participant {
         return cards.getCards();
     }
 
-    public int getScore() {
-        return cards.calculateScore();
+    public Score getScore() {
+        return cards.getScore();
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 }

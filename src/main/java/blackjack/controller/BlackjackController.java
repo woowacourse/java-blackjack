@@ -8,7 +8,6 @@ import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -45,37 +44,22 @@ public class BlackjackController {
         });
     }
 
-    private <T> T repeatInput(Supplier<T> input) {
-        try {
-            return input.get();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return repeatInput(input);
-        }
-    }
-
     private void initDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
         blackjackGame.initDraw(dealer, players);
         outputView.printInitCards(dealer, players);
     }
 
     private void playerDraw(final Players players, final Dealer dealer, final BlackjackGame blackjackGame) {
-        players.getPlayers().forEach((player ->
-                processPlayerDraw(blackjackGame, player))
-        );
+        players.getPlayers().forEach((player -> processPlayerDraw(blackjackGame, player)));
 
         processDealerDraw(dealer, blackjackGame);
     }
 
     private void processPlayerDraw(final BlackjackGame blackjackGame, final Player player) {
-        while (isPlayerEnd(blackjackGame, player) && isCommandContinue(player)) {
+        while (!player.isBust() && isCommandContinue(player)) {
             blackjackGame.playerDraw(player);
             outputView.printParticipantCards(player.getName(), player.showCards());
         }
-    }
-
-    private boolean isPlayerEnd(final BlackjackGame blackjackGame, final Player player) {
-        return !blackjackGame.isBust(player.getScore());
     }
 
     private boolean isCommandContinue(final Player player) {
@@ -83,7 +67,7 @@ public class BlackjackController {
     }
 
     private void processDealerDraw(final Dealer dealer, final BlackjackGame blackjackGame) {
-        while (!blackjackGame.isEnd(dealer.getScore())) {
+        while (dealer.isHitAble()) {
             blackjackGame.dealerDraw(dealer);
             outputView.printDealerDraw();
         }
@@ -95,19 +79,17 @@ public class BlackjackController {
     }
 
     private void printResult(final Dealer dealer, final Players players) {
-        final Map<String, GameResult> playersResult = getPlayerScoreResult(dealer, players);
-        outputView.printGameResult(dealer.getResult(), playersResult);
+        Map<String, GameResult> playersResult = players.toResults(dealer);
+        Map<GameResult, Integer> dealerResult = dealer.getResult(players);
+        outputView.printGameResult(dealerResult, playersResult);
     }
 
-    private Map<String, GameResult> getPlayerScoreResult(final Dealer dealer, final Players players) {
-        Map<String, GameResult> result = new LinkedHashMap<>();
-
-        players.getPlayers().forEach((player) -> {
-            int playerScore = player.getScore();
-            GameResult gameResult = dealer.declareGameResult(playerScore);
-            result.put(player.getName(), gameResult);
-        });
-
-        return result;
+    private <T> T repeatInput(Supplier<T> input) {
+        try {
+            return input.get();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return repeatInput(input);
+        }
     }
 }

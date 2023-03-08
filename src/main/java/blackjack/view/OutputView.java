@@ -7,6 +7,7 @@ import blackjack.domain.game.GameResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
+import blackjack.domain.user.Score;
 
 import java.util.List;
 import java.util.Map;
@@ -65,11 +66,16 @@ public class OutputView {
 
     public void printCardResult(final Dealer dealer, final Players players) {
         System.out.println();
-        System.out.println(dealer.getName() + "카드: " + toCardsView(dealer.showCards()) + " - 결과: " + dealer.getScore());
-        players.getPlayers().forEach(player ->
-                System.out.println(player.getName() + "카드: " + toCardsView(player.showCards()) + " - 결과: " + player.getScore())
-        );
+        System.out.println(dealer.getName() + "카드: " + toCardsView(dealer.showCards()) + " - 결과: " + toScoreView(dealer.getScore()));
+        players.getPlayers().forEach(player -> System.out.println(player.getName() + "카드: " + toCardsView(player.showCards()) + " - 결과: " + toScoreView(player.getScore())));
         System.out.println();
+    }
+
+    private String toScoreView(final Score score) {
+        if (score.isBust()) {
+            return "BUST!";
+        }
+        return String.valueOf(score.getValue());
     }
 
     public void printGameResult(final Map<GameResult, Integer> dealerResult, final Map<String, GameResult> playerScore) {

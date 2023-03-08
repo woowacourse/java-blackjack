@@ -9,8 +9,6 @@ import blackjack.domain.user.Players;
 public class BlackjackGame {
 
     private static final int INIT_DRAW_COUNT = 2;
-    private static final int MIN_DEALER_SCORE = 16;
-    private static final int BUST_SCORE = -1;
 
     private final CardPack cardPack;
 
@@ -46,13 +44,5 @@ public class BlackjackGame {
 
     public void dealerDraw(final Dealer dealer) {
         dealer.drawCard(cardPack);
-    }
-
-    public boolean isEnd(final int score) {
-        return (score > MIN_DEALER_SCORE) || isBust(score);
-    }
-
-    public boolean isBust(final int score) {
-        return score == BUST_SCORE;
     }
 }

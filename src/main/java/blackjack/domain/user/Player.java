@@ -51,7 +51,11 @@ public class Player {
         return List.copyOf(participant.showCards());
     }
 
-    public int getScore() {
+    public boolean isBust() {
+        return participant.isBust();
+    }
+
+    public Score getScore() {
         return participant.getScore();
     }
 

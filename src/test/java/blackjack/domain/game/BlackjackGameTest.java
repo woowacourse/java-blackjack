@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.cardpack.CardPack;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -16,68 +17,34 @@ import java.util.List;
 class BlackjackGameTest {
 
     @Test
-    void 게임은_딜러가_16점_이하인지_검사한다() {
+    void 딜러가_카드를_뽑는다() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(new CardPack());
-        Dealer dealer = new Dealer("딜러");
+        BlackjackGame blackjackGame = new BlackjackGame(new CardPack(List.of(
+                new Card(CardNumber.TEN, CardShape.SPADE),
+                new Card(CardNumber.TEN, CardShape.HEART)
+        )));
+        Dealer dealer = new Dealer("dummy");
 
         // when
         blackjackGame.dealerDraw(dealer);
-        int dealerScore = dealer.getScore();
 
         // then
-        final boolean dealerEnd = blackjackGame.isEnd(dealerScore);
-        Assertions.assertThat(dealerEnd).isFalse();
+        Assertions.assertThat(dealer.showCards()).hasSize(1);
     }
 
     @Test
-    void 게임은_딜러가_16점_초과인지_검사한다() {
+    void 플레이어가_카드를_뽑는다() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(new CardPack());
-        Dealer dealer = new Dealer("딜러");
+        BlackjackGame blackjackGame = new BlackjackGame(new CardPack(List.of(
+                new Card(CardNumber.TEN, CardShape.SPADE),
+                new Card(CardNumber.TEN, CardShape.HEART)
+        )));
+        Player player = new Player("dummy");
 
         // when
-        blackjackGame.dealerDraw(dealer);
-        blackjackGame.dealerDraw(dealer);
-        int dealerScore = dealer.getScore();
+        blackjackGame.playerDraw(player);
 
         // then
-        final boolean dealerEnd = blackjackGame.isEnd(dealerScore);
-        Assertions.assertThat(dealerEnd).isTrue();
-    }
-
-    @Test
-    void 게임은_딜러가_21점_초과이면_True() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(new CardPack());
-        Dealer dealer = new Dealer("딜러");
-
-        // when
-        blackjackGame.dealerDraw(dealer);
-        blackjackGame.dealerDraw(dealer);
-        blackjackGame.dealerDraw(dealer);
-        int dealerScore = dealer.getScore();
-
-        // then
-        final boolean dealerEnd = blackjackGame.isEnd(dealerScore);
-        Assertions.assertThat(dealerEnd).isTrue();
-    }
-
-
-    @Test
-    void 게임은_딜러가_16이면_false() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(new CardPack(
-                List.of(new Card(CardNumber.QUEEN, CardShape.SPADE), new Card(CardNumber.SIX, CardShape.SPADE))));
-        Dealer dealer = new Dealer("딜러");
-
-        // when
-        blackjackGame.dealerDraw(dealer);
-        blackjackGame.dealerDraw(dealer);
-        int dealerScore = dealer.getScore();
-
-        // then
-        final boolean dealerEnd = blackjackGame.isEnd(dealerScore);
-        Assertions.assertThat(dealerEnd).isFalse();
+        Assertions.assertThat(player.showCards()).hasSize(1);
     }
 }

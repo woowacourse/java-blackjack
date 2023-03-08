@@ -69,9 +69,9 @@ class DealerTest {
         dealer.drawCard(dealerPack);
 
         //then
-        Assertions.assertThat(dealer.declareGameResult(player1.getScore())).isEqualTo(GameResult.WIN);
-        Assertions.assertThat(dealer.declareGameResult(player2.getScore())).isEqualTo(GameResult.DRAW);
-        Assertions.assertThat(dealer.declareGameResult(player3.getScore())).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(dealer.declareGameResult(player1.getScore().getValue())).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(dealer.declareGameResult(player2.getScore().getValue())).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(dealer.declareGameResult(player3.getScore().getValue())).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -92,10 +92,10 @@ class DealerTest {
         dealer.drawCard(cardPack);
         dealer.drawCard(cardPack);
 
-        dealer.declareGameResult(player.getScore());
+        dealer.declareGameResult(player.getScore().getValue());
 
         //then
-        Map<GameResult, Integer> result = dealer.getResult();
+        Map<GameResult, Integer> result = dealer.getResult(new Players(List.of(player)));
         Assertions.assertThat(result.get(GameResult.WIN)).isEqualTo(1);
     }
 }

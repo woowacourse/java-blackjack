@@ -17,15 +17,15 @@ class CardsTest {
     @Test
     void 카드를_받아_점수를_계산한다() {
         //given
-        Cards hand = new Cards();
+        Cards cards = new Cards();
         CardNumber cardNumber = CardNumber.TWO;
-        List<Card> cards = List.of(new Card(cardNumber, CardShape.CLOVER));
+        List<Card> dummy = List.of(new Card(cardNumber, CardShape.CLOVER));
 
         // when
-        cards.forEach(hand::add);
+        dummy.forEach(cards::add);
 
         // then
-        Assertions.assertThat(hand.calculateScore())
+        Assertions.assertThat(cards.getScore().getValue())
                 .isEqualTo(cardNumber.getScore());
     }
 
@@ -45,7 +45,7 @@ class CardsTest {
             cards.forEach(hand::add);
 
             // then
-            Assertions.assertThat(hand.calculateScore())
+            Assertions.assertThat(hand.getScore().getValue())
                     .isEqualTo(20);
         }
 
@@ -61,7 +61,7 @@ class CardsTest {
             cards.forEach(hand::add);
 
             // then
-            Assertions.assertThat(hand.calculateScore())
+            Assertions.assertThat(hand.getScore().getValue())
                     .isEqualTo(MAX_CARD_SCORE);
         }
     }
@@ -79,7 +79,7 @@ class CardsTest {
         cards.forEach(hand::add);
 
         //then
-        Assertions.assertThat(hand.calculateScore())
+        Assertions.assertThat(hand.getScore().getValue())
                 .isEqualTo(BUST_SCORE);
     }
 }

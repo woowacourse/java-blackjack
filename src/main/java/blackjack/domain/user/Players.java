@@ -1,6 +1,11 @@
 package blackjack.domain.user;
 
+import blackjack.domain.game.GameResult;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -20,11 +25,11 @@ public class Players {
 
     private void validatePlayerCount(final List<Player> players) {
         if (players.isEmpty()) {
-            throw new IllegalArgumentException("플레이어들은 1명 이상이어야합니다.");
+            throw new IllegalArgumentException("플레이어들은 " + MAX_PLAYER_COUNT + "명 이상이어야합니다.");
         }
 
         if (players.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException("플레이어들은 13명 이하여야 합니다.");
+            throw new IllegalArgumentException("플레이어들은 10명 이하여야 합니다.");
         }
     }
 
@@ -37,6 +42,17 @@ public class Players {
         if (count != players.size()) {
             throw new IllegalArgumentException("플레이어들의 이름은 고유하여야 합니다.");
         }
+    }
+
+    public Map<String, GameResult> toResults(Dealer dealer) {
+        return players.stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> {
+                            Score score = player.getScore();
+                            return dealer.declareGameResult(score.getValue());
+                        },
+                        (a, b) -> a, HashMap::new));
     }
 
     public List<Player> getPlayers() {
