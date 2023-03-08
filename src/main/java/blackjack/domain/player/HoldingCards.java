@@ -21,10 +21,10 @@ public class HoldingCards {
 
     public Score getSum() {
         Score score = getDefaultSum();
-        if (!hasAce()) {
-            return score;
+        if (hasAce()) {
+            return getSumOfContainingAce(score);
         }
-        return getSumOfContainingAce(score);
+        return score;
     }
 
     public Score getDefaultSum() {
