@@ -75,11 +75,9 @@ public class BlackJackController {
     }
 
     private void takeEachChallengerTurn(Player player) {
-        boolean gonnaPick = chooseGonnaPick(player);
-        while (blackJackGame.canPick(player) && gonnaPick) {
+        while (blackJackGame.canPick(player) && chooseGonnaPick(player)) {
             blackJackGame.pick(player);
             OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
-            gonnaPick = chooseGonnaPick(player);
         }
     }
 
