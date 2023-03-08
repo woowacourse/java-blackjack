@@ -44,7 +44,7 @@
   - [ ] 메서드 순서 정렬
   - [x] `static` 선언된 메소드 확인 후 제거
   - [x] 축약해서 사용한 메소드, 필드 네이밍 변경
-  - [ ] GameResult class getPlayerWinWhenDealerLessThan21 메소드 네이밍 변경
+  - [x] GameResult class getPlayerWinWhenDealerLessThan21 메소드 네이밍 변경
   - [ ] 상수와 필드 사이 개행 추가
   - [ ] show로 시작하는 메서드 네이밍 get으로 수정
   - [ ] 한 번만 사용되는 문장 -> 코드 내에서 바로 사용하도록 수정

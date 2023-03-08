@@ -27,7 +27,7 @@ public class GameResult {
         return dealerResult;
     }
 
-    private String getPlayerWinWhenDealerLessThan21(int dealerScore, int playerScore) {
+    private String getPlayerResultWhenDealerBurst(int dealerScore, int playerScore) {
         if (playerScore > dealerScore) {
             return WIN;
         }
@@ -37,7 +37,7 @@ public class GameResult {
         return DRAW;
     }
 
-    private String getPlayerWinWhenDealerOverThan21(int playerScore) {
+    private String getPlayerResultWhenDealerNotBurst(int playerScore) {
         if (playerScore <= BURST_NUMBER) {
             return WIN;
         }
@@ -57,10 +57,10 @@ public class GameResult {
 
     private String getPlayerWin(int dealerScore, int playerScore) {
         if (dealerScore > BURST_NUMBER) {
-            return getPlayerWinWhenDealerOverThan21(playerScore);
+            return getPlayerResultWhenDealerNotBurst(playerScore);
         }
         if (playerScore <= BURST_NUMBER) {
-            return getPlayerWinWhenDealerLessThan21(dealerScore, playerScore);
+            return getPlayerResultWhenDealerBurst(dealerScore, playerScore);
         }
         return LOSE;
     }
