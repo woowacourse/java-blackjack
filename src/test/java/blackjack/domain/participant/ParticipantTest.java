@@ -3,15 +3,36 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Deck;
+import blackjack.domain.game.ParticipantCards;
+import blackjack.fixture.ParticipantCardsFixture;
 import blackjack.fixture.ParticipantFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParticipantTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "       "})
+    @DisplayName("이름이 공백이거나 비어있을 경우 예외가 발생한다.")
+    void throwExceptionWhenNameIsBlank(final String nameValue) {
+        final Deck deck = new Deck();
+        final ParticipantCards participantsCards
+                = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
+        assertThatThrownBy(() -> new Participant(participantsCards, nameValue) {
+            @Override
+            public boolean isHittable() {
+                throw new UnsupportedOperationException();
+            }
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
     @Test
     @DisplayName("자신의 점수를 계산한다.")
     void getTotalPoint() {
@@ -44,5 +65,22 @@ class ParticipantTest {
         Participant participant = ParticipantFixture.create(cardOne, cardTwo, List.of());
 
         assertThat(participant.open(2)).containsAll(List.of(cardOne, cardTwo));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"헤나01", "헤나02", "헤나03"})
+    @DisplayName("참가자 이름을 가져온다.")
+    void getName(final String nameValue) {
+        final Deck deck = new Deck();
+        final ParticipantCards cards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
+        final Participant participant = new Participant(cards, nameValue) {
+            @Override
+            public boolean isHittable() {
+                throw new UnsupportedOperationException();
+            }
+        };
+        final Name name = participant.getName();
+
+        assertThat(name.getValue()).isEqualTo(nameValue);
     }
 }
