@@ -1,13 +1,20 @@
 package domain.player;
 
 import domain.card.CardArea;
+import domain.game.BattingMoney;
 
 public class Gambler extends Participant {
 
     private HitState state = HitState.INIT;
+    private final BattingMoney battingMoney;
 
-    public Gambler(final Name name, final CardArea cardArea) {
+    public Gambler(final Name name, final CardArea cardArea, final BattingMoney battingMoney) {
         super(name, cardArea);
+        this.battingMoney = battingMoney;
+    }
+
+    public BattingMoney battingMoney() {
+        return battingMoney;
     }
 
     @Override
