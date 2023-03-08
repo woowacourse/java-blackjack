@@ -26,11 +26,7 @@ public class BlackJackGame {
     }
 
     public void drawDefaultCard() {
-        drawPlayersDefaultCard();
         dealer.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
-    }
-
-    private void drawPlayersDefaultCard() {
         for (Player player : players.getPlayers()) {
             player.receiveCards(cards.drawCards(INITIAL_CARD_COUNT));
         }
