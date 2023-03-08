@@ -1,10 +1,13 @@
 package blackjack;
 
-import blackjack.domain.BlackJackManager;
+import blackjack.controller.BlackJackController;
 
 public class Application {
     public static void main(String[] args) {
-        BlackJackManager blackJackManager = new BlackJackManager();
-        blackJackManager.run();
+        BlackJackController blackJackController = new BlackJackController();
+        blackJackController.showParticipantInitialCards();
+        blackJackController.checkParticipantsHit();
+        blackJackController.showParticipantStatus();
+        blackJackController.showGameResult();
     }
 }
