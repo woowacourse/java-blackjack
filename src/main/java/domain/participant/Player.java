@@ -24,18 +24,6 @@ public class Player extends Participant {
         return calculateScore() < BURST_NUMBER;
     }
 
-    public boolean isWin(Dealer dealer) {
-        if (isBurst()) {
-            return false;
-        }
-
-        if (dealer.isBurst()) {
-            return true;
-        }
-
-        return this.calculateScore() > dealer.calculateScore();
-    }
-
     public BlackJackResult getResult(Dealer dealer) {
         if (isBlackJack()) {
             return calculateBlackJackCase(dealer);

@@ -11,7 +11,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -184,32 +183,6 @@ class BlackJackGameTest {
         boolean expected = false;
         // when
         boolean actual = blackJackGame.canDealerDrawMore();
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("딜러의 점수를 바탕으로 플레이어들의 승패를 계산한다.")
-    @Test
-    void get_win_loss_result() {
-        // given
-        List<Card> playerCards = new ArrayList<>();
-        playerCards.add(new Card(CardType.SPADE, CardValue.EIGHT));
-        Player player = new Player(new Name("pobi"), new DrawnCards(playerCards));
-
-        Players players = new Players(List.of(player));
-
-        List<Card> dealerCard = new ArrayList<>();
-        dealerCard.add(new Card(CardType.SPADE, CardValue.TWO));
-        Dealer dealer = new Dealer(new DrawnCards(dealerCard));
-
-        BlackJackGame blackJackGame = new BlackJackGame(players, dealer,
-                CardDeck.createShuffled(createFillCards()));
-
-        boolean expected = true;
-        // when
-        List<WinLoseResult> winLoseResults = blackJackGame.getWinLoseResults();
-        boolean actual = winLoseResults.get(0)
-                .isWin();
         // then
         assertThat(actual).isEqualTo(expected);
     }

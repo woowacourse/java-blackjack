@@ -9,7 +9,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
-import dto.response.WinLoseResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,12 +77,6 @@ public class BlackJackGame {
                 .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateScore())));
 
         return participantResults;
-    }
-
-    public List<WinLoseResult> getWinLoseResults() {
-        return players.stream()
-                .map(player -> new WinLoseResult(player.getName(), player.isWin(dealer)))
-                .collect(toList());
     }
 
     public List<String> getPlayersName() {
