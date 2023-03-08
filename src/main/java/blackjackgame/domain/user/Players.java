@@ -1,6 +1,7 @@
 package blackjackgame.domain.user;
 
 import blackjackgame.domain.game.Result;
+import blackjackgame.domain.user.dto.NameDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +42,12 @@ public class Players {
         }
     }
 
-    public Map<String, Result> getPlayerFinalResult() {
-        Map<String, Result> playerFinalResult = new LinkedHashMap<>();
+    public Map<NameDto, Result> getPlayerFinalResult() {
+        Map<NameDto, Result> playerFinalResult = new LinkedHashMap<>();
 
         for (Player player : players) {
-            playerFinalResult.put(player.getName(), player.getResult());
+            NameDto nameDto = new NameDto(player.getName());
+            playerFinalResult.put(nameDto, player.getResult());
         }
 
         return playerFinalResult;

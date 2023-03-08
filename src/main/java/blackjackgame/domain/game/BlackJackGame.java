@@ -7,6 +7,7 @@ import blackjackgame.domain.user.Dealer;
 import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
+import blackjackgame.domain.user.dto.NameDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,19 +78,19 @@ public class BlackJackGame {
         return player.getStatus() == PlayerStatus.NORMAL && dealer.getStatus() == DealerStatus.NORMAL;
     }
 
-    public Map<String, List<Card>> getSetUpResult() {
-        Map<String, List<Card>> setUpResult = new LinkedHashMap<>();
+    public Map<NameDto, List<Card>> getSetUpResult() {
+        Map<NameDto, List<Card>> setUpResult = new LinkedHashMap<>();
 
-        setUpResult.put(dealer.getName(), List.of(dealer.getFirstCard()));
+        setUpResult.put(new NameDto(dealer.getName()), List.of(dealer.getFirstCard()));
 
         for (Player player : players.getPlayers()) {
-            setUpResult.put(player.getName(), player.getCards());
+            setUpResult.put(new NameDto(player.getName()), player.getCards());
         }
 
         return setUpResult;
     }
 
-    public Map<String, Result> getPlayerFinalResult() {
+    public Map<NameDto, Result> getPlayerFinalResult() {
         return players.getPlayerFinalResult();
     }
 

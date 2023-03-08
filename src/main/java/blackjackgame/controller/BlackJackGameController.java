@@ -11,6 +11,7 @@ import blackjackgame.domain.user.Player;
 import blackjackgame.domain.user.PlayerStatus;
 import blackjackgame.domain.user.Players;
 import blackjackgame.domain.user.User;
+import blackjackgame.domain.user.dto.NameDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +116,7 @@ public class BlackJackGameController {
 
     private void printFinalResult(BlackJackGame blackJackGame) {
         Map<Result, Integer> dealerWinningRecord = blackJackGame.getDealer().getWinningRecord();
-        Map<String, Result> userFinalResult = blackJackGame.getPlayerFinalResult();
+        Map<NameDto, Result> userFinalResult = blackJackGame.getPlayerFinalResult();
         outputView.printFinalResult(dealerWinningRecord, userFinalResult);
     }
 }

@@ -3,6 +3,7 @@ package blackjackgame.view;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.game.Result;
 import blackjackgame.domain.user.User;
+import blackjackgame.domain.user.dto.NameDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +32,31 @@ public class OutputView {
         System.out.println(e.getMessage() + NEWLINE);
     }
 
-    public void printSetUpResult(Map<String, List<Card>> setUpResult) {
+    public void printSetUpResult(Map<NameDto, List<Card>> setUpResult) {
         printSetUpCompleteMessage(setUpResult);
         printUserCards(setUpResult);
+    }
+
+    private void printSetUpCompleteMessage(Map<NameDto, List<Card>> setUpResult) {
+        List<String> userNames = new ArrayList<>(setUpResult.keySet()).stream()
+                .map(NameDto::getName)
+                .collect(Collectors.toList());
+        List<String> playerNames = userNames.subList(1, setUpResult.size());
+        String playerNamesPrintFormat = String.join(DRAW_RESULT_DELIMITER, playerNames);
+
+        System.out.printf(SETUP_COMPLETE_MESSAGE_FORMAT, playerNamesPrintFormat);
+    }
+
+    private void printUserCards(Map<NameDto, List<Card>> setUpResult) {
+        for (Entry<NameDto, List<Card>> cardsByUser : setUpResult.entrySet()) {
+            String name = cardsByUser.getKey().getName();
+            String cards = cardsByUser.getValue().stream()
+                    .map(Card::getSymbol)
+                    .collect(Collectors.joining(DRAW_RESULT_DELIMITER));
+
+            System.out.println(name + NAME_CARD_DELIMITER + cards);
+        }
+        System.out.print(NEWLINE);
     }
 
     public void printAskOneMoreCardMessage(String name) {
@@ -46,26 +69,6 @@ public class OutputView {
                 .collect(Collectors.joining(DRAW_RESULT_DELIMITER));
 
         System.out.println(name + NAME_CARD_DELIMITER + cardSymbols);
-    }
-
-    private void printSetUpCompleteMessage(Map<String, List<Card>> setUpResult) {
-        List<String> userNames = new ArrayList<>(setUpResult.keySet());
-        List<String> playerNames = userNames.subList(1, setUpResult.size());
-        String playerNamesPrintFormat = String.join(DRAW_RESULT_DELIMITER, playerNames);
-
-        System.out.printf(SETUP_COMPLETE_MESSAGE_FORMAT, playerNamesPrintFormat);
-    }
-
-    private void printUserCards(Map<String, List<Card>> setUpResult) {
-        for (Entry<String, List<Card>> cardsByUser : setUpResult.entrySet()) {
-            String name = cardsByUser.getKey();
-            String cards = cardsByUser.getValue().stream()
-                    .map(Card::getSymbol)
-                    .collect(Collectors.joining(DRAW_RESULT_DELIMITER));
-
-            System.out.println(name + NAME_CARD_DELIMITER + cards);
-        }
-        System.out.print(NEWLINE);
     }
 
     public void printDealerDrawResult(int dealerDrawCount) {
@@ -85,7 +88,7 @@ public class OutputView {
         System.out.print(NEWLINE);
     }
 
-    public void printFinalResult(Map<Result, Integer> dealerResult, Map<String, Result> userResult) {
+    public void printFinalResult(Map<Result, Integer> dealerResult, Map<NameDto, Result> userResult) {
         System.out.println(FINAL_RESULT_NOTICE_MESSAGE);
         printDealerFinalResult(dealerResult);
         printPlayerFinalResult(userResult);
@@ -98,9 +101,11 @@ public class OutputView {
                 dealerResult.get(Result.LOSE));
     }
 
-    private void printPlayerFinalResult(Map<String, Result> userResult) {
-        for (Entry<String, Result> userFinalResult : userResult.entrySet()) {
-            System.out.println(userFinalResult.getKey() + ": " + userFinalResult.getValue().getResult());
+    private void printPlayerFinalResult(Map<NameDto, Result> userResult) {
+        for (Entry<NameDto, Result> userFinalResult : userResult.entrySet()) {
+            String playerName = userFinalResult.getKey().getName();
+            String result = userFinalResult.getValue().getResult();
+            System.out.println(playerName + ": " + result);
         }
     }
 }
