@@ -65,6 +65,20 @@ class ScoreTest {
         assertThat(score.isBlackjack()).isFalse();
     }
 
+    @DisplayName("합이 21이 넘을 경우 버스트이다.")
+    @Test
+    void isBust() {
+        Score score = Score.of(22);
+        assertThat(score.isBust()).isTrue();
+    }
+
+    @DisplayName("합이 21이 넘지 않으면 버스트가 아니다.")
+    @Test
+    void isNotBust() {
+        Score score = Score.of(20);
+        assertThat(score.isBust()).isFalse();
+    }
+
     @DisplayName("에이스를 가졌을 때")
     @Nested
     class GetValueWithBonus {

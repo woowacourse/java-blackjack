@@ -48,4 +48,8 @@ public class Score {
     public boolean isBlackjack() {
         return value == BLACKJACK_SCORE;
     }
+
+    public boolean isBust() {
+        return value > BLACKJACK_SCORE;
+    }
 }
