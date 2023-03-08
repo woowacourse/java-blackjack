@@ -1,16 +1,11 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.result.Result.DRAW;
-import static blackjack.domain.result.Result.LOSE;
-import static blackjack.domain.result.Result.WIN;
-import static blackjack.domain.participant.Dealer.BLACKJACK_SCORE;
 import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Result;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,36 +48,7 @@ public final class Players {
     }
 
     public Map<Player, Result> makeResult(final int dealerScore) {
-        Map<Player, Result> results = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            results.put(player, compare(player, dealerScore));
-        }
-        return results;
-    }
-
-    private Result compare(final Player player, final int dealerScore) {
-        if (dealerScore > BLACKJACK_SCORE) {
-            return judgeToBust(player);
-        }
-        return judgeToNotBust(player.calculateTotalScore(), dealerScore);
-    }
-
-    private Result judgeToBust(final Player player) {
-        if (player.isBust()) {
-            return DRAW;
-        }
-        return WIN;
-    }
-
-    private Result judgeToNotBust(final int playerScore, int dealerScore) {
-        if (playerScore < dealerScore) {
-            return LOSE;
-        }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return WIN;
+        return Result.makeResult(this.players, dealerScore);
     }
 
     public int size() {
