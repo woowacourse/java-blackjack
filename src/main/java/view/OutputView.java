@@ -1,11 +1,7 @@
 package view;
 
-import domain.Card;
-import domain.Cards;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Participant;
-import domain.Player;
+import domain.*;
+
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -30,7 +26,7 @@ public class OutputView {
 
     private static void printHideCard(Dealer dealer) {
         Card dealerCard = dealer.getCards().get(0);
-        System.out.printf("%s: %s%n", dealer.getName(), Converter.of(dealerCard));
+        System.out.printf("%s: %s%n", dealer.getName(), PrintConverter.of(dealerCard));
     }
 
     public static void printCard(Participant participant) {
@@ -41,7 +37,7 @@ public class OutputView {
         Cards cards = participant.getCards();
         StringJoiner stringJoiner = new StringJoiner(DELIMITER);
         for (int i = 0; i < cards.getSize(); i++) {
-            stringJoiner.add(Converter.of(cards.get(i)));
+            stringJoiner.add(PrintConverter.of(cards.get(i)));
         }
         return stringJoiner.toString();
     }
@@ -68,14 +64,14 @@ public class OutputView {
 
     private static void printDealerWinOrLose(DealerScore dealerScore) {
         System.out.printf("딜러: %d%s %d%s %d%s%n",
-            dealerScore.getWin(), Converter.of(GameResult.WIN),
-            dealerScore.getLose(), Converter.of(GameResult.LOSE),
-            dealerScore.getDraw(), Converter.of(GameResult.DRAW));
+            dealerScore.getWin(), PrintConverter.of(GameResult.WIN),
+            dealerScore.getLose(), PrintConverter.of(GameResult.LOSE),
+            dealerScore.getDraw(), PrintConverter.of(GameResult.DRAW));
     }
 
     private static void printPlayersWinOrLose(List<PlayerScore> results) {
         for (PlayerScore result : results) {
-            System.out.printf("%s: %s%n", result.getName(), Converter.of(result.getGameResult()));
+            System.out.printf("%s: %s%n", result.getName(), PrintConverter.of(result.getGameResult()));
         }
     }
 
