@@ -15,6 +15,10 @@ public class Score {
         this.value = value;
     }
 
+    public static Score of(final int value) {
+        return new Score(value);
+    }
+
     public static Score of(final Cards cards) {
         final int score = getInitialScore(cards);
         final int aceCount = cards.count(Letter.ACE);
@@ -49,6 +53,10 @@ public class Score {
 
     public boolean isStand() {
         return value <= MAX_VALUE;
+    }
+
+    public boolean isLessThan(final Score comparedScore) {
+        return this.value <= comparedScore.value;
     }
 
     @Override
