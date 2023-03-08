@@ -44,11 +44,11 @@ public class Score {
             return false;
         }
         Score score1 = (Score) o;
-        return score == score1.score;
+        return score == score1.score && isBlackjack == score1.isBlackjack;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(score, isBlackjack);
     }
 }

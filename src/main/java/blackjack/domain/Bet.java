@@ -18,16 +18,16 @@ public class Bet {
         return new Bet(bet);
     }
 
-    public Bet calculateResult(GameResult gameResult) {
-        return new Bet(gameResult.applyBet(bet));
-    }
-
     private static void validateBat(int bet) {
         if (bet <= MINIMUM_BET || bet >= MAXIMUM_BET) {
             throw new IllegalArgumentException(
                     "[ERROR] 배팅금은 " + decimalFormat.format(MINIMUM_BET) + "보다 크거나 " + decimalFormat.format(MAXIMUM_BET)
                             + "보다 작아야 합니다.");
         }
+    }
+
+    public Bet calculateResult(GameResult gameResult) {
+        return new Bet(gameResult.applyBet(bet));
     }
 
     public int getBet() {
