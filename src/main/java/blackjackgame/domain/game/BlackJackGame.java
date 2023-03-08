@@ -36,7 +36,7 @@ public class BlackJackGame {
         player.receiveCard(cards.drawCard());
     }
 
-    public void drawDealerCardUntilSatisfyingCondition() {
+    public void drawDealerCardUntilSatisfyingMinimumScore() {
         while (DealerStatus.UNDER_MIN_SCORE.equals(dealer.getStatus())) {
             dealer.receiveCard(cards.drawCard());
         }
