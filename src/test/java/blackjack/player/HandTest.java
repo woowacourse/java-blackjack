@@ -8,6 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -89,9 +90,9 @@ class HandTest {
 
         Hand newHand = hand.add(card, card2);
 
-        int score = newHand.calculateScore();
+        Score score = newHand.calculateScore();
 
-        assertThat(score).isEqualTo(10);
+        assertThat(score).isEqualTo(new Score(10));
     }
 
     @Test
@@ -129,8 +130,8 @@ class HandTest {
             Card card1 = new Card(CardNumber.TWO, Pattern.HEART);
             Hand newHand = hand.add(card, card1);
 
-            int score = newHand.calculateScore();
-            assertThat(score).isEqualTo(13);
+            Score score = newHand.calculateScore();
+            assertThat(score).isEqualTo(new Score(13));
         }
 
         @DisplayName("합계가 11 초과이면 에이스가 1로 계산된다.")
@@ -142,8 +143,8 @@ class HandTest {
             Card card2 = new Card(CardNumber.FIVE, Pattern.HEART);
             Hand newHand = hand.add(card, card1, card2);
 
-            int score = newHand.calculateScore();
-            assertThat(score).isEqualTo(16);
+            Score score = newHand.calculateScore();
+            assertThat(score).isEqualTo(new Score(16));
         }
     }
 }

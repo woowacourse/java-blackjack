@@ -10,6 +10,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Score;
 import blackjack.domain.participant.dealer.Dealer;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -45,7 +46,7 @@ class DealerTest {
         dealer.hit(card2);
         dealer.hit(card3);
 
-        assertThat(dealer.calculateScore()).isEqualTo(15);
+        assertThat(dealer.calculateScore()).isEqualTo(new Score(15));
     }
 
     @Test

@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
+    public static final int DEALER_MIN_SCORE = 17;
     private final DealerWinningResult dealerWinningResult = new DealerWinningResult();
 
 
@@ -21,7 +22,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isUnderScore() {
-        return hand.calculateScore() <= 16;
+        return hand.calculateScore().getValue() < DEALER_MIN_SCORE;
     }
 
     public void lose() {

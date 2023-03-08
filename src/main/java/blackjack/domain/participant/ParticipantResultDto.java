@@ -15,7 +15,8 @@ public class ParticipantResultDto {
     }
 
     public static ParticipantResultDto from(Participant participant) {
-        return new ParticipantResultDto(participant.getName(), participant.showCards(), participant.calculateScore());
+        return new ParticipantResultDto(participant.getName(), participant.showCards(),
+                participant.calculateScore().getValue());
     }
 
     public Name getName() {

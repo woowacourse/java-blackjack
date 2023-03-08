@@ -33,12 +33,12 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         Score score = Score.of(mapCardsToNumbers());
         if (containsAce()) {
-            return score.getValueIncludingAce().getValue();
+            return score.getValueIncludingAce();
         }
-        return score.getValue();
+        return score;
     }
 
     private int[] mapCardsToNumbers() {

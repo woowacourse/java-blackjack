@@ -9,7 +9,6 @@ import blackjack.domain.game.WinningResult;
 import java.util.List;
 
 public abstract class Participant {
-    public static final int BLACK_JACK_NUMBER = 21;
     protected final Name name;
     protected Hand hand;
 
@@ -26,7 +25,7 @@ public abstract class Participant {
         hand = hand.add(cards.toArray(Card[]::new));
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         return hand.calculateScore();
     }
 
@@ -35,11 +34,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return hand.calculateScore() == BLACK_JACK_NUMBER;
+        return hand.calculateScore().isBlackjack();
     }
 
     public boolean isBust() {
-        return hand.calculateScore() > BLACK_JACK_NUMBER;
+        return hand.calculateScore().isBust();
     }
 
     public Name getName() {
@@ -52,8 +51,8 @@ public abstract class Participant {
     }
 
     private WinningResult decideResultByComparingWith(Participant other) {
-        int score = calculateScore();
-        int otherScore = other.calculateScore();
+        int score = calculateScore().getValue();
+        int otherScore = other.calculateScore().getValue();
         if (isBust()) {
             return LOSE;
         }

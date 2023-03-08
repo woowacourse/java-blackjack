@@ -10,6 +10,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Score;
 import blackjack.domain.participant.player.Player;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import java.util.List;
@@ -58,7 +59,7 @@ class PlayerTest {
         player.hit(card2);
         player.hit(card3);
 
-        assertThat(player.calculateScore()).isEqualTo(15);
+        assertThat(player.calculateScore()).isEqualTo(new Score(15));
     }
 
     @Test
