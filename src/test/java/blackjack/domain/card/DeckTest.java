@@ -12,7 +12,7 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
-        deck = Deck.getInstance();
+        deck = new Deck();
     }
 
     @Test

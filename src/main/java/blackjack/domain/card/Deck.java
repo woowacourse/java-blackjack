@@ -9,17 +9,9 @@ public class Deck {
     private static final int FIRST_CARD = 0;
     private static final int DECK_SIZE = 52;
 
-    private static Deck instance;
-    private static final List<Card> deck = new ArrayList<>(DECK_SIZE);
+    private final List<Card> deck = new ArrayList<>(DECK_SIZE);
 
-    public static Deck getInstance() {
-        if (instance == null) {
-            instance = new Deck();
-        }
-        return instance;
-    }
-
-    private Deck() {
+    public Deck() {
         initDeck();
     }
 
