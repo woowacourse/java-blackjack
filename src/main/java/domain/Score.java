@@ -41,20 +41,20 @@ public class Score {
         return isNotBlackJack() && this.isGreaterThan(limit) && NONE_ACE_COUNT < aceCount;
     }
 
-    private boolean isNotBlackJack() {
-        return !this.equals(BLACKJACK);
-    }
-
-    public boolean isGreaterThan(Score compareTarget) {
-        return this.getValue() > compareTarget.getValue();
-    }
-
     private Score minus(Score other) {
         return Score.from(this.getValue() - other.getValue());
     }
 
+    private boolean isNotBlackJack() {
+        return !this.equals(BLACKJACK);
+    }
+
     public boolean isBust() {
         return this.isGreaterThan(BLACKJACK);
+    }
+
+    public boolean isGreaterThan(Score compareTarget) {
+        return this.getValue() > compareTarget.getValue();
     }
 
     public int getValue() {

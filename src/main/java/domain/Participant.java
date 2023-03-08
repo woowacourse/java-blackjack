@@ -20,11 +20,11 @@ public abstract class Participant {
         return getTotalScore().isBust();
     }
 
+    public abstract Score getTotalScore();
+
     public int getTotalScoreToValue() {
         return getTotalScore().getValue();
     }
-
-    public abstract Score getTotalScore();
 
     public abstract boolean isMoreCardAble();
 

@@ -33,42 +33,16 @@ public class BlackJackController {
         end(players, dealer);
     }
 
-    private void progress(Players players, CardDistributor cardDistributor, Dealer dealer) {
-        progressPlayers(players, cardDistributor);
-        progressDealer(dealer, cardDistributor);
-    }
-
-    private void end(Players players, Dealer dealer) {
-        printFinalCard(dealer);
-        players.getPlayers().forEach(this::printFinalCard);
-        outputView.printFinalResult(dealer.getNameToValue(), new Result(dealer, players).getResult());
-    }
-
-    private void progressDealer(Dealer dealer, CardDistributor cardDistributor) {
-        int dealerMoreCardCount = 0;
-        while (dealer.isMoreCardAble() && cardDistributor.isCardLeft()) {
-            dealer.pick(cardDistributor.distribute());
-            dealerMoreCardCount++;
-        }
-        outputView.printDealerMoreCard(dealer.getNameToValue(), dealerMoreCardCount);
-    }
-
-    private void progressPlayers(Players players, CardDistributor cardDistributor) {
-        for (Player player : players.getPlayers()) {
-            requestPlayerMoreCard(cardDistributor, player);
-        }
-    }
-
-    private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getNameToValue(),
-                getCardStatusFromCards(participant.getCardList()),
-                participant.getTotalScoreToValue());
-    }
-
-    private List<CardStatusDto> getCardStatusFromCards(List<Card> cards) {
-        return cards.stream()
-                .map(CardStatusDto::from)
+    private Players createGamePlayers(CardDistributor cardDistributor) {
+        List<String> playerNames = inputView.requestPlayerName();
+        List<Player> players = playerNames.stream()
+                .map(name -> distributeInitialCardForPlayer(name, cardDistributor))
                 .collect(Collectors.toList());
+        return Players.from(players);
+    }
+
+    private Player distributeInitialCardForPlayer(String playerName, CardDistributor cardDistributor) {
+        return Player.of(new Name(playerName), cardDistributor.distributeInitialCard());
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {
@@ -82,10 +56,27 @@ public class BlackJackController {
                 getCardStatusFromCards(List.of(dealer.showOneCard())));
     }
 
+    private List<CardStatusDto> getCardStatusFromCards(List<Card> cards) {
+        return cards.stream()
+                .map(CardStatusDto::from)
+                .collect(Collectors.toList());
+    }
+
     private void printPlayersInitialCard(Players players) {
         for (Participant player : players.getPlayers()) {
             outputView.printCardStatus(player.getNameToValue(),
                     getCardStatusFromCards(player.getCardList()));
+        }
+    }
+
+    private void progress(Players players, CardDistributor cardDistributor, Dealer dealer) {
+        progressPlayers(players, cardDistributor);
+        progressDealer(dealer, cardDistributor);
+    }
+
+    private void progressPlayers(Players players, CardDistributor cardDistributor) {
+        for (Player player : players.getPlayers()) {
+            requestPlayerMoreCard(cardDistributor, player);
         }
     }
 
@@ -106,16 +97,25 @@ public class BlackJackController {
                 getCardStatusFromCards(player.getCardList()));
     }
 
-    private Players createGamePlayers(CardDistributor cardDistributor) {
-        List<String> playerNames = inputView.requestPlayerName();
-        List<Player> players = playerNames.stream()
-                .map(name -> distributeInitialCardForPlayer(name, cardDistributor))
-                .collect(Collectors.toList());
-        return Players.from(players);
+    private void progressDealer(Dealer dealer, CardDistributor cardDistributor) {
+        int dealerMoreCardCount = 0;
+        while (dealer.isMoreCardAble() && cardDistributor.isCardLeft()) {
+            dealer.pick(cardDistributor.distribute());
+            dealerMoreCardCount++;
+        }
+        outputView.printDealerMoreCard(dealer.getNameToValue(), dealerMoreCardCount);
     }
 
-    private Player distributeInitialCardForPlayer(String playerName, CardDistributor cardDistributor) {
-        return Player.of(new Name(playerName), cardDistributor.distributeInitialCard());
+    private void end(Players players, Dealer dealer) {
+        printFinalCard(dealer);
+        players.getPlayers().forEach(this::printFinalCard);
+        outputView.printFinalResult(dealer.getNameToValue(), new Result(dealer, players).getResult());
+    }
+
+    private void printFinalCard(Participant participant) {
+        outputView.printCardAndScore(participant.getNameToValue(),
+                getCardStatusFromCards(participant.getCardList()),
+                participant.getTotalScoreToValue());
     }
 
 }

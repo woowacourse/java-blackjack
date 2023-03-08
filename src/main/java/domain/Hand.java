@@ -10,17 +10,9 @@ public class Hand {
         this.cards = cards;
     }
 
-    public int getSize() {
-        return cards.size();
-    }
-
     public Score calculateScore(Score limit) {
         Score score = calculateCardScoreSum();
         return score.decreaseScoreByAce(limit, calculateAceCount());
-    }
-
-    public void addNewCard(Card card) {
-        cards.add(card);
     }
 
     private Score calculateCardScoreSum() {
@@ -37,8 +29,16 @@ public class Hand {
                 .count();
     }
 
+    public void addNewCard(Card card) {
+        cards.add(card);
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 
     public Card getFirstCard() {

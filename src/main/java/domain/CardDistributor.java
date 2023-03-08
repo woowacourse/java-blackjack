@@ -20,10 +20,6 @@ public class CardDistributor {
         Collections.shuffle(cards);
     }
 
-    public Card distribute() {
-        return cards.remove(cards.size() - 1);
-    }
-
     public Hand distributeInitialCard() {
         if (cards.size() < INITIAL_CARD_SIZE) {
             throw new IllegalArgumentException(CARD_RUN_OUT_ERROR_MESSAGE);
@@ -35,12 +31,16 @@ public class CardDistributor {
         return new Hand(cards);
     }
 
-    public int getDeckSize() {
-        return cards.size();
+    public Card distribute() {
+        return cards.remove(cards.size() - 1);
     }
 
     public boolean isCardLeft() {
         return cards.size() != 0;
+    }
+
+    public int getDeckSize() {
+        return cards.size();
     }
 
 }

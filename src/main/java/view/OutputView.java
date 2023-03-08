@@ -66,11 +66,11 @@ public class OutputView {
         printDealerResultCount(dealerName, winCount, loseCount, drawCount);
     }
 
-    private int getLoseCount(int loseCount, GameResult result) {
-        if (result == GameResult.WIN) {
-            loseCount++;
+    private int getWinCount(int winCount, GameResult result) {
+        if (result == GameResult.LOSE) {
+            winCount++;
         }
-        return loseCount;
+        return winCount;
     }
 
     private int getDrawCount(int drawCount, GameResult result) {
@@ -80,11 +80,11 @@ public class OutputView {
         return drawCount;
     }
 
-    private int getWinCount(int winCount, GameResult result) {
-        if (result == GameResult.LOSE) {
-            winCount++;
+    private int getLoseCount(int loseCount, GameResult result) {
+        if (result == GameResult.WIN) {
+            loseCount++;
         }
-        return winCount;
+        return loseCount;
     }
 
     private void printDealerResultCount(String dealerName, int winCount, int loseCount, int drawCount) {
@@ -100,14 +100,14 @@ public class OutputView {
         }
     }
 
+    private String getGameResultExpression(GameResult gameResult) {
+        return gameResult.getExpression() + INTERVAL_SPACE;
+    }
+
     private void printPlayersFinalResult(Map<String, GameResult> results) {
         System.out.println();
         results.forEach(
                 (name, result) -> System.out.printf(RESULT_NAME_FORMAT + getGameResultExpression(result) + "\n", name));
-    }
-
-    private String getGameResultExpression(GameResult gameResult) {
-        return gameResult.getExpression() + INTERVAL_SPACE;
     }
 
 }
