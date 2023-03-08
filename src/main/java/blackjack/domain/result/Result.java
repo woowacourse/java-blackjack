@@ -2,7 +2,6 @@ package blackjack.domain.result;
 
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.player.Score;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -18,44 +17,47 @@ public class Result {
 
     public static Result from(final Players players) {
         Map<Player, Rank> results = new LinkedHashMap<>();
-        Score dealerPoint = players.getDealer().getTotalPoint();
+        Player dealer = players.getDealer();
         for (Player challenger : players.getChallengers()) {
-            Rank rank = makePlayerResult(dealerPoint, challenger);
+            Rank rank = makePlayerResult(dealer, challenger);
             results.put(challenger, rank);
         }
         return new Result(results);
     }
 
-    private static Rank makePlayerResult(final Score dealerPoint, final Player challenger) {
-        Score challengerPoint = challenger.getTotalPoint();
-        if (dealerPoint.isBust()) {
-            return getRankWhenDealerOverPoint(challengerPoint);
+    private static Rank makePlayerResult(final Player dealer, final Player challenger) {
+        if (challenger.isSameScore(dealer)) {
+            return Rank.DRAW;
         }
-        return getRankWhenDealerNotOverPoint(dealerPoint, challengerPoint);
+        return getRankWhenScoresNotSame(dealer, challenger);
     }
 
-    private static Rank getRankWhenDealerOverPoint(final Score challengerPoint) {
-        if (challengerPoint.isBust()) {
+    private static Rank getRankWhenScoresNotSame(final Player dealer, final Player challenger) {
+        if (dealer.isBust() || challenger.isBust()) {
+            return getRankWhenSomebodyBust(dealer, challenger);
+        }
+        return getRankWhenBothNotBust(dealer, challenger);
+    }
+
+    private static Rank getRankWhenSomebodyBust(final Player dealer, final Player challenger) {
+        if (dealer.isBust()) {
+            return getRankWhenDealerBust(challenger);
+        }
+        return Rank.LOSE;
+    }
+
+    private static Rank getRankWhenDealerBust(final Player challenger) {
+        if (challenger.isBust()) {
             return Rank.DRAW;
         }
         return Rank.WIN;
     }
 
-    private static Rank getRankWhenDealerNotOverPoint(final Score dealerPoint, final Score challengerPoint) {
-        if (challengerPoint.isBust()) {
-            return Rank.LOSE;
-        }
-        return comparePoint(dealerPoint, challengerPoint);
-    }
-
-    private static Rank comparePoint(final Score dealerPoint, final Score challengerPoint) {
-        if (dealerPoint.isBiggerThan(challengerPoint)) {
-            return Rank.LOSE;
-        }
-        if (challengerPoint.isBiggerThan(dealerPoint)) {
+    private static Rank getRankWhenBothNotBust(final Player dealer, final Player challenger) {
+        if (challenger.moreScoreThan(dealer)) {
             return Rank.WIN;
         }
-        return Rank.DRAW;
+        return Rank.LOSE;
     }
 
     public Rank getChallengerResult(final Player player) {
