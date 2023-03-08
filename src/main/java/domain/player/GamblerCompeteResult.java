@@ -15,4 +15,12 @@ public enum GamblerCompeteResult {
         }
         return this;
     }
+
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isLose() {
+        return this == LOSE;
+    }
 }
