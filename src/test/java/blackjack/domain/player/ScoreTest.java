@@ -32,4 +32,14 @@ class ScoreTest {
 
         assertThat(addedScore.getValue()).isEqualTo(20);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"20,true", "15,false"})
+    @DisplayName("같은 점수인지 확인해주는 기능 테스트")
+    void is_same_score(int point, boolean expected) {
+        Score score = new Score(20);
+        Score targetScore = new Score(point);
+
+        assertThat(score.isSameScore(targetScore)).isEqualTo(expected);
+    }
 }

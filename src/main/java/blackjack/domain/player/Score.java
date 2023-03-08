@@ -19,6 +19,10 @@ public final class Score {
         return value > MAX_VALUE;
     }
 
+    public boolean isSameScore(final Score score) {
+        return score.value == value;
+    }
+
     public Score plus(final Score score) {
         return new Score(score.value + value);
     }
