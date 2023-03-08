@@ -1,7 +1,9 @@
 package domain.model;
 
 import domain.vo.Score;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -58,7 +60,8 @@ public class Players {
     }
 
     public Player get(final int index) {
-        Player player = players.get(index);
-        return new Player(new Cards(player.getCards()), player.getName());
+        final Player player = players.get(index);
+        Set<Card> cards = new HashSet<>(player.getCards());
+        return new Player(new Cards(cards), player.getName());
     }
 }
