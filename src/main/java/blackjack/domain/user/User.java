@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Score;
+import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;

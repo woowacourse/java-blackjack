@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 
 public class PlayerFinalResult implements FinalResult<GameResult> {
 
