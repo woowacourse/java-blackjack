@@ -33,7 +33,8 @@ public class Dealer implements Decidable {
 
     @Override
     public boolean canDraw() {
-        return participant.calculateTotalScore() <= DEALER_MIN_RECEIVE_CARD;
+        Score score = participant.calculateTotalScore();
+        return score.isLessOrEquals(new Score(DEALER_MIN_RECEIVE_CARD));
     }
 
     public List<Card> getCards() {

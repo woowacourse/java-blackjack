@@ -55,13 +55,13 @@ public class GameResult {
         return false;
     }
 
-    private void compareIfNotBust(final Player player, final int dealerScore,
+    private void compareIfNotBust(final Player player, final Score dealerScore,
                                   final Map<Player, Result> playersResult) {
-        if (dealerScore < player.calculateTotalScore()) {
+        if (dealerScore.isLess(player.calculateTotalScore())) {
             playersResult.put(player, WIN);
             return;
         }
-        if (dealerScore == player.calculateTotalScore()) {
+        if (dealerScore.isEquals(player.calculateTotalScore())) {
             playersResult.put(player, DRAW);
             return;
         }

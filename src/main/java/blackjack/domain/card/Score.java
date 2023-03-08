@@ -25,8 +25,16 @@ public class Score {
         return value > BLACKJACK_SCORE_CONDITION;
     }
 
-    public int getValue() {
-        return value;
+    public boolean isLessOrEquals(Score other) {
+        return value <= other.value;
+    }
+
+    public boolean isLess(Score other) {
+        return value < other.value;
+    }
+
+    public boolean isEquals(Score other) {
+        return value == other.value;
     }
 
     @Override
