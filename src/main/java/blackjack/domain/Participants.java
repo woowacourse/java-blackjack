@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ public class Participants {
         return participants.stream()
                 .filter(Participant::isPlayer)
                 .map(Player.class::cast)
-                .collect(toList());
+                .collect(toUnmodifiableList());
     }
 
     public Dealer getDealer() {
