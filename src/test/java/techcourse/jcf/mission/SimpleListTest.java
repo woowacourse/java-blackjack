@@ -1,9 +1,9 @@
 package techcourse.jcf.mission;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import org.junit.jupiter.api.Test;
 
 class SimpleListTest {
 
@@ -47,5 +47,12 @@ class SimpleListTest {
                 values.add(String.valueOf(i));
             }
         });
+
+        final String[] arrays = {"first", "second"};
+
+        final SimpleList<String> arrayToList = SimpleList.<String>fromArrayToList(arrays);
+
+        assertThat(arrayToList.get(0)).isEqualTo("first");
+        assertThat(arrayToList.get(1)).isEqualTo("second");
     }
 }

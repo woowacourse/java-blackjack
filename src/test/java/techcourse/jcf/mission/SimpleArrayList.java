@@ -20,12 +20,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.capacity = initialCapacity;
     }
 
-    public SimpleArrayList(final Object[] initialArray) {
-        this.array = initialArray;
-        this.size = initialArray.length;
-        this.capacity = initialArray.length;
-    }
-
     @Override
     public boolean add(final E value) {
         checkMaxSize();
