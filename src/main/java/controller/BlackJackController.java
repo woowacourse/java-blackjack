@@ -25,12 +25,12 @@ public class BlackJackController {
         final Dealer dealer = new Dealer();
         divideFirstCard(deck, participants);
 
-        outputView.printFirstCardStatus(participants);
+        outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
 
         divideCard(deck, participants, dealer);
-        outputView.printScoreBoard(participants);
+        outputView.printScoreBoard(BlackJackGameResponse.create(participants));
 
-        outputView.printFinalResult(participants);
+        outputView.printFinalResult(BlackJackGameResponse.create(participants));
     }
 
     private Participants getParticipants(final Deck deck) {
@@ -38,7 +38,7 @@ public class BlackJackController {
     }
 
     private void divideFirstCard(final Deck deck, final Participants participants) {
-        outputView.printDivideTwoCard(participants.getPlayers());
+        outputView.printDivideTwoCard(BlackJackGameResponse.create(participants));
         participants.receiveInitialCards(deck);
     }
 
@@ -79,7 +79,8 @@ public class BlackJackController {
     private void receiveCardForPlayer(final Deck deck, final Player player, final ReceiveCommand receiveCommand) {
         if (ReceiveCommand.isHit(receiveCommand)) {
             player.receiveCard(deck.pick());
-            outputView.printPlayerCardStatus(player);
+            final HandResponse handResponse = HandResponse.of(player.calculateTotalValue(), player.getHand().getCards());
+            outputView.printPlayerCardStatus(new UserResponse(player.getName(), handResponse));
         }
     }
 
