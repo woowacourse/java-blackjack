@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerCommandTest {
 
@@ -28,5 +30,12 @@ class PlayerCommandTest {
         assertThatThrownBy(() -> PlayerCommand.from(command))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessageContaining(String.format(PlayerCommand.COMMAND_ERROR_MESSAGE, command));
+    }
+
+    @DisplayName("enum 값이 HIT이면 true, STAND면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"HIT,true", "STAND,false"}, delimiter = ',')
+    void isHitTest(PlayerCommand command, boolean expected) {
+        assertThat(command.isHit()).isEqualTo(expected);
     }
 }

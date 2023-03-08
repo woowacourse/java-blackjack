@@ -69,7 +69,7 @@
 #### 테스트
 - [x] 테스트 코드가 하나의 테스트만 하도록 분리
 - PlayerCommandTest
-  - [ ] isHit 테스트 추가
+  - [x] isHit 테스트 추가
   - [ ] 생성 테스트 추가
   - [x] from 예외 테스트 추가
 - DeckTest
