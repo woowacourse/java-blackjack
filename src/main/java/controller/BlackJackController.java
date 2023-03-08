@@ -3,8 +3,8 @@ package controller;
 import java.util.List;
 import java.util.Map;
 
+import domain.AdditionalDrawStatus;
 import domain.BlackJackGame;
-import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import util.Constants;
@@ -17,7 +17,7 @@ public class BlackJackController {
     public void run() {
         BlackJackGame blackJackGame = generateBlackJackGame();
         printParticipantInitCardsStep(blackJackGame, blackJackGame.getPlayerNames());
-        playerDrawCardStep(blackJackGame, blackJackGame.getPlayers());
+        playerDrawCardStep(blackJackGame);
         dealerDrawCardStep(blackJackGame);
         printParticipantFinalCardsStep(blackJackGame, blackJackGame.getPlayerNames());
         printFinalFightResultStep(blackJackGame);
@@ -48,32 +48,28 @@ public class BlackJackController {
         }
     }
 
-    private void playerDrawCardStep(BlackJackGame blackJackGame, Players players) {
+    public void playerDrawCardStep(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
         for (Player player : players.getPlayers()) {
-            drawCard(blackJackGame, player);
+            drawCardOrPass(blackJackGame, player);
         }
     }
 
-    // TODO : indent 1로 줄이기
-    private void drawCard(BlackJackGame blackJackGame, Player player) {
-        while (player.checkCardsCondition()) {
+    private void drawCardOrPass(BlackJackGame blackJackGame, Player player) {
+        AdditionalDrawStatus additionalDrawStatus = AdditionalDrawStatus.DRAW;
+        while (AdditionalDrawStatus.isDrawable(additionalDrawStatus) && blackJackGame.canPlayerDrawCard(player)) {
             String playerName = player.getName();
             OutputView.printInputReceiveYesOrNotMessage(playerName);
             String receiveOrNot = InputView.inputReceiveOrNot();
-            if (receiveOrNot.equals("y")) {
-                blackJackGame.distributeCard(player);
-                ResultView.printParticipantResult(playerName, blackJackGame.findCardNamesByParticipantName(playerName));
-            }
-            if (receiveOrNot.equals("n")) {
-                break;
-            }
+            additionalDrawStatus = blackJackGame.distributePlayerCardOrPass(player, receiveOrNot);
+            ResultView.printParticipantResult(playerName, blackJackGame.findCardNamesByParticipantName(playerName));
         }
     }
 
     private void dealerDrawCardStep(BlackJackGame blackJackGame) {
         while (blackJackGame.canDealerDrawCard()) {
             OutputView.printDealerReceivedMessage();
-            blackJackGame.distributeCard(blackJackGame.getDealer());
+            blackJackGame.distributeDealerCard();
         }
     }
 
