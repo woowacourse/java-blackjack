@@ -2,6 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.BlackJackResult;
 import domain.card.Card;
 import domain.card.CardType;
 import domain.card.CardValue;
@@ -85,7 +86,6 @@ class PlayerTest {
         List<Card> givenBurstCards = List.of(cardA, cardB, cardC);
         List<Card> givenNotBurstCards = List.of(cardA, cardB);
 
-
         Player player = new Player(name, new DrawnCards(givenBurstCards));
         Dealer dealer = new Dealer(new DrawnCards(givenNotBurstCards));
 
@@ -108,7 +108,6 @@ class PlayerTest {
         List<Card> givenBurstCards = List.of(cardA, cardB, cardC);
         List<Card> givenNotBurstCards = List.of(cardA, cardB);
 
-
         Player player = new Player(name, new DrawnCards(givenNotBurstCards));
         Dealer dealer = new Dealer(new DrawnCards(givenBurstCards));
 
@@ -130,7 +129,6 @@ class PlayerTest {
         List<Card> givenHighScore = List.of(cardA, cardB);
         List<Card> givenLowScore = List.of(cardA);
 
-
         Player player = new Player(name, new DrawnCards(givenHighScore));
         Dealer dealer = new Dealer(new DrawnCards(givenLowScore));
 
@@ -150,7 +148,6 @@ class PlayerTest {
 
         Name name = new Name("pobi");
         List<Card> givenCard = List.of(cardA, cardB);
-
 
         Player player = new Player(name, new DrawnCards(givenCard));
         Dealer dealer = new Dealer(new DrawnCards(givenCard));
@@ -210,5 +207,106 @@ class PlayerTest {
         boolean actual = player.isBlackJack();
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이다.")
+    @Test
+    void is_each_blackJack() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(CardType.SPADE, CardValue.ACE));
+        cards.add(new Card(CardType.SPADE, CardValue.TEN));
+        DrawnCards blackJackCards = new DrawnCards(cards);
+
+        Player player = new Player(new Name("pobi"), blackJackCards);
+        Dealer dealer = new Dealer(blackJackCards);
+        // when
+        BlackJackResult actual = player.getResult(dealer);
+        // then
+        assertThat(actual).isEqualTo(BlackJackResult.EACH_BLACKJACK);
+    }
+
+    @DisplayName("플레이어가 버스트이다.")
+    @Test
+    void is_Burst() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardB = new Card(CardType.HEART, CardValue.TEN);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.TEN);
+
+        List<Card> burstCards = List.of(cardA, cardB, cardC);
+        List<Card> notBurstCards = List.of(cardA, cardB);
+
+        Player player = new Player(new Name("pobi"), new DrawnCards(burstCards));
+        Dealer dealer = new Dealer(new DrawnCards(notBurstCards));
+
+        // when
+        BlackJackResult actual = player.getResult(dealer);
+        // then
+        assertThat(actual).isEqualTo(BlackJackResult.BURST);
+    }
+
+    @DisplayName("플레이어가 승리하였다 - 딜러가 버스트인 경우.")
+    @Test
+    void is_win_by_dealer_burst() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardB = new Card(CardType.HEART, CardValue.TEN);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.TEN);
+
+        List<Card> burstCards = List.of(cardA, cardB, cardC);
+        List<Card> notBurstCards = List.of(cardA, cardB);
+
+        Player player = new Player(new Name("pobi"), new DrawnCards(notBurstCards));
+        Dealer dealer = new Dealer(new DrawnCards(burstCards));
+
+        // when
+        BlackJackResult actual = player.getResult(dealer);
+        // then
+        assertThat(actual).isEqualTo(BlackJackResult.WIN);
+    }
+
+    @DisplayName("플레이거가 승리한 경우 - 점수가 높은 경우.")
+    @Test
+    void is_win_by_high_score() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardB = new Card(CardType.DIAMOND, CardValue.NINE);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.THREE);
+
+        List<Card> highScoreCards = List.of(cardA, cardB);
+        List<Card> lowScoreCards = List.of(cardA, cardC);
+
+        Player player = new Player(new Name("pobi"), new DrawnCards(highScoreCards));
+        Dealer dealer = new Dealer(new DrawnCards(lowScoreCards));
+
+        // when
+        BlackJackResult actual = player.getResult(dealer);
+        // then
+        assertThat(actual).isEqualTo(BlackJackResult.WIN);
+    }
+
+    @DisplayName("플레이거가 패배한 경우 - 점수가 낮은 경우.")
+    @Test
+    void is_lose_by_low_score() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardB = new Card(CardType.DIAMOND, CardValue.NINE);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.THREE);
+
+        List<Card> highScoreCards = List.of(cardA, cardB);
+        List<Card> lowScoreCards = List.of(cardA, cardC);
+
+        Player player = new Player(new Name("pobi"), new DrawnCards(lowScoreCards));
+        Dealer dealer = new Dealer(new DrawnCards(highScoreCards));
+
+        // when
+        BlackJackResult actual = player.getResult(dealer);
+        // then
+        assertThat(actual).isEqualTo(BlackJackResult.LOSE);
     }
 }

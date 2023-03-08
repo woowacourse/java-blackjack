@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BlackJackResult;
 import domain.card.Card;
 import domain.card.DrawnCards;
 import java.util.ArrayList;
@@ -34,5 +35,29 @@ public class Player extends Participant {
         }
 
         return this.calculateScore() > dealer.calculateScore();
+    }
+
+    public BlackJackResult getResult(Dealer dealer) {
+        if (isBlackJack()) {
+            return calculateBlackJackCase(dealer);
+        }
+
+        if (isBurst()) {
+            return BlackJackResult.BURST;
+        }
+
+
+        if (this.calculateScore() > dealer.calculateScore() || dealer.isBurst()) {
+            return BlackJackResult.WIN;
+        }
+
+        return BlackJackResult.LOSE;
+    }
+
+    private static BlackJackResult calculateBlackJackCase(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return BlackJackResult.EACH_BLACKJACK;
+        }
+        return BlackJackResult.BLACKJACK;
     }
 }
