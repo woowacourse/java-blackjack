@@ -1,10 +1,12 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
@@ -34,6 +36,23 @@ public class DealerTest {
 
         //then
         assertThat(dealer.canAddCard()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러가 뽑은 카드를 자신의 카드 목록에 추가할 경우 카드의 개수가 한장 추가된다")
+    void pickCard() {
+        //given
+        CardDeck cardDeck = new CardDeck();
+        Cards cards = new Cards(new ArrayList<>(List.of(new Card(Suit.CLOVER, Number.A), new Card(Suit.DIAMOND, Number.K))));
+        Dealer dealer = new Dealer(cards);
+        int cardSize = dealer.getCards().getSize();
+
+        //when
+        Card card = dealer.pickCard(cardDeck);
+        dealer.hit(card);
+
+        //then
+        assertThat(dealer.getCards().getSize()).isEqualTo(cardSize + 1);
     }
 }
 

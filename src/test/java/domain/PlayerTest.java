@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -46,5 +47,22 @@ public class PlayerTest {
         Player player = new Player(name, cards);
         //then
         assertThat(player.canAddCard()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러가 카드를 뽑으면 카드의 개수가 한장 추가된다")
+    void pickCard() {
+        //given
+        CardDeck cardDeck = new CardDeck();
+        Cards cards = new Cards(new ArrayList<>(List.of(new Card(Suit.CLOVER, Number.A), new Card(Suit.DIAMOND, Number.K))));
+        Player player = new Player("roy", cards);
+        int cardSize = player.getCards().getSize();
+
+        //when
+        Card card = player.pickCard(cardDeck);
+        player.hit(card);
+
+        //then
+        assertThat(player.getCards().getSize()).isEqualTo(cardSize + 1);
     }
 }

@@ -1,3 +1,4 @@
+import domain.Card;
 import domain.CardDeck;
 import domain.Cards;
 import domain.Dealer;
@@ -6,10 +7,10 @@ import domain.Judge;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
-import view.DealerScore;
+import domain.DealerScore;
 import view.InputView;
 import view.OutputView;
-import view.PlayerScore;
+import domain.PlayerScore;
 
 public class Application {
 
@@ -58,7 +59,8 @@ public class Application {
         }
 
         if (dealer.canAddCard()) {
-            dealer.hit(cardDeck.pick());
+            Card card = dealer.pickCard(cardDeck);
+            dealer.hit(card);
             OutputView.printHit();
         }
     }
@@ -66,7 +68,8 @@ public class Application {
     private void draw(CardDeck cardDeck, Player player) {
         boolean isContinue = false;
         while (player.canAddCard() && (isContinue = InputView.readYesOrNo(player.getName()))) {
-            player.hit(cardDeck.pick());
+            Card card = player.pickCard(cardDeck);
+            player.hit(card);
             OutputView.printCard(player);
 
         }

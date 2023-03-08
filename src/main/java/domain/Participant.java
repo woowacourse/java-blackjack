@@ -19,6 +19,10 @@ public abstract class Participant {
         }
     }
 
+    public Card pickCard(CardDeck cardDeck) {
+        return cardDeck.pick();
+    }
+
     public void hit(Card card) {
         cards.add(card);
     }
