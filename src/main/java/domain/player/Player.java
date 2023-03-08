@@ -4,14 +4,14 @@ import domain.card.Cards;
 import domain.card.Card;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Player {
 
     private static final int MAX_NAME_LENGTH = 10;
+    private static final int NUM_CARDS_FOR_BLACKJACK = 2;
 
     private final String name;
-    protected final Cards cards;
+    private final Cards cards;
 
     Player(final String name, final Cards cards) {
         validateBlank(name);
@@ -19,6 +19,8 @@ public abstract class Player {
         this.name = name;
         this.cards = cards;
     }
+
+    public abstract boolean isInPlaying();
 
     private void validateBlank(final String name) {
         if (name.isBlank()) {
@@ -32,37 +34,28 @@ public abstract class Player {
         }
     }
 
-    abstract public List<String> revealCards();
-
-    abstract public boolean isInPlaying(boolean isHit);
-
     public boolean isBust() {
         return HandsState.from(cards.calculateScore()) == HandsState.BUST;
     }
 
-    public boolean isBlackjack() {
-        return HandsState.from(cards.calculateScore()) == HandsState.BLACKJACK;
+    public boolean isBlackJack() {
+        return HandsState.from(cards.calculateScore()) == HandsState.MAX_SCORE
+                && cards.getCardsSize() == NUM_CARDS_FOR_BLACKJACK;
     }
 
-    public List<Card> showCards() {
-        return List.copyOf(cards.getCards());
+    public String getName() {
+        return name;
     }
 
-    public List<String> showCardNames() {
-        return showCards().stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toList());
-    }
-
-    public void takeCard(final Card card) {
-        cards.takeCard(card);
+    public List<String> getCardNames() {
+        return cards.getCardNames();
     }
 
     public int getScore() {
         return cards.calculateScore();
     }
 
-    public String getName() {
-        return name;
+    public void takeCard(final Card card) {
+        cards.takeCard(card);
     }
 }

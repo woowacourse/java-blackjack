@@ -1,51 +1,52 @@
 package domain.player;
 
-import domain.card.Deck;
-import domain.result.GameResult;
-import domain.result.Result;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 public final class Participants {
 
+    public static final String DEALER_NAME = "딜러";
+
     private final List<Participant> participants;
 
     private Participants(final List<Participant> participants) {
+        validateDuplicate(participants);
+        validateName(participants);
         this.participants = participants;
     }
 
-    public static Participants from(final List<String> playerNames) {
-        validateDuplicate(playerNames);
-        List<Participant> participants = playerNames.stream()
-                .map(Participant::from)
-                .collect(toList());
-
+    public static Participants from(final List<Participant> participants) {
         return new Participants(participants);
     }
 
-    private static void validateDuplicate(final List<String> playerNames) {
-        if (isDuplicate(playerNames)) {
+    private void validateDuplicate(final List<Participant> participants) {
+        if (isDuplicate(participants)) {
             throw new IllegalArgumentException("중복되지 않은 이름만 입력해주세요");
         }
     }
 
-    public void drawCard(final Deck deck) {
-        participants.forEach(participant -> {
-            participant.takeCard(deck.dealCard());
-            participant.takeCard(deck.dealCard());
-        });
+    private boolean isDuplicate(final List<Participant> participants) {
+        return countDistinctParticipants(participants) != participants.size();
     }
 
-    private static boolean isDuplicate(final List<String> playerNames) {
-        final int uniqueNameCount = new HashSet<>(playerNames).size();
-        return uniqueNameCount < playerNames.size();
+    private long countDistinctParticipants(final List<Participant> participants) {
+        return participants.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
+    }
+
+    private void validateName(final List<Participant> participants) {
+        if (isParticipantsNameDealer(participants)) {
+            throw new IllegalArgumentException("플레이어의 이름은 딜러가 될 수 없습니다.");
+        }
+    }
+
+    private boolean isParticipantsNameDealer(final List<Participant> participants) {
+        return participants.stream()
+                .map(Player::getName)
+                .anyMatch(name -> name.equals(DEALER_NAME));
     }
 
     public List<Participant> getParticipants() {
@@ -56,27 +57,5 @@ public final class Participants {
         return participants.stream()
                 .map(Participant::getName)
                 .collect(toList());
-    }
-
-    public Result getResult(final Dealer dealer) {
-        Map<GameResult, List<String>> result = participants.stream()
-                .collect(groupingBy(participant -> isWinner(dealer, participant)
-                        , mapping(Participant::getName, toList())));
-
-        List<String> winners = result.getOrDefault(GameResult.VICTORY, new ArrayList<>());
-        List<String> losers = result.getOrDefault(GameResult.DEFEAT, new ArrayList<>());
-
-        return new Result(winners, losers);
-    }
-
-    private GameResult isWinner(final Dealer dealer, final Participant participant) {
-        if (participant.isBust() || isParticipantDefeat(dealer, participant)) {
-            return GameResult.DEFEAT;
-        }
-        return GameResult.VICTORY;
-    }
-
-    private boolean isParticipantDefeat(final Dealer dealer, final Participant participant) {
-        return !dealer.isBust() && dealer.getScore() > participant.getScore();
     }
 }
