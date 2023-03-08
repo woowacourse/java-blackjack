@@ -37,9 +37,9 @@ class DealerTest {
         assertThat(result).isEqualTo(DealerStatus.NORMAL);
     }
 
-    @DisplayName("합산 점수가 17 미만이면 UNDER_SEVENTEEN 상태가 된다.")
+    @DisplayName("합산 점수가 17 미만이면 UNDER_MIN_SCORE 상태가 된다.")
     @Test
-    void checkUnderSeventeenByScoreTest() {
+        void checkUnderMinScoreByScoreTest() {
         Dealer dealer = new Dealer();
 
         dealer.receiveCard(CloverCard.CLOVER_TEN);

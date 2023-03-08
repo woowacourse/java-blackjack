@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class SuitTest {
     @DisplayName("블랙잭 게임 카드 문양은 하트, 다이아몬드, 클로버, 스페이드의 값만 가진다.")
     @Test
-    void generatePatternTest() {
+    void generateSuitTest() {
         List<String> patterns = Arrays.stream(Suit.values())
                 .map(Suit::getPattern)
                 .collect(Collectors.toList());
