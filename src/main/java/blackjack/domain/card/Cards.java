@@ -6,7 +6,6 @@ import java.util.List;
 
 public final class Cards {
 
-    private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BLACKJACK_SCORE_CONDITION = 21;
     private static final int MAKE_ACE_BIGGER_SCORE = 10;
     private static final int ACE_BIGGER_SCORE = BLACKJACK_SCORE_CONDITION - MAKE_ACE_BIGGER_SCORE;
