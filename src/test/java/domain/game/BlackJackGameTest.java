@@ -37,7 +37,7 @@ class BlackJackGameTest {
     }
 
     private static Map<Name, BettingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
-        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BettingMoney.of(10)));
+        return names.stream().collect(Collectors.toMap(Function.identity(), it -> BettingMoney.of(10000)));
     }
 
     @Nested

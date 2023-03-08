@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Revenue {
 
-    private final double amount;
+    private final int amount;
 
-    public Revenue(final double amount) {
+    public Revenue(final int amount) {
         this.amount = amount;
     }
 
@@ -23,7 +23,7 @@ public class Revenue {
     }
 
     public static Revenue blackJackWin(final BettingMoney money) {
-        return new Revenue(money.amount() * 1.5);
+        return new Revenue((int) (money.amount() * 1.5));
     }
 
     public static Revenue zero() {
@@ -39,7 +39,7 @@ public class Revenue {
         if (this == o) return true;
         if (!(o instanceof Revenue)) return false;
         final Revenue revenue = (Revenue) o;
-        return Double.compare(revenue.amount, amount) == 0;
+        return amount == revenue.amount;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Revenue {
         return Objects.hash(amount);
     }
 
-    public double amount() {
+    public int amount() {
         return amount;
     }
 }

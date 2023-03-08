@@ -34,9 +34,9 @@ public class InputView {
         throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
     }
 
-    public static double readBattingMoney(final Name name) {
+    public static int readBattingMoney(final Name name) {
         System.out.println(name.value() + "의 배팅 금액은?");
-        final double input = scanner.nextDouble();
+        final int input = scanner.nextInt();
         scanner.nextLine();
         return input;
     }
