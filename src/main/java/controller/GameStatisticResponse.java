@@ -24,7 +24,7 @@ public class GameStatisticResponse {
         return dealer;
     }
 
-    public List<Gambler> players() {
+    public List<Gambler> gamblers() {
         return new ArrayList<>(gamblers);
     }
 

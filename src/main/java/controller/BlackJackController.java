@@ -16,32 +16,32 @@ public class BlackJackController {
 
     public void run() {
         final BlackJackGame blackJackGame = withExceptionHandle(this::setUpGame);
-        hitOrStayForParticipants(blackJackGame);
+        hitOrStayForGamblers(blackJackGame);
         hitOrStayForDealer(blackJackGame);
         statistic(blackJackGame);
     }
 
     private BlackJackGame setUpGame() {
-        final List<Name> participantNames = withExceptionHandle(this::createParticipantNames);
+        final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, participantNames);
+        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerNames);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
         return blackJackGame;
     }
 
-    private List<Name> createParticipantNames() {
+    private List<Name> createGamblerNames() {
         return InputView.readParticipantsName()
                 .stream()
                 .map(Name::of)
                 .collect(Collectors.toList());
     }
 
-    private void hitOrStayForParticipants(final BlackJackGame blackJackGame) {
-        while (blackJackGame.existCanHitParticipant()) {
-            final Gambler canHitGambler = blackJackGame.findCanHitParticipant();
+    private void hitOrStayForGamblers(final BlackJackGame blackJackGame) {
+        while (blackJackGame.existCanHitGambler()) {
+            final Gambler canHitGambler = blackJackGame.findCanHitGambler();
             final HitState hitState = withExceptionHandle(() -> inputHitOrStay(canHitGambler));
-            blackJackGame.hitOrStayForParticipant(canHitGambler, hitState);
-            OutputView.showPlayerCardAreaState(canHitGambler);
+            blackJackGame.hitOrStayForGambler(canHitGambler, hitState);
+            OutputView.showGamblerCardAreaState(canHitGambler);
         }
     }
 

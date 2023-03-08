@@ -65,12 +65,12 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 콩떡, 코다), dealer, CardDeck.shuffledFullCardDeck());
 
         // when
-        final Map<Gambler, DealerCompeteResult> statistic = blackJackGame.statistic();
+        final Map<Gambler, GamblerCompeteResult> statistic = blackJackGame.statistic();
 
         // then
-        assertThat(statistic.get(말랑)).isEqualTo(DealerCompeteResult.DRAW);
-        assertThat(statistic.get(콩떡)).isEqualTo(DealerCompeteResult.WIN);
-        assertThat(statistic.get(코다)).isEqualTo(DealerCompeteResult.LOSE);
+        assertThat(statistic.get(말랑)).isEqualTo(GamblerCompeteResult.DRAW);
+        assertThat(statistic.get(콩떡)).isEqualTo(GamblerCompeteResult.LOSE);
+        assertThat(statistic.get(코다)).isEqualTo(GamblerCompeteResult.WIN);
     }
 
     @Nested
@@ -86,7 +86,7 @@ class BlackJackGameTest {
             blackJackGame.gamblers().forEach(it -> it.changeState(HitState.STAY));
 
             // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isFalse();
+            assertThat(blackJackGame.existCanHitGambler()).isFalse();
         }
 
         @Test
@@ -97,7 +97,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
 
             // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isFalse();
+            assertThat(blackJackGame.existCanHitGambler()).isFalse();
         }
 
         @Test
@@ -109,7 +109,7 @@ class BlackJackGameTest {
             말랑.changeState(HitState.HIT);
 
             // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isTrue();
+            assertThat(blackJackGame.existCanHitGambler()).isTrue();
         }
 
         @Test
@@ -120,7 +120,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
 
             // when & then
-            assertThat(blackJackGame.existCanHitParticipant()).isTrue();
+            assertThat(blackJackGame.existCanHitGambler()).isTrue();
         }
     }
 
@@ -136,7 +136,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
 
             // when
-            Gambler canHit = blackJackGame.findCanHitParticipant();
+            Gambler canHit = blackJackGame.findCanHitGambler();
 
             // then
             assertThat(canHit).isEqualTo(코다);
@@ -150,7 +150,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(List.of(말랑, 코다), new Dealer(under21CardArea()), CardDeck.shuffledFullCardDeck());
 
             // when & then
-            assertThatThrownBy(blackJackGame::findCanHitParticipant)
+            assertThatThrownBy(blackJackGame::findCanHitGambler)
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -167,7 +167,7 @@ class BlackJackGameTest {
             final BlackJackScore before = 코다.score();
 
             // when
-            blackJackGame.hitOrStayForParticipant(코다, HitState.HIT);
+            blackJackGame.hitOrStayForGambler(코다, HitState.HIT);
 
             // then
             assertThat(코다.score()).isNotEqualTo(before);
@@ -181,7 +181,7 @@ class BlackJackGameTest {
             final BlackJackScore before = 코다.score();
 
             // when
-            blackJackGame.hitOrStayForParticipant(코다, HitState.STAY);
+            blackJackGame.hitOrStayForGambler(코다, HitState.STAY);
 
             // then
             assertThat(코다.score()).isEqualTo(before);

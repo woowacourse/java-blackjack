@@ -5,7 +5,6 @@ import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.player.Dealer;
-import domain.player.DealerCompeteResult;
 import domain.player.Gambler;
 import domain.player.Participant;
 
@@ -59,19 +58,19 @@ public class OutputView {
     }
 
     private static void makePlayerResultMessage() {
-        DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.WIN, "승");
-        DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.LOSE, "패");
-        DEALER_COMPETE_MESSAGE_MAP.put(DealerCompeteResult.DRAW, "무");
+        GAMBLER_COMPETE_MESSAGE_MAP.put(GamblerCompeteResult.WIN, "승");
+        GAMBLER_COMPETE_MESSAGE_MAP.put(GamblerCompeteResult.LOSE, "패");
+        GAMBLER_COMPETE_MESSAGE_MAP.put(GamblerCompeteResult.DRAW, "무");
     }
 
     public static void printAfterFirstDeal(final Dealer dealer, final List<Gambler> gamblers) {
-        final String message = String.format("\n%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), playerNames(gamblers));
+        final String message = String.format("\n%s와 %s 에게 2장을 나누었습니다.", dealer.nameValue(), gamblerNames(gamblers));
         System.out.println(message);
         showDealerCardAreaState(dealer);
-        gamblers.forEach(OutputView::showPlayerCardAreaState);
+        gamblers.forEach(OutputView::showGamblerCardAreaState);
     }
 
-    private static String playerNames(final List<Gambler> gamblers) {
+    private static String gamblerNames(final List<Gambler> gamblers) {
         return gamblers.stream()
                 .map(Participant::nameValue)
                 .collect(Collectors.joining(DELIMITER));
@@ -85,7 +84,7 @@ public class OutputView {
     /**
      * 출력 : 말랑카드: 2 다이아, 잭 클로버
      */
-    public static void showPlayerCardAreaState(final Gambler gambler) {
+    public static void showGamblerCardAreaState(final Gambler gambler) {
         final String message = makeCardAreaStateMessage(gambler);
         System.out.println(message);
     }
@@ -149,7 +148,7 @@ public class OutputView {
     private static void showFinalWinLose(final GameStatisticResponse statistic) {
         System.out.println("\n## 최종 승패");
         showFinalDealerWinLose(statistic);
-        showFinalParticipantsWinLose(statistic);
+        showFinalGamblersWinLose(statistic);
     }
 
     private static void showFinalDealerWinLose(final GameStatisticResponse gameStatisticResponse) {
@@ -172,8 +171,8 @@ public class OutputView {
         return String.format(" %d%s", count, DEALER_COMPETE_MESSAGE_MAP.get(dealerCompeteResult));
     }
 
-    private static void showFinalParticipantsWinLose(final GameStatisticResponse statistic) {
-        final Map<Gambler, DealerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
+    private static void showFinalGamblersWinLose(final GameStatisticResponse statistic) {
+        final Map<Gambler, GamblerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
         final List<Gambler> gamblers = statistic.players();
         gamblers.stream()
                 .map(it -> it.nameValue() + ": " + DEALER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))

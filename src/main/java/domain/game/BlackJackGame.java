@@ -24,33 +24,42 @@ public class BlackJackGame {
         this.cardDeck = cardDeck;
     }
 
-    public static BlackJackGame defaultSetting(final CardDeck cardDeck, final List<Name> participantNames) {
-        validateParticipantsSize(participantNames);
-        final List<Gambler> gamblers = participantNames.stream()
+    public static BlackJackGame defaultSetting(final CardDeck cardDeck, final List<Name> gamblerNames) {
+        validateGamblersSize(gamblerNames);
+        final List<Gambler> gamblers = gamblerNames
+                .stream()
                 .map(it -> new Gambler(it, new CardArea(cardDeck.draw(), cardDeck.draw())))
                 .collect(toList());
         final Dealer dealer = new Dealer(new CardArea(cardDeck.draw(), cardDeck.draw()));
         return new BlackJackGame(gamblers, dealer, cardDeck);
     }
 
-    private static void validateParticipantsSize(final List<Name> participantNames) {
-        if (participantNames.size() > MAX_PARTICIPANT_COUNT_INCLUDE) {
+    private static void validateGamblersSize(final List<Name> gamblerNames) {
+        if (gamblerNames.size() > MAX_PARTICIPANT_COUNT_INCLUDE) {
             throw new IllegalArgumentException(String.format("참가자는 %d명 이하여야 합니다.", MAX_PARTICIPANT_COUNT_INCLUDE));
         }
     }
 
-    public boolean existCanHitParticipant() {
+    public List<Gambler> gamblers() {
+        return new ArrayList<>(gamblers);
+    }
+
+    public Dealer dealer() {
+        return dealer;
+    }
+
+    public boolean existCanHitGambler() {
         return gamblers.stream().anyMatch(Gambler::canHit);
     }
 
-    public Gambler findCanHitParticipant() {
+    public Gambler findCanHitGambler() {
         return gamblers.stream()
                 .filter(Gambler::canHit)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Hit 가능한 참여자가 없습니다."));
     }
 
-    public void hitOrStayForParticipant(final Gambler gambler, final HitState hitState) {
+    public void hitOrStayForGambler(final Gambler gambler, final HitState hitState) {
         validatePlayerExist(gambler);
         gambler.changeState(hitState);
         if (gambler.wantHit()) {
@@ -78,13 +87,5 @@ public class BlackJackGame {
                         identity(),
                         dealer::compete
                 ));
-    }
-
-    public List<Gambler> gamblers() {
-        return new ArrayList<>(gamblers);
-    }
-
-    public Dealer dealer() {
-        return dealer;
     }
 }
