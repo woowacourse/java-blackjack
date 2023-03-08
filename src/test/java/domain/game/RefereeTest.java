@@ -1,12 +1,11 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import result.Referee;
-import result.Result;
 
 public class RefereeTest {
     @DisplayName("플레이어가 딜러에게 이길 경우 플레이어의 결과는 WIN이 반환된다")

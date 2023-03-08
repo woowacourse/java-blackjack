@@ -1,8 +1,8 @@
 package domain.user;
 
-import domain.Card;
-import domain.Cards;
-import domain.Score;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Score;
 import java.util.List;
 
 public abstract class User {

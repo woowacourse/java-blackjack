@@ -1,6 +1,6 @@
-package result;
+package domain.game;
 
-import domain.Score;
+import domain.card.Score;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.HashMap;

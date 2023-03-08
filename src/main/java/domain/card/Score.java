@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public class Score {
     private static final Score BLACK_JACK_SCORE = new Score(21);
@@ -15,10 +15,6 @@ public class Score {
 
     public boolean isAddable() {
         return isLessThan(BLACK_JACK_SCORE);
-    }
-
-    public boolean isBlackJack() {
-        return equals(BLACK_JACK_SCORE);
     }
 
     public boolean isLessThan(Score other) {

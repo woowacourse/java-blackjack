@@ -1,14 +1,14 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
 import domain.deck.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
+import domain.user.Users;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import result.Referee;
-import result.Result;
 
 public class BlackJack {
     private final Users users;

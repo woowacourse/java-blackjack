@@ -1,13 +1,13 @@
 package controller;
 
-import domain.BlackJack;
 import domain.HitCommand;
-import domain.Users;
 import domain.deck.RandomDeckGenerator;
+import domain.game.BlackJack;
+import domain.game.Result;
 import domain.user.Player;
+import domain.user.Users;
 import java.util.List;
 import java.util.Map;
-import result.Result;
 import view.InputView;
 import view.OutputView;
 

@@ -1,11 +1,13 @@
-package domain;
+package domain.user;
 
-import static domain.Denomination.JACK;
-import static domain.Denomination.SEVEN;
-import static domain.Denomination.SIX;
+import static domain.card.Denomination.JACK;
+import static domain.card.Denomination.SEVEN;
+import static domain.card.Denomination.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.user.Dealer;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suits;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

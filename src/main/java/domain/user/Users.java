@@ -1,8 +1,6 @@
-package domain;
+package domain.user;
 
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
+import domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

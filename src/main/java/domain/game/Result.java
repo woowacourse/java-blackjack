@@ -1,4 +1,4 @@
-package result;
+package domain.game;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ public enum Result {
     PUSH("무"),
     WIN("승");
 
-    private static final Map<Result, Result> OpponentPair = Map.of(
+    private static final Map<Result, Result> opponentPair = Map.of(
             WIN, LOSE,
             LOSE, WIN,
             PUSH, PUSH
@@ -20,7 +20,7 @@ public enum Result {
     }
 
     public Result getResultOfOpponent() {
-        return OpponentPair.get(this);
+        return opponentPair.get(this);
     }
 
     public String getName() {

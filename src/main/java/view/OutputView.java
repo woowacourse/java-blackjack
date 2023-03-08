@@ -1,10 +1,10 @@
 package view;
 
-import domain.Card;
+import domain.card.Card;
+import domain.game.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import result.Result;
 
 public class OutputView {
 

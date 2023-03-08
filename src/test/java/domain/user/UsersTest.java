@@ -1,10 +1,13 @@
-package domain;
+package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.user.Player;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Score;
+import domain.card.Suits;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -15,19 +18,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class UsersTest {
 
+    static Stream<List<String>> parameterProvider() {
+        return Stream.of(
+                List.of("a"),
+                List.of("a", "kiara", "ash", "woowa")
+        );
+    }
+
     @DisplayName("참여 인원은 1명 이상 4명 이하이다")
     @ParameterizedTest
     @MethodSource("parameterProvider")
     void playerCount1_4(List<String> names) {
         assertThatNoException()
                 .isThrownBy(() -> Users.from(names));
-    }
-
-    static Stream<List<String>> parameterProvider() {
-        return Stream.of(
-                List.of("a"),
-                List.of("a", "kiara", "ash", "woowa")
-        );
     }
 
     @DisplayName("참여 인원은 1명미만이 될 수 없다")

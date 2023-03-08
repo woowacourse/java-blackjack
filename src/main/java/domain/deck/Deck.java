@@ -1,6 +1,6 @@
 package domain.deck;
 
-import domain.Card;
+import domain.card.Card;
 import java.util.Stack;
 
 public class Deck {
