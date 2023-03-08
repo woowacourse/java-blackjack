@@ -1,4 +1,4 @@
-package batting;
+package betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,10 +21,10 @@ class BettingMapTest {
     @DisplayName("베팅맵에 플레이어와 어마운트를 저장한다")
     void saveBet() {
         Player player = new Player(new Name("폴로"));
-        Amount amount = new Amount(1000);
+        BettingAmount bettingAmount = new BettingAmount(1000);
 
-        bettingMap.saveBet(player, amount);
+        bettingMap.saveBet(player, bettingAmount);
 
-        assertThat(bettingMap.getBettingAmountByPlayer(player)).isEqualTo(amount);
+        assertThat(bettingMap.getBettingAmountByPlayer(player)).isEqualTo(bettingAmount);
     }
 }
