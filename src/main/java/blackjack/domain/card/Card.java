@@ -30,10 +30,6 @@ public class Card {
         return CARDS.get(suit).get(number);
     }
 
-    public CardNumber getNumber() {
-        return number;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -54,5 +50,9 @@ public class Card {
     @Override
     public String toString() {
         return number.getNumber() + shape.getValue();
+    }
+
+    public CardNumber getNumber() {
+        return number;
     }
 }
