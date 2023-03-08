@@ -29,7 +29,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool);
-        Dealer dealer = new Dealer("딜러", dealerCardPool);
+        Dealer dealer = new Dealer( dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.LOSE);
@@ -46,7 +46,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool);
-        Dealer dealer = new Dealer("딜러", dealerCardPool);
+        Dealer dealer = new Dealer( dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.DRAW);
@@ -63,7 +63,7 @@ class GameResultTest {
         );
 
         Player player = new Player("플레이어", playerCardPool);
-        Dealer dealer = new Dealer("딜러", dealerCardPool);
+        Dealer dealer = new Dealer( dealerCardPool);
 
         assertThat(GameResult.makePlayerRecord(player, dealer))
                 .isEqualTo(GameResult.WIN);

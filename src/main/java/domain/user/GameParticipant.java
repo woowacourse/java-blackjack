@@ -14,9 +14,9 @@ public class GameParticipant {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public GameParticipant(final List<String> playerNames, final String dealerName) {
+    public GameParticipant(final List<String> playerNames) {
         this.players = makePlayersWithName(playerNames);
-        this.dealer = makeDealerWithName(dealerName);
+        this.dealer = makeDealer();
     }
 
     private List<Player> makePlayersWithName(final List<String> playerNames) {
@@ -25,8 +25,8 @@ public class GameParticipant {
                 .collect(Collectors.toList());
     }
 
-    private Dealer makeDealerWithName(final String dealerName) {
-        return new Dealer(dealerName, new CardPool(Collections.emptyList()));
+    private Dealer makeDealer() {
+        return new Dealer(new CardPool(Collections.emptyList()));
     }
 
     public void letPlayersToHit(final Deck deck) {

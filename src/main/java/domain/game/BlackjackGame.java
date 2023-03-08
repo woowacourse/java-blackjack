@@ -16,11 +16,10 @@ public class BlackjackGame {
 
     public BlackjackGame(
             final List<String> playerNames,
-            final String dealerName,
             final ShuffleStrategy shuffleStrategy
     ) {
         this.deck = new Deck(shuffleStrategy);
-        this.gameParticipant = new GameParticipant(playerNames, dealerName);
+        this.gameParticipant = new GameParticipant(playerNames);
     }
 
     public void letDealerHitUntilThreshold() {

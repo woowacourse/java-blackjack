@@ -17,7 +17,7 @@ class DealerTest {
     @Test
     @DisplayName("17이면 히트가 아니다")
     void notHit() {
-        Dealer dealer = new Dealer("deal", new CardPool(List.of(
+        Dealer dealer = new Dealer(new CardPool(List.of(
                 new Card(CardType.HEART, CardNumber.SIX),
                 new Card(CardType.HEART, CardNumber.ACE)
         )));
@@ -28,7 +28,7 @@ class DealerTest {
     @Test
     @DisplayName("16이면 히트다")
     void isHit() {
-        Dealer dealer = new Dealer("deal", new CardPool(List.of(
+        Dealer dealer = new Dealer( new CardPool(List.of(
                 new Card(CardType.HEART, CardNumber.FIVE),
                 new Card(CardType.HEART, CardNumber.ACE)
         )));
