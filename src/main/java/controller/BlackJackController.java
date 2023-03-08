@@ -9,7 +9,6 @@ import ui.output.OutputView;
 
 public class BlackJackController {
 
-
     public void start(final Deck deck) {
         final Participants participants = getParticipants();
         final Dealer dealer = new Dealer();
