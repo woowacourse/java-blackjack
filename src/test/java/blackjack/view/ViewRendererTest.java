@@ -19,20 +19,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class ViewRendererTest {
 
     @Test
-    @DisplayName("Status를 출력 형식에 맞게 렌더링 테스트")
-    void renderStatusTest() {
-        final Map<String, CardGroup> status = Map.of("홍실", new CardGroup(
-                new Card(CardShape.SPADE, CardNumber.ACE),
-                new Card(CardShape.DIAMOND, CardNumber.TWO)
-        ));
-
-        final Map<String, List<String>> renderedStatus = ViewRenderer.renderStatus(status);
-
-        assertThat(renderedStatus.get("홍실")).contains("A스페이드", "2다이아몬드");
-    }
-
-
-    @Test
     @DisplayName("카드 렌더링 테스트")
     void renderCardToStringTest() {
         final CardGroup cardGroup = new CardGroup(new Card(CardShape.SPADE, CardNumber.ACE),

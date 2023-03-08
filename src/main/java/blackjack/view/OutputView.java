@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.user.Dealer;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -24,16 +23,10 @@ public class OutputView {
         System.out.println(PLAYER_NAME_REQUEST_MESSAGE);
     }
 
-    public void printFirstOpenCardGroups(Map<String, List<String>> initialStatus) {
+    public void printFirstCardGroupInfoMessage(final List<String> playerNames) {
         printLineBreak();
-        List<String> playerNames = initialStatus.keySet().stream()
-                .filter(name -> !name.equals(Dealer.DEALER_NAME))
-                .collect(Collectors.toUnmodifiableList());
-
-        printInitialStatusInfoMessage(playerNames);
-        printCardGroup(Dealer.DEALER_NAME, initialStatus.get(Dealer.DEALER_NAME));
-        playerNames.forEach(name -> printCardGroup(name, initialStatus.get(name)));
-        printLineBreak();
+        System.out.println(String.format(INITIAL_STATUS_INFO_MESSAGE_FORMAT, Dealer.DEALER_NAME
+                , String.join(DELIMITER, playerNames)));
     }
 
     public void printCardGroup(String name, List<String> cardNames) {
@@ -41,10 +34,6 @@ public class OutputView {
                 , String.join(DELIMITER, cardNames)));
     }
 
-    private void printInitialStatusInfoMessage(List<String> playerNames) {
-        System.out.println(String.format(INITIAL_STATUS_INFO_MESSAGE_FORMAT, Dealer.DEALER_NAME
-                , String.join(DELIMITER, playerNames)));
-    }
 
     public void printDrawCardRequestMessage(final String playerName) {
         System.out.println(String.format(DRAW_CARD_REQUEST_MESSAGE_FORMAT, playerName));

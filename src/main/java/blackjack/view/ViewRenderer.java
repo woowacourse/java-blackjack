@@ -47,12 +47,6 @@ public class ViewRenderer {
     private ViewRenderer() {
     }
 
-    public static Map<String, List<String>> renderStatus(final Map<String, CardGroup> status) {
-        final Map<String, List<String>> renderedStatus = new LinkedHashMap<>();
-        status.forEach((name, cardGroup) -> renderedStatus.put(name, renderCardGroup(cardGroup)));
-        return Collections.unmodifiableMap(renderedStatus);
-    }
-
     public static List<String> renderCardGroup(final CardGroup cardGroup) {
         return cardGroup.getCards().stream()
                 .map(card -> CARD_NUMBER_STRING_MAPPER.get(card.getNumber())
