@@ -56,7 +56,7 @@ public class BlackJackGame {
 
     public void drawCardOfPlayerByName(final String playerName, final DrawCommand drawCommand) {
         if (drawCommand == DrawCommand.DRAW) {
-            gameParticipants.drawCardOfPlayerByName(playerName, deck.popCard());
+            gameParticipants.drawCardOfPlayerByName(playerName, deck);
         }
     }
 
@@ -66,6 +66,10 @@ public class BlackJackGame {
 
     public int findDealerDrawCount() {
         return gameParticipants.findDealerDrawCount(deck);
+    }
+
+    public int findDealerDrawPoint() {
+        return gameParticipants.findDealerDrawPoint();
     }
 
     public List<Card> findDealerCard() {

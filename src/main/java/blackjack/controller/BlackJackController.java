@@ -78,12 +78,11 @@ public class BlackJackController {
 
     private void drawDealerCards(final BlackJackGame blackJackGame) {
         IntStream.range(0, blackJackGame.findDealerDrawCount())
-                .forEach(ignored -> outputView.printDealerCardDrawMessage());
+                .forEach(ignored -> outputView.printDealerCardDrawMessage(blackJackGame.findDealerDrawPoint()));
     }
 
     private void printResult(final BlackJackGame blackJackGame) {
         printFinalStatusOfParticipants(blackJackGame);
-
         printResultOfGame(blackJackGame);
     }
 

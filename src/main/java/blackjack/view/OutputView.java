@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String OUTPUT_DISTRIBUTE_MESSAGE = System.lineSeparator() + "딜러와 %s에게 2장을 나누었습니다.";
-    private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String OUTPUT_DISTRIBUTE_MESSAGE = System.lineSeparator() + "%s와 %s에게 2장을 나누었습니다.";
+    private static final String OUTPUT_DEALER_STATUS_MESSAGE = System.lineSeparator() + "%s는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DELIMITER_BETWEEN_CARDS = ", ";
     private static final String DELIMITER = ": ";
     private static final String DEALER = "딜러";
@@ -32,7 +32,7 @@ public class OutputView {
 
     private void printInitialDistributionMessage(final Map<String, List<Card>> playerNameToCards) {
         final String playerNames = String.join(DELIMITER_BETWEEN_CARDS, playerNameToCards.keySet());
-        System.out.printf((OUTPUT_DISTRIBUTE_MESSAGE) + System.lineSeparator(), playerNames);
+        System.out.printf((OUTPUT_DISTRIBUTE_MESSAGE) + System.lineSeparator(), DEALER, playerNames);
     }
 
     private void printInitialDealerCard(final Card card) {
@@ -64,9 +64,8 @@ public class OutputView {
         System.out.println(playerName + DELIMITER + cards);
     }
 
-    public void printDealerCardDrawMessage() {
-        System.out.println();
-        System.out.println(OUTPUT_DEALER_STATUS_MESSAGE);
+    public void printDealerCardDrawMessage(final int dealerDrawPoint) {
+        System.out.printf(OUTPUT_DEALER_STATUS_MESSAGE + System.lineSeparator(), DEALER, dealerDrawPoint);
     }
 
     public void printFinalStatusOfDealer(final List<Card> dealerCards, final int dealerScore) {

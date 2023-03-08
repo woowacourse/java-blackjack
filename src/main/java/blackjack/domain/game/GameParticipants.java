@@ -39,8 +39,8 @@ public class GameParticipants {
         return players.isPlayerDrawable(playerName);
     }
 
-    public void drawCardOfPlayerByName(final String playerName, final Card card) {
-        players.drawCardOfPlayerByName(playerName, card);
+    public void drawCardOfPlayerByName(final String playerName, final Deck deck) {
+        players.drawCardOfPlayerByName(playerName, deck.popCard());
     }
 
     public List<Card> findCardsOfPlayerByName(final String name) {
@@ -54,6 +54,10 @@ public class GameParticipants {
             drawCount++;
         }
         return drawCount;
+    }
+
+    public int findDealerDrawPoint() {
+        return dealer.getDrawPoint();
     }
 
     public int findDealerScore() {

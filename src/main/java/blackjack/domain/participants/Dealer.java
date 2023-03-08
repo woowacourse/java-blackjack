@@ -23,4 +23,8 @@ public class Dealer extends Participant {
 
     }
 
+    public int getDrawPoint() {
+        return DEALER_DRAW_POINT;
+    }
+
 }
