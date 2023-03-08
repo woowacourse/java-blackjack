@@ -29,6 +29,14 @@ public class InputView {
         return MoreDraw.from(input).getState();
     }
 
+    public int readBetting(final String name) {
+        System.out.println(format("{0}의 배팅 금액은?", name));
+
+        final String input = scanner.nextLine();
+
+        return Integer.parseInt(input);
+    }
+
     enum MoreDraw {
 
         YES("y", true),
