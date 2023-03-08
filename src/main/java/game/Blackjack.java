@@ -5,6 +5,7 @@ import domain.Gambler;
 import domain.Player;
 import domain.Players;
 import domain.Result;
+import view.InputView;
 
 import java.util.Map;
 
@@ -14,26 +15,16 @@ import static view.OutputView.printDealerHitMessage;
 import static view.OutputView.printSingleGambler;
 
 public class Blackjack {
-    //TODO: Blackjack testcode 작성
-    //TODO: 모든 class들 testcode 확인하고 부족한 부분 작성해보기
-    //TODO: 질문 >> blackjack이 result를 가지는 게 맞는가?
 
-    private final Players players;
-    private final Dealer dealer;
     private Result result;
 
-    public Blackjack(Players players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+    public void play(Players players, Dealer dealer) {
+        hitOrStandByPlayers(players);
+        hitOrStandByDealer(dealer);
+        createResult(players, dealer);
     }
 
-    public void play() {
-        hitOrStandByPlayers();
-        hitOrStandByDealer();
-        createResult();
-    }
-
-    private void hitOrStandByPlayers() {
+    private void hitOrStandByPlayers(Players players) {
         for (Player player : players.getPlayers()) {
             hitOrStandByPlayer(player);
         }
@@ -71,18 +62,18 @@ public class Blackjack {
         }
     }
 
-    private void hitOrStandByDealer() {
+    private void hitOrStandByDealer(Dealer dealer) {
         while (dealer.isDealerHit()) {
-            dealerHit();
+            dealerHit(dealer);
         }
     }
 
-    private void dealerHit() {
+    private void dealerHit(Dealer dealer) {
         dealer.pickCard();
         printDealerHitMessage();
     }
 
-    public void createResult() {
+    public void createResult(Players players, Dealer dealer) {
         result = new Result(players, dealer);
     }
 
