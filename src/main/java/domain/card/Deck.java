@@ -1,8 +1,8 @@
 package domain.card;
 
-import domain.card.shuffler.DeckShuffler;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -10,8 +10,8 @@ public class Deck {
 
     private final Stack<Card> deck;
 
-    public Deck(DeckShuffler shuffler) {
-        this.deck = shuffler.shuffleDeck(initializeDeck());
+    public Deck() {
+        this.deck = initializeDeck();
     }
 
     private static Stack<Card> initializeDeck() {
@@ -22,6 +22,10 @@ public class Deck {
                         .map(Shape::getShape)
                         .forEach(shape -> deck.push(new Card(value, shape))));
         return deck;
+    }
+
+    public void shuffleDeck() {
+        Collections.shuffle(this.deck);
     }
 
     public List<Card> getInitialDeck() {

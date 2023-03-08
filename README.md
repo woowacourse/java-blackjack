@@ -60,7 +60,7 @@
 - [x] 에러 메세지 출력 및 입력 반복
 - [x] 실패 검증 테스트에서 어떤 예외 메세지 포함하는지 검증하도록 수정
 - [x] printInitialMessage 메서드 로직 수정 (딜러 이름 출력하도록)
-- [ ] shuffleDeck 메서드가 인자로 Deck을 받고, Deck을 반환하도록 변경
+- [x] shuffleDeck 메서드 이동 (DeckShuffler 삭제)
 - [ ] FixedDeckShuffler 클래스 위치 이동
 - [ ] initializeDeck 로직 수정 (Card 생성받는 부분)
 - [ ] 이름으로 공백이 입력되는 경우에 대한 검증 추가

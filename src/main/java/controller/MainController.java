@@ -3,7 +3,6 @@ package controller;
 import domain.PlayerCommand;
 import domain.WinningStatus;
 import domain.card.Deck;
-import domain.card.shuffler.DeckShuffler;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -17,16 +16,15 @@ public class MainController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final DeckShuffler deckShuffler;
 
-    public MainController(final InputView inputView, final OutputView outputView, DeckShuffler deckShuffler) {
+    public MainController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.deckShuffler = deckShuffler;
     }
 
     public void run() {
-        Deck deck = new Deck(deckShuffler);
+        Deck deck = new Deck();
+        deck.shuffleDeck();
         Participants participants = initializeParticipants(deck);
         Dealer dealer = participants.getDealer();
 

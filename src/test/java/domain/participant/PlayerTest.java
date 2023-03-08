@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.shuffler.FixedDeckShuffler;
 import domain.PlayerCommand;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 추가로 받을지 선택할 수 있다.")
     @Test
     void receiveAdditionalCardTest() {
-        player.receiveAdditionalCard(PlayerCommand.HIT, new Deck(new FixedDeckShuffler()));
+        player.receiveAdditionalCard(PlayerCommand.HIT, new Deck());
         assertThat(player.calculateScore()).isEqualTo(23);
     }
 }

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.shuffler.FixedDeckShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,7 @@ class DealerTest {
         ArrayList<Card> initialCards = new ArrayList<>(List.of(new Card("3", "스페이드"), new Card("K", "스페이드")));
         Dealer dealer = new Dealer(initialCards);
 
-        Deck deck = new Deck(new FixedDeckShuffler());
+        Deck deck = new Deck();
 
         dealer.fillCards(deck);
         assertThat(dealer.calculateScore()).isGreaterThan(16)
