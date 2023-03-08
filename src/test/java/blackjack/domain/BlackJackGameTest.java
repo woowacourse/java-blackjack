@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Shape;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Score;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +45,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("bust가 아닌 경우에 카드를 뽑을 수 있다")
+    @DisplayName("도전자는 bust가 아닌 경우에 카드를 뽑을 수 있다")
     void can_pick_when_not_bust() {
         Player ditoo = blackJackGame.getChallengers().get(0);
 
@@ -51,21 +53,45 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("bust인 경우에 카드를 뽑을 수 없다")
+    @DisplayName("도전자는 bust인 경우에 카드를 뽑을 수 없다")
     void can_not_pick_when_bust() {
         Player ditoo = blackJackGame.getChallengers().get(0);
-        Score holdingCardsPoint = ditoo.getTotalPoint();
 
-        while (!holdingCardsPoint.isBust()) {
-            blackJackGame.pick(ditoo);
-            holdingCardsPoint = ditoo.getTotalPoint();
-        }
+        Card spadeTen = new Card(Shape.SPADE, Number.TEN);
+        Card spadeJack = new Card(Shape.SPADE, Number.JACK);
+        Card spadeQueen = new Card(Shape.SPADE, Number.QUEEN);
+
+        ditoo.pickStartCards(spadeTen, spadeJack);
+        ditoo.pick(spadeQueen);
 
         assertThat(blackJackGame.canPick(ditoo)).isFalse();
     }
 
     @Test
-    @DisplayName("딜러만 선택하는 기능에 대한 테스트")
+    @DisplayName("딜러는 카드 합이 16이하인 경우에 카드를 또 뽑을 수 있다")
+    void dealer_pick_card_when_under_or_equals_to_16() {
+        Player dealer = blackJackGame.getDealer();
+
+        Card card = new Card(Shape.HEART, Number.NINE);
+        dealer.pick(card);
+
+        assertThat(blackJackGame.isDealerCanPick()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 카드 합이 16초과인 경우에 카드를 또 뽑을 수 없다")
+    void dealer_pick_card_when_over_16() {
+        Player dealer = blackJackGame.getDealer();
+
+        Card heartNine = new Card(Shape.HEART, Number.NINE);
+        Card heartTen = new Card(Shape.HEART, Number.TEN);
+        dealer.pickStartCards(heartNine, heartTen);
+
+        assertThat(blackJackGame.isDealerCanPick()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러를 선택하는 기능에 대한 테스트")
     void get_dealer() {
         Player dealer = blackJackGame.getDealer();
 
@@ -73,7 +99,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("도전자만 선택하는 기능 대한 테스트")
+    @DisplayName("도전자를 선택하는 기능 대한 테스트")
     void get_challengers() {
         List<Player> challengers = blackJackGame.getChallengers();
 

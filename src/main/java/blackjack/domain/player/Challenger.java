@@ -23,7 +23,7 @@ public class Challenger extends Player {
     @Override
     public Boolean canPick() {
         Score score = holdingCards.getDefaultSum();
-        return score.getValue() > MAXIMUM_POINT_TO_PICK;
+        return score.getValue() <= MAXIMUM_POINT_TO_PICK;
     }
 
     @Override
