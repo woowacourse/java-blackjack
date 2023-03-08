@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import domain.User;
-
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
@@ -15,8 +13,8 @@ public class InputView {
         return splitWithComma(input);
     }
 
-    public boolean askForHit(User user) {
-        System.out.println(user.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public boolean askForHit(String userName) {
+        System.out.println(userName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
         if (input.equals("y")) {
             return true;

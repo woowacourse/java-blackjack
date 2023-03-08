@@ -47,7 +47,7 @@ public class Game {
         return players;
     }
 
-    public List<Player> getUsers() {
+    public List<User> getUsers() {
         return new ArrayList<>(users);
     }
 

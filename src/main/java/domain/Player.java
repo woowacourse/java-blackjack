@@ -38,6 +38,10 @@ public abstract class Player {
 
     public abstract boolean canHit();
 
+    public Hand hand() {
+        return hand;
+    }
+
     public List<Card> getCards() {
         return new ArrayList<>(hand.cards());
     }
