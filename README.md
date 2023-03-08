@@ -7,25 +7,24 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ## 클래스 다이어그램
+### 주요 클래스
 ```mermaid
-classDiagram-v2
-    note "주요 클래스"
-    BlackjackGame <-- Participants
-    BlackjackGame <-- Deck
-    Participants <-- Dealer
-    Participants <-- Players
-    Players <-- Player
-    Hand <-- Card
-    Card <-- Suit
-    Card <-- Rank
-    Deck <-- Card
-    Player <-- Hand
-    Dealer <-- Hand
+classDiagram
+BlackjackGame <-- Participants
+BlackjackGame <-- Deck
+Participants <-- Dealer
+Participants <-- Players
+Players <-- Player
+Hand <-- Card
+Card <-- Suit
+Card <-- Rank
+Deck <-- Card
+Player <-- Hand
+Dealer <-- Hand
 ```
-
+### User 관련 클래스
 ```mermaid
-classDiagram-v2
-    note "User 관련 클래스"
+classDiagram
     User <|-- Player
     User <|-- Dealer
     Deck <|.. ShuffledDeck
@@ -35,10 +34,9 @@ classDiagram-v2
     +Hand hand
     }
 ```
-
+### UserName 관련 클래스
 ```mermaid
-classDiagram-v2
-    note "UserName 관련 클래스"
+classDiagram
     UserName <|.. PlayerName
     UserName <|.. DealerName
     Player *-- PlayerName
