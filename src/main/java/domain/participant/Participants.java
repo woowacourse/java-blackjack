@@ -35,6 +35,10 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

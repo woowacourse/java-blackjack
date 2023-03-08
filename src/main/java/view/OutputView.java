@@ -25,14 +25,13 @@ public class OutputView {
     }
 
     public void printInitialState(Participants participants) {
-        printInitialMessage(participants.getPlayerNames());
+        printInitialMessage(participants.getDealerName(), participants.getPlayerNames());
         printAllState(participants);
     }
 
-    private void printInitialMessage(final List<String> names) {
-        String dealerName = names.get(0);
-        String playerNames = names.stream().skip(1).collect(Collectors.joining(", "));
-        System.out.printf("%s와 %s에게 2장을 나누었습니다." + System.lineSeparator(), dealerName, playerNames);
+    private void printInitialMessage(final String dealerName, final List<String> playerNames) {
+        String playerNamesFormat = String.join(", ", playerNames);
+        System.out.printf("%s와 %s에게 2장을 나누었습니다." + System.lineSeparator(), dealerName, playerNamesFormat);
     }
 
     private void printAllState(final Participants participants) {
