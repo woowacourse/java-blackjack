@@ -8,18 +8,22 @@ public class Name {
     private final String name;
 
     public Name(final String name) {
-        validateLength(name);
-        validateFormat(name);
+        validateName(name);
         this.name = name;
     }
 
-    private static void validateFormat(final String name) {
+    private void validateName(String name) {
+        validateLength(name);
+        validateFormat(name);
+    }
+
+    private void validateFormat(final String name) {
         if (!NAME_REGEX.matcher(name).matches()) {
             throw new IllegalArgumentException("이름에 숫자나 특수문자가 포함될 수 없습니다.");
         }
     }
 
-    private static void validateLength(final String name) {
+    private void validateLength(final String name) {
         if (name.length() > 10) {
             throw new IllegalArgumentException("[ERROR] 이름의 길이는 10글자 이하여야 합니다.");
         }

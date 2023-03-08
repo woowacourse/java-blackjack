@@ -60,7 +60,7 @@
 - [ ]  initializeDeck 로직 수정 (Card 생성받는 부분)
 - [ ]  shuffleDeck 메서드가 인자로 Deck을 받고, Deck을 반환하도록 변경
 - [ ]  FixedDeckShuffler 클래스 위치 이동
-- [ ]  모든 검증 메서드들을 호출하는 메서드 추가
+- [x]  모든 검증 메서드들을 호출하는 메서드 추가
 - [ ]  이름으로 공백이 입력되는 경우에 대한 검증 추가
 - [ ]  printInitialMessage 메서드 로직 수정 (딜러 이름 출력하도록)
 - [ ]  승무패 카운트 계산하는 로직 이동
