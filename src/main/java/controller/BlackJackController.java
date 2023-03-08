@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
+import domain.game.BattingMoney;
 import domain.game.BlackJackGame;
 import domain.player.Gambler;
 import domain.player.HitState;
@@ -8,14 +9,19 @@ import domain.player.Name;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class BlackJackController {
 
     public void run() {
-        final BlackJackGame blackJackGame = withExceptionHandle(this::setUpGame);
+        final BlackJackGame blackJackGame = setUpGame();
         hitOrStayForGamblers(blackJackGame);
         hitOrStayForDealer(blackJackGame);
         statistic(blackJackGame);
@@ -24,7 +30,9 @@ public class BlackJackController {
     private BlackJackGame setUpGame() {
         final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerNames);
+        final Map<Name, BattingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
+
+        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBattingMoneyMap);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
         return blackJackGame;
     }
@@ -34,6 +42,15 @@ public class BlackJackController {
                 .stream()
                 .map(Name::of)
                 .collect(Collectors.toList());
+    }
+
+    private Map<Name, BattingMoney> batting(final List<Name> gamblerNames) {
+        return gamblerNames.stream()
+                .collect(toMap(identity(),
+                        name -> withExceptionHandle(() -> BattingMoney.of(InputView.readBattingMoney(name))),
+                        (a, b) -> b,
+                        LinkedHashMap::new
+                ));
     }
 
     private void hitOrStayForGamblers(final BlackJackGame blackJackGame) {
@@ -57,10 +74,11 @@ public class BlackJackController {
     }
 
     private void statistic(final BlackJackGame blackJackGame) {
+
         OutputView.showGameStatistic(new GameStatisticResponse(
                 blackJackGame.dealer(),
                 blackJackGame.gamblers(),
-                blackJackGame.statistic()));
+                blackJackGame.revenue()));
     }
 
     private <T> T withExceptionHandle(final Supplier<T> supplier) {

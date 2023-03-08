@@ -4,6 +4,7 @@ import controller.GameStatisticResponse;
 import domain.card.Card;
 import domain.card.CardShape;
 import domain.card.CardValue;
+import domain.game.Revenue;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.GamblerCompeteResult;
@@ -13,14 +14,9 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-
 public class OutputView {
-
-    private static final StringBuilder stringBuilder = new StringBuilder();
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
@@ -111,10 +107,10 @@ public class OutputView {
      * pobi 카드: 2하트, 8스페이드, A 클로버 - 결과: 21
      * jason 카드: 7클로버, K 스페이드 - 결과: 17
      * <br>
-     * ## 최종 승패
-     * 딜러: 1승 1패
-     * pobi: 승
-     * jason: 패
+     * ## 최종 수익
+     * 딜러: 10000
+     * pobi: 10000
+     * jason: -20000
      */
     public static void showGameStatistic(final GameStatisticResponse statistic) {
         showFinalCards(statistic);
@@ -147,36 +143,25 @@ public class OutputView {
     }
 
     private static void showFinalWinLose(final GameStatisticResponse statistic) {
-        System.out.println("\n## 최종 승패");
-        showFinalDealerWinLose(statistic);
-        showFinalGamblersWinLose(statistic);
+        System.out.println("\n## 최종 수익");
+        showFinalDealerRevenue(statistic);
+        showFinalGamblersRevenue(statistic);
     }
 
-    private static void showFinalDealerWinLose(final GameStatisticResponse gameStatisticResponse) {
-        final Map<Gambler, GamblerCompeteResult> resultPerParticipant = gameStatisticResponse.dealerResultPerGambler();
-        final Map<GamblerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
-                .collect(Collectors.groupingBy(Function.identity(), counting()));
-        final String dealerStatisticMessage = stringBuilder.append("딜러:")
-                .append(dealerResultCount(dealerWinLoseCount, GamblerCompeteResult.LOSE))
-                .append(dealerResultCount(dealerWinLoseCount, GamblerCompeteResult.DRAW))
-                .append(dealerResultCount(dealerWinLoseCount, GamblerCompeteResult.WIN))
-                .toString();
-        System.out.println(dealerStatisticMessage);
+    private static void showFinalDealerRevenue(final GameStatisticResponse gameStatisticResponse) {
+        final int sum = (int) gameStatisticResponse.gamblerRevenueMap()
+                .values()
+                .stream()
+                .mapToDouble(Revenue::amount)
+                .sum();
+        System.out.println("딜러: " + sum * -1);
     }
 
-    private static String dealerResultCount(final Map<GamblerCompeteResult, Long> dealerWinLoseCount, final GamblerCompeteResult gamblerCompeteResult) {
-        final Long count = dealerWinLoseCount.getOrDefault(gamblerCompeteResult, 0L);
-        if (count == 0L) {
-            return EMPTY;
-        }
-        return String.format(" %d%s", count, GAMBLER_COMPETE_MESSAGE_MAP.get(gamblerCompeteResult.reverse()));
-    }
-
-    private static void showFinalGamblersWinLose(final GameStatisticResponse statistic) {
-        final Map<Gambler, GamblerCompeteResult> resultPerParticipant = statistic.dealerResultPerGambler();
+    private static void showFinalGamblersRevenue(final GameStatisticResponse statistic) {
+        final Map<Gambler, Revenue> gamblerRevenueMap = statistic.gamblerRevenueMap();
         final List<Gambler> gamblers = statistic.gamblers();
         gamblers.stream()
-                .map(it -> it.nameValue() + ": " + GAMBLER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it)))
+                .map(it -> it.nameValue() + ": " +gamblerRevenueMap.get(it).amount())
                 .forEach(System.out::println);
     }
 }

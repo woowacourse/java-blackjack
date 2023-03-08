@@ -1,6 +1,7 @@
 package view;
 
 import domain.player.Gambler;
+import domain.player.Name;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,5 +34,12 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("y 혹은 n 만을 입력해주세요");
+    }
+
+    public static double readBattingMoney(final Name name) {
+        System.out.println(name.value() + "의 배팅 금액은?");
+        final double input = scanner.nextDouble();
+        scanner.nextLine();
+        return input;
     }
 }
