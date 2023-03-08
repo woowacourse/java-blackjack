@@ -21,7 +21,6 @@ public class OutputView {
     private static final String DELIM = ", ";
     private static final String CARD_INFORMATION_FORMAT = "카드: ";
     private static final String DEALER_INFORMATION_FORMAT = "딜러: ";
-    private static final String EMPTY_DELIM = " ";
     private static final String COLON = ": ";
 
     static {
@@ -115,7 +114,7 @@ public class OutputView {
         System.out.println("## 최종 수익");
 
         for (final Participant participant : bettingMoneyBoard.keySet()) {
-            System.out.println(participant.name().value() + COLON + bettingMoneyBoard.get(participant).value());
+            System.out.println(getPlayerName(participant) + COLON + bettingMoneyBoard.get(participant).value());
         }
     }
 
@@ -125,5 +124,9 @@ public class OutputView {
 
     public static void dealerOneMoreCard() {
         System.out.println("딜러는 16 이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void showDealerMoneyBoard(final Money dealerMoney) {
+        System.out.println(DEALER_INFORMATION_FORMAT + dealerMoney.value());
     }
 }
