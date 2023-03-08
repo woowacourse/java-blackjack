@@ -12,10 +12,6 @@ public class Card {
         this.cardInfo = info;
     }
 
-    public int sum(final Card otherCard) {
-        return this.cardInfo.sum(otherCard.cardInfo);
-    }
-
     public boolean isACE() {
         return this.cardInfo.isACE();
     }
