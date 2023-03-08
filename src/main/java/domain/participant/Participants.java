@@ -68,29 +68,12 @@ public class Participants {
         return dealer.canHit();
     }
 
-    public Map<String, PlayerGameResult> getResult() {
-        Map<String, PlayerGameResult> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player.getName(), getPlayerGameResult(player)));
-
-        return result;
+    public boolean isDealerBust() {
+        return dealer.isBust();
     }
 
-    private PlayerGameResult getPlayerGameResult(Participant player) {
-        int dealerScore = dealer.calculateScore();
-        int playerScore = player.calculateScore();
-
-        if (isPlayerLose(player, dealerScore, playerScore)) {
-            return PlayerGameResult.LOSE;
-        }
-        if (playerScore == dealerScore) {
-            return PlayerGameResult.DRAW;
-        }
-
-        return PlayerGameResult.WIN;
-    }
-
-    private boolean isPlayerLose(Participant player, int dealerScore, int playerScore) {
-        return (playerScore < dealerScore && !dealer.isBust()) || player.isBust();
+    public int getDealerScore() {
+        return dealer.calculateScore();
     }
 
     public Participant getDealer() {

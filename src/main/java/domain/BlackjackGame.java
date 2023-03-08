@@ -3,6 +3,7 @@ package domain;
 import domain.card.Deck;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,7 +45,28 @@ public class BlackjackGame {
     }
 
     public Map<String, PlayerGameResult> getResult() {
-        return participants.getResult();
+        Map<String, PlayerGameResult> result = new LinkedHashMap<>();
+        participants.getPlayers().forEach(player -> result.put(player.getName(), getPlayerGameResult(player)));
+
+        return new LinkedHashMap<>(result);
+    }
+
+    private PlayerGameResult getPlayerGameResult(Participant player) {
+        int dealerScore = participants.getDealerScore();
+        int playerScore = player.calculateScore();
+
+        if (isPlayerLose(player, dealerScore, playerScore)) {
+            return PlayerGameResult.LOSE;
+        }
+        if (playerScore == dealerScore) {
+            return PlayerGameResult.DRAW;
+        }
+
+        return PlayerGameResult.WIN;
+    }
+
+    private boolean isPlayerLose(Participant player, int dealerScore, int playerScore) {
+        return (playerScore < dealerScore && !participants.isDealerBust()) || player.isBust();
     }
 
     public Participant getDealer() {
