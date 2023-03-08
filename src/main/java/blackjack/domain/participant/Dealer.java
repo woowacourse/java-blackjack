@@ -36,7 +36,7 @@ public final class Dealer {
 
     private void settingSelfCards() {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            this.drawCard();
+            receiveCard(drawCard());
         }
     }
 
@@ -56,8 +56,8 @@ public final class Dealer {
         player.receiveCard(deck.drawCard());
     }
 
-    public void drawCard() {
-        receiveCard(deck.drawCard());
+    public Card drawCard() {
+        return deck.drawCard();
     }
 
     public boolean canDraw() {

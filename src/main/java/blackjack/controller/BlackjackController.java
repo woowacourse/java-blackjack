@@ -60,7 +60,7 @@ public class BlackjackController {
 
     private void turnOfDealer() {
         while (dealer.canDraw()) {
-            dealer.drawCard();
+            dealer.receiveCard(dealer.drawCard());
             printDealerDrawOneMoreCard(dealer);
         }
     }

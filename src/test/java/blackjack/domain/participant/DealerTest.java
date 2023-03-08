@@ -54,7 +54,7 @@ class DealerTest {
         int initSize = dealer.getCards().size();
 
         while (dealer.canDraw()) {
-            dealer.drawCard();
+            dealer.receiveCard(dealer.drawCard());
         }
 
         assertAll(
