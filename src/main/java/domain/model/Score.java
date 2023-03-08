@@ -1,6 +1,6 @@
 package domain.model;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 
 public class Score {
 
@@ -15,7 +15,7 @@ public class Score {
 
     public static Score of(final Cards cards) {
         final int score = getInitialScore(cards);
-        final int count = cards.count(Letter.ACE);
+        final int count = cards.count(Denomination.ACE);
         return new Score(modifyScoreByAce(score, count));
     }
 
@@ -35,7 +35,7 @@ public class Score {
 
     private static int changeToAceSub(int score) {
         if (score > BLACK_JACK) {
-            score -= Letter.ACE.getNumber();
+            score -= Denomination.ACE.getNumber();
             score += ACE_SUB_NUMBER;
         }
         return score;

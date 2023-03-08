@@ -1,6 +1,6 @@
 package domain.model;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 import domain.type.Suit;
 import java.util.Arrays;
 import java.util.PriorityQueue;
@@ -18,7 +18,7 @@ public class RandomCardGenerator implements CardGenerator {
     });
 
     static {
-        Arrays.stream(Letter.values())
+        Arrays.stream(Denomination.values())
             .forEach(
                 letter -> Arrays.stream(Suit.values())
                     .map(suit -> new Card(suit, letter))

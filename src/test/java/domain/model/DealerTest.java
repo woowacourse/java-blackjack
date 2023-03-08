@@ -3,7 +3,7 @@ package domain.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 import domain.type.Suit;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,13 +17,13 @@ public class DealerTest {
     public void testAddCardWhenUnder21() {
         //given
         Set<Card> cardSet = new HashSet<>();
-        cardSet.add(new Card(Suit.SPADE, Letter.NINE));
+        cardSet.add(new Card(Suit.SPADE, Denomination.NINE));
         Cards cards = new Cards(cardSet);
         Dealer dealer = new Dealer(cards);
 
         //when
-        dealer.addCard(new Card(Suit.DIAMOND, Letter.NINE));
-        dealer.addCard(new Card(Suit.SPADE, Letter.THREE));
+        dealer.addCard(new Card(Suit.DIAMOND, Denomination.NINE));
+        dealer.addCard(new Card(Suit.SPADE, Denomination.THREE));
 
         //then
         assertThat(dealer.getScore().getValue()).isEqualTo(21);
@@ -34,13 +34,13 @@ public class DealerTest {
     public void testAddCardWhenOver21() {
         //given
         Set<Card> cardSet = new HashSet<>();
-        cardSet.add(new Card(Suit.SPADE, Letter.TEN));
+        cardSet.add(new Card(Suit.SPADE, Denomination.TEN));
         Cards cards = new Cards(cardSet);
         Dealer dealer = new Dealer(cards);
 
         //when
-        dealer.addCard(new Card(Suit.SPADE, Letter.TEN));
-        dealer.addCard(new Card(Suit.SPADE, Letter.ACE));
+        dealer.addCard(new Card(Suit.SPADE, Denomination.TEN));
+        dealer.addCard(new Card(Suit.SPADE, Denomination.ACE));
 
         //then
         assertThat(dealer.getScore().getValue()).isEqualTo(21);
@@ -50,7 +50,7 @@ public class DealerTest {
     @DisplayName("카드를 더 받을 수 있는지 테스트")
     public void testCanReceiveCard() {
         //given
-        Cards cardsScore16 = new Cards(Set.of(new Card(Suit.SPADE, Letter.TEN), new Card(Suit.SPADE, Letter.SIX)));
+        Cards cardsScore16 = new Cards(Set.of(new Card(Suit.SPADE, Denomination.TEN), new Card(Suit.SPADE, Denomination.SIX)));
         Dealer dealer = new Dealer(cardsScore16);
 
         //when
@@ -64,7 +64,7 @@ public class DealerTest {
     @DisplayName("카드를 더 받을 수 없는지 테스트")
     public void testCanNotReceiveCard() {
         //given
-        Cards cardsScore17 = new Cards(Set.of(new Card(Suit.SPADE, Letter.TEN), new Card(Suit.SPADE, Letter.SEVEN)));
+        Cards cardsScore17 = new Cards(Set.of(new Card(Suit.SPADE, Denomination.TEN), new Card(Suit.SPADE, Denomination.SEVEN)));
         Dealer dealer = new Dealer(cardsScore17);
 
         //when

@@ -2,7 +2,7 @@ package domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 import domain.type.Suit;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +22,9 @@ class BlackJackResultMakerTest {
 
     @BeforeEach
     public void beforeEach() {
-        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
+        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Denomination.TWO)));
         dealer = new Dealer(dealerCards);
-        playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
+        playerCards = new Cards(Set.of(new Card(Suit.SPADE, Denomination.SIX)));
         players = IntStream.range(0, 10)
             .mapToObj(i -> new Player(playerCards, "test"))
             .collect(Collectors.toList());

@@ -1,6 +1,6 @@
 package domain.model;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 import java.util.Set;
 
 public class Cards {
@@ -11,9 +11,9 @@ public class Cards {
         this.cards = cards;
     }
 
-    public int count(final Letter letter) {
+    public int count(final Denomination denomination) {
         return (int) cards.stream()
-            .filter(card -> card.isMatch(letter))
+            .filter(card -> card.isMatch(denomination))
             .count();
     }
 

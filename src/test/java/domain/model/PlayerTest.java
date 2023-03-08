@@ -2,7 +2,7 @@ package domain.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 import domain.type.Suit;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,13 +17,13 @@ class PlayerTest {
     public void testScore21receivable() {
         //given
         Set<Card> cardSet = new HashSet<>();
-        cardSet.add(new Card(Suit.SPADE, Letter.NINE));
-        cardSet.add(new Card(Suit.DIAMOND, Letter.NINE));
+        cardSet.add(new Card(Suit.SPADE, Denomination.NINE));
+        cardSet.add(new Card(Suit.DIAMOND, Denomination.NINE));
         Cards cards = new Cards(cardSet);
         Player player = new Player(cards, "player");
 
         //when
-        player.addCard(new Card(Suit.SPADE, Letter.THREE));
+        player.addCard(new Card(Suit.SPADE, Denomination.THREE));
 
         //then
         assertTrue(player.canReceiveCard());
@@ -34,13 +34,13 @@ class PlayerTest {
     public void testScore22NotReceivable() {
         //given
         Set<Card> cardSet = new HashSet<>();
-        cardSet.add(new Card(Suit.SPADE, Letter.TEN));
-        cardSet.add(new Card(Suit.DIAMOND, Letter.TEN));
+        cardSet.add(new Card(Suit.SPADE, Denomination.TEN));
+        cardSet.add(new Card(Suit.DIAMOND, Denomination.TEN));
         Cards cards = new Cards(cardSet);
         Player player = new Player(cards, "player");
 
         //when
-        player.addCard(new Card(Suit.SPADE, Letter.TWO));
+        player.addCard(new Card(Suit.SPADE, Denomination.TWO));
 
         //then
         assertFalse(player.canReceiveCard());

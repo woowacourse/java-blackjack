@@ -1,21 +1,21 @@
 package domain.model;
 
-import domain.type.Letter;
+import domain.type.Denomination;
 import domain.type.Suit;
 import java.util.Objects;
 
 public class Card {
 
     private final Suit suit;
-    private final Letter letter;
+    private final Denomination denomination;
 
-    public Card(final Suit suit, final Letter letter) {
+    public Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
-        this.letter = letter;
+        this.denomination = denomination;
     }
 
-    public boolean isMatch(final Letter letter) {
-        return this.letter.equals(letter);
+    public boolean isMatch(final Denomination denomination) {
+        return this.denomination.equals(denomination);
     }
 
     @Override
@@ -27,20 +27,28 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return suit == card.suit && letter == card.letter;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit, letter);
+        return Objects.hash(suit, denomination);
     }
 
     @Override
     public String toString() {
-        return letter.getSign() + suit.getName();
+        return denomination.getSign() + suit.getName();
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     public int getNumber() {
-        return letter.getNumber();
+        return denomination.getNumber();
     }
 }

@@ -1,6 +1,6 @@
 package domain.type;
 
-public enum Letter {
+public enum Denomination {
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -18,7 +18,7 @@ public enum Letter {
     private final int number;
     private final String sign;
 
-    Letter(final int number, final String sign) {
+    Denomination(final int number, final String sign) {
         this.number = number;
         this.sign = sign;
     }
