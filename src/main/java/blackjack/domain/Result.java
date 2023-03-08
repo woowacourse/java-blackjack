@@ -20,6 +20,6 @@ public enum Result {
         return Arrays.stream(values())
                 .filter(result -> result.resultLogic.apply(userPoint, dealerPoint))
                 .findAny()
-                .orElseThrow(() -> new AssertionError());
+                .orElseThrow(() -> new IllegalArgumentException());
     }
 }

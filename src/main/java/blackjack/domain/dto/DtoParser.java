@@ -97,6 +97,6 @@ public class DtoParser {
         if (result == Result.LOSE) {
             return new ResultDto("패");
         }
-        throw new AssertionError();
+        throw new IllegalArgumentException();
     }
 }
