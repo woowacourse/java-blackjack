@@ -1,7 +1,10 @@
 package blackjack.domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckFactory;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -37,5 +40,41 @@ class ParticipantsTest {
 
         assertThatThrownBy(() -> new Participants(participants))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 참가자들에게_카드를_나눠준다() {
+        final Deck deck = DeckFactory.createWithCount(1);
+        final Participants participants = new Participants(List.of(
+                new Player("dani")
+        ));
+
+        participants.drawCard(deck, 5);
+
+        final Participant dani = participants.getParticipants().get(0);
+        assertThat(dani.getCards().count()).isEqualTo(5);
+    }
+
+    @Test
+    void 참가자들중_딜러를_찾는다() {
+        Dealer dealer = new Dealer();
+        final Participants participants = new Participants(List.of(
+                dealer,
+                new Player("kokodak"),
+                new Player("dani")
+        ));
+
+        assertThat(participants.getDealer()).isEqualTo(dealer);
+    }
+
+    @Test
+    void 참가자들중_플레이어들을_찾는다() {
+        final Participants participants = new Participants(List.of(
+                new Dealer(),
+                new Player("kokodak"),
+                new Player("dani")
+        ));
+
+        assertThat(participants.getPlayers().size()).isEqualTo(2);
     }
 }
