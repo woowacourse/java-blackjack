@@ -23,9 +23,13 @@ public class Dealer implements Gambler {
 
     @Override
     public void pickCard() {
-        if (cards.calculateScore() <= PICK_BOUNDARY) {
+        if (isDealerHit()) {
             cards.addCard(Deck.pickCard());
         }
+    }
+
+    public boolean isDealerHit() {
+        return cards.calculateScore() <= PICK_BOUNDARY;
     }
 
     @Override

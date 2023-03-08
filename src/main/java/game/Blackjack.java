@@ -32,11 +32,11 @@ public class Blackjack {
 
     private void hitOrStandByPlayers() {
         for (Player player : players.getPlayers()) {
-            playerHitOrStand(player);
+            hitOrStandByPlayer(player);
         }
     }
 
-    private void playerHitOrStand(Player player) {
+    private void hitOrStandByPlayer(Player player) {
         boolean isHit;
         do {
             isHit = getIsHit(player);
@@ -54,14 +54,12 @@ public class Blackjack {
     }
 
     private boolean getIsHit(Player player) {
-        boolean isHit;
         try {
-            isHit = readIsHit(player);
+            return readIsHit(player);
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            isHit = getIsHit(player);
+            return getIsHit(player);
         }
-        return isHit;
     }
 
     private void playerHit(Player player, boolean isHit) {
@@ -71,7 +69,7 @@ public class Blackjack {
     }
 
     private void hitOrStandByDealer() {
-        while (dealer.getScore() <= dealer.getPickBoundary()) {
+        while (dealer.isDealerHit()) {
             dealerHit();
         }
     }
