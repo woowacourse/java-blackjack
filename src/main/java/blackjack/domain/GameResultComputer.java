@@ -1,5 +1,7 @@
-package blackjack.domain.result;
+package blackjack.domain;
 
+import blackjack.domain.result.JudgeResult;
+import blackjack.dto.TotalGameResult;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -21,7 +23,7 @@ public class GameResultComputer {
                         () -> new EnumMap<>(JudgeResult.class)));
     }
 
-    public Map<String, JudgeResult> getJudgeResultsByPlayer() {
-        return judgeResultsByPlayer;
+    public TotalGameResult computeTotalResult() {
+        return TotalGameResult.of(countDealerJudgeResults(), judgeResultsByPlayer);
     }
 }

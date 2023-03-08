@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
-import blackjack.domain.result.JudgeResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -20,7 +19,7 @@ public class BlackJackController {
         startGame();
         hitOrStayForAvailablePlayers(playerNames);
         hitUntilDealerAvailable();
-        totalUp();
+        endGame();
     }
 
     private List<String> enrollPlayerNames() {
@@ -64,11 +63,8 @@ public class BlackJackController {
         OutputView.showDealerHitResult(DealerName, hitCount);
     }
 
-    private void totalUp() {
+    private void endGame() {
         OutputView.showAllFinalCards(blackJackGame.openAllFinalCards());
-        blackJackGame.updateGameResultComputer();
-        final Map<String, JudgeResult> playerJudgeResults = blackJackGame.computeJudgeResultsByPlayer();
-        final Map<JudgeResult, Integer> dealerJudgeResultsStatistic = blackJackGame.computeDealerJudgeResultsStatistic();
-        OutputView.showAllJudgeResults(playerJudgeResults, dealerJudgeResultsStatistic);
+        OutputView.showTotalGameResult(blackJackGame.computeTotalGameResult());
     }
 }

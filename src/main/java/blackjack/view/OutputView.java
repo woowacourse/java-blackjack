@@ -2,7 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.result.FinalCards;
-import blackjack.domain.result.JudgeResult;
+import blackjack.dto.PlayerResult;
+import blackjack.dto.ResultCount;
+import blackjack.dto.TotalGameResult;
 import blackjack.view.outputWord.DenominationWord;
 import blackjack.view.outputWord.JudgeResultWord;
 import blackjack.view.outputWord.SuitWord;
@@ -20,7 +22,7 @@ public class OutputView {
     private static final String GAME_RESULT_FORMAT = "%s 카드: %s - 결과: %d%n";
     private static final String OPEN_CARD_MESSAGE_FORMAT = "%n%s와 %s에게 2장을 나누었습니다.%n";
     private static final String DEALER_HIT_RESULT_MESSAGE_FORMAT = "%s는 16 이하라 %d장의 카드를 더 받았습니다.%n";
-    private static final String FINAL_RESULT_HEADER = "%n## 최종 승패%n";
+    private static final String TOTAL_RESULT_HEADER = "%n## 최종 승패%n";
     private static final String INPUT_ERROR_MESSAGE_FORMAT = "%n[입력 오류] %s%n";
 
     // TODO 반복문 단순화
@@ -71,21 +73,19 @@ public class OutputView {
         }
     }
 
-    public static void showAllJudgeResults(final Map<String, JudgeResult> playerJudgeResults,
-                                           final Map<JudgeResult, Integer> dealerJudgeResultStatistic) {
-        System.out.printf(FINAL_RESULT_HEADER);
-        showDealerJudgeResultStatistic(dealerJudgeResultStatistic);
-        showJudgeResultsByPlayer(playerJudgeResults);
+    public static void showTotalGameResult(final TotalGameResult totalGameResult) {
+        System.out.printf(TOTAL_RESULT_HEADER);
+        showDealerResultCounts(totalGameResult.getDealerResultCounts());
+        showPlayerResults(totalGameResult.getPlayerResults());
     }
 
-    // TODO 딜러 문자열 전달받기
-    private static void showDealerJudgeResultStatistic(final Map<JudgeResult, Integer> dealerJudgeResultStatistic) {
-        System.out.printf(KEY_VALUE_FORMAT, "딜러", JudgeResultWord.toStatisticWords(dealerJudgeResultStatistic));
+    private static void showDealerResultCounts(final List<ResultCount> dealerResultCounts) {
+        System.out.printf(KEY_VALUE_FORMAT, "딜러", JudgeResultWord.toWordsWithCount(dealerResultCounts));
     }
 
-    private static void showJudgeResultsByPlayer(final Map<String, JudgeResult> playerJudgeResults) {
-        playerJudgeResults.forEach(
-                (name, result) -> System.out.printf(KEY_VALUE_FORMAT, name, JudgeResultWord.toWord(result)));
+    private static void showPlayerResults(final List<PlayerResult> playerResults) {
+        playerResults.forEach(result -> System.out.printf(KEY_VALUE_FORMAT, result.getName(),
+                JudgeResultWord.toWord(result.getJudgeResult())));
     }
 
     public static void showInputErrorMessage(final String message) {

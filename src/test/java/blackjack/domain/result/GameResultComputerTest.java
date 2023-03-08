@@ -6,6 +6,7 @@ import static blackjack.domain.result.JudgeResult.WIN;
 import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.GameResultComputer;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
