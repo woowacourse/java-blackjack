@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import domain.Dealer;
 import domain.Deck;
 import domain.Game;
+import domain.Participants;
 import domain.Player;
 import domain.User;
 import dto.PlayerDto;
@@ -16,20 +17,13 @@ public class Application {
     private static final OutputView OUTPUT_VIEW = new OutputView();
 
     public static void main(String[] args) {
-        List<User> users = createUsersFrom(INPUT_VIEW.readNames());
-        Game game = new Game(new Dealer(), users, new Deck());
+        Participants participants = Participants.of(INPUT_VIEW.readNames());
+        Game game = new Game(participants, new Deck());
 
         start(game);
         play(game);
-
         printCardsAndScores(game);
         printResult(game);
-    }
-
-    private static List<User> createUsersFrom(List<String> names) {
-        return names.stream()
-                .map(User::new)
-                .collect(Collectors.toList());
     }
 
     private static void start(Game game) {

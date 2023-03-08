@@ -1,49 +1,48 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
 
     private final Deck deck;
-    private final Dealer dealer;
-    private final List<User> users;
+    private final Participants participants;
 
-    public Game(Dealer dealer, List<User> users, Deck deck) {
-        this.dealer = dealer;
-        this.users = users;
+    public Game(Participants participants, Deck deck) {
+        this.participants = participants;
         this.deck = deck;
     }
 
     public void dealTwice() {
         for (int i = 0; i < 2; i++) {
-            for (User user : users) {
-                user.drawFrom(deck);
-            }
-            dealer.drawFrom(deck);
+            participants.dealFrom(deck);
         }
     }
 
     public void dealTo(Player player) {
-        player.drawFrom(deck);
+        Player foundPlayer = participants.find(player);
+        foundPlayer.drawFrom(deck);
     }
 
     public Result getResultOf(User user) {
-        return user.competeWith(dealer);
+        Player foundPlayer = participants.find(user);
+        Dealer dealer = participants.getDealer();
+        return foundPlayer.competeWith(dealer);
     }
 
     public List<Result> getDealerResults() {
+        Dealer dealer = participants.getDealer();
+        List<User> users = participants.getUsers();
         return users.stream()
                 .map(dealer::competeWith)
                 .collect(Collectors.toList());
     }
 
     public List<User> getUsers() {
-        return new ArrayList<>(users);
+        return participants.getUsers();
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return participants.getDealer();
     }
 }

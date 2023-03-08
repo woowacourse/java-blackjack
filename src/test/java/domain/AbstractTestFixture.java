@@ -31,6 +31,7 @@ public abstract class AbstractTestFixture {
     }
 
     Game createGameFrom(Dealer dealer, User... users) {
-        return new Game(dealer, Arrays.asList(users), new Deck());
+        var participants = createParticipantsFrom(dealer, users);
+        return new Game(participants, new Deck());
     }
 }
