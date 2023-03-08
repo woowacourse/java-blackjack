@@ -16,4 +16,12 @@ class NamesTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복되지 않은 이름만 입력해주세요");
     }
+
+    @Test
+    @DisplayName("플레이어 이름은 딜러가 될수없다.")
+    void givenParticipantsNameDealer_thenFail() {
+        assertThatThrownBy(() -> Names.from(List.of("준팍", "딜러")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 딜러가 될 수 없습니다.");
+    }
 }
