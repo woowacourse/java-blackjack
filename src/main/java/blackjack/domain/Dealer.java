@@ -25,7 +25,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canDraw() {
+    public boolean canHit() {
         return hand.getSum() < CARD_TAKE_LIMIT;
     }
 }

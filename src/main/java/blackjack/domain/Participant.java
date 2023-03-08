@@ -10,7 +10,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public abstract boolean canDraw();
+    public abstract boolean canHit();
 
     public boolean isBust() {
         return hand.isBust();

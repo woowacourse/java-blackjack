@@ -27,17 +27,17 @@ public class Players {
         }
     }
 
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
     public Player findPlayerByName(String playerName) {
         return players.stream()
                 .filter(player -> player.isYourName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 플레이어를 찾을 수 없습니다."));
-    }
-
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
     }
 
     public List<Card> getPlayerCards(String playerName) {
@@ -64,9 +64,17 @@ public class Players {
     public PlayerWinResults computePlayerWinResults(Dealer dealer) {
         PlayerWinResults playerWinResults = new PlayerWinResults();
         for (Player player : players) {
-            playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
+            addResult(playerWinResults, player, dealer);
         }
         return playerWinResults;
+    }
+
+    private void addResult(PlayerWinResults playerWinResults, Player player, Dealer dealer) {
+        if (player.isBust()) {
+            playerWinResults.addResultByPlayerName(player.getName(), WinResult.LOSE);
+            return;
+        }
+        playerWinResults.addResultByPlayerName(player.getName(), dealer.judge(player));
     }
 
     public List<String> findCanDrawPlayerNames() {
@@ -78,7 +86,7 @@ public class Players {
     }
 
     private void addCanDrawPlayer(Player player, List<String> canDrawPlayerNames) {
-        if (player.canDraw()) {
+        if (player.canHit()) {
             canDrawPlayerNames.add(player.getName());
         }
     }

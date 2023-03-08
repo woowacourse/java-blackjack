@@ -60,7 +60,7 @@ public class BlackJackController {
         }
         blackJackGame.handOneCard(playerName);
         OutputView.showPlayerCard(playerName, blackJackGame.openPlayerCards(playerName));
-        if (blackJackGame.canDraw(playerName)) {
+        if (blackJackGame.canHit(playerName)) {
             hitOrStay(playerName);
         }
     }

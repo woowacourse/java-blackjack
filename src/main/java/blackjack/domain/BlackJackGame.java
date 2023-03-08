@@ -28,9 +28,9 @@ public class BlackJackGame {
         player.take(card);
     }
 
-    public boolean canDraw(String playerName) {
+    public boolean canHit(String playerName) {
         Player player = participants.findPlayerByName(playerName);
-        return player.canDraw();
+        return player.canHit();
     }
 
     public Card openDealerFirstCard() {
@@ -50,7 +50,7 @@ public class BlackJackGame {
         Dealer dealer = participants.getDealer();
         int hitCount = 0;
 
-        while (dealer.canDraw()) {
+        while (dealer.canHit()) {
             Card card = deck.draw();
             dealer.take(card);
             hitCount++;
