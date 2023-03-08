@@ -27,12 +27,12 @@ public class DealerTest {
         assertThat(dealer.getHand().getCount()).isEqualTo(2);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "hand={0}, expected={1}")
     @MethodSource("generateHand")
     @DisplayName("참여자는 자신의 카드 점수를 계산한다.")
-    void calculateHand(List<Card> Hand, int expected) {
+    void calculateHand(List<Card> hand, int expected) {
         Dealer dealer = new Dealer();
-        for (Card card : Hand) {
+        for (Card card : hand) {
             dealer.addCard(card);
         }
 
@@ -67,12 +67,12 @@ public class DealerTest {
         assertThat(dealerFirstCard).isSameAs(firstCard);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "hand={0}, expectedFlag={1}")
     @MethodSource("generateHandAndFlag")
     @DisplayName("카드를 더 받을 수 있는 여부를 반환한다")
-    void getParticipantIntention(List<Card> Hand, boolean expectedFlag) {
+    void getParticipantIntention(List<Card> hand, boolean expectedFlag) {
         Dealer dealer = new Dealer();
-        for (Card card : Hand) {
+        for (Card card : hand) {
             dealer.addCard(card);
         }
 

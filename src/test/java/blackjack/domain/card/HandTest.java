@@ -24,7 +24,7 @@ public class HandTest {
         assertThat(hand.getCount()).isEqualTo(expectedSize);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "createdHand={0}, expectedSum={1}")
     @MethodSource("generateHand")
     @DisplayName("보유한 카드의 점수 합을 계산한다.")
     void getSum(List<Card> createdHand, int expectedSum) {
@@ -48,7 +48,7 @@ public class HandTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "createdHand={0}, expectedCount={1}")
     @MethodSource("generateHandWithACE")
     @DisplayName("에이스의 카드 개수를 구한다.")
     void countACE(List<Card> createdHand, int expectedCount) {

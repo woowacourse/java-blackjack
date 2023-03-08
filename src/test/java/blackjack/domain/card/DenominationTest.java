@@ -24,7 +24,7 @@ public class DenominationTest {
         assertThat(denominations).containsAll(expectedDenominations);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "denomination={0}, expectedValue={1}")
     @MethodSource("generateNumbers")
     @DisplayName("각 숫자에 해당하는 값을 확인한다.")
     void getNumberValue(Denomination denomination, int expectedValue) {

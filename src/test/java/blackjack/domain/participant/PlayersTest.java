@@ -34,7 +34,7 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "inputNames={0}")
     @MethodSource("generatePlayerNames")
     @DisplayName("플레이어가 1~7명 이외의 경우에 예외가 발생한다 ")
     void createPlayersWrongSize(List<String> inputNames) {

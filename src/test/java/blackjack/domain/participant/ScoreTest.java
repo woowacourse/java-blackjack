@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ScoreTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "scoreValue={0}")
     @ValueSource(ints = {-1, -2, -3})
     @DisplayName("0보다 작은 점수는 예외를 발생한다")
     void lessThanZeroException(int value) {
         assertThatThrownBy(() -> new Score(value)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "scoreValueA={0}, scoreValueB={1}, expectedValue={2}")
     @MethodSource("increaseScoreDummy")
     @DisplayName("점수를 더한다.")
     void increase(int valueA, int valueB, int expectedValue) {
@@ -42,7 +42,7 @@ public class ScoreTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "scoreValueA={0}, scoreValueB={1}, expectedLessThan={2}, expectedGreaterThan={3}")
     @MethodSource("compareScoreDummy")
     @DisplayName("점수를 비교한다")
     void compareScore(int value, int otherValue, boolean expectedLessThan, boolean expectedGreaterThan) {
@@ -66,7 +66,7 @@ public class ScoreTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "scoreValue={0}, aceCount={1}, expectedValue={2}")
     @MethodSource("aceScoreDummy")
     @DisplayName("ACE를 최적의 점수로 계산한다")
     void calculateBestScoreAce(int value, int aceCount, int expectedValue) {

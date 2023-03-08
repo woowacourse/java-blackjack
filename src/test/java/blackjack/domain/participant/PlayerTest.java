@@ -27,7 +27,7 @@ public class PlayerTest {
         assertThat(player.getHand().getCount()).isEqualTo(2);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "hand={0}, expected={1}")
     @MethodSource("generateHand")
     @DisplayName("플레이어는 자신의 카드 점수를 계산한다.")
     void calculateHand(List<Card> hand, int expected) {
@@ -53,7 +53,7 @@ public class PlayerTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "hand={0}, expectedFlag={1}")
     @MethodSource("generateHandAndFlag")
     @DisplayName("카드를 더 받을 수 있는 여부를 반환한다")
     void getParticipantIntention(List<Card> hand, boolean expectedFlag) {

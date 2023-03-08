@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NameTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "inputName={0}")
     @ValueSource(strings = {"gr ay", " luca", " ", "", "bada "})
     @DisplayName("이름에 빈 문자열이 들어오는 경우 예외가 발생한다.")
     void createWithBlankName(String inputName) {
@@ -17,7 +17,7 @@ public class NameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "inputName={0}")
     @ValueSource(strings = {"abcdef", "가나다라마바", "123456"})
     @DisplayName("이름의 길이가 5보다 큰 경우 예외가 발생한다.")
     void createWithWrongRangeName(String inputName) {
@@ -25,7 +25,7 @@ public class NameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "inputName={0}")
     @ValueSource(strings = {"a", "gray", "luca", "hello"})
     @DisplayName("이름의 길이가 1~5 사이인 경우 정상적으로 생성된다.")
     void createPlayer(String inputName) {
