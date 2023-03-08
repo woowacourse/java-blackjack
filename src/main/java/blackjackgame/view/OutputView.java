@@ -8,9 +8,7 @@ import blackjackgame.domain.ResultDto;
 import blackjackgame.domain.player.Guest;
 
 public class OutputView {
-    public static final String FINAL_RESULT_MSG = "## 최종 승패";
     private static final String DELIMITER = ", ";
-    private static final String DEALER_HIT_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public void printFirstDealerCards(final String playerName, final List<List<String>> cards) {
         List<String> card = cards.get(1);
@@ -29,7 +27,7 @@ public class OutputView {
     }
 
     public void dealerAddCard() {
-        System.out.println(System.lineSeparator() + DEALER_HIT_CARD_MSG);
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printScore(final int score) {
@@ -38,7 +36,7 @@ public class OutputView {
 
     public void printResult(ResultDto resultDto) {
         System.out.println();
-        StringBuilder stringBuilder = new StringBuilder(FINAL_RESULT_MSG + System.lineSeparator() + "딜러: ");
+        StringBuilder stringBuilder = new StringBuilder("## 최종 승패" + System.lineSeparator() + "딜러: ");
         appendDealerResult(resultDto.getDealerResult(), stringBuilder);
         appendGuestsResult(resultDto.getGuestsResult(), stringBuilder);
         System.out.println(System.lineSeparator() + stringBuilder);

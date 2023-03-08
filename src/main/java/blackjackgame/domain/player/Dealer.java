@@ -6,7 +6,6 @@ import blackjackgame.domain.card.Card;
 
 public class Dealer extends Player {
     private static final int DEALER_HIT_STANDARD = 16;
-    private static final String DEALER = "딜러";
 
     public Dealer(List<Card> cards) {
         super(cards);
@@ -17,6 +16,6 @@ public class Dealer extends Player {
     }
 
     public String getName() {
-        return DEALER;
+        return "딜러";
     }
 }

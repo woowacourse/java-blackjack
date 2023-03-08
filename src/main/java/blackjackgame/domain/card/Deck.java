@@ -28,7 +28,7 @@ public class Deck {
         return cards;
     }
 
-    public List<Card> firstPickCards(){
+    public List<Card> firstPickCards() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             cards.add(pickOne());
@@ -37,7 +37,7 @@ public class Deck {
     }
 
     public Card pickOne() {
-        if(cards.peekFirst() == null){
+        if (cards.peekFirst() == null) {
             cards.addAll(initializeCards());
         }
         return cards.removeFirst();
