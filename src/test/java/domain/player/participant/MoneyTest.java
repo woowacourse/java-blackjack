@@ -1,6 +1,7 @@
 package domain.player.participant;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -55,5 +56,21 @@ class MoneyTest {
 
         //when & then
         assertEquals(bettingMoney.lose(), resultMoney);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "1000,1000,2000",
+            "1500,1000,2500",
+            "2000,1028,3028"
+    })
+    @DisplayName("plus() : 돈을 합할 수 있다.")
+    void test_plus(final int amount1, final int amount2, final int resultAmount) throws Exception {
+        //given
+        final Money origin = Money.wons(amount1);
+        final Money other = Money.wons(amount2);
+
+        //when & then
+        assertEquals(origin.plus(other), Money.wons(resultAmount));
     }
 }

@@ -39,6 +39,10 @@ public class Money {
         return new Money(value.multiply(BigDecimal.valueOf(LOSE_MONEY)));
     }
 
+    public Money plus(Money other) {
+        return new Money(value.add(other.value));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
