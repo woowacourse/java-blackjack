@@ -13,27 +13,27 @@ import static org.assertj.core.api.Assertions.*;
 class DealerTest {
 
     @Test
-    @DisplayName("가지고 있는 카드 중 첫번째를 반환한다.")
-    void giveCards_theReturnFirstCard() {
+    @DisplayName("카드가 한장뿐인 리스트를 반환한다.")
+    void showCardsTest() {
         //given
         final Dealer dealer = Dealer.create(0);
 
         final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SIX, Rank.SEVEN);
         final Deck deck = Deck.from(TestCardGenerator.from(ranks));
 
-        for (int i = 0; i < ranks.size(); i++) {
-            dealer.takeCard(deck.dealCard());
-        }
+        ranks.forEach(i -> dealer.takeCard(deck.dealCard()));
 
         //when
-        final Card firstCard = dealer.getFirstCard();
+        final List<Card> cards = dealer.showCards();
 
         //then
-        assertThat(firstCard).isEqualTo(Card.of(Suit.CLUBS, Rank.EIGHT));
+        assertThat(cards)
+                .hasSize(1)
+                .isEqualTo(List.of(Card.of(Suit.CLUBS, Rank.EIGHT)));
     }
 
     @Nested
-    class IsHitTest {
+    class CanHitTest {
 
         @Test
         @DisplayName("카드 점수의 총합이 16 이하면 true를 리턴한다")
@@ -42,7 +42,7 @@ class DealerTest {
             final Dealer dealer = Dealer.create(15);
 
             //when
-            final boolean dealerHit = dealer.isHit();
+            final boolean dealerHit = dealer.canHit();
 
             //then
             assertThat(dealerHit).isTrue();
@@ -55,7 +55,7 @@ class DealerTest {
             final Dealer dealer = Dealer.create(17);
 
             //when
-            final boolean dealerHit = dealer.isHit();
+            final boolean dealerHit = dealer.canHit();
 
             //then
             assertThat(dealerHit).isFalse();
