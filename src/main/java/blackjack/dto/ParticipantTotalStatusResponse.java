@@ -13,7 +13,7 @@ public class ParticipantTotalStatusResponse {
 
     public static ParticipantTotalStatusResponse of(Participant participant) {
         return new ParticipantTotalStatusResponse(ParticipantStatusResponse.of(participant),
-                participant.getScore().getValue());
+                participant.getScore().getScore());
     }
 
     public ParticipantStatusResponse getParticipantStatusResponse() {

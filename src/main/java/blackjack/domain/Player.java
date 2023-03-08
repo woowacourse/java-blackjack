@@ -23,10 +23,10 @@ public class Player extends Participant {
     public GameResult matchGame(Dealer dealer) {
         Score dealerScore = dealer.getScore();
         Score myScore = this.getScore();
-        if (dealerScore.isOverThen(myScore)) {
+        if (dealerScore.isWinTo(myScore)) {
             return GameResult.LOSE;
         }
-        if (myScore.isOverThen(dealerScore)) {
+        if (myScore.isWinTo(dealerScore)) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
@@ -51,6 +51,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canDrawCard() {
-        return getScore().getValue() < MAX_SCORE;
+        return getScore().getScore() < MAX_SCORE;
     }
 }

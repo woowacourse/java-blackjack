@@ -14,7 +14,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDrawCard() {
-        return getScore().getValue() <= DRAW_CARD_BOUNDARY;
+        return getScore().getScore() <= DRAW_CARD_BOUNDARY;
     }
 
     @Override

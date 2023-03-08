@@ -26,7 +26,7 @@ class CardsTest {
         Score score = cards.getScore();
 
         // then
-        assertThat(score.getValue())
+        assertThat(score.getScore())
                 .isEqualTo(12);
     }
 
@@ -43,7 +43,7 @@ class CardsTest {
         Score score = cards.getScore();
 
         // then
-        assertThat(score.getValue())
+        assertThat(score.getScore())
                 .isEqualTo(expect);
     }
 }
