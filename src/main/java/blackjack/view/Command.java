@@ -1,20 +1,23 @@
 package blackjack.view;
 
+import java.util.Arrays;
+
 public enum Command {
 
-    HIT,
-    STAY;
+    HIT("y"),
+    STAY("n");
+
+    private final String command;
+
+    Command(String command) {
+        this.command = command;
+    }
 
     public static Command of(String command) {
-        if ("y".equals(command)) {
-            return HIT;
-        }
-
-        if ("n".equals(command)) {
-            return STAY;
-        }
-
-        throw new IllegalArgumentException("y, n 중에 입력해야 합니다.");
+        return Arrays.stream(Command.values())
+                .filter(value -> value.command.equals(command))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
 
     public boolean isStay() {
