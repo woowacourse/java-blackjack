@@ -3,7 +3,6 @@ package domain.game;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
@@ -36,11 +34,12 @@ class BetTest {
                 .hasMessage("100,000,000초과의 베팅은 할 수 없습니다.");
     }
 
-    @DisplayName("보너스를 받으면 베팅한 금액의 1.5배의 수익률을 가진다.")
+    @DisplayName("블랙잭이면 베팅한 금액의 1.5배의 수익률을 가진다.")
     @Test
     void bonus() {
         final Bet bet = Bet.of(10_000);
-        assertThat(bet.applyBonus())
+        bet.applyBlackJack();
+        assertThat(bet.getProfit())
                 .isEqualTo(15_000);
     }
 
@@ -48,7 +47,8 @@ class BetTest {
     @Test
     void bust() {
         final Bet bet = Bet.of(10_000);
-        assertThat(bet.applyBust())
+        bet.applyBust();
+        assertThat(bet.getProfit())
                 .isEqualTo(-10_000);
     }
 

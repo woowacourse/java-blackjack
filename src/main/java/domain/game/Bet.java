@@ -9,6 +9,8 @@ public final class Bet {
     public static final double BONUS_RATE = 1.5;
 
     private final int bet;
+    private boolean isBlackJack = false;
+    private boolean isBusted = false;
 
     private Bet(final int bet) {
         validatePrice(bet);
@@ -30,12 +32,22 @@ public final class Bet {
         }
     }
 
-    public int applyBonus() {
-        return  (int) (bet * BONUS_RATE);
+    public void applyBust() {
+        this.isBusted = true;
     }
 
-    public int applyBust() {
-        return -bet;
+    public void applyBlackJack() {
+        this.isBlackJack = true;
+    }
+
+    public int getProfit() {
+        if (isBusted) {
+            return -bet;
+        }
+        if (isBlackJack) {
+            return  (int) (bet * BONUS_RATE);
+        }
+        return bet;
     }
 
     @Override
