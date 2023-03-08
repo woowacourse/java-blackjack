@@ -10,12 +10,12 @@ import view.OutputView;
 import java.util.List;
 import java.util.function.Supplier;
 
-public final class Controller {
+public final class Runner {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public Controller(final InputView inputView, final OutputView outputView) {
+    public Runner(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

@@ -5,13 +5,13 @@ import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
+import util.HitOrStay;
+import util.Notice;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.toList;
@@ -19,6 +19,7 @@ import static java.util.stream.Collectors.toList;
 public final class BlackjackGame {
 
     private static final int DEALER_INDEX = 0;
+    private static final int INIT_SCORE = 0;
 
     private final List<Player> players;
     private final Deck deck;
@@ -47,18 +48,18 @@ public final class BlackjackGame {
         });
     }
 
-    public void playParticipantsTurn(Predicate<Participant> isHit, Consumer<Participant> consumer) {
-        this.getParticipants().forEach(participant -> playParticipantTurn(participant, isHit, consumer));
+    public void playParticipantsTurn(HitOrStay hitOrStay, Notice<Participant> notice) {
+        this.getParticipants().forEach(participant -> playParticipantTurn(participant, hitOrStay, notice));
     }
 
-    public void playDealerTurn(Consumer<Boolean> consumer) {
+    public void playDealerTurn(Notice<Boolean> notice) {
         final Dealer dealer = getDealer();
 
         while (dealer.canHit()) {
-            consumer.accept(dealer.canHit());
+            notice.print(dealer.canHit());
             dealer.takeCard(this.deck.dealCard());
         }
-        consumer.accept(dealer.canHit());
+        notice.print(dealer.canHit());
     }
 
     public Results judgeResult() {
@@ -78,14 +79,14 @@ public final class BlackjackGame {
 
     private static List<Participant> createParticipants(final List<String> participantNames) {
         return participantNames.stream()
-                .map(name -> Participant.of(name, 0))
+                .map(name -> Participant.of(name, INIT_SCORE))
                 .collect(toList());
     }
 
-    private void playParticipantTurn(final Participant participant, final Predicate<Participant> hitOrStay, final Consumer<Participant> print) {
-        while (participant.isHit(hitOrStay.test(participant))) {
+    private void playParticipantTurn(final Participant participant, final HitOrStay hitOrStay, final Notice<Participant> notice) {
+        while (participant.isHit(hitOrStay.isHit(participant))) {
             participant.takeCard(deck.dealCard());
-            print.accept(participant);
+            notice.print(participant);
         }
     }
 
@@ -98,11 +99,11 @@ public final class BlackjackGame {
                 .collect(toUnmodifiableList());
     }
 
-    public Dealer getDealer() {
-        return (Dealer) players.get(DEALER_INDEX);
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    private Dealer getDealer() {
+        return (Dealer) players.get(DEALER_INDEX);
     }
 }
