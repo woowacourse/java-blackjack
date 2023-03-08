@@ -1,26 +1,27 @@
 package blackjack.view;
 
+import static blackjack.domain.participant.Dealer.CAN_DRAW_SCORE;
+import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
-import static blackjack.domain.participant.Dealer.CAN_DRAW_SCORE;
-import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.Result;
 import java.util.List;
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
 
     public void printDistributeCardsMessage(final List<Player> players) {
         String names = players.stream()
                 .map(Player::getName)
                 .collect(joining(", "));
+        int initCardCount = INIT_CARD_COUNT;
 
-        System.out.println(System.lineSeparator() + "딜러와 " + names + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다." + System.lineSeparator());
+        System.out.println(System.lineSeparator() + "딜러와 " + names + "에게 " + initCardCount + "장을 나누었습니다." + System.lineSeparator());
     }
 
     public void printParticipantsInitCards(final Card dealerCard, final List<Player> players) {

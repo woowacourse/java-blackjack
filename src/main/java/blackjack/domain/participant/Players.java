@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
+import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.Card;

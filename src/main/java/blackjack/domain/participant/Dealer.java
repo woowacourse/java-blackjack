@@ -1,30 +1,40 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static blackjack.domain.result.Result.DRAW;
 import static blackjack.domain.result.Result.LOSE;
 import static blackjack.domain.result.Result.WIN;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public final class Dealer extends Participant {
+public final class Dealer {
 
+    private static final String NAME = "딜러";
     public static final int CAN_DRAW_SCORE = 16;
 
     private final Players players;
     private final Deck deck;
+    private final Participant participant;
 
     public Dealer(final Players players) {
-        super(new Cards());
         this.players = players;
         this.deck = new Deck();
+        this.participant = new Participant(NAME);
+    }
+
+    public void receiveCard(final Card card) {
+        participant.receiveCard(card);
+    }
+
+    public int calculateTotalScore() {
+        return participant.calculateTotalScore();
     }
 
     public void settingCards() {
@@ -48,7 +58,7 @@ public final class Dealer extends Participant {
     }
 
     public Card showOneCard() {
-        return this.cards.getCards().get(0);
+        return participant.getCards().get(0);
     }
 
     public void giveCard(Player player) {
@@ -60,7 +70,7 @@ public final class Dealer extends Participant {
     }
 
     public Map<Player, Result> requestResultToPlayers() {
-        return players.makeResult(this.cards.calculateTotalScore());
+        return players.makeResult(participant.calculateTotalScore());
     }
 
     public Map<Result, Integer> countSelfResults(final Map<Player, Result> playerResults) {
@@ -89,10 +99,14 @@ public final class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.calculateTotalScore() <= CAN_DRAW_SCORE;
+        return participant.calculateTotalScore() <= CAN_DRAW_SCORE;
     }
 
     public List<Player> getPlayers() {
         return players.getPlayers();
+    }
+
+    public List<Card> getCards() {
+        return participant.getCards();
     }
 }

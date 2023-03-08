@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Dealer.INIT_CARD_COUNT;
+import static blackjack.domain.participant.Participant.INIT_CARD_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
