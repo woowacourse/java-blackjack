@@ -42,6 +42,10 @@ public class GameParticipant {
         }
     }
 
+    public boolean dealerNeedsHit() {
+        return dealer.needsHit();
+    }
+
     public Map<Player, GameResult> makeGameResultForAllPlayer() {
         Map<Player, GameResult> record = new HashMap<>();
         recordGameResult(record);
@@ -55,14 +59,6 @@ public class GameParticipant {
 
     public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {
         return GameResult.makeDealerRecord(record);
-    }
-
-    public boolean isBurst(final Player player) {
-        return player.isBurst();
-    }
-
-    public boolean dealerNeedsHit() {
-        return dealer.needsHit();
     }
 
     public List<Player> getPlayers() {
