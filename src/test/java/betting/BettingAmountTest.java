@@ -1,5 +1,6 @@
 package betting;
 
+import static blackjackgame.Result.BLACKJACK;
 import static blackjackgame.Result.LOSE;
 import static blackjackgame.Result.TIE;
 import static blackjackgame.Result.WIN;
@@ -62,6 +63,14 @@ class BettingAmountTest {
             BettingAmount bettingAmount = new BettingAmount(1000);
 
             assertThat(bettingAmount.calculateRewardByResult(TIE)).isEqualTo(1000);
+        }
+
+        @Test
+        @DisplayName("블랙잭으로 이긴경우 2.5배를 반환한다")
+        void blackjack() {
+            BettingAmount bettingAmount = new BettingAmount(1000);
+
+            assertThat(bettingAmount.calculateRewardByResult(BLACKJACK)).isEqualTo(2500);
         }
     }
 }

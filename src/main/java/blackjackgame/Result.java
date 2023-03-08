@@ -1,14 +1,15 @@
 package blackjackgame;
 
 public enum Result {
+    BLACKJACK("승", 2.5),
     WIN("승", 2),
     TIE("무", 1),
     LOSE("패", -2);
 
     private final String label;
-    private final int rate;
+    private final double rate;
 
-    Result(String label, int rate) {
+    Result(String label, double rate) {
         this.label = label;
         this.rate = rate;
     }
@@ -17,7 +18,7 @@ public enum Result {
         return label;
     }
 
-    public int getRate() {
+    public double getRate() {
         return rate;
     }
 }

@@ -33,6 +33,6 @@ public class BettingAmount {
         if (result == null) {
             throw new IllegalArgumentException("결과가 생성되지 않았습니다.");
         }
-        return result.getRate() * amount;
+        return (int) (result.getRate() * amount);
     }
 }
