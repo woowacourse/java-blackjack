@@ -27,4 +27,8 @@ public class Participant extends Player {
     public Money determineBetMoney() {
         return betResultState.calculateBetOutComeOf(money);
     }
+
+    public boolean hasNotBetState() {
+        return betResultState == null;
+    }
 }

@@ -22,6 +22,7 @@ import static domain.card.CardValue.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Participant 은")
@@ -91,5 +92,12 @@ class ParticipantTest {
                 Arguments.of(participant2, Money.wons(-5000)),
                 Arguments.of(participant3, Money.wons(1000))
         );
+    }
+
+    @Test
+    @DisplayName("hasNotBetState() : 배팅금액상태가 결정되지 않을 수 있다.")
+    void test_hasNotBetState() throws Exception {
+        //when & then
+        assertTrue(participant.hasNotBetState());
     }
 }
