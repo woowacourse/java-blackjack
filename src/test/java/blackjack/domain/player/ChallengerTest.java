@@ -9,6 +9,8 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.player.exception.InvalidPlayerNameException;
 import java.util.List;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -51,4 +53,13 @@ class ChallengerTest {
                         false)
         );
     }
-}
+
+    @Test
+    @DisplayName("도전자는 딜러가 아니다")
+    void challenger_is_not_dealer() {
+        Challenger challenger = new Challenger("ditoo");
+
+        assertThat(challenger.isChallenger()).isTrue();
+        assertThat(challenger.isDealer()).isFalse();
+    }
+ }
