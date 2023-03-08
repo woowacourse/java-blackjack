@@ -24,18 +24,16 @@ class BlackJackGameTest {
     private final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
 
     @Test
-    void 기본_세팅_시_참여자의_이름과_게임에서_사용할_카드_덱을_받아_딜러와_참여자들에게_카드를_2장씩_배분한_상태로_생성된다() {
+    void 기본_세팅_시_참여자의_이름과_배팅_금액과_게임에서_사용할_카드_덱을_받아_딜러와_참여자들을_생성한다() {
         // given
         final List<Name> names = List.of(말랑이름(), 코다이름());
-        final int before = cardDeck.cards().size();
 
         // when
         BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, makeBattingMoneyMapFromNames(names));
 
         // then
-        assertThat(cardDeck.cards().size()).isEqualTo(before - (names.size() * 2 + 2));
-        blackJackGame.gamblers().forEach(it -> assertThat(it.cardArea().cards().size()).isEqualTo(2));
-        assertThat(blackJackGame.dealer().cardArea().cards().size()).isEqualTo(2);
+        assertThat(blackJackGame.gamblers().size()).isEqualTo(names.size());
+        assertThat(blackJackGame.dealer()).isNotNull();
     }
 
     private static Map<Name, BettingMoney> makeBattingMoneyMapFromNames(final List<Name> names) {
