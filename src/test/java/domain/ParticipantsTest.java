@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Players;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ class ParticipantsTest {
     @Test
     void 초기_카드_지급() {
         // given
-        Participants participants = new Participants(List.of("name1", "name2"));
+        Participants participants = Participants.of(List.of("name1", "name2"));
         participants.drawInitialCardsEachParticipant(new ShuffledDeck());
         // when
         Dealer dealer = participants.getDealer();
@@ -28,7 +29,7 @@ class ParticipantsTest {
     @DisplayName("모든 플레이어의 결과를 반환한다.")
     @Test
     void 결과_계산() {
-        Participants participants = new Participants(List.of("Player1", "Player2", "Player3"));
+        Participants participants = Participants.of(List.of("Player1", "Player2", "Player3"));
         participants.drawInitialCardsEachParticipant(new ShuffledDeck());
 
         Map<Player, Result> results = participants.calculateAllResults();
@@ -41,7 +42,8 @@ class ParticipantsTest {
     @Test
     void 플레이어_승리() {
         // given
-        Participants participants = new Participants(List.of("Player"));
+        Player player = new Player("Player");
+        Participants participants = new Participants(new Players(List.of(player)), new Dealer());
         participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 1
@@ -51,15 +53,15 @@ class ParticipantsTest {
         // when
         Map<Player, Result> results = participants.calculateAllResults();
         // then
-        Result resultOfPlayer = (Result) results.values().toArray()[0];
-        assertThat(resultOfPlayer).isEqualTo(Result.WIN);
+        assertThat(results.get(player)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("플레이어의 점수가 딜러와 같으면 무승부 결과를 반환한다.")
     @Test
     void 플레이어_무승부() {
         // given
-        Participants participants = new Participants(List.of("Player"));
+        Player player = new Player("Player");
+        Participants participants = new Participants(new Players(List.of(player)), new Dealer());
         participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 1
@@ -69,15 +71,15 @@ class ParticipantsTest {
         // when
         Map<Player, Result> results = participants.calculateAllResults();
         // then
-        Result resultOfPlayer = (Result) results.values().toArray()[0];
-        assertThat(resultOfPlayer).isEqualTo(Result.DRAW);
+        assertThat(results.get(player)).isEqualTo(Result.DRAW);
     }
 
     @DisplayName("플레이어의 점수가 딜러보다 낮으면 플레이어가 패배하는 결과를 반환한다.")
     @Test
     void 플레이어_패배() {
         // given
-        Participants participants = new Participants(List.of("Player"));
+        Player player = new Player("Player");
+        Participants participants = new Participants(new Players(List.of(player)), new Dealer());
         participants.drawInitialCardsEachParticipant(DeterminedDeck.of(List.of(
                 new Card(Suit.CLOVER, Rank.FOUR), // Player1에게 주어지는 카드 2
                 new Card(Suit.CLOVER, Rank.FIVE), // Player1에게 주어지는 카드 1
@@ -87,7 +89,6 @@ class ParticipantsTest {
         // when
         Map<Player, Result> results = participants.calculateAllResults();
         // then
-        Result resultOfPlayer = (Result) results.values().toArray()[0];
-        assertThat(resultOfPlayer).isEqualTo(Result.LOSE);
+        assertThat(results.get(player)).isEqualTo(Result.LOSE);
     }
 }

@@ -10,7 +10,7 @@ public class BlackjackGame {
     private final Deck deck;
 
     public BlackjackGame(List<String> nameValues) {
-        this.participants = new Participants(nameValues);
+        this.participants = Participants.of(nameValues);
         this.deck = new ShuffledDeck();
     }
 

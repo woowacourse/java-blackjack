@@ -14,9 +14,13 @@ public class Participants {
     private final Players players;
     private final Dealer dealer;
 
-    public Participants(List<String> nameValues) {
-        this.dealer = new Dealer();
-        this.players = Players.of(nameValues);
+    public Participants(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
+    }
+
+    public static Participants of(List<String> nameValues) {
+        return new Participants(Players.of(nameValues), new Dealer());
     }
 
     public void drawInitialCardsEachParticipant(Deck deck) {
