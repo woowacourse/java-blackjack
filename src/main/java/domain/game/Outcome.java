@@ -1,62 +1,48 @@
 package domain.game;
 
-import domain.player.Player;
-
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public enum Outcome {
+
     WIN, DRAW, LOSE;
 
-    public static EnumMap<Outcome, Integer> initializeOutcomes() {
-        EnumMap<Outcome, Integer> dealerOutcome = new EnumMap<>(Outcome.class);
-
-        for (Outcome outcome : Outcome.values()) {
-            dealerOutcome.put(outcome, 0);
-        }
-
-        return dealerOutcome;
-    }
+    private static final int BLACK_JACK_NUMBER = 21;
 
     public static Outcome reverseOutcome(final Outcome outcome) {
         if (outcome == Outcome.WIN) {
             return Outcome.LOSE;
         }
-        if(outcome == Outcome.LOSE) {
+        if (outcome == Outcome.LOSE) {
             return Outcome.WIN;
         }
         return Outcome.DRAW;
     }
 
-    public static Map<String, Outcome> decidePlayersOutcome(final int dealerScore, final List<Player> players) {
-        Map<String, Outcome> playerOutcome = new LinkedHashMap<>();
-        players.forEach((player ->
-                playerOutcome.put(player.getName(), decideOutcome(dealerScore, player))
-        ));
-
-        return playerOutcome;
-    }
-
-    private static Outcome decideOutcome(final int dealerScore, final Player player) {
-        if (player.isWin(dealerScore)) {
+    public static Outcome decideOutcome(final int score, final int otherScore) {
+        if (lose(score, otherScore)) {
+            return Outcome.LOSE;
+        }
+        if (win(score, otherScore)) {
             return Outcome.WIN;
         }
-        if (player.isDraw(dealerScore)) {
-            return Outcome.DRAW;
-        }
-        return Outcome.LOSE;
+        return Outcome.DRAW;
     }
 
-    public static EnumMap<Outcome, Integer> decideDealerOutcome(final int dealerScore, final List<Player> players) {
-        Map<String, Outcome> playerOutcome = decidePlayersOutcome(dealerScore, players);
-        EnumMap<Outcome, Integer> dealerOutcome = initializeOutcomes();
-        for (String key : playerOutcome.keySet()) {
-            Outcome outcome = playerOutcome.get(key);
-            Outcome dealerEachOutcome = reverseOutcome(outcome);
-            dealerOutcome.put(dealerEachOutcome, dealerOutcome.get(dealerEachOutcome) + 1);
+    private static boolean lose(final int score, final int otherScore) {
+        if (score > BLACK_JACK_NUMBER) {
+            return true;
         }
-        return dealerOutcome;
+        if (score < otherScore && otherScore <= BLACK_JACK_NUMBER) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean win(final int score, final int otherScore) {
+        if (otherScore > BLACK_JACK_NUMBER) {
+            return true;
+        }
+        if (score > otherScore) {
+            return true;
+        }
+        return false;
     }
 }
