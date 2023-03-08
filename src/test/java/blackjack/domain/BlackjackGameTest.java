@@ -47,8 +47,7 @@ class BlackjackGameTest {
         }
 
         //when
-        Map<Player, WinningResult> result = game.generatePlayersResult();
-
+        Map<Player, WinningResult> result = game.generatePlayersResult(new BlackJackReferee());
         //then
         Set<Player> players = result.keySet();
         for(Participant participant : players) {
@@ -74,7 +73,7 @@ class BlackjackGameTest {
         }
 
         //when
-        Map<Player, WinningResult> result = game.generatePlayersResult();
+        Map<Player, WinningResult> result = game.generatePlayersResult(new BlackJackReferee());
 
         //then
         Set<Player> players = result.keySet();

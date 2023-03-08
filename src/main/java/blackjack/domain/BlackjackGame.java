@@ -16,14 +16,11 @@ public class BlackjackGame {
         this.cards = cards;
     }
 
-    public Map<Player, WinningResult> generatePlayersResult() {
-        Map<Player, WinningResult> playersResult = new LinkedHashMap<>();
-        List<Player> players = findPlayers();
-        for (Player player : players) {
-            WinningResult dealerResult = findDealer().judgeWinOrLose(player);
-            initPlayerResult(playersResult, player, dealerResult);
+    public Map<Player, WinningResult> generatePlayersResult(BlackJackReferee referee) {
+        for (Player player : findPlayers()) {
+           referee.createResult(findDealer(),player);
         }
-        return playersResult;
+        return referee.getPlayerWinningResult();
     }
 
     public void getTwoHitCards(final Participant participant) {
@@ -32,15 +29,15 @@ public class BlackjackGame {
         }
     }
 
-    public void hitDealerCard(final Cards cards) {
+    public void hitDealerCard() {
         Dealer dealer = findDealer();
         while (dealer.decideHit()) {
             dealer.hit(cards.pick());
         }
     }
 
-    private void initPlayerResult(final Map<Player, WinningResult> playersResult, final Player player, final WinningResult dealerResult) {
-        playersResult.put(player, dealerResult.getPlayerResultByDealerResult());
+    public void hitPlayerCard(Player player) {
+        player.hit(cards.pick());
     }
 
     public List<Player> findPlayers() {

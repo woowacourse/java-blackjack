@@ -19,18 +19,6 @@ public class Dealer extends Participant {
         return calculateCardNumber();
     }
 
-    public WinningResult judgeWinOrLose(final Player player) {
-        int myValue = calculateDealerCardNumber();
-        int playerValue = player.calculateCardNumber();
-        if (playerValue > WinningResult.WIN_MAX_NUMBER || myValue > WinningResult.WIN_MAX_NUMBER) {
-            return WinningResult.calculateByBurst(playerValue);
-        }
-        if (judgeBlackjack() || player.judgeBlackjack()) {
-            return WinningResult.calculateByBlackjack(player.judgeBlackjack(), judgeBlackjack());
-        }
-        return WinningResult.calculateByNumber(playerValue, myValue);
-    }
-
     private boolean isFirstTwoHit() {
         return getCardsCount() == FIRST_CARD_COUNT;
     }

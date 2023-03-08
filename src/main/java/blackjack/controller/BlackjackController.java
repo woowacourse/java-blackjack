@@ -23,8 +23,9 @@ public class BlackjackController {
         Participants participants = Participants.from(playersName);
         BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
         gameSetting(blackjackGame);
-        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(blackjackGame.generatePlayersResult());
-        hitParticipantsCard(blackjackGame, cards);
+        hitParticipantsCard(blackjackGame);
+        BlackjackGameResult blackjackGameResult =
+                new BlackjackGameResult(blackjackGame.generatePlayersResult(new BlackJackReferee()));
         printResult(blackjackGame, blackjackGameResult);
     }
 
@@ -36,21 +37,18 @@ public class BlackjackController {
         outputView.printParticipantsCard(blackjackGame.findDealer(), blackjackGame.findPlayers());
     }
 
-    private void hitParticipantsCard(final BlackjackGame blackjackGame, final Cards cards) {
+    private void hitParticipantsCard(final BlackjackGame blackjackGame) {
         List<Player> players = blackjackGame.findPlayers();
         for (Player player : players) {
-            hitPlayerCard(player, cards);
+            hitPlayerCard(player, blackjackGame);
         }
-        blackjackGame.hitDealerCard(cards);
+        blackjackGame.hitDealerCard();
         outputView.printHitDealerCount(blackjackGame.findDealer());
     }
 
-    private void hitPlayerCard(final Player player, final Cards cards) {
+    private void hitPlayerCard(final Player player, final BlackjackGame blackjackGame) {
         while (player.decideHit() && HitCommand.of(inputHitCommand(player)).isQuit()) {
-            player.hit(cards.pick());
-            outputView.printCurrentCards(player);
-        }
-        if (player.decideHit()) {
+            blackjackGame.hitPlayerCard(player);
             outputView.printCurrentCards(player);
         }
     }
