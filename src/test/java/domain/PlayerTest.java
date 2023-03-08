@@ -77,38 +77,32 @@ class PlayerTest {
         assertThat(player.isBusted()).isFalse();
     }
 
-    @DisplayName("게임에서 승리할 경우, 플레이어가 배팅한 금액의 2배가 된다.")
+    @DisplayName("게임에서 승리할 경우, 플레이어가 배팅한 금액의 수익이 생긴다.")
     @Test
     void updateBetAmountAboutWinSuccessTest() {
-        int moneyBeforeWin = player.getMoney();
+        int bettingMoney = player.getMoney();
 
-        player.updateBetAmount(Result.WIN);
-
-        assertThat(player.getMoney())
-                .isEqualTo(moneyBeforeWin * 2);
+        assertThat(player.getProfit(Result.WIN))
+                .isEqualTo(bettingMoney);
     }
 
-    @DisplayName("게임에서 패배할 경우, 플레이어가 배팅한 금액을 모두 잃는다.")
+    @DisplayName("게임에서 패배할 경우, 플레이어가 배팅한 금액만큼 손해가 생긴다.")
     @Test
     void updateBetAmountAboutLoseSuccessTest() {
-        player.updateBetAmount(Result.LOSE);
+        int bettingMoney = player.getMoney();
 
-        assertThat(player.getMoney())
+        assertThat(player.getProfit(Result.LOSE))
+                .isEqualTo(bettingMoney * -1);
+    }
+
+    @DisplayName("게임에서 비길 경우, 플레이어의 수익이 생기지 않는다.")
+    @Test
+    void updateBetAmountAboutDrawSuccessTest() {
+        assertThat(player.getProfit(Result.DRAW))
                 .isEqualTo(0);
     }
 
-    @DisplayName("게임에서 비길 경우, 플레이어가 배팅한 금액을 돌려받는다.")
-    @Test
-    void updateBetAmountAboutDrawSuccessTest() {
-        int moneyBeforeDraw = player.getMoney();
-
-        player.updateBetAmount(Result.DRAW);
-
-        assertThat(player.getMoney())
-                .isEqualTo(moneyBeforeDraw);
-    }
-
-    @DisplayName("게임에서 블랙잭으로 승리할 경우, 플레이어가 배팅한 금액의 2.5배를 돌려받는다.")
+    @DisplayName("게임에서 블랙잭으로 승리할 경우, 플레이어는 배팅 금액의 1.5배의 수익을 얻는다.")
     @Test
     void updateBetAmountAboutWinWithBlackjackSuccessTest() {
         int moneyBeforeWin = player.getMoney();
@@ -116,9 +110,7 @@ class PlayerTest {
         player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
         player.receive(Card.of(CardShape.CLUB, CardRank.TEN));
 
-        player.updateBetAmount(Result.WIN);
-
-        assertThat(player.getMoney())
-                .isEqualTo((int) (moneyBeforeWin * 2.5));
+        assertThat(player.getProfit(Result.WIN))
+                .isEqualTo((int) (moneyBeforeWin * 1.5));
     }
 }
