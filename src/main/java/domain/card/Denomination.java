@@ -15,6 +15,9 @@ public enum Denomination {
     KING(10, "K"),
     ACE(1, "A");
 
+    public static final int ACE_VALUE = 1;
+    public static final int ANOTHER_ACE_VALUE = 11;
+
     private final int value;
     private final String alias;
 

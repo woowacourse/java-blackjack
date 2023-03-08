@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.card.Card;
+import domain.card.Denomination;
 
 public abstract class Participant {
-    private static final int ACE_VALUE = 1;
-    private static final int ANOTHER_ACE_VALUE = 11;
+
     private static final int MIN_BUST_VALUE = 22;
     private static final int INIT_VALUE_FOR_ADD = 0;
 
@@ -36,7 +36,7 @@ public abstract class Participant {
     }
 
     private void addNotAceValueToTotalValues(List<Integer> totalValues, Integer handValue) {
-        if (handValue != ACE_VALUE) {
+        if (handValue != Denomination.ACE_VALUE) {
             List<Integer> sumValueWithoutAce = totalValues.stream()
                     .map(value -> value + handValue)
                     .collect(Collectors.toList());
@@ -46,7 +46,7 @@ public abstract class Participant {
     }
 
     private void addAceValueToTotalValues(List<Integer> totalValues, Integer handValue) {
-        if (handValue == ACE_VALUE) {
+        if (handValue == Denomination.ACE_VALUE) {
             List<Integer> aceValueSum = getAceValueSum(totalValues);
             List<Integer> anotherAceValueSum = getAnotherAceValueSum(totalValues);
             totalValues.clear();
@@ -57,24 +57,24 @@ public abstract class Participant {
 
     private List<Integer> getAceValueSum(List<Integer> totalValues) {
         return totalValues.stream()
-                .map(value -> value + ACE_VALUE)
+                .map(value -> value + Denomination.ACE_VALUE)
                 .filter(value -> value < MIN_BUST_VALUE)
                 .collect(Collectors.toList());
     }
 
     private List<Integer> getAnotherAceValueSum(List<Integer> totalValues) {
         return totalValues.stream()
-                .map(value -> value + ANOTHER_ACE_VALUE)
+                .map(value -> value + Denomination.ANOTHER_ACE_VALUE)
                 .filter(value -> value < MIN_BUST_VALUE)
                 .collect(Collectors.toList());
     }
 
     private int getCardValueSumMax(List<Integer> totalValues, List<Integer> handCardValues) {
         int maxSumValue = 0;
-        if (handCardValues.contains(ACE_VALUE)) {
+        if (handCardValues.contains(Denomination.ACE_VALUE)) {
             maxSumValue = getCardValueSum(totalValues);
         }
-        if (!handCardValues.contains(ACE_VALUE)) {
+        if (!handCardValues.contains(Denomination.ACE_VALUE)) {
             maxSumValue = getJustSumValue(totalValues);
         }
         return maxSumValue;
