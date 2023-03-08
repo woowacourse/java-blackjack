@@ -20,6 +20,7 @@ public final class Controller {
 
             initGame(blackjackGame, participants, dealer);
             distributeCards(blackjackGame, participants, dealer);
+
             printPlayerCardsAndScore(participants, dealer);
             printRevenue(blackjackGame, participants, dealer);
         } catch (IllegalArgumentException e) {
