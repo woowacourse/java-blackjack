@@ -40,15 +40,15 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Optional<BlackJackGame> blackJackGame;
         do {
-            blackJackGame = checkNames();
+            blackJackGame = createNames();
         } while (blackJackGame.isEmpty());
         return blackJackGame.get();
     }
 
-    private Optional<BlackJackGame> checkNames() {
+    private Optional<BlackJackGame> createNames() {
         try {
             final String inputNames = InputView.readNames();
-            return Optional.of(new BlackJackGame(new Dealer(), inputNames));
+            return Optional.of(new BlackJackGame(new Dealer(), new Players(inputNames)));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return Optional.empty();
