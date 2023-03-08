@@ -1,12 +1,12 @@
 package controller;
 
+import domain.BlackJackGame;
 import domain.PlayerCommand;
 import domain.WinningStatus;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import view.InputView;
@@ -23,25 +23,14 @@ public class MainController {
     }
 
     public void run() {
-        Deck deck = new Deck();
-        deck.shuffleDeck();
-        Participants participants = initializeParticipants(deck);
-        Dealer dealer = participants.getDealer();
+        BlackJackGame blackJackGame = new BlackJackGame(inputView.readPlayerNames());
+        Participants participants = blackJackGame.getParticipants();
 
-        outputView.printInitialState(participants);
-        receiveAdditionalCard(deck, participants, dealer);
+        outputView.printInitialState(blackJackGame.getParticipants());
+        receiveAdditionalCard(blackJackGame.getDeck(), participants, participants.getDealer());
 
         outputView.printFinalState(participants);
-        printFinalResult(participants, dealer);
-    }
-
-    private Participants initializeParticipants(Deck deck) {
-        try {
-            return new Participants(inputView.readPlayerNames(), deck);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return initializeParticipants(deck);
-        }
+        printFinalResult(blackJackGame);
     }
 
     private void receiveAdditionalCard(Deck deck, Participants participants, Dealer dealer) {
@@ -49,28 +38,16 @@ public class MainController {
         receiveAdditionalDealerCard(deck, dealer);
     }
 
-    private void printFinalResult(Participants participants, Dealer dealer) {
-        Map<Player, WinningStatus> playersResult = new HashMap<>();
-        Map<WinningStatus, Integer> dealerResult = new HashMap<>();
-        calculateResult(participants, dealer, playersResult, dealerResult);
+    private void printFinalResult(BlackJackGame blackJackGame) {
+        Map<Player, WinningStatus> playersResult = blackJackGame.calculatePlayersResult();
+        Map<WinningStatus, Integer> dealerResult = blackJackGame.calculateDealerResult(playersResult);
         outputView.printFinalResultMessage();
         outputView.printDealerResult(dealerResult);
         outputView.printPlayerResult(playersResult);
     }
 
-    private void calculateResult(Participants participants, Dealer dealer, Map<Player, WinningStatus> playersResult,
-                           Map<WinningStatus, Integer> dealerResult) {
-        int dealerScore = dealer.calculateScore();
-        for (Player player : participants.getPlayers()) {
-            WinningStatus playerWinningStatus = decideWinningStatus(player, dealerScore);
-            playersResult.put(player, playerWinningStatus);
-            dealerResult.put(playerWinningStatus.reverse(),
-                    dealerResult.getOrDefault(playerWinningStatus.reverse(), 0) + 1);
-        }
-    }
-
     private void receiveAdditionalDealerCard(Deck deck, Dealer dealer) {
-        while (dealer.calculateScore() <= 16) {
+        while (dealer.calculateScore() <= BlackJackGame.DEALER_REPEAT_NUMBER) {
             outputView.printFillDealerCards();
             dealer.receiveCard(deck.getCard());
         }
@@ -87,7 +64,7 @@ public class MainController {
         while (repeat) {
             PlayerCommand command = initializeCommand(player.getName());
             player.receiveAdditionalCard(command, deck);
-            repeat = player.calculateScore() < 21 && command.isHit();
+            repeat = player.calculateScore() < BlackJackGame.BLACKJACK_NUMBER && command.isHit();
             outputView.printSingleState(player);
         }
     }
@@ -99,30 +76,5 @@ public class MainController {
             System.out.println(e.getMessage());
             return initializeCommand(playerName);
         }
-    }
-
-    public WinningStatus decideWinningStatus(final Player player, final int dealerScore) {
-        int score = player.calculateScore();
-        if (dealerScore > 21) {
-            return decideWinningStatusDealerBust(score);
-        }
-        return decideWinningStatusDealerNotBust(dealerScore, score);
-    }
-
-    private WinningStatus decideWinningStatusDealerNotBust(int dealerScore, int score) {
-        if (score <= 21 && score > dealerScore) {
-            return WinningStatus.WIN;
-        }
-        if (score == dealerScore) {
-            return WinningStatus.TIE;
-        }
-        return WinningStatus.LOSE;
-    }
-
-    private WinningStatus decideWinningStatusDealerBust(int score) {
-        if (score > 21) {
-            return WinningStatus.TIE;
-        }
-        return WinningStatus.WIN;
     }
 }
