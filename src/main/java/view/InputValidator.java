@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 
 public class InputValidator {
+
     private static final String DEALER_NAME = "딜러";
     private static final String YES = "y";
     private static final String NO = "n";
