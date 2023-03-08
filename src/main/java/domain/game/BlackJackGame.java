@@ -81,7 +81,7 @@ public class BlackJackGame {
         dealer.hit(cardDeck.draw());
     }
 
-    public Map<Gambler, DealerCompeteResult> statistic() {
+    public Map<Gambler, GamblerCompeteResult> statistic() {
         return gamblers.stream()
                 .collect(toMap(
                         identity(),

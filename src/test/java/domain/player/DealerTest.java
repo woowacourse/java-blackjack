@@ -14,7 +14,7 @@ import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.*;
 import static domain.fixture.GamblerFixture.말랑;
-import static domain.player.DealerCompeteResult.*;
+import static domain.player.GamblerCompeteResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -96,11 +96,11 @@ class DealerTest {
 
     @ParameterizedTest(name = "참가자의 점수가 {0}, 딜러의 점수가 {1} 인 경우, 딜러는 {2} 이다")
     @MethodSource("playerAndDealerAndResult")
-    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Participant participant, final Dealer dealer, final DealerCompeteResult dealerCompeteResult) {
+    void compete_시_대상_참가자와_승부하여_결과를_반환한다(final Participant participant, final Dealer dealer, final GamblerCompeteResult gamblerCompeteResult) {
         // when
-        final DealerCompeteResult judge = dealer.compete(participant);
+        final GamblerCompeteResult judge = dealer.compete(participant);
 
         // then
-        assertThat(judge).isEqualTo(dealerCompeteResult);
+        assertThat(judge).isEqualTo(gamblerCompeteResult.reverse());
     }
 }

@@ -6,6 +6,7 @@ import domain.card.CardShape;
 import domain.card.CardValue;
 import domain.player.Dealer;
 import domain.player.Gambler;
+import domain.player.GamblerCompeteResult;
 import domain.player.Participant;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class OutputView {
 
     private static final Map<CardShape, String> SHAPE_MESSAGE_MAP = new EnumMap<>(CardShape.class);
     private static final Map<CardValue, String> VALUE_MESSAGE_MAP = new EnumMap<>(CardValue.class);
-    private static final Map<DealerCompeteResult, String> DEALER_COMPETE_MESSAGE_MAP = new EnumMap<>(DealerCompeteResult.class);
+    private static final Map<GamblerCompeteResult, String> GAMBLER_COMPETE_MESSAGE_MAP = new EnumMap<>(GamblerCompeteResult.class);
 
     private static final String EMPTY = "";
     private static final String DELIMITER = ", ";
@@ -129,7 +130,7 @@ public class OutputView {
         System.out.println();
         final List<Participant> participant = new ArrayList<>();
         participant.add(statistic.dealer());
-        participant.addAll(statistic.players());
+        participant.addAll(statistic.gamblers());
         showParticipantsResultState(participant);
     }
 
@@ -152,30 +153,30 @@ public class OutputView {
     }
 
     private static void showFinalDealerWinLose(final GameStatisticResponse gameStatisticResponse) {
-        final Map<Gambler, DealerCompeteResult> resultPerParticipant = gameStatisticResponse.dealerResultPerPlayer();
-        final Map<DealerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
+        final Map<Gambler, GamblerCompeteResult> resultPerParticipant = gameStatisticResponse.dealerResultPerGambler();
+        final Map<GamblerCompeteResult, Long> dealerWinLoseCount = resultPerParticipant.values().stream()
                 .collect(Collectors.groupingBy(Function.identity(), counting()));
         final String dealerStatisticMessage = stringBuilder.append("딜러:")
-                .append(dealerResultCount(dealerWinLoseCount, DealerCompeteResult.WIN))
-                .append(dealerResultCount(dealerWinLoseCount, DealerCompeteResult.DRAW))
-                .append(dealerResultCount(dealerWinLoseCount, DealerCompeteResult.LOSE))
+                .append(dealerResultCount(dealerWinLoseCount, GamblerCompeteResult.LOSE))
+                .append(dealerResultCount(dealerWinLoseCount, GamblerCompeteResult.DRAW))
+                .append(dealerResultCount(dealerWinLoseCount, GamblerCompeteResult.WIN))
                 .toString();
         System.out.println(dealerStatisticMessage);
     }
 
-    private static String dealerResultCount(final Map<DealerCompeteResult, Long> dealerWinLoseCount, final DealerCompeteResult dealerCompeteResult) {
-        final Long count = dealerWinLoseCount.getOrDefault(dealerCompeteResult, 0L);
+    private static String dealerResultCount(final Map<GamblerCompeteResult, Long> dealerWinLoseCount, final GamblerCompeteResult gamblerCompeteResult) {
+        final Long count = dealerWinLoseCount.getOrDefault(gamblerCompeteResult, 0L);
         if (count == 0L) {
             return EMPTY;
         }
-        return String.format(" %d%s", count, DEALER_COMPETE_MESSAGE_MAP.get(dealerCompeteResult));
+        return String.format(" %d%s", count, GAMBLER_COMPETE_MESSAGE_MAP.get(gamblerCompeteResult.reverse()));
     }
 
     private static void showFinalGamblersWinLose(final GameStatisticResponse statistic) {
-        final Map<Gambler, GamblerCompeteResult> resultPerParticipant = statistic.dealerResultPerPlayer();
-        final List<Gambler> gamblers = statistic.players();
+        final Map<Gambler, GamblerCompeteResult> resultPerParticipant = statistic.dealerResultPerGambler();
+        final List<Gambler> gamblers = statistic.gamblers();
         gamblers.stream()
-                .map(it -> it.nameValue() + ": " + DEALER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it).reverse()))
+                .map(it -> it.nameValue() + ": " + GAMBLER_COMPETE_MESSAGE_MAP.get(resultPerParticipant.get(it)))
                 .forEach(System.out::println);
     }
 }

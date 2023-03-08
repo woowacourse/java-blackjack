@@ -20,19 +20,19 @@ public class Dealer extends Participant {
         return cardArea.firstCard();
     }
 
-    public DealerCompeteResult compete(final Participant participant) {
+    public GamblerCompeteResult compete(final Participant participant) {
         if (participant.isBust()) {
-            return DealerCompeteResult.WIN;
+            return GamblerCompeteResult.LOSE;
         }
         if (isBust()) {
-            return DealerCompeteResult.LOSE;
+            return GamblerCompeteResult.WIN;
         }
         if (participant.isLargerScoreThan(this)) {
-            return DealerCompeteResult.LOSE;
+            return GamblerCompeteResult.WIN;
         }
         if (isLargerScoreThan(participant)) {
-            return DealerCompeteResult.WIN;
+            return GamblerCompeteResult.LOSE;
         }
-        return DealerCompeteResult.DRAW;
+        return GamblerCompeteResult.DRAW;
     }
 }

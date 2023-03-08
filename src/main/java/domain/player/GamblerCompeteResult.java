@@ -1,12 +1,12 @@
 package domain.player;
 
-public enum DealerCompeteResult {
+public enum GamblerCompeteResult {
     WIN,
     LOSE,
     DRAW,
     ;
 
-    public DealerCompeteResult reverse() {
+    public GamblerCompeteResult reverse() {
         if (this == WIN) {
             return LOSE;
         }
