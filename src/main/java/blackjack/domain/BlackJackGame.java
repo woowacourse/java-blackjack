@@ -39,11 +39,11 @@ public class BlackJackGame {
     }
 
     public List<Result> getPlayersResult() {
-        return Referee.getPlayersResult(participants);
+        return new Referee(participants).getPlayersResult();
     }
 
-    public PlayerWinResults computePlayerWinResults() {
-        return participants.computePlayersWinResult();
+    public List<Integer> getDealerResult() {
+        return new Referee(participants).getDealerResult();
     }
 
     public Dealer getDealer() {
