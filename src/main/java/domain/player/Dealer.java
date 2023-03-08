@@ -9,6 +9,8 @@ import static java.util.stream.Collectors.toMap;
 public class Dealer extends Player {
 
     private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_HIT_BOUNDARY = 16;
+
 
     public Dealer() {
         super(new PlayerName(DEALER_NAME));
@@ -37,7 +39,8 @@ public class Dealer extends Player {
     }
 
     public boolean isHittable() {
-        return getScore().isDealerHittable();
+        return getScore()
+                .isSmallerOrEqual(Score.from(DEALER_HIT_BOUNDARY));
     }
 
     private boolean isBothBlackjack(final Player player) {

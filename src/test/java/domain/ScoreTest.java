@@ -6,7 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.awt.desktop.ScreenSleepEvent;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreTest {
@@ -44,6 +48,19 @@ class ScoreTest {
         DealerStatus dealerStatus = score.compareScore(opponent);
         //then
         assertThat(dealerStatus).isEqualTo(DealerStatus.LOSE);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1:2:true", "2:2:true", "3:2:false"}, delimiter = ':')
+    @DisplayName("더 큰 Score와 비교하면 false를 반환한다")
+    void compareValueTest(int origin, int compared, boolean expected) {
+        //given
+        Score score = Score.from(origin);
+        Score scoreCompared = Score.from(compared);
+        //when
+        boolean smallerOrEqual = score.isSmallerOrEqual(scoreCompared);
+        //then
+        assertThat(smallerOrEqual).isEqualTo(expected);
     }
 
 }
