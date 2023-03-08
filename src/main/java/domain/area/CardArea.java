@@ -51,4 +51,8 @@ public class CardArea {
     public Card firstCard() {
         return cards.get(0);
     }
+
+    public boolean isBlackjack() {
+        return calculate().isBlackjack();
+    }
 }

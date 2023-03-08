@@ -202,4 +202,34 @@ class CardAreaTest {
         // when & then
         assertEquals(cardArea.firstCard(), new Card(CardShape.CLOVER, TEN));
     }
+
+    @ParameterizedTest
+    @MethodSource("isBlackjack")
+    @DisplayName("isBlackjack() : 총합이 21이면 블랙잭이다.")
+    void test_isBlackjack(final CardArea cardArea, final int calculateScore) throws Exception {
+        //given
+        final boolean isBlackjack = new Score(calculateScore).isBlackjack();
+
+        //when & then
+        assertEquals(cardArea.isBlackjack(), isBlackjack);
+    }
+
+    static Stream<Arguments> isBlackjack() {
+
+        // 21
+        final CardArea cardArea1 = new CardArea();
+        cardArea1.addCard(new Card(CardShape.CLOVER, TEN));
+        cardArea1.addCard(new Card(CardShape.CLOVER, ACE));
+
+        // 20
+        final CardArea cardArea2 = new CardArea();
+        cardArea2.addCard(new Card(CardShape.CLOVER, SIX));
+        cardArea2.addCard(new Card(CardShape.CLOVER, THREE));
+        cardArea2.addCard(new Card(CardShape.CLOVER, ACE));
+
+        return Stream.of(
+                Arguments.of(cardArea1, 21),
+                Arguments.of(cardArea2, 20)
+        );
+    }
 }
