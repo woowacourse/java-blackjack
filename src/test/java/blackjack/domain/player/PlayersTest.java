@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.player.Players.from;
 import static blackjack.domain.player.Result.PUSH;
 import static blackjack.domain.player.Result.WIN;
 import static blackjack.util.CardFixtures.ACE_DIAMOND;
@@ -35,39 +34,42 @@ public class PlayersTest {
 
     @Test
     void 입력받은_플레이어의_이름이_중복되는_경우_예외를_던진다() {
+        final Players players = Players.create();
         final List<String> names = List.of("name", "name");
 
-        assertThatThrownBy(() -> from(names))
+        assertThatThrownBy(() -> players.addPlayers(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.DUPLICATE_NAMES_MESSAGE + names);
+                .hasMessage("플레이어의 이름이 중복될 수 없습니다. 입력값:" + names);
     }
 
     @ParameterizedTest(name = "입력받은 플레이어가 {0}명인 경우 예외를 던진다.")
     @ValueSource(ints = {0, 7})
     void 입력받은_플레이어가_1명_미만_6명_초과인_경우_예외를_던진다(final int count) {
+        final Players players = Players.create();
         final List<String> names = IntStream.range(0, count)
                 .mapToObj(String::valueOf)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> from(names))
+        assertThatThrownBy(() -> players.addPlayers(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.INVALID_NAME_COUNT + count);
+                .hasMessage("플레이어는 최소 1명 이상, 최대 6명 이하여야 합니다. 입력값:" + count);
     }
 
     @Test
-    void 플레이어들이_정상_생성된다() {
+    void 플레이어들이_정상적으로_추가된다() {
+        final Players players = Players.create();
         final List<String> names = List.of("후추", "허브");
 
-        final Players players = from(names);
+        players.addPlayers(names);
 
         assertThat(players.getPlayers()).hasSize(3);
     }
 
     @Test
     void 플레이어들이_게임_시작_시_카드를_뽑는다() {
-        final List<String> names = List.of("후추", "허브");
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
         final Deck deck = new FixedDeck(ACE_SPADE, KING_HEART, JACK_SPADE, TWO_SPADE, EIGHT_SPADE, JACK_SPADE);
-        final Players players = from(names);
 
         players.initialDraw(deck);
 
@@ -78,10 +80,10 @@ public class PlayersTest {
 
     @Test
     void 플레이어에게_카드를_뽑게한다() {
-        final Players players = Players.from(List.of("허브"));
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+        final Player player = players.getGamblers().get(0);
         final Deck deck = new FixedDeck(JACK_SPADE);
-        final int gamblerIndex = 1;
-        final Player player = players.getPlayers().get(gamblerIndex);
 
         players.drawTo(player, deck);
 
@@ -90,9 +92,9 @@ public class PlayersTest {
 
     @Test
     void 플레이어가_카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Players players = Players.from(List.of("허브"));
-        final int gamblerIndex = 1;
-        final Player player = players.getPlayers().get(gamblerIndex);
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
+        final Player player = players.getGamblers().get(0);
 
         players.stay(player);
 
@@ -101,8 +103,8 @@ public class PlayersTest {
 
     @Test
     void 플레이어들을_반환한다() {
-        final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
 
         final List<Player> result = players.getPlayers();
 
@@ -112,8 +114,8 @@ public class PlayersTest {
 
     @Test
     void 겜블러를_반환한다() {
-        final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
 
         final List<Player> result = players.getGamblers();
 
@@ -123,8 +125,7 @@ public class PlayersTest {
 
     @Test
     void 딜러를_반환한다() {
-        final List<String> names = List.of("후추", "허브");
-        final Players players = from(names);
+        final Players players = Players.create();
 
         final Player player = players.getDealer();
 
@@ -133,9 +134,8 @@ public class PlayersTest {
 
     @Test
     void 딜러가_카드를_가능할_때_까지_뽑는다() {
-        final List<String> names = List.of("후추");
-        final Deck deck = new FixedDeck(ACE_DIAMOND, TWO_SPADE, JACK_CLOVER, TWO_SPADE, EIGHT_SPADE);
-        final Players players = from(names);
+        final Players players = Players.create();
+        final Deck deck = new FixedDeck(ACE_DIAMOND, TWO_SPADE, EIGHT_SPADE);
         players.initialDraw(deck);
 
         players.drawToDealer(deck);
@@ -145,9 +145,9 @@ public class PlayersTest {
 
     @Test
     void 게임_결과를_반환한다() {
-        final List<String> names = List.of("후추", "허브");
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추", "허브"));
         final Deck deck = new FixedDeck(ACE_DIAMOND, SEVEN_SPADE, JACK_CLOVER, NINE_SPADE, NINE_HEART, NINE_CLOVER);
-        final Players players = from(names);
         players.initialDraw(deck);
 
         Map<Player, Result> result = players.play();
