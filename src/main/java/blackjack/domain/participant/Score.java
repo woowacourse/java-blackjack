@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Score {
-    private final int BLACKJACK = 21;
+    public static final int BLACKJACK_SCORE = 21;
+
     private final int value;
 
     public static Score of(int... values) {
@@ -38,9 +39,13 @@ public class Score {
     }
 
     public Score getValueIncludingAce() {
-        if (value > BLACKJACK) {
+        if (value > BLACKJACK_SCORE) {
             return new Score(value - 10);
         }
         return this;
+    }
+
+    public boolean isBlackjack() {
+        return value == BLACKJACK_SCORE;
     }
 }

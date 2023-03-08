@@ -51,6 +51,20 @@ class ScoreTest {
         assertDoesNotThrow(() -> Score.of(1, 2, 3, 4, 5));
     }
 
+    @DisplayName("합이 21이면 블랙잭이다")
+    @Test
+    void isBlackjack() {
+        Score score = Score.of(10, 11);
+        assertThat(score.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("합이 21이 아니면 블랙잭이 아니다.")
+    @Test
+    void isNotBlackjack() {
+        Score score = Score.of(10, 10);
+        assertThat(score.isBlackjack()).isFalse();
+    }
+
     @DisplayName("에이스를 가졌을 때")
     @Nested
     class GetValueWithBonus {
