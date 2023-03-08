@@ -1,16 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.generator.RandomDeckGenerator;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.ViewRenderer;
 
 import java.util.List;
-import java.util.Map;
 
 public class BackJackController {
 
@@ -77,7 +75,7 @@ public class BackJackController {
     }
 
     private void printGameResult(BlackJackGame blackJackGame) {
-        Map<String, GameResult> gameResult = blackJackGame.getGameResult();
-        outputView.printWinningResult(ViewRenderer.renderWinningResult(gameResult));
+        final List<FinalResult> finalResults = blackJackGame.getFinalResults();
+        outputView.printFinalResult(finalResults);
     }
 }

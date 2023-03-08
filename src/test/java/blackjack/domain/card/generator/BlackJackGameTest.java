@@ -6,13 +6,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,11 +112,11 @@ class BlackJackGameTest {
     void getWinningResultTest() {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"), new TestDeckGenerator(testCards));
 
-        Map<String, GameResult> winningResult = blackJackGame.getGameResult();
+        final List<FinalResult> finalResults = blackJackGame.getFinalResults();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(GameResult.WIN);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(GameResult.WIN);
+            softly.assertThat(finalResults.get(1).getResult()).isEqualTo(GameResult.WIN);
+            softly.assertThat(finalResults.get(2).getResult()).isEqualTo(GameResult.WIN);
         });
     }
 }

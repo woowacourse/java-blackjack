@@ -4,15 +4,14 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.user.Dealer;
+import blackjack.dto.DealerFinalResult;
+import blackjack.dto.FinalResult;
+import blackjack.dto.PlayerFinalResult;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class ViewRenderer {
@@ -52,15 +51,6 @@ public class ViewRenderer {
         );
     }
 
-    public static Map<String, List<String>> renderStatus(final Map<String, List<Card>> status) {
-        Map<String, List<String>> renderedStatus = new HashMap<>();
-
-        for (String name : status.keySet()) {
-            renderedStatus.put(name, renderCardsToString(status.get(name)));
-        }
-        return renderedStatus;
-    }
-
     public static List<String> renderCardsToString(final List<Card> cards) {
         return cards.stream()
                 .map(card -> CARD_NUMBER_STRING_MAPPER.get(card.getNumber())
@@ -68,32 +58,16 @@ public class ViewRenderer {
                 .collect(toUnmodifiableList());
     }
 
-    public static Map<String, String> renderWinningResult(Map<String, GameResult> winningResult) {
-        Map<String, String> renderedWinningResult = new LinkedHashMap<>();
-        Map<GameResult, Long> dealerWinningResult = winningResult.values().stream()
-                .collect(groupingBy(ViewRenderer::recursionWinningStatus, counting()));
-
-        renderedWinningResult.put(Dealer.DEALER_NAME_CODE, renderDealerWinningResult(dealerWinningResult));
-
-        for (String name : winningResult.keySet()) {
-            renderedWinningResult.put(name, WINNING_STATUS_MAPPER.get(winningResult.get(name)));
+    public static String renderFinalResult(final FinalResult finalResult) {
+        if (finalResult instanceof DealerFinalResult) {
+            return renderDealerFinalResult((DealerFinalResult) finalResult);
         }
-
-        return renderedWinningResult;
+        return renderPlayerFinalResult((PlayerFinalResult) finalResult);
     }
 
-    private static GameResult recursionWinningStatus(GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
-            return GameResult.LOSE;
-        }
-        if (gameResult == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return gameResult;
-    }
-
-    private static String renderDealerWinningResult(Map<GameResult, Long> dealerWinningResult) {
+    private static String renderDealerFinalResult(final DealerFinalResult finalResult) {
         StringBuilder stringBuilder = new StringBuilder();
+        final Map<GameResult, Long> dealerWinningResult = finalResult.getResult();
         stringBuilder.append(renderWinningStatus(GameResult.WIN, dealerWinningResult));
         stringBuilder.append(renderWinningStatus(GameResult.TIE, dealerWinningResult));
         stringBuilder.append(renderWinningStatus(GameResult.LOSE, dealerWinningResult));
@@ -107,5 +81,9 @@ public class ViewRenderer {
             return dealerWinningResult.get(gameResult) + WINNING_STATUS_MAPPER.get(gameResult);
         }
         return BLANK;
+    }
+
+    private static String renderPlayerFinalResult(final PlayerFinalResult finalResult) {
+        return WINNING_STATUS_MAPPER.get(finalResult.getResult());
     }
 }

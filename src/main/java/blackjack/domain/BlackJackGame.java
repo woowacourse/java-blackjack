@@ -6,11 +6,17 @@ import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Users;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.DealerFinalResult;
+import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
+import blackjack.dto.PlayerFinalResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class BlackJackGame {
 
@@ -36,10 +42,6 @@ public class BlackJackGame {
         }
         return initialHoldingCards;
     }
-
-//    public Map<String, List<Card>> getInitialHoldingCards() {
-//        return users.getInitialHoldingStatus();
-//    }
 
     public List<String> getPlayerNames() {
         return users.getPlayerNames();
@@ -69,8 +71,27 @@ public class BlackJackGame {
         return results;
     }
 
-    public Map<String, GameResult> getGameResult() {
-        return users.getGameResult();
+    public List<FinalResult> getFinalResults() {
+        final Map<String, GameResult> playerResults = users.getGameResult();
+        final Map<GameResult, Long> dealerWinningResult = playerResults.values().stream()
+                .collect(groupingBy(this::recursionWinningStatus, counting()));
+
+        final List<FinalResult> results = new ArrayList<>();
+        results.add(new DealerFinalResult(Dealer.DEALER_NAME_CODE, dealerWinningResult));
+        for (Map.Entry<String, GameResult> entry : playerResults.entrySet()) {
+            results.add(new PlayerFinalResult(entry.getKey(), entry.getValue()));
+        }
+        return results;
+    }
+
+    private GameResult recursionWinningStatus(GameResult gameResult) {
+        if (gameResult == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
+        if (gameResult == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        return gameResult;
     }
 
     public boolean isPossibleToDraw(final String name) {

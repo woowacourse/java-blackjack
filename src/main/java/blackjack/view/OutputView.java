@@ -2,10 +2,10 @@ package blackjack.view;
 
 import blackjack.domain.user.Dealer;
 import blackjack.dto.CardAndScoreResult;
+import blackjack.dto.FinalResult;
 import blackjack.dto.HoldingCards;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -37,7 +37,7 @@ public class OutputView {
 
     public void printCards(HoldingCards holdingCards) {
         System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, holdingCards.getName()
-                , ViewRenderer.renderCardsToString(holdingCards.getCards())));
+                , String.join(DELIMITER,ViewRenderer.renderCardsToString(holdingCards.getCards()))));
     }
 
     private void printInitialStatusInfoMessage(List<String> playerNames) {
@@ -56,14 +56,16 @@ public class OutputView {
     public void printCarAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
         for (CardAndScoreResult result : cardAndScoreResult) {
             System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
-                    result.getName(), ViewRenderer.renderCardsToString(result.getCards()), result.getScoreValue()));
+                    result.getName(), String.join(DELIMITER, ViewRenderer.renderCardsToString(result.getCards())),
+                    result.getScoreValue()));
         }
     }
 
-    public void printWinningResult(final Map<String, String> winningResults) {
+    public void printFinalResult(final List<FinalResult> finalResults) {
         System.out.println(WINNING_RESULT_INFO_MESSAGE);
-        for (String name : winningResults.keySet()) {
-            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, name, winningResults.get(name)));
+        for (FinalResult finalResult : finalResults) {
+            System.out.println(String.format(WINNING_RESULT_MESSAGE_FORMAT, finalResult.getName(),
+                    ViewRenderer.renderFinalResult(finalResult)));
         }
     }
 
