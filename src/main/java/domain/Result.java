@@ -1,6 +1,5 @@
 package domain;
 
-// TODO: 2023-03-07 Rate를 변수로 두고 사용 ??
 public enum Result {
     WIN("승", 2.0),
     DRAW("무", 1.0),

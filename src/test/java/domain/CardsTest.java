@@ -22,5 +22,4 @@ class CardsTest {
         Assertions.assertThat(cards.isBlackjack())
                 .isTrue();
     }
-
 }

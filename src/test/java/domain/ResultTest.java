@@ -41,5 +41,4 @@ class ResultTest {
         assertThat(Result.WIN.updateBalance(betAmount, isBlackjack).getMoney())
                 .isEqualTo((int) ((Result.WIN.getRatio() + BONUS_RATIO) * money));
     }
-
 }
