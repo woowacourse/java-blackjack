@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class GameTest extends AbstractTestFixture {
 
@@ -12,7 +14,6 @@ public class GameTest extends AbstractTestFixture {
     @DisplayName("카드를 2번 돌린다")
     void test_deal_two_cards() {
         var dealer = new Dealer();
-        // var participants = createParticipantsFrom(dealer, new User("조이"), new User("땡칠"));
         var game = createGameFrom(dealer, new User("조이"), new User("땡칠"));
 
         game.dealTwice();
@@ -28,11 +29,32 @@ public class GameTest extends AbstractTestFixture {
     void test_dealing_card_to_not_playing_throws() {
         var participant = new User("조이", createCards("10", "2"));
         var notParticipant = new User("참가자아님");
-        // var participants = createParticipantsFrom(new Dealer(createCards("K")), participant);
 
         var game = createGameFrom(new Dealer(createCards("K")), participant);
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> game.dealTo(notParticipant));
+    }
+
+    @DisplayName("유저의 승패를 알 수 있다")
+    @ParameterizedTest(name = "유저의 승패를 알 수 있다")
+    @CsvSource({"K,LOSE", "A,DRAW", "3,WIN"})
+    void test_win_lose_draw_user(String lastCardLetter, Result result) {
+        var user = new User("조이", createCards("8", "K", lastCardLetter));
+        var dealer = new Dealer(createCards("K", "9"));
+        var game = createGameFrom(dealer, user);
+
+        assertThat(game.getResultOf(user)).isEqualTo(result);
+    }
+
+    @Test
+    @DisplayName("딜러의 승패를 모두 알 수 있다")
+    void test_win_lose_draw_dealer() {
+        var user = new User("조이", createCards("9", "K"));
+        var user2 = new User("조이", createCards("8", "K", "K"));
+        var dealer = new Dealer(createCards("K", "9"));
+        var game = createGameFrom(dealer, user, user2);
+
+        assertThat(game.getDealerResults()).containsOnly(Result.DRAW, Result.WIN);
     }
 }
