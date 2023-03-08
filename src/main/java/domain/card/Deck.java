@@ -17,7 +17,7 @@ public final class Deck {
         return new Deck(new ArrayDeque<>(cards));
     }
 
-    public Card dealCard() {
+    public Card distributeCard() {
         return deck.removeFirst();
     }
 }
