@@ -56,7 +56,7 @@
 
 
 - 테스트 코드
-  - [ ] given when then 제거
+  - [x] given when then 제거
   - [ ] assertDoesNotThrow를 사용한 테스트 메서드 -> 생성한 객체의 상태를 체크해주는 방식으로 변경
   - [ ] `@BeforeEach` 사용 부분 변경
 
