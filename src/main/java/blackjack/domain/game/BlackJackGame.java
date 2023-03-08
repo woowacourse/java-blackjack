@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participants.Players;
 import blackjack.view.DrawCommand;
 
 import java.util.List;
@@ -11,9 +12,13 @@ public class BlackJackGame {
     private final GameParticipants gameParticipants;
     private final Deck deck;
 
-    public BlackJackGame(final GameParticipants gameParticipants, final Deck deck) {
+    private BlackJackGame(final GameParticipants gameParticipants, final Deck deck) {
         this.gameParticipants = gameParticipants;
         this.deck = deck;
+    }
+
+    public static BlackJackGame of(final List<String> playerNames, final Deck deck) {
+        return new BlackJackGame(new GameParticipants(Players.from(playerNames)), deck);
     }
 
     public void distributeInitialCards() {

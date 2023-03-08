@@ -4,9 +4,7 @@ import static blackjack.controller.Repeater.repeatUntilNoException;
 
 import blackjack.domain.DeckFactory;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.game.GameParticipants;
 import blackjack.domain.game.ResultOfGame;
-import blackjack.domain.participants.Players;
 import blackjack.view.DrawCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -37,13 +35,8 @@ public class BlackJackController {
     }
 
     private BlackJackGame createBlackJackGame(final DeckFactory deckFactory) {
-        final GameParticipants gameParticipants = new GameParticipants(createPlayers());
-        return new BlackJackGame(gameParticipants, deckFactory.generate());
-    }
-
-    private Players createPlayers() {
         return repeatUntilNoException(
-                () -> Players.from(inputView.inputPlayerNames()), outputView::printError);
+                () -> BlackJackGame.of(inputView.inputPlayerNames(), deckFactory.generate()), outputView::printError);
     }
 
     private void printInitialCard(final BlackJackGame blackJackGame) {
