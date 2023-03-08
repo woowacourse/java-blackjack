@@ -19,11 +19,11 @@ public class BlackjackController {
         dealer = new Dealer(players);
 
         settingGame();
-
         for (Player player : dealer.getPlayers()) {
             play(player);
         }
         turnOfDealer();
+
         finishGame();
     }
 
