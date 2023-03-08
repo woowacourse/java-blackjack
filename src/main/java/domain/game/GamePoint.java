@@ -68,8 +68,12 @@ public final class GamePoint {
         return card.getCardNumberValue();
     }
 
+    public boolean isBlackJack() {
+        return BLACK_JACK == gamePoint;
+    }
+
     public boolean isBusted() {
-        return gamePoint == BUST;
+        return BUST == gamePoint;
     }
 
     public int getPoint() {

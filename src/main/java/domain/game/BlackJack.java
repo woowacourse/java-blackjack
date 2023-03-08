@@ -39,6 +39,9 @@ public final class BlackJack {
 
     public void drawCard(final Participant player) {
         player.takeCard(deck.drawCard());
+        if (isBusted(player)) {
+            player.applyBust();
+        }
     }
 
     public int getAdditionalCardCount() {

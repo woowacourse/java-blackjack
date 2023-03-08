@@ -47,12 +47,24 @@ public abstract class Participant {
         return bet;
     }
 
+    public void applyBust() {
+        bet.applyBust();
+    }
+
+    public void applyBlackJack() {
+        bet.applyBlackJack();
+    }
+
     public GamePoint calculatePoint() {
         return cards.getGamePoint();
     }
 
     public boolean isBusted() {
         return cards.isBusted();
+    }
+
+    public boolean isBlackJack() {
+        return cards.getGamePoint().isBlackJack();
     }
 
     public Name getName() {

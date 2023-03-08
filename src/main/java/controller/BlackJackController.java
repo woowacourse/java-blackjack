@@ -58,6 +58,10 @@ public final class BlackJackController {
     }
 
     private void getPlayerDecision(final Player player, final BlackJack blackJack) {
+        if (player.isBlackJack()) {
+            player.applyBlackJack();
+            return;
+        }
         while (!blackJack.isBusted(player) && wantMoreCard(player)) {
             blackJack.drawCard(player);
             outputView.printPlayerCards(player);
