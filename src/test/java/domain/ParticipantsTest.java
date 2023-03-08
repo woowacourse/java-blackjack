@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.stream.Stream;
 
@@ -40,21 +41,29 @@ public class ParticipantsTest extends AbstractTestFixture {
 
     static Stream<Arguments> test_find_if_player_is_participant() {
         var dealer = new Dealer();
-        var notParticipant = new User("조이");
         var participant = new User("땡칠");
-        var participants = createParticipantsFrom(dealer, participant);
         return Stream.of(
-                Arguments.of(participants, participant, true),
-                Arguments.of(participants, dealer, true),
-                Arguments.of(participants, notParticipant, false),
-                Arguments.of(participants, new Dealer(), false)
+                Arguments.of(createParticipantsFrom(dealer, participant), participant),
+                Arguments.of(createParticipantsFrom(dealer, participant), dealer)
         );
     }
 
-    @DisplayName("플레이어가 참가자인지 알 수 있다")
-    @ParameterizedTest(name = "플레이어가 참가자인지 알 수 있다")
+    @DisplayName("플레이어를 찾을 수 있다")
+    @ParameterizedTest(name = "플레이어를 찾을 수 있다")
     @MethodSource
-    void test_find_if_player_is_participant(Participants participants, Player player, boolean doesExist) {
-        assertThat(participants.has(player)).isEqualTo(doesExist);
+    void test_find_if_player_is_participant(Participants participants, Player player) {
+        assertThat(participants.find(player)).isEqualTo(player);
+    }
+
+    @Test
+    @DisplayName("참가중이지 않은 플레이어를 찾으면 예외를 던진다")
+    void test_dealing_card_to_not_playing_throws() {
+        var participant = new User("조이", createCards("10", "2"));
+        var notParticipant = new User("참가자아님");
+
+        var participants = createParticipantsFrom(new Dealer(createCards("K")), participant);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> participants.find(notParticipant));
     }
 }

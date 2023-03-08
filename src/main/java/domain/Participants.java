@@ -24,15 +24,18 @@ public class Participants {
         return new Participants(users);
     }
 
-    public boolean has(Player player) {
-        return isExistingDealer(player) || isExistingUser(player);
-    }
-
     public void dealFrom(Deck deck) {
         for (User user : users) {
             user.drawFrom(deck);
         }
         dealer.drawFrom(deck);
+    }
+
+    public Player find(Player player) {
+        if (isExistingDealer(player) || isExistingUser(player)) {
+            return player;
+        }
+        throw new IllegalArgumentException("참가중인 플레이어가 아닙니다");
     }
 
     private boolean isExistingUser(Player player) {
