@@ -22,6 +22,20 @@ public abstract class Player {
         holdingCards.add(card);
     }
 
+    public boolean isBust() {
+        return getTotalPoint().isBust();
+    }
+
+    public boolean moreScoreThan(final Player targetPlayer) {
+        Score targetScore = targetPlayer.getTotalPoint();
+        return getTotalPoint().isBiggerThan(targetScore);
+    }
+
+    public boolean isSameScore(final Player targetPlayer) {
+        Score targetScore = targetPlayer.getTotalPoint();
+        return getTotalPoint().isSameScore(targetScore);
+    }
+
     public Score getTotalPoint() {
         return holdingCards.getSum();
     }

@@ -51,12 +51,75 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("추가 카드를 뽑는다.")
+    @DisplayName("추가 카드를 뽑는다")
     void pick_card() {
         Card card = new Card(Shape.DIAMOND, Number.JACK);
         player.pick(card);
 
         assertThat(player.getHoldingCards().getCards())
                 .contains(card);
+    }
+
+    @Test
+    @DisplayName("bust이면 bust임을 알려준다")
+    void bust() {
+        Card card1 = new Card(Shape.HEART, Number.FOUR);
+        Card card2 = new Card(Shape.CLOVER, Number.KING);
+        Card card3 = new Card(Shape.DIAMOND, Number.QUEEN);
+
+        player.pickStartCards(card1, card2);
+        player.pick(card3);
+
+        assertThat(player.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("bust가 아니면 bust가 아님을 알려준다")
+    void not_bust() {
+        Card card1 = new Card(Shape.HEART, Number.FOUR);
+        Card card2 = new Card(Shape.CLOVER, Number.KING);
+
+        player.pickStartCards(card1, card2);
+
+        assertThat(player.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("비교 대상보다 점수가 높은 경우 테스트")
+    void is_more_score() {
+        Card card1 = new Card(Shape.HEART, Number.FOUR);
+        Card card2 = new Card(Shape.CLOVER, Number.KING);
+
+        player.pickStartCards(card1, card2);
+        Player targetPlayer = new Challenger("oing");
+        targetPlayer.pick(card1);
+
+        assertThat(player.moreScoreThan(targetPlayer)).isTrue();
+    }
+
+    @Test
+    @DisplayName("비교 대상보다 점수가 낮은 경우 테스트")
+    void is_less_score() {
+        Card card1 = new Card(Shape.HEART, Number.FOUR);
+        Card card2 = new Card(Shape.CLOVER, Number.KING);
+
+        player.pick(card1);
+        Player targetPlayer = new Challenger("oing");
+        targetPlayer.pickStartCards(card1, card2);
+
+        assertThat(player.moreScoreThan(targetPlayer)).isFalse();
+    }
+
+    @Test
+    @DisplayName("비교 대상과 점수가 같은 경우 테스트")
+    void is_same_score() {
+        Card card1 = new Card(Shape.HEART, Number.FOUR);
+        Card card2 = new Card(Shape.CLOVER, Number.KING);
+
+        player.pickStartCards(card1, card2);
+        Player targetPlayer = new Challenger("oing");
+        targetPlayer.pickStartCards(card1, card2);
+
+        assertThat(player.isSameScore(targetPlayer)).isTrue();
     }
 }
