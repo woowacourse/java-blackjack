@@ -9,9 +9,9 @@ class CardTest {
 
     @DisplayName("Suit과 Rank가 똑같은 카드는 두 번 생성되지 않는다.")
     @Test
-    void getCardTest() {
-        Card card1 = Card.getCard(Suit.DIAMOND, Rank.ACE);
-        Card card2 = Card.getCard(Suit.DIAMOND, Rank.ACE);
+    void cardOfTest() {
+        Card card1 = Card.of(Suit.DIAMOND, Rank.ACE);
+        Card card2 = Card.of(Suit.DIAMOND, Rank.ACE);
         assertTrue(card1 == card2);
     }
 }
