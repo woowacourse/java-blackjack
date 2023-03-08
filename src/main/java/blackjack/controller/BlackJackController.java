@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.Bet;
 import blackjack.domain.Name;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
@@ -48,11 +49,16 @@ public class BlackJackController {
         Deck deck = deckGenerator.generate();
         List<String> names = InputView.readPlayerNames();
         List<Player> players = names.stream()
-                .map(name -> new Player(name, deck.drawCards(START_DRAW_COUNT)))
+                .map(name -> new Player(name, deck.drawCards(START_DRAW_COUNT), readPlayerBet(name)))
                 .collect(toList());
         Dealer dealer = new Dealer(deck.drawCards(START_DRAW_COUNT));
         Participants participants = new Participants(dealer, players);
         return new BlackJackGame(participants, deck);
+    }
+
+    private Bet readPlayerBet(String playerName) {
+        int bet = InputView.readPlayerBet(playerName);
+        return Bet.of(bet);
     }
 
     private void printAllParticipantStatues(List<ParticipantStatusResponse> participantStatusResponse) {
@@ -136,7 +142,7 @@ public class BlackJackController {
         Dealer dealer = participants.getDealer();
         return participants.getPlayers()
                 .stream()
-                .map(player -> PlayerGameResult.of(player.getName(), player.matchGame(dealer)))
+                .map(player -> PlayerGameResult.of(player.getName(), player.matchGameWithBet(dealer)))
                 .collect(collectingAndThen(toList(), TotalGameResult::of));
     }
 }

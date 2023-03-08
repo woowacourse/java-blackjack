@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
     private static final int MAX_SCORE = 21;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int BLACKJACK_REQUIRE_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -22,9 +23,9 @@ public class Cards {
                 .mapToInt(Card::getScore)
                 .sum();
         if (hasAce()) {
-            return calculateAce(score);
+            score = calculateAce(score);
         }
-        return new Score(score);
+        return new Score(score, isBlackjack());
     }
 
     private boolean hasAce() {
@@ -32,11 +33,15 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private Score calculateAce(int score) {
+    private int calculateAce(int score) {
         if (score + ACE_BONUS_SCORE <= MAX_SCORE) {
-            return new Score(score + ACE_BONUS_SCORE);
+            return score + ACE_BONUS_SCORE;
         }
-        return new Score(score);
+        return score;
+    }
+
+    private boolean isBlackjack() {
+        return cards.size() == BLACKJACK_REQUIRE_COUNT;
     }
 
     public List<Card> getCards() {

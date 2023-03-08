@@ -17,8 +17,8 @@ class ParticipantsTest {
         // given
         Dealer dealer = new Dealer(Collections.emptyList());
         List<Player> players = List.of(
-                new Player("glen", Collections.emptyList()),
-                new Player("encho", Collections.emptyList())
+                new Player("glen", Collections.emptyList(), Bet.of(1000)),
+                new Player("encho", Collections.emptyList(), Bet.of(1000))
         );
         Participants participants = new Participants(dealer, players);
 
@@ -37,8 +37,8 @@ class ParticipantsTest {
         // given
         Dealer dealer = new Dealer(Collections.emptyList());
         List<Player> players = List.of(
-                new Player("glen", Collections.emptyList()),
-                new Player("encho", Collections.emptyList())
+                new Player("glen", Collections.emptyList(), Bet.of(1000)),
+                new Player("encho", Collections.emptyList(), Bet.of(1000))
         );
         Participants participants = new Participants(dealer, players);
 
@@ -56,7 +56,7 @@ class ParticipantsTest {
         // given
         List<String> names = List.of("glen", "pobi", "glen");
         List<Player> players = names.stream()
-                .map(name -> new Player(name, Collections.emptyList()))
+                .map(name -> new Player(name, Collections.emptyList(), Bet.of(1000)))
                 .collect(Collectors.toList());
 
         // expect

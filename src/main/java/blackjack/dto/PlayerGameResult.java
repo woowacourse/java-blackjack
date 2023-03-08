@@ -1,26 +1,26 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.Bet;
 import blackjack.domain.Name;
 
 public class PlayerGameResult {
     private final String name;
-    private final GameResult result;
+    private final int result;
 
-    public PlayerGameResult(String name, GameResult result) {
+    public PlayerGameResult(String name, int result) {
         this.name = name;
         this.result = result;
     }
 
-    public static PlayerGameResult of(Name name, GameResult gameResult) {
-        return new PlayerGameResult(name.getName(), gameResult);
+    public static PlayerGameResult of(Name name, Bet bet) {
+        return new PlayerGameResult(name.getName(), bet.getBet());
     }
 
     public String getName() {
         return name;
     }
 
-    public GameResult getResult() {
+    public int getResult() {
         return result;
     }
 }

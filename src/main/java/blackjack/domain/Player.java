@@ -9,9 +9,12 @@ public class Player extends Participant {
     private static final int PLAYER_START_SHOW_COUNT = 2;
     private static final int MAX_SCORE = 21;
 
-    public Player(String name, List<Card> cards) {
+    private final Bet bet;
+
+    public Player(String name, List<Card> cards, Bet bet) {
         super(name, cards);
         validateBlacklist(name);
+        this.bet = bet;
     }
 
     private void validateBlacklist(String name) {
@@ -23,6 +26,18 @@ public class Player extends Participant {
     public GameResult matchGame(Dealer dealer) {
         Score dealerScore = dealer.getScore();
         Score myScore = this.getScore();
+        return getGameResult(dealerScore, myScore);
+    }
+
+    public Bet matchGameWithBet(Dealer dealer) {
+        GameResult gameResult = matchGame(dealer);
+        return bet.calculateResult(gameResult);
+    }
+
+    private GameResult getGameResult(Score dealerScore, Score myScore) {
+        if (isBlackjack(myScore, dealerScore)) {
+            return GameResult.BLACKJACK;
+        }
         if (dealerScore.isWinTo(myScore)) {
             return GameResult.LOSE;
         }
@@ -30,6 +45,10 @@ public class Player extends Participant {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
+    }
+
+    private boolean isBlackjack(Score myScore, Score dealerScore) {
+        return myScore.isBlackjack() && !dealerScore.isBlackjack();
     }
 
     @Override

@@ -6,9 +6,15 @@ public class Score {
     private static final int BUST_SCORE_BOUNDARY = 21;
 
     private final int score;
+    private final boolean isBlackjack;
 
-    public Score(int value) {
-        this.score = value;
+    public Score(int score) {
+        this(score, false);
+    }
+
+    public Score(int score, boolean isBlackjack) {
+        this.score = score;
+        this.isBlackjack = isBlackjack;
     }
 
     public boolean isWinTo(Score other) {
@@ -27,6 +33,10 @@ public class Score {
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isBlackjack() {
+        return isBlackjack;
     }
 
     @Override
