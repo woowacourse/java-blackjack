@@ -9,6 +9,6 @@ public class Dealer extends Player {
     }
 
     public boolean isDealerDraw() {
-        return getScore() < STOP_LOWER_BOUND;
+        return score() < STOP_LOWER_BOUND;
     }
 }

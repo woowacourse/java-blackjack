@@ -16,15 +16,19 @@ public class Player {
         hand.addCard(card);
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public List<Card> cards() {
+        return hand.cards();
     }
 
     public Name getName() {
         return name;
     }
 
-    public int getScore() {
+    public String name() {
+        return name.getName();
+    }
+
+    public int score() {
         return hand.score();
     }
 }

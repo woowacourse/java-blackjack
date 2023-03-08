@@ -19,8 +19,8 @@ public class OutputView {
     }
 
     public static void printDealerCard(final Card card) {
-        final String rank = card.getRank();
-        final String suit = card.getSuit();
+        final String rank = card.rank();
+        final String suit = card.suit();
         System.out.printf("딜러: %s%s%n", rank, suit);
     }
 
@@ -33,7 +33,7 @@ public class OutputView {
     private static String toStringCards(final List<Card> cards) {
         StringJoiner stringJoiner = new StringJoiner(", ");
         cards.forEach(card -> {
-            String temp = card.getRank() + card.getSuit();
+            String temp = card.rank() + card.suit();
             stringJoiner.add(temp);
         });
         return stringJoiner.toString();
@@ -79,13 +79,13 @@ public class OutputView {
 
     private static void printEachPlayerResult(final Map<Name, Outcome> result, final Name name) {
         if (result.get(name).equals(Outcome.WIN)) {
-            printGameEachResult(name.getValue(), 1, 0, 0);
+            printGameEachResult(name.getName(), 1, 0, 0);
         }
         if (result.get(name).equals(Outcome.DRAW)) {
-            printGameEachResult(name.getValue(), 0, 1, 0);
+            printGameEachResult(name.getName(), 0, 1, 0);
         }
         if (result.get(name).equals(Outcome.LOSE)) {
-            printGameEachResult(name.getValue(), 0, 0, 1);
+            printGameEachResult(name.getName(), 0, 0, 1);
         }
     }
 

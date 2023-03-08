@@ -20,9 +20,9 @@ public class HandTest {
         Hand hand = new Hand();
         final Card card = new Card(Suit.DIAMOND, Rank.ACE);
 
-        assertEquals(0, hand.getCards().size());
+        assertEquals(0, hand.cards().size());
         hand.addCard(card);
-        assertEquals(1, hand.getCards().size());
+        assertEquals(1, hand.cards().size());
     }
 
     @DisplayName("21에 가장 가까운 점수를 반환한다.")

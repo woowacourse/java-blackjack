@@ -19,8 +19,8 @@ public class PlayerTest {
         final String testName = "test";
         Player player = new Player(testName);
 
-        Assertions.assertEquals(0, player.getCards().size());
+        Assertions.assertEquals(0, player.cards().size());
         player.drawCard(deck.popCard());
-        Assertions.assertEquals(1, player.getCards().size());
+        Assertions.assertEquals(1, player.cards().size());
     }
 }

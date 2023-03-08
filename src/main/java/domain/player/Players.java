@@ -24,9 +24,9 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public Player getPlayer(final String playerName) {
+    public Player getPlayer(final String name) {
         return players.stream()
-                .filter(player -> player.getName().equals(new Name(playerName)))
+                .filter(player -> player.name().equals(name))
                 .findFirst()
                 .orElseThrow();
     }

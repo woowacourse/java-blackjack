@@ -53,7 +53,7 @@ public class BlackJackGame {
 
         players.getPlayers()
                 .forEach(player ->
-                        result.put(player.getName(), decideOutcome(dealer.getScore(), player.getScore()))
+                        result.put(player.getName(), decideOutcome(dealer.score(), player.score()))
                 );
 
         return result;
@@ -89,9 +89,9 @@ public class BlackJackGame {
 
     public List<Card> getCards(final String playerName) {
         if (isDealer(playerName)) {
-            return dealer.getCards();
+            return dealer.cards();
         }
-        return players.getPlayer(playerName).getCards();
+        return players.getPlayer(playerName).cards();
     }
 
     private boolean isDealer(final String name) {
@@ -100,9 +100,9 @@ public class BlackJackGame {
 
     public int getScore(final String playerName) {
         if (isDealer(playerName)) {
-            return dealer.getScore();
+            return dealer.score();
         }
-        return players.getPlayer(playerName).getScore();
+        return players.getPlayer(playerName).score();
     }
 
     public EnumMap<Outcome, Integer> calculateDealerResult() {
