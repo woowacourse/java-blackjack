@@ -22,8 +22,8 @@ public class BlackJackController {
     }
 
     private void generateGame() {
-        List<String> playerNames = InputView.askPlayerNames();
-        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), playerNames);
+        List<String> playersName = InputView.askPlayersName();
+        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), playersName);
     }
 
     private void startGame() {
@@ -38,8 +38,8 @@ public class BlackJackController {
     }
 
     private void openInitialCards() {
-        List<String> playerNames = blackJackGame.getPlayerNames();
-        OutputView.showHandInitialCardsCompleteMessage(playerNames);
+        List<String> playersName = blackJackGame.getPlayersName();
+        OutputView.showHandInitialCardsCompleteMessage(playersName);
 
         Card dealerFirstCard = blackJackGame.openDealerFirstCard();
         OutputView.showDealerFirstCard(dealerFirstCard);
@@ -62,7 +62,7 @@ public class BlackJackController {
             return;
         }
         blackJackGame.handOneCard(player);
-        OutputView.showPlayerCard(player.getName(), blackJackGame.openPlayerCards(player.getName()));
+        OutputView.showPlayerCard(player.getName(), player.getCards());
         if (player.canHit()) {
             hitOrStay(player);
         }
@@ -71,8 +71,8 @@ public class BlackJackController {
     private void showResult() {
         OutputView.showDealerGameResult(blackJackGame.computeDealerGameResult());
 
-        List<String> playerNames = blackJackGame.getPlayerNames();
-        for (String playerName : playerNames) {
+        List<String> playersName = blackJackGame.getPlayersName();
+        for (String playerName : playersName) {
             GameResult playerResult = blackJackGame.computePlayerGameResult(playerName);
             OutputView.showPlayerGameResult(playerName, playerResult);
         }

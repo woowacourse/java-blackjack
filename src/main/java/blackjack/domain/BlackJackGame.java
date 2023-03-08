@@ -35,11 +35,6 @@ public class BlackJackGame {
         return participants.findCanHitPlayer();
     }
 
-    public List<Card> openPlayerCards(String playerName) {
-        Player player = participants.findPlayerByName(playerName);
-        return player.getCards();
-    }
-
     public int hitOrStayForDealer() {
         Dealer dealer = participants.getDealer();
         int hitCount = 0;
@@ -65,7 +60,7 @@ public class BlackJackGame {
         return participants.computePlayerWinResults();
     }
 
-    public List<String> getPlayerNames() {
+    public List<String> getPlayersName() {
         return participants.getPlayerNames();
     }
 
