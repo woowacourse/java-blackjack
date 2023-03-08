@@ -2,19 +2,23 @@ package domain.service;
 
 import domain.model.Dealer;
 import domain.model.Player;
+import domain.model.Players;
 import domain.vo.Result;
 import domain.vo.Score;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BlackJackResultMaker {
 
-    public Map<Player, Result> makePlayersResult(final Dealer dealer, final List<Player> players) {
-        return players.stream().collect(
-            Collectors.toMap(player -> player, player -> decide(player.getScore(), dealer.getScore()), (a, b) -> b,
-                LinkedHashMap::new));
+    public Map<Player, Result> makePlayersResult(final Dealer dealer, final Players players) {
+        return IntStream.range(0, players.size())
+            .mapToObj(players::get)
+            .collect(
+                Collectors.toMap(player -> player, player -> decide(player.getScore(), dealer.getScore()), (a, b) -> b,
+                    LinkedHashMap::new));
     }
 
     private Result decide(final Score score, final Score comparedScore) {
@@ -35,8 +39,8 @@ public class BlackJackResultMaker {
         return score.isBust() && comparedScore.isBust() || score.getValue() == comparedScore.getValue();
     }
 
-    public Result makeDealerResult(final Dealer dealer, final List<Player> players) {
-        final List<Score> scores = players.stream().map(Player::getScore).collect(Collectors.toList());
+    public Result makeDealerResult(final Dealer dealer, final Players players) {
+        List<Score> scores = players.getScores();
         return decide(dealer.getScore(), scores);
     }
 

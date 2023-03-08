@@ -6,14 +6,15 @@ import domain.model.Card;
 import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
-import domain.vo.Result;
+import domain.model.Players;
 import domain.type.Letter;
 import domain.type.Suit;
+import domain.vo.Result;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,11 +23,20 @@ class BlackJackResultMakerTest {
     private final BlackJackResultMaker blackJackResultMaker = new BlackJackResultMaker();
     private final Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.TWO)));
     private final Dealer dealer = new Dealer(dealerCards);
-    private final Cards playerCards = new Cards(Set.of(new Card(Suit.SPADE, Letter.SIX)));
-    private final List<Player> players = IntStream.range(0, 10)
-        .mapToObj(i -> new Player(playerCards, "test"))
-        .collect(Collectors.toList());
+    private static final List<Card> playerCards = List.of(
+        new Card(Suit.SPADE, Letter.SIX),
+        new Card(Suit.DIAMOND, Letter.ACE));
+    private static Players players;
 
+    @BeforeAll
+    public static void setUp() {
+        ArrayList<String> names = new ArrayList<>();
+        for (int i = 0; i < playerCards.size(); i++) {
+            names.add("test" + i);
+        }
+        players = Players.from(names);
+        players.addAll(playerCards);
+    }
 
 
     @Test
@@ -51,7 +61,7 @@ class BlackJackResultMakerTest {
         Result result = blackJackResultMaker.makeDealerResult(dealer, players);
 
         //then
-        assertThat(result.getDefeat()).isEqualTo(10);
+        assertThat(result.getDefeat()).isEqualTo(playerCards.size());
         assertThat(result.getVictory()).isEqualTo(0);
         assertThat(result.getDraw()).isEqualTo(0);
     }

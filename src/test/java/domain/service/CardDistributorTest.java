@@ -6,11 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.model.Card;
 import domain.model.Cards;
 import domain.model.Player;
+import domain.model.Players;
 import domain.type.Letter;
 import domain.type.Suit;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +22,18 @@ class CardDistributorTest {
     public void testGiveCardToOneSpecific() {
         //given
         final Card card = new Card(Suit.CLUB, Letter.ACE);
-        cardDistributor = new CardDistributor(() -> card);
-        final Player player = new Player(Cards.makeEmptyCards(), "player");
+        cardDistributor = new CardDistributor(new CardGenerator() {
+            @Override
+            public Card generate() {
+                return card;
+            }
+
+            @Override
+            public List<Card> generate(final int size) {
+                return null;
+            }
+        });
+        final Player player = new Player(Cards.makeEmpty(), "player");
 
         //when
         cardDistributor.giveCard(player);
@@ -40,7 +49,7 @@ class CardDistributorTest {
     public void testGiveCardToBustedOne() {
         //given
         cardDistributor = new CardDistributor(new RandomCardGenerator());
-        final Cards cards = Cards.makeEmptyCards();
+        final Cards cards = Cards.makeEmpty();
         cards.add(new Card(Suit.CLUB, Letter.TEN));
         cards.add(new Card(Suit.SPADE, Letter.TEN));
         cards.add(new Card(Suit.DIAMOND, Letter.TEN));
@@ -58,17 +67,15 @@ class CardDistributorTest {
     public void testInitGiveCardToAll() {
         //given
         cardDistributor = new CardDistributor(new RandomCardGenerator());
-        final Set<Card> cardSet1 = new HashSet<>();
-        final Player player1 = new Player(new Cards(cardSet1), "player1");
-        final Set<Card> cardSet2 = new HashSet<>();
-        final Player player2 = new Player(new Cards(cardSet2), "player2");
+        List<String> names = List.of("player1", "player2");
+        Players players = Players.from(names);
 
         //when
-        cardDistributor.giveInitCards(List.of(player1, player2));
+        cardDistributor.giveInitCards(players);
 
         //then
-        assertThat(player1.getCards().size()).isEqualTo(2);
-        assertThat(player2.getCards().size()).isEqualTo(2);
+        assertThat(players.get(0).getCards().size()).isEqualTo(2);
+        assertThat(players.get(1).getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -76,7 +83,7 @@ class CardDistributorTest {
     public void testInitGiveCardToOne() {
         //given
         cardDistributor = new CardDistributor(new RandomCardGenerator());
-        final Player player = new Player(Cards.makeEmptyCards(), "player");
+        final Player player = new Player(Cards.makeEmpty(), "player");
 
         //when
         cardDistributor.giveInitCards(player);
@@ -90,7 +97,7 @@ class CardDistributorTest {
     public void testInitGiveCardWhenCardIsNotEmpty() {
         //given
         cardDistributor = new CardDistributor(new RandomCardGenerator());
-        final Cards cards = Cards.makeEmptyCards();
+        final Cards cards = Cards.makeEmpty();
         cards.add(new Card(Suit.SPADE, Letter.ACE));
         final Player player = new Player(cards, "player");
 

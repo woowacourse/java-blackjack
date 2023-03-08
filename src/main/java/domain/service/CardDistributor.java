@@ -1,8 +1,7 @@
 package domain.service;
 
 import domain.model.Participant;
-import domain.model.Player;
-import java.util.List;
+import domain.model.Players;
 import java.util.stream.IntStream;
 
 public class CardDistributor {
@@ -33,8 +32,9 @@ public class CardDistributor {
             .forEach(count -> participant.addCard(cardGenerator.generate()));
     }
 
-    public void giveInitCards(final List<Player> players) {
-        players.forEach(this::giveInitCards);
+    public void giveInitCards(final Players players) {
+        IntStream.range(0, INIT_DEAL_COUNT)
+            .forEach(count -> players.addAll(cardGenerator.generate(players.size())));
     }
 
     private void checkCardEmpty(final Participant participant) {
