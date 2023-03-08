@@ -114,12 +114,13 @@ public class BlackjackController {
 
     private void showResult(final Participants participants) {
         GameResult gameResult = new GameResult(participants);
+
         Map<Player, Result> playerResult = gameResult.decidePlayersResult();
-        List<Integer> dealerResult = gameResult.getDealerResult();
+        Map<Player, Result> reversePlayerResult = gameResult.reverseResult(playerResult);
+        List<Integer> dealerResultCount = gameResult.getDealerResultCount(reversePlayerResult);
 
         Map<String, String> playerResultWithName = getPlayerResult(playerResult);
-
-        outputView.printGameResult(dealerResult, playerResultWithName);
+        outputView.printGameResult(dealerResultCount, playerResultWithName);
     }
 
     private List<String> getPlayerNames(final List<Player> players) {

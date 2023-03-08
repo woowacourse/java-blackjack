@@ -23,6 +23,7 @@ class GameResultTest {
 
     private GameResult gameResult;
     private Participants participants;
+    private Map<Player, Result> playerResultMap;
 
     @BeforeEach
     void setUp() {
@@ -45,14 +46,12 @@ class GameResultTest {
         participants.getDealer().receiveCard(new Card(Number.NINE, Pattern.DIAMOND));
 
         gameResult = new GameResult(participants);
+        playerResultMap = gameResult.decidePlayersResult();
     }
 
     @Test
     @DisplayName("플레이어 결과 확인")
     void decidePlayersResult() {
-        // given
-        Map<Player, Result> playerResultMap = gameResult.decidePlayersResult();
-
         // expect
         assertAll(
                 () -> assertThat(playerResultMap.get(participants.getPlayers().get(0))).isEqualTo(Result.WIN),
@@ -62,10 +61,22 @@ class GameResultTest {
     }
 
     @Test
+    @DisplayName("플레이어 결과 뒤집기")
+    void reverseResult() {
+        Map<Player, Result> reverseResult = gameResult.reverseResult(playerResultMap);
+        // expect
+        assertAll(
+                () -> assertThat(reverseResult.get(participants.getPlayers().get(0))).isEqualTo(Result.LOSE),
+                () -> assertThat(reverseResult.get(participants.getPlayers().get(1))).isEqualTo(Result.WIN),
+                () -> assertThat(reverseResult.get(participants.getPlayers().get(2))).isEqualTo(Result.DRAW)
+        );
+    }
+
+    @Test
     @DisplayName("딜러 결과 카운트 확인")
-    void getDealerResult() {
+    void getDealerResultCount() {
          // given
-         List<Integer> dealerResult = gameResult.getDealerResult();
+         List<Integer> dealerResult = gameResult.getDealerResultCount(playerResultMap);
 
          // expect
          assertAll(

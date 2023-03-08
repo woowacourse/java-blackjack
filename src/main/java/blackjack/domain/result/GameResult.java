@@ -16,30 +16,33 @@ import java.util.Map;
 public class GameResult {
 
     private final Participants participants;
-    private final Map<Player, Result> playersResult;
 
     public GameResult(Participants participants) {
         this.participants = participants;
-        playersResult = new HashMap<>();
     }
 
     public Map<Player, Result> decidePlayersResult() {
+        Map<Player, Result> playersResult = new HashMap<>();
+        Dealer dealer = participants.getDealer();
+
         for (Player player : participants.getPlayers()) {
-            compareScore(player, participants.getDealer());
+            makePlayersResult(player, dealer, playersResult);
         }
 
         return playersResult;
     }
 
-    private void compareScore(final Player player, final Dealer dealer) {
-        if (isParticipantBust(player, dealer)) {
+    private void makePlayersResult(final Player player, final Dealer dealer,
+                                   final Map<Player, Result> playersResult) {
+        if (isParticipantBust(player, dealer, playersResult)) {
             return;
         }
-
-        compareIfNotBust(player, dealer.calculateTotalScore());
+        int dealerScore = dealer.calculateTotalScore();
+        compareIfNotBust(player, dealerScore, playersResult);
     }
 
-    private boolean isParticipantBust(final Player player, final Dealer dealer) {
+    private boolean isParticipantBust(final Player player, final Dealer dealer,
+                                      final Map<Player, Result> playersResult) {
         if (player.isBust()) {
             playersResult.put(player, LOSE);
             return true;
@@ -51,7 +54,8 @@ public class GameResult {
         return false;
     }
 
-    private void compareIfNotBust(final Player player, final int dealerScore) {
+    private void compareIfNotBust(final Player player, final int dealerScore,
+                                  final Map<Player, Result> playersResult) {
         if (dealerScore < player.calculateTotalScore()) {
             playersResult.put(player, WIN);
             return;
@@ -63,34 +67,37 @@ public class GameResult {
         playersResult.put(player, LOSE);
     }
 
-    public List<Integer> getDealerResult() {
-        initPlayersResultIfEmpty();
+    public Map<Player, Result> reverseResult(final Map<Player, Result> playersResult) {
+        Map<Player, Result> reversePlayersResult = new HashMap<>();
+
+        for (Player player : playersResult.keySet()) {
+            Result reverseResult = reverse(playersResult.get(player));
+            reversePlayersResult.put(player, reverseResult);
+        }
+
+        return reversePlayersResult;
+    }
+
+    private Result reverse(Result result) {
+        if (result == WIN) {
+            return LOSE;
+        }
+        if (result == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public List<Integer> getDealerResultCount(final Map<Player, Result> reversePlayersResult) {
         Map<Result, Integer> dealerResult = new LinkedHashMap<>() {{
             put(WIN, 0);
             put(DRAW, 0);
             put(LOSE, 0);
         }};
-        for (Result playerResult : playersResult.values()) {
-            decideDealerResultCount(playerResult, dealerResult);
+
+        for (Result value : reversePlayersResult.values()) {
+            dealerResult.put(value, dealerResult.get(value) + 1);
         }
         return new ArrayList<>(dealerResult.values());
-    }
-
-    private void initPlayersResultIfEmpty() {
-        if (playersResult.isEmpty()) {
-            decidePlayersResult();
-        }
-    }
-
-    private void decideDealerResultCount(final Result playerResult, final Map<Result, Integer> dealerResult) {
-        if (playerResult == WIN) {
-            dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
-            return;
-        }
-        if (playerResult == DRAW) {
-            dealerResult.put(DRAW, dealerResult.get(DRAW) + 1);
-            return;
-        }
-        dealerResult.put(WIN, dealerResult.get(WIN) + 1);
     }
 }
