@@ -1,12 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
 import blackjack.domain.dto.*;
 import blackjack.domain.user.Dealer;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -81,7 +79,7 @@ public class OutputView {
     public void printFinalPlayersStatus(FinalStatusDto finalStatusDto) {
         printPlayFinalStatus(finalStatusDto.getDealer(), finalStatusDto.getDealerScore());
         final Map<UserDto, Integer> userScores = finalStatusDto.getUserScores();
-        for(UserDto userDto : userScores.keySet()){
+        for (UserDto userDto : userScores.keySet()) {
             printPlayFinalStatus(userDto, userScores.get(userDto));
         }
     }

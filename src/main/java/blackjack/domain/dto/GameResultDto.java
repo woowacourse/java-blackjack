@@ -1,6 +1,6 @@
 package blackjack.domain.dto;
 
-import java.util.*;
+import java.util.Map;
 
 public class GameResultDto {
     private final Map<String, ResultDto> userResult;
@@ -10,6 +10,7 @@ public class GameResultDto {
         this.userResult = userResult;
         this.dealerResult = dealerResult;
     }
+
     public Map<String, ResultDto> getUserResult() {
         return userResult;
     }

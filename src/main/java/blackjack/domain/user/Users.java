@@ -3,14 +3,9 @@ package blackjack.domain.user;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.GamePoint;
-import blackjack.domain.user.Name;
-import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Users {
     private final List<User> users;

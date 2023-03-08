@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.*;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import org.assertj.core.api.InstanceOfAssertFactories;

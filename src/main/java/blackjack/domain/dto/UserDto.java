@@ -1,8 +1,5 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.User;
-
 import java.util.List;
 
 public class UserDto {

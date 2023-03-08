@@ -13,7 +13,7 @@ public class CardTest {
     @Test
     @DisplayName("카드 정상 생성 테스트")
     void validCardTest() {
-        for(CardNumber cardNumber : CardNumber.values()){
+        for (CardNumber cardNumber : CardNumber.values()) {
             assertDoesNotThrow(() -> new Card(Shape.DIAMOND, cardNumber));
         }
     }

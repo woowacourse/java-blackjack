@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.RandomDeck;
-import blackjack.domain.dto.*;
+import blackjack.domain.dto.DtoParser;
 import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

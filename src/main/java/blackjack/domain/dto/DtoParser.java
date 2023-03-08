@@ -2,10 +2,10 @@ package blackjack.domain.dto;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.Result;
-import blackjack.domain.user.Users;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 
 import java.util.*;
 
@@ -66,7 +66,7 @@ public class DtoParser {
     private static Map<ResultDto, Integer> getDealerResultDto(final Map<Result, Integer> dealerResult) {
         final Map<ResultDto, Integer> returnMap = new HashMap<>();
         for (Result result : dealerResult.keySet()) {
-            if(dealerResult.get(result) != 0){
+            if (dealerResult.get(result) != 0) {
                 returnMap.put(getDtoOfResult(result), dealerResult.get(result));
             }
         }
