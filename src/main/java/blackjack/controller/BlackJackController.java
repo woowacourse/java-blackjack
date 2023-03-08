@@ -75,30 +75,20 @@ public class BlackJackController {
     }
 
     private void takeEachChallengerTurn(Player player) {
-        if (blackJackGame.canPick(player)) {
-            checkChoice(player);
-        }
-    }
-
-    private void checkChoice(Player player) {
-        try {
-            boolean choice = inputChoice(player);
-            pickCard(player, choice);
-        } catch (CustomException e) {
-            OutputView.printErrorMessage(e);
-            checkChoice(player);
-        }
-    }
-
-    private boolean inputChoice(Player player) {
-        return InputView.inputPlayerChoice(player.getName());
-    }
-
-    private void pickCard(Player player, boolean choice)  {
-        if (choice) {
+        boolean gonnaPick = chooseGonnaPick(player);
+        while (blackJackGame.canPick(player) && gonnaPick) {
             blackJackGame.pick(player);
             OutputView.printChallengerStatusInGame(PlayerStatusDto.from(player));
-            takeEachChallengerTurn(player);
+            gonnaPick = chooseGonnaPick(player);
+        }
+    }
+
+    private boolean chooseGonnaPick(Player player) {
+        try {
+            return InputView.inputPlayerChoice(player.getName());
+        } catch (CustomException e) {
+            OutputView.printErrorMessage(e);
+            return chooseGonnaPick(player);
         }
     }
 
