@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.deck.TestDeckForThreeParticipant;
 import domain.participant.Name;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
@@ -86,16 +86,22 @@ class BetTest {
             assertThat(list.get(2).getBet()).isEqualTo(Bet.of(3000));
         }
 
+        @DisplayName("플레이어들과 딜러의 초기 점수를 확인한다.")
         @Test
         void name() {
             final Players players = blackJack.getPlayers();
             final List<Player> playerList = players.getPlayers();
-            assertThat(playerList.get(0))
+            gamePointCheck(playerList.get(0), 21);
+            gamePointCheck(playerList.get(1), 7);
+            gamePointCheck(blackJack.getDealer(), 15);
+        }
+
+        private void gamePointCheck(final Participant participant, final int gamePoint) {
+            assertThat(participant)
                     .extracting("cards")
                     .extracting("gamePoint")
                     .extracting("gamePoint")
-                    .isEqualTo(21);
-
+                    .isEqualTo(gamePoint);
         }
     }
 
