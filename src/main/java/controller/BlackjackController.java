@@ -51,24 +51,25 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(BlackjackGame blackjackGame, Participant player) {
-        while (player.isAbleToReceiveCard()
-                && requestAction(player) == BlackjackAction.HIT) {
-            blackjackGame.handOutCardTo(player);
-            outputView.printParticipantCards(player, player.getCards());
+        BlackjackAction blackjackAction;
+
+        do {
+            blackjackAction = requestAction(player.getName());
+            blackjackGame.playByAction(player, blackjackAction);
+            outputView.printParticipantCards(player);
+        } while (blackjackGame.isAbleToContinue(player, blackjackAction));
+
+        if (player.isBusted()) {
+            outputView.printBusted(player.getName());
         }
-
-        printPlayerCurrentState(player);
     }
 
-    private BlackjackAction requestAction(Participant player) {
-        return retryOnInvalidUserInput(() -> requestMoreCardTo(player));
-    }
-
-    private BlackjackAction requestMoreCardTo(Participant player) {
-        String playerName = player.getName();
-        String userInputCommand = inputView.requestMoreCard(playerName);
-
-        return BlackjackAction.from(userInputCommand);
+    private BlackjackAction requestAction(String playerName) {
+        return retryOnInvalidUserInput(() -> {
+                    String commandValue = inputView.requestMoreCard(playerName);
+                    return BlackjackAction.from(commandValue);
+                }
+        );
     }
 
     private void playDealerTurn(BlackjackGame blackjackGame) {
@@ -77,15 +78,6 @@ public class BlackjackController {
 
         int hitCardCount = blackjackGame.getParticipantHitCardCount(dealer);
         outputView.printDealerHitCount(hitCardCount);
-    }
-
-    private void printPlayerCurrentState(Participant player) {
-        if (player.isBusted()) {
-            outputView.printBusted(player.getName());
-            return;
-        }
-
-        outputView.printParticipantCards(player, player.getCards());
     }
 
     private void printResults(BlackjackGame blackjackGame) {

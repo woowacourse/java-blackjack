@@ -22,19 +22,29 @@ public class BlackjackGame {
 
     public void handOutInitialCards() {
         for (Participant participant : participants.getParticipants()) {
-            handOutCardTo(participant, INITIAL_CARD_AMOUNT);
+            handOutCardTo(participant);
+            handOutCardTo(participant);
         }
     }
 
-    public void handOutCardTo(Participant participant) {
+    private void handOutCardTo(Participant participant) {
         Card card = deck.drawCard();
         participant.receive(card);
     }
 
-    public void handOutCardTo(Participant participant, int amount) {
-        for (int i = 0; i < amount; i++) {
+    public void playByAction(Participant participant, BlackjackAction blackjackAction) {
+        assertParticipation(participant);
+
+        if (isAbleToContinue(participant, blackjackAction)) {
             handOutCardTo(participant);
         }
+    }
+
+    public boolean isAbleToContinue(Participant participant, BlackjackAction blackjackAction) {
+        assertParticipation(participant);
+
+        return participant.isAbleToReceiveCard()
+                && blackjackAction == BlackjackAction.HIT;
     }
 
     public void handOutAdditionalCardToDealer() {
@@ -44,7 +54,16 @@ public class BlackjackGame {
         }
     }
 
+    private void assertParticipation(Participant participant) {
+        if (participants.getParticipants().contains(participant)) {
+            return;
+        }
+
+        throw new IllegalStateException();
+    }
+
     public int getParticipantHitCardCount(Participant participant) {
+        assertParticipation(participant);
         return participant.getCards().size() - INITIAL_CARD_AMOUNT;
     }
 

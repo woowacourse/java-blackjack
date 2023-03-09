@@ -37,7 +37,11 @@ public class OutputView {
         }
     }
 
-    public void printParticipantCards(Participant participant, List<Card> cards) {
+    public void printParticipantCards(Participant participant) {
+        printParticipantCards(participant, participant.getCards());
+    }
+
+    private void printParticipantCards(Participant participant, List<Card> cards) {
         String cardsFormat = String.format(Format.CARDS.format,
                 participant.getName(), getCardsFormat(cards));
         System.out.println(cardsFormat);
