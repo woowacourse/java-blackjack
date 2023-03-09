@@ -5,6 +5,7 @@ import domain.stake.Stake;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -85,5 +86,16 @@ class StakeTest {
         Stake add = stake1.add(stake2);
         //then
         assertThat(add).isEqualTo(Stake.fromBet(250));
+    }
+
+    @Test
+    @DisplayName("블랙잭으로 승리해서 얻은 stake는 100_000 초과일 수 있다")
+    void stakeUnlimitTest() {
+        //given
+        Stake stake = Stake.fromBet(100000);
+        //when
+        Stake playerPrize = stake.getPlayerPrize(DealerStatus.BLACKJACK_LOSE);
+        //then
+        assertThat(playerPrize.getValue()).isEqualTo(150000);
     }
 }
