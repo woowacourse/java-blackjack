@@ -35,28 +35,15 @@ public class GameResult {
     }
 
     private void calculatePlayer(Dealer dealer, Player player) {
-        if (getPlayersResult(dealer, player).equals(Result.LOSE)) {
+        if (player.getCardsSum() > BLACK_JACK || (dealer.getCardsSum() > player.getCardsSum() && !(dealer.getCardsSum() > BLACK_JACK))) {
             whenPlayerLose(dealer, player);
             return;
-        } else if (getPlayersResult(dealer, player).equals(Result.WIN)) {
+        }
+        if ((dealer.getCardsSum() > BLACK_JACK || dealer.getCardsSum() < player.getCardsSum())) {
             whenPlayerWin(dealer, player);
             return;
         }
         whenPlayerDraw(player);
-    }
-
-    private Result getPlayersResult(Dealer dealer, Player player) {
-        return isPlayerWin(dealer.getCardsSum(), player.getCardsSum());
-    }
-
-    private Result isPlayerWin(int dealerSum, int playerSum) {
-        if (playerSum > BLACK_JACK || (dealerSum > playerSum && !(dealerSum > BLACK_JACK))) {
-            return Result.LOSE;
-        }
-        if (dealerSum > BLACK_JACK || dealerSum < playerSum) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
     }
 
     private void whenPlayerLose(Dealer dealer, Player player) {
