@@ -51,7 +51,8 @@ public class GameBoard {
 
     public List<GameResult> getPlayersGameResult() {
         return playerBoards.getAllPlayerBoard().stream()
-            .map(playerBoard -> GameJudge.getPlayerGameResult(dealerBoard, playerBoard))
+            .map(playerBoard -> GameJudge.judgePlayerWithDealerPointAndPlayerPoint(dealerBoard.getPoint(),
+                playerBoard.getPoint()))
             .collect(Collectors.toList());
     }
 

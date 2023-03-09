@@ -1,15 +1,10 @@
 package domain;
 
-import domain.board.DealerBoard;
-import domain.board.PlayerBoard;
-
 public class GameJudge {
 
     public static final int BLACK_JACK_POINT = 21;
 
-    public static GameResult getPlayerGameResult(DealerBoard dealerBoard, PlayerBoard playerBoard) {
-        int dealerPoint = dealerBoard.getPoint();
-        int playerPoint = playerBoard.getPoint();
+    public static GameResult judgePlayerWithDealerPointAndPlayerPoint(int dealerPoint, int playerPoint) {
         return judgePlayer(dealerPoint, playerPoint);
     }
 
@@ -17,6 +12,27 @@ public class GameJudge {
         if (dealerPoint > BLACK_JACK_POINT) {
             return whenDealerIsBust(playerPoint);
         }
+        if (playerPoint > BLACK_JACK_POINT) {
+            return whenPlayerIsBust(dealerPoint);
+        }
+        return whenBothNotBust(dealerPoint, playerPoint);
+    }
+
+    private static GameResult whenDealerIsBust(int playerPoint) {
+        if (playerPoint > BLACK_JACK_POINT) {
+            return GameResult.DRAW;
+        }
+        return GameResult.WIN;
+    }
+
+    private static GameResult whenPlayerIsBust(int dealerPoint) {
+        if (dealerPoint > BLACK_JACK_POINT) {
+            return GameResult.DRAW;
+        }
+        return GameResult.LOSE;
+    }
+
+    private static GameResult whenBothNotBust(int dealerPoint, int playerPoint) {
         if (dealerPoint < playerPoint) {
             return GameResult.WIN;
         }
@@ -24,12 +40,5 @@ public class GameJudge {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
-    }
-
-    private static GameResult whenDealerIsBust(int playerPoint) {
-        if (playerPoint > BLACK_JACK_POINT) {
-            return GameResult.DRAW;
-        }
-        return GameResult.LOSE;
     }
 }
