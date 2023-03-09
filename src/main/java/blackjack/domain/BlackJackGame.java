@@ -38,12 +38,8 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public List<Result> getPlayersResult() {
-        return new Referee(participants).getPlayersResult();
-    }
-
-    public List<Integer> getDealerResult() {
-        return new Referee(participants).getDealerResult();
+    public GameResult getGameResult() {
+        return participants.getGameResult();
     }
 
     public Dealer getDealer() {

@@ -23,6 +23,4 @@ public class Player extends Participant {
     public boolean canHit() {
         return !hand.isBlackJack() && !hand.isBust();
     }
-
-
 }
