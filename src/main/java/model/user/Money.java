@@ -18,6 +18,14 @@ public class Money {
         return -money;
     }
 
+    public Money blackJack() {
+        return new Money(blackJackMoney());
+    }
+
+    private Long blackJackMoney() {
+        return (long) (money * 1.5);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
