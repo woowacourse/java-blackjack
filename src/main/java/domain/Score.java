@@ -8,6 +8,7 @@ public class Score {
     private static final int MAX_SCORE = 21;
     private static final int DEALER_CARD_ABLE_BOUND = 16;
     private static final int PLAYER_CARD_ABLE_BOUND = 20;
+    private static final int ACE_DECREASE = 10;
     private static final Map<Integer, Score> scoreFactory = new HashMap<>();
 
     private final int value;
@@ -23,7 +24,7 @@ public class Score {
 
     private static int decreaseScoreByAceCount(int inputValue, int limit, int aceCount) {
         while (canDecreaseScore(inputValue, limit, aceCount)) {
-            inputValue -= 10;
+            inputValue -= ACE_DECREASE;
             aceCount--;
         }
 
