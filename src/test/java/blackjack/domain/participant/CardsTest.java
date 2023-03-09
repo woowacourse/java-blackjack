@@ -9,13 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class CardDeckTest {
+class CardsTest {
 
-    CardDeck deck;
+    Cards deck;
 
     @BeforeEach
     void init() {
-        deck = new CardDeck();
+        deck = new Cards();
     }
 
     @Test
@@ -33,7 +33,7 @@ class CardDeckTest {
 
     @Test
     void testCommonCase() {
-        CardDeck deck = new CardDeck();
+        Cards deck = new Cards();
         deck.addCard(new CourtCard(Pattern.SPADE, "K"));
         deck.addCard(new StandardCard(Pattern.SPADE, "4"));
         Assertions.assertThat(deck.calculateScore(deck)).isEqualTo(14);
@@ -41,7 +41,7 @@ class CardDeckTest {
 
     @Test
     void testBurstCase() {
-        CardDeck deck = new CardDeck();
+        Cards deck = new Cards();
         deck.addCard(new CourtCard(Pattern.SPADE, "K"));
         deck.addCard(new CourtCard(Pattern.SPADE, "J"));
         deck.addCard(new CourtCard(Pattern.SPADE, "Q"));
@@ -55,7 +55,7 @@ class CardDeckTest {
 
         @Test
         void testOneAceCase() {
-            CardDeck deck = new CardDeck();
+            Cards deck = new Cards();
             deck.addCard(new CourtCard(Pattern.SPADE, "K"));
             deck.addCard(new StandardCard(Pattern.SPADE, "4"));
             deck.addCard(new AceCard(Pattern.HEART));
@@ -64,7 +64,7 @@ class CardDeckTest {
 
         @Test
         void testElevenAceCase() {
-            CardDeck deck = new CardDeck();
+            Cards deck = new Cards();
             deck.addCard(new StandardCard(Pattern.SPADE, "2"));
             deck.addCard(new StandardCard(Pattern.SPADE, "4"));
             deck.addCard(new AceCard(Pattern.HEART));
@@ -74,7 +74,7 @@ class CardDeckTest {
 
         @Test
         void testManyAceCase() {
-            CardDeck deck = new CardDeck();
+            Cards deck = new Cards();
             deck.addCard(new StandardCard(Pattern.SPADE, "2"));
             deck.addCard(new AceCard(Pattern.HEART));
             deck.addCard(new AceCard(Pattern.CLUB));
@@ -86,7 +86,7 @@ class CardDeckTest {
 
         @Test
         void testManyAceBurstCase() {
-            CardDeck deck = new CardDeck();
+            Cards deck = new Cards();
             deck.addCard(new CourtCard(Pattern.SPADE, "K"));
             deck.addCard(new AceCard(Pattern.SPADE));
             deck.addCard(new AceCard(Pattern.HEART));

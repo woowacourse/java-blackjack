@@ -18,11 +18,11 @@ class PlayerTest {
     void testHit() {
         Participant p1 = new Player("무민");
         Card card = new StandardCard(Pattern.CLUB, "4");
-        Assertions.assertThat(p1.getCardDeck().getCardCount()).isEqualTo(0);
+        Assertions.assertThat(p1.getCards().getCardCount()).isEqualTo(0);
 
         p1.hit(card);
 
-        Assertions.assertThat(p1.getCardDeck().getCardCount()).isEqualTo(1);
-        Assertions.assertThat(p1.getCardDeck().getCards().contains(card)).isTrue();
+        Assertions.assertThat(p1.getCards().getCardCount()).isEqualTo(1);
+        Assertions.assertThat(p1.getCards().getCards().contains(card)).isTrue();
     }
 }

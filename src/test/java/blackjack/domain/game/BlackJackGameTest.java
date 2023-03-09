@@ -22,8 +22,8 @@ class BlackJackGameTest {
         Dealer dealer = new Dealer();
 
         blackJackGame.initHit(players, dealer);
-        players.getPlayers().stream().allMatch(player -> player.getCardDeck().getCardCount() == 2);
-        assertThat(dealer.getCardDeck().getCardCount()).isEqualTo(2);
+        players.getPlayers().stream().allMatch(player -> player.getCards().getCardCount() == 2);
+        assertThat(dealer.getCards().getCardCount()).isEqualTo(2);
     }
 
     @Test
@@ -32,7 +32,7 @@ class BlackJackGameTest {
 
         blackJackGame.hit(player);
 
-        assertThat(player.getCardDeck().getCardCount()).isEqualTo(1);
+        assertThat(player.getCards().getCardCount()).isEqualTo(1);
     }
 
     @Test

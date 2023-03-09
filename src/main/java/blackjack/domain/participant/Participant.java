@@ -1,39 +1,39 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.game.CardPool;
+import blackjack.domain.game.Deck;
 import blackjack.domain.card.Card;
 
 abstract public class Participant {
 
     private static final int INIT_COUNT = 2;
 
-    private final CardDeck cardDeck;
+    private final Cards cards;
     private final Name name;
 
     public Participant(String name) {
         this.name = new Name(name);
-        cardDeck = new CardDeck();
+        cards = new Cards();
     }
 
-    public void initHit(CardPool cardPool) {
+    public void initHit(Deck deck) {
         for (int i = 0; i < INIT_COUNT; i++) {
-            hit(cardPool.draw());
+            hit(deck.draw());
         }
     }
 
     public void hit(Card card) {
-        cardDeck.addCard(card);
+        cards.addCard(card);
     }
 
     public int calculateScore() {
-        return cardDeck.calculateScore(cardDeck);
+        return cards.calculateScore(cards);
     }
 
     public Name getName() {
         return name;
     }
 
-    public CardDeck getCardDeck() {
-        return cardDeck;
+    public Cards getCards() {
+        return cards;
     }
 }

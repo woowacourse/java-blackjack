@@ -7,13 +7,13 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-class CardPoolTest {
+class DeckTest {
 
     @Test
     void drawCardFail() {
-        CardPool cardPool = new CardPool((x) -> List.of());
+        Deck deck = new Deck((x) -> List.of());
 
-        Assertions.assertThatThrownBy(cardPool::draw)
+        Assertions.assertThatThrownBy(deck::draw)
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("더 이상 카드가 없습니다.");
     }
@@ -21,9 +21,9 @@ class CardPoolTest {
     @Test
     void drawCard() {
         final AceCard target = new AceCard(Pattern.SPADE);
-        CardPool cardPool = new CardPool((x) -> (Lists.newArrayList(target)));
+        Deck deck = new Deck((x) -> (Lists.newArrayList(target)));
 
-        Assertions.assertThat(cardPool.draw()).isEqualTo(target);
-        Assertions.assertThat(cardPool.size()).isEqualTo(0);
+        Assertions.assertThat(deck.draw()).isEqualTo(target);
+        Assertions.assertThat(deck.size()).isEqualTo(0);
     }
 }

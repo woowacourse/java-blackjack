@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CardDeck {
+public class Cards {
 
     private static final int MIN_ACE_VALUE = 1;
     private static final int MAX_ACE_VALUE = 11;
@@ -14,7 +14,7 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck() {
+    public Cards() {
         cards = new ArrayList<>();
     }
 
@@ -40,7 +40,7 @@ public class CardDeck {
             .collect(Collectors.toList());
     }
 
-    public int calculateScore(CardDeck deck) {
+    public int calculateScore(Cards deck) {
         int commonSum = calculateStandardAndCourtCardScore(deck);
         List<AceCard> aceCards = extractAceCards(deck);
         int aceCardCount = aceCards.size();
@@ -49,14 +49,14 @@ public class CardDeck {
     }
 
 
-    private int calculateStandardAndCourtCardScore(CardDeck deck) {
+    private int calculateStandardAndCourtCardScore(Cards deck) {
         return deck.getCards().stream()
                 .filter((card) -> card.getValue() != MAX_ACE_VALUE)
                 .mapToInt(Card::getValue)
                 .sum();
     }
 
-    private List<AceCard> extractAceCards(CardDeck deck) {
+    private List<AceCard> extractAceCards(Cards deck) {
         return deck.getCards().stream()
                 .filter((card) -> card.getValue() == MAX_ACE_VALUE)
                 .map((card) -> (AceCard) card)

@@ -29,13 +29,13 @@ public class BlackJackController {
         printFinal(players, dealer);
     }
 
-    private void initHit(Players players, Dealer dealer) {
-        blackJackGame.initHit(players, dealer);
-        OutputView.printInitCardDeck(dealer, players);
-    }
-
     private Players inputPlayerNames() {
         return new Players(InputView.inputPlayerNames());
+    }
+
+    private void initHit(Players players, Dealer dealer) {
+        blackJackGame.initHit(players, dealer);
+        OutputView.printInitCards(dealer, players);
     }
 
     private void askPlayers(Players players) {
@@ -51,7 +51,7 @@ public class BlackJackController {
         while (isContinueToAsk(command, score)) {
             command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
             hitByCommand(player, command);
-            OutputView.printPlayerCardDeck(player);
+            OutputView.printPlayerCards(player);
             score = blackJackGame.calculateScore(player);
             checkBurst(score);
         }
@@ -91,7 +91,7 @@ public class BlackJackController {
     private void printFinal(Players players, Dealer dealer) {
         List<Result> results = blackJackGame.getPlayersResult(dealer, players);
 
-        OutputView.printFinalCardDeckAndScore(dealer, players);
+        OutputView.printFinalCardsAndScore(dealer, players);
         OutputView.printResult(blackJackGame.getDealerResult(results), dealer, players, results);
     }
 }

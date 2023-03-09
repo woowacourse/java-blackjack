@@ -5,7 +5,7 @@ import blackjack.strategy.CardShuffle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardPool {
+public class Deck {
 
     private static final int MIN_INCLUSIVE = 2;
     private static final int MAX_INCLUSIVE = 10;
@@ -13,7 +13,7 @@ public class CardPool {
 
     private List<Card> cards = new ArrayList<>();
 
-    public CardPool(CardShuffle cardShuffle) {
+    public Deck(CardShuffle cardShuffle) {
         final Pattern[] values = Pattern.values();
 
         for (Pattern pattern : values) {

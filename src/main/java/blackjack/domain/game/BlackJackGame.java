@@ -13,21 +13,21 @@ public class BlackJackGame {
     private static final int BURST_SCORE = 21;
     private static final int DEALER_HIT_NUMBER = 16;
 
-    private final CardPool cardPool;
+    private final Deck deck;
     private final Referee referee;
 
     public BlackJackGame(CardShuffle cardShuffle) {
-        cardPool = new CardPool(cardShuffle);
+        deck = new Deck(cardShuffle);
         referee = new Referee();
     }
 
     public void initHit(Players players, Dealer dealer) {
-        dealer.initHit(cardPool);
-        players.initHit(cardPool);
+        dealer.initHit(deck);
+        players.initHit(deck);
     }
 
     public void hit(Participant participant) {
-        participant.hit(cardPool.draw());
+        participant.hit(deck.draw());
     }
 
     public int calculateScore(Participant participant) {
