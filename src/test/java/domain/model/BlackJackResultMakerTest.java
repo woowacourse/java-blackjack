@@ -6,7 +6,6 @@ import domain.type.Denomination;
 import domain.type.Suit;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +21,9 @@ class BlackJackResultMakerTest {
 
     @BeforeEach
     public void beforeEach() {
-        Cards dealerCards = new Cards(Set.of(new Card(Suit.SPADE, Denomination.TWO)));
+        Cards dealerCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.TWO)));
         dealer = new Dealer(dealerCards);
-        playerCards = new Cards(Set.of(new Card(Suit.SPADE, Denomination.SIX)));
+        playerCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.SIX)));
         players = IntStream.range(0, 10)
             .mapToObj(i -> new Player(playerCards, "test"))
             .collect(Collectors.toList());

@@ -1,13 +1,14 @@
 package domain.model;
 
 import domain.type.Denomination;
-import java.util.Set;
+
+import java.util.List;
 
 public class Cards {
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
-    public Cards(final Set<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -21,7 +22,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public Set<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 }

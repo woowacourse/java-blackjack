@@ -1,7 +1,7 @@
 package domain.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
@@ -20,7 +20,7 @@ public class Player {
     }
 
     public static Player from(final String name) {
-        return new Player(new Cards(new HashSet<>()), name);
+        return new Player(new Cards(new ArrayList<>()), name);
     }
 
     public void addCard(final Card card) {
@@ -32,8 +32,8 @@ public class Player {
         return !score.isBust();
     }
 
-    public Cards getCards() {
-        return new Cards(Set.copyOf(cards.getCards()));
+    public List<Card> getCards() {
+        return new ArrayList<>(cards.getCards());
     }
 
     public String getName() {

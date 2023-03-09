@@ -1,6 +1,6 @@
 package domain.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Dealer extends Player {
 
@@ -12,7 +12,7 @@ public class Dealer extends Player {
     }
 
     public Dealer()  {
-        super(new Cards(new HashSet<>()), DEALER_NAME);
+        super(new Cards(new ArrayList<>()), DEALER_NAME);
     }
 
     @Override

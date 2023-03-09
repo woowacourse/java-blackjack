@@ -1,7 +1,6 @@
 package view;
 
 import domain.model.Card;
-import domain.model.Cards;
 import domain.model.Dealer;
 import domain.model.Player;
 import domain.model.Result;
@@ -43,7 +42,7 @@ public class OutputView {
     }
 
     private static void printFirstCard(final Dealer dealer) {
-        final Card card = dealer.getCards().getCards()
+        final Card card = dealer.getCards()
             .stream()
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
@@ -54,10 +53,9 @@ public class OutputView {
         System.out.println(player.getName() + CARD + COLON + stringifyCards(player.getCards()));
     }
 
-    private static String stringifyCards(final Cards cards) {
+    private static String stringifyCards(final List<Card> cards) {
         final StringJoiner sj = new StringJoiner(DELIMITER);
-        cards.getCards()
-            .stream()
+        cards.stream()
             .map(Card::toString)
             .forEach(sj::add);
         return sj.toString();
