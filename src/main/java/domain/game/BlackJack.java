@@ -1,7 +1,7 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.deck.Deck;
 import domain.dto.CardNames;
 import domain.user.Dealer;
@@ -56,15 +56,15 @@ public class BlackJack {
         List<Player> players = users.getPlayers();
         Map<String, CardNames> playerToCard = new LinkedHashMap<>();
         for (Player player : players) {
-            Cards playerCards = player.getCards();
-            playerToCard.put(player.getName(), new CardNames(playerCards.getCardNames()));
+            Hand playerHand = player.getCards();
+            playerToCard.put(player.getName(), new CardNames(playerHand.getCardNames()));
         }
         return playerToCard;
     }
 
     public CardNames getDealerCardNames() {
-        Cards dealerCards = users.getDealer().getCards();
-        return new CardNames(dealerCards.getCardNames());
+        Hand dealerHand = users.getDealer().getCards();
+        return new CardNames(dealerHand.getCardNames());
     }
 
     public List<Player> getHittablePlayers() {

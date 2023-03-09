@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class Hand {
     private final List<Card> cards = new ArrayList<>();
 
     public void addCard(final Card card) {

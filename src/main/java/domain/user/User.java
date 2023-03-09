@@ -1,19 +1,19 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.card.Score;
 
 public abstract class User {
 
-    protected final Cards cards = new Cards();
+    protected final Hand hand = new Hand();
 
     public void hit(final Card card) {
-        cards.addCard(card);
+        hand.addCard(card);
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 
     abstract public boolean isHittable();
@@ -23,6 +23,6 @@ public abstract class User {
     abstract public boolean isPlayer();
 
     public Score getScore() {
-        return cards.getSumOfScores();
+        return hand.getSumOfScores();
     }
 }

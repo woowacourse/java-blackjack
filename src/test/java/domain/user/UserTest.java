@@ -3,7 +3,7 @@ package domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.card.Denomination;
 import domain.card.Suits;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +18,8 @@ public class UserTest {
         Card card2 = new Card(Denomination.THREE, Suits.DIAMOND);
         user.hit(card1);
         user.hit(card2);
-        Cards cards = user.getCards();
+        Hand hand = user.getCards();
 
-        assertThat(cards.getCards()).containsExactly(card1, card2);
+        assertThat(hand.getCards()).containsExactly(card1, card2);
     }
 }

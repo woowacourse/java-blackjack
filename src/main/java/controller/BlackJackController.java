@@ -1,7 +1,7 @@
 package controller;
 
 import domain.HitCommand;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.deck.RandomDeckGenerator;
 import domain.dto.CardNames;
 import domain.game.BlackJack;
@@ -53,8 +53,8 @@ public class BlackJackController {
         String playerName = player.getName();
         while (blackJack.isHittablePlayer(player) && askHitCommandToPlayer(player).isHit()) {
             blackJack.giveCard(playerName);
-            Cards playerCards = player.getCards();
-            OutputView.printEachPlayerCards(playerName, new CardNames(playerCards.getCardNames()));
+            Hand playerHand = player.getCards();
+            OutputView.printEachPlayerCards(playerName, new CardNames(playerHand.getCardNames()));
         }
     }
 

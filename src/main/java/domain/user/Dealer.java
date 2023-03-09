@@ -10,7 +10,7 @@ public class Dealer extends User {
 
     @Override
     public boolean isHittable() {
-        return cards.isUnder(UNDER_OVER_SCORE);
+        return hand.isUnder(UNDER_OVER_SCORE);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class Dealer extends User {
     }
 
     public Card getVisibleCard() {
-        return cards.get(VISIBLE_CARD_INDEX);
+        return hand.get(VISIBLE_CARD_INDEX);
     }
 }
