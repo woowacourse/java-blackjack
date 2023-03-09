@@ -7,8 +7,7 @@ import ui.InputView;
 import ui.OutputView;
 
 public class BlackjackController {
-    private static final String HIT = "y";
-    private static final String STAND = "n";
+
     private final Participants participants;
 
     public BlackjackController() {
@@ -33,12 +32,12 @@ public class BlackjackController {
     }
 
     private void giveCardUntilImpossible(Player player, Dealer dealer) {
-        String whetherDrawCard = HIT;
-        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player)).equals(HIT)) {
+        boolean whetherDrawCard = false;
+        while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player))) {
             player.addCard(dealer.drawCard());
             OutputView.printCardsStatusOfPlayer(player);
         }
-        if (STAND.equals(whetherDrawCard)) {
+        if (!whetherDrawCard) {
             OutputView.printCardsStatusOfPlayer(player);
         }
     }
