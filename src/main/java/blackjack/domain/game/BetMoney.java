@@ -9,12 +9,16 @@ public class BetMoney {
 
     private final int amount;
 
-    public BetMoney(final int amount) {
-        validateAmountRange(amount);
+    private BetMoney(final int amount) {
         this.amount = amount;
     }
 
-    private void validateAmountRange(final int amount) {
+    public static BetMoney createBetMoney(final int amount) {
+        validateAmountRange(amount);
+        return new BetMoney(amount);
+    }
+
+    private static void validateAmountRange(final int amount) {
         if (amount < MINIMUM_AMOUNT || amount > MAXIMUM_AMOUNT) {
             throw new IllegalArgumentException(INVALID_ACCOUNT_RANGE_MESSAGE + amount);
         }
@@ -25,6 +29,10 @@ public class BetMoney {
             return new BetMoney((int) (amount * 2.5));
         }
         return new BetMoney(amount * 2);
+    }
+
+    public BetMoney loseMoney() {
+        return this.subtract(this);
     }
 
     public BetMoney subtract(final BetMoney betMoney) {
