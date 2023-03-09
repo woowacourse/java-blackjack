@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.game.Deck;
+import domain.deck.ShuffledDeck;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
@@ -35,7 +35,7 @@ class DealerTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     void dealerTakeCardTest(int value) {
-        dealer.takeCard(new Deck(), value);
+        dealer.takeCard(new ShuffledDeck(), value);
 
         assertThat(dealer)
                 .extracting("cards")
@@ -47,7 +47,7 @@ class DealerTest {
     @DisplayName("딜러는 한 장의 카드를 받을 수 있다.")
     @Test
     void playerTakeCardsTest() {
-        dealer.takeCard(Card.create(CardShape.HEART, CardNumber.of(3)));
+        dealer.takeCard(Card.of(CardShape.HEART, CardNumber.of(3)));
 
         assertThat(dealer)
                 .extracting("cards")
@@ -60,7 +60,7 @@ class DealerTest {
     @Test
     void calculateGamePoint() {
         for (int i = 0; i < 12; i++) {
-            dealer.takeCard(Card.create(CardShape.HEART, CardNumber.of(1)));
+            dealer.takeCard(Card.of(CardShape.HEART, CardNumber.of(1)));
         }
         assertThat(dealer.calculatePoint())
                 .extracting("gamePoint")

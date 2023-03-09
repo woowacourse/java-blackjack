@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.deck.TestDeckForThreeParticipant;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
@@ -60,7 +62,7 @@ class BetTest {
         void init() {
             final List<Name> names = List.of(Name.of("a"), Name.of("b"), Name.of("c"));
             final List<Integer> bets = List.of(1000, 2000, 3000);
-            blackJack = BlackJack.getInstance(names, bets, new Deck());
+            blackJack = BlackJack.getInstance(names, bets, new TestDeckForThreeParticipant());
 
             final Players players = Players.create(names, bets);
         }
@@ -82,6 +84,18 @@ class BetTest {
             assertThat(list.get(0).getBet()).isEqualTo(Bet.of(1000));
             assertThat(list.get(1).getBet()).isEqualTo(Bet.of(2000));
             assertThat(list.get(2).getBet()).isEqualTo(Bet.of(3000));
+        }
+
+        @Test
+        void name() {
+            final Players players = blackJack.getPlayers();
+            final List<Player> playerList = players.getPlayers();
+            assertThat(playerList.get(0))
+                    .extracting("cards")
+                    .extracting("gamePoint")
+                    .extracting("gamePoint")
+                    .isEqualTo(21);
+
         }
     }
 

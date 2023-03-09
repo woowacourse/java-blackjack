@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.deck.DeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
@@ -13,23 +14,23 @@ public final class BlackJack {
 
     private final Dealer dealer;
     private final Players players;
-    private final Deck deck;
+    private final DeckStrategy deck;
 
-    private BlackJack(final List<Name> playerNames, final List<Integer> bets, final Deck deck) {
+    private BlackJack(final List<Name> playerNames, final List<Integer> bets, final DeckStrategy deck) {
         this.dealer = Dealer.create(bets);
         this.players = Players.create(playerNames, bets);
         this.deck = deck;
         initGame(deck, INITIAL_DRAW_CARD_COUNT);
     }
 
-    private void initGame(final Deck deck, final int count) {
+    private void initGame(final DeckStrategy deck, final int count) {
         dealer.takeCard(deck, count);
         players.takeCard(deck, count);
     }
 
     public static BlackJack getInstance(final List<Name> playerNames,
                                         final List<Integer> bets,
-                                        final Deck deck) {
+                                        final DeckStrategy deck) {
         return new BlackJack(playerNames, bets, deck);
     }
 
@@ -51,6 +52,10 @@ public final class BlackJack {
             count += 1;
         }
         return count;
+    }
+
+    public void calculateBets() {
+
     }
 
     public Dealer getDealer() {

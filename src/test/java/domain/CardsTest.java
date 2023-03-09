@@ -19,9 +19,9 @@ public class CardsTest {
     @DisplayName("Cards는 카드들의 리스트로 이루어져 있다.")
     void cardsSumTest() {
         final List<Card> data = List.of(
-                Card.create(CardShape.CLOVER, CardNumber.of(1)),
-                Card.create(CardShape.DIAMOND, CardNumber.of(2)),
-                Card.create(CardShape.HEART, CardNumber.of(3))
+                Card.of(CardShape.CLOVER, CardNumber.of(1)),
+                Card.of(CardShape.DIAMOND, CardNumber.of(2)),
+                Card.of(CardShape.HEART, CardNumber.of(3))
         );
         assertDoesNotThrow(() -> Cards.create(data));
     }
@@ -30,15 +30,15 @@ public class CardsTest {
     @DisplayName("Cards에 Card를 추가할 수 있다.")
     void addCardTest() {
         final List<Card> data = List.of(
-                Card.create(CardShape.CLOVER, CardNumber.of(1)),
-                Card.create(CardShape.DIAMOND, CardNumber.of(2)),
-                Card.create(CardShape.HEART, CardNumber.of(3))
+                Card.of(CardShape.CLOVER, CardNumber.of(1)),
+                Card.of(CardShape.DIAMOND, CardNumber.of(2)),
+                Card.of(CardShape.HEART, CardNumber.of(3))
         );
         final Cards cards = Cards.create(data);
         assertThat(cards).extracting("cards", collection(List.class))
                 .size().isSameAs(3);
 
-        final Card card = Card.create(CardShape.HEART, CardNumber.of(1));
+        final Card card = Card.of(CardShape.HEART, CardNumber.of(1));
         assertThat(cards.add(card)).extracting("cards", collection(List.class))
                 .size().isSameAs(4);
     }
@@ -47,9 +47,9 @@ public class CardsTest {
     @DisplayName("Cards에 Card를 추가하면 Point도 업데이트 된다.")
     void addCardPointUpdateTest() {
         final List<Card> data = List.of(
-                Card.create(CardShape.CLOVER, CardNumber.of(1)),
-                Card.create(CardShape.DIAMOND, CardNumber.of(2)),
-                Card.create(CardShape.HEART, CardNumber.of(3))
+                Card.of(CardShape.CLOVER, CardNumber.of(1)),
+                Card.of(CardShape.DIAMOND, CardNumber.of(2)),
+                Card.of(CardShape.HEART, CardNumber.of(3))
         );
         final Cards cards = Cards.create(data);
         assertThat(cards)
@@ -57,7 +57,7 @@ public class CardsTest {
                 .extracting("gamePoint")
                 .isSameAs(16);
 
-        final Card card = Card.create(CardShape.HEART, CardNumber.of(5));
+        final Card card = Card.of(CardShape.HEART, CardNumber.of(5));
 
         assertThat(cards.add(card))
                 .extracting("gamePoint")
@@ -69,9 +69,9 @@ public class CardsTest {
     @DisplayName("cards의 bust 상태 테스트")
     void bustTest() {
         final List<Card> data = List.of(
-                Card.create(CardShape.HEART, CardNumber.of(10)),
-                Card.create(CardShape.HEART, CardNumber.of(10)),
-                Card.create(CardShape.HEART, CardNumber.of(10))
+                Card.of(CardShape.HEART, CardNumber.of(10)),
+                Card.of(CardShape.HEART, CardNumber.of(10)),
+                Card.of(CardShape.HEART, CardNumber.of(10))
         );
         final Cards cards = Cards.create(data);
         assertThat(cards.isBusted()).isTrue();

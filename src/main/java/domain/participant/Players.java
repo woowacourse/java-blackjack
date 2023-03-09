@@ -1,14 +1,12 @@
 package domain.participant;
 
-import domain.game.Deck;
+import domain.deck.DeckStrategy;
 import domain.game.GamePoint;
 
-import java.time.chrono.MinguoDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public final class Players {
 
@@ -43,7 +41,7 @@ public final class Players {
         }
     }
 
-    public void takeCard(final Deck deck, final int count) {
+    public void takeCard(final DeckStrategy deck, final int count) {
         for (Player player : players) {
             player.takeCard(deck, count);
         }

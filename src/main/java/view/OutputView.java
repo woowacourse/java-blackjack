@@ -108,7 +108,7 @@ public final class OutputView {
     }
 
     public void printFinalResult(final Dealer dealer, GameResult gameResult) {
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
         printDealerResult(dealer, gameResult.getDealerResult());
         printPlayersResult(gameResult.getPlayerResult());
     }

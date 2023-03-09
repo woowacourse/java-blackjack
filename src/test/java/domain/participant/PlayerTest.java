@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.game.Deck;
+import domain.deck.ShuffledDeck;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
@@ -25,8 +25,8 @@ class PlayerTest {
     @BeforeEach
     void init() {
         initialData = List.of(
-                Card.create(CardShape.HEART, CardNumber.of(1)),
-                Card.create(CardShape.HEART, CardNumber.of(2))
+                Card.of(CardShape.HEART, CardNumber.of(1)),
+                Card.of(CardShape.HEART, CardNumber.of(2))
         );
         player = Player.create(Name.of("HK"), Cards.create(initialData), 10_000);
     }
@@ -42,7 +42,7 @@ class PlayerTest {
     @DisplayName("플레이어는 한 장의 카드를 받을 수 있다.")
     @Test
     void playerTakeCardsTest() {
-        player.takeCard(Card.create(CardShape.HEART, CardNumber.of(3)));
+        player.takeCard(Card.of(CardShape.HEART, CardNumber.of(3)));
 
         assertThat(player)
                 .extracting("cards")
@@ -55,7 +55,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {2, 3, 4, 5})
     void playerTakeCardTest(int value) {
-        player.takeCard(new Deck(), value);
+        player.takeCard(new ShuffledDeck(), value);
 
         assertThat(player)
                 .extracting("cards")
@@ -68,7 +68,7 @@ class PlayerTest {
     @Test
     void calculateGamePoint() {
         for (int i = 0; i < 12; i++) {
-            player.takeCard(Card.create(CardShape.HEART, CardNumber.of(1)));
+            player.takeCard(Card.of(CardShape.HEART, CardNumber.of(1)));
         }
         assertThat(player.calculatePoint())
                 .extracting("gamePoint")

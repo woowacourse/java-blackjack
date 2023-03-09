@@ -1,7 +1,7 @@
 package domain.participant;
 
+import domain.deck.DeckStrategy;
 import domain.game.Bet;
-import domain.game.Deck;
 import domain.game.GamePoint;
 import domain.card.Card;
 import domain.card.Cards;
@@ -33,7 +33,7 @@ public abstract class Participant {
         this.cards = cards.add(card);
     }
 
-    public void takeCard(final Deck deck, final int count) {
+    public void takeCard(final DeckStrategy deck, final int count) {
         for (int i = 0; i < count; i++) {
             this.cards = cards.add(deck.drawCard());
         }

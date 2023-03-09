@@ -1,7 +1,7 @@
 package controller;
 
 import domain.game.BlackJack;
-import domain.game.Deck;
+import domain.deck.ShuffledDeck;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.Name;
@@ -30,7 +30,7 @@ public final class BlackJackController {
         for (Name playerName : playerNames) {
             bets.add(repeat(() -> inputView.betRequest(playerName)));
         }
-        return BlackJack.getInstance(playerNames, bets, new Deck());
+        return BlackJack.getInstance(playerNames, bets, new ShuffledDeck());
     }
 
     public void process() {
@@ -40,6 +40,7 @@ public final class BlackJackController {
         getPlayersDecision(blackJack);
         getDealerResult(blackJack);
         outputView.printStatus(blackJack.getDealer(), blackJack.getPlayers());
+        blackJack.calculateBets();
         outputView.printFinalResult(blackJack.getDealer(), blackJack.getGameResult());
     }
 
