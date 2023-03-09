@@ -41,4 +41,12 @@ class InputValidatorTest {
                 () -> InputValidator.validateAnswerYesOrNo("yyy"))
                 .getMessage().equals("[ERROR] y/n만 입력 가능합니다.");
     }
+
+    @DisplayName("배팅금액은 숫자를 입력하지 않으면 예외를 던진다.")
+    @Test
+    void validateIsNumericTest() {
+        assertThrows(IllegalArgumentException.class,
+                () -> InputValidator.validateIsNumeric("h343"))
+                .getMessage().equals("[ERROR] 배팅 금액은 숫자를 입력해주세요.");
+    }
 }

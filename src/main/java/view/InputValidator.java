@@ -38,4 +38,12 @@ public class InputValidator {
             throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
         }
     }
+
+    public static void validateIsNumeric(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자를 입력해주세요.");
+        }
+    }
 }

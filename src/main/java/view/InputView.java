@@ -49,4 +49,15 @@ public final class InputView {
     private void validateAnswer(final String input) {
         InputValidator.validateAnswerYesOrNo(input);
     }
+
+    public int readBetMoney() {
+        final String input = scanner.nextLine();
+        validateBetMoney(input);
+
+        return Integer.parseInt(input);
+    }
+
+    private void validateBetMoney(final String input) {
+        InputValidator.validateIsNumeric(input);
+    }
 }
