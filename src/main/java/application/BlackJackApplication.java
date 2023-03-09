@@ -23,26 +23,22 @@ public class BlackJackApplication {
 
     private final InputView inputView;
     private final OutputView outputView;
-    //TODO: 생성 위치 고민
-    private final BlackJackBettingMachine blackJackBettingMachine;
 
-
-    public BlackJackApplication(InputView inputView, OutputView outputView,
-                                BlackJackBettingMachine blackJackBettingMachine) {
+    public BlackJackApplication(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackJackBettingMachine = blackJackBettingMachine;
     }
 
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
+        BlackJackBettingMachine blackJackBettingMachine = new BlackJackBettingMachine();
 
-        betEachPlayer(blackJackGame);
+        betEachPlayer(blackJackGame, blackJackBettingMachine);
         splitCards(blackJackGame);
         drawCards(blackJackGame);
 
         printParticipantResults(blackJackGame);
-        printBattingResults(blackJackGame);
+        printBattingResults(blackJackGame, blackJackBettingMachine);
     }
 
     private BlackJackGame createBlackJackGame() {
@@ -67,7 +63,7 @@ public class BlackJackApplication {
         }
     }
 
-    private void betEachPlayer(BlackJackGame blackJackGame) {
+    private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
         for (String playerName : blackJackGame.getPlayersName()) {
             int bettingMoney = inputView.readBettingMoneyByName(playerName);
             blackJackBettingMachine.betMoney(playerName, bettingMoney);
@@ -159,7 +155,7 @@ public class BlackJackApplication {
         return ParticipantResult.toDto(dealerName, dealerCards, dealerScore);
     }
 
-    private void printBattingResults(BlackJackGame blackJackGame) {
+    private void printBattingResults(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
         List<BattingResult> battingResultDtos = new ArrayList<>();
 
         for (String playerName : blackJackGame.getPlayersName()) {
