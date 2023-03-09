@@ -24,7 +24,7 @@ public class DeckTest {
         }
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("덱이 비었습니다.");
+                .hasMessage("카드를 전부 사용했습니다.");
     }
 
     @DisplayName("중복된 카드 반환 없는지 확인")
@@ -33,14 +33,14 @@ public class DeckTest {
         // given
         Deck deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
-        Set<Card> cardsDeduplicated = new HashSet<>();
         List<Card> cards = new ArrayList<>();
         // when
         for (int i = 0; i < 52; i++) {
             Card card = deck.draw();
-            cardsDeduplicated.add(card);
             cards.add(card);
         }
+        Set<Card> cardsDeduplicated = new HashSet<>(cards);
+
         // then
         assertThat(cardsDeduplicated.size()).isEqualTo(cards.size());
     }
