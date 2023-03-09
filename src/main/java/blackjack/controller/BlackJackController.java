@@ -94,8 +94,9 @@ public class BlackJackController {
     }
 
     private void takeDealerTurn() {
+        boolean isDealerPicked = blackJackGame.isDealerCanPick();
         blackJackGame.takeDealerTurn();
-        OutputView.printDealerResult(blackJackGame.isDealerCanPick());
+        OutputView.printDealerResult(isDealerPicked);
     }
 
     private void showResult() {
