@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.response.CardResponse;
-import blackjack.response.ResultTypeResponse;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +76,7 @@ public class OutputView {
             final Map<String, Integer> playersScore) {
         playersScore.keySet().forEach(name -> {
             printFinalPlayerCard(name, playersCardsResponse.get(name));
-            printFinalPlayerScore(name, playersScore.get(name));
+            printFinalPlayerScore(playersScore.get(name));
         });
     }
 
@@ -90,49 +89,26 @@ public class OutputView {
         System.out.print(name + CARD + DELIMITER + card);
     }
 
-    private void printFinalPlayerScore(final String name, final int score) {
+    private void printFinalPlayerScore(final int score) {
         System.out.println(RESULT + score);
-    }
-
-    public void printFinalResult(final Map<ResultTypeResponse, Long> dealerResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.print(DEALER + DELIMITER);
-        printDealerResult(dealerResult);
-    }
-
-    private void printDealerResult(final Map<ResultTypeResponse, Long> dealerResult) {
-        printDealer(dealerResult, ResultTypeResponse.from("승"));
-        printDealer(dealerResult, ResultTypeResponse.from("무"));
-        printDealer(dealerResult, ResultTypeResponse.from("패"));
-        System.out.println();
-    }
-
-    private void printPlayerResult(final String name, final ResultTypeResponse resultTypeResponse) {
-        System.out.println(name + DELIMITER + resultTypeResponse.getResult());
-    }
-
-    private void printDealer(
-            final Map<ResultTypeResponse, Long> dealerResult,
-            final ResultTypeResponse resultTypeResponse) {
-
-        if (dealerResult.get(resultTypeResponse) != 0) {
-            System.out.print(dealerResult.get(resultTypeResponse) + resultTypeResponse.getResult());
-        }
     }
 
     public void printError(final Exception exception) {
         System.out.println(exception.getMessage());
     }
 
-    public void printFinalDealerResult(final Map<ResultTypeResponse, Long> dealerResult) {
+    public void printFinalMoney(final Map<String, Integer> calculatePlayersMoney) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.print(DEALER + DELIMITER);
-        printDealerResult(dealerResult);
+        System.out.println("## 최종 수익");
+        System.out.println(DEALER + DELIMITER + calculateDealerMoney(calculatePlayersMoney));
+        calculatePlayersMoney.forEach((name, money) -> System.out.println(name + DELIMITER + money));
     }
 
-    public void printFinalPlayersResult(final Map<String, ResultTypeResponse> playersResult) {
-        playersResult.forEach(this::printPlayerResult);
+    private String calculateDealerMoney(final Map<String, Integer> calculatePlayersMoney) {
+        int dealerMoney = 0;
+        for (final int money : calculatePlayersMoney.values()) {
+            dealerMoney -= money;
+        }
+        return String.valueOf(dealerMoney);
     }
 }
