@@ -20,17 +20,21 @@ public class ScoreTest {
     @Test
     @DisplayName("21 점이면 최고 점수이다.")
     void twentyOneIsMaxScore() {
-        Score score = Score.of(21);
+        Score notMaxScore = Score.of(20);
+        Score maxScore = Score.of(21);
 
-        assertThat(score.isMaxScore()).isTrue();
+        assertThat(notMaxScore.isMaxScore()).isFalse();
+        assertThat(maxScore.isMaxScore()).isTrue();
     }
 
     @Test
     @DisplayName("21 점 보다 크면 Bust 이다.")
     void LargeThenTwentyOneIsBust() {
-        Score score = Score.of(22);
+        Score notBust = Score.of(21);
+        Score bust = Score.of(22);
 
-        assertThat(score.isBust()).isTrue();
+        assertThat(notBust.isBust()).isFalse();
+        assertThat(bust.isBust()).isTrue();
     }
 
 }
