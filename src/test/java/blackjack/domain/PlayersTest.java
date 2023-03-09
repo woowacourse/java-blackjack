@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayersTest {
-
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewPlayers() {
@@ -19,6 +18,7 @@ class PlayersTest {
         for (int i = 0; i < 3; i++) {
             players.add(new Player(new Name("newName")));
         }
+
         assertDoesNotThrow(() -> new Players(players));
     }
 
@@ -30,6 +30,7 @@ class PlayersTest {
         for (int i = 0; i < size; i++) {
             players.add(new Player(new Name("newName")));
         }
+
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.");

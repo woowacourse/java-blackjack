@@ -30,6 +30,7 @@ class GamePlayerTest {
     @Test
     void Should_Success_When_GiveCardToDealer() {
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
+
         assertDoesNotThrow(() -> gamePlayer.giveCardToDealer(new Card(CardNumber.ACE, CardSymbol.HEARTS)));
     }
 
@@ -37,6 +38,7 @@ class GamePlayerTest {
     @Test
     void Should_Success_When_GiveCardToPlayer() {
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
+
         assertDoesNotThrow(() -> gamePlayer.giveCardToPlayerByIndex(1, new Card(CardNumber.ACE, CardSymbol.HEARTS)));
     }
 
@@ -53,7 +55,6 @@ class GamePlayerTest {
         Card card6 = new Card(CardNumber.TEN, CardSymbol.SPADES);
         Card card7 = new Card(CardNumber.TEN, CardSymbol.CLUBS);
         Card card8 = new Card(CardNumber.TEN, CardSymbol.HEARTS);
-
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);

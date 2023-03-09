@@ -13,7 +13,7 @@ class PlayerTest {
     private Player tori;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         tori = new Player(new Name("tori"));
     }
 
