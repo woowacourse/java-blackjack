@@ -11,12 +11,11 @@ public class Game {
         this.deck = deck;
         this.gamePlayer = gamePlayer;
 
-        deck.shuffleDeck();
         initializeGame();
     }
 
     public static Game from(GamePlayer gamePlayer) {
-        return new Game(new Deck(), gamePlayer);
+        return new Game(Deck.of(new ShuffleCardsGenerator().generator()), gamePlayer);
     }
 
     private void initializeGame() {

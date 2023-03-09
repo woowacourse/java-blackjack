@@ -1,11 +1,8 @@
 package blackjack.domain;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck {
     private final Deque<Card> cards;
@@ -14,11 +11,8 @@ public class Deck {
         this.cards = cards;
     }
 
-    public Deck() {
-        this(Arrays.stream(CardNumber.values())
-                .flatMap(cardNumber -> Arrays.stream(CardSymbol.values())
-                        .map(cardSymbol -> new Card(cardNumber, cardSymbol)))
-                .collect(Collectors.toCollection(ArrayDeque::new)));
+    public static Deck of(List<Card> cards) {
+        return new Deck(new ArrayDeque<>(cards));
     }
 
     public Card draw() {
@@ -30,10 +24,6 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("더 이상 카드를 뽑을 수 없습니다.");
         }
-    }
-
-    public void shuffleDeck() {
-        Collections.shuffle((List<?>) this.cards);
     }
 
     public boolean isEmpty() {
