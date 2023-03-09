@@ -121,23 +121,7 @@ public class BlackJackGameController {
         GameResult gameResult = new GameResult(game);
         outputView.printEndMsg();
         outputView.printDealerWinningResult(gameResult.getDealerResult());
-        outputView.printPlayerWinningResult(getFormattedPlayerResult(gameResult.getPlayerResult()));
-    }
-
-    private Map<String, Integer> getFormattedDealerResult(Map<Result, Integer> dealerResult) {
-        Map<String, Integer> formattedDealerResult = new HashMap<>();
-        for (Result result : dealerResult.keySet()) {
-            formattedDealerResult.put(result.getResult(), dealerResult.get(result));
-        }
-        return formattedDealerResult;
-    }
-
-    private Map<String, String> getFormattedPlayerResult(Map<Player, Result> playerResult) {
-        Map<String, String> formattedPlayerResult = new HashMap<>();
-        for (Player player : playerResult.keySet()) {
-            formattedPlayerResult.put(player.showName(), playerResult.get(player).getResult());
-        }
-        return formattedPlayerResult;
+        outputView.printPlayerWinningResult(gameResult.getPlayerResult());
     }
 
     private void printOnePlayerResult(Player player) {

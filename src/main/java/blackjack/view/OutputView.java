@@ -73,9 +73,9 @@ public class OutputView {
         System.out.println(FINAL_START_MSG);
     }
 
-    public void printPlayerWinningResult(Map<String, String> playerResult) {
-        for (String playerName : playerResult.keySet()) {
-            System.out.println(playerName + RESULT_DELIMITER + playerResult.get(playerName));
+    public void printPlayerWinningResult(Map<Player, Result> playerResult) {
+        for (Player player : playerResult.keySet()) {
+            System.out.println(player.showName() + RESULT_DELIMITER + playerResult.get(player).getResult());
         }
     }
 
