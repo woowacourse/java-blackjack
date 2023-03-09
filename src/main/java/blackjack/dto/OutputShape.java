@@ -10,6 +10,7 @@ public enum OutputShape {
     SPADE(Shape.SPADE, "스페이드"),
     CLOVER(Shape.CLOVER, "클로버");
 
+    private static final String NON_VALUABLE_MASSAGE = "없는 모양입니다.";
     private final Shape shape;
     private final String output;
 
@@ -21,7 +22,8 @@ public enum OutputShape {
     public static String match(Shape shape) {
         return Arrays.stream(values())
                 .filter(outputLetter -> outputLetter.shape.equals(shape))
-                .findFirst()
-                .get().output;
+                .findFirst().orElseThrow(()->{
+                    throw new IllegalArgumentException(NON_VALUABLE_MASSAGE);
+                }).output;
     }
 }

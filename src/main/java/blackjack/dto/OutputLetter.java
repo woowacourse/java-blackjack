@@ -20,6 +20,7 @@ public enum OutputLetter {
     QUEEN(Letter.QUEEN, "Q"),
 
     KING(Letter.KING, "K");
+    private static final String NON_VALUABLE_MASSAGE = "없는 숫자입니다.";
     private final Letter letter;
     private final String output;
 
@@ -31,7 +32,8 @@ public enum OutputLetter {
     public static String match(Letter letter) {
         return Arrays.stream(values())
                 .filter(outputLetter -> outputLetter.letter.equals(letter))
-                .findFirst()
-                .get().output;
+                .findFirst().orElseThrow(()->{
+                    throw new IllegalArgumentException(NON_VALUABLE_MASSAGE);
+                }).output;
     }
 }
