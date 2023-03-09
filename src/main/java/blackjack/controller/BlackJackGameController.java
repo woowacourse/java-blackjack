@@ -40,12 +40,12 @@ public class BlackJackGameController {
     private BlackJackGame generateBlackJackGame() {
         Optional<BlackJackGame> blackJackGame;
         do {
-            blackJackGame = createNames();
+            blackJackGame = generateNames();
         } while (blackJackGame.isEmpty());
         return blackJackGame.get();
     }
 
-    private Optional<BlackJackGame> createNames() {
+    private Optional<BlackJackGame> generateNames() {
         try {
             final String inputNames = InputView.readNames();
             return Optional.of(new BlackJackGame(new Dealer(), new Players(inputNames)));
@@ -107,9 +107,8 @@ public class BlackJackGameController {
     private boolean isCardHandedOutByCommand(final BlackJackGame blackJackGame, final Player player,
                                              final String playerAnswer) {
         if (playerAnswer.equals(YES_COMMAND)) {
-            blackJackGame.handOutCardTo(shufflingMachine, player);
+            blackJackGame.hit(shufflingMachine, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
-            return true;
         }
         OutputView.printParticipantCards(player.getName(), player.getCards());
         return false;
@@ -117,7 +116,7 @@ public class BlackJackGameController {
 
     private void handOutCardToDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
         while (dealer.isUnderThanBoundary(DEALER_DRAWING_BOUNDARY)) {
-            blackJackGame.handOutCardTo(shufflingMachine, dealer);
+            blackJackGame.hit(shufflingMachine, dealer);
             OutputView.printDealerReceiveOneMoreCard();
         }
     }

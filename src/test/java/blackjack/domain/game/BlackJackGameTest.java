@@ -4,17 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.game.ResultType;
-import org.assertj.core.api.SoftAssertions;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -52,7 +48,7 @@ class BlackJackGameTest {
         Dealer dealer = blackJackGame.getDealer();
 
         // when
-        blackJackGame.handOutCardTo(shufflingMachine, dealer);
+        blackJackGame.hit(shufflingMachine, dealer);
         int dealerCardSize = dealer.getCards().size();
 
         // then

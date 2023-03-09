@@ -13,8 +13,6 @@ import blackjack.domain.participant.Players;
 
 public class BlackJackGame {
 
-    private static final int NUMBER_OF_INITIAL_CARD = 2;
-
     private final Dealer dealer;
     private final Players players;
 
@@ -23,7 +21,7 @@ public class BlackJackGame {
         this.players = players;
     }
 
-    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant) {
+    public void hit(final ShufflingMachine shufflingMachine, final Participant participant) {
         final Card card = Deck.from(shufflingMachine.draw());
         participant.receiveCard(card);
     }
@@ -35,10 +33,9 @@ public class BlackJackGame {
     }
 
     private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        int count = 0;
-        while (count != NUMBER_OF_INITIAL_CARD) {
-            handOutCardTo(shufflingMachine, participant);
-            count++;
+        int cardSize = 2;
+        while (cardSize-- > 0) {
+            hit(shufflingMachine, participant);
         }
     }
 
