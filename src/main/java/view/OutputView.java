@@ -33,6 +33,7 @@ public class OutputView {
         if (cardIterator.hasNext()) {
             Card firstCard = cardIterator.next();
             System.out.println("딜러: " + Display.of(firstCard));
+            return;
         }
         System.out.println("딜러의 카드가 없습니다");
     }
