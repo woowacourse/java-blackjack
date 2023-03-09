@@ -22,4 +22,8 @@ public class Score {
         return score == MAX_SCORE;
     }
 
+    public boolean isBust() {
+        return MAX_SCORE < score;
+    }
+
 }
