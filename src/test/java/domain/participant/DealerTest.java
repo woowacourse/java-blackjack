@@ -52,7 +52,7 @@ class DealerTest {
         assertThat(actual).isEqualTo(expectedA.getScore() + expectedB.getScore());
     }
 
-    @DisplayName("딜가 뽑은 카드들을 반환하다.")
+    @DisplayName("딜러가 뽑은 카드들을 반환하다.")
     @Test
     void returns_dealer_drawn_cards() {
         // given
@@ -73,12 +73,11 @@ class DealerTest {
     @Test
     void is_blackJack() {
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.ACE);
+        Card cardB = new Card(CardType.SPADE, CardValue.TEN);
 
-        cards.add(new Card(CardType.SPADE, CardValue.ACE));
-        cards.add(new Card(CardType.SPADE, CardValue.TEN));
-
-        Dealer dealer = new Dealer( new DrawnCards(cards));
+        DrawnCards blackJackCard = new DrawnCards(List.of(cardA, cardB));
+        Dealer dealer = new Dealer(blackJackCard);
         // when
         boolean actual = dealer.isBlackJack();
         // then
@@ -88,14 +87,12 @@ class DealerTest {
     @DisplayName("점수가 21점이 아니라면 블랙잭이 아니다.")
     @Test
     void is_not_blackJack_by_score() {
-
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+        Card cardB = new Card(CardType.SPADE, CardValue.TEN);
 
-        cards.add(new Card(CardType.SPADE, CardValue.ACE));
-        cards.add(new Card(CardType.SPADE, CardValue.TWO));
-
-        Dealer dealer = new Dealer( new DrawnCards(cards));
+        DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB));
+        Dealer dealer = new Dealer(notBlackJackCards);
         // when
         boolean actual = dealer.isBlackJack();
         // then
@@ -106,13 +103,12 @@ class DealerTest {
     @Test
     void is_not_blackJack_by_card_size() {
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+        Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardC = new Card(CardType.SPADE, CardValue.NINE);
 
-        cards.add(new Card(CardType.SPADE, CardValue.TEN));
-        cards.add(new Card(CardType.SPADE, CardValue.NINE));
-        cards.add(new Card(CardType.SPADE, CardValue.TWO));
-
-        Dealer dealer = new Dealer( new DrawnCards(cards));
+        DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB, cardC));
+        Dealer dealer = new Dealer(notBlackJackCards);
         // when
         boolean actual = dealer.isBlackJack();
         // then
