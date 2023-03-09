@@ -28,7 +28,7 @@ public class Participant extends Player {
         return betResultState.calculateBetOutcomeOf(money);
     }
 
-    private boolean hasNotBetState() {
+    public boolean hasNotBetState() {
         return betResultState.equals(BetResultState.NULL);
     }
 
