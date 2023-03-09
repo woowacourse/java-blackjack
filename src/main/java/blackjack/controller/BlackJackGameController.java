@@ -36,19 +36,20 @@ public class BlackJackGameController {
     }
 
     private Game generateGame() {
-        Players players = Players.of(generatePlayers());
         Deck deck = new Deck();
         deck.shuffleDeck();
-        GamePlayer gamePlayer = new GamePlayer(players, new Dealer());
+
+        GamePlayer gamePlayer = new GamePlayer(makePlayers(), new Dealer());
+
         return new Game(deck, gamePlayer);
     }
 
-    private List<String> generatePlayers() {
+    private Players makePlayers() {
         try {
-            return inputView.readPlayersName();
+            return Players.of(inputView.readPlayersName());
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR]" + e.getMessage());
-            return generatePlayers();
+            return makePlayers();
         }
     }
 
