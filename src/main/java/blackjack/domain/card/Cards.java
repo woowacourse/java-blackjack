@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public final class Cards {
     private static final int ACE_ADDITIONAL_SCORE = 10;
     private static final int BUST_LOWER_BOUND = 22;
     private static final int BLACKJACK_COUNT = 2;
@@ -25,14 +25,14 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculateMinScore() {
+    public int minScore() {
         return cards.stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::score)
                 .sum();
     }
 
-    public int calculateTotalScore() {
-        int score = calculateMinScore();
+    public int totalScore() {
+        int score = minScore();
         if (hasAce() && canChangeAceScore(score)) {
             return score + ACE_ADDITIONAL_SCORE;
         }
@@ -49,15 +49,15 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_COUNT && calculateTotalScore() == BLACKJACK_SCORE;
+        return cards.size() == BLACKJACK_COUNT && totalScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return BLACKJACK_SCORE < calculateMinScore();
+        return BLACKJACK_SCORE < minScore();
     }
 
     public boolean isBlackjackScore() {
-        return cards.size() != BLACKJACK_COUNT && calculateTotalScore() == BLACKJACK_SCORE;
+        return cards.size() != BLACKJACK_COUNT && totalScore() == BLACKJACK_SCORE;
     }
 
     public List<String> getCardLetters() {

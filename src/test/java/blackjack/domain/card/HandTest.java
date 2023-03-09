@@ -37,7 +37,7 @@ public class HandTest {
 
         final Hand hand = new Hand(cards);
 
-        assertThat(hand.calculateScore()).isEqualTo(21);
+        assertThat(hand.score()).isEqualTo(21);
     }
 
     @ParameterizedTest(name = "승패를 구한다. 갬블러: {0}, 딜러: {1}, 결과값: {2}")
@@ -97,7 +97,7 @@ public class HandTest {
     void 점수_산정에_들어갈_결과값을_반환한다() {
         final Hand hand = new Hand(List.of(ACE_SPADE));
 
-        final int result = hand.calculateScore();
+        final int result = hand.score();
 
         assertThat(result).isEqualTo(11);
     }

@@ -24,7 +24,7 @@ public class CardTest {
     void 카드의_점수를_반환한다() {
         final Card card = new Card(Rank.THREE, Shape.DIAMOND);
 
-        assertThat(card.getScore()).isEqualTo(3);
+        assertThat(card.score()).isEqualTo(3);
     }
 
     @Test

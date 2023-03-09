@@ -26,6 +26,6 @@ public class RankTest {
 
     @Test
     void 점수를_반환한다() {
-        assertThat(FOUR.getScore()).isEqualTo(4);
+        assertThat(FOUR.score()).isEqualTo(4);
     }
 }

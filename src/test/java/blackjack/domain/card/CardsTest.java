@@ -34,7 +34,7 @@ public class CardsTest {
     void 점수_산정에_들어갈_결과값을_반환한다(final List<Card> cards, final int result) {
         final Cards sut = new Cards(cards);
 
-        assertThat(sut.calculateTotalScore()).isEqualTo(result);
+        assertThat(sut.totalScore()).isEqualTo(result);
     }
 
     static Stream<Arguments> calculateTotalScoreSource() {
@@ -55,7 +55,7 @@ public class CardsTest {
     void 점수_최솟값을_반환한다() {
         final Cards cards = new Cards(List.of(FIVE_SPADE, ACE_SPADE));
 
-        assertThat(cards.calculateMinScore()).isEqualTo(6);
+        assertThat(cards.minScore()).isEqualTo(6);
     }
 
     @Test

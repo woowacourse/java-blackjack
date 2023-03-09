@@ -46,10 +46,10 @@ public final class Hand {
     }
 
     private Result playWithScore(final Hand other) {
-        if (other.state == BUST || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
+        if (other.state == BUST || cards.totalScore() > other.cards.totalScore()) {
             return Result.WIN;
         }
-        if (other.state != BUST && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
+        if (other.state != BUST && cards.totalScore() < other.cards.totalScore()) {
             return Result.LOSE;
         }
         return Result.PUSH;
@@ -59,8 +59,8 @@ public final class Hand {
         return state == PLAY;
     }
 
-    public int calculateScore() {
-        return cards.calculateTotalScore();
+    public int score() {
+        return cards.totalScore();
     }
 
     public void stay() {

@@ -31,7 +31,7 @@ public enum Rank {
         return letter;
     }
 
-    public int getScore() {
+    public int score() {
         return score;
     }
 }

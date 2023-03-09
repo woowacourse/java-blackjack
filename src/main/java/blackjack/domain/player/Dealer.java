@@ -15,7 +15,7 @@ public final class Dealer extends AbstractPlayer {
 
     @Override
     public boolean isDrawable() {
-        return hand.isPlayable() && hand.calculateScore() <= SCORE_LOWER_BOUND;
+        return hand.isPlayable() && hand.score() <= SCORE_LOWER_BOUND;
     }
 
     @Override
