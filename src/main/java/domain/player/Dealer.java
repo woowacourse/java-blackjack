@@ -11,7 +11,7 @@ import java.util.Map;
 public class Dealer extends Participant {
     private static final int SIGN_REVERSE = -1;
 
-    private final Map<Player, Result> resultMap = new LinkedHashMap<>();
+    private final Map<Player, Result> playerResults = new LinkedHashMap<>();
 
     public Dealer() {
         super(Name.from(DEALER_NAME));
@@ -20,43 +20,45 @@ public class Dealer extends Participant {
     public void decideResults(Players players) {
         for (Player player : players.getPlayers()) {
             Result dealerResult = competeWith(player);
-            resultMap.put(player, dealerResult);
+            playerResults.put(player, dealerResult);
         }
     }
 
     private Result competeWith(Player player) {
-        if (player.isBusted()) {
-            return Result.WIN;
-        }
-
-        if (this.isBusted()) {
-            return Result.LOSE;
-        }
-
-        return competeByBlackjack(player);
-    }
-
-    private Result competeByBlackjack(Player player) {
         if (this.isBlackjack() && player.isBlackjack()) {
             return Result.DRAW;
         }
         if (this.isBlackjack()) {
-            return Result.WIN;
-        }
-        if (player.isBlackjack()) {
             return Result.LOSE;
         }
+        if (player.isBlackjack()) {
+            return Result.BLACKJACK;
+        }
+
+        return competeByBust(player);
+    }
+
+    private Result competeByBust(Player player) {
+        if (player.isBusted()) {
+            return Result.LOSE;
+        }
+
+        if (this.isBusted()) {
+            return Result.WIN;
+        }
+
         return competeByScore(player.calculateScore());
+
     }
 
     private Result competeByScore(int playerScore) {
         int dealerScore = this.calculateScore();
 
         if (playerScore > dealerScore) {
-            return Result.LOSE;
+            return Result.WIN;
         }
         if (playerScore < dealerScore) {
-            return Result.WIN;
+            return Result.LOSE;
         }
 
         return Result.DRAW;
@@ -69,8 +71,8 @@ public class Dealer extends Participant {
     }
 
     private int calculatePlayersProfit() {
-        return resultMap.keySet().stream()
-                .mapToInt(player -> player.calculateProfitBy(resultMap.get(player).convertToOpposite()))
+        return playerResults.keySet().stream()
+                .mapToInt(player -> player.calculateProfitBy(playerResults.get(player)))
                 .sum();
     }
 
@@ -82,13 +84,13 @@ public class Dealer extends Participant {
         return cards.size() - BlackjackRule.INITIAL_CARD_COUNT.getValue();
     }
 
-    public int getResultCount(Result result) {
-        return (int) resultMap.values().stream()
-                .filter(result::equals)
+    public int getDealerResultCount(Result result) {
+        return (int) playerResults.values().stream()
+                .filter(value -> result.equals(value.convertToOpposite()))
                 .count();
     }
 
     public Map<Player, Result> getGameResult() {
-        return Collections.unmodifiableMap(resultMap);
+        return Collections.unmodifiableMap(playerResults);
     }
 }
