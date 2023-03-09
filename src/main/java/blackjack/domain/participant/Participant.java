@@ -18,13 +18,6 @@ public class Participant {
         cards.add(card);
     }
 
-    public int getTotalScore() {
-        return this.cards.calculateTotalScore();
-    }
-
-    public boolean isBust() {
-        return getTotalScore() > 21;
-    }
 
     public String getName() {
         return name.getValue();
@@ -34,8 +27,9 @@ public class Participant {
         return this.cards.getCards();
     }
 
-    public boolean isNotBust() {
-        return getTotalScore() <= 21;
+
+    public int getTotalScore() {
+        return this.cards.calculateTotalScore();
     }
 
     public boolean isScoreBiggerThan(Participant participant) {
@@ -48,5 +42,12 @@ public class Participant {
 
     public boolean isScoreSmallerThan(Participant participant) {
         return participant.getTotalScore() > this.getTotalScore();
+    }
+
+    public boolean isBust() {
+        return getTotalScore() > 21;
+    }
+    public boolean isNotBust() {
+        return getTotalScore() <= 21;
     }
 }
