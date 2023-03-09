@@ -20,10 +20,17 @@ public class InputView {
         return Arrays.asList(splitNames);
     }
 
-    //TODO: 숫자가 아닐시 예외처리 로직 추가
     public int readBettingMoneyByName(final String name) {
         System.out.println(name + "의 배팅 금액은?");
-        return Integer.parseInt(scanner.nextLine());
+        return parseInt(scanner.nextLine());
+    }
+
+    private int parseInt(String rawLadderHeight) {
+        try {
+            return Integer.parseInt(rawLadderHeight);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요");
+        }
     }
 
     public String readChoiceOfDrawCard(final String name) {

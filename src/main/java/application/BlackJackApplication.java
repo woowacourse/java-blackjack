@@ -65,8 +65,17 @@ public class BlackJackApplication {
 
     private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
         for (String playerName : blackJackGame.getPlayersName()) {
-            int bettingMoney = inputView.readBettingMoneyByName(playerName);
+            int bettingMoney = getBettingMoney(playerName);
             blackJackBettingMachine.betMoney(playerName, bettingMoney);
+        }
+    }
+
+    private int getBettingMoney(String playerName) {
+        try {
+            return inputView.readBettingMoneyByName(playerName);
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception.getMessage());
+            return getBettingMoney(playerName);
         }
     }
 
