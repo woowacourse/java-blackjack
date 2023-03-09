@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.GameOutcome.LOSE;
-import static domain.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -31,12 +29,12 @@ class BlackjackGameTest {
             });
 
             //when
-            Map<String, GameOutcome> outcome = blackjackGame.getPlayersOutcome();
+            Map<String, Integer> outcome = blackjackGame.getRevenues();
 
             //then
             assertAll(
-                    () -> assertThat(outcome.get("포이")).isEqualTo(WIN),
-                    () -> assertThat(outcome.get("에밀")).isEqualTo(LOSE)
+                    () -> assertThat(outcome.get("포이")).isEqualTo(1000),
+                    () -> assertThat(outcome.get("에밀")).isEqualTo(-2000)
             );
         }
     }

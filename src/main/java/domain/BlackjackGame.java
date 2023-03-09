@@ -49,7 +49,7 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public Map<String, GameOutcome> getPlayersOutcome() {
+    public Map<String, Integer> getRevenues() {
         return players.battleWith(dealer);
     }
 

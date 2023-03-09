@@ -27,7 +27,7 @@ public class BlackjackController {
         handOutCardsToPlayers(blackjackGame);
         handOutCardsToDealer(blackjackGame);
         outputView.printParticipantsScore(toParticipantDtosWithScore(blackjackGame.getParticipants()));
-        outputView.printGameOutcomes(blackjackGame.getPlayersOutcome());
+        outputView.printRevenues(blackjackGame.getRevenues());
     }
 
     private BlackjackGame initializeGame() {

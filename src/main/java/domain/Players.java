@@ -48,10 +48,14 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public Map<String, GameOutcome> battleWith(Dealer dealer) {
+    public Map<String, Integer> battleWith(Dealer dealer) {
         int dealerScore = dealer.score();
         return players.stream()
-                .collect(toUnmodifiableMap(Player::name
-                        , player -> GameOutcome.of(player.score(), dealerScore)));
+                .collect(toUnmodifiableMap(Player::name, player -> calculateRevenues(player, dealerScore)));
+    }
+
+    private static int calculateRevenues(final Player player, final int dealerScore) {
+        return GameOutcome.of(player.score(), dealerScore, player.hand().size())
+                .calculateRevenue(player.bettingMoney());
     }
 }
