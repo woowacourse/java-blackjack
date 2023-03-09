@@ -22,8 +22,8 @@ public class BlackJackController {
     }
 
     public void init(final Deck deck) {
-        final Participants participants = getParticipants(deck);
         final Dealer dealer = new Dealer();
+        final Participants participants = getParticipants(deck, dealer);
         divideFirstCard(deck, participants);
 
         outputView.printFirstCardStatus(BlackJackGameResponse.create(participants));
@@ -35,8 +35,8 @@ public class BlackJackController {
                 new PlayerResultResponses(participants.findPlayerFinalResult()));
     }
 
-    private Participants getParticipants(final Deck deck) {
-        return Participants.from(Arrays.asList(inputView.getPlayersName().split(",")));
+    private Participants getParticipants(final Deck deck, final Dealer dealer) {
+        return Participants.of(Arrays.asList(inputView.getPlayersName().split(",")), dealer);
     }
 
     private void divideFirstCard(final Deck deck, final Participants participants) {

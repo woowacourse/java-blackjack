@@ -39,8 +39,8 @@ class ParticipantsTest {
 
     @BeforeEach
     void init() {
-        participants = Participants.from(List.of("bebe"));
-        dealer = participants.getDealer();
+        dealer = new Dealer();
+        participants = Participants.of(List.of("bebe"), dealer);
         bebe = participants.getPlayers().get(0);
     }
 

@@ -16,19 +16,19 @@ public class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    private Participants(final List<String> playersName, final Dealer dealer) {
-        this.players = createPlayers(playersName);
+    private Participants(final List<Player> playersName, final Dealer dealer) {
+        this.players = playersName;
         this.dealer = dealer;
+    }
+
+    public static Participants of(final List<String> playersName, final Dealer dealer) {
+        return new Participants(createPlayers(playersName), dealer);
     }
 
     private static List<Player> createPlayers(List<String> playersName) {
         return playersName.stream()
                 .map(Player::new)
                 .collect(toList());
-    }
-
-    public static Participants from(final List<String> playersName) {
-        return new Participants(playersName, new Dealer());
     }
 
     public Map<Result, Long> findDealerFinalResult() {
