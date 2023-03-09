@@ -1,10 +1,10 @@
 package domain.board;
 
-import domain.PlayerStatus;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.user.Dealer;
+import domain.user.PlayerStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

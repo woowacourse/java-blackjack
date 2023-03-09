@@ -1,8 +1,8 @@
 package domain.board;
 
-import domain.PlayerStatus;
 import domain.TurnAction;
 import domain.user.Player;
+import domain.user.PlayerStatus;
 import java.util.Objects;
 
 public class PlayerBoard {

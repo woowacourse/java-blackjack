@@ -1,7 +1,5 @@
 package domain.user;
 
-import domain.Hand;
-import domain.PlayerName;
 import domain.card.Card;
 import java.util.List;
 import java.util.Objects;

@@ -1,7 +1,7 @@
 package domain.board;
 
-import domain.PlayerStatus;
 import domain.user.Player;
+import domain.user.PlayerStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 

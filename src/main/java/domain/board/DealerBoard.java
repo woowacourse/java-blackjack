@@ -1,7 +1,7 @@
 package domain.board;
 
-import domain.PlayerStatus;
 import domain.user.Dealer;
+import domain.user.PlayerStatus;
 
 public class DealerBoard {
 
