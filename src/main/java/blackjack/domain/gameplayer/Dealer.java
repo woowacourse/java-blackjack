@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Dealer implements Person {
+    public static final Score hitUpperBound = Score.of(17);
     private final List<Card> cards;
 
     public Dealer() {
@@ -22,7 +23,7 @@ public class Dealer implements Person {
     @Override
     public boolean canContinue() {
         Score totalScore = calculateScore();
-        return totalScore.isLessThan(Score.dealerHitUpperBound);
+        return totalScore.isLessThan(hitUpperBound);
     }
 
     @Override

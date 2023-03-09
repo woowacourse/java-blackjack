@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Score {
 
-    public static final Score dealerHitUpperBound = new Score(17);
     public static final Score playerHitUpperBound = new Score(21);
 
     private static final int MAX_ACE_SCORE = 11;
