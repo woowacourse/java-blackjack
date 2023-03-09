@@ -1,8 +1,6 @@
 package balckjack.domain;
 
-import java.util.List;
-
-public enum Number {
+public enum Denomination {
     ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
@@ -20,7 +18,7 @@ public enum Number {
     private final String symbol;
     private final int value;
 
-    Number(String symbol, int value) {
+    Denomination(String symbol, int value) {
         this.symbol = symbol;
         this.value = value;
     }
@@ -31,14 +29,6 @@ public enum Number {
 
     public int getValue() {
         return value;
-    }
-
-    public static Number convertNumberToSymbol(int number) {
-        try {
-            return valueOf(String.valueOf(number));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("입력 값은 2에서 10 사이의 숫자여야 합니다.");
-        }
     }
 }
 

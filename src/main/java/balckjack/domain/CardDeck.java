@@ -27,16 +27,16 @@ public class CardDeck {
         return cards;
     }
 
-    public List<Card> extractAceCards() {
+    public Long findAceCardCount() {
         return cards.stream()
             .filter(Card::isAce)
-            .collect(Collectors.toList());
+            .count();
     }
 
-    public List<Card> extractStandardCards() {
+    public int calculateStandardCardsScore() {
         return cards.stream()
             .filter((card) -> !card.isAce())
-            .collect(Collectors.toList());
+            .mapToInt(Card::getValue).sum();
     }
 
 }

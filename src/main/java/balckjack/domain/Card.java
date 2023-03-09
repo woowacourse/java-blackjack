@@ -8,25 +8,25 @@ import java.util.stream.Collectors;
 public class Card {
 
     private final Pattern pattern;
-    private final Number number;
+    private final Denomination denomination;
 
     public static List<Card> create(Pattern selectedPattern) {
-        return Arrays.stream(Number.values())
+        return Arrays.stream(Denomination.values())
             .map((number) -> new Card(selectedPattern, number))
             .collect(Collectors.toList());
     }
 
-    public Card(Pattern pattern, Number number) {
+    public Card(Pattern pattern, Denomination denomination) {
         this.pattern = pattern;
-        this.number = number;
+        this.denomination = denomination;
     }
 
     public boolean isAce() {
-        return number == Number.ACE;
+        return denomination == Denomination.ACE;
     }
 
     public int getValue() {
-        return number.getValue();
+        return denomination.getValue();
     }
 
     @Override
@@ -38,16 +38,16 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return pattern == card.pattern && Objects.equals(number, card.number);
+        return pattern == card.pattern && Objects.equals(denomination, card.denomination);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pattern, number);
+        return Objects.hash(pattern, denomination);
     }
 
     @Override
     public String toString() {
-        return number.getSymbol() + pattern.getName();
+        return denomination.getSymbol() + pattern.getName();
     }
 }

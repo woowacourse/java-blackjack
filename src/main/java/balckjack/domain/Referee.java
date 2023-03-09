@@ -22,14 +22,9 @@ public class Referee {
      * @return 일반적인 경우 카드 덱의 총 점수를 반환하고 Burst되는 경우 -1을 반환한다.
      */
     public int calculateDeckScore(CardDeck deck) {
-        int commonSum = calculateCommonCardScore(deck);
-        int aceSum = calculateAceCardScore(commonSum, deck);
-        return commonSum + aceSum;
-    }
-
-    private int calculateCommonCardScore(CardDeck deck) {
-        return deck.extractStandardCards().stream()
-            .mapToInt(Card::getValue).sum();
+        int standardSum = deck.calculateStandardCardsScore();
+        int aceSum = calculateAceCardScore(standardSum, deck);
+        return standardSum + aceSum;
     }
 
     public boolean isBurst(CardDeck deck) {
@@ -38,7 +33,7 @@ public class Referee {
 
     private int calculateAceCardScore(int commonSum, CardDeck deck) {
         int sum = 0;
-        int aceCardCount = deck.extractAceCards().size();
+        int aceCardCount = Math.toIntExact(deck.findAceCardCount());
         for (int restCount = aceCardCount; restCount > 0; restCount--) {
             int aceScore = decideAceScore(commonSum, restCount);
             commonSum += aceScore;
@@ -89,6 +84,4 @@ public class Referee {
         return calculateDeckScore(dealer.getCardDeck()) <= Referee.DEALER_HIT_NUMBER
             && isBurst(dealer.getCardDeck());
     }
-
-
 }

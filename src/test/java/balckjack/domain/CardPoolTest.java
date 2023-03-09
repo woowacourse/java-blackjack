@@ -19,7 +19,7 @@ class CardPoolTest {
 
     @Test
     void drawAceCard() {
-        final Card target = new Card(Pattern.SPADE, Number.ACE);
+        final Card target = new Card(Pattern.SPADE, Denomination.ACE);
         Assertions.assertThat(CardPool.getCards().contains(target)).isTrue();
         Card card = CardPool.draw(new StubCardPicker(target));
 

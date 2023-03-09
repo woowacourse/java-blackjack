@@ -15,7 +15,7 @@ class PlayerTest {
     @Test
     void testHit() {
         Participant p1 = new Player("무민");
-        Card card = new Card(Pattern.CLUB, Number.FOUR);
+        Card card = new Card(Pattern.CLOVER, Denomination.FOUR);
         Assertions.assertThat(p1.getCardDeck().getCards().size()).isEqualTo(0);
 
         p1.hit(new StubCardPicker(card));
