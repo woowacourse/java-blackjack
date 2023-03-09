@@ -29,9 +29,8 @@ public class BlackjackGameTest {
 
         blackjackGame.distributeDealer();
 
-        Map<String, List<Card>> result = new LinkedHashMap<>();
-        result.put("딜러", List.of(new Card(CardNumber.ACE, CardPattern.SPADE)));
-        Assertions.assertThat(dealer.getInfo()).usingRecursiveComparison().isEqualTo(result);
+        Card card = new Card(CardNumber.ACE, CardPattern.SPADE);
+        Assertions.assertThat(dealer.getCards().get(0)).usingRecursiveComparison().isEqualTo(card);
     }
 
     @Test
