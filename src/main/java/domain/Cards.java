@@ -9,7 +9,11 @@ public class Cards {
     private static final int BLACK_JACK_SCORE = 21;
     private static final int ACE_OFFSET = 10;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
 
     public void addCard(final Card card) {
         cards.add(card);
