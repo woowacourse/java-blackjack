@@ -48,7 +48,6 @@ public class CardGroup {
         return getScore().isBlackJackScore();
     }
 
-
     public CardGroup getSubCardGroup(int size) {
         final List<Card> subCardGroup = cards.stream()
                 .limit(size)

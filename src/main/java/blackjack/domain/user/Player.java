@@ -6,7 +6,6 @@ import blackjack.domain.result.WinningStatus;
 
 public class Player extends User {
 
-
     static final String NAME_IS_DEALER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 '딜러'일 수 없습니다.";
     private static final int FIRST_OPEN_CARD_COUNT = 2;
 
