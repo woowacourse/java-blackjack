@@ -10,17 +10,18 @@
 ### 주요 클래스
 ```mermaid
 classDiagram
-BlackjackGame <-- Participants
-BlackjackGame <-- Deck
-Participants <-- Dealer
-Participants <-- Players
-Players <-- Player
-Hand <-- Card
-Card <-- Suit
-Card <-- Rank
-Deck <-- Card
-Player <-- Hand
-Dealer <-- Hand
+    note "* 연관 관계만 표시"
+    BlackjackGame <-- Participants
+    BlackjackGame <-- Deck
+    Participants <-- Dealer
+    Participants <-- Players
+    Players <-- Player
+    Hand <-- Card
+    Card <-- Suit
+    Card <-- Rank
+    Deck <-- Card
+    Player <-- Hand
+    Dealer <-- Hand
 ```
 ### User 관련 클래스
 ```mermaid
@@ -29,14 +30,19 @@ classDiagram
     User <|-- Dealer
     Deck <|.. ShuffledDeck
     <<interface>> Deck
+    note for User "User와 Player/Dealer는 일반화 관계(상속)"
+    note for Deck "Deck과 ShuffledDeck은 실체화 관계(구현)"
     class User {
-    +UserName userName
-    +Hand hand
+        +UserName userName
+        +Hand hand
     }
 ```
 ### UserName 관련 클래스
 ```mermaid
 classDiagram
+    note "Player와 PlayerName,
+    Dealer와 DelaerName은
+    합성 집합 관계(Composition)"
     UserName <|.. PlayerName
     UserName <|.. DealerName
     Player *-- PlayerName
@@ -47,8 +53,9 @@ classDiagram
 ## 기능 구현 목록
 
 ### InputView
-- [x] 플레이어들의 이름을 입력한다.
-- [x] 플레이어가 카드를 더 받을지 여부를 입력한다.
+- [x] 플레이어들의 이름을 입력받는다.
+- [ ] 플레이어의 배팅 금액을 입력받는다.
+- [x] 플레이어가 카드를 더 받을지 여부를 입력받는다.
   - [x] 잘못된 입력을 하면 안내 메시지를 출력하고 다시 입력 받는다.
 
 ### OutputView
