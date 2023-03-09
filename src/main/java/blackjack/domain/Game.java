@@ -7,10 +7,16 @@ public class Game {
     private final Deck deck;
     private final GamePlayer gamePlayer;
 
-    public Game(Deck deck, GamePlayer gamePlayer) {
+    private Game(Deck deck, GamePlayer gamePlayer) {
         this.deck = deck;
         this.gamePlayer = gamePlayer;
+
+        deck.shuffleDeck();
         initializeGame();
+    }
+
+    public static Game from(GamePlayer gamePlayer) {
+        return new Game(new Deck(), gamePlayer);
     }
 
     private void initializeGame() {

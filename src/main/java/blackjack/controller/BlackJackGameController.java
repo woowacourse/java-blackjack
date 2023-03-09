@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
 import blackjack.domain.Game;
 import blackjack.domain.GamePlayer;
 import blackjack.domain.GameResult;
@@ -24,24 +23,10 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        Game game = start();
+        Game game = Game.from(new GamePlayer(makePlayers(), new Dealer()));
+        printStartCards(game);
         play(game);
         finish(game);
-    }
-
-    private Game start() {
-        Game game = generateGame();
-        printStartCards(game);
-        return game;
-    }
-
-    private Game generateGame() {
-        Deck deck = new Deck();
-        deck.shuffleDeck();
-
-        GamePlayer gamePlayer = new GamePlayer(makePlayers(), new Dealer());
-
-        return new Game(deck, gamePlayer);
     }
 
     private Players makePlayers() {
