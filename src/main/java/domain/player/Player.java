@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Player extends Participant {
     private static final String UNAVAILABLE_NAME = "'%s'라는 이름은 사용할 수 없습니다.";
 
-    private final BettingMoney bettingMoney;
+    private BettingMoney bettingMoney;
 
     private Player(Name name, BettingMoney bettingMoney) {
         super(name);
@@ -27,10 +27,16 @@ public class Player extends Participant {
     }
 
     public int calculateProfitBy(Result result) {
-        int currentMoney = result.payOut(bettingMoney).getMoney();
-        int bettingMoney = this.bettingMoney.getMoney();
+        BettingMoney currentMoney = result.payOut(bettingMoney);
+        BettingMoney profit = bettingMoney.calculateProfit(currentMoney);
 
-        return currentMoney - bettingMoney;
+        updateMoney(currentMoney);
+
+        return profit.getMoney();
+    }
+
+    private void updateMoney(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
     public int getMoney() {
