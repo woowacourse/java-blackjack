@@ -23,11 +23,11 @@ public class Cards {
 
     public int calculateTotalScore() {
         int totalScore = makeTotalScore();
-        totalScore = makeTotalUnder21(totalScore);
+        totalScore = mediateTotalScore(totalScore);
         return totalScore;
     }
 
-    private int makeTotalUnder21(int totalScore) {
+    private int mediateTotalScore(int totalScore) {
         int aceCount = countAce();
         while (totalScore > BLACKJACK_NUMBER && aceCount != ZERO) {
             totalScore -= ACE_NUMBER_DIFFERENCE;

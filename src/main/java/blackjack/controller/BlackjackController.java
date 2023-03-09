@@ -71,6 +71,7 @@ public class BlackjackController {
         while (blackjackGame.isPlayerCanPlay(player, inputView.inputOrderCard(player.getName()))) {
             outputView.outputPlayerCard(player.getName(), new CardsDto(player.getCards(), player.getTotalScore()));
         }
+        outputView.outputPlayerCard(player.getName(), new CardsDto(player.getCards(), player.getTotalScore()));
     }
 
     private void hitDealer(BlackjackGame blackjackGame, Dealer dealer) {
