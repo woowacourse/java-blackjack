@@ -5,7 +5,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 import java.util.HashMap;
+
 @FunctionalInterface
-public interface ResultCalculator {
+public interface StateExecutor {
     void calculateResult(HashMap<Player, WinTieLose> playersResult, Player player, Dealer dealer);
 }

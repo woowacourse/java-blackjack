@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class ResultCalculatorTest {
+public class StateExecutorTest {
     @Test
     @DisplayName("딜러가 버스트일때 플레이어가 버스트가 아닐때 테스트")
     void resultCalculatorWithBustDealerNotBustPlayer() {
@@ -27,9 +27,9 @@ public class ResultCalculatorTest {
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TWO));
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        ResultCalculator resultCalculatorWithBustDealer = new OnlyDealerBustState();
+        StateExecutor stateExecutorWithBustDealer = new OnlyDealerBustState();
 
-        resultCalculatorWithBustDealer.calculateResult(playersResult, player, dealer);
+        stateExecutorWithBustDealer.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.WIN);
     }
 
@@ -39,16 +39,16 @@ public class ResultCalculatorTest {
         Player player = new Player(new Name("test"));
         Dealer dealer = new Dealer();
         HashMap<Player, WinTieLose> playersResult = new HashMap<>();
-        player.drawCard(new Card(Shape.CLOVER, Letter.THREE));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
         player.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TWO));
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        ResultCalculator resultCalculatorWithBustDealer = new OnlyDealerBustState();
+        StateExecutor stateExecutorWithBustDealer = new BothBustState();
 
-        resultCalculatorWithBustDealer.calculateResult(playersResult, player, dealer);
+        stateExecutorWithBustDealer.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.TIE);
     }
 
@@ -66,9 +66,9 @@ public class ResultCalculatorTest {
         player.drawCard(new Card(Shape.HEART, Letter.TEN));
         player.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
 
-        ResultCalculator resultCalculatorWithBustPlayer = new OnlyPlayerBustState();
+        StateExecutor stateExecutorWithBustPlayer = new OnlyPlayerBustState();
 
-        resultCalculatorWithBustPlayer.calculateResult(playersResult, player, dealer);
+        stateExecutorWithBustPlayer.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.LOSE);
     }
 
@@ -86,9 +86,9 @@ public class ResultCalculatorTest {
         player.drawCard(new Card(Shape.HEART, Letter.TEN));
 
 
-        ResultCalculator resultCalculatorWithNotBust = new BothNotBustState();
+        StateExecutor stateExecutorWithNotBust = new BothNotBustState();
 
-        resultCalculatorWithNotBust.calculateResult(playersResult, player, dealer);
+        stateExecutorWithNotBust.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.LOSE);
     }
 
@@ -106,9 +106,9 @@ public class ResultCalculatorTest {
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
 
 
-        ResultCalculator resultCalculatorWithNotBust = new BothNotBustState();
+        StateExecutor stateExecutorWithNotBust = new BothNotBustState();
 
-        resultCalculatorWithNotBust.calculateResult(playersResult, player, dealer);
+        stateExecutorWithNotBust.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.WIN);
     }
 }

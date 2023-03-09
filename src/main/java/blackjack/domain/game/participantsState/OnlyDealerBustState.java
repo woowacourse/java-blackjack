@@ -6,7 +6,7 @@ import blackjack.domain.participant.Player;
 
 import java.util.HashMap;
 
-public class OnlyDealerBustState implements ResultCalculator {
+public class OnlyDealerBustState implements StateExecutor {
 
     @Override
     public void calculateResult(HashMap<Player, WinTieLose> playersResult, Player player, Dealer dealer) {

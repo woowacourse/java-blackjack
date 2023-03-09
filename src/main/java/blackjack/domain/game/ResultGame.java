@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.game.participantsState.OnlyDealerBustState;
-import blackjack.domain.game.participantsState.PlayerState;
+import blackjack.domain.game.participantsState.PlayerDealerState;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -21,7 +20,7 @@ public class ResultGame {
     }
 
     public void calculateResult() {
-        players.forEach(player -> new PlayerState(player,dealer).calculateResult(playersResult));
+        players.forEach(player -> new PlayerDealerState(player, dealer).calculateResult(playersResult));
     }
 
     public WinTieLose getPlayerResult(final Player player) {
