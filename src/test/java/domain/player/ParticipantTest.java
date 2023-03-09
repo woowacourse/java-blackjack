@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardArea;
+import domain.fixture.CardDeckFixture;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static domain.card.CardShape.DIAMOND;
-import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.equal16CardArea;
 import static domain.fixture.CardAreaFixture.withTwoCard;
@@ -48,7 +48,7 @@ class ParticipantTest {
     void hit_시_카드를_추가한다() {
         // when
         final int beforeSize = cardArea.cards().size();
-        participant.hit(new Card(SPADE, TEN));
+        participant.hit(CardDeckFixture.cardDeck(TEN));
 
         // then
         assertThat(cardArea.cards().size()).isEqualTo(beforeSize + 1);

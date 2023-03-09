@@ -1,8 +1,5 @@
 package domain.card;
 
-import domain.fixture.CardAreaFixture;
-import domain.player.Dealer;
-import domain.player.Gambler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static domain.card.CardValue.*;
+import static domain.card.CardValue.JACK;
+import static domain.card.CardValue.values;
 import static domain.fixture.CardDeckFixture.cardDeck;
-import static domain.fixture.GamblerFixture.말랑;
 import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,17 +43,15 @@ class CardDeckTest {
     }
 
     @Test
-    void 참가자에게_카드를_뽑아줄_수_있다() {
+    void 카드를_뽑을_수_있다() {
         // given
-        final Gambler 말랑 = 말랑(CardAreaFixture.withTwoCard(TEN, TWO));
-        final Dealer 딜러 = new Dealer(CardAreaFixture.withTwoCard(EIGHT, JACK));
         final CardDeck cardDeck = cardDeck(JACK, JACK);
 
         // when
-        cardDeck.drawTo(말랑);
-        cardDeck.drawTo(딜러);
+        final Card draw = cardDeck.draw();
 
         // then
-        assertThat(cardDeck.cards().size()).isEqualTo(0);
+        assertThat(cardDeck.cards().size()).isEqualTo(1);
+        assertThat(draw.cardValue()).isEqualTo(JACK);
     }
 }

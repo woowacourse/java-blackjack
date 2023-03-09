@@ -1,8 +1,8 @@
 package domain.player;
 
 import domain.card.BlackJackScore;
-import domain.card.Card;
 import domain.card.CardArea;
+import domain.card.CardDeck;
 
 public abstract class Participant {
 
@@ -30,8 +30,8 @@ public abstract class Participant {
         return cardArea.isBust();
     }
 
-    public void hit(final Card card) {
-        cardArea.addCard(card);
+    public void hit(final CardDeck cardDeck) {
+        cardArea.addCard(cardDeck.draw());
     }
 
     public abstract boolean canHit();

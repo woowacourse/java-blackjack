@@ -62,7 +62,7 @@ public class BlackJackGame {
         validatePlayerExist(gambler);
         gambler.changeState(hitState);
         if (gambler.wantHit()) {
-            cardDeck.drawTo(gambler);
+            gambler.hit(cardDeck);
         }
     }
 
@@ -74,7 +74,7 @@ public class BlackJackGame {
 
     public boolean hitForDealerWhenShouldMoreHit() {
         if (dealer.canHit()) {
-            cardDeck.drawTo(dealer);
+            dealer.hit(cardDeck);
             return true;
         }
         return false;
