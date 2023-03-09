@@ -57,7 +57,7 @@ public class Players {
     }
 
     private boolean isDraw(Dealer dealer, Player player) {
-        return dealer.calculateScore() == player.calculateScore();
+        return dealer.calculateScore() == player.calculateScore() && !player.isBust();
     }
 
     private boolean isDealerWinPlayer(Dealer dealer, Player player) {

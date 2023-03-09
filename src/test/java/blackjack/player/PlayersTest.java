@@ -187,7 +187,7 @@ class PlayersTest {
             player.hit(new Card(Rank.KING, Suit.HEART));
             player.hit(new Card(Rank.JACK, Suit.CLOVER));
             player.hit(new Card(Rank.JACK, Suit.DIAMOND));
-            dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+            dealer.hit(new Card(Rank.KING, Suit.CLOVER));
             dealer.hit(new Card(Rank.KING, Suit.SPADE));
             dealer.hit(new Card(Rank.QUEEN, Suit.SPADE));
             players.calculateWinning(dealer);
