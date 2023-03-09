@@ -14,7 +14,7 @@ import java.util.Map;
 import static view.InputView.*;
 import static view.OutputView.*;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     public void runGame() {
         Players players = repeatReadPlayers();
@@ -33,7 +33,7 @@ public class BlackjackController {
         }
     }
 
-    private void process(Players players, Dealer dealer, Deck deck) {
+    private void process(final Players players, final Dealer dealer, final Deck deck) {
         Map<Player, Stake> playerStakes = readStakes(players);
         drawInitialCards(players, dealer, deck);
 
@@ -107,14 +107,14 @@ public class BlackjackController {
         }
     }
 
-    private void showFinalScores(Players players, Dealer dealer) {
+    private void showFinalScores(final Players players, final Dealer dealer) {
         printScore(dealer);
         for (Player player : players.getPlayers()) {
             printScore(player);
         }
     }
 
-    private void showBetResults(Dealer dealer, Players players, Map<Player, Stake> playerStakes) {
+    private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Stake> playerStakes) {
         Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
         Map<Player, Stake> playerStakeMap = dealer.calculateBets(players, dealerStats, playerStakes);
         printResult(playerStakeMap);

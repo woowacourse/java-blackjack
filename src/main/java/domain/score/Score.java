@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Score {
+public final class Score {
 
     private static final int MAX_SCORE = 21;
     private static final Map<Integer, Score> cache = new ConcurrentHashMap<>();
@@ -34,7 +34,7 @@ public class Score {
         return DealerStatus.LOSE;
     }
 
-    public boolean isSmallerOrEqual(Score score) {
+    public boolean isSmallerOrEqual(final Score score) {
         return value <= score.value;
     }
 

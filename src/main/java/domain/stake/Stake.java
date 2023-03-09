@@ -4,7 +4,7 @@ import domain.player.DealerStatus;
 
 import java.util.Objects;
 
-public class Stake {
+public final class Stake {
 
     private static final int MIN_BET = 100;
     private static final int MAX_BET = 100_000;
@@ -30,15 +30,15 @@ public class Stake {
         }
     }
 
-    public Stake getDealerPrize(DealerStatus dealerStatus) {
+    public Stake getDealerPrize(final DealerStatus dealerStatus) {
         return new Stake((int) (value * dealerStatus.getMultiply()));
     }
 
-    public Stake getPlayerPrize(DealerStatus dealerStatus) {
+    public Stake getPlayerPrize(final DealerStatus dealerStatus) {
         return new Stake((int) (PLAYER_NEGATE * value * dealerStatus.getMultiply()));
     }
 
-    public Stake add(Stake stake) {
+    public Stake add(final Stake stake) {
         return new Stake(this.value + stake.value);
     }
 

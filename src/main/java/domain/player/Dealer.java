@@ -41,7 +41,7 @@ public class Dealer extends Player {
         return this.compareNormalCase(player.getScore());
     }
 
-    private DealerStatus compareNormalCase(Score score) {
+    private DealerStatus compareNormalCase(final Score score) {
         return getScore().compareScore(score);
     }
 
@@ -49,7 +49,7 @@ public class Dealer extends Player {
         return player.isBlackjack() && this.isBlackjack();
     }
 
-    public Map<Player, Stake> calculateBets(Players players, Map<Player, DealerStatus> dealerStatus, Map<Player, Stake> playerBets) {
+    public Map<Player, Stake> calculateBets(final Players players, final Map<Player, DealerStatus> dealerStatus, final Map<Player, Stake> playerBets) {
         Map<Player, Stake> prizeResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             DealerStatus singleResult = dealerStatus.get(player);

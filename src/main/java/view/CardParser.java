@@ -7,7 +7,7 @@ import domain.card.Suit;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class CardParser {
+public final class CardParser {
 
     private static final Map<Denomination, String> denominationParser = new EnumMap<>(Denomination.class);
     private static final Map<Suit, String> suitParser = new EnumMap<>(Suit.class);
@@ -33,7 +33,7 @@ public class CardParser {
         suitParser.put(Suit.DIAMOND, "다이아몬드");
     }
 
-    public static String parse(Card card) {
+    public static String parse(final Card card) {
         return denominationParser.get(card.getDenomination()) + suitParser.get(card.getSuit());
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = ",";
@@ -30,7 +30,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static int readBettingStake(Player player) {
+    public static int readBettingStake(final Player player) {
         System.out.println(player.getName() + "의 베팅 금액은?");
         String input = scanner.nextLine();
         try {
@@ -41,7 +41,7 @@ public class InputView {
         }
     }
 
-    public static boolean readIsHit(Player player) {
+    public static boolean readIsHit(final Player player) {
         printNewLine();
         System.out.println(player.getName() + STAND_GUIDE_MESSAGE);
 
@@ -50,13 +50,13 @@ public class InputView {
         return input.equalsIgnoreCase(YES);
     }
 
-    private static void validateStand(String input) {
+    private static void validateStand(final String input) {
         if (!input.equalsIgnoreCase(YES) && !input.equalsIgnoreCase(NO)) {
             throw new IllegalArgumentException(INPUT_Y_OR_N_ERROR_GUIDE_MESSAGE);
         }
     }
 
-    public static void printErrorMessage(RuntimeException exception) {
+    public static void printErrorMessage(final RuntimeException exception) {
         System.out.println(exception.getMessage());
     }
 

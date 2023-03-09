@@ -6,16 +6,16 @@ public class PlayerName {
 
     private final String name;
 
-    public PlayerName(String name) {
+    public PlayerName(final String name) {
         validatePlayerName(name);
         this.name = name;
     }
 
-    private void validatePlayerName(String name) {
+    private void validatePlayerName(final String name) {
         validateBlank(name);
     }
 
-    private void validateBlank(String name) {
+    private void validateBlank(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(BLANK_ERROR_GUIDE_MESSAGE);
         }

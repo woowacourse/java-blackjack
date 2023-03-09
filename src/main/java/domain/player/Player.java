@@ -12,17 +12,17 @@ public class Player {
     private final PlayerName playerName;
     private final Cards cards;
 
-    public Player(PlayerName playerName) {
+    public Player(final PlayerName playerName) {
         this.playerName = playerName;
         this.cards = new Cards();
     }
 
-    public void drawInitialCards(Deck deck) {
+    public void drawInitialCards(final Deck deck) {
         drawCard(deck.pickCard());
         drawCard(deck.pickCard());
     }
 
-    public void drawCard(Card card) {
+    public void drawCard(final Card card) {
         cards.addCard(card);
     }
 
