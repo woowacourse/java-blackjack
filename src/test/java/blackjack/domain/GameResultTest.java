@@ -17,10 +17,10 @@ class GameResultTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new ArrayList<>(List.of(new Card(Suit.HEART, Letter.JACK), new Card(Suit.SPADE, Letter.EIGHT))));
+        dealer = new Dealer(new ArrayList<>(List.of(Card.of(Suit.HEART, Letter.JACK), Card.of(Suit.SPADE, Letter.EIGHT))));
         dealer.isAbleToReceive();
 
-        player = new Player("pobi", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.FOUR), new Card(Suit.DIAMOND, Letter.SIX))));
+        player = new Player("pobi", new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.FOUR), Card.of(Suit.DIAMOND, Letter.SIX))));
         player.isAbleToReceive();
         players = new ArrayList<>();
         players.add(player);
@@ -38,7 +38,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 비기는 경우")
     void gameResult2() {
-        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -50,8 +50,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 버스터 없이 딜러가 지는 경우")
     void gameResult3() {
-        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
-        player.receiveCard(new Card(Suit.CLOVER, Letter.TWO));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.TWO));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -63,8 +63,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 플레이어만 버스터인 경우")
     void gameResult4() {
-        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
-        player.receiveCard(new Card(Suit.CLOVER, Letter.KING));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.KING));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -76,7 +76,7 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 딜러만 버스터인 경우")
     void gameResult5() {
-        dealer.receiveCard(new Card(Suit.CLOVER, Letter.SEVEN));
+        dealer.receiveCard(Card.of(Suit.CLOVER, Letter.SEVEN));
         dealer.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -88,10 +88,10 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인: 둘 다 버스터인 경우")
     void gameResult6() {
-        dealer.receiveCard(new Card(Suit.CLOVER, Letter.SEVEN));
+        dealer.receiveCard(Card.of(Suit.CLOVER, Letter.SEVEN));
         dealer.isAbleToReceive();
-        player.receiveCard(new Card(Suit.CLOVER, Letter.EIGHT));
-        player.receiveCard(new Card(Suit.CLOVER, Letter.KING));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.EIGHT));
+        player.receiveCard(Card.of(Suit.CLOVER, Letter.KING));
         player.isAbleToReceive();
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -103,8 +103,8 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과 확인 : 플레이어 여러명일 때")
     void multiPlayer() {
-        Player player2 = new Player("jena", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.ACE), new Card(Suit.DIAMOND, Letter.SEVEN))));
-        Player player3 = new Player("io", new ArrayList<>(List.of(new Card(Suit.CLOVER, Letter.JACK), new Card(Suit.DIAMOND, Letter.KING))));
+        Player player2 = new Player("jena", new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.ACE), Card.of(Suit.DIAMOND, Letter.SEVEN))));
+        Player player3 = new Player("io", new ArrayList<>(List.of(Card.of(Suit.CLOVER, Letter.JACK), Card.of(Suit.DIAMOND, Letter.KING))));
 
         List<Player> players = new ArrayList<>();
         players.add(player);

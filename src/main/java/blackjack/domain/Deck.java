@@ -20,7 +20,7 @@ public class Deck {
 
     private void generateCardEachSuit(Suit suit) {
         for (Letter letter : Letter.values()) {
-            cards.add(new Card(suit, letter));
+            cards.add(Card.of(suit, letter));
         }
     }
 
