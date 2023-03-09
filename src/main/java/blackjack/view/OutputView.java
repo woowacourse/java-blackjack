@@ -33,7 +33,7 @@ public class OutputView {
     public void printCurrentCards(Participant participant) {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
-        for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
+        for (int index = 0, end = participant.getHand().getReceivedCards().size(); index < end; index++) {
             ViewCardNumber cardNumber = ViewCardNumber.findCardNumber(participant.getCardNumber(index));
             ViewCardSuit cardSuit = ViewCardSuit.findCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber.getName() + cardSuit.getCardSuitName());
@@ -45,7 +45,7 @@ public class OutputView {
     public void printTotalCardsAndScore(Participant participant) {
         System.out.print(participant.getName() + "카드: ");
         List<String> cards = new ArrayList<>();
-        for (int index = 0, end = participant.getReceivedCards().size(); index < end; index++) {
+        for (int index = 0, end = participant.getHand().getReceivedCards().size(); index < end; index++) {
             ViewCardNumber cardNumber = ViewCardNumber.findCardNumber(participant.getCardNumber(index));
             ViewCardSuit cardSuit = ViewCardSuit.findCardSuit(participant.getCardSuit(index));
             cards.add(cardNumber.getName() + cardSuit.getCardSuitName());

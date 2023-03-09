@@ -30,8 +30,7 @@ public abstract class Participant {
     }
 
     public boolean participantHasAceCard() {
-        return hand.getReceivedCards().stream()
-            .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+        return hand.hasAceCard();
     }
 
     public int calculateCardNumberAceCardValueOne() {

@@ -30,7 +30,7 @@ class BlackjackGameTest {
 
         //then
         for (Participant participant : participants.getParticipants()) {
-            assertThat(participant.getReceivedCards().size()).isEqualTo(2);
+            assertThat(participant.getHand().getReceivedCards().size()).isEqualTo(2);
         }
     }
 
