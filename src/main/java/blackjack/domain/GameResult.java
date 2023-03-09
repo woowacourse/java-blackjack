@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
+    public static final Score bustLowerBound = Score.of(22);
+
     private static final int INIT_NUMBER = 0;
 
     private final Map<Result, Integer> dealerResult;
@@ -32,7 +34,7 @@ public class GameResult {
 
         for (Player player : game.getPlayers()) {
             Score playerScore = player.calculateScore();
-            Result playerWin = Result.getLeftResult(playerScore, dealerScore, Score.bustLowerBound);
+            Result playerWin = Result.getLeftResult(playerScore, dealerScore, bustLowerBound);
             Result dealerWin = Result.getOpponentResult(playerWin);
             playerResult.put(player, playerWin);
             dealerResult.put(dealerWin, dealerResult.get(dealerWin) + 1);
