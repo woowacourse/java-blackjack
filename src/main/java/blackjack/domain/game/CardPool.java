@@ -39,7 +39,7 @@ public class CardPool {
         }
     }
 
-    public int getSize() {
+    public int size() {
         return cards.size();
     }
 
