@@ -14,14 +14,17 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static view.message.Message.CARD_MESSAGE;
-import static view.message.Message.DEALER_GAME_RESULT;
-import static view.message.Message.DRAW_MESSAGE;
-import static view.message.Message.FINAL_GAME_RESULT;
-import static view.message.Message.PARTICIPANT_CARD_RESULT;
-import static view.message.Message.PLAYER_GAME_RESULT;
-
 public final class OutputView {
+
+    private static final String BUST_MESSAGE = "카드의 합이 21을 초과했습니다.";
+    private static final String BLACKJACK_MESSAGE = "축하드립니다! 블랙잭입니다!";
+    private static final String DEALER_DRAW_MESSAGE_FORMAT = "%s는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DRAW_MESSAGE_FORMAT = "%s에게 2장을 나누었습니다.";
+    private static final String CARD_MESSAGE_FORMAT = "%s: %s";
+    private static final String PARTICIPANT_CARD_RESULT_FORMAT = "%s 카드: %s - 결과: %d";
+    private static final String FINAL_GAME_RESULT = "## 최종 승패";
+    private static final String DEALER_GAME_RESULT_FORMAT = "%s: %d승 %d패 %d무";
+    private static final String PLAYER_GAME_RESULT_FORMAT = "%s: %s";
 
     public static void print(final String message) {
         System.out.println(message);
@@ -30,34 +33,46 @@ public final class OutputView {
     public void printParticipantMessage(final List<Participant> participants) {
         final String participantNamesMessage = makeParticipantNamesMessage(participants);
         final String drawMessage = String.format(System.lineSeparator() +
-                DRAW_MESSAGE.getMessage(), participantNamesMessage);
+                DRAW_MESSAGE_FORMAT, participantNamesMessage);
         print(drawMessage);
     }
 
     public void printDealerCard(final String dealerName, final Card dealerFirstCard) {
-        final String dealerCardMessage = String.format(CARD_MESSAGE.getMessage(),
+        final String dealerCardMessage = String.format(CARD_MESSAGE_FORMAT,
                 dealerName, getCardMessage(dealerFirstCard));
         print(dealerCardMessage);
     }
 
     public void printParticipantCard(final String playerName, final List<Card> playerCards) {
         final String cardsMessage = getCardsMessage(playerCards);
-        final String participantCardMessage = String.format(CARD_MESSAGE.getMessage(), playerName, cardsMessage);
+        final String participantCardMessage = String.format(CARD_MESSAGE_FORMAT, playerName, cardsMessage);
         print(participantCardMessage);
     }
 
     public void printCardResult(final String participantName,
                                 final List<Card> participantCards,
                                 final int participantScore) {
-        final String cardsResultMessage = String.format(PARTICIPANT_CARD_RESULT.getMessage(),
+        final String cardsResultMessage = String.format(PARTICIPANT_CARD_RESULT_FORMAT,
                 participantName, getCardsMessage(participantCards), participantScore);
         print(cardsResultMessage);
     }
 
     public void printFinalGameResult(final String dealerName, final Map<String, Result> playerGameResults) {
-        print(System.lineSeparator() + FINAL_GAME_RESULT.getMessage());
+        print(System.lineSeparator() + FINAL_GAME_RESULT);
         printDealerGameResult(dealerName, playerGameResults);
         printPlayerGameResult(playerGameResults);
+    }
+
+    public void printBustMessage() {
+        System.out.println(BUST_MESSAGE);
+    }
+
+    public void printBlackJackMessage() {
+        System.out.println(BLACKJACK_MESSAGE);
+    }
+
+    public void printDrawMessage(final String dealerName) {
+        System.out.println(String.format(DEALER_DRAW_MESSAGE_FORMAT, dealerName) + System.lineSeparator());
     }
 
     private String makeParticipantNamesMessage(final List<Participant> participants) {
@@ -88,7 +103,7 @@ public final class OutputView {
         final int dealerLoseCount = getDealerResultCountByType(resultCounts, Result.WIN);
         final int drawCount = getDealerResultCountByType(resultCounts, Result.DRAW);
 
-        final String dealerGameResultMessage = String.format(DEALER_GAME_RESULT.getMessage(),
+        final String dealerGameResultMessage = String.format(DEALER_GAME_RESULT_FORMAT,
                 dealerName, dealerWinCount, dealerLoseCount, drawCount);
         print(dealerGameResultMessage);
     }
@@ -96,7 +111,7 @@ public final class OutputView {
     private void printPlayerGameResult(final Map<String, Result> playerGameResults) {
         playerGameResults.keySet().forEach(playerName -> {
             final Result playerResult = playerGameResults.get(playerName);
-            final String playerGameResultMessage = String.format(PLAYER_GAME_RESULT.getMessage(),
+            final String playerGameResultMessage = String.format(PLAYER_GAME_RESULT_FORMAT,
                     playerName, GameResultMessage.findMessage(playerResult));
             print(playerGameResultMessage);
         });

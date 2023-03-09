@@ -10,10 +10,11 @@ import java.util.stream.Collectors;
 
 import static controller.DrawCardCommand.CARD_DRAW_AGAIN;
 import static controller.DrawCardCommand.CARD_DRAW_STOP;
-import static view.message.Message.DRAW_CARD_CARD_MESSAGE;
-import static view.message.Message.PLAYER_NAME_INPUT_MESSAGE;
 
 public final class InputView {
+
+    private static final String PLAYER_NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String DRAW_CARD_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)";
 
     private final BufferedReader bufferedReader;
 
@@ -31,13 +32,13 @@ public final class InputView {
     }
 
     public List<String> getPlayerNames() {
-        OutputView.print(PLAYER_NAME_INPUT_MESSAGE.getMessage());
+        OutputView.print(PLAYER_NAME_INPUT_MESSAGE);
         List<String> playerNames = Arrays.asList(Objects.requireNonNull(readConsole()).split(","));
         return trimParticipantNames(playerNames);
     }
 
     public String getDrawCardCommand(final String name) {
-        final String drawCardMessage = System.lineSeparator() + String.format(DRAW_CARD_CARD_MESSAGE.getMessage(),
+        final String drawCardMessage = System.lineSeparator() + String.format(DRAW_CARD_CARD_MESSAGE_FORMAT,
                 name, CARD_DRAW_AGAIN.getCommand(), CARD_DRAW_STOP.getCommand());
         OutputView.print(drawCardMessage);
         return readConsole();

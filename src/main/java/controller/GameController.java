@@ -17,10 +17,6 @@ import view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-import static view.message.Message.BLACKJACK_MESSAGE;
-import static view.message.Message.BUST_MESSAGE;
-import static view.message.Message.DEALER_DRAW_MESSAGE;
-
 public final class GameController {
 
     private final InputView inputView;
@@ -119,7 +115,7 @@ public final class GameController {
     private boolean isBust(final Participant player) {
         final boolean isBust = player.isBust();
         if (isBust) {
-            OutputView.print(BUST_MESSAGE.getMessage());
+            outputView.printBustMessage();
         }
         return isBust;
     }
@@ -127,7 +123,7 @@ public final class GameController {
     private boolean isBlackJack(final Participant player) {
         final boolean isBlackJack = player.isBlackJack();
         if (isBlackJack) {
-            OutputView.print(BLACKJACK_MESSAGE.getMessage());
+            outputView.printBlackJackMessage();
         }
         return isBlackJack;
     }
@@ -136,8 +132,7 @@ public final class GameController {
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canGiveCard()) {
             gameManager.handCard(dealer);
-            OutputView.print(String.format(DEALER_DRAW_MESSAGE.getMessage(),
-                    dealer.getName()) + System.lineSeparator());
+            outputView.printDrawMessage(dealer.getName());
         }
     }
 
