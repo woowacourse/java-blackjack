@@ -1,15 +1,24 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.betting.Profit;
+import java.util.function.Function;
+
 public enum Result {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN("승", profit -> profit),
+    DRAW("무", profit -> profit.zero()),
+    LOSE("패", profit -> profit.loss());
 
     private final String name;
+    private final Function<Profit, Profit> function;
 
-    Result(final String name) {
+    Result(final String name, final Function<Profit, Profit> function) {
         this.name = name;
+        this.function = function;
+    }
+
+    public Profit calculate(final Profit profit) {
+        return function.apply(profit);
     }
 
     public Result reverse() {
