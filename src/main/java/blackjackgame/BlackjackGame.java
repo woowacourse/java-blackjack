@@ -20,6 +20,7 @@ import participants.Player;
 
 public class BlackjackGame {
     private static final int FIRST_DRAW_COUNT = 2;
+    public static final int MAX_PLAYERS = 6;
     private final Participants participants;
     private final Deck deck;
     private final BettingMap bettingMap;
@@ -40,7 +41,7 @@ public class BlackjackGame {
     }
 
     private void validateMaxPlayer(List<String> names) {
-        if (names.size() > 6) {
+        if (names.size() > MAX_PLAYERS) {
             throw new IllegalArgumentException("참가인원은 최대 6명입니다.");
         }
     }
