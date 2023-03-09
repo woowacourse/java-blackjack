@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DealerTest {
+
     Dealer dealer;
 
     @BeforeEach
@@ -21,24 +22,24 @@ public class DealerTest {
     @DisplayName("딜러의 점수가 16이하이면 더 뽑아야 한다.")
     @Test
     void shouldDealerDrawTest() {
-        Card firstCard = Card.getCard(Suit.CLOVER, Rank.FOUR);
-        Card secondCard = Card.getCard(Suit.CLOVER, Rank.KING);
+        Card firstCard = Card.of(Suit.CLOVER, Rank.FOUR);
+        Card secondCard = Card.of(Suit.CLOVER, Rank.KING);
 
-        dealer.drawCard(firstCard);
-        dealer.drawCard(secondCard);
+        dealer.hit(firstCard);
+        dealer.hit(secondCard);
 
-        assertTrue(dealer.isDealerDraw());
+        assertTrue(dealer.isDealerHit());
     }
 
     @DisplayName("딜러의 점수가 17이상이면 더 뽑으면 안된다.")
     @Test
     void shouldNotDealerDrawTest() {
-        Card firstCard = Card.getCard(Suit.CLOVER, Rank.ACE);
-        Card secondCard = Card.getCard(Suit.CLOVER, Rank.KING);
+        Card firstCard = Card.of(Suit.CLOVER, Rank.ACE);
+        Card secondCard = Card.of(Suit.CLOVER, Rank.KING);
 
-        dealer.drawCard(firstCard);
-        dealer.drawCard(secondCard);
+        dealer.hit(firstCard);
+        dealer.hit(secondCard);
 
-        assertFalse(dealer.isDealerDraw());
+        assertFalse(dealer.isDealerHit());
     }
 }

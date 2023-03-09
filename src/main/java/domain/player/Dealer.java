@@ -1,29 +1,14 @@
 package domain.player;
 
-public class Dealer extends Player {
+public final class Dealer extends Participant {
+
     private static final int STOP_LOWER_BOUND = 17;
-    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(new Hand());
     }
 
-    public boolean isDealerDraw() {
+    public boolean isDealerHit() {
         return getScore() < STOP_LOWER_BOUND;
-    }
-
-    @Override
-    public boolean isWin(int dealerScore) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isDraw(int dealerScore) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isLargerThanBlackJackNumber() {
-        throw new UnsupportedOperationException();
     }
 }
