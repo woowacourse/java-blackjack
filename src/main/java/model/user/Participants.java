@@ -3,9 +3,13 @@ package model.user;
 import model.card.Deck;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toUnmodifiableList;
+import static java.util.stream.Collectors.toMap;
 
 public class Participants {
 
@@ -27,14 +31,16 @@ public class Participants {
         return new Participants(playersName, new Dealer());
     }
 
-    public List<Result> getFinalResult(final Dealer dealer) {
-        return createFinalResultWithoutDealer(dealer.calculateTotalValue());
+    public Map<Result, Long> findDealerFinalResult() {
+        final int dealerTotalValue = dealer.calculateTotalValue();
+        return players.stream()
+                .collect(groupingBy(player -> Result.judge(player.calculateTotalValue(), dealerTotalValue), counting()));
     }
 
-    private List<Result> createFinalResultWithoutDealer(final int dealerTotalValue) {
+    public Map<Player, Result> findPlayerFinalResult() {
+        final int dealerTotalValue = dealer.calculateTotalValue();
         return players.stream()
-                .map(player -> player.judgeResult(dealerTotalValue))
-                .collect(toUnmodifiableList());
+                .collect(toMap(Function.identity(), player -> player.judgeResult(dealerTotalValue)));
     }
 
     public void receiveInitialCards(final Deck deck) {

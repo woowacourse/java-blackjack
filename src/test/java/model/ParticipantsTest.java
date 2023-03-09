@@ -6,11 +6,14 @@ import model.card.RandomShuffleMaker;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
+import model.user.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static model.card.Shape.CLOVER;
 import static model.card.Shape.DIAMOND;
@@ -50,10 +53,10 @@ class ParticipantsTest {
 
         // when, then
         assertAll(
-                () -> assertThat(participants.getFinalResult(dealer)).containsExactly(LOSE),
+                () -> assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(LOSE),
                 () -> {
             bebe.receiveCard(new Card(CLOVER, TWO));
-            assertThat(participants.getFinalResult(dealer)).containsExactly(WIN);
+            assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(WIN);
         });
     }
 
@@ -70,7 +73,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(participants.getFinalResult(dealer)).containsExactly(TIE);
+        assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(TIE);
     }
 
     @Test
@@ -84,7 +87,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, THREE));
 
         // when, then
-        assertThat(participants.getFinalResult(dealer)).containsExactly(LOSE);
+        assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(LOSE);
     }
 
     @Test
@@ -98,7 +101,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(SPADE, KING));
 
         // when, then
-        assertThat(participants.getFinalResult(dealer)).containsExactly(WIN);
+        assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(WIN);
     }
 
     @DisplayName("receiveInitialCards가 두 장의 카드를 주는지 확인한다.")
@@ -112,5 +115,52 @@ class ParticipantsTest {
                 () -> assertThat(bebe.getHand().getCards()).hasSize(2),
                 () -> assertThat(dealer.getHand().getCards()).hasSize(2)
         );
+    }
+
+    @Nested
+    @DisplayName("딜러의 최종 결과를 반환한다.")
+    class DealerResultTest {
+
+        @Test
+        @DisplayName("딜러가 플레이어의 결과보다 크면 딜러의 결과로 승리가 반환된다.")
+        void givenDealerMoreValueThanPlayer_whenFindDealerFinalResult_thenReturnWin() {
+            // given
+            dealer.receiveCard(new Card(DIAMOND, KING));
+            bebe.receiveCard(new Card(DIAMOND, NINE));
+
+            // when
+            final Map<Result, Long> result = participants.findDealerFinalResult();
+
+            // then
+            assertThat(result.get(WIN)).isEqualTo(1L);
+        }
+
+        @Test
+        @DisplayName("딜러가 플레이어의 결과와 같으면 딜러의 결과로 승리가 반환된다.")
+        void givenDealerSameValueThanPlayer_whenFindDealerFinalResult_thenReturnWin() {
+            // given
+            dealer.receiveCard(new Card(DIAMOND, KING));
+            bebe.receiveCard(new Card(DIAMOND, JACK));
+
+            // when
+            final Map<Result, Long> result = participants.findDealerFinalResult();
+
+            // then
+            assertThat(result.get(TIE)).isEqualTo(1L);
+        }
+
+        @Test
+        @DisplayName("딜러가 플레이어의 결과보다 작으면 딜러의 결과로 승리가 반환된다.")
+        void givenDealerLessValueThanPlayer_whenFindDealerFinalResult_thenReturnWin() {
+            // given
+            dealer.receiveCard(new Card(DIAMOND, NINE));
+            bebe.receiveCard(new Card(DIAMOND, JACK));
+
+            // when
+            final Map<Result, Long> result = participants.findDealerFinalResult();
+
+            // then
+            assertThat(result.get(LOSE)).isEqualTo(1L);
+        }
     }
 }

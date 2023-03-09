@@ -4,6 +4,7 @@ import model.card.Deck;
 import model.user.Dealer;
 import model.user.Participants;
 import model.user.Player;
+import model.user.Result;
 import ui.input.InputView;
 import ui.input.ReceiveCommand;
 import ui.output.OutputView;
@@ -30,7 +31,8 @@ public class BlackJackController {
         divideCard(deck, participants, dealer);
         outputView.printScoreBoard(BlackJackGameResponse.create(participants));
 
-        outputView.printFinalResult(BlackJackGameResponse.create(participants));
+        outputView.printFinalResult(new DealerResultResponse(participants.findDealerFinalResult(), Result.values()),
+                new PlayerResultResponses(participants.findPlayerFinalResult()));
     }
 
     private Participants getParticipants(final Deck deck) {
