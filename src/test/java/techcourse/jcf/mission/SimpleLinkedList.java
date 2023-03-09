@@ -1,16 +1,16 @@
 package techcourse.jcf.mission;
 
-public class SimpleLinkedList implements SimpleList {
+public class SimpleLinkedList<E> implements SimpleList<E> {
 
     private int size;
-    private Node head;
-    private Node tail;
+    private Node<E> head;
+    private Node<E> tail;
 
-    private static class Node {
-        String value;
-        Node next;
+    private static class Node<E> {
+        E value;
+        Node<E> next;
 
-        Node(String value, Node next) {
+        Node(final E value, final Node<E> next) {
             this.value = value;
             this.next = next;
         }
@@ -23,9 +23,9 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean add(final String value) {
-        Node lastNode = tail;
-        Node newNode = new Node(value, null);
+    public boolean add(final E value) {
+        Node<E> lastNode = tail;
+        Node<E> newNode = new Node<>(value, null);
 
         if (head == null && tail == null) {
             head = newNode;
@@ -38,20 +38,22 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public void add(final int index, final String value) {
+    public void add(final int index, final E value) {
         checkValidIndex(index);
-        Node newNode = new Node(value, null);
+        Node<E> newNode = new Node<>(value, null);
 
         if (index == 0) {
-            Node firstNode = head;
+            Node<E> firstNode = head;
             head = newNode;
             newNode.next = firstNode;
-        } else if (index == size) {
+        }
+        else if (index == size) {
             tail.next = newNode;
             tail = newNode;
-        } else {
-            Node temp = node(index - 1);
-            Node nextNode = temp.next;
+        }
+        else {
+            Node<E> temp = node(index - 1);
+            Node<E> nextNode = temp.next;
             temp.next = newNode;
             newNode.next = nextNode;
         }
@@ -65,31 +67,31 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String set(final int index, final String value) {
+    public E set(final int index, final E value) {
         checkValidIndex(index);
-        Node temp = node(index);
-        String oldValue = temp.value;
+        Node<E> temp = node(index);
+        E oldValue = temp.value;
         temp.value = value;
 
         return oldValue;
     }
 
     @Override
-    public String get(final int index) {
+    public E get(final int index) {
         checkValidIndex(index);
-        Node temp = node(index);
+        Node<E> temp = node(index);
         return temp.value;
     }
 
     @Override
-    public boolean contains(final String value) {
+    public boolean contains(final E value) {
         return indexOf(value) >= 0;
     }
 
     @Override
-    public int indexOf(final String value) {
+    public int indexOf(final E value) {
         int index = 0;
-        for (Node temp = head; temp != null; temp = temp.next) {
+        for (Node<E> temp = head; temp != null; temp = temp.next) {
             if (temp.value.equals(value)) {
                 return index;
             }
@@ -109,7 +111,7 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public boolean remove(final String value) {
+    public boolean remove(final E value) {
         int index = indexOf(value);
 
         if (index == -1) {
@@ -120,20 +122,22 @@ public class SimpleLinkedList implements SimpleList {
     }
 
     @Override
-    public String remove(final int index) {
+    public E remove(final int index) {
         checkValidIndex(index);
 
-        String oldValue = null;
+        E oldValue = null;
         if (index == 0) {
             oldValue = head.value;
             head = head.next;
-        } else if (index == size - 1) {
+        }
+        else if (index == size - 1) {
             oldValue = tail.value;
-            Node temp = node(index - 1);
+            Node<E> temp = node(index - 1);
             tail = temp;
             temp.next = null;
-        } else {
-            Node temp = node(index - 1);
+        }
+        else {
+            Node<E> temp = node(index - 1);
             temp.next = temp.next.next;
         }
         size--;
@@ -147,8 +151,8 @@ public class SimpleLinkedList implements SimpleList {
         size = 0;
     }
 
-    private Node node(final int index) {
-        Node temp = head;
+    private Node<E> node(final int index) {
+        Node<E> temp = head;
         for (int i = 0; i < index; i++) {
             temp = temp.next;
         }

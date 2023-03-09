@@ -1,33 +1,34 @@
 package techcourse.jcf.mission;
 
-public class SimpleArrayList implements SimpleList {
+public class SimpleArrayList<E> implements SimpleList<E> {
 
     private static final int INITIAL_CAPACITY = 10;
 
-    private String[] array;
+    private Object[] array;
     private int size;
     private int capacity;
 
     public SimpleArrayList() {
-        this.array = new String[INITIAL_CAPACITY];
+        this.array = new Object[INITIAL_CAPACITY];
         this.size = 0;
         this.capacity = INITIAL_CAPACITY;
     }
 
+    public SimpleArrayList(final E... values) {
+        this.array = values;
+        this.size = values.length;
+        this.capacity = Math.max(values.length, INITIAL_CAPACITY);
+    }
+
+
     public SimpleArrayList(final int initialCapacity) {
-        this.array = new String[initialCapacity];
+        this.array = new Object[initialCapacity];
         this.size = 0;
         this.capacity = initialCapacity;
     }
 
-    public SimpleArrayList(final String[] initialArray) {
-        this.array = initialArray;
-        this.size = initialArray.length;
-        this.capacity = initialArray.length;
-    }
-
     @Override
-    public boolean add(final String value) {
+    public boolean add(final E value) {
         checkMaxSize();
         array[size] = value;
         size++;
@@ -42,13 +43,13 @@ public class SimpleArrayList implements SimpleList {
 
     private void grow() {
         this.capacity += (capacity >> 1);
-        String[] newArray = new String[capacity];
+        Object[] newArray = new Object[capacity];
         System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
     }
 
     @Override
-    public void add(final int index, final String value) {
+    public void add(final int index, final E value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index: " + index + "Size: " + size);
         }
@@ -66,28 +67,28 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String set(final int index, final String value) {
+    public E set(final int index, final E value) {
         checkValidIndex(index);
 
-        String oldValue = array[index];
+        Object oldValue = array[index];
         array[index] = value;
 
-        return oldValue;
+        return (E) oldValue;
     }
 
     @Override
-    public String get(final int index) {
+    public E get(final int index) {
         checkValidIndex(index);
-        return array[index];
+        return (E) array[index];
     }
 
     @Override
-    public boolean contains(final String value) {
+    public boolean contains(final E value) {
         return indexOf(value) >= 0;
     }
 
     @Override
-    public int indexOf(final String value) {
+    public int indexOf(final E value) {
         for (int i = 0; i < size; i++) {
             if (value == null && array[i] == null) {
                 return i;
@@ -110,7 +111,7 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(final String value) {
+    public boolean remove(final E value) {
         if (indexOf(value) == -1) {
             return false;
         }
@@ -119,17 +120,17 @@ public class SimpleArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(final int index) {
+    public E remove(final int index) {
         checkValidIndex(index);
 
-        String oldValue = array[index];
+        Object oldValue = array[index];
         if (size - 1 > index) {
             System.arraycopy(array, index + 1, array, index, size - index);
         }
         array[size - 1] = null;
 
         size--;
-        return oldValue;
+        return (E) oldValue;
     }
 
     @Override
