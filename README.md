@@ -33,20 +33,19 @@ classDiagram
     note for User "* User와 Player/Dealer는 일반화 관계(상속)"
     note for Deck "* Deck과 ShuffledDeck은 실체화 관계(구현)"
     class User {
-        +UserName userName
+        +UserInformation userInformation
         +Hand hand
     }
 ```
-### UserName 관련 클래스
+### UserInformation 관련 클래스
 ```mermaid
 classDiagram
-    note "* Player와 PlayerName,
-    Dealer와 DelaerName은
-    합성 집합 관계(Composition)"
+    note "* UserInformation와 UserName/BettingAmount는 합성 집합 관계(Composition)
+    UserName과 PlayerName/DealerName은 실체화 관계(구현)"
     UserName <|.. PlayerName
     UserName <|.. DealerName
-    Player *-- PlayerName
-    Dealer *-- DealerName
+    UserInformation *-- UserName
+    UserInformation *-- BettingAmount
     <<interface>> UserName
 ```
 
@@ -62,7 +61,7 @@ classDiagram
 ### OutputView
 - [x] 딜러와 플레이어 초기 카드 발급 결과를 출력한다.
 - [x] Hit, Stay 시 Player의 카드 현황을 출력한다.
-- [x] 딜러와 플레이어의 비교 결과를 출력한다.
+- [ ] 딜러와 플레이어의 최종 수익을 출력한다.
 
 ### BlackjackGame
 - 블랙잭 게임 규칙에 따라 게임을 진행
@@ -72,8 +71,16 @@ classDiagram
 - [x] 사용자의 의사를 확인하여 카드를 추가로 발급한다.
 - [x] 딜러가 카드를 더 받을 수 있으면 추가로 발급한다.
 - [x] 모든 유저의 카드 현황을 반환한다.
-- [x] 딜러와 각 플레이어의 게임 결과를 계산한다.
-- [x] 딜러와 각 플레이어의 게임 결과를 반환한다.
+- [ ] 딜러와 각 플레이어의 최종 수익을 반환한다.
+
+### Participants
+- 게임의 모든 참가자(플레이어, 딜러)를 가지고 있는 클래스
+- [x] 모든 참가자에게 초기 카드를 지급한다.
+- [x] 딜러를 hit 또는 stay 한다.
+- [ ] 모든 플레이어의 최종 수익을 계산한다.
+  - [x] 모든 플레이어의 결과를 계산한다.
+- [x] 딜러를 반환한다.
+- [x] 플레이어들을 반환한다.
 
 ### User
 - 게임에 참여하는 유저가 상속받는 클래스
@@ -92,10 +99,16 @@ classDiagram
 - 게임에 참여하는 유저
 - [x] 카드를 더 받을 수 있는 상태인지 확인한다. (Override)
   - [x] 점수가 21점 이상이면 카드를 더 받을 수 없다.
+- [ ] 베팅 금액을 반환한다.
 
 ### Players
 - Player를 감싸는 일급 컬렉션
 - [x] Player들을 반환한다.
+
+### UserInformation
+- 유저의 이름과 베팅 금액 정보를 가지고 있는 클래스
+- [ ] 이름을 반환한다.
+- [ ] 베팅 금액을 반환한다.
 
 ### UserName (Interface)
 - 유저의 이름 정보를 가지고 있는 객체의 규격
@@ -114,6 +127,11 @@ classDiagram
 - [x] 유효한 이름인지 검증한다.
   - [x] 예외 처리) 빈 이름
 - [x] 이름 값을 반환한다.
+
+### BettingAmount
+- 베팅 금액 정보를 가지고 있는 객체
+- [ ] 올바른 베팅 금액인지 검증한다.
+- [ ] 베팅 금액을 반환한다.
 
 ### Deck (Interface)
 - [x] 1개의 카드를 반환한다.
