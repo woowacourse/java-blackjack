@@ -87,12 +87,12 @@
 - [x] HashMap 선언 -> Map 선언
   - 전하고자 하는 의미를 담고자 LinkedHashMap으로 선언을 한다 vs 다형성을 위해 Map으로 선언한다. 어떤 것이 맞을까?
   - 전하고자 하는 의미 역시 기능이 변경됨에 따라 달라질 수 있다. 그렇기 때문에 Map으로 선언하며 수정에 열려 있도록 설계하는 것이 좋을 것 같다.
-- [ ] Map의 키로 사용하고 있는 String을 의미에 맞게 포장
+- [x] Map의 키로 사용하고 있는 String을 의미에 맞게 포장
   - Game 클래스에서 반환한 Map을 컨트롤러에서 바로 OutputView로 전달하고자 합니다.
   - Map의 Key로 Name 객체를 넣으면, 뷰에 Name이라는 도메인 객체를 전달하는 것이라 생각했습니다.
   - 뷰에 도메인 객체를 전달하지 않고자 Map의 Key 타입을 String으로 선언하고 Game 클래스에서 해당 타입에 맞게 만들어 반환하는 것을 선택했습니다.
   - 제이미가 의도하신 바는 Game 클래스에서는 Name 객체를 Key로 가지는 Map을 반환하고, 컨트롤러에서 이를 벗겨서 String을 Key로 가지는 Map을 뷰에 전달하는 것일까요?
-  - [ ] DTO를 통해 컨트롤러에서 뷰로 정보를 전달하자.
+  - [x] DTO를 통해 컨트롤러에서 뷰로 정보를 전달하자.
     - DTO를 사용함으로써 Map에 어떤 정보가 담겨 있는지, 그 의미를 전달할 수 있을 것이다.
 - [x] 첫번째 카드 get 메서드는 딜러의 역할이 될 수 있다.
 - [x] Controller.playGame() 메서드 분리의 이유 고민
@@ -176,39 +176,54 @@
 - [x] 플레이어가 생성자 테스트에서 플레이어가 2장의 카드를 받는지 검증하는 것이 적합할까?
 - [x] ScoreTest 반대 케이스 테스트
 ### 1단계 2차 피드백
-- [ ] 컨트롤러에서 카드 뽑기 로직과 관련된 상수를 가지고 있는 것이 맞는지에 대한 고민
-- [ ] repeat 메서드명 개선 (어떨 떄 반복하는지 드러나지 않는다.)
-- [ ] `printInputPlayerNameMessage`, `readPlayerNames` 메서드명 통일
-- [ ] `isLessThanBustScore`의 책임이 컨트롤러에 있는 게 맞을까?
-- [ ] 딜러가 카드를 뽑았는지 여부를 계산하는 로직을 컨트롤러가 가지는 게 맞는가?
+- [x] 컨트롤러에서 카드 뽑기 로직과 관련된 상수를 가지고 있는 것이 맞는지에 대한 고민
+- [x] repeat 메서드명 개선 (어떨 떄 반복하는지 드러나지 않는다.)
+- [x] `printInputPlayerNameMessage`, `readPlayerNames` 메서드명 통일
+- [x] `isLessThanBustScore`의 책임이 컨트롤러에 있는 게 맞을까?
+- [x] 딜러가 카드를 뽑았는지 여부를 계산하는 로직을 컨트롤러가 가지는 게 맞는가?
   - 디미터의 법칙에 대해 공부해보자
-- [ ] 게임 결과를 받을 때, blackJackGame.getDealer()를 통해 딜러에게 물어보기 보단, blackJackGame에게만 물어보도록 수정
-- [ ] getPlayerFinalResult의 결과를 반환받는 변수명은 userFinalReuslt?
-- [ ] Cards 객체가 생성자로 받는 CardsGenerator의 변수명을 shuffledCardsGenerator 대신 CardsGenerator로 수정
-- [ ] 불필요한 개행 제거
-  - [ ] Name 클래스
-- [ ] drawTwoCards 메서드명 (세 장 뽑게 될 경우 메서드명 변경해야 됨. 변경에 닫혀있다!)
-- [ ] 각 문양 별 카드 Enum의 속성 바로 초기화해줄 수 있음
+- [x] 게임 결과를 받을 때, blackJackGame.getDealer()를 통해 딜러에게 물어보기 보단, blackJackGame에게만 물어보도록 수정
+  - 이렇게 수정할 경우, BlackJackGame 객체가 Dealer.getWinningRecord()를 그대로 호출하기만 하는 메서드를 갖게 된다.
+  - 그저 다른 객체의 메서드를 사용하고 결과를 그대로 반환해주는 경우에도 BlackJackGame이 호출하도록 하는 게 맞는 걸까?
+  - 같은 상황을 레이어드 아키텍처에 대입해서 생각해봐도 컨트롤러가 바로 repository 계층에 접근하지 않고, 무조건 서비스를 통해 접근하는 건가?
+- [x] getPlayerFinalResult의 결과를 반환받는 변수명은 userFinalReuslt?
+- [x] Cards 객체가 생성자로 받는 CardsGenerator의 변수명을 shuffledCardsGenerator 대신 CardsGenerator로 수정
+- [x] 불필요한 개행 제거
+  - [x] Name 클래스
+- [x] drawTwoCards 메서드명 (세 장 뽑게 될 경우 메서드명 변경해야 됨. 변경에 닫혀있다!)
+- [x] 각 문양 별 카드 Enum의 속성 바로 초기화해줄 수 있음
 - [ ] cards를 generator에서 만들어도 되지만, cards에서 만들고 generator에선 셔플만 하면 어떨까?
-- [ ] 게임 순서에 맞게 딜러부터 카드 분배하도록 수정
-- [ ] drawPlayersDefaultCard 메서드 분리 필요성이 있었는가?
-- [ ] drawDealerCardUntilSatisfyingCondition 메서드명과 상수명 통일
-- [ ] judgeWinner 결과를 각 player와 dealer에 심어주는 게 맞을까? (player는 dealer를 모르고, dealer는 player를 모른다.)
-- [ ] Score.DEALER_MIN_SCORE 상수명 개선
+  - 생성의 역할은 Cards에게 맡기고, shuffle한다는 행위에 대한 역할만 generator에게 맡기는 것이 좋은 방법일까?
+- [x] 게임 순서에 맞게 딜러부터 카드 분배하도록 수정
+- [x] drawPlayersDefaultCard 메서드 분리 필요성이 있었는가?
+- [x] drawDealerCardUntilSatisfyingCondition 메서드명과 상수명 통일
+- [x]  judgeWinner 결과를 각 player와 dealer에 심어주는 게 맞을까? (player는 dealer를 모르고, dealer는 player를 모른다.)
+- [x] Score.DEALER_MIN_SCORE 상수명 개선
 - [ ] Dealer와 Player 모두 name을 가진다면 User에서 관리할 수 있지 않을까?
-- [ ] CardsTest 변수명 개선
-- [ ] CardsTest FixedCardsGenerator를 메서드 안에 넣어줄 수 있다.
-- [ ] 불필요한 주석 삭제
-- [ ] 테스트 클래스의 인스턴스 변수 접근제어자 추가
-- [ ] BlackJackGameTest
-  - [ ] 현재 모든 메서드에서 Player와 Dealer를 blackJackGame으로부터 뽑아서 쓰고 있다. 이를 개선해보자.
-  - [ ] 2장을 뽑는다는 메서드를 검증할 때, 단순히 2장의 카드가 있다는 걸 보여주기보단 기존에는 한 장도 없었단 걸 함께 보여주자.
-  - [ ] FixedCardsGenerator가 리스트의 일부를 반환해주는 역할을 한다면 어떨까?
-  - [ ] player가 버스트인지 확인할 수 있도록 하자.
+  - 딜러는 무조건 "딜러"라는 이름을 반환합니다.
+  - 그렇기 떄문에 때문에 이를 Name 객체로 생성해주기 보다는 Dealer 클래스 내에서 상수로 선언하여 사용하는 것이 좋다고 생각했습니다.
+  - 제이미는 `new Name("딜러")`와 같이 Name 객체를 만들고 이를 Dealer가 인스턴스 변수로 갖는 것이 좋다고 생각하시나요??
+- [x] CardsTest 변수명 개선
+- [x] CardsTest FixedCardsGenerator를 메서드 안에 넣어줄 수 있다.
+- [x] 불필요한 주석 삭제
+- [x] 테스트 클래스의 인스턴스 변수 접근제어자 추가
+- [x] BlackJackGameTest
+  - [x] 현재 모든 메서드에서 Player와 Dealer를 blackJackGame으로부터 뽑아서 쓰고 있다. 이를 개선해보자.
+  - [x] 2장을 뽑는다는 메서드를 검증할 때, 단순히 2장의 카드가 있다는 걸 보여주기보단 기존에는 한 장도 없었단 걸 함께 보여주자.
+  - [x] FixedCardsGenerator가 리스트의 일부를 반환해주는 역할을 한다면 어떨까?
+  - [x] player가 버스트인지 확인할 수 있도록 하자.
     - 주석으로 확인하면, 변경 포인트가 2개가 되는 것이다.
-- [ ] DealerTest 테스트 메서드명 수정
-- [ ] Name이 null을 받게 될 상황을 고려해 NPE 방지
-- [ ] Player를 생성했을 때, 카드를 가지고 있지 않다가 receiveCard를 하면 받은 카드가 패 안에 있다는 걸 검증하는 테스트 작성
+- [x] DealerTest 테스트 메서드명 수정
+- [x] Name이 null을 받게 될 상황을 고려해 NPE 방지
+- [x] Player를 생성했을 때, 카드를 가지고 있지 않다가 receiveCard를 하면 받은 카드가 패 안에 있다는 걸 검증하는 테스트 작성
+
+### 궁금한 점
+**부모 클래스의 생성자를 그대로 쓰면 자식 클래스는 생성자 코드를 생략해도 될까?**
+  - 현재 Delaer는 생성자에서 별다른 로직을 가지고 있지 않다.
+  - 그렇기 때문에 부모 클래스인 User의 생성자를 그대로 사용하는데, 이러한 경우에도 생성자를 만들어서 super()만 호출하는 게 좋은가?
+  - 다른 로직을 가지지 않고, 슈퍼 클래스의 생서자만 사용한다는 걸 보여주기 위해서?
+  - 코드의 중복을 제거하기 위해 상속을 사용했지만, 생성자까지 생략해도 좋은지 궁금하다.
+
 ### 게임 도메인의 역할?
 - [x] 딜러의 카드를 2장 뽑는다.
 - [x] 플레이어마다 카드를 2장 뽑는다.
