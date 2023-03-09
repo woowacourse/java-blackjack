@@ -122,4 +122,38 @@ class PlayerTest {
         //then
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("블랙잭인지 테스트")
+    public void testIsBlackJack() {
+        //given
+        final Cards blackJackCards = new Cards(Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.SPADE, Letter.ACE)
+        ));
+        final Player player = new Player(blackJackCards, "test");
+
+        //when
+        boolean result = player.isBlackJack();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌지 테스트")
+    public void testIsNotBlackJack() {
+        //given
+        final Cards blackJackCards = new Cards(Set.of(
+            new Card(Suit.CLUB, Letter.TEN),
+            new Card(Suit.SPADE, Letter.TEN)
+        ));
+        final Player player = new Player(blackJackCards, "test");
+
+        //when
+        boolean result = player.isNotBlackJack();
+
+        //then
+        assertThat(result).isTrue();
+    }
 }
