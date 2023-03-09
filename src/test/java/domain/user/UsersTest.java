@@ -7,10 +7,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
+import domain.money.BettingAmount;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,32 +23,28 @@ public class UsersTest {
 
     @BeforeEach
     void setUpUsers() {
-        Map<String, Integer> players = new LinkedHashMap<>();
-        players.put("hongo", 1000);
-        players.put("kiara", 1000);
-        players.put("ash", 1000);
-        users = Users.from(players);
+        users = Users.from(List.of("hongo", "kiara", "ash"));
     }
 
     @DisplayName("참여 인원은 1명 이상 4명 이하이다")
     @ParameterizedTest
     @MethodSource("parameterProvider")
-    void playerCount1_4(Map<String, Integer> players) {
+    void playerCount1_4(List<String> playerNames) {
         assertThatNoException()
-            .isThrownBy(() -> Users.from(players));
+            .isThrownBy(() -> Users.from(playerNames));
     }
 
-    static Stream<Map<String, Integer>> parameterProvider() {
+    static Stream<List<String>> parameterProvider() {
         return Stream.of(
-            Map.of("hongo", 1000, "kiara", 1000, "ash", 1000, "woowa", 1000),
-            Map.of("ash", 1000)
+            List.of("hongo", "kiara", "ash", "woowa"),
+            List.of("ash")
         );
     }
 
     @DisplayName("참여 인원은 1명미만이 될 수 없다")
     @Test
     void playerCount_shouldNotBeUnder1() {
-        assertThatThrownBy(() -> Users.from(Collections.emptyMap()))
+        assertThatThrownBy(() -> Users.from(Collections.emptyList()))
             .hasMessageContaining("플레이어 수는 ")
             .hasMessageContaining("명 이상, ");
     }
@@ -57,9 +52,17 @@ public class UsersTest {
     @DisplayName("참여 인원은 4명초과가 될 수 없다")
     @Test
     void playerCount_shouldNotBeOver4() {
-        assertThatThrownBy(() -> Users.from(Map.of("a", 10, "b", 10, "c", 10, "d", 10, "e", 10)))
+        assertThatThrownBy(() -> Users.from(List.of("a", "b", "c", "d", "e")))
             .hasMessageContaining("플레이어 수는 ")
             .hasMessageContaining("명 이하여야 합니다.");
+    }
+
+    @DisplayName("플레이어의 이름은 중복될 수 없다")
+    @Test
+    void nameNotDuplicated() {
+        assertThatThrownBy(() -> Users.from(List.of("hongo", "hongo", "ash")))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
     }
 
     @DisplayName("해당 이름의 플레이어에게 카드를 추가한다")
@@ -68,6 +71,30 @@ public class UsersTest {
         users.hitCardByName("hongo", new Card(Denomination.JACK, Suits.HEART));
         Player player = users.getPlayers().get(0);
         assertThat(player.getScore()).isEqualTo(10);
+    }
+
+    @DisplayName("이름으로 카드추가시 해당 이름의 플레이어가 없을시 예외처리한다")
+    @Test
+    void hitCardByName_noSuchName_exception() {
+        assertThatThrownBy(() -> users.hitCardByName("error", new Card(Denomination.JACK, Suits.HEART)))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("해당 이름의 플레이어가 존재하지 않습니다.");
+    }
+
+    @DisplayName("해당 이름의 플레이어가 베팅한다")
+    @Test
+    void bettingByName() {
+        users.bettingByName("hongo", 10000);
+        Player player = users.getPlayers().get(0);
+        assertThat(player.getBettingAmount()).isEqualTo(BettingAmount.valueOf(10000));
+    }
+
+    @DisplayName("이름으로 베팅시 해당 이름의 플레이어가 없을시 예외처리한다")
+    @Test
+    void bettingByName_noSuchName_exception() {
+        assertThatThrownBy(() -> users.bettingByName("error", 10000))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("해당 이름의 플레이어가 존재하지 않습니다.");
     }
 
     @DisplayName("카드를 더 받을 수 있는 플레이어 리스트를 반환한다")

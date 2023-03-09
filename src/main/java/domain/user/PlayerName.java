@@ -1,9 +1,6 @@
 package domain.user;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class PlayerName {
 
@@ -38,13 +35,6 @@ public class PlayerName {
     private void validateProperName(final String name) {
         if (name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException("딜러라는 이름은 사용할 수 없습니다.");
-        }
-    }
-
-    public static void validateDuplication(final List<String> names) {
-        Set<String> distinctNames = new HashSet<>(names);
-        if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 

@@ -3,11 +3,8 @@ package controller;
 import domain.card.shuffler.RandomCardShuffler;
 import domain.game.BlackJackGame;
 import domain.user.Player;
-import domain.user.PlayerName;
 import domain.user.Users;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -41,13 +38,11 @@ public class Controller {
 
     private BlackJackGame createBlackJackGame() {
         List<String> playerNames = inputView.askPlayerNames();
-        PlayerName.validateDuplication(playerNames);
-        Map<String, Integer> playerNameToBettingAmount = new LinkedHashMap<>();
+        Users users = Users.from(playerNames);
         for (String playerName : playerNames) {
             int bettingAmount = inputView.askPlayerBettingAmount(playerName);
-            playerNameToBettingAmount.put(playerName, bettingAmount);
+            users.bettingByName(playerName, bettingAmount);
         }
-        Users users = Users.from(playerNameToBettingAmount);
         return BlackJackGame.of(users, new RandomCardShuffler());
     }
 

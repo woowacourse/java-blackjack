@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suits;
+import domain.money.BettingAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setPlayer() {
-        player = new Player("kiara", 10000);
+        player = new Player("kiara");
     }
 
     @DisplayName("카드 점수가 21보다 작으면 카드를 받을 수 있다")
@@ -45,5 +46,12 @@ public class PlayerTest {
     @Test
     void isRightName_false() {
         assertThat(player.isRightName("hongo")).isFalse();
+    }
+
+    @DisplayName("베팅금액을 설정한다")
+    @Test
+    void betting() {
+        player.betting(10000);
+        assertThat(player.getBettingAmount()).isEqualTo(BettingAmount.valueOf(10000));
     }
 }

@@ -10,7 +10,6 @@ import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,11 +32,7 @@ public class GameResultTest {
     }
 
     void createUsers() {
-        Map<String, Integer> playerNameToBettingAmount = new LinkedHashMap<>();
-        playerNameToBettingAmount.put("hongo", 1000);
-        playerNameToBettingAmount.put("kiara", 1000);
-        playerNameToBettingAmount.put("ash", 1000);
-        users = Users.from(playerNameToBettingAmount);
+        users = Users.from(List.of("hongo", "kiara", "ash"));
     }
 
     void giveCardToPlayer(User user, Denomination denomination) {

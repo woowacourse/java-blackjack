@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Users;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,9 +19,13 @@ public class BlackJackGameTest {
 
     @BeforeEach
     void setUsers() {
-        users = Users.from(Map.of("hongo", 10000));
+        users = Users.from(List.of("hongo"));
         blackJackGame = BlackJackGame.of(users, cards -> {
         });
+    }
+
+    void createUsers() {
+        users = Users.from(List.of("hongo", "kiara", "ash"));
     }
 
     @DisplayName("유저가 요청하면 카드를 하나 더 준다")
@@ -91,13 +94,5 @@ public class BlackJackGameTest {
             .hasEntrySatisfying("hongo", score -> assertThat(score).isEqualTo(13))
             .hasEntrySatisfying("kiara", score -> assertThat(score).isEqualTo(7))
             .hasEntrySatisfying("ash", score -> assertThat(score).isEqualTo(11));
-    }
-
-    void createUsers() {
-        Map<String, Integer> playerNameToBettingAmount = new LinkedHashMap<>();
-        playerNameToBettingAmount.put("hongo", 1000);
-        playerNameToBettingAmount.put("kiara", 1000);
-        playerNameToBettingAmount.put("ash", 1000);
-        users = Users.from(playerNameToBettingAmount);
     }
 }
