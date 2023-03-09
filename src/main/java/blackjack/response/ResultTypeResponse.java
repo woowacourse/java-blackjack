@@ -36,7 +36,7 @@ public class ResultTypeResponse {
         return Objects.hash(result);
     }
 
-    public String getResult(final ResultConvertStrategy resultConvertStrategy) {
-        return resultConvertStrategy.convertResult(result);
+    public String getResult() {
+        return result;
     }
 }

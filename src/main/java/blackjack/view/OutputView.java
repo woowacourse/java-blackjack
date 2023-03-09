@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.response.CardConvertStrategy;
 import blackjack.response.CardResponse;
 import blackjack.response.DealerScoreResponse;
 import blackjack.response.FinalResultResponse;
@@ -8,7 +7,6 @@ import blackjack.response.InitialCardResponse;
 import blackjack.response.PlayerCardsResponse;
 import blackjack.response.PlayersCardsResponse;
 import blackjack.response.PlayersCardsResponse.CardsScore;
-import blackjack.response.ResultConvertStrategy;
 import blackjack.response.ResultTypeResponse;
 import java.text.MessageFormat;
 import java.util.List;
@@ -25,9 +23,6 @@ public class OutputView {
     private static final String DEALER = "딜러";
     private static final String CARD = "카드";
     private static final String RESULT = " - 결과: ";
-
-    private final CardConvertStrategy cardConvertStrategy = new CardConvertStrategyImpl();
-    private final ResultConvertStrategy resultConvertStrategy = new ResultConvertStrategyImpl();
 
     public void printInitialCards(final InitialCardResponse initialCardResponse) {
         final Map<String, List<CardResponse>> playerNameToCards = initialCardResponse.getPlayerNameToCards();
@@ -56,8 +51,8 @@ public class OutputView {
     }
 
     private String convertCard(final CardResponse cardResponse) {
-        final String convertedSymbol = cardResponse.getSymbol(cardConvertStrategy);
-        final String convertedShape = cardResponse.getShape(cardConvertStrategy);
+        final String convertedSymbol = cardResponse.getSymbol();
+        final String convertedShape = cardResponse.getShape();
 
         return convertedSymbol + convertedShape;
     }
@@ -118,7 +113,7 @@ public class OutputView {
     }
 
     private void printPlayerResult(final String name, final ResultTypeResponse resultTypeResponse) {
-        System.out.println(name + DELIMITER + resultTypeResponse.getResult(resultConvertStrategy));
+        System.out.println(name + DELIMITER + resultTypeResponse.getResult());
     }
 
     private void printDealer(
@@ -127,7 +122,7 @@ public class OutputView {
 
         if (dealerResult.containsKey(resultTypeResponse)) {
             System.out.print(
-                    dealerResult.get(resultTypeResponse) + resultTypeResponse.getResult(resultConvertStrategy));
+                    dealerResult.get(resultTypeResponse) + resultTypeResponse.getResult());
         }
     }
 

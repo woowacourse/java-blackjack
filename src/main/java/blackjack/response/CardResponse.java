@@ -13,14 +13,14 @@ public class CardResponse {
     }
 
     public static CardResponse from(final Card card) {
-        return new CardResponse(card.getSymbol().name(), card.getShape().name());
+        return new CardResponse(card.getSymbol().getName(), card.getShape().getName());
     }
 
-    public String getSymbol(final CardConvertStrategy cardConvertStrategy) {
-        return cardConvertStrategy.convertSymbol(symbol);
+    public String getSymbol() {
+        return symbol;
     }
 
-    public String getShape(final CardConvertStrategy cardConvertStrategy) {
-        return cardConvertStrategy.convertShape(shape);
+    public String getShape() {
+        return shape;
     }
 }
