@@ -1,10 +1,11 @@
 package view;
 
+import domain.BlackjackGame;
 import domain.BlackjackGameResult;
 import domain.BlackjackScore;
 import domain.Card;
 import domain.Participant;
-import domain.Participants;
+import domain.Players;
 import domain.Result;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,23 +17,25 @@ public class OutputView {
     private static final int NO_MORE_CARD_COUNT = 0;
     private static final int SKIP_COUNT = 0;
 
-    public void printInitialCards(Participants participants) {
-        String namesFormat = participants.getPlayers().stream()
+    public void printInitialCards(BlackjackGame blackjackGame) {
+        Players players = blackjackGame.getPlayers();
+        String namesFormat = players.getPlayers().stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(DELIMITER));
 
         breakLine();
         String initialCardsPrefixFormat = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
         System.out.println(initialCardsPrefixFormat);
-        printParticipantsInitialCards(participants);
+        printParticipantsInitialCards(blackjackGame);
         breakLine();
     }
 
-    private void printParticipantsInitialCards(Participants participants) {
-        Participant dealer = participants.getDealer();
+    private void printParticipantsInitialCards(BlackjackGame blackjackGame) {
+        Participant dealer = blackjackGame.getDealer();
         printParticipantCards(dealer, dealer.getInitialOpeningCards());
 
-        for (Participant participant : participants.getPlayers()) {
+        Players players = blackjackGame.getPlayers();
+        for (Participant participant : players.getPlayers()) {
             printParticipantCards(participant, participant.getInitialOpeningCards());
         }
     }
@@ -73,12 +76,13 @@ public class OutputView {
         System.out.println(format);
     }
 
-    public void printCardsWithScore(Participants participants) {
+    public void printCardsWithScore(BlackjackGame blackjackGame) {
         breakLine();
-        Participant dealer = participants.getDealer();
+        Participant dealer = blackjackGame.getDealer();
         System.out.println(getCardsWithScoreFormat(dealer));
 
-        for (Participant player : participants.getPlayers()) {
+        Players players = blackjackGame.getPlayers();
+        for (Participant player : players.getPlayers()) {
             System.out.println(getCardsWithScoreFormat(player));
         }
     }

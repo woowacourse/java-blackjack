@@ -9,7 +9,7 @@ public class Player extends Participant {
         super(participantName);
     }
 
-    public static Participant from(ParticipantName participantName) {
+    public static Player from(ParticipantName participantName) {
         validateAllowedName(participantName);
         return new Player(participantName);
     }

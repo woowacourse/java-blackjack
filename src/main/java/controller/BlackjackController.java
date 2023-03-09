@@ -5,8 +5,9 @@ import domain.BlackjackGame;
 import domain.BlackjackGameResult;
 import domain.DeckFactory;
 import domain.Participant;
-import domain.Participants;
+import domain.Player;
 import domain.PlayerNames;
+import domain.Players;
 import java.util.List;
 import java.util.function.Supplier;
 import view.InputView;
@@ -24,7 +25,7 @@ public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = createBlackjackGame();
         blackjackGame.handOutInitialCards();
-        outputView.printInitialCards(blackjackGame.getParticipants());
+        outputView.printInitialCards(blackjackGame);
 
         playPlayersTurn(blackjackGame);
         playDealerTurn(blackjackGame);
@@ -33,24 +34,25 @@ public class BlackjackController {
     }
 
     private BlackjackGame createBlackjackGame() {
-        Participants participants = retryOnInvalidUserInput(this::requestPlayers);
-        return BlackjackGame.from(participants, DeckFactory.getShuffledDeck());
+        Players players = retryOnInvalidUserInput(this::requestPlayers);
+        return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 
-    private Participants requestPlayers() {
+    private Players requestPlayers() {
         List<String> playerNamesUserInput = inputView.requestPlayerNames();
         PlayerNames playerNames = PlayerNames.from(playerNamesUserInput);
-
-        return Participants.from(playerNames);
+        return Players.from(playerNames);
     }
 
     private void playPlayersTurn(BlackjackGame blackjackGame) {
-        for (Participant player : blackjackGame.getPlayers()) {
+        Players players = blackjackGame.getPlayers();
+
+        for (Player player : players.getPlayers()) {
             playPlayerTurn(blackjackGame, player);
         }
     }
 
-    private void playPlayerTurn(BlackjackGame blackjackGame, Participant player) {
+    private void playPlayerTurn(BlackjackGame blackjackGame, Player player) {
         BlackjackAction blackjackAction;
 
         do {
@@ -83,8 +85,7 @@ public class BlackjackController {
     private void printResults(BlackjackGame blackjackGame) {
         BlackjackGameResult blackjackGameResult = BlackjackGameResult.from(blackjackGame);
 
-        Participants participants = blackjackGame.getParticipants();
-        outputView.printCardsWithScore(participants);
+        outputView.printCardsWithScore(blackjackGame);
         outputView.printFinalResult(blackjackGame.getDealer(), blackjackGameResult);
     }
 

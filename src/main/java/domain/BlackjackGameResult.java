@@ -15,9 +15,9 @@ public class BlackjackGameResult {
     public static BlackjackGameResult from(BlackjackGame blackjackGame) {
         Map<Participant, Result> dealerResultsAgainstParticipants = new LinkedHashMap<>();
         Participant dealer = blackjackGame.getDealer();
-        List<Participant> players = blackjackGame.getPlayers();
+        Players players = blackjackGame.getPlayers();
 
-        for (Participant player : players) {
+        for (Participant player : players.getPlayers()) {
             Result dealerResult = dealer.competeWith(player);
             dealerResultsAgainstParticipants.put(player, dealerResult);
         }

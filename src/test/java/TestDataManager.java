@@ -6,6 +6,7 @@ import domain.Participants;
 import domain.Player;
 import domain.ParticipantName;
 import domain.PlayerNames;
+import domain.Players;
 import java.util.List;
 
 public class TestDataManager {
@@ -16,8 +17,10 @@ public class TestDataManager {
      * @return BlackjackGame
      */
     public static BlackjackGame getShuffledBlackjackGame() {
-        Participants participants = Participants.from(PlayerNames.from(List.of("pobi", "crong", "royce")));
-        return BlackjackGame.from(participants, DeckFactory.getShuffledDeck());
+        PlayerNames playerNames = PlayerNames.from(List.of("pobi", "crong", "royce"));
+        Players players = Players.from(playerNames);
+
+        return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 
     public static Participant getPlayerWithName(String name) {

@@ -6,10 +6,10 @@ import domain.BlackjackGame;
 import domain.Card;
 import domain.Cards;
 import domain.Participant;
-import domain.Participants;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class BlackjackGameTest {
     @Test
     void handOutInitialCardsSuccessTest() {
         BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-        Participants participants = blackjackGame.getParticipants();
+        List<Participant> participants = blackjackGame.getParticipants();
         assertPlayersCardSize(participants, 0);
 
         blackjackGame.handOutInitialCards();
@@ -32,8 +32,8 @@ class BlackjackGameTest {
                 .hasSize(size);
     }
 
-    private void assertPlayersCardSize(Participants participants, int size) {
-        participants.getParticipants().stream()
+    private void assertPlayersCardSize(List<Participant> participants, int size) {
+        participants.stream()
                 .map(Participant::getCards)
                 .forEach(cards -> assertThat(cards).hasSize(size));
     }
@@ -79,41 +79,43 @@ class BlackjackGameTest {
     @Nested
     @DisplayName("플레이어의 상태와 액션으로 게임 진행 가능 여부를 확인 할 수 있다.")
     class isAbleToContinueTest {
+        BlackjackGame blackjackGame;
+        Participant gamePlayer;
+        @BeforeEach
+        void setUp() {
+            blackjackGame = TestDataManager.getShuffledBlackjackGame();
+            gamePlayer = blackjackGame.getPlayers().getPlayers().get(0);
+        }
+
         @DisplayName("액션이 HIT이고 player가 카드를 받을 수 있는 상태에만 진행 할 수 있다.")
         @Test
         void isAbleToContinueTrueTest() {
-            BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-            Participant player = blackjackGame.getPlayers().get(0);
-            assertThat(player.isAbleToReceiveCard()).isTrue();
+            assertThat(gamePlayer.isAbleToReceiveCard()).isTrue();
 
-            boolean ableToContinue = blackjackGame.isAbleToContinue(player, BlackjackAction.HIT);
+            boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HIT);
             assertThat(ableToContinue).isTrue();
         }
 
         @DisplayName("player가 카드를 받을 수 있는 상태가 아니면 진행 할 수 없다.")
         @Test
         void isAbleToContinueFalseTestWhenPlayerIsNotAbleToReceiveCard() {
-            BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-            Participant player = blackjackGame.getPlayers().get(0);
-            player.receive(Cards.of(
+            gamePlayer.receive(Cards.of(
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.KING),
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.QUEEN),
                     new Card(TrumpCardType.CLUB, TrumpCardNumber.JACK))
             );
-            assertThat(player.isAbleToReceiveCard()).isFalse();
+            assertThat(gamePlayer.isAbleToReceiveCard()).isFalse();
 
-            boolean ableToContinue = blackjackGame.isAbleToContinue(player, BlackjackAction.HIT);
+            boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HIT);
             assertThat(ableToContinue).isFalse();
         }
 
         @DisplayName("player가 카드를 받을 수 있지만 액션이 HOLD인 경우 진행 할 수 없다.")
         @Test
         void isAbleToContinueFalseTestWhenActionIsHold() {
-            BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-            Participant player = blackjackGame.getPlayers().get(0);
-            assertThat(player.isAbleToReceiveCard()).isTrue();
+            assertThat(gamePlayer.isAbleToReceiveCard()).isTrue();
 
-            boolean ableToContinue = blackjackGame.isAbleToContinue(player, BlackjackAction.HOLD);
+            boolean ableToContinue = blackjackGame.isAbleToContinue(gamePlayer, BlackjackAction.HOLD);
             assertThat(ableToContinue).isFalse();
         }
     }
@@ -122,7 +124,7 @@ class BlackjackGameTest {
     @Test
     void playByActionHit() {
         BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-        Participant player = blackjackGame.getPlayers().get(0);
+        Participant player = blackjackGame.getPlayers().getPlayers().get(0);
         List<Card> playerCards = player.getCards();
         assertThat(playerCards).hasSize(0);
 
@@ -135,7 +137,7 @@ class BlackjackGameTest {
     @Test
     void playByActionHold() {
         BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-        Participant player = blackjackGame.getPlayers().get(0);
+        Participant player = blackjackGame.getPlayers().getPlayers().get(0);
         List<Card> playerCards = player.getCards();
         assertThat(playerCards).hasSize(0);
 

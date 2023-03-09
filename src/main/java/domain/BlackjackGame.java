@@ -13,15 +13,13 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame from(Participants participants, Deck deck) {
-        Dealer dealer = new Dealer();
-        participants.addDealer(dealer);
-
+    public static BlackjackGame from(Players players, Deck deck) {
+        Participants participants = Participants.from(players);
         return new BlackjackGame(deck, participants);
     }
 
     public void handOutInitialCards() {
-        for (Participant participant : participants.getParticipants()) {
+        for (Participant participant : participants.getAllParticipants()) {
             handOutCardTo(participant);
             handOutCardTo(participant);
         }
@@ -55,7 +53,7 @@ public class BlackjackGame {
     }
 
     private void assertParticipation(Participant participant) {
-        if (participants.getParticipants().contains(participant)) {
+        if (participants.getAllParticipants().contains(participant)) {
             return;
         }
 
@@ -67,15 +65,15 @@ public class BlackjackGame {
         return participant.getCards().size() - INITIAL_CARD_AMOUNT;
     }
 
-    public Participant getDealer() {
-        return participants.getDealer();
+    public List<Participant> getParticipants() {
+        return participants.getAllParticipants();
     }
 
-    public List<Participant> getPlayers() {
+    public Players getPlayers() {
         return participants.getPlayers();
     }
 
-    public Participants getParticipants() {
-        return participants;
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 }

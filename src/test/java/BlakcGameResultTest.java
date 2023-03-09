@@ -4,6 +4,8 @@ import domain.BlackjackGame;
 import domain.BlackjackGameResult;
 import domain.Card;
 import domain.Participant;
+import domain.Player;
+import domain.Players;
 import domain.Result;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
@@ -22,9 +24,10 @@ class BlakcGameResultTest {
     void createBlackjackGameResultSuccessTest() {
         BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
         giveCardsTo(blackjackGame.getDealer(), List.of(DIAMOND_TEN, DIAMOND_NINE)); // 19
-        giveCardsTo(blackjackGame.getPlayers().get(0), List.of(DIAMOND_TEN, SPADE_NINE)); // 19
-        giveCardsTo(blackjackGame.getPlayers().get(1), List.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
-        giveCardsTo(blackjackGame.getPlayers().get(2), List.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
+        List<Player> players = blackjackGame.getPlayers().getPlayers();
+        giveCardsTo(players.get(0), List.of(DIAMOND_TEN, SPADE_NINE)); // 19
+        giveCardsTo(players.get(1), List.of(DIAMOND_TEN, DIAMOND_TEN)); // 20
+        giveCardsTo(players.get(2), List.of(DIAMOND_TEN, DIAMOND_EIGHT)); // 18
 
         BlackjackGameResult blackjackGameResult = BlackjackGameResult.from(blackjackGame);
 
