@@ -5,7 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.Result;
-import blackjack.strategy.CardShuffle;
+import blackjack.strategy.RandomCardShuffle;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -13,16 +13,10 @@ import java.util.List;
 
 public class BlackJackController {
 
-    private final CardShuffle cardShuffle;
-
-    public BlackJackController(CardShuffle cardShuffle) {
-        this.cardShuffle = cardShuffle;
-    }
-
     public void run() {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames, OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
-        final BlackJackGame blackJackGame = new BlackJackGame(cardShuffle);
+        final BlackJackGame blackJackGame = new BlackJackGame(new RandomCardShuffle());
 
         initHit(players, dealer, blackJackGame);
         askPlayers(players, blackJackGame);
