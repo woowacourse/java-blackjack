@@ -1,6 +1,6 @@
 package view;
 
-import dto.response.BattingResultDto;
+import dto.response.BattingResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import java.util.List;
@@ -10,6 +10,7 @@ public class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.getProperty("line.separator");
+    private static final String EXCEPTION_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printCardSplitMessage(DrawnCardsInfo dealerCardInfo, final List<DrawnCardsInfo> playerCardInfos) {
         String names = playerCardInfos.stream()
@@ -26,13 +27,13 @@ public class OutputView {
         System.out.println(cardInfo.getName() + ": " + getCardsInfo(cardInfo.getDrawnCards()));
     }
 
-    public void printPlayerCardInfo(final DrawnCardsInfo info) {
-        System.out.println(info.getName() + "카드: " + getCardsInfo(info.getDrawnCards()));
-    }
-
     private String getCardsInfo(final List<String> cards) {
         return cards.stream()
                 .collect(Collectors.joining(DELIMITER));
+    }
+
+    public void printPlayerCardInfo(final DrawnCardsInfo info) {
+        System.out.println(info.getName() + "카드: " + getCardsInfo(info.getDrawnCards()));
     }
 
     public void printDealerCardPickMessage(int dealerDrawLimitScore) {
@@ -50,22 +51,22 @@ public class OutputView {
                         " - 결과: " + result.getScore());
     }
 
-    public void printBattingResults(List<BattingResultDto> battingResultDtos) {
-        int dealerBattingResult = battingResultDtos
+    public void printBattingResults(List<BattingResult> battingResults) {
+        int dealerBattingResult = battingResults
                 .stream()
-                .mapToInt(BattingResultDto::getMoney)
+                .mapToInt(BattingResult::getMoney)
                 .sum() * -1;
 
         System.out.println("최종 수익");
         System.out.println("딜러: " + dealerBattingResult);
-        battingResultDtos.forEach(OutputView::printPlayerBattingResult);
+        battingResults.forEach(this::printPlayerBattingResult);
     }
 
-    private static void printPlayerBattingResult(BattingResultDto battingResultDto) {
-        System.out.println(battingResultDto.getName() + ": " + battingResultDto.getMoney());
+    private void printPlayerBattingResult(BattingResult battingResult) {
+        System.out.println(battingResult.getName() + ": " + battingResult.getMoney());
     }
 
     public void printExceptionMessage(final String message) {
-        System.out.println(message);
+        System.out.println(EXCEPTION_MESSAGE_PREFIX + message);
     }
 }

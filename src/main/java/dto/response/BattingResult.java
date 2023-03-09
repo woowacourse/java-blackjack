@@ -1,11 +1,11 @@
 package dto.response;
 
-public class BattingResultDto {
+public class BattingResult {
 
     private final String name;
     private final int money;
 
-    public BattingResultDto(String name, int money) {
+    public BattingResult(String name, int money) {
         this.name = name;
         this.money = money;
     }

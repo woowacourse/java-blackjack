@@ -11,7 +11,7 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.ParticipantGenerator;
 import domain.participant.Players;
-import dto.response.BattingResultDto;
+import dto.response.BattingResult;
 import dto.response.DrawnCardsInfo;
 import dto.response.ParticipantResult;
 import java.util.ArrayList;
@@ -160,12 +160,12 @@ public class BlackJackApplication {
     }
 
     private void printBattingResults(BlackJackGame blackJackGame) {
-        List<BattingResultDto> battingResultDtos = new ArrayList<>();
+        List<BattingResult> battingResultDtos = new ArrayList<>();
 
         for (String playerName : blackJackGame.getPlayersName()) {
             int bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
             int result = blackJackGame.getResult(playerName, bettingMoney);
-            battingResultDtos.add(new BattingResultDto(playerName, result));
+            battingResultDtos.add(new BattingResult(playerName, result));
         }
 
         outputView.printBattingResults(battingResultDtos);
