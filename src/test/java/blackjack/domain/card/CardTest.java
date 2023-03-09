@@ -49,10 +49,10 @@ public class CardTest {
 
     @Test
     @DisplayName("모양을 반환하는 테스트")
-    void getShapeTest(){
+    void getShapeTest() {
         Card card;
-        for(Shape shape: Shape.values()){
-            card = new Card(shape,Letter.EIGHT);
+        for (Shape shape : Shape.values()) {
+            card = new Card(shape, Letter.EIGHT);
 
             assertThat(card.getShape()).isEqualTo(shape);
         }
@@ -60,10 +60,10 @@ public class CardTest {
 
     @Test
     @DisplayName("숫자를 반환하는 테스트")
-    void getLetterTest(){
+    void getLetterTest() {
         Card card;
-        for(Letter letter: Letter.values()){
-            card = new Card(Shape.CLOVER,letter);
+        for (Letter letter : Letter.values()) {
+            card = new Card(Shape.CLOVER, letter);
 
             assertThat(card.getLetter()).isEqualTo(letter);
         }
@@ -71,8 +71,8 @@ public class CardTest {
 
     @Test
     @DisplayName("카드를 뒤로 뒤집는 테스트")
-    void reverseCardTest(){
-        Card card = new Card(Shape.CLOVER,Letter.EIGHT);
+    void reverseCardTest() {
+        Card card = new Card(Shape.CLOVER, Letter.EIGHT);
         card.reverseCard();
 
         assertThat(card.isOpen()).isFalse();
@@ -80,8 +80,8 @@ public class CardTest {
 
     @Test
     @DisplayName("카드를 앞으로 뒤집는 테스트")
-    void openCardTest(){
-        Card card = new Card(Shape.CLOVER,Letter.EIGHT);
+    void openCardTest() {
+        Card card = new Card(Shape.CLOVER, Letter.EIGHT);
         card.reverseCard();
         card.openCard();
 

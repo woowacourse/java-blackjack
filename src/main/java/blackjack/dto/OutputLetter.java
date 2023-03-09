@@ -32,7 +32,7 @@ public enum OutputLetter {
     public static String match(Letter letter) {
         return Arrays.stream(values())
                 .filter(outputLetter -> outputLetter.letter.equals(letter))
-                .findFirst().orElseThrow(()->{
+                .findFirst().orElseThrow(() -> {
                     throw new IllegalArgumentException(NON_VALUABLE_MASSAGE);
                 }).output;
     }

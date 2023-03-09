@@ -53,11 +53,11 @@ public class DealerTest {
 
     @Test
     @DisplayName("패를 한장 빼고 뒤집는 테스트")
-    void reverseAllExceptionOneTest(){
+    void reverseAllExceptionOneTest() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Shape.CLOVER, Letter.SEVEN);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        Card card3 = new Card(Shape.HEART,Letter.TWO);
+        Card card3 = new Card(Shape.HEART, Letter.TWO);
         Card card4 = new Card(Shape.SPADE, Letter.TWO);
         dealer.drawCard(card1);
         dealer.drawCard(card2);
@@ -74,11 +74,11 @@ public class DealerTest {
 
     @Test
     @DisplayName("카드 모두 여는 테스트")
-    void openAllCardTest(){
+    void openAllCardTest() {
         Dealer dealer = new Dealer();
         Card card1 = new Card(Shape.CLOVER, Letter.SEVEN);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        Card card3 = new Card(Shape.HEART,Letter.TWO);
+        Card card3 = new Card(Shape.HEART, Letter.TWO);
         Card card4 = new Card(Shape.SPADE, Letter.TWO);
         dealer.drawCard(card1);
         dealer.drawCard(card2);

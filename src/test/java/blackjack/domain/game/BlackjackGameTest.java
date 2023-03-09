@@ -56,61 +56,61 @@ public class BlackjackGameTest {
 
     @Test
     @DisplayName("플레이어가 계속 히트할 수 있는 지 테스트")
-    void isPlayerCanPlay(){
+    void isPlayerCanPlay() {
         BlackjackGame blackjackGame = new BlackjackGame(deck);
         Player player = participants.getPlayers().get(0);
 
         blackjackGame.drawCard(player);
         blackjackGame.drawCard(player);
         boolean order = true;
-        int expected = player.getCards().size()+1;
-        assertThat(blackjackGame.isPlayerCanPlay(player,order)).isTrue();
+        int expected = player.getCards().size() + 1;
+        assertThat(blackjackGame.isPlayerCanPlay(player, order)).isTrue();
         assertThat(player.getCards().size()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("플레이어가 버스트일때 계속 히트 할 수 없는 테스트")
-    void isBustPlayerCantPlay(){
+    void isBustPlayerCantPlay() {
         BlackjackGame blackjackGame = new BlackjackGame(deck);
         Player player = participants.getPlayers().get(0);
-        while(player.isNotBust()){
+        while (player.isNotBust()) {
             blackjackGame.drawCard(player);
         }
         boolean order = true;
         int expected = player.getCards().size();
-        assertThat(blackjackGame.isPlayerCanPlay(player,order)).isFalse();
+        assertThat(blackjackGame.isPlayerCanPlay(player, order)).isFalse();
         assertThat(player.getCards().size()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("플레이어가 히트를 거절했을때")
-    void isPlayerDontDraw(){
+    void isPlayerDontDraw() {
         BlackjackGame blackjackGame = new BlackjackGame(deck);
         Player player = participants.getPlayers().get(0);
         blackjackGame.drawCard(player);
         blackjackGame.drawCard(player);
         boolean order = false;
         int expected = player.getCards().size();
-        assertThat(blackjackGame.isPlayerCanPlay(player,order)).isFalse();
+        assertThat(blackjackGame.isPlayerCanPlay(player, order)).isFalse();
         assertThat(player.getCards().size()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("딜러가 16이하일때 히트하는지 테스트")
-    void playDealerTest(){
+    void playDealerTest() {
         BlackjackGame blackjackGame = new BlackjackGame(deck);
         blackjackGame.drawCard(dealer);
         blackjackGame.drawCard(dealer);
-        int expected = dealer.getCards().size()+1;
+        int expected = dealer.getCards().size() + 1;
         assertThat(blackjackGame.playDealer(dealer)).isTrue();
         assertThat(dealer.getCards().size()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("딜러가 16이상일때 히트하는지 테스트")
-    void cantPlayDealerTest(){
+    void cantPlayDealerTest() {
         BlackjackGame blackjackGame = new BlackjackGame(deck);
-        while (!dealer.canNotHit()){
+        while (!dealer.canNotHit()) {
             blackjackGame.drawCard(dealer);
         }
         int expected = dealer.getCards().size();

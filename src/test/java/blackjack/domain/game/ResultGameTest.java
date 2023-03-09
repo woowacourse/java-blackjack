@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Letter;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,11 +50,11 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("버스트된 딜러와 버스트 안된 참가자의 게임 결과를 입력하는 테스트")
-    void calculateResultWithBustedDealerTest(){
+    void calculateResultWithBustedDealerTest() {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        dealer.drawCard(new Card(Shape.HEART,Letter.TWO));
+        dealer.drawCard(new Card(Shape.HEART, Letter.TWO));
 
         Player player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
@@ -67,11 +66,11 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("버스트된 딜러와 버스트 된 참가자의 게임 결과를 입력하는 테스트")
-    void calculateResultWithBustedDealerPlayerTest(){
+    void calculateResultWithBustedDealerPlayerTest() {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        dealer.drawCard(new Card(Shape.HEART,Letter.TWO));
+        dealer.drawCard(new Card(Shape.HEART, Letter.TWO));
 
         Player player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.TWO));
@@ -85,7 +84,7 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("딜러와 버스트 된 참가자의 게임 결과를 입력하는 테스트")
-    void calculateResultWithNonBustedDealerAndBustedPlayerTest(){
+    void calculateResultWithNonBustedDealerAndBustedPlayerTest() {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.ACE));
@@ -102,7 +101,7 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("버스트 안된 딜러와 참가자 중 딜러가 이기는 경우 테스트")
-    void calculateResultWithNonBustedDealerWinNonBustedPlayerTest(){
+    void calculateResultWithNonBustedDealerWinNonBustedPlayerTest() {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.ACE));
@@ -118,7 +117,7 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("버스트 안된 딜러와 참가자 중 참가자가 이기는 경우 테스트")
-    void calculateResultWithNonBustedDealerLoseNonBustedPlayerTest(){
+    void calculateResultWithNonBustedDealerLoseNonBustedPlayerTest() {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.JACK));
@@ -134,7 +133,7 @@ public class ResultGameTest {
 
     @Test
     @DisplayName("버스트 안된 딜러와 참가자 중 비기는 경우 테스트")
-    void calculateResultWithNonBustedDealerTieNonBustedPlayerTest(){
+    void calculateResultWithNonBustedDealerTieNonBustedPlayerTest() {
 
         dealer.drawCard(new Card(Shape.CLOVER, Letter.ACE));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.JACK));

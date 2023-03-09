@@ -47,6 +47,7 @@ public class Participant {
     public boolean isBust() {
         return getTotalScore() > 21;
     }
+
     public boolean isNotBust() {
         return getTotalScore() <= 21;
     }

@@ -22,7 +22,7 @@ public enum OutputShape {
     public static String match(Shape shape) {
         return Arrays.stream(values())
                 .filter(outputLetter -> outputLetter.shape.equals(shape))
-                .findFirst().orElseThrow(()->{
+                .findFirst().orElseThrow(() -> {
                     throw new IllegalArgumentException(NON_VALUABLE_MASSAGE);
                 }).output;
     }

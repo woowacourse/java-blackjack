@@ -23,14 +23,14 @@ public class ResultGame {
     }
 
     public void calculateResult() {
-        players.forEach(player -> compareScore(player).calculateResult(playersResult,player,dealer));
+        players.forEach(player -> compareScore(player).calculateResult(playersResult, player, dealer));
     }
 
     private ResultCalculator compareScore(final Player player) {
-        if(dealer.isBust()){
+        if (dealer.isBust()) {
             return new ResultCalculatorWithBustDealer();
         }
-        if(player.isBust()){
+        if (player.isBust()) {
             return new ResultCalculatorWithBustPlayer();
         }
         return new ResultCalculatorWithNotBustDealerPlayer();

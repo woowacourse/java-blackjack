@@ -10,7 +10,6 @@ public class ResultDto {
     private static final String WIN_MASSAGE = "승";
     private static final String TIE_MASSAGE = "무";
     private static final String LOSE_MASSAGE = "패";
-    private static final String SPACE = " ";
     private final Map<String, String> playersResult;
 
     public ResultDto(Map<Player, WinTieLose> playersResult) {
