@@ -34,7 +34,7 @@ class PlayerTest {
     void cannotCreateSameName() {
         Name name = new Name("딜러");
 
-        assertThatThrownBy(()-> new Player(name))
+        assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -116,7 +116,8 @@ class PlayerTest {
             //given
             Player polo = new Player(new Name("폴로"));
             //when
-            polo.hitAdditionalCardFrom(new Deck(new FixedCardsGenerator()), (name)-> AddCardOrNot.NO, (player) -> {});
+            polo.hitAdditionalCardFrom(new Deck(new FixedCardsGenerator()), (name) -> AddCardOrNot.NO, (player) -> {
+            });
             //then
             assertThat(polo.showCards()).isEmpty();
         }
@@ -135,6 +136,21 @@ class PlayerTest {
             });
             //then
             assertThat(rosie.showCards()).containsExactlyElementsOf(already);
+        }
+
+        @DisplayName("21이면 카드를 받을 수 있다.")
+        @Test
+        void canHitWhenPlayerIsBlackjack() {
+            //given
+            Player kiara = new Player(new Name("키아라"));
+            List<Card> already = List.of(new Card(CardNumber.TEN, Pattern.CLOVER),
+                    new Card(CardNumber.ACE, Pattern.HEART));
+            kiara.hit(already);
+            //when
+            kiara.hitAdditionalCardFrom(new Deck(new FixedCardsGenerator()), (name) -> AddCardOrNot.YES, (player) -> {
+            });
+            //then
+            assertThat(kiara.showCards()).hasSize(3);
         }
     }
 }

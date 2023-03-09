@@ -62,7 +62,7 @@ public class Player extends Participant {
 
     public void hitAdditionalCardFrom(Deck deck, CardDecisionStrategy cardDecisionStrategy,
                                       CardDisplayStrategy cardDisplayStrategy) {
-        while (!isBlackJack() && !isBust()) {
+        while (!isBust()) {
             AddCardOrNot addCardOrNot = cardDecisionStrategy.decide(this);
             if (addCardOrNot.equals(NO)) {
                 break;

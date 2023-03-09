@@ -28,10 +28,6 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public boolean isBlackJack() {
-        return hand.calculateScore().isBlackjack();
-    }
-
     public boolean isBust() {
         return hand.calculateScore().isBust();
     }
