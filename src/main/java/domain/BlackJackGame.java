@@ -8,7 +8,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.response.DrawnCardsInfo;
 import java.util.List;
 
 public class BlackJackGame {
@@ -46,10 +45,9 @@ public class BlackJackGame {
         return dealer.openDrawnCards();
     }
 
-    public DrawnCardsInfo drawPlayerCardByName(final String playerName) {
+    public void drawPlayerCardByName(final String playerName) {
         Player player = players.findPlayerByName(playerName);
         player.drawCard(cardDeck.draw());
-        return DrawnCardsInfo.toDto(player.getName(), player.openDrawnCards());
     }
 
     public boolean canPlayerDrawMore(final String playerName) {

@@ -40,6 +40,7 @@ public class BlackJackApplication {
         betEachPlayer(blackJackGame);
         splitCards(blackJackGame);
         drawCards(blackJackGame);
+
         printParticipantResults(blackJackGame);
         printBattingResults(blackJackGame);
     }
@@ -75,7 +76,6 @@ public class BlackJackApplication {
 
     private void splitCards(BlackJackGame blackJackGame) {
         blackJackGame.splitCards();
-
         DrawnCardsInfo dealerCardInfo = createDealerCardInfo(blackJackGame);
         List<DrawnCardsInfo> playerCardInfos = createPlayerCardInfos(blackJackGame);
 
@@ -107,11 +107,17 @@ public class BlackJackApplication {
 
     private void drawPlayerCards(BlackJackGame blackJackGame, String playerName) {
         while (getDrawCommand(playerName).isDraw()) {
-            DrawnCardsInfo drawnCardsInfo = blackJackGame.drawPlayerCardByName(playerName);
-            outputView.printPlayerCardInfo(drawnCardsInfo);
+            blackJackGame.drawPlayerCardByName(playerName);
+            DrawnCardsInfo openCardsInfo = createOpenCardsInfo(blackJackGame, playerName);
+            outputView.printPlayerCardInfo(openCardsInfo);
 
             if (!blackJackGame.canPlayerDrawMore(playerName)) break;
         }
+    }
+
+    private DrawnCardsInfo createOpenCardsInfo(BlackJackGame blackJackGame, String playerName) {
+        List<Card> openCards = blackJackGame.getOpenCardsByName(playerName);
+        return DrawnCardsInfo.toDto(playerName, openCards);
     }
 
     private DrawCommand getDrawCommand(final String playerName) {
