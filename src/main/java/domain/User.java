@@ -6,7 +6,7 @@ import static domain.Status.*;
 
 public abstract class User {
 
-    private static final int BUST_LIMIT = 21;
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Hand hand;
     private Status status;
@@ -39,11 +39,30 @@ public abstract class User {
     }
 
     boolean isBusted() {
-        return score().getValue() > BUST_LIMIT;
+        return score().isGreaterThan(BLACKJACK_SCORE);
+    }
+
+    boolean isBlackjack() {
+        return hand.size() == 2 && score().equals(BLACKJACK_SCORE);
     }
 
     void addCard(Card card) {
         hand.add(card);
+        updateStatus();
+    }
+
+    private void updateStatus() {
+        if (isBusted()) {
+            status = BUST;
+        }
+
+        if (!canHit()) {
+            status = STAY;
+        }
+
+        if (isBlackjack()) {
+            status = BLACKJACK;
+        }
     }
 
     public Score score() {
