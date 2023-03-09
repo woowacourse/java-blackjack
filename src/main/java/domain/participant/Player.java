@@ -47,4 +47,8 @@ public class Player extends Participant {
         }
         return BlackJackResult.BLACKJACK;
     }
+
+    public boolean hasSameName(String name) {
+        return this.name.getName().equals(name);
+    }
 }

@@ -181,7 +181,7 @@ class PlayerTest {
         assertThat(actual).isEqualTo(BlackJackResult.WIN);
     }
 
-    @DisplayName("플레이거가 승리한 경우 - 점수가 높은 경우.")
+    @DisplayName("플레이어가 승리한 경우 - 점수가 높은 경우.")
     @Test
     void is_win_by_high_score() {
         // given
@@ -201,7 +201,7 @@ class PlayerTest {
         assertThat(actual).isEqualTo(BlackJackResult.WIN);
     }
 
-    @DisplayName("플레이거가 패배한 경우 - 점수가 낮은 경우.")
+    @DisplayName("플레이어가 패배한 경우 - 점수가 낮은 경우.")
     @Test
     void is_lose_by_low_score() {
         // given
@@ -219,5 +219,31 @@ class PlayerTest {
         BlackJackResult actual = player.getResult(dealer);
         // then
         assertThat(actual).isEqualTo(BlackJackResult.LOSE);
+    }
+
+    @DisplayName("이름이 같으면 true를 반환한다.")
+    @Test
+    void has_same_name() {
+        // given
+        String givenName = "name";
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name(givenName), new DrawnCards(emptyCards));
+        // when
+        boolean actual = player.hasSameName(givenName);
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("이름이 다르면 false 반환한다.")
+    @Test
+    void has_not_same_name() {
+        // given
+        String givenName = "name";
+        List<Card> emptyCards = new ArrayList<>();
+        Player player = new Player(new Name(givenName), new DrawnCards(emptyCards));
+        // when
+        boolean actual = player.hasSameName(givenName + "any");
+        // then
+        assertThat(actual).isFalse();
     }
 }

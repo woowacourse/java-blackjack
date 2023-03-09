@@ -34,7 +34,7 @@ public class Players {
 
     public Player findPlayerByName(String playerName) {
         return players.stream()
-                .filter(player -> player.getName().equals(playerName))
+                .filter(player -> player.hasSameName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
