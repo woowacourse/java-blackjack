@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
+    private static final String TEST_PLAYER_NAME = "필립";
     private final String name = "test";
     private final Card cardKing = new Card(CardShape.SPADE, CardNumber.KING);
     private final Card cardEight = new Card(CardShape.CLOVER, CardNumber.EIGHT);
@@ -43,7 +44,8 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어의 이름으로 '딜러'가 들어오는 경우 예외처리하는 기능 테스트")
     void throwExceptionWhenPlayerNameIsDealerName() {
-        assertThatThrownBy(() -> new Player("딜러", initialGroup)).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Player(Dealer.DEALER_NAME, initialGroup)).isInstanceOf(
+                        IllegalArgumentException.class)
                 .hasMessage(Player.NAME_IS_DEALER_NAME_EXCEPTION_MESSAGE);
     }
 
@@ -86,7 +88,7 @@ class PlayerTest {
             final CardGroup bustCardGroup = initialGroup;
             bustCardGroup.add(new Card(CardShape.CLOVER, CardNumber.FIVE));
             final Dealer dealer = new Dealer(bustCardGroup);
-            final Player player = new Player("제이미", bustCardGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, bustCardGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }
@@ -97,7 +99,7 @@ class PlayerTest {
             final CardGroup bustCardGroup = new CardGroup(cardKing, cardEight);
             bustCardGroup.add(new Card(CardShape.CLOVER, CardNumber.FIVE));
             final Dealer dealer = new Dealer(bustCardGroup);
-            final Player player = new Player("제이미", initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
         }
@@ -106,7 +108,7 @@ class PlayerTest {
         @DisplayName("딜러와 플레이어가 bust가 아니고, score가 동일할 때 무승부 반환")
         void comparePlayerEqualScore() {
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
-            final Player player = new Player("필립", initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.TIE);
         }
@@ -116,7 +118,7 @@ class PlayerTest {
         void comparePlayerIfPlayerScoreBiggerThanDealer() {
             final Dealer dealer = new Dealer(new CardGroup
                     (new Card(CardShape.HEART, CardNumber.FIVE), new Card(CardShape.CLOVER, CardNumber.EIGHT)));
-            final Player player = new Player("제이미", initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.WIN);
         }
@@ -125,7 +127,7 @@ class PlayerTest {
         @DisplayName("딜러와 플레이어는 버스트가 아니고 플레이어의 점수가 딜러보다 낮은 경우 패배 반환")
         void comparePlayerIfPlayerScoreSmallerThanDealer() {
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardKing));
-            final Player player = new Player("홍실", initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
 
             assertThat(player.calculateWinningStatus(dealer)).isEqualTo(WinningStatus.LOSE);
         }
@@ -133,7 +135,7 @@ class PlayerTest {
         @Test
         @DisplayName("딜러는 버스트가 아니고, 플레이어는 버스트인 경우 패배 반환")
         void comparePlayerIfDealerNonBustPlayerBust() {
-            final Player player = new Player("홍실", initialGroup);
+            final Player player = new Player(TEST_PLAYER_NAME, initialGroup);
             final Dealer dealer = new Dealer(new CardGroup(cardKing, cardEight));
 
             player.drawCard(new Deck(new TestNonShuffledDeckGenerator(List.of(cardEight))));

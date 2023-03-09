@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
+    public static final String TEST_PLAYER_NAME_1 = "필립";
+    public static final String TEST_PLAYER_NAME_2 = "홍실";
     final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
             new Card(CardShape.CLOVER, CardNumber.NINE),
@@ -27,18 +29,19 @@ public class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getPlayerNameAndCardResultsTest() {
-        final Players players = new Players(List.of("필립", "홍실"), new Deck(new TestNonShuffledDeckGenerator(testCards)));
+        final Players players = new Players(List.of(TEST_PLAYER_NAME_1, TEST_PLAYER_NAME_2),
+                new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
         final Map<String, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
 
         assertSoftly(softly -> {
-            softly.assertThat(playerNameAndResults.get("필립").getCards().getCards())
+            softly.assertThat(playerNameAndResults.get(TEST_PLAYER_NAME_1).getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
-            softly.assertThat(playerNameAndResults.get("필립").getScore().getValue())
+            softly.assertThat(playerNameAndResults.get(TEST_PLAYER_NAME_1).getScore().getValue())
                     .isEqualTo(21);
-            softly.assertThat(playerNameAndResults.get("홍실").getCards().getCards())
+            softly.assertThat(playerNameAndResults.get(TEST_PLAYER_NAME_2).getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(playerNameAndResults.get("홍실").getScore().getValue())
+            softly.assertThat(playerNameAndResults.get(TEST_PLAYER_NAME_2).getScore().getValue())
                     .isEqualTo(19);
         });
     }
@@ -46,7 +49,7 @@ public class PlayersTest {
     @Test
     @DisplayName("플레이어들의 이름에 중복이 있는경우 예외처리하는 기능 테스트")
     void throwExceptionIfPlayerNamesHasDuplicate() {
-        final List<String> playerNames = List.of("필립", "필립");
+        final List<String> playerNames = List.of(TEST_PLAYER_NAME_1, TEST_PLAYER_NAME_1);
 
         assertThatThrownBy(() -> new Players(playerNames, new Deck(new RandomDeckGenerator())));
     }

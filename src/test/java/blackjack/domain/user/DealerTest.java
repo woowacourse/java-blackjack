@@ -40,6 +40,4 @@ class DealerTest {
 
         assertThat(dealer.getFirstOpenCardGroup().getCards()).containsExactly(cardKing);
     }
-
-
 }

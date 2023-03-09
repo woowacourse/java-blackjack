@@ -22,7 +22,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class BlackJackGameTest {
-    final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
+
+    private static final String TEST_PLAYER_NAME1 = "필립";
+    private static final String TEST_PLAYER_NAME2 = "홍실";
+
+    private final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
             new Card(CardShape.CLOVER, CardNumber.NINE),
             new Card(CardShape.HEART, CardNumber.JACK),
@@ -36,27 +40,27 @@ class BlackJackGameTest {
     @Test
     @DisplayName("게임 초기화 테스트")
     void initGame() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2)
                 , new TestNonShuffledDeckGenerator(testCards));
 
         assertThat(blackJackGame.getPlayerNames())
-                .containsExactly("필립", "홍실");
+                .containsExactly(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2);
     }
 
     @Test
     @DisplayName("유저들의 첫 패를 반환하는 기능 테스트")
     void getUsersInitialStatus() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2)
                 , new TestNonShuffledDeckGenerator(testCards));
 
         final Map<String, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
 
         assertSoftly(softly -> {
-            softly.assertThat(userNameAndFirstOpenCardGroups.get("필립").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get(TEST_PLAYER_NAME1).getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(userNameAndFirstOpenCardGroups.get("홍실").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get(TEST_PLAYER_NAME2).getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
-            softly.assertThat(userNameAndFirstOpenCardGroups.get("딜러").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get(Dealer.DEALER_NAME).getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
         });
     }
@@ -71,7 +75,7 @@ class BlackJackGameTest {
                 new TestNonShuffledDeckGenerator(cards));
 
         blackJackGame.drawDealer();
-        final int dealerCardSize = blackJackGame.getUserNameAndCardResults().get("딜러")
+        final int dealerCardSize = blackJackGame.getUserNameAndCardResults().get(Dealer.DEALER_NAME)
                 .getCards()
                 .getCards()
                 .size();
@@ -94,19 +98,19 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어 이름 리스트를 반환하는 기능 테스트")
     void getPlayersTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new RandomDeckGenerator());
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1), new RandomDeckGenerator());
 
         final List<String> players = blackJackGame.getPlayerNames();
 
-        assertThat(players).containsExactly("필립");
+        assertThat(players).containsExactly(TEST_PLAYER_NAME1);
     }
 
     @Test
     @DisplayName("플레이어 이름으로 bust됬는지 확인하는 기능 테스트")
     void isBustTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"), new RandomDeckGenerator());
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1), new RandomDeckGenerator());
 
-        boolean isBust = blackJackGame.isPlayerBust("필립");
+        boolean isBust = blackJackGame.isPlayerBust(TEST_PLAYER_NAME1);
 
         assertThat(isBust).isFalse();
     }
@@ -114,11 +118,11 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어 턴 진행 테스트")
     void playPlayerTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1),
                 new TestNonShuffledDeckGenerator(testCards));
 
-        blackJackGame.playPlayer("필립", DrawOrStay.DRAW);
-        List<Card> cards = blackJackGame.getCardGroupBy("필립").getCards();
+        blackJackGame.playPlayer(TEST_PLAYER_NAME1, DrawOrStay.DRAW);
+        List<Card> cards = blackJackGame.getCardGroupBy(TEST_PLAYER_NAME1).getCards();
 
         assertThat(cards).containsExactlyInAnyOrderElementsOf(testCards.subList(2, 5));
     }
@@ -126,10 +130,10 @@ class BlackJackGameTest {
     @Test
     @DisplayName("점수를 포함한 상태를 반환하는 기능 테스트")
     void getCardResult() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1),
                 new TestNonShuffledDeckGenerator(testCards));
 
-        final CardResult philip = blackJackGame.getUserNameAndCardResults().get("필립");
+        final CardResult philip = blackJackGame.getUserNameAndCardResults().get(TEST_PLAYER_NAME1);
 
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(philip.getCards().getCards())
@@ -146,14 +150,14 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어들의 승리 여부 반환 테스트")
     void getWinningResultTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실"),
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2),
                 new TestNonShuffledDeckGenerator(testCards));
 
         Map<String, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
 
         assertSoftly(softly -> {
-            softly.assertThat(winningResult.get("필립")).isEqualTo(WinningStatus.LOSE);
-            softly.assertThat(winningResult.get("홍실")).isEqualTo(WinningStatus.LOSE);
+            softly.assertThat(winningResult.get(TEST_PLAYER_NAME1)).isEqualTo(WinningStatus.LOSE);
+            softly.assertThat(winningResult.get(TEST_PLAYER_NAME2)).isEqualTo(WinningStatus.LOSE);
         });
     }
 
@@ -166,10 +170,10 @@ class BlackJackGameTest {
                 new Card(CardShape.SPADE, CardNumber.ACE),
                 new Card(CardShape.SPADE, CardNumber.JACK)
         );
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1),
                 new TestNonShuffledDeckGenerator(testCards));
 
-        boolean isBlackJack = blackJackGame.isBlackJackScore("필립");
+        boolean isBlackJack = blackJackGame.isBlackJackScore(TEST_PLAYER_NAME1);
 
         assertThat(isBlackJack).isTrue();
     }
@@ -177,7 +181,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
-        final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
+        final BlackJackGame blackJackGame = new BlackJackGame(List.of(TEST_PLAYER_NAME1),
                 new TestNonShuffledDeckGenerator(testCards));
 
         final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
@@ -187,9 +191,9 @@ class BlackJackGameTest {
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
             softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getScore().getValue())
                     .isEqualTo(21);
-            softly.assertThat(userNameAndCardResults.get("필립").getCards().getCards())
+            softly.assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(userNameAndCardResults.get("필립").getScore().getValue())
+            softly.assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getScore().getValue())
                     .isEqualTo(19);
         });
     }
