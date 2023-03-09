@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 public class BlackJackResultMaker {
 
     public Map<Player, Result> makePlayersResult(final Dealer dealer, final Players players) {
-        return IntStream.range(0, players.size())
+        return IntStream.range(0, players.count())
             .mapToObj(players::get)
             .collect(
                 Collectors.toMap(player -> player, player -> decide(player.getScore(), dealer.getScore()), (a, b) -> b,

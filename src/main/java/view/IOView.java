@@ -76,7 +76,7 @@ public class IOView {
     public void printInitialCards(final Dealer dealer, final Players players) {
         printCardsMessage(players);
         printFirstCard(dealer);
-        IntStream.range(0, players.size())
+        IntStream.range(0, players.count())
             .mapToObj(players::get)
             .forEach(this::printCard);
     }
@@ -121,7 +121,7 @@ public class IOView {
     public void printTotalCardState(final Dealer dealer, final Players players) {
         System.out.print(NEW_LINE);
         printPlayerCardState(dealer, DEALER_NAME);
-        for (int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.count(); i++) {
             Player player = players.get(i);
             printPlayerCardState(player, player.getName());
         }

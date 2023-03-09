@@ -35,11 +35,11 @@ public class CardDistributor {
     public void giveInitCards(final Players players) {
         checkCardEmpty(players);
         IntStream.range(0, INIT_DEAL_COUNT)
-            .forEach(count -> players.addAll(cardGenerator.generate(players.size())));
+            .forEach(count -> players.addAll(cardGenerator.generate(players.count())));
     }
 
     private void checkCardEmpty(final Players players) {
-        IntStream.range(0, players.size())
+        IntStream.range(0, players.count())
             .mapToObj(players::get)
             .forEach(this::checkCardEmpty);
     }

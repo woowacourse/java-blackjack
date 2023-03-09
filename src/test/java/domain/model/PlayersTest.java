@@ -46,7 +46,7 @@ class PlayersTest {
         Players players = Players.from(names);
 
         //when
-        int result = players.size();
+        int result = players.count();
 
         //then
         assertThat(result).isEqualTo(size);

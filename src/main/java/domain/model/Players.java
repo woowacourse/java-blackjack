@@ -43,7 +43,7 @@ public class Players {
             .forEach(i -> players.get(i).addCard(cards.get(i)));
     }
 
-    public int size() {
+    public int count() {
         return players.size();
     }
 

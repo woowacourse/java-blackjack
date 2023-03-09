@@ -39,7 +39,7 @@ public class BlackJackController {
     }
 
     private void getPlayerAdditionalCard(final Players players) {
-        IntStream.range(0, players.size()).forEach(index -> {
+        IntStream.range(0, players.count()).forEach(index -> {
             Player player = getPlayerAdditionalCard(players.get(index));
             players.set(index, player);
         });
