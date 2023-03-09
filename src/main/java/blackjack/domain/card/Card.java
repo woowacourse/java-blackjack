@@ -14,6 +14,10 @@ public class Card {
         return number == Number.ACE;
     }
 
+    public String getCardInfo() {
+        return number.getName() + suit.getName();
+    }
+
     public int getScore() {
         return number.getScore();
     }

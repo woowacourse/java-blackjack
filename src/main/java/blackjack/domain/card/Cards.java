@@ -63,7 +63,7 @@ public class Cards {
 
     public List<String> getCardInfos() {
         return cards.stream()
-                .map(card -> card.getNumberName() + card.getSuitName())
+                .map(Card::getCardInfo)
                 .collect(Collectors.toList());
     }
 
