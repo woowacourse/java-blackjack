@@ -14,7 +14,7 @@ class PlayersTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewPlayers() {
-        assertThat(Players.of(List.of("name1", "name2", "name3")).count()).isEqualTo(3);
+        assertThat(Players.from(List.of("name1", "name2", "name3")).count()).isEqualTo(3);
     }
 
     @DisplayName("플레이어 수는 1에서 6사이여야 한다.")
@@ -26,7 +26,7 @@ class PlayersTest {
             names.add("newname");
         }
 
-        assertThatThrownBy(() -> Players.of(names))
+        assertThatThrownBy(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 진행하는 플레이어의 수는 1명에서 6명 사이여야 합니다.");
     }

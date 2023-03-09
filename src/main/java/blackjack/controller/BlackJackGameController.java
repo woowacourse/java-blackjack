@@ -31,7 +31,7 @@ public class BlackJackGameController {
 
     private Players makePlayers() {
         try {
-            return Players.of(inputView.readPlayersName());
+            return Players.from(inputView.readPlayersName());
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR]" + e.getMessage());
             return makePlayers();

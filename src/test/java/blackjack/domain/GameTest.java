@@ -10,8 +10,8 @@ class GameTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewGame() {
-        GamePlayer gamePlayer = new GamePlayer(Players.of(List.of("name1", "name2", "name3")), new Dealer());
-        Game game = new Game(new Deck(), gamePlayer);
+        GamePlayer gamePlayer = new GamePlayer(Players.from(List.of("name1", "name2", "name3")), new Dealer());
+        Game game = Game.from(gamePlayer);
 
         assertThat(game.getPlayersCount()).isEqualTo(3);
     }

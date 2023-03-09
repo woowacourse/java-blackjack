@@ -11,7 +11,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> playerNames) {
+    public static Players from(List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(Player::from)
                 .collect(Collectors.toList());
