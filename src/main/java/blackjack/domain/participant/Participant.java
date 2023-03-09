@@ -51,18 +51,18 @@ public abstract class Participant {
     }
 
     private WinningResult decideResultByComparingWith(Participant other) {
-        int score = calculateScore().getValue();
-        int otherScore = other.calculateScore().getValue();
+        Score score = calculateScore();
+        Score otherScore = other.calculateScore();
         if (isBust()) {
             return LOSE;
         }
-        if (score > otherScore || other.isBust()) {
+        if (score.isHigherThan(otherScore) || other.isBust()) {
             return WIN;
         }
-        if (score < otherScore) {
-            return LOSE;
+        if (score.equals(otherScore)) {
+            return TIE;
         }
-        return TIE;
+        return LOSE;
     }
 
     public abstract void win();
