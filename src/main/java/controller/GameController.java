@@ -113,7 +113,7 @@ public final class GameController {
     }
 
     private boolean cannotDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
-        return isBust(player) || isBlackJack(player) || drawCardCommand.isDrawStop();
+        return drawCardCommand.isDrawStop() || isBust(player) || isBlackJack(player);
     }
 
     private boolean isBust(final Participant player) {
