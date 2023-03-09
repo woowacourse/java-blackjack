@@ -1,54 +1,38 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
-import blackjack.domain.player.User;
+import blackjack.domain.player.*;
 import blackjack.domain.result.UserResults;
 
 public class BlackjackGame {
 
-    public static final int NUMBER_OF_INITIAL_CARDS = 2;
-
-    private final Players players;
-    private final Dealer dealer;
+    private final Users users;
+    private final Deck deck;
 
     public BlackjackGame(Players players) {
-        this.players = players;
-        this.dealer = new Dealer();
+        users = new Users(new Dealer(), players);
+        deck = Deck.getInstance();
     }
 
     public void giveInitialCardsToUsers() {
-        Deck deck = Deck.getInstance();
         deck.shuffleCards();
-        for (Player player : players.getPlayers()) {
-            giveInitialCards(player);
-        }
-        giveInitialCards(dealer);
-    }
-
-    private void giveInitialCards(User user) {
-        Deck deck = Deck.getInstance();
-        for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIAL_CARDS; cardIndex++) {
-            user.updateCardScore(deck.drawCard());
-        }
+        users.giveInitialCards();
+        users.giveInitialCards();
     }
 
     public void updateCard(User user) {
-        Deck deck = Deck.getInstance();
         user.updateCardScore(deck.drawCard());
     }
 
     public UserResults getResults() {
-        return UserResults.of(dealer, players);
+        return UserResults.of(users.getDealer(), users.getPlayers());
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return users.getDealer();
     }
 
     public Players getPlayers() {
-        return players;
+        return users.getPlayers();
     }
 }
