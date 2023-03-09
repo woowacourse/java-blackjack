@@ -66,14 +66,8 @@ public class BlackJackGameController {
         outputView.printStartMsg(game.showPlayersName());
         outputView.printDealerCards(game.showDealerCards(), System.lineSeparator());
         for (Player player : game.getPlayers()) {
-            printPlayerCards(player);
+            outputView.printPlayerCards(player, LINE_SEPARATOR);
         }
-    }
-
-    private void printPlayerCards(Player player) {
-        String playerName = player.showName();
-        List<Card> cards = player.showCards();
-        outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
     }
 
     private void play(Game game) {
@@ -86,7 +80,7 @@ public class BlackJackGameController {
     private void playerTurn(Game game, Player player) {
         while (isCheckPlayerCommand(player)) {
             game.giveCardTo(player);
-            printPlayerCards(player);
+            outputView.printPlayerCards(player, LINE_SEPARATOR);
         }
     }
 

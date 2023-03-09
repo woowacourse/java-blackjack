@@ -32,7 +32,9 @@ public class OutputView {
         System.out.println(names.get(lastIndex) + INIT_END_MSG);
     }
 
-    public void printPlayerCards(String name, List<Card> cards, String end) {
+    public void printPlayerCards(Player player, String end) {
+        String name = player.showName();
+        List<Card> cards = player.showCards();
         int lastIndex = cards.size() - 1;
         System.out.print(name + CARD_MSG);
         printCards(cards, end, lastIndex);
