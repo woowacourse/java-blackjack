@@ -5,7 +5,7 @@ import java.util.List;
 import static domain.Status.*;
 
 public abstract class User {
-
+    public static int NUMBER_OF_FIRST_CARDS = 2;
     private static final Score BLACKJACK_SCORE = new Score(21);
 
     private final Hand hand;
@@ -46,14 +46,6 @@ public abstract class User {
         return score().equals(other.score());
     }
 
-    private boolean isBusted() {
-        return score().isGreaterThan(BLACKJACK_SCORE);
-    }
-
-    private boolean isBlackjack() {
-        return hand.size() == 2 && score().equals(BLACKJACK_SCORE);
-    }
-
     void addCard(Card card) {
         hand.add(card);
         updateStatus();
@@ -72,6 +64,14 @@ public abstract class User {
         if (isBlackjack()) {
             status = BLACKJACK;
         }
+    }
+
+    private boolean isBusted() {
+        return score().isGreaterThan(BLACKJACK_SCORE);
+    }
+
+    private boolean isBlackjack() {
+        return hand.size() == NUMBER_OF_FIRST_CARDS && score().equals(BLACKJACK_SCORE);
     }
 
     public Score score() {
