@@ -15,7 +15,7 @@ public class BlackJackGame {
     private final Participants participants;
 
     public BlackJackGame(List<String> playerNames) {
-        this.deck = InitGameSetter.generateDeck();
+        this.deck = new Deck();
         Players players = InitGameSetter.generatePlayers(deck, playerNames);
         Dealer dealer = InitGameSetter.generateDealer(deck);
         this.participants = new Participants(players, dealer);

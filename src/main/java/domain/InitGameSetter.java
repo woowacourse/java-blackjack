@@ -5,15 +5,9 @@ import java.util.List;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.DeckGenerator;
 import domain.participant.*;
 
 public class InitGameSetter {
-
-    public static Deck generateDeck() {
-        DeckGenerator deckGenerator = new DeckGenerator();
-        return deckGenerator.generate();
-    }
 
     public static Players generatePlayers(Deck deck, List<String> playerNames) {
         List<Player> generatedPlayers = new ArrayList<>();
