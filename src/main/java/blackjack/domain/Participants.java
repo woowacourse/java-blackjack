@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
+    private static final String DEALER_NAME = "딜러";
+
     private final List<Participant> participants;
 
     private Participants(final List<Participant> participants) {
@@ -20,6 +22,20 @@ public class Participants {
             participants.add(new Player(new ParticipantName(playerName)));
         }
         return new Participants(participants);
+    }
+
+    public List<Player> findPlayers() {
+        return getParticipants().stream()
+                .filter(participant -> !participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
+                .map(it -> (Player) it)
+                .collect(Collectors.toList());
+    }
+
+    public Dealer findDealer() {
+        return (Dealer) getParticipants().stream()
+                .filter(participant -> participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
+                .findFirst()
+                .get();
     }
 
     public List<String> getParticipantsName() {

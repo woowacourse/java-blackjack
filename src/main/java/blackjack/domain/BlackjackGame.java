@@ -1,11 +1,9 @@
 package blackjack.domain;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int FIRST_HIT_COUNT = 2;
 
     private final Participants participants;
@@ -21,8 +19,8 @@ public class BlackjackGame {
     }
 
     public Map<Player, WinningResult> generatePlayersResult(BlackJackReferee referee) {
-        for (Player player : findPlayers()) {
-           referee.createResult(findDealer(),player);
+        for (Player player : participants.findPlayers()) {
+            referee.createResult(participants.findDealer(), player);
         }
         return Collections.unmodifiableMap(referee.getPlayerWinningResult());
     }
@@ -34,7 +32,7 @@ public class BlackjackGame {
     }
 
     public void hitDealerCard() {
-        Dealer dealer = findDealer();
+        Dealer dealer = participants.findDealer();
         while (dealer.decideHit()) {
             dealer.hit(cards.pick());
         }
@@ -45,17 +43,11 @@ public class BlackjackGame {
     }
 
     public List<Player> findPlayers() {
-        return getParticipants().stream()
-                .filter(participant -> !participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
-                .map(it -> (Player) it)
-                .collect(Collectors.toList());
+        return Collections.unmodifiableList(participants.findPlayers());
     }
 
     public Dealer findDealer() {
-        return (Dealer) getParticipants().stream()
-            .filter(participant -> participant.getParticipantName().equals(new ParticipantName(DEALER_NAME)))
-            .findFirst()
-            .get();
+       return participants.findDealer();
     }
 
     public List<Participant> getParticipants() {
