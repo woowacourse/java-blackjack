@@ -3,7 +3,8 @@ package blackjack.domain.game;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Players;
-import blackjack.strategy.CardPicker;
+import blackjack.strategy.CardShuffle;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,18 +16,18 @@ public class BlackJackGame {
     private final CardPool cardPool;
     private final Referee referee;
 
-    public BlackJackGame() {
-        cardPool = new CardPool();
+    public BlackJackGame(CardShuffle cardShuffle) {
+        cardPool = new CardPool(cardShuffle);
         referee = new Referee();
     }
 
-    public void initHit(Players players, Dealer dealer, CardPicker cardPicker) {
-        dealer.initHit(cardPool, cardPicker);
-        players.initHit(cardPool, cardPicker);
+    public void initHit(Players players, Dealer dealer) {
+        dealer.initHit(cardPool);
+        players.initHit(cardPool);
     }
 
-    public void hit(Participant participant, CardPicker cardPicker) {
-        participant.hit(cardPool.draw(cardPicker));
+    public void hit(Participant participant) {
+        participant.hit(cardPool.draw());
     }
 
     public int calculateScore(Participant participant) {

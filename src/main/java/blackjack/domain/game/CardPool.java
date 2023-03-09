@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.*;
-import blackjack.strategy.CardPicker;
+import blackjack.strategy.CardShuffle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +11,15 @@ public class CardPool {
     private static final int MAX_INCLUSIVE = 10;
     private static final List<String> COURT_SYMBOLS = List.of("J", "Q", "K");
 
-    private final List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
-    public CardPool() {
+    public CardPool(CardShuffle cardShuffle) {
         final Pattern[] values = Pattern.values();
 
         for (Pattern pattern : values) {
             addAllCardByPattern(pattern);
         }
+        this.cards = cardShuffle.shuffle(cards);
     }
 
     private void addAllCardByPattern(Pattern pattern) {
@@ -43,9 +44,14 @@ public class CardPool {
         return cards.size();
     }
 
-    public Card draw(CardPicker cardPicker) {
-        final Card card = cardPicker.pick(cards);
-        cards.remove(card);
-        return card;
+    public Card draw() {
+        validateSize();
+        return cards.remove(0);
+    }
+
+    private void validateSize() {
+        if (cards.isEmpty()) {
+            throw new IndexOutOfBoundsException("더 이상 카드가 없습니다.");
+        }
     }
 }

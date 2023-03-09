@@ -5,7 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.Result;
-import blackjack.strategy.CardPicker;
+import blackjack.strategy.CardShuffle;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -13,16 +13,16 @@ import java.util.List;
 
 public class BlackJackController {
 
-    private final CardPicker cardPicker;
+    private final CardShuffle cardShuffle;
 
-    public BlackJackController(CardPicker cardPicker) {
-        this.cardPicker = cardPicker;
+    public BlackJackController(CardShuffle cardShuffle) {
+        this.cardShuffle = cardShuffle;
     }
 
     public void run() {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames, OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
-        final BlackJackGame blackJackGame = new BlackJackGame();
+        final BlackJackGame blackJackGame = new BlackJackGame(cardShuffle);
 
         initHit(players, dealer, blackJackGame);
         askPlayers(players, blackJackGame);
@@ -31,7 +31,7 @@ public class BlackJackController {
     }
 
     private void initHit(Players players, Dealer dealer, BlackJackGame blackJackGame) {
-        blackJackGame.initHit(players, dealer, cardPicker);
+        blackJackGame.initHit(players, dealer);
         OutputView.printInitCardDeck(dealer, players);
     }
 
@@ -67,7 +67,7 @@ public class BlackJackController {
 
     private void hitByCommand(Player player, Command command, BlackJackGame blackJackGame) {
         if (Command.isContinue(command)) {
-            blackJackGame.hit(player, cardPicker);
+            blackJackGame.hit(player);
         }
     }
 
@@ -85,7 +85,7 @@ public class BlackJackController {
         int dealerScore = blackJackGame.calculateScore(dealer);
 
         while (blackJackGame.isContinueToHit(dealerScore)) {
-            blackJackGame.hit(dealer, cardPicker);
+            blackJackGame.hit(dealer);
             dealerScore = blackJackGame.calculateScore(dealer);
             OutputView.printDealerPickMessage(dealer);
         }

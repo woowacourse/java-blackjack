@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.game.CardPool;
 import blackjack.domain.card.Card;
-import blackjack.strategy.CardPicker;
 
 abstract public class Participant {
 
@@ -16,9 +15,9 @@ abstract public class Participant {
         cardDeck = new CardDeck();
     }
 
-    public void initHit(CardPool cardPool, CardPicker cardPicker) {
+    public void initHit(CardPool cardPool) {
         for (int i = 0; i < INIT_COUNT; i++) {
-            hit(cardPool.draw(cardPicker));
+            hit(cardPool.draw());
         }
     }
 
