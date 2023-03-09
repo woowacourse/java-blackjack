@@ -1,17 +1,17 @@
 package domain.user;
 
-public class BetAmount {
+public class Bet {
 
     private static final int MIN_BET_AMOUNT = 1;
 
     private static final String BET_AMOUNT_SMALL_MESSAGE =
             String.format("[ERROR] 배팅 금액은 %d이상이어야 합니다.", MIN_BET_AMOUNT);
 
-    private final int amount;
+    private final int credit;
 
-    public BetAmount(final int amount) {
-        validate(amount);
-        this.amount = amount;
+    public Bet(final int credit) {
+        validate(credit);
+        this.credit = credit;
     }
 
     private void validate(final int amount) {
@@ -20,7 +20,7 @@ public class BetAmount {
         }
     }
 
-    public int getAmount() {
-        return amount;
+    public int getCredit() {
+        return credit;
     }
 }

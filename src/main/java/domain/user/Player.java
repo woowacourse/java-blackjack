@@ -8,12 +8,12 @@ public class Player {
 
     private final PlayerName playerName;
     private final CardPool cardPool;
-    private final BetAmount betAmount;
+    private final Bet bet;
 
     public Player(final String playerName, final CardPool cardPool) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
-        this.betAmount = new BetAmount(DEFAULT_BET_AMOUNT);
+        this.bet = new Bet(DEFAULT_BET_AMOUNT);
     }
 
     public void draw(final Card card) {
