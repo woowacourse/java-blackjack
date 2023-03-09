@@ -27,4 +27,15 @@ class DealerTest {
         Assertions.assertThat(dealer.getReadyCards())
                 .containsExactly(new Card(CardNumber.ACE, CardShape.SPADE));
     }
+    
+    @Test
+    @DisplayName("딜러의 카드가 현재 16점 이하인지 확인한다.")
+    void testDealerScore() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardNumber.KING, CardShape.SPADE));
+        dealer.addCard(new Card(CardNumber.THREE, CardShape.HEART));
+        Assertions.assertThat(dealer.isAbleToDraw()).isTrue();
+        dealer.addCard(new Card(CardNumber.KING, CardShape.HEART));
+        Assertions.assertThat(dealer.isAbleToDraw()).isFalse();
+    }
 }

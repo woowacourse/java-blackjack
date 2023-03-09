@@ -39,10 +39,10 @@ public class GameController {
     }
     
     private void loopUntilDealStop(Playable participant, Function<Playable, Boolean> function) {
-        boolean isDealContinued;
-        do {
+        boolean isDealContinued = true;
+        while (participant.isAbleToDraw() && isDealContinued) {
             isDealContinued = function.apply(participant);
-        } while (participant.isAbleToDraw() && isDealContinued);
+        }
     }
     
     private boolean dealPlayerMoreCard(Game game, Playable player) {

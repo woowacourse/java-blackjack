@@ -78,7 +78,7 @@ public class OutputView {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(name);
             stringBuilder.append(": ");
-            if (result == ResultStatus.WIN) {
+            if (result == ResultStatus.WIN || result == ResultStatus.WIN_BLACKJACK) {
                 stringBuilder.append("승");
             } else if (result == ResultStatus.LOSE) {
                 stringBuilder.append("패");
