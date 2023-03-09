@@ -1,22 +1,21 @@
 package domain;
 
-import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
 
 public enum BlackJackResult {
-
     WIN(money -> money),
     LOSE(money -> money * -1),
     BLACKJACK(money -> (int) (money * 1.5)),
     EACH_BLACKJACK(money -> 0),
     BURST(money -> money * -1);
 
-    private Function<Integer, Integer> expression;
+    private IntUnaryOperator expression;
 
-    BlackJackResult(Function<Integer, Integer> expression) {
+    BlackJackResult(IntUnaryOperator expression) {
         this.expression = expression;
     }
 
     public int calculatePrize(int money) {
-        return expression.apply(money);
+        return expression.applyAsInt(money);
     }
 }
