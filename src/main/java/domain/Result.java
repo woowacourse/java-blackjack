@@ -80,12 +80,8 @@ public class Result {
         return !player.isBust() && !dealer.isBust() && dealer.getTotalScore().equals(player.getTotalScore());
     }
 
-    public Map<String, GameResult> getResult() {
-        LinkedHashMap<String, GameResult> results = new LinkedHashMap<>();
-        for (Name name : gameResult.keySet()) {
-            results.put(name.getValue(), gameResult.get(name));
-        }
-        return results;
+    public Map<Name, GameResult> getPlayersWinResult() {
+        return gameResult;
     }
 
 }

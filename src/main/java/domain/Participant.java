@@ -34,10 +34,6 @@ public abstract class Participant {
         return getTotalScore().isMaxScore() && hand.getSize() == INITIAL_CARD_COUNT;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
     public List<Card> getCardList() {
         return List.copyOf(hand.getCards());
     }
