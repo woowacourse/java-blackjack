@@ -27,52 +27,37 @@ public class BlackJackController {
                 outputView::printError);
 
         blackJackGame.distributeInitialCard();
-        outputView.printInitialCards(blackJackGame.getInitialCardResponse());
+        outputView.printInitialCards(blackJackGame.getDealerFirstCard(), blackJackGame.getPlayerCards());
 
-        drawPlayersCards(blackJackGame);
-        drawDealerCards(blackJackGame);
-
-        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScoreResponse());
-        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayersCardsResponse());
-        outputView.printFinalResult(blackJackGame.createFinalResultResponse());
-    }
-
-    private List<String> inputPlayerNames() {
-        return inputView.inputPlayerNames();
-    }
-
-    private void drawPlayersCards(final BlackJackGame blackJackGame) {
         for (final String playerName : blackJackGame.getPlayerNames()) {
-            drawPlayerCard(playerName, blackJackGame);
+            DrawCommand playerChoice = DrawCommand.DRAW;
+            while (blackJackGame.isPlayerDrawable(playerName) && playerChoice != DrawCommand.STAY) {
+                playerChoice = inputPlayerChoice(playerName);
+                if (playerChoice == DrawCommand.DRAW) {
+                    blackJackGame.drawPlayerCard(playerName);
+                }
+                outputView.printCardStatusOfPlayer(playerName, blackJackGame.getPlayerCardsResponse(playerName));
+            }
         }
-    }
 
-    private void drawPlayerCard(final String playerName, final BlackJackGame blackJackGame) {
-        DrawCommand playerInput = DrawCommand.DRAW;
-        while (blackJackGame.isPlayerDrawable(playerName) && playerInput != DrawCommand.STAY) {
-            playerInput = repeatUntilNoException(
-                    () -> inputView.inputCommand(playerName), outputView::printError);
-            drawCard(playerName, blackJackGame, playerInput);
-            printPlayerResult(playerName, blackJackGame);
-        }
-    }
-
-    private void drawCard(final String playerName, final BlackJackGame blackJackGame,
-            final DrawCommand playerInput) {
-        if (playerInput == DrawCommand.DRAW) {
-            blackJackGame.drawPlayerCard(playerName);
-        }
-    }
-
-    private void printPlayerResult(final String playerName, final BlackJackGame blackJackGame) {
-        outputView.printCardStatusOfPlayer(blackJackGame.getPlayerCardsResponse(playerName));
-    }
-
-    private void drawDealerCards(final BlackJackGame blackJackGame) {
         while (blackJackGame.isDealerDrawable()) {
             blackJackGame.drawDealerCard();
             outputView.printDealerCardDrawMessage();
         }
+
+        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScore(), blackJackGame.getDealerCardsResponse());
+        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayerCards(), blackJackGame.getPlayerScores());
+        outputView.printFinalDealerResult(blackJackGame.getDealerResult());
+        outputView.printFinalPlayersResult(blackJackGame.generatePlayersResult());
+    }
+
+    private DrawCommand inputPlayerChoice(final String playerName) {
+        return repeatUntilNoException(
+                () -> inputView.inputCommand(playerName), outputView::printError);
+    }
+
+    private List<String> inputPlayerNames() {
+        return inputView.inputPlayerNames();
     }
 
 }

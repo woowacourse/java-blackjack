@@ -5,12 +5,6 @@ public enum ResultType {
     TIE("무"),
     LOSE("패");
 
-    private final String name;
-
-    ResultType(final String name) {
-        this.name = name;
-    }
-
     public ResultType getOppositeResult() {
         if (this == WIN) {
             return LOSE;
@@ -19,9 +13,5 @@ public enum ResultType {
             return TIE;
         }
         return WIN;
-    }
-
-    public String getName() {
-        return name;
     }
 }

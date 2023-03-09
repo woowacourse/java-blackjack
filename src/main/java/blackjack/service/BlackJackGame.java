@@ -3,6 +3,7 @@ package blackjack.service;
 import blackjack.domain.BlackJackRule;
 import blackjack.domain.BlackJackRuleImpl;
 import blackjack.domain.ResultType;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.participant.Dealer;
@@ -10,12 +11,6 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.response.CardResponse;
-import blackjack.response.DealerScoreResponse;
-import blackjack.response.FinalResultResponse;
-import blackjack.response.InitialCardResponse;
-import blackjack.response.PlayerCardsResponse;
-import blackjack.response.PlayersCardsResponse;
-import blackjack.response.PlayersCardsResponse.CardsScore;
 import blackjack.response.ResultTypeResponse;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -61,38 +56,50 @@ public class BlackJackGame {
         return participants.getPlayerNames();
     }
 
-    public InitialCardResponse getInitialCardResponse() {
-        return InitialCardResponse.of(participants.getPlayers(), participants.getDealer());
+    public CardResponse getDealerFirstCard() {
+        final Card dealerFirstCard = participants.getDealer().getFirstCard();
+        return CardResponse.from(dealerFirstCard);
     }
 
-    public PlayerCardsResponse getPlayerCardsResponse(final String playerName) {
+    public Map<String, List<CardResponse>> getPlayerCards() {
+        final Map<String, List<CardResponse>> playerCards = new HashMap<>();
+        for (final String playerName : getPlayerNames()) {
+            final List<CardResponse> cardResponses = participants.getPlayerCards(playerName).stream()
+                    .map(CardResponse::from)
+                    .collect(Collectors.toList());
+            playerCards.put(playerName, cardResponses);
+        }
+        return playerCards;
+    }
+
+    public Map<String, Integer> getPlayerScores() {
+        final Map<String, Integer> playerScores = new HashMap<>();
+        for (final String playerName : getPlayerNames()) {
+            final Player player = participants.findPlayerByName(playerName);
+            playerScores.put(playerName, player.currentScore());
+        }
+        return playerScores;
+    }
+
+    public List<CardResponse> getPlayerCardsResponse(final String playerName) {
         final Player player = participants.findPlayerByName(playerName);
-        final List<CardResponse> cardResponses = player.getCards().stream()
+        return player.getCards().stream()
                 .map(CardResponse::from)
                 .collect(Collectors.toList());
-        return new PlayerCardsResponse(player.getName(), cardResponses);
     }
 
-    public DealerScoreResponse getDealerScoreResponse() {
+    public List<CardResponse> getDealerCardsResponse() {
         final Dealer dealer = participants.getDealer();
-        final var cards = dealer.getCards().stream()
+        return dealer.getCards().stream()
                 .map(CardResponse::from)
                 .collect(Collectors.toList());
-        return new DealerScoreResponse(cards, dealer.currentScore());
     }
 
-    public PlayersCardsResponse getPlayersCardsResponse() {
-        final Map<String, CardsScore> playerNameToResult = participants.getPlayers().getPlayers().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> CardsScore.of(player.currentScore(), player),
-                        (x, y) -> y,
-                        LinkedHashMap::new)
-                );
-        return new PlayersCardsResponse(playerNameToResult);
+    public int getDealerScore() {
+        return participants.getDealer().currentScore();
     }
 
-    public FinalResultResponse createFinalResultResponse() {
+    public Map<ResultTypeResponse, Long> getDealerResult() {
         final BlackJackRule blackJackRule = new BlackJackRuleImpl();
         final ParticipantResults participantResults = new ParticipantResults();
         final Dealer dealer = participants.getDealer();
@@ -101,28 +108,29 @@ public class BlackJackGame {
             participantResults.addPlayerResult(player.getName(), resultType);
         });
         final Map<String, ResultType> playersToResult = participantResults.getPlayerNameToResultType();
-        final Map<String, ResultTypeResponse> playersToResultResponse = generatePlayersResult(playersToResult);
-        final Map<ResultTypeResponse, Long> dealerResult = generateDealerResult(playersToResult);
-        return new FinalResultResponse(playersToResultResponse, dealerResult);
-    }
-
-    private LinkedHashMap<String, ResultTypeResponse> generatePlayersResult(
-            final Map<String, ResultType> playersToResult) {
-        return playersToResult.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        result -> ResultTypeResponse.from(result.getValue().getOppositeResult()),
-                        (x, y) -> y,
-                        LinkedHashMap::new));
-    }
-
-    private Map<ResultTypeResponse, Long> generateDealerResult(final Map<String, ResultType> playersToResult) {
         return playersToResult.entrySet()
                 .stream()
                 .collect(Collectors.groupingBy(
                         result -> ResultTypeResponse.from(result.getValue()),
                         Collectors.counting()));
+    }
+
+    public Map<String, ResultTypeResponse> generatePlayersResult() {
+        final BlackJackRule blackJackRule = new BlackJackRuleImpl();
+        final ParticipantResults participantResults = new ParticipantResults();
+        final Dealer dealer = participants.getDealer();
+        participants.getPlayers().getPlayers().forEach(player -> {
+            final ResultType resultType = blackJackRule.calculateDealerResult(dealer, player).getOppositeResult();
+            participantResults.addPlayerResult(player.getName(), resultType);
+        });
+        final Map<String, ResultType> playersToResult = participantResults.getPlayerNameToResultType();
+        return playersToResult.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        result -> ResultTypeResponse.from(result.getValue()),
+                        (x, y) -> y,
+                        LinkedHashMap::new));
     }
 
     private static class ParticipantResults {

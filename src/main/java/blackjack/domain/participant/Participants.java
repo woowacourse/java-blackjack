@@ -43,6 +43,10 @@ public class Participants {
         return dealer;
     }
 
+    public List<Card> getPlayerCards(final String playerName) {
+        return players.findPlayerByName(playerName).getCards();
+    }
+
     public Players getPlayers() {
         return players;
     }

@@ -1,12 +1,6 @@
 package blackjack.view;
 
 import blackjack.response.CardResponse;
-import blackjack.response.DealerScoreResponse;
-import blackjack.response.FinalResultResponse;
-import blackjack.response.InitialCardResponse;
-import blackjack.response.PlayerCardsResponse;
-import blackjack.response.PlayersCardsResponse;
-import blackjack.response.PlayersCardsResponse.CardsScore;
 import blackjack.response.ResultTypeResponse;
 import java.text.MessageFormat;
 import java.util.List;
@@ -24,10 +18,10 @@ public class OutputView {
     private static final String CARD = "카드";
     private static final String RESULT = " - 결과: ";
 
-    public void printInitialCards(final InitialCardResponse initialCardResponse) {
-        final Map<String, List<CardResponse>> playerNameToCards = initialCardResponse.getPlayerNameToCards();
+    public void printInitialCards(final CardResponse dealerCard,
+            final Map<String, List<CardResponse>> playerNameToCards) {
         printInitialMessage(playerNameToCards);
-        printInitialDealerCard(initialCardResponse.getDealerCard());
+        printInitialDealerCard(dealerCard);
         playerNameToCards.forEach(this::printInitialPlayerCard);
         System.out.println();
     }
@@ -57,13 +51,12 @@ public class OutputView {
         return convertedSymbol + convertedShape;
     }
 
-    public void printCardStatusOfPlayer(final PlayerCardsResponse playerCardsResponse) {
-        final String name = playerCardsResponse.getName();
-        final String cards = playerCardsResponse.getCards()
+    public void printCardStatusOfPlayer(final String planerName, final List<CardResponse> playerCardsResponse) {
+        final String cards = playerCardsResponse
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-        System.out.println(name + DELIMITER + cards);
+        System.out.println(planerName + DELIMITER + cards);
     }
 
     public void printDealerCardDrawMessage() {
@@ -71,45 +64,48 @@ public class OutputView {
         System.out.println(OUTPUT_DEALER_STATUS_MESSAGE);
     }
 
-    public void printFinalStatusOfDealer(final DealerScoreResponse dealerScoreResponse) {
-        final String cards = dealerScoreResponse.getCards()
+    public void printFinalStatusOfDealer(final int score, final List<CardResponse> dealerCards) {
+        final String cards = dealerCards
                 .stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
         System.out.println();
-        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + dealerScoreResponse.getScore());
+        System.out.println(DEALER + " " + CARD + DELIMITER + cards + RESULT + score);
     }
 
-    public void printFinalStatusOfPlayers(final PlayersCardsResponse playersCardsResponse) {
-        playersCardsResponse.getPlayerNameToResult()
-                .forEach(this::printFinalStatusOfPlayer);
+    public void printFinalStatusOfPlayers(final Map<String, List<CardResponse>> playersCardsResponse,
+            final Map<String, Integer> playersScore) {
+        playersScore.keySet().forEach(name -> {
+            printFinalPlayerCard(name, playersCardsResponse.get(name));
+            printFinalPlayerScore(name, playersScore.get(name));
+        });
     }
 
-    private void printFinalStatusOfPlayer(final String name, final CardsScore cardsScore) {
-        final String cards = cardsScore.getCards()
-                .stream()
+
+    private void printFinalPlayerCard(final String name, final List<CardResponse> cards) {
+        final String card = cards.stream()
                 .map(this::convertCard)
                 .collect(Collectors.joining(DELIMITER_BETWEEN_CARDS));
-        System.out.println(name + CARD + DELIMITER + cards + RESULT + cardsScore.getScore());
+
+        System.out.print(name + CARD + DELIMITER + card);
     }
 
-    public void printFinalResult(final FinalResultResponse finalResultDto) {
+    private void printFinalPlayerScore(final String name, final int score) {
+        System.out.println(RESULT + score);
+    }
+
+    public void printFinalResult(final Map<ResultTypeResponse, Long> dealerResult) {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.print(DEALER + DELIMITER);
-        printDealerResult(finalResultDto.getDealerResult());
-        printPlayersResult(finalResultDto.getPlayersToResult());
+        printDealerResult(dealerResult);
     }
 
     private void printDealerResult(final Map<ResultTypeResponse, Long> dealerResult) {
-        printDealer(dealerResult, ResultTypeResponse.from("WIN"));
-        printDealer(dealerResult, ResultTypeResponse.from("DRAW"));
-        printDealer(dealerResult, ResultTypeResponse.from("LOSE"));
+        printDealer(dealerResult, ResultTypeResponse.from("승"));
+        printDealer(dealerResult, ResultTypeResponse.from("무"));
+        printDealer(dealerResult, ResultTypeResponse.from("패"));
         System.out.println();
-    }
-
-    private void printPlayersResult(final Map<String, ResultTypeResponse> playersResult) {
-        playersResult.forEach(this::printPlayerResult);
     }
 
     private void printPlayerResult(final String name, final ResultTypeResponse resultTypeResponse) {
@@ -128,5 +124,16 @@ public class OutputView {
 
     public void printError(final Exception exception) {
         System.out.println(exception.getMessage());
+    }
+
+    public void printFinalDealerResult(final Map<ResultTypeResponse, Long> dealerResult) {
+        System.out.println();
+        System.out.println("## 최종 승패");
+        System.out.print(DEALER + DELIMITER);
+        printDealerResult(dealerResult);
+    }
+
+    public void printFinalPlayersResult(final Map<String, ResultTypeResponse> playersResult) {
+        playersResult.forEach(this::printPlayerResult);
     }
 }

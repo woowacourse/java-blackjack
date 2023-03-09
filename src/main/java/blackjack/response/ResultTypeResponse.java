@@ -12,7 +12,7 @@ public class ResultTypeResponse {
     }
 
     public static ResultTypeResponse from(final ResultType resultType) {
-        return new ResultTypeResponse(resultType.name());
+        return new ResultTypeResponse(resultType.getName());
     }
 
     public static ResultTypeResponse from(final String resultType) {
