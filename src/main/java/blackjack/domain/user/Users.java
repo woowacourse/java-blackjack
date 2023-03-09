@@ -23,12 +23,12 @@ public class Users {
         this.players = new Players(playerNames, deck);
     }
 
-    public Map<String, CardGroup> getFirstOpenCardGroups() {
-        final Map<String, CardGroup> usersFirstOpenCardGroups = new LinkedHashMap<>();
-        usersFirstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
+    public Map<String, CardGroup> getUserNameAndFirstOpenCardGroups() {
+        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = new LinkedHashMap<>();
+        userNameAndFirstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
         final Map<String, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
-        usersFirstOpenCardGroups.putAll(playerFirstOpenCardGroups);
-        return Collections.unmodifiableMap(usersFirstOpenCardGroups);
+        userNameAndFirstOpenCardGroups.putAll(playerFirstOpenCardGroups);
+        return Collections.unmodifiableMap(userNameAndFirstOpenCardGroups);
     }
 
     public CardGroup getCardGroupBy(final String name) {

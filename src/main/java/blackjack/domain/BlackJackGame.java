@@ -20,12 +20,12 @@ public class BlackJackGame {
         this.users = new Users(playerNames, deck);
     }
 
-    public CardGroup getCardGroupBy(final String name) {
-        return users.getCardGroupBy(name);
+    public CardGroup getCardGroupBy(final String userName) {
+        return users.getCardGroupBy(userName);
     }
 
-    public Map<String, CardGroup> getFirstOpenCardGroups() {
-        return users.getFirstOpenCardGroups();
+    public Map<String, CardGroup> getUserNameAndFirstOpenCardGroups() {
+        return users.getUserNameAndFirstOpenCardGroups();
     }
 
     public List<String> getPlayerNames() {

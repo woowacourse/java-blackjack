@@ -29,7 +29,7 @@ public class OutputView {
                 , String.join(DELIMITER, playerNames)));
     }
 
-    public void printCardGroup(String name, List<String> cardNames) {
+    public void printUserNameAndCardGroup(String name, List<String> cardNames) {
         System.out.println(String.format(CARD_INFO_MESSAGE_FORMAT, name
                 , String.join(DELIMITER, cardNames)));
     }

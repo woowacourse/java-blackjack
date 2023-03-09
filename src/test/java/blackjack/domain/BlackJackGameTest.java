@@ -49,14 +49,14 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립", "홍실")
                 , new TestNonShuffledDeckGenerator(testCards));
 
-        final Map<String, CardGroup> firstOpenCardGroups = blackJackGame.getFirstOpenCardGroups();
+        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
 
         assertSoftly(softly -> {
-            softly.assertThat(firstOpenCardGroups.get("필립").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get("필립").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(firstOpenCardGroups.get("홍실").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get("홍실").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
-            softly.assertThat(firstOpenCardGroups.get("딜러").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get("딜러").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
         });
     }

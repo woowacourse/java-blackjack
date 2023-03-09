@@ -38,14 +38,15 @@ public class BlackJackController {
     }
 
     private void printFirstOpenCardGroups(final BlackJackGame blackJackGame) {
-        final Map<String, CardGroup> firstOpenCardGroups = blackJackGame.getFirstOpenCardGroups();
-        final List<String> userNames = firstOpenCardGroups.keySet()
+        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
+        final List<String> userNames = userNameAndFirstOpenCardGroups.keySet()
                 .stream()
                 .collect(Collectors.toUnmodifiableList());
         outputView.printFirstCardGroupInfoMessage(userNames);
-        for (final String name : firstOpenCardGroups.keySet()) {
-            final List<String> renderedCardGroup = ViewRenderer.renderCardGroup(firstOpenCardGroups.get(name));
-            outputView.printCardGroup(name, renderedCardGroup);
+        for (final String userName : userNames) {
+            final List<String> renderedUserNameAndCardGroup = ViewRenderer.renderCardGroup(
+                    userNameAndFirstOpenCardGroups.get(userName));
+            outputView.printUserNameAndCardGroup(userName, renderedUserNameAndCardGroup);
         }
     }
 
@@ -62,8 +63,8 @@ public class BlackJackController {
             outputView.printDrawCardRequestMessage(playerName);
             drawOrStay = repeatUntilReadValidateDrawInput();
             blackJackGame.playPlayer(playerName, drawOrStay);
-            final CardGroup userCardGroup = blackJackGame.getCardGroupBy(playerName);
-            outputView.printCardGroup(playerName, ViewRenderer.renderCardGroup(userCardGroup));
+            final CardGroup playerCardGroup = blackJackGame.getCardGroupBy(playerName);
+            outputView.printUserNameAndCardGroup(playerName, ViewRenderer.renderCardGroup(playerCardGroup));
         }
     }
 

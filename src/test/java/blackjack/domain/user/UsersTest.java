@@ -75,14 +75,14 @@ class UsersTest {
         final Users users = new Users(List.of("필립", "홍실")
                 , new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
-        final Map<String, CardGroup> firstOpenCardGroups = users.getFirstOpenCardGroups();
+        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = users.getUserNameAndFirstOpenCardGroups();
 
         assertSoftly(softly -> {
-            softly.assertThat(firstOpenCardGroups.get("필립").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get("필립").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
-            softly.assertThat(firstOpenCardGroups.get("홍실").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get("홍실").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
-            softly.assertThat(firstOpenCardGroups.get("딜러").getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get("딜러").getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
         });
     }
