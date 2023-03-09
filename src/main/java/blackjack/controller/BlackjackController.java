@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.factory.PlayersFactory;
 import blackjack.domain.player.*;
 import blackjack.domain.result.UserResult;
 import blackjack.view.InputView;
@@ -25,7 +24,7 @@ public class BlackjackController {
 
     private Players generatePlayers() {
         Names names = new Names(InputView.inputPeopleNames());
-        return PlayersFactory.of(names);
+        return Players.from(names);
     }
 
     private void ready(Players players) {
