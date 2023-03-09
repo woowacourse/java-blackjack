@@ -24,6 +24,24 @@ public class Result {
         return new Result(0, 0, 1);
     }
 
+    public static Result decide(final Score score, final List<Score> comparedScores) {
+        Result result = new Result(0, 0, 0);
+        comparedScores.forEach(comparedScore -> addResult(score, comparedScore, result));
+        return result;
+    }
+
+    private static void addResult(final Score score, final Score comparedScore, final Result result) {
+        if (isVictory(score, comparedScore)) {
+            result.addVictory();
+            return;
+        }
+        if (isDraw(score, comparedScore)) {
+            result.addDraw();
+            return;
+        }
+        result.addDefeat();
+    }
+
     private static boolean isVictory(final Score score, final Score comparedScore) {
         return !score.isBust()
             && (comparedScore.isBust() || score.getValue() > comparedScore.getValue());
@@ -34,33 +52,15 @@ public class Result {
             || score.getValue() == comparedScore.getValue();
     }
 
-    public static Result decide(final Score score, final List<Score> comparedScores) {
-        Result result = new Result(0, 0, 0);
-        comparedScores.forEach(comparedScore -> addResult(score, comparedScore, result));
-        return result;
-    }
-
-    private static void addResult(final Score score, final Score comparedScore, final Result result) {
-        if (isDraw(score, comparedScore)) {
-            result.addDraw();
-            return;
-        }
-        if (isVictory(score, comparedScore)) {
-            result.addVictory();
-            return;
-        }
-        result.addDefeat();
-    }
-
-    public void addVictory() {
+    private void addVictory() {
         victory++;
     }
 
-    public void addDraw() {
+    private void addDraw() {
         draw++;
     }
 
-    public void addDefeat() {
+    private void addDefeat() {
         defeat++;
     }
 
