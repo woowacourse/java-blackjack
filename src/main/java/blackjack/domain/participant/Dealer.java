@@ -27,7 +27,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return isCardShortage() && isScoreLow();
+        return isCardShortage() && isScoreLow() && drawable;
     }
 
     private boolean isCardShortage() {
