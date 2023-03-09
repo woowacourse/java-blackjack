@@ -9,6 +9,12 @@ public class BlackJackRuleImpl implements BlackJackRule {
 
     @Override
     public ResultType calculateDealerResult(final Dealer dealer, final Player player) {
+        if (isBlackJackWin(dealer, player)) {
+            return ResultType.BLACKJACK_WIN;
+        }
+        if (isBlackJackLose(dealer, player)) {
+            return ResultType.BLACKJACK_LOSE;
+        }
         final int dealerScore = dealer.currentScore();
         final int playerScore = player.currentScore();
         if (isTie(dealerScore, playerScore)) {
@@ -18,6 +24,14 @@ public class BlackJackRuleImpl implements BlackJackRule {
             return ResultType.WIN;
         }
         return ResultType.LOSE;
+    }
+
+    private boolean isBlackJackWin(final Dealer dealer, final Player player) {
+        return dealer.isBlackJack() && !player.isBlackJack();
+    }
+
+    private boolean isBlackJackLose(final Dealer dealer, final Player player) {
+        return !dealer.isBlackJack() && player.isBlackJack();
     }
 
     private boolean isTie(final int dealerScore, final int playerScore) {

@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Players;
 import blackjack.response.CardResponse;
 import blackjack.response.ResultTypeResponse;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,19 +53,17 @@ class DomainConverter {
                 ));
     }
 
-    static Map<ResultTypeResponse, Long> convertDealerResults(final Map<String, ResultType> generatePlayersResult) {
-        final Map<ResultTypeResponse, Long> dealerResult = new HashMap<>();
-        final long dealerWinCount = generatePlayersResult.values().stream()
-                .filter(ResultType.WIN::equals)
-                .count();
-        final long dealerLoseCount = generatePlayersResult.values().stream()
-                .filter(ResultType.LOSE::equals)
-                .count();
-        final long drawCount = generatePlayersResult.values().stream()
-                .filter(ResultType.TIE::equals)
-                .count();
-        dealerResult.put(ResultTypeResponse.from(ResultType.LOSE.getName()), dealerWinCount);
-        dealerResult.put(ResultTypeResponse.from(ResultType.WIN.getName()), dealerLoseCount);
+    static Map<ResultTypeResponse, Integer> convertDealerResults(final Map<String, ResultType> generatePlayersResult) {
+        final Map<ResultTypeResponse, Integer> dealerResult = new HashMap<>();
+        final int dealerWinCount = Collections.frequency(generatePlayersResult.values(), ResultType.WIN);
+        final int dealerBlackJackWinCount = Collections.frequency(generatePlayersResult.values(),
+                ResultType.BLACKJACK_WIN);
+        final int dealerLoseCount = Collections.frequency(generatePlayersResult.values(), ResultType.LOSE);
+        final int dealerBlackJackLoseCount = Collections.frequency(generatePlayersResult.values(),
+                ResultType.BLACKJACK_LOSE);
+        final int drawCount = Collections.frequency(generatePlayersResult.values(), ResultType.TIE);
+        dealerResult.put(ResultTypeResponse.from(ResultType.LOSE.getName()), dealerWinCount + dealerBlackJackLoseCount);
+        dealerResult.put(ResultTypeResponse.from(ResultType.WIN.getName()), dealerLoseCount + dealerBlackJackWinCount);
         dealerResult.put(ResultTypeResponse.from(ResultType.TIE.getName()), drawCount);
         return dealerResult;
     }

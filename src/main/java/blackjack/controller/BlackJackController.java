@@ -2,9 +2,7 @@ package blackjack.controller;
 
 import static blackjack.controller.DomainConverter.convertCard;
 import static blackjack.controller.DomainConverter.convertCards;
-import static blackjack.controller.DomainConverter.convertDealerResults;
 import static blackjack.controller.DomainConverter.convertPlayersCards;
-import static blackjack.controller.DomainConverter.convertPlayersResult;
 import static blackjack.controller.DomainConverter.getPlayerCards;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
@@ -34,6 +32,10 @@ public class BlackJackController {
                         new BlackJackRuleImpl()),
                 outputView::printError);
 
+        for (final String playerName : blackJackGame.getPlayerNames()) {
+            blackJackGame.addPlayerMoney(playerName, inputPlayerMoney(playerName));
+        }
+
         blackJackGame.distributeInitialCard();
 
         outputView.printInitialCards(
@@ -60,8 +62,13 @@ public class BlackJackController {
                 convertCards(blackJackGame.getDealerCards()));
         outputView.printFinalStatusOfPlayers(convertPlayersCards(blackJackGame.getPlayersCards()),
                 blackJackGame.getPlayersScores());
-        outputView.printFinalDealerResult(convertDealerResults(blackJackGame.generatePlayersResult()));
-        outputView.printFinalPlayersResult(convertPlayersResult(blackJackGame.generatePlayersResult()));
+
+        outputView.printFinalMoney(blackJackGame.calculatePlayersMoney());
+    }
+
+    private int inputPlayerMoney(final String playerName) {
+        return repeatUntilNoException(
+                () -> inputView.inputPlayerMoney(playerName), outputView::printError);
     }
 
     private DrawCommand inputPlayerChoice(final String playerName) {

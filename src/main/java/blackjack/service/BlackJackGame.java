@@ -18,6 +18,7 @@ public class BlackJackGame {
     private final Participants participants;
     private final Deck deck;
     private final BlackJackRule blackJackRule;
+    private final Map<String, Integer> playerMoney = new LinkedHashMap<>();
 
     private BlackJackGame(final Players players, final DeckFactory deckFactory, final BlackJackRule blackJackRule) {
         participants = new Participants(players, new Dealer());
@@ -100,6 +101,25 @@ public class BlackJackGame {
         participants.getPlayers().getPlayers()
                 .forEach(player -> playerScores.put(player.getName(), player.currentScore()));
         return playerScores;
+    }
+
+    public void addPlayerMoney(final String playerName, final int inputPlayerMoney) {
+        playerMoney.put(playerName, inputPlayerMoney);
+    }
+
+    public Map<String, Integer> calculatePlayersMoney() {
+        final Map<String, Integer> resultPlayersMoney = new LinkedHashMap<>();
+        final Map<String, ResultType> playerResult = generatePlayersResult();
+        playerMoney.forEach((playerName, money) -> {
+            final ResultType resultType = playerResult.get(playerName);
+            final int playerWinningMoney = calculatePlayerMoney(money, resultType);
+            resultPlayersMoney.put(playerName, playerWinningMoney);
+        });
+        return resultPlayersMoney;
+    }
+
+    private int calculatePlayerMoney(final int money, final ResultType resultType) {
+        return (int) (money * resultType.getPlayerProfit());
     }
 
     private static class ParticipantResults {
