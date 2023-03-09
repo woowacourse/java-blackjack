@@ -19,7 +19,7 @@ public class BlackjackController {
 
     public void run() {
         Cards cards = Cards.create(new RandomCardPickerGenerator());
-        List<String> playersName = inputPlayerNameCommand();
+        List<String> playersName = inputPlayerName();
         BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
         hitFirstSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
@@ -58,13 +58,13 @@ public class BlackjackController {
         outputView.printAllWinORLose(blackjackGameResult);
     }
 
-    private List<String> inputPlayerNameCommand() {
+    private List<String> inputPlayerName() {
         try {
             return inputView.readPlayerName();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return inputPlayerNameCommand();
+        return inputPlayerName();
     }
 
     private String inputHitCommand(final Player player) {
