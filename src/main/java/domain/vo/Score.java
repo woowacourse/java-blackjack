@@ -11,14 +11,18 @@ public class Score {
     private static final int ACE_SUB_NUMBER = 1;
     private final int value;
 
-    public Score(final int value) {
+    private Score(final int value) {
         this.value = value;
     }
-    
+
     public static Score of(final Cards cards) {
         final int score = getInitialScore(cards);
         final int aceCount = cards.count(Letter.ACE);
         return new Score(modifyScoreByAce(score, aceCount));
+    }
+
+    public static Score of(final int value) {
+        return new Score(value);
     }
 
     private static int getInitialScore(final Cards cards) {
@@ -51,8 +55,16 @@ public class Score {
         return value <= MAX_VALUE;
     }
 
-    public boolean isLessThanOrEqualTo(final Score comparedScore) {
+    public boolean isMax() {
+        return value == MAX_VALUE;
+    }
+
+    public boolean lessThanOrEqualTo(final Score comparedScore) {
         return this.value <= comparedScore.value;
+    }
+
+    public boolean moreThan(final Score comparedScore) {
+        return this.value > comparedScore.value;
     }
 
     @Override

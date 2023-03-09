@@ -171,11 +171,11 @@ class ScoreTest {
     @DisplayName("스코어가 비교 대상보다 더 작은지 테스트")
     public void testIsLessThan() {
         //given
-        Score score = new Score(1);
-        Score comparedScore = new Score(2);
+        Score score = Score.of(1);
+        Score comparedScore = Score.of(2);
 
         //when
-        boolean result = score.isLessThanOrEqualTo(comparedScore);
+        boolean result = score.lessThanOrEqualTo(comparedScore);
 
         //then
         assertThat(result).isTrue();
