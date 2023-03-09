@@ -1,6 +1,5 @@
 package controller;
 
-
 import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
@@ -18,7 +17,7 @@ public class MainController {
 
     public void start() {
         names = inputNames();
-        List<Integer> amounts = inputAmounts();
+        final List<Integer> amounts = inputAmounts();
         blackJackGame = generateBlackJackGame(amounts);
 
         outputCards();
@@ -34,8 +33,8 @@ public class MainController {
     }
 
     private List<Integer> inputAmounts() {
-        List<Integer> amounts = new ArrayList<>();
-        for (String name : names) {
+        final List<Integer> amounts = new ArrayList<>();
+        for (final String name : names) {
             OutputView.printEmptyLine();
             OutputView.printInputAmount(name);
             amounts.add(InputView.readAmount());
@@ -43,10 +42,10 @@ public class MainController {
         return amounts;
     }
 
-    private BlackJackGame generateBlackJackGame(List<Integer> amounts) {
-        Deck deck = new Deck();
+    private BlackJackGame generateBlackJackGame(final List<Integer> amounts) {
+        final Deck deck = new Deck();
         deck.shuffleDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
+        final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
         OutputView.printEmptyLine();
         OutputView.printDistributeCard(names);
         return blackJackGame;
@@ -104,7 +103,8 @@ public class MainController {
         );
 
         names.forEach(name ->
-                OutputView.printCardResult(name, blackJackGame.getPlayerCards(name), blackJackGame.getPlayerScore(name))
+                OutputView.printCardResult(name, blackJackGame.getPlayerCards(name),
+                        blackJackGame.getPlayerScore(name))
         );
     }
 }

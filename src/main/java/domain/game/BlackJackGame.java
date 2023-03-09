@@ -23,7 +23,7 @@ public class BlackJackGame {
         dealer.drawCard(deck.popCard());
         dealer.drawCard(deck.popCard());
 
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             player.drawCard(deck.popCard());
             player.drawCard(deck.popCard());
         }

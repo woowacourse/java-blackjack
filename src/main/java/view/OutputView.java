@@ -25,15 +25,15 @@ public class OutputView {
     }
 
     public static void printPlayerCard(final String playerName, final List<Card> cards) {
-        String toStringCards = toStringCards(cards);
+        final String toStringCards = toStringCards(cards);
 
         System.out.printf("%s: %s%n", playerName, toStringCards);
     }
 
     private static String toStringCards(final List<Card> cards) {
-        StringJoiner stringJoiner = new StringJoiner(", ");
+        final StringJoiner stringJoiner = new StringJoiner(", ");
         cards.forEach(card -> {
-            String temp = card.rank() + card.suit();
+            final String temp = card.rank() + card.suit();
             stringJoiner.add(temp);
         });
         return stringJoiner.toString();
