@@ -23,8 +23,7 @@ class BlackjackGameResultTest {
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
         }
-        BlackjackGameResult blackjackGameResult =
-                new BlackjackGameResult(game.generatePlayersResult(new BlackJackReferee()));
+        BlackjackGameResult blackjackGameResult = game.generatePlayersResult(new BlackJackReferee());
 
         //when
         int result = blackjackGameResult.getDealerLoseCount();
@@ -46,8 +45,7 @@ class BlackjackGameResultTest {
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
         }
-        BlackjackGameResult blackjackGameResult =
-                new BlackjackGameResult(game.generatePlayersResult(new BlackJackReferee()));
+        BlackjackGameResult blackjackGameResult = game.generatePlayersResult(new BlackJackReferee());
 
         //when
         int result = blackjackGameResult.getDealerWinCount();

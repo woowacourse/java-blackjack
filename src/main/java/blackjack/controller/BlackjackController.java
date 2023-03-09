@@ -23,8 +23,7 @@ public class BlackjackController {
         BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
         hitFirstSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
-        BlackjackGameResult blackjackGameResult =
-                new BlackjackGameResult(blackjackGame.generatePlayersResult(new BlackJackReferee()));
+        BlackjackGameResult blackjackGameResult = blackjackGame.generatePlayersResult(new BlackJackReferee());
         printResult(blackjackGame, blackjackGameResult);
     }
 

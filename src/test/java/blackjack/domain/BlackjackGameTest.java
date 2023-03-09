@@ -51,16 +51,16 @@ class BlackjackGameTest {
         }
 
         //when
-        Map<Player, WinningResult> result = game.generatePlayersResult(new BlackJackReferee());
+        BlackjackGameResult blackjackGameResult= game.generatePlayersResult(new BlackJackReferee());
         //then
-        Set<Player> players = result.keySet();
+        Set<Player> players = blackjackGameResult.getGameResult().keySet();
         for(Participant participant : players) {
             String playerName = participant.getParticipantName().getName();
             if (playerName.equals("pobi")){
-                assertThat(result.get(participant)).isEqualTo(WinningResult.LOSE);
+                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.LOSE);
             }
             if (participant.equals("ako")) {
-                assertThat(result.get(participant)).isEqualTo(WinningResult.WIN);
+                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.WIN);
             }
         }
     }
@@ -79,17 +79,17 @@ class BlackjackGameTest {
         }
 
         //when
-        Map<Player, WinningResult> result = game.generatePlayersResult(new BlackJackReferee());
+        BlackjackGameResult blackjackGameResult= game.generatePlayersResult(new BlackJackReferee());
 
         //then
-        Set<Player> players = result.keySet();
+        Set<Player> players = blackjackGameResult.getGameResult().keySet();
         for(Participant participant : players) {
             String playername = participant.getParticipantName().getName();
             if (playername.equals("pobi")){
-                assertThat(result.get(participant)).isEqualTo(WinningResult.LOSE);
+                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.LOSE);
             }
             if (playername.equals("ako")) {
-                assertThat(result.get(participant)).isEqualTo(WinningResult.WIN);
+                assertThat(blackjackGameResult.getGameResult().get(participant)).isEqualTo(WinningResult.WIN);
             }
         }
     }

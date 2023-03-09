@@ -18,11 +18,11 @@ public class BlackjackGame {
         return new BlackjackGame(Participants.from(playerName, new Dealer()), cards);
     }
 
-    public Map<Player, WinningResult> generatePlayersResult(BlackJackReferee referee) {
+    public BlackjackGameResult generatePlayersResult(BlackJackReferee referee) {
         for (Player player : participants.findPlayers()) {
             referee.createResult(participants.findDealer(), player);
         }
-        return Collections.unmodifiableMap(referee.getPlayerWinningResult());
+        return new BlackjackGameResult(referee.getPlayerWinningResult());
     }
 
     public void getTwoHitCards(final Participant participant) {
