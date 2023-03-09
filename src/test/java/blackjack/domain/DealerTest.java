@@ -63,7 +63,7 @@ class DealerTest {
             .sum() + 10;
 
         //when
-        int result = dealer.calculateDealerCardNumber();
+        int result = dealer.calculateCardNumber();
 
         //then
         assertThat(result).isEqualTo(expect);

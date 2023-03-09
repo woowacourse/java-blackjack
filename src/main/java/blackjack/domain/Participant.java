@@ -11,38 +11,31 @@ public abstract class Participant {
     public static final int FIRST_HIT_CARD_SIZE = 2;
 
     private final ParticipantName participantName;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Participant(final ParticipantName participantName) {
-        this.cards = new ArrayList<>();
+        this.cards = new Cards();
         this.participantName = participantName;
     }
 
     public void hit(final Card card) {
-        cards.add(card);
+        cards.addCard(card);
     }
 
     public int getCardsCount() {
-        return cards.size();
+        return cards.getCardSize();
     }
 
     public boolean hasAceCard() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
-    public int calculateCardNumberAceCardValueOne() {
-        return cards.stream()
-            .mapToInt(card -> card.getCardNumber().getValue())
-            .sum();
+        return cards.hasAceCard();
     }
 
     public boolean judgeBlackjack() {
-        return cards.size() == FIRST_HIT_CARD_SIZE && calculateCardNumber() == BLACKJACK_MAX_NUMBER;
+        return cards.getCardSize() == FIRST_HIT_CARD_SIZE && calculateCardNumber() == BLACKJACK_MAX_NUMBER;
     }
 
     public int calculateCardNumber() {
-        int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
+        int totalSumAceCardValueOne = cards.calculateCardNumberAceCardValueOne();
         if (hasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
             return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
         }
@@ -59,10 +52,10 @@ public abstract class Participant {
     }
 
     public CardNumber getCardNumber(final int index) {
-        return cards.get(index).getCardNumber();
+        return cards.getCardNumberByIndex(index);
     }
 
     public CardSuit getCardSuit(final int index) {
-        return cards.get(index).getCardSuit();
+        return cards.getCardSuitByIndex(index);
     }
 }

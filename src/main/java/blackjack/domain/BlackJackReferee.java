@@ -15,7 +15,7 @@ public class BlackJackReferee {
     }
 
     private WinningResult judgeWinOrLose(final Dealer dealer, final Player player) {
-        if (player.calculateCardNumber() > WIN_MAX_NUMBER || dealer.calculateDealerCardNumber() > WIN_MAX_NUMBER) {
+        if (player.calculateCardNumber() > WIN_MAX_NUMBER || dealer.calculateCardNumber() > WIN_MAX_NUMBER) {
             return calculateByBurst(player);
         }
         if (dealer.judgeBlackjack() || player.judgeBlackjack()) {
@@ -42,10 +42,10 @@ public class BlackJackReferee {
     }
 
     private WinningResult calculateByNumber(final Player player,final Dealer dealer) {
-        if (player.calculateCardNumber() > dealer.calculateDealerCardNumber()) {
+        if (player.calculateCardNumber() > dealer.calculateCardNumber()) {
             return WinningResult.LOSE;
         }
-        if (player.calculateCardNumber() < dealer.calculateDealerCardNumber()) {
+        if (player.calculateCardNumber() < dealer.calculateCardNumber()) {
             return WinningResult.WIN;
         }
         return WinningResult.PUSH;
