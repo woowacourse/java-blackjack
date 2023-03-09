@@ -13,14 +13,14 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class PlayersTest {
+public class ParticipantsTest {
 
     @Test
     @DisplayName("플레이어가 1~7명이면 정상적으로 생성된다.")
     void createPlayers() {
         List<String> inputNames = List.of("gray", "luca", "pobi", "neo", "hoy");
 
-        Players players = Players.create(inputNames);
+        Participants players = Participants.create(inputNames);
 
         assertThat(players).isNotNull();
     }
@@ -30,7 +30,7 @@ public class PlayersTest {
     void createPlayersWithDuplicatedName() {
         List<String> inputNames = List.of("gray", "gray", "pobi", "neo", "hoy");
 
-        assertThatThrownBy(() -> Players.create(inputNames))
+        assertThatThrownBy(() -> Participants.create(inputNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -38,7 +38,7 @@ public class PlayersTest {
     @MethodSource("generatePlayerNames")
     @DisplayName("플레이어가 1~7명 이외의 경우에 예외가 발생한다 ")
     void createPlayersWrongSize(List<String> inputNames) {
-        assertThatThrownBy(() -> Players.create(inputNames))
+        assertThatThrownBy(() -> Participants.create(inputNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
