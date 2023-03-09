@@ -76,13 +76,11 @@ public class BlackJackController {
                         deckFactory,
                         new BlackJackRuleImpl()),
                 outputView::printError);
-
         for (final String playerName : blackJackGame.getPlayerNames()) {
             blackJackGame.addPlayerMoney(playerName, inputPlayerMoney(playerName));
         }
 
         blackJackGame.distributeInitialCard();
-
         outputView.printInitialCards(
                 convertCard(blackJackGame.getDealerFirstCard()),
                 getPlayerCards(blackJackGame.getPlayers()));
@@ -90,7 +88,6 @@ public class BlackJackController {
         for (final String playerName : blackJackGame.getPlayerNames()) {
             drawPlayerCard(blackJackGame, playerName);
         }
-
         while (blackJackGame.isDealerDrawable()) {
             blackJackGame.drawDealerCard();
             outputView.printDealerCardDrawMessage();
@@ -100,7 +97,6 @@ public class BlackJackController {
                 convertCards(blackJackGame.getDealerCards()));
         outputView.printFinalStatusOfPlayers(convertPlayersCards(blackJackGame.getPlayersCards()),
                 blackJackGame.getPlayersScores());
-
         outputView.printFinalMoney(blackJackGame.calculatePlayersMoney());
     }
 
