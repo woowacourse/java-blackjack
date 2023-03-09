@@ -1,4 +1,4 @@
-package blackjack.domain.game.resultCalculator;
+package blackjack.domain.game.participantsState;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Letter;
@@ -27,7 +27,7 @@ public class ResultCalculatorTest {
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TWO));
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        ResultCalculator resultCalculatorWithBustDealer = new ResultCalculatorWithBustDealer();
+        ResultCalculator resultCalculatorWithBustDealer = new OnlyDealerBustState();
 
         resultCalculatorWithBustDealer.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.WIN);
@@ -46,7 +46,7 @@ public class ResultCalculatorTest {
         dealer.drawCard(new Card(Shape.CLOVER, Letter.TWO));
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
         dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        ResultCalculator resultCalculatorWithBustDealer = new ResultCalculatorWithBustDealer();
+        ResultCalculator resultCalculatorWithBustDealer = new OnlyDealerBustState();
 
         resultCalculatorWithBustDealer.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.TIE);
@@ -66,7 +66,7 @@ public class ResultCalculatorTest {
         player.drawCard(new Card(Shape.HEART, Letter.TEN));
         player.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
 
-        ResultCalculator resultCalculatorWithBustPlayer = new ResultCalculatorWithBustPlayer();
+        ResultCalculator resultCalculatorWithBustPlayer = new OnlyPlayerBustState();
 
         resultCalculatorWithBustPlayer.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.LOSE);
@@ -86,7 +86,7 @@ public class ResultCalculatorTest {
         player.drawCard(new Card(Shape.HEART, Letter.TEN));
 
 
-        ResultCalculator resultCalculatorWithNotBust = new ResultCalculatorWithNotBustDealerPlayer();
+        ResultCalculator resultCalculatorWithNotBust = new BothNotBustState();
 
         resultCalculatorWithNotBust.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.LOSE);
@@ -106,7 +106,7 @@ public class ResultCalculatorTest {
         dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
 
 
-        ResultCalculator resultCalculatorWithNotBust = new ResultCalculatorWithNotBustDealerPlayer();
+        ResultCalculator resultCalculatorWithNotBust = new BothNotBustState();
 
         resultCalculatorWithNotBust.calculateResult(playersResult, player, dealer);
         assertThat(playersResult.get(player)).isEqualTo(WinTieLose.WIN);
