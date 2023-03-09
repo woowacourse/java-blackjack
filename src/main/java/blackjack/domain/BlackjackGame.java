@@ -1,15 +1,11 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.player.User;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.UserResult;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import blackjack.domain.result.UserResults;
 
 public class BlackjackGame {
 
@@ -24,6 +20,8 @@ public class BlackjackGame {
     }
 
     public void giveInitialCardsToUsers() {
+        Deck deck = Deck.getInstance();
+        deck.shuffleCards();
         for (Player player : players.getPlayers()) {
             giveInitialCards(player);
         }
@@ -31,34 +29,19 @@ public class BlackjackGame {
     }
 
     private void giveInitialCards(User user) {
+        Deck deck = Deck.getInstance();
         for (int cardIndex = 0; cardIndex < NUMBER_OF_INITIAL_CARDS; cardIndex++) {
-            user.updateCardScore();
+            user.updateCardScore(deck.drawCard());
         }
     }
 
-    public UserResult getResults() {
-        HashMap<User, List<Result>> userResults = initializeResults();
-        calculateResults(userResults);
-        return new UserResult(userResults);
+    public void updateCard(User user) {
+        Deck deck = Deck.getInstance();
+        user.updateCardScore(deck.drawCard());
     }
 
-    private void calculateResults(HashMap<User, List<Result>> userResults) {
-        int dealerScore = dealer.getTotalScore();
-        for (Player player : players.getPlayers()) {
-            Result playerResult = Result.calculateResult(player.getTotalScore(), dealerScore);
-            Result dealerResult = playerResult.ofOppositeResult();
-            userResults.get(player).add(playerResult);
-            userResults.get(dealer).add(dealerResult);
-        }
-    }
-
-    private HashMap<User, List<Result>> initializeResults() {
-        HashMap<User, List<Result>> userResults = new HashMap<>();
-        userResults.put(dealer, new ArrayList<>());
-        for (Player player : players.getPlayers()) {
-            userResults.put(player, new ArrayList<>());
-        }
-        return userResults;
+    public UserResults getResults() {
+        return UserResults.of(dealer, players);
     }
 
     public Dealer getDealer() {

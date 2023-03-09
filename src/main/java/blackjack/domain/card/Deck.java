@@ -16,7 +16,6 @@ public class Deck {
         List<Card> createdCards = CardFactory.of();
         validate(createdCards);
         cards = createdCards;
-        shuffleCards();
     }
 
     public static Deck getInstance() {

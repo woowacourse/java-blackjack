@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.player.*;
-import blackjack.domain.result.UserResult;
+import blackjack.domain.result.UserResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -48,7 +48,7 @@ public class BlackjackController {
 
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
-        UserResult results = blackjackGame.getResults();
+        UserResults results = blackjackGame.getResults();
         OutputView.printResults(results, dealer);
     }
 
@@ -69,13 +69,13 @@ public class BlackjackController {
     public void giveAdditionalCardsToDealer(Dealer dealer) {
         while (dealer.hasUnderMinimumScore()) {
             OutputView.printDealerOneMore();
-            dealer.updateCardScore();
+            blackjackGame.updateCard(dealer);
         }
     }
 
     private void giveAdditionalCard(String answer, Player player) {
         while (GameCommand.isContinue(answer) && player.isUnderBust()) {
-            player.updateCardScore();
+            blackjackGame.updateCard(player);
             OutputView.printPlayerCurrentCards(player);
             answer = InputView.askAdditionalCard(player.getPlayerName());
         }
