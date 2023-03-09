@@ -13,7 +13,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        tori = new Player(new Name("tori"));
+        tori = Player.from("tori");
     }
 
     @DisplayName("생성 테스트")

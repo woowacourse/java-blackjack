@@ -6,9 +6,16 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         validatePlayersCount(players);
         this.players = players;
+    }
+
+    public static Players of(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(Player::from)
+                .collect(Collectors.toList());
+        return new Players(players);
     }
 
     private void validatePlayersCount(List<Player> players) {

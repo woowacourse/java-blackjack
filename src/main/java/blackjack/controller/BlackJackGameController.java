@@ -6,8 +6,6 @@ import blackjack.domain.Deck;
 import blackjack.domain.Game;
 import blackjack.domain.GamePlayer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Name;
-import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,16 +23,39 @@ public class BlackJackGameController {
         this.outputView = outputView;
     }
 
-    private List<String> getCardNames(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString()).collect(
-                        Collectors.toList());
-    }
-
     public void run() {
         Game game = start();
         play(game);
         finish(game);
+    }
+
+    private Game start() {
+        Game game = generateGame();
+        printStartCards(game);
+        return game;
+    }
+
+    private Game generateGame() {
+        Players players = Players.of(generatePlayers());
+        Deck deck = new Deck();
+        deck.shuffleDeck();
+        GamePlayer gamePlayer = new GamePlayer(players, new Dealer());
+        return new Game(deck, gamePlayer);
+    }
+
+    private List<String> generatePlayers() {
+        try {
+            return inputView.readPlayersName();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR]" + e.getMessage());
+            return generatePlayers();
+        }
+    }
+
+    private List<String> getCardNames(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString()).collect(
+                        Collectors.toList());
     }
 
     private void finish(Game game) {
@@ -64,12 +85,6 @@ public class BlackJackGameController {
         dealerPlay(game);
     }
 
-    private Game start() {
-        Game game = generateGame();
-        printStartCards(game);
-        return game;
-    }
-
     private void dealerPlay(Game game) {
         while (game.isHitDealer()) {
             outputView.printDealerHit();
@@ -84,26 +99,6 @@ public class BlackJackGameController {
             String playerName = game.showPlayerNameByIndex(i);
             List<String> cards = getCardNames(game.showPlayerCardsByIndex(i));
             outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
-        }
-    }
-
-    private Game generateGame() {
-        List<Player> players = generatePlayers();
-        Deck deck = new Deck();
-        deck.shuffleDeck();
-        GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
-        return new Game(deck, gamePlayer);
-    }
-
-    private List<Player> generatePlayers() {
-        try {
-            List<String> playersName = inputView.readPlayersName();
-            return playersName.stream()
-                    .map(name -> new Player(new Name(name)))
-                    .collect(Collectors.toList());
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR]" + e.getMessage());
-            return generatePlayers();
         }
     }
 

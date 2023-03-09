@@ -5,9 +5,13 @@ public class Player extends Person {
 
     private final Name name;
 
-    public Player(Name name) {
+    private Player(Name name) {
         super();
         this.name = name;
+    }
+
+    public static Player from(String name) {
+        return new Player(new Name(name));
     }
 
     @Override

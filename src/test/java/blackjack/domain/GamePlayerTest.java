@@ -13,11 +13,7 @@ class GamePlayerTest {
 
     @BeforeEach
     void init() {
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            players.add(new Player(new Name("newName")));
-        }
-        gamePlayer = new GamePlayer(new Players(players), new Dealer());
+        gamePlayer = new GamePlayer(Players.of(List.of("name1", "name2", "name3")), new Dealer());
     }
 
     @DisplayName("생성 테스트")
