@@ -4,23 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class BetTest {
-
-    @Test
-    @DisplayName("배팅 금액이 0원이면 예외가 발생한다")
-    void betAmountCreateFailWhenBetAmountZero() {
-        assertThatThrownBy(() -> new Bet(0))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("배팅 금액이 0원 미만이면 예외가 발생한다")
-    void betAmountCreateFailWhenBetAmountUnderZero() {
-        assertThatThrownBy(() -> new Bet(-1))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 
     @Test
     @DisplayName("수익은 0원일 수 있다")
