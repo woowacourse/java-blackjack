@@ -28,7 +28,7 @@ public enum Result {
 
     private static Result judgeOverBurst(final int dealerTotalValue, final int userTotalValue) {
         if (userTotalValue > BUST_NUMBER && dealerTotalValue > BUST_NUMBER) {
-            return TIE;
+            return LOSE;
         }
 
         return userTotalValue > BUST_NUMBER ? LOSE : WIN;
