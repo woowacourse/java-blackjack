@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.Card;
 import domain.card.CardRandomShuffler;
+import domain.game.BettingMoney;
 import domain.game.GameManager;
 import domain.game.GameResult;
 import domain.game.Result;
@@ -12,8 +13,11 @@ import domain.participant.Players;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class GameController {
 
@@ -28,7 +32,8 @@ public final class GameController {
     public void start() {
         final Dealer dealer = Participant.createDealer();
         final List<Player> players = getPlayers();
-        final GameManager gameManager = makeGameManager(dealer, players);
+        final Map<Player, BettingMoney> playerBettingInfo = getBettingMoneys(players);
+        final GameManager gameManager = makeGameManager(dealer, playerBettingInfo);
         gameManager.handFirstCards();
         printParticipantCards(dealer, players);
         drawPlayersCard(players, gameManager);
@@ -49,9 +54,22 @@ public final class GameController {
         });
     }
 
-    private GameManager makeGameManager(final Dealer dealer, final List<Player> players) {
+    private Map<Player, BettingMoney> getBettingMoneys(final List<Player> players) {
+        return players.stream()
+                .collect(Collectors.toMap(Function.identity(), this::getPlayerBettingMoneys,
+                        (v1, v2) -> v1, LinkedHashMap::new));
+    }
+
+    private BettingMoney getPlayerBettingMoneys(final Player player) {
+        return inputView.getInputWithRetry(() -> {
+            String bettingMoney = inputView.getBettingMoney(player.getName());
+            return BettingMoney.create(bettingMoney);
+        });
+    }
+
+    private GameManager makeGameManager(final Dealer dealer, final Map<Player, BettingMoney> playerBettingInfo) {
         final CardRandomShuffler cardRandomShuffler = new CardRandomShuffler();
-        return GameManager.create(dealer, players, cardRandomShuffler);
+        return GameManager.create(dealer, playerBettingInfo, cardRandomShuffler);
     }
 
     private void printParticipantCards(final Dealer dealer, final List<Player> players) {

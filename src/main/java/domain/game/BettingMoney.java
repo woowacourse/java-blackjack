@@ -16,6 +16,10 @@ public class BettingMoney {
         return new BettingMoney(validMoney);
     }
 
+    public static BettingMoney zero() {
+        return new BettingMoney(0);
+    }
+
     private static int validType(final String money) {
         int validMoney;
         try {
@@ -30,5 +34,9 @@ public class BettingMoney {
         if (money <= MIN_MONEY || money > MAX_MONEY) {
             throw new IllegalArgumentException("베팅 금액은 0원 초과, 100,000,000원 이하여야 합니다.");
         }
+    }
+
+    public BettingMoney add(final BettingMoney bettingMoney) {
+        return new BettingMoney(this.money + bettingMoney.money);
     }
 }

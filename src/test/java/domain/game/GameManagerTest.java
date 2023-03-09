@@ -1,14 +1,13 @@
 package domain.game;
 
-import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Players;
+import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -16,24 +15,22 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class GameManagerTest {
 
-    private Deck deck;
     private Dealer dealer;
-    private Players players;
     private GameManager gameManager;
+    private Map<Player, BettingMoney> bettingInfo;
 
     @BeforeEach
     void init() {
-        final List<String> playerNames = List.of("pobi", "conan");
-        deck = Deck.create(targetCard -> targetCard);
-        players = Players.create(playerNames);
         dealer = Participant.createDealer();
-        gameManager = GameManager.create(dealer, players.getPlayers(), deck);
+        bettingInfo = Map.ofEntries(Map.entry(Player.create("pobi"), BettingMoney.create("10000")),
+                Map.entry(Player.create("crong"), BettingMoney.create("20000")));
+        gameManager = GameManager.create(dealer, bettingInfo, (card) -> card);
     }
 
     @Test
     @DisplayName("create()는 덱과 참가자 정보를 받으면 게임 관리자를 생성한다")
     void create_givenDeckAndParticipants_thenSuccess() {
-        final GameManager gameManager = assertDoesNotThrow(() -> GameManager.create(dealer, players.getPlayers(), deck));
+        final GameManager gameManager = assertDoesNotThrow(() -> GameManager.create(dealer, bettingInfo, (card) -> card));
 
         assertThat(gameManager)
                 .isExactlyInstanceOf(GameManager.class);

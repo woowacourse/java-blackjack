@@ -4,27 +4,30 @@ import domain.CardShuffler;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.ParticipantMoney;
 import domain.participant.Player;
 
-import java.util.List;
+import java.util.Map;
 
 public final class GameManager {
 
     private final Deck deck;
-    private final Participants participants;
+    private final ParticipantMoney participantMoney;
 
-    private GameManager(final Deck deck, final Participants participants) {
+    private GameManager(final Deck deck, final ParticipantMoney participantMoney) {
         this.deck = deck;
-        this.participants = participants;
+        this.participantMoney = participantMoney;
     }
 
-    public static GameManager create(final Dealer dealer, final List<Player> players, final CardShuffler cardShuffler) {
-        return new GameManager(Deck.create(cardShuffler), Participants.create(dealer, players));
+    public static GameManager create(final Dealer dealer,
+                                     final Map<Player, BettingMoney> playerInfo,
+                                     final CardShuffler cardShuffler) {
+        return new GameManager(Deck.create(cardShuffler), ParticipantMoney.create(dealer, playerInfo));
     }
 
     public void handFirstCards() {
-        participants.getParticipants()
+        participantMoney.getParticipantMoney()
+                .keySet()
                 .forEach(participant -> participant.addCard(deck.draw(), deck.draw()));
     }
 
