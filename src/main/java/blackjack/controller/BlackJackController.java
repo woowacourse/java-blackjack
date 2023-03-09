@@ -24,7 +24,7 @@ public class BlackJackController {
 
         passInitialCard();
 
-        passExtraCard();
+        passExtraCardToPlayer();
 
         finishGame();
     }
@@ -46,28 +46,26 @@ public class BlackJackController {
         outputView.showAllPlayerNameHand(blackJackGame.findAllPlayerNameHand());
     }
 
-    private void passExtraCard() {
+    private void passExtraCardToPlayer() {
         passExtraCardToAllPlayers();
         passExtraCardToDealer();
     }
 
     private void passExtraCardToAllPlayers() {
-        int totalPlayerCount = blackJackGame.getTotalPlayerCount();
-        for (int playerIndex = 0; playerIndex < totalPlayerCount; playerIndex++) {
-            passExtraCard(playerIndex);
+        List<String> playerNames = blackJackGame.findAllPlayerNames();
+        playerNames.forEach(this::passExtraCardToPlayer);
+    }
+
+    private void passExtraCardToPlayer(String playerName) {
+        while (isContinuePassPlayerCard(playerName)) {
+            blackJackGame.passExtraCardToPlayer(playerName);
+            outputView.showPlayerNameHand(blackJackGame.findPlayerNameHand(playerName));
         }
     }
 
-    private void passExtraCard(int playerIndex) {
-        while (isContinuePassPlayerCard(playerIndex)) {
-            blackJackGame.passPlayerCard(playerIndex);
-            outputView.showPlayerNameHand(blackJackGame.findPlayerNameHand(playerIndex));
-        }
-    }
-
-    private boolean isContinuePassPlayerCard(int playerIndex) {
-        if (blackJackGame.canPassPlayerCard(playerIndex)) {
-            String intention = inputView.readIntention(blackJackGame.findPlayerName(playerIndex));
+    private boolean isContinuePassPlayerCard(String playerName) {
+        if (blackJackGame.canPassCardToPlayer(playerName)) {
+            String intention = inputView.readIntention(playerName);
             return hasIntention(intention);
         }
         return false;
@@ -78,8 +76,8 @@ public class BlackJackController {
     }
 
     private void passExtraCardToDealer() {
-        while (blackJackGame.canPassDealerCard()) {
-            blackJackGame.passDealerCard();
+        while (blackJackGame.canPassCardToDealer()) {
+            blackJackGame.passExtraCardToDealer();
             outputView.showDealerDrawPossible();
         }
         outputView.showDealerDrawImpossible();
