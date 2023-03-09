@@ -2,7 +2,7 @@ package domain.player.participant.betresult;
 
 import domain.player.participant.Money;
 
-public class NotYetState implements BetResultState {
+public class TieState implements BetResultState {
 
     @Override
     public Money calculateBetOutcomeOf(final Money money) {

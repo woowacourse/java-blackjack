@@ -6,7 +6,7 @@ import domain.player.dealer.Dealer;
 import domain.player.participant.betresult.BetResultState;
 import domain.player.participant.betresult.BreakEvenState;
 import domain.player.participant.betresult.LoseState;
-import domain.player.participant.betresult.NotYetState;
+import domain.player.participant.betresult.TieState;
 import domain.player.participant.betresult.WinState;
 
 public class Participant extends Player {
@@ -17,7 +17,7 @@ public class Participant extends Player {
     public Participant(final Name name, final Money money) {
         super(name);
         this.money = money;
-        betResultState = null;
+        betResultState = new TieState();
     }
 
     @Override
@@ -33,40 +33,42 @@ public class Participant extends Player {
         return betResultState.calculateBetOutcomeOf(money);
     }
 
-    public Money determineBetMoney(final BetResultState betResultState) {
-        return betResultState.calculateBetOutcomeOf(money);
+    private boolean hasNotBetState() {
+        return betResultState instanceof TieState;
     }
 
-    public boolean hasNotBetState() {
-        return betResultState == null;
+    private boolean hasBetState() {
+        return !(hasNotBetState());
     }
 
-    public BetResultState firstMatchWith(final Dealer dealer) {
+    public void firstMatchWith(final Dealer dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
-            return new BreakEvenState();
+            betResultState = new BreakEvenState();
         }
-
         if (isBlackjack() && !dealer.isBlackjack()) {
-            return new WinState();
+            betResultState = new WinState();
         }
-
         if (!isBlackjack() && dealer.isBlackjack()) {
-            return new LoseState();
+            betResultState = new LoseState();
         }
-
-        return new NotYetState();
     }
 
-    public BetResultState finalMatchWith(final Dealer dealer) {
+    public void finalMatchWith(final Dealer dealer) {
+        if (hasBetState()) {
+            return;
+        }
         if (isBust()) {
-            return new LoseState();
+            betResultState = new LoseState();
+            return;
         }
         if (dealer.isBust()) {
-            return new BreakEvenState();
+            betResultState = new BreakEvenState();
+            return;
         }
         if (score().isLessThan(dealer.score())) {
-            return new LoseState();
+            betResultState = new LoseState();
+            return;
         }
-        return new BreakEvenState();
+        betResultState = new BreakEvenState();
     }
 }
