@@ -26,6 +26,13 @@ public abstract class Player {
         return false;
     }
 
+    public boolean isBlackJack() {
+        if (holdingCards.getSum() == BLACKJACK_POINT) {
+            return true;
+        }
+        return false;
+    }
+
     public int getTotalPoint() {
         return holdingCards.getSum();
     }

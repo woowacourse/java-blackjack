@@ -61,7 +61,7 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideCards")
+    @MethodSource("provideCards_bust")
     @DisplayName("버스트인지 확인")
     void is_bust(List<Card> cards, boolean expected) {
         for (Card card : cards) {
@@ -71,7 +71,7 @@ class PlayerTest {
         assertThat(player.isBust()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideCards() {
+    private static Stream<Arguments> provideCards_bust() {
         return Stream.of(
                 Arguments.of(
                         List.of(
@@ -90,6 +90,32 @@ class PlayerTest {
                                 new Card(Shape.SPADE, Symbol.ACE),
                                 new Card(Shape.HEART, Symbol.ACE),
                                 new Card(Shape.CLOVER, Symbol.FIVE)),
+                        false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideCards_blackjack")
+    @DisplayName("블랙잭인지 확인")
+    void is_blackjack(List<Card> cards, boolean expected) {
+        for (Card card : cards) {
+            player.pickCard(card);
+        }
+
+        assertThat(player.isBlackJack()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCards_blackjack() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(Shape.DIAMOND, Symbol.QUEEN),
+                                new Card(Shape.CLOVER, Symbol.ACE)),
+                        true),
+                Arguments.of(
+                        List.of(
+                                new Card(Shape.CLOVER, Symbol.ACE),
+                                new Card(Shape.SPADE, Symbol.FIVE)),
                         false)
         );
     }
