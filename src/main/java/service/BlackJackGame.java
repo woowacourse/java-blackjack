@@ -5,7 +5,6 @@ import domain.CardBox;
 import domain.Cards;
 import domain.Dealer;
 import domain.Name;
-import domain.Participant;
 import domain.Participants;
 import domain.Player;
 import domain.Players;
@@ -40,9 +39,8 @@ public class BlackJackGame {
     private Participants makeParticipants() {
         List<Name> names = getNames();
         Dealer dealer = makeDealer();
-        List<Participant> participantsByPlayer = initPlayers(dealer, names);
-        participantsByPlayer.add(0, dealer);
-        return new Participants(participantsByPlayer);
+        Players players = initPlayers(dealer, names);
+        return new Participants(dealer, players);
     }
 
     private List<Name> getNames() {
@@ -58,14 +56,14 @@ public class BlackJackGame {
         return new Dealer(cardBox, cardss);
     }
 
-    private List<Participant> initPlayers(final Dealer dealer, final List<Name> names) {
-        List<Participant> participants = new ArrayList<>();
+    private Players initPlayers(final Dealer dealer, final List<Name> names) {
+        List<Player> players = new ArrayList<>();
         for (Name name : names) {
-            participants.add(makePlayer(dealer, name));
+            players.add(makePlayer(dealer, name));
         }
         Card drewInitLastCardOfDealer = dealer.draw();
         dealer.addCard(drewInitLastCardOfDealer);
-        return participants;
+        return new Players(players);
     }
 
     private void printInitGameMessage(final Participants participants) {

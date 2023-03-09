@@ -2,8 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author 우가
@@ -15,16 +13,9 @@ public class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    public Participants(final List<Participant> participants) {
-        this.dealer = (Dealer) participants.get(0);
-        this.players = convertPlayers(participants);
-    }
-
-    private Players convertPlayers(final List<Participant> participants) {
-        List<Player> players = IntStream.range(1, participants.size())
-                .mapToObj(i -> (Player) participants.get(i))
-                .collect(Collectors.toList());
-        return new Players(players);
+    public Participants(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
     public List<String> getPlayerNames() {

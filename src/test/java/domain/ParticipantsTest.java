@@ -25,9 +25,8 @@ class ParticipantsTest {
     @Test
     void 참가자들의_플레이어_이름들을_반환한다() {
         Dealer dealer = readDealer();
-        List<Participant> participantsPlayers = readPlayers();
-        participantsPlayers.add(0, dealer);
-        Participants participants = new Participants(participantsPlayers);
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
 
         assertThat(participants.getPlayerNames()).containsExactly("우가", "빙봉");
     }
@@ -35,9 +34,8 @@ class ParticipantsTest {
     @Test
     void 참가자들이_가진_카드뭉치를_반환한다() {
         Dealer dealer = readDealer();
-        List<Participant> participantsPlayers = readPlayers();
-        participantsPlayers.add(0, dealer);
-        Participants participants = new Participants(participantsPlayers);
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
 
         assertThat(participants.getPlayerCards())
                 .extracting(Cards::cardsToString)
@@ -47,9 +45,8 @@ class ParticipantsTest {
     @Test
     void 참가자들중_플레이어를_반환한다() {
         Dealer dealer = readDealer();
-        List<Participant> participantsPlayers = readPlayers();
-        participantsPlayers.add(0, dealer);
-        Participants participants = new Participants(participantsPlayers);
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
 
         assertThat(participants.getPlayersToList()).contains(우가, 빙봉);
     }
@@ -57,9 +54,8 @@ class ParticipantsTest {
     @Test
     void 참가자들중_딜러를_반환한다() {
         Dealer dealer = readDealer();
-        List<Participant> participantsPlayers = readPlayers();
-        participantsPlayers.add(0, dealer);
-        Participants participants = new Participants(participantsPlayers);
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
 
         assertThat(participants.getDealer()).isEqualTo(dealer);
     }
@@ -67,9 +63,8 @@ class ParticipantsTest {
     @Test
     void 참가자들끼리의_우승결과를_반환한다() {
         Dealer dealer = readDealer();
-        List<Participant> participantsPlayers = readPlayers();
-        participantsPlayers.add(0, dealer);
-        Participants participants = new Participants(participantsPlayers);
+        Players players = readPlayers();
+        Participants participants = new Participants(dealer, players);
 
         assertThat(participants.getWinningResult()).containsExactly(1, 0);
     }
@@ -82,10 +77,10 @@ class ParticipantsTest {
         return new Dealer(new CardBox(), new Cards(cards));
     }
 
-    List<Participant> readPlayers() {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(우가);
-        participants.add(빙봉);
-        return participants;
+    Players readPlayers() {
+        List<Player> players = new ArrayList<>();
+        players.add(우가);
+        players.add(빙봉);
+        return new Players(players);
     }
 }
