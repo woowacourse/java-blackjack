@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
-    Deck deck;
+    private Deck deck;
 
     @BeforeEach
     void setUp() {

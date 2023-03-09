@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    Dealer dealer;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
