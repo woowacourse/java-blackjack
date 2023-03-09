@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.gameplayer.Dealer;
 import blackjack.domain.gameplayer.Player;
 
 import java.util.List;
@@ -40,7 +41,8 @@ public class OutputView {
         printCards(cards, end, lastIndex);
     }
 
-    public void printDealerCards(List<Card> cards, String end) {
+    public void printDealerCards(Dealer dealer, String end) {
+        List<Card> cards = dealer.showAllCards();
         int lastIndex = cards.size() - 1;
         System.out.print(DEALER_MSG);
         printCards(cards, end, lastIndex);
@@ -60,15 +62,16 @@ public class OutputView {
         System.out.println(DEALER_HIT_MSG);
     }
 
-    public void printDealerResult(List<Card> cards, int calculateScore) {
+    public void printDealerResult(Dealer dealer, int calculateScore) {
         System.out.println();
-        printDealerCards(cards, EMPTY);
+        printDealerCards(dealer, EMPTY);
         System.out.println(RESULT_MSG + calculateScore);
     }
 
-    public void printPlayerResult(String name, List<Card> cards, int calculateScore) {
-        printPlayerCards(name, cards, EMPTY);
-        System.out.println(RESULT_MSG + calculateScore);
+    public void printPlayerResult(Player player) {
+        printPlayerCards(player, EMPTY);
+        int score = player.calculateScore().getScore();
+        System.out.println(RESULT_MSG + score);
     }
 
     public void printEndMsg() {

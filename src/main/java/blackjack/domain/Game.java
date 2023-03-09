@@ -68,4 +68,8 @@ public class Game {
     public Score getDealerScore() {
         return dealer.calculateScore();
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }
