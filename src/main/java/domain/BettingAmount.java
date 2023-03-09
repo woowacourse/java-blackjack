@@ -40,6 +40,14 @@ public class BettingAmount {
         return new BettingAmount(revenue * LOSE_MULTIPLE);
     }
 
+    public BettingAmount add(BettingAmount other) {
+        return new BettingAmount(revenue + other.getRevenue());
+    }
+
+    public BettingAmount subtract(BettingAmount other) {
+        return new BettingAmount(revenue - other.getRevenue());
+    }
+
     public double getRevenue() {
         return revenue;
     }
