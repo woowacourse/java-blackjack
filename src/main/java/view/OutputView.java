@@ -2,7 +2,7 @@ package view;
 
 import domain.card.Card;
 import domain.game.GameResult;
-import domain.card.Winning;
+import domain.game.Winning;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

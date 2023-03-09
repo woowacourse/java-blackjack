@@ -1,4 +1,4 @@
-package domain.card;
+package domain.game;
 
 public enum Winning {
     LOSE("패"),

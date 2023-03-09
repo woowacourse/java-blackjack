@@ -1,13 +1,12 @@
 package domain.game;
 
-import static domain.card.Winning.LOSE;
-import static domain.card.Winning.PUSH;
-import static domain.card.Winning.WIN;
+import static domain.game.Winning.LOSE;
+import static domain.game.Winning.PUSH;
+import static domain.game.Winning.WIN;
 
-import domain.user.Users;
-import domain.card.Winning;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Users;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
