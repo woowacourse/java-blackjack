@@ -3,7 +3,10 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
+import domain.betting.BettingMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
@@ -68,5 +71,21 @@ public class DealerTest {
         dealer.takeCard(new Card(Suit.HEART, Denomination.ACE));
         dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
         assertThat(dealer.checkCardsCondition()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 배팅 머니를 저장한다.")
+    void saveBettingMoneyByPlayer() {
+        // given
+        List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.SEVEN), new Card(Suit.SPADE, Denomination.TEN));
+        Player player = new Player(new Name("seongha"), new HandCards(cards));
+        BettingMoney bettingMoney = new BettingMoney(10000);
+
+        // when
+        dealer.savePlayerBettingMoney(player, bettingMoney);
+        Map<Player, BettingMoney> bettingMoneyByPlayer = dealer.getBettingMoneyByPlayer();
+
+        // then
+        assertThat(bettingMoneyByPlayer.get(player)).isEqualTo(bettingMoney);
     }
 }
