@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class PlayerName {
 
     private final String value;
@@ -17,5 +19,22 @@ public class PlayerName {
 
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PlayerName that = (PlayerName) o;
+        return value.equals(that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
