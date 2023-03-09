@@ -1,12 +1,14 @@
 package blackjack.domain;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackGameResult {
     private final Map<Player, WinningResult> gameResult;
 
     public BlackjackGameResult(Map<Player, WinningResult> gameResult) {
-        this.gameResult = gameResult;
+        this.gameResult = new LinkedHashMap<>(gameResult);
     }
 
     public int getDealerLoseCount() {
@@ -28,7 +30,7 @@ public class BlackjackGameResult {
     }
 
     public Map<Player, WinningResult> getGameResult() {
-        return gameResult;
+        return Collections.unmodifiableMap(gameResult);
     }
 
     public WinningResult NameByPlayer(Player player) {

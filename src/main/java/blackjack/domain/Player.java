@@ -12,9 +12,6 @@ public class Player extends Participant {
 
     @Override
     public boolean decideHit() {
-        if (calculateCardNumber() < BLACKJACK_MAX_NUMBER) {
-            return true;
-        }
-        return false;
+        return calculateCardNumber() < BLACKJACK_MAX_NUMBER;
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -63,6 +64,6 @@ public class BlackJackReferee {
     }
 
     public Map<Player, WinningResult> getPlayerWinningResult() {
-        return playerWinningResult;
+        return Collections.unmodifiableMap(playerWinningResult);
     }
 }

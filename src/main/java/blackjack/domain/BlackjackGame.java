@@ -24,7 +24,7 @@ public class BlackjackGame {
         for (Player player : findPlayers()) {
            referee.createResult(findDealer(),player);
         }
-        return referee.getPlayerWinningResult();
+        return Collections.unmodifiableMap(referee.getPlayerWinningResult());
     }
 
     public void getTwoHitCards(final Participant participant) {
@@ -59,10 +59,10 @@ public class BlackjackGame {
     }
 
     public List<Participant> getParticipants() {
-        return participants.getParticipants();
+        return Collections.unmodifiableList(participants.getParticipants());
     }
 
     public List<String> getParticipantsName() {
-        return participants.getParticipantsName();
+        return Collections.unmodifiableList(participants.getParticipantsName());
     }
 }

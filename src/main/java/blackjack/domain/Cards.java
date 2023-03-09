@@ -14,8 +14,8 @@ public class Cards {
     private final CardPickerGenerator cardPickerGenerator;
 
     private Cards(List<Card> cards, CardPickerGenerator cardPickerGenerator) {
-        this.cardPickerGenerator = cardPickerGenerator;
         this.cards = cards;
+        this.cardPickerGenerator = cardPickerGenerator;
     }
 
     public static Cards create(CardPickerGenerator cardPickerGenerator) {
