@@ -14,6 +14,8 @@ import static controller.DrawCardCommand.CARD_DRAW_STOP;
 public final class InputView {
 
     private static final String PLAYER_NAME_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String BETTING_MONEY_INPUT_MESSAGE_FORMAT = "%s의 배팅 금액은?";
+
     private static final String DRAW_CARD_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)";
 
     private final BufferedReader bufferedReader;
@@ -35,6 +37,11 @@ public final class InputView {
         OutputView.print(PLAYER_NAME_INPUT_MESSAGE);
         List<String> playerNames = Arrays.asList(Objects.requireNonNull(readConsole()).split(","));
         return trimParticipantNames(playerNames);
+    }
+
+    public String getBettingMoney(final String playerName) {
+        OutputView.print(System.lineSeparator() + String.format(BETTING_MONEY_INPUT_MESSAGE_FORMAT, playerName));
+        return readConsole();
     }
 
     public String getDrawCardCommand(final String name) {
