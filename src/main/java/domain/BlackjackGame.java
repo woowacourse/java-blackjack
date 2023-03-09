@@ -6,20 +6,20 @@ public class BlackjackGame {
     private static final int INITIAL_CARD_AMOUNT = 2;
 
     private final Deck deck;
-    private final Participants participants;
+    private final BlackjackParticipants blackjackParticipants;
 
-    private BlackjackGame(Deck deck, Participants participants) {
+    private BlackjackGame(Deck deck, BlackjackParticipants blackjackParticipants) {
         this.deck = deck;
-        this.participants = participants;
+        this.blackjackParticipants = blackjackParticipants;
     }
 
     public static BlackjackGame from(Players players, Deck deck) {
-        Participants participants = Participants.from(players);
-        return new BlackjackGame(deck, participants);
+        BlackjackParticipants blackjackParticipants = BlackjackParticipants.from(players);
+        return new BlackjackGame(deck, blackjackParticipants);
     }
 
     public void handOutInitialCards() {
-        for (Participant participant : participants.getAllParticipants()) {
+        for (Participant participant : blackjackParticipants.getAllParticipants()) {
             handOutCardTo(participant);
             handOutCardTo(participant);
         }
@@ -53,7 +53,7 @@ public class BlackjackGame {
     }
 
     private void assertParticipation(Participant participant) {
-        if (participants.getAllParticipants().contains(participant)) {
+        if (blackjackParticipants.getAllParticipants().contains(participant)) {
             return;
         }
 
@@ -66,14 +66,14 @@ public class BlackjackGame {
     }
 
     public List<Participant> getParticipants() {
-        return participants.getAllParticipants();
+        return blackjackParticipants.getAllParticipants();
     }
 
     public Players getPlayers() {
-        return participants.getPlayers();
+        return blackjackParticipants.getPlayers();
     }
 
     public Dealer getDealer() {
-        return participants.getDealer();
+        return blackjackParticipants.getDealer();
     }
 }

@@ -3,16 +3,16 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participants {
+public class BlackjackParticipants {
     private final Dealer dealer = new Dealer();
     private final Players players;
 
-    public Participants(Players players) {
+    public BlackjackParticipants(Players players) {
         this.players = players;
     }
 
-    public static Participants from(Players players) {
-        return new Participants(players);
+    public static BlackjackParticipants from(Players players) {
+        return new BlackjackParticipants(players);
     }
 
     public Players getPlayers() {

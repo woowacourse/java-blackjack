@@ -1,9 +1,6 @@
 import domain.BlackjackGame;
 import domain.Dealer;
-import domain.DealerResult;
 import domain.DeckFactory;
-import domain.Participant;
-import domain.Participants;
 import domain.Player;
 import domain.ParticipantName;
 import domain.PlayerNames;
