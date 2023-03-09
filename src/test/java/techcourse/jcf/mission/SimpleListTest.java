@@ -55,10 +55,13 @@ class SimpleListTest {
         assertThat(arrayToList.get(0)).isEqualTo("first");
         assertThat(arrayToList.get(1)).isEqualTo("second");
 
-//        final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(0.5, 0.7);
-//        final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(1, 2);
-//
-//        final double doubleTotal = SimpleList.sum(doubleValues); // 1.2
-//        final double intTotal = SimpleList.sum(intValues);
+        final SimpleList<Double> doubleValues = new SimpleArrayList<>(0.5, 0.7);
+        final SimpleList<Integer> intValues = new SimpleArrayList<>(1, 2);
+
+        final double doubleTotal = SimpleList.sum(doubleValues);
+        final double intTotal = SimpleList.sum(intValues);
+
+        assertThat(doubleTotal).isEqualTo(1.2);
+        assertThat(intTotal).isEqualTo(3);
     }
 }

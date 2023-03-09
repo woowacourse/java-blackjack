@@ -14,6 +14,13 @@ public class SimpleArrayList<E> implements SimpleList<E> {
         this.capacity = INITIAL_CAPACITY;
     }
 
+    public SimpleArrayList(final E... values) {
+        this.array = values;
+        this.size = values.length;
+        this.capacity = Math.max(values.length, INITIAL_CAPACITY);
+    }
+
+
     public SimpleArrayList(final int initialCapacity) {
         this.array = new Object[initialCapacity];
         this.size = 0;

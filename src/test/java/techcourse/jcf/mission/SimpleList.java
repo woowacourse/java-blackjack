@@ -12,6 +12,16 @@ public interface SimpleList<E> {
         return simpleList;
     }
 
+    static <T extends Number> double sum(final SimpleList<T> simpleList) {
+        double sumOfElement = 0;
+
+        for (int i = 0; i < simpleList.size(); i++) {
+            sumOfElement += simpleList.get(i).doubleValue();
+        }
+
+        return sumOfElement;
+    }
+
     boolean add(E value);
 
     void add(int index, E value);

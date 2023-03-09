@@ -10,7 +10,7 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
         E value;
         Node<E> next;
 
-        Node(E value, Node<E> next) {
+        Node(final E value, final Node<E> next) {
             this.value = value;
             this.next = next;
         }
