@@ -10,14 +10,6 @@ public class Status {
         this.account = account;
     }
 
-    public String getName() {
-        return name.name();
-    }
-
-    public int getAccount() {
-        return account.account();
-    }
-
     public void bustAccount(final int loseMoney) {
         account.bust(loseMoney);
     }
@@ -28,5 +20,13 @@ public class Status {
 
     public void loseGame(final int loseMoney) {
         account.subAccount(loseMoney);
+    }
+    
+    public String getName() {
+        return name.name();
+    }
+
+    public int getAccount() {
+        return account.account();
     }
 }
