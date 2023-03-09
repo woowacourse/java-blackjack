@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.Denomination.ACE;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,8 +30,7 @@ public class Cards {
     }
 
     private boolean isContainAce() {
-        return cards.stream()
-            .anyMatch(card -> card.getDenomination() == ACE);
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public boolean isUnder(int score) {

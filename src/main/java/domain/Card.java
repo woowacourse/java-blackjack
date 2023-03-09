@@ -12,6 +12,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
     public int getScore() {
         return denomination.getScore();
     }
