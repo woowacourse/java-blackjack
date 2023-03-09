@@ -35,4 +35,8 @@ public class Player {
     public CardPool getCardPool() {
         return cardPool;
     }
+
+    public void takeRevenueFrom(final Player otherPlayer) {
+        bet.takeRevenueFrom(otherPlayer.bet);
+    }
 }

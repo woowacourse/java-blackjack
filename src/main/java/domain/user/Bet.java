@@ -8,10 +8,12 @@ public class Bet {
             String.format("[ERROR] 배팅 금액은 %d이상이어야 합니다.", MIN_BET_AMOUNT);
 
     private final int credit;
+    private int revenue;
 
     public Bet(final int credit) {
         validate(credit);
         this.credit = credit;
+        this.revenue = 0;
     }
 
     private void validate(final int amount) {
@@ -20,7 +22,12 @@ public class Bet {
         }
     }
 
-    public int getCredit() {
-        return credit;
+    public void takeRevenueFrom(Bet otherBet) { // TODO: REVENUE 객체 분리
+        this.revenue += otherBet.credit;
+        otherBet.revenue -= otherBet.credit;
+    }
+
+    public int getRevenue() {
+        return revenue;
     }
 }

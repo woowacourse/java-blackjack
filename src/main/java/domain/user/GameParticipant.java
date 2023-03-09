@@ -57,6 +57,17 @@ public class GameParticipant {
         players.forEach(player -> record.put(player, GameResult.makePlayerRecord(player, dealer)));
     }
 
+    public void updateBetAmountByGameResult(final Map<Player, GameResult> record) {
+        record.forEach(((player, gameResult) -> {
+            if (gameResult == GameResult.WIN) {
+                player.takeRevenueFrom(dealer);
+            }
+            if (gameResult == GameResult.LOSE) {
+                dealer.takeRevenueFrom(player);
+            }
+        }));
+    }
+
     public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {
         return GameResult.makeDealerRecord(record);
     }
