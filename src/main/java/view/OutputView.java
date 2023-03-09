@@ -3,6 +3,7 @@ package view;
 import domain.PlayerGameResult;
 import domain.card.Card;
 import domain.participant.Participant;
+import domain.participant.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,7 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + makeCardView(dealer.getCards().get(DEALER_VISIBLE_CARD)));
     }
 
-    public static void printPlayersCard(List<Participant> players) {
+    public static void printPlayersCard(List<Player> players) {
         players.stream()
                 .map(OutputView::makePlayerHandView)
                 .forEach(System.out::println);
@@ -55,7 +56,7 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printAllHands(Participant dealer, List<Participant> players) {
+    public static void printAllHands(Participant dealer, List<Player> players) {
         String dealerCards = makeCardsView(dealer.getCards());
         System.out.println("\n" + dealer.getName() + " 카드: " + dealerCards + " - 결과: " + dealer.calculateScore());
 

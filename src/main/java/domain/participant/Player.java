@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.card.Hand;
+import domain.card.Deck;
 
 public class Player extends Participant {
     private static final String ERROR_NAME_LENGTH = "[ERROR] 플레이어의 이름은 2 ~ 10 글자여야 합니다.";
@@ -9,15 +9,15 @@ public class Player extends Participant {
 
     private boolean isStand = false;
 
-    private Player(String name, Hand hand) {
-        super(name, hand);
+    private Player(String name, Deck deck) {
+        super(name, deck);
     }
 
-    public static Player from(String name, Hand hand) {
+    public static Player from(String name, Deck deck) {
         name = name.trim();
         validate(name);
 
-        return new Player(name, hand);
+        return new Player(name, deck);
     }
 
     private static void validate(String name) {
@@ -31,7 +31,6 @@ public class Player extends Participant {
         return isStand;
     }
 
-    @Override
     public void stand() {
         this.isStand = true;
     }

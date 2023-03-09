@@ -13,10 +13,10 @@ public class Participants {
     private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
 
-    private final Participant dealer;
-    private final List<Participant> players;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(Participant dealer, List<Participant> players) {
+    private Participants(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -24,11 +24,11 @@ public class Participants {
     public static Participants of(List<String> playersName, Deck deck) {
         validate(playersName);
 
-        List<Participant> players = playersName.stream()
-                .map(name -> Participant.player(name, deck))
+        List<Player> players = playersName.stream()
+                .map(name -> Player.from(name, deck))
                 .collect(Collectors.toList());
 
-        return new Participants(Participant.dealer(deck), players);
+        return new Participants(Dealer.from(deck), players);
     }
 
     private static void validate(List<String> names) {
@@ -53,7 +53,7 @@ public class Participants {
         }
     }
 
-    public Optional<Participant> getNextTurnPlayer() {
+    public Optional<Player> getNextTurnPlayer() {
         return players.stream()
                 .filter(player -> !player.isStand() && !player.isBust())
                 .findFirst();
@@ -87,11 +87,11 @@ public class Participants {
         return dealer.isStand() || dealer.isBust();
     }
 
-    public Participant getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

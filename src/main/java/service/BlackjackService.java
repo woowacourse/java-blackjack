@@ -5,6 +5,7 @@ import domain.card.Deck;
 import domain.card.ShuffleStrategy;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -31,11 +32,11 @@ public class BlackjackService {
         return new BlackjackService(deck, participants);
     }
 
-    public Optional<Participant> getNextPlayer() {
+    public Optional<Player> getNextPlayer() {
         return participants.getNextTurnPlayer();
     }
 
-    public void nextTurn(Participant next, String hitSelection) {
+    public void playNextTurnPlayer(Player next, String hitSelection) {
         if (STAND.equals(hitSelection)) {
             next.stand();
             return;
@@ -68,7 +69,7 @@ public class BlackjackService {
         return participants.getDealer();
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return participants.getPlayers();
     }
 }

@@ -1,6 +1,6 @@
 package controller;
 
-import domain.participant.Participant;
+import domain.participant.Player;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
@@ -36,9 +36,9 @@ public class BlackjackController {
 
     private void runPlayersTurn(BlackjackService blackjackGame) {
         while (blackjackGame.getNextPlayer().isPresent()) {
-            Participant nextPlayer = blackjackGame.getNextPlayer().get();
+            Player nextPlayer = blackjackGame.getNextPlayer().get();
 
-            blackjackGame.nextTurn(nextPlayer, InputView.readHit(nextPlayer));
+            blackjackGame.playNextTurnPlayer(nextPlayer, InputView.readHit(nextPlayer));
 
             OutputView.printPlayerCard(nextPlayer);
         }

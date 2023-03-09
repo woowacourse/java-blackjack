@@ -14,17 +14,9 @@ public abstract class Participant {
     private final String name;
     private final Hand hand;
 
-    protected Participant(String name, Hand hand) {
-        this.hand = hand;
+    protected Participant(String name, Deck deck) {
+        this.hand = Hand.from(deck);
         this.name = name;
-    }
-
-    public static Participant dealer(Deck deck) {
-        return Dealer.from(Hand.from(deck));
-    }
-
-    public static Participant player(String name, Deck deck) {
-        return Player.from(name, Hand.from(deck));
     }
 
     public void addCard(Card card) {
@@ -40,8 +32,6 @@ public abstract class Participant {
     }
 
     public abstract boolean isStand();
-
-    public abstract void stand();
 
     public String getName() {
         return name;
