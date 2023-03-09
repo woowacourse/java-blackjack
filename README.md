@@ -30,8 +30,8 @@ classDiagram
     User <|-- Dealer
     Deck <|.. ShuffledDeck
     <<interface>> Deck
-    note for User "User와 Player/Dealer는 일반화 관계(상속)"
-    note for Deck "Deck과 ShuffledDeck은 실체화 관계(구현)"
+    note for User "* User와 Player/Dealer는 일반화 관계(상속)"
+    note for Deck "* Deck과 ShuffledDeck은 실체화 관계(구현)"
     class User {
         +UserName userName
         +Hand hand
@@ -40,7 +40,7 @@ classDiagram
 ### UserName 관련 클래스
 ```mermaid
 classDiagram
-    note "Player와 PlayerName,
+    note "* Player와 PlayerName,
     Dealer와 DelaerName은
     합성 집합 관계(Composition)"
     UserName <|.. PlayerName
@@ -54,6 +54,7 @@ classDiagram
 
 ### InputView
 - [x] 플레이어들의 이름을 입력받는다.
+- [x] 사용할 덱의 개수를 입력받는다.
 - [ ] 플레이어의 배팅 금액을 입력받는다.
 - [x] 플레이어가 카드를 더 받을지 여부를 입력받는다.
   - [x] 잘못된 입력을 하면 안내 메시지를 출력하고 다시 입력 받는다.
@@ -65,6 +66,7 @@ classDiagram
 
 ### BlackjackGame
 - 블랙잭 게임 규칙에 따라 게임을 진행
+- [x] 덱의 개수를 검증 후 덱을 생성한다.
 - [x] 모든 Plyaer와 Dealer에게 카드를 2장씩 전달한다.
   - [x] Deck에서 카드를 받아 User에게 전달한다.
 - [x] 사용자의 의사를 확인하여 카드를 추가로 발급한다.
@@ -113,12 +115,14 @@ classDiagram
   - [x] 예외 처리) 빈 이름
 - [x] 이름 값을 반환한다.
 
-### Deck
-- 상징 별, 숫자 별 domain.Card 52장을 생성해서 가지고 있는 객체
+### Deck (Interface)
+- [x] 1개의 카드를 반환한다.
+
+### ShuffledDeck (implements Deck)
+- 상징 별, 숫자 별 Card 52장 더미를 n개 생성해서 가지고 있는 객체
 - [x] 상징, 숫자 별 카드를 생성한다.
   - [x] 순서를 랜덤하게 섞는다.
 - [x] 1개의 카드를 반환한다.
-  - [x] 한 번 반환한 카드는 다시 반환하지 않는다.
 
 ### Card
 - 카드 한장

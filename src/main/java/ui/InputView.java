@@ -34,4 +34,12 @@ public class InputView {
         System.out.printf("%s 또는 %s를 입력하세요.%n", YES_COMMAND, NO_COMMAND);
         return readWhetherDrawUntilInputCorrectly();
     }
+
+    public static int readDeckCount() {
+        System.out.println();
+        System.out.println("게임에 사용할 덱의 개수를 입력해주세요. (1, 2, 4, 6, 8만 입력 가능)");
+        int deckCountInput = SCANNER.nextInt();
+        SCANNER.nextLine();
+        return deckCountInput;
+    }
 }
