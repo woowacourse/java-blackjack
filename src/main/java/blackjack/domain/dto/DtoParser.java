@@ -4,6 +4,7 @@ import blackjack.domain.BlackJack;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
@@ -60,7 +61,13 @@ public class DtoParser {
     }
 
     public static GameResultDto getGameResultDto(final BlackJack blackJack) {
-        return new GameResultDto(enrollUser(blackJack), getDealerResultDto(blackJack.getDealerResult()));
+        return new GameResultDto(enrollUser(blackJack), getDealerResultDto(blackJack.getDealerResult()), getDealerNameValue(blackJack));
+    }
+
+    private static String getDealerNameValue(final BlackJack blackJack) {
+        final Dealer dealer = blackJack.getDealer();
+        final Name name = dealer.getName();
+        return name.getValue();
     }
 
     private static Map<ResultDto, Integer> getDealerResultDto(final Map<Result, Integer> dealerResult) {

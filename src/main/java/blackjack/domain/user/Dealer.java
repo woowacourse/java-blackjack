@@ -7,14 +7,15 @@ import blackjack.domain.card.GamePoint;
 import java.util.List;
 
 public class Dealer implements Player {
-    public static final String DEALER_NAME = "딜러";
     private static final int INITIAL_CARD_COUNT = 2;
-    private final Name name = new Name(DEALER_NAME);
+    private static final String DEALER_NAME = "딜러";
+    private final Name name;
     private Cards cards;
 
     public Dealer(List<Card> cards) {
         validateCardsSize(cards.size());
         this.cards = new Cards(cards);
+        this.name = new Name(DEALER_NAME);
     }
 
     private void validateCardsSize(final int size) {

@@ -23,9 +23,8 @@ public class OutputView {
     }
 
     private String makeUsersNameList(List<UserDto> userNames) {
-        return userNames
-                .stream()
-                .map(userDto -> userDto.getName())
+        return userNames.stream()
+                .map(UserDto::getName)
                 .collect(Collectors.joining(DELIMITER));
     }
 
@@ -105,11 +104,11 @@ public class OutputView {
     }
 
     private void printDealerResult(final GameResultDto gameResultDto) {
-        printDealer(gameResultDto.getDealerResult(), Dealer.DEALER_NAME);
+        printDealer(gameResultDto.getDealerResult(), gameResultDto.getDealerName());
     }
 
     private void printDealer(final Map<ResultDto, Integer> dealerResult, final String dealerName) {
-        System.out.println(String.format("딜러: %s", makeResultStringOf(dealerResult)));
+        System.out.println(String.format("%s: %s", dealerName, makeResultStringOf(dealerResult)));
     }
 
     private String makeResultStringOf(final Map<ResultDto, Integer> dealerResult) {
