@@ -64,7 +64,7 @@ class PlayersTest {
         Player player = new Player(new Name("로지"));
         Players newPlayers = players.add(player);
         //when
-        newPlayers.takeCard(deck, 2);
+        newPlayers.hitFirstCards(deck);
         //then
         assertThat(player.showCards()).hasSize(2);
     }

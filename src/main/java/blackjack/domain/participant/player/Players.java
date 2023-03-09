@@ -38,8 +38,11 @@ public class Players {
         players.forEach(player -> player.hitAdditionalCardFrom(deck, cardDecisionStrategy, cardDisplayStrategy));
     }
 
-    public void takeCard(Deck deck, int size) {
-        players.forEach(player -> player.hit(deck.drawCards(size)));
+    public void hitFirstCards(Deck deck) {
+        players.forEach(player -> {
+            player.hit(deck.drawCard());
+            player.hit(deck.drawCard());
+        });
     }
 
     public List<ParticipantResultDto> getPlayerResults() {

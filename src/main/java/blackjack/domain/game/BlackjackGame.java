@@ -14,7 +14,6 @@ import blackjack.domain.participant.player.Players;
 import java.util.List;
 
 public class BlackjackGame {
-    public static final int FIRST_DRAW_COUNT = 2;
     private Players players;
     private final Dealer dealer;
     private final Deck deck;
@@ -30,11 +29,12 @@ public class BlackjackGame {
     }
 
     public void supplyCardsToDealer() {
-        dealer.hit(deck.drawCards(FIRST_DRAW_COUNT));
+        dealer.hit(deck.drawCard());
+        dealer.hit(deck.drawCard());
     }
 
     public void supplyCardsToPlayers() {
-        players.takeCard(deck, FIRST_DRAW_COUNT);
+        players.hitFirstCards(deck);
     }
 
     public void supplyAdditionalCardToPlayersBy(CardDecisionStrategy cardDecisionStrategy,
