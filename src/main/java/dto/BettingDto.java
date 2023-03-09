@@ -5,6 +5,7 @@ import domain.Name;
 import domain.Player;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BettingDto {
@@ -12,7 +13,7 @@ public class BettingDto {
     private final Map<Name, Money> betting;
 
     public BettingDto() {
-        betting = new HashMap<>();
+        betting = new LinkedHashMap<>();
     }
 
     public void putPlayerAndMoney(Player player, Money money) {
