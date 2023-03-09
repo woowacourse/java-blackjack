@@ -26,8 +26,28 @@ public class Player {
         cards.addCard(card);
     }
 
-    public Score getScore() {
-        return cards.calculateScore();
+    public Status compareWithDealer(final Dealer dealer) {
+        if (isBothBlackjack(dealer)) {
+            return Status.DRAW;
+        }
+        if (this.isBlackjack()) {
+            return Status.BLACKJACK_WIN;
+        }
+        if (dealer.isBlackjack() || this.isBusted()) {
+            return Status.LOSE;
+        }
+        if (dealer.isBusted()) {
+            return Status.WIN;
+        }
+        return this.compareNormalCase(dealer.getScore());
+    }
+
+    private Status compareNormalCase(final Score score) {
+        return getScore().compareScore(score);
+    }
+
+    private boolean isBothBlackjack(final Dealer dealer) {
+        return dealer.isBlackjack() && this.isBlackjack();
     }
 
     public boolean isBusted() {
@@ -40,6 +60,10 @@ public class Player {
 
     public boolean isBlackjack() {
         return cards.isBlackJack();
+    }
+
+    public Score getScore() {
+        return cards.calculateScore();
     }
 
     public List<Card> getCards() {

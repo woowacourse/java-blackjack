@@ -1,11 +1,10 @@
 package domain;
 
-import domain.player.DealerStatus;
+import domain.player.Status;
 import domain.stake.Stake;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -34,7 +33,7 @@ class StakeTest {
         //given
         Stake stake = Stake.fromBet(100);
         //when
-        Stake dealerPrize = stake.getDealerPrize(DealerStatus.WIN);
+        Stake dealerPrize = stake.getPrize(Status.WIN);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(100);
@@ -46,7 +45,7 @@ class StakeTest {
         //given
         Stake stake = Stake.fromBet(100);
         //when
-        Stake dealerPrize = stake.getDealerPrize(DealerStatus.LOSE);
+        Stake dealerPrize = stake.getPrize(Status.LOSE);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(-100);
@@ -58,22 +57,22 @@ class StakeTest {
         //given
         Stake stake = Stake.fromBet(100);
         //when
-        Stake dealerPrize = stake.getDealerPrize(DealerStatus.DRAW);
+        Stake dealerPrize = stake.getPrize(Status.DRAW);
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("블랙잭으로 지면 베팅 금액의 -1.5배를 반환한다")
+    @DisplayName("블랙잭으로 지면 베팅 금액의 1.5배를 반환한다")
     void calculatePrize4() {
         //given
         Stake stake = Stake.fromBet(100);
         //when
-        Stake dealerPrize = stake.getDealerPrize(DealerStatus.BLACKJACK_LOSE);
+        Stake dealerPrize = stake.getPrize(Status.BLACKJACK_WIN);
         int value = dealerPrize.getValue();
         //then
-        assertThat(value).isEqualTo(-150);
+        assertThat(value).isEqualTo(150);
     }
 
     @Test
@@ -94,7 +93,7 @@ class StakeTest {
         //given
         Stake stake = Stake.fromBet(100000);
         //when
-        Stake playerPrize = stake.getPlayerPrize(DealerStatus.BLACKJACK_LOSE);
+        Stake playerPrize = stake.getPrize(Status.BLACKJACK_WIN);
         //then
         assertThat(playerPrize.getValue()).isEqualTo(150000);
     }

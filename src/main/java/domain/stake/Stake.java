@@ -1,6 +1,6 @@
 package domain.stake;
 
-import domain.player.DealerStatus;
+import domain.player.Status;
 
 import java.util.Objects;
 
@@ -30,12 +30,12 @@ public final class Stake {
         }
     }
 
-    public Stake getDealerPrize(final DealerStatus dealerStatus) {
-        return new Stake((int) (value * dealerStatus.getMultiply()));
+    public Stake getPrize(final Status status) {
+        return new Stake((int) (value * status.getMultiply()));
     }
 
-    public Stake getPlayerPrize(final DealerStatus dealerStatus) {
-        return new Stake((int) (PLAYER_NEGATE * value * dealerStatus.getMultiply()));
+    public Stake negate() {
+        return new Stake(value * -1);
     }
 
     public Stake add(final Stake stake) {

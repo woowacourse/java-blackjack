@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.player.Dealer;
-import domain.player.DealerStatus;
+import domain.player.Status;
 import domain.player.Player;
 import domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -52,69 +52,5 @@ class DealerTest {
         dealer.drawCard(card2);
         //then
         assertThat(dealer.isHittable()).isFalse();
-    }
-
-    @Test
-    @DisplayName("players와 dealer의 점수를 비교한다.")
-    void dealerCompareWithPlayersTest() {
-        //given
-        Dealer dealer = new Dealer();
-        Players players = new Players(List.of("ori", "jude"));
-        //when
-        dealer.drawCard(new Card(Suit.HEART, Denomination.ACE));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.NINE));
-        players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        players.getPlayers().get(1).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
-        //then
-        assertThat(dealerStats).containsValues(DealerStatus.WIN, DealerStatus.LOSE);
-    }
-
-    @Test
-    @DisplayName("player와 dealer 모두 blackjack이라면 비긴다.")
-    void dealerCompareWithPlayersTest2() {
-        //given
-        Dealer dealer = new Dealer();
-        Players players = new Players(List.of("jude"));
-        //when
-        dealer.drawCard(new Card(Suit.HEART, Denomination.ACE));
-        dealer.drawCard(new Card(Suit.HEART, Denomination.JACK));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.ACE));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
-        //then
-        assertThat(dealerStats).containsValue(DealerStatus.DRAW);
-    }
-
-    @Test
-    @DisplayName("player와 dealer가 둘다 버스트라면 dealer가 이긴다.")
-    void dealerCompareWithPlayersTest3() {
-        //given
-        Dealer dealer = new Dealer();
-        Players players = new Players(List.of("jude"));
-        //when
-        dealer.drawCard(new Card(Suit.HEART, Denomination.JACK));
-        dealer.drawCard(new Card(Suit.HEART, Denomination.JACK));
-        dealer.drawCard(new Card(Suit.HEART, Denomination.JACK));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
-        //then
-        assertThat(dealerStats).containsValue(DealerStatus.WIN);
-    }
-
-    @Test
-    @DisplayName("player가 blackjack이라면 BLACKJACK_LOSE를 반환한다")
-    void blackjackLoseTest() {
-        //given
-        Dealer dealer = new Dealer();
-        Players players = new Players(List.of("jude"));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.ACE));
-        players.getPlayers().get(0).drawCard(new Card(Suit.HEART, Denomination.JACK));
-        //when
-        Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
-        //then
-        assertThat(dealerStats).containsValue(DealerStatus.BLACKJACK_LOSE);
     }
 }

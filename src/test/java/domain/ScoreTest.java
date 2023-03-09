@@ -1,6 +1,6 @@
 package domain;
 
-import domain.player.DealerStatus;
+import domain.player.Status;
 import domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,9 +29,9 @@ class ScoreTest {
         Score score = Score.from(20);
         //when
         Score opponent = Score.from(19);
-        DealerStatus dealerStatus = score.compareScore(opponent);
+        Status status = score.compareScore(opponent);
         //then
-        assertThat(dealerStatus).isEqualTo(DealerStatus.WIN);
+        assertThat(status).isEqualTo(Status.WIN);
     }
 
     @Test
@@ -41,9 +41,9 @@ class ScoreTest {
         Score score = Score.from(10);
         //when
         Score opponent = Score.from(19);
-        DealerStatus dealerStatus = score.compareScore(opponent);
+        Status status = score.compareScore(opponent);
         //then
-        assertThat(dealerStatus).isEqualTo(DealerStatus.LOSE);
+        assertThat(status).isEqualTo(Status.LOSE);
     }
 
     @ParameterizedTest
@@ -75,9 +75,9 @@ class ScoreTest {
         Score score1 = Score.from(10);
         Score score2 = Score.from(10);
         //when
-        DealerStatus dealerStatus = score1.compareScore(score2);
+        Status status = score1.compareScore(score2);
         //then
-        assertThat(dealerStatus).isEqualTo(DealerStatus.DRAW);
+        assertThat(status).isEqualTo(Status.DRAW);
     }
 
 }

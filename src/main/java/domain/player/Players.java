@@ -1,9 +1,10 @@
 package domain.player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
+import domain.stake.Stake;
+
+import java.util.*;
+
+import static java.util.stream.Collectors.*;
 
 public final class Players {
 
@@ -39,7 +40,24 @@ public final class Players {
     private List<Player> createPlayers(final List<String> players) {
         return players.stream()
                 .map(name -> new Player(new PlayerName(name)))
-                .collect(Collectors.toList());
+                .collect(toList());
+    }
+
+    public Map<Player, Status> calculateResults(final Dealer dealer) {
+        return players.stream()
+                .collect(toMap(player -> player, player -> player.compareWithDealer(dealer)));
+    }
+
+    public Map<Player, Stake> calculateBets(Dealer dealer, final Map<Player, Status> dealerStats, final Map<Player, Stake> playerBets) {
+        Map<Player, Stake> prizeResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            Status singleResult = dealerStats.get(player);
+            Stake singleStake = playerBets.get(player);
+            prizeResult.merge(dealer, singleStake.getPrize(singleResult), Stake::add);
+            prizeResult.merge(player, singleStake.getPrize(singleResult), Stake::add);
+        }
+        prizeResult.computeIfPresent(dealer, (ignored, stake) -> stake.negate());
+        return prizeResult;
     }
 
     public List<Player> getPlayers() {

@@ -1,6 +1,6 @@
 package domain.score;
 
-import domain.player.DealerStatus;
+import domain.player.Status;
 
 import java.util.Map;
 import java.util.Objects;
@@ -24,14 +24,14 @@ public final class Score {
         return cache.get(value);
     }
 
-    public DealerStatus compareScore(final Score score) {
+    public Status compareScore(final Score score) {
         if (this.value > score.value) {
-            return DealerStatus.WIN;
+            return Status.WIN;
         }
         if (this.value == score.value) {
-            return DealerStatus.DRAW;
+            return Status.DRAW;
         }
-        return DealerStatus.LOSE;
+        return Status.LOSE;
     }
 
     public boolean isSmallerOrEqual(final Score score) {
