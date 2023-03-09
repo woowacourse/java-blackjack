@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardHand {
-    public static final int UPPER_LIMIT_TO_ADD = 11;
-    public static final int ACE_BONUS = 10;
+    private static final int UPPER_LIMIT_TO_ADD = 11;
+    private static final int ACE_BONUS = 10;
     private final List<Card> cards;
 
     public CardHand() {
