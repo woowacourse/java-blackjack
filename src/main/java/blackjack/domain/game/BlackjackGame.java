@@ -6,6 +6,7 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
+import java.util.Map;
 
 public final class BlackjackGame {
     private final Players players;
@@ -15,14 +16,18 @@ public final class BlackjackGame {
         this.players = players;
         this.bets = bets;
     }
-
-    public BlackjackGame(final Bets bets) {
+    
+    public BlackjackGame() {
         this.players = Players.create();
-        this.bets = bets;
+        this.bets = new Bets();
     }
 
     public void addPlayers(final List<String> names) {
         players.addPlayers(names);
+    }
+
+    public void addBets(final Map<Player, Money> bets) {
+        this.bets.addBets(bets);
     }
 
     public void initialDraw(final Deck deck) {

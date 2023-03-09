@@ -12,7 +12,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.util.FixedDeck;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class BlackjackGameTest {
 
     @Test
     void 플레이어가_게임에_참가한다() {
-        final BlackjackGame blackjackGame = new BlackjackGame(new Bets(Map.of()));
+        final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.addPlayers(List.of("허브", "후추"));
 
         assertThat(blackjackGame.getPlayers())
@@ -37,7 +36,7 @@ public class BlackjackGameTest {
     @Test
     void 딜러가_카드를_뽑는다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, TWO_HEART, SIX_HEART);
-        final BlackjackGame blackjackGame = new BlackjackGame(new Bets(Map.of()));
+        final BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.initialDraw(deck);
 
         blackjackGame.drawToDealer(deck);
@@ -48,7 +47,7 @@ public class BlackjackGameTest {
 
     @Test
     void 플레이어에게_카드를_뽑게한다() {
-        final BlackjackGame blackjackGame = new BlackjackGame(new Bets(Map.of()));
+        final BlackjackGame blackjackGame = new BlackjackGame();
         final Deck deck = new FixedDeck(JACK_SPADE);
         blackjackGame.addPlayers(List.of("허브"));
 
@@ -61,8 +60,8 @@ public class BlackjackGameTest {
 
     @Test
     void 플레이어가_카드를_더_뽑을_수_없는_상태로_변경한다() {
-        final Players players = Players.from(List.of("허브"));
-        final BlackjackGame blackjackGame = new BlackjackGame(players, new Bets(Map.of()));
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("허브"));
         final Player player = blackjackGame.getPlayers().get(1);
 
         blackjackGame.stay(player);
@@ -73,11 +72,12 @@ public class BlackjackGameTest {
     @Test
     void 게임_결과를_반환한다() {
         final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, ACE_SPADE, KING_SPADE, KING_SPADE);
-        final Players players = Players.from(List.of("허브"));
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("허브"));
         final int playerIndex = 1;
-        final Player player = players.getPlayers().get(playerIndex);
-        final Bets bets = new Bets(Map.of(player, Money.initialBet(1000)));
-        final BlackjackGame blackjackGame = new BlackjackGame(players, bets);
+        final Player player = blackjackGame.getPlayers().get(playerIndex);
+        final Map<Player, Money> initialBets = Map.of(player, Money.initialBet(1000));
+        blackjackGame.addBets(initialBets);
         blackjackGame.initialDraw(deck);
         blackjackGame.drawToDealer(deck);
 
@@ -88,8 +88,8 @@ public class BlackjackGameTest {
 
     @Test
     void 플레이어들을_반환한다() {
-        final List<String> names = List.of("허브", "후추");
-        final BlackjackGame blackjackGame = new BlackjackGame(Players.from(names), new Bets(Map.of()));
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("허브", "후추"));
 
         final List<Player> players = blackjackGame.getPlayers();
 
@@ -100,8 +100,8 @@ public class BlackjackGameTest {
 
     @Test
     void 딜러를_반환한다() {
-        final List<String> names = List.of("후추");
-        final BlackjackGame blackjackGame = new BlackjackGame(Players.from(names), new Bets(Map.of()));
+        final BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.addPlayers(List.of("허브"));
 
         final Dealer dealer = blackjackGame.getDealer();
 

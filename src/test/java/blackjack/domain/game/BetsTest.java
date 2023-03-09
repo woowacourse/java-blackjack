@@ -22,7 +22,8 @@ public class BetsTest {
         final Gambler pepper = Gambler.create("후추");
         initialBets.put(herb, Money.initialBet(1000));
         initialBets.put(pepper, Money.initialBet(100));
-        final Bets bets = new Bets(initialBets);
+        final Bets bets = new Bets();
+        bets.addBets(initialBets);
 
         bets.calculateProfit(Map.of(herb, Result.BLACKJACK_WIN, pepper, Result.PUSH));
 
@@ -33,23 +34,26 @@ public class BetsTest {
 
     @Test
     void 베팅_결과를_반환한다() {
+        final Bets bets = new Bets();
         final Map<Player, Money> initialBets = new LinkedHashMap<>();
         initialBets.put(Gambler.create("허브"), Money.initialBet(1000));
         initialBets.put(Gambler.create("후추"), Money.initialBet(100));
+        bets.addBets(initialBets);
 
-        final Bets bets = new Bets(initialBets);
+        final Map<Player, Money> result = bets.getBets();
 
-        assertThat(bets.getBets().values())
+        assertThat(result.values())
                 .extracting(Money::getValue)
                 .containsExactly(1000, 100);
     }
 
     @Test
     void 딜러의_수익을_반환한다() {
+        final Bets bets = new Bets();
         final Map<Player, Money> initialBets = new LinkedHashMap<>();
         initialBets.put(Gambler.create("허브"), Money.initialBet(1000));
         initialBets.put(Gambler.create("후추"), Money.initialBet(100));
-        final Bets bets = new Bets(initialBets);
+        bets.addBets(initialBets);
 
         Money money = bets.getDealerProfit();
 

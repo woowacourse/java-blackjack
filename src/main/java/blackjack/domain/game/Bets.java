@@ -12,6 +12,14 @@ public final class Bets {
         bets = new LinkedHashMap<>(initialBets);
     }
 
+    public Bets() {
+        bets = new LinkedHashMap<>();
+    }
+
+    public void addBets(final Map<Player, Money> bets) {
+        this.bets.putAll(bets);
+    }
+
     public void calculateProfit(final Map<Player, Result> results) {
         for (Player player : results.keySet()) {
             final Result result = results.get(player);
@@ -27,5 +35,4 @@ public final class Bets {
         return bets.values().stream()
                 .reduce(Money.ZERO, Money::minus);
     }
-
 }
