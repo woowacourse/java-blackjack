@@ -8,6 +8,8 @@ import java.util.List;
 public class Hand {
     public static final int ABLE_ACE_ADDITIONAL_SCORE_UPPERBOUND = 11;
     public static final int ACE_ADDITIONAL_SCORE = 10;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final List<Card> cards;
 
@@ -42,5 +44,9 @@ public class Hand {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(card -> card.getRank().equals(Rank.ACE));
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARDS_SIZE && score() == BLACKJACK_NUMBER;
     }
 }

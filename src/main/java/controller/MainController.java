@@ -4,12 +4,8 @@ package controller;
 import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
-import domain.game.Outcome;
-import domain.player.Name;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -30,7 +26,6 @@ public class MainController {
         drawCardsDealer();
 
         outputCardResult();
-        outputGameResult();
     }
 
     private List<String> inputNames() {
@@ -111,12 +106,5 @@ public class MainController {
         names.forEach(name ->
                 OutputView.printCardResult(name, blackJackGame.getPlayerCards(name), blackJackGame.getPlayerScore(name))
         );
-    }
-
-    private void outputGameResult() {
-        final EnumMap<Outcome, Integer> dealerResult = blackJackGame.calculateDealerResult();
-        final Map<Name, Outcome> playerResult = blackJackGame.decidePlayersOutcome();
-        OutputView.printEmptyLine();
-        OutputView.printGameResult(dealerResult, playerResult);
     }
 }

@@ -1,5 +1,5 @@
 package domain.game;
 
 public enum Outcome {
-    WIN, DRAW, LOSE
+    BLACKJACK, WIN, DRAW, LOSE
 }
