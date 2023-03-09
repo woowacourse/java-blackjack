@@ -76,11 +76,14 @@ public class Participants {
     }
 
     private int getPlayerResult(Player player, int dealerScore) {
-        if (dealer.isBust()) {
-            return player.getBettingAmount();
-        }
         if (player.isBust()) {
             return -player.getBettingAmount();
+        }
+        if (dealer.isBust() && player.isBlackjack()) {
+            return (int) (player.getBettingAmount() * 1.5);
+        }
+        if (dealer.isBust()) {
+            return player.getBettingAmount();
         }
         if (player.calculateScore() == dealerScore) {
             return 0;

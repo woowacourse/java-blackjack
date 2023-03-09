@@ -161,8 +161,113 @@ class ParticipantsTest {
         assertThat(participants.isDealerStand()).isFalse();
     }
 
+    @Test
+    void 딜러_버스트이면_모든_플레이어_승리() throws Exception {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.DIAMOND));
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1000);
+    }
+
+    @Test
+    void 딜러_버스트X_플레이어_버스트() throws Exception {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
+        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.CLUB));
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(-1000);
+    }
+
+    @Test
+    void 딜러_버스트X_플레이어와_동점() throws Exception {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(0);
+    }
+
+    @Test
+    void 플레이어가_딜러보다_크고_블랙잭() throws Exception {
+        //given
+        final Deck deck = Deck.create(makePlayerBlackjack());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1500);
+    }
+
+    @Test
+    void 딜러가_버스트이고_플레이어가_블랙잭() throws Exception {
+        //given
+        final Deck deck = Deck.create(makePlayerBlackjack());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.DIAMOND));
+        participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1500);
+    }
+
+    @Test
+    void 플레이어_버스트X_딜러보다_클_때() throws Exception {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getPlayers().get(0).addCard(new Card(Rank.NINE, Suit.DIAMOND));
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(1000);
+    }
+
+    @Test
+    void 플레이어_버스트X_딜러보다_작을_때() throws Exception {
+        //given
+        final Deck deck = Deck.create(notShuffle());
+        Participants participants = Participants.of(List.of("연어"), deck);
+        participants.getPlayers().forEach(player -> player.bet(1000));
+
+        //when
+        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
+
+        //then
+        assertThat(participants.getPlayersResult().get("연어")).isEqualTo(0);
+    }
+
     private ShuffleStrategy notShuffle() {
         return cards -> {
+        };
+    }
+
+    private ShuffleStrategy makePlayerBlackjack() {
+        return cards -> {
+            cards.set(1, new Card(Rank.JACK, Suit.DIAMOND));
         };
     }
 }
