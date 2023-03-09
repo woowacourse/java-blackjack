@@ -9,8 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
-    private static final int SIGN_REVERSE = -1;
-
     private final Map<Player, Result> resultMap = new LinkedHashMap<>();
 
     public Dealer() {
@@ -63,14 +61,8 @@ public class Dealer extends Participant {
     }
 
     public int getProfit() {
-        int playersProfit = calculatePlayersProfit();
-
-        return playersProfit * SIGN_REVERSE;
-    }
-
-    private int calculatePlayersProfit() {
         return resultMap.keySet().stream()
-                .mapToInt(player -> player.getProfit(resultMap.get(player).convertToOpposite()))
+                .mapToInt(player -> player.calculateProfitBy(resultMap.get(player)))
                 .sum();
     }
 

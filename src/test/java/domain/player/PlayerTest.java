@@ -86,7 +86,7 @@ class PlayerTest {
     void updateBettingMoneyAboutWinSuccessTest() {
         int bettingMoney = player.getMoney();
 
-        assertThat(player.getProfit(Result.WIN))
+        assertThat(player.calculateProfitBy(Result.WIN))
                 .isEqualTo(bettingMoney);
     }
 
@@ -95,14 +95,14 @@ class PlayerTest {
     void updateBettingMoneyAboutLoseSuccessTest() {
         int bettingMoney = player.getMoney();
 
-        assertThat(player.getProfit(Result.LOSE))
+        assertThat(player.calculateProfitBy(Result.LOSE))
                 .isEqualTo(bettingMoney * -1);
     }
 
     @DisplayName("게임에서 비길 경우, 플레이어의 수익이 생기지 않는다.")
     @Test
     void updateBettingMoneyAboutDrawSuccessTest() {
-        assertThat(player.getProfit(Result.DRAW))
+        assertThat(player.calculateProfitBy(Result.DRAW))
                 .isEqualTo(0);
     }
 
@@ -114,7 +114,7 @@ class PlayerTest {
         player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
         player.receive(Card.of(CardShape.CLUB, CardRank.TEN));
 
-        assertThat(player.getProfit(Result.WIN))
+        assertThat(player.calculateProfitBy(Result.WIN))
                 .isEqualTo((int) (moneyBeforeWin * 1.5));
     }
 }
