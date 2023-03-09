@@ -8,6 +8,7 @@ public class CardHolder {
     public static final int ACE_SCORE_SWITCHING_LINE = 10;
     public static final int ACE_MAX_SCORE = 11;
     public static final int ACE_MIN_SCORE = 1;
+
     private final List<Card> cards;
 
     public CardHolder(List<Card> cards) {

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class BlackJack {
     public static final int INITIALIZING_CARD_COUNT = 2;
+
     private final Players players;
     private final DeckOfCards deckOfCards;
 
