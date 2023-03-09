@@ -7,7 +7,7 @@ public class WinState implements BetResultState {
     private static final double WINNER_PERCENT = 1.5;
 
     @Override
-    public Money calculateBetOutComeOf(final Money money) {
+    public Money calculateBetOutcomeOf(final Money money) {
         return money.times(WINNER_PERCENT);
     }
 }

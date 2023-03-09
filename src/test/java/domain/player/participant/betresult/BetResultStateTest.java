@@ -27,7 +27,7 @@ class BetResultStateTest {
         final Money resultMoney = Money.wons(resultAmount);
 
         //when & then
-        assertEquals(winState.calculateBetOutComeOf(bettingMoney), resultMoney);
+        assertEquals(winState.calculateBetOutcomeOf(bettingMoney), resultMoney);
     }
 
     @ParameterizedTest
@@ -45,7 +45,7 @@ class BetResultStateTest {
         final Money resultMoney = Money.wons(resultAmount);
 
         //when & then
-        assertEquals(loseState.calculateBetOutComeOf(bettingMoney), resultMoney);
+        assertEquals(loseState.calculateBetOutcomeOf(bettingMoney), resultMoney);
     }
 
     @ParameterizedTest
@@ -63,6 +63,6 @@ class BetResultStateTest {
         final Money resultMoney = Money.wons(resultAmount);
 
         //when & then
-        assertEquals(breakEvenState.calculateBetOutComeOf(bettingMoney), resultMoney);
+        assertEquals(breakEvenState.calculateBetOutcomeOf(bettingMoney), resultMoney);
     }
 }

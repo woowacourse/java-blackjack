@@ -5,7 +5,7 @@ import domain.player.participant.Money;
 public class LoseState implements BetResultState {
 
     @Override
-    public Money calculateBetOutComeOf(final Money money) {
+    public Money calculateBetOutcomeOf(final Money money) {
         return money.lose();
     }
 }
