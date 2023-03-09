@@ -20,4 +20,13 @@ class StandardCardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("심볼은 2 ~ 10 사이 숫자여야 합니다. 입력된 값 : %d", Integer.parseInt(input)));
     }
+
+    @Test
+    void getCardSymbolAndPattern() {
+        Pattern pattern = Pattern.SPADE;
+        String symbol = "2";
+        StandardCard standardCard = new StandardCard(pattern, symbol);
+
+        Assertions.assertThat(standardCard.getCardSymbolAndPattern()).isEqualTo(symbol + pattern.getName());
+    }
 }
