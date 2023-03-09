@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Score {
 
-    public static final Score bustLowerBound = new Score(22);
     public static final Score dealerHitUpperBound = new Score(17);
     public static final Score playerHitUpperBound = new Score(21);
 
@@ -29,6 +28,10 @@ public class Score {
         }
 
         return new Score(totalScore);
+    }
+
+    public static Score of(int score) {
+        return new Score(score);
     }
 
     private static boolean hasACE(List<Card> cards) {
