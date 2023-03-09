@@ -18,13 +18,18 @@ public class BlackjackController {
     }
 
     public void run() {
-        Cards cards = Cards.create(new RandomCardPickerGenerator());
-        List<String> playersName = inputPlayerName();
-        BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
+        BlackjackGame blackjackGame = initBlackjackGame();
         hitFirstSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
         BlackjackGameResult blackjackGameResult = blackjackGame.generatePlayersResult(new BlackJackReferee());
         printResult(blackjackGame, blackjackGameResult);
+    }
+
+    private BlackjackGame initBlackjackGame() {
+        Cards cards = Cards.create(new RandomCardPickerGenerator());
+        List<String> playersName = inputPlayerName();
+        BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
+        return blackjackGame;
     }
 
     private void hitFirstSetting(final BlackjackGame blackjackGame) {

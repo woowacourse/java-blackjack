@@ -15,39 +15,37 @@ public class BlackJackReferee {
     }
 
     private WinningResult judgeWinOrLose(final Dealer dealer, final Player player) {
-        int myValue = dealer.calculateDealerCardNumber();
-        int playerValue = player.calculateCardNumber();
-        if (playerValue > WIN_MAX_NUMBER || myValue > WIN_MAX_NUMBER) {
-            return calculateByBurst(playerValue);
+        if (player.calculateCardNumber() > WIN_MAX_NUMBER || dealer.calculateDealerCardNumber() > WIN_MAX_NUMBER) {
+            return calculateByBurst(player);
         }
         if (dealer.judgeBlackjack() || player.judgeBlackjack()) {
-            return calculateByBlackjack(player.judgeBlackjack(), dealer.judgeBlackjack());
+            return calculateByBlackjack(player, dealer);
         }
-        return calculateByNumber(playerValue, myValue);
+        return calculateByNumber(player, dealer);
     }
 
-    private WinningResult calculateByBurst(int playerValue) {
-        if (playerValue > WIN_MAX_NUMBER) {
+    private WinningResult calculateByBurst(final Player player) {
+        if (player.calculateCardNumber() > WIN_MAX_NUMBER) {
             return WinningResult.WIN;
         }
         return WinningResult.LOSE;
     }
 
-    private WinningResult calculateByBlackjack(boolean isPlayerBlackjack, boolean isDealerBlackjack) {
-        if (isPlayerBlackjack && isDealerBlackjack) {
+    private WinningResult calculateByBlackjack(final Player player,final Dealer dealer) {
+        if (player.judgeBlackjack() && dealer.judgeBlackjack()) {
             return WinningResult.PUSH;
         }
-        if (isPlayerBlackjack) {
+        if (player.judgeBlackjack()) {
             return WinningResult.LOSE;
         }
         return WinningResult.WIN;
     }
 
-    private WinningResult calculateByNumber(int playerValue, int dealerValue) {
-        if (playerValue > dealerValue) {
+    private WinningResult calculateByNumber(final Player player,final Dealer dealer) {
+        if (player.calculateCardNumber() > dealer.calculateDealerCardNumber()) {
             return WinningResult.LOSE;
         }
-        if (playerValue < dealerValue) {
+        if (player.calculateCardNumber() < dealer.calculateDealerCardNumber()) {
             return WinningResult.WIN;
         }
         return WinningResult.PUSH;
