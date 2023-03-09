@@ -15,7 +15,7 @@ class BlackJackRefereeTest {
     void judgmentPlayerBlackjack() {
         //given
         BlackJackReferee referee = new BlackJackReferee();
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("비버"));
         List<Card> dealerCards = List.of(
                 new Card(CardNumber.QUEEN, CardSuit.CLUB),
@@ -43,7 +43,7 @@ class BlackJackRefereeTest {
     @DisplayName("플레이어가 처음의 받은 2장의 카드가 블랙잭일 Lose반환")
     void judgmentDealerBlackjack() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("비버"));
         BlackJackReferee referee = new BlackJackReferee();
         List<Card> dealerCards = List.of(
@@ -73,7 +73,7 @@ class BlackJackRefereeTest {
     @DisplayName("플레이어와 딜러가 처음의 받은 2장의 카드가 블랙잭일 Push 반환")
     void judgmentAllBlackjack() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("비버"));
         BlackJackReferee referee = new BlackJackReferee();
         List<Card> dealerCards = List.of(
@@ -103,7 +103,7 @@ class BlackJackRefereeTest {
     @DisplayName("딜러가 플레이어를 이길 시 WIN 리턴")
     void judgeWinner() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("홍실"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.TEN, CardSuit.DIAMOND));
@@ -123,7 +123,7 @@ class BlackJackRefereeTest {
     @DisplayName("딜러가 플레이어에게 졌을 시 LOSE 리턴")
     void judgeWinner2() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("홍실"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.TWO, CardSuit.SPADE));
@@ -143,7 +143,7 @@ class BlackJackRefereeTest {
     @DisplayName("딜러가 플레이어와 같은 값을 가질 시 PUSH 리턴")
     void judgeWinner3() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("홍실"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.NINE, CardSuit.SPADE));
@@ -163,7 +163,7 @@ class BlackJackRefereeTest {
     @DisplayName("딜러와 플레이어가 모두 블랙잭일 때 PUSH 리턴")
     void judgeWinner4() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         Player player = new Player(new ParticipantName("홍실"));
         BlackJackReferee referee = new BlackJackReferee();
         dealer.hit(new Card(CardNumber.ACE, CardSuit.SPADE));

@@ -12,7 +12,7 @@ class DealerTest {
     @DisplayName("처음의 받은 2장의 카드의 합이 16이하일 때 true 반환")
     void judgmentBelow16() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         List<Card> cards = List.of(
             new Card(CardNumber.QUEEN, CardSuit.CLUB),
             new Card(CardNumber.FOUR, CardSuit.SPADE)
@@ -31,7 +31,7 @@ class DealerTest {
     @DisplayName("처음의 받은 2장의 카드의 합이 17이상일 때 false 반환")
     void judgmentOver16() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         List<Card> cards = List.of(
             new Card(CardNumber.QUEEN, CardSuit.CLUB),
             new Card(CardNumber.NINE, CardSuit.SPADE)
@@ -50,7 +50,7 @@ class DealerTest {
     @DisplayName("딜러는 소프트 17을 적용한다.(Ace는 11로 게산)")
     void soft17() {
         //given
-        Dealer dealer = new Dealer(new ParticipantName("딜러"));
+        Dealer dealer = new Dealer();
         List<Card> cards = List.of(
             new Card(CardNumber.ACE, CardSuit.SPADE),
             new Card(CardNumber.SIX, CardSuit.HEART)

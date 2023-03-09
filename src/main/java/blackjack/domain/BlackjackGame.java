@@ -11,9 +11,13 @@ public class BlackjackGame {
     private final Participants participants;
     private final Cards cards;
 
-    public BlackjackGame(Participants participants, Cards cards) {
+    private BlackjackGame(Participants participants, Cards cards) {
         this.participants = participants;
         this.cards = cards;
+    }
+
+    public static BlackjackGame of(List<String> playerName, Cards cards) {
+        return new BlackjackGame(Participants.from(playerName, new Dealer()), cards);
     }
 
     public Map<Player, WinningResult> generatePlayersResult(BlackJackReferee referee) {

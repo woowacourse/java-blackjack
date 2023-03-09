@@ -18,8 +18,10 @@ class BlackjackGameTest {
     void firstAllHit() {
         //given
         List<Integer> testData = settingTestData();
-        Participants participants = Participants.from(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.create(new TestCardPickerGenerator(testData)));
+        BlackjackGame game = BlackjackGame.of(
+                List.of("pobi", "ako"),
+                Cards.create(new TestCardPickerGenerator(testData))
+        );
         //when
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
@@ -40,8 +42,10 @@ class BlackjackGameTest {
     void playerResultTest() {
         //given
         List<Integer> testData = settingTestData();
-        Participants participants = Participants.from(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.create(new TestCardPickerGenerator(testData)));
+        BlackjackGame game = BlackjackGame.of(
+                List.of("pobi", "ako"),
+                Cards.create(new TestCardPickerGenerator(testData))
+        );
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
         }
@@ -66,8 +70,10 @@ class BlackjackGameTest {
     void dealerResultTest() {
         //given
         List<Integer> testData = settingTestData();
-        Participants participants = Participants.from(List.of("pobi", "ako"));
-        BlackjackGame game = new BlackjackGame(participants, Cards.create(new TestCardPickerGenerator(testData)));
+        BlackjackGame game = BlackjackGame.of(
+                List.of("pobi", "ako"),
+                Cards.create(new TestCardPickerGenerator(testData))
+        );
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
         }

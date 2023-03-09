@@ -5,10 +5,11 @@ public class Dealer extends Participant {
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
     private static final int DEALER_HIT_BASED_NUMBER = 16;
     private static final int FIRST_CARD_COUNT = 2;
+    public static final String DEALERNAME = "딜러";
 
 
-    public Dealer(ParticipantName participantName) {
-        super(participantName);
+    public Dealer() {
+        super(new ParticipantName(DEALERNAME));
     }
 
     public int calculateDealerCardNumber() {

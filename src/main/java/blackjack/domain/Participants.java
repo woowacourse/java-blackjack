@@ -12,9 +12,9 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants from(final List<String> playersName) {
+    public static Participants from(final List<String> playersName,final Dealer dealer) {
         List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer(new ParticipantName("딜러")));
+        participants.add(dealer);
         for (String playerName : playersName) {
             participants.add(new Player(new ParticipantName(playerName)));
         }

@@ -20,8 +20,7 @@ public class BlackjackController {
     public void run() {
         Cards cards = Cards.create(new RandomCardPickerGenerator());
         List<String> playersName = inputPlayerNameCommand();
-        Participants participants = Participants.from(playersName);
-        BlackjackGame blackjackGame = new BlackjackGame(participants, cards);
+        BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
         gameSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
         BlackjackGameResult blackjackGameResult =
