@@ -1,9 +1,36 @@
 package blackjack.domain;
 
 public enum ResultType {
-    WIN("승"),
-    TIE("무"),
-    LOSE("패");
+    BLACKJACK_WIN("블랙잭 승리") {
+        @Override
+        public ResultType getOppositeResult() {
+            return BLACKJACK_LOSE;
+        }
+    },
+    WIN("승") {
+        @Override
+        public ResultType getOppositeResult() {
+            return LOSE;
+        }
+    },
+    TIE("무") {
+        @Override
+        public ResultType getOppositeResult() {
+            return TIE;
+        }
+    },
+    LOSE("패") {
+        @Override
+        public ResultType getOppositeResult() {
+            return WIN;
+        }
+    },
+    BLACKJACK_LOSE("블랙잭 패배") {
+        @Override
+        public ResultType getOppositeResult() {
+            return BLACKJACK_WIN;
+        }
+    };
 
     private final String name;
 
@@ -11,15 +38,7 @@ public enum ResultType {
         this.name = name;
     }
 
-    public ResultType getOppositeResult() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == TIE) {
-            return TIE;
-        }
-        return WIN;
-    }
+    public abstract ResultType getOppositeResult();
 
     public String getName() {
         return name;
