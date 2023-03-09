@@ -12,9 +12,17 @@ public class BlackJackApplication {
         Players players = generatePlayers();
         Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
+        startPhase(players, dealer, blackJackGame);
+        endPhase(players, dealer);
+    }
+
+    private static void startPhase(Players players, Dealer dealer, BlackJackGame blackJackGame) {
         initSetting(blackJackGame, players, dealer);
         OutputView.printParticipantResult(dealer.getName(), dealer.getCardNames());
         OutputView.printInitPlayerCards(players);
+    }
+
+    private static void endPhase(Players players, Dealer dealer) {
         askEachPlayers(players);
         dealerExecute(dealer);
         printFinalGameStatus(players, dealer);
