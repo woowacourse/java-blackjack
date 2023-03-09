@@ -8,17 +8,16 @@ import blackjack.domain.game.ResultGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 import blackjack.dto.CardsDto;
 import blackjack.dto.ParticipantsDto;
 import blackjack.dto.ResultDto;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.List;
 
 public class BlackjackController {
 
-    private static final String DEALER_NAME = "딜러";
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -33,14 +32,8 @@ public class BlackjackController {
         final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
 
         startGame(blackjackGame, participants);
-        participants.getDealer().reverseAllExceptOne();
-        outputView.outputParticipantCards(new ParticipantsDto(participants));
         hitParticipants(blackjackGame, participants);
-        ResultGame resultGame = new ResultGame(participants);
-        resultGame.calculateResult();
-        participants.getDealer().openAllCard();
-        outputView.outputCardsAndScore(new ParticipantsDto(participants));
-        outputView.outputFinalResult(new ResultDto(resultGame.getPlayersResult()));
+        showResult(participants);
     }
 
 
@@ -56,9 +49,10 @@ public class BlackjackController {
 
     private void startGame(final BlackjackGame blackjackGame, Participants participants) {
         final List<String> playerNames = participants.getPlayerNames();
-
         outputView.outputSplitMessage(playerNames);
         blackjackGame.giveTwoCardEveryone(participants);
+        participants.getDealer().reverseAllExceptOne();
+        outputView.outputParticipantCards(new ParticipantsDto(participants));
     }
 
 
@@ -84,4 +78,13 @@ public class BlackjackController {
             outputView.outputDealerDrawCard(dealer.getName());
         }
     }
+
+    private void showResult(Participants participants) {
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+        participants.getDealer().openAllCard();
+        outputView.outputCardsAndScore(new ParticipantsDto(participants));
+        outputView.outputFinalResult(new ResultDto(resultGame.getPlayersResult()));
+    }
+
 }

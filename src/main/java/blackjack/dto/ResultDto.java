@@ -23,7 +23,7 @@ public class ResultDto {
     }
 
     public int getDealerWinCount() {
-        return this.getDealerCount(WIN_MASSAGE);
+        return this.getDealerCount(LOSE_MASSAGE);
     }
 
     public int getDealerTieCount() {
@@ -31,7 +31,7 @@ public class ResultDto {
     }
 
     public int getDealerLoseCount() {
-        return this.getDealerCount(LOSE_MASSAGE);
+        return this.getDealerCount(WIN_MASSAGE);
     }
 
     private int getDealerCount(final String expected) {

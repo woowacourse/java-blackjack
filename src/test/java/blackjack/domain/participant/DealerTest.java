@@ -48,6 +48,6 @@ public class DealerTest {
         dealer.drawCard(card2);
 
         //then
-        Assertions.assertThat(dealer.isNotBust()).isFalse();
+        Assertions.assertThat(dealer.canNotHit()).isTrue();
     }
 }

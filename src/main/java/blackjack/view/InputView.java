@@ -25,15 +25,15 @@ public class InputView {
         return List.of(scanner.nextLine().replace(TARGET_SPACE, REPLACEMENT).split(INPUT_PLAYER_DELIMITER));
     }
 
-    public boolean inputOrderCard(final String name){
+    public boolean inputOrderCard(final String name) {
         System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
         String input = scanner.nextLine();
         validate(input);
         return input.equals(YES);
     }
 
-    public void validate(String input){
-        if(!input.equals(YES)&&!input.equals(NO)){
+    public void validate(String input) {
+        if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException();
         }
     }
