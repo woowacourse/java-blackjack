@@ -12,7 +12,7 @@ public enum ViewCardNumber {
     SEVEN("SEVEN", "7"),
     EIGHT("EIGHT", "8"),
     NINE("NINE", "9"),
-    TEN("CTEN", "10"),
+    TEN("TEN", "10"),
     JACK("JACK", "J"),
     QUEEN("QUEEN", "Q"),
     KING("KING", "K"),

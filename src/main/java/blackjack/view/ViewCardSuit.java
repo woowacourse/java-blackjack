@@ -10,8 +10,8 @@ public enum ViewCardSuit {
     CLUB("CLUB", "클로버"),
     ;
 
-    final String name;
     final String cardSuitName;
+    final String name;
 
     ViewCardSuit(final String name, final String cardSuitName) {
         this.cardSuitName = cardSuitName;
@@ -20,7 +20,7 @@ public enum ViewCardSuit {
 
     public static String getCardSuit(final String cardSuit) {
         return Arrays.stream(ViewCardSuit.values())
-                .filter(it -> it.cardSuitName.equals(cardSuit))
+                .filter(it -> it.name.equals(cardSuit))
                 .findAny()
                 .get()
                 .cardSuitName;
