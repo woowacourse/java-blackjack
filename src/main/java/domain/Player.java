@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Player extends Participant {
     private static final String FORBIDDEN_NAME_MESSAGE = "\"딜러\"라는 이름은 사용하실 수 없습니다.";
 
@@ -21,8 +19,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> getInitialOpeningCards() {
-        return getCards();
+    public Cards getInitialOpeningCards() {
+        return cards;
     }
 
     @Override

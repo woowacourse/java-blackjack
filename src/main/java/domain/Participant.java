@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -30,20 +28,12 @@ public abstract class Participant {
         return calculateBlackjackScore().isGreaterThan(BlackjackScore.getMaxScore());
     }
 
-    public abstract List<Card> getInitialOpeningCards();
+    public abstract Cards getInitialOpeningCards();
 
     public abstract boolean isAbleToReceiveCard();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Participant that = (Participant) o;
-        return participantName.equals(that.participantName) && getCards().equals(that.getCards());
+    public int getCurrentCardAmount() {
+        return cards.getCards().size();
     }
 
     @Override
@@ -51,8 +41,8 @@ public abstract class Participant {
         return Objects.hash(participantName, getCards());
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+    public Cards getCards() {
+        return cards;
     }
 
     public String getName() {

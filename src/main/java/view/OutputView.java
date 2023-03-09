@@ -3,11 +3,11 @@ package view;
 import domain.BlackjackGame;
 import domain.BlackjackScore;
 import domain.Card;
+import domain.Cards;
 import domain.DealerResult;
 import domain.Participant;
 import domain.Players;
 import domain.Result;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -48,17 +48,18 @@ public class OutputView {
     }
 
     public void printParticipantCards(Participant participant) {
-        printParticipantCards(participant, participant.getCards());
+        Cards cards = participant.getCards();
+        printParticipantCards(participant, cards);
     }
 
-    private void printParticipantCards(Participant participant, List<Card> cards) {
+    private void printParticipantCards(Participant participant, Cards cards) {
         String cardsFormat = String.format(CARDS_FORMAT,
                 participant.getName(), getCardsFormat(cards));
         System.out.println(cardsFormat);
     }
 
-    private String getCardsFormat(List<Card> cards) {
-        return cards.stream()
+    private String getCardsFormat(Cards cards) {
+        return cards.getCards().stream()
                 .map(this::getCardFormat)
                 .collect(Collectors.joining(DELIMITER));
     }

@@ -62,7 +62,7 @@ public class BlackjackGame {
 
     public int getParticipantHitCardCount(Participant participant) {
         assertParticipation(participant);
-        return participant.getCards().size() - INITIAL_CARD_AMOUNT;
+        return participant.getCurrentCardAmount() - INITIAL_CARD_AMOUNT;
     }
 
     public List<Participant> getParticipants() {

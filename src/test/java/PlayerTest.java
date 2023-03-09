@@ -2,6 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.Card;
+import domain.Cards;
 import domain.Participant;
 import domain.ParticipantName;
 import domain.Player;
@@ -33,7 +34,8 @@ class PlayerTest {
         player.receive(HEART_QUEEN);
         player.receive(HEART_TEN);
 
-        assertThat(player.getInitialOpeningCards()).hasSize(2);
+        Cards initialOpeningCards = player.getInitialOpeningCards();
+        assertThat(initialOpeningCards.getCards()).hasSize(2);
     }
 
 

@@ -35,7 +35,7 @@ class BlackjackGameTest {
     private void assertParticipantsCardSize(List<Participant> participants, int size) {
         participants.stream()
                 .map(Participant::getCards)
-                .forEach(cards -> assertThat(cards).hasSize(size));
+                .forEach(cards -> assertThat(cards.getCards()).hasSize(size));
     }
 
     @DisplayName("딜러는 카드의 합이 17보다 낮으면 카드를 추가로 받는다.")
@@ -48,7 +48,7 @@ class BlackjackGameTest {
 
         blackjackGame.handOutAdditionalCardToDealer();
 
-        assertThat(dealer.getCards().size())
+        assertThat(dealer.getCurrentCardAmount())
                 .isGreaterThan(2);
     }
 
@@ -66,8 +66,8 @@ class BlackjackGameTest {
     }
 
     private void assertParticipantCardSize(Participant participant, int expectedSize) {
-        assertThat(participant.getCards())
-                .hasSize(expectedSize);
+        assertThat(participant.getCurrentCardAmount())
+                .isEqualTo(expectedSize);
     }
 
     @DisplayName("게임에 참여하지 않은 참가자는 플레이 할 수 없다.")
@@ -130,13 +130,12 @@ class BlackjackGameTest {
     void playByActionHit() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant player = blackjackGame.getPlayers().getPlayers().get(0);
-        List<Card> playerCards = player.getCards();
-        assertThat(playerCards).hasSize(0);
+        assertThat(player.getCurrentCardAmount()).isEqualTo(0);
 
         assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HIT);
 
-        assertThat(playerCards).hasSize(1);
+        assertThat(player.getCurrentCardAmount()).isEqualTo(1);
     }
 
     @DisplayName("Action이 HOLD인 경우 카드를 받지 않는다.")
@@ -144,13 +143,12 @@ class BlackjackGameTest {
     void playByActionHold() {
         BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant player = blackjackGame.getPlayers().getPlayers().get(0);
-        List<Card> playerCards = player.getCards();
-        assertThat(playerCards).hasSize(0);
+        assertThat(player.getCurrentCardAmount()).isEqualTo(0);
 
         assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HOLD);
 
-        assertThat(playerCards).hasSize(0);
+        assertThat(player.getCurrentCardAmount()).isEqualTo(0);
     }
 
 }
