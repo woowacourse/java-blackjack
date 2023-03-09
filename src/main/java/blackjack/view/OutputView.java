@@ -1,6 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import blackjack.domain.gameplayer.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -77,11 +79,11 @@ public class OutputView {
         }
     }
 
-    public void printDealerWinningResult(Map<String, Integer> dealerResult) {
+    public void printDealerWinningResult(Map<Result, Integer> dealerResult) {
         StringBuilder dealerResultMsg = new StringBuilder(DEALER_MSG);
-        for (String result : dealerResult.keySet()) {
+        for (Result result : dealerResult.keySet()) {
             if (dealerResult.get(result) != ZERO) {
-                dealerResultMsg.append(dealerResult.get(result)).append(result).append(BLANK);
+                dealerResultMsg.append(dealerResult.get(result)).append(result.getResult()).append(BLANK);
             }
         }
         System.out.println(dealerResultMsg);

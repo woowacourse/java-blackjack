@@ -120,7 +120,7 @@ public class BlackJackGameController {
 
         GameResult gameResult = new GameResult(game);
         outputView.printEndMsg();
-        outputView.printDealerWinningResult(getFormattedDealerResult(gameResult.getDealerResult()));
+        outputView.printDealerWinningResult(gameResult.getDealerResult());
         outputView.printPlayerWinningResult(getFormattedPlayerResult(gameResult.getPlayerResult()));
     }
 
