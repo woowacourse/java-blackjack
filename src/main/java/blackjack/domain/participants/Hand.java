@@ -31,7 +31,7 @@ public class Hand {
         return sumScore() > SUM_MAXIMUM_BEFORE_BUST;
     }
 
-    public boolean hasSafeScore() {
+    public boolean hasScoreUnderMax() {
         return sumScore() < SUM_MAXIMUM_BEFORE_BUST;
     }
 

@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToHit() {
-        return isSafe();
+        return isNotBustNorHasMaxScore();
     }
 
     @Override

@@ -56,4 +56,24 @@ class HandTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("카드가 존재하지 않는 핸드입니다.");
     }
+
+    @DisplayName("카드 문자의 총 합이 21을 초과하면 참을 반환한다.")
+    @Test
+    void should_ReturnTrue_When_SumIsOver21() {
+        final Hand hand = new Hand(
+                List.of(new Card(SPADE, ACE), new Card(HEART, ACE), new Card(SPADE, KING), new Card(CLUB, QUEEN))
+        );
+
+        assertThat(hand.hasBustedScore()).isTrue();
+    }
+
+    @DisplayName("카드 문자의 총 합이 21 미만이면 참을 반환한다.")
+    @Test
+    void should_ReturnTrue_When_SumIsUnder21() {
+        final Hand hand = new Hand(
+                List.of(new Card(SPADE, KING), new Card(CLUB, QUEEN))
+        );
+
+        assertThat(hand.hasScoreUnderMax()).isTrue();
+    }
 }

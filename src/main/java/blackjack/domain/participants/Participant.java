@@ -36,8 +36,8 @@ public abstract class Participant {
         return hand.hasBustedScore();
     }
 
-    public boolean isSafe() {
-        return hand.hasSafeScore();
+    public boolean isNotBustNorHasMaxScore() {
+        return hand.hasScoreUnderMax();
     }
 
     public String getName() {
@@ -48,11 +48,11 @@ public abstract class Participant {
         return hand.cards();
     }
 
-    public abstract HandStatus toHandStatus();
-
     public HandResult toHandResult() {
         return new HandResult(getName(), cards(), computeCardsScore());
     }
+
+    public abstract HandStatus toHandStatus();
 
     public abstract boolean isAbleToHit();
 
