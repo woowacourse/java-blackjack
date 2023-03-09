@@ -4,26 +4,28 @@ import java.util.Objects;
 
 public class Money {
 
+    private static final Money zero = new Money(0L);
+
     private final Long money;
 
     public Money(final Long money) {
         this.money = money;
     }
 
-    public Money lose() {
-        return new Money(oppositeMoney());
+    public static Money zero() {
+        return zero;
     }
 
-    private Long oppositeMoney() {
-        return -money;
+    public Money add(final Money money) {
+        return new Money(this.money + money.money);
+    }
+
+    public Money lose() {
+        return new Money(-money);
     }
 
     public Money blackJack() {
-        return new Money(blackJackMoney());
-    }
-
-    private Long blackJackMoney() {
-        return (long) (money * 1.5);
+        return new Money((long) (money * 1.5));
     }
 
     @Override
