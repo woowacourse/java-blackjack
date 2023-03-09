@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.deck.Card;
 import domain.deck.Rank;
+
 import java.util.LinkedList;
 import java.util.List;
 

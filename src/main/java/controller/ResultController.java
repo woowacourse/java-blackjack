@@ -1,10 +1,10 @@
 package controller;
 
-import domain.result.GameResult;
-import domain.result.Outcome;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
+import domain.result.GameResult;
+import domain.result.Outcome;
 import view.OutputView;
 
 import java.util.EnumMap;

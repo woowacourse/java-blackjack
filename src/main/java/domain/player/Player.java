@@ -1,6 +1,6 @@
 package domain.player;
 
-public final class Player extends Participant{
+public final class Player extends Participant {
 
     private static final int BLACK_JACK_NUMBER = 21;
 

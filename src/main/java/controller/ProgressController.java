@@ -9,10 +9,10 @@ import view.OutputView;
 
 public class ProgressController {
 
-    InputView inputView;
-    OutputView outputView;
+    private final InputView inputView;
+    private final OutputView outputView;
 
-    public ProgressController(InputView inputView, OutputView outputView) {
+    public ProgressController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

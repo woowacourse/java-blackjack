@@ -1,10 +1,10 @@
 package view;
 
 import domain.deck.Card;
-import domain.result.Outcome;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
+import domain.result.Outcome;
 
 import java.util.EnumMap;
 import java.util.List;

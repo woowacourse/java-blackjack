@@ -42,11 +42,11 @@ public final class GameResult {
         Map<String, Outcome> playerResults = new LinkedHashMap<>();
         players.getPlayers()
                 .forEach((player ->
-                playerResults.put(
-                        player.getName(),
-                        Outcome.decideOutcome(player.getScore(), dealer.getScore())
-                )
-        ));
+                        playerResults.put(
+                                player.getName(),
+                                Outcome.decideOutcome(player.getScore(), dealer.getScore())
+                        )
+                ));
         return playerResults;
     }
 }
