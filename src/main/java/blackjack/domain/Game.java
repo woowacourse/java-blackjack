@@ -59,11 +59,11 @@ public class Game {
     }
 
     public List<Card> showDealerCards() {
-        return getDealer().showCards();
+        return getDealer().getFirstCard();
     }
 
     public List<Card> showDealerAllCards() {
-        return getDealer().showAllCards();
+        return getDealer().getAllCards();
     }
 
     public int getPlayersCount() {

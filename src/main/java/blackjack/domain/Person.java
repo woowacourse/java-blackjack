@@ -1,14 +1,46 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public interface Person {
+abstract class Person {
+    private static final int ACE_BONUS_SCORE = 10;
+    private static final int BURST_SCORE = 21;
 
-    void addCard(Card card);
+    protected List<Card> cards;
 
-    List<Card> showCards();
+    Person() {
+        this.cards = new ArrayList<>();
+    }
 
-    boolean isHit();
+    void addCard(Card card) {
+        cards.add(card);
+    }
 
-    int calculateScore();
+    boolean hasACE() {
+        return cards.stream()
+                .anyMatch(Card::isACE);
+    }
+
+    int calculateScore() {
+        int totalScore = getTotalScore();
+
+        if (totalScore > BURST_SCORE && hasACE()) {
+            return totalScore - ACE_BONUS_SCORE;
+        }
+        return totalScore;
+    }
+
+    abstract boolean isHit();
+
+    int getTotalScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
+
+    List<Card> getAllCards() {
+        return Collections.unmodifiableList(cards);
+    }
 }

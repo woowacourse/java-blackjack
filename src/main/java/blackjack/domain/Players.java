@@ -35,7 +35,7 @@ public class Players {
 
     public List<String> getPlayersName() {
         return players.stream()
-                .map(Player::showName)
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 
@@ -44,10 +44,10 @@ public class Players {
     }
 
     public List<Card> showPlayerCardsByIndex(int i) {
-        return getPlayer(i).showCards();
+        return getPlayer(i).getAllCards();
     }
 
     public String showPlayerNameByIndex(int i) {
-        return getPlayer(i).showName();
+        return getPlayer(i).getName();
     }
 }
