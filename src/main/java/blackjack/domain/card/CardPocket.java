@@ -6,6 +6,7 @@ import java.util.List;
 public class CardPocket {
 
     private static final int BUST_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int VALUE_ACE = 10;
     private final List<Card> cards;
 
@@ -58,5 +59,9 @@ public class CardPocket {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateScore() == BLACKJACK_SCORE;
     }
 }

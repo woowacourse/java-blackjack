@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -66,5 +68,19 @@ class CardPocketTest {
         cardPocket.addCard(new Card(Shape.DIAMOND, Symbol.ACE));
         assertThat(cardPocket.calculateScore())
                 .isEqualTo(12);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"ACE, TEN, true", "JACK, ACE, true", "ACE, ACE, false", "TEN, TEN, false"})
+    void 블랙잭인_경우_2장으로_21점이_되는_경우_검증(
+            final Symbol firstSymbol,
+            final Symbol secondSymbol,
+            final boolean expected) {
+        final CardPocket cardPocket = CardPocket.empty();
+        cardPocket.addCard(new Card(Shape.DIAMOND, firstSymbol));
+        cardPocket.addCard(new Card(Shape.DIAMOND, secondSymbol));
+
+        assertThat(cardPocket.isBlackJack())
+                .isEqualTo(expected);
     }
 }
