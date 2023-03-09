@@ -1,5 +1,9 @@
-package domain;
+package generator;
 
+import domain.Card;
+import domain.CardDeck;
+import domain.Type;
+import domain.Value;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

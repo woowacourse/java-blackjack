@@ -1,8 +1,14 @@
-package domain;
+package generator;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
+import domain.Card;
+import domain.Dealer;
+import domain.DrawnCards;
+import domain.Player;
+import domain.Players;
+import domain.Status;
 import java.util.ArrayList;
 import java.util.List;
 
