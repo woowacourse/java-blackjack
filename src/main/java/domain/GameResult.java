@@ -17,15 +17,15 @@ public class GameResult {
         setPlayersInitialResult(players);
     }
 
-    public void addBetMoney(Player player, BettingMoney money) {
-        gameResult.put(player, money);
-    }
-
     private void setPlayersInitialResult(Players players) {
         gameResult.put(players.findDealer(), new BettingMoney(0));
         for (Player player : players.getPlayersWithOutDealer()) {
             gameResult.put(player, new BettingMoney(0));
         }
+    }
+
+    public void addBetMoney(Player player, BettingMoney money) {
+        gameResult.put(player, money);
     }
 
     public void calculatePlayersResult(Players players) {
@@ -37,13 +37,13 @@ public class GameResult {
     private void calculatePlayer(Dealer dealer, Player player) {
         if (player.getCardsSum() > BLACK_JACK || (dealer.getCardsSum() > player.getCardsSum() && !(dealer.getCardsSum() > BLACK_JACK))) {
             whenPlayerLose(dealer, player);
-            return;
         }
-        if ((dealer.getCardsSum() > BLACK_JACK || dealer.getCardsSum() < player.getCardsSum())) {
+        else if ((dealer.getCardsSum() > BLACK_JACK || dealer.getCardsSum() < player.getCardsSum())) {
             whenPlayerWin(dealer, player);
-            return;
         }
-        whenPlayerDraw(player);
+        else if(dealer.getCardsSum() == player.getCardsSum()) {
+            whenPlayerDraw(player);
+        }
     }
 
     private void whenPlayerLose(Dealer dealer, Player player) {
