@@ -3,12 +3,11 @@ package domain.blackjack;
 import domain.player.BettingMoney;
 
 public enum Result {
+    BLACKJACK("승(블랙잭)", 2.5),
     WIN("승", 2.0),
     DRAW("무", 1.0),
     LOSE("패", 0.0),
     ;
-
-    private static final double BLACKJACK_BONUS_RATIO = 0.5;
 
     private final String value;
     private final double ratio;
@@ -19,7 +18,7 @@ public enum Result {
     }
 
     public Result convertToOpposite() {
-        if (this == WIN) {
+        if (this == WIN || this == BLACKJACK) {
             return LOSE;
         }
 
@@ -30,11 +29,7 @@ public enum Result {
         return DRAW;
     }
 
-    public BettingMoney payOut(BettingMoney bettingMoney, boolean isBlackjack) {
-        if (isBlackjack && this == WIN) {
-            return bettingMoney.applyRatio(this.ratio + BLACKJACK_BONUS_RATIO);
-        }
-
+    public BettingMoney payOut(BettingMoney bettingMoney) {
         return bettingMoney.applyRatio(this.ratio);
     }
 

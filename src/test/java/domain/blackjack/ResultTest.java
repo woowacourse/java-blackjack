@@ -9,8 +9,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
-    private static final double BONUS_RATIO = 0.5;
-
     @DisplayName("상대방 입장의 승무패 결과로 반환 가능하다.") // WIN -> LOSE, LOSE -> WIN
     @Test
     void convertResultSuccessTest() {
@@ -25,10 +23,9 @@ class ResultTest {
     @EnumSource(value = Result.class)
     void updateBalanceSuccessTest(Result result) {
         int money = 10000;
-        boolean isBlackjack = false;
         BettingMoney bettingMoney = BettingMoney.from(money);
 
-        assertThat(result.payOut(bettingMoney, isBlackjack).getMoney())
+        assertThat(result.payOut(bettingMoney).getMoney())
                 .isEqualTo((int) (result.getRatio() * money));
     }
 
@@ -36,10 +33,9 @@ class ResultTest {
     @Test
     void updateBalanceWithBlackjackSuccessTest() {
         int money = 10000;
-        boolean isBlackjack = true;
         BettingMoney bettingMoney = BettingMoney.from(money);
 
-        assertThat(Result.WIN.payOut(bettingMoney, isBlackjack).getMoney())
-                .isEqualTo((int) ((Result.WIN.getRatio() + BONUS_RATIO) * money));
+        assertThat(Result.BLACKJACK.payOut(bettingMoney).getMoney())
+                .isEqualTo((int) (Result.BLACKJACK.getRatio() * money));
     }
 }

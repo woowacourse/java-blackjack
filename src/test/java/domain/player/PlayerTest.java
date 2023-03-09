@@ -114,7 +114,7 @@ class PlayerTest {
         player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
         player.receive(Card.of(CardShape.CLUB, CardRank.TEN));
 
-        assertThat(player.calculateProfitBy(Result.WIN))
+        assertThat(player.calculateProfitBy(Result.BLACKJACK))
                 .isEqualTo((int) (moneyBeforeWin * 1.5));
     }
 }

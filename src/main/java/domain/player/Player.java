@@ -27,7 +27,7 @@ public class Player extends Participant {
     }
 
     public int calculateProfitBy(Result result) {
-        int currentMoney = result.payOut(bettingMoney, this.isBlackjack()).getMoney();
+        int currentMoney = result.payOut(bettingMoney).getMoney();
         int bettingMoney = this.bettingMoney.getMoney();
 
         return currentMoney - bettingMoney;
