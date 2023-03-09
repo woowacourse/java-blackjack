@@ -42,18 +42,29 @@ public class Players {
     }
 
     private void compareScore(Dealer dealer, Player player) {
+        if (isPlayerBlackjackWin(dealer, player)) {
+            player.winBlackjack();
+            dealer.lose();
+            return;
+        }
         if (isPlayerWinDealer(dealer, player)) {
             player.win();
             dealer.lose();
+            return;
         }
         if (isDealerWinPlayer(dealer, player)) {
             player.lose();
             dealer.win();
+            return;
         }
         if (isDraw(dealer, player)) {
             player.tie();
             dealer.tie();
         }
+    }
+
+    private boolean isPlayerBlackjackWin(Dealer dealer, Player player) {
+        return player.isBlackjack() && !dealer.isBlackjack();
     }
 
     private boolean isDraw(Dealer dealer, Player player) {
@@ -62,6 +73,9 @@ public class Players {
 
     private boolean isDealerWinPlayer(Dealer dealer, Player player) {
         if (player.isBust()) {
+            return true;
+        }
+        if (!player.isBlackjack() && dealer.isBlackjack()) {
             return true;
         }
         if (dealer.isBust()) {

@@ -21,6 +21,10 @@ public class Player extends Participant {
         result = Result.TIE;
     }
 
+    public void winBlackjack() {
+        result = Result.BLACKJACK;
+    }
+
     public Result getResult() {
         return result;
     }
