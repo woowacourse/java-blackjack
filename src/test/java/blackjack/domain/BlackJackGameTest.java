@@ -78,7 +78,8 @@ public class BlackJackGameTest {
         blackJackGame.drawOrNot(false, dani);
 
         assertThatThrownBy(blackJackGame::findDrawablePlayer)
-                .isInstanceOf(NoSuchElementException.class);
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("카드를 받을 수 있는 플레이어가 존재하지 않습니다.");
     }
 
     @Test

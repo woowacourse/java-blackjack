@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ParticipantsTest {
 
+    private static final int MAXIMUM_PARTICIPANT_COUNT = 6;
+
     @Test
     void 중복되는_이름이_존재하면_예외를_던진다() {
         final List<Participant> participants = List.of(
@@ -23,7 +25,8 @@ class ParticipantsTest {
                 new Player("kokodak"));
 
         assertThatThrownBy(() -> new Participants(participants))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자 이름은 중복될 수 없습니다.");
     }
 
     @Test
@@ -39,7 +42,8 @@ class ParticipantsTest {
         );
 
         assertThatThrownBy(() -> new Participants(participants))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자는 " + MAXIMUM_PARTICIPANT_COUNT + "명을 초과할 수 없습니다");
     }
 
     @Test

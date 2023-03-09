@@ -32,6 +32,7 @@ class DeckTest {
         final Deck deck = new Deck(cards);
 
         assertThatThrownBy(deck::draw)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("덱에 더 이상의 카드가 없습니다.");
     }
 }
