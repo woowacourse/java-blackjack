@@ -4,11 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
+    Dealer dealer;
+
+    @BeforeEach
+    void setUp() {
+        dealer = new Dealer();
+    }
+
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewDealer() {
@@ -19,8 +27,8 @@ class DealerTest {
     @Test
     void Should_Success_When_AddCard() {
         Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-        Dealer dealer = new Dealer();
         dealer.addCard(card);
+
         assertThat(dealer.getAllCards()).contains(card);
     }
 
@@ -30,9 +38,6 @@ class DealerTest {
         Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
         Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
         Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-
-        Dealer dealer = new Dealer();
-
         dealer.addCard(card);
         dealer.addCard(card2);
         dealer.addCard(card3);
@@ -44,9 +49,6 @@ class DealerTest {
     @Test
     void Should_FirstCard_When_GetFirstCards() {
         Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
-
-        Dealer dealer = new Dealer();
-
         dealer.addCard(card);
 
         assertThat(dealer.getAllCards()).size().isEqualTo(1);
@@ -59,8 +61,8 @@ class DealerTest {
         @Test
         void Should_True_When_hasACE() {
             Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-            Dealer dealer = new Dealer();
             dealer.addCard(card);
+
             assertThat(dealer.hasACE()).isTrue();
         }
 
@@ -68,8 +70,8 @@ class DealerTest {
         @Test
         void Should_False_When_hasACE() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
-            Dealer dealer = new Dealer();
             dealer.addCard(card);
+
             assertThat(dealer.hasACE()).isFalse();
         }
     }
@@ -82,9 +84,6 @@ class DealerTest {
         void Should_Success_When_CalculateScore() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
             Card card2 = new Card(CardNumber.KING, CardSymbol.HEARTS);
-
-            Dealer dealer = new Dealer();
-
             dealer.addCard(card);
             dealer.addCard(card2);
 
@@ -99,9 +98,6 @@ class DealerTest {
             void Should_ACEScoreIs11_When_Burst() {
                 Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
                 Card card2 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-
-                Dealer dealer = new Dealer();
-
                 dealer.addCard(card);
                 dealer.addCard(card2);
 
@@ -114,9 +110,6 @@ class DealerTest {
                 Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
                 Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
                 Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-
-                Dealer dealer = new Dealer();
-
                 dealer.addCard(card);
                 dealer.addCard(card2);
                 dealer.addCard(card3);
@@ -134,9 +127,6 @@ class DealerTest {
         void Should_isHitFalse_When_MoreThan17() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
             Card card2 = new Card(CardNumber.SEVEN, CardSymbol.HEARTS);
-
-            Dealer dealer = new Dealer();
-
             dealer.addCard(card);
             dealer.addCard(card2);
 
@@ -148,9 +138,6 @@ class DealerTest {
         void Should_isHitTrue_When_LessThan17() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
             Card card2 = new Card(CardNumber.SIX, CardSymbol.HEARTS);
-
-            Dealer dealer = new Dealer();
-
             dealer.addCard(card);
             dealer.addCard(card2);
 
