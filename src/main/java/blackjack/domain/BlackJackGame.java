@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.ShufflingMachine;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 
@@ -20,20 +19,20 @@ public class BlackJackGame {
         this.players = new Players(inputNames);
     }
 
-    public void handOutCardTo(final ShufflingMachine shufflingMachine, final Participant participant) {
-        final Card card = Deck.from(shufflingMachine.draw());
+    public void handOutCardTo(final Deck deck, final Participant participant) {
+        final Card card = deck.draw();
         participant.receiveCard(card);
     }
 
-    public void handOutInitCards(final ShufflingMachine shufflingMachine) {
-        handOutInitCardsTo(shufflingMachine, dealer);
+    public void handOutInitCards(final Deck deck) {
+        handOutInitCardsTo(deck, dealer);
         players.getPlayers()
-                .forEach(player -> handOutInitCardsTo(shufflingMachine, player));
+                .forEach(player -> handOutInitCardsTo(deck, player));
     }
 
-    private void handOutInitCardsTo(final ShufflingMachine shufflingMachine, final Participant participant) {
+    private void handOutInitCardsTo(final Deck deck, final Participant participant) {
         for (int i = 0; i < NUMBER_OF_INITIAL_CARD; i++) {
-            final Card card = Deck.from(shufflingMachine.draw());
+            final Card card = deck.draw();
             participant.receiveCard(card);
         }
     }

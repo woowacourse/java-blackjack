@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.card.ShufflingMachine;
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -14,13 +14,13 @@ public class BlackJackGameController {
     private static final String HIT_COMMAND = "y";
     private static final String STAND_COMMAND = "n";
 
-    private ShufflingMachine shufflingMachine;
+    private Deck deck;
 
     public void run() {
         final BlackJackGame blackJackGame = generateBlackJackGame();
-        shufflingMachine = new ShufflingMachine();
+        deck = new Deck();
 
-        blackJackGame.handOutInitCards(shufflingMachine);
+        blackJackGame.handOutInitCards(deck);
         final Dealer dealer = blackJackGame.getDealer();
         final Players players = blackJackGame.getPlayers();
         OutputView.printInitCard(players.getPlayers(), dealer.getFirstCard());
@@ -56,7 +56,7 @@ public class BlackJackGameController {
 
     private void handOutCardToDealer(BlackJackGame blackJackGame, Dealer dealer) {
         while (dealer.isUnderThanBoundary(Dealer.DRAWING_BOUNDARY)) {
-            blackJackGame.handOutCardTo(shufflingMachine, dealer);
+            blackJackGame.handOutCardTo(deck, dealer);
             OutputView.printDealerReceiveOneMoreCard();
         }
     }
@@ -90,7 +90,7 @@ public class BlackJackGameController {
 
     private boolean handOutCardByCommand(BlackJackGame blackJackGame, Player player, String playerAnswer) {
         if (playerAnswer.equals(HIT_COMMAND)) {
-            blackJackGame.handOutCardTo(shufflingMachine, player);
+            blackJackGame.handOutCardTo(deck, player);
             OutputView.printParticipantCards(player.getName(), player.getCards());
             return true;
         }
