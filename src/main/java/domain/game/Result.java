@@ -11,18 +11,20 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result compareHandValue(int playerHandValue, int dealerHandValue) {
-        if (playerHandValue > dealerHandValue) {
+    public static Result calculateResult(int handValueGap, int handCountGap) {
+        if (handValueGap > 0) {
             return WIN;
         }
-        return LOSE;
-    }
-
-    public static Result compareHandCount(int playerHandCount, int dealerHandCount) {
-        if (playerHandCount > dealerHandCount) {
+        if (handValueGap < 0) {
             return LOSE;
         }
-        return WIN;
+        if (handCountGap > 0) {
+            return LOSE;
+        }
+        if (handCountGap < 0) {
+            return WIN;
+        }
+        return TIE;
     }
 
     public String getResult() {
