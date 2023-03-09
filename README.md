@@ -34,6 +34,7 @@
 - [x] CardHand에 Card를 저장한다.
 - [x] CardHand의 점수가 블랙잭인지 확인한다.
 - [x] bust인지 확인한다.
+- [x] blackjack인지 확인한다.
 
 ### Dealer extends AbstractUser
 - 플레이어와 비교하여 승패를 결정하는 유저

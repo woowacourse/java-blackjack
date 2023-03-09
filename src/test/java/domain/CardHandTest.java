@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,25 +55,5 @@ class CardHandTest {
         assertThat(cardHand.calculateScore()).isEqualTo(21);
     }
 
-    @DisplayName("점수 계산 블랙잭인 경우")
-    @Test
-    void 블랙잭인_경우() {
-        CardHand cardHand = new CardHand();
 
-        cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
-        cardHand.add(new Card(Symbol.SPADE, CardNumber.JACK));
-
-        assertThat(cardHand.isBlackjack()).isTrue();
-    }
-
-    @DisplayName("점수 계산 블랙잭이 아닌 경우")
-    @Test
-    void 블랙잭이_아닌_경우() {
-        CardHand cardHand = new CardHand();
-
-        cardHand.add(new Card(Symbol.DIAMOND, CardNumber.ACE));
-        cardHand.add(new Card(Symbol.SPADE, CardNumber.NINE));
-
-        assertThat(cardHand.isBlackjack()).isFalse();
-    }
 }

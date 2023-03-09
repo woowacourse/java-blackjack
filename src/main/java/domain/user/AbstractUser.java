@@ -24,10 +24,6 @@ abstract public class AbstractUser {
         return this.cardHand.calculateScore();
     }
 
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
-    }
-
     public void addCard(Card card) {
         if (canAdd()) {
             cardHand.add(card);
@@ -42,5 +38,9 @@ abstract public class AbstractUser {
 
     public boolean isBust() {
         return this.cardHand.calculateScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return cardHand.getCards().size() == 2 && cardHand.haveAce() && cardHand.haveTenScoreCard();
     }
 }

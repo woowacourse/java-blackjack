@@ -29,7 +29,7 @@ public enum CardNumber {
         return this.equals(ACE);
     }
 
-    public boolean isTenCard() {
+    public boolean isTenScoreCard() {
         return this.equals(TEN) || this.equals(JACK) || this.equals(QUEEN) || this.equals(KING);
     }
 }

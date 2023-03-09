@@ -69,7 +69,6 @@ class DealerTest {
         CardHand cardHand = new CardHand();
         cardHand.add(new Card(Symbol.SPADE, CardNumber.ACE));
         cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
-        cardHand.add(new Card(Symbol.CLOVER, CardNumber.KING));
         Dealer dealer = new Dealer(cardHand);
         assertThat(dealer.isBlackjack()).isTrue();
     }

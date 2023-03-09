@@ -25,7 +25,7 @@ public class Card {
         return this.cardNumber.isAce();
     }
 
-    public boolean isTenCard() {
-        return this.cardNumber.isTenCard();
+    public boolean isTenScoreCard() {
+        return this.cardNumber.isTenScoreCard();
     }
 }

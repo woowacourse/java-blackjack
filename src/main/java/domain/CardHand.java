@@ -26,12 +26,12 @@ public class CardHand {
         return scoreBeforeCheckAce;
     }
 
-    private boolean haveAce() {
+    public boolean haveAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
-    public boolean isBlackjack() {
-        return cards.size() == 2 && cards.stream().anyMatch(Card::isAce) && cards.stream().anyMatch(Card::isTenCard);
+    public boolean haveTenScoreCard() {
+        return cards.stream().anyMatch(Card::isTenScoreCard);
     }
 
     public List<Card> getCards() {
