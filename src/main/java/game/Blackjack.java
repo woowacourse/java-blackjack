@@ -33,6 +33,15 @@ public class Blackjack {
         }
     }
 
+    private boolean getIsHit(Player player) {
+        try {
+            return readIsHit(player);
+        } catch (RuntimeException exception) {
+            printErrorMessage(exception);
+            return getIsHit(player);
+        }
+    }
+
     public void hitOrStandByPlayer(Player player, boolean isHit) {
         playerHit(player, isHit);
         printSingleGambler(player);
@@ -43,15 +52,6 @@ public class Blackjack {
             return false;
         }
         return true;
-    }
-
-    private boolean getIsHit(Player player) {
-        try {
-            return readIsHit(player);
-        } catch (RuntimeException exception) {
-            printErrorMessage(exception);
-            return getIsHit(player);
-        }
     }
 
     private void playerHit(Player player, boolean isHit) {
