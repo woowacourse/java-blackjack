@@ -82,7 +82,7 @@ public class OutputView {
     }
 
     public void printRewardResults(Reward dealerRewardResult, BettingResultsDto playersResultDto) {
-        System.out.println("## 최종 수익");
+        System.out.println("\n## 최종 수익");
         System.out.println("딜러: " + dealerRewardResult.getReward());
         playersResultDto.getBettingResults()
                 .stream()
@@ -91,6 +91,6 @@ public class OutputView {
     }
 
     private String parseMessage(BettingResultDto bettingResultDto) {
-        return bettingResultDto.getName().getValue() + ": " + bettingResultDto.getReward().getReward();
+        return bettingResultDto.getName().getValue() + DIVISION + bettingResultDto.getReward();
     }
 }
