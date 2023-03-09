@@ -17,7 +17,7 @@ public class Player {
         this.cards = new Cards();
     }
 
-    public void initDraw(Deck deck) {
+    public void drawInitialCards(Deck deck) {
         drawCard(deck.pickCard());
         drawCard(deck.pickCard());
     }
