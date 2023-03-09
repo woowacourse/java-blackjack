@@ -36,7 +36,7 @@ public class Players {
         return players.stream()
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
 
     public Stream<Player> stream() {

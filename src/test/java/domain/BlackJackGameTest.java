@@ -46,7 +46,7 @@ class BlackJackGameTest {
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         Players players = new Players(createPlayers("pobi", "ori"));
-        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        Dealer dealer = createEmptyCardDealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
 
@@ -69,7 +69,7 @@ class BlackJackGameTest {
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         Players players = new Players(createPlayers("pobi", "ori"));
-        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        Dealer dealer = createEmptyCardDealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
         Player player = players.findPlayerByName("pobi");
@@ -90,7 +90,7 @@ class BlackJackGameTest {
         List<Card> cards = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(cards);
         Players players = new Players(createPlayers("pobi", "ori"));
-        Dealer dealer = new Dealer(new DrawnCards(new ArrayList<>()));
+        Dealer dealer = createEmptyCardDealer();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, cardDeck);
 
@@ -112,13 +112,14 @@ class BlackJackGameTest {
         cards.add(new Card(CardType.SPADE, CardValue.JACK));
         cards.add(new Card(CardType.HEART, CardValue.JACK));
         cards.add(new Card(CardType.DIAMOND, CardValue.JACK));
-        Player player = new Player(new Name("ori"), new DrawnCards(cards));
 
+        Player player = new Player(new Name("ori"), new DrawnCards(cards));
         List<Player> players = createPlayers("pobi");
         players.add(player);
 
-        BlackJackGame blackJackGame = new BlackJackGame(new Players(players), createEmptyCardDealer(),
-                CardDeck.createShuffled(deck));
+        Dealer dealer = createEmptyCardDealer();
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Players(players), dealer, CardDeck.createShuffled(deck));
 
         boolean expected = false;
         // when
@@ -135,10 +136,11 @@ class BlackJackGameTest {
         Card givenCard = new Card(CardType.SPADE, CardValue.JACK);
         cards.add(givenCard);
 
+        List<Player> players = createPlayers("a", "b");
         Dealer dealer = new Dealer(new DrawnCards(cards));
+
         List<Card> rawDeck = createFillCards();
         CardDeck cardDeck = CardDeck.createShuffled(rawDeck);
-        List<Player> players = createPlayers("a", "b");
         BlackJackGame blackJackGame = new BlackJackGame(new Players(players), dealer, cardDeck);
 
         Card expected = rawDeck.get(0);
