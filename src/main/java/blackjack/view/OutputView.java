@@ -78,9 +78,10 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printResults(UserResult results) {
+    public static void printResults(UserResult results, Dealer dealer) {
         System.out.println(RESULT_TITLE);
         HashMap<User, String> userResults = results.getResults();
+        System.out.println(dealer.getName() + CARD_USER_DELIMITER + userResults.remove(dealer));
         for (User user : userResults.keySet()) {
             System.out.println(user.getName() + CARD_USER_DELIMITER + userResults.get(user));
         }
