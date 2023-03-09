@@ -55,37 +55,4 @@ public class BlackjackGameTest {
 
         Assertions.assertThat(playerPobi.getPlayerCards()).usingRecursiveComparison().isEqualTo(playerCard);
     }
-
-    @Test
-    @DisplayName("플레이어의 최종 승패 결과를 가져온다.")
-    void calculatePlayerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
-
-        blackjackGame.distributeInitialCard();
-
-        Player pobi = players.getPlayersWithOutDealer().get(0);
-
-        Assertions.assertThat(blackjackGame.getPlayersResult(pobi)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    @DisplayName("딜러의 최종 승패 결과를 가져온다.")
-    void calculateDealerWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
-
-        blackjackGame.distributeInitialCard();
-
-        Assertions.assertThat(blackjackGame.getDealerResult(players)).isEqualTo(List.of(Result.WIN, Result.WIN));
-    }
-
-    @Test
-    @DisplayName("플레이어와 딜러의 승패 계산")
-    void calculateWinOrLoseTest() {
-        BlackjackGame blackjackGame = new BlackjackGame(players, cardDeck);
-
-        Assertions.assertThat(blackjackGame.isPlayerWin(21, 10)).isEqualTo(Result.LOSE);
-        Assertions.assertThat(blackjackGame.isPlayerWin(10, 21)).isEqualTo(Result.WIN);
-        Assertions.assertThat(blackjackGame.isPlayerWin(25, 22)).isEqualTo(Result.LOSE);
-        Assertions.assertThat(blackjackGame.isPlayerWin(21, 21)).isEqualTo(Result.DRAW);
-    }
 }

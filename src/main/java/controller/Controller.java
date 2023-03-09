@@ -1,9 +1,9 @@
 package controller;
 
 import domain.BlackjackGame;
+import domain.GameResult;
 import domain.deck.CardDeck;
 import domain.generator.CardGenerator;
-import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
 import strategy.ShuffleCardsStrategy;
@@ -21,12 +21,14 @@ public class Controller {
 
     public void run() {
         Players players = setPlayers();
+        GameResult gameResult = new GameResult(players);
         BlackjackGame game = new BlackjackGame(players,
                 new CardDeck(new CardGenerator().generate(new ShuffleCardsStrategy())));
+        setPlayersBetMoney(players, gameResult);
         distributeInitialCard(players, game);
-        pollPlayerAdditionalCard(players, game);
-        pollDealerAdditionalCard(players, game);
-        printResult(players, game);
+        pollAdditionalCard(players, game);
+
+        printResult(players, game, gameResult);
     }
 
     private Players setPlayers() {
@@ -50,12 +52,6 @@ public class Controller {
         outputView.printInitialCards(players.findDealer(), players);
     }
 
-    private void pollPlayerAdditionalCard(Players players, BlackjackGame game) {
-        for (Player player : players.getPlayersWithOutDealer()) {
-            selectByPlayer(game, player);
-        }
-    }
-
     private void selectByPlayer(BlackjackGame game, Player player) {
         boolean command;
         do {
@@ -74,17 +70,19 @@ public class Controller {
         }
     }
 
-    private void pollDealerAdditionalCard(Players players, BlackjackGame game) {
-        Dealer dealer = players.findDealer();
-        while (!dealer.isOverDealerStandard()) {
+    private void pollAdditionalCard(Players players, BlackjackGame game) {
+        for (Player player : players.getPlayersWithOutDealer()) {
+            selectByPlayer(game, player);
+        }
+        while (!players.findDealer().isOverDealerStandard()) {
             game.distributeDealer();
-            outputView.printDistributeDealer(dealer);
+            outputView.printDistributeDealer(players.findDealer());
         }
     }
 
-    private void printResult(Players players, BlackjackGame game) {
-        Dealer dealer = players.findDealer();
-        outputView.printCardsResult(dealer, players);
-        outputView.printWinnerResult(players, game);
+    private void printResult(Players players, BlackjackGame game, GameResult gameResult) {
+        gameResult.calculatePlayersResult(players);
+        outputView.printCardsResult(players.findDealer(), players);
+        outputView.printWinnerResult(players, game, gameResult);
     }
 }
