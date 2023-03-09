@@ -16,45 +16,39 @@ public class BlackJackRuleImpl implements BlackJackRule {
     public ResultType calculateDealerResult(final Dealer dealer, final Player player) {
         //이 부분이 애매해서 리팩토링을 해보려고 했는데, 더 좋은 방법이 생각나지 않아서 일단 이렇게 구현했습니다.
         //enum 클래스에 BiPredicate를 추가해서 구현해보려고 했는데, enum 클래스에 메서드를 추가하는 것이 맞는지 잘 모르겠습니다.
-        if (isBlackJackWin(dealer, player)) {
-            return ResultType.BLACKJACK_WIN;
+        if (dealer.hasBlackJack()) {
+            return playWithBlackjack(player);
         }
-        if (isBlackJackLose(dealer, player)) {
-            return ResultType.BLACKJACK_LOSE;
+        if (dealer.currentScore() > BUST_POINT) {
+            return playWithBust(player);
         }
-        final int dealerScore = dealer.currentScore();
-        final int playerScore = player.currentScore();
-        if (isTie(dealerScore, playerScore)) {
+        return playWithScore(dealer, player);
+    }
+
+    private ResultType playWithBlackjack(final Player player) {
+        if (player.hasBlackJack()) {
             return ResultType.TIE;
         }
-        if (isDealerWin(dealerScore, playerScore)) {
-            return ResultType.WIN;
+        return ResultType.BLACKJACK_WIN;
+    }
+
+    private ResultType playWithBust(final Player player) {
+        if (player.currentScore() > BUST_POINT) {
+            return ResultType.TIE;
+        }
+        if (player.hasBlackJack()) {
+            return ResultType.BLACKJACK_LOSE;
         }
         return ResultType.LOSE;
     }
 
-    private boolean isBlackJackWin(final Dealer dealer, final Player player) {
-        return dealer.hasBlackJack() && !player.hasBlackJack();
-    }
-
-    private boolean isBlackJackLose(final Dealer dealer, final Player player) {
-        return !dealer.hasBlackJack() && player.hasBlackJack();
-    }
-
-    private boolean isTie(final int dealerScore, final int playerScore) {
-        if (playerScore > BUST_POINT && dealerScore > BUST_POINT) {
-            return true;
+    private ResultType playWithScore(final Dealer dealer, final Player player) {
+        if (player.hasBlackJack()) {
+            return ResultType.BLACKJACK_LOSE;
         }
-        return playerScore == dealerScore;
-    }
-
-    private boolean isDealerWin(final int dealerScore, final int playerScore) {
-        if (playerScore > BUST_POINT) {
-            return true;
+        if (player.currentScore() > BUST_POINT || dealer.currentScore() > player.currentScore()) {
+            return ResultType.WIN;
         }
-        if (dealerScore > BUST_POINT) {
-            return false;
-        }
-        return dealerScore > playerScore;
+        return ResultType.LOSE;
     }
 }
