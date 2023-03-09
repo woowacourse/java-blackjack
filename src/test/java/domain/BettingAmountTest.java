@@ -33,7 +33,7 @@ class BettingAmountTest {
     void playerBlackJackBettingAmount() {
         BettingAmount initial = BettingAmount.fromPlayer(10000);
 
-        BettingAmount result = initial.wonBlackJack();
+        BettingAmount result = initial.calculateMultiple(GameResult.BLACKJACK);
 
         assertThat(result.getRevenue()).isEqualTo(10000 * 1.5);
     }
@@ -43,7 +43,7 @@ class BettingAmountTest {
     void playerWinBettingAmount() {
         BettingAmount initial = BettingAmount.fromPlayer(10000);
 
-        BettingAmount result = initial.won();
+        BettingAmount result = initial.calculateMultiple(GameResult.WIN);
 
         assertThat(result.getRevenue()).isEqualTo(10000 * 1);
     }
@@ -53,7 +53,7 @@ class BettingAmountTest {
     void playerLoseOrBustBettingAmount() {
         BettingAmount initial = BettingAmount.fromPlayer(10000);
 
-        BettingAmount result = initial.lostOrBust();
+        BettingAmount result = initial.calculateMultiple(GameResult.LOSE);
 
         assertThat(result.getRevenue()).isEqualTo(10000 * -1);
     }
@@ -75,7 +75,7 @@ class BettingAmountTest {
         BettingAmount dealerInitialAmount = BettingAmount.getDealerInitialAmount();
         BettingAmount playerInitialAmount = BettingAmount.fromPlayer(10000);
 
-        BettingAmount dealerResult = dealerInitialAmount.subtract(playerInitialAmount);
+        BettingAmount dealerResult = dealerInitialAmount.subtractFromOtherPlayer(playerInitialAmount);
 
         assertThat(dealerResult.getRevenue()).isEqualTo(dealerInitialAmount.getRevenue() - 10000);
     }
