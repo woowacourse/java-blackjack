@@ -8,6 +8,11 @@ public class InputView {
     private static final String CHANGE_LINE = "\n";
     private static final String INPUT_PLAYERS_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_ORDER_CARD_MESSAGE = CHANGE_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String YES = "y";
+    private static final String NO = "n";
+    private static final String TARGET_SPACE = " ";
+    private static final String REPLACEMENT = "";
+    private static final String INPUT_PLAYER_DELIMITER = ",";
 
     private final Scanner scanner;
 
@@ -17,24 +22,19 @@ public class InputView {
 
     public List<String> inputPlayers() {
         System.out.println(INPUT_PLAYERS_MESSAGE);
-        return List.of(scanner.nextLine().replace(" ", "").split(","));
+        return List.of(scanner.nextLine().replace(TARGET_SPACE, REPLACEMENT).split(INPUT_PLAYER_DELIMITER));
     }
 
-    public String inputOrderCard(final String name) {
+    public boolean inputOrderCard(final String name){
         System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        validate(input);
+        return input.equals(YES);
     }
 
-//    public boolean inputOrderCard1(final String name){
-//        System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
-//        String input = scanner.nextLine();
-//        validate(input);
-//        return input.equals("y");
-//    }
-//
-//    public void validate(String input){
-//        if(!input.equals("y")&&!input.equals("n")){
-//            throw new IllegalArgumentException();
-//        }
-//    }
+    public void validate(String input){
+        if(!input.equals(YES)&&!input.equals(NO)){
+            throw new IllegalArgumentException();
+        }
+    }
 }

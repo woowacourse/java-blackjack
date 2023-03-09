@@ -6,7 +6,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.view.Order;
 
 import java.util.List;
 
@@ -36,8 +35,8 @@ public class BlackjackGame {
         participant.drawCard(deck.drawCard());
     }
 
-    public boolean isPlayerCanPlay(final Participant participant, final Order order) {
-        if (participant.isBust() || !order.isYES()) {
+    public boolean isPlayerCanPlay(final Participant participant, final boolean order) {
+        if (participant.isBust() || !order) {
             return false;
         }
         participant.drawCard(deck.drawCard());

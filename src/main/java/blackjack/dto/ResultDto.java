@@ -1,4 +1,4 @@
-package blackjack.view.dto;
+package blackjack.dto;
 
 import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Player;

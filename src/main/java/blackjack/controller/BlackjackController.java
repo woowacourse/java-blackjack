@@ -9,11 +9,10 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
-import blackjack.view.Order;
 import blackjack.view.OutputView;
-import blackjack.view.dto.CardsDto;
-import blackjack.view.dto.ParticipantsDto;
-import blackjack.view.dto.ResultDto;
+import blackjack.dto.CardsDto;
+import blackjack.dto.ParticipantsDto;
+import blackjack.dto.ResultDto;
 
 import java.util.List;
 
@@ -75,10 +74,8 @@ public class BlackjackController {
     }
 
     private void hitEachPlayer(final BlackjackGame blackjackGame, Player player) {
-        Order order = Order.from(inputView.inputOrderCard(player.getName()));
-        while (blackjackGame.isPlayerCanPlay(player, order)) {
+        while (blackjackGame.isPlayerCanPlay(player, inputView.inputOrderCard(player.getName()))) {
             outputView.outputPlayerCard(player.getName(), new CardsDto(player.getCards(), player.getTotalScore()));
-            order = Order.from(inputView.inputOrderCard(player.getName()));
         }
     }
 

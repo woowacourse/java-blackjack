@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.view.dto.CardInfo;
-import blackjack.view.dto.CardsDto;
-import blackjack.view.dto.ParticipantsDto;
-import blackjack.view.dto.ResultDto;
+import blackjack.dto.CardInfo;
+import blackjack.dto.CardsDto;
+import blackjack.dto.ParticipantsDto;
+import blackjack.dto.ResultDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,14 +75,14 @@ public class OutputView {
 
     public void outputFinalResult(ResultDto resultDto) {
         System.out.println(FINAL_RESULT_MASSAGE);
-        outputDealerResult(DEALER_NAME, resultDto.getDealerWinCount(),
+        outputDealerResult(resultDto.getDealerWinCount(),
                 resultDto.getDealerTieCount(),
                 resultDto.getDealerLoseCount());
         resultDto.getPlayerResult().forEach(this::outputPlayerResult);
     }
 
-    private void outputDealerResult(final String name, final int win, final int tie, final int lose) {
-        System.out.println(name + DEALER_DELIMITER
+    private void outputDealerResult(final int win, final int tie, final int lose) {
+        System.out.println(DEALER_NAME + DEALER_DELIMITER
                 + win + WIN_COUNT_MASSAGE
                 + tie + TIE_COUNT_MASSAGE
                 + lose + LOSE_COUNT_MASSAGE);
