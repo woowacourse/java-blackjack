@@ -19,42 +19,21 @@ public class Result {
 
     private Map<GameOutcome, Integer> initDealerResult() {
         return new HashMap<>(Arrays.stream(GameOutcome.values())
-                .collect(Collectors.toMap(value -> value, ignored -> 0)));
+                .collect(Collectors.toMap(value -> value, value -> 0)));
     }
 
     private Map<Guest, GameOutcome> generateGuestsResult(final Dealer dealer, final List<Guest> guests) {
-        return guests.stream()
-                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealer, guest), (guest1,guest2) -> guest1, LinkedHashMap::new));
-    }
-
-    private GameOutcome judgeGuestResult(final Dealer dealer, final Guest guest) {
-        if (isBlackJack(guest)) {
-            return judgeResultWhenGuestBlackJack(dealer);
-        }
-        if (guest.getScore() <= BLACKJACK_MAX_SCORE) {
-            return judgeResultWhenGuestUnderMaxScore(dealer, guest);
-        }
-        return LOSE;
-    }
-
-    private boolean isBlackJack(Player player) {
-        return player.getScore() == BLACKJACK_MAX_SCORE && player.getCards().size() == 2;
-    }
-
-    private GameOutcome judgeResultWhenGuestBlackJack(Dealer dealer) {
-        if (dealer.getScore() == BLACKJACK_MAX_SCORE && dealer.getCards().size() == 2) {
-            return DRAW;
-        }
-        return BLACKJACK_WIN;
-    }
-
-    private GameOutcome judgeResultWhenGuestUnderMaxScore(Dealer dealer, Guest guest) {
         int dealerScore = dealer.getScore();
-        int guestScore = guest.getScore();
-        if (isBlackJack(dealer) || dealerScore <= BLACKJACK_MAX_SCORE && dealerScore > guestScore) {
+        return guests.stream()
+                .collect(Collectors.toMap(guest -> guest, guest -> judgeGuestResult(dealerScore, guest.getScore()), (guest1,guest2) -> guest1, LinkedHashMap::new));
+    }
+
+    private GameOutcome judgeGuestResult(final int dealerScore, final int guestScore) {
+        if (guestScore > BLACKJACK_MAX_SCORE ||
+            (dealerScore <= BLACKJACK_MAX_SCORE && dealerScore > guestScore)) {
             return LOSE;
         }
-        if (dealerScore > BLACKJACK_MAX_SCORE || dealerScore < guestScore) {
+        if (dealerScore > BLACKJACK_MAX_SCORE || guestScore > dealerScore) {
             return WIN;
         }
         return DRAW;
@@ -67,7 +46,7 @@ public class Result {
     }
 
     private void judgeDealerResult(final GameOutcome gameOutcome) {
-        if (gameOutcome == WIN || gameOutcome == BLACKJACK_WIN) {
+        if (gameOutcome == WIN) {
             dealerResult.put(LOSE, dealerResult.get(LOSE) + 1);
         }
         if (gameOutcome == LOSE) {

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class ResultTest {
     private final Card ten = new Card(Symbol.CLOVER, CardValue.KING);
     private final Card nine = new Card(Symbol.CLOVER, CardValue.NINE);
-    private final Card ace = new Card(Symbol.CLOVER, CardValue.ACE);
+    private final Card one = new Card(Symbol.CLOVER, CardValue.ACE);
     private final Card two = new Card(Symbol.CLOVER, CardValue.TWO);
     private final Card three = new Card(Symbol.CLOVER, CardValue.THREE);
     private final Card four = new Card(Symbol.CLOVER, CardValue.FOUR);
@@ -23,14 +23,14 @@ class ResultTest {
         Guest win = new Guest(new Name("win"), ten, nine);
         win.addCard(two);
 
-        Guest lose = new Guest(new Name("lose"), ten, ace);
+        Guest lose = new Guest(new Name("lose"), ten, one);
         lose.addCard(two);
 
         Guest draw = new Guest(new Name("draw"), ten, nine);
-        draw.addCard(ace);
+        draw.addCard(one);
 
         Dealer dealer = new Dealer(ten, nine);
-        dealer.addCard(ace);
+        dealer.addCard(one);
 
         Result result = new Result(dealer, List.of(win, lose, draw));
 
@@ -157,7 +157,7 @@ class ResultTest {
         @Test
         void Should_GuestLose_When_DealerAndGuestBelow21() {
             Guest guest = new Guest(new Name("guest"), ten, nine);
-            guest.addCard(ace);
+            guest.addCard(one);
 
             Dealer dealer = new Dealer(ten, nine);
             dealer.addCard(two);
@@ -244,7 +244,7 @@ class ResultTest {
             guest.addCard(two);
 
             Dealer dealer = new Dealer(ten, nine);
-            dealer.addCard(ace);
+            dealer.addCard(one);
 
             Result result = new Result(dealer, List.of(guest));
 
@@ -252,47 +252,6 @@ class ResultTest {
             Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
 
             assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.WIN);
-            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
-            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(1);
-            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
-        }
-    }
-
-    @Nested
-    @DisplayName("게스트가 블랙잭일 때, ")
-    class GuestBlackJack {
-        @DisplayName("딜러가 블랙잭일 때 무승부")
-        @Test
-        void Should_Draw_When_DealerAndGuestBlackJack() {
-            Guest guest = new Guest(new Name("guest"), ten, ace);
-
-            Dealer dealer = new Dealer(ten, ace);
-
-            Result result = new Result(dealer, List.of(guest));
-
-            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
-            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
-
-            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.DRAW);
-            assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
-            assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(0);
-            assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(1);
-        }
-
-        @DisplayName("딜러의 점수가 21일 때 게스트 승")
-        @Test
-        void Should_GuestWin_When_Dealer21AndGuestBlackJack() {
-            Guest guest = new Guest(new Name("guest"), ten, ace);
-
-            Dealer dealer = new Dealer(ten, nine);
-            dealer.addCard(two);
-
-            Result result = new Result(dealer, List.of(guest));
-
-            Map<Guest, GameOutcome> guestsResult = result.getGuestsResult();
-            Map<GameOutcome, Integer> dealerResult = result.getDealerResult();
-
-            assertThat(guestsResult.get(guest)).isEqualTo(GameOutcome.BLACKJACK_WIN);
             assertThat(dealerResult.get(GameOutcome.WIN)).isEqualTo(0);
             assertThat(dealerResult.get(GameOutcome.LOSE)).isEqualTo(1);
             assertThat(dealerResult.get(GameOutcome.DRAW)).isEqualTo(0);
