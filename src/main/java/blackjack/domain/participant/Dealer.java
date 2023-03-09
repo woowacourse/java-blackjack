@@ -12,4 +12,11 @@ public class Dealer extends Participant {
     }
 
     public boolean canNotHit(){return getTotalScore() > 16;}
+    public void reverseAllExceptOne(){
+        this.getCards().forEach(Card::reverseCard);
+        this.getCards().get(0).openCard();
+    }
+    public void openAllCard(){
+        this.getCards().forEach(Card::openCard);
+    }
 }

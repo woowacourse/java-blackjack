@@ -10,9 +10,15 @@ public class CardsDto {
     private final List<CardInfo> cards;
 
     public CardsDto(List<Card> cards){
-        this.cards = cards.stream().map(CardInfo::new).collect(Collectors.toList());
+
+        this.cards = cards.stream()
+                .map(CardInfo::new)
+                .collect(Collectors.toList());
     }
     public List<CardInfo> getCards() {
-        return cards;
+
+        return cards.stream()
+                .filter(CardInfo::isOpen)
+                .collect(Collectors.toList());
     }
 }

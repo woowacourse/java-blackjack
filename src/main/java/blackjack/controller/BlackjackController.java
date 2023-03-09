@@ -35,10 +35,12 @@ public class BlackjackController {
         final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
 
         startGame(blackjackGame,participants);
+        participants.getDealer().reverseAllExceptOne();
         outputView.outputParticipantCards(new ParticipantsDto(participants));
         hitParticipants(blackjackGame,participants);
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
+        participants.getDealer().openAllCard();
         outputView.outputParticipantCards(new ParticipantsDto(participants));
     }
 
