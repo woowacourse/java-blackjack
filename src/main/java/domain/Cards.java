@@ -9,12 +9,10 @@ public class Cards {
     private static final int BLACKJACK_CONDITION = 21;
 
     private final List<Card> cards;
-    private final boolean blackJack;
 
     public Cards(final List<Card> cards) {
         validateDuplicated(cards);
         this.cards = cards;
-        this.blackJack = isTwentyOne();
     }
 
     public int sumOfCards() {
@@ -56,12 +54,12 @@ public class Cards {
         }
     }
 
-    public boolean isTwentyOne() {
-        return sumOfCards() == BLACKJACK_CONDITION;
+    public boolean isBlackJack() {
+        return cards.size() == 2 && isTwentyOne();
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == 2 && blackJack;
+    private boolean isTwentyOne() {
+        return sumOfCards() == BLACKJACK_CONDITION;
     }
 
     public List<String> cardsToString() {
