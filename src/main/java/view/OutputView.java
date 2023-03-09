@@ -1,5 +1,7 @@
 package view;
 
+import static view.OutputView.Format.RESULT;
+
 import domain.BlackjackGame;
 import domain.DealerResult;
 import domain.BlackjackScore;
@@ -19,12 +21,12 @@ public class OutputView {
 
     public void printInitialCards(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
-        String namesFormat = players.getPlayers().stream()
+        String playerNames = players.getPlayers().stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(DELIMITER));
 
         breakLine();
-        String initialCardsPrefixFormat = String.format(Format.CARD_DISTRIBUTION.format, namesFormat);
+        String initialCardsPrefixFormat = String.format(Format.CARD_DISTRIBUTION.format, playerNames);
         System.out.println(initialCardsPrefixFormat);
         printParticipantsInitialCards(blackjackGame);
         breakLine();
@@ -109,7 +111,7 @@ public class OutputView {
             dealerResultsFormat.append(getResultFormat(result, dealerResult.getResultCount(result)));
         }
 
-        String format = String.format(Format.RESULT.format, dealer.getName(), dealerResultsFormat);
+        String format = String.format(RESULT.format, dealer.getName(), dealerResultsFormat);
         System.out.println(format);
     }
 
@@ -122,7 +124,7 @@ public class OutputView {
     }
 
     private void printPlayerResult(Participant player, Result result) {
-        String format = String.format(Format.RESULT.format,
+        String format = String.format(RESULT.format,
                 player.getName(), result.getValue());
         System.out.println(format);
     }
