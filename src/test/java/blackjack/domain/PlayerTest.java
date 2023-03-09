@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,7 @@ class PlayerTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewPlayer() {
-        assertDoesNotThrow(() -> new Player(new Name("name")));
+        assertThat(tori.getName()).isEqualTo("tori");
     }
 
     @DisplayName("카드 추가 테스트")

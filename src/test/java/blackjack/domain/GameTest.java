@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,8 @@ class GameTest {
             players.add(new Player(new Name("newName")));
         }
         GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
+        Game game = new Game(new Deck(), gamePlayer);
 
-        assertDoesNotThrow(() -> new Game(new Deck(), gamePlayer));
+        assertThat(game.getPlayersCount()).isEqualTo(3);
     }
 }

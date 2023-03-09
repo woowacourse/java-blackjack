@@ -1,7 +1,7 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ class PlayersTest {
             players.add(new Player(new Name("newName")));
         }
 
-        assertDoesNotThrow(() -> new Players(players));
+        assertThat(new Players(players).count()).isEqualTo(3);
     }
 
     @DisplayName("플레이어 수는 1에서 6사이여야 한다.")

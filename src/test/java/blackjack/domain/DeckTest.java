@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +18,7 @@ class DeckTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewDeck() {
-        assertDoesNotThrow(Deck::new);
+        assertThat(deck.size()).isEqualTo(52);
     }
 
     @DisplayName("덱의 가장 위쪽에 위치하는 카드를 뽑을 수 있다.")

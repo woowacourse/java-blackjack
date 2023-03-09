@@ -52,4 +52,8 @@ public class GamePlayer {
     public Players getPlayers() {
         return players;
     }
+
+    public int count() {
+        return players.count() + 1;
+    }
 }

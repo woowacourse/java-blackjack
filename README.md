@@ -57,8 +57,10 @@
 
 - 테스트 코드
   - [x] given when then 제거
-  - [ ] assertDoesNotThrow를 사용한 테스트 메서드 -> 생성한 객체의 상태를 체크해주는 방식으로 변경
+  - [x] assertDoesNotThrow를 사용한 테스트 메서드 -> 생성한 객체의 상태를 체크해주는 방식으로 변경
   - [x] `@BeforeEach` 사용 부분 변경
+  - [ ] GameTest 단위테스트 추가
+  - [ ] Parameterized test 네이밍 출력 형식 변경
 
 
 - 클래스 내부 로직 변경

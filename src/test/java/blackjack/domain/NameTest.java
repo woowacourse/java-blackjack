@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,9 @@ class NameTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewName() {
-        assertDoesNotThrow(() -> new Name("name"));
+        Name name = new Name("name");
+
+        assertThat(name.getName()).isEqualTo("name");
     }
 
     @DisplayName("양 끝 공백을 가진 이름이 들어오면, 공백을 제거한다.")

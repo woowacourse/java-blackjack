@@ -1,18 +1,16 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
-
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewCard() {
-        assertDoesNotThrow(() -> new Card(CardNumber.EIGHT, CardSymbol.HEARTS));
+        assertThat(new Card(CardNumber.EIGHT, CardSymbol.HEARTS).getCardNumberToString()).isEqualTo("8");
     }
 
     @DisplayName("ACE 카드 확인 테스트")
