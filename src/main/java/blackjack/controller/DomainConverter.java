@@ -1,11 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Players;
 import blackjack.response.CardResponse;
-import blackjack.response.ResultTypeResponse;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,31 +45,6 @@ class DomainConverter {
                         entry -> entry.getValue().stream()
                                 .map(CardResponse::from)
                                 .collect(Collectors.toList()),
-                        (oldValue, newValue) -> newValue,
-                        LinkedHashMap::new
-                ));
-    }
-
-    static Map<ResultTypeResponse, Integer> convertDealerResults(final Map<String, ResultType> generatePlayersResult) {
-        final Map<ResultTypeResponse, Integer> dealerResult = new HashMap<>();
-        final int dealerWinCount = Collections.frequency(generatePlayersResult.values(), ResultType.WIN);
-        final int dealerBlackJackWinCount = Collections.frequency(generatePlayersResult.values(),
-                ResultType.BLACKJACK_WIN);
-        final int dealerLoseCount = Collections.frequency(generatePlayersResult.values(), ResultType.LOSE);
-        final int dealerBlackJackLoseCount = Collections.frequency(generatePlayersResult.values(),
-                ResultType.BLACKJACK_LOSE);
-        final int drawCount = Collections.frequency(generatePlayersResult.values(), ResultType.TIE);
-        dealerResult.put(ResultTypeResponse.from(ResultType.LOSE.getName()), dealerWinCount + dealerBlackJackLoseCount);
-        dealerResult.put(ResultTypeResponse.from(ResultType.WIN.getName()), dealerLoseCount + dealerBlackJackWinCount);
-        dealerResult.put(ResultTypeResponse.from(ResultType.TIE.getName()), drawCount);
-        return dealerResult;
-    }
-
-    static Map<String, ResultTypeResponse> convertPlayersResult(final Map<String, ResultType> generatePlayersResult) {
-        return generatePlayersResult.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> ResultTypeResponse.from(entry.getValue().getName()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
