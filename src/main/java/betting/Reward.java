@@ -5,7 +5,7 @@ import blackjackgame.Result;
 public class Reward {
     private final int reward;
 
-    private Reward(int reward) {
+    public Reward(int reward) {
         this.reward = reward;
     }
 

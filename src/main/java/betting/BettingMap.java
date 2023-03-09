@@ -6,6 +6,7 @@ import java.util.Map;
 import participants.Player;
 
 public class BettingMap {
+    public static final int NEGATIVE_UNIT = -1;
     private final Map<Player, BettingAmount> bettingMap = new LinkedHashMap<>();
 
 
@@ -19,5 +20,12 @@ public class BettingMap {
 
     public Map<Player, BettingAmount> getBettingMap() {
         return bettingMap;
+    }
+
+    public int calculateDealerReward() {
+        return bettingMap.entrySet()
+                .stream()
+                .mapToInt(entry -> entry.getValue().calculateRewardByResult(entry.getKey().getResult()))
+                .sum() * NEGATIVE_UNIT;
     }
 }

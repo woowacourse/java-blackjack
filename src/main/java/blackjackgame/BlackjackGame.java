@@ -6,6 +6,7 @@ import java.util.Set;
 
 import betting.BettingAmount;
 import betting.BettingMap;
+import betting.Reward;
 import deck.Deck;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
@@ -126,5 +127,9 @@ public class BlackjackGame {
 
     public void saveBetAmount(String name, int betAmount) {
         bettingMap.saveBet(new Player(new Name(name)), new BettingAmount(betAmount));
+    }
+
+    public Reward getDealerRewardResult() {
+        return new Reward(bettingMap.calculateDealerReward());
     }
 }
