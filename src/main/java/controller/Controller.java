@@ -2,6 +2,7 @@ package controller;
 
 import domain.BettingMoney;
 import domain.BlackjackGame;
+import domain.Command;
 import domain.GameResult;
 import domain.deck.CardDeck;
 import domain.generator.CardGenerator;
@@ -61,7 +62,7 @@ public class Controller {
     }
 
     private void selectByPlayer(BlackjackGame game, Player player) {
-        boolean command;
+        Command command;
         do {
             command = setCommand(player);
             game.distributeByCommand(player, command);
@@ -69,9 +70,9 @@ public class Controller {
         } while (player.canDrawCard(command));
     }
 
-    private boolean setCommand(Player player) {
+    private Command setCommand(Player player) {
         try {
-            return inputView.readCommand(player.getName());
+            return Command.from(inputView.readCommand(player.getName()));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return setCommand(player);

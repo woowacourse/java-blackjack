@@ -38,7 +38,7 @@ public class BlackjackGame {
         player.addCard(cardDeck.poll());
     }
 
-    public void distributeByCommand(Player player, boolean command) {
+    public void distributeByCommand(Player player, Command command) {
         if (player.isCommandYes(command)) {
             distributePlayer(player);
         }

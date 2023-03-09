@@ -22,22 +22,15 @@ public class InputView {
         return Arrays.asList(names.split(SPLIT_DELIMITER));
     }
 
-    public boolean readCommand(String name) {
+    public String readCommand(String name) {
         System.out.println();
         System.out.printf(READ_ADD_CARD_COMMAND_MESSAGE, name);
-        String input = scanner.nextLine();
-        if(input.equals("y")) {
-            return true;
-        }
-        else if(input.equals("n")){
-            return false;
-        }
-        throw new IllegalArgumentException(INVALID_COMMAND);
+        return scanner.nextLine();
     }
 
-    public Integer readBetMoney() {
+    public int readBetMoney() {
         try{
-            Integer betMoney= Integer.parseInt(scanner.nextLine());
+            int betMoney= Integer.parseInt(scanner.nextLine());
             return betMoney;
         } catch(Exception e){
             throw new IllegalArgumentException("숫자만 입력해주세요.");

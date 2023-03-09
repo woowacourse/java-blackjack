@@ -1,5 +1,6 @@
 package domain.participants;
 
+import domain.Command;
 import domain.deck.Card;
 import domain.deck.Cards;
 
@@ -28,12 +29,12 @@ public class Player {
         return getCardsSum() >= BLACK_JACK;
     }
 
-    public boolean canDrawCard(boolean command) {
+    public boolean canDrawCard(Command command) {
         return !isOverPlayerBlackJack() && isCommandYes(command);
     }
 
-    public boolean isCommandYes(boolean command) {
-        return command == Y_COMMAND;
+    public boolean isCommandYes(Command command) {
+        return command.equals(Command.YES);
     }
 
     public String getName() {
