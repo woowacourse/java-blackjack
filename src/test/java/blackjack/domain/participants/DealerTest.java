@@ -10,11 +10,11 @@ import static blackjack.domain.card.Suit.SPADE;
 import static blackjack.domain.result.JudgeResult.LOSE;
 import static blackjack.domain.result.JudgeResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.card.Card;
 import blackjack.dto.HandStatus;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -61,9 +61,9 @@ class DealerTest {
         player1.take(new Card(CLUB, SIX));
         player2.take(new Card(DIAMOND, QUEEN));
         player2.take(new Card(DIAMOND, JACK));
-        
+
         assertThat(dealer.judgeAllPlayersResult(new Players(List.of(player1, player2))))
-                .containsExactlyEntriesOf(Map.of("pobi", LOSE, "wony", WIN));
+                .containsExactly(entry("pobi", LOSE), entry("wony", WIN));
     }
 
     @DisplayName("딜러는 카드 오픈 시 첫 번째 카드 상태만 확인한다.")
