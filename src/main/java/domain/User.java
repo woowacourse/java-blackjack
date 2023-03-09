@@ -62,6 +62,7 @@ public abstract class User {
     private void updateStatus() {
         if (isBusted()) {
             status = BUST;
+            return;
         }
 
         if (!canHit()) {
