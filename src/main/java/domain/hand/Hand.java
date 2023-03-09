@@ -21,8 +21,8 @@ public class Hand {
     public Score calculate() {
         Score score = score();
 
-        if (hasAce()) {
-            score = score.plusTenIfNotBurst();
+        if (isSoftHand()) {
+            score = score.plusSoftHand();
         }
 
         return score;
@@ -35,7 +35,7 @@ public class Hand {
 
     }
 
-    private boolean hasAce() {
+    private boolean isSoftHand() {
         return cards.stream()
                     .anyMatch(card -> card.cardValue().isAce());
     }

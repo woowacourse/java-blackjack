@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -153,7 +152,7 @@ class ScoreTest {
         final Score result = new Score(sum);
 
         //when & then
-        assertEquals(origin.plusTenIfNotBurst(), result);
+        assertEquals(origin.plusSoftHand(), result);
     }
 
     @ParameterizedTest
