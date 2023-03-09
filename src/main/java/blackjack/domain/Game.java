@@ -57,14 +57,6 @@ public class Game {
         return players.getPlayersName();
     }
 
-    public List<Card> showDealerCards() {
-        return dealer.showCards();
-    }
-
-    public List<Card> showDealerAllCards() {
-        return dealer.showAllCards();
-    }
-
     public Score getDealerScore() {
         return dealer.calculateScore();
     }
