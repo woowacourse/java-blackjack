@@ -22,16 +22,33 @@ public class Dealer extends Participant {
     public ResultType judgeResult(final Participant participant) {
         final int dealerPoint = getTotalPoint();
         final int participantPoint = participant.getTotalPoint();
+        return compare(dealerPoint, participantPoint);
+    }
 
-        if (participantPoint > BLACK_JACK_NUMBER) {
+    private ResultType compare(final int dealerPoint, final int participantPoint) {
+        if (checkBlackJack(dealerPoint, participantPoint)) {
+            return BLACK_JACK;
+        }
+        if (checkWin(dealerPoint, participantPoint)) {
             return WIN;
         }
-        if (dealerPoint > BLACK_JACK_NUMBER || dealerPoint < participantPoint) {
+        if (checkLose(dealerPoint, participantPoint)) {
             return LOSE;
         }
-        if (dealerPoint > participantPoint) {
-            return WIN;
-        }
         return PUSH;
+    }
+
+    private boolean checkBlackJack(final int dealerPoint, final int participantPoint) {
+        return participantPoint == BLACK_JACK_NUMBER && dealerPoint != BLACK_JACK_NUMBER;
+    }
+
+    private boolean checkWin(final int dealerPoint, final int participantPoint) {
+        return dealerPoint < participantPoint && participantPoint < BLACK_JACK_NUMBER;
+    }
+
+    private boolean checkLose(final int dealerPoint, final int participantPoint) {
+        return participantPoint > BLACK_JACK_NUMBER
+                || participantPoint < dealerPoint && dealerPoint <= BLACK_JACK_NUMBER
+                || participantPoint == dealerPoint && participantPoint != BLACK_JACK_NUMBER;
     }
 }
