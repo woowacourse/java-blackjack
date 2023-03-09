@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,5 +30,15 @@ public class BetMoneyTest {
         assertThatThrownBy(() -> new BetMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BetMoney.INVALID_ACCOUNT_RANGE_MESSAGE + money);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"true, 2500", "false, 2000"})
+    void 이긴_배팅_금액을_얻는다(final boolean isBlackjack, final int expectedMoney) {
+        final BetMoney betMoney = new BetMoney(1000);
+
+        final BetMoney winMoney = betMoney.winMoney(isBlackjack);
+
+        assertThat(winMoney).isEqualTo(new BetMoney(expectedMoney));
     }
 }
