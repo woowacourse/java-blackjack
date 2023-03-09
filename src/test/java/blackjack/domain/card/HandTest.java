@@ -91,4 +91,62 @@ class HandTest {
         //then
         assertThat(result).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("받은 카드가 2장이고 점수가 21점이면 블랙잭이다.")
+    void isBlackjackReturnTrueTest() {
+        //given
+        List<Card> recievedCards = List.of(
+            new Card(CardNumber.ACE, CardSuit.DIAMOND),
+            new Card(CardNumber.JACK, CardSuit.SPADE));
+        Hand hand = new Hand();
+        for (Card card : recievedCards) {
+            hand.hitCard(card);
+        }
+
+        //when
+        boolean result = hand.isBlackjack();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수가 21점일 때 받은 카드의 수가 2장이 아니면 블랙잭이 아니다")
+    void isBlackjackReturnFalseTest1() {
+        //gvien
+        List<Card> recievedCards = List.of(
+            new Card(CardNumber.ACE, CardSuit.DIAMOND),
+            new Card(CardNumber.TWO, CardSuit.SPADE),
+            new Card(CardNumber.EIGHT, CardSuit.CLUB));
+        Hand hand = new Hand();
+        for (Card card : recievedCards) {
+            hand.hitCard(card);
+        }
+
+        //when
+        boolean result = hand.isBlackjack();
+
+        //then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("주어진 카드가 2장일 때 점수가 21점이 아니면 블랙잭이 아니다.")
+    void isBlackjackReturnFalseTest2() {
+        //given
+        List<Card> recievedCards = List.of(
+            new Card(CardNumber.ACE, CardSuit.DIAMOND),
+            new Card(CardNumber.TWO, CardSuit.SPADE));
+        Hand hand = new Hand();
+        for (Card card : recievedCards) {
+            hand.hitCard(card);
+        }
+
+        //when
+        boolean result = hand.isBlackjack();
+
+        //then
+        assertThat(result).isFalse();
+    }
 }

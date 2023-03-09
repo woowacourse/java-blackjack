@@ -7,6 +7,8 @@ public class Hand {
 
     private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
+    private static final int WIN_MAX_VALUE = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> receivedCards;
 
@@ -29,6 +31,10 @@ public class Hand {
             return sum + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
         }
         return sum;
+    }
+
+    public boolean isBlackjack() {
+        return receivedCards.size() == BLACKJACK_SIZE && calculateCardNumber() == WIN_MAX_VALUE;
     }
 
     private int calculateCardNumberAceCardValueOne() {

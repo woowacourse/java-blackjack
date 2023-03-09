@@ -7,8 +7,6 @@ import blackjack.domain.card.Hand;
 
 public abstract class Participant {
 
-    private static final int WIN_MAX_VALUE = 21;
-    private static final int BLACKJACK_SIZE = 2;
     private static final String DEALER_NAME = "딜러";
 
     private final ParticipantName participantName;
@@ -32,7 +30,7 @@ public abstract class Participant {
     }
 
     public boolean judgeBlackjack() {
-        return hand.getReceivedCards().size() == BLACKJACK_SIZE && calculateCardNumber() == WIN_MAX_VALUE;
+        return hand.isBlackjack();
     }
 
     public int calculateCardNumber() {
