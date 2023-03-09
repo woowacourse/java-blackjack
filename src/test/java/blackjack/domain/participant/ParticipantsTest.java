@@ -24,7 +24,7 @@ public class ParticipantsTest {
     @Test
     @DisplayName("참가자들이 존재하지 않을 때 예외를 던지는지 테스트")
     void throwExceptionWhenEmptyNames() {
-        List<String> names = List.of();
+        final List<String> names = List.of();
 
         Assertions.assertThatThrownBy(() -> new Participants(dealer, names, new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -34,7 +34,7 @@ public class ParticipantsTest {
     @Test
     @DisplayName("중복된 이름이 없을 경우 참여자들이 정상적으로 생성되는지 테스트")
     void nonDuplicateNameTest() {
-        List<String> names = List.of("pobi", "crong", "eddy");
+        final List<String> names = List.of("pobi", "crong", "eddy");
 
         assertThatNoException().isThrownBy(() -> new Participants(dealer, names, new ArrayList<>()));
     }
@@ -42,7 +42,7 @@ public class ParticipantsTest {
     @Test
     @DisplayName("중복된 이름이 존재하는 경우 예외를 던지는지 테스트")
     void throwExceptionWhenExistDuplicateName() {
-        List<String> names = List.of("pobi", "crong", "crong");
+        final List<String> names = List.of("pobi", "crong", "crong");
 
         Assertions.assertThatThrownBy(() -> new Participants(dealer, names, new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -52,24 +52,20 @@ public class ParticipantsTest {
     @Test
     @DisplayName("모든 참여자를 반환하는 테스트")
     void getAllTest() {
-        // given
-        List<String> playerNames = List.of("pobi", "crong");
-        Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
-
-        // when
-        List<Participant> expected = List.of(dealer,
+        final List<String> playerNames = List.of("pobi", "crong");
+        final Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+        final List<Participant> expected = List.of(dealer,
                 new Player(new Name("pobi"), new ArrayList<>()),
                 new Player(new Name("crong"), new ArrayList<>()));
 
-        // then
         Assertions.assertThat(participants.getAll()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("딜러를 반환하는 테스트")
     void getDealerTest() {
-        List<String> playerNames = List.of("pobi", "crong");
-        Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+        final List<String> playerNames = List.of("pobi", "crong");
+        final Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
 
         assertThat(participants.getDealer()).isEqualTo(dealer);
     }
@@ -77,9 +73,10 @@ public class ParticipantsTest {
     @Test
     @DisplayName("플레이어들을 반환하는 테스트")
     void getPlayersTest() {
-        List<String> playerNames = List.of("pobi", "crong");
-        Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
-        Player expected = new Player(new Name("pobi"), new ArrayList<>());
+        final List<String> playerNames = List.of("pobi", "crong");
+        final Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+        final Player expected = new Player(new Name("pobi"), new ArrayList<>());
+
         assertThat(participants.getPlayers().get(0).getClass()).isEqualTo(expected.getClass());
         assertThat(participants.getPlayers().size()).isEqualTo(2);
     }
@@ -88,12 +85,12 @@ public class ParticipantsTest {
     @DisplayName("딜러의 이름을 반환하는 테스트")
     void getDealerNameTest() {
         // given
-        List<String> playerNames = List.of("pobi", "crong");
-        Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+        final List<String> playerNames = List.of("pobi", "crong");
+        final Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+        final String expected = "딜러";
 
         // when
-        String actual = participants.getDealer().getName();
-        String expected = "딜러";
+        final String actual = participants.getDealer().getName();
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected);
@@ -102,8 +99,8 @@ public class ParticipantsTest {
     @Test
     @DisplayName("참여자들의 이름을 반환하는 테스트")
     void getNamesTest() {
-        List<String> playerNames = List.of("pobi", "crong");
-        Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
+        final List<String> playerNames = List.of("pobi", "crong");
+        final Participants participants = new Participants(dealer, playerNames, new ArrayList<>());
 
         Assertions.assertThat(participants.getNames()).contains("딜러", "pobi", "crong");
     }

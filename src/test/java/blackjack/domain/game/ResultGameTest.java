@@ -41,9 +41,9 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 버스트일 때")
     class PlayerBust {
-        Dealer dealer = new Dealer(new ArrayList<>());
-        Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
-        Map<Participant, WinTieLose> playersResult = new HashMap<>();
+        final Dealer dealer = new Dealer(new ArrayList<>());
+        final Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
         @BeforeEach
@@ -62,7 +62,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
@@ -74,7 +74,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
@@ -83,9 +83,9 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 블랙잭일 때")
     class PlayerNormal {
-        Dealer dealer = new Dealer(new ArrayList<>());
-        Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
-        Map<Participant, WinTieLose> playersResult = new HashMap<>();
+        final Dealer dealer = new Dealer(new ArrayList<>());
+        final Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
         @BeforeEach
@@ -104,7 +104,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -116,7 +116,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
@@ -128,7 +128,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -137,9 +137,9 @@ public class ResultGameTest {
     @Nested
     @DisplayName("플레이어가 블랙잭이 아닐 때")
     class PlayerBlackjack {
-        Dealer dealer = new Dealer(new ArrayList<>());
-        Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
-        Map<Participant, WinTieLose> playersResult = new HashMap<>();
+        final Dealer dealer = new Dealer(new ArrayList<>());
+        final Participants participants = new Participants(dealer, List.of("pobi"), new ArrayList<>());
+        final Map<Participant, WinTieLose> playersResult = new HashMap<>();
         Participant player;
 
         @BeforeEach
@@ -158,7 +158,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -170,7 +170,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.THREE));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
         }
@@ -182,7 +182,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.EIGHT));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
         }
@@ -194,7 +194,7 @@ public class ResultGameTest {
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.SEVEN));
             dealer.drawCard(new Card(Shape.DIAMOND, Letter.TWO));
 
-            ResultGame resultGame = new ResultGame(playersResult);
+            final ResultGame resultGame = new ResultGame(playersResult);
             resultGame.calculateResult(participants);
             assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
         }
@@ -205,11 +205,11 @@ public class ResultGameTest {
     void getDealerCountTest() {
         // given
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
-        Participant player = participants.getPlayers().get(0);
+        final Participant player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
-        ResultGame resultGame = new ResultGame(playersResult);
+        final ResultGame resultGame = new ResultGame(playersResult);
         resultGame.calculateResult(participants);
 
         // then
@@ -221,11 +221,11 @@ public class ResultGameTest {
     void getPlayerResultTest() {
         // given
         dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
-        Participant player = participants.getPlayers().get(0);
+        final Participant player = participants.getPlayers().get(0);
         player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
 
         // when
-        ResultGame resultGame = new ResultGame(playersResult);
+        final ResultGame resultGame = new ResultGame(playersResult);
         resultGame.calculateResult(participants);
 
         // then

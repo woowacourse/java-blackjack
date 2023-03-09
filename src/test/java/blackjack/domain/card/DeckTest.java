@@ -14,7 +14,7 @@ public class DeckTest {
     @Test
     @DisplayName("52장의 트럼프 카드를 모두 생성하는지 테스트")
     void createAllCardTest() {
-        Deck deck = Deck.createAllCard();
+        final Deck deck = Deck.createAllCard();
 
         for (int i = 0; i < 52; i++) {
             Assertions.assertThatNoException().isThrownBy(deck::draw);
@@ -24,7 +24,7 @@ public class DeckTest {
     @Test
     @DisplayName("중복된 카드를 주입하면 에러를 반환한다")
     void throwExceptionWhenDuplicateCard() {
-        List<Card> cards = List.of(new Card(Shape.DIAMOND, Letter.JACK), new Card(Shape.DIAMOND, Letter.JACK));
+        final List<Card> cards = List.of(new Card(Shape.DIAMOND, Letter.JACK), new Card(Shape.DIAMOND, Letter.JACK));
 
         assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -35,11 +35,11 @@ public class DeckTest {
     @DisplayName("카드를 뽑는다")
     void drawCardTest() {
         //given
-        Deck deck = new Deck(List.of(new Card(Shape.DIAMOND, Letter.JACK)));
+        final Deck deck = new Deck(List.of(new Card(Shape.DIAMOND, Letter.JACK)));
+        final Card expected = new Card(Shape.DIAMOND, Letter.JACK);
 
         //when
-        Card actual = deck.draw();
-        Card expected = new Card(Shape.DIAMOND, Letter.JACK);
+        final Card actual = deck.draw();
 
         //then
         assertThat(actual).isEqualTo(expected);

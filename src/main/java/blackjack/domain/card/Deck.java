@@ -18,7 +18,7 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public Deck(List<Card> cards) {
+    public Deck(final List<Card> cards) {
         validate(cards);
 
         this.cards = new Stack<>();

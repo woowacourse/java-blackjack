@@ -31,7 +31,7 @@ public class Hand {
         return calculateScore(aceCount, score);
     }
 
-    private Score calculateScore(int aceCount, Score score) {
+    private Score calculateScore(final int aceCount, final Score score) {
         if (isNeedDowngradeScoreAceCard(aceCount, score)) {
             return calculateScoreRegardAce(aceCount, score);
         }

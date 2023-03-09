@@ -37,7 +37,7 @@ public class OutputView {
         return String.join(COMMA, participants.getNames());
     }
 
-    private void printDealerNameAndCard(Participant dealer, Card card) {
+    private void printDealerNameAndCard(final Participant dealer, final Card card) {
         System.out.println(NEW_LINE + dealer.getName() + COLON + card.getCardName());
     }
 
@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     private String getNameAndCards(final Participant participant) {
-        List<String> cardNames = participant.getHand()
+        final List<String> cardNames = participant.getHand()
                 .stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toUnmodifiableList());

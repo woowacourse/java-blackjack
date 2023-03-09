@@ -8,11 +8,11 @@ public class Score {
 
     private final int value;
 
-    public Score(int value) {
+    public Score(final int value) {
         this.value = value;
     }
 
-    public Score minus(int value) {
+    public Score minus(final int value) {
         return new Score(this.value - value);
     }
 
@@ -20,7 +20,7 @@ public class Score {
         return value <= BLACKJACK;
     }
 
-    public boolean isHit(int hitScore) {
+    public boolean isHit(final int hitScore) {
         return value <= hitScore;
     }
 
@@ -28,11 +28,11 @@ public class Score {
         return value > BLACKJACK;
     }
 
-    public boolean isGreaterThan(Score other) {
+    public boolean isGreaterThan(final Score other) {
         return value > other.value;
     }
 
-    public boolean isEqualsTo(Score other) {
+    public boolean isEqualsTo(final Score other) {
         return value == other.value;
     }
 
