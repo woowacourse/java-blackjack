@@ -95,6 +95,58 @@ class PlayerTest {
         assertThat(player.isBust()).isTrue();
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {1000, 1000000000})
+    void 베팅_금액의_범위는_1000원부터_10억원까지이다(int bettingAmount) throws Exception {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+        player.bet(bettingAmount);
+
+        //then
+        assertDoesNotThrow(() -> player.bet(bettingAmount));
+        assertThat(player.getBettingAmount()).isEqualTo(bettingAmount);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {999, 1000000001})
+    void 베팅_금액의_범위는_1000원_10억원이_아니면_예외가_발생한다(int bettingAmount) throws Exception {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> player.bet(bettingAmount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 베팅 금액은 1000 ~ 10억원 까지만 가능합니다");
+    }
+
+    @Test
+    void 베팅_금액은_1000원_단위이다() throws Exception {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertDoesNotThrow(() -> player.bet(2000));
+    }
+
+    @Test
+    void 베팅_금액은_1000원_단위가_아니면_예외가_발생한다() throws Exception {
+        //given
+        Player player = Player.from("연어", Deck.create(notShuffle()));
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> player.bet(2500))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 베팅 금액은 1000원 단위만 가능합니다");
+    }
+
     private ShuffleStrategy notShuffle() {
         return cards -> {
         };
