@@ -4,7 +4,6 @@ import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Score;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +51,7 @@ public final class WinningResult {
     }
 
     public Map<Player, WinningStatus> getPlayersResult() {
-        return Collections.unmodifiableMap(playersResult);
+        return Map.copyOf(playersResult);
     }
 
     public Map<WinningStatus, Integer> getDealerResult() {
