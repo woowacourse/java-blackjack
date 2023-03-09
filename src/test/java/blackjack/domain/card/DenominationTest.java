@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DenominationTest {
 
-    @DisplayName("카드는 문자(2~10, Ace, King, Queen, Jack)을 가진다.")
+    @DisplayName("카드는 끗수(2~10, Ace, King, Queen, Jack)을 가진다.")
     @Test
     void should_HaveAllNumberTypes() {
         assertThat(Denomination.values())
@@ -24,10 +24,10 @@ class DenominationTest {
                 );
     }
 
-    @DisplayName("각 문자는 값을 가진다.")
+    @DisplayName("각 끗수는 값을 가진다.")
     @Test
     void should_HaveAllNumberValues() {
-        List<Integer> numberValues = Arrays.stream(Denomination.values())
+        final List<Integer> numberValues = Arrays.stream(Denomination.values())
                 .map(Denomination::getValue)
                 .collect(Collectors.toList());
         assertThat(numberValues)

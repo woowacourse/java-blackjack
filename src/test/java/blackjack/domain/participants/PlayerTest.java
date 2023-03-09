@@ -59,7 +59,7 @@ class PlayerTest {
         final Card card1 = new Card(SPADE, JACK);
         final Card card2 = new Card(SPADE, TEN);
         final Player player = new Player("이름");
-        
+
         player.take(card1);
         player.take(card2);
 

@@ -31,7 +31,7 @@ public enum DenominationWord {
         final DenominationWord numberWord = Arrays.stream(values())
                 .filter(number -> number.denomination == findDenomination)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 문자가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 끗수가 존재하지 않습니다."));
         return numberWord.word;
     }
 }
