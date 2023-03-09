@@ -2,9 +2,13 @@ package blackjack.domain.game;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BettingPlayers {
     private static final double BLACK_JACK_PROFIT_RATE = 1.5;
@@ -16,13 +20,13 @@ public class BettingPlayers {
         saveBettingInformation(players, moneys);
     }
 
-    public Map<Player, Money> decideBetResultBy(final Dealer dealer) {
+    public Map<Participant, Money> findBettingResultsBy(final Dealer dealer) {
         players.keySet().forEach(player -> {
             final ResultType playerResult = dealer.judgeResult(player);
             final Money currentMoney = players.get(player);
             reflectPlayerMoney(player, playerResult, currentMoney);
         });
-        return new HashMap<>(players);
+        return new LinkedHashMap<>(players);
     }
 
     private void saveBettingInformation(final List<Player> players, final List<Money> moneys) {
