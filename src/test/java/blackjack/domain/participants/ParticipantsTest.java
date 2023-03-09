@@ -12,13 +12,23 @@ class ParticipantsTest {
 
     private final String dealerName = "딜러";
 
-    @DisplayName("참가자 중 플레이어는 중복인 이름을 허용하지 않는다.")
+    @DisplayName("플레이어의 이름 간 중복을 허용하지 않는다.")
     @Test
-    void should_ThrowException_When_PlayerNameDuplicated() {
-        List<String> playerNames = List.of("pobi", "pobi", "jason");
+    void should_ThrowException_When_PlayerNamesDuplicated() {
+        final List<String> playerNames = List.of("pobi", "pobi", "jason");
 
         Assertions.assertThatThrownBy(() -> Participants.of(dealerName, playerNames))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
+    }
+
+    @DisplayName("플레이어의 이름과 딜러의 이름 간 중복을 허용하지 않는다.")
+    @Test
+    void should_ThrowException_When_PlayerNameDuplicatedWithDealerName() {
+        final List<String> playerNames = List.of("pobi", "딜러");
+
+        Assertions.assertThatThrownBy(() -> Participants.of(dealerName, playerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("플레이어 이름은 딜러 이름(" + dealerName + ")과 중복될 수 없습니다.");
     }
 }
