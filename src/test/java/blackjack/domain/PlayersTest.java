@@ -23,7 +23,7 @@ class PlayersTest {
     }
 
     @DisplayName("플레이어 수는 1에서 6사이여야 한다.")
-    @ParameterizedTest()
+    @ParameterizedTest(name = "{displayName} [{index}] => ''{0}''")
     @ValueSource(ints = {0, 7})
     void Should_ThrowException_When_Between1And6(int size) {
         List<Player> players = new ArrayList<>();
