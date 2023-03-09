@@ -11,12 +11,11 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public List<String> readPlayerNames() {
-        final String nameInput = SCANNER.nextLine();
-        return Arrays.stream(nameInput.split(DELIMIT_REGEX, -1)).collect(Collectors.toUnmodifiableList());
+        final String inputName = SCANNER.nextLine();
+        return Arrays.stream(inputName.split(DELIMIT_REGEX, -1)).collect(Collectors.toUnmodifiableList());
     }
 
     public String readDrawOrStay() {
         return SCANNER.nextLine();
     }
-
 }
