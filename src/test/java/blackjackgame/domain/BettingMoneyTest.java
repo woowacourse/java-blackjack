@@ -1,11 +1,19 @@
 package blackjackgame.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BettingMoneyTest {
+    @DisplayName("입력된 베팅 금액이 1000 미만일 때 예외를 반환하는지 확인한다.")
+    @Test
+    void Shoud_ReturnException_When_BettingMoneyIsLowerThanThousand() {
+        int inputMoney = 999;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> BettingMoney.of(inputMoney));
+    }
+
     @DisplayName("게스트가 이길 때 베팅금액만큼 수익이 나는지 확인한다.")
     @Test
     void Should_ReturnBettingMoney_When_GuestWin() {

@@ -43,10 +43,19 @@ public class BlackJackController {
     private Map<Guest, BettingMoney> askGuestsBettingMoney(final Guests guests) {
         Map<Guest, BettingMoney> guestBettingMoneyMap = new LinkedHashMap<>();
         for (Guest guest : guests.getGuests()) {
-            BettingMoney bettingMoney = BettingMoney.of(inputView.readBettingMoney(guest.getName()));
-            guestBettingMoneyMap.put(guest, bettingMoney);
+            askGuestBettingMoney(guestBettingMoneyMap, guest);
         }
         return guestBettingMoneyMap;
+    }
+
+    private void askGuestBettingMoney(Map<Guest, BettingMoney> guestBettingMoneyMap, Guest guest) {
+        try {
+            BettingMoney bettingMoney = BettingMoney.of(inputView.readBettingMoney(guest.getName()));
+            guestBettingMoneyMap.put(guest, bettingMoney);
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMsg(e.getMessage());
+            askGuestBettingMoney(guestBettingMoneyMap, guest);
+        }
     }
 
     private void printFirstHand(final Guests guests, final Dealer dealer) {
