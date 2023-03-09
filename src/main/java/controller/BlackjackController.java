@@ -17,16 +17,23 @@ public class BlackjackController {
             start(blackjackGame);
 
             OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
-            OutputView.printParticipantsResult(blackjackGame.getResult());
+            OutputView.printParticipantsResult(blackjackGame.getPlayersResult(), blackjackGame.getDealerResult());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }
     }
 
     private void prepare(BlackjackService blackjackGame) {
+        betPlayers(blackjackGame);
         OutputView.printStartMessage(blackjackGame.getPlayersName());
         OutputView.printDealerCard(blackjackGame.getDealer());
         OutputView.printPlayersCard(blackjackGame.getPlayers());
+    }
+
+    private void betPlayers(BlackjackService blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            player.bet(InputView.readBettingAmount(player.getName()));
+        }
     }
 
     private void start(BlackjackService blackjackGame) {

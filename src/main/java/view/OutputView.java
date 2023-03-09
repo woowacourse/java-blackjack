@@ -1,19 +1,14 @@
 package view;
 
-import domain.PlayerGameResult;
 import domain.card.Card;
 import domain.participant.Participant;
 import domain.participant.Player;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEALER_WIN = "승";
-    private static final String DEALER_DRAW = "무";
-    private static final String DEALER_LOSE = "패";
     private static final int DEALER_VISIBLE_CARD = 1;
 
     private OutputView() {
@@ -65,40 +60,12 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    public static void printParticipantsResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(playersResult);
-        printPlayersResult(playersResult);
-    }
+    public static void printParticipantsResult(Map<String, Integer> playersResult, int dealerPrize) {
+        System.out.println("\n## 최종 수익");
 
-    private static void printDealerResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.print("딜러: ");
-
-        Map<PlayerGameResult, Long> dealerResult = playersResult.values().stream()
-                .collect(Collectors.groupingBy(result -> result, Collectors.counting()));
-
-        Arrays.stream(PlayerGameResult.values())
-                .filter(dealerResult::containsKey)
-                .map(playerResult -> dealerResult.get(playerResult) + makeDealerResultView(playerResult))
-                .forEach(System.out::println);
-    }
-
-    private static String makeDealerResultView(PlayerGameResult playerGameResult) {
-        if (PlayerGameResult.WIN.equals(playerGameResult)) {
-            return DEALER_LOSE + " ";
-        }
-
-        if (PlayerGameResult.DRAW.equals(playerGameResult)) {
-            return DEALER_DRAW + " ";
-        }
-
-        return DEALER_WIN + " ";
-    }
-
-    private static void printPlayersResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println();
+        System.out.println("딜러: " + dealerPrize);
         playersResult.entrySet().stream()
-                .map(player -> player.getKey() + ": " + player.getValue().getName())
+                .map(playerResult -> playerResult.getKey() + ": " + playerResult.getValue())
                 .forEach(System.out::println);
     }
 

@@ -1,6 +1,5 @@
 package service;
 
-import domain.PlayerGameResult;
 import domain.card.Deck;
 import domain.card.ShuffleStrategy;
 import domain.participant.Participant;
@@ -61,8 +60,16 @@ public class BlackjackService {
         return participants.getPlayersName();
     }
 
-    public Map<String, PlayerGameResult> getResult() {
-        return participants.getResult();
+    public Map<String, Integer> getPlayersResult() {
+        return participants.getPlayersResult();
+    }
+
+    public int getDealerResult() {
+        final Map<String, Integer> playersResult = participants.getPlayersResult();
+
+        return playersResult.values().stream()
+                .mapToInt(playerPrize -> -playerPrize)
+                .sum();
     }
 
     public Participant getDealer() {

@@ -10,6 +10,7 @@ import java.util.List;
 public abstract class Participant {
 
     private static final int BLACKJACK = 21;
+    public static final int INITIAL_HAND_SIZE = 2;
 
     private final String name;
     private final Hand hand;
@@ -29,6 +30,14 @@ public abstract class Participant {
 
     public boolean isBust() {
         return calculateScore() > BLACKJACK;
+    }
+
+    public boolean isBlackjack() {
+        if (getCards().size() != INITIAL_HAND_SIZE) {
+            return false;
+        }
+
+        return calculateScore() == BLACKJACK;
     }
 
     public abstract boolean isStand();

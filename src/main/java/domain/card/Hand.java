@@ -7,6 +7,7 @@ import java.util.List;
 public class Hand {
     private static final int BLACKJACK = 21;
     private static final int ACE_OFFSET = 10;
+    public static final int INITIAL_TWO_CARDS = 2;
 
     private final List<Card> cards;
 

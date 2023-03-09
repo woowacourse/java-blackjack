@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import domain.card.Deck;
 
 import java.util.*;
@@ -65,16 +64,34 @@ public class Participants {
         }
     }
 
-    public Map<String, PlayerGameResult> getResult() {
-        Map<String, PlayerGameResult> result = new LinkedHashMap<>();
+    public Map<String, Integer> getPlayersResult() {
+        Map<String, Integer> result = new LinkedHashMap<>();
 
         int dealerScore = dealer.calculateScore();
-        for (Participant player : players) {
-            int playerScore = player.calculateScore();
-            result.put(player.getName(), PlayerGameResult.of(playerScore, dealerScore));
+        for (Player player : players) {
+            result.put(player.getName(), getPlayerResult(player, dealerScore));
         }
 
         return result;
+    }
+
+    private int getPlayerResult(Player player, int dealerScore) {
+        if (dealer.isBust()) {
+            return player.getBettingAmount();
+        }
+        if (player.isBust()) {
+            return -player.getBettingAmount();
+        }
+        if (player.calculateScore() == dealerScore) {
+            return 0;
+        }
+        if (player.isBlackjack()) {
+            return (int) (player.getBettingAmount() * 1.5);
+        }
+        if (player.calculateScore() > dealerScore) {
+            return player.getBettingAmount();
+        }
+        return -player.getBettingAmount();
     }
 
     public List<String> getPlayersName() {

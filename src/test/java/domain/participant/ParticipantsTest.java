@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import domain.card.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -117,77 +116,6 @@ class ParticipantsTest {
 
         //then
         assertThat(participants.getDealer().calculateScore()).isGreaterThan(16);
-    }
-
-    @Test
-    void 플레이어가_21이하_딜러가_버스트이면_플레이어_승리() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getDealer().addCard(new Card(Rank.TEN, Suit.DIAMOND));
-        participants.getDealer().addCard(new Card(Rank.TEN, Suit.CLUB));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.WIN);
-    }
-
-    @Test
-    void 플레이어가_21이하이고_딜러보다_크면_플레이어_승리() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getPlayers().get(0).addCard(new Card(Rank.NINE, Suit.DIAMOND));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.WIN);
-    }
-
-    @Test
-    void 플레이어가_21이하이고_딜러와_같으면_무승부() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.DRAW);
-    }
-
-    @Test
-    void 플레이어가_버스트이면_플레이어_패배() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.DIAMOND));
-        participants.getPlayers().get(0).addCard(new Card(Rank.TEN, Suit.CLUB));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.LOSE);
-    }
-
-    @Test
-    void 딜러가_21_이하이고_플레이어보다_크면_플레이어_패배() throws Exception {
-        //given
-        String player = "연어";
-        final Deck deck = Deck.create(notShuffle());
-        Participants participants = Participants.of(List.of(player), deck);
-
-        //when
-        participants.getDealer().addCard(new Card(Rank.NINE, Suit.DIAMOND));
-
-        //then
-        assertThat(participants.getResult().get(player)).isEqualTo(PlayerGameResult.LOSE);
     }
 
     @Test
