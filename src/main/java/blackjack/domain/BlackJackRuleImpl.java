@@ -27,11 +27,11 @@ public class BlackJackRuleImpl implements BlackJackRule {
     }
 
     private boolean isBlackJackWin(final Dealer dealer, final Player player) {
-        return dealer.isBlackJack() && !player.isBlackJack();
+        return dealer.hasBlackJack() && !player.hasBlackJack();
     }
 
     private boolean isBlackJackLose(final Dealer dealer, final Player player) {
-        return !dealer.isBlackJack() && player.isBlackJack();
+        return !dealer.hasBlackJack() && player.hasBlackJack();
     }
 
     private boolean isTie(final int dealerScore, final int playerScore) {

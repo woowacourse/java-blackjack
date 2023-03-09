@@ -18,7 +18,7 @@ public abstract class Participant {
         drawCard(second);
     }
 
-    public boolean isBlackJack() {
+    public boolean hasBlackJack() {
         return cardPocket.isBlackJack();
     }
 
