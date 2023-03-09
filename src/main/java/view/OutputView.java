@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
+import domain.stake.Stake;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,11 +110,11 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printResult(Map<Player, Integer> prizeResults) {
+    public static void printResult(Map<Player, Stake> prizeResults) {
         printNewLine();
         System.out.println(RESULT_GUIDE_MESSAGE);
         prizeResults.forEach(
-                (player, prize) -> System.out.println(player.getName() + COLON + prize)
+                (player, prize) -> System.out.println(player.getName() + COLON + prize.getValue())
         );
     }
 

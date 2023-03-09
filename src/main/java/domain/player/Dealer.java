@@ -1,7 +1,9 @@
 package domain.player;
 
 import domain.score.Score;
+import domain.stake.Stake;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
@@ -14,6 +16,11 @@ public class Dealer extends Player {
 
     public Dealer() {
         super(new PlayerName(DEALER_NAME));
+    }
+
+    public boolean isHittable() {
+        return getScore()
+                .isSmallerOrEqual(Score.from(DEALER_HIT_BOUNDARY));
     }
 
     public Map<Player, DealerStatus> getDealerStats(final Players players) {
@@ -38,12 +45,18 @@ public class Dealer extends Player {
         return getScore().compareScore(score);
     }
 
-    public boolean isHittable() {
-        return getScore()
-                .isSmallerOrEqual(Score.from(DEALER_HIT_BOUNDARY));
-    }
-
     private boolean isBothBlackjack(final Player player) {
         return player.isBlackjack() && this.isBlackjack();
+    }
+
+    public Map<Player, Stake> calculateBets(Players players, Map<Player, DealerStatus> dealerStatus, Map<Player, Stake> playerBets) {
+        Map<Player, Stake> prizeResult = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            DealerStatus singleResult = dealerStatus.get(player);
+            Stake singleStake = playerBets.get(player);
+            prizeResult.merge(this, singleStake.getDealerPrize(singleResult), Stake::add);
+            prizeResult.merge(player, singleStake.getPlayerPrize(singleResult), Stake::add);
+        }
+        return prizeResult;
     }
 }

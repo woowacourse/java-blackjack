@@ -16,36 +16,35 @@ import static view.OutputView.*;
 
 public class BlackjackController {
 
-    private final Deck deck = new Deck();
-
     public void runGame() {
-        Players players = getPlayers();
+        Players players = repeatReadPlayers();
         Dealer dealer = new Dealer();
+        Deck deck = new Deck();
 
-        process(players, dealer);
+        process(players, dealer, deck);
     }
 
-    private Players getPlayers() {
+    private Players repeatReadPlayers() {
         try {
             return new Players(readPlayersName());
         } catch (RuntimeException exception) {
             printErrorMessage(exception);
-            return getPlayers();
+            return repeatReadPlayers();
         }
     }
 
-    private void process(Players players, Dealer dealer) {
+    private void process(Players players, Dealer dealer, Deck deck) {
         Map<Player, Stake> playerStakes = readStakes(players);
-        drawInitialCards(players, dealer);
+        drawInitialCards(players, dealer, deck);
 
-        readPlayersHit(players);
-        drawIfDealerCanHit(dealer);
+        readPlayersHit(players, deck);
+        drawIfDealerCanHit(dealer, deck);
 
         printScores(players, dealer);
         getResult(dealer, players, playerStakes);
     }
 
-    private void drawInitialCards(final Players players, final Dealer dealer) {
+    private void drawInitialCards(final Players players, final Dealer dealer, final Deck deck) {
         printInitialPickGuideMessage(players);
         for (Player player : players.getPlayers()) {
             player.initDraw(deck);
@@ -64,29 +63,29 @@ public class BlackjackController {
 
     private void repeatReadSingleStake(final Map<Player, Stake> playerStakes, final Player player) {
         try {
-            playerStakes.put(player, new Stake(readBettingStake(player)));
+            playerStakes.put(player, Stake.from(readBettingStake(player)));
         } catch (RuntimeException e) {
             InputView.printErrorMessage(e);
             repeatReadSingleStake(playerStakes, player);
         }
     }
 
-    private void readPlayersHit(Players players) {
+    private void readPlayersHit(final Players players, final Deck deck) {
         for (Player player : players.getPlayers()) {
-            readPlayerHit(player);
+            readPlayerHit(player, deck);
         }
     }
 
-    private void readPlayerHit(Player player) {
+    private void readPlayerHit(final Player player, final Deck deck) {
         boolean canHit;
         do {
             canHit = repeatReadCanHit(player);
-            drawIfHit(player, canHit);
+            drawIfHit(player, canHit, deck);
             printSinglePlayer(player);
         } while (canHit && player.isNotBusted());
     }
 
-    private boolean repeatReadCanHit(Player player) {
+    private boolean repeatReadCanHit(final Player player) {
         try {
             return readIsHit(player);
         } catch (RuntimeException exception) {
@@ -95,13 +94,13 @@ public class BlackjackController {
         }
     }
 
-    private void drawIfHit(Player player, boolean canHit) {
+    private void drawIfHit(final Player player, final boolean canHit, final Deck deck) {
         if (canHit) {
             player.drawCard(deck.pickCard());
         }
     }
 
-    private void drawIfDealerCanHit(Dealer dealer) {
+    private void drawIfDealerCanHit(final Dealer dealer, final Deck deck) {
         while (dealer.isHittable()) {
             printDealerDrawMessage();
             dealer.drawCard(deck.pickCard());
@@ -117,19 +116,7 @@ public class BlackjackController {
 
     private void getResult(Dealer dealer, Players players, Map<Player, Stake> playerStakes) {
         Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
-        Map<Player, Integer> prizeResults = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            updateDealerPrize(dealer, playerStakes, dealerStats, prizeResults, player);
-            updatePlayerPrize(playerStakes, dealerStats, prizeResults, player);
-        }
-        printResult(prizeResults);
-    }
-
-    private void updatePlayerPrize(final Map<Player, Stake> playerStakes, final Map<Player, DealerStatus> dealerStats, final Map<Player, Integer> prizeResults, final Player player) {
-        prizeResults.merge(player, playerStakes.get(player).getPlayerPrize(dealerStats.get(player)), Integer::sum);
-    }
-
-    private void updateDealerPrize(final Dealer dealer, final Map<Player, Stake> playerStakes, final Map<Player, DealerStatus> dealerStats, final Map<Player, Integer> prizeResults, final Player player) {
-        prizeResults.merge(dealer, playerStakes.get(player).getDealerPrize(dealerStats.get(player)), Integer::sum);
+        Map<Player, Stake> playerStakeMap = dealer.calculateBets(players, dealerStats, playerStakes);
+        printResult(playerStakeMap);
     }
 }
