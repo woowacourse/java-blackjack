@@ -44,9 +44,9 @@ public class BlackJackController {
     }
 
     private void printFirstHand(final Guests guests, final Dealer dealer) {
-        outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.transformCards(dealer.getCards()));
+        outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getCards()));
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.transformCards(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
         }
     }
 
@@ -69,7 +69,7 @@ public class BlackJackController {
         if (addCardRequest == AddCardRequest.YES) {
             guest.addCard(deck.pickOne());
         }
-        outputView.printCards(guest.getName(), BlackJackGameDataAssembler.transformCards(guest.getCards()));
+        outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
     }
 
     private void askDealerHitCard(final Dealer dealer, final Deck deck) {
@@ -80,18 +80,18 @@ public class BlackJackController {
     }
 
     private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
-        outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.transformCards(dealer.getCards()));
+        outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getCards()));
         outputView.printScore(dealer.getScore());
 
         for (final Guest guest : guests.getGuests()) {
-            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.transformCards(guest.getCards()));
+            outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
             outputView.printScore(guest.getScore());
         }
     }
 
     private void printGameResult(final Guests guests, final Dealer dealer) {
         Result result = new Result(dealer, guests.getGuests());
-        outputView.printResult(BlackJackGameDataAssembler.transformDealerResult(result.getDealerResult()),
-                BlackJackGameDataAssembler.transformGuestsResult(result.getGuestsResult()));
+        outputView.printResult(BlackJackGameDataAssembler.assembleDealerResultDto(result.getDealerResult()),
+                BlackJackGameDataAssembler.assembleGuestsResultDto(result.getGuestsResult()));
     }
 }
