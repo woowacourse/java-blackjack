@@ -20,4 +20,8 @@ public class Name {
     public String getValue() {
         return value;
     }
+
+    public boolean isSameName(final String name) {
+        return this.value.equals(name);
+    }
 }
