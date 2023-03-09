@@ -4,13 +4,13 @@ import domain.shuffler.CardShuffler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.NoSuchElementException;
 
 public class Deck {
 
     private static final List<Card> CARDS;
 
-    private final Queue<Card> unusedCards;
+    private final LinkedList<Card> unusedCards;
 
     static {
         CARDS = new ArrayList<>();
@@ -37,6 +37,10 @@ public class Deck {
     }
 
     public Card pickCard() {
-        return unusedCards.remove();
+        try {
+            return unusedCards.remove();
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("더이상 뽑을 카드가 없습니다.");
+        }
     }
 }
