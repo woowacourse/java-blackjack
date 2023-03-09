@@ -16,7 +16,7 @@ public class PlayersTest {
         String input = "pobi,jason";
 
         // when
-        Players players = new Players(input);
+        Players players = Players.createPlayers(input);
 
         // then
         assertThat(players.getPlayers().size()).isEqualTo(2);
@@ -29,7 +29,7 @@ public class PlayersTest {
         String input = "a,b,c,d,e,f,g,h";
 
         // when & then
-        assertThatThrownBy(() -> new Players(input))
+        assertThatThrownBy(() -> Players.createPlayers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 1명 이상 7명 이하만 가능합나다.");
     }
@@ -41,7 +41,7 @@ public class PlayersTest {
         String input = "a,a,b,c";
 
         // when & then
-        assertThatThrownBy(() -> new Players(input))
+        assertThatThrownBy(() -> Players.createPlayers(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("각 플레이어는 중복된 이름을 가질 수 없습니다.");
     }

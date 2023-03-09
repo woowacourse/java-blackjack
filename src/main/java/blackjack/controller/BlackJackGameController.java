@@ -48,7 +48,7 @@ public class BlackJackGameController {
     private Optional<BlackJackGame> generateNames() {
         try {
             final String inputNames = InputView.readNames();
-            return Optional.of(new BlackJackGame(new Dealer(), new Players(inputNames)));
+            return Optional.of(new BlackJackGame(new Dealer(), Players.createPlayers(inputNames)));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return Optional.empty();

@@ -20,7 +20,7 @@ class GameResultTest {
         // given
         Map<Player, ResultType> playerResult = new LinkedHashMap<>();
 
-        Players players = new Players("pobi,crong");
+        Players players = Players.createPlayers("pobi,crong");
         for (Player player : players.getPlayers()) {
             playerResult.put(player, ResultType.WIN);
         }
