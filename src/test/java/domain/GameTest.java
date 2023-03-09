@@ -1,10 +1,10 @@
 package domain;
 
-import domain.BlackJackGame.Game;
 import domain.Card.Card;
 import domain.Card.CardNumber;
 import domain.Card.CardShape;
 import domain.Card.Deck;
+import domain.game.Game;
 import domain.user.Dealer;
 import domain.user.Player;
 import org.assertj.core.api.Assertions;

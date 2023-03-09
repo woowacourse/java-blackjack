@@ -1,8 +1,8 @@
 package view;
 
-import domain.BlackJackGame.GameResult.Result;
 import domain.Card.Card;
 import domain.Card.CardCollection;
+import domain.game.GameResult.Result;
 import domain.user.Participants;
 import domain.user.Playable;
 import java.util.HashMap;

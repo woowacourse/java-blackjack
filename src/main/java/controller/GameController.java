@@ -1,10 +1,10 @@
 package controller;
 
-import domain.BlackJackGame.BlackJackAction;
-import domain.BlackJackGame.Game;
-import domain.BlackJackGame.GameResult;
-import domain.BlackJackGame.GameResult.Result;
 import domain.Card.Deck;
+import domain.game.BlackJackAction;
+import domain.game.Game;
+import domain.game.GameResult;
+import domain.game.GameResult.Result;
 import domain.user.Participants;
 import domain.user.Playable;
 import domain.user.Player;

@@ -1,4 +1,4 @@
-package domain.BlackJackGame;
+package domain.game;
 
 import domain.user.Player;
 import java.util.ArrayList;

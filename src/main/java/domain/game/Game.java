@@ -1,7 +1,7 @@
-package domain.BlackJackGame;
+package domain.game;
 
-import domain.BlackJackGame.GameResult.Result;
 import domain.Card.Deck;
+import domain.game.GameResult.Result;
 import domain.user.Dealer;
 import domain.user.Participants;
 import domain.user.Playable;

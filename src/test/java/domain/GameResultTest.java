@@ -1,7 +1,7 @@
 package domain;
 
-import domain.BlackJackGame.GameResult;
-import domain.BlackJackGame.GameResult.Result;
+import domain.game.GameResult;
+import domain.game.GameResult.Result;
 import domain.user.Participants;
 import domain.user.Player;
 import java.util.HashMap;
