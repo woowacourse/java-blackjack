@@ -9,7 +9,6 @@ import blackjack.model.state.DealerInitialState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,6 @@ public class GameController {
         CardDeck cardDeck = new CardDeck();
 
         distributeFirstCards(players, dealer, cardDeck);
-        printFirstCardDistribution(players, dealer);
 
         playHitOrStand(players, dealer, cardDeck);
 
@@ -42,15 +40,8 @@ public class GameController {
     private void distributeFirstCards(Players players, Dealer dealer, CardDeck cardDeck) {
         players.distributeFirstCards(cardDeck);
         dealer.draw(cardDeck);
-    }
-
-    private void printFirstCardDistribution(Players players, Dealer dealer) {
         outputView.printDistributionMessage(players.getPlayerNames());
-
-        Map<String, List<Card>> dealerDistributedCards = new HashMap<>();
-        dealerDistributedCards.put(dealer.getName(), dealer.firstDistributedCard());
-        outputView.printHandCardUnits(new CardUnit(dealerDistributedCards).getHandCardUnits());
-
+        outputView.printHandCardUnits(new CardUnit(dealer.firstDistributedCard()).getHandCardUnits());
         outputView.printHandCardUnits(new CardUnit(players.firstDistributedCards()).getHandCardUnits());
     }
 
@@ -74,7 +65,7 @@ public class GameController {
     }
 
     private void printScoreResults(Players players, Dealer dealer) {
-        printOneScoreResult(Integer.toString(dealer.cardScore().getScore()), dealer.isBlackjack(), dealer.handCards());
+        printOneScoreResult(Integer.toString(dealer.cardScore().getScore()), dealer.isBlackjack(), dealer.getCardUnit());
 
         for (int playerId = 0; playerId < players.getPlayerCount(); playerId++) {
             String scoreResult = Integer.toString(players.getScoreById(playerId));

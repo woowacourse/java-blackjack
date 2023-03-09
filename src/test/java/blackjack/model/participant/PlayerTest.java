@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -64,10 +65,10 @@ class PlayerTest {
 
         // when
         player.draw(cardDeck);
-        List<Card> firstDistributedCard = player.firstDistributedCard();
+        Map<String, List<Card>> firstDistributedCard = player.firstDistributedCard();
 
         //then
-        assertThat(firstDistributedCard).containsExactly(card4, card3);
+        assertThat(firstDistributedCard.get("도치")).containsExactly(card4, card3);
     }
 
     @Test

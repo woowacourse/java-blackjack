@@ -4,7 +4,6 @@ import blackjack.model.WinningResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
-import blackjack.model.card.HandCard;
 import blackjack.model.state.InitialState;
 
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class Players {
         Map<String, List<Card>> distributedCards = new HashMap<>();
 
         for (Player player : players) {
-            distributedCards.put(player.getName(), player.firstDistributedCard());
+            distributedCards.putAll(player.firstDistributedCard());
         }
         return distributedCards;
     }
@@ -61,7 +60,7 @@ public class Players {
     }
 
     public Map<String, List<Card>> getHandCardsById(int playerId) {
-        return getPlayerById(playerId).handCards();
+        return getPlayerById(playerId).getCardUnit();
     }
 
     public int getPlayerCount() {

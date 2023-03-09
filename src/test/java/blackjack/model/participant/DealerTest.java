@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -43,9 +44,9 @@ class DealerTest {
 
         // when
         dealer.draw(cardDeck);
-        List<Card> firstDistributedCard = dealer.firstDistributedCard();
+        Map<String, List<Card>> firstDistributedCard = dealer.firstDistributedCard();
         //then
-        assertThat(firstDistributedCard).containsExactly(card4);
+        assertThat(firstDistributedCard.get("딜러")).containsExactly(card4);
     }
 
     @Test

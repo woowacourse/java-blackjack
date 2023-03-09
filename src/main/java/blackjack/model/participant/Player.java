@@ -9,7 +9,9 @@ import blackjack.model.card.HandCard;
 import blackjack.model.state.DrawState;
 import blackjack.model.state.ParticipantState;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Player extends Participant {
 
@@ -37,12 +39,15 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> firstDistributedCard() {
+    public Map<String, List<Card>> firstDistributedCard() {
         if (handcard.size() == 0) {
             throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
         }
+        Map<String, List<Card>> firstCardUnits = new HashMap<>();
+
         List<Card> handCards = handcard.getCards();
-        return List.of(handCards.get(FIRST_CARD), handCards.get(SECOND_CARD));
+        firstCardUnits.put(getName(), List.of(handCards.get(FIRST_CARD), handCards.get(SECOND_CARD)));
+        return firstCardUnits;
     }
 
     @Override

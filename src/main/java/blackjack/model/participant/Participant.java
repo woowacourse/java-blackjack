@@ -38,17 +38,10 @@ public abstract class Participant {
 
     abstract public void changeToStand();
 
-    abstract public List<Card> firstDistributedCard();
+    abstract public Map<String, List<Card>> firstDistributedCard();
 
     public CardScore cardScore() {
         return handcard.score(resultState());
-    }
-
-    public Map<String, List<Card>> handCards() {
-        Map<String, List<Card>> handCards = new HashMap<>();
-
-        handCards.put(getName(), handcard.getCards());
-        return handCards;
     }
 
     public boolean isEqualId(int findId) {
@@ -69,6 +62,12 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return handcard.getCards();
+    }
+
+    public Map<String, List<Card>> getCardUnit() {
+        Map<String, List<Card>> cardUnit = new HashMap<>();
+        cardUnit.put(getName(), getCards());
+        return cardUnit;
     }
 
     public String getName() {
