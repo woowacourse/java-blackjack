@@ -3,9 +3,11 @@ package blackjackcontroller;
 import java.util.List;
 
 import betting.BettingMap;
+import betting.Reward;
 import blackjackgame.BlackjackGame;
 import deck.CardsGenerator;
 import deck.Deck;
+import dto.BettingResultsDto;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
@@ -42,6 +44,7 @@ public class BlackjackController {
         hitPlayers();
         dealerHit();
         printFinalCards();
+        printRewardResults();
         printWinningResult();
     }
 
@@ -135,8 +138,16 @@ public class BlackjackController {
         outputView.printFinalResults(dealerResult, playerResults);
     }
 
-    private void printWinningResult() {
+
+    private void printRewardResults() {
         blackjackGame.calculateWinning();
+        Reward dealerRewardResult = blackjackGame.getDealerRewardResult();
+        BettingResultsDto playersResultDto = blackjackGame.getPlayersResultDto();
+        outputView.printRewardResults(dealerRewardResult, playersResultDto);
+    }
+
+
+    private void printWinningResult() {
         DealerWinningDto dealerWinningResult = blackjackGame.getDealerWinningResult();
         List<PlayerWinningDto> playerWinningResults = blackjackGame.getPlayerWinningResults();
         outputView.printWinningResults(dealerWinningResult, playerWinningResults);

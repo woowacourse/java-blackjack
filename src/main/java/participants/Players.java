@@ -109,4 +109,11 @@ public class Players {
     public Name findPlayer(int playerIndex) {
         return players.get(playerIndex).getName();
     }
+
+    public Player findPlayer(Name name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다."));
+    }
 }

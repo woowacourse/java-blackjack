@@ -8,6 +8,7 @@ import betting.BettingAmount;
 import betting.BettingMap;
 import betting.Reward;
 import deck.Deck;
+import dto.BettingResultsDto;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
 import dto.PlayerOpenDto;
@@ -33,7 +34,8 @@ public class BlackjackGame {
         validateDuplicatedName(names);
         validateMaxPlayer(names);
         for (String name : names) {
-            participants.addPlayer(new Player(new Name(name)));
+            Player player = new Player(new Name(name));
+            participants.addPlayer(player);
         }
     }
 
@@ -126,10 +128,15 @@ public class BlackjackGame {
     }
 
     public void saveBetAmount(String name, int betAmount) {
-        bettingMap.saveBet(new Player(new Name(name)), new BettingAmount(betAmount));
+        Player player = participants.findPlayerByName(new Name(name));
+        bettingMap.saveBet(player, new BettingAmount(betAmount));
     }
 
     public Reward getDealerRewardResult() {
         return new Reward(bettingMap.calculateDealerReward());
+    }
+
+    public BettingResultsDto getPlayersResultDto() {
+        return BettingResultsDto.from(bettingMap);
     }
 }

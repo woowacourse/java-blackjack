@@ -77,4 +77,8 @@ public class Participants {
     public Name findUserNameByIndex(int playerIndex) {
         return players.findPlayer(playerIndex);
     }
+
+    public Player findPlayerByName(Name name) {
+        return players.findPlayer(name);
+    }
 }
