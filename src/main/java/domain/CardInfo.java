@@ -34,10 +34,6 @@ public enum CardInfo {
         return name;
     }
 
-    public int sum(final CardInfo other) {
-        return this.value + other.value;
-    }
-
     public boolean isACE() {
         return name.equals(ACE);
     }

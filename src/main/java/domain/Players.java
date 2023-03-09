@@ -22,13 +22,6 @@ public class Players {
             throw new IllegalArgumentException("블랙잭은 최소 한명이상 가능합니다.");
         }
     }
-//
-//    public void playerDrawAddCard(final int index, final CardBox cardBox) {
-//        boolean flag = true;
-//        while (flag) {
-//            flag = !players.get(index).addCard(cardBox);
-//        }
-//    }
 
     public List<String> getNames() {
         return players.stream()
