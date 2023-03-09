@@ -11,7 +11,7 @@ public class Card {
         this.isOpen = true;
     }
 
-    public int getValue() {
+    public int getScore() {
         return this.letter.getValue();
     }
 
