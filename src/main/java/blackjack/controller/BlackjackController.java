@@ -21,14 +21,14 @@ public class BlackjackController {
         Cards cards = Cards.create(new RandomCardPickerGenerator());
         List<String> playersName = inputPlayerNameCommand();
         BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
-        gameSetting(blackjackGame);
+        hitFirstSetting(blackjackGame);
         hitParticipantsCard(blackjackGame);
         BlackjackGameResult blackjackGameResult =
                 new BlackjackGameResult(blackjackGame.generatePlayersResult(new BlackJackReferee()));
         printResult(blackjackGame, blackjackGameResult);
     }
 
-    private void gameSetting(final BlackjackGame blackjackGame) {
+    private void hitFirstSetting(final BlackjackGame blackjackGame) {
         for (Participant participant : blackjackGame.getParticipants()) {
             blackjackGame.getTwoHitCards(participant);
         }
