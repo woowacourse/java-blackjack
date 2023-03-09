@@ -37,7 +37,7 @@ public class DeckTest {
         Card card = deck.drawCard();
 
         //then
-        assertThat(card.getValue()).isEqualTo(Letter.ACE.getValue());
+        assertThat(card.getScore()).isEqualTo(Letter.ACE.getValue());
     }
 
     @Test

@@ -29,7 +29,7 @@ public class BlackjackController {
     public void run() {
         final Participants participants = makeParticipants();
         final Deck deck = makeDeck();
-        final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+        final BlackjackGame blackjackGame = new BlackjackGame(deck);
 
         startGame(blackjackGame, participants);
         hitParticipants(blackjackGame, participants);

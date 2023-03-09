@@ -24,7 +24,7 @@ public class ParticipantTest {
         Participant participant = new Participant(new Name("test"));
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        int expected = card1.getValue() + card2.getValue();
+        int expected = card1.getScore() + card2.getScore();
         participant.drawCard(card1);
         participant.drawCard(card2);
 

@@ -37,7 +37,7 @@ public class CardsTest {
         Cards cards = new Cards();
         Card card1 = new Card(Shape.CLOVER, Letter.ACE);
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-        int expectedValue = card1.getValue() + card2.getValue();
+        int expectedValue = card1.getScore() + card2.getScore();
 
         // when
         cards.add(card1);

@@ -1,5 +1,9 @@
 package blackjack.domain.game;
 
+import blackjack.domain.game.resultCalculator.ResultCalculator;
+import blackjack.domain.game.resultCalculator.ResultCalculatorWithBustDealer;
+import blackjack.domain.game.resultCalculator.ResultCalculatorWithBustPlayer;
+import blackjack.domain.game.resultCalculator.ResultCalculatorWithNotBustDealerPlayer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -19,51 +23,17 @@ public class ResultGame {
     }
 
     public void calculateResult() {
-        players.forEach(this::compareScore);
+        players.forEach(player -> compareScore(player).calculateResult(playersResult,player,dealer));
     }
 
-    private void compareScore(final Player player) {
-        compareScoreWithBustDealer(player);
-        compareScoreWithBustPlayer(player);
-        compareScoreWithNotBustDealer(player);
-    }
-
-    private void compareScoreWithBustDealer(final Player player) {
-        if (dealer.isNotBust()) {
-            return;
+    private ResultCalculator compareScore(final Player player) {
+        if(dealer.isBust()){
+            return new ResultCalculatorWithBustDealer();
         }
-        if (player.isBust()) {
-            playersResult.put(player, WinTieLose.TIE);
-            return;
+        if(player.isBust()){
+            return new ResultCalculatorWithBustPlayer();
         }
-        playersResult.put(player, WinTieLose.WIN);
-    }
-
-    private void compareScoreWithBustPlayer(final Player player) {
-        if (player.isNotBust()) {
-            return;
-        }
-        if (dealer.isBust()) {
-            playersResult.put(player, WinTieLose.TIE);
-            return;
-        }
-        playersResult.put(player, WinTieLose.LOSE);
-
-    }
-
-    private void compareScoreWithNotBustDealer(final Player player) {
-        if (dealer.isBust() || player.isBust()) {
-            return;
-        }
-        if (player.isScoreSameWith(dealer)) {
-            playersResult.put(player, WinTieLose.TIE);
-        }
-        if (player.isScoreBiggerThan(dealer)) {
-            playersResult.put(player, WinTieLose.WIN);
-        }
-        if (player.isScoreSmallerThan(dealer)) {
-            playersResult.put(player, WinTieLose.LOSE);
-        }
+        return new ResultCalculatorWithNotBustDealerPlayer();
     }
 
     public WinTieLose getPlayerResult(final Player player) {

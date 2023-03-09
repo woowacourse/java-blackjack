@@ -13,7 +13,7 @@ public class BlackjackGame {
 
     private final Deck deck;
 
-    public BlackjackGame(final Participants participants, final Deck deck) {
+    public BlackjackGame(final Deck deck) {
         this.deck = deck;
     }
 

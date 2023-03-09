@@ -42,7 +42,7 @@ public class Cards {
 
     private int makeTotalScore() {
         return this.cards.stream().
-                map(Card::getValue).
+                map(Card::getScore).
                 reduce(ZERO, Integer::sum);
     }
 }
