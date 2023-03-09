@@ -2,6 +2,8 @@ package domain.stake;
 
 import domain.player.DealerStatus;
 
+import java.util.Objects;
+
 public class Stake {
 
     private static final int MIN_BET = 100;
@@ -10,12 +12,16 @@ public class Stake {
 
     private final int value;
 
-    public Stake(final int value) {
-        validate(value);
+    private Stake(final int value) {
         this.value = value;
     }
 
-    private void validate(final int value) {
+    public static Stake from(final int value) {
+        validate(value);
+        return new Stake(value);
+    }
+
+    private static void validate(final int value) {
         if (value < MIN_BET) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액은 100 미만일 수 없습니다.");
         }
@@ -24,11 +30,28 @@ public class Stake {
         }
     }
 
-    public int getDealerPrize(DealerStatus dealerStatus) {
-        return (int) (value * dealerStatus.getMultiply());
+    public Stake getDealerPrize(DealerStatus dealerStatus) {
+        return new Stake((int) (value * dealerStatus.getMultiply()));
     }
 
-    public int getPlayerPrize(DealerStatus dealerStatus) {
-        return (int) (PLAYER_NEGATE * value * dealerStatus.getMultiply());
+    public Stake getPlayerPrize(DealerStatus dealerStatus) {
+        return new Stake((int) (PLAYER_NEGATE * value * dealerStatus.getMultiply()));
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stake stake = (Stake) o;
+        return value == stake.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
