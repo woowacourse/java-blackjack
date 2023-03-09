@@ -106,7 +106,7 @@ public class BlackJackGameController {
     }
 
     private void finish(Game game) {
-        outputView.printDealerResult(game.getDealer(), game.getDealerScore().getScore());
+        outputView.printDealerResult(game.getDealer());
 
         for (Player player : game.getPlayers()) {
             outputView.printPlayerResult(player);

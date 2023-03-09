@@ -62,10 +62,11 @@ public class OutputView {
         System.out.println(DEALER_HIT_MSG);
     }
 
-    public void printDealerResult(Dealer dealer, int calculateScore) {
+    public void printDealerResult(Dealer dealer) {
+        int score = dealer.calculateScore().getScore();
         System.out.println();
         printDealerCards(dealer, EMPTY);
-        System.out.println(RESULT_MSG + calculateScore);
+        System.out.println(RESULT_MSG + score);
     }
 
     public void printPlayerResult(Player player) {
