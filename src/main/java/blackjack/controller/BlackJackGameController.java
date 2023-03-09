@@ -111,7 +111,7 @@ public class BlackJackGameController {
     }
 
     private void dealerTurn(Game game) {
-        while (game.isHitDealer()) {
+        while (game.canContinueDealer()) {
             outputView.printDealerHit();
             game.giveCardToDealer();
         }

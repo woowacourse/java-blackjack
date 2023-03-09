@@ -37,7 +37,7 @@ public class Game {
         giveCardToDealer();
     }
 
-    public boolean isHitDealer() { // 메서드명 변경 필요
+    public boolean canContinueDealer() {
         return dealer.canContinue();
     }
 
