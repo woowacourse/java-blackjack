@@ -99,9 +99,7 @@ public class OutputView {
         System.out.println(NEW_LINE + FINAL_RESULT_MESSAGE);
         System.out.println(getDealerResultFormat(dealer));
 
-        dealer.getGameResult().forEach(
-                (key, value) -> printPlayerResult(key, value.convertToOpposite())
-        );
+        dealer.getGameResult().forEach(this::printPlayerResult);
 
         printFinalProfit(dealer);
     }
@@ -109,14 +107,16 @@ public class OutputView {
     private String getDealerResultFormat(Dealer dealer) {
         StringBuilder dealerResultsFormat = new StringBuilder();
         for (Result result : Result.values()) {
-            dealerResultsFormat.append(getResultFormat(result, dealer.getResultCount(result)));
+            dealerResultsFormat.append(getResultFormat(result, dealer));
         }
 
         return String.format(Format.RESULT.format, dealer.getName(), dealerResultsFormat);
     }
 
-    private String getResultFormat(Result result, int resultCount) {
-        if (resultCount == 0) {
+    private String getResultFormat(Result result, Dealer dealer) {
+        int resultCount = dealer.getDealerResultCount(result);
+
+        if (resultCount == 0 || result == Result.BLACKJACK) {
             return "";
         }
 
@@ -133,8 +133,7 @@ public class OutputView {
         System.out.println(NEW_LINE + FINAL_PROFIT_MESSAGE);
 
         printDealerProfit(dealer);
-        dealer.getGameResult()
-                .forEach((player, result) -> printPlayerProfit(player, result.convertToOpposite()));
+        dealer.getGameResult().forEach(this::printPlayerProfit);
     }
 
     private void printDealerProfit(Dealer dealer) {
