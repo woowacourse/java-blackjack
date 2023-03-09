@@ -1,5 +1,13 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSuit;
+import blackjack.domain.game.BlackJackReferee;
+import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +41,7 @@ class BlackJackRefereeTest {
         }
         //when
         referee.createResult(dealer, player);
-        Map<Player,WinningResult> result = referee.getPlayerWinningResult();
+        Map<Player, WinningResult> result = referee.getPlayerWinningResult();
 
         //then
         assertThat(result.get(player)).isEqualTo(WinningResult.LOSE);

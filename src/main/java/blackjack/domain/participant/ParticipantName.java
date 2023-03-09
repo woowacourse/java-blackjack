@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

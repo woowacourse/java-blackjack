@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSuit;
 
 public abstract class Participant {
 
