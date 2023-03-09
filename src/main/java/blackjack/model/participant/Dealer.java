@@ -20,7 +20,7 @@ public class Dealer extends Participant {
         this.currentState = currentState.draw(cardDeck);
         if (currentState instanceof DrawState) {
             this.currentState = ((DrawState) currentState).transitToDealerDrawState();
-            this.currentState = ((DealerDrawState) currentState).transitStateOrNot();
+            this.currentState = ((DealerDrawState) currentState).tryStateTransition();
         }
     }
 

@@ -13,7 +13,7 @@ public class DealerDrawState extends State {
     @Override
     public State draw(CardDeck cardDeck) {
         hand.add(cardDeck.pick());
-        return transitStateOrNot();
+        return tryStateTransition();
     }
 
     @Override
@@ -21,7 +21,7 @@ public class DealerDrawState extends State {
         return false;
     }
 
-    public State transitStateOrNot() {
+    public State tryStateTransition() {
         if (isScoreHigherThanBlackjackNumber()) {
             return new BustState(hand);
         }
