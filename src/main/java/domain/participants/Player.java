@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Player {
     private static final int BLACK_JACK = 21;
-    private static final boolean Y_COMMAND = true;
     private final Name name;
     private final Cards cards;
 

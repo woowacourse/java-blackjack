@@ -32,7 +32,7 @@ public class Cards {
     }
 
     private boolean countAce() {
-        return cards.stream().filter(Card::isAce).findAny().isPresent();
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {
