@@ -22,7 +22,7 @@ class BlackJackTest {
     @DisplayName("게임 시작 시 플레이어들에게 카드를 2장씩 나눠준다.")
     void whenStartingGame_thenPerPlayerHavingTwoCard() {
         BlackJack blackJack = new BlackJack(
-                new Players(makeDealer(), Participant.of(GIVEN_NAMES)),
+                new Players(makeDealer(), Participant.from(GIVEN_NAMES)),
                 DeckOfCards.create(maxIndex -> 0)
         );
         blackJack.initializeCardsOfPlayers();
@@ -38,7 +38,7 @@ class BlackJackTest {
     @DisplayName("전체 플레이어에게 카드를 한 장씩 추가한다.")
     void givesAllPlayersACard() {
         Dealer dealer = makeDealer();
-        List<Participant> participants = Participant.of(GIVEN_NAMES);
+        List<Participant> participants = Participant.from(GIVEN_NAMES);
         BlackJack blackJack = new BlackJack(
                 new Players(dealer, participants),
                 DeckOfCards.create(maxIndex -> 0)
@@ -53,7 +53,7 @@ class BlackJackTest {
     @DisplayName("특정 플레이어에게 한 장을 추가한다.")
     void givenPlayer_thenGivesCard() {
         BlackJack blackJack = new BlackJack(
-                new Players(makeDealer(), Participant.of(GIVEN_NAMES)),
+                new Players(makeDealer(), Participant.from(GIVEN_NAMES)),
                 DeckOfCards.create(maxIndex -> 0)
         );
         PlayerReadOnly participant = blackJack.getParticipants().get(0);
@@ -71,7 +71,7 @@ class BlackJackTest {
                 new Players(
                         makeDealer(
                                 new Card(Shape.SPADE, Number.KING),
-                                new Card(Shape.HEART, Number.SIX)), Participant.of(GIVEN_NAMES)
+                                new Card(Shape.HEART, Number.SIX)), Participant.from(GIVEN_NAMES)
                 ), null
         );
         assertThat(blackJack.shouldDealerGetCard()).isTrue();
@@ -84,7 +84,7 @@ class BlackJackTest {
                 new Players(
                         makeDealer(
                                 new Card(Shape.SPADE, Number.KING),
-                                new Card(Shape.HEART, Number.SEVEN)), Participant.of(GIVEN_NAMES)
+                                new Card(Shape.HEART, Number.SEVEN)), Participant.from(GIVEN_NAMES)
                 ), null
         );
         assertThat(blackJack.shouldDealerGetCard()).isFalse();
@@ -94,7 +94,7 @@ class BlackJackTest {
     @DisplayName("딜러에게 한 장의 카드를 추가한다.")
     void thenGiveDealerCard() {
         Dealer dealer = makeDealer();
-        BlackJack blackJack = new BlackJack(new Players(dealer, Participant.of(GIVEN_NAMES)), DeckOfCards.create(maxIndex -> 0));
+        BlackJack blackJack = new BlackJack(new Players(dealer, Participant.from(GIVEN_NAMES)), DeckOfCards.create(maxIndex -> 0));
         blackJack.giveCardToDealer();
         assertThat(dealer.getCards()).hasSize(1);
     }

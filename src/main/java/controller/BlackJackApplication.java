@@ -15,7 +15,7 @@ import java.util.List;
 public class BlackJackApplication {
     public void startGame() {
         BlackJack blackJack = new BlackJack(
-                new Players(new Dealer(CardHolder.makeEmptyHolder()), Participant.of(getParticipantNames())),
+                new Players(new Dealer(CardHolder.makeEmptyHolder()), Participant.from(getParticipantNames())),
                 DeckOfCards.create(new RandomBasedIndexGenerator())
         );
         initializeBlackjackGame(blackJack);

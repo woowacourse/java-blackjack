@@ -10,7 +10,7 @@ public class Participant extends Player {
         super(cardHolder, name);
     }
 
-    public static List<Participant> of(List<Name> names) {
+    public static List<Participant> from(List<Name> names) {
         return names.stream()
                 .map(name -> new Participant(CardHolder.makeEmptyHolder(), name))
                 .collect(Collectors.toList());
