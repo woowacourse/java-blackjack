@@ -4,13 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.controller.AddCardOrNot;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Score;
+import blackjack.domain.participant.player.AddCardOrNot;
 import blackjack.domain.participant.player.Player;
 import blackjack.fixedCaradsGenerator.FixedCardsGenerator;
 import java.util.List;

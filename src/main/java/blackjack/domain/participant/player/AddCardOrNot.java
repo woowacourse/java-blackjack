@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack.domain.participant.player;
 
 public enum AddCardOrNot {
     YES,

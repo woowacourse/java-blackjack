@@ -1,12 +1,11 @@
 package blackjack.domain.participant.player;
 
-import static blackjack.controller.AddCardOrNot.NO;
 import static blackjack.domain.game.WinningResult.LOSE;
 import static blackjack.domain.game.WinningResult.TIE;
 import static blackjack.domain.game.WinningResult.WIN;
 import static blackjack.domain.participant.dealer.Dealer.DEALER_NAME;
+import static blackjack.domain.participant.player.AddCardOrNot.NO;
 
-import blackjack.controller.AddCardOrNot;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Hand;

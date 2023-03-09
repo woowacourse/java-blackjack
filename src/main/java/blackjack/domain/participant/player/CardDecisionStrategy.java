@@ -1,6 +1,5 @@
 package blackjack.domain.participant.player;
 
-import blackjack.controller.AddCardOrNot;
 import blackjack.domain.participant.Participant;
 
 @FunctionalInterface
