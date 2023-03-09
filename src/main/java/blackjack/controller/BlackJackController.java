@@ -47,7 +47,7 @@ public class BlackJackController {
     }
 
     private HitCommand refreshHitCommand(final String playerName) {
-        if (blackJackGame.isAvailable(playerName)) {
+        if (blackJackGame.isAbleToHit(playerName)) {
             return InputHandler.retryForIllegalArgument(playerName, InputView::askToHit,
                     OutputView::showInputErrorMessage);
         }

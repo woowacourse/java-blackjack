@@ -61,7 +61,7 @@ public class BlackJackGame {
         return participant.cards();
     }
 
-    public boolean isAvailable(final String participantName) {
+    public boolean isAbleToHit(final String participantName) {
         final Participant participant = participants.findParticipantByName(participantName);
         return participant.isAbleToHit();
     }
