@@ -4,7 +4,6 @@ import domain.Money;
 import domain.Name;
 import domain.Player;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

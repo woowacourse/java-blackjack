@@ -7,19 +7,19 @@ public class ResultCalculator {
 
     private final Map<Name, Integer> resultOfBetting;
 
-    public ResultCalculator(Map<Name, Integer> betting, Map<Name, GameResult> result) {
+    public ResultCalculator(Betting betting, Map<Player, GameResult> result) {
         resultOfBetting = new LinkedHashMap<>();
         calculateResult(betting, result);
     }
 
-    private void calculateResult(Map<Name, Integer> betting, Map<Name, GameResult> result) {
-        betting.forEach((name, money) -> calculateEachResult(name, money, result));
+    private void calculateResult(Betting betting, Map<Player, GameResult> result) {
+        resultOfBetting.put(Name.DEALER_NAME, 0);
+        result.forEach((player, gameResult) -> calculateEachResult(player, gameResult, betting));
     }
 
-    private void calculateEachResult(Name name, int money, Map<Name, GameResult> result) {
-        money *= result.get(name)
-                .getRateOfReturn();
-        resultOfBetting.put(name, money);
+    private void calculateEachResult(Player player, GameResult gameResult, Betting betting) {
+        int money = (int) (betting.getPlayerMoney(player) * gameResult.getRateOfReturn());
+        resultOfBetting.put(player.getName(), money);
         resultOfBetting.put(Name.DEALER_NAME, calculateDealerMoney(money));
     }
 

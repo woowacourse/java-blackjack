@@ -1,21 +1,21 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultCalculatorTest {
 
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerBlackJackWin() {
-        Map<Name, GameResult> result = Map.of(new Name("aa"), GameResult.BLACK_JACK_WIN);
-        Map<Name, Integer> betting = Map.of(new Name("aa"), 10000);
+        Map<Player, GameResult> result = Map.of(new Player(new Name("aa"), new Cards(Collections.emptyList())), GameResult.BLACK_JACK_WIN);
+        Map<Name, Money> bettingDto = Map.of(new Name("aa"), Money.of(10000));
+        Betting betting = new Betting(bettingDto);
         ResultCalculator resultCalculator = new ResultCalculator(betting, result);
 
         Map<Name, Integer> resultOfBetting = resultCalculator.getResultOfBetting();
@@ -27,8 +27,9 @@ public class ResultCalculatorTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerWin() {
-        Map<Name, GameResult> result = Map.of(new Name("aa"), GameResult.WIN);
-        Map<Name, Integer> betting = Map.of(new Name("aa"), 10000);
+        Map<Player, GameResult> result = Map.of(new Player(new Name("aa"), new Cards(Collections.emptyList())), GameResult.WIN);
+        Map<Name,  Money> bettingDto = Map.of(new Name("aa"), Money.of(10000));
+        Betting betting = new Betting(bettingDto);
         ResultCalculator resultCalculator = new ResultCalculator(betting, result);
 
         Map<Name, Integer> resultOfBetting = resultCalculator.getResultOfBetting();
@@ -40,8 +41,9 @@ public class ResultCalculatorTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerLose() {
-        Map<Name, GameResult> result = Map.of(new Name("aa"), GameResult.LOSE);
-        Map<Name, Integer> betting = Map.of(new Name("aa"), 10000);
+        Map<Player, GameResult> result = Map.of(new Player(new Name("aa"), new Cards(Collections.emptyList())), GameResult.LOSE);
+        Map<Name,  Money> bettingDto = Map.of(new Name("aa"), Money.of(10000));
+        Betting betting = new Betting(bettingDto);
         ResultCalculator resultCalculator = new ResultCalculator(betting, result);
 
         Map<Name, Integer> resultOfBetting = resultCalculator.getResultOfBetting();
@@ -53,8 +55,9 @@ public class ResultCalculatorTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이긴 경우를 계산한다.")
     void playerDraw() {
-        Map<Name, GameResult> result = Map.of(new Name("aa"), GameResult.DRAW);
-        Map<Name, Integer> betting = Map.of(new Name("aa"), 10000);
+        Map<Player, GameResult> result = Map.of(new Player(new Name("aa"), new Cards(Collections.emptyList())), GameResult.DRAW);
+        Map<Name, Money> bettingDto = Map.of(new Name("aa"), Money.of(10000));
+        Betting betting = new Betting(bettingDto);
         ResultCalculator resultCalculator = new ResultCalculator(betting, result);
 
         Map<Name, Integer> resultOfBetting = resultCalculator.getResultOfBetting();

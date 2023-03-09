@@ -10,7 +10,7 @@ public class Betting {
         this.betting = betting;
     }
 
-    public int getBettingMoney(Player player) {
+    public int getPlayerMoney(Player player) {
         return betting.get(player.getName()).getValue();
     }
 

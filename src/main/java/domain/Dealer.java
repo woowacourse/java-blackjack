@@ -9,8 +9,7 @@ public class Dealer extends Participant {
     }
 
     public Card showOneCard() {
-        return cards.getCards()
-                .get(0);
+        return cards.getCard();
     }
 
     @Override
