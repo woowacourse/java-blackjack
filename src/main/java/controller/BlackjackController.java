@@ -58,7 +58,7 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             repeatReadSingleStake(playerStakes, player);
         }
-        return new LinkedHashMap<>(playerStakes);
+        return playerStakes;
     }
 
     private void repeatReadSingleStake(final Map<Player, Stake> playerStakes, final Player player) {
