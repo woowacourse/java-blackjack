@@ -76,16 +76,26 @@ public class BlackJackApplication {
     private void splitCards(BlackJackGame blackJackGame) {
         blackJackGame.splitCards();
 
+        DrawnCardsInfo dealerCardInfo = createDealerCardInfo(blackJackGame);
+        List<DrawnCardsInfo> playerCardInfos = createPlayerCardInfos(blackJackGame);
+
+        outputView.printCardSplitMessage(dealerCardInfo, playerCardInfos);
+    }
+
+    private DrawnCardsInfo createDealerCardInfo(BlackJackGame blackJackGame) {
         List<Card> dealerOpenCard = blackJackGame.getDealerOpenCard();
         DrawnCardsInfo dealerCardInfo = DrawnCardsInfo.toDto(blackJackGame.getDealerName(), dealerOpenCard);
+        return dealerCardInfo;
+    }
 
+    private List<DrawnCardsInfo> createPlayerCardInfos(BlackJackGame blackJackGame) {
         List<DrawnCardsInfo> playerCardInfos = new ArrayList<>();
+
         for (String playerName : blackJackGame.getPlayersName()) {
             List<Card> openCards = blackJackGame.getOpenCardsByName(playerName);
             playerCardInfos.add(DrawnCardsInfo.toDto(playerName, openCards));
         }
-
-        outputView.printCardSplitMessage(dealerCardInfo, playerCardInfos);
+        return playerCardInfos;
     }
 
     private void drawCards(BlackJackGame blackJackGame) {
@@ -123,12 +133,29 @@ public class BlackJackApplication {
     }
 
     private void printParticipantResults(BlackJackGame blackJackGame) {
-        List<ParticipantResult> participantResults = blackJackGame.getParticipantResults();
-        outputView.printParticipantResults(participantResults);
+        List<ParticipantResult> playerResults = new ArrayList<>();
+
+        for (String playerName : blackJackGame.getPlayersName()) {
+            List<Card> drawnCards = blackJackGame.getDrawnCardByNames(playerName);
+            int score = blackJackGame.getScoreByName(playerName);
+            playerResults.add(ParticipantResult.toDto(playerName, drawnCards, score));
+        }
+
+        ParticipantResult dealerResult = createDealerResult(blackJackGame);
+
+        outputView.printParticipantResults(dealerResult,playerResults);
+    }
+
+    private ParticipantResult createDealerResult(BlackJackGame blackJackGame) {
+        List<Card> dealerCards = blackJackGame.getDealerCards();
+        int dealerScore = blackJackGame.getDealerScore();
+        String dealerName = blackJackGame.getDealerName();
+        return ParticipantResult.toDto(dealerName, dealerCards, dealerScore);
     }
 
     private void printBattingResults(BlackJackGame blackJackGame) {
         List<BattingResultDto> battingResultDtos = new ArrayList<>();
+
         for (String playerName : blackJackGame.getPlayersName()) {
             int bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
             int result = blackJackGame.getResult(playerName, bettingMoney);

@@ -9,8 +9,6 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.response.DrawnCardsInfo;
-import dto.response.ParticipantResult;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
@@ -33,6 +31,12 @@ public class BlackJackGame {
                 .forEach(this::splitEachParticipant);
     }
 
+    private void splitEachParticipant(final Participant participant) {
+        for (int i = 0; i < NUMBER_OF_SPLIT_CARDS; i++) {
+            participant.drawCard(cardDeck.draw());
+        }
+    }
+
     public List<Card> getOpenCardsByName(String name) {
         Player player = players.findPlayerByName(name);
         return player.openDrawnCards();
@@ -41,13 +45,6 @@ public class BlackJackGame {
     public List<Card> getDealerOpenCard() {
         return dealer.openDrawnCards();
     }
-
-    private void splitEachParticipant(final Participant participant) {
-        for (int i = 0; i < NUMBER_OF_SPLIT_CARDS; i++) {
-            participant.drawCard(cardDeck.draw());
-        }
-    }
-
 
     public DrawnCardsInfo drawPlayerCardByName(final String playerName) {
         Player player = players.findPlayerByName(playerName);
@@ -68,13 +65,11 @@ public class BlackJackGame {
         return dealer.isDrawable();
     }
 
-    public List<ParticipantResult> getParticipantResults() {
-        List<ParticipantResult> participantResults = new ArrayList<>();
-        participantResults.add(ParticipantResult.toDto(dealer, dealer.calculateScore()));
-        players.stream()
-                .forEach(player -> participantResults.add(ParticipantResult.toDto(player, player.calculateScore())));
-
-        return participantResults;
+    //TODO: 메소드명 변경 고민
+    public int getResult(String name, int betMoney) {
+        Player player = players.findPlayerByName(name);
+        BlackJackResult result = player.getResult(dealer);
+        return result.calculatePrize(betMoney);
     }
 
     public List<String> getPlayersName() {
@@ -91,10 +86,21 @@ public class BlackJackGame {
         return dealer.getDrawLimitScore();
     }
 
-    //TODO: 메소드명 변경 고민
-    public int getResult(String name, int betMoney) {
+    public List<Card> getDrawnCardByNames(String name) {
         Player player = players.findPlayerByName(name);
-        BlackJackResult result = player.getResult(dealer);
-        return result.calculatePrize(betMoney);
+        return player.getDrawnCards();
+    }
+
+    public List<Card> getDealerCards() {
+        return dealer.getDrawnCards();
+    }
+
+    public int getDealerScore() {
+        return dealer.calculateScore();
+    }
+
+    public int getScoreByName(String name) {
+        Player player = players.findPlayerByName(name);
+        return player.calculateScore();
     }
 }

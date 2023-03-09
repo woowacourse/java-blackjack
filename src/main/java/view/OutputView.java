@@ -39,10 +39,15 @@ public class OutputView {
         System.out.println(String.format("딜러는 %s이하라 한장의 카드를 더 받았습니다.", dealerDrawLimitScore));
     }
 
-    public void printParticipantResults(final List<ParticipantResult> results) {
+    public void printParticipantResults(ParticipantResult dealerResult, final List<ParticipantResult> results) {
         System.out.println();
-        results.forEach(result -> System.out.println(result.getName() + " 카드: " + getCardsInfo(result.getDrawnCards()) +
-                        " - 결과: " + result.getScore()));
+        printCardsAndScore(dealerResult);
+        results.forEach(this::printCardsAndScore);
+    }
+
+    private void printCardsAndScore(ParticipantResult result) {
+        System.out.println(result.getName() + " 카드: " + getCardsInfo(result.getDrawnCards()) +
+                        " - 결과: " + result.getScore());
     }
 
     public void printBattingResults(List<BattingResultDto> battingResultDtos) {
