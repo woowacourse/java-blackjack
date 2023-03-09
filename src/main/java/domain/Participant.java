@@ -20,10 +20,11 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return getTotalScore() > BUST_LIMIT;
+        return cards.getScore(BUST_LIMIT)
+                .isBust();
     }
 
-    public abstract int getTotalScore();
+    public abstract int getTotalScoreValue();
 
     public abstract boolean isMoreCardAble();
 
@@ -45,7 +46,7 @@ public abstract class Participant {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 

@@ -15,12 +15,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isMoreCardAble() {
-        return getTotalScore() <= MORE_CARD_LIMIT;
+        return cards.getScore(MORE_CARD_LIMIT)
+                .isDealerMoreCardAble();
     }
 
     @Override
-    public int getTotalScore() {
-        return cards.calculateScore(MORE_CARD_LIMIT);
+    public int getTotalScoreValue() {
+        return cards.getScore(MORE_CARD_LIMIT)
+                .getValue();
     }
 
 }

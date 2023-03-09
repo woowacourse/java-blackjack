@@ -19,16 +19,23 @@ public class Cards {
         return cards.size();
     }
 
-    public int calculateScore(int limit) {
-        int aceCount = 0;
-        int sum = 0;
+    public Score getScore(int limit) {
+        int totalSumOfCards = getSumOfCard();
+        int aceCount = getAceCount();
 
-        for (Card card : cards) {
-            aceCount = increaseAceCount(aceCount, card);
-            sum += card.getLetterScore();
-        }
+        return Score.of(totalSumOfCards, limit, aceCount);
+    }
 
-        return decreaseScoreByAce(sum, limit, aceCount);
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int getSumOfCard() {
+        return cards.stream()
+                .mapToInt(Card::getLetterScore)
+                .sum();
     }
 
     public void addNewCard(Card card) {
@@ -45,27 +52,6 @@ public class Cards {
 
     public void removeCard() {
         cards.remove(cards.size() - 1);
-    }
-
-    private int increaseAceCount(int aceCount, Card card) {
-        if (card.isAce()) {
-            aceCount++;
-        }
-
-        return aceCount;
-    }
-
-    private int decreaseScoreByAce(int sum, int limit, int aceCount) {
-        while (canDecreaseScoreByAce(sum, limit, aceCount)) {
-            sum -= ACE_DECREASE;
-            aceCount--;
-        }
-
-        return sum;
-    }
-
-    private boolean canDecreaseScoreByAce(int sum, int limit, int aceCount) {
-        return sum != BLACK_JACK && limit < sum && NONE_ACE < aceCount;
     }
 
     public List<Card> getCards() {

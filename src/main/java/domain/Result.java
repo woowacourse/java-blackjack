@@ -43,17 +43,17 @@ public class Result {
     }
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
-        return !player.isBust() && (dealer.isBust() || dealer.getTotalScore() < player.getTotalScore());
+        return !player.isBust() && (dealer.isBust() || dealer.getTotalScoreValue() < player.getTotalScoreValue());
     }
 
 
     private boolean isPlayerLose(Dealer dealer, Player player) {
-        return !dealer.isBust() && (player.isBust() || dealer.getTotalScore() > player.getTotalScore());
+        return !dealer.isBust() && (player.isBust() || dealer.getTotalScoreValue() > player.getTotalScoreValue());
     }
 
 
     private boolean isPlayerDraw(Dealer dealer, Player player) {
-        return (dealer.isBust() && player.isBust()) || (dealer.getTotalScore() == player.getTotalScore());
+        return (dealer.isBust() && player.isBust()) || (dealer.getTotalScoreValue() == player.getTotalScoreValue());
     }
 
     public Map<Name, GameResult> getResult() {

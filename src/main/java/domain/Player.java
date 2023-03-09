@@ -16,12 +16,14 @@ public class Player extends Participant {
         }
     }
 
-    public int getTotalScore() {
-        return cards.calculateScore(BUST_LIMIT);
+    public int getTotalScoreValue() {
+        return cards.getScore(BUST_LIMIT)
+                .getValue();
     }
 
     public boolean isMoreCardAble() {
-        return getTotalScore() < BUST_LIMIT;
+        return cards.getScore(BUST_LIMIT)
+                .isPlayerMoreCardAble();
     }
 
 }

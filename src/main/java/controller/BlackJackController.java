@@ -1,7 +1,6 @@
 package controller;
 
 import domain.CardDistributor;
-import domain.Cards;
 import domain.Dealer;
 import domain.Name;
 import domain.Participant;
@@ -62,7 +61,7 @@ public class BlackJackController {
     }
 
     private void printFinalCard(Participant participant) {
-        outputView.printCardAndScore(participant.getNameValue(), getCardStatus(participant), participant.getTotalScore());
+        outputView.printCardAndScore(participant.getNameValue(), getCardStatus(participant), participant.getTotalScoreValue());
     }
 
     private List<CardStatusDto> getCardStatus(Participant participant) {
