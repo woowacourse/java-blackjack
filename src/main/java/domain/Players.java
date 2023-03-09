@@ -45,13 +45,6 @@ public class Players {
         return players;
     }
 
-    public Player getPlayer(String name) {
-        return players.stream()
-                .filter(s -> s.getName().equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어 입니다."));
-    }
-
     public int getCardsSum(String playerName) {
         return players.stream()
                 .filter(s -> s.getName() == playerName)

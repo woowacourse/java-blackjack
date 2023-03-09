@@ -14,16 +14,20 @@ public class OutputView {
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String SPLIT_DELIMITER = ", ";
 
+    public String namimgCard(Card card) {
+        return card.getCardNumber().getName() + card.getCardPattern().getPattern();
+    }
 
     public void printInitialCards(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(INITIAL_DISTRUIBUTE_MESSAGE, dealer.getName(), players.getPlayersName()
                 .stream()
                 .collect(Collectors.joining(SPLIT_DELIMITER)));
-        System.out.println(dealer.getName() + ": " + dealer.getInfo().get(dealer.getName()).get(0).getCardInfo());
+        Card dealerCard = dealer.getCards().get(0);
+        System.out.println(dealer.getName() + ": " + namimgCard(dealerCard));
         for (String key : players.getInfo().keySet()) {
             List<Card> value = players.getInfo().get(key);
-            System.out.println(key + "카드: " + value.stream().map(s -> s.getCardInfo())
+            System.out.println(key + "카드: " + value.stream().map(this::namimgCard)
                     .collect(Collectors.joining(SPLIT_DELIMITER)));
         }
     }
@@ -31,7 +35,7 @@ public class OutputView {
     public void printPlayerCardsInfo(Player player) {
         System.out.println(player.getName() + "카드: " +
                 player.getCards().stream().
-                        map(s -> s.getCardInfo()).collect(Collectors.joining(", ")));
+                        map(this::namimgCard).collect(Collectors.joining(", ")));
 
     }
 
@@ -43,12 +47,12 @@ public class OutputView {
     public void printCardsResult(Dealer dealer, Players players) {
         System.out.println();
         System.out.printf(DEALER_CARDS_RESULT_MESSAGE, dealer.getName(), dealer.getCards()
-                .stream().map(s -> s.getCardInfo())
+                .stream().map(this::namimgCard)
                 .collect(Collectors.joining(SPLIT_DELIMITER)), dealer.getCardsSum());
         for (String key : players.getInfo().keySet()) {
             List<Card> value = players.getInfo().get(key);
             System.out.printf(PLAYER_CARDS_RESULT_MESSAGE, key, value.stream()
-                    .map(s -> s.getCardInfo())
+                    .map(this::namimgCard)
                     .collect(Collectors.joining(SPLIT_DELIMITER)), players.getCardsSum(key));
         }
     }
