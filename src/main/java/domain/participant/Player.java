@@ -24,7 +24,7 @@ public class Player extends Participant {
         return calculateScore() < BURST_NUMBER;
     }
 
-    public BlackJackResult getResult(Dealer dealer) {
+    public BlackJackResult calculateResult(Dealer dealer) {
         if (isBlackJack()) {
             return calculateBlackJackCase(dealer);
         }

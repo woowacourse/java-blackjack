@@ -146,7 +146,7 @@ class PlayerTest {
             Player player = new Player(new Name("pobi"), blackJackCards);
             Dealer dealer = new Dealer(notBlackJackCards);
             // when
-            BlackJackResult actual = player.getResult(dealer);
+            BlackJackResult actual = player.calculateResult(dealer);
             // then
             assertThat(actual).isEqualTo(BlackJackResult.BLACKJACK);
         }
@@ -163,7 +163,7 @@ class PlayerTest {
             Player player = new Player(new Name("pobi"), blackJackCards);
             Dealer dealer = new Dealer(blackJackCards);
             // when
-            BlackJackResult actual = player.getResult(dealer);
+            BlackJackResult actual = player.calculateResult(dealer);
             // then
             assertThat(actual).isEqualTo(BlackJackResult.EACH_BLACKJACK);
         }
@@ -182,7 +182,7 @@ class PlayerTest {
             Player player = new Player(new Name("pobi"), burstCards);
             Dealer dealer = new Dealer(notBurstCards);
             // when
-            BlackJackResult actual = player.getResult(dealer);
+            BlackJackResult actual = player.calculateResult(dealer);
             // then
             assertThat(actual).isEqualTo(BlackJackResult.BURST);
         }
@@ -202,7 +202,7 @@ class PlayerTest {
             Dealer dealer = new Dealer(burstCards);
 
             // when
-            BlackJackResult actual = player.getResult(dealer);
+            BlackJackResult actual = player.calculateResult(dealer);
             // then
             assertThat(actual).isEqualTo(BlackJackResult.WIN);
         }
@@ -222,7 +222,7 @@ class PlayerTest {
             Dealer dealer = new Dealer(lowScoreCards);
 
             // when
-            BlackJackResult actual = player.getResult(dealer);
+            BlackJackResult actual = player.calculateResult(dealer);
             // then
             assertThat(actual).isEqualTo(BlackJackResult.WIN);
         }
@@ -241,7 +241,7 @@ class PlayerTest {
             Player player = new Player(new Name("pobi"), lowScoreCards);
             Dealer dealer = new Dealer(highScoreCards);
             // when
-            BlackJackResult actual = player.getResult(dealer);
+            BlackJackResult actual = player.calculateResult(dealer);
             // then
             assertThat(actual).isEqualTo(BlackJackResult.LOSE);
         }

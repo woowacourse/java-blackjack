@@ -63,10 +63,9 @@ public class BlackJackGame {
         return dealer.isDrawable();
     }
 
-    //TODO: 메소드명 변경 고민
-    public int getResult(String name, BettingMoney betMoney) {
+    public int calculateBettingResult(String name, BettingMoney betMoney) {
         Player player = players.findPlayerByName(name);
-        BlackJackResult result = player.getResult(dealer);
+        BlackJackResult result = player.calculateResult(dealer);
         return result.calculatePrize(betMoney.getMoney());
     }
 

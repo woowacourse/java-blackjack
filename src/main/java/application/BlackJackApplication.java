@@ -66,17 +66,17 @@ public class BlackJackApplication {
 
     private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
         for (String playerName : blackJackGame.getPlayersName()) {
-            int bettingMoney = getBettingMoney(playerName);
+            int bettingMoney = createBettingMoney(playerName);
             blackJackBettingMachine.betMoney(playerName, new BettingMoney(bettingMoney));
         }
     }
 
-    private int getBettingMoney(String playerName) {
+    private int createBettingMoney(String playerName) {
         try {
             return inputView.readBettingMoneyByName(playerName);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return getBettingMoney(playerName);
+            return createBettingMoney(playerName);
         }
     }
 
@@ -162,18 +162,19 @@ public class BlackJackApplication {
         List<Card> dealerCards = blackJackGame.getDealerCards();
         int dealerScore = blackJackGame.getDealerScore();
         String dealerName = blackJackGame.getDealerName();
+
         return ParticipantResult.toDto(dealerName, dealerCards, dealerScore);
     }
 
     private void printBattingResults(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
-        List<BattingResult> battingResultDtos = new ArrayList<>();
+        List<BattingResult> battingResults = new ArrayList<>();
 
         for (String playerName : blackJackGame.getPlayersName()) {
             BettingMoney bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
-            int result = blackJackGame.getResult(playerName, bettingMoney);
-            battingResultDtos.add(new BattingResult(playerName, result));
+            int result = blackJackGame.calculateBettingResult(playerName, bettingMoney);
+            battingResults.add(new BattingResult(playerName, result));
         }
 
-        outputView.printBattingResults(battingResultDtos);
+        outputView.printBattingResults(battingResults);
     }
 }
