@@ -3,14 +3,12 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("BetMoney는 ")
-public class BetMoneyTest {
+@DisplayName("BetAmount는 ")
+public class BetAmountTest {
 
     @ParameterizedTest(name = "1,000원 단위로 입력가능하다 money = {0}")
     @ValueSource(ints = {6383, 980403, 12345})
@@ -19,7 +17,7 @@ public class BetMoneyTest {
         // when
 
         // then
-        assertThatThrownBy(() -> new BetMoney(money))
+        assertThatThrownBy(() -> BetAmount.of(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 배팅 금액은 1,000원 단위만 가능합니다");
     }
@@ -31,7 +29,7 @@ public class BetMoneyTest {
         // when
 
         // then
-        assertThatThrownBy(() -> new BetMoney(money))
+        assertThatThrownBy(() -> BetAmount.of(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 1,000 ~ 1,000,000 사이의 금액만 배팅 가능합니다");
     }

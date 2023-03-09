@@ -21,4 +21,9 @@ public class Dealer extends Participant {
     public Card getCardWithInvisible() {
         return getCards().get(VISIBLE_CARD_INDEX);
     }
+
+    @Override
+    public void betPlayer(int betMoney) {
+        throw new UnsupportedOperationException();
+    }
 }

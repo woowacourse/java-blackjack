@@ -39,4 +39,3 @@ public class Card {
         return Objects.hash(denomination, suit);
     }
 }
-

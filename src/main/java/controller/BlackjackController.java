@@ -10,7 +10,8 @@ public class BlackjackController {
 
     public void run() {
         try {
-            BlackjackGame blackjackGame = BlackjackGame.of(InputView.readPlayersName());
+            BlackjackGame blackjackGame = BlackjackGame.of(getPlayersName());
+            initBetting(blackjackGame);
 
             initParticipantsHand(blackjackGame);
             runPlayersTurn(blackjackGame);
@@ -20,6 +21,31 @@ public class BlackjackController {
             OutputView.printParticipantsResult(blackjackGame.getResult());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
+        }
+    }
+
+    private List<String> getPlayersName() {
+        try {
+            return InputView.readPlayersName();
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            return getPlayersName();
+        }
+    }
+
+    private void initBetting(BlackjackGame blackjackGame) {
+        List<Participant> players = blackjackGame.getPlayers();
+        for (Participant participant : players) {
+            betEachPlayer(blackjackGame, participant);
+        }
+    }
+
+    private void betEachPlayer(final BlackjackGame blackjackGame, final Participant participant) {
+        try {
+            participant.betPlayer(InputView.readBetMoney(participant));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            initBetting(blackjackGame);
         }
     }
 

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BetAmount;
 import domain.card.Card;
 
 public class Player extends Participant {
@@ -10,8 +11,11 @@ public class Player extends Participant {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 10;
 
+    private BetAmount betAmount;
+
     private Player(String name) {
         super(name.trim());
+        this.betAmount = BetAmount.setDefaultBetting();
     }
 
     public static Player from(String name) {
@@ -40,5 +44,10 @@ public class Player extends Participant {
     @Override
     public Card getCardWithInvisible() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void betPlayer(int betMoney) {
+        this.betAmount = BetAmount.of(betMoney);
     }
 }

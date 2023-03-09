@@ -36,6 +36,8 @@ public abstract class Participant {
 
     public abstract Card getCardWithInvisible();
 
+    public abstract void betPlayer(int betMoney);
+
     public String getName() {
         return name;
     }

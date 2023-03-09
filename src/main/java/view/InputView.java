@@ -1,7 +1,6 @@
 package view;
 
 import domain.participant.Participant;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,8 +20,22 @@ public class InputView {
         return List.of(names.split(DELIMITER_USERNAME));
     }
 
-    public static String readHit(Participant playerName) {
-        System.out.println(playerName.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static int readBetMoney(Participant player) {
+        System.out.println(player.getName() + "의 배팅 금액은?");
+
+        String input = scanner.nextLine();
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 숫자를 입력해주세요");
+        }
+
+        return Integer.parseInt(input);
+    }
+
+
+    public static String readHit(Participant player) {
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }
 }
