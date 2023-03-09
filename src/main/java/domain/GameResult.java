@@ -24,19 +24,21 @@ public class GameResult {
     }
 
     private ResultType isPlayerWin(int dealerSum, int playerSum) {
-        if (playerSum > BLACK_JACK) {
-            return ResultType.LOSE;
-        }
-        if (dealerSum > BLACK_JACK) {
+        if (isWin(dealerSum, playerSum)) {
             return ResultType.WIN;
         }
-        if (dealerSum > playerSum) {
+        if (isLose(dealerSum, playerSum)) {
             return ResultType.LOSE;
-        }
-        if (dealerSum < playerSum) {
-            return ResultType.WIN;
         }
         return ResultType.DRAW;
+    }
+
+    private boolean isWin(int dealerSum, int playerSum) {
+        return dealerSum > BLACK_JACK || dealerSum < playerSum;
+    }
+
+    private boolean isLose(int dealerSum, int playerSum) {
+        return playerSum > BLACK_JACK || dealerSum > playerSum && dealerSum <= BLACK_JACK;
     }
 
     public Map<String, List<ResultType>> getDealerResult() {
