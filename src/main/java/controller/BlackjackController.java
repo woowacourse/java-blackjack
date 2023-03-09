@@ -18,7 +18,7 @@ public class BlackjackController {
             runDealerTurn(blackjackGame);
 
             OutputView.printAllHands(blackjackGame.getDealer(), blackjackGame.getPlayers());
-            OutputView.printParticipantsResult(blackjackGame.getResult());
+            OutputView.printBettingResult(blackjackGame.getBettingResult());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
         }
@@ -40,12 +40,12 @@ public class BlackjackController {
         }
     }
 
-    private void betEachPlayer(final BlackjackGame blackjackGame, final Participant participant) {
+    private void betEachPlayer(BlackjackGame blackjackGame, Participant participant) {
         try {
             participant.betPlayer(InputView.readBetMoney(participant));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            initBetting(blackjackGame);
+            betEachPlayer(blackjackGame, participant);
         }
     }
 

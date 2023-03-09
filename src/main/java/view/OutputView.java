@@ -1,6 +1,5 @@
 package view;
 
-import domain.PlayerGameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
@@ -19,9 +18,7 @@ public class OutputView {
     private static final String JACK = "J";
     private static final String QUEEN = "Q";
     private static final String KING = "K";
-    private static final String WIN = "승";
-    private static final String DRAW = "무";
-    private static final String LOSE = "패";
+    private static final int MULTIPLY_VALUE_FOR_DEALER_PROFIT = -1;
     private static final String ENTER_LINE = System.lineSeparator();
 
     private OutputView() {
@@ -104,54 +101,25 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    public static void printParticipantsResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println(ENTER_LINE + "## 최종 승패");
-        printDealerResult(playersResult);
-        printPlayersResult(playersResult);
+    public static void printBettingResult(Map<Participant, Integer> bettingResult) {
+        System.out.println(ENTER_LINE + "## 최종 수익");
+        printDealerResult(bettingResult);
+        printPlayersResult(bettingResult);
     }
 
-    private static void printDealerResult(Map<String, PlayerGameResult> playersResult) {
+    private static void printDealerResult(Map<Participant, Integer> bettingResult) {
         System.out.print("딜러: ");
 
-        Map<String, Long> dealerResult = playersResult.values().stream()
-                .collect(Collectors.groupingBy(OutputView::makeDealerWinningView, Collectors.counting()));
+        int dealerProfit = bettingResult.values().stream()
+                .mapToInt(number -> number)
+                .sum() * MULTIPLY_VALUE_FOR_DEALER_PROFIT;
 
-        printDealerResultByWinning(dealerResult, WIN);
-        printDealerResultByWinning(dealerResult, DRAW);
-        printDealerResultByWinning(dealerResult, LOSE);
+        System.out.println(dealerProfit);
     }
 
-    private static void printDealerResultByWinning(Map<String, Long> dealerResult, String winning) {
-        if (dealerResult.containsKey(winning)) {
-            System.out.print(dealerResult.get(winning) + winning + " ");
-        }
-    }
 
-    private static void printPlayersResult(Map<String, PlayerGameResult> playersResult) {
-        System.out.println();
-        playersResult.entrySet().stream()
-                .map(player -> player.getKey() + ": " + makePlayerWinningView(player.getValue()))
-                .forEach(System.out::println);
-    }
-
-    private static String makeDealerWinningView(PlayerGameResult result) {
-        if (result.equals(PlayerGameResult.LOSE)) {
-            return WIN;
-        }
-        if (result.equals(PlayerGameResult.DRAW)) {
-            return DRAW;
-        }
-        return LOSE;
-    }
-
-    private static String makePlayerWinningView(PlayerGameResult result) {
-        if (result.equals(PlayerGameResult.WIN)) {
-            return WIN;
-        }
-        if (result.equals(PlayerGameResult.DRAW)) {
-            return DRAW;
-        }
-        return LOSE;
+    private static void printPlayersResult(Map<Participant, Integer> bettingResult) {
+        bettingResult.forEach((player, betAmount) -> System.out.println(player.getName() + ": " + betAmount));
     }
 
     public static void printError(Exception e) {

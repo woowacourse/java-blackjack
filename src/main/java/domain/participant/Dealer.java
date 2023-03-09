@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BetAmount;
 import domain.card.Card;
 
 public class Dealer extends Participant {
@@ -24,6 +25,11 @@ public class Dealer extends Participant {
 
     @Override
     public void betPlayer(int betMoney) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getBetAmount() {
         throw new UnsupportedOperationException();
     }
 }

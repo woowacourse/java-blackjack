@@ -50,4 +50,9 @@ public class Player extends Participant {
     public void betPlayer(int betMoney) {
         this.betAmount = BetAmount.from(betMoney);
     }
+
+    @Override
+    public int getBetAmount() {
+        return this.betAmount.getMoney();
+    }
 }

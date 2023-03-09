@@ -1,85 +1,88 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Participant;
-import domain.participant.Participants;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
 
-
     @Test
-    void 딜러보다_점수가_높으면_WIN() {
-        // given
-        BlackjackGame blackjackGame = BlackjackGame.of(List.of("배럴"));
-        blackjackGame.getDealer().addCard(new Card(Denomination.NINE, Suit.SPADE));
-        List<Participant> players = blackjackGame.getPlayers();
-
-        // when
-        players.get(0).addCard(new Card(Denomination.ACE, Suit.SPADE));
-
-        // then
-        assertThat(blackjackGame.getResult()).contains(
-                // 딜러 9 vs 배럴 ACE
-                Map.entry("배럴", PlayerGameResult.WIN)
-        );
-    }
-
-    @Test
-    void 딜러와_점수가_같다면_DRAW() {
+    void 딜러보다_점수가_크다면_배팅_금악만큼_수익이다() {
         // given
         BlackjackGame blackjackGame = BlackjackGame.of(List.of("둘리"));
-        blackjackGame.getDealer().addCard(new Card(Denomination.NINE, Suit.SPADE));
-        List<Participant> players = blackjackGame.getPlayers();
+        Participant player = blackjackGame.getPlayers().get(0);
+        Card card = new Card(Denomination.NINE, Suit.SPADE);
+        player.addCard(card);
 
         // when
-        players.get(0).addCard(new Card(Denomination.NINE, Suit.SPADE));
+        player.betPlayer(10_000);
 
         // then
-        assertThat(blackjackGame.getResult()).contains(
-                // 딜러 9 vs 둘리 9
-                Map.entry("둘리", PlayerGameResult.DRAW)
+        assertThat(blackjackGame.getBettingResult()).contains(
+                // 딜러 0 vs 둘리 9 -> 딜러 승
+                Map.entry(player, 10_000)
         );
     }
 
     @Test
-    void 딜러보다_점수가_낮으면_LOSE() {
+    void 딜러와_점수가_같다면_수익은_없다() {
+        // given
+        BlackjackGame blackjackGame = BlackjackGame.of(List.of("둘리"));
+        Participant player = blackjackGame.getPlayers().get(0);
+        Card card = new Card(Denomination.NINE, Suit.SPADE);
+        blackjackGame.getDealer().addCard(card);
+        player.addCard(card);
+
+        // when
+        player.betPlayer(10_000);
+
+        // then
+        assertThat(blackjackGame.getBettingResult()).contains(
+                // 딜러 9 vs 둘리 9 -> 무승부
+                Map.entry(player, 0)
+        );
+    }
+
+    @Test
+    void 딜러보다_점수가_낮으면_배팅금액만큼_잃는다() {
         // given
         BlackjackGame blackjackGame = BlackjackGame.of(List.of("패배자이름"));
-        blackjackGame.getDealer().addCard(new Card(Denomination.NINE, Suit.SPADE));
-        List<Participant> players = blackjackGame.getPlayers();
+        Participant dealer = blackjackGame.getDealer();
+        Participant player = blackjackGame.getPlayers().get(0);
+        dealer.addCard(new Card(Denomination.NINE, Suit.SPADE));
+        player.addCard(new Card(Denomination.TWO, Suit.SPADE));
 
         // when
-        players.get(0).addCard(new Card(Denomination.TWO, Suit.SPADE));
+        player.betPlayer(10_000);
 
         // then
-        assertThat(blackjackGame.getResult()).contains(
+        assertThat(blackjackGame.getBettingResult()).contains(
                 // 딜러 9 vs 패배자 1
-                Map.entry("패배자이름", PlayerGameResult.LOSE)
+                Map.entry(player, -10_000)
         );
     }
 
     @Test
-    void 플레이어_카드_합이_블랙잭이면_블랙잭으로_승리이다() {
-        BlackjackGame blackjackGame = BlackjackGame.of(List.of("블랙잭으로승리"));
-        List<Participant> players = blackjackGame.getPlayers();
+    void 플레이어_카드_합이_블랙잭이면_150_퍼센트_수익이다() {
+        // given
+        BlackjackGame blackjackGame = BlackjackGame.of(List.of("둘리"));
+        Participant player = blackjackGame.getPlayers().get(0);
+        player.addCard(new Card(Denomination.ACE, Suit.SPADE));
+        player.addCard(new Card(Denomination.TEN, Suit.SPADE));
 
         // when
-        players.get(0).addCard(new Card(Denomination.ACE, Suit.SPADE));
-        players.get(0).addCard(new Card(Denomination.JACK, Suit.DIAMOND));
+        player.betPlayer(10_000);
 
         // then
-        assertThat(blackjackGame.getResult()).contains(
-                Map.entry("블랙잭으로승리", PlayerGameResult.BLACKJACK)
+        assertThat(blackjackGame.getBettingResult()).contains(
+                // 딜러 0 vs 둘리 21
+                Map.entry(player, 15_000)
         );
     }
-
-
 }

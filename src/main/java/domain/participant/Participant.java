@@ -1,9 +1,11 @@
 package domain.participant;
 
+import domain.BetAmount;
 import domain.card.Card;
 import domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     private static final int BLACKJACK = 21;
@@ -41,6 +43,8 @@ public abstract class Participant {
     public abstract Card getCardWithInvisible();
 
     public abstract void betPlayer(int betMoney);
+
+    public abstract int getBetAmount();
 
     public String getName() {
         return name;
