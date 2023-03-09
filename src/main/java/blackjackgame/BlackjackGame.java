@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import betting.BettingAmount;
+import betting.BettingMap;
 import deck.Deck;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
@@ -18,10 +20,12 @@ public class BlackjackGame {
     private static final int FIRST_DRAW_COUNT = 2;
     private final Participants participants;
     private final Deck deck;
+    private final BettingMap bettingMap;
 
-    public BlackjackGame(Participants participants, Deck deck) {
+    public BlackjackGame(Participants participants, Deck deck, BettingMap bettingMap) {
         this.participants = participants;
         this.deck = deck;
+        this.bettingMap = bettingMap;
     }
 
     public void addPlayers(List<String> names) {
@@ -118,5 +122,9 @@ public class BlackjackGame {
 
     public Name findUserNameByIndex(int playerIndex) {
         return participants.findUserNameByIndex(playerIndex);
+    }
+
+    public void saveBetAmount(String name, int betAmount) {
+        bettingMap.saveBet(new Player(new Name(name)), new BettingAmount(betAmount));
     }
 }

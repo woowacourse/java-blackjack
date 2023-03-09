@@ -35,4 +35,8 @@ public class BettingAmount {
         }
         return (int) (result.getRate() * amount);
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
