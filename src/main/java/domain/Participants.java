@@ -1,32 +1,36 @@
 package domain;
 
-import domain.user.AbstractUser;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
 import java.util.List;
 
-public class BlackjackGame {
-    private final int INITIAL_CARDS_COUNT = 2;
+public class Participants {
 
     private final Dealer dealer;
     private final Players players;
 
-    public BlackjackGame(List<String> nameValues) {
+    public Participants(List<String> nameValues) {
         this.dealer = new Dealer();
         this.players = new Players(nameValues);
     }
 
-    public void initGame(Deck deck) {
-        addInitialCards(dealer, deck);
-        players.getPlayers().forEach(player -> addInitialCards(player, deck));
+    public void initGame() {
+        dealer.drawInitCardsDealer();
+        drawPlayerInitCards(dealer, players);
     }
 
-    private void addInitialCards(AbstractUser user, Deck deck) {
-        for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
-            user.addCard(deck.draw());
-        }
+    public void drawPlayerInitCards(Dealer dealer, Players players) {
+        players.getPlayers().forEach(player -> {
+            addPlayerCards(player, dealer.drawInitCards());
+        });
     }
+
+    public void addPlayerCards(Player player, List<Card> cards) {
+        cards.forEach(player::addCard);
+    }
+
+
 
     public Dealer getDealer() {
         return this.dealer;
@@ -36,8 +40,8 @@ public class BlackjackGame {
         return this.players.getPlayers();
     }
 
-    public void addCardToDealerIfPossible(Deck deck) {
-        this.dealer.addCard(deck.draw());
+    public void addCardToDealerIfPossible() {
+        this.dealer.drawCardDealer();
     }
 
     public void calculateAllResults(PlayerResultRepository playerResultRepository) {

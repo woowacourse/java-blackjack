@@ -1,13 +1,9 @@
 package controller;
 
-import domain.BlackjackGame;
-import domain.CardNumber;
-import domain.Deck;
+import domain.Participants;
 import domain.PlayerResultRepository;
-import domain.Symbol;
+import domain.user.Dealer;
 import domain.user.Player;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import ui.InputView;
 import ui.OutputView;
 
@@ -15,36 +11,33 @@ public class BlackjackController {
     private static final String HIT = "y";
     private static final String STAND = "n";
     private final PlayerResultRepository playerResultRepository;
-    private final Deck deck;
 
     public BlackjackController() {
         this.playerResultRepository = new PlayerResultRepository();
-        this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
-                Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
     }
 
     public void run() {
-        BlackjackGame blackjackGame = new BlackjackGame(InputView.readPlayersName());
-        blackjackGame.initGame(this.deck);
-        OutputView.printCardsStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        blackjackGame.getPlayers().forEach(this::giveCardUntilImpossible);
-        addCardToDealerIfPossible(blackjackGame);
-        OutputView.printCardsStatusWithScore(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        blackjackGame.calculateAllResults(playerResultRepository);
+        Participants participants = new Participants(InputView.readPlayersName());
+        participants.initGame();
+        OutputView.printCardsStatus(participants.getDealer(), participants.getPlayers());
+        participants.getPlayers().forEach(player -> giveCardUntilImpossible(player, participants.getDealer()));
+        addCardToDealerIfPossible(participants);
+        OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
+        participants.calculateAllResults(playerResultRepository);
         OutputView.printResults(playerResultRepository);
     }
 
-    private void addCardToDealerIfPossible(BlackjackGame blackjackGame) {
-        if (blackjackGame.getDealer().canAdd()) {
+    private void addCardToDealerIfPossible(Participants participants) {
+        if (participants.getDealer().canAdd()) {
             OutputView.announceAddCardToDealer();
-            blackjackGame.addCardToDealerIfPossible(this.deck);
+            participants.addCardToDealerIfPossible();
         }
     }
 
-    private void giveCardUntilImpossible(Player player) {
+    private void giveCardUntilImpossible(Player player, Dealer dealer) {
         String whetherDrawCard = HIT;
         while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player)).equals(HIT)) {
-            player.addCard(this.deck.draw());
+            player.addCard(dealer.drawCard());
             OutputView.printCardsStatusOfUser(player);
         }
         if (STAND.equals(whetherDrawCard)) {
