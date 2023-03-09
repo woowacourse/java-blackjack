@@ -46,7 +46,7 @@ public class BlackJackController {
 
     private boolean wantHit(final String playerName) {
         outputView.printRequestIntention(playerName);
-        return DrawIntention.of(inputView.readPlayerIntention()).equals(DrawIntention.YES);
+        return DrawIntention.of(inputView.readPlayerIntention().toLowerCase()).equals(DrawIntention.YES);
     }
 
     private void hit(final Deck deck, final Player player) {
