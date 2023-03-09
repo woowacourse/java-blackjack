@@ -43,7 +43,6 @@ public class OutputView {
     public static void printPlayerCurrentCards(Player player) {
         String playerCards = getPlayerCards(player);
         System.out.println(player.getPlayerName() + CARD_DELIMITER + playerCards);
-        printEmptyLine();
     }
 
     private static String getPlayerCards(User user) {
@@ -61,7 +60,8 @@ public class OutputView {
     }
 
     public static void printScore(Dealer dealer, Players players) {
-        System.out.println(dealer.getName() + CARD_DELIMITER + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
+        printEmptyLine();
+        System.out.println(DEALER_NAME + CARD_DELIMITER + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + CARD_USER_DELIMITER + getPlayerCards(player) + RESULT_DELIMITER + player.getTotalScore());
         }
