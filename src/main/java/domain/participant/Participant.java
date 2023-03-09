@@ -26,16 +26,6 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    public void takeCard(final Card card) {
-        this.cards = cards.add(card);
-    }
-
-    public void takeCard(final DeckStrategy deck, final int count) {
-        for (int i = 0; i < count; i++) {
-            this.cards = cards.add(deck.drawCard());
-        }
-    }
-
     public Cards getCards() {
         return cards;
     }

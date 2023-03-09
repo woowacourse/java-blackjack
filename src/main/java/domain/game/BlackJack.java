@@ -4,6 +4,7 @@ import domain.deck.DeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public final class BlackJack {
         return participant.isBusted();
     }
 
-    public void drawCard(final Participant player) {
+    public void drawCard(final Player player) {
         player.takeCard(deck.drawCard());
     }
 
@@ -49,10 +50,6 @@ public final class BlackJack {
             count += 1;
         }
         return count;
-    }
-
-    public void calculateBets() {
-
     }
 
     public Dealer getDealer() {

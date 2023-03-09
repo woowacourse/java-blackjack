@@ -40,7 +40,6 @@ public final class BlackJackController {
         getPlayersDecision(blackJack);
         getDealerResult(blackJack);
         outputView.printStatus(blackJack.getDealer(), blackJack.getPlayers());
-        blackJack.calculateBets();
         outputView.printFinalResult(blackJack.getDealer(), blackJack.getGameResult());
     }
 

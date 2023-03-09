@@ -1,6 +1,8 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.Cards;
+import domain.deck.DeckStrategy;
 import domain.game.GamePoint;
 
 import java.util.List;
@@ -15,6 +17,16 @@ public final class Dealer extends Participant {
 
     public static Dealer create() {
         return new Dealer(Name.of(DEALER_NAME));
+    }
+
+    public void takeCard(final DeckStrategy deck, final int count) {
+        for (int i = 0; i < count; i++) {
+            this.cards = cards.add(deck.drawCard());
+        }
+    }
+
+    public void takeCard(final Card card) {
+        this.cards = cards.add(card);
     }
 
     public boolean needMoreCard() {

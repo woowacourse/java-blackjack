@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.deck.TestDeckForThreeParticipant;
+import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -57,34 +58,43 @@ class BetTest {
     @Nested
     class BetDealerPlayersTest {
         private BlackJack blackJack;
+        private Player player1;
+        private Player player2;
+        private Dealer dealer;
 
         @BeforeEach
         void init() {
-            final List<Name> names = List.of(Name.of("a"), Name.of("b"), Name.of("c"));
-            final List<Integer> bets = List.of(1000, 2000, 3000);
+            final List<Name> names = List.of(Name.of("a"), Name.of("b"));
+            final List<Integer> bets = List.of(1000, 2000);
             blackJack = BlackJack.getInstance(names, bets, new TestDeckForThreeParticipant());
 
-            final Players players = Players.create(names, bets);
+            final Players players = blackJack.getPlayers();
+            final List<Player> playerList = players.getPlayers();
+            player1 = playerList.get(0);
+            player2 = playerList.get(1);
+            dealer = blackJack.getDealer();
         }
 
         @DisplayName("플레이어들은 각각 배팅 금액을 가지고 있다.")
         @Test
         void playerBetTest() {
-            final Players players = blackJack.getPlayers();
-            final List<Player> list = players.getPlayers();
-            assertThat(list.get(0).getBet()).isEqualTo(Bet.of(1000));
-            assertThat(list.get(1).getBet()).isEqualTo(Bet.of(2000));
-            assertThat(list.get(2).getBet()).isEqualTo(Bet.of(3000));
+            assertThat(player1.getBet()).isEqualTo(Bet.of(1000));
+            assertThat(player2.getBet()).isEqualTo(Bet.of(2000));
         }
 
         @DisplayName("플레이어들과 딜러의 초기 점수를 확인한다.")
         @Test
-        void name() {
-            final Players players = blackJack.getPlayers();
-            final List<Player> playerList = players.getPlayers();
-            gamePointCheck(playerList.get(0), 21);
-            gamePointCheck(playerList.get(1), 7);
-            gamePointCheck(blackJack.getDealer(), 15);
+        void initialGamePointTest() {
+            gamePointCheck(player1, 21);
+            gamePointCheck(player2, 7);
+            gamePointCheck(dealer, 15);
+        }
+
+        @DisplayName("플레이어들의 초기 수익률을 구한다.")
+        @Test
+        void betProfitTest() {
+            betProfitCheck(player1, 1500);
+            betProfitCheck(player2, 2000);
         }
 
         private void gamePointCheck(final Participant participant, final int gamePoint) {
@@ -93,6 +103,13 @@ class BetTest {
                     .extracting("gamePoint")
                     .extracting("gamePoint")
                     .isEqualTo(gamePoint);
+        }
+
+        private void betProfitCheck(final Player player, final int profit) {
+            assertThat(player)
+                    .extracting("bet")
+                    .extracting("Profit")
+                    .isEqualTo(profit);
         }
     }
 
