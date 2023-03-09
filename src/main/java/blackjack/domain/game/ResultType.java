@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 public enum ResultType {
+    BLACK_JACK("블랙잭 승"),
     WIN("승"),
     LOSE("패"),
     PUSH("무");
@@ -9,16 +10,6 @@ public enum ResultType {
 
     ResultType(final String type) {
         this.type = type;
-    }
-
-    public static ResultType getReverseType(ResultType type) {
-        if (type == WIN) {
-            return LOSE;
-        }
-        if (type == LOSE) {
-            return WIN;
-        }
-        return PUSH;
     }
 
     public String getType() {
