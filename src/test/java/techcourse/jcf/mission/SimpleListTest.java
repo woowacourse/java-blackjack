@@ -10,14 +10,13 @@ class SimpleListTest {
     @Test
     public void simpleArrayListTest() {
         simpleListTest(new SimpleArrayList<>());
-        genericTest(new SimpleArrayList<>());
+        genericTest();
+        pecsTest();
     }
 
     @Test
     public void simpleLinkedListTest() {
         simpleListTest(new SimpleLinkedList<>());
-        genericTest(new SimpleLinkedList<>());
-
     }
 
     private void simpleListTest(SimpleList<String> values) {
@@ -68,7 +67,7 @@ class SimpleListTest {
         assertThat(intTotal).isEqualTo(3);
     }
 
-    private void genericTest(SimpleList<String> values) {
+    private void genericTest() {
         final SimpleList<Double> doubleValues = new SimpleArrayList<Double>(-0.1, 0.5, 0.7);
         final SimpleList<Integer> intValues = new SimpleArrayList<Integer>(-10, 1, 2);
 
@@ -79,5 +78,19 @@ class SimpleListTest {
         assertThat(filteredDoubleValues.get(1)).isEqualTo(0.7);
         assertThat(filteredIntValues.get(0)).isEqualTo(1);
         assertThat(filteredIntValues.get(1)).isEqualTo(2);
+    }
+
+    class Printer { }
+    class LaserPrinter extends Printer { }
+
+    private void pecsTest() {
+        final var laserPrinter = new LaserPrinter();
+
+        final SimpleList<Printer> printers = new SimpleArrayList<Printer>();
+        final SimpleList<LaserPrinter> laserPrinters = new SimpleArrayList<LaserPrinter>(laserPrinter);
+
+        SimpleList.copy(laserPrinters, printers);
+
+        System.out.println(printers.get(0) == laserPrinter); // true
     }
 }
