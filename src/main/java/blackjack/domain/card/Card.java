@@ -34,7 +34,7 @@ abstract public class Card {
         return Objects.hash(pattern, symbol);
     }
 
-    public String getCardInfo() {
+    public String getCardSymbolAndPattern() {
         return symbol + pattern.getName();
     }
 }

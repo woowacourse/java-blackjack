@@ -34,9 +34,9 @@ public class CardDeck {
     }
 
 
-    public List<String> getCardsInfo() {
+    public List<String> getCardsSymbolAndPattern() {
         return cards.stream()
-            .map(Card::getCardInfo)
+            .map(Card::getCardSymbolAndPattern)
             .collect(Collectors.toList());
     }
 

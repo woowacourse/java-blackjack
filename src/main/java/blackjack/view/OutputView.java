@@ -23,7 +23,7 @@ public class OutputView {
         final String dealerName = dealer.getName().getValue();
         
         System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, processedPlayerNames));
-        System.out.println(String.format("%s: %s", dealerName, dealer.getCardDeck().getCardsInfo().get(0)));
+        System.out.println(String.format("%s: %s", dealerName, dealer.getCardDeck().getCardsSymbolAndPattern().get(0)));
         printPlayersCardDeck(players, playerNames);
         System.out.println();
     }
@@ -43,13 +43,13 @@ public class OutputView {
     }
 
     public static void printPlayerCardDeck(Player player) {
-        final String cards = String.join(DELIMITER, player.getCardDeck().getCardsInfo());
+        final String cards = String.join(DELIMITER, player.getCardDeck().getCardsSymbolAndPattern());
 
         System.out.println(String.format("%s카드 %s", player.getName().getValue(), cards));
     }
 
     public static void printPlayerCardDeck(Player player, int rawScore) {
-        List<String> cards = player.getCardDeck().getCardsInfo();
+        List<String> cards = player.getCardDeck().getCardsSymbolAndPattern();
 
         System.out.println(formatFinalCardDeckAndScore(player, cards, convertToBurst(rawScore)));
     }
@@ -62,7 +62,7 @@ public class OutputView {
     public static void printFinalCardDeckAndScore(Participant dealer, Players players) {
         System.out.println();
         final List<String> playerNames = getPlayerNames(players);
-        final List<String> dealerCards = dealer.getCardDeck().getCardsInfo();
+        final List<String> dealerCards = dealer.getCardDeck().getCardsSymbolAndPattern();
 
         String dealerScore = convertToBurst(dealer.calculateScore());
         System.out.println(formatFinalCardDeckAndScore(dealer, dealerCards, dealerScore));
