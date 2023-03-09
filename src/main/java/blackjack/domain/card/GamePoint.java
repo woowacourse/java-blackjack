@@ -6,7 +6,9 @@ public class GamePoint implements Comparable<GamePoint> {
 
     private static final int BUST = 0;
     private static final int MAX_GAME_POINT_VALUE = 21;
+    public static final int BLACK_JACK_POINT_VALUE = 22;
     private static final int ACE_BONUS_VALUE = 10;
+    private static final int BLACK_JAVCK_CARD_SIZE = 2;
     private final int gamePoint;
 
     public GamePoint(final List<Card> cards) {
@@ -15,10 +17,19 @@ public class GamePoint implements Comparable<GamePoint> {
 
     private int getOptimizedValue(List<Card> cards) {
         int originValue = getValueOf(cards);
+        if (checkBlackJack(cards)) {
+            return BLACK_JACK_POINT_VALUE;
+        }
         if (originValue + ACE_BONUS_VALUE <= MAX_GAME_POINT_VALUE && containAce(cards)) {
             return originValue += ACE_BONUS_VALUE;
         }
         return checkWithBust(originValue);
+    }
+
+    private boolean checkBlackJack(final List<Card> cards) {
+        final boolean blackJackSize = cards.size() == BLACK_JAVCK_CARD_SIZE;
+        final boolean blackJackConcept = containAce(cards) && getValueOf(cards) == 11;
+        return blackJackSize && blackJackConcept;
     }
 
     private int getValueOf(final List<Card> cards) {
@@ -38,6 +49,10 @@ public class GamePoint implements Comparable<GamePoint> {
             return BUST;
         }
         return value;
+    }
+
+    public boolean isBlackJack() {
+        return gamePoint == BLACK_JACK_POINT_VALUE;
     }
 
     public boolean isBusted() {

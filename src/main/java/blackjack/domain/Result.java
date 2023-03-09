@@ -6,13 +6,15 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum Result {
-    WIN((userValue, dealerValue) -> userValue.compareTo(dealerValue) > 0),
-    LOSE((userValue, dealerValue) -> userValue.isBusted() || userValue.compareTo(dealerValue) < 0),
-    DRAW((userValue, dealerValue) -> !userValue.isBusted() && userValue.compareTo(dealerValue) == 0);
+    WIN(1, (userValue, dealerValue) -> userValue.compareTo(dealerValue) > 0),
+    LOSE(-1, (userValue, dealerValue) -> userValue.isBusted() || userValue.compareTo(dealerValue) < 0),
+    DRAW(0, (userValue, dealerValue) -> !userValue.isBusted() && userValue.compareTo(dealerValue) == 0);
 
+    private final int prizeMultiplier;
     private final BiFunction<GamePoint, GamePoint, Boolean> resultLogic;
 
-    Result(BiFunction<GamePoint, GamePoint, Boolean> predicate) {
+    Result(int prizeMultiplier, BiFunction<GamePoint, GamePoint, Boolean> predicate) {
+        this.prizeMultiplier = prizeMultiplier;
         this.resultLogic = predicate;
     }
 
@@ -21,5 +23,9 @@ public enum Result {
                 .filter(result -> result.resultLogic.apply(userPoint, dealerPoint))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException());
+    }
+
+    public int getPrizeMultiplier() {
+        return prizeMultiplier;
     }
 }

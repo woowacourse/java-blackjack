@@ -77,4 +77,27 @@ public class GamePointTest {
         final GamePoint gamePoint = new GamePoint(data);
         assertThat(gamePoint.getValue()).isEqualTo(16);
     }
+
+    @Test
+    @DisplayName("BlackJack 카드 두 장으로 21점을 만들면 된다.")
+    void BlackJackTest() {
+        final List<Card> data = List.of(
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.DIAMOND, CardNumber.TEN)
+        );
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("BlackJack 카드 세 장으로 21점을 만든 것은 블랙잭이 아니다.")
+    void notBlackJackTest() {
+        final List<Card> data = List.of(
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.DIAMOND, CardNumber.TEN),
+                new Card(Shape.DIAMOND, CardNumber.TEN)
+        );
+        final GamePoint gamePoint = new GamePoint(data);
+        assertThat(gamePoint.isBlackJack()).isFalse();
+    }
 }
