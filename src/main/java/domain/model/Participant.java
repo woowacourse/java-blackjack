@@ -20,11 +20,28 @@ public abstract class Participant {
     }
 
     public boolean canReceiveCard() {
-        return Score.of(cards).isStand();
+        return isStand();
     }
 
     public boolean canNotReceiveCard() {
+        return isBust();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2
+            && Score.of(cards).isMax();
+    }
+
+    public boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
+
+    public boolean isBust() {
         return Score.of(cards).isBust();
+    }
+
+    public boolean isStand() {
+        return Score.of(cards).isStand();
     }
 
     public Score getScore() {
