@@ -1,15 +1,15 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.DealerResult;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
-import blackjack.domain.Result;
+import blackjack.domain.PlayerResult;
 import blackjack.domain.WinResult;
 
 public class OutputView {
@@ -73,15 +73,15 @@ public class OutputView {
         showPlayersResult(gameResult.getPlayersResult());
     }
 
-    private static void showDealerResult(Map<WinResult, Integer> dealerResult) {
-        int win = dealerResult.get(WinResult.WIN);
-        int push = dealerResult.get(WinResult.PUSH);
-        int lose = dealerResult.get(WinResult.LOSE);
+    private static void showDealerResult(DealerResult dealerResult) {
+        int win = dealerResult.getCount(WinResult.WIN);
+        int push = dealerResult.getCount(WinResult.PUSH);
+        int lose = dealerResult.getCount(WinResult.LOSE);
         System.out.printf(KEY_VALUE_FORMAT, DEALER_NAME, toDealerWinResult(win, push, lose));
     }
 
-    private static void showPlayersResult(List<Result> playersResult) {
-        for (Result result : playersResult) {
+    private static void showPlayersResult(List<PlayerResult> playersResult) {
+        for (PlayerResult result : playersResult) {
             System.out.printf(KEY_VALUE_FORMAT, result.getName(), toWord(result.getWinResult()));
         }
     }

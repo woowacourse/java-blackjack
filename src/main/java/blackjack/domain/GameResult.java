@@ -1,23 +1,28 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameResult {
 
-    private Map<WinResult, Integer> dealerResult;
-    private List<Result> playersResult;
+    private final DealerResult dealerResult;
+    private final List<PlayerResult> playersResult;
 
-    public GameResult(Map<WinResult, Integer> dealerResult, List<Result> playersResult) {
-        this.dealerResult = dealerResult;
-        this.playersResult = playersResult;
+    public GameResult() {
+        dealerResult = new DealerResult();
+        playersResult = new ArrayList<>();
     }
 
-    public Map<WinResult, Integer> getDealerResult() {
+    public void addResult(Player player, WinResult playerWinResult) {
+        dealerResult.add(playerWinResult.counter());
+        playersResult.add(new PlayerResult(player.getName(), playerWinResult));
+    }
+
+    public DealerResult getDealerResult() {
         return dealerResult;
     }
 
-    public List<Result> getPlayersResult() {
+    public List<PlayerResult> getPlayersResult() {
         return playersResult;
     }
 }

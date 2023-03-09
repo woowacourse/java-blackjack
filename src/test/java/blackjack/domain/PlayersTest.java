@@ -1,7 +1,12 @@
 package blackjack.domain;
 
-import static blackjack.domain.Number.*;
-import static blackjack.domain.Symbol.*;
+import static blackjack.domain.Number.ACE;
+import static blackjack.domain.Number.FIVE;
+import static blackjack.domain.Number.FOUR;
+import static blackjack.domain.Number.SIX;
+import static blackjack.domain.Number.THREE;
+import static blackjack.domain.Number.TWO;
+import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

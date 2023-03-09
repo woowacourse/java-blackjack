@@ -8,8 +8,8 @@ public class Hand {
     private static final int BLACK_JACK = 21;
     private static final int ACE_ADDITIONAL_VALUE = 10;
 
-    private int sum = 0;
     private final List<Card> cards = new ArrayList<>();
+    private int sum = 0;
 
     public void add(Card card) {
         sum += card.getNumberValue();

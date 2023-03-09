@@ -11,7 +11,6 @@ import static blackjack.domain.Symbol.DIAMOND;
 import static blackjack.domain.Symbol.HEART;
 import static blackjack.domain.Symbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.entry;
 
 import java.util.List;
 
@@ -46,24 +45,22 @@ class DealerTest {
         playerC.take(new Card(DIAMOND, JACK));
 
         GameResult gameResult = dealer.judgeGameResult(players);
-        assertThat(gameResult.getDealerResult())
-                .contains(
-                        entry(WinResult.WIN, 1),
-                        entry(WinResult.PUSH, 1),
-                        entry(WinResult.LOSE, 1)
-                );
+        DealerResult dealerResult = gameResult.getDealerResult();
+        assertThat(dealerResult.getCount(WinResult.WIN)).isEqualTo(1);
+        assertThat(dealerResult.getCount(WinResult.PUSH)).isEqualTo(1);
+        assertThat(dealerResult.getCount(WinResult.LOSE)).isEqualTo(1);
 
-        List<Result> results = gameResult.getPlayersResult();
+        List<PlayerResult> results = gameResult.getPlayersResult();
 
-        Result resultA = results.get(0);
+        PlayerResult resultA = results.get(0);
         assertThat(resultA.getName()).isEqualTo("a");
         assertThat(resultA.getWinResult()).isEqualTo(WinResult.WIN);
 
-        Result resultB = results.get(1);
+        PlayerResult resultB = results.get(1);
         assertThat(resultB.getName()).isEqualTo("b");
         assertThat(resultB.getWinResult()).isEqualTo(WinResult.LOSE);
 
-        Result resultC = results.get(2);
+        PlayerResult resultC = results.get(2);
         assertThat(resultC.getName()).isEqualTo("c");
         assertThat(resultC.getWinResult()).isEqualTo(WinResult.PUSH);
     }
