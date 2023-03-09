@@ -40,10 +40,6 @@ public class Game {
         return status != STAY && status != BUST;
     }
 
-    public void updateStatusToStay(User user) {
-        user.updateStatusToStay();
-    }
-
     public void dealCardToDealer() {
         Dealer dealer = users.dealer();
 

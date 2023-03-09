@@ -78,17 +78,7 @@ public abstract class User {
     }
 
     public Status status() {
-        if (isBusted()) {
-            return BUST;
-        }
-        if (!canHit()) {
-            return STAY;
-        }
         return status;
-    }
-
-    public void updateStatusToStay() {
-        status = STAY;
     }
 
     public List<Card> cards() {
