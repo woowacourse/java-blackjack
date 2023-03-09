@@ -47,7 +47,7 @@
   - [x] GameResult class getPlayerWinWhenDealerLessThan21 메소드 네이밍 변경
   - [x] 상수와 필드 사이 개행 추가
   - [x] show로 시작하는 메서드 네이밍 get으로 수정
-  - [ ] 한 번만 사용되는 문장 -> 코드 내에서 바로 사용하도록 수정
+  - [x] 한 번만 사용되는 문장 -> 코드 내에서 바로 사용하도록 수정
 
 
 - 검증
