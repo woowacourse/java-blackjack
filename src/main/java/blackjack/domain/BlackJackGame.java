@@ -76,7 +76,7 @@ public class BlackJackGame {
     public List<FinalResult> getFinalResults() {
         final Map<String, GameResult> playerResults = users.getGameResult();
         final Map<GameResult, Long> dealerWinningResult = playerResults.values().stream()
-                .collect(groupingBy(this::reverseWinningStatus, counting()));
+                .collect(groupingBy(GameResult::reverseWinningStatus, counting()));
 
         final List<FinalResult> results = new ArrayList<>();
         results.add(new DealerFinalResult(Dealer.DEALER_NAME_CODE, dealerWinningResult));
@@ -84,16 +84,6 @@ public class BlackJackGame {
             results.add(new PlayerFinalResult(entry.getKey(), entry.getValue()));
         }
         return results;
-    }
-
-    private GameResult reverseWinningStatus(GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
-            return GameResult.LOSE;
-        }
-        if (gameResult == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return gameResult;
     }
 
     public boolean isPossibleToDraw(final String name) {

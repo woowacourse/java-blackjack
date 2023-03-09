@@ -45,7 +45,8 @@ public class ViewRenderer {
         CARD_NUMBER_STRING_MAPPER.put(CardNumber.KING, "K");
 
         WINNING_STATUS_MAPPER = Map.of(
-                GameResult.WIN, "승 ",
+                GameResult.BLACKJACK_WIN, "승 ",
+                GameResult.NORMAL_WIN, "승 ",
                 GameResult.TIE, "무 ",
                 GameResult.LOSE, "패 "
         );
@@ -68,7 +69,7 @@ public class ViewRenderer {
     private static String renderDealerFinalResult(final DealerFinalResult finalResult) {
         StringBuilder stringBuilder = new StringBuilder();
         final Map<GameResult, Long> dealerWinningResult = finalResult.getResult();
-        stringBuilder.append(renderWinningStatus(GameResult.WIN, dealerWinningResult));
+        stringBuilder.append(renderWinningStatus(GameResult.NORMAL_WIN, dealerWinningResult));
         stringBuilder.append(renderWinningStatus(GameResult.TIE, dealerWinningResult));
         stringBuilder.append(renderWinningStatus(GameResult.LOSE, dealerWinningResult));
 

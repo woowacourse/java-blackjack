@@ -103,7 +103,7 @@ class BlackJackGameTest {
     }
 
     /*
-    필립: 21
+    필립: blackjack
     홍실: 19
     딜러: 13
      */
@@ -115,8 +115,8 @@ class BlackJackGameTest {
         final List<FinalResult> finalResults = blackJackGame.getFinalResults();
 
         assertSoftly(softly -> {
-            softly.assertThat(finalResults.get(1).getResult()).isEqualTo(GameResult.WIN);
-            softly.assertThat(finalResults.get(2).getResult()).isEqualTo(GameResult.WIN);
+            softly.assertThat(finalResults.get(1).getResult()).isEqualTo(GameResult.BLACKJACK_WIN);
+            softly.assertThat(finalResults.get(2).getResult()).isEqualTo(GameResult.NORMAL_WIN);
         });
     }
 }

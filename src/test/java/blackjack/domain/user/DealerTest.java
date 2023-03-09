@@ -105,7 +105,8 @@ class DealerTest {
             return Stream.of(
                     Arguments.of(thirteenCardGroup, GameResult.LOSE),
                     Arguments.of(nineteenCardGroup, GameResult.TIE),
-                    Arguments.of(twentyoneCardGroup, GameResult.WIN),
+                    Arguments.of(twentyoneCardGroup, GameResult.NORMAL_WIN),
+                    Arguments.of(blackjackCardGroup, GameResult.BLACKJACK_WIN),
                     Arguments.of(bustedCardGame, GameResult.LOSE)
             );
         }
@@ -128,7 +129,7 @@ class DealerTest {
             return Stream.of(
                     Arguments.of(thirteenCardGroup, GameResult.LOSE),
                     Arguments.of(twentyoneCardGroup, GameResult.TIE),
-                    Arguments.of(blackjackCardGroup, GameResult.WIN),
+                    Arguments.of(blackjackCardGroup, GameResult.BLACKJACK_WIN),
                     Arguments.of(bustedCardGame, GameResult.LOSE)
             );
         }
@@ -171,8 +172,8 @@ class DealerTest {
 
         private static Stream<Arguments> provideForBustedDealer() {
             return Stream.of(
-                    Arguments.of(thirteenCardGroup, GameResult.WIN),
-                    Arguments.of(blackjackCardGroup, GameResult.WIN),
+                    Arguments.of(thirteenCardGroup, GameResult.NORMAL_WIN),
+                    Arguments.of(blackjackCardGroup, GameResult.BLACKJACK_WIN),
                     Arguments.of(bustedCardGame, GameResult.LOSE)
             );
         }
