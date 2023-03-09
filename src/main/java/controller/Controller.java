@@ -1,10 +1,12 @@
 package controller;
 
-import domain.game.BlackJackGame;
-import domain.user.Users;
 import domain.card.shuffler.RandomCardShuffler;
+import domain.game.BlackJackGame;
 import domain.user.Player;
+import domain.user.Users;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -29,13 +31,23 @@ public class Controller {
     }
 
     private BlackJackGame ready() {
-        List<String> playerNames = inputView.askPlayerNames();
-        Users users = Users.from(playerNames);
-        BlackJackGame blackJackGame = BlackJackGame.of(users, new RandomCardShuffler());
-        outputView.printInitMessage(playerNames);
+        BlackJackGame blackJackGame = createBlackJackGame();
+        outputView.printInitMessage(blackJackGame.getPlayerNames());
         outputView.printDealerCardWithHidden(blackJackGame.getDealerCardWithHidden());
         outputView.printPlayerCards(blackJackGame.getPlayerToCard());
         return blackJackGame;
+    }
+
+    private BlackJackGame createBlackJackGame() {
+        List<String> playerNames = inputView.askPlayerNames();
+        Users.validateDuplication(playerNames);
+        Map<String, Integer> playerNameToBettingAmount = new LinkedHashMap<>();
+        for (String playerName : playerNames) {
+            int bettingAmount = inputView.askPlayerBettingAmount(playerName);
+            playerNameToBettingAmount.put(playerName, bettingAmount);
+        }
+        Users users = Users.from(playerNameToBettingAmount);
+        return BlackJackGame.of(users, new RandomCardShuffler());
     }
 
     private void play(BlackJackGame blackJackGame) {

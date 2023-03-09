@@ -15,7 +15,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setPlayer() {
-        player = new Player("kiara");
+        player = new Player("kiara", 10000);
     }
 
     @DisplayName("카드 점수가 21보다 작으면 카드를 받을 수 있다")

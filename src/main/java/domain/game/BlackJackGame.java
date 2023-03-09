@@ -1,12 +1,12 @@
 package domain.game;
 
-import domain.card.Deck;
-import domain.user.Users;
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.shuffler.CardShuffler;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
+import domain.user.Users;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,6 +55,10 @@ public class BlackJackGame {
     public Card getDealerCardWithHidden() {
         Dealer dealer = users.getDealer();
         return dealer.getCardWithHidden();
+    }
+
+    public List<String> getPlayerNames() {
+        return users.getPlayerNames();
     }
 
     public Map<String, List<Card>> getPlayerToCard() {
