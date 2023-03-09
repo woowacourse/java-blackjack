@@ -7,18 +7,20 @@ import java.util.List;
 
 public class DeckFactory {
     public static Deck getShuffledDeck() {
-        List<Card> cards = new ArrayList<>();
-        addAllCards(cards);
-        Deque<Card> deck = new ArrayDeque<>(cards);
+        List<Card> allCards = getAllCards();
+        Deque<Card> deck = new ArrayDeque<>(allCards);
         return new Deck(deck);
     }
 
-    private static void addAllCards(List<Card> deck) {
+    private static List<Card> getAllCards() {
+        List<Card> cards = new ArrayList<>();
         TrumpCardType[] trumpCardTypes = TrumpCardType.values();
 
         for (TrumpCardType trumpCardType : trumpCardTypes) {
-            addCardsOfShape(deck, trumpCardType);
+            addCardsOfShape(cards, trumpCardType);
         }
+
+        return cards;
     }
 
     private static void addCardsOfShape(List<Card> deck, TrumpCardType trumpCardType) {
