@@ -16,26 +16,13 @@ public class BlackJackGame {
         participants.handInitialCards(deck);
     }
 
-    public void handOneCard(Player player) {
+    public void handOneCard(Participant participant) {
         Card card = deck.draw();
-        player.take(card);
+        participant.take(card);
     }
 
     public Card openDealerFirstCard() {
         return participants.openDealerFirstCard();
-    }
-
-    public int hitOrStayForDealer() {
-        Dealer dealer = participants.getDealer();
-        int hitCount = 0;
-
-        while (dealer.canHit()) {
-            Card card = deck.draw();
-            dealer.take(card);
-            hitCount++;
-        }
-
-        return hitCount;
     }
 
     public GameResult getGameResult() {

@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.domain.BlackJackDeckGenerator;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.view.Command;
 import blackjack.view.InputView;
@@ -30,9 +31,7 @@ public class BlackJackController {
         openInitialCards();
 
         blackJackGame.getPlayers().forEach(this::hitOrStay);
-
-        int hitCount = blackJackGame.hitOrStayForDealer();
-        OutputView.showDealerHitResult(hitCount);
+        hitOrStayForDealer(blackJackGame.getDealer());
     }
 
     private void openInitialCards() {
@@ -59,6 +58,16 @@ public class BlackJackController {
         blackJackGame.handOneCard(player);
         OutputView.showPlayerCard(player);
         hitOrStay(player);
+    }
+
+    private void hitOrStayForDealer(Dealer dealer) {
+        if (!dealer.canHit()) {
+            return;
+        }
+
+        blackJackGame.handOneCard(dealer);
+        OutputView.showDealerHitMessage();
+        hitOrStayForDealer(dealer);
     }
 
     private void showResult() {

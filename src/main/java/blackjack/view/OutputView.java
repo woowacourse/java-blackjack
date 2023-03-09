@@ -22,7 +22,7 @@ public class OutputView {
     private static final String KEY_VALUE_FORMAT = "%s : %s%n";
     private static final String GAME_RESULT_FORMAT = "%s카드: %s - 결과: %d%n";
     private static final String OPEN_CARD_MESSAGE = "%n딜러와 %s에게 2장을 나누었습니다.%n";
-    private static final String DEALER_HIT_RESULT_MESSAGE = DEALER_NAME + "는 16 이하라 %d장의 카드를 더 받았습니다.%n";
+    private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_HEADER = "%n## 최종 승패%n";
 
     public static void showHandInitialCardsCompleteMessage(List<String> playerNames) {
@@ -63,11 +63,8 @@ public class OutputView {
         return NumberWord.toWord(card.getNumber()) + SymbolWord.toWord(card.getSymbol());
     }
 
-    public static void showDealerHitResult(int hitCount) {
-        if (hitCount == 0) {
-            return;
-        }
-        System.out.printf(DEALER_HIT_RESULT_MESSAGE, hitCount);
+    public static void showDealerHitMessage() {
+        System.out.println(DEALER_HIT_MESSAGE);
     }
 
     public static void showGameResult(GameResult gameResult) {
