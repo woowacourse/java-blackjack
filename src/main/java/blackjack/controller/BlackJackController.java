@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    private final static String DealerName = "딜러";
+    private final static String DEALER_NAME = "딜러";
     private BlackJackGame blackJackGame;
 
     public void run() {
@@ -25,12 +25,12 @@ public class BlackJackController {
     }
 
     private void initializeGame(final List<String> playerNames) {
-        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DealerName, playerNames);
+        blackJackGame = new BlackJackGame(new BlackJackDeckGenerator(), DEALER_NAME, playerNames);
     }
 
     private void startGame(final List<String> playerNames) {
         blackJackGame.handOut();
-        OutputView.showOpenCards(DealerName, playerNames, blackJackGame.openHandStatuses());
+        OutputView.showOpenCards(DEALER_NAME, playerNames, blackJackGame.openHandStatuses());
     }
 
     private void hitOrStayForAvailablePlayers(final List<String> playerNames) {
@@ -56,7 +56,7 @@ public class BlackJackController {
 
     private void hitUntilDealerAvailable() {
         final int hitCount = blackJackGame.hitOrStayForDealer();
-        OutputView.showDealerHitResult(DealerName, hitCount);
+        OutputView.showDealerHitResult(DEALER_NAME, hitCount);
     }
 
     private void endGame() {

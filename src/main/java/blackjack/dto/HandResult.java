@@ -5,7 +5,6 @@ import java.util.List;
 
 public class HandResult {
 
-
     private final String participantName;
     private final List<Card> cards;
     private final int sum;
