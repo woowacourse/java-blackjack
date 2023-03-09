@@ -1,11 +1,13 @@
 package controller;
 
-import domain.*;
+import domain.blackjack.BlackjackGame;
+import domain.player.*;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -28,13 +30,31 @@ public class BlackjackController {
     }
 
     private Players createPlayers() {
+        Names names = createNames();
+
+        return Players.from(names.getNames().stream()
+                .map(name -> Player.of(name, createBettingMoney(name)))
+                .collect(Collectors.toList()));
+    }
+
+    private Names createNames() {
         return retryOnInvalidUserInput(
-                () -> Players.from(Names.from(readPlayerNames()))
+                () -> Names.from(readPlayerNames())
         );
     }
 
     private List<String> readPlayerNames() {
         return inputView.requestPlayerNames();
+    }
+
+    private BettingMoney createBettingMoney(Name name) {
+        return retryOnInvalidUserInput(
+                () -> BettingMoney.from(readBettingMoney(name))
+        );
+    }
+
+    private int readBettingMoney(Name name) {
+        return inputView.requestBettingMoney(name.getName());
     }
 
     private void play(BlackjackGame blackjackGame) {

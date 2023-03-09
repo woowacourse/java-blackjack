@@ -1,8 +1,7 @@
-package domain;
+package domain.player;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -11,11 +10,8 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(Names playerNames) {
-        return new Players(playerNames.getNames()
-                .stream()
-                .map(name -> Player.from(name))
-                .collect(Collectors.toList()));
+    public static Players from(List<Player> players) {
+        return new Players(players);
     }
 
     public List<Player> getPlayers() {

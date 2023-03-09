@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ public class Names {
 
     public static Names from(List<String> names) {
         List<Name> playerNames = names.stream()
-                .map(name -> Name.from(name))
+                .map(Name::from)
                 .collect(Collectors.toList());
 
         return new Names(playerNames);

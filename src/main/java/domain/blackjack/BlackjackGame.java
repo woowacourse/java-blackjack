@@ -1,4 +1,11 @@
-package domain;
+package domain.blackjack;
+
+import domain.card.Card;
+import domain.card.Deck;
+import domain.player.Dealer;
+import domain.player.Participant;
+import domain.player.Player;
+import domain.player.Players;
 
 public class BlackjackGame {
     private final Deck deck;

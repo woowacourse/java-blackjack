@@ -1,6 +1,8 @@
-import domain.Card;
-import domain.CardRank;
-import domain.CardShape;
+package domain.card;
+
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

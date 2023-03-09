@@ -1,4 +1,8 @@
-package domain;
+package domain.player;
+
+import domain.blackjack.BlackjackRule;
+import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.List;
 
@@ -35,5 +39,9 @@ public abstract class Participant {
 
     public String getName() {
         return name.getName();
+    }
+
+    protected boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 }

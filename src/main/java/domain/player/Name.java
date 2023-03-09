@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 public class Name {
     private static final int MAX_LENGTH = 5;

@@ -1,4 +1,6 @@
-import domain.Deck;
+package domain.card;
+
+import domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

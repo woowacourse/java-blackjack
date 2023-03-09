@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import domain.blackjack.BlackjackRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +9,13 @@ import java.util.List;
 public class Cards {
     private final List<Card> cards = new ArrayList<>();
 
-    public void add(Card card) {
-        cards.add(card);
+    public boolean isBlackjack() {
+        if (cards.size() == BlackjackRule.INITIAL_CARD_COUNT.getValue()
+                && calculateScore() == BlackjackRule.BUST_LIMIT.getValue()) {
+            return true;
+        }
+
+        return false;
     }
 
     public int calculateScore() {
@@ -35,6 +42,10 @@ public class Cards {
         return score;
     }
 
+    public void add(Card card) {
+        cards.add(card);
+    }
+
     public Card getFirstCard() {
         return cards.get(0);
     }
@@ -46,5 +57,4 @@ public class Cards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
 }

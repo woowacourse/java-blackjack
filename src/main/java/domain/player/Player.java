@@ -1,24 +1,46 @@
-package domain;
+package domain.player;
+
+import domain.blackjack.Result;
 
 import java.util.Objects;
 
 public class Player extends Participant {
     private static final String UNAVAILABLE_NAME = "'%s'라는 이름은 사용할 수 없습니다.";
 
-    private Player(Name name) {
+    private BettingMoney bettingMoney;
+
+    private Player(Name name, BettingMoney bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
-    public static Player from(Name name){
+    public static Player of(Name name, BettingMoney bettingMoney) {
         validateNameIsNotSameDealer(name);
 
-        return new Player(name);
+        return new Player(name, bettingMoney);
     }
 
     private static void validateNameIsNotSameDealer(Name name) {
         if (DEALER_NAME.equals(name.getName())) {
             throw new IllegalArgumentException(String.format(UNAVAILABLE_NAME, DEALER_NAME));
         }
+    }
+
+    public int calculateProfitBy(Result result) {
+        BettingMoney currentMoney = result.payOut(bettingMoney);
+        BettingMoney profit = bettingMoney.calculateProfit(currentMoney);
+
+        updateMoney(currentMoney);
+
+        return profit.getMoney();
+    }
+
+    private void updateMoney(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
+    }
+
+    public int getMoney() {
+        return bettingMoney.getMoney();
     }
 
     @Override
