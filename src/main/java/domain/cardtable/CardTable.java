@@ -5,8 +5,6 @@ import domain.player.Player;
 import domain.player.dealer.Dealer;
 import domain.player.participant.Money;
 import domain.player.participant.Participant;
-import domain.player.participant.betresult.BetResultState;
-import domain.player.participant.betresult.NotYetState;
 
 import java.util.List;
 import java.util.Map;
@@ -27,40 +25,28 @@ public class CardTable {
 
     public Map<Participant, Money> determineParticipantsBettingMoney(final List<Participant> participants,
                                                                      final Dealer dealer) {
-        final Map<Participant, BetResultState> result = matchAfterFirstDeal(participants, dealer);
 
-        return result.keySet()
-                     .stream()
-                     .collect(Collectors.toMap(
-                             Function.identity(),
-                             participant -> {
-                                 if (result.get(participant) instanceof NotYetState) {
-                                     return participant.determineBetMoney(participant.finalMatchWith(dealer));
-                                 }
-                                 return participant.determineBetMoney(result.get(participant));
-                             }
-                     ));
+        return participants.stream()
+                           .peek(participant -> participant.finalMatchWith(dealer))
+                           .collect(Collectors.toMap(
+                                   Function.identity(),
+                                   Participant::determineBetMoney)
+                           );
     }
 
     public Money determineDealerMoney(final List<Participant> participants, final Dealer dealer) {
 
         final Map<Participant, Money> participantsResultMoney = determineParticipantsBettingMoney(participants, dealer);
 
-        return participantsResultMoney.keySet()
+        return participantsResultMoney.values()
                                       .stream()
-                                      .map(Participant::determineBetMoney)
                                       .reduce(Money.MIN, Money::plus)
                                       .lose();
     }
 
-    public Map<Participant, BetResultState> matchAfterFirstDeal(final List<Participant> participants,
-                                                                final Dealer dealer) {
+    public void matchAfterFirstDeal(final List<Participant> participants, final Dealer dealer) {
 
-        return participants.stream()
-                           .collect(Collectors.toMap(
-                                   Function.identity(),
-                                   participant -> participant.firstMatchWith(dealer)
-                           ));
+        participants.forEach(participant -> participant.firstMatchWith(dealer));
     }
 
     public boolean dealCardTo(Player player) {
