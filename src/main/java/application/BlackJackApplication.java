@@ -117,7 +117,9 @@ public class BlackJackApplication {
             DrawnCardsInfo openCardsInfo = createOpenCardsInfo(blackJackGame, playerName);
             outputView.printPlayerCardInfo(openCardsInfo);
 
-            if (!blackJackGame.canPlayerDrawMore(playerName)) break;
+            if (!blackJackGame.canPlayerDrawMore(playerName)) {
+                break;
+            }
         }
     }
 
@@ -155,7 +157,7 @@ public class BlackJackApplication {
 
         ParticipantResult dealerResult = createDealerResult(blackJackGame);
 
-        outputView.printParticipantResults(dealerResult,playerResults);
+        outputView.printParticipantResults(dealerResult, playerResults);
     }
 
     private ParticipantResult createDealerResult(BlackJackGame blackJackGame) {

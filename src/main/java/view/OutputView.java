@@ -48,7 +48,7 @@ public class OutputView {
 
     private void printCardsAndScore(ParticipantResult result) {
         System.out.println(result.getName() + " 카드: " + getCardsInfo(result.getDrawnCards()) +
-                        " - 결과: " + result.getScore());
+                " - 결과: " + result.getScore());
     }
 
     public void printBattingResults(List<BattingResult> battingResults) {

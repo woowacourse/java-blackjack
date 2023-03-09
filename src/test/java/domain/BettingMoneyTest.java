@@ -20,7 +20,7 @@ class BettingMoneyTest {
 
     @DisplayName("배팅 금액은 1000원 이상 10000원 이하여야 한다.")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 999,10001})
+    @ValueSource(ints = {-1, 0, 999, 10001})
     void create_fail_high_money(int expected) {
         //when && then
         assertThatThrownBy(() -> new BettingMoney(expected))

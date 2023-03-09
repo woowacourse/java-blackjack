@@ -119,7 +119,7 @@ class PlayerTest {
             Card cardB = new Card(CardType.SPADE, CardValue.TEN);
             Card cardC = new Card(CardType.SPADE, CardValue.NINE);
 
-            DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB,cardC));
+            DrawnCards notBlackJackCards = new DrawnCards(List.of(cardA, cardB, cardC));
             Player player = new Player(new Name("pobi"), notBlackJackCards);
             // when
             boolean actual = player.isBlackJack();
@@ -177,7 +177,7 @@ class PlayerTest {
             Card cardC = new Card(CardType.DIAMOND, CardValue.TEN);
 
             DrawnCards burstCards = new DrawnCards(List.of(cardA, cardB, cardC));
-            DrawnCards notBurstCards =  new DrawnCards(List.of(cardA, cardB));
+            DrawnCards notBurstCards = new DrawnCards(List.of(cardA, cardB));
 
             Player player = new Player(new Name("pobi"), burstCards);
             Dealer dealer = new Dealer(notBurstCards);
@@ -196,7 +196,7 @@ class PlayerTest {
             Card cardC = new Card(CardType.DIAMOND, CardValue.TEN);
 
             DrawnCards burstCards = new DrawnCards(List.of(cardA, cardB, cardC));
-            DrawnCards notBurstCards =  new DrawnCards(List.of(cardA, cardB));
+            DrawnCards notBurstCards = new DrawnCards(List.of(cardA, cardB));
 
             Player player = new Player(new Name("pobi"), notBurstCards);
             Dealer dealer = new Dealer(burstCards);

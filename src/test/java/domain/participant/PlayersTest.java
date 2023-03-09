@@ -32,7 +32,7 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(expected))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 최소 1명, 최대 4명입니다.");
-     }
+    }
 
     @DisplayName("플레이어의 수가 1명 미만이면 예외를 반환한다.")
     @Test

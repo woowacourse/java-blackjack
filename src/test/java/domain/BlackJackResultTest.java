@@ -30,6 +30,7 @@ class BlackJackResultTest {
         // then
         assertThat(actual).isEqualTo(-1000);
     }
+
     @Test
     @DisplayName("burst인 경우 돈을 모두 잃는다")
     void burst_case() {
