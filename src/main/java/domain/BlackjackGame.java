@@ -10,15 +10,9 @@ public class BlackjackGame {
     private final Dealer dealer;
     private Deck deck;
 
-    private BlackjackGame(Players players, Dealer dealer) {
+    public BlackjackGame(Players players) {
         this.players = players;
-        this.dealer = dealer;
-    }
-
-    public static BlackjackGame createWithPlayerNames(List<String> playerNames) {
-        Players players = Players.from(playerNames);
-        Dealer dealer = new Dealer();
-        return new BlackjackGame(players, dealer);
+        this.dealer = new Dealer();
     }
 
     public void handOutInitialCards(ShuffleStrategy shuffleStrategy) {

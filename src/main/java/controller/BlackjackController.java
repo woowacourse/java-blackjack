@@ -2,8 +2,10 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.Decision;
+import domain.Name;
 import domain.Participant;
 import domain.Player;
+import domain.Players;
 import domain.RandomShuffleStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,20 +31,35 @@ public class BlackjackController {
     }
 
     private BlackjackGame initializeGame() {
-        BlackjackGame blackjackGame = createGame();
+        List<Name> playerNames = createNames();
+        BlackjackGame blackjackGame = createGame(playerNames);
         blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
 
         outputView.printParticipantsInitialCards(toParticipantDtos(blackjackGame.getParticipants()));
         return blackjackGame;
     }
 
-    private BlackjackGame createGame() {
+    private BlackjackGame createGame(List<Name> playerNames) {
         try {
-            List<String> playerNames = inputView.readNames();
-            return BlackjackGame.createWithPlayerNames(playerNames);
+            List<Player> rawPlayers = playerNames.stream()
+                    .map(playerName -> new Player(playerName, inputView.readBettingMoney(playerName.value())))
+                    .collect(Collectors.toUnmodifiableList());
+            Players players = new Players(rawPlayers);
+            return new BlackjackGame(players);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return createGame();
+            return createGame(playerNames);
+        }
+    }
+
+    private List<Name> createNames() {
+        try {
+            return inputView.readNames().stream()
+                    .map(Name::new)
+                    .collect(Collectors.toUnmodifiableList());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return createNames();
         }
     }
 

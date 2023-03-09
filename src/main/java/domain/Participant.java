@@ -5,8 +5,10 @@ import java.util.List;
 public abstract class Participant {
 
     private final Hand hand;
+    private final Name name;
 
-    Participant() {
+    Participant(Name name) {
+        this.name = name;
         this.hand = new Hand();
     }
 
@@ -24,5 +26,7 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public abstract String name();
+    public String name() {
+        return name.value();
+    }
 }

@@ -1,15 +1,15 @@
 package domain;
 
-import java.util.Objects;
-
 public class Player extends Participant {
 
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 21;
-    private final Name name;
+
+    private final BettingMoney bettingMoney;
     private Decision decision;
 
-    public Player(String inputName) {
-        this.name = new Name(inputName);
+    public Player(Name name, int bettingMoney) {
+        super(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
         this.decision = Decision.HIT;
     }
 
@@ -23,25 +23,7 @@ public class Player extends Participant {
                 score() < UPPER_BOUND_OF_DRAWABLE_SCORE;
     }
 
-    @Override
-    public String name() {
-        return name.value();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public int bettingMoney() {
+        return bettingMoney.value();
     }
 }

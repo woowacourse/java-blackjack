@@ -4,13 +4,12 @@ public class Dealer extends Participant {
 
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 17;
 
-    @Override
-    public boolean isDrawable() {
-        return UPPER_BOUND_OF_DRAWABLE_SCORE > score();
+    public Dealer() {
+        super(new Name("딜러"));
     }
 
     @Override
-    public String name() {
-        return "딜러";
+    public boolean isDrawable() {
+        return UPPER_BOUND_OF_DRAWABLE_SCORE > score();
     }
 }

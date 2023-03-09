@@ -3,7 +3,7 @@ package domain;
 import static domain.GameOutcome.LOSE;
 import static domain.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.Map;
@@ -16,8 +16,10 @@ class BlackjackGameTest {
     class 결과반환 {
         @Test
         void should_승패를판단하여반환한다_when_getPlayerOutcome호출시() {
+            Players players = new Players(List.of(new Player(new Name("포이"), 1000),
+                    new Player(new Name("에밀"), 2000)));
             //given
-            BlackjackGame blackjackGame = BlackjackGame.createWithPlayerNames(List.of("포이", "에밀"));
+            BlackjackGame blackjackGame = new BlackjackGame(players);
             blackjackGame.handOutInitialCards((cards) -> {
                 cards.clear();
                 cards.add(new Card(Suit.SPADE, Number.JACK));
