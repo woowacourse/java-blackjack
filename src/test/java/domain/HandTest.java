@@ -24,7 +24,7 @@ public class HandTest extends AbstractTestFixture {
     }
 
     @ParameterizedTest(name = "점수를 계산한다")
-    @CsvSource({"8,K,18", "10,5,15", "A,A,12"})
+    @CsvSource({"8,K,18", "10,5,15", "SPADE-A,HEART-A,12"})
     void test_score(String letter1, String letter2, int score) {
         var hand = new Hand(createCards(letter1, letter2));
 
@@ -35,8 +35,7 @@ public class HandTest extends AbstractTestFixture {
         return Stream.of(
                 Arguments.of(21, createCards("J", "10", "A")),
                 Arguments.of(21, createCards("7", "3", "A")),
-                Arguments.of(13, createCards("A", "A", "A")),
-                Arguments.of(21, createCards("A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"))
+                Arguments.of(14, createCards("SPADE-A", "HEART-A", "DIAMOND-A", "CLOVER-A"))
         );
     }
 
@@ -51,7 +50,7 @@ public class HandTest extends AbstractTestFixture {
     @ParameterizedTest(name = "패가 Bust인지 알 수 있다.")
     @CsvSource({"K,true", "A,false"})
     void test_is_bust(String additionalLetter, boolean isBust) {
-        var hand = new Hand(createCards("K", "K", additionalLetter));
+        var hand = new Hand(createCards("J", "Q", additionalLetter));
 
         assertThat(hand.isBust()).isEqualTo(isBust);
     }
@@ -61,7 +60,7 @@ public class HandTest extends AbstractTestFixture {
                 Arguments.of(createCards("K", "10", "A"), createCards("J", "10"), true),
                 Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "Q"), true),
                 Arguments.of(createCards("K", "10"), createCards("K", "10", "A"), false),
-                Arguments.of(createCards("K", "10", "K"), createCards("K", "10", "Q"), false),
+                Arguments.of(createCards("K", "10", "J"), createCards("K", "10", "Q"), false),
                 Arguments.of(createCards("K", "10", "Q"), createCards("K", "10", "A"), false),
                 Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "A"), false)
         );
@@ -79,7 +78,7 @@ public class HandTest extends AbstractTestFixture {
     static Stream<Arguments> test_is_draw_against_other() {
         return Stream.of(
                 Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "A"), true),
-                Arguments.of(createCards("K", "10", "K"), createCards("K", "10", "Q"), true),
+                Arguments.of(createCards("K", "10", "J"), createCards("K", "10", "Q"), true),
                 Arguments.of(createCards("K", "10", "A"), createCards("K", "10", "Q"), false),
                 Arguments.of(createCards("K", "10", "Q"), createCards("K", "10", "A"), false),
                 Arguments.of(createCards("K", "10", "A"), createCards("J", "10"), false),

@@ -67,8 +67,8 @@ class UserTest extends AbstractTestFixture {
     @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
     @Test
     void test_all_busted_is_draw() {
-        var user = new User("조이", createCards("10", "K", "K"));
-        var dealer = new Dealer(createCards("K", "9", "9"));
+        var user = new User("조이", createCards("10", "K", "J"));
+        var dealer = new Dealer(createCards("K", "8", "10"));
 
         assertThat(user.competeWith(dealer)).isEqualTo(Result.DRAW);
     }
@@ -76,7 +76,7 @@ class UserTest extends AbstractTestFixture {
     @DisplayName("유저만 죽으면 딜러가 이긴다")
     @Test
     void test_user_busted_dealer_wins() {
-        var user = new User("조이", createCards("10", "K", "K"));
+        var user = new User("조이", createCards("10", "K", "J"));
         var dealer = new Dealer(createCards("K", "9"));
 
         assertThat(user.competeWith(dealer)).isEqualTo(Result.LOSE);

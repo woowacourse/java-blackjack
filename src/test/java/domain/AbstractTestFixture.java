@@ -8,11 +8,18 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractTestFixture {
 
-    static List<Card> createCards(String... letters) {
-        return Arrays.stream(letters)
-                .map(AbstractTestFixture::letterFrom)
-                .map(AbstractTestFixture::createCard)
+    static List<Card> createCards(String... cards) {
+        return Arrays.stream(cards)
+                .map(AbstractTestFixture::parse)
                 .collect(Collectors.toList());
+    }
+
+    private static Card parse(String card) {
+        String[] cardInfo = card.split("-");
+        if (cardInfo.length > 1) {
+            return new Card(faceFrom(cardInfo[0]), letterFrom(cardInfo[1]));
+        }
+        return new Card(SPADE, letterFrom(cardInfo[0]));
     }
 
     static Card createCard(Letter letter) {
@@ -24,6 +31,13 @@ public abstract class AbstractTestFixture {
                 .filter(letterEnum -> letterEnum.getLetter().equals(letter))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 글자입니다"));
+    }
+
+    static Face faceFrom(String face) {
+        return Arrays.stream(Face.values())
+                .filter(faceEnum -> faceEnum.name().equals(face))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 카드 그림입니다"));
     }
 
     static Participants createParticipantsFrom(Dealer dealer, User... users) {
