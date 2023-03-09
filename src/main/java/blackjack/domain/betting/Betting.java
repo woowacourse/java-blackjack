@@ -5,16 +5,18 @@ import java.util.Map;
 
 public class Betting {
 
+    private static final int BONUS_PERCENT = 50;
+
     private final Map<Player, Profit> expectedProfit;
 
     public Betting(final Map<Player, Profit> expectedProfit) {
         this.expectedProfit = expectedProfit;
     }
 
-    public void addBlackJackBonus(final Player player) {
+    public void addBonus(final Player player) {
         validateExistPlayer(player);
         final Profit profit = expectedProfit.get(player);
-        expectedProfit.put(player, profit.increaseFiftyPercent());
+        expectedProfit.put(player, profit.increaseByPercent(BONUS_PERCENT));
     }
 
     private void validateExistPlayer(final Player player) {

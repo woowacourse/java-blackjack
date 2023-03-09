@@ -56,7 +56,7 @@ public class Participants {
 
     private void calculateBlackJackBonus(final Player player, final Betting betting) {
         if (player.isBlackJack()) {
-            betting.addBlackJackBonus(player);
+            betting.addBonus(player);
         }
     }
 

@@ -8,8 +8,8 @@ public class Profit {
         this.value = value;
     }
 
-    public Profit increaseFiftyPercent() {
-        return new Profit(value + (int) (value * 0.5));
+    public Profit increaseByPercent(final int percent) {
+        return new Profit(value + (int) (value * percent / 100.0));
     }
 
     public Profit loss() {

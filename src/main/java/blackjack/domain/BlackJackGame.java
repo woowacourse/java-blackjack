@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.participant.Result.LOSE;
-
 import blackjack.domain.betting.Betting;
 import blackjack.domain.betting.Profit;
 import blackjack.domain.card.Deck;
@@ -42,12 +40,12 @@ public class BlackJackGame {
 
         for (final Player player : players) {
             final Result result = dealer.showResult(player.getScore());
-            applyLose(player, result);
+            applyProfit(player, result);
         }
     }
 
-    private void applyLose(final Player player, final Result result) {
-        if (result == LOSE) {
+    private void applyProfit(final Player player, final Result result) {
+        if (result == Result.LOSE) {
             betting.fail(player);
         }
     }

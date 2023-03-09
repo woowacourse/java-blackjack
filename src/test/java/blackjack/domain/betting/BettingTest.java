@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 class BettingTest {
 
     @Nested
-    class addBlackJackBonus_메서드는 {
+    class addBonus_메서드는 {
 
         @Test
         void 플레이어가_존재하지_않으면_예외를_던진다() {
@@ -30,11 +30,11 @@ class BettingTest {
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             final Betting betting = new Betting(expectedProfit);
 
-            assertThatThrownBy(() -> betting.addBlackJackBonus(player)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> betting.addBonus(player)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
-        void 플레이어가_존재하면_블랙잭_보너스를_추가한다() {
+        void 플레이어가_존재하면_보너스를_추가한다() {
             final Player player = new Player("toney");
             player.drawCard(new Card(QUEEN, CLOVER));
             player.drawCard(new Card(ACE, HEART));
@@ -42,7 +42,7 @@ class BettingTest {
             final Map<Player, Profit> expectedProfit = new HashMap<>();
             expectedProfit.put(player, new Profit(10000));
             final Betting betting = new Betting(expectedProfit);
-            betting.addBlackJackBonus(player);
+            betting.addBonus(player);
 
             assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(15000);
         }

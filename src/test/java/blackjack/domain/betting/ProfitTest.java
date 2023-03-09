@@ -14,11 +14,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 class ProfitTest {
 
     @ParameterizedTest(name = "원금: {0}, 결과: {1}")
-    @CsvSource(value = {"10000,15000", "13333,19999"})
-    void 수익이_50_퍼센트_증가한다(final int value, final int expected) {
+    @CsvSource(value = {"50,10000,15000", "30,10000,13000"})
+    void 수익이_퍼센트만큼_증가한다(final int percent, final int value, final int expected) {
         final Profit profit = new Profit(value);
 
-        final Profit increase = profit.increaseFiftyPercent();
+        final Profit increase = profit.increaseByPercent(percent);
 
         assertThat(increase.getValue()).isEqualTo(expected);
     }
