@@ -20,16 +20,16 @@ class ResultTest {
     @DisplayName("올바른 게임 승패 결과가 나오는지 확인한다")
     @Test
     void Should_EqualExpectedResult_When_GenerateResult() {
-        Guest win = new Guest(new Name("win"), ten, nine);
+        Guest win = new Guest(new Name("win"), List.of(ten, nine));
         win.addCard(two);
 
-        Guest lose = new Guest(new Name("lose"), ten, ace);
+        Guest lose = new Guest(new Name("lose"), List.of(ten, three));
         lose.addCard(two);
 
-        Guest draw = new Guest(new Name("draw"), ten, nine);
+        Guest draw = new Guest(new Name("draw"), List.of(ten, nine));
         draw.addCard(ace);
 
-        Dealer dealer = new Dealer(ten, nine);
+        Dealer dealer = new Dealer(List.of(ten, nine));
         dealer.addCard(ace);
 
         Result result = new Result(dealer, List.of(win, lose, draw));
@@ -51,10 +51,10 @@ class ResultTest {
         @DisplayName("점수가 21을 넘었다면 게스트 패")
         @Test
         void Should_GuestLose_When_Over21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(three);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(three);
 
             Result result = new Result(dealer, List.of(guest));
@@ -71,10 +71,10 @@ class ResultTest {
         @DisplayName("점수가 21이하일때 무승부")
         @Test
         void Should_GuestDraw_When_Below21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(two);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(two);
 
             Result result = new Result(dealer, List.of(guest));
@@ -96,10 +96,10 @@ class ResultTest {
         @DisplayName("딜러와 게스트의 점수가 21을 초과한 경우 게스트 패")
         @Test
         void Should_GuestLose_When_DealerAndGuestOver21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(three);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(four);
 
             Result result = new Result(dealer, List.of(guest));
@@ -116,10 +116,10 @@ class ResultTest {
         @DisplayName("딜러의 점수가 21을 초과하고 게스트의 점수가 21이하인 경우 게스트 승")
         @Test
         void Should_GuestWin_When_DealerOver21GuestBelow21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(two);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(three);
 
             Result result = new Result(dealer, List.of(guest));
@@ -136,10 +136,10 @@ class ResultTest {
         @DisplayName("딜러의 점수가 21이하고 게스트의 점수가 21 초과인 경우 게스트 패")
         @Test
         void Should_GuestLose_When_DealerBelow21GuestOver21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(three);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(two);
 
             Result result = new Result(dealer, List.of(guest));
@@ -156,10 +156,10 @@ class ResultTest {
         @DisplayName("딜러와 게스트의 점수가 21이하인 경우, 게스트 패")
         @Test
         void Should_GuestLose_When_DealerAndGuestBelow21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(ace);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(two);
 
             Result result = new Result(dealer, List.of(guest));
@@ -180,10 +180,10 @@ class ResultTest {
         @DisplayName("딜러와 게스트의 점수가 21을 초과한 경우 게스트 패")
         @Test
         void Should_GuestLose_When_DealerAndGuestOver21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(four);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(three);
 
             Result result = new Result(dealer, List.of(guest));
@@ -200,10 +200,10 @@ class ResultTest {
         @DisplayName("딜러의 점수가 21이하이고 게스트의 점수가 21초과인 경우 게스트 패")
         @Test
         void Should_GuestWin_When_DealerBelow21GuestOver21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(three);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(two);
 
             Result result = new Result(dealer, List.of(guest));
@@ -220,10 +220,10 @@ class ResultTest {
         @DisplayName("딜러의 점수가 21초과이고 게스트의 점수가 21 이하인 경우 게스트 승")
         @Test
         void Should_GuestLose_When_DealerOver21GuestBelow21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(two);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(three);
 
             Result result = new Result(dealer, List.of(guest));
@@ -240,10 +240,10 @@ class ResultTest {
         @DisplayName("딜러와 게스트의 점수가 21이하인 경우, 게스트 승")
         @Test
         void Should_GuestLose_When_DealerAndGuestBelow21() {
-            Guest guest = new Guest(new Name("guest"), ten, nine);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, nine));
             guest.addCard(two);
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(ace);
 
             Result result = new Result(dealer, List.of(guest));
@@ -264,9 +264,9 @@ class ResultTest {
         @DisplayName("딜러가 블랙잭일 때 무승부")
         @Test
         void Should_Draw_When_DealerAndGuestBlackJack() {
-            Guest guest = new Guest(new Name("guest"), ten, ace);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, ace));
 
-            Dealer dealer = new Dealer(ten, ace);
+            Dealer dealer = new Dealer(List.of(ten, ace));
 
             Result result = new Result(dealer, List.of(guest));
 
@@ -282,9 +282,9 @@ class ResultTest {
         @DisplayName("딜러의 점수가 21일 때 게스트 승")
         @Test
         void Should_GuestWin_When_Dealer21AndGuestBlackJack() {
-            Guest guest = new Guest(new Name("guest"), ten, ace);
+            Guest guest = new Guest(new Name("guest"), List.of(ten, ace));
 
-            Dealer dealer = new Dealer(ten, nine);
+            Dealer dealer = new Dealer(List.of(ten, nine));
             dealer.addCard(two);
 
             Result result = new Result(dealer, List.of(guest));

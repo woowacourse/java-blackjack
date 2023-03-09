@@ -1,11 +1,13 @@
 package blackjackgame.domain;
 
+import java.util.List;
+
 public class Dealer extends Player {
     private static final int DEALER_HIT_STANDARD = 16;
     private static final String DEALER = "딜러";
 
-    public Dealer(final Card firstCard, final Card secondCard) {
-        super(firstCard, secondCard);
+    public Dealer(final List<Card> initHand) {
+        super(initHand);
     }
 
     public boolean canHit() {
