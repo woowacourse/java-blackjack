@@ -3,6 +3,7 @@ package domain.user;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,5 +43,13 @@ public class PlayerNameTest {
         assertThatThrownBy(() -> new PlayerName("딜러"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("딜러라는 이름은 사용할 수 없습니다.");
+    }
+
+    @DisplayName("플레이어의 이름은 중복될 수 없다")
+    @Test
+    void nameNotDuplicated() {
+        assertThatThrownBy(() -> PlayerName.validateDuplication(List.of("hongo", "hongo", "ash")))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
     }
 }

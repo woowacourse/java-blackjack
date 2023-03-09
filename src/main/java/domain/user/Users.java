@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Card;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,13 +33,6 @@ public class Users {
 
     private static void validate(final Set<String> names) {
         validateSize(names);
-    }
-
-    public static void validateDuplication(final List<String> names) {
-        Set<String> distinctNames = new HashSet<>(names);
-        if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
-        }
     }
 
     private static void validateSize(final Set<String> names) {

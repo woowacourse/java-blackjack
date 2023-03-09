@@ -3,6 +3,7 @@ package controller;
 import domain.card.shuffler.RandomCardShuffler;
 import domain.game.BlackJackGame;
 import domain.user.Player;
+import domain.user.PlayerName;
 import domain.user.Users;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -40,7 +41,7 @@ public class Controller {
 
     private BlackJackGame createBlackJackGame() {
         List<String> playerNames = inputView.askPlayerNames();
-        Users.validateDuplication(playerNames);
+        PlayerName.validateDuplication(playerNames);
         Map<String, Integer> playerNameToBettingAmount = new LinkedHashMap<>();
         for (String playerName : playerNames) {
             int bettingAmount = inputView.askPlayerBettingAmount(playerName);
