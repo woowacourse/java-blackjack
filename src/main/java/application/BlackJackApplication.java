@@ -3,7 +3,7 @@ package application;
 import static java.util.stream.Collectors.toList;
 
 import domain.BettingMoney;
-import domain.BlackJackBettingMachine;
+import domain.BlackJackBettingDeposit;
 import domain.BlackJackGame;
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -32,14 +32,14 @@ public class BlackJackApplication {
 
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
-        BlackJackBettingMachine blackJackBettingMachine = new BlackJackBettingMachine();
+        BlackJackBettingDeposit blackJackBettingDeposit = new BlackJackBettingDeposit();
 
-        betEachPlayer(blackJackGame, blackJackBettingMachine);
+        betEachPlayer(blackJackGame, blackJackBettingDeposit);
         splitCards(blackJackGame);
         drawCards(blackJackGame);
 
         printParticipantResults(blackJackGame);
-        printBattingResults(blackJackGame, blackJackBettingMachine);
+        printBattingResults(blackJackGame, blackJackBettingDeposit);
     }
 
     private BlackJackGame createBlackJackGame() {
@@ -64,10 +64,10 @@ public class BlackJackApplication {
         }
     }
 
-    private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
+    private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingDeposit blackJackBettingDeposit) {
         for (String playerName : blackJackGame.getPlayersName()) {
             int bettingMoney = createBettingMoney(playerName);
-            blackJackBettingMachine.betMoney(playerName, new BettingMoney(bettingMoney));
+            blackJackBettingDeposit.betMoney(playerName, new BettingMoney(bettingMoney));
         }
     }
 
@@ -168,11 +168,11 @@ public class BlackJackApplication {
         return ParticipantResult.toDto(dealerName, dealerCards, dealerScore);
     }
 
-    private void printBattingResults(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
+    private void printBattingResults(BlackJackGame blackJackGame, BlackJackBettingDeposit blackJackBettingDeposit) {
         List<BattingResult> battingResults = new ArrayList<>();
 
         for (String playerName : blackJackGame.getPlayersName()) {
-            BettingMoney bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
+            BettingMoney bettingMoney = blackJackBettingDeposit.findBetMoneyByName(playerName);
             int result = blackJackGame.calculateBettingResult(playerName, bettingMoney);
             battingResults.add(new BattingResult(playerName, result));
         }

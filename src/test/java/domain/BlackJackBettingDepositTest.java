@@ -6,17 +6,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackBettingMachineTest {
+class BlackJackBettingDepositTest {
 
     @DisplayName("해당하는 이름에 할당된 money를 반환한다.")
     @Test
     void find_by_specific_name() {
         //given
         BettingMoney expected = new BettingMoney(1000);
-        BlackJackBettingMachine blackJackBettingMachine = new BlackJackBettingMachine();
-        blackJackBettingMachine.betMoney("name", expected);
+        BlackJackBettingDeposit blackJackBettingDeposit = new BlackJackBettingDeposit();
+        blackJackBettingDeposit.betMoney("name", expected);
         //when
-        BettingMoney actual = blackJackBettingMachine.findBetMoneyByName("name");
+        BettingMoney actual = blackJackBettingDeposit.findBetMoneyByName("name");
         //then
         assertThat(actual).isEqualTo(expected);
     }
@@ -25,9 +25,9 @@ class BlackJackBettingMachineTest {
     @Test
     void is_contain_name_throw_exception() {
         //given
-        BlackJackBettingMachine blackJackBettingMachine = new BlackJackBettingMachine();
+        BlackJackBettingDeposit blackJackBettingDeposit = new BlackJackBettingDeposit();
         //when && then
-        assertThatThrownBy(() -> blackJackBettingMachine.findBetMoneyByName("expected"))
+        assertThatThrownBy(() -> blackJackBettingDeposit.findBetMoneyByName("expected"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 플레이어입니다.");
     }
