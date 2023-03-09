@@ -7,16 +7,17 @@ import org.junit.jupiter.api.Test;
 
 import static model.card.Shape.CLOVER;
 import static model.card.Shape.DIAMOND;
+import static model.card.Shape.HEART;
 import static model.card.Shape.SPADE;
 import static model.card.Value.ACE;
 import static model.card.Value.FIVE;
 import static model.card.Value.JACK;
 import static model.card.Value.KING;
 import static model.card.Value.NINE;
+import static model.card.Value.SIX;
 import static model.card.Value.THREE;
 import static model.card.Value.TWO;
 import static model.user.Result.LOSE;
-import static model.user.Result.TIE;
 import static model.user.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -65,8 +66,8 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 비긴 결과가 반환된다.")
-    void whenOverBurstNumberFindWinPlayer() {
+    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 지는 결과가 반환된다.")
+    void whenOverBustNumberBoth_thenReturnLose() {
         // given
         int dealerTotalValue = 23;
 
@@ -75,7 +76,7 @@ class UserTest {
         user.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(user.judgeResult(dealerTotalValue)).isEqualTo(TIE);
+        assertThat(user.judgeResult(dealerTotalValue)).isEqualTo(LOSE);
     }
 
     @Test
@@ -102,5 +103,34 @@ class UserTest {
 
         // when, then
         assertThat(user.judgeResult(dealerTotalValue)).isEqualTo(WIN);
+    }
+
+    @Test
+    @DisplayName("블랙잭 여부를 확인한다.")
+    void whenBlackJack_thenReturnTrue() {
+        // given
+        user.receiveCard(new Card(DIAMOND, ACE));
+        user.receiveCard(new Card(HEART, KING));
+
+        // when, then
+        assertAll(
+                () -> assertThat(user.isBlackJack()).isTrue(),
+                () -> {
+                    user.receiveCard(new Card(CLOVER, ACE));
+                    assertThat(user.isBlackJack()).isFalse();
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("카드를 추가적으로 받았을 경우 블랙잭 여부를 확인한다.")
+    void givenThreeCards_whenBlackJack_thenReturnTrue() {
+        // given
+        user.receiveCard(new Card(DIAMOND, FIVE));
+        user.receiveCard(new Card(SPADE, SIX));
+        user.receiveCard(new Card(HEART, KING));
+
+        // when, then
+        assertThat(user.isBlackJack()).isFalse();
     }
 }

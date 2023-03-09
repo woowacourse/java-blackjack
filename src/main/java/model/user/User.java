@@ -31,6 +31,10 @@ public class User {
         return Result.judge(dealerTotalValue, playerTotalValue);
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public String getName() {
         return this.name;
     }

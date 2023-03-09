@@ -9,6 +9,7 @@ public class Hand {
 
     private static final int BUST_NUMBER = 21;
     private static final int ACE_REVISE_VALUE = 10;
+    private static final int INITIAL_HAND_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -48,6 +49,10 @@ public class Hand {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public boolean isBlackJack() {
+        return (cards.size() == INITIAL_HAND_SIZE) && (getTotalValue() == BUST_NUMBER);
     }
 
     public List<Card> getCards() {

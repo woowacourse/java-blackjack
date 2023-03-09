@@ -3,10 +3,6 @@ package model.user;
 import model.card.Card;
 import model.card.Deck;
 import model.card.RandomShuffleMaker;
-import model.user.Dealer;
-import model.user.Participants;
-import model.user.Player;
-import model.user.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -61,8 +57,8 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 비긴 결과가 반환된다.")
-    void whenOverBurstNumberFindWinPlayer() {
+    @DisplayName("딜러와 플레이어가 모두 21 초과일 경우 플레이어가 지는 결과가 반환된다.")
+    void whenOverBothBustNumber_thenReturnLose() {
         // given
         dealer.receiveCard(new Card(SPADE, KING));
         dealer.receiveCard(new Card(DIAMOND, KING));
@@ -73,7 +69,7 @@ class ParticipantsTest {
         bebe.receiveCard(new Card(CLOVER, TWO));
 
         // when, then
-        assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(TIE);
+        assertThat(participants.findPlayerFinalResult().get(bebe)).isEqualTo(LOSE);
     }
 
     @Test

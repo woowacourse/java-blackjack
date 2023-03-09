@@ -13,15 +13,6 @@ public class Player implements Receivable {
         this.user = new User(name);
     }
 
-    @Override
-    public boolean canReceiveCard() {
-        return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
-    }
-
-    public int calculateTotalValue() {
-        return user.getCardTotalValue();
-    }
-
     public Result judgeResult(int dealerTotalValue) {
         return user.judgeResult(dealerTotalValue);
     }
@@ -32,6 +23,19 @@ public class Player implements Receivable {
 
     public void receiveCard(final Card card) {
         user.receiveCard(card);
+    }
+
+    @Override
+    public boolean canReceiveCard() {
+        return CAN_RECEIVE_MAX_NUMBER >= calculateTotalValue();
+    }
+
+    public int calculateTotalValue() {
+        return user.getCardTotalValue();
+    }
+
+    private boolean isBlackJack() {
+        return user.isBlackJack();
     }
 
     public String getName() {
