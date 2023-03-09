@@ -1,12 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.player.*;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.UserResults;
+import blackjack.domain.result.UserResultsDTO;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static blackjack.domain.player.Dealer.DEALER_NAME;
 
 public class OutputView {
 
@@ -79,10 +80,10 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public static void printResults(UserResults results, Dealer dealer) {
+    public static void printResults(UserResultsDTO userResultsDTO) {
         System.out.println(RESULT_TITLE);
-        HashMap<User, List<Result>> userResults = results.getResults();
-        System.out.println(dealer.getName() + CARD_USER_DELIMITER + userResults.remove(dealer));
+        HashMap<User, String> userResults = userResultsDTO.getResults();
+        System.out.println(DEALER_NAME + CARD_USER_DELIMITER + userResultsDTO.getDealerResult());
         for (User user : userResults.keySet()) {
             System.out.println(user.getName() + CARD_USER_DELIMITER + userResults.get(user));
         }
