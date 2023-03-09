@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Suit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

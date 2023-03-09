@@ -1,6 +1,6 @@
 package ui;
 
-import domain.Card;
+import domain.card.Card;
 import domain.Result;
 import domain.user.User;
 import domain.user.Dealer;

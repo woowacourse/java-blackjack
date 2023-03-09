@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.card.Deck;
+import domain.card.ShuffledDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

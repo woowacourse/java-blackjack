@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.Hand;
+import domain.card.Hand;
 
 public final class Player extends User {
 

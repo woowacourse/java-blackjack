@@ -3,10 +3,10 @@ package domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Card;
-import domain.Hand;
-import domain.Rank;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
