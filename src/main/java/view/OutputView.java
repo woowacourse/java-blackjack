@@ -57,7 +57,7 @@ public class OutputView {
                 .mapToInt(BattingResult::getMoney)
                 .sum() * -1;
 
-        System.out.println("최종 수익");
+        System.out.println(NEW_LINE + "최종 수익");
         System.out.println("딜러: " + dealerBattingResult);
         battingResults.forEach(this::printPlayerBattingResult);
     }
