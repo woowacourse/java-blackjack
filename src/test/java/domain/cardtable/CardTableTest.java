@@ -27,12 +27,9 @@ import static domain.card.CardValue.KING;
 import static domain.card.CardValue.NINE;
 import static domain.card.CardValue.QUEEN;
 import static domain.card.CardValue.TEN;
-import static domain.card.CardValue.THREE;
 import static domain.card.CardValue.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CardTableTest {
 
@@ -41,7 +38,7 @@ class CardTableTest {
     CardTable cardTable;
 
     @BeforeEach
-    void initCardArea() {
+    void initHand() {
         cardDeck = CardDeck.shuffledFullCardDeck();
         cardTable = CardTable.readyToPlayBlackjack(cardDeck);
     }
@@ -221,8 +218,8 @@ class CardTableTest {
 
         //then
         assertAll(
-                () -> assertThat(participant.cardArea().cards()).hasSize(3),
-                () -> assertThat(dealer.cardArea().cards()).hasSize(2)
+                () -> assertThat(participant.hand().cards()).hasSize(3),
+                () -> assertThat(dealer.hand().cards()).hasSize(2)
         );
     }
 }

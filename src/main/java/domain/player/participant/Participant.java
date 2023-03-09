@@ -21,7 +21,7 @@ public class Participant extends Player {
 
     @Override
     public boolean canHit() {
-        return cardArea.canMoreCard();
+        return hand.canMoreCard();
     }
 
     public Money determineBetMoney() {

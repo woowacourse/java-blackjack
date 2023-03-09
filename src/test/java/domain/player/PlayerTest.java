@@ -45,10 +45,10 @@ class PlayerTest {
     @Test
     void 카드를_추가할_수_있다() {
         // when
-        final int beforeSize = player.cardArea().cards().size();
+        final int beforeSize = player.hand().cards().size();
         player.hit(new Card(CardShape.SPADE, TEN));
 
         // then
-        assertThat(player.cardArea.cards()).hasSize(beforeSize + 1);
+        assertThat(player.hand.cards()).hasSize(beforeSize + 1);
     }
 }

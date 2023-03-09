@@ -20,6 +20,6 @@ public class Dealer extends Player {
     }
 
     public Card faceUpFirstCard() {
-        return cardArea.firstCard();
+        return hand.firstCard();
     }
 }

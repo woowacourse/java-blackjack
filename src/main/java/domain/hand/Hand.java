@@ -1,4 +1,4 @@
-package domain.area;
+package domain.hand;
 
 import domain.Score;
 import domain.card.Card;
@@ -6,7 +6,7 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardArea {
+public class Hand {
 
     private final List<Card> cards = new ArrayList<>();
 

@@ -83,7 +83,7 @@ public class OutputView {
     }
 
     private static String makeStateMessage(final Player player) {
-        return player.cardArea()
+        return player.hand()
                      .cards()
                      .stream()
                      .map(card -> String.format("%s %s",
@@ -98,14 +98,14 @@ public class OutputView {
     }
 
     public static void showPlayerStateResult(final Player player) {
-        final String message = player.cardArea().cards().stream()
+        final String message = player.hand().cards().stream()
                                      .map(card -> String.format("%s %s",
                                                                 VALUE_MESSAGE_MAP.get(card.cardValue()),
                                                                 SHAPE_MESSAGE_MAP.get(card.cardShape())))
                                      .collect(Collectors.joining(DELIM, getPlayerName(player)
                                                                          + CARD_INFORMATION_FORMAT,
                                                                  String.format(" - 결과: %d",
-                                                                               player.cardArea().calculate().value())));
+                                                                               player.hand().calculate().value())));
 
         System.out.println(message);
     }
