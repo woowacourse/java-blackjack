@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,14 @@ public class Players {
         }
     }
 
+    public List<Integer> getPlayersScore() {
+        List<Integer> playersScore = new ArrayList<>();
+        for (Player player : players) {
+            playersScore.add(player.calculateScore());
+        }
+        return playersScore;
+    }
+
     public boolean getPlayerIsHit(int i) {
         return players.get(i).isHit();
     }
@@ -38,12 +47,6 @@ public class Players {
 
     public int count() {
         return players.size();
-    }
-
-    public List<String> getPlayersName() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
     }
 
     public int getPlayerScoreByIndex(int i) {

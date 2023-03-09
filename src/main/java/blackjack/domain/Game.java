@@ -27,20 +27,24 @@ public class Game {
         gamePlayer.initializeGamePlayer(cards);
     }
 
-    public boolean isHitPlayerByIndex(int i) {
+    public List<Integer> getPlayersScore() {
+        return gamePlayer.getPlayers().getPlayersScore();
+    }
+
+    public void playerHit(int i) {
+        gamePlayer.playerHit(i, deck.draw());
+    }
+
+    public void dealerHit() {
+        gamePlayer.dealerHit(deck.draw());
+    }
+
+    public boolean isPlayerHitPossibleByIndex(int i) {
         return gamePlayer.isHitPlayerByIndex(i);
     }
 
-    public boolean isHitDealer() {
+    public boolean isDealerHitPossible() {
         return gamePlayer.isHitDealer();
-    }
-
-    public void giveCardToPlayerByIndex(int i) {
-        gamePlayer.giveCardToPlayerByIndex(i, deck.draw());
-    }
-
-    public void giveCardToDealer() {
-        gamePlayer.giveCardToDealer(deck.draw());
     }
 
     public Players getPlayers() {

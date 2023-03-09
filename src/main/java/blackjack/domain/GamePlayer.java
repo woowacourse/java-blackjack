@@ -11,12 +11,21 @@ public class GamePlayer {
         this.dealer = dealer;
     }
 
-    public void giveCardToDealer(Card card) {
+    public void playerHit(int i, Card card) {
+        players.addCardToPlayer(i, card);
+    }
+
+    public void dealerHit(Card card) {
         dealer.addCard(card);
+
     }
 
     public void giveCardToPlayerByIndex(int i, Card card) {
         players.addCardToPlayer(i, card);
+    }
+
+    public void giveCardToDealer(Card card) {
+        dealer.addCard(card);
     }
 
     public void initializeGamePlayer(List<Card> cards) {
