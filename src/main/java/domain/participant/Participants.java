@@ -13,22 +13,18 @@ public final class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(List<String> names, CardDeck cardDeck) {
-        validateSize(names);
-        this.players = names.stream()
-                .map(Name::new)
-                .map(name -> new Player(name, cardDeck.giveInitialCards()))
-                .collect(Collectors.toList());
-        this.dealer = new Dealer(cardDeck.giveInitialCards());
-    }
-
     public Participants(List<String> names) {
         validateSize(names);
         this.players = names.stream()
                 .map(Name::new)
-                .map(name -> new Player(name, Collections.emptyList()))
+                .map(Player::new)
                 .collect(Collectors.toList());
-        this.dealer = new Dealer(Collections.emptyList());
+        this.dealer = new Dealer();
+    }
+
+    public void distributeInitialCards(CardDeck cardDeck) {
+        players.forEach(player -> player.receiveInitialCards(cardDeck.giveInitialCards()));
+        dealer.receiveInitialCards(cardDeck.giveInitialCards());
     }
 
     private void validateSize(final List<String> names) {

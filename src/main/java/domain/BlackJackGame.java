@@ -17,6 +17,10 @@ public final class BlackJackGame {
         this.cardDeck = cardDeck;
     }
 
+    public void distributeInitialCards() {
+        participants.distributeInitialCards(cardDeck);
+    }
+
     public void giveCardTo(Participant participant) {
         participant.receiveCard(cardDeck.getCard());
     }

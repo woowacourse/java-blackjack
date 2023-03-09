@@ -17,10 +17,13 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
+        gitJjang = new Player(new Name("깃짱"));
         List<Card> gitJjangCards = List.of(new Card(Value.KING, Shape.HEART), new Card(Value.THREE, Shape.SPADE));
+        gitJjang.receiveInitialCards(gitJjangCards);
+
+        kyle = new Player(new Name("카일"));
         List<Card> kyleCards = List.of(new Card(Value.FOUR, Shape.SPADE), new Card(Value.ACE, Shape.CLOVER));
-        gitJjang = new Player(new Name("깃짱"), gitJjangCards);
-        kyle = new Player(new Name("카일"), kyleCards);
+        kyle.receiveInitialCards(kyleCards);
     }
 
     @DisplayName("플레이어의 점수를 알 수 있다.")

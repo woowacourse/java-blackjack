@@ -1,50 +1,39 @@
 package domain.participant;
 
 import domain.card.Card;
-import java.util.ArrayList;
-import java.util.Collections;
+import domain.card.Cards;
 import java.util.List;
 
 public abstract class Participant {
 
     private final Name name;
-    private final List<Card> cards;
+    private final Cards cards;
 
-    public Participant(final Name name, final List<Card> cards) {
+    public Participant(final Name name) {
         this.name = name;
-        this.cards = new ArrayList<>(cards);
+        this.cards = new Cards();
     }
 
     abstract boolean isHittable();
 
+    public void receiveInitialCards(List<Card> cards) {
+        this.cards.receiveInitialCards(cards);
+    }
+
     public void receiveCard(Card card) {
-        this.cards.add(card);
+        this.cards.receiveCard(card);
+    }
+
+    public int getScore() {
+        return calculateScore().getValue();
     }
 
     public Score calculateScore() {
-        boolean hasAce = hasAce();
-        Score defaultScore = new Score(calculateDefaultScore());
-        boolean canAddBonusScore = defaultScore.canAddBonusScore();
-
-        if (hasAce && canAddBonusScore) {
-            defaultScore = defaultScore.addBonusScore();
-        }
-        return defaultScore;
-    }
-
-    private int calculateDefaultScore() {
-        return cards.stream()
-                .mapToInt(Card::getDefaultScore)
-                .sum();
-    }
-
-    private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.calculateScore();
     }
 
     public boolean isBust() {
-        Score score = new Score(calculateDefaultScore());
-        return score.isBust();
+        return cards.isBust();
     }
 
     public String getName() {
@@ -52,11 +41,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
-
-    public int getScore() {
-        return calculateScore().getValue();
-    }
-
 }

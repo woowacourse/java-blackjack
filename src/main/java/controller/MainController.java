@@ -29,8 +29,9 @@ public final class MainController {
 
     private BlackJackGame createBlackJackGame(CardsShuffler cardsShuffler) {
         CardDeck cardDeck = new CardDeck(cardsShuffler);
-        Participants participants = new Participants(inputView.readPlayerNames(), cardDeck);
+        Participants participants = new Participants(inputView.readPlayerNames());
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        blackJackGame.distributeInitialCards();
 
         outputView.printInitialMessage(blackJackGame.getPlayers());
         outputView.printAllState(blackJackGame.getParticipants());

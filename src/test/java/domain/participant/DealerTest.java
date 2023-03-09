@@ -14,11 +14,9 @@ class DealerTest {
     @DisplayName("딜러는 카드를 추가로 받고, 점수를 계산할 수 있다.")
     @Test
     void fillCardsTest() {
-        List<Card> initialCards = List.of(new Card(Value.THREE, Shape.SPADE), new Card(Value.KING, Shape.SPADE));
-        Dealer dealer = new Dealer(initialCards);
-
+        Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(List.of(new Card(Value.KING, Shape.SPADE), new Card(Value.KING, Shape.HEART)));
         dealer.receiveCard(new Card(Value.TEN, Shape.SPADE));
-
         assertThat(dealer.getScore()).isEqualTo(23);
     }
 }

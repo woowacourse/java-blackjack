@@ -18,7 +18,7 @@ class ParticipantTest {
     void setUp() {
         List<Card> initialCards = List.of(new Card(Value.TWO, Shape.SPADE), new Card(Value.FOUR, Shape.HEART));
         Name mango = new Name("망고");
-        participant = new Participant(mango, initialCards) {
+        participant = new Participant(mango) {
             @Override
             boolean isHittable() {
                 return true;
