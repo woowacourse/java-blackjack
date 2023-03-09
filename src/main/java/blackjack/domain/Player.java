@@ -2,6 +2,7 @@ package blackjack.domain;
 
 public class Player extends Person {
     private static final int PLAYER_STOP_HIT_BOUND = 21;
+
     private final Name name;
 
     public Player(Name name) {
