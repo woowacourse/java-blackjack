@@ -40,6 +40,6 @@ class DealerTest {
         dealer.receive(HEART_QUEEN);
         dealer.receive(HEART_TEN);
 
-        assertThat(dealer.getInitialCards()).hasSize(1);
+        assertThat(dealer.getInitialOpeningCards()).hasSize(1);
     }
 }

@@ -5,7 +5,6 @@ import domain.Card;
 import domain.Participant;
 import domain.ParticipantName;
 import domain.Player;
-import domain.PlayerNames;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +33,7 @@ class PlayerTest {
         player.receive(HEART_QUEEN);
         player.receive(HEART_TEN);
 
-        assertThat(player.getInitialCards()).hasSize(2);
+        assertThat(player.getInitialOpeningCards()).hasSize(2);
     }
 
 

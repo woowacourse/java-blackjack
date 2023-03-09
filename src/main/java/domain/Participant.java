@@ -44,7 +44,7 @@ public abstract class Participant {
         return blackjackScore.compete(otherBlackjackScore);
     }
 
-    public abstract List<Card> getInitialCards();
+    public abstract List<Card> getInitialOpeningCards();
 
     public abstract boolean isAbleToReceiveCard();
 

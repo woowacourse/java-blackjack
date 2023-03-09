@@ -30,10 +30,10 @@ public class OutputView {
 
     private void printParticipantsInitialCards(Participants participants) {
         Participant dealer = participants.getDealer();
-        printParticipantCards(dealer, dealer.getInitialCards());
+        printParticipantCards(dealer, dealer.getInitialOpeningCards());
 
         for (Participant participant : participants.getPlayers()) {
-            printParticipantCards(participant, participant.getInitialCards());
+            printParticipantCards(participant, participant.getInitialOpeningCards());
         }
     }
 

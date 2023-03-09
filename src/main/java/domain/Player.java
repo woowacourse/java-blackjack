@@ -21,7 +21,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> getInitialCards() {
+    public List<Card> getInitialOpeningCards() {
         return getCards();
     }
 

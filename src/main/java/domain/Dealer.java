@@ -16,7 +16,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<Card> getInitialCards() {
+    public List<Card> getInitialOpeningCards() {
         return Collections.unmodifiableList(
                 cards.getCards().subList(0, INITIAL_CARD_INDEX)
         );
