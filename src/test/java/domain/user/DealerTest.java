@@ -2,43 +2,32 @@ package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("딜러 테스트.")
-    @TestFactory
-    Stream<DynamicTest> getSizeDynamicTest() {
+    @DisplayName("딜러는 게임을 시작할 카드 중 1개만 반환한다.")
+    @Test
+    void getInitialHand() {
         Dealer dealer = new Dealer();
-        Card firstCardAceSpade = new Card(Denomination.ACE, Suit.SPADE);
-        Card secondSixSpade = new Card(Denomination.SIX, Suit.SPADE);
-        return Stream.of(
-            dynamicTest("이름과 딜러 여부를 확인한다.", () -> {
-                assertThat(dealer.getName()).isEqualTo("딜러");
-                assertThat(dealer.isPlayer()).isFalse();
-            }),
-            dynamicTest("게임할 준비가 되지 않은 채 게임할 카드를 조회하면 오류를 던진다.", () -> {
-                dealer.dealt(firstCardAceSpade);
-                assertThat(dealer.calculatePoint()).isEqualTo(1);
-                assertThatThrownBy(dealer::faceUpInitialHand)
-                    .isExactlyInstanceOf(IllegalStateException.class)
-                    .hasMessage("딜러는 카드 두장을 받고 시작해야 합니다.");
-            }),
-            dynamicTest("준비가 완료되면 딜러는 1장의 카드를 오픈한다.", () -> {
-                dealer.dealt(secondSixSpade);
-                assertThat(dealer.faceUpInitialHand()).containsExactly(firstCardAceSpade);
-            }),
-            dynamicTest("가지고 있는 카드의 점수를 반환한다.(ACE가 11로 계산되어 17이상이 되면 11로 계산된다.)", () -> {
-                assertThat(dealer.calculatePoint()).isEqualTo(17);
-            })
-        );
+        Card firstCard = new Card(Denomination.JACK, Suit.DIAMOND);
+        Card secondCard = new Card(Denomination.ACE, Suit.DIAMOND);
+        dealer.dealt(firstCard);
+        dealer.dealt(secondCard);
+        assertThat(dealer.getInitialHand()).containsExactly(firstCard);
+    }
+
+    @DisplayName("카드를 지급받지 않고 게임을 시작할 카드를 조회하면 오류를 던진다")
+    @Test
+    void getInitialHandWithoutCard() {
+        Dealer dealer = new Dealer();
+        assertThatThrownBy(dealer::getInitialHand)
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("딜러는 카드 두장을 받고 시작해야 합니다.");
     }
 }
