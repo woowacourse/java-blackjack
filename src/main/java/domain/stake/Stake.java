@@ -16,7 +16,7 @@ public class Stake {
         this.value = value;
     }
 
-    public static Stake from(final int value) {
+    public static Stake fromBet(final int value) {
         validate(value);
         return new Stake(value);
     }

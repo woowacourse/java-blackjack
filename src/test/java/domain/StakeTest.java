@@ -5,7 +5,6 @@ import domain.stake.Stake;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,7 +13,7 @@ class StakeTest {
     @Test
     @DisplayName("0미만일 수  없다")
     void minimumTest() {
-        assertThatThrownBy(() -> Stake.from(-1))
+        assertThatThrownBy(() -> Stake.fromBet(-1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("미만");
     }
@@ -22,7 +21,7 @@ class StakeTest {
     @Test
     @DisplayName("100_000 초과일 수 없다")
     void maximumTest() {
-        assertThatThrownBy(() -> Stake.from(100_001))
+        assertThatThrownBy(() -> Stake.fromBet(100_001))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("초과");
     }
@@ -32,7 +31,7 @@ class StakeTest {
     @DisplayName("이기면 베팅 금액의 1배를 반환한다")
     void calculatePrize() {
         //given
-        Stake stake = Stake.from(100);
+        Stake stake = Stake.fromBet(100);
         //when
         Stake dealerPrize = stake.getDealerPrize(DealerStatus.WIN);
         int value = dealerPrize.getValue();
@@ -44,7 +43,7 @@ class StakeTest {
     @DisplayName("지면 베팅 금액의 -1배를 반환한다")
     void calculatePrize2() {
         //given
-        Stake stake = Stake.from(100);
+        Stake stake = Stake.fromBet(100);
         //when
         Stake dealerPrize = stake.getDealerPrize(DealerStatus.LOSE);
         int value = dealerPrize.getValue();
@@ -56,7 +55,7 @@ class StakeTest {
     @DisplayName("비기면 베팅 금액의 0배를 반환한다")
     void calculatePrize3() {
         //given
-        Stake stake = Stake.from(100);
+        Stake stake = Stake.fromBet(100);
         //when
         Stake dealerPrize = stake.getDealerPrize(DealerStatus.DRAW);
         int value = dealerPrize.getValue();
@@ -68,7 +67,7 @@ class StakeTest {
     @DisplayName("블랙잭으로 지면 베팅 금액의 -1.5배를 반환한다")
     void calculatePrize4() {
         //given
-        Stake stake = Stake.from(100);
+        Stake stake = Stake.fromBet(100);
         //when
         Stake dealerPrize = stake.getDealerPrize(DealerStatus.BLACKJACK_LOSE);
         int value = dealerPrize.getValue();
@@ -80,11 +79,11 @@ class StakeTest {
     @DisplayName("Stake 합산 테스트")
     void addStakeTest() {
         //given
-        Stake stake1 = Stake.from(150);
-        Stake stake2 = Stake.from(100);
+        Stake stake1 = Stake.fromBet(150);
+        Stake stake2 = Stake.fromBet(100);
         //when
         Stake add = stake1.add(stake2);
         //then
-        assertThat(add).isEqualTo(Stake.from(250));
+        assertThat(add).isEqualTo(Stake.fromBet(250));
     }
 }

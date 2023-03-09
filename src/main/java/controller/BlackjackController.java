@@ -63,7 +63,7 @@ public class BlackjackController {
 
     private void repeatReadSingleStake(final Map<Player, Stake> playerStakes, final Player player) {
         try {
-            playerStakes.put(player, Stake.from(readBettingStake(player)));
+            playerStakes.put(player, Stake.fromBet(readBettingStake(player)));
         } catch (RuntimeException e) {
             InputView.printErrorMessage(e);
             repeatReadSingleStake(playerStakes, player);
