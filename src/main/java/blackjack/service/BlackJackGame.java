@@ -7,11 +7,13 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class BlackJackGame {
 
@@ -65,15 +67,6 @@ public class BlackJackGame {
         return participants.getPlayers();
     }
 
-    public Map<String, ResultType> generatePlayersResult() {
-        final ParticipantResults participantResults = new ParticipantResults();
-        final Dealer dealer = participants.getDealer();
-        participants.getPlayers().getPlayers().forEach(player -> {
-            final ResultType resultType = blackJackRule.calculateDealerResult(dealer, player).getOppositeResult();
-            participantResults.addPlayerResult(player.getName(), resultType);
-        });
-        return participantResults.getPlayerNameToResultType();
-    }
 
     public List<Card> getPlayerCards(final String playerName) {
         return participants.findPlayerByName(playerName)
@@ -109,29 +102,24 @@ public class BlackJackGame {
 
     public Map<String, Integer> calculatePlayersMoney() {
         final Map<String, Integer> resultPlayersMoney = new LinkedHashMap<>();
-        final Map<String, ResultType> playerResult = generatePlayersResult();
-        playerMoney.forEach((playerName, money) -> {
-            final ResultType resultType = playerResult.get(playerName);
-            final int playerWinningMoney = calculatePlayerMoney(money, resultType);
-            resultPlayersMoney.put(playerName, playerWinningMoney);
-        });
+        final Dealer dealer = participants.getDealer();
+        participants.getPlayers()
+                .getPlayers()
+                .forEach(calculateWinningMoney(resultPlayersMoney, dealer));
         return resultPlayersMoney;
+    }
+
+    private Consumer<Player> calculateWinningMoney(final Map<String, Integer> resultPlayersMoney, final Dealer dealer) {
+        return player -> {
+            final ResultType playerResult = blackJackRule.calculateDealerResult(dealer, player)
+                    .getOppositeResult();
+            final int betMoney = playerMoney.get(player.getName());
+            final int playerWinningMoney = calculatePlayerMoney(betMoney, playerResult);
+            resultPlayersMoney.put(player.getName(), playerWinningMoney);
+        };
     }
 
     private int calculatePlayerMoney(final int money, final ResultType resultType) {
         return (int) (money * resultType.getPlayerProfit());
-    }
-
-    private static class ParticipantResults {
-
-        private final Map<String, ResultType> playerNameToResultType = new HashMap<>();
-
-        void addPlayerResult(final String playerName, final ResultType resultType) {
-            playerNameToResultType.put(playerName, resultType);
-        }
-
-        Map<String, ResultType> getPlayerNameToResultType() {
-            return playerNameToResultType;
-        }
     }
 }
