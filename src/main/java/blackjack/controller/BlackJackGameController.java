@@ -64,7 +64,7 @@ public class BlackJackGameController {
 
     private void printStartCards(Game game) {
         outputView.printStartMsg(game.showPlayersName());
-        outputView.printDealerCards(getCardNames(game.showDealerCards()), System.lineSeparator());
+        outputView.printDealerCards(game.showDealerCards(), System.lineSeparator());
         for (Player player : game.getPlayers()) {
             printPlayerCards(player);
         }
@@ -72,14 +72,8 @@ public class BlackJackGameController {
 
     private void printPlayerCards(Player player) {
         String playerName = player.showName();
-        List<String> cards = getCardNames(player.showCards());
+        List<Card> cards = player.showCards();
         outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
-    }
-
-    private List<String> getCardNames(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.getCardNumberToString() + card.getCardSymbolToString())
-                .collect(Collectors.toList());
     }
 
     private void play(Game game) {
@@ -118,7 +112,7 @@ public class BlackJackGameController {
     }
 
     private void finish(Game game) {
-        outputView.printDealerResult(getCardNames(game.showDealerAllCards()), game.getDealerScore().getScore());
+        outputView.printDealerResult(game.showDealerAllCards(), game.getDealerScore().getScore());
 
         for (Player player : game.getPlayers()) {
             printOnePlayerResult(player);
@@ -148,7 +142,7 @@ public class BlackJackGameController {
 
     private void printOnePlayerResult(Player player) {
         String playerName = player.showName();
-        List<String> playerCards = getCardNames(player.showCards());
+        List<Card> playerCards = player.showCards();
         Score score = player.calculateScore();
         outputView.printPlayerResult(playerName, playerCards, score.getScore());
     }

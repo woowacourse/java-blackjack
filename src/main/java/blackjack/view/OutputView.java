@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.card.Card;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,20 +30,22 @@ public class OutputView {
         System.out.println(names.get(lastIndex) + INIT_END_MSG);
     }
 
-    public void printPlayerCards(String name, List<String> cards, String end) {
+    public void printPlayerCards(String name, List<Card> cards, String end) {
         int lastIndex = cards.size() - 1;
         System.out.print(name + CARD_MSG);
         for (int i = 0; i < lastIndex; i++) {
-            System.out.print(cards.get(i) + CARD_DELIMITER);
+            Card card = cards.get(i);
+            System.out.print(card.getCardNumberToString() + card.getCardSymbolToString() + CARD_DELIMITER);
         }
         System.out.print(cards.get(lastIndex) + end);
     }
 
-    public void printDealerCards(List<String> cards, String end) {
+    public void printDealerCards(List<Card> cards, String end) {
         int lastIndex = cards.size() - 1;
         System.out.print(DEALER_MSG);
         for (int i = 0; i < lastIndex; i++) {
-            System.out.print(cards.get(i) + CARD_DELIMITER);
+            Card card = cards.get(i);
+            System.out.print(card.getCardNumberToString() + card.getCardSymbolToString() + CARD_DELIMITER);
         }
         System.out.print(cards.get(lastIndex) + end);
     }
@@ -51,13 +55,13 @@ public class OutputView {
         System.out.println(DEALER_HIT_MSG);
     }
 
-    public void printDealerResult(List<String> cardNames, int calculateScore) {
+    public void printDealerResult(List<Card> cardNames, int calculateScore) {
         System.out.println();
         printDealerCards(cardNames, EMPTY);
         System.out.println(RESULT_MSG + calculateScore);
     }
 
-    public void printPlayerResult(String showName, List<String> cardNames, int calculateScore) {
+    public void printPlayerResult(String showName, List<Card> cardNames, int calculateScore) {
         printPlayerCards(showName, cardNames, EMPTY);
         System.out.println(RESULT_MSG + calculateScore);
     }
