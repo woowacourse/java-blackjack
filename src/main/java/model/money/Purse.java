@@ -1,58 +1,34 @@
 package model.money;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
+import model.user.Player;
+
 import java.util.List;
 import java.util.Map;
-import model.user.Dealer;
-import model.user.Player;
-import model.user.GameState;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toMap;
 
 public class Purse {
 
-    private final Map<Player, Bet> purses;
+    private final Map<Player, Money> purses;
 
-    private Purse(final Map<Player, Bet> purses) {
+    private Purse(final Map<Player, Money> purses) {
         this.purses = purses;
     }
 
     public static Purse create(final List<Player> players) {
-        final Map<Player, Bet> purses = new LinkedHashMap<>();
-        for (Player player : players) {
-            purses.put(player, Bet.zero());
-        }
+        final Map<Player, Money> purses = players.stream()
+                .collect(toMap(Function.identity(), player -> Money.zero()));
         return new Purse(purses);
     }
 
-    public void addMoney(final Player player, final Bet bet) {
-        final Bet currentBet = purses.get(player);
-        final Bet addedBet = currentBet.add(bet);
-        purses.put(player, addedBet);
+    public void addMoney(final Player player, final Money money) {
+        final Money currentMoney = purses.get(player);
+        final Money addedMoney = currentMoney.add(money);
+        purses.put(player, addedMoney);
     }
 
-    public void calculateMoneyAll(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            calculateMoney(player, dealer);
-        }
-    }
-
-    private void calculateMoney(final Player player, final Dealer dealer) {
-        final GameState gameState = player.judgeResult(dealer);
-        final Bet bet = findMoneyByPlayer(player);
-        purses.put(player, bet.calculateBet(gameState));
-    }
-
-    public Bet findMoneyByPlayer(final Player player) {
+    public Money getMoney(final Player player) {
         return purses.get(player);
-    }
-
-    public Map<Player, Bet> getPursesAll() {
-        return Collections.unmodifiableMap(new LinkedHashMap<>(purses));
-    }
-
-    public long getTotalBet() {
-        return purses.values().stream()
-                .mapToLong(Bet::getMoney)
-                .sum();
     }
 }
