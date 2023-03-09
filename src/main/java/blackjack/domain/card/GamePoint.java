@@ -16,7 +16,7 @@ public class GamePoint implements Comparable<GamePoint> {
     private int getOptimizedValue(List<Card> cards) {
         int originValue = getValueOf(cards);
         if (originValue + ACE_BONUS_VALUE <= MAX_GAME_POINT_VALUE && containAce(cards)) {
-            originValue += ACE_BONUS_VALUE;
+            return originValue += ACE_BONUS_VALUE;
         }
         return checkWithBust(originValue);
     }
