@@ -27,6 +27,10 @@ public class BetMoney {
         return new BetMoney(amount * 2);
     }
 
+    public BetMoney subtract(final BetMoney betMoney) {
+        return new BetMoney(this.amount - betMoney.amount);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

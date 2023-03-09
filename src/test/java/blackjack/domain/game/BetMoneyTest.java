@@ -41,4 +41,15 @@ public class BetMoneyTest {
 
         assertThat(winMoney).isEqualTo(new BetMoney(expectedMoney));
     }
+
+    @ParameterizedTest
+    @CsvSource({"10000, 5000, 5000", "5000, 10000, -5000"})
+    void 뺄셈_결과를_반환한다(final int original, final int afterGame, final int expectedDifference) {
+        final BetMoney originalMoney = new BetMoney(original);
+        final BetMoney afterGameMoney = new BetMoney(afterGame);
+
+        final BetMoney income = afterGameMoney.subtract(originalMoney);
+
+        assertThat(income).isEqualTo(new BetMoney(expectedDifference));
+    }
 }
