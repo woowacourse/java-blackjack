@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import blackjack.controller.DrawOrStay;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
@@ -9,24 +12,19 @@ import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.card.TestNonShuffledDeckGenerator;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Name;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class BlackJackGameTest {
 
     private static final Name TEST_PLAYER_NAME1 = new Name("필립");
     private static final Name TEST_PLAYER_NAME2 = new Name("홍실");
-    private static final Name DEALER_NAME = new Name(Dealer.DEALER_NAME);
+    private static final Name DEALER_NAME = new Name("딜러");
 
     private final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
@@ -149,11 +147,6 @@ class BlackJackGameTest {
         });
     }
 
-    /*
-    필립: 21
-    홍실: 19
-    딜러: 13
-     */
     @Test
     @DisplayName("플레이어들의 승리 여부 반환 테스트")
     void getWinningResultTest() {
@@ -161,7 +154,12 @@ class BlackJackGameTest {
                 TEST_PLAYER_NAME2.getValue()),
                 new TestNonShuffledDeckGenerator(testCards));
 
-        Map<Name, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
+        final Map<Name, WinningStatus> winningResult = blackJackGame.getPlayersWinningResults();
+        final Map<Name, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
+
+        assertThat(userNameAndCardResults.get(DEALER_NAME).getScore().getValue()).isEqualTo(21);
+        assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getScore().getValue()).isEqualTo(19);
+        assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME2).getScore().getValue()).isEqualTo(13);
 
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get(TEST_PLAYER_NAME1)).isEqualTo(WinningStatus.LOSE);
