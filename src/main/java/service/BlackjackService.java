@@ -68,8 +68,12 @@ public class BlackjackService {
         final Map<String, Integer> playersResult = participants.getPlayersResult();
 
         return playersResult.values().stream()
-                .mapToInt(playerPrize -> -playerPrize)
+                .mapToInt(this::convertToDealerPrize)
                 .sum();
+    }
+
+    private int convertToDealerPrize(int playerPrize) {
+        return -playerPrize;
     }
 
     public Participant getDealer() {
