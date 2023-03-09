@@ -4,10 +4,10 @@ import domain.user.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerResultRepository {
+public class PlayerResults {
     private final Map<Player, Result> repository;
 
-    public PlayerResultRepository() {
+    public PlayerResults() {
         this.repository = new HashMap<>();
     }
 
@@ -23,15 +23,15 @@ public class PlayerResultRepository {
         return repository;
     }
 
-    public long playerWinCount(){
+    public long playerWinCount() {
         return repository.values().stream().filter(result -> result == Result.WIN).count();
     }
 
-    public long playerLoseCount(){
+    public long playerLoseCount() {
         return repository.values().stream().filter(result -> result == Result.LOSE).count();
     }
 
-    public long playerDrawCount(){
+    public long playerDrawCount() {
         return repository.values().stream().filter(result -> result == Result.DRAW).count();
     }
 }

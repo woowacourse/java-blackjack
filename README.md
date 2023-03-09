@@ -40,6 +40,7 @@
 - [x] 카드를 더 받을 수 있는 상태인지 확인한다. (Override)
   - [x] 점수가 16점 이상이면 카드를 더 받을 수 없다.
 - [x] Deck을 소유해 카드 발급 관련 기능을 수행한다.
+- [x] 전체 승패를 한번에 계산한다.
 
 ### Player extends AbstractUser
 - 게임에 참여하는 유저
@@ -50,7 +51,6 @@
 ### Players
 - Player를 감싸는 일급 컬렉션
 - [x] Player들을 반환한다.
-- [x] 전체 승패를 한번에 계산한다.
 
 ### Name
 - 유저의 이름 정보를 가지고 있는 객체
@@ -90,7 +90,7 @@
 - 게임 결과 정보
 - [x] 게임 결과에 대한 정보를 갖고 있는 상수 집합을 구현한다.
 
-### PlayerResultRepository
+### PlayerResults
 - Player의 게임 결과(Result)를 매칭한 정보를 가지고 있는 객체.
 - [x] Player의 게임 결과를 저장한다.
 - [x] Player의 게임 결과를 반환한다.

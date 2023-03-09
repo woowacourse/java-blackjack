@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Participants;
-import domain.PlayerResultRepository;
 import domain.user.Dealer;
 import domain.user.Player;
 import ui.InputView;
@@ -10,10 +9,8 @@ import ui.OutputView;
 public class BlackjackController {
     private static final String HIT = "y";
     private static final String STAND = "n";
-    private final PlayerResultRepository playerResultRepository;
 
     public BlackjackController() {
-        this.playerResultRepository = new PlayerResultRepository();
     }
 
     public void run() {
@@ -23,8 +20,8 @@ public class BlackjackController {
         participants.getPlayers().forEach(player -> giveCardUntilImpossible(player, participants.getDealer()));
         addCardToDealerIfPossible(participants);
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
-        participants.calculateAllResults(playerResultRepository);
-        OutputView.printResults(playerResultRepository);
+        participants.calculateAllResults();
+        OutputView.printResults(participants.getPlayerResults());
     }
 
     private void addCardToDealerIfPossible(Participants participants) {

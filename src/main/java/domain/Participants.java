@@ -31,7 +31,6 @@ public class Participants {
     }
 
 
-
     public Dealer getDealer() {
         return this.dealer;
     }
@@ -44,7 +43,11 @@ public class Participants {
         this.dealer.drawCardDealer();
     }
 
-    public void calculateAllResults(PlayerResultRepository playerResultRepository) {
-        this.players.calculateAllResults(playerResultRepository, this.dealer);
+    public void calculateAllResults() {
+        this.dealer.calculateAllResults(players.getPlayers());
+    }
+
+    public PlayerResults getPlayerResults() {
+        return this.dealer.getPlayerResults();
     }
 }

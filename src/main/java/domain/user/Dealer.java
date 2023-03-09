@@ -4,6 +4,8 @@ import domain.Card;
 import domain.CardHand;
 import domain.CardNumber;
 import domain.Deck;
+import domain.PlayerResults;
+import domain.Result;
 import domain.Symbol;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,16 +17,19 @@ public class Dealer extends AbstractUser {
     private final int INITIAL_CARDS_COUNT = 2;
 
     private final Deck deck;
+    private final PlayerResults playerResults;
 
     public Dealer() {
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
+        playerResults = new PlayerResults();
     }
 
     public Dealer(CardHand cardHand) {
         super(cardHand);
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
+        playerResults = new PlayerResults();
     }
 
     @Override
@@ -50,7 +55,28 @@ public class Dealer extends AbstractUser {
         return deck.draw();
     }
 
-    public  void drawCardDealer() {
+    public void drawCardDealer() {
         cardHand.add(deck.draw());
+    }
+
+    public void calculateAllResults(List<Player> users) {
+        users.forEach(player -> this.playerResults.save(player, calculatePlayerResult(player)));
+    }
+
+    private Result calculatePlayerResult(AbstractUser user) {
+        if (user.isBust()) {
+            return Result.LOSE;
+        }
+        if (this.isBust() || user.calculateScore() > this.calculateScore()) {
+            return Result.WIN;
+        }
+        if (user.calculateScore() == this.calculateScore()) {
+            return Result.DRAW;
+        }
+        return Result.LOSE;
+    }
+
+    public PlayerResults getPlayerResults() {
+        return this.playerResults;
     }
 }

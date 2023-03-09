@@ -1,6 +1,6 @@
 package ui;
 
-import domain.PlayerResultRepository;
+import domain.PlayerResults;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -11,9 +11,7 @@ public class OutputView {
     private final static CardPrintMapper cardPrintMapper = new CardPrintMapper();
 
     public static void printCardsStatus(Dealer dealer, List<Player> players) {
-        List<String> nameValues = players.stream()
-                .map(Player::getNameValue)
-                .collect(Collectors.toList());
+        List<String> nameValues = players.stream().map(Player::getNameValue).collect(Collectors.toList());
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", nameValues));
         System.out.println();
@@ -23,8 +21,7 @@ public class OutputView {
     }
 
     public static String userHavingCards(AbstractUser user) {
-        List<String> cardTexts = user.getCards().stream()
-                .map(cardPrintMapper::transformToPrintCard)
+        List<String> cardTexts = user.getCards().stream().map(cardPrintMapper::transformToPrintCard)
                 .collect(Collectors.toList());
         return String.join(", ", cardTexts);
     }
@@ -60,10 +57,10 @@ public class OutputView {
         players.forEach(OutputView::printCardsStatusAndScoreOfPlayer);
     }
 
-    public static void printResults(PlayerResultRepository repository) {
-        long dealerLose = repository.playerWinCount();
-        long dealerWin = repository.playerLoseCount();
-        long dealerDraws = repository.playerDrawCount();
+    public static void printResults(PlayerResults playerResults) {
+        long dealerLose = playerResults.playerWinCount();
+        long dealerWin = playerResults.playerLoseCount();
+        long dealerDraws = playerResults.playerDrawCount();
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패", dealerWin, dealerLose);
@@ -71,7 +68,7 @@ public class OutputView {
             System.out.printf(" %d무", dealerDraws);
         }
         System.out.println();
-        repository.getRepository()
+        playerResults.getRepository()
                 .forEach((player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
     }
 }
