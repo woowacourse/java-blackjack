@@ -1,7 +1,7 @@
 package view;
 
 import domain.deck.Card;
-import domain.game.Outcome;
+import domain.result.Outcome;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
