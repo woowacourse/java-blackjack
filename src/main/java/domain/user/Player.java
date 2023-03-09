@@ -9,18 +9,34 @@ public class Player implements Playable {
     public static final String FIRST_HAND_STATUS_ERROR_MESSAGE = "처음에는 2장의 카드만 가질 수 있습니다.";
     public static final String EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있습니다.";
     public static final int PLAYER_DRAWABLE_BOUNDARY = 21;
+    public static final String INVALIDE_DEALER_NAME_USAGE_ERROR_MESSAGE = "딜러는 플레이어가 될 수 없습니다.";
+    public static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 1자 이상 5자 이하여야 합니다.";
     private final String name;
     
     private CardCollection hand = new CardCollection();
     
     public Player(final String name) {
-        this.validateName(name);
+        this.validateBlank(name);
+        this.validateDealerName(name);
+        this.validateNameLength(name);
         this.name = name;
     }
     
-    private void validateName(final String name) {
+    private void validateBlank(final String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_NAME_ERROR_MESSAGE);
+        }
+    }
+    
+    private void validateDealerName(final String name) {
+        if (name.equals("딜러")) {
+            throw new IllegalArgumentException(INVALIDE_DEALER_NAME_USAGE_ERROR_MESSAGE);
+        }
+    }
+    
+    private void validateNameLength(final String name) {
+        if (name.length() > 5 || name.length() < 1) {
+            throw new IllegalArgumentException(NAME_LENGTH_ERROR_MESSAGE);
         }
     }
     

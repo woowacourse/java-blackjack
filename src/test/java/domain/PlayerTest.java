@@ -10,6 +10,26 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
     
+    @Test
+    @DisplayName("플레이어 이름 길이 예외 테스트")
+    void validateNameLengthTest() {
+        Assertions.assertThatThrownBy(() -> new Player("echoecho"))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+    
+    @Test
+    @DisplayName("플레이어 이름 공백 예외 테스트")
+    void validateBlankTest() {
+        Assertions.assertThatThrownBy(() -> new Player(""))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+    
+    @Test
+    @DisplayName("플레이어 딜러 이름 예외 테스트")
+    void validateDealerNameTest() {
+        Assertions.assertThatThrownBy(() -> new Player("딜러"))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
     
     @Test
     @DisplayName("처음에 카드를 지급받지 않은 경우 카드 조회시 오류를 던진다.")
