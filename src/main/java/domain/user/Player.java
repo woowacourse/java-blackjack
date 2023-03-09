@@ -4,6 +4,7 @@ import domain.Hand;
 import domain.PlayerName;
 import domain.card.Card;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
 
@@ -38,6 +39,23 @@ public class Player {
 
     public int getPoint() {
         return hand.calculatePoint();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return name.equals(player.name) && hand.equals(player.hand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand);
     }
 }
 
