@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,5 +50,45 @@ class HandTest {
 
         //then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 K, 카드 ACE, 카드 TEN을 받으면 ACE 카드는 1로 계산된다.")
+    void caculateCardNumberAceCardValueOneTest() {
+        //gvien
+        List<Card> recievedCards = List.of(
+            new Card(CardNumber.ACE, CardSuit.DIAMOND),
+            new Card(CardNumber.KING, CardSuit.SPADE),
+            new Card(CardNumber.TEN, CardSuit.CLUB));
+        Hand hand = new Hand();
+        for (Card card : recievedCards) {
+            hand.hitCard(card);
+        }
+
+        //when
+        int result = hand.calculateCardNumber();
+
+        //then
+        assertThat(result).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("카드 TWO, 카드 ACE, 카드 EIGHT을 받으면 ACE 카드는 1로 계산된다.")
+    void caculateCardNumberAceCardValueELEVENTest() {
+        //gvien
+        List<Card> recievedCards = List.of(
+            new Card(CardNumber.ACE, CardSuit.DIAMOND),
+            new Card(CardNumber.TWO, CardSuit.SPADE),
+            new Card(CardNumber.EIGHT, CardSuit.CLUB));
+        Hand hand = new Hand();
+        for (Card card : recievedCards) {
+            hand.hitCard(card);
+        }
+
+        //when
+        int result = hand.calculateCardNumber();
+
+        //then
+        assertThat(result).isEqualTo(21);
     }
 }

@@ -13,9 +13,8 @@ public class Dealer extends Participant {
     }
 
     public int calculateDealerCardNumber() {
-        int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
         if (participantHasAceCard() && getHand().getReceivedCards().size() == FIRST_CARD_COUNT) {
-            return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
+            return calculateCardNumber();
         }
         return calculateCardNumber();
     }

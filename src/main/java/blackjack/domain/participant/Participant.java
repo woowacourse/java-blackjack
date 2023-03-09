@@ -7,8 +7,6 @@ import blackjack.domain.card.Hand;
 
 public abstract class Participant {
 
-    private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
-    private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
     private static final int WIN_MAX_VALUE = 21;
     private static final int BLACKJACK_SIZE = 2;
     private static final String DEALER_NAME = "딜러";
@@ -33,22 +31,12 @@ public abstract class Participant {
         return hand.hasAceCard();
     }
 
-    public int calculateCardNumberAceCardValueOne() {
-        return hand.getReceivedCards().stream()
-            .mapToInt(card -> card.getCardNumber().getValue())
-            .sum();
-    }
-
     public boolean judgeBlackjack() {
         return hand.getReceivedCards().size() == BLACKJACK_SIZE && calculateCardNumber() == WIN_MAX_VALUE;
     }
 
     public int calculateCardNumber() {
-        int totalSumAceCardValueOne = calculateCardNumberAceCardValueOne();
-        if (participantHasAceCard() && totalSumAceCardValueOne <= JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM) {
-            return totalSumAceCardValueOne + CALIBRATED_ACE_CARD_ELEVEN_VALUE;
-        }
-        return totalSumAceCardValueOne;
+        return hand.calculateCardNumber();
     }
 
     public ParticipantName getParticipantName() {
