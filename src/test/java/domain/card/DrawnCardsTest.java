@@ -2,7 +2,6 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,16 +12,12 @@ class DrawnCardsTest {
     @Test
     void calculate_drawn_cards_number() {
         // given
-        List<Card> cards = new ArrayList<>();
-        CardValue expectedA = CardValue.TWO;
-        CardValue expectedB = CardValue.THREE;
+        Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+        Card cardB = new Card(CardType.SPADE, CardValue.THREE);
 
-        cards.add(new Card(CardType.SPADE, expectedA));
-        cards.add(new Card(CardType.SPADE, expectedB));
+        DrawnCards drawnCards = new DrawnCards(List.of(cardA, cardB));
 
-        DrawnCards drawnCards = new DrawnCards(cards);
-
-        int expected = expectedA.getScore() + expectedB.getScore();
+        int expected = cardA.getScore() + cardB.getScore();
         // when
         int actual = drawnCards.calculateScore();
         // then
@@ -33,17 +28,12 @@ class DrawnCardsTest {
     @Test
     void calculate_ace_when_under_burst_number() {
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+        Card cardB = new Card(CardType.SPADE, CardValue.ACE);
 
-        CardValue expectedA = CardValue.TWO;
-        CardValue expectedB = CardValue.ACE;
+        DrawnCards drawnCards = new DrawnCards(List.of(cardA, cardB));
 
-        cards.add(new Card(CardType.SPADE, expectedA));
-        cards.add(new Card(CardType.SPADE, expectedB));
-
-        DrawnCards drawnCards = new DrawnCards(cards);
-
-        int expected = expectedA.getScore() + expectedB.getScore();
+        int expected = cardA.getScore() + cardB.getScore();
         // when
         int actual = drawnCards.calculateScore();
         // then
@@ -55,19 +45,13 @@ class DrawnCardsTest {
     @Test
     void calculate_ace_when_over_burst_number() {
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+        Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardC = new Card(CardType.SPADE, CardValue.ACE);
 
-        CardValue expectedA = CardValue.TWO;
-        CardValue expectedB = CardValue.TEN;
-        CardValue expectedC = CardValue.ACE;
+        DrawnCards drawnCards = new DrawnCards(List.of(cardA, cardB, cardC));
 
-        cards.add(new Card(CardType.SPADE, expectedA));
-        cards.add(new Card(CardType.SPADE, expectedB));
-        cards.add(new Card(CardType.SPADE, expectedC));
-
-        DrawnCards drawnCards = new DrawnCards(cards);
-
-        int expected = expectedA.getScore() + expectedB.getScore() + expectedC.getExtraScore();
+        int expected = cardA.getScore() + cardB.getScore() + cardC.getValue().getExtraScore();
         // when
         int actual = drawnCards.calculateScore();
         // then
@@ -78,12 +62,10 @@ class DrawnCardsTest {
     @Test
     void is_blackJack() {
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardB = new Card(CardType.SPADE, CardValue.ACE);
 
-        cards.add(new Card(CardType.SPADE, CardValue.ACE));
-        cards.add(new Card(CardType.SPADE, CardValue.TEN));
-
-        DrawnCards drawnCards = new DrawnCards(cards);
+        DrawnCards drawnCards = new DrawnCards(List.of(cardA, cardB));
         // when
         boolean actual = drawnCards.isBlackJack();
         // then
@@ -93,14 +75,11 @@ class DrawnCardsTest {
     @DisplayName("점수가 21점이 아니라면 블랙잭이 아니다.")
     @Test
     void is_not_blackJack_by_score() {
-
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardB = new Card(CardType.SPADE, CardValue.TWO);
 
-        cards.add(new Card(CardType.SPADE, CardValue.ACE));
-        cards.add(new Card(CardType.SPADE, CardValue.TWO));
-
-        DrawnCards drawnCards = new DrawnCards(cards);
+        DrawnCards drawnCards = new DrawnCards(List.of(cardA, cardB));
         // when
         boolean actual = drawnCards.isBlackJack();
         // then
@@ -111,13 +90,11 @@ class DrawnCardsTest {
     @Test
     void is_not_blackJack_by_card_size() {
         // given
-        List<Card> cards = new ArrayList<>();
+        Card cardA = new Card(CardType.SPADE, CardValue.TWO);
+        Card cardB = new Card(CardType.SPADE, CardValue.TEN);
+        Card cardC = new Card(CardType.DIAMOND, CardValue.TWO);
 
-        cards.add(new Card(CardType.SPADE, CardValue.TEN));
-        cards.add(new Card(CardType.SPADE, CardValue.NINE));
-        cards.add(new Card(CardType.SPADE, CardValue.TWO));
-
-        DrawnCards drawnCards = new DrawnCards(cards);
+        DrawnCards drawnCards = new DrawnCards(List.of(cardA, cardB, cardC));
         // when
         boolean actual = drawnCards.isBlackJack();
         // then
