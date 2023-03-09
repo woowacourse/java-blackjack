@@ -34,4 +34,8 @@ public abstract class User {
     public String getName() {
         return name.getName();
     }
+
+    public boolean isDealer(Object object) {
+        return object instanceof Dealer;
+    }
 }
