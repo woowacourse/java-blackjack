@@ -26,7 +26,7 @@ public class GameController {
             final String nameDelimiter = ",";
             List<String> playerNames = Arrays.stream(playerNamesInput.split(nameDelimiter, -1))
                 .collect(Collectors.toList());
-            PlayerBoards playerBoards = PlayerBoards.of(playerNames);
+            PlayerBoards playerBoards = PlayerBoards.from(playerNames);
             return new GameController(BlackJackGame.from(playerBoards));
         } catch (IllegalArgumentException exception) {
             InputView.printErrorMessage(exception);
@@ -38,7 +38,7 @@ public class GameController {
         blackJackGame.initializeHand();
         OutputView.printReady(blackJackGame.getPlayerNames());
         OutputView.printDealerReadyStatus(blackJackGame.getDealerName(), blackJackGame.getDealerInitialHand());
-        OutputView.printPlayersReadyStatus(blackJackGame.getPlayerNames(), blackJackGame.getPlayerInitialHand());
+        OutputView.printPlayersReadyStatus(blackJackGame.getPlayerNames(), blackJackGame.getPlayersInitialHand());
     }
 
     public void play() {
