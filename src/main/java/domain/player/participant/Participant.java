@@ -25,10 +25,6 @@ public class Participant extends Player {
         return cardArea.canMoreCard();
     }
 
-    public void determineBetState(final BetResultState betResultState) {
-        this.betResultState = betResultState;
-    }
-
     public Money determineBetMoney() {
         return betResultState.calculateBetOutcomeOf(money);
     }
