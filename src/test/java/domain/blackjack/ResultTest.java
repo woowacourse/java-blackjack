@@ -1,6 +1,5 @@
 package domain.blackjack;
 
-import domain.blackjack.Result;
 import domain.player.BettingMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,9 +26,9 @@ class ResultTest {
     void updateBalanceSuccessTest(Result result) {
         int money = 10000;
         boolean isBlackjack = false;
-        BettingMoney betAmount = BettingMoney.from(money);
+        BettingMoney bettingMoney = BettingMoney.from(money);
 
-        assertThat(result.payOut(betAmount, isBlackjack).getMoney())
+        assertThat(result.payOut(bettingMoney, isBlackjack).getMoney())
                 .isEqualTo((int) (result.getRatio() * money));
     }
 
@@ -38,9 +37,9 @@ class ResultTest {
     void updateBalanceWithBlackjackSuccessTest() {
         int money = 10000;
         boolean isBlackjack = true;
-        BettingMoney betAmount = BettingMoney.from(money);
+        BettingMoney bettingMoney = BettingMoney.from(money);
 
-        assertThat(Result.WIN.payOut(betAmount, isBlackjack).getMoney())
+        assertThat(Result.WIN.payOut(bettingMoney, isBlackjack).getMoney())
                 .isEqualTo((int) ((Result.WIN.getRatio() + BONUS_RATIO) * money));
     }
 }

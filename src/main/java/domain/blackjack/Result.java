@@ -30,12 +30,12 @@ public enum Result {
         return DRAW;
     }
 
-    public BettingMoney payOut(BettingMoney betAmount, boolean isBlackjack) {
+    public BettingMoney payOut(BettingMoney bettingMoney, boolean isBlackjack) {
         if (isBlackjack && this == WIN) {
-            return betAmount.applyRatio(this.ratio + BLACKJACK_BONUS_RATIO);
+            return bettingMoney.applyRatio(this.ratio + BLACKJACK_BONUS_RATIO);
         }
 
-        return betAmount.applyRatio(this.ratio);
+        return bettingMoney.applyRatio(this.ratio);
     }
 
     public String getValue() {

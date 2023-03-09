@@ -7,27 +7,17 @@ import java.util.Objects;
 public class Player extends Participant {
     private static final String UNAVAILABLE_NAME = "'%s'라는 이름은 사용할 수 없습니다.";
 
-    private BettingMoney betAmount;
+    private final BettingMoney bettingMoney;
 
-    private Player(Name name) {
+    private Player(Name name, BettingMoney bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
-    private Player(Name name, BettingMoney betAmount) {
-        super(name);
-        this.betAmount = betAmount;
-    }
-
-    public static Player from(Name name) {
+    public static Player of(Name name, BettingMoney bettingMoney) {
         validateNameIsNotSameDealer(name);
 
-        return new Player(name);
-    }
-
-    public static Player of(Name name, BettingMoney betAmount) {
-        validateNameIsNotSameDealer(name);
-
-        return new Player(name, betAmount);
+        return new Player(name, bettingMoney);
     }
 
     private static void validateNameIsNotSameDealer(Name name) {
@@ -37,14 +27,14 @@ public class Player extends Participant {
     }
 
     public int getProfit(Result result) {
-        int currentMoney = result.payOut(betAmount, this.isBlackjack()).getMoney();
-        int bettingMoney = betAmount.getMoney();
+        int currentMoney = result.payOut(bettingMoney, this.isBlackjack()).getMoney();
+        int bettingMoney = this.bettingMoney.getMoney();
 
         return currentMoney - bettingMoney;
     }
 
     public int getMoney() {
-        return betAmount.getMoney();
+        return bettingMoney.getMoney();
     }
 
     @Override

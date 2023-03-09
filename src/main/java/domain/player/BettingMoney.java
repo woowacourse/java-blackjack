@@ -49,8 +49,8 @@ public class BettingMoney {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BettingMoney betAmount = (BettingMoney) o;
-        return money == betAmount.money;
+        BettingMoney bettingMoney = (BettingMoney) o;
+        return money == bettingMoney.money;
     }
 
     @Override

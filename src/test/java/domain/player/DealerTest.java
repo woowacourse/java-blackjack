@@ -4,7 +4,6 @@ import domain.blackjack.Result;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardShape;
-import domain.player.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,12 @@ class DealerTest {
     @Test
     void decideResultSuccessTest() {
         Dealer dealer = new Dealer();
-        Players players = Players.from(Names.from(List.of("pobi", "crong")));
+        Players players = Players.from(
+                List.of(
+                        Player.of(Name.from("pobi"), BettingMoney.from(1000)),
+                        Player.of(Name.from("crong"), BettingMoney.from(1000))
+                )
+        );
         Player pobi = players.getPlayers().get(0);
         Player crong = players.getPlayers().get(1);
 
@@ -43,7 +47,9 @@ class DealerTest {
     @Test
     void decideResultWithBlackjackTest() {
         Dealer dealer = new Dealer();
-        Players players = Players.from(Names.from(List.of("pobi")));
+        Players players = Players.from(
+                List.of(Player.of(Name.from("pobi"), BettingMoney.from(1000)))
+        );
         Player pobi = players.getPlayers().get(0);
 
         giveCardsTo(dealer, List.of(DIAMOND_ACE, DIAMOND_TEN));

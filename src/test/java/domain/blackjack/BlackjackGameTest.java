@@ -1,10 +1,6 @@
 package domain.blackjack;
 
-import domain.blackjack.BlackjackGame;
-import domain.player.Names;
-import domain.player.Participant;
-import domain.player.Player;
-import domain.player.Players;
+import domain.player.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +16,12 @@ class BlackjackGameTest {
 
     @BeforeEach
     void setUp() {
-        players = Players.from(Names.from(List.of("pobi", "crong")));
+        players = Players.from(
+                List.of(
+                        Player.of(Name.from("pobi"), BettingMoney.from(1000)),
+                        Player.of(Name.from("crong"), BettingMoney.from(1000))
+                )
+        );
         blackjackGame = new BlackjackGame(players);
     }
 

@@ -33,7 +33,7 @@ public class BlackjackController {
         Names names = createNames();
 
         return Players.from(names.getNames().stream()
-                .map(name -> Player.of(name, createBetAmount(name)))
+                .map(name -> Player.of(name, createBettingMoney(name)))
                 .collect(Collectors.toList()));
     }
 
@@ -47,13 +47,13 @@ public class BlackjackController {
         return inputView.requestPlayerNames();
     }
 
-    private BettingMoney createBetAmount(Name name) {
+    private BettingMoney createBettingMoney(Name name) {
         return retryOnInvalidUserInput(
-                () -> BettingMoney.from(readBetAmount(name))
+                () -> BettingMoney.from(readBettingMoney(name))
         );
     }
 
-    private int readBetAmount(Name name) {
+    private int readBettingMoney(Name name) {
         return inputView.requestBettingMoney(name.getName());
     }
 
