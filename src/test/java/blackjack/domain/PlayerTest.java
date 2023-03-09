@@ -4,11 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
+    private Player tori;
+
+    @BeforeEach
+    void setUp(){
+        tori = new Player(new Name("tori"));
+    }
+
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewPlayer() {
@@ -19,8 +27,8 @@ class PlayerTest {
     @Test
     void Should_Success_When_AddCard() {
         Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-        Player tori = new Player(new Name("tori"));
         tori.addCard(card);
+
         assertThat(tori.getAllCards()).contains(card);
     }
 
@@ -30,9 +38,6 @@ class PlayerTest {
         Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
         Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
         Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-
-        Player tori = new Player(new Name("tori"));
-
         tori.addCard(card);
         tori.addCard(card2);
         tori.addCard(card3);
@@ -48,9 +53,6 @@ class PlayerTest {
         void Should_Success_When_CalculateScore() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
             Card card2 = new Card(CardNumber.KING, CardSymbol.HEARTS);
-
-            Player tori = new Player(new Name("tori"));
-
             tori.addCard(card);
             tori.addCard(card2);
 
@@ -65,9 +67,6 @@ class PlayerTest {
             void Should_ACEScoreIs11_When_Burst() {
                 Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
                 Card card2 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-
-                Player tori = new Player(new Name("tori"));
-
                 tori.addCard(card);
                 tori.addCard(card2);
 
@@ -80,9 +79,6 @@ class PlayerTest {
                 Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
                 Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
                 Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-
-                Player tori = new Player(new Name("tori"));
-
                 tori.addCard(card);
                 tori.addCard(card2);
                 tori.addCard(card3);
@@ -101,9 +97,6 @@ class PlayerTest {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
             Card card2 = new Card(CardNumber.NINE, CardSymbol.HEARTS);
             Card card3 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
-
-            Player tori = new Player(new Name("tori"));
-
             tori.addCard(card);
             tori.addCard(card2);
             tori.addCard(card3);
@@ -116,9 +109,6 @@ class PlayerTest {
         void Should_isHitTrue_When_LessThan17() {
             Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
             Card card2 = new Card(CardNumber.KING, CardSymbol.HEARTS);
-
-            Player tori = new Player(new Name("tori"));
-
             tori.addCard(card);
             tori.addCard(card2);
 
