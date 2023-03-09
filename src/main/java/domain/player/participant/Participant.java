@@ -6,7 +6,6 @@ import domain.player.dealer.Dealer;
 import domain.player.participant.betresult.BetResultState;
 import domain.player.participant.betresult.BreakEvenState;
 import domain.player.participant.betresult.LoseState;
-import domain.player.participant.betresult.TieState;
 import domain.player.participant.betresult.WinState;
 
 public class Participant extends Player {
@@ -17,7 +16,7 @@ public class Participant extends Player {
     public Participant(final Name name, final Money money) {
         super(name);
         this.money = money;
-        betResultState = new TieState();
+        betResultState = BetResultState.NULL;
     }
 
     @Override
@@ -30,7 +29,7 @@ public class Participant extends Player {
     }
 
     private boolean hasNotBetState() {
-        return betResultState instanceof TieState;
+        return betResultState.equals(BetResultState.NULL);
     }
 
     private boolean hasBetState() {
