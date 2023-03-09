@@ -59,6 +59,10 @@ public class Players {
             .collect(Collectors.toUnmodifiableList());
     }
 
+    public void set(final int index, final Player element) {
+        players.set(index, element);
+    }
+
     public Player get(final int index) {
         final Player player = players.get(index);
         Set<Card> cards = new HashSet<>(player.getCards());

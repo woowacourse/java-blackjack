@@ -51,4 +51,18 @@ class PlayersTest {
         //then
         assertThat(result).isEqualTo(size);
     }
+
+    @Test
+    @DisplayName("원소 수정 테스트")
+    public void testSet() {
+        //given
+        Players players = Players.from(List.of("test1", "test2", "test3"));
+        Player player = new Player(Cards.makeEmpty(), "player");
+
+        //when
+        players.set(1, player);
+
+        //then
+        assertThat(player.getName()).isEqualTo(players.get(1).getName());
+    }
 }

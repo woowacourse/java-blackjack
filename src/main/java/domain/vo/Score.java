@@ -21,6 +21,13 @@ public class Score {
         return new Score(modifyScoreByAce(score, aceCount));
     }
 
+    private static int getInitialScore(final Cards cards) {
+        return cards.getCards()
+            .stream()
+            .mapToInt(Card::getNumber)
+            .sum();
+    }
+
     private static int modifyScoreByAce(int score, final int aceCount) {
         for (int i = 0; i < aceCount; i++) {
             score = changeToAceSub(score);
@@ -34,13 +41,6 @@ public class Score {
             score += ACE_SUB_NUMBER;
         }
         return score;
-    }
-
-    private static int getInitialScore(final Cards cards) {
-        return cards.getCards()
-            .stream()
-            .mapToInt(Card::getNumber)
-            .sum();
     }
 
     public boolean isBust() {

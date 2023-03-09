@@ -39,16 +39,18 @@ public class BlackJackController {
     }
 
     private void getPlayerAdditionalCard(final Players players) {
-        IntStream.range(0, players.size())
-            .mapToObj(players::get)
-            .forEach(this::getPlayerAdditionalCard);
+        IntStream.range(0, players.size()).forEach(index -> {
+            Player player = getPlayerAdditionalCard(players.get(index));
+            players.set(index, player);
+        });
     }
 
-    private void getPlayerAdditionalCard(final Player player) {
+    private Player getPlayerAdditionalCard(final Player player) {
         while (player.canReceiveCard() && getIntentReceiveCard(player)) {
             blackJackGame.giveCard(player);
             ioView.printCard(player);
         }
+        return player;
     }
 
     private boolean getIntentReceiveCard(final Player player) {

@@ -27,7 +27,7 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return suit == card.suit && letter == card.letter;
+        return suit.equals(card.suit) && letter.equals(card.letter);
     }
 
     @Override
