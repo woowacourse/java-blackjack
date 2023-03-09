@@ -31,11 +31,19 @@ public abstract class User {
     }
 
     private boolean isWon(User other) {
-        return !isBusted() && (score().getValue() > other.score().getValue() || other.isBusted());
+        if (status == BUST) {
+            return false;
+        }
+
+        return score().isGreaterThan(other.score()) || other.status == BUST;
     }
 
     private boolean isDraw(User other) {
-        return score().getValue() == other.score().getValue() || (isBusted() && other.isBusted());
+        if (status == BUST && other.status == BUST) {
+            return true;
+        }
+
+        return score().equals(other.score());
     }
 
     boolean isBusted() {
