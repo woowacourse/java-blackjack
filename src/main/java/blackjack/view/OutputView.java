@@ -35,21 +35,22 @@ public class OutputView {
     public void printPlayerCards(String name, List<Card> cards, String end) {
         int lastIndex = cards.size() - 1;
         System.out.print(name + CARD_MSG);
-        for (int i = 0; i < lastIndex; i++) {
-            Card card = cards.get(i);
-            System.out.print(card.getCardNumberToString() + card.getCardSymbolToString() + CARD_DELIMITER);
-        }
-        System.out.print(cards.get(lastIndex) + end);
+        printCards(cards, end, lastIndex);
     }
 
     public void printDealerCards(List<Card> cards, String end) {
         int lastIndex = cards.size() - 1;
         System.out.print(DEALER_MSG);
+        printCards(cards, end, lastIndex);
+    }
+
+    private void printCards(List<Card> cards, String end, int lastIndex) {
         for (int i = 0; i < lastIndex; i++) {
             Card card = cards.get(i);
             System.out.print(card.getCardNumberToString() + card.getCardSymbolToString() + CARD_DELIMITER);
         }
-        System.out.print(cards.get(lastIndex) + end);
+        Card card = cards.get(lastIndex);
+        System.out.print(card.getCardNumberToString() + card.getCardSymbolToString() + end);
     }
 
     public void printDealerHit() {
@@ -57,14 +58,14 @@ public class OutputView {
         System.out.println(DEALER_HIT_MSG);
     }
 
-    public void printDealerResult(List<Card> cardNames, int calculateScore) {
+    public void printDealerResult(List<Card> cards, int calculateScore) {
         System.out.println();
-        printDealerCards(cardNames, EMPTY);
+        printDealerCards(cards, EMPTY);
         System.out.println(RESULT_MSG + calculateScore);
     }
 
-    public void printPlayerResult(String showName, List<Card> cardNames, int calculateScore) {
-        printPlayerCards(showName, cardNames, EMPTY);
+    public void printPlayerResult(String name, List<Card> cards, int calculateScore) {
+        printPlayerCards(name, cards, EMPTY);
         System.out.println(RESULT_MSG + calculateScore);
     }
 
