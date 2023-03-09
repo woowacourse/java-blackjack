@@ -55,9 +55,9 @@ public class BlackJackTest {
         assertThat(results.get("hongo")).isEqualTo(Result.PUSH);
     }
 
-    @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 무승부를 반환한다")
+    @DisplayName("딜러와 플레이어의 카드가 21 초과일 경우 패배를 반환한다")
     @Test
-    void PUSH_whenBothCardsOver21() {
+    void LOSE_whenBothCardsOver21() {
         List<Player> players = users.getPlayers();
 
         Player player = players.get(0);
@@ -71,7 +71,7 @@ public class BlackJackTest {
         // player : ACE(1), 2, 10, 10  => 23
         // dealer : 3, 4, 5, 10        => 22
         Map<String, Result> results = blackJack.calculateTotalPlayerResults();
-        assertThat(results.get("hongo")).isEqualTo(Result.PUSH);
+        assertThat(results.get("hongo")).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("유저가 요청하면 카드를 하나 더 준다")

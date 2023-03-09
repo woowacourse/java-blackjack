@@ -18,7 +18,7 @@ public class Referee {
     }
 
     public static Result judgePlayerResult(final Score playerScore, final Score dealerScore) {
-        if (playerScore.equals(dealerScore) || (playerScore.isBust() && dealerScore.isBust())) {
+        if (playerScore.equals(dealerScore)) {
             return Result.PUSH;
         }
         if ((!dealerScore.isBust() && playerScore.isLessThan(dealerScore)) || playerScore.isBust()) {
