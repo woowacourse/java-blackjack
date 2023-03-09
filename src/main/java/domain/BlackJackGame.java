@@ -62,7 +62,7 @@ public class BlackJackGame {
         return gameBoard.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
     }
 
-    public List<List<Card>> getPlayerInitialHand() {
+    public List<List<Card>> getPlayersInitialHand() {
         return gameBoard.getPlayers().stream().map(Player::getInitialHand).collect(Collectors.toList());
     }
 
@@ -73,7 +73,6 @@ public class BlackJackGame {
     public List<Card> getDealerInitialHand() {
         return gameBoard.getDealer().getInitialHand();
     }
-
 
     public Dealer getDealer() {
         return gameBoard.getDealer();
@@ -87,14 +86,6 @@ public class BlackJackGame {
         dealTo(gameBoard.getDealer());
         gameBoard.getDealerBoard().update();
     }
-
-//    public GameResult getDealerGameResult(List<GameResult> playerBoxResults) {
-//        GameResult dealerBoxResult = new GameResult(0, 0);
-//        for (GameResult playerBoxResult : playerBoxResults) {
-//            dealerBoxResult = dealerBoxResult.addReversed(playerBoxResult);
-//        }
-//        return dealerBoxResult;
-//    }
 
     public List<GameResult> getPlayersGameResult() {
         return gameBoard.getPlayersGameResult();
