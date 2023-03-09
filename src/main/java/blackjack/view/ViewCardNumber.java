@@ -1,36 +1,34 @@
 package blackjack.view;
 
-import blackjack.domain.card.CardNumber;
-
 import java.util.Arrays;
 
 public enum ViewCardNumber {
-    ACE(CardNumber.ACE, "A"),
-    TWO(CardNumber.TWO, "2"),
-    THREE(CardNumber.THREE, "3"),
-    FOUR(CardNumber.FOUR, "4"),
-    FIVE(CardNumber.FIVE, "5"),
-    SIX(CardNumber.SIX, "6"),
-    SEVEN(CardNumber.SEVEN, "7"),
-    EIGHT(CardNumber.EIGHT, "8"),
-    NINE(CardNumber.NINE, "9"),
-    TEN(CardNumber.TEN, "10"),
-    JACK(CardNumber.JACK, "J"),
-    QUEEN(CardNumber.QUEEN, "Q"),
-    KING(CardNumber.KING, "K"),
+    ACE("ACE", "A"),
+    TWO("TWO", "2"),
+    THREE("THREE", "3"),
+    FOUR("FOUR", "4"),
+    FIVE("FIVE", "5"),
+    SIX("SIX", "6"),
+    SEVEN("SEVEN", "7"),
+    EIGHT("EIGHT", "8"),
+    NINE("NINE", "9"),
+    TEN("CTEN", "10"),
+    JACK("JACK", "J"),
+    QUEEN("QUEEN", "Q"),
+    KING("KING", "K"),
     ;
 
-    final CardNumber cardNumber;
+    final String cardNumberName;
     final String name;
 
-    ViewCardNumber(CardNumber cardNumber, String name) {
+    ViewCardNumber(String cardNumberName, String name) {
         this.name = name;
-        this.cardNumber = cardNumber;
+        this.cardNumberName = cardNumberName;
     }
 
-    public static String getCardNumber(final CardNumber cardNumber) {
+    public static String getCardNumber(final String cardNumber) {
         return Arrays.stream(ViewCardNumber.values())
-                .filter(it -> it.cardNumber == cardNumber)
+                .filter(it -> it.cardNumberName.equals(cardNumber))
                 .findAny()
                 .get()
                 .name;
