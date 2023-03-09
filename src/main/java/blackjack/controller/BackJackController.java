@@ -73,7 +73,7 @@ public class BackJackController {
 
     private void printCardResult(BlackJackGame blackJackGame) {
         final List<CardAndScoreResult> cardAndScoreResult = blackJackGame.getCardAndScoreResult();
-        outputView.printCarAndScoreResult(cardAndScoreResult);
+        outputView.printCardAndScoreResult(cardAndScoreResult);
         outputView.printLineBreak();
     }
 

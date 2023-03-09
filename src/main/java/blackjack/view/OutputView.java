@@ -61,7 +61,7 @@ public class OutputView {
         System.out.println(DEALER_DRAW_INFO_MESSAGE);
     }
 
-    public void printCarAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
+    public void printCardAndScoreResult(final List<CardAndScoreResult> cardAndScoreResult) {
         for (CardAndScoreResult result : cardAndScoreResult) {
             System.out.println(String.format(CARD_RESULT_MESSAGE_FORMAT,
                     dealerNameConvertor(result.getName()), String.join(DELIMITER, ViewRenderer.renderCardsToString(result.getCards())),

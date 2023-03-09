@@ -76,7 +76,7 @@ public class BlackJackGame {
     public List<FinalResult> getFinalResults() {
         final Map<String, GameResult> playerResults = users.getGameResult();
         final Map<GameResult, Long> dealerWinningResult = playerResults.values().stream()
-                .collect(groupingBy(this::recursionWinningStatus, counting()));
+                .collect(groupingBy(this::reverseWinningStatus, counting()));
 
         final List<FinalResult> results = new ArrayList<>();
         results.add(new DealerFinalResult(Dealer.DEALER_NAME_CODE, dealerWinningResult));
@@ -86,7 +86,7 @@ public class BlackJackGame {
         return results;
     }
 
-    private GameResult recursionWinningStatus(GameResult gameResult) {
+    private GameResult reverseWinningStatus(GameResult gameResult) {
         if (gameResult == GameResult.WIN) {
             return GameResult.LOSE;
         }
