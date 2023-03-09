@@ -21,7 +21,7 @@ class PlayersTest {
         Players players = new Players(dealer, Collections.emptyList());
 
         Card card = new Card(Shape.SPADE, Number.FOUR);
-        players.giveCardToDealer(card);
+        players.giveCardByName(dealer.getName(), card);
 
         assertThat(dealer.getCards()).contains(card);
     }

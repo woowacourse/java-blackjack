@@ -16,10 +16,6 @@ public class Players {
         this.participants = participants;
     }
 
-    public void giveCardToDealer(Card card) {
-        dealer.addCard(card);
-    }
-
     public void giveCardByName(String name, Card card) {
         Player player = findByName(name);
         player.addCard(card);
