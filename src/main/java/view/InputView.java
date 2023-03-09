@@ -34,4 +34,10 @@ public class InputView {
         }
         throw new IllegalArgumentException(INVALID_COMMAND);
     }
+
+    public Integer readBetMoney() {
+        Integer betMoney= scanner.nextInt();
+        scanner.nextLine();
+        return betMoney;
+    }
 }

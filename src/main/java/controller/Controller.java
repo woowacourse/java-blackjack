@@ -38,6 +38,13 @@ public class Controller {
         }
     }
 
+    private void setPlayersBetMoney(Players players, GameResult gameResult) {
+        for (Player player : players.getPlayersWithOutDealer()) {
+            outputView.printBettingMessage(player);
+            gameResult.addBetMoney(player, inputView.readBetMoney());
+        }
+    }
+
     private void distributeInitialCard(Players players, BlackjackGame game) {
         game.distributeInitialCard();
         outputView.printInitialCards(players.findDealer(), players);
