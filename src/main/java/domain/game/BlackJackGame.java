@@ -1,6 +1,9 @@
-package domain;
+package domain.game;
 
-import domain.shuffler.CardShuffler;
+import domain.card.Deck;
+import domain.user.Users;
+import domain.card.Card;
+import domain.card.shuffler.CardShuffler;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;

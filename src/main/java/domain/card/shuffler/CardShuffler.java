@@ -1,6 +1,6 @@
-package domain.shuffler;
+package domain.card.shuffler;
 
-import domain.Card;
+import domain.card.Card;
 import java.util.List;
 
 @FunctionalInterface

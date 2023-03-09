@@ -1,9 +1,11 @@
-package domain;
+package domain.game;
 
-import static domain.Winning.LOSE;
-import static domain.Winning.PUSH;
-import static domain.Winning.WIN;
+import static domain.card.Winning.LOSE;
+import static domain.card.Winning.PUSH;
+import static domain.card.Winning.WIN;
 
+import domain.user.Users;
+import domain.card.Winning;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.Collections;

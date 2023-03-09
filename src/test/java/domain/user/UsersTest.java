@@ -1,10 +1,12 @@
-package domain;
+package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.user.Player;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suits;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;

@@ -1,7 +1,8 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Winning;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,13 +1,16 @@
-package domain;
+package domain.user;
 
-import static domain.Denomination.ACE;
-import static domain.Denomination.FIVE;
-import static domain.Denomination.FOUR;
-import static domain.Denomination.SIX;
-import static domain.Denomination.THREE;
-import static domain.Denomination.TWO;
+import static domain.card.Denomination.ACE;
+import static domain.card.Denomination.FIVE;
+import static domain.card.Denomination.FOUR;
+import static domain.card.Denomination.SIX;
+import static domain.card.Denomination.THREE;
+import static domain.card.Denomination.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suits;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

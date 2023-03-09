@@ -1,8 +1,8 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.Users;
-import domain.shuffler.RandomCardShuffler;
+import domain.game.BlackJackGame;
+import domain.user.Users;
+import domain.card.shuffler.RandomCardShuffler;
 import domain.user.Player;
 import java.util.List;
 import view.InputView;

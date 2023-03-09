@@ -1,9 +1,11 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.Users;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
