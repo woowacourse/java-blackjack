@@ -14,11 +14,11 @@ public class OutputView {
     public static final int FIRST_CARD_COUNT = 2;
 
     public void printParticipants(final List<String> participants) {
+        String dealerName = participants.get(DEALER_INDEX);
         System.out.println();
-        StringBuilder stringBuilder = new StringBuilder(participants.remove(DEALER_INDEX));
-        stringBuilder.append("와 ");
-        stringBuilder.append(String.join(", ", participants));
-        stringBuilder.append("에게 2장을 나누었습니다.");
+        String stringBuilder = dealerName + "와 " +
+                String.join(", ", participants) +
+                "에게 2장을 나누었습니다.";
         System.out.println(stringBuilder);
     }
 
