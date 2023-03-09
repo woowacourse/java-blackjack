@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player implements Person {
+    public static final Score hitUpperBound = Score.of(21);
 
     private final Name name;
     private final List<Card> cards;
@@ -35,7 +36,7 @@ public class Player implements Person {
     @Override
     public boolean canContinue() {
         Score totalScore = calculateScore();
-        return totalScore.isLessThan(Score.playerHitUpperBound);
+        return totalScore.isLessThan(hitUpperBound);
     }
 
     @Override

@@ -7,9 +7,6 @@ import java.util.List;
 
 
 public class Score {
-
-    public static final Score playerHitUpperBound = new Score(21);
-
     private static final int MAX_ACE_SCORE = 11;
     private static final int DIFFERENCE_WITH_ACE_NUMBER = 10;
 

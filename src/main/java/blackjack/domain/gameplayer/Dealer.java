@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Dealer implements Person {
     public static final Score hitUpperBound = Score.of(17);
+
     private final List<Card> cards;
 
     public Dealer() {
