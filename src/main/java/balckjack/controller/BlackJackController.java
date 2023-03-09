@@ -59,7 +59,7 @@ public class BlackJackController {
     }
 
     private boolean isBurst(Referee referee, Player player) {
-        if (referee.isBurst(player.getCardDeck())) {
+        if (player.getCardDeck().calculateScore().isBurst()) {
             OutputView.printBurstMessage();
             return true;
         }

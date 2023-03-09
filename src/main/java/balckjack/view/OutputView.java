@@ -8,6 +8,7 @@ import balckjack.domain.Player;
 import balckjack.domain.Players;
 import balckjack.domain.Referee;
 import balckjack.domain.Result;
+import balckjack.domain.Score;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -64,17 +65,16 @@ public class OutputView {
         System.out.println();
         final List<String> playerNames = players.getPlayerNames();
 
-        printParticipantCardDeck(dealer, referee.calculateDeckScore(dealer.getCardDeck()));
+        printParticipantCardDeck(dealer, dealer.getCardDeck().calculateScore());
         for (int index = 0; index < playerNames.size(); index++) {
             printParticipantCardDeck(players.getPlayers().get(index),
-                referee.calculateDeckScore(players.getPlayers().get(index).getCardDeck()));
+                players.getPlayers().get(index).getCardDeck().calculateScore());
         }
         System.out.println();
     }
 
-    private static void printParticipantCardDeck(Participant participant, int rawScore) {
+    private static void printParticipantCardDeck(Participant participant, Score score) {
         final String cards = convertCardDeckString(participant.getCardDeck());
-        String score = convertScoreToString(rawScore);
         System.out.println(
             String.format("%s카드: %s - 결과 : %s", participant.getName().getValue(), cards, score));
     }
@@ -96,28 +96,28 @@ public class OutputView {
         System.out.println();
 
         for (int i = 0; i < names.size(); i++) {
-            System.out.println(String.format("%s: %s", names.get(i), results.get(i).getResult()));
+            System.out.println(String.format("%s: %s", names.get(i), results.get(i)));
         }
     }
 
     private static void printDealerResult(Map<String, Long> dealerResult, Dealer dealer) {
         System.out.print(String.format("%s: ", dealer.getName().getValue()));
         for (Result result : Result.values()) {
-            if (dealerResult.containsKey(result.getResult())) {
-                Long count = dealerResult.get(result.getResult());
+            if (dealerResult.containsKey(result)) {
+                Long count = dealerResult.get(result);
                 System.out.print(String.format("%d%s ", count, reverse(result)));
             }
         }
     }
 
-    private static String reverse(Result result) {
+    private static Result reverse(Result result) {
         if (result == Result.WIN) {
-            return Result.LOSE.getResult();
+            return Result.LOSE;
         }
         if (result == Result.LOSE) {
-            return Result.WIN.getResult();
+            return Result.WIN;
         }
-        return result.getResult();
+        return result;
     }
 
     public static void printBurstMessage() {
