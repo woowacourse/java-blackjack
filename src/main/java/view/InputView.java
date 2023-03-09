@@ -11,6 +11,7 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    private static final String NEW_LINE = System.lineSeparator();
     private static final String DELIMITER = ",";
 
     public static List<String> readParticipantsName() {
@@ -20,7 +21,8 @@ public class InputView {
     }
 
     public static boolean readWantHit(final Gambler gambler) {
-        System.out.printf("\n%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)\n", gambler.nameValue());
+        final String message = String.format("%s는 한장의 카드를 더 받으시겠습니까?(예는 y, 아니오는 n)", gambler.nameValue());
+        System.out.println(NEW_LINE + message);
         return parseHitCommand(scanner.nextLine());
     }
 
