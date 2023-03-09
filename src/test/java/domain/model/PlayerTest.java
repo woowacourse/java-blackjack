@@ -65,7 +65,7 @@ class PlayerTest {
         final Set<Card> cardSet = Set.of(
             new Card(Suit.DIAMOND, Letter.TEN),
             new Card(Suit.SPADE, Letter.TEN),
-            new Card(Suit.CLUB, Letter.TWO));
+            new Card(Suit.CLUB, Letter.ACE));
         final Cards bustedCards = new Cards(cardSet);
         final Player player = new Player(bustedCards, "test");
 
