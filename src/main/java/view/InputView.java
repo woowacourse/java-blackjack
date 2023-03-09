@@ -36,8 +36,11 @@ public class InputView {
     }
 
     public Integer readBetMoney() {
-        Integer betMoney= scanner.nextInt();
-        scanner.nextLine();
-        return betMoney;
+        try{
+            Integer betMoney= Integer.parseInt(scanner.nextLine());
+            return betMoney;
+        } catch(Exception e){
+            throw new IllegalArgumentException("숫자만 입력해주세요.");
+        }
     }
 }

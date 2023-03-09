@@ -43,7 +43,15 @@ public class Controller {
     private void setPlayersBetMoney(Players players, GameResult gameResult) {
         for (Player player : players.getPlayersWithOutDealer()) {
             outputView.printBettingMessage(player);
+            setBetMoney(player,gameResult);
+        }
+    }
+    private void setBetMoney(Player player, GameResult gameResult){
+        try{
             gameResult.addBetMoney(player, inputView.readBetMoney());
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            setBetMoney(player,gameResult);
         }
     }
 
