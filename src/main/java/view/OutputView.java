@@ -1,7 +1,9 @@
 package view;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import domain.Card;
@@ -27,9 +29,12 @@ public class OutputView {
     }
 
     public void printFirstCardOfDealer(Hand hand) {
-        Card card = hand.cards().get(0);
-
-        System.out.println("딜러: " + Display.of(card));
+        Iterator<Card> cardIterator = hand.cards().iterator();
+        if (cardIterator.hasNext()) {
+            Card firstCard = cardIterator.next();
+            System.out.println("딜러: " + Display.of(firstCard));
+        }
+        System.out.println("딜러의 카드가 없습니다");
     }
 
     public void noticeDealerHitOrStand(int hitCount) {
@@ -73,7 +78,7 @@ public class OutputView {
                 .count();
     }
 
-    private String joinDisplaysOf(List<Card> cards) {
+    private String joinDisplaysOf(Set<Card> cards) {
         return cards.stream()
                 .map(Display::of)
                 .collect(Collectors.joining(", "));
