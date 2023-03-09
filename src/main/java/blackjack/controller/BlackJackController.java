@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static blackjack.util.Repeater.repeatUntilNoException;
 
+import blackjack.domain.BlackJackRuleImpl;
 import blackjack.domain.card.DeckFactory;
 import blackjack.service.BlackJackGame;
 import blackjack.view.DrawCommand;
@@ -23,7 +24,8 @@ public class BlackJackController {
         final BlackJackGame blackJackGame = repeatUntilNoException(
                 () -> BlackJackGame.of(
                         inputPlayerNames(),
-                        deckFactory),
+                        deckFactory,
+                        new BlackJackRuleImpl()),
                 outputView::printError);
 
         blackJackGame.distributeInitialCard();

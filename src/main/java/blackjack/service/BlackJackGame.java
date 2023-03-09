@@ -1,7 +1,6 @@
 package blackjack.service;
 
 import blackjack.domain.BlackJackRule;
-import blackjack.domain.BlackJackRuleImpl;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -22,14 +21,19 @@ public class BlackJackGame {
 
     private final Participants participants;
     private final Deck deck;
+    private final BlackJackRule blackJackRule;
 
-    private BlackJackGame(final Players players, final DeckFactory deckFactory) {
+    private BlackJackGame(final Players players, final DeckFactory deckFactory, final BlackJackRule blackJackRule) {
         participants = new Participants(players, new Dealer());
         deck = deckFactory.generate();
+        this.blackJackRule = blackJackRule;
     }
 
-    public static BlackJackGame of(final List<String> playerNames, final DeckFactory deckFactory) {
-        return new BlackJackGame(Players.from(playerNames), deckFactory);
+    public static BlackJackGame of(
+            final List<String> playerNames,
+            final DeckFactory deckFactory,
+            final BlackJackRule blackJackRule) {
+        return new BlackJackGame(Players.from(playerNames), deckFactory, blackJackRule);
     }
 
     public void distributeInitialCard() {
@@ -100,7 +104,6 @@ public class BlackJackGame {
     }
 
     public Map<ResultTypeResponse, Long> getDealerResult() {
-        final BlackJackRule blackJackRule = new BlackJackRuleImpl();
         final ParticipantResults participantResults = new ParticipantResults();
         final Dealer dealer = participants.getDealer();
         participants.getPlayers().getPlayers().forEach(player -> {
@@ -116,7 +119,6 @@ public class BlackJackGame {
     }
 
     public Map<String, ResultTypeResponse> generatePlayersResult() {
-        final BlackJackRule blackJackRule = new BlackJackRuleImpl();
         final ParticipantResults participantResults = new ParticipantResults();
         final Dealer dealer = participants.getDealer();
         participants.getPlayers().getPlayers().forEach(player -> {
