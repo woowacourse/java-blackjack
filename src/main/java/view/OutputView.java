@@ -1,11 +1,9 @@
 package view;
 
-import static view.OutputView.Format.RESULT;
-
 import domain.BlackjackGame;
-import domain.DealerResult;
 import domain.BlackjackScore;
 import domain.Card;
+import domain.DealerResult;
 import domain.Participant;
 import domain.Players;
 import domain.Result;
@@ -14,10 +12,17 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
-    private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
-    private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
     private static final int NO_MORE_CARD_COUNT = 0;
     private static final int SKIP_COUNT = 0;
+    private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러의 카드합이 17이상이라 카드를 더 받지 않았습니다.";
+    private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final String CARD_DISTRIBUTION_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
+    private static final String CARDS_FORMAT = "%s카드: %s";
+    private static final String CARDS_WITH_SCORE_FORMAT = CARDS_FORMAT + " - 결과: %d";
+    private static final String BUSTED_FORMAT = "%s는 버스트 되었습니다.";
+    private static final String RESULT_FORMAT = "%s: %s";
+    private static final String DEALER_MORE_CARDS_FORMAT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
+    private static final String ERROR_FORMAT = "[Error] %s";
 
     public void printInitialCards(BlackjackGame blackjackGame) {
         Players players = blackjackGame.getPlayers();
@@ -26,7 +31,7 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
 
         breakLine();
-        String initialCardsPrefixFormat = String.format(Format.CARD_DISTRIBUTION.format, playerNames);
+        String initialCardsPrefixFormat = String.format(CARD_DISTRIBUTION_FORMAT, playerNames);
         System.out.println(initialCardsPrefixFormat);
         printParticipantsInitialCards(blackjackGame);
         breakLine();
@@ -47,7 +52,7 @@ public class OutputView {
     }
 
     private void printParticipantCards(Participant participant, List<Card> cards) {
-        String cardsFormat = String.format(Format.CARDS.format,
+        String cardsFormat = String.format(CARDS_FORMAT,
                 participant.getName(), getCardsFormat(cards));
         System.out.println(cardsFormat);
     }
@@ -63,7 +68,7 @@ public class OutputView {
     }
 
     public void printBusted(String name) {
-        String format = String.format(Format.BUSTED.format, name);
+        String format = String.format(BUSTED_FORMAT, name);
         System.out.println(format);
     }
 
@@ -74,7 +79,7 @@ public class OutputView {
         }
 
         breakLine();
-        String format = String.format(Format.DEALER_MORE_CARDS.format, hitCardCount);
+        String format = String.format(DEALER_MORE_CARDS_FORMAT, hitCardCount);
         System.out.println(format);
     }
 
@@ -91,7 +96,7 @@ public class OutputView {
 
     private String getCardsWithScoreFormat(Participant participant) {
         BlackjackScore participantScore = participant.calculateBlackjackScore();
-        return String.format(Format.CARDS_WITH_SCORE.format,
+        return String.format(CARDS_WITH_SCORE_FORMAT,
                 participant.getName(), getCardsFormat(participant.getCards()), participantScore.getValue());
     }
 
@@ -111,7 +116,7 @@ public class OutputView {
             dealerResultsFormat.append(getResultFormat(result, dealerResult.getResultCount(result)));
         }
 
-        String format = String.format(RESULT.format, dealer.getName(), dealerResultsFormat);
+        String format = String.format(RESULT_FORMAT, dealer.getName(), dealerResultsFormat);
         System.out.println(format);
     }
 
@@ -124,33 +129,17 @@ public class OutputView {
     }
 
     private void printPlayerResult(Participant player, Result result) {
-        String format = String.format(RESULT.format,
+        String format = String.format(RESULT_FORMAT,
                 player.getName(), result.getValue());
         System.out.println(format);
     }
 
     public void printErrorMessage(String message) {
-        String format = String.format(Format.ERROR.format, message);
+        String format = String.format(ERROR_FORMAT, message);
         System.out.println(format);
     }
 
     private void breakLine() {
         System.out.print(System.lineSeparator());
-    }
-
-    public enum Format {
-        CARD_DISTRIBUTION("딜러와 %s에게 2장을 나누었습니다."),
-        CARDS("%s카드: %s"),
-        CARDS_WITH_SCORE(CARDS.format + " - 결과: %d"),
-        BUSTED("%s는 버스트 되었습니다."),
-        RESULT("%s: %s"),
-        DEALER_MORE_CARDS("딜러는 16이하라 %d장의 카드를 더 받았습니다."),
-        ERROR("[Error] %s");
-
-        private final String format;
-
-        Format(String format) {
-            this.format = format;
-        }
     }
 }
