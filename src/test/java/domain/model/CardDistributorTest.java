@@ -1,6 +1,5 @@
 package domain.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +13,7 @@ class CardDistributorTest {
     @DisplayName("한명에게 카드 배분을 테스트")
     public void testGiveCardToOne() {
         //given
-        List<Card> cardList = new ArrayList<>();
-        Player player = new Player("player", new Cards(cardList));
+        Player player = new Player("player", Cards.empty());
 
         //when
         cardDistributor.giveCard(player);
@@ -28,10 +26,8 @@ class CardDistributorTest {
     @DisplayName("여러명에게 카드 배분을 테스트")
     public void testGiveCardToAll() {
         //given
-        List<Card> cardList1 = new ArrayList<>();
-        Player player1 = new Player("player1", new Cards(cardList1));
-        List<Card> cardList2 = new ArrayList<>();
-        Player player2 = new Player("player2", new Cards(cardList2));
+        Player player1 = new Player("player1", Cards.empty());
+        Player player2 = new Player("player2", Cards.empty());
 
         //when
         cardDistributor.giveCard(List.of(player1, player2));

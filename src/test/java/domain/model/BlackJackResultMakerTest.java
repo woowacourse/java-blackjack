@@ -21,9 +21,9 @@ class BlackJackResultMakerTest {
 
     @BeforeEach
     public void beforeEach() {
-        Cards dealerCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.TWO)));
+        Cards dealerCards = Cards.of(new Card(Suit.SPADE, Denomination.TWO));
         dealer = new Dealer(dealerCards);
-        playerCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.SIX)));
+        playerCards = Cards.of(new Card(Suit.SPADE, Denomination.SIX));
         players = IntStream.range(0, 10)
             .mapToObj(i -> new Player("test", playerCards))
             .collect(Collectors.toList());

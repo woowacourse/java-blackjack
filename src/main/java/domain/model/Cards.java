@@ -2,14 +2,25 @@ package domain.model;
 
 import domain.type.Denomination;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(final List<Card> cards) {
+    private Cards(final List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Cards empty() {
+        return new Cards(new ArrayList<>());
+    }
+
+    public static Cards of(final Card... card) {
+        List<Card> cards = new ArrayList<>(Arrays.asList(card));
+        return new Cards(cards);
     }
 
     public int count(final Denomination denomination) {

@@ -20,7 +20,7 @@ public class Player {
     }
 
     public static Player from(final String name) {
-        return new Player(name, new Cards(new ArrayList<>()));
+        return new Player(name, Cards.empty());
     }
 
     public void addCard(final Card card) {

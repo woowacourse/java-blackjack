@@ -14,7 +14,7 @@ public class ResultTest {
     @DisplayName("무승부 결과 테스트(같은 점수일 때)")
     public void testDecideDraw() {
         //given
-        Cards cards = new Cards(List.of(new Card(Suit.SPADE, Denomination.SIX)));
+        Cards cards = Cards.of(new Card(Suit.SPADE, Denomination.SIX));
         Score score = Score.of(cards);
         Score comparedScore = Score.of(cards);
 
@@ -31,15 +31,15 @@ public class ResultTest {
     @DisplayName("무승부 결과 테스트(둘 다 버스트 났을 때)")
     public void testDecideBothBust() {
         //given
-        Cards cards = new Cards(List.of(
+        Cards cards = Cards.of(
             new Card(Suit.SPADE, Denomination.TEN),
             new Card(Suit.CLOVER, Denomination.TEN),
-            new Card(Suit.DIAMOND, Denomination.TEN)));
+            new Card(Suit.DIAMOND, Denomination.TEN));
         Score score = Score.of(cards);
-        Cards comparedCards = new Cards(List.of(
+        Cards comparedCards = Cards.of(
             new Card(Suit.SPADE, Denomination.NINE),
             new Card(Suit.CLOVER, Denomination.NINE),
-            new Card(Suit.DIAMOND, Denomination.NINE)));
+            new Card(Suit.DIAMOND, Denomination.NINE));
         Score comparedScore = Score.of(comparedCards);
 
         //when
@@ -55,9 +55,9 @@ public class ResultTest {
     @DisplayName("승리 결과 테스트")
     public void testDecideVictory() {
         //given
-        Cards cards = new Cards(List.of(new Card(Suit.SPADE, Denomination.SIX)));
+        Cards cards = Cards.of(new Card(Suit.SPADE, Denomination.SIX));
         Score score = Score.of(cards);
-        Cards comparedCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.FIVE)));
+        Cards comparedCards = Cards.of(new Card(Suit.SPADE, Denomination.FIVE));
         Score comparedScore = Score.of(comparedCards);
 
         //when
@@ -73,9 +73,9 @@ public class ResultTest {
     @DisplayName("패배 결과 테스트")
     public void testDecideDefeat() {
         //given
-        Cards cards = new Cards(List.of(new Card(Suit.SPADE, Denomination.FIVE)));
+        Cards cards = Cards.of(new Card(Suit.SPADE, Denomination.FIVE));
         Score score = Score.of(cards);
-        Cards comparedCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.SIX)));
+        Cards comparedCards = Cards.of(new Card(Suit.SPADE, Denomination.SIX));
         Score comparedScore = Score.of(comparedCards);
 
         //when
@@ -91,11 +91,11 @@ public class ResultTest {
     @DisplayName("한 점수에 대한 여러 점수와 비교 테스트")
     public void testDecideScores() {
         //given
-        Cards cards = new Cards(List.of(new Card(Suit.SPADE, Denomination.SIX)));
+        Cards cards = Cards.of(new Card(Suit.SPADE, Denomination.SIX));
         Score score1 = Score.of(cards);
         Score score2 = Score.of(cards);
 
-        Cards comparedCards = new Cards(List.of(new Card(Suit.SPADE, Denomination.FIVE)));
+        Cards comparedCards = Cards.of(new Card(Suit.SPADE, Denomination.FIVE));
         Score comparedScore = Score.of(comparedCards);
 
         //when

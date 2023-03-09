@@ -1,7 +1,5 @@
 package domain.model;
 
-import java.util.ArrayList;
-
 public class Dealer extends Player {
 
     private static final int MIN_SCORE_THRESHOLD = 16;
@@ -12,7 +10,7 @@ public class Dealer extends Player {
     }
 
     public Dealer()  {
-        super(DEALER_NAME, new Cards(new ArrayList<>()));
+        super(DEALER_NAME, Cards.empty());
     }
 
     @Override

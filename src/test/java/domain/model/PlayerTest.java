@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import domain.type.Denomination;
 import domain.type.Suit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,10 +14,9 @@ class PlayerTest {
     @DisplayName("21 이하의 점수에서의 canReceiveCard 테스트")
     public void testScore21receivable() {
         //given
-        List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(Suit.SPADE, Denomination.NINE));
-        cardList.add(new Card(Suit.DIAMOND, Denomination.NINE));
-        Cards cards = new Cards(cardList);
+        Cards cards = Cards.of(
+            new Card(Suit.SPADE, Denomination.NINE),
+            new Card(Suit.DIAMOND, Denomination.NINE));
         Player player = new Player("player", cards);
 
         //when
@@ -34,12 +30,10 @@ class PlayerTest {
     @DisplayName("22 이상의 점수에서의 canReceiveCard 테스트")
     public void testScore22NotReceivable() {
         //given
-        List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(Suit.SPADE, Denomination.NINE));
-        cardList.add(new Card(Suit.DIAMOND, Denomination.NINE));
-        Cards cards = new Cards(cardList);
+        Cards cards = Cards.of(
+            new Card(Suit.SPADE, Denomination.NINE),
+            new Card(Suit.DIAMOND, Denomination.NINE));
         Player player = new Player("player", cards);
-
         //when
         player.addCard(new Card(Suit.SPADE, Denomination.FOUR));
 
