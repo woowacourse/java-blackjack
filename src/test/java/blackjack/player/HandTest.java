@@ -104,5 +104,31 @@ class HandTest {
             int score = hand.calculateScore();
             assertThat(score).isEqualTo(16);
         }
+
+        @Test
+        @DisplayName("블랙잭인 경우 true를 반환한다.")
+        void isBlackjack() {
+            hand = new Hand();
+            Card card = new Card(Rank.ACE, Suit.HEART);
+            Card card1 = new Card(Rank.TEN, Suit.HEART);
+            hand.add(card);
+            hand.add(card1);
+
+            assertThat(hand.isBlackjack()).isTrue();
+        }
+
+        @Test
+        @DisplayName("블랙잭인 경우 true를 반환한다.")
+        void isBlackjackFalse() {
+            hand = new Hand();
+            Card card = new Card(Rank.ACE, Suit.HEART);
+            Card card1 = new Card(Rank.TEN, Suit.HEART);
+            Card card2 = new Card(Rank.TEN, Suit.SPADE);
+            hand.add(card);
+            hand.add(card1);
+            hand.add(card2);
+
+            assertThat(hand.isBlackjack()).isFalse();
+        }
     }
 }

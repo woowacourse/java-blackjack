@@ -8,6 +8,8 @@ import card.Card;
 public class Hand {
     public static final int ACE_ADDITIONAL_SCORE = 10;
     public static final int LIMIT_ADDITIONAL_SCORE = 11;
+    public static final int BLACK_JACK = 21;
+    public static final int BLACK_JACK_CARD_COUNT = 2;
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -42,5 +44,9 @@ public class Hand {
             throw new IllegalStateException("들고있는 카드가 없습니다.");
         }
         return cards.get(0);
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACK_JACK && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 }
