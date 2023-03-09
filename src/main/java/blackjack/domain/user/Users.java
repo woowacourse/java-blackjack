@@ -23,15 +23,15 @@ public class Users {
         this.players = new Players(playerNames, deck);
     }
 
-    public Map<String, CardGroup> getUserNameAndFirstOpenCardGroups() {
-        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = new LinkedHashMap<>();
+    public Map<Name, CardGroup> getUserNameAndFirstOpenCardGroups() {
+        final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = new LinkedHashMap<>();
         userNameAndFirstOpenCardGroups.put(dealer.getName(), dealer.getFirstOpenCardGroup());
-        final Map<String, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
+        final Map<Name, CardGroup> playerFirstOpenCardGroups = players.getFirstOpenCardGroup();
         userNameAndFirstOpenCardGroups.putAll(playerFirstOpenCardGroups);
         return Collections.unmodifiableMap(userNameAndFirstOpenCardGroups);
     }
 
-    public CardGroup getCardGroupBy(final String name) {
+    public CardGroup getCardGroupBy(final Name name) {
         return players.getCardGroupBy(name);
     }
 
@@ -39,7 +39,7 @@ public class Users {
         return dealer.isUnderDrawLimit();
     }
 
-    public List<String> getPlayerNames() {
+    public List<Name> getPlayerNames() {
         return players.getPlayerNames();
     }
 
@@ -47,7 +47,7 @@ public class Users {
         dealer.drawCard(deck);
     }
 
-    public Map<String, WinningStatus> getPlayersWinningResults() {
+    public Map<Name, WinningStatus> getPlayersWinningResults() {
         return players.getWinningResult(dealer);
     }
 
@@ -59,22 +59,22 @@ public class Users {
                         Collections::unmodifiableMap));
     }
 
-    public boolean isPlayerBust(final String name) {
+    public boolean isPlayerBust(final Name name) {
         return players.isPlayerBust(name);
     }
 
-    public void drawCard(final String userName, final Deck deck) {
+    public void drawCard(final Name userName, final Deck deck) {
         players.drawCard(userName, deck);
     }
 
-    public boolean isBlackJackScore(final String name) {
+    public boolean isBlackJackScore(final Name name) {
         return players.isBlackJackScore(name);
     }
 
-    public Map<String, CardResult> getUserNameAndCardResults() {
-        final Map<String, CardResult> userNameAndResults = new LinkedHashMap<>();
+    public Map<Name, CardResult> getUserNameAndCardResults() {
+        final Map<Name, CardResult> userNameAndResults = new LinkedHashMap<>();
         userNameAndResults.put(dealer.getName(), new CardResult(dealer.getCardGroups(), dealer.getScore()));
-        final Map<String, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
+        final Map<Name, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
         userNameAndResults.putAll(playerNameAndResults);
         return Collections.unmodifiableMap(userNameAndResults);
     }

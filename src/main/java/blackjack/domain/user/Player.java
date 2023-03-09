@@ -25,8 +25,8 @@ public class Player extends User {
         return getCardGroups().getSubCardGroup(FIRST_OPEN_CARD_COUNT);
     }
 
-    public boolean isSameName(final String name) {
-        return getName().equals(name);
+    public boolean isSameName(final Name name) {
+        return getName().isSame(name);
     }
 
     public WinningStatus calculateWinningStatus(final Dealer dealer) {

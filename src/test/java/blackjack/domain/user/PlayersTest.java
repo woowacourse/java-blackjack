@@ -17,8 +17,9 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
-    public static final String TEST_PLAYER_NAME_1 = "필립";
-    public static final String TEST_PLAYER_NAME_2 = "홍실";
+    private static final Name TEST_PLAYER_NAME_1 = new Name("필립");
+    private static final Name TEST_PLAYER_NAME_2 = new Name("홍실");
+
     final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
             new Card(CardShape.CLOVER, CardNumber.NINE),
@@ -29,10 +30,10 @@ public class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getPlayerNameAndCardResultsTest() {
-        final Players players = new Players(List.of(TEST_PLAYER_NAME_1, TEST_PLAYER_NAME_2),
+        final Players players = new Players(List.of(TEST_PLAYER_NAME_1.getValue(), TEST_PLAYER_NAME_2.getValue()),
                 new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
-        final Map<String, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
+        final Map<Name, CardResult> playerNameAndResults = players.getPlayerNameAndCardResults();
 
         assertSoftly(softly -> {
             softly.assertThat(playerNameAndResults.get(TEST_PLAYER_NAME_1).getCards().getCards())
@@ -49,7 +50,7 @@ public class PlayersTest {
     @Test
     @DisplayName("플레이어들의 이름에 중복이 있는경우 예외처리하는 기능 테스트")
     void throwExceptionIfPlayerNamesHasDuplicate() {
-        final List<String> playerNames = List.of(TEST_PLAYER_NAME_1, TEST_PLAYER_NAME_1);
+        final List<String> playerNames = List.of(TEST_PLAYER_NAME_1.getValue(), TEST_PLAYER_NAME_1.getValue());
 
         assertThatThrownBy(() -> new Players(playerNames, new Deck(new RandomDeckGenerator())));
     }

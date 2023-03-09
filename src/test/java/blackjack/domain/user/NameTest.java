@@ -30,8 +30,8 @@ class NameTest {
         final Name name = new Name("test");
 
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(name.isSameName("test")).isTrue();
-            softly.assertThat(name.isSameName("홍실")).isFalse();
+            softly.assertThat(name.isSame(name)).isTrue();
+            softly.assertThat(name.isSame(new Name("홍실"))).isFalse();
         });
     }
 }

@@ -22,9 +22,11 @@ import org.junit.jupiter.api.Test;
 
 class UsersTest {
 
-    public static final String TEST_PLAYER_NAME1 = "필립";
-    public static final String TEST_PLAYER_NAME2 = "홍실";
-    public static final String TEST_PLAYER_NAME3 = "제이미";
+    private static final Name TEST_PLAYER_NAME1 = new Name("필립");
+    private static final Name TEST_PLAYER_NAME2 = new Name("홍실");
+    private static final Name TEST_PLAYER_NAME3 = new Name("제이미");
+    private static final Name DEALER_NAME = new Name(Dealer.DEALER_NAME);
+
     final List<Card> testCards = List.of(new Card(CardShape.SPADE, CardNumber.ACE),
             new Card(CardShape.CLOVER, CardNumber.TEN),
             new Card(CardShape.CLOVER, CardNumber.NINE),
@@ -38,8 +40,8 @@ class UsersTest {
         @Test
         @DisplayName("플레이어의 이름이 6개 이상 입력되는 경우 예외처리")
         void throwExceptionIfPlayerNamesLengthOver5() {
-            final List<String> playerNames = List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2, TEST_PLAYER_NAME3, "네오",
-                    "솔라", "다니");
+            final List<String> playerNames = List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()
+                    , TEST_PLAYER_NAME3.getValue(), "네오", "솔라", "다니");
 
             final Runnable initialUsersByPlayerNamesLengthOver5 =
                     () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
@@ -52,7 +54,8 @@ class UsersTest {
         @Test
         @DisplayName("조건을 만족하는 경우 정상적으로 Users가 생성된다.")
         void initialUsersSuccess() {
-            final List<String> playerNames = List.of(TEST_PLAYER_NAME2, TEST_PLAYER_NAME3, TEST_PLAYER_NAME1);
+            final List<String> playerNames = List.of(TEST_PLAYER_NAME2.getValue()
+                    , TEST_PLAYER_NAME3.getValue(), TEST_PLAYER_NAME1.getValue());
 
             final Runnable initialUsers =
                     () -> new Users(playerNames, new Deck(new RandomDeckGenerator()));
@@ -64,7 +67,7 @@ class UsersTest {
     @Test
     @DisplayName("유저들의 이름을 받고 CardGroup을 반환하는 기능 테스트")
     void getUsersStatus() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2)
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue())
                 , new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
         final CardGroup philipCardGroup = users.getCardGroupBy(TEST_PLAYER_NAME1);
@@ -76,17 +79,17 @@ class UsersTest {
     @Test
     @DisplayName("유저들의 첫 패를 반환하는 기능 테스트")
     void getUsersInitialStatus() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2)
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue())
                 , new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
-        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = users.getUserNameAndFirstOpenCardGroups();
+        final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = users.getUserNameAndFirstOpenCardGroups();
 
         assertSoftly(softly -> {
             softly.assertThat(userNameAndFirstOpenCardGroups.get(TEST_PLAYER_NAME1).getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
             softly.assertThat(userNameAndFirstOpenCardGroups.get(TEST_PLAYER_NAME2).getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(4, 6));
-            softly.assertThat(userNameAndFirstOpenCardGroups.get(Dealer.DEALER_NAME).getCards())
+            softly.assertThat(userNameAndFirstOpenCardGroups.get(DEALER_NAME).getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 1));
         });
     }
@@ -94,7 +97,7 @@ class UsersTest {
     @Test
     @DisplayName("딜러의 스코어가 16이 넘는지 확인하는 기능 테스트")
     void isDealerOverDrawLimitTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1),
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()),
                 new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
         boolean dealerOverDrawLimit = users.isDealerUnderDrawLimit();
@@ -106,10 +109,10 @@ class UsersTest {
     @DisplayName("딜러의 카드를 하나 추가하는 기능 테스트")
     void drawDealerTest() {
         final Deck deck = new Deck(new TestNonShuffledDeckGenerator(testCards));
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1), deck);
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), deck);
 
         users.drawDealer(deck);
-        final CardResult cardResult = users.getUserNameAndCardResults().get(Dealer.DEALER_NAME);
+        final CardResult cardResult = users.getUserNameAndCardResults().get(DEALER_NAME);
 
         assertThat(cardResult.getCards().getCards())
                 .containsExactly(new Card(CardShape.SPADE, CardNumber.ACE)
@@ -120,9 +123,9 @@ class UsersTest {
     @Test
     @DisplayName("플레이어 리스트를 반환하는 기능 테스트")
     void getPlayersTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1), new Deck(new RandomDeckGenerator()));
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()), new Deck(new RandomDeckGenerator()));
 
-        final List<String> players = users.getPlayerNames();
+        final List<Name> players = users.getPlayerNames();
 
         assertThat(players).containsExactly(TEST_PLAYER_NAME1);
     }
@@ -135,10 +138,10 @@ class UsersTest {
     @Test
     @DisplayName("플레이어들의 승리 여부 반환 테스트")
     void getWinningResultTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2),
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
                 new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
-        Map<String, WinningStatus> winningResult = users.getPlayersWinningResults();
+        Map<Name, WinningStatus> winningResult = users.getPlayersWinningResults();
 
         assertSoftly(softly -> {
             softly.assertThat(winningResult.get(TEST_PLAYER_NAME1)).isEqualTo(WinningStatus.LOSE);
@@ -149,15 +152,15 @@ class UsersTest {
     @Test
     @DisplayName("유저(플레이어+딜러)의 이름과 카드목록 점수를 반환하는 기능 테스트")
     void getUserNamesAndResultsTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1),
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue()),
                 new Deck(new TestNonShuffledDeckGenerator(testCards)));
 
-        final Map<String, CardResult> userNameAndCardResults = users.getUserNameAndCardResults();
+        final Map<Name, CardResult> userNameAndCardResults = users.getUserNameAndCardResults();
 
         assertSoftly(softly -> {
-            softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getCards().getCards())
+            softly.assertThat(userNameAndCardResults.get(DEALER_NAME).getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(0, 2));
-            softly.assertThat(userNameAndCardResults.get(Dealer.DEALER_NAME).getScore().getValue())
+            softly.assertThat(userNameAndCardResults.get(DEALER_NAME).getScore().getValue())
                     .isEqualTo(21);
             softly.assertThat(userNameAndCardResults.get(TEST_PLAYER_NAME1).getCards().getCards())
                     .containsExactlyInAnyOrderElementsOf(testCards.subList(2, 4));
@@ -169,7 +172,7 @@ class UsersTest {
     @Test
     @DisplayName("딜러의 승무패 결과를 반환하는 기능 테스트")
     void getDealerWinningResultsTest() {
-        final Users users = new Users(List.of(TEST_PLAYER_NAME1, TEST_PLAYER_NAME2),
+        final Users users = new Users(List.of(TEST_PLAYER_NAME1.getValue(), TEST_PLAYER_NAME2.getValue()),
                 new Deck(new TestNonShuffledDeckGenerator(testCards)));
         final Map<WinningStatus, Long> dealerWinningResults = users.getDealerWinningResults();
 

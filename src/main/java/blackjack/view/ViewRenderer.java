@@ -7,6 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Name;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -66,19 +67,19 @@ public class ViewRenderer {
     }
 
     public static Map<String, String> renderPlayersWinningResults(
-            final Map<String, WinningStatus> playersWinningResults) {
+            final Map<Name, WinningStatus> playersWinningResults) {
         final Map<String, String> renderedWinningResult = new LinkedHashMap<>();
         playersWinningResults.forEach((name, winningStatus) ->
-                renderedWinningResult.put(name, WINNING_STATUS_MAPPER.get(winningStatus)));
+                renderedWinningResult.put(name.getValue(), WINNING_STATUS_MAPPER.get(winningStatus)));
         return Collections.unmodifiableMap(renderedWinningResult);
     }
 
     public static Map<String, String> renderUserNameAndCardResults(
-            final Map<String, CardResult> userNameAndCardResults) {
+            final Map<Name, CardResult> userNameAndCardResults) {
         final Map<String, String> renderedUserNameAndCardResults = new LinkedHashMap<>();
 
         userNameAndCardResults
-                .forEach((key, value) -> renderedUserNameAndCardResults.put(key, renderCardResults(value)));
+                .forEach((key, value) -> renderedUserNameAndCardResults.put(key.getValue(), renderCardResults(value)));
 
         return Collections.unmodifiableMap(renderedUserNameAndCardResults);
     }
@@ -87,5 +88,11 @@ public class ViewRenderer {
         final List<String> cardNames = renderCardGroup(cardResult.getCards());
         return String.format(CARD_RESULT_FORMAT, String.join(", ", cardNames)
                 , cardResult.getScore().getValue());
+    }
+
+    public static List<String> renderNames(final List<Name> userNames) {
+        return userNames.stream()
+                .map(Name::getValue)
+                .collect(toUnmodifiableList());
     }
 }

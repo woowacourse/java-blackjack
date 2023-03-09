@@ -25,10 +25,10 @@ class DealerTest {
     @Test
     @DisplayName("딜러 초기화 테스트")
     void initTest() {
-        User dealer = new Dealer(initialGroup);
+        final User dealer = new Dealer(initialGroup);
 
         assertSoftly(softly -> {
-            softly.assertThat(dealer.getName()).isEqualTo(Dealer.DEALER_NAME);
+            softly.assertThat(dealer.getName().getValue()).isEqualTo(Dealer.DEALER_NAME);
             softly.assertThat(dealer.getCardGroups().getCards()).containsExactly(cardKing, cardEight);
         });
     }

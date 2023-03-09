@@ -39,15 +39,15 @@ public class Players {
         }
     }
 
-    public Map<String, CardGroup> getFirstOpenCardGroup() {
-        final Map<String, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
+    public Map<Name, CardGroup> getFirstOpenCardGroup() {
+        final Map<Name, CardGroup> firstOpenCardGroup = new LinkedHashMap<>();
         players.forEach(player ->
                 firstOpenCardGroup.put(player.getName(), player.getFirstOpenCardGroup()));
         return Collections.unmodifiableMap(firstOpenCardGroup);
     }
 
 
-    public CardGroup getCardGroupBy(final String name) {
+    public CardGroup getCardGroupBy(final Name name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
@@ -55,20 +55,20 @@ public class Players {
                 .getCardGroups();
     }
 
-    public List<String> getPlayerNames() {
+    public List<Name> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Map<String, WinningStatus> getWinningResult(final Dealer dealer) {
-        final Map<String, WinningStatus> playerWinningResult = new LinkedHashMap<>();
+    public Map<Name, WinningStatus> getWinningResult(final Dealer dealer) {
+        final Map<Name, WinningStatus> playerWinningResult = new LinkedHashMap<>();
         players.forEach(
                 player -> playerWinningResult.put(player.getName(), player.calculateWinningStatus(dealer)));
         return Collections.unmodifiableMap(playerWinningResult);
     }
 
-    public boolean isPlayerBust(final String name) {
+    public boolean isPlayerBust(final Name name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .map(Player::isBust)
@@ -76,15 +76,15 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE));
     }
 
-    public void drawCard(final String userName, final Deck deck) {
+    public void drawCard(final Name name, final Deck deck) {
         players.stream()
-                .filter(player -> player.isSameName(userName))
+                .filter(player -> player.isSameName(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE))
                 .drawCard(deck);
     }
 
-    public boolean isBlackJackScore(final String name) {
+    public boolean isBlackJackScore(final Name name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .map(Player::isBlackJackScore)
@@ -92,8 +92,8 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_CONTAIN_USER_BY_NAME_EXCEPTION_MESSAGE));
     }
 
-    public Map<String, CardResult> getPlayerNameAndCardResults() {
-        final Map<String, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
+    public Map<Name, CardResult> getPlayerNameAndCardResults() {
+        final Map<Name, CardResult> playerNameAndCardResults = new LinkedHashMap<>();
         players.forEach(player -> playerNameAndCardResults.put(player.getName(),
                 new CardResult(player.getCardGroups(), player.getScore())));
         return Collections.unmodifiableMap(playerNameAndCardResults);

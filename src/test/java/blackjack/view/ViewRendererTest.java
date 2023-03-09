@@ -6,6 +6,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,9 +33,9 @@ class ViewRendererTest {
     @Test
     @DisplayName("플레이어의 승리 결과 렌더링 테스트")
     void renderPlayersWinningResultsTest() {
-        final Map<String, WinningStatus> winningResult = Map.of(
-                "필립", WinningStatus.WIN,
-                "홍실", WinningStatus.TIE);
+        final Map<Name, WinningStatus> winningResult = Map.of(
+                new Name("필립"), WinningStatus.WIN,
+                new Name("홍실"), WinningStatus.TIE);
 
         final Map<String, String> renderedWinningResult = ViewRenderer.renderPlayersWinningResults(winningResult);
 
@@ -66,7 +67,7 @@ class ViewRendererTest {
                 new Card(CardShape.SPADE, CardNumber.ACE),
                 new Card(CardShape.DIAMOND, CardNumber.NINE)
         );
-        final Map<String, CardResult> userNameAndCardResults = Map.of("딜러",
+        final Map<Name, CardResult> userNameAndCardResults = Map.of(new Name("딜러"),
                 new CardResult(cardGroup, cardGroup.getScore()));
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer.renderUserNameAndCardResults(
                 userNameAndCardResults);

@@ -5,6 +5,7 @@ import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.RandomDeckGenerator;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
@@ -38,33 +39,33 @@ public class BlackJackController {
     }
 
     private void printFirstOpenCardGroups(final BlackJackGame blackJackGame) {
-        final Map<String, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
-        final List<String> userNames = userNameAndFirstOpenCardGroups.keySet()
+        final Map<Name, CardGroup> userNameAndFirstOpenCardGroups = blackJackGame.getUserNameAndFirstOpenCardGroups();
+        final List<Name> userNames = userNameAndFirstOpenCardGroups.keySet()
                 .stream()
                 .collect(Collectors.toUnmodifiableList());
-        outputView.printFirstCardGroupInfoMessage(userNames);
-        for (final String userName : userNames) {
+        outputView.printFirstCardGroupInfoMessage(ViewRenderer.renderNames(userNames));
+        for (final Name userName : userNames) {
             final List<String> renderedUserNameAndCardGroup = ViewRenderer.renderCardGroup(
                     userNameAndFirstOpenCardGroups.get(userName));
-            outputView.printUserNameAndCardGroup(userName, renderedUserNameAndCardGroup);
+            outputView.printUserNameAndCardGroup(userName.getValue(), renderedUserNameAndCardGroup);
         }
     }
 
     private void playPlayersTurn(final BlackJackGame blackJackGame) {
-        final List<String> playerNames = blackJackGame.getPlayerNames();
-        for (final String playerName : playerNames) {
+        final List<Name> playerNames = blackJackGame.getPlayerNames();
+        for (final Name playerName : playerNames) {
             playPlayerTurn(blackJackGame, playerName);
         }
     }
 
-    private void playPlayerTurn(final BlackJackGame blackJackGame, final String playerName) {
+    private void playPlayerTurn(final BlackJackGame blackJackGame, final Name playerName) {
         DrawOrStay drawOrStay = DrawOrStay.DRAW;
         while (drawOrStay.isDraw() && isContinuous(playerName, blackJackGame)) {
-            outputView.printDrawCardRequestMessage(playerName);
+            outputView.printDrawCardRequestMessage(playerName.getValue());
             drawOrStay = repeatUntilReadValidateDrawInput();
             blackJackGame.playPlayer(playerName, drawOrStay);
             final CardGroup playerCardGroup = blackJackGame.getCardGroupBy(playerName);
-            outputView.printUserNameAndCardGroup(playerName, ViewRenderer.renderCardGroup(playerCardGroup));
+            outputView.printUserNameAndCardGroup(playerName.getValue(), ViewRenderer.renderCardGroup(playerCardGroup));
         }
     }
 
@@ -77,7 +78,7 @@ public class BlackJackController {
         }
     }
 
-    private boolean isContinuous(final String playerName, final BlackJackGame blackJackGame) {
+    private boolean isContinuous(final Name playerName, final BlackJackGame blackJackGame) {
         if (blackJackGame.isBlackJackScore(playerName) || blackJackGame.isPlayerBust(playerName)) {
             return false;
         }
@@ -92,7 +93,7 @@ public class BlackJackController {
     }
 
     private void printUserNameAndCardResults(BlackJackGame blackJackGame) {
-        final Map<String, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
+        final Map<Name, CardResult> userNameAndCardResults = blackJackGame.getUserNameAndCardResults();
         final Map<String, String> renderedUserNameAndCardResults = ViewRenderer
                 .renderUserNameAndCardResults(userNameAndCardResults);
         outputView.printUserNameAndCardResults(renderedUserNameAndCardResults);
@@ -101,7 +102,7 @@ public class BlackJackController {
     private void printUserWinningResults(final BlackJackGame blackJackGame) {
         final Map<WinningStatus, Long> dealerWinningResult = blackJackGame.getDealerWinningResult();
         outputView.printDealerWinningResult(ViewRenderer.renderDealerWinningResult(dealerWinningResult));
-        final Map<String, WinningStatus> playersWinningResult = blackJackGame.getPlayersWinningResults();
+        final Map<Name, WinningStatus> playersWinningResult = blackJackGame.getPlayersWinningResults();
         outputView.printPlayersWinningResults(ViewRenderer.renderPlayersWinningResults(playersWinningResult));
     }
 }

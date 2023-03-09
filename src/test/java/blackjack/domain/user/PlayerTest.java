@@ -36,7 +36,7 @@ class PlayerTest {
     void initTest() {
         final User player = new Player(name, initialGroup);
         assertSoftly(softly -> {
-            softly.assertThat(player.getName()).isEqualTo(name);
+            softly.assertThat(player.getName().getValue()).isEqualTo(name);
             softly.assertThat(player.getCardGroups().getCards()).containsExactly(cardKing, cardEight);
         });
     }

@@ -22,8 +22,8 @@ public abstract class User {
         cardGroup.add(deck.draw());
     }
 
-    final public String getName() {
-        return name.getValue();
+    final public Name getName() {
+        return name;
     }
 
     final public CardGroup getCardGroups() {

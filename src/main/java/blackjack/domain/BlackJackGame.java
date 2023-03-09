@@ -6,6 +6,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.result.CardResult;
 import blackjack.domain.result.WinningStatus;
+import blackjack.domain.user.Name;
 import blackjack.domain.user.Users;
 import java.util.List;
 import java.util.Map;
@@ -20,19 +21,19 @@ public class BlackJackGame {
         this.users = new Users(playerNames, deck);
     }
 
-    public CardGroup getCardGroupBy(final String userName) {
+    public CardGroup getCardGroupBy(final Name userName) {
         return users.getCardGroupBy(userName);
     }
 
-    public Map<String, CardGroup> getUserNameAndFirstOpenCardGroups() {
+    public Map<Name, CardGroup> getUserNameAndFirstOpenCardGroups() {
         return users.getUserNameAndFirstOpenCardGroups();
     }
 
-    public List<String> getPlayerNames() {
+    public List<Name> getPlayerNames() {
         return users.getPlayerNames();
     }
 
-    public boolean isPlayerBust(final String name) {
+    public boolean isPlayerBust(final Name name) {
         return users.isPlayerBust(name);
     }
 
@@ -44,17 +45,17 @@ public class BlackJackGame {
         return users.isDealerUnderDrawLimit();
     }
 
-    public void playPlayer(final String userName, final DrawOrStay drawOrStay) {
+    public void playPlayer(final Name userName, final DrawOrStay drawOrStay) {
         if (drawOrStay.isDraw()) {
             users.drawCard(userName, deck);
         }
     }
 
-    public Map<String, CardResult> getUserNameAndCardResults() {
+    public Map<Name, CardResult> getUserNameAndCardResults() {
         return users.getUserNameAndCardResults();
     }
 
-    public Map<String, WinningStatus> getPlayersWinningResults() {
+    public Map<Name, WinningStatus> getPlayersWinningResults() {
         return users.getPlayersWinningResults();
     }
 
@@ -62,7 +63,7 @@ public class BlackJackGame {
         return users.getDealerWinningResults();
     }
 
-    public boolean isBlackJackScore(final String name) {
+    public boolean isBlackJackScore(final Name name) {
         return users.isBlackJackScore(name);
     }
 }
