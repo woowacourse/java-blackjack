@@ -65,6 +65,14 @@ public class Hand {
         state = State.STOP;
     }
 
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return state.isBust();
+    }
+
     public List<String> getCardLetters() {
         return cards.getCardLetters();
     }

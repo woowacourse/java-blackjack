@@ -97,4 +97,39 @@ public class HandTest {
 
         assertThat(hand.isPlayable()).isFalse();
     }
+
+    @ParameterizedTest
+    @MethodSource("isBlackjackSource")
+    void 블랙잭인지_확인한다(final List<Rank> ranks, final boolean expected) {
+        final Hand hand = generateHand(ranks);
+
+        final boolean actual = hand.isBlackjack();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> isBlackjackSource() {
+        return Stream.of(
+                Arguments.of(List.of(ACE, JACK), true),
+                Arguments.of(List.of(ACE, SEVEN), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBustSource")
+    void 버스트인지_확인한다(final List<Rank> ranks, final boolean expected) {
+        final Hand hand = generateHand(ranks);
+
+        final boolean actual = hand.isBust();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> isBustSource() {
+        return Stream.of(
+                Arguments.of(List.of(JACK, KING, TWO), true),
+                Arguments.of(List.of(JACK, QUEEN, ACE), false),
+                Arguments.of(List.of(JACK, ACE), false)
+        );
+    }
 }
