@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,11 @@ public class Players {
                 .stream()
                 .map(Player::from)
                 .collect(Collectors.toList()));
+    }
+
+    public static Players of(Player... players) {
+        List<Player> newPlayers = new ArrayList<>(Arrays.asList(players));
+        return new Players(newPlayers);
     }
 
     public List<Player> getPlayers() {

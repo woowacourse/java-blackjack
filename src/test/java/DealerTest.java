@@ -24,7 +24,7 @@ class DealerTest {
     @DisplayName("딜러는 17보다 낮은 경우 카드를 받을 수 있다.")
     @Test
     void isAbleToReceiveCardWhenUnderMoreCardLimitTest() {
-        Dealer dealer = TestDataManager.getDealer();
+        Dealer dealer = TestDataGenerator.getDealer();
         Cards cards = Cards.of(CLUB_ACE, HEART_THREE);
         dealer.receive(cards);
 
@@ -34,7 +34,7 @@ class DealerTest {
     @DisplayName("딜러는 17이상인 경우 카드를 받을 수 없다.")
     @Test
     void isAbleToReceiveCardWhenOverMoreCardLimitTest() {
-        Dealer dealer = TestDataManager.getDealer();
+        Dealer dealer = TestDataGenerator.getDealer();
         Cards cards = Cards.of(HEART_QUEEN, HEART_TEN);
         dealer.receive(cards);
 
@@ -44,7 +44,7 @@ class DealerTest {
     @DisplayName("딜러는 초기 카드를 한 장만 공개한다.")
     @Test
     void getInitialCardsTest() {
-        Dealer dealer = TestDataManager.getDealer();
+        Dealer dealer = TestDataGenerator.getDealer();
         Cards cards = Cards.of(HEART_QUEEN, HEART_TEN);
         dealer.receive(cards);
 
@@ -60,8 +60,8 @@ class DealerTest {
 
         @BeforeEach
         void setUp() {
-            dealer = TestDataManager.getDealer();
-            player = TestDataManager.getPlayerWithName("pobi");
+            dealer = TestDataGenerator.getDealer();
+            player = TestDataGenerator.getPlayerWithName("pobi");
         }
 
         @DisplayName("딜러의 게임 점수가 높으면 승리한다.")

@@ -15,24 +15,24 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
-    @DisplayName("게임 시작 시, 모든 플레이어에게 두 장의 카드를 나눠준다.")
+
+    private static final Card CLUB_KING = new Card(TrumpCardType.CLUB, TrumpCardNumber.KING);
+    private static final Card CLUB_SIX = new Card(TrumpCardType.CLUB, TrumpCardNumber.SIX);
+    private static final Card CLUB_SEVEN = new Card(TrumpCardType.CLUB, TrumpCardNumber.SEVEN);
+
+    @DisplayName("게임 시작 시, 모든 플레이어와 딜러에게 두 장의 카드를 나눠준다.")
     @Test
     void handOutInitialCardsSuccessTest() {
-        BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         List<Participant> participants = blackjackGame.getParticipants();
-        assertPlayersCardSize(participants, 0);
+        assertParticipantsCardSize(participants, 0);
 
         blackjackGame.handOutInitialCards();
 
-        assertPlayersCardSize(participants, 2);
+        assertParticipantsCardSize(participants, 2);
     }
 
-    private void assertPlayerCardSize(Participant player, int size) {
-        assertThat(player.getCards())
-                .hasSize(size);
-    }
-
-    private void assertPlayersCardSize(List<Participant> participants, int size) {
+    private void assertParticipantsCardSize(List<Participant> participants, int size) {
         participants.stream()
                 .map(Participant::getCards)
                 .forEach(cards -> assertThat(cards).hasSize(size));
@@ -41,36 +41,40 @@ class BlackjackGameTest {
     @DisplayName("딜러는 카드의 합이 17보다 낮으면 카드를 추가로 받는다.")
     @Test
     void handOutAdditionalCardToDealerSuccessTestWhenUnderMoreCardLimit() {
-        BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
-        dealer.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.KING));
-        dealer.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.SIX));
-        assertPlayerCardSize(dealer, 2);
+        dealer.receive(Cards.of(CLUB_KING, CLUB_SIX));
+        assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
 
-        assertPlayerCardSize(dealer, 3);
+        assertThat(dealer.getCards().size())
+                .isGreaterThan(2);
     }
 
     @DisplayName("딜러는 카드의 합이 17보다 높으면 카드를 받을 수 없다.")
     @Test
     void handOutAdditionalCardToDealerSuccessTestWhenOverMoreCardLimit() {
-        BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant dealer = blackjackGame.getDealer();
-        dealer.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.KING));
-        dealer.receive(new Card(TrumpCardType.CLUB, TrumpCardNumber.SEVEN));
-        assertPlayerCardSize(dealer, 2);
+        dealer.receive(Cards.of(CLUB_KING, CLUB_SEVEN));
+        assertParticipantCardSize(dealer, 2);
 
         blackjackGame.handOutAdditionalCardToDealer();
 
-        assertPlayerCardSize(dealer, 2);
+        assertParticipantCardSize(dealer, 2);
+    }
+
+    private void assertParticipantCardSize(Participant participant, int expectedSize) {
+        assertThat(participant.getCards())
+                .hasSize(expectedSize);
     }
 
     @DisplayName("게임에 참여하지 않은 참가자는 플레이 할 수 없다.")
     @Test
     void playByActionWithNotParticipateFailTest() {
-        BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
-        Participant otherPlayer = TestDataManager.getPlayerWithName("other");
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
+        Participant otherPlayer = TestDataGenerator.getPlayerWithName("other");
 
         assertThatThrownBy(() -> blackjackGame.playByAction(otherPlayer, BlackjackAction.HIT))
                 .isInstanceOf(IllegalStateException.class);
@@ -81,9 +85,10 @@ class BlackjackGameTest {
     class isAbleToContinueTest {
         BlackjackGame blackjackGame;
         Participant gamePlayer;
+
         @BeforeEach
         void setUp() {
-            blackjackGame = TestDataManager.getShuffledBlackjackGame();
+            blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
             gamePlayer = blackjackGame.getPlayers().getPlayers().get(0);
         }
 
@@ -123,11 +128,12 @@ class BlackjackGameTest {
     @DisplayName("Action이 HIT인 경우 카드를 한 장 받는다.")
     @Test
     void playByActionHit() {
-        BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant player = blackjackGame.getPlayers().getPlayers().get(0);
         List<Card> playerCards = player.getCards();
         assertThat(playerCards).hasSize(0);
 
+        assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HIT);
 
         assertThat(playerCards).hasSize(1);
@@ -136,11 +142,12 @@ class BlackjackGameTest {
     @DisplayName("Action이 HOLD인 경우 카드를 받지 않는다.")
     @Test
     void playByActionHold() {
-        BlackjackGame blackjackGame = TestDataManager.getShuffledBlackjackGame();
+        BlackjackGame blackjackGame = TestDataGenerator.getShuffledBlackjackGame();
         Participant player = blackjackGame.getPlayers().getPlayers().get(0);
         List<Card> playerCards = player.getCards();
         assertThat(playerCards).hasSize(0);
 
+        assertThat(player.isAbleToReceiveCard()).isTrue();
         blackjackGame.playByAction(player, BlackjackAction.HOLD);
 
         assertThat(playerCards).hasSize(0);

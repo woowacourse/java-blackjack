@@ -4,7 +4,6 @@ import domain.BlackjackScore;
 import domain.Card;
 import domain.Cards;
 import domain.Participant;
-import domain.Result;
 import domain.TrumpCardNumber;
 import domain.TrumpCardType;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,7 @@ class ParticipantTest {
     @DisplayName("플레이어가 받은 카드의 점수를 확인할 수 있다.")
     @Test
     void calculateScoreSuccessTest() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(CLUB_ACE, HEART_THREE);
         player.receive(cards);
 
@@ -32,7 +31,7 @@ class ParticipantTest {
     @DisplayName("21을 넘은 경우 ACE는 1로 계산한다.")
     @Test
     void calculateScoreSuccessTestWhenHasAce() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(CLUB_ACE, HEART_THREE, HEART_TEN);
         assertThat(CLUB_ACE.getScore() + HEART_THREE.getScore() + HEART_TEN.getScore())
                 .isGreaterThan(21);
@@ -46,7 +45,7 @@ class ParticipantTest {
     @DisplayName("21을 넘지 않는 경우 까지 ACE는 11로 계산한다.")
     @Test
     void calculateScoreSuccessTestWhenHasAceUntilNotBusted() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(CLUB_ACE, HEART_TEN);
         player.receive(cards);
         assertThat(player.calculateBlackjackScore())
@@ -60,7 +59,7 @@ class ParticipantTest {
     @DisplayName("카드의 합이 21이 넘으면 버스트 된다.")
     @Test
     void isBustedSuccessTest() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(HEART_THREE, HEART_TEN, HEART_QUEEN);
         player.receive(cards);
 
@@ -74,7 +73,7 @@ class ParticipantTest {
     @DisplayName("카드의 합이 21이 넘지 않으면 버스트 되지 않는다.")
     @Test
     void isNotBustedSuccessTest() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         Cards cards = Cards.of(HEART_TEN, HEART_QUEEN);
         player.receive(cards);
 

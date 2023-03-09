@@ -98,7 +98,7 @@ public class OutputView {
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerFinalResult(dealer, dealerResult);
 
-        dealerResult.getDealerResultsAgainstParticipants().forEach(
+        dealerResult.getResultsAgainstParticipants().forEach(
                 (key, value) -> printPlayerResult(key, value.convertToOpposite())
         );
     }

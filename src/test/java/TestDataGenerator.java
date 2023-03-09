@@ -7,7 +7,7 @@ import domain.PlayerNames;
 import domain.Players;
 import java.util.List;
 
-public class TestDataManager {
+public class TestDataGenerator {
 
     /**
      * pobi와 crong, royce가 참가한 BlackjackGame을 반환합니다.
@@ -18,6 +18,10 @@ public class TestDataManager {
         PlayerNames playerNames = PlayerNames.from(List.of("pobi", "crong", "royce"));
         Players players = Players.from(playerNames);
 
+        return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
+    }
+
+    public static BlackjackGame getShuffledBlackjackGame(Players players) {
         return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 

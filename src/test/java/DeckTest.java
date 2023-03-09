@@ -28,7 +28,7 @@ class DeckTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    private void assertDeckSize(Deck deck, int size) {
-        assertThat(deck.getSize()).isEqualTo(size);
+    private void assertDeckSize(Deck deck, int expectedSize) {
+        assertThat(deck.getSize()).isEqualTo(expectedSize);
     }
 }

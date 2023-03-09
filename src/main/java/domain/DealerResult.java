@@ -30,7 +30,7 @@ public class DealerResult {
                 .count();
     }
 
-    public Map<Player, Result> getDealerResultsAgainstParticipants() {
+    public Map<Player, Result> getResultsAgainstParticipants() {
         return Collections.unmodifiableMap(resultAgainstPlayers);
     }
 }

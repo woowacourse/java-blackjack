@@ -6,25 +6,25 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BlackjackActionTest {
-    @DisplayName("입력값에 따라 명령이 생성된다. y -> HIT")
+    @DisplayName("CommandValue가 y면 HIT을 반환한다.")
     @Test
     void createCommandHitSuccessTest() {
-        String input = "y";
+        String commandValue = "y";
 
-        BlackjackAction blackjackAction = BlackjackAction.from(input);
+        BlackjackAction blackjackAction = BlackjackAction.from(commandValue);
         Assertions.assertThat(blackjackAction).isEqualTo(BlackjackAction.HIT);
     }
 
-    @DisplayName("입력값에 따라 명령이 생성된다. n -> HOLD")
+    @DisplayName("CommandValue가 n이면 HOLD을 반환한다.")
     @Test
     void createCommandHoldSuccessTest() {
-        String input = "n";
+        String commandValue = "n";
 
-        BlackjackAction blackjackAction = BlackjackAction.from(input);
+        BlackjackAction blackjackAction = BlackjackAction.from(commandValue);
         Assertions.assertThat(blackjackAction).isEqualTo(BlackjackAction.HOLD);
     }
 
-    @ParameterizedTest(name = "y 혹은 n 만 입력할 수 있다.")
+    @ParameterizedTest(name = "CommandValue는 y 혹은 n 만 가능하다")
     @ValueSource(strings = {"yy", "nn", "hold", "hit"})
     void createCommandFailTest(String input) {
         Assertions.assertThatThrownBy(() -> BlackjackAction.from(input))

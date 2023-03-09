@@ -18,7 +18,7 @@ class PlayerTest {
     @DisplayName("플레이어는 버스트된 경우 카드를 받을 수 없다.")
     @Test
     void isAbleToReceiveCardWhenUnderMoreCardLimitTest() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         player.receive(HEART_THREE);
         player.receive(HEART_TEN);
         player.receive(HEART_QUEEN);
@@ -29,7 +29,7 @@ class PlayerTest {
     @DisplayName("플레이어는 초기 카드 두장 모두 공개한다.")
     @Test
     void getInitialCardsTest() {
-        Participant player = TestDataManager.getPlayerWithName("pobi");
+        Participant player = TestDataGenerator.getPlayerWithName("pobi");
         player.receive(HEART_QUEEN);
         player.receive(HEART_TEN);
 
