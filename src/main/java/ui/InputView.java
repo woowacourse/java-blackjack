@@ -26,7 +26,7 @@ public class InputView {
     }
 
     private static boolean validateIntentionInput(String input) {
-        if(HIT.equals(input) || STAND.equals(input)) {
+        if (HIT.equals(input) || STAND.equals(input)) {
             return true;
         }
         System.out.println("y또는 n으로 입력해주세요");

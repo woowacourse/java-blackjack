@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.Card;
 import domain.CardHand;
-import domain.Name;
 import java.util.List;
 
 abstract public class AbstractUser {
