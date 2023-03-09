@@ -1,7 +1,6 @@
 package view.display;
 
 import domain.card.Shape;
-import domain.card.Value;
 import java.util.EnumMap;
 import java.util.Map;
 
