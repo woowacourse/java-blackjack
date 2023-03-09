@@ -35,7 +35,7 @@ public class PlayerBoardTest {
             Assertions.assertThat(playerBoard).extracting("status").isEqualTo(PlayerStatus.HIT_ABLE);
         }
 
-        @DisplayName("카드를 받고 점수가 21일 때")
+        @DisplayName("카드를 받고 블랙잭일 때")
         @Test
         void updateWhenPlayerHitAndBlackJAck() {
             Player player = new Player("split");
@@ -46,7 +46,7 @@ public class PlayerBoardTest {
             Assertions.assertThat(playerBoard).extracting("status").isEqualTo(PlayerStatus.BLACK_JACK);
         }
 
-        @DisplayName("카드를 받고 점수가 21보다 높을 때")
+        @DisplayName("카드를 받고 버스트일 때")
         @Test
         void updateWhenPlayerHitAndBUst() {
             Player player = new Player("split");
@@ -58,7 +58,7 @@ public class PlayerBoardTest {
             Assertions.assertThat(playerBoard).extracting("status").isEqualTo(PlayerStatus.BUST);
         }
 
-        @DisplayName("카드를 받지 않을 때")
+        @DisplayName("스탠드일 때")
         @Test
         void updateWhenPlayerStand() {
             Player player = new Player("split");

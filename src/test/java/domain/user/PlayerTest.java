@@ -20,7 +20,7 @@ class PlayerTest {
         assertThat(player.getName()).isEqualTo("split");
     }
 
-    @DisplayName("플레이어에게 카드를 지급한다.")
+    @DisplayName("플레이어가 카드를 받는다.")
     @Test
     void dealt() {
         Player player = new Player("split");
