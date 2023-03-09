@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.User;
 
 import java.util.Arrays;
@@ -30,11 +29,12 @@ public class UserResultsDTO {
     }
 
     private static String getResult(HashMap<User, List<Result>> userResults, User user) {
-        if (user instanceof Dealer) {
+        if (user.isDealer(user)) {
             return makeDealerResult(userResults.get(user));
         }
         return userResults.get(user).stream()
-                .map(Result::getResult).collect(Collectors.joining(" "));
+                .map(Result::getResult)
+                .collect(Collectors.joining(" "));
     }
 
     private static String makeDealerResult(List<Result> results) {
@@ -52,14 +52,16 @@ public class UserResultsDTO {
     }
 
     private static int countResultSize(List<Result> results, Result resultName) {
-        return (int) results.stream().filter(result -> result.equals(resultName)).count();
+        return (int) results.stream()
+                .filter(result -> result.equals(resultName))
+                .count();
     }
 
     public HashMap<User, String> getResults() {
         return results;
     }
 
-    public String getDealerResult() {
+    public String removeAndGetDealerResult() {
         User dealer = results.keySet().stream()
                 .filter(user -> user.getName().equals(DEALER))
                 .findAny()
