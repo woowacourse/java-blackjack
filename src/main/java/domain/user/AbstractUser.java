@@ -41,6 +41,6 @@ abstract public class AbstractUser {
     }
 
     public boolean isBlackjack() {
-        return cardHand.getCards().size() == 2 && cardHand.haveAce() && cardHand.haveTenScoreCard();
+        return cardHand.getCards().size() == 2 && cardHand.calculateScore() == 21;
     }
 }
