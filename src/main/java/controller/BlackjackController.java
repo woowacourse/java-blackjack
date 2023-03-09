@@ -40,8 +40,8 @@ public class BlackjackController {
         readPlayersHit(players, deck);
         drawIfDealerCanHit(dealer, deck);
 
-        printScores(players, dealer);
-        getResult(dealer, players, playerStakes);
+        showFinalScores(players, dealer);
+        showBetResults(dealer, players, playerStakes);
     }
 
     private void drawInitialCards(final Players players, final Dealer dealer, final Deck deck) {
@@ -107,14 +107,14 @@ public class BlackjackController {
         }
     }
 
-    private void printScores(Players players, Dealer dealer) {
+    private void showFinalScores(Players players, Dealer dealer) {
         printScore(dealer);
         for (Player player : players.getPlayers()) {
             printScore(player);
         }
     }
 
-    private void getResult(Dealer dealer, Players players, Map<Player, Stake> playerStakes) {
+    private void showBetResults(Dealer dealer, Players players, Map<Player, Stake> playerStakes) {
         Map<Player, DealerStatus> dealerStats = dealer.getDealerStats(players);
         Map<Player, Stake> playerStakeMap = dealer.calculateBets(players, dealerStats, playerStakes);
         printResult(playerStakeMap);
