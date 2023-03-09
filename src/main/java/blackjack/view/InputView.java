@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -30,5 +31,14 @@ public class InputView {
             throw new IllegalArgumentException("y 또는 n만 입력할 수 있습니다.");
         }
         return playerAdditionalHit.equals(ADDITIONAL_HIT_APPROVE);
+    }
+
+    public static List<Integer> readMoney(final List<String> nameValues) {
+        final List<Integer> moneyValues = new ArrayList<>();
+        for (String nameValue : nameValues) {
+            System.out.printf("%s의 배팅 금액은?" + System.lineSeparator(), nameValue);
+            moneyValues.add(scanner.nextInt());
+        }
+        return moneyValues;
     }
 }
