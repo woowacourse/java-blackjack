@@ -32,18 +32,6 @@ class BlackJackResultTest {
     }
 
     @Test
-    @DisplayName("burst인 경우 돈을 모두 잃는다")
-    void burst_case() {
-        // given
-        BlackJackResult win = BlackJackResult.BURST;
-        int givenMoney = 1000;
-        // when
-        double actual = win.calculatePrize(givenMoney);
-        // then
-        assertThat(actual).isEqualTo(-1000);
-    }
-
-    @Test
     @DisplayName("블랙잭인 경우 돈을 1.5배로 얻는다")
     void blackJack_case() {
         // given

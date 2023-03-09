@@ -30,7 +30,7 @@ public class Player extends Participant {
         }
 
         if (isBurst()) {
-            return BlackJackResult.BURST;
+            return BlackJackResult.LOSE;
         }
 
         if (this.calculateScore() > dealer.calculateScore() || dealer.isBurst()) {

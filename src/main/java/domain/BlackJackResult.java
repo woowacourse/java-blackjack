@@ -6,8 +6,7 @@ public enum BlackJackResult {
     WIN(money -> money),
     LOSE(money -> money * -1),
     BLACKJACK(money -> (int) (money * 1.5)),
-    EACH_BLACKJACK(money -> 0),
-    BURST(money -> money * -1);
+    EACH_BLACKJACK(money -> 0);
 
     private IntUnaryOperator expression;
 

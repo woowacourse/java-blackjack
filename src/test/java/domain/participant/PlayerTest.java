@@ -168,7 +168,7 @@ class PlayerTest {
             assertThat(actual).isEqualTo(BlackJackResult.EACH_BLACKJACK);
         }
 
-        @DisplayName("버스트이면 BURST를 반환한다.")
+        @DisplayName("버스트이면 LOSE를 반환한다.")
         @Test
         void is_Burst() {
             // given
@@ -184,7 +184,7 @@ class PlayerTest {
             // when
             BlackJackResult actual = player.calculateResult(dealer);
             // then
-            assertThat(actual).isEqualTo(BlackJackResult.BURST);
+            assertThat(actual).isEqualTo(BlackJackResult.LOSE);
         }
 
         @DisplayName("승리하면 WIN을 반환한다. - 딜러가 버스트인 경우.")
@@ -246,7 +246,6 @@ class PlayerTest {
             assertThat(actual).isEqualTo(BlackJackResult.LOSE);
         }
     }
-
 
     @DisplayName("이름이 같으면 true를 반환한다.")
     @Test
