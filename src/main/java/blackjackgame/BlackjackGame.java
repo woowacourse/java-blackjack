@@ -2,12 +2,16 @@ package blackjackgame;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import betting.BettingAmount;
 import betting.BettingMap;
 import betting.Reward;
 import deck.Deck;
+import dto.BettingResultDto;
 import dto.BettingResultsDto;
 import dto.DealerFirstOpenDto;
 import dto.DealerWinningDto;
@@ -19,8 +23,8 @@ import participants.Participants;
 import participants.Player;
 
 public class BlackjackGame {
-    private static final int FIRST_DRAW_COUNT = 2;
     public static final int MAX_PLAYERS = 6;
+    private static final int FIRST_DRAW_COUNT = 2;
     private final Participants participants;
     private final Deck deck;
     private final BettingMap bettingMap;
@@ -138,6 +142,19 @@ public class BlackjackGame {
     }
 
     public BettingResultsDto getPlayersResultDto() {
-        return BettingResultsDto.from(bettingMap);
+        List<BettingResultDto> bettingResults = getBettingResults(bettingMap.getBettingMap());
+        return new BettingResultsDto(bettingResults);
     }
+
+    private List<BettingResultDto> getBettingResults(Map<Player, BettingAmount> bettingAmountMap) {
+        return bettingAmountMap.entrySet()
+                .stream()
+                .map(entry -> new BettingResultDto(entry.getKey().getName(), getRewardByResult(entry)))
+                .collect(Collectors.toList());
+    }
+
+    private int getRewardByResult(Entry<Player, BettingAmount> entry) {
+        return entry.getValue().calculateRewardByResult(entry.getKey().getResult());
+    }
+
 }

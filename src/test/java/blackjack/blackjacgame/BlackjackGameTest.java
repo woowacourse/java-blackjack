@@ -228,6 +228,8 @@ class BlackjackGameTest {
         @DisplayName("이름과 배팅 금액을 입력 받아 베팅맵에 저장한다")
         void saveBetAmount() {
             Player player = new Player(new Name("폴로"));
+            players.add(player);
+            player.win();
 
             blackjackGame.saveBetAmount("폴로", 10000);
 
