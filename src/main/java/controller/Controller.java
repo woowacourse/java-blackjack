@@ -27,7 +27,6 @@ public class Controller {
         setPlayersBetMoney(players, gameResult);
         distributeInitialCard(players, game);
         pollAdditionalCard(players, game);
-
         printResult(players, game, gameResult);
     }
 
