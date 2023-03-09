@@ -9,20 +9,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJack {
+public class BlackJackGame {
 
     private final Users users;
     private final Deck deck;
 
-    private BlackJack(final Users users, final Deck deck) {
+    private BlackJackGame(final Users users, final Deck deck) {
         this.users = users;
         this.deck = deck;
     }
 
-    public static BlackJack of(final Users users, final CardShuffler cardShuffler) {
+    public static BlackJackGame of(final Users users, final CardShuffler cardShuffler) {
         Deck deck = Deck.from(cardShuffler);
         initCards(users, deck);
-        return new BlackJack(users, deck);
+        return new BlackJackGame(users, deck);
     }
 
     private static void initCards(Users users, Deck deck) {

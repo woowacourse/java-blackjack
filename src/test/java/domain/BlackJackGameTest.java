@@ -10,15 +10,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackTest {
+public class BlackJackGameTest {
 
     private Users users;
-    private BlackJack blackJack;
+    private BlackJackGame blackJackGame;
 
     @BeforeEach
     void setUsers() {
         users = Users.from(List.of("hongo"));
-        blackJack = BlackJack.of(users, cards -> {
+        blackJackGame = BlackJackGame.of(users, cards -> {
         });
     }
 
@@ -29,7 +29,7 @@ public class BlackJackTest {
         Player player = players.get(0);
         int oldScore = player.getScore();
 
-        blackJack.giveCard("hongo");
+        blackJackGame.giveCard("hongo");
 
         assertThat(player.getScore()).isGreaterThan(oldScore);
     }
@@ -40,7 +40,7 @@ public class BlackJackTest {
         Dealer dealer = users.getDealer();
         int oldCardSize = dealer.getCards().size();
 
-        blackJack.giveCardToDealer();
+        blackJackGame.giveCardToDealer();
 
         assertThat(dealer.getCards().size()).isEqualTo(oldCardSize + 1);
     }
@@ -49,13 +49,13 @@ public class BlackJackTest {
     @Test
     void getPlayerToCard() {
         users = Users.from(List.of("hongo", "kiara", "ash"));
-        blackJack = BlackJack.of(users, cards -> {
+        blackJackGame = BlackJackGame.of(users, cards -> {
         });
-        blackJack.giveCard("kiara");
-        blackJack.giveCard("ash");
-        blackJack.giveCard("ash");
+        blackJackGame.giveCard("kiara");
+        blackJackGame.giveCard("ash");
+        blackJackGame.giveCard("ash");
 
-        Map<String, List<Card>> playerToCard = blackJack.getPlayerToCard();
+        Map<String, List<Card>> playerToCard = blackJackGame.getPlayerToCard();
 
         assertThat(playerToCard.keySet())
             .containsExactly("hongo", "kiara", "ash");
@@ -73,14 +73,14 @@ public class BlackJackTest {
     @Test
     void getPlayerToScore() {
         users = Users.from(List.of("hongo", "kiara", "ash"));
-        blackJack = BlackJack.of(users, cards -> {
+        blackJackGame = BlackJackGame.of(users, cards -> {
         });
 
         // 카드 현황
         // player1 : ACE(11), 2 => 13
         // player2 : 3, 4       => 7
         // player3 : 5, 6       => 11
-        Map<String, Integer> playerToScore = blackJack.getPlayerToScore();
+        Map<String, Integer> playerToScore = blackJackGame.getPlayerToScore();
 
         assertThat(playerToScore.keySet())
             .containsExactly("hongo", "kiara", "ash");
