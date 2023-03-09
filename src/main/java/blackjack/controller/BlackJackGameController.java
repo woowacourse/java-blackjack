@@ -39,8 +39,7 @@ public class BlackJackGameController {
 
     private Game initGame() {
         Deck deck = initDeck();
-        GamePlayer gamePlayer = new GamePlayer(new Players(initPlayers()), new Dealer());
-        return new Game(deck, gamePlayer);
+        return new Game(deck, new Dealer(), new Players(initPlayers()));
     }
 
     private List<Player> initPlayers() {

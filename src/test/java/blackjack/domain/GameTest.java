@@ -24,8 +24,6 @@ class GameTest {
             players.add(new Player(new Name("newName" + i)));
         }
 
-        GamePlayer gamePlayer = new GamePlayer(new Players(players), new Dealer());
-
         Stack<Card> cards = new Stack<>();
 
         for (CardNumber cardNumber : CardNumber.values()) {
@@ -37,6 +35,6 @@ class GameTest {
         Deck deck = new Deck(cards);
 
         // When, then
-        assertDoesNotThrow(() -> new Game(deck, gamePlayer));
+        assertDoesNotThrow(() -> new Game(deck, new Dealer(), new Players(players)));
     }
 }

@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gameplayer.Dealer;
-import blackjack.domain.gameplayer.GamePlayer;
 import blackjack.domain.gameplayer.Player;
 import blackjack.domain.gameplayer.Players;
 
@@ -11,11 +10,13 @@ import java.util.List;
 
 public class Game {
     private final Deck deck;
-    private final GamePlayer gamePlayer;
+    private final Dealer dealer;
+    private final Players players;
 
-    public Game(Deck deck, GamePlayer gamePlayer) {
+    public Game(Deck deck, Dealer dealer, Players players) {
         this.deck = deck;
-        this.gamePlayer = gamePlayer;
+        this.dealer = dealer;
+        this.players = players;
         init();
     }
 
@@ -25,7 +26,7 @@ public class Game {
     }
 
     private void initPlayerCards() {
-        for (Player player : gamePlayer.getPlayers()) {
+        for (Player player : players) {
             giveCardTo(player);
             giveCardTo(player);
         }
@@ -36,39 +37,35 @@ public class Game {
         giveCardToDealer();
     }
 
-    public boolean isHitDealer() {
-        return gamePlayer.isHitDealer();
+    public boolean isHitDealer() { // 메서드명 변경 필요
+        return dealer.canContinue();
     }
 
     public void giveCardTo(Player player) {
-        gamePlayer.giveCardTo(player, deck.draw());
+        player.addCard(deck.draw());
     }
 
     public void giveCardToDealer() {
-        gamePlayer.giveCardToDealer(deck.draw());
+        dealer.addCard(deck.draw());
     }
 
     public Players getPlayers() {
-        return gamePlayer.getPlayers();
-    }
-
-    private Dealer getDealer() {
-        return gamePlayer.getDealer();
+        return players;
     }
 
     public List<String> showPlayersName() {
-        return getPlayers().getPlayersName();
+        return players.getPlayersName();
     }
 
     public List<Card> showDealerCards() {
-        return getDealer().showCards();
+        return dealer.showCards();
     }
 
     public List<Card> showDealerAllCards() {
-        return getDealer().showAllCards();
+        return dealer.showAllCards();
     }
 
     public Score getDealerScore() {
-        return getDealer().calculateScore();
+        return dealer.calculateScore();
     }
 }
