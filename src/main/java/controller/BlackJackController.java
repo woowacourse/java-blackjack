@@ -7,7 +7,6 @@ import domain.card.shuffler.CardsShuffler;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.result.WinningResult;
 import view.InputView;
 import view.OutputView;
 
@@ -79,8 +78,6 @@ public final class BlackJackController {
     private void showResult(final BlackJackGame blackJackGame) {
         outputView.printFinalState(blackJackGame.getParticipants());
 
-        WinningResult winningResult = new WinningResult(blackJackGame.getParticipants());
-
-        outputView.printResult(winningResult);
+        outputView.printResult(blackJackGame.makeResult());
     }
 }
