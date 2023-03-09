@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public enum GameResult {
+    BLACKJACK("블랙잭"),
     WIN("승"),
     LOSE("패"),
     DRAW("무");
