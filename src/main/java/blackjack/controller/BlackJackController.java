@@ -38,7 +38,7 @@ public class BlackJackController {
         List<String> playersName = blackJackGame.getPlayersName();
         OutputView.showHandInitialCardsCompleteMessage(playersName);
 
-        Card dealerFirstCard = blackJackGame.openDealerFirstCard();
+        Card dealerFirstCard = blackJackGame.getDealerFirstCard();
         OutputView.showDealerFirstCard(dealerFirstCard);
 
         List<Player> players = blackJackGame.getPlayers();

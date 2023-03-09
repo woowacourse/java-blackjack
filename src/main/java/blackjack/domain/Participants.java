@@ -29,23 +29,19 @@ public class Participants {
         }
     }
 
-    public Card openDealerFirstCard() {
-        return dealer.getCards().get(0);
+    public GameResult getGameResult() {
+        return dealer.judgeGameResult(players);
     }
 
     public Dealer getDealer() {
         return dealer;
     }
 
-    public List<String> getPlayerNames() {
+    public List<String> getPlayersName() {
         return players.getPlayersName();
     }
 
     public List<Player> getPlayers() {
         return players.getPlayers();
-    }
-
-    public GameResult getGameResult() {
-        return dealer.judgeGameResult(players);
     }
 }

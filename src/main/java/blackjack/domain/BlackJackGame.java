@@ -21,8 +21,8 @@ public class BlackJackGame {
         participant.take(card);
     }
 
-    public Card openDealerFirstCard() {
-        return participants.openDealerFirstCard();
+    public Card getDealerFirstCard() {
+        return getDealer().getFirstCard();
     }
 
     public GameResult getGameResult() {
@@ -34,7 +34,7 @@ public class BlackJackGame {
     }
 
     public List<String> getPlayersName() {
-        return participants.getPlayerNames();
+        return participants.getPlayersName();
     }
 
     public List<Player> getPlayers() {

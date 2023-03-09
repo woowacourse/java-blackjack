@@ -9,52 +9,55 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
-    private static final int CARD_TAKE_LIMIT = 17;
-    private final Map<WinResult, Integer> result;
-
-    public Dealer() {
-        result = new HashMap<>();
-        result.put(WIN, 0);
-        result.put(PUSH, 0);
-        result.put(LOSE, 0);
-    }
+    private static final int CAN_HIT_LIMIT = 17;
 
     public GameResult judgeGameResult(Players players) {
+        Map<WinResult, Integer> dealerResult = new HashMap<>();
+        dealerResult.put(WIN, 0);
+        dealerResult.put(PUSH, 0);
+        dealerResult.put(LOSE, 0);
+
         List<Result> playersResult = new ArrayList<>();
-        players.getPlayers().forEach(player -> addResult(playersResult, player));
-        return new GameResult(result, playersResult);
+
+        players.getPlayers().forEach(player -> addResult(dealerResult, playersResult, player));
+        return new GameResult(dealerResult, playersResult);
     }
 
-    private void addResult(List<Result> playersResult, Player player) {
+    private void addResult(Map<WinResult, Integer> dealerResult, List<Result> playersResult, Player player) {
         if (player.isBust()) {
+            dealerResult.replace(WIN, dealerResult.get(WIN) + 1);
             playersResult.add(new Result(player.getName(), WinResult.LOSE));
             return;
         }
-        playersResult.add(new Result(player.getName(), judge(player)));
+        playersResult.add(new Result(player.getName(), judge(dealerResult, player)));
     }
 
-    private WinResult judge(Player player) {
+    private WinResult judge(Map<WinResult, Integer> dealerResult, Player player) {
         if (isBust()) {
-            result.replace(LOSE, result.get(LOSE) + 1);
+            dealerResult.replace(LOSE, dealerResult.get(LOSE) + 1);
             return WIN;
         }
 
         if (player.getSum() == getSum()) {
-            result.replace(PUSH, result.get(PUSH) + 1);
+            dealerResult.replace(PUSH, dealerResult.get(PUSH) + 1);
             return PUSH;
         }
 
         if (player.getSum() > getSum()) {
-            result.replace(LOSE, result.get(LOSE) + 1);
+            dealerResult.replace(LOSE, dealerResult.get(LOSE) + 1);
             return WIN;
         }
 
-        result.replace(WIN, result.get(WIN) + 1);
+        dealerResult.replace(WIN, dealerResult.get(WIN) + 1);
         return LOSE;
+    }
+
+    public Card getFirstCard() {
+        return getCards().get(0);
     }
 
     @Override
     public boolean canHit() {
-        return hand.getSum() < CARD_TAKE_LIMIT;
+        return hand.getSum() < CAN_HIT_LIMIT;
     }
 }
