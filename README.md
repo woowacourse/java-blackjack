@@ -7,8 +7,10 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ```mermaid
+---
+title: 의존성그래프
+---
 graph TD
-의존성그래프
 BlackJackGame --> Players
 BlackJackGame --> Deck
 BlackJackGame --> Dealer
