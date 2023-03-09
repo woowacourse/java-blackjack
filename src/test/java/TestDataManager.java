@@ -1,5 +1,6 @@
 import domain.BlackjackGame;
 import domain.Dealer;
+import domain.DealerResult;
 import domain.DeckFactory;
 import domain.Participant;
 import domain.Participants;
@@ -23,11 +24,11 @@ public class TestDataManager {
         return BlackjackGame.from(players, DeckFactory.getShuffledDeck());
     }
 
-    public static Participant getPlayerWithName(String name) {
+    public static Player getPlayerWithName(String name) {
         return Player.from(new ParticipantName(name));
     }
 
-    public static Participant getDealer() {
+    public static Dealer getDealer() {
         return new Dealer();
     }
 }

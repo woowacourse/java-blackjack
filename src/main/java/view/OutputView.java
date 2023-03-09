@@ -1,7 +1,7 @@
 package view;
 
 import domain.BlackjackGame;
-import domain.BlackjackGameResult;
+import domain.DealerResult;
 import domain.BlackjackScore;
 import domain.Card;
 import domain.Participant;
@@ -93,20 +93,20 @@ public class OutputView {
                 participant.getName(), getCardsFormat(participant.getCards()), participantScore.getValue());
     }
 
-    public void printFinalResult(Participant dealer, BlackjackGameResult blackjackGameResult) {
+    public void printFinalResult(Participant dealer, DealerResult dealerResult) {
         breakLine();
         System.out.println(FINAL_RESULT_MESSAGE);
-        printDealerFinalResult(dealer, blackjackGameResult);
+        printDealerFinalResult(dealer, dealerResult);
 
-        blackjackGameResult.getDealerResultsAgainstParticipants().forEach(
+        dealerResult.getDealerResultsAgainstParticipants().forEach(
                 (key, value) -> printPlayerResult(key, value.convertToOpposite())
         );
     }
 
-    private void printDealerFinalResult(Participant dealer, BlackjackGameResult blackjackGameResult) {
+    private void printDealerFinalResult(Participant dealer, DealerResult dealerResult) {
         StringBuilder dealerResultsFormat = new StringBuilder();
         for (Result result : Result.values()) {
-            dealerResultsFormat.append(getResultFormat(result, blackjackGameResult.getResultCount(result)));
+            dealerResultsFormat.append(getResultFormat(result, dealerResult.getResultCount(result)));
         }
 
         String format = String.format(Format.RESULT.format, dealer.getName(), dealerResultsFormat);

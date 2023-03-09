@@ -11,6 +11,20 @@ public class Dealer extends Participant {
         super(ParticipantName.getDealerName());
     }
 
+    public Result competeWithPlayer(Player player) {
+        if (player.isBusted()) {
+            return Result.WIN;
+        }
+
+        if (this.isBusted()) {
+            return Result.LOSE;
+        }
+
+        BlackjackScore blackjackScore = BlackjackScore.from(cards);
+        BlackjackScore otherBlackjackScore = BlackjackScore.from(player.cards);
+        return blackjackScore.compete(otherBlackjackScore);
+    }
+
     public boolean isAbleToReceiveCard() {
         return !calculateBlackjackScore().isGreaterThan(MORE_CARD_LIMIT_SCORE);
     }

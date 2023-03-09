@@ -30,20 +30,6 @@ public abstract class Participant {
         return calculateBlackjackScore().isGreaterThan(BlackjackScore.getMaxScore());
     }
 
-    public Result competeWith(Participant otherPlayer) {
-        if (otherPlayer.isBusted()) {
-            return Result.WIN;
-        }
-
-        if (this.isBusted()) {
-            return Result.LOSE;
-        }
-
-        BlackjackScore blackjackScore = BlackjackScore.from(cards);
-        BlackjackScore otherBlackjackScore = BlackjackScore.from(otherPlayer.cards);
-        return blackjackScore.compete(otherBlackjackScore);
-    }
-
     public abstract List<Card> getInitialOpeningCards();
 
     public abstract boolean isAbleToReceiveCard();

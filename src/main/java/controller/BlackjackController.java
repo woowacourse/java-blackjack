@@ -2,7 +2,7 @@ package controller;
 
 import domain.BlackjackAction;
 import domain.BlackjackGame;
-import domain.BlackjackGameResult;
+import domain.DealerResult;
 import domain.DeckFactory;
 import domain.Participant;
 import domain.Player;
@@ -83,10 +83,10 @@ public class BlackjackController {
     }
 
     private void printResults(BlackjackGame blackjackGame) {
-        BlackjackGameResult blackjackGameResult = BlackjackGameResult.from(blackjackGame);
+        DealerResult dealerResult = DealerResult.from(blackjackGame);
 
         outputView.printCardsWithScore(blackjackGame);
-        outputView.printFinalResult(blackjackGame.getDealer(), blackjackGameResult);
+        outputView.printFinalResult(blackjackGame.getDealer(), dealerResult);
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
