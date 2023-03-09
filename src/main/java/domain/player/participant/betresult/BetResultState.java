@@ -4,6 +4,5 @@ import domain.player.participant.Money;
 
 public interface BetResultState {
 
-
-    Money calculateBetOutcomeOf(Money money);
+    Money calculateBetOutcomeOf(final Money money);
 }

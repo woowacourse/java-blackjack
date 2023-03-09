@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Money {
 
     private static final int LOSE_MONEY = -1;
+    public static final Money MIN = new Money(BigDecimal.valueOf(0));
 
     private final BigDecimal value;
 
