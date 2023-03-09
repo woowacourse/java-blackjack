@@ -23,10 +23,10 @@ public class HandCards {
     }
 
     private int calculateTotalScore() {
-        int totalScore = 0;
-        for (Card card : playerCards) {
-            totalScore += card.getNumber().getValue();
-        }
+        Integer totalScore = playerCards.stream()
+                .map(card -> card.getNumber().getValue())
+                .reduce(Integer::sum)
+                .get();
         return updateAceScore(totalScore);
     }
 
