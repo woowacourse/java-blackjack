@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.CardNumber.ACE_CONVERT_NUMBER;
+
 public class ParticipantCards {
     private static final int INITIAL_SIZE = 2;
     private static final int BLACK_JACK = 21;
@@ -27,11 +30,11 @@ public class ParticipantCards {
         cards.add(card);
     }
 
-    public int calculate() {
-        List<CardNumber> cardNumbers = cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList());
-        return CardNumber.getMaxValueNearBlackJack(cardNumbers, BLACK_JACK);
+    public int getMaxValueNearBlackJack() {
+        final List<CardNumber> cardNumbers = getCardNumbers();
+        final int aceCount = getAceCount(cardNumbers);
+        final int sumBeforeOptimize = getSumBeforeOptimize(cardNumbers);
+        return getSumAfterOptimize(aceCount, sumBeforeOptimize);
     }
 
     public List<Card> open(int size) {
@@ -41,15 +44,45 @@ public class ParticipantCards {
     }
 
     public List<Card> openAll() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 
     public boolean isBust() {
-        return calculate() > BLACK_JACK;
+        return getMaxValueNearBlackJack() > BLACK_JACK;
     }
 
     public boolean isBlackJack() {
-        return calculate() == BLACK_JACK;
+        return getMaxValueNearBlackJack() == BLACK_JACK;
+    }
+
+    private List<CardNumber> getCardNumbers() {
+        return cards.stream()
+                .map(Card::getNumber)
+                .collect(Collectors.toList());
+    }
+
+    private int getAceCount(final List<CardNumber> cardNumbers) {
+        return (int) cardNumbers.stream()
+                .filter(number -> number == ACE)
+                .count();
+    }
+
+    private int getSumBeforeOptimize(final List<CardNumber> cardNumbers) {
+        return cardNumbers.stream()
+                .mapToInt(CardNumber::getValue)
+                .sum();
+    }
+
+    private int getSumAfterOptimize(final int aceCount, final int sumBeforeOptimize) {
+        return IntStream.range(0, aceCount)
+                .reduce(sumBeforeOptimize, (before, after) -> optimizeMaxValue(before));
+    }
+
+    private int optimizeMaxValue(final int before) {
+        if (before + ACE_CONVERT_NUMBER <= BLACK_JACK) {
+            return before + ACE_CONVERT_NUMBER;
+        }
+        return before;
     }
 
     private void validate(final List<Card> cards) {
