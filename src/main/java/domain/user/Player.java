@@ -47,4 +47,8 @@ public class Player {
         }
         bet.takeRevenueFrom(otherPlayer.bet);
     }
+
+    public void addBetAmount(int amount) {
+        this.bet.addAmount(amount);
+    }
 }
