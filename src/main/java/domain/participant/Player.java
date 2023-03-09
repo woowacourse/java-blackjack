@@ -48,6 +48,6 @@ public class Player extends Participant {
 
     @Override
     public void betPlayer(int betMoney) {
-        this.betAmount = BetAmount.of(betMoney);
+        this.betAmount = BetAmount.from(betMoney);
     }
 }

@@ -17,7 +17,7 @@ public class BetAmount {
         this.money = money;
     }
 
-    public static BetAmount of(int money) {
+    public static BetAmount from(int money) {
         return new BetAmount(money);
     }
 
