@@ -40,37 +40,37 @@ class BettingAmountTest {
 
     @Nested
     @DisplayName("Result에 따라 최종금액을 계산한다.")
-    class calculateRewardByResult {
+    class CalculateRewardByResult {
         @Test
-        @DisplayName("이긴 경우 원래금액의 2배를 반환한다.")
+        @DisplayName("이긴 경우 원래금액의 1배를 반환한다.")
         void win() {
             BettingAmount bettingAmount = new BettingAmount(1000);
 
-            assertThat(bettingAmount.calculateRewardByResult(WIN)).isEqualTo(2000);
+            assertThat(bettingAmount.calculateRewardByResult(WIN)).isEqualTo(1000);
         }
 
         @Test
-        @DisplayName("진경우 원래금액의 -2배를 반환한다")
+        @DisplayName("진경우 원래금액의 -1배를 반환한다")
         void lose() {
             BettingAmount bettingAmount = new BettingAmount(1000);
 
-            assertThat(bettingAmount.calculateRewardByResult(LOSE)).isEqualTo(-2000);
+            assertThat(bettingAmount.calculateRewardByResult(LOSE)).isEqualTo(-1000);
         }
 
         @Test
-        @DisplayName("비긴 경우 원래금액을 반환한다.")
+        @DisplayName("비긴 경우 0을 반환한다.")
         void tie() {
             BettingAmount bettingAmount = new BettingAmount(1000);
 
-            assertThat(bettingAmount.calculateRewardByResult(TIE)).isEqualTo(1000);
+            assertThat(bettingAmount.calculateRewardByResult(TIE)).isEqualTo(0);
         }
 
         @Test
-        @DisplayName("블랙잭으로 이긴경우 2.5배를 반환한다")
+        @DisplayName("블랙잭으로 이긴경우 1.5배를 반환한다")
         void blackjack() {
             BettingAmount bettingAmount = new BettingAmount(1000);
 
-            assertThat(bettingAmount.calculateRewardByResult(BLACKJACK)).isEqualTo(2500);
+            assertThat(bettingAmount.calculateRewardByResult(BLACKJACK)).isEqualTo(1500);
         }
     }
 }
