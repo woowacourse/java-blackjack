@@ -149,6 +149,13 @@
 
 ## ✅ 1단계 리뷰 반영 및 리팩터링 목록
 
+### 클래스 다이어그램
+
+- 리팩터링 전
+  ![classdiagram-before](classdiagram-before.png)
+- 리팩터링 후
+  ![classdiagram-after](classdiagram-after.png)
+
 ### refactor
 
 - [x] Controller 실행 코드 메서드 분리
