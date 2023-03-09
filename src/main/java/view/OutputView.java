@@ -2,27 +2,17 @@ package view;
 
 import domain.PlayerGameResult;
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import domain.participant.Participant;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
-    private static final String DIAMOND = "다이아몬드";
-    private static final String CLUB = "클로버";
-    private static final String SPADE = "스페이드";
-    private static final String HEART = "하트";
-    private static final String ACE = "A";
-    private static final String JACK = "J";
-    private static final String QUEEN = "Q";
-    private static final String KING = "K";
-    private static final String WIN = "승";
-    private static final String DRAW = "무";
-    private static final String LOSE = "패";
+    private static final String DEALER_WIN = "승";
+    private static final String DEALER_DRAW = "무";
+    private static final String DEALER_LOSE = "패";
     private static final int DEALER_VISIBLE_CARD = 1;
 
     private OutputView() {
@@ -58,38 +48,7 @@ public class OutputView {
     }
 
     private static String makeCardView(Card card) {
-        return makeRankView(card.getRank()) + makeSuitView(card.getSuit());
-    }
-
-    private static String makeSuitView(Suit suit) {
-        if (suit.equals(Suit.DIAMOND)) {
-            return DIAMOND;
-        }
-        if (suit.equals(Suit.HEART)) {
-            return HEART;
-        }
-        if (suit.equals(Suit.SPADE)) {
-            return SPADE;
-        }
-
-        return CLUB;
-    }
-
-    private static String makeRankView(Rank rank) {
-        if (rank.equals(Rank.ACE)) {
-            return ACE;
-        }
-        if (rank.equals(Rank.JACK)) {
-            return JACK;
-        }
-        if (rank.equals(Rank.QUEEN)) {
-            return QUEEN;
-        }
-        if (rank.equals(Rank.KING)) {
-            return KING;
-        }
-
-        return String.valueOf(rank.getScore());
+        return card.getRank().getName() + card.getSuit().getName();
     }
 
     public static void printDealerHit() {
@@ -114,45 +73,32 @@ public class OutputView {
     private static void printDealerResult(Map<String, PlayerGameResult> playersResult) {
         System.out.print("딜러: ");
 
-        Map<String, Long> dealerResult = playersResult.values().stream()
-                .collect(Collectors.groupingBy(OutputView::makeDealerWinningView, Collectors.counting()));
+        Map<PlayerGameResult, Long> dealerResult = playersResult.values().stream()
+                .collect(Collectors.groupingBy(result -> result, Collectors.counting()));
 
-        printDealerResultByWinning(dealerResult, WIN);
-        printDealerResultByWinning(dealerResult, DRAW);
-        printDealerResultByWinning(dealerResult, LOSE);
+        Arrays.stream(PlayerGameResult.values())
+                .filter(dealerResult::containsKey)
+                .map(playerResult -> dealerResult.get(playerResult) + makeDealerResultView(playerResult))
+                .forEach(System.out::println);
     }
 
-    private static void printDealerResultByWinning(Map<String, Long> dealerResult, String winning) {
-        if (dealerResult.containsKey(winning)) {
-            System.out.print(dealerResult.get(winning) + winning + " ");
+    private static String makeDealerResultView(PlayerGameResult playerGameResult) {
+        if (PlayerGameResult.WIN.equals(playerGameResult)) {
+            return DEALER_LOSE + " ";
         }
+
+        if (PlayerGameResult.DRAW.equals(playerGameResult)) {
+            return DEALER_DRAW + " ";
+        }
+
+        return DEALER_WIN + " ";
     }
 
     private static void printPlayersResult(Map<String, PlayerGameResult> playersResult) {
         System.out.println();
         playersResult.entrySet().stream()
-                .map(player -> player.getKey() + ": " + makePlayerWinningView(player.getValue()))
+                .map(player -> player.getKey() + ": " + player.getValue().getName())
                 .forEach(System.out::println);
-    }
-
-    private static String makeDealerWinningView(PlayerGameResult result) {
-        if (result.equals(PlayerGameResult.LOSE)) {
-            return WIN;
-        }
-        if (result.equals(PlayerGameResult.DRAW)) {
-            return DRAW;
-        }
-        return LOSE;
-    }
-
-    private static String makePlayerWinningView(PlayerGameResult result) {
-        if (result.equals(PlayerGameResult.WIN)) {
-            return WIN;
-        }
-        if (result.equals(PlayerGameResult.DRAW)) {
-            return DRAW;
-        }
-        return LOSE;
     }
 
     public static void printError(Exception e) {

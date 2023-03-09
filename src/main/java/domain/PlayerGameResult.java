@@ -1,11 +1,17 @@
 package domain;
 
 public enum PlayerGameResult {
-    WIN,
-    DRAW,
-    LOSE;
+    LOSE("패"),
+    DRAW("무"),
+    WIN("승");
 
     private static final int BLACKJACK = 21;
+
+    private final String name;
+
+    PlayerGameResult(final String name) {
+        this.name = name;
+    }
 
     public static PlayerGameResult of(int playerScore, int dealerScore) {
         if (playerScore > BLACKJACK) {
@@ -19,5 +25,9 @@ public enum PlayerGameResult {
         }
 
         return LOSE;
+    }
+
+    public String getName() {
+        return name;
     }
 }
