@@ -1,5 +1,7 @@
 package domain.card;
 
+import domain.player.Participant;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -42,7 +44,11 @@ public class CardDeck {
         return new ArrayList<>(cards);
     }
 
-    public Card draw() {
+    private Card draw() {
         return this.cards.pollFirst();
+    }
+
+    public void drawTo(final Participant participant) {
+        participant.hit(draw());
     }
 }

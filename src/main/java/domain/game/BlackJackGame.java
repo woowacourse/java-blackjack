@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.card.CardArea;
 import domain.card.CardDeck;
 import domain.player.*;
 
@@ -63,7 +62,7 @@ public class BlackJackGame {
         validatePlayerExist(gambler);
         gambler.changeState(hitState);
         if (gambler.wantHit()) {
-            gambler.hit(cardDeck.draw());
+            cardDeck.drawTo(gambler);
         }
     }
 
@@ -75,7 +74,7 @@ public class BlackJackGame {
 
     public boolean hitForDealerWhenShouldMoreHit() {
         if (dealer.canHit()) {
-            dealer.hit(cardDeck.draw());
+            cardDeck.drawTo(dealer);
             return true;
         }
         return false;
