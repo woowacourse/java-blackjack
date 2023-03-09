@@ -69,7 +69,7 @@
   - [x] hasACE 메소드 위치 변경
   - [ ] GameResult class dealerResult.put(~) 올바른 결과가 출력되도록 변경
   - [x] Person interface -> abstract class로 변경
-  - [ ] 결과 타입에 대한 enum class 추가
+  - [x] 결과 타입에 대한 enum class 추가
   - [ ] view 호출하는 로직 단순화
   - [ ] List<Card>를 필드로 가지는 Hand 생성
 

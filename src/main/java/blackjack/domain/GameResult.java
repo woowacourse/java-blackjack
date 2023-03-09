@@ -6,9 +6,7 @@ import java.util.Map;
 
 public class GameResult {
     private static final int BURST_NUMBER = 21;
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
-    private static final String DRAW = "무";
+
     private final Map<String, Integer> dealerResult;
     private final Map<String, String> playerResult;
 
@@ -21,27 +19,27 @@ public class GameResult {
     private Map<String, Integer> initializeDealerResult() {
         Map<String, Integer> dealerResult = new HashMap<>();
 
-        dealerResult.put(WIN, 0);
-        dealerResult.put(LOSE, 0);
-        dealerResult.put(DRAW, 0);
+        dealerResult.put(ResultType.WIN.message(), 0);
+        dealerResult.put(ResultType.LOSE.message(), 0);
+        dealerResult.put(ResultType.DRAW.message(), 0);
         return dealerResult;
     }
 
     private String getPlayerResultWhenDealerBurst(int dealerScore, int playerScore) {
         if (playerScore > dealerScore) {
-            return WIN;
+            return ResultType.WIN.message();
         }
         if (playerScore < dealerScore) {
-            return LOSE;
+            return ResultType.LOSE.message();
         }
-        return DRAW;
+        return ResultType.DRAW.message();
     }
 
     private String getPlayerResultWhenDealerNotBurst(int playerScore) {
         if (playerScore <= BURST_NUMBER) {
-            return WIN;
+            return ResultType.WIN.message();
         }
-        return DRAW;
+        return ResultType.DRAW.message();
     }
 
     private void accumulationResult(Game game) {
@@ -62,7 +60,7 @@ public class GameResult {
         if (playerScore <= BURST_NUMBER) {
             return getPlayerResultWhenDealerBurst(dealerScore, playerScore);
         }
-        return LOSE;
+        return ResultType.LOSE.message();
     }
 
     public Map<String, Integer> getDealerResult() {
