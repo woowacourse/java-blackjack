@@ -35,8 +35,9 @@ public class OutputView {
         System.out.println("\n## 최종 승패");
     }
 
-    public static void printDealerResult(final String dealerResults) {
-        System.out.println("딜러: " + dealerResults);
+    public static void printDealerResult(final List<String> dealerResults) {
+        String results = String.join(" ", dealerResults);
+        System.out.println("딜러: " + results);
     }
 
     public static void printPlayerResult(final String playerName, final String playerResult) {

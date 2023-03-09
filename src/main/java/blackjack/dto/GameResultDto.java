@@ -8,36 +8,38 @@ import static java.util.stream.Collectors.*;
 
 public class GameResultDto {
 
-    private final List<GameResult> dealerGameResult;
-    private final GameResult playerGameresult;
+    private final List<String> dealerGameResult;
+    private final String playerGameResult;
 
-    private GameResultDto(List<GameResult> gameResult) {
+    private GameResultDto(List<String> gameResult) {
         this.dealerGameResult = gameResult;
-        this.playerGameresult = null;
+        this.playerGameResult = null;
     }
 
-    private GameResultDto(GameResult gameResult) {
+    private GameResultDto(String gameResult) {
         this.dealerGameResult = null;
-        this.playerGameresult = gameResult;
+        this.playerGameResult = gameResult;
     }
 
-    public static GameResultDto of(List<GameResult> gameResult) {
-        return new GameResultDto(gameResult);
-    }
-
-    public static GameResultDto of(GameResult gameResult) {
-        return new GameResultDto(gameResult);
-    }
-
-    public String getDealerGameResult() {
-        return dealerGameResult.stream()
+    public static GameResultDto of(List<GameResult> dealerGameResult) {
+        List<String> gameResult = dealerGameResult.stream()
                 .collect(groupingBy(GameResult::getName, counting()))
                 .entrySet().stream()
                 .map(entry -> entry.getValue() + entry.getKey())
-                .collect(joining(" "));
+                .collect(toList());
+        return new GameResultDto(gameResult);
+    }
+
+    public static GameResultDto of(GameResult playerGameResult) {
+        String gameResult = playerGameResult.getName();
+        return new GameResultDto(gameResult);
+    }
+
+    public List<String> getDealerGameResult() {
+        return dealerGameResult;
     }
 
     public String getPlayerGameResult() {
-        return playerGameresult.getName();
+        return playerGameResult;
     }
 }
