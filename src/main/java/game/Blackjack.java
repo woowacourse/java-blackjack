@@ -5,7 +5,6 @@ import domain.Gambler;
 import domain.Player;
 import domain.Players;
 import domain.Result;
-import view.InputView;
 
 import java.util.Map;
 
@@ -26,25 +25,24 @@ public class Blackjack {
 
     private void hitOrStandByPlayers(Players players) {
         for (Player player : players.getPlayers()) {
-            hitOrStandByPlayer(player);
+            boolean isHit;
+            do {
+                isHit = getIsHit(player);
+                hitOrStandByPlayer(player, isHit);
+            } while (isHit && isPickAble(player));
         }
     }
 
-    private void hitOrStandByPlayer(Player player) {
-        boolean isHit;
-        do {
-            isHit = getIsHit(player);
-            playerHit(player, isHit);
-            printSingleGambler(player);
-            isHit = isPickAble(player, isHit);
-        } while (isHit);
+    public void hitOrStandByPlayer(Player player, boolean isHit) {
+        playerHit(player, isHit);
+        printSingleGambler(player);
     }
 
-    private boolean isPickAble(Player player, boolean isHit) {
+    private boolean isPickAble(Player player) {
         if (player.isBustedGambler()) {
-            isHit = false;
+            return false;
         }
-        return isHit;
+        return true;
     }
 
     private boolean getIsHit(Player player) {
