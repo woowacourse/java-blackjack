@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
 
     public static final Score INITIAL_SCORE = Score.from(0);
-    private static final Score MAX_SCORE = Score.from(21);
+    public static final Score MAX_SCORE = Score.from(21);
     private static final Score ACE_DECREASE = Score.from(10);
     private static final int NONE_ACE_COUNT = 0;
 

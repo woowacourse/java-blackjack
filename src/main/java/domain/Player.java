@@ -3,7 +3,7 @@ package domain;
 public class Player extends Participant {
 
     private static final String BAN_NAME_ERROR_MESSAGE = "Player 의 이름은 딜러일 수 없습니다.";
-    private static final Score MORE_CARD_LIMIT = Score.from(21);
+    private static final Score MORE_CARD_LIMIT = Score.MAX_SCORE;
 
     private Player(Name name, Hand hand) {
         super(name, hand);
