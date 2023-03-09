@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,14 @@ class ScoreTest {
     void create() {
         assertThatCode(() -> new Score(0))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("값으로 음수를 가질 수 없다.")
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -100, -21})
+    void cannotCreateByNegative() {
+        assertThatThrownBy(()-> new Score(-1))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("점수를 반환할 수 있다.")

@@ -14,6 +14,9 @@ public class Score {
     }
 
     public Score(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("점수는 음수일 수 없습니다.");
+        }
         this.value = value;
     }
 
