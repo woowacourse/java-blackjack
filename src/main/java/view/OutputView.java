@@ -63,6 +63,10 @@ public class OutputView {
         System.out.println("딜러: " + renderedResults);
     }
 
+    public static void printError(String message) {
+        System.out.println("[ERROR] " + message);
+    }
+
     private long countResults(Result targetResult, List<Result> results) {
         return results.stream()
                 .filter(result -> result.equals(targetResult))
