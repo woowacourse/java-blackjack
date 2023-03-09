@@ -74,7 +74,7 @@ public class HandTest {
 
         hand.add(new Card(ACE, HEART));
 
-        assertThat(hand.getCardLetters()).containsExactly("A하트");
+        assertThat(hand.getSymbols()).containsExactly("A하트");
     }
 
     @ParameterizedTest(name = "카드를 뽑을 수 있는지 확인한다. 입력값: {0}, 결과값: {1}")

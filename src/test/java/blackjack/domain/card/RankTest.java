@@ -21,7 +21,7 @@ public class RankTest {
 
     @Test
     void 심볼을_반환한다() {
-        assertThat(Rank.ACE.getLetter()).isEqualTo("A");
+        assertThat(Rank.ACE.getSymbol()).isEqualTo("A");
     }
 
     @Test

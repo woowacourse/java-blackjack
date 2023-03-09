@@ -26,5 +26,5 @@ public interface Player {
 
     String getNameValue();
 
-    List<String> getCardLetters();
+    List<String> getSymbols();
 }

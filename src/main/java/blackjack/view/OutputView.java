@@ -43,7 +43,7 @@ public class OutputView {
 
     private String generateInitialDrawMessage(final Player player) {
         if (player.isDealer()) {
-            return generatePlayerMessage(player, player.getCardLetters().get(DEALER_OPEN_CARD_INDEX));
+            return generatePlayerMessage(player, player.getSymbols().get(DEALER_OPEN_CARD_INDEX));
         }
         return generatePlayerMessage(player, generateCardMessage(player));
     }
@@ -53,7 +53,7 @@ public class OutputView {
     }
 
     private String generateCardMessage(final Player player) {
-        return join(DELIMITER, player.getCardLetters());
+        return join(DELIMITER, player.getSymbols());
     }
 
     public void printDealerDraw(final Dealer dealer) {

@@ -25,7 +25,7 @@ public final class Card {
         return rank.score();
     }
 
-    public String getLetter() {
-        return rank.getLetter() + shape.getLetter();
+    public String getSymbol() {
+        return rank.getSymbol() + shape.getSymbol();
     }
 }

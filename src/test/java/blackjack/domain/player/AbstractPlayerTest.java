@@ -45,7 +45,7 @@ public class AbstractPlayerTest {
 
         player.initialDraw(deck);
 
-        assertThat(player.getCardLetters()).containsExactly("A다이아몬드", "K하트");
+        assertThat(player.getSymbols()).containsExactly("A다이아몬드", "K하트");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AbstractPlayerTest {
 
         player.draw(deck);
 
-        assertThat(player.getCardLetters()).containsExactly("A다이아몬드");
+        assertThat(player.getSymbols()).containsExactly("A다이아몬드");
     }
 
     @Test
@@ -101,6 +101,6 @@ public class AbstractPlayerTest {
     void 보유하고_있는_모든_카드의_정보를_반환한다() {
         player.draw(new FixedDeck(TEN_SPADE));
 
-        assertThat(player.getCardLetters()).containsExactly("10스페이드");
+        assertThat(player.getSymbols()).containsExactly("10스페이드");
     }
 }

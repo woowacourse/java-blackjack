@@ -87,7 +87,7 @@ public class PlayersTest {
 
         players.drawTo(player, deck);
 
-        assertThat(player.getCardLetters()).containsExactly("J스페이드");
+        assertThat(player.getSymbols()).containsExactly("J스페이드");
     }
 
     @Test
@@ -99,7 +99,7 @@ public class PlayersTest {
         players.drawTo(Name.from("후추"), deck);
 
         final Player player = players.getGamblers().get(0);
-        assertThat(player.getCardLetters()).containsExactly("J스페이드");
+        assertThat(player.getSymbols()).containsExactly("J스페이드");
     }
 
     @Test

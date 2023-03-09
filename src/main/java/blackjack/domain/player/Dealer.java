@@ -24,6 +24,6 @@ public final class Dealer extends AbstractPlayer {
     }
 
     public int getCardCount() {
-        return hand.getCardLetters().size();
+        return hand.getSymbols().size();
     }
 }

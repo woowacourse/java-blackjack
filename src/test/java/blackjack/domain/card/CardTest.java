@@ -28,9 +28,9 @@ public class CardTest {
     }
 
     @Test
-    void 카드의_정보를_반환한다() {
+    void 카드의_심볼을_반환한다() {
         final Card card = new Card(Rank.THREE, Shape.DIAMOND);
 
-        assertThat(card.getLetter()).isEqualTo("3다이아몬드");
+        assertThat(card.getSymbol()).isEqualTo("3다이아몬드");
     }
 }

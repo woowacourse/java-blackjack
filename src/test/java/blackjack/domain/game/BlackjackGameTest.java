@@ -56,7 +56,7 @@ public class BlackjackGameTest {
 
         final int playerIndex = 1;
         final Player player = blackjackGame.getPlayers().get(playerIndex);
-        assertThat(player.getCardLetters()).containsExactly("J스페이드");
+        assertThat(player.getSymbols()).containsExactly("J스페이드");
     }
 
     @Test

@@ -60,9 +60,9 @@ public final class Cards {
         return cards.size() != BLACKJACK_COUNT && totalScore() == BLACKJACK_SCORE;
     }
 
-    public List<String> getCardLetters() {
+    public List<String> getSymbols() {
         return cards.stream()
-                .map(Card::getLetter)
+                .map(Card::getSymbol)
                 .collect(toUnmodifiableList());
     }
 }

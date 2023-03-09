@@ -61,7 +61,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public final List<String> getCardLetters() {
-        return hand.getCardLetters();
+    public final List<String> getSymbols() {
+        return hand.getSymbols();
     }
 }

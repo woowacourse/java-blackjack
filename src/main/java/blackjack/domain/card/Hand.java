@@ -67,7 +67,7 @@ public final class Hand {
         state = STOP;
     }
 
-    public List<String> getCardLetters() {
-        return cards.getCardLetters();
+    public List<String> getSymbols() {
+        return cards.getSymbols();
     }
 }

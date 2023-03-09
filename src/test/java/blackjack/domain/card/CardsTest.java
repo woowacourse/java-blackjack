@@ -64,14 +64,14 @@ public class CardsTest {
 
         cards.add(new Card(Rank.FIVE, Shape.SPADE));
 
-        assertThat(cards.getCardLetters()).containsExactly("5스페이드");
+        assertThat(cards.getSymbols()).containsExactly("5스페이드");
     }
 
     @Test
-    void 모든_카드의_정보를_반환한다() {
+    void 모든_카드의_심볼을_반환한다() {
         final Cards cards = new Cards(List.of(FIVE_SPADE, ACE_CLOVER));
 
-        final List<String> result = cards.getCardLetters();
+        final List<String> result = cards.getSymbols();
 
         assertThat(result).containsExactly("5스페이드", "A클로버");
     }
