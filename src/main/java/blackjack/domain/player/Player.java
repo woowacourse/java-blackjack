@@ -20,6 +20,8 @@ public interface Player {
 
     Result play(final Hand hand);
 
+    boolean isSameName(Name name);
+
     Name name();
 
     String getNameValue();

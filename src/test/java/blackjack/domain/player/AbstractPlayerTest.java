@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -77,6 +79,12 @@ public class AbstractPlayerTest {
         final Result result = player.play(hand);
 
         assertThat(result).isEqualTo(Result.BLACKJACK_WIN);
+    }
+
+    @ParameterizedTest(name = "이름이 같은지 확인한다. 대상: 허브, 입력:{0}, 결과:{1}")
+    @CsvSource({"허브, true", "허브아님, false"})
+    void 이름이_같은지_확인한다(final String name, final boolean result) {
+        assertThat(player.isSameName(Name.from(name))).isEqualTo(result);
     }
 
     @Test

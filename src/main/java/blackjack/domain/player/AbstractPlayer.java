@@ -46,6 +46,11 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isSameName(final Name name) {
+        return this.name.equals(name);
+    }
+
+    @Override
     public final Name name() {
         return name;
     }

@@ -91,13 +91,25 @@ public class PlayersTest {
     }
 
     @Test
-    void 플레이어가_카드를_더_뽑을_수_없는_상태로_변경한다() {
+    void 입력한_플레이어의_카드를_추가한다() {
         final Players players = Players.create();
         players.addPlayers(List.of("후추"));
+        final Deck deck = new FixedDeck(JACK_SPADE);
+
+        players.drawTo(Name.from("후추"), deck);
+
         final Player player = players.getGamblers().get(0);
+        assertThat(player.getCardLetters()).containsExactly("J스페이드");
+    }
 
-        players.stay(player);
+    @Test
+    void 입력한_플레이어의_상태를_카드를_더_뽑을_수_없는_상태로_변경한다() {
+        final Players players = Players.create();
+        players.addPlayers(List.of("후추"));
 
+        players.stay(Name.from("후추"));
+
+        final Player player = players.getGamblers().get(0);
         assertThat(player.isDrawable()).isFalse();
     }
 
@@ -140,7 +152,8 @@ public class PlayersTest {
 
         players.drawToDealer(deck);
 
-        assertThat(players.getDealer().calculateScore()).isEqualTo(21);
+        final Dealer dealer = players.getDealer();
+        assertThat(dealer.calculateScore()).isEqualTo(21);
     }
 
     @Test

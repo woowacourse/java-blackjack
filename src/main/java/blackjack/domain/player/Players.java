@@ -15,6 +15,7 @@ public final class Players {
     private static final int COUNT_LOWER_BOUND = 1;
     private static final int COUNT_UPPER_BOUND = 6;
     private static final int DEALER_COUNT = 1;
+    private static final String INVALID_NAME_MESSAGE = "해당 이름을 가진 플레이어가 존재하지 않습니다.";
 
     private final List<Player> players;
 
@@ -85,6 +86,23 @@ public final class Players {
 
     public void drawTo(final Player player, final Deck deck) {
         player.draw(deck);
+    }
+
+    public void drawTo(final Name name, final Deck deck) {
+        final Player player = findPlayerBy(name);
+        player.draw(deck);
+    }
+
+    private Player findPlayerBy(final Name name) {
+        return players.stream()
+                .filter(player -> player.isSameName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_NAME_MESSAGE));
+    }
+
+    public void stay(final Name name) {
+        final Player player = findPlayerBy(name);
+        player.stay();
     }
 
     public void stay(final Player player) {

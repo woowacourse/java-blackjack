@@ -1,15 +1,16 @@
 package blackjack.domain.game;
 
 import static blackjack.util.CardFixtures.ACE_SPADE;
-import static blackjack.util.CardFixtures.EIGHT_SPADE;
 import static blackjack.util.CardFixtures.JACK_SPADE;
 import static blackjack.util.CardFixtures.KING_SPADE;
+import static blackjack.util.CardFixtures.SIX_HEART;
 import static blackjack.util.CardFixtures.TWO_HEART;
 import static blackjack.util.CardFixtures.TWO_SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.util.FixedDeck;
@@ -24,29 +25,38 @@ import org.junit.jupiter.api.Test;
 public class BlackjackGameTest {
 
     @Test
+    void 플레이어가_게임에_참가한다() {
+        final BlackjackGame blackjackGame = new BlackjackGame(new Bets(Map.of()));
+        blackjackGame.addPlayers(List.of("허브", "후추"));
+
+        assertThat(blackjackGame.getPlayers())
+                .extracting(Player::getNameValue)
+                .containsExactly("딜러", "허브", "후추");
+    }
+
+    @Test
     void 딜러가_카드를_뽑는다() {
-        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
-        final Players players = Players.from(List.of("허브"));
-        final BlackjackGame blackjackGame = new BlackjackGame(players, new Bets(Map.of()));
+        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, TWO_HEART, SIX_HEART);
+        final BlackjackGame blackjackGame = new BlackjackGame(new Bets(Map.of()));
         blackjackGame.initialDraw(deck);
 
         blackjackGame.drawToDealer(deck);
 
         final Dealer dealer = blackjackGame.getDealer();
-        assertThat(dealer.getCardCount()).isEqualTo(3);
+        assertThat(dealer.getCardCount()).isEqualTo(4);
     }
 
     @Test
     void 플레이어에게_카드를_뽑게한다() {
-        final Players players = Players.from(List.of("허브"));
-        final BlackjackGame blackjackGame = new BlackjackGame(players, new Bets(Map.of()));
-        final Deck deck = new FixedDeck(JACK_SPADE, TWO_SPADE, EIGHT_SPADE, TWO_HEART, KING_SPADE);
-        blackjackGame.initialDraw(deck);
-        final Player player = players.getPlayers().get(1);
+        final BlackjackGame blackjackGame = new BlackjackGame(new Bets(Map.of()));
+        final Deck deck = new FixedDeck(JACK_SPADE);
+        blackjackGame.addPlayers(List.of("허브"));
 
-        blackjackGame.drawTo(player, deck);
+        blackjackGame.drawTo(Name.from("허브"), deck);
 
-        assertThat(player.getCardLetters()).containsExactly("8스페이드", "2하트", "K스페이드");
+        final int playerIndex = 1;
+        final Player player = blackjackGame.getPlayers().get(playerIndex);
+        assertThat(player.getCardLetters()).containsExactly("J스페이드");
     }
 
     @Test
