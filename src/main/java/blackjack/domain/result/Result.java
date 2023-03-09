@@ -34,10 +34,10 @@ public enum Result {
     }
 
     public Result ofOppositeResult() {
-        if (this.equals(WIN)) {
+        if (this == WIN) {
             return LOSE;
         }
-        if (this.equals(LOSE)) {
+        if (this == LOSE) {
             return WIN;
         }
         return TIE;
