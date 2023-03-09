@@ -3,7 +3,7 @@ package domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.CardDeck;
 import domain.card.Shape;
 import domain.card.Value;
 import domain.shuffler.FixedCardsShuffler;
@@ -53,8 +53,8 @@ class WinningResultTest {
 
     private Participants initializeParticipants() {
         List<String> names = Arrays.asList("깃짱", "이리내", "푸우", "카일");
-        Cards cards = new Cards(new FixedCardsShuffler());
-        Participants participants = new Participants(names, cards);
+        CardDeck cardDeck = new CardDeck(new FixedCardsShuffler());
+        Participants participants = new Participants(names, cardDeck);
 
         gitJjang = participants.getPlayers().get(0); // K, K
         irene = participants.getPlayers().get(1); // K, K

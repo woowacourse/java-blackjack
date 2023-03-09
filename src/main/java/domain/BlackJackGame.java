@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.Cards;
+import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -10,15 +10,15 @@ import java.util.List;
 public final class BlackJackGame {
 
     private final Participants participants;
-    private final Cards cards;
+    private final CardDeck cardDeck;
 
-    public BlackJackGame(final Participants participants, final Cards cards) {
+    public BlackJackGame(final Participants participants, final CardDeck cardDeck) {
         this.participants = participants;
-        this.cards = cards;
+        this.cardDeck = cardDeck;
     }
 
     public void giveCardTo(Participant participant) {
-        participant.receiveCard(cards.getCard());
+        participant.receiveCard(cardDeck.getCard());
     }
 
     public Participants getParticipants() {

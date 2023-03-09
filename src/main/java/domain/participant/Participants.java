@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.card.Cards;
+import domain.card.CardDeck;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,13 +13,22 @@ public final class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(List<String> names, Cards cards) {
+    public Participants(List<String> names, CardDeck cardDeck) {
         validateSize(names);
         this.players = names.stream()
                 .map(Name::new)
-                .map(name -> new Player(name, cards.giveInitialCards()))
+                .map(name -> new Player(name, cardDeck.giveInitialCards()))
                 .collect(Collectors.toList());
-        this.dealer = new Dealer(cards.giveInitialCards());
+        this.dealer = new Dealer(cardDeck.giveInitialCards());
+    }
+
+    public Participants(List<String> names) {
+        validateSize(names);
+        this.players = names.stream()
+                .map(Name::new)
+                .map(name -> new Player(name, Collections.emptyList()))
+                .collect(Collectors.toList());
+        this.dealer = new Dealer(Collections.emptyList());
     }
 
     private void validateSize(final List<String> names) {

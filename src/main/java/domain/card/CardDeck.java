@@ -7,11 +7,11 @@ import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class Cards {
+public final class CardDeck {
 
     private final Deque<Card> cards;
 
-    public Cards(CardsShuffler shuffler) {
+    public CardDeck(CardsShuffler shuffler) {
         this.cards = shuffler.shuffleCards(initializeCards());
     }
 

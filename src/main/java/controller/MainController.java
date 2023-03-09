@@ -2,7 +2,7 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.PlayerCommand;
-import domain.card.Cards;
+import domain.card.CardDeck;
 import domain.card.shuffler.CardsShuffler;
 import domain.participant.Dealer;
 import domain.participant.Participants;
@@ -28,9 +28,9 @@ public final class MainController {
     }
 
     private BlackJackGame createBlackJackGame(CardsShuffler cardsShuffler) {
-        Cards cards = new Cards(cardsShuffler);
-        Participants participants = new Participants(inputView.readPlayerNames(), cards);
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cards);
+        CardDeck cardDeck = new CardDeck(cardsShuffler);
+        Participants participants = new Participants(inputView.readPlayerNames(), cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         outputView.printInitialMessage(blackJackGame.getPlayers());
         outputView.printAllState(blackJackGame.getParticipants());
