@@ -39,6 +39,34 @@ class ScoreTest {
         assertThat(actual).isEqualTo(value);
     }
 
+    @DisplayName("다른 객체와 대소비교 하는 기능")
+    @Nested
+    class IsGreaterThan {
+        @DisplayName("값이 더 크면 true를 반환한다.")
+        @Test
+        void returnTrue() {
+            Score one = new Score(1);
+            Score two = new Score(2);
+            assertThat(two.isHigherThan(one)).isTrue();
+        }
+
+        @DisplayName("값이 더 작으면 false를 반환한다.")
+        @Test
+        void returnFalseWhenValueIsLessThan() {
+            Score three = new Score(3);
+            Score two = new Score(2);
+            assertThat(two.isHigherThan(three)).isFalse();
+        }
+
+        @DisplayName("값이 같으면 false를 반환한다.")
+        @Test
+        void returnFalseWhenValueEquals() {
+            Score one = new Score(2);
+            Score two = new Score(2);
+            assertThat(two.isHigherThan(one)).isFalse();
+        }
+    }
+
     @DisplayName("같은 값을 가진 객체는 같다.")
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 21})

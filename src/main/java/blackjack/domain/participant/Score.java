@@ -20,6 +20,25 @@ public class Score {
         this.value = value;
     }
 
+    public Score getValueIncludingAce() {
+        if (value > BLACKJACK_SCORE) {
+            return new Score(value - 10);
+        }
+        return this;
+    }
+
+    public boolean isBlackjack() {
+        return value == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return value > BLACKJACK_SCORE;
+    }
+
+    public boolean isHigherThan(Score other) {
+        return value > other.value;
+    }
+
     public int getValue() {
         return value;
     }
@@ -39,20 +58,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public Score getValueIncludingAce() {
-        if (value > BLACKJACK_SCORE) {
-            return new Score(value - 10);
-        }
-        return this;
-    }
-
-    public boolean isBlackjack() {
-        return value == BLACKJACK_SCORE;
-    }
-
-    public boolean isBust() {
-        return value > BLACKJACK_SCORE;
     }
 }
