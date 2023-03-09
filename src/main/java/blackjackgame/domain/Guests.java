@@ -1,7 +1,10 @@
 package blackjackgame.domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Guests {
     private static final int MIN_GUESTS_NUMBER = 1;
@@ -33,6 +36,13 @@ public class Guests {
         if (playerNames.size() != playerNames.stream().distinct().count()) {
             throw new IllegalArgumentException("참여자의 이름은 중복될 수 없습니다.");
         }
+    }
+
+    public Map<Guest, BettingMoney> bet(final List<BettingMoney> inputBettingMoneys) {
+        Map<Guest, BettingMoney> guestBettingMoneyMap = new LinkedHashMap<>();
+        IntStream.range(0, guests.size())
+                .forEach(index -> guestBettingMoneyMap.put(guests.get(index), inputBettingMoneys.get(index)));
+        return guestBettingMoneyMap;
     }
 
     public List<Guest> getGuests() {
