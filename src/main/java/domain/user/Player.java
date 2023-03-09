@@ -11,6 +11,7 @@ public class Player implements Playable {
     public static final int PLAYER_DRAWABLE_BOUNDARY = 21;
     public static final String INVALID_DEALER_NAME_USAGE_ERROR_MESSAGE = "딜러는 플레이어가 될 수 없습니다.";
     public static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 1자 이상 5자 이하여야 합니다.";
+    public static final String DEALER_NAME = "딜러";
     private final String name;
     
     private CardCollection hand = new CardCollection();
@@ -29,7 +30,7 @@ public class Player implements Playable {
     }
     
     private void validateDealerName(final String name) {
-        if (name.equals("딜러")) {
+        if (name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException(INVALID_DEALER_NAME_USAGE_ERROR_MESSAGE);
         }
     }
@@ -97,5 +98,9 @@ public class Player implements Playable {
         }
         final Player player = (Player) o;
         return this.name.equals(player.name) && this.hand.equals(player.hand);
+    }
+    
+    public boolean isBlackJack() {
+        return this.hand.calculateScore() == PLAYER_DRAWABLE_BOUNDARY;
     }
 }

@@ -41,21 +41,21 @@ public class Game {
     
     private ResultStatus comparePlayerWithDealer(Player player, Dealer dealer) {
         if (player.isBust() && !dealer.isBust()) {
-            return ResultStatus.LOSE;
+            return ResultStatus.of(false, false, false);
         }
         if (!player.isBust() && dealer.isBust()) {
-            return ResultStatus.WIN;
+            return ResultStatus.of(true, false, player.isBlackJack());
         }
         if (player.isBust() && dealer.isBust()) {
-            return ResultStatus.DRAW;
+            return ResultStatus.of(false, true, false);
         }
         if (player.getScore() > dealer.getScore()) {
-            return ResultStatus.WIN;
+            return ResultStatus.of(true, false, player.isBlackJack());
         }
         if (player.getScore() < dealer.getScore()) {
-            return ResultStatus.LOSE;
+            return ResultStatus.of(false, false, false);
         }
-        return ResultStatus.DRAW;
+        return ResultStatus.of(false, true, false);
     }
     
     public List<Player> getPlayers() {

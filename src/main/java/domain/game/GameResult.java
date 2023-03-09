@@ -21,7 +21,7 @@ public class GameResult {
         dealerResult.put(ResultStatus.DRAW, 0);
         dealerResult.put(ResultStatus.LOSE, 0);
         for (ResultStatus resultStatus : this.resultCacheMap.values()) {
-            if (resultStatus == ResultStatus.WIN) {
+            if (resultStatus == ResultStatus.WIN || resultStatus == ResultStatus.WIN_BLACKJACK) {
                 dealerResult.put(ResultStatus.LOSE, dealerResult.get(ResultStatus.LOSE) + 1);
             }
             if (resultStatus == ResultStatus.DRAW) {
