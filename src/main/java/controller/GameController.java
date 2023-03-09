@@ -1,8 +1,8 @@
 package controller;
 
 import domain.Card.Deck;
-import domain.game.BlackJackAction;
 import domain.game.Game;
+import domain.game.GameAction;
 import domain.game.GameResult;
 import domain.game.ResultStatus;
 import domain.user.Participants;
@@ -47,7 +47,7 @@ public class GameController {
     
     private boolean dealPlayerMoreCard(Game game, Playable player) {
         boolean isHit = this.readAnswerMoreCardUntilValid(player.getName());
-        if (BlackJackAction.of(isHit) == BlackJackAction.HIT) {
+        if (GameAction.of(isHit) == GameAction.HIT) {
             game.deal(player);
             OutputView.printNameAndCards(player.getName(), player.getCards());
             return true;

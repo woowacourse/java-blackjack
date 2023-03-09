@@ -1,9 +1,9 @@
 package domain.game;
 
-public enum BlackJackAction {
+public enum GameAction {
     HIT, STAND;
     
-    public static BlackJackAction of(boolean isHit) {
+    public static GameAction of(boolean isHit) {
         if (isHit) {
             return HIT;
         }
