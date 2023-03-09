@@ -24,6 +24,10 @@ public class Score {
         return this;
     }
 
+    public boolean isGreaterThan(Score other) {
+        return this.value > other.value;
+    }
+
     public int getValue() {
         return value;
     }

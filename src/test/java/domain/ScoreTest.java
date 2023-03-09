@@ -24,4 +24,13 @@ class ScoreTest {
 
         assertThat(score.addScoreByAce()).isEqualTo(new Score(result));
     }
+
+    @ParameterizedTest(name = "Score를 비교해서 현재 Score가 더 큰지 확인한다.")
+    @CsvSource(value = {"11,10,true", "5,7,false"})
+    void test_isGreaterThan(int value, int other, boolean isGreaterThan) {
+        Score score = new Score(value);
+
+        assertThat(score.isGreaterThan(new Score(other)))
+                .isEqualTo(isGreaterThan);
+    }
 }
