@@ -5,20 +5,23 @@ import java.util.List;
 
 public class HandResult {
 
-    private final HandStatus handStatus;
+
+    private final String participantName;
+    private final List<Card> cards;
     private final int sum;
 
     public HandResult(final String participantName, final List<Card> cards, final int sum) {
-        this.handStatus = new HandStatus(participantName, cards);
+        this.participantName = participantName;
+        this.cards = cards;
         this.sum = sum;
     }
 
     public String getParticipantName() {
-        return handStatus.getParticipantName();
+        return participantName;
     }
 
     public List<Card> getCards() {
-        return handStatus.getCards();
+        return cards;
     }
 
     public int getSum() {
