@@ -7,8 +7,8 @@ import java.util.function.BiFunction;
 
 public enum Result {
     WIN((userValue, dealerValue) -> userValue.compareTo(dealerValue) > 0),
-    LOSE((userValue, dealerValue) -> userValue.compareTo(dealerValue) < 0),
-    DRAW((userValue, dealerValue) -> userValue.compareTo(dealerValue) == 0);
+    LOSE((userValue, dealerValue) -> userValue.isBusted() || userValue.compareTo(dealerValue) < 0),
+    DRAW((userValue, dealerValue) -> !userValue.isBusted() && userValue.compareTo(dealerValue) == 0);
 
     private final BiFunction<GamePoint, GamePoint, Boolean> resultLogic;
 
