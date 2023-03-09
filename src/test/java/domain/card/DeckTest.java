@@ -20,7 +20,7 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("카드 덱에서 한 장 뽑는 메서드 테스트")
+    @DisplayName("카드 덱에서 한 장을 뽑는다.")
     void DeckDrawTest() {
         Deck deck = Deck.from((orderedDeck) -> orderedDeck);
         Assertions.assertThat(deck.draw()).isEqualTo(Card.from(Suit.CLOVER, Rank.ACE));

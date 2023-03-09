@@ -3,8 +3,6 @@ package view;
 import java.util.List;
 import java.util.Map;
 
-import domain.game.Result;
-
 public class OutputView {
     private static final String PARTICIPANT_CARD_FORMAT = "%s : %s\n";
     private static final String PARTICIPANT_HAND_SUM = "%s 카드: %s - 결과: %s\n";
@@ -51,26 +49,18 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerResult(Map<Result, Integer> results) {
+    public static void printDealerResult(Map<String, Integer> results) {
         StringBuilder dealerResult = new StringBuilder();
         dealerResult.append(DEALER_TAG).append(RESULT_FORMAT);
-        countTargetResult(results, Result.WIN, dealerResult);
-        countTargetResult(results, Result.TIE, dealerResult);
-        countTargetResult(results, Result.LOSE, dealerResult);
-
+        for (String result : results.keySet()) {
+            dealerResult.append(results.get(result)).append(result).append(BLANK);
+        }
         System.out.println(dealerResult);
     }
 
-    private static void countTargetResult(Map<Result, Integer> results, Result result, StringBuilder dealerResult) {
-        int count = results.getOrDefault(result, 0);
-        if (count > 0) {
-            dealerResult.append(results.get(result)).append(result.getResult()).append(BLANK);
-        }
-    }
-
-    public static void printPlayerResult(String name, Result result) {
+    public static void printPlayerResult(String name, String result) {
         StringBuilder stringBuilder = new StringBuilder();
-        System.out.println(stringBuilder.append(name).append(RESULT_FORMAT).append(result.getResult()));
+        System.out.println(stringBuilder.append(name).append(RESULT_FORMAT).append(result));
     }
 
     public static void printResultInfo() {
