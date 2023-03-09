@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final int INITIAL_DRAW_COUNT = 2;
     private static final int DEALER_OPEN_CARD_INDEX = 0;

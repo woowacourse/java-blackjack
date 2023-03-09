@@ -11,7 +11,7 @@ import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;

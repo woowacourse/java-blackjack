@@ -3,7 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.player.Result;
 import java.math.BigDecimal;
 
-public class Money {
+public final class Money {
     public static final Money ZERO = new Money(0);
     private static final int INITIAL_BET_LOWER_BOUND = 100;
     static final String INVALID_INITIAL_BET_VALUE = "초기값은 " + INITIAL_BET_LOWER_BOUND + "이상이어야 합니다.";

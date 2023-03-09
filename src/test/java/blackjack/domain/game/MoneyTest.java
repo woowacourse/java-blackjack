@@ -30,6 +30,7 @@ public class MoneyTest {
         final Money money = bet.calculatePrize(result);
 
         assertThat(money.getValue()).isEqualTo(prize);
+
     }
 
     @Test

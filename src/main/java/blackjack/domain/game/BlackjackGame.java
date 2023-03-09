@@ -7,7 +7,7 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
 
-public class BlackjackGame {
+public final class BlackjackGame {
     private final Players players;
     private final Bets bets;
 

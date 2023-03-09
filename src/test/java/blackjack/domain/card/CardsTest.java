@@ -30,14 +30,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CardsTest {
 
     @ParameterizedTest(name = "점수 산정에 들어갈 결과값을 반환한다. 입력: {0}, 점수: {1}")
-    @MethodSource("calculateTotalScoreSource")
+    @MethodSource("totalScoreSource")
     void 점수_산정에_들어갈_결과값을_반환한다(final List<Card> cards, final int result) {
         final Cards sut = new Cards(cards);
 
         assertThat(sut.totalScore()).isEqualTo(result);
     }
 
-    static Stream<Arguments> calculateTotalScoreSource() {
+    static Stream<Arguments> totalScoreSource() {
         return Stream.of(
                 Arguments.of(List.of(FIVE_SPADE, ACE_SPADE), 16),
                 Arguments.of(List.of(ACE_SPADE, ACE_HEART), 12),

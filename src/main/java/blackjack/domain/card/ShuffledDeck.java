@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class ShuffledDeck implements Deck {
+public final class ShuffledDeck implements Deck {
     private static final Deck DECK;
 
     static {
