@@ -12,6 +12,6 @@ public class Dealer extends Person {
     }
 
     public List<Card> getFirstCard() {
-        return List.of(cards.get(0));
+        return List.of(hand.getAllCards().get(0));
     }
 }

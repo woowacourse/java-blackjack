@@ -19,7 +19,7 @@ class DealerTest {
     @DisplayName("생성 테스트")
     @Test
     void Should_Create_When_NewDealer() {
-        assertThat(dealer.cards.size()).isEqualTo(0);
+        assertThat(dealer.getAllCards().size()).isEqualTo(0);
     }
 
     @DisplayName("카드 추가 테스트")
@@ -51,28 +51,6 @@ class DealerTest {
         dealer.addCard(card);
 
         assertThat(dealer.getAllCards()).size().isEqualTo(1);
-    }
-
-    @DisplayName("카드 리스트에 ACE 존재 여부 확인 테스트")
-    @Nested
-    class hasACE {
-        @DisplayName("ACE가 있을 때")
-        @Test
-        void Should_True_When_hasACE() {
-            Card card = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-            dealer.addCard(card);
-
-            assertThat(dealer.hasACE()).isTrue();
-        }
-
-        @DisplayName("ACE가 없을 때")
-        @Test
-        void Should_False_When_hasACE() {
-            Card card = new Card(CardNumber.JACK, CardSymbol.HEARTS);
-            dealer.addCard(card);
-
-            assertThat(dealer.hasACE()).isFalse();
-        }
     }
 
     @DisplayName("카드 점수 계산")
