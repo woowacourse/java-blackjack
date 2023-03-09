@@ -6,11 +6,11 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    public Players(final List<Name> names, final List<Batting> amounts) {
+    public Players(final List<Name> names, final List<Amount> amounts) {
         this.players = generatePlayers(names, amounts);
     }
 
-    private List<Player> generatePlayers(final List<Name> names, final List<Batting> amounts) {
+    private List<Player> generatePlayers(final List<Name> names, final List<Amount> amounts) {
         final List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < amounts.size(); i++) {

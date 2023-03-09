@@ -2,7 +2,7 @@ package domain.game;
 
 import domain.deck.Card;
 import domain.deck.Deck;
-import domain.player.Batting;
+import domain.player.Amount;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
@@ -14,10 +14,10 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Deck deck, final List<Name> names, final List<Batting> battings) {
+    public BlackJackGame(final Deck deck, final List<Name> names, final List<Amount> amounts) {
         this.deck = deck;
         this.dealer = new Dealer();
-        this.players = new Players(names, battings);
+        this.players = new Players(names, amounts);
         distributeTwoCards();
     }
 

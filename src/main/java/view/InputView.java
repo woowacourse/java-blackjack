@@ -1,6 +1,6 @@
 package view;
 
-import domain.player.Batting;
+import domain.player.Amount;
 import domain.player.Name;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +47,7 @@ public class InputView {
         throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
     }
 
-    public static Batting readBatting() {
-        return new Batting(Integer.parseInt(scanner.nextLine()));
+    public static Amount readBatting() {
+        return new Amount(Integer.parseInt(scanner.nextLine()));
     }
 }

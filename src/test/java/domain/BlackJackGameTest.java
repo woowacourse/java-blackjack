@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
-import domain.player.Batting;
+import domain.player.Amount;
 import domain.player.Name;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,13 +17,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class BlackJackGameTest {
     List<Name> names;
-    List<Batting> amounts;
+    List<Amount> amounts;
     BlackJackGame blackJackGame;
 
     @BeforeEach
     void setup() {
         names = Stream.of("name1", "name2").map(Name::new).collect(Collectors.toList());
-        amounts = Stream.of(1, 100).map(Batting::new).collect(Collectors.toList());
+        amounts = Stream.of(1, 100).map(Amount::new).collect(Collectors.toList());
         blackJackGame = new BlackJackGame(new Deck(), names, amounts);
     }
 

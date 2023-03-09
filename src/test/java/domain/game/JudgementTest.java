@@ -3,7 +3,7 @@ package domain.game;
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Suit;
-import domain.player.Batting;
+import domain.player.Amount;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
@@ -23,8 +23,8 @@ class JudgementTest {
     List<Name> names = Stream.of(PLAYER_NAME)
             .map(Name::new)
             .collect(Collectors.toList());
-    List<Batting> battings = Stream.of(10)
-            .map(Batting::new)
+    List<Amount> amounts = Stream.of(10)
+            .map(Amount::new)
             .collect(Collectors.toList());
     Name name = new Name(PLAYER_NAME);
     Players players;
@@ -33,7 +33,7 @@ class JudgementTest {
 
     @BeforeEach
     void setup() {
-        players = new Players(names, battings);
+        players = new Players(names, amounts);
         player = players.getPlayer(name);
         dealer = new Dealer();
     }

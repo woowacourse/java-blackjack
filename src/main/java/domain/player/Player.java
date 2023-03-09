@@ -6,12 +6,12 @@ import java.util.List;
 public class Player {
     private final Name name;
     private final Hand hand;
-    private final Batting batting;
+    private final Amount amount;
 
-    public Player(final Name name, final Batting batting) {
+    public Player(final Name name, final Amount amount) {
         this.name = name;
         this.hand = new Hand();
-        this.batting = batting;
+        this.amount = amount;
     }
 
     public void drawCard(final Card card) {

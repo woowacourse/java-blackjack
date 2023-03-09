@@ -3,7 +3,7 @@ package controller;
 import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
-import domain.player.Batting;
+import domain.player.Amount;
 import domain.player.Name;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class MainController {
 
     public void start() {
         names = inputNames();
-        final List<Batting> amounts = inputBattings();
+        final List<Amount> amounts = inputBattings();
         blackJackGame = generateBlackJackGame(amounts);
 
         outputCards();
@@ -34,8 +34,8 @@ public class MainController {
         return InputView.readNames();
     }
 
-    private List<Batting> inputBattings() {
-        final List<Batting> amounts = new ArrayList<>();
+    private List<Amount> inputBattings() {
+        final List<Amount> amounts = new ArrayList<>();
         for (final Name name : names) {
             OutputView.printEmptyLine();
             OutputView.printInputAmount(name);
@@ -44,7 +44,7 @@ public class MainController {
         return amounts;
     }
 
-    private BlackJackGame generateBlackJackGame(final List<Batting> amounts) {
+    private BlackJackGame generateBlackJackGame(final List<Amount> amounts) {
         final Deck deck = new Deck();
         deck.shuffleDeck();
         final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);

@@ -1,7 +1,7 @@
 package domain;
 
 import domain.deck.Deck;
-import domain.player.Batting;
+import domain.player.Amount;
 import domain.player.Name;
 import domain.player.Player;
 import org.junit.jupiter.api.Assertions;
@@ -18,8 +18,8 @@ public class PlayerTest {
     @Test
     void drawTest() {
         final Name name = new Name("test");
-        final Batting batting = new Batting(100_000);
-        final Player player = new Player(name, batting);
+        final Amount amount = new Amount(100_000);
+        final Player player = new Player(name, amount);
 
         Assertions.assertEquals(0, player.cards().size());
         player.drawCard(deck.popCard());
