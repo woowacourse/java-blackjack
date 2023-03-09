@@ -33,7 +33,7 @@ class BettingResultsDtoTest {
         int reward = dto.getBettingResults().get(0).getReward().getReward();
 
         assertThat(name).isEqualTo("폴로");
-        assertThat(reward).isEqualTo(20000);
+        assertThat(reward).isEqualTo(10000);
     }
 
     @Test
@@ -50,7 +50,7 @@ class BettingResultsDtoTest {
         int reward = dto.getBettingResults().get(0).getReward().getReward();
 
         assertThat(name).isEqualTo("폴로");
-        assertThat(reward).isEqualTo(-20000);
+        assertThat(reward).isEqualTo(-10000);
     }
 
     @Test
@@ -67,7 +67,7 @@ class BettingResultsDtoTest {
         int reward = dto.getBettingResults().get(0).getReward().getReward();
 
         assertThat(name).isEqualTo("폴로");
-        assertThat(reward).isEqualTo(10000);
+        assertThat(reward).isEqualTo(0);
     }
 
     @Test
@@ -84,7 +84,7 @@ class BettingResultsDtoTest {
         int reward = dto.getBettingResults().get(0).getReward().getReward();
 
         assertThat(name).isEqualTo("폴로");
-        assertThat(reward).isEqualTo(25000);
+        assertThat(reward).isEqualTo(15000);
     }
 
     @Test
@@ -113,11 +113,11 @@ class BettingResultsDtoTest {
         int reward3 = dto.getBettingResults().get(2).getReward().getReward();
 
         assertThat(name1).isEqualTo("폴로");
-        assertThat(reward1).isEqualTo(1000);
+        assertThat(reward1).isEqualTo(0);
         assertThat(name2).isEqualTo("로지");
-        assertThat(reward2).isEqualTo(4000);
+        assertThat(reward2).isEqualTo(2000);
         assertThat(name3).isEqualTo("마코");
-        assertThat(reward3).isEqualTo(-60000);
+        assertThat(reward3).isEqualTo(-30000);
     }
 
     @Test
@@ -146,10 +146,10 @@ class BettingResultsDtoTest {
         int reward3 = dto.getBettingResults().get(2).getReward().getReward();
 
         assertThat(name1).isEqualTo("폴로");
-        assertThat(reward1).isEqualTo(1000);
+        assertThat(reward1).isEqualTo(0);
         assertThat(name2).isEqualTo("로지");
-        assertThat(reward2).isEqualTo(5000);
+        assertThat(reward2).isEqualTo(3000);
         assertThat(name3).isEqualTo("마코");
-        assertThat(reward3).isEqualTo(-60000);
+        assertThat(reward3).isEqualTo(-30000);
     }
 }

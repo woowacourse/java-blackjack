@@ -1,10 +1,10 @@
 package blackjackgame;
 
 public enum Result {
-    BLACKJACK("승", 2.5),
-    WIN("승", 2),
-    TIE("무", 1),
-    LOSE("패", -2);
+    BLACKJACK("승", 1.5),
+    WIN("승", 1),
+    TIE("무", 0),
+    LOSE("패", -1);
 
     private final String label;
     private final double rate;
