@@ -1,15 +1,10 @@
 package domain;
 
-import static domain.GameResult.LOSE;
-import static domain.GameResult.PUSH;
-import static domain.GameResult.WIN;
-
 import domain.shuffler.CardShuffler;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,37 +45,8 @@ public class BlackJack {
         dealer.hit(deck.pickCard());
     }
 
-    public Map<String, GameResult> calculatePlayerResults() {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-        int dealerScore = dealer.getScore();
-        Map<String, GameResult> playerResults = new LinkedHashMap<>();
-        for (Player player : players) {
-            GameResult playerResult = GameResult.comparePlayerWithDealer(player.getScore(), dealerScore);
-            playerResults.put(player.getName(), playerResult);
-        }
-        return Collections.unmodifiableMap(playerResults);
-    }
-
-    public Map<GameResult, Integer> calculateDealerResult() {
-        Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
-        Map<String, GameResult> playerResults = calculatePlayerResults();
-        playerResults.values().forEach(result -> convertResult(result, dealerResult));
-        return dealerResult;
-    }
-
-    private void convertResult(final GameResult playerResult, final Map<GameResult, Integer> dealerResult) {
-        Map<GameResult, GameResult> converter = setUpResultConverter();
-        GameResult convertedResult = converter.get(playerResult);
-        dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
-    }
-
-    private Map<GameResult, GameResult> setUpResultConverter() {
-        Map<GameResult, GameResult> converter = new EnumMap<>(GameResult.class);
-        converter.put(WIN, LOSE);
-        converter.put(LOSE, WIN);
-        converter.put(PUSH, PUSH);
-        return converter;
+    public GameResult getResult() {
+        return GameResult.of(users);
     }
 
     public Card getDealerCardWithHidden() {

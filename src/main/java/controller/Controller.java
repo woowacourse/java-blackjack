@@ -64,6 +64,6 @@ public class Controller {
     private void end(BlackJack blackJack) {
         outputView.printDealerCardWithScore(blackJack.getDealerCards(), blackJack.getDealerScore());
         outputView.printPlayerCardWithScore(blackJack.getPlayerToCard(), blackJack.getPlayerToScore());
-        outputView.printGameResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResults());
+        outputView.printGameResult(blackJack.getResult());
     }
 }

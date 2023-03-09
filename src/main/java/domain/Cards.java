@@ -31,6 +31,10 @@ public class Cards {
         int sumOfScores = cards.stream()
             .map(Card::getScore)
             .reduce(0, Integer::sum);
+        return addAceOffset(sumOfScores);
+    }
+
+    private int addAceOffset(int sumOfScores) {
         if (isContainAce() && sumOfScores + ACE_OFFSET <= BLACK_JACK_SCORE) {
             return sumOfScores + Cards.ACE_OFFSET;
         }

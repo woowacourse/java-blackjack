@@ -1,33 +1,74 @@
 package domain;
 
-public enum GameResult {
-    LOSE("패"),
-    PUSH("무"),
-    WIN("승");
+import static domain.Winning.LOSE;
+import static domain.Winning.PUSH;
+import static domain.Winning.WIN;
 
-    private static final int BLACK_JACK_SCORE = 21;
+import domain.user.Dealer;
+import domain.user.Player;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-    private final String name;
+public class GameResult {
 
-    GameResult(String name) {
-        this.name = name;
+    private final Map<String, Winning> playerResults;
+    private final Map<Winning, Integer> dealerResult;
+
+    private GameResult(final Map<String, Winning> playerResults,
+        final Map<Winning, Integer> dealerResult) {
+        this.playerResults = playerResults;
+        this.dealerResult = dealerResult;
     }
 
-    public static GameResult comparePlayerWithDealer(final int playerScore, final int dealerScore) {
-        if (isBust(playerScore) || ((playerScore < dealerScore) && !isBust(dealerScore))) {
-            return LOSE;
+    public static GameResult of(final Users users) {
+        Map<String, Winning> playerResults = calculatePlayerResults(users);
+        Map<Winning, Integer> dealerResult = calculateDealerResult(playerResults);
+        return new GameResult(playerResults, dealerResult);
+    }
+
+    private static Map<String, Winning> calculatePlayerResults(final Users users) {
+        List<Player> players = users.getPlayers();
+        Dealer dealer = users.getDealer();
+        int dealerScore = dealer.getScore();
+        Map<String, Winning> playerResults = new LinkedHashMap<>();
+        for (Player player : players) {
+            Winning playerResult = Winning.comparePlayerWithDealer(player.getScore(), dealerScore);
+            playerResults.put(player.getName(), playerResult);
         }
-        if (playerScore == dealerScore) {
-            return PUSH;
+        return Collections.unmodifiableMap(playerResults);
+    }
+
+    private static Map<Winning, Integer> calculateDealerResult(final Map<String, Winning> playerResults) {
+        Map<Winning, Integer> dealerResult = new EnumMap<>(Winning.class);
+        for (Winning playerResult : playerResults.values()) {
+            convertAndPutResult(playerResult, dealerResult);
         }
-        return WIN;
+        return Collections.unmodifiableMap(dealerResult);
     }
 
-    private static boolean isBust(int score) {
-        return score > BLACK_JACK_SCORE;
+    private static void convertAndPutResult(final Winning playerResult,
+        final Map<Winning, Integer> dealerResult) {
+        Map<Winning, Winning> converter = setUpResultConverter();
+        Winning convertedResult = converter.get(playerResult);
+        dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
     }
 
-    public String getName() {
-        return this.name;
+    private static Map<Winning, Winning> setUpResultConverter() {
+        Map<Winning, Winning> converter = new EnumMap<>(Winning.class);
+        converter.put(WIN, LOSE);
+        converter.put(LOSE, WIN);
+        converter.put(PUSH, PUSH);
+        return converter;
+    }
+
+    public Map<String, Winning> getPlayerResults() {
+        return playerResults;
+    }
+
+    public Map<Winning, Integer> getDealerResult() {
+        return dealerResult;
     }
 }
