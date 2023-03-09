@@ -78,7 +78,7 @@ public final class GameController {
 
     private void printPlayerCards(final List<Player> players) {
         players.forEach(player ->
-                outputView.printParticipantCard(player.getName(), player.getCard()));
+                outputView.printParticipantCard(player.getName(), player.getHand()));
     }
 
     private void drawPlayersCard(final List<Player> players, final GameManager gameManager) {
@@ -89,7 +89,7 @@ public final class GameController {
                                 final Participant player) {
         DrawCardCommand drawCardCommand = getDrawCardCommand(player);
         checkDraw(gameManager, player, drawCardCommand);
-        outputView.printParticipantCard(player.getName(), player.getCard());
+        outputView.printParticipantCard(player.getName(), player.getHand());
         if (cannotDrawCard(player, drawCardCommand)) {
             return;
         }
@@ -147,7 +147,7 @@ public final class GameController {
     }
 
     private void printParticipantCardResult(final Participant participant) {
-        final List<Card> participantCards = participant.getCard();
+        final List<Card> participantCards = participant.getHand();
         final int participantScore = participant.calculateScore();
         outputView.printCardResult(participant.getName(), participantCards, participantScore);
     }

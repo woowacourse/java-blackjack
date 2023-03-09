@@ -8,13 +8,12 @@ import java.util.List;
 public class Participant {
 
     protected static final ParticipantName DEALER_NAME = ParticipantName.create("딜러");
-
+    protected final ParticipantCard hand;
     private final ParticipantName name;
-    protected final ParticipantCard card;
 
     protected Participant(final String name) {
         this.name = ParticipantName.create(name);
-        this.card = ParticipantCard.create();
+        this.hand = ParticipantCard.create();
     }
 
     public static Dealer createDealer() {
@@ -23,28 +22,28 @@ public class Participant {
 
     public final void addCard(final Card... cards) {
         for (Card card : cards) {
-            this.card.addCard(card);
+            hand.addCard(card);
         }
     }
 
     public final int calculateScore() {
-        Score score = card.calculateScore();
+        Score score = hand.calculateScore();
         return score.getScore();
     }
 
     public final boolean isBust() {
-        return card.isBust();
+        return hand.isBust();
     }
 
     public final boolean isBlackJack() {
-        return card.isBlackJack();
+        return hand.isBlackJack();
     }
 
     public final String getName() {
         return name.getName();
     }
 
-    public final List<Card> getCard() {
-        return List.copyOf(card.getCards());
+    public final List<Card> getHand() {
+        return List.copyOf(hand.getCards());
     }
 }

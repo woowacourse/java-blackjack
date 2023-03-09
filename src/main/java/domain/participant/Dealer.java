@@ -16,10 +16,10 @@ public final class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return card.getFirstCard();
+        return hand.getFirstCard();
     }
 
     public boolean canGiveCard() {
-        return STANDARD_GIVEN_SCORE.isGreaterThanAndEqual(card.calculateScore());
+        return STANDARD_GIVEN_SCORE.isGreaterThanAndEqual(hand.calculateScore());
     }
 }

@@ -29,7 +29,7 @@ class DealerTest {
     void addCard_givenCard_thenSuccess() {
         // when
         dealer.addCard(card);
-        final ParticipantCard participantCard = dealer.card;
+        final ParticipantCard participantCard = dealer.hand;
         final List<Card> cards = participantCard.getCards();
 
         // then
