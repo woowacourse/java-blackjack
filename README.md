@@ -8,6 +8,28 @@
 
 ---
 
+```mermaid
+classDiagram
+  
+  Dealer
+  Player --> Players
+  Card --> DrawnCards
+  DrawnCards --> Player
+  DrawnCards --> Dealer
+  Name --> Status
+  Status --> Player
+  Status --> Dealer
+  Account --> Status
+  Type --> Card
+  Value --> Card
+  Card --> CardDeck
+  
+  CardDeck --> BlackJackController
+  Players --> BlackJackController
+  Dealer --> BlackJackController
+  
+```
+
 ## 오리 X 제이의 블랙잭 규칙
 
 - 점수가 21점에 가까운 사람이 승리한다.
@@ -47,4 +69,4 @@
 
 - 딜러를 포함한 모든 플레이어들의 카드 목록과 스코어를 출력한다.
 
-- 딜러를 포함한 모든 플레이어들의 게임 승패 결과를 출력한다.
+- 딜러를 포함한 모든 플레이어들의 스코어와 상금 혹은 잃은 금액을 출력한다.
