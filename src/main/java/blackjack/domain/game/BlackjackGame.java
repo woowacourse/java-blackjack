@@ -12,11 +12,6 @@ public final class BlackjackGame {
     private final Players players;
     private final Bets bets;
 
-    public BlackjackGame(final Players players, final Bets bets) {
-        this.players = players;
-        this.bets = bets;
-    }
-    
     public BlackjackGame() {
         this.players = Players.create();
         this.bets = new Bets();
@@ -57,6 +52,10 @@ public final class BlackjackGame {
 
     public List<Player> getPlayers() {
         return players.getPlayers();
+    }
+
+    public List<Player> getGambler() {
+        return players.getGamblers();
     }
 
     public Dealer getDealer() {

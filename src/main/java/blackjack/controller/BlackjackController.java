@@ -5,7 +5,6 @@ import blackjack.domain.game.Bets;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Money;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
@@ -15,30 +14,35 @@ public final class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final BlackjackGame blackjackGame;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
+    public BlackjackController(
+            final InputView inputView,
+            final OutputView outputView,
+            final BlackjackGame blackjackGame
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.blackjackGame = blackjackGame;
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = initializeGame();
-        initialDraw(blackjackGame);
-        draw(blackjackGame);
-        play(blackjackGame);
+        initializeGame();
+        initialDraw();
+        draw();
+        play();
     }
 
-    private BlackjackGame initializeGame() {
-        final Players players = createPlayers(new Retry());
-        final Bets bets = createBets(new Retry(), players);
-
-        return new BlackjackGame(players, bets);
+    private void initializeGame() {
+        addPlayers(new Retry());
+        addBets(new Retry());
     }
 
-    private Players createPlayers(final Retry retry) {
+    private void addPlayers(final Retry retry) {
         while (retry.isRepeatable()) {
             try {
-                return Players.from(inputView.readPlayers());
+                blackjackGame.addPlayers(inputView.readPlayers());
+                return;
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
                 retry.decrease();
@@ -47,15 +51,15 @@ public final class BlackjackController {
         throw new IllegalArgumentException(retry.getFailMessage());
     }
 
-    private Bets createBets(final Retry retry, Players players) {
+    private void addBets(final Retry retry) {
         final Map<Player, Money> result = new LinkedHashMap<>();
-        for (final Player player : players.getGamblers()) {
-            result.put(player, readPlayerBet(retry, player));
+        for (final Player player : blackjackGame.getGambler()) {
+            result.put(player, readBet(retry, player));
         }
-        return new Bets(result);
+        blackjackGame.addBets(result);
     }
 
-    private Money readPlayerBet(final Retry retry, final Player player) {
+    private Money readBet(final Retry retry, final Player player) {
         while (retry.isRepeatable()) {
             try {
                 return Money.initialBet(inputView.readBet(player));
@@ -67,14 +71,14 @@ public final class BlackjackController {
         throw new IllegalArgumentException(retry.getFailMessage());
     }
 
-    private void initialDraw(final BlackjackGame blackjackGame) {
+    private void initialDraw() {
         blackjackGame.initialDraw(ShuffledDeck.getInstance());
         outputView.printInitialDraw(blackjackGame.getPlayers());
     }
 
-    private void draw(final BlackjackGame blackjackGame) {
+    private void draw() {
         for (final Player player : blackjackGame.getPlayers()) {
-            drawOnce(blackjackGame, player);
+            drawOnce(player);
         }
         blackjackGame.drawToDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(blackjackGame.getDealer());
@@ -83,10 +87,10 @@ public final class BlackjackController {
         }
     }
 
-    private void drawOnce(final BlackjackGame blackjackGame, final Player player) {
+    private void drawOnce(final Player player) {
         while (isDrawable(player)) {
             final BlackjackCommand command = createCommand(player, new Retry());
-            decideAction(blackjackGame, player, command);
+            decideAction(player, command);
             outputView.printDrawResult(player);
         }
     }
@@ -107,7 +111,7 @@ public final class BlackjackController {
         throw new IllegalArgumentException(retry.getFailMessage());
     }
 
-    private void decideAction(final BlackjackGame blackjackGame, final Player player, final BlackjackCommand command) {
+    private void decideAction(final Player player, final BlackjackCommand command) {
         if (command.isHit()) {
             blackjackGame.drawTo(player, ShuffledDeck.getInstance());
             return;
@@ -115,7 +119,7 @@ public final class BlackjackController {
         blackjackGame.stay(player);
     }
 
-    private void play(final BlackjackGame blackjackGame) {
+    private void play() {
         final Bets bets = blackjackGame.play();
         outputView.printGameResult(bets);
     }
