@@ -83,7 +83,7 @@ class PlayerTest {
 
     @DisplayName("게임에서 승리할 경우, 플레이어가 배팅한 금액의 수익이 생긴다.")
     @Test
-    void updateBettingMoneyAboutWinSuccessTest() {
+    void getProfitAboutWinSuccessTest() {
         int bettingMoney = player.getMoney();
 
         assertThat(player.calculateProfitBy(Result.WIN))
@@ -92,7 +92,7 @@ class PlayerTest {
 
     @DisplayName("게임에서 패배할 경우, 플레이어가 배팅한 금액만큼 손해가 생긴다.")
     @Test
-    void updateBettingMoneyAboutLoseSuccessTest() {
+    void getProfitAboutLoseSuccessTest() {
         int bettingMoney = player.getMoney();
 
         assertThat(player.calculateProfitBy(Result.LOSE))
@@ -101,14 +101,14 @@ class PlayerTest {
 
     @DisplayName("게임에서 비길 경우, 플레이어의 수익이 생기지 않는다.")
     @Test
-    void updateBettingMoneyAboutDrawSuccessTest() {
+    void getProfitMoneyAboutDrawSuccessTest() {
         assertThat(player.calculateProfitBy(Result.DRAW))
                 .isEqualTo(0);
     }
 
     @DisplayName("게임에서 블랙잭으로 승리할 경우, 플레이어는 배팅 금액의 1.5배의 수익을 얻는다.")
     @Test
-    void updateBettingMoneyAboutWinWithBlackjackSuccessTest() {
+    void getProfitAboutWinWithBlackjackSuccessTest() {
         int moneyBeforeWin = player.getMoney();
 
         player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
@@ -116,5 +116,19 @@ class PlayerTest {
 
         assertThat(player.calculateProfitBy(Result.BLACKJACK))
                 .isEqualTo((int) (moneyBeforeWin * 1.5));
+    }
+
+    @DisplayName("게임에서 블랙잭으로 승리할 경우, 플레이어는 현재(배팅) 금액은 2.5배가 된다.")
+    @Test
+    void updateBettingMoneyAboutWinWithBlackjackSuccessTest() {
+        int moneyBeforeWin = player.getMoney();
+
+        player.receive(Card.of(CardShape.CLUB, CardRank.ACE));
+        player.receive(Card.of(CardShape.CLUB, CardRank.TEN));
+
+        player.calculateProfitBy(Result.BLACKJACK);
+
+        assertThat(player.getMoney())
+                .isEqualTo((int) (moneyBeforeWin * 2.5));
     }
 }
