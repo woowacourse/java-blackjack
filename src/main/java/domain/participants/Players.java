@@ -35,10 +35,4 @@ public class Players {
         return players.stream().filter(s -> !s.equals(findDealer()))
                 .collect(Collectors.toList());
     }
-
-    public List<String> getPlayersName() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
 }
