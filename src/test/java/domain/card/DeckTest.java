@@ -11,7 +11,8 @@ class DeckTest {
     void getCardTopOfDeck() {
         DeckGenerator deckGenerator = new DeckGenerator();
         Deck deck = deckGenerator.generate();
-        Card topOfDeckCard = deck.getCards().get(0);
+        int topOfDeckCardIndex = deck.cards.size() - 1;
+        Card topOfDeckCard = deck.cards.get(topOfDeckCardIndex);
 
         Assertions.assertThat(deck.drawCard()).isEqualTo(topOfDeckCard);
     }

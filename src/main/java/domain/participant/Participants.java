@@ -9,8 +9,6 @@ import util.Constants;
 
 public class Participants {
 
-    private static final String NOT_MATCH_DEALER_NAME = "[ERROR] 딜러 이름이 일치하지 않습니다.";
-
     private final Players players;
     private final Dealer dealer;
 
@@ -56,6 +54,10 @@ public class Participants {
 
     public int getDealerCardValueSum() {
         return dealer.getOptimalCardValueSum();
+    }
+
+    public List<Player> getRawPlayers() {
+        return players.getPlayers();
     }
 
     public Players getPlayers() {

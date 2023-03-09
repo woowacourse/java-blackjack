@@ -9,6 +9,8 @@ import domain.result.ResultCalculator;
 
 public class BlackJackGame {
 
+    private static final String ADDITIONAL_DRAW_CARD_OK_SIGN = "y";
+
     private final Deck deck;
     private final Participants participants;
 
@@ -31,14 +33,16 @@ public class BlackJackGame {
         return participants.getPlayers();
     }
 
-    public boolean canPlayerDrawCard(Player player) {
-        return player.checkCardsCondition();
+    public boolean canPlayerDrawCard(String playerName) {
+        Player findPlayer = participants.findPlayerByPlayerName(playerName);
+        return findPlayer.checkCardsCondition();
     }
 
-    public AdditionalDrawStatus distributePlayerCardOrPass(Player player, String receiveOrNot) {
+    public AdditionalDrawStatus distributePlayerCardOrPass(String playerName, String receiveOrNot) {
         AdditionalDrawStatus additionalDrawStatus = AdditionalDrawStatus.PASS;
-        if (receiveOrNot.equals("y")) {
-            player.takeCard(deck.drawCard());
+        Player findPlayer = participants.findPlayerByPlayerName(playerName);
+        if (receiveOrNot.equals(ADDITIONAL_DRAW_CARD_OK_SIGN)) {
+            findPlayer.takeCard(deck.drawCard());
             additionalDrawStatus = AdditionalDrawStatus.DRAW;
         }
         return additionalDrawStatus;
@@ -53,6 +57,10 @@ public class BlackJackGame {
         return participants.canDealerDrawCard();
     }
 
+    public Dealer getDealer() {
+        return participants.getDealer();
+    }
+
     public int getDealerCardValueSum() {
         return participants.getDealerCardValueSum();
     }
@@ -62,13 +70,7 @@ public class BlackJackGame {
         return findPlayer.getOptimalCardValueSum();
     }
 
-    public Map<String, String> calculateResult() {
-        Players players = participants.getPlayers();
-        Dealer dealer = participants.getDealer();
-        ResultCalculator resultCalculator = new ResultCalculator(dealer, players);
-        for (Player player : players.getPlayers()) {
-            resultCalculator.calculate(player, dealer);
-        }
-        return resultCalculator.getFinalFightResults();
+    public List<Player> getRawPlayers() {
+        return participants.getRawPlayers();
     }
 }
