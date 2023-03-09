@@ -9,22 +9,23 @@ import ui.OutputView;
 public class BlackjackController {
     private static final String HIT = "y";
     private static final String STAND = "n";
+    private final Participants participants;
 
     public BlackjackController() {
+        this.participants = new Participants(InputView.readPlayersName());
     }
 
     public void run() {
-        Participants participants = new Participants(InputView.readPlayersName());
         participants.initGame();
         OutputView.printCardsStatus(participants.getDealer(), participants.getPlayers());
         participants.getPlayers().forEach(player -> giveCardUntilImpossible(player, participants.getDealer()));
-        addCardToDealerIfPossible(participants);
+        addCardToDealerIfPossible();
         OutputView.printCardsStatusWithScore(participants.getDealer(), participants.getPlayers());
         participants.calculateAllResults();
         OutputView.printResults(participants.getPlayerResults());
     }
 
-    private void addCardToDealerIfPossible(Participants participants) {
+    private void addCardToDealerIfPossible() {
         if (participants.getDealer().canAdd()) {
             OutputView.announceAddCardToDealer();
             participants.addCardToDealerIfPossible();
