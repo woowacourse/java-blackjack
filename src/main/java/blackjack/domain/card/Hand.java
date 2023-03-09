@@ -15,6 +15,11 @@ public class Hand {
         receivedCards.add(card);
     }
 
+    public boolean hasAceCard() {
+        return receivedCards.stream()
+            .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+    }
+
     public List<Card> getReceivedCards() {
         return receivedCards;
     }
