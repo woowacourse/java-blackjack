@@ -7,7 +7,6 @@ import java.util.List;
 public abstract class Participant {
 
     private final CardPocket cardPocket;
-    private int cachedScore;
 
     Participant() {
         cardPocket = CardPocket.empty();
@@ -24,11 +23,10 @@ public abstract class Participant {
 
     void drawCard(final Card card) {
         cardPocket.addCard(card);
-        cachedScore = cardPocket.calculateScore();
     }
 
     public int currentScore() {
-        return cachedScore;
+        return cardPocket.calculateScore();
     }
 
     public List<Card> getCards() {

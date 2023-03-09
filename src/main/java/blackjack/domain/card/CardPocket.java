@@ -9,6 +9,7 @@ public class CardPocket {
     private static final int BLACKJACK_SCORE = 21;
     private static final int VALUE_ACE = 10;
     private final List<Card> cards;
+    private int cachedScore;
 
     private CardPocket(final List<Card> cards) {
         validateCardPocket(cards);
@@ -27,15 +28,20 @@ public class CardPocket {
 
     public void addCard(final Card card) {
         cards.add(card);
+        calculateCurrentScore();
     }
 
-    public int calculateScore() {
+    private void calculateCurrentScore() {
         final int countOfAce = countAce();
         int scoreOfCards = calculateMinimumScore();
         for (int i = 0; i < countOfAce; i++) {
             scoreOfCards = calculateAceScore(scoreOfCards);
         }
-        return scoreOfCards;
+        cachedScore = scoreOfCards;
+    }
+
+    public int calculateScore() {
+        return cachedScore;
     }
 
     private int countAce() {
