@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class Hand {
+
     private static final int UPPER_BOUND = 11;
     private static final int ACE_RANK_DIFFERENCE = 10;
 
