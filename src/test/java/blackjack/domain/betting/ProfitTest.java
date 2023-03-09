@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ProfitTest {
 
-    @ParameterizedTest(name = "원금: {0}, 결과: {1}")
+    @ParameterizedTest(name = "퍼센트: {0}, 원금: {1}, 결과: {2}")
     @CsvSource(value = {"50,10000,15000", "30,10000,13000"})
     void 수익이_퍼센트만큼_증가한다(final int percent, final int value, final int expected) {
         final Profit profit = new Profit(value);
@@ -21,6 +21,13 @@ class ProfitTest {
         final Profit increase = profit.increaseByPercent(percent);
 
         assertThat(increase.getValue()).isEqualTo(expected);
+    }
+
+    @Test
+    void 수익이_사라진다() {
+        final Profit profit = new Profit(10000);
+
+        assertThat(profit.zero().getValue()).isEqualTo(0);
     }
 
     @Nested
