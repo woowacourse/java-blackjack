@@ -1,5 +1,7 @@
 package controller;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import domain.BlackjackGame;
 import domain.Decision;
 import domain.Name;
@@ -32,23 +34,22 @@ public class BlackjackController {
 
     private BlackjackGame initializeGame() {
         List<Name> playerNames = createNames();
-        BlackjackGame blackjackGame = createGame(playerNames);
+        Players players = createPlayers(playerNames);
+        BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
 
         outputView.printParticipantsInitialCards(toParticipantDtos(blackjackGame.getParticipants()));
         return blackjackGame;
     }
 
-    private BlackjackGame createGame(List<Name> playerNames) {
+    private Players createPlayers(List<Name> playerNames) {
         try {
-            List<Player> rawPlayers = playerNames.stream()
+            return playerNames.stream()
                     .map(playerName -> new Player(playerName, inputView.readBettingMoney(playerName.value())))
-                    .collect(Collectors.toUnmodifiableList());
-            Players players = new Players(rawPlayers);
-            return new BlackjackGame(players);
+                    .collect(Collectors.collectingAndThen(toUnmodifiableList(), Players::new));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return createGame(playerNames);
+            outputView.printErrorMessage(e.getMessage());
+            return createPlayers(playerNames);
         }
     }
 
@@ -56,9 +57,9 @@ public class BlackjackController {
         try {
             return inputView.readNames().stream()
                     .map(Name::new)
-                    .collect(Collectors.toUnmodifiableList());
+                    .collect(toUnmodifiableList());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return createNames();
         }
     }
@@ -76,7 +77,7 @@ public class BlackjackController {
         try {
             return Decision.from(inputView.readDecision(currentDrawablePlayer.name()));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return getDecision(currentDrawablePlayer);
         }
     }
@@ -91,13 +92,13 @@ public class BlackjackController {
     private List<ParticipantDto> toParticipantDtos(List<Participant> participants) {
         return participants.stream()
                 .map(ParticipantDto::new)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(toUnmodifiableList());
     }
 
     private List<ParticipantDtoWithScore> toParticipantDtosWithScore(List<Participant> participants) {
         return participants.stream()
                 .map(ParticipantDtoWithScore::new)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(toUnmodifiableList());
     }
 
 }

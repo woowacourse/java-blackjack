@@ -16,7 +16,11 @@ public class Card {
     }
 
     public int score() {
-        return number.score();
+       return number.score();
+    }
+
+    public Number number() {
+        return number;
     }
 
     public String suit() {

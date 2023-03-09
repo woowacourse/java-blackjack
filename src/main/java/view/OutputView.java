@@ -1,17 +1,14 @@
 package view;
 
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 
 import controller.ParticipantDto;
-import domain.GameOutcome;
 import controller.ParticipantDtoWithScore;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final String NAME_CARD_DELIMITER = ":";
+    private static final String NAME_INFO_DELIMITER = ": ";
 
     private static final String CARD_DELIMITER = ", ";
 
@@ -24,7 +21,7 @@ public class OutputView {
         String initialState = participantDtos.stream()
                 .map(ParticipantDto::name)
                 .collect(joining(CARD_DELIMITER, "", "에게 2장을 나누었습니다."));
-        System.out.println(initialState);
+        System.out.println(initialState + System.lineSeparator());
     }
 
     private void printInitialCards(List<ParticipantDto> participantDtos) {
@@ -35,6 +32,7 @@ public class OutputView {
             }
             printAllCards(participantDto);
         });
+        System.out.println();
     }
 
     private void printFirstCard(ParticipantDto participantDto) {
@@ -48,14 +46,15 @@ public class OutputView {
 
     private String generateCardsInfo(String name, List<String> cards) {
         String cardsInfo = String.join(CARD_DELIMITER, cards);
-        return String.format("%s%s%s", name, NAME_CARD_DELIMITER, cardsInfo);
+        return String.format("%s%s%s", name, NAME_INFO_DELIMITER, cardsInfo);
     }
 
     public void printDealerHandOutInfo() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printParticipantsScore(List<ParticipantDtoWithScore> participantDtosWithScore) {
+        System.out.println();
         for (ParticipantDtoWithScore participantDtoWithScore : participantDtosWithScore) {
             System.out.println(generateCardsAndScore(participantDtoWithScore));
         }
@@ -68,22 +67,23 @@ public class OutputView {
         return String.format("%s - 결과: %d", generateCardsInfo(name, cards), score);
     }
 
-    public void printGameOutcomes(Map<String, GameOutcome> playerOutcomes) {
-        System.out.println("## 최종 승패");
-        Map<GameOutcome, Long> dealerOutcome = generateDealerOutcome(playerOutcomes);
+    public void printRevenues(Map<String, Integer> playerOutcomes) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        int dealerOutcome = calculateDealerRevenue(playerOutcomes);
         printDealerOutcome(dealerOutcome);
-        playerOutcomes.forEach((name, outcome) -> System.out.println(name + ": " + outcome.value()));
+        playerOutcomes.forEach((name, outcome) -> System.out.println(name + NAME_INFO_DELIMITER + outcome));
     }
 
-    private Map<GameOutcome, Long> generateDealerOutcome(Map<String, GameOutcome> playerOutcomes) {
-        return playerOutcomes.values()
-                .stream()
-                .collect(groupingBy(GameOutcome::oppositeOutcome, counting()));
+    private int calculateDealerRevenue(Map<String, Integer> playerOutcomes) {
+        return playerOutcomes.values().stream().mapToInt(Integer::intValue)
+                .sum() * -1;
     }
 
-    private void printDealerOutcome(Map<GameOutcome, Long> dealerOutcome) {
-        System.out.print("딜러:");
-        dealerOutcome.forEach((outcome, count) -> System.out.print(" " + count + outcome.value()));
-        System.out.println();
+    private void printDealerOutcome(int dealerOutcome) {
+        System.out.println("딜러" + NAME_INFO_DELIMITER + dealerOutcome);
+    }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.println("[ERROR] " + errorMessage);
     }
 }
