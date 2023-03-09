@@ -215,10 +215,12 @@ class CardTableTest {
         dealer.hit(new Card(DIAMOND, TEN));
         dealer.hit(new Card(DIAMOND, TEN));
 
-        //when & then
+        //when
+        cardTable.dealCardTo(participant);
+        cardTable.dealCardTo(dealer);
+
+        //then
         assertAll(
-                () -> assertTrue(cardTable.dealCardTo(participant)),
-                () -> assertFalse(cardTable.dealCardTo(dealer)),
                 () -> assertThat(participant.cardArea().cards()).hasSize(3),
                 () -> assertThat(dealer.cardArea().cards()).hasSize(2)
         );

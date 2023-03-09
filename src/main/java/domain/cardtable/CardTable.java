@@ -49,11 +49,9 @@ public class CardTable {
         participants.forEach(participant -> participant.firstMatchWith(dealer));
     }
 
-    public boolean dealCardTo(Player player) {
+    public void dealCardTo(Player player) {
         if (player.canHit()) {
             player.hit(cardDeck.draw());
-            return true;
         }
-        return false;
     }
 }
