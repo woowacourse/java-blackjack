@@ -19,6 +19,10 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public int getSumOfScores() {
         int sumOfScores = cards.stream()
             .map(Card::getScore)

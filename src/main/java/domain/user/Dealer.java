@@ -12,6 +12,6 @@ public class Dealer extends User {
     }
 
     public Card getCardWithHidden() {
-        return cards.getCards().get(0);
+        return cards.getFirstCard();
     }
 }
