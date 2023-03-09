@@ -8,18 +8,12 @@ public class Player {
 
     private final PlayerName playerName;
     private final CardPool cardPool;
-    private final int betAmount;
+    private final BetAmount betAmount;
 
     public Player(final String playerName, final CardPool cardPool) {
         this.playerName = new PlayerName(playerName);
         this.cardPool = cardPool;
-        this.betAmount = DEFAULT_BET_AMOUNT;
-    }
-
-    public Player(final String playerName, final CardPool cardPool, final int betAmount) {
-        this.playerName = new PlayerName(playerName);
-        this.cardPool = cardPool;
-        this.betAmount = betAmount;
+        this.betAmount = new BetAmount(DEFAULT_BET_AMOUNT);
     }
 
     public void draw(final Card card) {
@@ -34,19 +28,11 @@ public class Player {
         return cardPool.isSumExceedLimit();
     }
 
-    public void addBetAmount() {
-
-    }
-
     public PlayerName getPlayerName() {
         return playerName;
     }
 
     public CardPool getCardPool() {
         return cardPool;
-    }
-
-    public int getBetAmount() {
-        return betAmount;
     }
 }
