@@ -4,14 +4,13 @@ import domain.Hand;
 import domain.PlayerName;
 import domain.card.Card;
 import java.util.List;
-import java.util.Objects;
 
 public class Player {
 
-    protected static final String DEALER_NAME = "딜러";
-    public static final int INITIAL_HAND_COUNT = 2;
+    protected static final int INITIAL_HAND_COUNT = 2;
+    private static final Hand EMPTY_HAND = Hand.from(null);
     protected final PlayerName name;
-    protected Hand hand = Hand.valueOf(null);
+    protected Hand hand = EMPTY_HAND;
 
     public Player(String name) {
         this.name = new PlayerName(name);
@@ -39,31 +38,6 @@ public class Player {
 
     public int getPoint() {
         return hand.calculatePoint();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player that = (Player) o;
-        return name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-            "name='" + name + '\'' +
-            ", hand=" + hand +
-            '}';
     }
 }
 
