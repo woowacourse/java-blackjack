@@ -44,4 +44,12 @@ public abstract class Player {
     public List<String> getCardLetters() {
         return hand.getCardLetters();
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 }

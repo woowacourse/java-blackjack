@@ -115,4 +115,39 @@ public class GamblerTest {
 
         assertThat(result).isEqualTo(Result.WIN);
     }
+
+    @ParameterizedTest
+    @MethodSource("isBlackjackSource")
+    void 겜블러_카드가_블랙잭인지_확인한다(final List<Card> cards, final boolean expectedResult) {
+        final Gambler gambler = new Gambler("허브");
+        final Deck deck = new FixedDeck(cards);
+        gambler.initialDraw(deck);
+
+        assertThat(gambler.isBlackjack()).isEqualTo(expectedResult);
+    }
+
+    public static Stream<Arguments> isBlackjackSource() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER)), false),
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(ACE, CLOVER)), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBustSource")
+    void 겜블러_카드가_버스트인지_확인한다(final List<Card> cards, final boolean expectedResult) {
+        final Gambler gambler = new Gambler("허브");
+        final Deck deck = new FixedDeck(cards);
+        gambler.initialDraw(deck);
+        gambler.draw(deck);
+
+        assertThat(gambler.isBust()).isEqualTo(expectedResult);
+    }
+
+    public static Stream<Arguments> isBustSource() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(QUEEN, CLOVER), new Card(ACE, CLOVER)), false),
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(QUEEN, CLOVER), new Card(KING, CLOVER)), true)
+        );
+    }
 }

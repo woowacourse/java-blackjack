@@ -135,5 +135,41 @@ public class DealerTest {
 
         assertThat(firstCardLetter).isEqualTo("A다이아몬드");
     }
+
+
+    @ParameterizedTest
+    @MethodSource("isBlackjackSource")
+    void 딜러_카드가_블랙잭인지_확인한다(final List<Card> cards, final boolean expectedResult) {
+        final Dealer dealer = Dealer.create();
+        final Deck deck = new FixedDeck(cards);
+        dealer.initialDraw(deck);
+
+        assertThat(dealer.isBlackjack()).isEqualTo(expectedResult);
+    }
+
+    public static Stream<Arguments> isBlackjackSource() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(SIX, CLOVER)), false),
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(ACE, CLOVER)), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isBustSource")
+    void 딜러_카드가_버스트인지_확인한다(final List<Card> cards, final boolean expectedResult) {
+        final Dealer dealer = Dealer.create();
+        final Deck deck = new FixedDeck(cards);
+        dealer.initialDraw(deck);
+        dealer.draw(deck);
+
+        assertThat(dealer.isBust()).isEqualTo(expectedResult);
+    }
+
+    public static Stream<Arguments> isBustSource() {
+        return Stream.of(
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(THREE, CLOVER), new Card(TWO, CLOVER)), false),
+                Arguments.of(List.of(new Card(JACK, CLOVER), new Card(QUEEN, CLOVER), new Card(KING, CLOVER)), true)
+        );
+    }
 }
 
