@@ -14,19 +14,16 @@ public abstract class Participant {
     protected static final String DEALER_NAME = "딜러";
 
     private final Name name;
-    private final Bet bet;
     protected Cards cards;
 
-    protected Participant(final Name name, final int bet) {
+    protected Participant(final Name name) {
         this.name = name;
         this.cards = Cards.create(Collections.emptyList());
-        this.bet = Bet.of(bet);
     }
 
-    protected Participant(final Name name, final Cards cards, final int bet) {
+    protected Participant(final Name name, final Cards cards) {
         this.name = name;
         this.cards = cards;
-        this.bet = Bet.of(bet);
     }
 
     public void takeCard(final Card card) {
@@ -41,18 +38,6 @@ public abstract class Participant {
 
     public Cards getCards() {
         return cards;
-    }
-
-    public Bet getBet() {
-        return bet;
-    }
-
-    public void applyBust() {
-        bet.applyBust();
-    }
-
-    public void applyBlackJack() {
-        bet.applyBlackJack();
     }
 
     public GamePoint calculatePoint() {

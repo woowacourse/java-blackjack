@@ -22,7 +22,7 @@ class DealerTest {
 
     @BeforeEach
     void init() {
-        dealer = Dealer.create(Collections.emptyList());
+        dealer = Dealer.create();
     }
 
     @DisplayName("딜러의 이름은 '딜러'다.")

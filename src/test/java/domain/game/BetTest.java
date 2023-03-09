@@ -67,15 +67,6 @@ class BetTest {
             final Players players = Players.create(names, bets);
         }
 
-        @DisplayName("딜러는 플레이어들이 배팅한 금액의 합계만큼 배팅 금액을 가진다.")
-        @Test
-        void dealerBetTest() {
-            assertThat(blackJack).extracting("dealer")
-                    .extracting("bet")
-                    .extracting("bet")
-                    .isEqualTo(6000);
-        }
-
         @DisplayName("플레이어들은 각각 배팅 금액을 가지고 있다.")
         @Test
         void playerBetTest() {

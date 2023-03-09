@@ -9,12 +9,12 @@ public final class Dealer extends Participant {
 
     public static final GamePoint STANDARD_OF_NEED_MORE_CARD = GamePoint.of(16);
 
-    protected Dealer(final Name name, final int bet) {
-        super(name, bet);
+    protected Dealer(final Name name) {
+        super(name);
     }
 
-    public static Dealer create(List<Integer> bets) {
-        return new Dealer(Name.of(DEALER_NAME), bets.stream().mapToInt(m -> m).sum());
+    public static Dealer create() {
+        return new Dealer(Name.of(DEALER_NAME));
     }
 
     public boolean needMoreCard() {

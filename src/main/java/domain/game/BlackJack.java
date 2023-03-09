@@ -17,7 +17,7 @@ public final class BlackJack {
     private final DeckStrategy deck;
 
     private BlackJack(final List<Name> playerNames, final List<Integer> bets, final DeckStrategy deck) {
-        this.dealer = Dealer.create(bets);
+        this.dealer = Dealer.create();
         this.players = Players.create(playerNames, bets);
         this.deck = deck;
         initGame(deck, INITIAL_DRAW_CARD_COUNT);
@@ -40,9 +40,6 @@ public final class BlackJack {
 
     public void drawCard(final Participant player) {
         player.takeCard(deck.drawCard());
-        if (isBusted(player)) {
-            player.applyBust();
-        }
     }
 
     public int getAdditionalCardCount() {
