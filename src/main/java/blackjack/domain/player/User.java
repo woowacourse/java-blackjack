@@ -8,29 +8,29 @@ import java.util.List;
 public abstract class User {
     public static final int BUST = 21;
 
-    protected final Hand hand;
+    protected final HandCards handCards;
     protected final Name name;
 
     public User(Name name) {
         this.name = name;
-        this.hand = new Hand();
+        this.handCards = new HandCards();
     }
 
     public List<Card> getPlayerCards() {
-        return hand.getPlayerCards();
+        return handCards.getPlayerCards();
     }
 
     public int getTotalScore() {
-        return hand.getTotalScore();
+        return handCards.getTotalScore();
     }
 
     public void updateCardScore() {
         Deck deck = Deck.getInstance();
-        hand.updateCardScore(deck.drawCard());
+        handCards.updateCardScore(deck.drawCard());
     }
 
     public boolean isUnderBust() {
-        return hand.getTotalScore() <= BUST;
+        return handCards.getTotalScore() <= BUST;
     }
 
     public String getName() {

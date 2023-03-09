@@ -10,6 +10,6 @@ public class Dealer extends User {
     }
 
     public boolean hasUnderMinimumScore() {
-        return hand.getTotalScore() <= MINIMUM_SCORE;
+        return handCards.getTotalScore() <= MINIMUM_SCORE;
     }
 }

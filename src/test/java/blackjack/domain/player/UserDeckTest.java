@@ -31,11 +31,11 @@ class UserDeckTest {
     @DisplayName("updateCardScore() 는 점수를 업데이트 한다.")
     void calculate_player_cards_score(List<Card> cards, int expectedTotalScore) {
         // given & when
-        Hand hand = new Hand();
-        cards.forEach(hand::updateCardScore);
+        HandCards handCards = new HandCards();
+        cards.forEach(handCards::updateCardScore);
 
         // then
-        Assertions.assertThat(hand.getTotalScore()).isEqualTo(expectedTotalScore);
+        Assertions.assertThat(handCards.getTotalScore()).isEqualTo(expectedTotalScore);
     }
 
     @ParameterizedTest
@@ -43,24 +43,24 @@ class UserDeckTest {
     @DisplayName("updateCardScore() 는 점수를 업데이트 한다.")
     void calculate_player_cards_score_with_ace(List<Card> cards, int expectedTotalScore) {
         // given & when
-        Hand hand = new Hand();
-        cards.forEach(hand::updateCardScore);
+        HandCards handCards = new HandCards();
+        cards.forEach(handCards::updateCardScore);
 
         // then
-        Assertions.assertThat(hand.getTotalScore()).isEqualTo(expectedTotalScore);
+        Assertions.assertThat(handCards.getTotalScore()).isEqualTo(expectedTotalScore);
     }
 
     @Test
     @DisplayName("updateCardScore()는 카드를 하나씩 추가한다.")
     void add_card() {
         // given
-        Hand hand = new Hand();
+        HandCards handCards = new HandCards();
 
         // when
         Card card = new Card(CardNumber.FIVE, CardSymbol.HEART);
-        hand.updateCardScore(card);
+        handCards.updateCardScore(card);
 
         // then
-        Assertions.assertThat(hand.getPlayerCards()).hasSize(1);
+        Assertions.assertThat(handCards.getPlayerCards()).hasSize(1);
     }
 }
