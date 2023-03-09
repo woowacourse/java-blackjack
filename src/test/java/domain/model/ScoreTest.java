@@ -175,7 +175,7 @@ class ScoreTest {
         Score comparedScore = new Score(2);
 
         //when
-        boolean result = score.isLessThan(comparedScore);
+        boolean result = score.isLessThanOrEqualTo(comparedScore);
 
         //then
         assertThat(result).isTrue();

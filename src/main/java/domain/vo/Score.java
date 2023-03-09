@@ -51,7 +51,7 @@ public class Score {
         return value <= MAX_VALUE;
     }
 
-    public boolean isLessThan(final Score comparedScore) {
+    public boolean isLessThanOrEqualTo(final Score comparedScore) {
         return this.value <= comparedScore.value;
     }
 
