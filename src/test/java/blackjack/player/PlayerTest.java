@@ -71,4 +71,26 @@ class PlayerTest {
 
         assertThat(player.isBust()).isTrue();
     }
+
+
+    @Test
+    @DisplayName("플레이어가 blackjack인 경우 true를 반환한다")
+    void isBlackJack() {
+        Player player = new Player(new Name("폴로"));
+        player.hit(new Card(Rank.KING, Suit.HEART));
+        player.hit(new Card(Rank.ACE, Suit.HEART));
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 blackjack인 경우 false를 반환한다")
+    void isBlackJackFalse() {
+        Player player = new Player(new Name("폴로"));
+        player.hit(new Card(Rank.KING, Suit.HEART));
+        player.hit(new Card(Rank.KING, Suit.SPADE));
+        player.hit(new Card(Rank.ACE, Suit.HEART));
+
+        assertThat(player.isBlackjack()).isFalse();
+    }
 }

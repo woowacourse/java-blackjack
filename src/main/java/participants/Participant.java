@@ -33,4 +33,8 @@ public class Participant {
     public Name getName() {
         return name;
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }
