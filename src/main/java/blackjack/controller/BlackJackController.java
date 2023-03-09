@@ -53,7 +53,8 @@ public class BlackJackController {
             command = Repeater.repeatIfError(() -> inputCommand(player), OutputView::printErrorMessage);
             hitByCommand(player, command, blackJackGame);
             OutputView.printPlayerCardDeck(player);
-            score = calculateScore(player, blackJackGame);
+            score = blackJackGame.calculateScore(player);
+            checkBurst(blackJackGame, score);
         }
     }
 
@@ -71,13 +72,10 @@ public class BlackJackController {
         }
     }
 
-    private int calculateScore(Player player, BlackJackGame blackJackGame) {
-        int score = blackJackGame.calculateScore(player);
-
+    private void checkBurst(BlackJackGame blackJackGame, int score) {
         if (blackJackGame.isBurst(score)) {
             OutputView.printBurstMessage();
         }
-        return score;
     }
 
     private void hitCardByDealer(Dealer dealer, BlackJackGame blackJackGame) {
