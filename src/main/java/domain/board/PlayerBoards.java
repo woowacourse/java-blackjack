@@ -2,7 +2,6 @@ package domain.board;
 
 import domain.PlayerStatus;
 import domain.user.Player;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,12 +15,11 @@ public class PlayerBoards {
         this.playerBoards = playerBoards;
     }
 
-    public static PlayerBoards of(List<String> playerNames) {
+    public static PlayerBoards from(List<String> playerNames) {
         validate(playerNames.size());
-        List<PlayerBoard> playerBoards = new ArrayList<>();
-        for (String playerName : playerNames) {
-            playerBoards.add(new PlayerBoard(new Player(playerName), PlayerStatus.HIT_ABLE));
-        }
+        List<PlayerBoard> playerBoards = playerNames.stream()
+            .map((playerName) -> new PlayerBoard(new Player(playerName), PlayerStatus.HIT_ABLE))
+            .collect(Collectors.toList());
         return new PlayerBoards(playerBoards);
     }
 
@@ -37,12 +35,5 @@ public class PlayerBoards {
 
     public List<PlayerBoard> getAllPlayerBoard() {
         return List.copyOf(playerBoards);
-    }
-
-    @Override
-    public String toString() {
-        return "PlayerBoards{" +
-            "playerBoards=" + playerBoards +
-            '}';
     }
 }

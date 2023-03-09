@@ -15,7 +15,7 @@ public class Hand {
         this.cards = cards;
     }
 
-    public static Hand valueOf(List<Card> cards) {
+    public static Hand from(List<Card> cards) {
         if (cards == null) {
             return new Hand(new ArrayList<>());
         }
@@ -56,12 +56,5 @@ public class Hand {
 
     public int getSize() {
         return cards.size();
-    }
-
-    @Override
-    public String toString() {
-        return "Hand{" +
-            "cards=" + cards +
-            '}';
     }
 }
