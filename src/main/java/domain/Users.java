@@ -2,6 +2,8 @@ package domain;
 
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.User;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +63,12 @@ public class Users {
 
     public boolean isDealerHittable() {
         return getDealer().isHittable();
+    }
+
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>(players);
+        users.add(dealer);
+        return users;
     }
 
     public List<Player> getPlayers() {

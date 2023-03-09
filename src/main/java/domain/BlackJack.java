@@ -31,10 +31,9 @@ public class BlackJack {
     }
 
     private static void initCards(Users users, Deck deck) {
-        for (Player player : users.getPlayers()) {
-            hitTwoCards(player, deck);
+        for (User user : users.getUsers()) {
+            hitTwoCards(user, deck);
         }
-        hitTwoCards(users.getDealer(), deck);
     }
 
     private static void hitTwoCards(User user, Deck deck) {
