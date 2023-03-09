@@ -8,12 +8,12 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackGameController {
-    private static final String LINE_SEPARATOR = System.lineSeparator();
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -23,8 +23,15 @@ public class BlackJackGameController {
     }
 
     public void run() {
+        // 게임 세팅
         Game game = Game.from(new GamePlayer(makePlayers(), new Dealer()));
-        printStartCards(game);
+
+        // 게임 시작 메시지 출력
+        String dealerFirstCard = game.showDealerCards().getCardNumberToString()
+                + game.showDealerCards().getCardSymbolToString();
+        Map<String, List<String>> players = playersToPrintFormat(game);
+        outputView.printGameStartMessage(players, dealerFirstCard);
+
         play(game);
         finish(game);
     }
@@ -36,6 +43,16 @@ public class BlackJackGameController {
             System.out.println("[ERROR]" + e.getMessage());
             return makePlayers();
         }
+    }
+
+    private Map<String, List<String>> playersToPrintFormat(Game game) {
+        Map<String, List<String>> players = new LinkedHashMap<>();
+        for (int i = 0; i < game.getPlayersCount(); i++) {
+            String playerName = game.showPlayerNameByIndex(i);
+            List<String> cards = getCardNames(game.showPlayerCardsByIndex(i));
+            players.put(playerName, cards);
+        }
+        return players;
     }
 
     private List<String> getCardNames(List<Card> cards) {
@@ -75,16 +92,6 @@ public class BlackJackGameController {
         while (game.isHitDealer()) {
             outputView.printDealerHit();
             game.giveCardToDealer();
-        }
-    }
-
-    private void printStartCards(Game game) {
-        outputView.printStartMsg(game.showPlayersName());
-        outputView.printDealerCards(getCardNames(game.showDealerCards()), System.lineSeparator());
-        for (int i = 0; i < game.getPlayersCount(); i++) {
-            String playerName = game.showPlayerNameByIndex(i);
-            List<String> cards = getCardNames(game.showPlayerCardsByIndex(i));
-            outputView.printPlayerCards(playerName, cards, LINE_SEPARATOR);
         }
     }
 

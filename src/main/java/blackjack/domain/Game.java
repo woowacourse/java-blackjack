@@ -51,10 +51,6 @@ public class Game {
         return gamePlayer.getDealer();
     }
 
-    public List<String> showPlayersName() {
-        return getPlayers().getPlayersName();
-    }
-
     public String showPlayerNameByIndex(int i) {
         return getPlayers().showPlayerNameByIndex(i);
     }
@@ -63,7 +59,7 @@ public class Game {
         return getPlayers().showPlayerCardsByIndex(i);
     }
 
-    public List<Card> showDealerCards() {
+    public Card showDealerCards() {
         return getDealer().getFirstCard();
     }
 

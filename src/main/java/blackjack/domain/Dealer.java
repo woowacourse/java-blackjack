@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Dealer extends Person {
     private static final int DEALER_STOP_HIT_BOUND = 17;
 
@@ -11,7 +9,7 @@ public class Dealer extends Person {
         return totalScore < DEALER_STOP_HIT_BOUND;
     }
 
-    public List<Card> getFirstCard() {
-        return List.of(hand.getAllCards().get(0));
+    public Card getFirstCard() {
+        return hand.getAllCards().get(0);
     }
 }

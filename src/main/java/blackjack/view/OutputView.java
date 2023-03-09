@@ -1,33 +1,46 @@
 package blackjack.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class OutputView {
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final int ZERO = 0;
 
-    public void printStartMsg(List<String> names) {
-        System.out.println();
-        int lastIndex = names.size() - 1;
-        System.out.print("딜러와 ");
-        for (int i = 0; i < lastIndex; i++) {
-            System.out.print(names.get(i) + ", ");
-        }
-        System.out.println(names.get(lastIndex) + "에게 2장을 나누었습니다.");
+    public void printGameStartMessage(Map<String, List<String>> players, String dealerCards) {
+        Set<String> playerNames = players.keySet();
+        List<String> playersName = new ArrayList<>(playerNames);
+
+        System.out.println(LINE_SEPARATOR
+                + "딜러와 "
+                + String.join(", ", playerNames)
+                + "에게 2장을 나누었습니다.");
+        System.out.println("딜러: " + dealerCards);
+        printPlayersInformation(players, playersName);
     }
 
-    public void printPlayerCards(String name, List<String> cards, String end) {
+    private void printPlayersInformation(Map<String, List<String>> players, List<String> playersName) {
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(playersName.get(i)
+                    + ": "
+                    + String.join(", ", players.get(playersName.get(i))));
+        }
+    }
+
+    public void printDealerCards(List<String> cards, String end) {
         int lastIndex = cards.size() - 1;
-        System.out.print(name + "카드: ");
+        System.out.print("딜러: ");
         for (int i = 0; i < lastIndex; i++) {
             System.out.print(cards.get(i) + ", ");
         }
         System.out.print(cards.get(lastIndex) + end);
     }
 
-    public void printDealerCards(List<String> cards, String end) {
+    public void printPlayerCards(String name, List<String> cards, String end) {
         int lastIndex = cards.size() - 1;
-        System.out.print("딜러: ");
+        System.out.print(name + "카드: ");
         for (int i = 0; i < lastIndex; i++) {
             System.out.print(cards.get(i) + ", ");
         }

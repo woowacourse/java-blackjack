@@ -31,6 +31,19 @@ class HandTest {
         assertThat(hand.getAllCards()).contains(card);
     }
 
+    @DisplayName("카드 Get 테스트")
+    @Test
+    void Should_Success_When_GetAllCards() {
+        Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
+        Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
+        Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
+        hand.add(card);
+        hand.add(card2);
+        hand.add(card3);
+
+        assertThat(hand.getAllCards()).containsAll(List.of(card, card2, card3));
+    }
+
     @DisplayName("카드 리스트에 ACE 존재 여부 확인 테스트")
     @Nested
     class hasACE {
@@ -66,6 +79,7 @@ class HandTest {
 
             assertThat(hand.getTotalScore()).isEqualTo(21);
         }
+
         @DisplayName("NINE, TWO, ACE 가지고 있을 대")
         @Test
         void Should_TotalScore_When_HaveCard2() {
@@ -78,18 +92,5 @@ class HandTest {
 
             assertThat(hand.getTotalScore()).isEqualTo(22);
         }
-    }
-
-    @DisplayName("카드 Get 테스트")
-    @Test
-    void Should_Success_When_GetAllCards() {
-        Card card = new Card(CardNumber.NINE, CardSymbol.HEARTS);
-        Card card2 = new Card(CardNumber.TWO, CardSymbol.HEARTS);
-        Card card3 = new Card(CardNumber.ACE, CardSymbol.HEARTS);
-        hand.add(card);
-        hand.add(card2);
-        hand.add(card3);
-
-        assertThat(hand.getAllCards()).containsAll(List.of(card, card2, card3));
     }
 }
