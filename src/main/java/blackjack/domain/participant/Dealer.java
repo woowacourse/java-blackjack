@@ -11,11 +11,5 @@ public class Dealer extends Participant {
         super(new Name(DEALER_NAME));
     }
 
-    public List<List<String>> getOneCard() {
-        final Card firstCard = this.getCards().get(0);
-
-        return List.of(firstCard.getCardName());
-    }
-
     public boolean canNotHit(){return getTotalScore() > 16;}
 }

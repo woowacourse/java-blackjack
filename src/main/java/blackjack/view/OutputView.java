@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.view.dto.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,24 +30,28 @@ public class OutputView {
     }
 
 
-    public void outputParticipantCards(HashMap<String, List<List<String>>> playerCards) {
-        outputPlayerCard(DEALER_NAME, playerCards.get(DEALER_NAME));
+    public void outputParticipantCards(ParticipantsDto participantsDto) {
+        outputPlayerCard(DEALER_NAME,participantsDto.getDealerCards());
         changeLine();
-        for (final String name : playerCards.keySet()) {
-            outputPlayerCard(name, playerCards.get(name));
-        }
+        participantsDto.getParticipantsMap().forEach((name,cards)->{
+                outputPlayerCard(name,cards);
+                changeLine();
+        });
     }
 
-    public void outputPlayerCard(final String name, final List<List<String>> cards) {
+    public void outputPlayerCard(final String name, final CardsDto cards) {
         System.out.print(name + PLAYER_SCORE_DELIMITER +
-                String.join(PLAYER_DELIMITER, cards.stream()
-                        .map(card -> OutputLetter.match(card.get(0)) + OutputShape.match(card.get(1)))
+                String.join(PLAYER_DELIMITER, cards.getCards().stream()
+                        .map(this::combineStringWith)
                         .collect(Collectors.toList())));
-        changeLine();
+    }
+    private String combineStringWith(CardInfo cardInfo){
+        return cardInfo.getLetter() + cardInfo.getShape();
     }
 
     public void outputDealerDrawCard(final String name) {
         System.out.println(CHANGE_LINE + name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
+        changeLine();
     }
 
     public void outputScore(final int score) {

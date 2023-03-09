@@ -16,17 +16,6 @@ public class CardTest {
         assertThatNoException().isThrownBy(() -> new Card(Shape.SPADE, Letter.TWO));
     }
 
-    @Test
-    @DisplayName("정확한 카드 숫자와 모양이 출력되는지 테스트")
-    void getCardNameTest() {
-        // given
-        Card card = new Card(Shape.DIAMOND, Letter.ACE);
-        List<String> actual = card.getCardName();
-        List<String> expected = List.of(Letter.ACE.getName(), Shape.DIAMOND.getValue());
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
 
     @Test
     @DisplayName("카드가 에이스 인지 확인하는 테스트")

@@ -66,13 +66,6 @@ public class ResultGame {
         }
     }
 
-    public int getDealerCount(final WinTieLose expected) {
-        return (int) playersResult.values()
-                .stream()
-                .filter(winTieLose -> winTieLose.equals(expected.reverseValue()))
-                .count();
-    }
-
     public WinTieLose getPlayerResult(final Player player) {
         return playersResult.get(player);
     }

@@ -19,10 +19,6 @@ public class DealerTest {
         Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
         dealer.drawCard(card1);
         dealer.drawCard(card2);
-
-        List<List<String>> expected = dealer.getOneCard();
-        Assertions.assertThat(expected.size()).isEqualTo(1);
-        Assertions.assertThat(expected).contains(card1.getCardName());
     }
 
     @Test
@@ -38,7 +34,7 @@ public class DealerTest {
         dealer.drawCard(card2);
 
         //then
-        Assertions.assertThat(dealer.isNotBust()).isTrue();
+        Assertions.assertThat(dealer.canNotHit()).isFalse();
     }
 
     @Test

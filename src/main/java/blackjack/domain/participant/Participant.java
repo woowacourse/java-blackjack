@@ -35,12 +35,6 @@ public class Participant {
         return this.cards.getCards();
     }
 
-    public List<List<String>> getCardNames() {
-        return cards.getCards().stream()
-                .map(Card::getCardName)
-                .collect(Collectors.toList());
-    }
-
     public boolean isNotBust() {
         return getTotalScore() <= 21;
     }

@@ -33,69 +33,6 @@ public class ResultGameTest {
     }
 
     @Test
-    @DisplayName("결과를 계산하는 딜러가 승리하는 테스트")
-    void calculateResultDealerWinTest() {
-        // given
-        ResultGame resultGame = new ResultGame(participants);
-        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
-        participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.NINE));
-
-        // when
-        resultGame.calculateResult();
-
-        // then
-        assertThat(resultGame.getDealerCount(WinTieLose.WIN)).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("결과를 계산하는 딜러가 비기는 테스트")
-    void calculateResultTieTest() {
-        // given
-        ResultGame resultGame = new ResultGame(participants);
-        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
-        participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.JACK));
-
-        // when
-        resultGame.calculateResult();
-
-        // then
-        assertThat(resultGame.getDealerCount(WinTieLose.TIE)).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("결과를 계산하는 딜러가 지는 테스트")
-    void calculateResultDealerLoseTest() {
-        // given
-        ResultGame resultGame = new ResultGame(participants);
-        dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
-        participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.NINE));
-
-        // when
-        resultGame.calculateResult();
-
-        // then
-        assertThat(resultGame.getDealerCount(WinTieLose.LOSE)).isEqualTo(1);
-    }
-
-
-    @Test
-    @DisplayName("딜러가 버스트일 때, 딜러가 지는 테스트")
-    void calculateResultDealerLoseWithBustTest() {
-        // given
-        ResultGame resultGame = new ResultGame(participants);
-        dealer.drawCard(new Card(Shape.CLOVER, Letter.EIGHT));
-        dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
-        dealer.drawCard(new Card(Shape.HEART, Letter.TEN));
-        participants.getPlayers().get(0).drawCard(new Card(Shape.CLOVER, Letter.NINE));
-
-        // when
-        resultGame.calculateResult();
-
-        // then
-        assertThat(resultGame.getDealerCount(WinTieLose.LOSE)).isEqualTo(3);
-    }
-
-    @Test
     @DisplayName("플레이어의 결과를 출력하는 테스트")
     void getPlayerResultTest() {
         // given

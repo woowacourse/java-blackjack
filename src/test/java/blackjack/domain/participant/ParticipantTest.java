@@ -18,21 +18,6 @@ public class ParticipantTest {
     }
 
     @Test
-    @DisplayName("카드 한장을 가져오는지 테스트")
-    void drawCardTest() {
-        // given
-        Participant participant = new Participant(new Name("test"));
-        Card card = new Card(Shape.CLOVER, Letter.ACE);
-
-        // when
-        participant.drawCard(card);
-
-        // then
-        Assertions.assertThat(participant.getCardNames())
-                .contains(card.getCardName());
-    }
-
-    @Test
     @DisplayName("카드의 총 합을 보여주는 테스트")
     void getTotalScoreTest() {
         // given
@@ -73,21 +58,6 @@ public class ParticipantTest {
         Assertions.assertThat(participant.getCards()).contains(card1, card2);
     }
 
-    @Test
-    @DisplayName("플레이어의 카드 이름 리스트를 반환하는 테스트 ")
-    void getCardNamesTest() {
-        // given
-        Participant participant = new Participant(new Name("test"));
-        Card card1 = new Card(Shape.CLOVER, Letter.ACE);
-        Card card2 = new Card(Shape.DIAMOND, Letter.JACK);
-
-        // when
-        participant.drawCard(card1);
-        participant.drawCard(card2);
-
-        // then
-        Assertions.assertThat(participant.getCardNames()).contains(card1.getCardName(), card2.getCardName());
-    }
 
     @Test
     @DisplayName("합이 21 초과인지 테스트")

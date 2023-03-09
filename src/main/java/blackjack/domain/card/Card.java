@@ -11,15 +11,19 @@ public class Card {
         this.letter = letter;
     }
 
-    public List<String> getCardName() {
-        return List.of(letter.getName(), shape.getValue());
-    }
-
     public int getValue() {
         return this.letter.getValue();
     }
 
     public boolean isAce() {
         return this.letter.isLetterAce();
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Letter getLetter() {
+        return letter;
     }
 }
