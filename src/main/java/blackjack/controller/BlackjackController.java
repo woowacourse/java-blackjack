@@ -23,11 +23,6 @@ public class BlackjackController {
         printFinalResults(dealer, players);
     }
 
-    private Players generatePlayers() {
-        Names names = new Names(InputView.inputPeopleNames());
-        return Players.from(names);
-    }
-
     private void ready(Players players) {
         blackjackGame = new BlackjackGame(players);
         blackjackGame.giveInitialCardsToUsers();
@@ -45,6 +40,11 @@ public class BlackjackController {
     private void giveAdditionalCards(Players players, Dealer dealer) {
         giveAdditionalCardsToPlayers(players);
         giveAdditionalCardsToDealer(dealer);
+    }
+
+    private Players generatePlayers() {
+        Names names = new Names(InputView.inputPeopleNames());
+        return Players.from(names);
     }
 
     private void printFinalResults(Dealer dealer, Players players) {
