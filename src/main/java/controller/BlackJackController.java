@@ -11,6 +11,7 @@ import domain.Player;
 import domain.Players;
 import domain.Result;
 import dto.CardStatusDto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import util.InitialCardMaker;
@@ -49,11 +50,15 @@ public class BlackJackController {
     }
 
     private BettingManager createBettingManager(Players players) {
-        List<Integer> bettingAmounts = inputView.askPlayersBattingAmount(players.getPlayerNamesToString());
-        List<BettingAmount> playerBettingAmounts = bettingAmounts.stream()
-                .map(BettingAmount::fromPlayer)
-                .collect(Collectors.toList());
-        return new BettingManager(players.getPlayerNames(), playerBettingAmounts);
+        return new BettingManager(players.getPlayerNames(), requestBettingAmounts(players));
+    }
+
+    private List<BettingAmount> requestBettingAmounts(Players players) {
+        List<BettingAmount> bettingAmounts = new ArrayList<>();
+        for (String name : players.getPlayerNamesToString()) {
+            bettingAmounts.add(BettingAmount.fromPlayer(inputView.askPlayerBettingAmount2(name)));
+        }
+        return bettingAmounts;
     }
 
     private void printInitialDistribution(Players players, Dealer dealer) {

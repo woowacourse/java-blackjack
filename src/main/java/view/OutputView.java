@@ -39,6 +39,7 @@ public class OutputView {
         if (cardCount != NONE) {
             System.out.printf("\n\n" + DEALER_RECEIVE_CARD + "\n", dealerName, cardCount);
         }
+        System.out.println();
     }
 
     public void printCardAndScore(String playerName, List<CardStatusDto> cardStatuses, int totalScore) {
