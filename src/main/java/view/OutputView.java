@@ -4,7 +4,9 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.game.Result;
+import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Player;
 import view.message.GameResultMessage;
 import view.message.NumberMessage;
 import view.message.PatternMessage;
@@ -19,7 +21,7 @@ public final class OutputView {
     private static final String BUST_MESSAGE = "카드의 합이 21을 초과했습니다.";
     private static final String BLACKJACK_MESSAGE = "축하드립니다! 블랙잭입니다!";
     private static final String DEALER_DRAW_MESSAGE_FORMAT = "%s는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String DRAW_MESSAGE_FORMAT = "%s에게 2장을 나누었습니다.";
+    private static final String DRAW_MESSAGE_FORMAT = "%s와 %s에게 2장을 나누었습니다.";
     private static final String CARD_MESSAGE_FORMAT = "%s: %s";
     private static final String PARTICIPANT_CARD_RESULT_FORMAT = "%s 카드: %s - 결과: %d";
     private static final String FINAL_GAME_RESULT = "## 최종 승패";
@@ -30,10 +32,10 @@ public final class OutputView {
         System.out.println(message);
     }
 
-    public void printParticipantMessage(final List<Participant> participants) {
-        final String participantNamesMessage = makeParticipantNamesMessage(participants);
+    public void printParticipantMessage(final Dealer dealer, final List<Player> players) {
+        final String participantNamesMessage = makeParticipantNamesMessage(players);
         final String drawMessage = String.format(System.lineSeparator() +
-                DRAW_MESSAGE_FORMAT, participantNamesMessage);
+                DRAW_MESSAGE_FORMAT, dealer.getName(), participantNamesMessage);
         print(drawMessage);
     }
 
@@ -75,11 +77,10 @@ public final class OutputView {
         System.out.println(String.format(DEALER_DRAW_MESSAGE_FORMAT, dealerName) + System.lineSeparator());
     }
 
-    private String makeParticipantNamesMessage(final List<Participant> participants) {
-        return participants.stream()
+    private String makeParticipantNamesMessage(final List<Player> players) {
+        return players.stream()
                 .map(Participant::getName)
-                .collect(Collectors.joining(", "))
-                .replace(",", "와");
+                .collect(Collectors.joining(", "));
     }
 
     private String getCardMessage(final Card participantCard) {

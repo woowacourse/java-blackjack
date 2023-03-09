@@ -1,9 +1,7 @@
 package controller;
 
-import domain.CardShuffler;
 import domain.card.Card;
 import domain.card.CardRandomShuffler;
-import domain.card.Deck;
 import domain.game.GameManager;
 import domain.game.GameResult;
 import domain.game.Result;
@@ -30,10 +28,9 @@ public final class GameController {
     public void start() {
         final Dealer dealer = Participant.createDealer();
         final List<Player> players = getPlayers();
-        final Deck deck = makeDeck();
-        final GameManager gameManager = makeGameManager(dealer, players, deck);
+        final GameManager gameManager = makeGameManager(dealer, players);
         gameManager.handFirstCards();
-        printParticipantCards(gameManager, dealer, players);
+        printParticipantCards(dealer, players);
         drawPlayersCard(players, gameManager);
         handleDealerCards(dealer, gameManager);
         printGameResult(dealer, players);
@@ -52,17 +49,13 @@ public final class GameController {
         });
     }
 
-    private Deck makeDeck() {
-        final CardShuffler cardShuffler = new CardRandomShuffler();
-        return Deck.create(cardShuffler);
+    private GameManager makeGameManager(final Dealer dealer, final List<Player> players) {
+        final CardRandomShuffler cardRandomShuffler = new CardRandomShuffler();
+        return GameManager.create(dealer, players, cardRandomShuffler);
     }
 
-    private GameManager makeGameManager(final Dealer dealer, final List<Player> players, final Deck deck) {
-        return GameManager.create(dealer, players, deck);
-    }
-
-    private void printParticipantCards(final GameManager gameManager, final Dealer dealer, final List<Player> players) {
-        outputView.printParticipantMessage(gameManager.getParticipants());
+    private void printParticipantCards(final Dealer dealer, final List<Player> players) {
+        outputView.printParticipantMessage(dealer, players);
         printDealerCard(dealer);
         printPlayerCards(players);
     }
@@ -73,16 +66,14 @@ public final class GameController {
     }
 
     private void printPlayerCards(final List<Player> players) {
-        players.forEach(player ->
-                outputView.printParticipantCard(player.getName(), player.getHand()));
+        players.forEach(player -> outputView.printParticipantCard(player.getName(), player.getHand()));
     }
 
     private void drawPlayersCard(final List<Player> players, final GameManager gameManager) {
         players.forEach(player -> handleDrawCard(gameManager, player));
     }
 
-    private void handleDrawCard(final GameManager gameManager,
-                                final Participant player) {
+    private void handleDrawCard(final GameManager gameManager, final Participant player) {
         DrawCardCommand drawCardCommand = getDrawCardCommand(player);
         checkDraw(gameManager, player, drawCardCommand);
         outputView.printParticipantCard(player.getName(), player.getHand());
@@ -99,9 +90,7 @@ public final class GameController {
         });
     }
 
-    private void checkDraw(final GameManager gameManager,
-                           final Participant player,
-                           final DrawCardCommand drawCardCommand) {
+    private void checkDraw(final GameManager gameManager, final Participant player, final DrawCardCommand drawCardCommand) {
         if (drawCardCommand.isDrawStop()) {
             return;
         }
@@ -109,7 +98,7 @@ public final class GameController {
     }
 
     private boolean cannotDrawCard(final Participant player, final DrawCardCommand drawCardCommand) {
-        return drawCardCommand.isDrawStop() || isBust(player) || isBlackJack(player);
+        return isBust(player) || isBlackJack(player) || drawCardCommand.isDrawStop();
     }
 
     private boolean isBust(final Participant player) {

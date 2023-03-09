@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.CardShuffler;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -18,8 +19,8 @@ public final class GameManager {
         this.participants = participants;
     }
 
-    public static GameManager create(final Dealer dealer, final List<Player> players, final Deck deck) {
-        return new GameManager(deck, Participants.create(dealer, players));
+    public static GameManager create(final Dealer dealer, final List<Player> players, final CardShuffler cardShuffler) {
+        return new GameManager(Deck.create(cardShuffler), Participants.create(dealer, players));
     }
 
     public void handFirstCards() {
@@ -29,9 +30,5 @@ public final class GameManager {
 
     public void handCard(final Participant participant) {
         participant.addCard(deck.draw());
-    }
-
-    public List<Participant> getParticipants() {
-        return List.copyOf(participants.getParticipants());
     }
 }
