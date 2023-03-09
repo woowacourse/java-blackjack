@@ -30,7 +30,7 @@ public class BlackJackGame {
 
         askPlayer(participants);
 
-        dealerDrawCardByMinimumCondition(participants.getDealer());
+        drawDealerCardByMinimumCondition(participants.getDealer());
 
         printCardResult(participants);
         printWinningResult(participants);
@@ -87,7 +87,7 @@ public class BlackJackGame {
         outputView.printCurrentPlayerResult(player.getName(), player.getCards().cardsToString());
     }
 
-    private void dealerDrawCardByMinimumCondition(final Dealer dealer) {
+    private void drawDealerCardByMinimumCondition(final Dealer dealer) {
         outputView.newLine();
         while (dealer.isSumUnderStandard()) {
             outputView.noticeDealerUnderStandard();
