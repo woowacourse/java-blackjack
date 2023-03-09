@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
 
-
     @Test
     @DisplayName("카드를 2장씩 분배한다.")
     void test_deal_two_cards() {
@@ -66,11 +65,19 @@ public class GameTest {
     @DisplayName("플레이어와 딜러가 모두 죽으면 무승부로 한다")
     @Test
     void test_draw_all_busted() {
-        var players = List.of(
-                new Player("땡칠", createCards("10", "K", "K"))
-        );
+        Player player = new Player("땡칠");
+        player.addCard(new Card(HEART, "10"));
+        player.addCard(new Card(HEART, "K"));
+        player.addCard(new Card(HEART, "J"));
 
-        var game = new Game(players, new Deck(), new Dealer(createCards("K", "9", "9")));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(HEART, "10"));
+        dealer.addCard(new Card(HEART, "K"));
+        dealer.addCard(new Card(HEART, "J"));
+
+        var players = List.of(player);
+
+        var game = new Game(players, new Deck(), dealer);
 
         assertThat(game.getResultBy(players.get(0))).isEqualTo(Result.DRAW);
     }
