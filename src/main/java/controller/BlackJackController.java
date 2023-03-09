@@ -11,12 +11,12 @@ import domain.result.WinningResult;
 import view.InputView;
 import view.OutputView;
 
-public final class MainController {
+public final class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public MainController(final InputView inputView, final OutputView outputView) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
