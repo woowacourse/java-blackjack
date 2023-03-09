@@ -55,10 +55,6 @@ public class Hand {
         return (cards.size() == INITIAL_HAND_SIZE) && (getTotalValue() == BUST_NUMBER);
     }
 
-    public boolean isBust() {
-        return calculateTotalValue() > BUST_NUMBER;
-    }
-
     public List<Card> getCards() {
         return this.cards;
     }
