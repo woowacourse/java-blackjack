@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String PLAYER_NAME_REQUEST_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
+    private static final String PLAYER_BETTING_AMOUNT_REQUEST_MESSAGE = "%s의 배팅 금액은?";
     private static final String INITIAL_STATUS_INFO_MESSAGE_FORMAT = "%s와 %s에게 2장을 나누었습니다.";
     private static final String CARD_INFO_MESSAGE_FORMAT = "%s카드: %s";
     private static final String DRAW_CARD_REQUEST_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
@@ -23,6 +24,10 @@ public class OutputView {
 
     public void printPlayerNameRequestMessage() {
         System.out.println(PLAYER_NAME_REQUEST_MESSAGE);
+    }
+
+    public void printPlayerBettingAmountRequestMessage(final String name) {
+        System.out.println(String.format(PLAYER_BETTING_AMOUNT_REQUEST_MESSAGE, name));
     }
 
     public void printInitialHoldingCards(final List<HoldingCards> initialHoldingCards) {
