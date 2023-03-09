@@ -13,8 +13,8 @@ public class Card {
         return cardNumber.number().equals(CardNumber.ACE.number());
     }
 
-    public int getScore(String number) {
-        return CardNumber.scoreByNumber(number);
+    public int getScore() {
+        return CardNumber.scoreByNumber(cardNumber.number());
     }
 
     public String getCardSymbolToString() {
