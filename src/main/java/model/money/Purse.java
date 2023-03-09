@@ -1,4 +1,6 @@
-package model.user;
+package model.money;
+
+import model.user.Player;
 
 import java.util.List;
 import java.util.Map;

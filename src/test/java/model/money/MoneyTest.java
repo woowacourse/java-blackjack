@@ -1,5 +1,6 @@
-package model.user;
+package model.money;
 
+import model.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

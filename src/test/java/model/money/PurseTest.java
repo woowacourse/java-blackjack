@@ -1,5 +1,8 @@
-package model.user;
+package model.money;
 
+import model.money.Money;
+import model.money.Purse;
+import model.user.Player;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

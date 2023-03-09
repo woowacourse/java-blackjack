@@ -1,4 +1,4 @@
-package model.user;
+package model.money;
 
 import java.util.Objects;
 
