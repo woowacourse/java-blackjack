@@ -55,4 +55,8 @@ public class CardPool {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public boolean isSumSameAsLimit() {
+        return sumCardNumbers() == CARD_POINT_LIMIT;
+    }
 }

@@ -58,14 +58,15 @@ public class GameParticipant {
     }
 
     public void updateBetAmountByGameResult(final Map<Player, GameResult> record) {
-        record.forEach(((player, gameResult) -> {
-            if (gameResult == GameResult.WIN) {
-                player.takeRevenueFrom(dealer);
-            }
-            if (gameResult == GameResult.LOSE) {
-                dealer.takeRevenueFrom(player);
-            }
-        }));
+        record.entrySet().stream()
+                .filter(entry -> !entry.getKey().isBlackjack() && !dealer.isBlackjack())
+                .filter(entry -> entry.getValue() == GameResult.WIN)
+                .forEach(entry -> entry.getKey().takeRevenueFrom(dealer));
+
+        record.entrySet().stream()
+                .filter(entry -> !entry.getKey().isBlackjack() && !dealer.isBlackjack())
+                .filter(entry -> entry.getValue() == GameResult.LOSE)
+                .forEach(entry -> dealer.takeRevenueFrom(entry.getKey()));
     }
 
     public Map<GameResult, Integer> getDealerRecord(final Map<Player, GameResult> record) {

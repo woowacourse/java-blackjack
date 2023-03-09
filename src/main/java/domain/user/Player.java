@@ -36,7 +36,15 @@ public class Player {
         return cardPool;
     }
 
+    public boolean isBlackjack() {
+        return cardPool.isSumSameAsLimit();
+    }
+
     public void takeRevenueFrom(final Player otherPlayer) {
+        if (isBlackjack()) {
+            bet.takeBonusRevenueFrom(otherPlayer.bet);
+            return;
+        }
         bet.takeRevenueFrom(otherPlayer.bet);
     }
 }
