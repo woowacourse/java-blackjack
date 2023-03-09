@@ -5,8 +5,10 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BLACKJACK_MAX_NUMBER = 21;
     private static final int JUDGE_ACE_CARD_VALUE_ELEVEN_MAX_SUM = 11;
     private static final int CALIBRATED_ACE_CARD_ELEVEN_VALUE = 10;
+    public static final int FIRST_HIT_CARD_SIZE = 2;
 
     private final ParticipantName participantName;
     private final List<Card> cards;
@@ -36,7 +38,7 @@ public abstract class Participant {
     }
 
     public boolean judgeBlackjack() {
-        return cards.size() == 2 && calculateCardNumber() == 21;
+        return cards.size() == FIRST_HIT_CARD_SIZE && calculateCardNumber() == BLACKJACK_MAX_NUMBER;
     }
 
     public int calculateCardNumber() {
