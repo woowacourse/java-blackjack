@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class BettingMoney {
 
     private static final int MAX_MONEY = 10000;
@@ -21,5 +23,26 @@ public class BettingMoney {
         if (money % UNIT_OF_MONEY != 0) {
             throw new IllegalArgumentException(String.format("배팅금액은 %s원 단위로 입력해야합니다.", UNIT_OF_MONEY));
         }
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        BettingMoney otherBettingMoney = (BettingMoney) other;
+        return money == otherBettingMoney.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }

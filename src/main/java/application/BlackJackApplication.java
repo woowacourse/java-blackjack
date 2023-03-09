@@ -2,6 +2,7 @@ package application;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.BettingMoney;
 import domain.BlackJackBettingMachine;
 import domain.BlackJackGame;
 import domain.card.Card;
@@ -66,7 +67,7 @@ public class BlackJackApplication {
     private void betEachPlayer(BlackJackGame blackJackGame, BlackJackBettingMachine blackJackBettingMachine) {
         for (String playerName : blackJackGame.getPlayersName()) {
             int bettingMoney = getBettingMoney(playerName);
-            blackJackBettingMachine.betMoney(playerName, bettingMoney);
+            blackJackBettingMachine.betMoney(playerName, new BettingMoney(bettingMoney));
         }
     }
 
@@ -168,7 +169,7 @@ public class BlackJackApplication {
         List<BattingResult> battingResultDtos = new ArrayList<>();
 
         for (String playerName : blackJackGame.getPlayersName()) {
-            int bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
+            BettingMoney bettingMoney = blackJackBettingMachine.findBetMoneyByName(playerName);
             int result = blackJackGame.getResult(playerName, bettingMoney);
             battingResultDtos.add(new BattingResult(playerName, result));
         }

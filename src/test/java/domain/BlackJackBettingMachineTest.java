@@ -12,11 +12,11 @@ class BlackJackBettingMachineTest {
     @Test
     void find_by_specific_name() {
         //given
-        int expected = 1000;
+        BettingMoney expected = new BettingMoney(1000);
         BlackJackBettingMachine blackJackBettingMachine = new BlackJackBettingMachine();
         blackJackBettingMachine.betMoney("name", expected);
         //when
-        int actual = blackJackBettingMachine.findBetMoneyByName("name");
+        BettingMoney actual = blackJackBettingMachine.findBetMoneyByName("name");
         //then
         assertThat(actual).isEqualTo(expected);
     }

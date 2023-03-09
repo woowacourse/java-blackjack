@@ -6,14 +6,14 @@ import java.util.Objects;
 
 public class BlackJackBettingMachine {
 
-    private final Map<String, Integer> repository = new HashMap<>();
+    private final Map<String, BettingMoney> repository = new HashMap<>();
 
-    public void betMoney(String name, int money) {
-        repository.put(name, money);
+    public void betMoney(String name, BettingMoney bettingMoney) {
+        repository.put(name, bettingMoney);
     }
 
-    public int findBetMoneyByName(String name) {
-        Integer bettingMoney = repository.get(name);
+    public BettingMoney findBetMoneyByName(String name) {
+        BettingMoney bettingMoney = repository.get(name);
         if (Objects.isNull(bettingMoney)) {
             throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
         }

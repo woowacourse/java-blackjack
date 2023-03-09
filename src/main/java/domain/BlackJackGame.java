@@ -64,10 +64,10 @@ public class BlackJackGame {
     }
 
     //TODO: 메소드명 변경 고민
-    public int getResult(String name, int betMoney) {
+    public int getResult(String name, BettingMoney betMoney) {
         Player player = players.findPlayerByName(name);
         BlackJackResult result = player.getResult(dealer);
-        return result.calculatePrize(betMoney);
+        return result.calculatePrize(betMoney.getMoney());
     }
 
     public List<String> getPlayersName() {
