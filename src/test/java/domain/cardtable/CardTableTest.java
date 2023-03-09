@@ -9,6 +9,7 @@ import domain.player.participant.Participant;
 import domain.player.participant.betresult.BetResultState;
 import domain.player.participant.betresult.BreakEvenState;
 import domain.player.participant.betresult.LoseState;
+import domain.player.participant.betresult.NotYetState;
 import domain.player.participant.betresult.WinState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -165,12 +166,11 @@ class CardTableTest {
                                   final Dealer dealer,
                                   final BetResultState betResultState) throws Exception {
         //when
-        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
+        final Map<Participant, BetResultState> resultFirstMatch = cardTable.matchAfterFirstDeal(
+                List.of(participant), dealer);
 
         //then
-        assertThat(participant).extracting("betResultState")
-                               .isNotNull()
-                               .isInstanceOf(betResultState.getClass());
+        assertThat(resultFirstMatch.get(participant)).isInstanceOf(betResultState.getClass());
     }
 
     @Test
@@ -186,11 +186,11 @@ class CardTableTest {
         dealer.hit(new Card(DIAMOND, NINE));
 
         //when
-        cardTable.matchAfterFirstDeal(List.of(participant), dealer);
+        final Map<Participant, BetResultState> resultFirstMatch =
+                cardTable.matchAfterFirstDeal(List.of(participant), dealer);
 
         //then
-        assertThat(participant).extracting("betResultState")
-                               .isNull();
+        assertThat(resultFirstMatch.get(participant)).isInstanceOf(NotYetState.class);
     }
 
     static Stream<Arguments> afterFirstDeal() {
@@ -251,5 +251,58 @@ class CardTableTest {
 
         //then
         assertEquals(resultBettingMoney.lose(), dealerMoney);
+    }
+
+    @ParameterizedTest
+    @MethodSource("determineFinalMatchResult")
+    @DisplayName("determineParticipantsBettingMoney() : ")
+    void dd(final List<Participant> participants, final Dealer dealer) throws Exception {
+
+        //when
+        final Map<Participant, Money> result = cardTable.determineParticipantsBettingMoney(
+                participants, dealer);
+
+        for (final Participant participant1 : result.keySet()) {
+            System.out.print(participant1.name().value() + " ");
+            System.out.println(result.get(participant1).value());
+        }
+
+        //then
+        assertAll(
+                () -> assertEquals(4, result.size())
+        );
+    }
+
+    static Stream<Arguments> determineFinalMatchResult() {
+
+        final Dealer dealer = new Dealer();
+        dealer.hit(new Card(HEART, TEN));
+        dealer.hit(new Card(CLOVER, TEN));
+
+        //무승부
+        final Participant participant1 = new Participant(new Name("name1"), Money.wons(10000));
+        participant1.hit(new Card(DIAMOND, TEN));
+        participant1.hit(new Card(SPADE, TEN));
+
+        //참여자 승
+        final Participant participant2 = new Participant(new Name("name2"), Money.wons(1000));
+        participant2.hit(new Card(SPADE, TEN));
+        participant2.hit(new Card(DIAMOND, TEN));
+
+        //참여자 패
+        final Participant participant3 = new Participant(new Name("name3"), Money.wons(4000));
+        participant3.hit(new Card(SPADE, TEN));
+        participant3.hit(new Card(DIAMOND, NINE));
+
+        //이미 처음 승부가 난 참여자
+        final Participant participant4 = new Participant(new Name("name4"), Money.wons(4000));
+        participant4.hit(new Card(SPADE, TEN));
+        participant4.hit(new Card(DIAMOND, ACE));
+
+        final List<Participant> participants = List.of(participant1, participant2, participant3, participant4);
+
+        return Stream.of(
+                Arguments.of(participants, dealer)
+        );
     }
 }

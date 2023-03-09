@@ -6,13 +6,10 @@ import domain.player.dealer.Dealer;
 import domain.player.participant.Money;
 import domain.player.participant.Participant;
 import domain.player.participant.betresult.BetResultState;
-import domain.player.participant.betresult.BreakEvenState;
-import domain.player.participant.betresult.LoseState;
-import domain.player.participant.betresult.WinState;
+import domain.player.participant.betresult.NotYetState;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,14 +27,19 @@ public class CardTable {
 
     public Map<Participant, Money> determineParticipantsBettingMoney(final List<Participant> participants,
                                                                      final Dealer dealer) {
-        return participants.stream()
-                           .collect(Collectors.toMap(
-                                   Function.identity(),
-                                   participant -> {
-                                       matchAfterFinalDeal(dealer, participant);
-                                       return participant.determineBetMoney();
-                                   })
-                           );
+        final Map<Participant, BetResultState> result = matchAfterFirstDeal(participants, dealer);
+
+        return result.keySet()
+                     .stream()
+                     .collect(Collectors.toMap(
+                             Function.identity(),
+                             participant -> {
+                                 if (result.get(participant) instanceof NotYetState) {
+                                     return participant.determineBetMoney(participant.finalMatchWith(dealer));
+                                 }
+                                 return participant.determineBetMoney(result.get(participant));
+                             }
+                     ));
     }
 
     public Money determineDealerMoney(final List<Participant> participants, final Dealer dealer) {
@@ -47,27 +49,18 @@ public class CardTable {
         return participantsResultMoney.keySet()
                                       .stream()
                                       .map(Participant::determineBetMoney)
-                                      .reduce(Money.wons(0), Money::plus)
+                                      .reduce(Money.MIN, Money::plus)
                                       .lose();
     }
 
-    private void matchAfterFinalDeal(final Dealer dealer, final Participant participant) {
-        if (participant.hasNotBetState()) {
-            participant.determineBetState(matchBetween(participant, dealer));
-        }
-    }
+    public Map<Participant, BetResultState> matchAfterFirstDeal(final List<Participant> participants,
+                                                                final Dealer dealer) {
 
-    private BetResultState matchBetween(final Participant participant, final Dealer dealer) {
-        if (participant.isBust()) {
-            return new LoseState();
-        }
-        if (dealer.isBust()) {
-            return new BreakEvenState();
-        }
-        if (participant.score().isLessThan(dealer.score())) {
-            return new LoseState();
-        }
-        return new BreakEvenState();
+        return participants.stream()
+                           .collect(Collectors.toMap(
+                                   Function.identity(),
+                                   participant -> participant.firstMatchWith(dealer)
+                           ));
     }
 
     public boolean dealCardTo(Player player) {
@@ -76,29 +69,5 @@ public class CardTable {
             return true;
         }
         return false;
-    }
-
-    public void matchAfterFirstDeal(final List<Participant> participants,
-                                    final Dealer dealer) {
-        participants.forEach(
-                participant -> matchFirstDealBetween(participant, dealer).
-                        ifPresent(participant::determineBetState)
-        );
-    }
-
-    private Optional<BetResultState> matchFirstDealBetween(final Participant participant, final Dealer dealer) {
-        if (participant.isBlackjack() && dealer.isBlackjack()) {
-            return Optional.of(new BreakEvenState());
-        }
-
-        if (participant.isBlackjack() && !dealer.isBlackjack()) {
-            return Optional.of(new WinState());
-        }
-
-        if (!participant.isBlackjack() && dealer.isBlackjack()) {
-            return Optional.of(new LoseState());
-        }
-
-        return Optional.empty();
     }
 }
