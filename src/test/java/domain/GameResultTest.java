@@ -1,7 +1,7 @@
 package domain;
 
 import domain.game.GameResult;
-import domain.game.GameResult.Result;
+import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Player;
 import java.util.HashMap;
@@ -16,10 +16,10 @@ public class GameResultTest {
     void playerGameResultTest() {
         Participants participants = Participants.of("echo,split");
         GameResult gameResult = new GameResult();
-        gameResult.accumulate(participants.getPlayers().get(0), Result.WIN);
+        gameResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
         Player player = participants.getPlayers().get(0);
-        HashMap<String, Result> resultMap = gameResult.getResultMap();
-        Assertions.assertThat(resultMap.get(player.getName())).isEqualTo(Result.WIN);
+        HashMap<String, ResultStatus> resultMap = gameResult.getResultMap();
+        Assertions.assertThat(resultMap.get(player.getName())).isEqualTo(ResultStatus.WIN);
         
     }
     
@@ -28,10 +28,10 @@ public class GameResultTest {
     void dealerGameResultTest() {
         Participants participants = Participants.of("echo,split");
         GameResult gameResult = new GameResult();
-        gameResult.accumulate(participants.getPlayers().get(0), Result.WIN);
-        HashMap<Result, Integer> dealerResultMap = gameResult.generateDealerResult();
-        Assertions.assertThat(dealerResultMap.get(Result.LOSE)).isEqualTo(1);
-        Assertions.assertThat(dealerResultMap.get(Result.DRAW)).isEqualTo(0);
-        Assertions.assertThat(dealerResultMap.get(Result.WIN)).isEqualTo(0);
+        gameResult.accumulate(participants.getPlayers().get(0), ResultStatus.WIN);
+        HashMap<ResultStatus, Integer> dealerResultMap = gameResult.generateDealerResult();
+        Assertions.assertThat(dealerResultMap.get(ResultStatus.LOSE)).isEqualTo(1);
+        Assertions.assertThat(dealerResultMap.get(ResultStatus.DRAW)).isEqualTo(0);
+        Assertions.assertThat(dealerResultMap.get(ResultStatus.WIN)).isEqualTo(0);
     }
 }

@@ -2,7 +2,7 @@ package view;
 
 import domain.Card.Card;
 import domain.Card.CardCollection;
-import domain.game.GameResult.Result;
+import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
 import java.util.HashMap;
@@ -31,11 +31,11 @@ public class OutputView {
     }
     
     
-    public static void printDealerGameResult(HashMap<Result, Integer> dealerResult) {
+    public static void printDealerGameResult(HashMap<ResultStatus, Integer> dealerResult) {
         System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
-        int winCount = dealerResult.get(Result.WIN);
-        int loseCount = dealerResult.get(Result.LOSE);
-        int drawCount = dealerResult.get(Result.DRAW);
+        int winCount = dealerResult.get(ResultStatus.WIN);
+        int loseCount = dealerResult.get(ResultStatus.LOSE);
+        int drawCount = dealerResult.get(ResultStatus.DRAW);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러: ");
         if (winCount > 0) {
@@ -72,15 +72,15 @@ public class OutputView {
                 + card.getCardShape().getName();
     }
     
-    public static void printPlayersGameResult(final HashMap<String, Result> resultMap) {
+    public static void printPlayersGameResult(final HashMap<String, ResultStatus> resultMap) {
         System.out.println(System.lineSeparator() + FINAL_STATUS_MESSAGE);
         resultMap.forEach((name, result) -> {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(name);
             stringBuilder.append(": ");
-            if (result == Result.WIN) {
+            if (result == ResultStatus.WIN) {
                 stringBuilder.append("승");
-            } else if (result == Result.LOSE) {
+            } else if (result == ResultStatus.LOSE) {
                 stringBuilder.append("패");
             } else {
                 stringBuilder.append("무");

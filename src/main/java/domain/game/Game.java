@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.Card.Deck;
-import domain.game.GameResult.Result;
 import domain.user.Dealer;
 import domain.user.Participants;
 import domain.user.Playable;
@@ -40,23 +39,23 @@ public class Game {
         return gameResult;
     }
     
-    private Result comparePlayerWithDealer(Player player, Dealer dealer) {
+    private ResultStatus comparePlayerWithDealer(Player player, Dealer dealer) {
         if (player.isBust() && !dealer.isBust()) {
-            return Result.LOSE;
+            return ResultStatus.LOSE;
         }
         if (!player.isBust() && dealer.isBust()) {
-            return Result.WIN;
+            return ResultStatus.WIN;
         }
         if (player.isBust() && dealer.isBust()) {
-            return Result.DRAW;
+            return ResultStatus.DRAW;
         }
         if (player.getScore() > dealer.getScore()) {
-            return Result.WIN;
+            return ResultStatus.WIN;
         }
         if (player.getScore() < dealer.getScore()) {
-            return Result.LOSE;
+            return ResultStatus.LOSE;
         }
-        return Result.DRAW;
+        return ResultStatus.DRAW;
     }
     
     public List<Player> getPlayers() {

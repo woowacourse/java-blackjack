@@ -4,7 +4,7 @@ import domain.Card.Deck;
 import domain.game.BlackJackAction;
 import domain.game.Game;
 import domain.game.GameResult;
-import domain.game.GameResult.Result;
+import domain.game.ResultStatus;
 import domain.user.Participants;
 import domain.user.Playable;
 import domain.user.Player;
@@ -75,7 +75,7 @@ public class GameController {
         final Participants participants = game.getParticipants();
         OutputView.printParticipantsNameCardsAndScore(participants);
         GameResult gameResult = game.generateGameResult();
-        HashMap<Result, Integer> dealerResult = gameResult.generateDealerResult();
+        HashMap<ResultStatus, Integer> dealerResult = gameResult.generateDealerResult();
         OutputView.printDealerGameResult(dealerResult);
         OutputView.printPlayersGameResult(gameResult.getResultMap());
     }

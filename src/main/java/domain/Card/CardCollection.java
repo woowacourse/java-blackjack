@@ -1,14 +1,16 @@
 package domain.Card;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class CardCollection implements Iterable<Card> {
     
-    private final java.util.List<Card> cards;
+    private final List<Card> cards;
     
     public CardCollection() {
-        this(new java.util.ArrayList<>());
+        this(new ArrayList<>());
     }
     
     private CardCollection(java.util.List<Card> cards) {
@@ -31,7 +33,7 @@ public class CardCollection implements Iterable<Card> {
     }
     
     public CardCollection add(Card card) {
-        java.util.List<Card> newCards = new java.util.ArrayList<>(this.cards);
+        List<Card> newCards = new ArrayList<>(this.cards);
         newCards.add(card);
         return new CardCollection(newCards);
     }
