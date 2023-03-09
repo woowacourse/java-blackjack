@@ -19,4 +19,14 @@ public class Purse {
                 .collect(toMap(Function.identity(), player -> Money.zero()));
         return new Purse(purses);
     }
+
+    public void addMoney(final Player player, final Money money) {
+        final Money currentMoney = purses.get(player);
+        final Money addedMoney = currentMoney.add(money);
+        purses.put(player, addedMoney);
+    }
+
+    public Money getMoney(final Player player) {
+        return purses.get(player);
+    }
 }
