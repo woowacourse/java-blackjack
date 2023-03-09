@@ -16,12 +16,17 @@ import view.OutputView;
 
 public class GameController {
     
-    public void run(Deck deck) {
-        deck.shuffle();
-        Game game = new Game(this.readPlayerNamesUntilValid(), deck);
+    public void run() {
+        Game game = new Game(this.readPlayerNamesUntilValid(), this.getShuffledDeck());
         this.startGame(game);
         this.runGame(game);
         this.endGame(game);
+    }
+    
+    private Deck getShuffledDeck() {
+        Deck deck = new Deck();
+        deck.shuffle();
+        return deck;
     }
     
     private void startGame(Game game) {
