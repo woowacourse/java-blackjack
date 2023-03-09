@@ -29,10 +29,6 @@ public class BettingAmount {
         return new BettingAmount(revenue * result.getMultiple());
     }
 
-    public BettingAmount add(BettingAmount other) {
-        return new BettingAmount(revenue + other.getRevenue());
-    }
-
     public BettingAmount subtractFromOtherPlayer(BettingAmount other) {
         return new BettingAmount(revenue - other.getRevenue());
     }

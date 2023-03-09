@@ -25,6 +25,12 @@ public class BettingManager {
         return getParticipantRevenuesToString(participantRevenues);
     }
 
+    private Map<Name, BettingAmount> createInitialParticipantRevenues() {
+        Map<Name, BettingAmount> participantsRevenue = new LinkedHashMap<>();
+        participantsRevenue.put(Name.DEALER, BettingAmount.getDealerInitialAmount());
+        return participantsRevenue;
+    }
+
     private void updateParticipantRevenue(Map<Name, BettingAmount> participantRevenues,
                                           Entry<Name, GameResult> playerResult) {
         Name name = playerResult.getKey();
@@ -32,12 +38,6 @@ public class BettingManager {
         participantRevenues.put(name, playerRevenue);
         participantRevenues.put(Name.DEALER,
                 participantRevenues.get(Name.DEALER).subtractFromOtherPlayer(playerRevenue));
-    }
-
-    private Map<Name, BettingAmount> createInitialParticipantRevenues() {
-        Map<Name, BettingAmount> participantsRevenue = new LinkedHashMap<>();
-        participantsRevenue.put(Name.DEALER, BettingAmount.getDealerInitialAmount());
-        return participantsRevenue;
     }
 
     private BettingAmount calculatePlayerRevenue(Name playerName, GameResult result) {

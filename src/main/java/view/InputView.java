@@ -31,7 +31,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public int askPlayerBettingAmount2(String name) {
+    public int askPlayerBettingAmount(String name) {
         String requestAmount = String.format(REQUEST_BATTING_AMOUNT, name);
         System.out.println("\n" + requestAmount);
         return readNumber(SCANNER.nextLine());

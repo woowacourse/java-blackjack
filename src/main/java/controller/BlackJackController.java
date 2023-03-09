@@ -56,7 +56,7 @@ public class BlackJackController {
     private List<BettingAmount> requestBettingAmounts(Players players) {
         List<BettingAmount> bettingAmounts = new ArrayList<>();
         for (String name : players.getPlayerNamesToString()) {
-            bettingAmounts.add(BettingAmount.fromPlayer(inputView.askPlayerBettingAmount2(name)));
+            bettingAmounts.add(BettingAmount.fromPlayer(inputView.askPlayerBettingAmount(name)));
         }
         return bettingAmounts;
     }

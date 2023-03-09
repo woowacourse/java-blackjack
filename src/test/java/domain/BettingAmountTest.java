@@ -59,18 +59,7 @@ class BettingAmountTest {
     }
 
     @Test
-    @DisplayName("딜러가 한 플레이어로부터 이기면, 그 플레이어 배팅 금액의 1배를 얻는다.")
-    void dealerWinAddPlayerBettingAmount() {
-        BettingAmount dealerInitialAmount = BettingAmount.getDealerInitialAmount();
-        BettingAmount playerInitialAmount = BettingAmount.fromPlayer(10000);
-
-        BettingAmount dealerResult = dealerInitialAmount.add(playerInitialAmount);
-
-        assertThat(dealerResult.getRevenue()).isEqualTo(dealerInitialAmount.getRevenue() + 10000);
-    }
-
-    @Test
-    @DisplayName("딜러가 한 플레이어로부터 이기면, 그 플레이어 배팅 금액의 1배를 얻는다.")
+    @DisplayName("딜러는 한 플레이어의 수익만큼의 손실, 또는 이득을 얻는다.")
     void dealerLoseGivePlayerBettingAmount() {
         BettingAmount dealerInitialAmount = BettingAmount.getDealerInitialAmount();
         BettingAmount playerInitialAmount = BettingAmount.fromPlayer(10000);
