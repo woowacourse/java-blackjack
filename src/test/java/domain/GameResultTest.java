@@ -21,7 +21,7 @@ public class  GameResultTest {
     void addGameResultTest(){
         Players players = new Players(List.of("pobi","ocean"));
         GameResult gameResult = new GameResult(players);
-        gameResult.addBetMoney(players.getPlayersWithOutDealer().get(0),10000);
+        gameResult.addBetMoney(players.getPlayersWithOutDealer().get(0),new BettingMoney(10000));
 
         Assertions.assertThat(gameResult.getPlayerProfit(players.getPlayersWithOutDealer().get(0))).isEqualTo(10000);
     }
@@ -34,7 +34,7 @@ public class  GameResultTest {
         gameResult.calculatePlayersResult(players);
 
         Player player = players.getPlayersWithOutDealer().get(0);
-        gameResult.addBetMoney(player,10000);
+        gameResult.addBetMoney(player,new BettingMoney(10000));
 
         Assertions.assertThat(gameResult.getPlayerProfit(player)).isEqualTo(10000);
     }

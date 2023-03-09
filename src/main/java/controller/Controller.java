@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BettingMoney;
 import domain.BlackjackGame;
 import domain.GameResult;
 import domain.deck.CardDeck;
@@ -47,7 +48,7 @@ public class Controller {
     }
     private void setBetMoney(Player player, GameResult gameResult){
         try{
-            gameResult.addBetMoney(player, inputView.readBetMoney());
+            gameResult.addBetMoney(player, new BettingMoney(inputView.readBetMoney()));
         }catch(IllegalArgumentException e){
             System.out.println(e.getMessage());
             setBetMoney(player,gameResult);

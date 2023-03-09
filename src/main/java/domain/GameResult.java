@@ -10,21 +10,21 @@ import java.util.Map;
 public class GameResult {
     private static final int BLACK_JACK = 21;
     private static final Double BLACK_JACK_BONUS = 1.5;
-    private final Map<Player, Integer> gameResult;
+    private final Map<Player, BettingMoney> gameResult;
 
     public GameResult(Players players) {
         this.gameResult = new HashMap<>();
         setPlayersInitialResult(players);
     }
 
-    public void addBetMoney(Player player, Integer money) {
+    public void addBetMoney(Player player, BettingMoney money) {
         gameResult.put(player, money);
     }
 
     private void setPlayersInitialResult(Players players) {
-        gameResult.put(players.findDealer(), 0);
+        gameResult.put(players.findDealer(), new BettingMoney(0));
         for (Player player : players.getPlayersWithOutDealer()) {
-            gameResult.put(player, 0);
+            gameResult.put(player, new BettingMoney(0));
         }
     }
 
@@ -48,28 +48,28 @@ public class GameResult {
 
     private void whenPlayerLose(Dealer dealer, Player player) {
         int playerMoney = getPlayerProfit(player);
-        int dealerMoney = gameResult.get(dealer);
-        gameResult.replace(player, -playerMoney);
-        gameResult.replace(dealer, (dealerMoney + playerMoney));
+        int dealerMoney = gameResult.get(dealer).getBettingMoney();
+        gameResult.replace(player, new BettingMoney(-playerMoney));
+        gameResult.replace(dealer, new BettingMoney(dealerMoney + playerMoney));
     }
 
     private void whenPlayerWin(Dealer dealer, Player player) {
         int playerMoney = getPlayerProfit(player);
-        int dealerMoney = gameResult.get(dealer);
+        int dealerMoney = gameResult.get(dealer).getBettingMoney();
         if (player.getCardsSum() == BLACK_JACK && player.getPlayerCards().size() == 2) {
-            gameResult.replace(player, (int) (playerMoney * BLACK_JACK_BONUS));
-            gameResult.replace(dealer, dealerMoney - (int) (playerMoney * BLACK_JACK_BONUS));
+            gameResult.replace(player, new BettingMoney((int) (playerMoney * BLACK_JACK_BONUS)));
+            gameResult.replace(dealer, new BettingMoney(dealerMoney - (int) (playerMoney * BLACK_JACK_BONUS)));
             return;
         }
-        gameResult.replace(player, playerMoney);
-        gameResult.replace(dealer, (dealerMoney - playerMoney));
+        gameResult.replace(player, new BettingMoney(playerMoney));
+        gameResult.replace(dealer, new BettingMoney(dealerMoney - playerMoney));
     }
 
     private void whenPlayerDraw(Player player) {
-        gameResult.replace(player, 0);
+        gameResult.replace(player, new BettingMoney(0));
     }
 
-    public Integer getPlayerProfit(Player player) {
-        return gameResult.get(player);
+    public int getPlayerProfit(Player player) {
+        return gameResult.get(player).getBettingMoney();
     }
 }
