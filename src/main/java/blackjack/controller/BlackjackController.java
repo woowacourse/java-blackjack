@@ -50,7 +50,7 @@ public class BlackjackController {
     private void printFinalResults(Dealer dealer, Players players) {
         OutputView.printScore(dealer, players);
         UserResult results = blackjackGame.getResults();
-        OutputView.printResults(results);
+        OutputView.printResults(results, dealer);
     }
 
     private void stopServingCard(Player player) {
@@ -95,7 +95,7 @@ public class BlackjackController {
 
         public static boolean isContinue(String input) {
             Arrays.stream(GameCommand.values())
-                    .filter(gameCommand -> gameCommand.input.equals(input))
+                    .filter(gameCommand -> gameCommand.input.equalsIgnoreCase(input.toUpperCase()))
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("'y' 또는 'n' 중에 입력하세요."));
             return CONTINUE.input.equals(input);
