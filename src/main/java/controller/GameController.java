@@ -36,7 +36,7 @@ public final class GameController {
         printParticipantCards(gameManager, dealer, players);
         drawPlayersCard(players, gameManager);
         handleDealerCards(dealer, gameManager);
-        printGameResult(gameManager);
+        printGameResult(dealer, players);
         printFinalGameResult(dealer, players);
     }
 
@@ -136,9 +136,9 @@ public final class GameController {
         }
     }
 
-    private void printGameResult(final GameManager gameManager) {
-        gameManager.getParticipants()
-                .forEach(this::printParticipantCardResult);
+    private void printGameResult(final Dealer dealer, final List<Player> players) {
+        printParticipantCardResult(dealer);
+        players.forEach(this::printParticipantCardResult);
     }
 
     private void printParticipantCardResult(final Participant participant) {
