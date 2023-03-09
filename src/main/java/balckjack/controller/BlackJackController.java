@@ -17,11 +17,11 @@ public class BlackJackController {
         final Players players = Repeater.repeatIfError(this::inputPlayerNames,
             OutputView::printErrorMessage);
         final Dealer dealer = new Dealer();
-        final Referee referee = new Referee();
 
         initializeGame(cardPicker, players, dealer);
-        tryPlayersTurn(cardPicker, players, referee);
-        tryDealerTurn(cardPicker, dealer, referee);
+        tryPlayersTurn(cardPicker, players);
+        tryDealerTurn(cardPicker, dealer);
+        final Referee referee = new Referee(dealer,players);
         reportResult(players, dealer, referee);
     }
 
@@ -32,15 +32,15 @@ public class BlackJackController {
         OutputView.printInitCardDeck(dealer, players);
     }
 
-    private void tryPlayersTurn(CardPicker cardPicker, Players players, Referee referee) {
+    private void tryPlayersTurn(CardPicker cardPicker, Players players) {
         for (Player player : players.getPlayers()) {
-            tryPlayerTurn(referee, player, cardPicker);
+            tryPlayerTurn(player, cardPicker);
         }
     }
 
-    private void tryPlayerTurn(Referee referee, Player player, CardPicker cardPicker) {
-        if (isContinueHit(player, cardPicker) && !isBurst(referee, player)) {
-            tryPlayerTurn(referee, player, cardPicker);
+    private void tryPlayerTurn(Player player, CardPicker cardPicker) {
+        if (isContinueHit(player, cardPicker) && !isBurst(player)) {
+            tryPlayerTurn(player, cardPicker);
         }
     }
 
@@ -58,7 +58,7 @@ public class BlackJackController {
             OutputView::printErrorMessage);
     }
 
-    private boolean isBurst(Referee referee, Player player) {
+    private boolean isBurst(Player player) {
         if (player.getCardDeck().calculateScore().isBurst()) {
             OutputView.printBurstMessage();
             return true;
@@ -74,15 +74,15 @@ public class BlackJackController {
         return Command.toCommand(InputView.inputReply(player.getName().getValue()));
     }
 
-    private void tryDealerTurn(CardPicker cardPicker, Dealer dealer, Referee referee) {
-        while (referee.isContinueDealerTurn(dealer)) {
+    private void tryDealerTurn(CardPicker cardPicker, Dealer dealer) {
+        while (dealer.isContinueDealerTurn()) {
             dealer.hit(cardPicker);
             OutputView.printDealerPickMessage(dealer);
         }
     }
 
     private void reportResult(Players players, Dealer dealer, Referee referee) {
-        List<Result> results = referee.judgeResult(dealer, players);
+        List<Result> results = referee.getResults();
         OutputView.printFinalCardDeck(dealer, players, referee);
         OutputView.printResult(referee.countDealerResult(results), dealer, players,
             results);

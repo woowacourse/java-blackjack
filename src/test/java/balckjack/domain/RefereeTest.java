@@ -9,13 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class RefereeTest {
 
-    Referee referee;
-
-    @BeforeEach
-    void init() {
-        referee = new Referee();
-    }
-
+    
     @Test
     void testResult() {
 
@@ -56,7 +50,7 @@ class RefereeTest {
         players.getPlayers().get(3).hit(new StubCardPicker(card12));
         players.getPlayers().get(3).hit(new StubCardPicker(card13));
 
-        List<Result> result = referee.judgeResult(dealer, players);
+        List<Result> result = new Referee(dealer, players).getResults();
         Assertions.assertThat(result)
             .isEqualTo(List.of(Result.WIN, Result.LOSE, Result.DRAW, Result.LOSE));
     }
@@ -101,7 +95,7 @@ class RefereeTest {
         players.getPlayers().get(3).hit(new StubCardPicker(card12));
         players.getPlayers().get(3).hit(new StubCardPicker(card13));
 
-        List<Result> result = referee.judgeResult(dealer, players);
+        List<Result> result = new Referee(dealer, players).getResults();
         Assertions.assertThat(result)
             .isEqualTo(List.of(Result.WIN, Result.WIN, Result.WIN, Result.LOSE));
     }
