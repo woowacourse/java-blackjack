@@ -21,7 +21,7 @@ class PlayerTest {
         cardList.add(new Card(Suit.SPADE, Denomination.NINE));
         cardList.add(new Card(Suit.DIAMOND, Denomination.NINE));
         Cards cards = new Cards(cardList);
-        Player player = new Player(cards, "player");
+        Player player = new Player("player", cards);
 
         //when
         player.addCard(new Card(Suit.SPADE, Denomination.THREE));
@@ -38,7 +38,7 @@ class PlayerTest {
         cardList.add(new Card(Suit.SPADE, Denomination.NINE));
         cardList.add(new Card(Suit.DIAMOND, Denomination.NINE));
         Cards cards = new Cards(cardList);
-        Player player = new Player(cards, "player");
+        Player player = new Player("player", cards);
 
         //when
         player.addCard(new Card(Suit.SPADE, Denomination.FOUR));

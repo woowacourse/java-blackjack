@@ -8,11 +8,11 @@ public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer(final Cards cards) {
-        super(cards, DEALER_NAME);
+        super(DEALER_NAME, cards);
     }
 
     public Dealer()  {
-        super(new Cards(new ArrayList<>()), DEALER_NAME);
+        super(DEALER_NAME, new Cards(new ArrayList<>()));
     }
 
     @Override

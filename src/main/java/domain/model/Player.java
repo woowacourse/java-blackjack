@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Player {
 
-    private final Cards cards;
     private final String name;
+    private final Cards cards;
     private Score score;
 
-    public Player(final Cards cards, final String name) {
-        this.cards = cards;
+    public Player(final String name, final Cards cards) {
         this.name = name;
+        this.cards = cards;
         this.score = makeScore(cards);
     }
 
@@ -20,7 +20,7 @@ public class Player {
     }
 
     public static Player from(final String name) {
-        return new Player(new Cards(new ArrayList<>()), name);
+        return new Player(name, new Cards(new ArrayList<>()));
     }
 
     public void addCard(final Card card) {
@@ -32,12 +32,12 @@ public class Player {
         return !score.isBust();
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards.getCards());
-    }
-
     public String getName() {
         return name;
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards.getCards());
     }
 
     public Score getScore() {

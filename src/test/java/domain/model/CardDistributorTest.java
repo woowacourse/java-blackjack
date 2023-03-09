@@ -15,7 +15,7 @@ class CardDistributorTest {
     public void testGiveCardToOne() {
         //given
         List<Card> cardList = new ArrayList<>();
-        Player player = new Player(new Cards(cardList), "player");
+        Player player = new Player("player", new Cards(cardList));
 
         //when
         cardDistributor.giveCard(player);
@@ -29,9 +29,9 @@ class CardDistributorTest {
     public void testGiveCardToAll() {
         //given
         List<Card> cardList1 = new ArrayList<>();
-        Player player1 = new Player(new Cards(cardList1), "player1");
+        Player player1 = new Player("player1", new Cards(cardList1));
         List<Card> cardList2 = new ArrayList<>();
-        Player player2 = new Player(new Cards(cardList2), "player2");
+        Player player2 = new Player("player2", new Cards(cardList2));
 
         //when
         cardDistributor.giveCard(List.of(player1, player2));
