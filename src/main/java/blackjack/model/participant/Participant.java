@@ -5,7 +5,6 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
 import blackjack.model.card.HandCard;
-import blackjack.model.state.ParticipantState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,47 +16,54 @@ public abstract class Participant {
 
     private final int id;
     private final Name name;
-    protected ParticipantState currentState;
     protected final HandCard handcard;
 
-    public Participant(Name name, ParticipantState state, HandCard handCard) {
+    public Participant(Name name, HandCard handCard) {
         this.id = CURRENT_MAX_ID;
         this.name = name;
-        this.currentState = state;
         this.handcard = handCard;
         CURRENT_MAX_ID++;
     }
 
-    public Participant(Name name, ParticipantState state) {
-        this(name, state, new HandCard());
+    public Participant(Name name) {
+        this(name, new HandCard());
     }
 
-    abstract public ResultState resultState();
+    public void draw(CardDeck cardDeck) {
+        if (isFinished()) {
+            throw new IllegalStateException("카드를 더 뽑을 수 없는 상태입니다.");
+        }
+        handcard.add(cardDeck.pick());
+    }
 
-    abstract public void draw(CardDeck cardDeck);
-
-    abstract public void changeToStand();
+    public void drawFirstTurnCards(CardDeck cardDeck) {
+        if (!handcard.isEmpty()) {
+            throw new IllegalStateException("이미 첫 카드를 뽑은 상태입니다.");
+        }
+        draw(cardDeck);
+        draw(cardDeck);
+    }
 
     abstract public Map<String, List<Card>> firstDistributedCard();
+
+    abstract public boolean isFinished();
 
     public CardScore cardScore() {
         return handcard.score(resultState());
     }
+
+    abstract protected ResultState resultState();
 
     public boolean isEqualId(int findId) {
         return this.id == findId;
     }
 
     public boolean isBlackjack() {
-        return currentState.isBlackjack();
+        return (handcard.size() == 2) && handcard.isBigScoreEqual(BLACKJACK_NUMBER);
     }
 
-    public boolean isBust() {
-        return currentState.isBust();
-    }
-
-    public boolean isFinished() {
-        return currentState.isFinished();
+    protected boolean isBust() {
+        return handcard.isSmallScoreOver(21) && handcard.isBigScoreOver(21);
     }
 
     public List<Card> getCards() {

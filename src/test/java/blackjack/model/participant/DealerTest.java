@@ -5,8 +5,6 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
-import blackjack.model.state.DealerDrawState;
-import blackjack.model.state.DealerInitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +20,7 @@ class DealerTest {
     @DisplayName("딜러의 처음 분배 카드를 조회 - 실패 : 받은 카드가 없을 경우 예외 발생")
     void dealer_firstDistributed_card_fail() {
         //given
-        Dealer dealer = new Dealer(new DealerInitialState());
+        Dealer dealer = new Dealer();
 
         //then
         assertThatThrownBy(dealer::firstDistributedCard)
@@ -40,7 +38,7 @@ class DealerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         List<Card> cards = List.of(card1, card2, card3, card4);
         CardDeck cardDeck = new CardDeck(cards);
-        Dealer dealer = new Dealer(new DealerInitialState());
+        Dealer dealer = new Dealer();
 
         // when
         dealer.draw(cardDeck);
@@ -59,7 +57,7 @@ class DealerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
 
         List<Card> cards = List.of(card4, card3);
-        Dealer dealer = new Dealer(new DealerDrawState(), new HandCard(new ArrayList<>(List.of(card1, card2))));
+        Dealer dealer = new Dealer(new HandCard(new ArrayList<>(List.of(card1, card2))));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
@@ -68,6 +66,6 @@ class DealerTest {
         //then
         assertThatThrownBy(() -> dealer.draw(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("스탠드 상태에서는 카드를 더 뽑을 수 없습니다.");
+                .hasMessage("카드를 더 뽑을 수 없는 상태입니다.");
     }
 }

@@ -3,11 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.ResultState;
 import blackjack.model.WinningResult;
 import blackjack.model.card.Card;
-import blackjack.model.card.CardDeck;
 import blackjack.model.card.HandCard;
-import blackjack.model.state.DealerInitialState;
-import blackjack.model.state.DrawState;
-import blackjack.model.state.ParticipantState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,40 +14,25 @@ public class Dealer extends Participant {
     public static final int DEALER_HIT_NUMBER = 16;
     public static final int FIRST_CARD = 0;
 
-    public Dealer() {super(new Name("딜러"), new DealerInitialState());}
+    public Dealer() {super(new Name("딜러"));}
 
-    public Dealer(ParticipantState currentState) {
-        super(new Name("딜러"), currentState);
-    }
-
-    public Dealer(ParticipantState currentState, HandCard handCard) {
-        super(new Name("딜러"), currentState, handCard);
+    public Dealer(HandCard handCard) {
+        super(new Name("딜러"), handCard);
     }
 
     @Override
-    public void draw(CardDeck cardDeck) {
-        if (currentState instanceof DrawState) {
-            this.currentState = ((DrawState) currentState).turnDealerDrawState();
+    public Map<String, List<Card>> firstDistributedCard() {
+        if (handcard.isEmpty()) {
+            throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
         }
-        this.currentState = currentState.draw(cardDeck, this.handcard);
+        Map<String, List<Card>> firstCardUnits = new HashMap<>();
+        firstCardUnits.put(getName(), List.of(handcard.getCards().get(FIRST_CARD)));
+        return firstCardUnits;
     }
 
     @Override
-    public void changeToStand() {
-        if (currentState instanceof DrawState) {
-            this.currentState = ((DrawState) currentState).turnStandState();
-        }
-    }
-
-    @Override
-    public ResultState resultState() {
-        if (this.isBlackjack()) {
-            return ResultState.BLACKJACK;
-        }
-        if (this.isBust()) {
-            return ResultState.DEALER_BUST;
-        }
-        return ResultState.STAND;
+    public boolean isFinished() {
+        return (isBlackjack() || isBust() || isStand());
     }
 
     public Map<String, WinningResult> participantWinningResults(Players players) {
@@ -68,12 +49,21 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Map<String, List<Card>> firstDistributedCard() {
-        if ((handcard.size() == 0)) {
-            throw new IllegalStateException("카드를 분배 받지 않은 상태입니다.");
+    protected ResultState resultState() {
+        if (this.isBlackjack()) {
+            return ResultState.BLACKJACK;
         }
-        Map<String, List<Card>> firstCardUnits = new HashMap<>();
-        firstCardUnits.put(getName(), List.of(handcard.getCards().get(FIRST_CARD)));
-        return firstCardUnits;
+        if (this.isBust()) {
+            return ResultState.DEALER_BUST;
+        }
+        return ResultState.STAND;
+    }
+
+    private boolean isStand() {
+        int validScore = handcard.bigScore();
+        if (validScore > BLACKJACK_NUMBER) {
+            validScore = handcard.smallScore();
+        }
+        return validScore > DEALER_HIT_NUMBER;
     }
 }

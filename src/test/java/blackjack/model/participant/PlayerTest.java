@@ -5,10 +5,6 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardSuit;
-import blackjack.model.state.BlackjackState;
-import blackjack.model.state.BustState;
-import blackjack.model.state.DrawState;
-import blackjack.model.state.InitialState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +21,7 @@ class PlayerTest {
     @DisplayName("플레이어 처음 카드 분배 - 성공 : 두 장의 카드를 지급받는다.")
     void player_initial_state_draw() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState());
+        Player player = new Player(new Name("도치"));
 
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.JACK);
@@ -33,7 +29,7 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        player.draw(cardDeck);
+        player.drawFirstTurnCards(cardDeck);
 
         //then
         assertThat(player.getCards()).containsExactly(card2, card1);
@@ -43,7 +39,7 @@ class PlayerTest {
     @DisplayName("플레이어의 처음 분배 카드를 조회 - 실패 : 받은 카드가 없을 경우 예외 발생")
     void player_firstDistributed_card_fail() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState());
+        Player player = new Player(new Name("도치"));
 
         //then
         assertThatThrownBy(player::firstDistributedCard).isInstanceOf(IllegalStateException.class)
@@ -54,7 +50,7 @@ class PlayerTest {
     @DisplayName("플레이어의 처음 분배 카드를 조회 - 성공 : 분배된 순으로 2장을 노출한다.")
     void player_firstDistributed_card_success() {
         //given
-        Player player = new Player(new Name("도치"), new InitialState());
+        Player player = new Player(new Name("도치"));
 
         Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
         Card card2 = Card.of(CardSuit.HEART, CardNumber.FIVE);
@@ -64,30 +60,11 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        player.draw(cardDeck);
+        player.drawFirstTurnCards(cardDeck);
         Map<String, List<Card>> firstDistributedCard = player.firstDistributedCard();
 
         //then
         assertThat(firstDistributedCard.get("도치")).containsExactly(card4, card3);
-    }
-
-    @Test
-    @DisplayName("플레이어 Bust상태 도달 - 성공 : hit 하다가 점수가 21을 넘기면 bust 상태가 된다.")
-    void player_draw_change_to_bust_success() {
-        //given
-        Card card1 = Card.of(CardSuit.CLUB, CardNumber.EIGHT);
-        Card card2 = Card.of(CardSuit.HEART, CardNumber.NINE);
-
-        List<Card> cards = List.of(card1, card2);
-        Player player = new Player(new Name("도치"), new DrawState(), new HandCard(new ArrayList<>(cards)));
-        Card card3 = Card.of(CardSuit.DIAMOND, CardNumber.NINE);
-        CardDeck cardDeck = new CardDeck(List.of(card3));
-
-        // when
-        player.draw(cardDeck);
-
-        //then
-        assertThat(player.isBust()).isTrue();
     }
 
     @Test
@@ -100,13 +77,13 @@ class PlayerTest {
         Card card4 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
 
         List<Card> cards = List.of(card1, card2, card3, card4);
-        Player player = new Player(new Name("도치"), new BustState(), new HandCard(new ArrayList<>(cards)));
+        Player player = new Player(new Name("도치"), new HandCard(new ArrayList<>(cards)));
         CardDeck cardDeck = new CardDeck(cards);
 
         //then
         assertThatThrownBy(() -> player.draw(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("버스트 상태에서는 카드를 더 뽑을 수 없습니다.");
+                .hasMessage("카드를 더 뽑을 수 없는 상태입니다.");
     }
 
     @Test
@@ -117,11 +94,11 @@ class PlayerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
 
         List<Card> cards = List.of(card1, card2);
-        Player player = new Player(new Name("도치"), new InitialState());
+        Player player = new Player(new Name("도치"));
         CardDeck cardDeck = new CardDeck(cards);
 
         // when
-        player.draw(cardDeck);
+        player.drawFirstTurnCards(cardDeck);
 
         //then
         assertThat(player.isBlackjack()).isTrue();
@@ -135,13 +112,13 @@ class PlayerTest {
         Card card2 = Card.of(CardSuit.HEART, CardNumber.ACE);
 
         List<Card> cards = List.of(card1, card2);
-        Player player = new Player(new Name("도치"), new BlackjackState(), new HandCard(cards));
+        Player player = new Player(new Name("도치"), new HandCard(cards));
         Card card3 = Card.of(CardSuit.HEART, CardNumber.EIGHT);
         CardDeck cardDeck = new CardDeck(List.of(card3));
 
         //then
         assertThatThrownBy(() -> player.draw(cardDeck))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("블랙잭 상태에서는 카드를 더 뽑을 수 없습니다.");
+                .hasMessage("카드를 더 뽑을 수 없는 상태입니다.");
     }
 }

@@ -68,6 +68,10 @@ public class HandCard {
         return cards.size();
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     private List<CardNumber> getCardNumbers() {
         return cards.stream()
                 .map(Card::getNumber)

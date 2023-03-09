@@ -4,7 +4,6 @@ import blackjack.model.WinningResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardScore;
-import blackjack.model.state.InitialState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +15,7 @@ public class Players {
 
     public Players(List<String> playerNames) {
         this.players = playerNames.stream()
-                .map(name -> new Player(new Name(name), new InitialState()))
+                .map(name -> new Player(new Name(name)))
                 .collect(Collectors.toList());
     }
 
@@ -25,7 +24,7 @@ public class Players {
             throw new IllegalStateException("첫 분배를 시작할 수 없는 상태입니다.");
         }
         for (Player player : players) {
-            player.draw(cardDeck);
+            player.drawFirstTurnCards(cardDeck);
         }
     }
 
@@ -41,13 +40,6 @@ public class Players {
     public void hit(CardDeck cardDeck, int playerId) {
         Player player = getPlayerById(playerId);
         player.draw(cardDeck);
-    }
-
-    public void changeToStand(int playerId) {
-        Player player = getPlayerById(playerId);
-        if (!player.isFinished()) {
-            player.changeToStand();
-        }
     }
 
     public boolean isBlackjack(int playerId) {
