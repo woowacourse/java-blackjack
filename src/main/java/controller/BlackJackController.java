@@ -63,9 +63,7 @@ public class BlackJackController {
     }
 
     private void hitForParticipants(final CardTable cardTable, final List<Participant> participants) {
-        participants.stream()
-                    .filter(Participant::hasNotBetState)
-                    .forEach(participant -> hitForParticipant(cardTable, participant));
+        participants.forEach(participant -> hitForParticipant(cardTable, participant));
     }
 
     private void hitForParticipant(final CardTable cardTable, final Participant participant) {
