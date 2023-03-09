@@ -19,10 +19,6 @@ public final class ParticipantName {
         return new ParticipantName(name);
     }
 
-    boolean isSame(final String name) {
-        return this.name.equals(name);
-    }
-
     private static void validateNullName(final String name) {
         if (Objects.isNull(name)) {
             throw new IllegalArgumentException("이름은 Null일 수 없습니다.");
@@ -39,6 +35,27 @@ public final class ParticipantName {
         if (name.length() > MAX_LENGTH) {
             throw new IllegalArgumentException("이름은 1글자에서 20글자 사이여야 합니다.");
         }
+    }
+
+    boolean isSame(final String name) {
+        return this.name.equals(name);
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof ParticipantName)) {
+            return false;
+        }
+        ParticipantName targetName = (ParticipantName) target;
+        return Objects.equals(name, targetName.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     String getName() {

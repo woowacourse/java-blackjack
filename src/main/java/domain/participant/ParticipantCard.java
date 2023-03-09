@@ -5,6 +5,7 @@ import domain.card.Score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static domain.card.CardNumber.ACE;
 
@@ -57,6 +58,23 @@ public class ParticipantCard {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof ParticipantCard)) {
+            return false;
+        }
+        ParticipantCard targetCard = (ParticipantCard) target;
+        return Objects.equals(cards, targetCard.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 
     List<Card> getCards() {

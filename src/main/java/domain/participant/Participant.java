@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Score;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Participant {
 
@@ -45,5 +46,22 @@ public class Participant {
 
     public final List<Card> getHand() {
         return List.copyOf(hand.getCards());
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Participant)) {
+            return false;
+        }
+        Participant targetParticipant = (Participant) target;
+        return Objects.equals(hand, targetParticipant.hand) && Objects.equals(name, targetParticipant.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hand, name);
     }
 }
