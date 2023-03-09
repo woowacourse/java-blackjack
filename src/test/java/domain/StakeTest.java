@@ -5,6 +5,7 @@ import domain.stake.Stake;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -73,5 +74,17 @@ class StakeTest {
         int value = dealerPrize.getValue();
         //then
         assertThat(value).isEqualTo(-150);
+    }
+
+    @Test
+    @DisplayName("Stake 합산 테스트")
+    void addStakeTest() {
+        //given
+        Stake stake1 = Stake.from(150);
+        Stake stake2 = Stake.from(100);
+        //when
+        Stake add = stake1.add(stake2);
+        //then
+        assertThat(add).isEqualTo(Stake.from(250));
     }
 }

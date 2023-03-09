@@ -38,6 +38,10 @@ public class Stake {
         return new Stake((int) (PLAYER_NEGATE * value * dealerStatus.getMultiply()));
     }
 
+    public Stake add(Stake stake) {
+        return new Stake(this.value + stake.value);
+    }
+
     public int getValue() {
         return value;
     }
