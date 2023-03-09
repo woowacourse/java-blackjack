@@ -43,10 +43,6 @@ public class GameResult {
         return dealerResult;
     }
 
-    public int getDealerResultTypeCount(ResultType resultType) {
-        return Collections.frequency(dealerResult.values().stream().findFirst().get(), resultType);
-    }
-
     public Map<String, ResultType> getPlayerResult() {
         return playerResult;
     }

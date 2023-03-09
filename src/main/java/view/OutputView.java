@@ -2,7 +2,9 @@ package view;
 
 import domain.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -61,10 +63,11 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         String dealerName = gameResult.getDealerResult().keySet().stream().findFirst().get();
+        List<ResultType> dealerResult = gameResult.getDealerResult().get(dealerName);
         System.out.printf(DEALER_RESULT_MESSAGE, dealerName,
-                gameResult.getDealerResultTypeCount(ResultType.WIN),
-                gameResult.getDealerResultTypeCount(ResultType.DRAW),
-                gameResult.getDealerResultTypeCount(ResultType.LOSE));
+                Collections.frequency(dealerResult, ResultType.WIN),
+                Collections.frequency(dealerResult, ResultType.DRAW),
+                Collections.frequency(dealerResult, ResultType.LOSE));
         for (String playerName : gameResult.getPlayerResult().keySet()) {
             System.out.printf(PLAYER_RESULT_MESSAGE, playerName,
                     gameResult.getPlayerResult().get(playerName).getResultType());
