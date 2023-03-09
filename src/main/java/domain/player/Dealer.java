@@ -49,10 +49,10 @@ public class Dealer extends Player {
         return player.isBlackjack() && this.isBlackjack();
     }
 
-    public Map<Player, Stake> calculateBets(final Players players, final Map<Player, DealerStatus> dealerStatus, final Map<Player, Stake> playerBets) {
+    public Map<Player, Stake> calculateBets(final Players players, final Map<Player, DealerStatus> dealerStats, final Map<Player, Stake> playerBets) {
         Map<Player, Stake> prizeResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            DealerStatus singleResult = dealerStatus.get(player);
+            DealerStatus singleResult = dealerStats.get(player);
             Stake singleStake = playerBets.get(player);
             prizeResult.merge(this, singleStake.getDealerPrize(singleResult), Stake::add);
             prizeResult.merge(player, singleStake.getPlayerPrize(singleResult), Stake::add);
