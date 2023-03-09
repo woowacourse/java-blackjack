@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Result;
 import java.util.Map;
 
 public class Betting {
@@ -25,10 +26,9 @@ public class Betting {
         }
     }
 
-    public void fail(final Player player) {
+    public void updateByResult(final Player player, final Result result) {
         validateExistPlayer(player);
-        final Profit profit = expectedProfit.get(player);
-        expectedProfit.put(player, profit.loss());
+        expectedProfit.put(player, result.calculate(expectedProfit.get(player)));
     }
 
     public Profit getPlayerProfit(final Player player) {

@@ -40,13 +40,7 @@ public class BlackJackGame {
 
         for (final Player player : players) {
             final Result result = dealer.showResult(player.getScore());
-            applyProfit(player, result);
-        }
-    }
-
-    private void applyProfit(final Player player, final Result result) {
-        if (result == Result.LOSE) {
-            betting.fail(player);
+            betting.updateByResult(player, result);
         }
     }
 

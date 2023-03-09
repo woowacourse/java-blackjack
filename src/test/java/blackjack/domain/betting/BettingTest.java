@@ -4,6 +4,9 @@ import static blackjack.domain.card.Number.ACE;
 import static blackjack.domain.card.Number.QUEEN;
 import static blackjack.domain.card.Suit.CLOVER;
 import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.participant.Result.DRAW;
+import static blackjack.domain.participant.Result.LOSE;
+import static blackjack.domain.participant.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -48,18 +51,58 @@ class BettingTest {
         }
     }
 
-    @Test
-    void 플레이어가_베팅에_실패하면_수익을_잃는다() {
-        final Player player = new Player("toney");
-        player.drawCard(new Card(QUEEN, CLOVER));
-        player.drawCard(new Card(ACE, HEART));
+    @Nested
+    class updateByResult_메서드는 {
 
-        final Map<Player, Profit> expectedProfit = new HashMap<>();
-        expectedProfit.put(player, new Profit(10000));
-        final Betting betting = new Betting(expectedProfit);
-        betting.fail(player);
+        @Test
+        void 플레이어가_존재하지_않으면_예외를_던진다() {
+            final Player player = new Player("toney");
 
-        assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(-10000);
+            final Map<Player, Profit> expectedProfit = new HashMap<>();
+            final Betting betting = new Betting(expectedProfit);
+
+            assertThatThrownBy(() -> betting.updateByResult(player, WIN)).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Nested
+        class 플레이어가_존재하면 {
+
+            @Test
+            void 결과가_WIN_일때_수익이_유지된다() {
+                final Player player = new Player("toney");
+
+                final Map<Player, Profit> expectedProfit = new HashMap<>();
+                expectedProfit.put(player, new Profit(10000));
+                final Betting betting = new Betting(expectedProfit);
+                betting.updateByResult(player, WIN);
+
+                assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(10000);
+            }
+
+            @Test
+            void 결과가_DRAW_일때_수익이_사라진다() {
+                final Player player = new Player("toney");
+
+                final Map<Player, Profit> expectedProfit = new HashMap<>();
+                expectedProfit.put(player, new Profit(10000));
+                final Betting betting = new Betting(expectedProfit);
+                betting.updateByResult(player, DRAW);
+
+                assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(0);
+            }
+
+            @Test
+            void 결과가_LOSE_일때_수익이_지출로_변한다() {
+                final Player player = new Player("toney");
+
+                final Map<Player, Profit> expectedProfit = new HashMap<>();
+                expectedProfit.put(player, new Profit(10000));
+                final Betting betting = new Betting(expectedProfit);
+                betting.updateByResult(player, LOSE);
+
+                assertThat(betting.getPlayerProfit(player).getValue()).isEqualTo(-10000);
+            }
+        }
     }
 
     @Nested
