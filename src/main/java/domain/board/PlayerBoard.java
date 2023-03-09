@@ -24,7 +24,7 @@ public class PlayerBoard {
         status = getResultByScore(point);
     }
 
-    protected PlayerStatus getResultByScore(int point) {
+    private PlayerStatus getResultByScore(int point) {
         if (point > BLACK_JACK_POINT) {
             return PlayerStatus.BUST;
         }
@@ -44,13 +44,5 @@ public class PlayerBoard {
 
     public int getPoint() {
         return player.getPoint();
-    }
-
-    @Override
-    public String toString() {
-        return "PlayerBoard{" +
-            "player=" + player +
-            ", status=" + status +
-            '}';
     }
 }

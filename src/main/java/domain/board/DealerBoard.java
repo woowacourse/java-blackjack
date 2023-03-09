@@ -20,7 +20,7 @@ public class DealerBoard {
         status = getResultByScore(point);
     }
 
-    protected PlayerStatus getResultByScore(int point) {
+    private PlayerStatus getResultByScore(int point) {
         if (point > BLACK_JACK_POINT) {
             return PlayerStatus.BUST;
         }
