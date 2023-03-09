@@ -18,6 +18,9 @@
 ### CardPrintMapper
 - [x] Card에게 정보를 받아 CardNumber와 Symbol에 대한 정보를 출력용으로 변환한다.
 
+### MatchResultMapper
+- [x] Result를 출력용으로 변환한다.
+
 ### Participants
 - 딜러와 플레이어간의 상호작용을 관리
 - [x] 모든 Plyaer와 Dealer에게 카드를 2장씩 전달한다.

@@ -68,7 +68,6 @@ public class OutputView {
             System.out.printf(" %d무", dealerDraws);
         }
         System.out.println();
-        playerResults.getRepository()
-                .forEach((player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
+        playerResults.getRepository().forEach((player, result) -> System.out.println(player.getNameValue() + ": " + MatchResultMapper.transformToPrintResult(result)));
     }
 }
