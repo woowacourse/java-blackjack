@@ -13,7 +13,7 @@ public class CardCollection implements Iterable<Card> {
         this(new ArrayList<>());
     }
     
-    private CardCollection(java.util.List<Card> cards) {
+    private CardCollection(List<Card> cards) {
         this.cards = cards;
     }
     

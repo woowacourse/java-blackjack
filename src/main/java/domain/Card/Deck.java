@@ -7,39 +7,29 @@ import java.util.List;
 public class Deck {
     
     public static final String NO_CARDS_IN_DECK = "덱에 카드가 없습니다.";
-    private final List<Card> cards;
+    private static final List<Card> cards = new ArrayList<>();
     
-    public Deck() {
-        this.cards = this.generateCards();
-    }
-    
-    private List<Card> generateCards() {
-        List<Card> cards = new ArrayList<>();
+    static {
         for (CardNumber value : CardNumber.values()) {
-            this.generateCard(cards, value);
-        }
-        return cards;
-    }
-    
-    private void generateCard(List<Card> cards, CardNumber value) {
-        for (CardShape cardShape : CardShape.values()) {
-            Card card = new Card(value, cardShape);
-            cards.add(card);
+            for (CardShape cardShape : CardShape.values()) {
+                Card card = new Card(value, cardShape);
+                cards.add(card);
+            }
         }
     }
     
     public void shuffle() {
-        Collections.shuffle(this.cards);
+        Collections.shuffle(cards);
     }
     
     public Card draw() {
-        if (this.cards.isEmpty()) {
+        if (cards.isEmpty()) {
             throw new IllegalStateException(NO_CARDS_IN_DECK);
         }
-        return this.cards.remove(0);
+        return cards.remove(0);
     }
     
     public int getSize() {
-        return this.cards.size();
+        return cards.size();
     }
 }
