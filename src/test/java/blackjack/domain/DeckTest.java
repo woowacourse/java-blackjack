@@ -6,17 +6,17 @@ import blackjack.util.CardPickerGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardsTest {
+class DeckTest {
 
     @Test
     @DisplayName("랜덤의 카드를 뽑아서 비교")
     void create() {
         //give
-        Cards cards = Cards.create(new TestCardPickerGenerator(0));
+        Deck deck = Deck.create(new TestCardPickerGenerator(0));
         Card card = new Card(CardNumber.ACE, CardSuit.SPADE);
 
         //when
-        Card result = cards.pick();
+        Card result = deck.pick();
 
         //then
         assertThat(result).isEqualTo(card);

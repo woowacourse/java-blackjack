@@ -7,23 +7,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class Deck {
 
     private static final int MAX_DECK_SIZE = 6;
     private final List<Card> cards;
     private final CardPickerGenerator cardPickerGenerator;
 
-    private Cards(List<Card> cards, CardPickerGenerator cardPickerGenerator) {
+    private Deck(List<Card> cards, CardPickerGenerator cardPickerGenerator) {
         this.cards = cards;
         this.cardPickerGenerator = cardPickerGenerator;
     }
 
-    public static Cards create(CardPickerGenerator cardPickerGenerator) {
+    public static Deck create(CardPickerGenerator cardPickerGenerator) {
         List<Card> deck = new ArrayList<>();
         for (int count = 0; count < MAX_DECK_SIZE; count++) {
             deck.addAll(initCards());
         }
-        return new Cards(deck,cardPickerGenerator);
+        return new Deck(deck,cardPickerGenerator);
     }
 
     private static List<Card> initCards() {

@@ -7,15 +7,15 @@ public class BlackjackGame {
     private static final int FIRST_HIT_COUNT = 2;
 
     private final Participants participants;
-    private final Cards cards;
+    private final Deck deck;
 
-    private BlackjackGame(Participants participants, Cards cards) {
+    private BlackjackGame(Participants participants, Deck deck) {
         this.participants = participants;
-        this.cards = cards;
+        this.deck = deck;
     }
 
-    public static BlackjackGame of(List<String> playerName, Cards cards) {
-        return new BlackjackGame(Participants.from(playerName, new Dealer()), cards);
+    public static BlackjackGame of(List<String> playerName, Deck deck) {
+        return new BlackjackGame(Participants.from(playerName, new Dealer()), deck);
     }
 
     public BlackjackGameResult generatePlayersResult(BlackJackReferee referee) {
@@ -27,19 +27,19 @@ public class BlackjackGame {
 
     public void getTwoHitCards(final Participant participant) {
         for (int count = 0; count < FIRST_HIT_COUNT; count++) {
-            participant.hit(cards.pick());
+            participant.hit(deck.pick());
         }
     }
 
     public void hitDealerCard() {
         Dealer dealer = participants.findDealer();
         while (dealer.decideHit()) {
-            dealer.hit(cards.pick());
+            dealer.hit(deck.pick());
         }
     }
 
     public void hitPlayerCard(Player player) {
-        player.hit(cards.pick());
+        player.hit(deck.pick());
     }
 
     public List<Player> findPlayers() {

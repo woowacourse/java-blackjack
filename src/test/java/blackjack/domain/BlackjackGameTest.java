@@ -5,7 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import blackjack.util.CardPickerGenerator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,7 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
                 List.of("pobi", "ako"),
-                Cards.create(new TestCardPickerGenerator(testData))
+                Deck.create(new TestCardPickerGenerator(testData))
         );
         //when
         for (Participant participant : game.getParticipants()) {
@@ -44,7 +43,7 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
                 List.of("pobi", "ako"),
-                Cards.create(new TestCardPickerGenerator(testData))
+                Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
@@ -72,7 +71,7 @@ class BlackjackGameTest {
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
                 List.of("pobi", "ako"),
-                Cards.create(new TestCardPickerGenerator(testData))
+                Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);

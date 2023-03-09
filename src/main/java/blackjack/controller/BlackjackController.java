@@ -26,9 +26,9 @@ public class BlackjackController {
     }
 
     private BlackjackGame initBlackjackGame() {
-        Cards cards = Cards.create(new RandomCardPickerGenerator());
+        Deck deck = Deck.create(new RandomCardPickerGenerator());
         List<String> playersName = inputPlayerName();
-        BlackjackGame blackjackGame = BlackjackGame.of(playersName, cards);
+        BlackjackGame blackjackGame = BlackjackGame.of(playersName, deck);
         return blackjackGame;
     }
 

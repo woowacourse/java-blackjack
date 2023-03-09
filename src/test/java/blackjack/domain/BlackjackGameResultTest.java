@@ -18,7 +18,7 @@ class BlackjackGameResultTest {
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
                 List.of("pobi", "ako"),
-                Cards.create(new TestCardPickerGenerator(testData))
+                Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
@@ -40,7 +40,7 @@ class BlackjackGameResultTest {
         List<Integer> testData = settingTestData();
         BlackjackGame game = BlackjackGame.of(
                 List.of("pobi", "ako"),
-                Cards.create(new TestCardPickerGenerator(testData))
+                Deck.create(new TestCardPickerGenerator(testData))
         );
         for (Participant participant : game.getParticipants()) {
             game.getTwoHitCards(participant);
