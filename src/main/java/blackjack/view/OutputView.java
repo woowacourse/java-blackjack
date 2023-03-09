@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import static java.lang.String.format;
-import static java.lang.String.join;
 
 import blackjack.domain.game.Bets;
 import blackjack.domain.game.Money;
@@ -12,20 +11,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class OutputView {
+    private static OutputView instance = new OutputView();
     private static final String NEW_LINE = System.lineSeparator();
     private static final int INITIAL_DRAW_COUNT = 2;
     private static final int DEALER_OPEN_CARD_INDEX = 0;
-    private static final String INITIAL_DRAW_MESSAGE = "에게 " + INITIAL_DRAW_COUNT + "장을 나누었습니다.";
     private static final String DELIMITER = ", ";
-    private static final String PLAYER_CARD_MESSAGE_FORMAT = "%s 카드: %s";
-    private static final String PLAYER_SCORE_MESSAGE_FORMAT = " - 결과: %d";
-    private static final String ERROR_MESSAGE = "[ERROR] ";
-    private static final String DEALER_DRAW_MESSAGE = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
-    private static final String GAME_RESULT_MESSAGE = NEW_LINE + "## 최종 수익";
-    private static final String GAME_RESULT_MESSAGE_FORMAT = "%s: %s";
+
+    private OutputView() {
+    }
+
+    public static OutputView getInstance() {
+        return instance;
+    }
 
     public void printInitialDraw(final List<Player> players) {
-        System.out.println(NEW_LINE + generateNames(players) + INITIAL_DRAW_MESSAGE);
+        System.out.println(NEW_LINE + generateNames(players) + "에게 " + INITIAL_DRAW_COUNT + "장을 나누었습니다.");
         System.out.println(generateInitialDrawMessages(players) + NEW_LINE);
     }
 
@@ -49,15 +49,16 @@ public final class OutputView {
     }
 
     private String generatePlayerMessage(final Player player, final String message) {
-        return format(PLAYER_CARD_MESSAGE_FORMAT, player.getNameValue(), message);
+        return format("%s 카드: %s", player.getNameValue(), message);
     }
 
     private String generateCardMessage(final Player player) {
-        return join(DELIMITER, player.getSymbols());
+        return String.join(DELIMITER, player.getSymbols());
     }
 
     public void printDealerDraw(final Dealer dealer) {
-        System.out.println(DEALER_DRAW_MESSAGE.repeat(dealer.getCardCount() - INITIAL_DRAW_COUNT));
+        final String dealerDrawMessage = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
+        System.out.println(dealerDrawMessage.repeat(dealer.getCardCount() - INITIAL_DRAW_COUNT));
     }
 
     public void printDrawResult(final Player player) {
@@ -69,26 +70,22 @@ public final class OutputView {
     }
 
     private String generateScoreMessage(final Player player) {
-        return format(PLAYER_SCORE_MESSAGE_FORMAT, player.calculateScore());
+        return format(" - 결과: %d", player.calculateScore());
     }
 
     public void printGameResult(final Bets bets) {
-        System.out.println(GAME_RESULT_MESSAGE);
-        System.out.println(String.format(GAME_RESULT_MESSAGE_FORMAT, "딜러", bets.getDealerProfit().getValue()));
+        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println(String.format("%s: %s", "딜러", bets.getDealerProfit().getValue()));
         System.out.println(generateGameResultMessage(bets.getBets()));
     }
 
     private String generateGameResultMessage(final Map<Player, Money> bets) {
         return bets.keySet().stream()
-                .map(player -> String.format(
-                        GAME_RESULT_MESSAGE_FORMAT,
-                        player.getNameValue(),
-                        bets.get(player).getValue())
-                )
+                .map(player -> String.format("%s: %s", player.getNameValue(), bets.get(player).getValue()))
                 .collect(Collectors.joining(NEW_LINE));
     }
 
     public void printError(final String message) {
-        System.out.println(ERROR_MESSAGE + message);
+        System.out.println("[ERROR] " + message);
     }
 }

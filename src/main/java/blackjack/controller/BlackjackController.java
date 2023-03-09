@@ -12,33 +12,27 @@ import java.util.Map;
 
 public final class BlackjackController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
-    private final BlackjackGame blackjackGame;
+    private static final InputView inputView = InputView.getInstance();
+    private static final OutputView outputView = OutputView.getInstance();
 
-    public BlackjackController(
-            final InputView inputView,
-            final OutputView outputView,
-            final BlackjackGame blackjackGame
-    ) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    private final BlackjackGame blackjackGame;
+    private final Retry retry;
+
+    public BlackjackController(final BlackjackGame blackjackGame, final Retry retry) {
         this.blackjackGame = blackjackGame;
+        this.retry = retry;
     }
 
     public void run() {
-        initializeGame();
+        addPlayers();
+        addBets();
         initialDraw();
         draw();
         play();
     }
 
-    private void initializeGame() {
-        addPlayers(new Retry());
-        addBets(new Retry());
-    }
-
-    private void addPlayers(final Retry retry) {
+    private void addPlayers() {
+        retry.reset();
         while (retry.isRepeatable()) {
             try {
                 blackjackGame.addPlayers(inputView.readPlayers());
@@ -51,15 +45,16 @@ public final class BlackjackController {
         throw new IllegalArgumentException(retry.getFailMessage());
     }
 
-    private void addBets(final Retry retry) {
+    private void addBets() {
         final Map<Player, Money> result = new LinkedHashMap<>();
         for (final Player player : blackjackGame.getGambler()) {
-            result.put(player, readBet(retry, player));
+            result.put(player, readBet(player));
         }
         blackjackGame.addBets(result);
     }
 
-    private Money readBet(final Retry retry, final Player player) {
+    private Money readBet(final Player player) {
+        retry.reset();
         while (retry.isRepeatable()) {
             try {
                 return Money.initialBet(inputView.readBet(player));
@@ -78,7 +73,7 @@ public final class BlackjackController {
 
     private void draw() {
         for (final Player player : blackjackGame.getPlayers()) {
-            drawOnce(player);
+            draw(player);
         }
         blackjackGame.drawToDealer(ShuffledDeck.getInstance());
         outputView.printDealerDraw(blackjackGame.getDealer());
@@ -87,9 +82,9 @@ public final class BlackjackController {
         }
     }
 
-    private void drawOnce(final Player player) {
+    private void draw(final Player player) {
         while (isDrawable(player)) {
-            final BlackjackCommand command = createCommand(player, new Retry());
+            final BlackjackCommand command = createCommand(player);
             decideAction(player, command);
             outputView.printDrawResult(player);
         }
@@ -99,7 +94,8 @@ public final class BlackjackController {
         return player.isDrawable() && !player.isDealer();
     }
 
-    private BlackjackCommand createCommand(final Player player, final Retry retry) {
+    private BlackjackCommand createCommand(final Player player) {
+        retry.reset();
         while (retry.isRepeatable()) {
             try {
                 return BlackjackCommand.from(inputView.readCommand(player));

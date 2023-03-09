@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public final class Players {
-
     private static final int COUNT_LOWER_BOUND = 1;
     private static final int COUNT_UPPER_BOUND = 6;
     private static final int DEALER_COUNT = 1;

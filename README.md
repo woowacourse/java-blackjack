@@ -13,10 +13,10 @@ flowchart TD
     BlackjackController --> BlackjackGame
     BlackjackController --> InputView
     BlackjackController --> OutputView
-
+    
     BlackjackGame --> Bets --> Money
     BlackjackGame --> Players
-
+    
     subgraph 카드
         ShuffledDeck --> Card
         Card --> Rank
@@ -25,9 +25,9 @@ flowchart TD
         Hand -- 사용자의 패 --> Cards
         Hand -- 핸드의 상태 --> State
     end
-
+    
     Players --> 플레이어 --> Hand
-
+    
     subgraph 플레이어
         direction BT
         Gambler -.-> Player

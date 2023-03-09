@@ -15,6 +15,10 @@ public final class Retry {
         this.count = count;
     }
 
+    public void reset() {
+        this.count = DEFAULT_COUNT;
+    }
+
     public boolean isRepeatable() {
         return count > 0;
     }

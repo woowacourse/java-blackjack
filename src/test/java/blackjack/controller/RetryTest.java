@@ -28,4 +28,13 @@ public class RetryTest {
 
         assertThat(retry.isRepeatable()).isFalse();
     }
+
+    @Test
+    void 재입력_가능_횟수를_초기화시킨다() {
+        final Retry retry = new Retry(0);
+
+        retry.reset();
+
+        assertThat(retry.isRepeatable()).isTrue();
+    }
 }
