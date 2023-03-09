@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Deck;
-import domain.card.RandomShuffleStrategy;
 
 class ParticipantsTest {
 
@@ -29,12 +28,14 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("참가자들에게 카드를 한 장씩 나누어준다.")
+    @DisplayName("참가자들이 카드를 한 장씩 받는다.")
     void participantsDealTest() {
-        participants.findDealer().deal(Deck.from(new RandomShuffleStrategy()), participants.getParticipants());
+        for (Participant participant : participants.getParticipants()) {
+            participant.receiveCard(deck.draw());
+        }
         List<Player> players = participants.findPlayers();
         for (Player player : players) {
-            assertThat(player.getCardNames().size()).isEqualTo(1);
+            assertThat(player.fetchHand().size()).isEqualTo(1);
         }
     }
 

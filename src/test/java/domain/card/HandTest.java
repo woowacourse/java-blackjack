@@ -13,11 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.card.Card;
-import domain.card.Hand;
-import domain.card.Rank;
-import domain.card.Suit;
-
 class HandTest {
 
     private Hand hand;
@@ -43,7 +38,7 @@ class HandTest {
     @DisplayName("패에 카드를 추가한다.")
     void addCard() {
         hand.addCard(Card.from(Suit.CLOVER, Rank.FIVE));
-        assertThat(hand.getCardNames().size()).isEqualTo(3);
+        assertThat(hand.getHand().size()).isEqualTo(3);
     }
 
     @ParameterizedTest(name = "handValue를 계산한다.")
