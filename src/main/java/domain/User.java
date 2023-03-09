@@ -46,11 +46,11 @@ public abstract class User {
         return score().equals(other.score());
     }
 
-    boolean isBusted() {
+    private boolean isBusted() {
         return score().isGreaterThan(BLACKJACK_SCORE);
     }
 
-    boolean isBlackjack() {
+    private boolean isBlackjack() {
         return hand.size() == 2 && score().equals(BLACKJACK_SCORE);
     }
 
