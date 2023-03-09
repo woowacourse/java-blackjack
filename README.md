@@ -73,7 +73,8 @@
   - [x] Person interface -> abstract class로 변경
   - [x] 결과 타입에 대한 enum class 추가
   - [ ] view 호출하는 로직 단순화
-  - [ ] List<Card>를 필드로 가지는 Hand 생성
+  - [x] List<Card>를 필드로 가지는 Hand 생성
+  - [x] Deck shuffle 메소드 전략 패턴을 통해 실행될 수 있도록 변경
 
 
 - TODO
