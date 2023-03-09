@@ -22,20 +22,20 @@ public class Participant {
         hand.addCard(card);
     }
 
-    public int getParticipantHandValue() {
-        int participantHandValue = getHandValue();
+    public int fetchParticipantHandValue() {
+        int participantHandValue = fetchHandValue();
         if (participantHandValue > BUST_BOUNDARY_VALUE) {
             participantHandValue = BUST_HAND_VALUE;
         }
         return participantHandValue;
     }
 
-    public int getHandValue() {
+    public int fetchHandValue() {
         return hand.calculateValue();
     }
 
-    public List<String> getCardNames() {
-        return hand.getCardNames();
+    public List<Card> fetchHand() {
+        return hand.getHand();
     }
 
     public String getName() {

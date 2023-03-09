@@ -1,13 +1,13 @@
 package domain.game;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.card.Card;
 import domain.card.Deck;
-import domain.card.RandomShuffleStrategy;
+import domain.card.ShuffleStrategy;
 import domain.people.Dealer;
 import domain.people.Participant;
 import domain.people.Participants;
@@ -23,18 +23,18 @@ public class BlackJackGame {
 
     private final Deck deck;
     private final Participants participants;
-    private boolean isOngoing;
+    private boolean isPlayerTurnsOngoing;
     private int currentPlayerIndex;
 
-    private BlackJackGame(List<String> names) {
-        this.deck = Deck.from(new RandomShuffleStrategy());
+    private BlackJackGame(List<String> names, ShuffleStrategy shuffleStrategy) {
+        this.deck = Deck.from(shuffleStrategy);
         this.participants = createParticipants(names);
-        this.isOngoing = true;
+        this.isPlayerTurnsOngoing = true;
         this.currentPlayerIndex = 0;
     }
 
-    public static BlackJackGame from(List<String> names) {
-        return new BlackJackGame(names);
+    public static BlackJackGame from(List<String> names, ShuffleStrategy shuffleStrategy) {
+        return new BlackJackGame(names, shuffleStrategy);
     }
 
     public Participants createParticipants(List<String> names) {
@@ -43,66 +43,75 @@ public class BlackJackGame {
 
     public void dealCardsToParticipants() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            Dealer dealer = participants.findDealer();
-            dealer.deal(deck, participants.getParticipants());
+            deal(deck, participants.getParticipants());
         }
     }
 
-    public List<String> getPlayerNames() {
-        return getPlayers().stream()
+    public void deal(Deck deck, List<Participant> participants) {
+        for (Participant participant : participants) {
+            participant.receiveCard(deck.draw());
+        }
+    }
+
+    public List<String> fetchPlayerNames() {
+        return fetchPlayers().stream()
             .map(Player::getName)
             .collect(Collectors.toList());
     }
 
-    private List<Player> getPlayers() {
+    private List<Player> fetchPlayers() {
         return participants.findPlayers();
     }
 
-    public Map<String, List<String>> getParticipantsInitHands() {
-        Map<String, List<String>> participantsHands = getParticipantsHands();
+    public Map<String, List<String>> fetchParticipantsInitHands() {
+        Map<String, List<String>> participantsHands = fetchParticipantsHands();
         List<String> dealerHand = participantsHands.get(DEALER_NAME);
         List<String> dealerFirstCard = dealerHand.subList(0, 1);
         participantsHands.replace(DEALER_NAME, dealerFirstCard);
         return participantsHands;
     }
 
-    public Map<String, List<String>> getParticipantsHands() {
+    public Map<String, List<String>> fetchParticipantsHands() {
         Map<String, List<String>> participantsHands = new LinkedHashMap<>();
-        getDealerHand(participantsHands);
-        getPlayersHand(participantsHands);
+        fetchDealerHand(participantsHands);
+        fetchPlayersHand(participantsHands);
         return participantsHands;
     }
 
-    private void getDealerHand(Map<String, List<String>> participantsHands) {
-        List<String> dealerHand = participants.findDealer().getCardNames();
-        participantsHands.put(DEALER_NAME, dealerHand);
+    private void fetchDealerHand(Map<String, List<String>> participantsHands) {
+        List<Card> dealerHand = participants.findDealer().fetchHand();
+        participantsHands.put(DEALER_NAME, dealerHand.stream()
+            .map(Card::getName)
+            .collect(Collectors.toList()));
     }
 
-    private void getPlayersHand(Map<String, List<String>> participantsHands) {
-        for (Participant participant : getPlayers()) {
+    private void fetchPlayersHand(Map<String, List<String>> participantsHands) {
+        for (Participant participant : fetchPlayers()) {
             String playerName = participant.getName();
-            List<String> playerHand = participant.getCardNames();
+            List<String> playerHand = participant.fetchHand().stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
             participantsHands.put(playerName, playerHand);
         }
     }
 
-    public boolean isOngoing() {
-        return isOngoing;
+    public boolean isPlayerTurnsOngoing() {
+        return isPlayerTurnsOngoing;
     }
 
-    public String getCurrentPlayer() {
-        return getPlayers().get(currentPlayerIndex).getName();
+    public String fetchCurrentPlayerName() {
+        return fetchPlayers().get(currentPlayerIndex).getName();
     }
 
     public void hitOrStay(String hitRequest) {
         if (isHit(hitRequest)) {
-            getPlayers().get(currentPlayerIndex).receiveCard(deck.draw());
+            fetchPlayers().get(currentPlayerIndex).receiveCard(deck.draw());
             return;
         }
 
         currentPlayerIndex++;
-        if (currentPlayerIndex == getPlayers().size()) {
-            isOngoing = false;
+        if (currentPlayerIndex == fetchPlayers().size()) {
+            isPlayerTurnsOngoing = false;
         }
     }
 
@@ -118,8 +127,8 @@ public class BlackJackGame {
         participants.findDealer().receiveCard(deck.draw());
     }
 
-    public Map<Participant, String> getParticipantScores() {
-        Map<Participant, String> scores = new LinkedHashMap<>();
+    public Map<String, String> fetchParticipantScores() {
+        Map<String, String> scores = new LinkedHashMap<>();
         for (Participant participant : participants.getParticipants()) {
             judgeBust(scores, participant);
         }
@@ -127,75 +136,51 @@ public class BlackJackGame {
         return scores;
     }
 
-    private void judgeBust(Map<Participant, String> scores, Participant participant) {
-        int handValue = participant.getHandValue();
+    private void judgeBust(Map<String, String> scores, Participant participant) {
+        int handValue = participant.fetchHandValue();
         if (handValue > BUST_BOUNDARY_VALUE) {
-            scores.put(participant, String.valueOf(BUST_HAND_VALUE));
+            scores.put(participant.getName(), String.valueOf(BUST_HAND_VALUE));
             return;
         }
-        scores.put(participant, String.valueOf(handValue));
+        scores.put(participant.getName(), String.valueOf(handValue));
     }
 
-    public Map<String, Result> calculatePlayerResults() {
+    public Map<String, String> calculatePlayerResults() {
         Dealer dealer = participants.findDealer();
-        Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (Player player : getPlayers()) {
+        Map<String, String> playerResults = new LinkedHashMap<>();
+        for (Player player : fetchPlayers()) {
             compareHandValue(dealer, playerResults, player);
         }
 
         return playerResults;
     }
 
-    private void compareHandValue(Dealer dealer, Map<String, Result> playerResults, Player player) {
-        int dealerHandValue = dealer.getParticipantHandValue();
-        int playerHandValue = player.getParticipantHandValue();
+    private void compareHandValue(Dealer dealer, Map<String, String> playerResults, Player player) {
+        int playerHandValue = player.fetchParticipantHandValue();
+        int dealerHandValue = dealer.fetchParticipantHandValue();
+        int handValueGap = playerHandValue - dealerHandValue;
 
-        if (playerHandValue != dealerHandValue) {
-            Result result = Result.compareHandValue(playerHandValue, dealerHandValue);
-            playerResults.put(player.getName(), result);
-            return;
-        }
-        compareAtTieValue(dealer, playerResults, player, playerHandValue);
+        int playerHandCount = player.fetchHand().size();
+        int dealerHandCount = dealer.fetchHand().size();
+        int handCountGap = playerHandCount - dealerHandCount;
+
+        playerResults.put(player.getName(), Result.calculateResult(handValueGap, handCountGap).getResult());
     }
 
-    private void compareAtTieValue(Dealer dealer, Map<String, Result> playerResults, Player player,
-        int playerHandValue) {
-        if (playerHandValue == BUST_HAND_VALUE) {
-            playerResults.put(player.getName(), Result.TIE);
-            return;
-        }
-        calculateResultByHandCount(dealer, playerResults, player);
-    }
-
-    private void calculateResultByHandCount(Dealer dealer, Map<String, Result> playerResults, Player player) {
-        int playerHandCount = player.getCardNames().size();
-        int dealerHandCount = dealer.getCardNames().size();
-        if (playerHandCount != dealerHandCount) {
-            Result result = Result.compareHandCount(playerHandCount, dealerHandCount);
-            playerResults.put(player.getName(), result);
-            return;
-        }
-        playerResults.put(player.getName(), Result.TIE);
-    }
-
-    public Map<Result, Integer> calculateDealerResults(Map<String, Result> playerResults) {
-        EnumMap<Result, Integer> result = new EnumMap<>(Result.class);
-
-        for (Result playerResult : playerResults.values()) {
-            judgeResult(result, playerResult);
-        }
-        return result;
-    }
-
-    private void judgeResult(EnumMap<Result, Integer> result, Result playerResult) {
-        if (playerResult.equals(Result.WIN)) {
-            result.put(Result.LOSE, result.getOrDefault(Result.LOSE, 0) + 1);
-        }
-        if (playerResult.equals(Result.TIE)) {
-            result.put(Result.TIE, result.getOrDefault(Result.TIE, 0) + 1);
-        }
-        if (playerResult.equals(Result.LOSE)) {
-            result.put(Result.WIN, result.getOrDefault(Result.WIN, 0) + 1);
-        }
+    public Map<String, Integer> calculateDealerResults(Map<String, String> playerResults) {
+        return playerResults.values().stream()
+            .collect(Collectors.groupingBy(
+                result -> {
+                    if (result.equals(Result.LOSE.getResult())) {
+                        return Result.WIN.getResult();
+                    }
+                    if (result.equals(Result.TIE.getResult())) {
+                        return Result.TIE.getResult();
+                    }
+                    return Result.LOSE.getResult();
+                },
+                LinkedHashMap::new,
+                Collectors.summingInt(result -> 1))
+            );
     }
 }

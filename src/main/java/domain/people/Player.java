@@ -8,12 +8,10 @@ public class Player extends Participant {
     private static final int MAX_PLAYER_NAME_LENGTH = 10;
     private static final String INVALID_NAME = "딜러";
     private static final String COMMA = ",";
-    private final String name;
 
     public Player(String name) {
         super(new ArrayList<>(), name);
         validate(name);
-        this.name = name;
     }
 
     private void validate(String name) {
