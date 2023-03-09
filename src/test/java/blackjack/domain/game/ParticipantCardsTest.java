@@ -1,9 +1,7 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.*;
+import blackjack.fixture.DeckMock;
 import blackjack.fixture.ParticipantCardsFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -22,38 +21,49 @@ class ParticipantCardsTest {
     @Test
     @DisplayName("생성한다.")
     void create() {
-        Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.TWO);
+        final Deck deck = new CardDeck();
 
         assertThatNoException()
-                .isThrownBy(() -> new ParticipantCards(List.of(cardOne, cardTwo)));
+                .isThrownBy(() -> new ParticipantCards(deck));
+    }
+
+    @Test
+    @DisplayName("생성한다.")
+    void create2() {
+        final Deck deck = new CardDeck();
+
+        assertThatNoException()
+                .isThrownBy(() -> new ParticipantCards(deck));
     }
 
     @Test
     @DisplayName("생성시에 카드가 두 장이 아닐 경우 예외가 발생한다.")
     void throwExceptionWhenCardsHasSizeLowerThan1() {
-        assertThatThrownBy(() -> new ParticipantCards(List.of()))
+        final Deck deck = DeckMock.create(Collections.emptyList());
+
+        assertThatThrownBy(() -> new ParticipantCards(deck))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("생성시에 카드가 중복될 경우 예외가 발생한다.")
     void throwExceptionWhenInitialCardsDuplicated() {
-        Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.THREE);
+        final Deck deck = DeckMock.create(List.of(
+                new Card(CardShape.SPADE, CardNumber.ACE),
+                new Card(CardShape.SPADE, CardNumber.ACE)
+        ));
 
-        assertThatThrownBy(() -> new ParticipantCards(List.of(cardOne, cardTwo)))
+        assertThatThrownBy(() -> new ParticipantCards(deck))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("중복되는 카드를 가지는 경우 예외가 발생한다.")
-    void throwExceptionWhenCardsDuplicated() {
-        Card cardOne = new Card(CardShape.DIAMOND, CardNumber.THREE);
-        Card cardTwo = new Card(CardShape.DIAMOND, CardNumber.FOUR);
-        ParticipantCards participantCards = new ParticipantCards(List.of(cardOne, cardTwo));
+    void throwExceptionWhenCardsDuplicated2() {
+        final Deck deck = new CardDeck();
+        final ParticipantCards participantCards = new ParticipantCards(deck);
 
-        assertThatThrownBy(() -> participantCards.receive(new Card(CardShape.DIAMOND, CardNumber.THREE)))
+        assertThatThrownBy(() -> CardsCache.getAllCards().forEach(participantCards::receive))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -61,20 +71,19 @@ class ParticipantCardsTest {
     @MethodSource("calculateDummy")
     @DisplayName("가지고 있는 카드의 합을 계산한다.")
     void calculate(final List<Card> cards, final int expectedSum) {
-        ParticipantCards participantCards = new ParticipantCards(cards);
-        int cardSum = participantCards.getMaxValueNearBlackJack();
+        final Deck deck = DeckMock.create(cards);
+        final ParticipantCards participantCards = new ParticipantCards(deck);
+        final int cardSum = participantCards.getMaxValueNearBlackJack();
 
         assertThat(cardSum).isEqualTo(expectedSum);
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
+    @ValueSource(ints = {0, 1, 2})
     @DisplayName("카드를 사이즈만큼 오픈한다.")
-    void open(final int openCount) {
-        final Deck deck = new Deck();
-        final List<Card> cards = List.of(deck.draw(), deck.draw());
-        final ParticipantCards participantCards = new ParticipantCards(cards);
-        participantCards.receive(deck.draw());
+    void open2(final int openCount) {
+        final Deck deck = new CardDeck();
+        final ParticipantCards participantCards = new ParticipantCards(deck);
         final List<Card> openCards = participantCards.open(openCount);
 
         assertThat(openCards).hasSize(openCount);
@@ -83,15 +92,14 @@ class ParticipantCardsTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("모든 카드를 오픈한다.")
-    void openAll(final int drawCount) {
-        final Deck deck = new Deck();
-        final List<Card> cards = List.of(deck.draw(), deck.draw());
-        final ParticipantCards participantCards = new ParticipantCards(cards);
+    void openAll2(final int drawCount) {
+        final Deck deck = new CardDeck();
+        final ParticipantCards participantCards = new ParticipantCards(deck);
         for (int count = 0; count < drawCount; count++) {
             participantCards.receive(deck.draw());
         }
         final List<Card> openCards = participantCards.openAll();
-        final int expectedSize = cards.size() + drawCount;
+        final int expectedSize = drawCount + 2;
 
         assertThat(openCards).hasSize(expectedSize);
     }

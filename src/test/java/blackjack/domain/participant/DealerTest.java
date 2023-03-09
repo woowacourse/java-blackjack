@@ -1,9 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.*;
 import blackjack.domain.game.ParticipantCards;
 import blackjack.domain.game.ResultType;
 import blackjack.fixture.ParticipantCardsFixture;
@@ -23,8 +20,8 @@ class DealerTest {
     @Test
     @DisplayName("생성한다.")
     void create() {
-        final Deck deck = new Deck();
-        final ParticipantCards participantCards = new ParticipantCards(List.of(deck.draw(), deck.draw()));
+        final Deck deck = new CardDeck();
+        final ParticipantCards participantCards = new ParticipantCards(deck);
 
         assertThatNoException().isThrownBy(() -> new Dealer(participantCards));
     }

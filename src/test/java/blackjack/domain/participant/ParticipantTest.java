@@ -1,9 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.*;
 import blackjack.domain.game.ParticipantCards;
 import blackjack.fixture.ParticipantCardsFixture;
 import blackjack.fixture.ParticipantFixture;
@@ -22,7 +19,7 @@ class ParticipantTest {
     @ValueSource(strings = {"", " ", "       "})
     @DisplayName("이름이 공백이거나 비어있을 경우 예외가 발생한다.")
     void throwExceptionWhenNameIsBlank(final String nameValue) {
-        final Deck deck = new Deck();
+        final Deck deck = new CardDeck();
         final ParticipantCards participantsCards
                 = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
         assertThatThrownBy(() -> new Participant(participantsCards, nameValue) {
@@ -71,7 +68,7 @@ class ParticipantTest {
     @ValueSource(strings = {"헤나01", "헤나02", "헤나03"})
     @DisplayName("참가자 이름을 가져온다.")
     void getName(final String nameValue) {
-        final Deck deck = new Deck();
+        final Deck deck = new CardDeck();
         final ParticipantCards cards = ParticipantCardsFixture.create(deck.draw(), deck.draw(), List.of());
         final Participant participant = new Participant(cards, nameValue) {
             @Override
