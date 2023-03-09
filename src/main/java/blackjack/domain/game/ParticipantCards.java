@@ -2,11 +2,12 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static blackjack.domain.card.CardNumber.ACE;
@@ -16,35 +17,29 @@ public class ParticipantCards {
     private static final int INITIAL_SIZE = 2;
     private static final int BLACK_JACK = 21;
 
-    private final List<Card> cards;
+    private final Cards cards;
 
-    public ParticipantCards(final List<Card> cards) {
-        validate(cards);
-        this.cards = new ArrayList<>(cards);
+    public ParticipantCards(final Deck deck) {
+        this.cards = createDeckCards(deck);
     }
 
     public void receive(final Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException("중복되는 카드를 가질 수 없습니다.");
-        }
-        cards.add(card);
+        cards.receive(card);
     }
 
     public int getMaxValueNearBlackJack() {
-        final List<CardNumber> cardNumbers = getCardNumbers();
+        final List<CardNumber> cardNumbers = cards.getCardNumbers();
         final int aceCount = getAceCount(cardNumbers);
         final int sumBeforeOptimize = getSumBeforeOptimize(cardNumbers);
         return getSumAfterOptimize(aceCount, sumBeforeOptimize);
     }
 
-    public List<Card> open(int size) {
-        return IntStream.range(0, size)
-                .mapToObj(cards::get)
-                .collect(Collectors.toList());
+    public List<Card> open(int openCount) {
+        return cards.open(openCount);
     }
 
     public List<Card> openAll() {
-        return new ArrayList<>(cards);
+        return cards.openAll();
     }
 
     public boolean isBust() {
@@ -55,10 +50,12 @@ public class ParticipantCards {
         return getMaxValueNearBlackJack() == BLACK_JACK;
     }
 
-    private List<CardNumber> getCardNumbers() {
-        return cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList());
+    private Cards createDeckCards(final Deck deck) {
+        final List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        validate(initCards);
+        return new Cards(initCards);
     }
 
     private int getAceCount(final List<CardNumber> cardNumbers) {
