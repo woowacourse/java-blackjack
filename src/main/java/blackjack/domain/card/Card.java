@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardShape cardShape;
+    private final CardShape shape;
     private final CardNumber number;
 
-    public Card(final CardShape cardShape, final CardNumber number) {
-        this.cardShape = cardShape;
+    public Card(final CardShape shape, final CardNumber number) {
+        this.shape = shape;
         this.number = number;
     }
 
     public CardShape getShape() {
-        return cardShape;
+        return shape;
     }
 
     public CardNumber getNumber() {
@@ -33,11 +33,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardShape == card.cardShape && number == card.number;
+        return shape == card.shape && number == card.number;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardShape, number);
+        return Objects.hash(shape, number);
     }
 }
