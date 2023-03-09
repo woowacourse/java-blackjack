@@ -13,12 +13,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class BlackJackGameTest {
     List<String> names;
+    List<Integer> amounts;
     BlackJackGame blackJackGame;
 
     @BeforeEach
     void setup() {
         names = List.of("name1", "name2");
-        blackJackGame = new BlackJackGame(new Deck(), names);
+        amounts = List.of(1, 100);
+        blackJackGame = new BlackJackGame(new Deck(), names, amounts);
     }
 
     @DisplayName("처음 카드를 나눠주면 플레이어의 패의 크기는 2이다.")
@@ -26,7 +28,7 @@ public class BlackJackGameTest {
     void distributeTwoCardsToPlayersTest() {
         int expectedCardSize = 2;
         for (String name : names) {
-            assertEquals(expectedCardSize, blackJackGame.getCards(name).size());
+            assertEquals(expectedCardSize, blackJackGame.getPlayerCards(name).size());
         }
     }
 
@@ -35,8 +37,8 @@ public class BlackJackGameTest {
     void drawCardTest() {
         int expectedCardSize = 3;
         for (String name : names) {
-            blackJackGame.drawCard(name);
-            assertEquals(expectedCardSize, blackJackGame.getCards(name).size());
+            blackJackGame.drawCardPlayer(name);
+            assertEquals(expectedCardSize, blackJackGame.getPlayerCards(name).size());
         }
     }
 
@@ -44,6 +46,6 @@ public class BlackJackGameTest {
     @ParameterizedTest
     @CsvSource(value = {"name1:20", "name2:17"}, delimiter = ':')
     void getScoreTest(String name, int score) {
-        assertEquals(score, blackJackGame.getScore(name));
+        assertEquals(score, blackJackGame.getPlayerScore(name));
     }
 }

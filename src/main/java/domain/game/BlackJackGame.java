@@ -12,17 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
-    private static final String DEALER_NAME = "딜러";
     private static final int BLACK_JACK_NUMBER = 21;
 
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Deck deck, final List<String> playerNames) {
+    public BlackJackGame(final Deck deck, final List<String> playerNames, final List<Integer> amounts) {
         this.deck = deck;
         this.dealer = new Dealer();
-        this.players = new Players(playerNames);
+        this.players = new Players(playerNames, amounts);
         distributeTwoCards();
     }
 
@@ -36,10 +35,11 @@ public class BlackJackGame {
         }
     }
 
-    public void drawCard(final String playerName) {
-        if (isDealer(playerName)) {
-            dealer.drawCard(deck.popCard());
-        }
+    public void drawCardDealer() {
+        dealer.drawCard(deck.popCard());
+    }
+
+    public void drawCardPlayer(final String playerName) {
         players.getPlayer(playerName)
                 .drawCard(deck.popCard());
     }
@@ -87,22 +87,20 @@ public class BlackJackGame {
         return score > BLACK_JACK_NUMBER;
     }
 
-    public List<Card> getCards(final String playerName) {
-        if (isDealer(playerName)) {
-            return dealer.cards();
-        }
+    public List<Card> getPlayerCards(final String playerName) {
         return players.getPlayer(playerName).cards();
     }
 
-    private boolean isDealer(final String name) {
-        return name.equals(DEALER_NAME);
+    public List<Card> getDealerCards() {
+        return dealer.cards();
     }
 
-    public int getScore(final String playerName) {
-        if (isDealer(playerName)) {
-            return dealer.score();
-        }
+    public int getPlayerScore(final String playerName) {
         return players.getPlayer(playerName).score();
+    }
+
+    public int getDealerScore() {
+        return dealer.score();
     }
 
     public EnumMap<Outcome, Integer> calculateDealerResult() {

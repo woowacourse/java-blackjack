@@ -92,4 +92,8 @@ public class OutputView {
     private static void printGameEachResult(final String playerName, final int win, final int draw, final int lose) {
         System.out.printf("%s: %s승 %s무 %s패%n", playerName, win, draw, lose);
     }
+
+    public static void printInputAmount(final String name) {
+        System.out.printf("%s의 베팅 금액은?%n", name);
+    }
 }

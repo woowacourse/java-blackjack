@@ -15,9 +15,9 @@ public class PlayerTest {
     @DisplayName("플레이어가 처음 카드를 뽑으면 패의 크기는 1이다.")
     @Test
     void drawTest() {
-
         final String testName = "test";
-        Player player = new Player(testName);
+        final int amount = 100_000;
+        Player player = new Player(testName, amount);
 
         Assertions.assertEquals(0, player.cards().size());
         player.drawCard(deck.popCard());

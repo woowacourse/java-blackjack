@@ -41,4 +41,8 @@ public class InputView {
         }
         throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
     }
+
+    public static Integer readAmount() {
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

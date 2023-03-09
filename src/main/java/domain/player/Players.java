@@ -6,16 +6,16 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    public Players(final List<String> playerNames) {
-        this.players = generatePlayers(playerNames);
+    public Players(final List<String> playerNames, final List<Integer> amounts) {
+        this.players = generatePlayers(playerNames, amounts);
     }
 
-    private List<Player> generatePlayers(final List<String> playerNames) {
+    private List<Player> generatePlayers(final List<String> playerNames, final List<Integer> amounts) {
         List<Player> players = new ArrayList<>();
 
-        playerNames.forEach(
-                name -> players.add(new Player(name))
-        );
+        for (int i = 0; i < amounts.size(); i++) {
+            players.add(new Player(playerNames.get(i), amounts.get(i)));
+        }
 
         return players;
     }
