@@ -19,7 +19,7 @@ public class BlackJackController {
     public void run() {
         final Deck deck = new Deck();
         final Guests guests = generateGuests(deck);
-        final Dealer dealer = new Dealer(List.of(deck.pickOne(), deck.pickOne()));
+        final Dealer dealer = new Dealer(deck.pickOne(), deck.pickOne());
         Map<Guest, BettingMoney> guestBettingMoney = askGuestsBettingMoney(guests);
         printFirstHand(guests, dealer);
 
@@ -101,7 +101,8 @@ public class BlackJackController {
     }
 
     private void printBettingResult(final Guests guests, final Dealer dealer, final Map<Guest, BettingMoney> guestBettingMoney) {
-        Map<Guest, GameOutcome> guestGameOutcome = new Result(dealer, guests.getGuests()).getGuestsResult();
+        Result result = new Result(dealer, guests.getGuests());
+        Map<Guest, GameOutcome> guestGameOutcome = result.getGuestsResult();
         Map<String, Integer> bettingResult = new LinkedHashMap<>();
         int dealerRevenue = 0;
         bettingResult.put(dealer.getName(), dealerRevenue);

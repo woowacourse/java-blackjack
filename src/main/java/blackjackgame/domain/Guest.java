@@ -1,6 +1,5 @@
 package blackjackgame.domain;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Guest extends Player {
@@ -8,8 +7,8 @@ public class Guest extends Player {
 
     private final Name name;
 
-    public Guest(final Name name, final List<Card> initHand) {
-        super(initHand);
+    public Guest(final Name name, final Card firstCard, final Card secondCard) {
+        super(firstCard, secondCard);
         this.name = name;
     }
 

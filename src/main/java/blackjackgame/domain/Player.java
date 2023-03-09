@@ -4,21 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    private static final int INIT_HAND_SIZE = 2;
     private static final int ACE_BONUS_SCORE = 10;
     private static final int MAX_BASIC_SCORE = 11;
 
     private final List<Card> cards;
 
-    public Player(final List<Card> initHand) {
-        validateHand(initHand);
-        this.cards = new ArrayList<>(initHand);
-    }
-
-    private void validateHand(List<Card> initHand) {
-        if (initHand.size() != INIT_HAND_SIZE) {
-            throw new IllegalArgumentException("블랙잭 시작 시 플레이어들은 2장의 카드를 분배받아야 합니다.");
-        }
+    public Player(final Card firstCard, final Card secondCard) {
+        this.cards = new ArrayList<>(List.of(firstCard, secondCard));
     }
 
     public abstract boolean canHit();
