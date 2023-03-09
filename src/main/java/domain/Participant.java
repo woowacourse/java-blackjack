@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Participant {
 
@@ -44,25 +43,6 @@ public abstract class Participant {
 
     public String getNameValue() {
         return name.getValue();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Participant that = (Participant) o;
-        return name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 
 }
