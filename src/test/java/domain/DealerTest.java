@@ -36,14 +36,14 @@ class DealerTest {
     }
 
     @ParameterizedTest(name = "점수가 21을 초과하는지 확인한다")
-    @CsvSource({"DIAMOND,8,HEART,K,true", "DIAMOND,10,DIAMOND,5,false"})
-    void c(Suit suit1, String denomination1, Suit suit2, String denomination2, boolean isBusted) {
-        var dealer = new Dealer(List.of(
-                new Card(suit1, denomination1),
-                new Card(suit2, denomination2),
-                new Card(SPADE, "5")));
+    @CsvSource({"DIAMOND,8,HEART,K,BUST", "DIAMOND,10,DIAMOND,5,STAY"})
+    void c(Suit suit1, String denomination1, Suit suit2, String denomination2, Status status) {
+        var dealer = new Dealer();
+        dealer.addCard(new Card(suit1, denomination1));
+        dealer.addCard(new Card(suit2, denomination2));
+        dealer.addCard(new Card(SPADE, "5"));
 
-        assertThat(dealer.isBusted()).isEqualTo(isBusted);
+        assertThat(dealer.status()).isEqualTo(status);
     }
 
     @DisplayName("카드를 받는다.")

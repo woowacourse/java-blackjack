@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.Suit.HEART;
 import static domain.Suit.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -35,14 +36,14 @@ class PlayerTest {
     }
 
     @ParameterizedTest(name = "점수가 21을 초과하는지 확인한다")
-    @CsvSource({"DIAMOND,8,SPADE,K,true", "DIAMOND,10,SPADE,5,false"})
-    void c(Suit suit1, String letter1, Suit suit2, String letter2, boolean isBusted) {
-        var player = new Player("조이", List.of(
-                new Card(suit1, letter1),
-                new Card(suit2, letter2),
-                new Card(SPADE, "5")));
+    @CsvSource({"DIAMOND,8,SPADE,K,BUST", "DIAMOND,10,SPADE,5,PLAYING"})
+    void c(Suit suit1, String letter1, Suit suit2, String letter2, Status status) {
+        var player = new Player("조이");
+        player.addCard(new Card(HEART, "5"));
+        player.addCard(new Card(suit1, letter1));
+        player.addCard(new Card(suit2, letter2));
 
-        assertThat(player.isBusted()).isEqualTo(isBusted);
+        assertThat(player.status()).isEqualTo(status);
     }
 
     @DisplayName("카드를 받는다.")
