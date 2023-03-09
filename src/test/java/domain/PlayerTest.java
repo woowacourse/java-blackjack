@@ -3,6 +3,7 @@ package domain;
 import domain.Card.Card;
 import domain.Card.CardNumber;
 import domain.Card.CardShape;
+import domain.user.ParticipantStatus;
 import domain.user.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -57,5 +58,17 @@ class PlayerTest {
         participant.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
         participant.addCard(new Card(CardNumber.THREE, CardShape.HEART));
         Assertions.assertThat(participant.getScore()).isEqualTo(14);
+    }
+    
+    @Test
+    @DisplayName("현재 점수로부터 참여자 상태를 반환한다.")
+    void getStatus() {
+        Player participant = new Player("echo");
+        participant.addCard(new Card(CardNumber.TWO, CardShape.SPADE));
+        participant.addCard(new Card(CardNumber.KING, CardShape.HEART));
+        Assertions.assertThat(participant.getStatus()).isEqualTo(ParticipantStatus.NOT_BUST);
+        participant.addCard(new Card(CardNumber.KING, CardShape.DIAMOND));
+        Assertions.assertThat(participant.getStatus()).isEqualTo(ParticipantStatus.BUST);
+        Assertions.assertThat(participant.isBust()).isTrue();
     }
 }
