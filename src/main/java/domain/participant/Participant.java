@@ -24,10 +24,6 @@ public abstract class Participant {
         this.cards.receiveCard(card);
     }
 
-    public int getScore() {
-        return calculateScore().getValue();
-    }
-
     public Score calculateScore() {
         return cards.calculateScore();
     }
@@ -42,5 +38,9 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public int getScore() {
+        return calculateScore().getValue();
     }
 }
