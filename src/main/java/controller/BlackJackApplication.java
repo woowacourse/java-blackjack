@@ -21,6 +21,7 @@ public class BlackJackApplication {
         initializeBlackjackGame(blackJack);
 
         giveCardToPlayers(blackJack);
+        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
         GameResultReadOnly gameResult = blackJack.battle();
         OutputView.printPlayersGameResults(gameResult);
     }
@@ -37,8 +38,11 @@ public class BlackJackApplication {
 
     private void giveCardToPlayers(BlackJack blackJack) {
         giveCardToParticipants(blackJack);
-        giveCardToDealer(blackJack);
-        OutputView.printPlayersFinalInformation(blackJack.getPlayers());
+        if (!blackJack.shouldDealerGetCard()) {
+            return;
+        }
+        blackJack.giveCardToDealer();
+        OutputView.printGiveDealerCardMessage();
     }
 
     private void giveCardToParticipants(BlackJack blackJack) {
@@ -78,13 +82,6 @@ public class BlackJackApplication {
 
         if (participant.isBust()) {
             OutputView.printBurstMessage(participant.getName());
-        }
-    }
-
-    private void giveCardToDealer(BlackJack blackJack) {
-        if (blackJack.shouldDealerGetCard()) {
-            blackJack.giveCardToDealer();
-            OutputView.printGiveDealerCardMessage();
         }
     }
 }
