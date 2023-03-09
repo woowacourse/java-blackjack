@@ -1,7 +1,7 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
     private static final int HIGH_ACE_VALUE = 11;
@@ -20,29 +20,17 @@ public class Hand {
     }
 
     public int calculateValue() {
-        int value = 0;
-        int aceCount = 0;
-
-        aceCount = countAce(aceCount);
-
-        value = sumValue(value);
+        int aceCount = countAce();
+        int value = sumValue();
 
         value = chooseAceValue(value, aceCount);
         return value;
     }
 
-    private int countAce(int aceCount) {
-        for (Card card : hand) {
-            aceCount = addAceCount(aceCount, card);
-        }
-        return aceCount;
-    }
-
-    private int addAceCount(int aceCount, Card card) {
-        if (card.isAce()) {
-            aceCount += 1;
-        }
-        return aceCount;
+    private int countAce() {
+        return (int)hand.stream()
+            .filter(Card::isAce)
+            .count();
     }
 
     private int chooseAceValue(int value, int aceCount) {
@@ -53,16 +41,13 @@ public class Hand {
         return value;
     }
 
-    private int sumValue(int value) {
-        for (Card card : hand) {
-            value += card.getValue();
-        }
-        return value;
+    private int sumValue() {
+        return  hand.stream()
+            .mapToInt(Card::getValue)
+            .sum();
     }
 
-    public List<String> getCardNames() {
-        return hand.stream()
-            .map(Card::getName)
-            .collect(Collectors.toList());
+    public List<Card> getHand() {
+        return new ArrayList<>(hand);
     }
 }
