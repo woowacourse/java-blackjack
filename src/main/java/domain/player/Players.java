@@ -43,15 +43,20 @@ public final class Players {
                 .collect(toList());
     }
 
+    public Map<Player, Stake> calculateFinalResults(final Dealer dealer, final Map<Player, Stake> playerBets) {
+        Map<Player, Status> statusResults = calculateResults(dealer);
+        return calculateBets(dealer, statusResults, playerBets);
+    }
+
     public Map<Player, Status> calculateResults(final Dealer dealer) {
         return players.stream()
                 .collect(toMap(player -> player, player -> player.compareWithDealer(dealer)));
     }
 
-    public Map<Player, Stake> calculateBets(Dealer dealer, final Map<Player, Status> dealerStats, final Map<Player, Stake> playerBets) {
+    public Map<Player, Stake> calculateBets(Dealer dealer, final Map<Player, Status> statusResults, final Map<Player, Stake> playerBets) {
         Map<Player, Stake> prizeResult = new LinkedHashMap<>();
         for (Player player : players) {
-            Status singleResult = dealerStats.get(player);
+            Status singleResult = statusResults.get(player);
             Stake singleStake = playerBets.get(player);
             prizeResult.merge(dealer, singleStake.getPrize(singleResult), Stake::add);
             prizeResult.merge(player, singleStake.getPrize(singleResult), Stake::add);

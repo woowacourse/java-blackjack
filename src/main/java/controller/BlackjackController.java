@@ -114,9 +114,8 @@ public final class BlackjackController {
         }
     }
 
-    private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Stake> playerStakes) {
-        Map<Player, Status> results = players.calculateResults(dealer);
-        Map<Player, Stake> finalStakeResults = players.calculateBets(dealer, results, playerStakes);
+    private void showBetResults(final Dealer dealer, final Players players, final Map<Player, Stake> playerBets) {
+        Map<Player, Stake> finalStakeResults = players.calculateFinalResults(dealer, playerBets);
         printResult(finalStakeResults);
     }
 }
