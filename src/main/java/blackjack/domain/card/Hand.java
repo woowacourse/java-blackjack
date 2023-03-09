@@ -1,10 +1,16 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.State.BLACKJACK;
+import static blackjack.domain.card.State.BUST;
+import static blackjack.domain.card.State.PLAY;
+import static blackjack.domain.card.State.STOP;
+import static blackjack.domain.card.State.calculateState;
+
 import blackjack.domain.player.Result;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
     private final Cards cards;
     private State state;
 
@@ -14,43 +20,43 @@ public class Hand {
 
     public Hand(final List<Card> cards) {
         this.cards = new Cards(cards);
-        this.state = State.calculateState(this.cards);
+        this.state = calculateState(this.cards);
     }
 
     public void add(final Card card) {
         cards.add(card);
-        state = State.calculateState(cards);
+        state = calculateState(cards);
     }
 
     public Result play(final Hand other) {
-        if (state.isBlackjack()) {
+        if (state == BLACKJACK) {
             return playWithBlackjack(other);
         }
-        if (state.isBust()) {
+        if (state == BUST) {
             return Result.LOSE;
         }
         return playWithScore(other);
     }
 
     private Result playWithBlackjack(final Hand other) {
-        if (other.state.isBlackjack()) {
+        if (other.state == BLACKJACK) {
             return Result.PUSH;
         }
         return Result.BLACKJACK_WIN;
     }
 
     private Result playWithScore(final Hand other) {
-        if (other.state.isBust() || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
+        if (other.state == BUST || cards.calculateTotalScore() > other.cards.calculateTotalScore()) {
             return Result.WIN;
         }
-        if (other.state.isNotBust() && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
+        if (other.state != BUST && cards.calculateTotalScore() < other.cards.calculateTotalScore()) {
             return Result.LOSE;
         }
         return Result.PUSH;
     }
 
     public boolean isPlayable() {
-        return state.isPlayable();
+        return state == PLAY;
     }
 
     public int calculateScore() {
@@ -58,7 +64,7 @@ public class Hand {
     }
 
     public void stay() {
-        state = State.STOP;
+        state = STOP;
     }
 
     public List<String> getCardLetters() {
