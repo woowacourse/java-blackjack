@@ -49,13 +49,13 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public Map<String, Integer> getRevenues() {
-        return players.battleWith(dealer);
-    }
-
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>(List.of(dealer));
         participants.addAll(players.getPlayers());
         return participants;
+    }
+
+    public Map<String, Integer> getRevenues() {
+        return players.battleWith(dealer);
     }
 }

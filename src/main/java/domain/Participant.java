@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final Hand hand;
+    protected final Hand hand;
     private final Name name;
 
     Participant(Name name) {
@@ -21,6 +21,8 @@ public abstract class Participant {
     public int score() {
         return hand.calculateScore();
     }
+
+    public abstract List<Card> initialHand();
 
     public List<Card> hand() {
         return hand.getCards();

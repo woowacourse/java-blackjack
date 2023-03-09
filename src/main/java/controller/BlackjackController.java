@@ -38,7 +38,7 @@ public class BlackjackController {
         BlackjackGame blackjackGame = new BlackjackGame(players);
         blackjackGame.handOutInitialCards(new RandomShuffleStrategy());
 
-        outputView.printParticipantsInitialCards(toParticipantDtos(blackjackGame.getParticipants()));
+        outputView.printCardInfos(toParticipantDtosOfInitialState(blackjackGame.getParticipants()));
         return blackjackGame;
     }
 
@@ -69,7 +69,7 @@ public class BlackjackController {
             Player currentDrawablePlayer = blackjackGame.getCurrentDrawablePlayer();
             Decision decision = getDecision(currentDrawablePlayer);
             blackjackGame.hitOrStand(decision);
-            outputView.printAllCards(new ParticipantDto(currentDrawablePlayer));
+            outputView.printCardsInfo(ParticipantDto.of(currentDrawablePlayer));
         }
     }
 
@@ -89,9 +89,9 @@ public class BlackjackController {
         }
     }
 
-    private List<ParticipantDto> toParticipantDtos(List<Participant> participants) {
+    private List<ParticipantDto> toParticipantDtosOfInitialState(List<Participant> participants) {
         return participants.stream()
-                .map(ParticipantDto::new)
+                .map(ParticipantDto::ofInitial)
                 .collect(toUnmodifiableList());
     }
 

@@ -12,7 +12,7 @@ public class OutputView {
 
     private static final String CARD_DELIMITER = ", ";
 
-    public void printParticipantsInitialCards(List<ParticipantDto> participantDtos) {
+    public void printCardInfos(List<ParticipantDto> participantDtos) {
         printInitialState(participantDtos);
         printInitialCards(participantDtos);
     }
@@ -25,21 +25,11 @@ public class OutputView {
     }
 
     private void printInitialCards(List<ParticipantDto> participantDtos) {
-        participantDtos.forEach(participantDto -> {
-            if (participantDto.name().equals("딜러")) {
-                printFirstCard(participantDto);
-                return;
-            }
-            printAllCards(participantDto);
-        });
+        participantDtos.forEach(this::printCardsInfo);
         System.out.println();
     }
 
-    private void printFirstCard(ParticipantDto participantDto) {
-        System.out.println(generateCardsInfo(participantDto.name(), participantDto.cards().subList(0, 1)));
-    }
-
-    public void printAllCards(ParticipantDto participantDto) {
+    public void printCardsInfo(ParticipantDto participantDto) {
         System.out.println(generateCardsInfo(participantDto.name(),
                 participantDto.cards()));
     }

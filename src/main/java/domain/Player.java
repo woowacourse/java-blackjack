@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Player extends Participant {
 
     private static final int UPPER_BOUND_OF_DRAWABLE_SCORE = 21;
@@ -21,6 +23,11 @@ public class Player extends Participant {
     public boolean isDrawable() {
         return decision == Decision.HIT &&
                 score() < UPPER_BOUND_OF_DRAWABLE_SCORE;
+    }
+
+    @Override
+    public List<Card> initialHand() {
+        return hand.getCards();
     }
 
     public int bettingMoney() {
