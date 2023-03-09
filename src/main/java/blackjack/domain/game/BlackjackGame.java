@@ -37,15 +37,15 @@ public class BlackjackGame {
     }
 
     public boolean isPlayerCanPlay(final Participant participant, final Order order) {
-        if(participant.isBust()||!order.isYES()){
+        if (participant.isBust() || !order.isYES()) {
             return false;
         }
         participant.drawCard(deck.drawCard());
         return participant.isNotBust();
     }
 
-    public boolean playDealer(Dealer dealer){
-        if(dealer.canNotHit()) {
+    public boolean playDealer(Dealer dealer) {
+        if (dealer.canNotHit()) {
             return false;
         }
         dealer.drawCard(deck.drawCard());

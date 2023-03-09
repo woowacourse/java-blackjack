@@ -10,22 +10,23 @@ import java.util.Map;
 
 public class ParticipantsDto {
     private final CardsDto dealerCards;
-    private final Map<String,CardsDto> participantsMap;
-    public ParticipantsDto(Participants participants){
+    private final Map<String, CardsDto> participantsMap;
+
+    public ParticipantsDto(Participants participants) {
         participantsMap = new HashMap<>();
         Dealer dealer = participants.getDealer();
-        this.dealerCards = new CardsDto(dealer.getCards(),dealer.getTotalScore());
-        for(Player player : participants.getPlayers()){
+        this.dealerCards = new CardsDto(dealer.getCards(), dealer.getTotalScore());
+        for (Player player : participants.getPlayers()) {
             putParticipant(player);
         }
     }
 
-    public Map<String,CardsDto> getParticipantsMap(){
+    public Map<String, CardsDto> getParticipantsMap() {
         return participantsMap;
     }
 
-    private void putParticipant(Participant participant){
-        participantsMap.put(participant.getName(),new CardsDto(participant.getCards(),participant.getTotalScore()));
+    private void putParticipant(Participant participant) {
+        participantsMap.put(participant.getName(), new CardsDto(participant.getCards(), participant.getTotalScore()));
     }
 
     public CardsDto getDealerCards() {

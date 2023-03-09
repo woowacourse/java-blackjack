@@ -5,7 +5,6 @@ import blackjack.domain.card.DeckMaker;
 import blackjack.domain.cardPicker.RandomCardPicker;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultGame;
-import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -16,7 +15,6 @@ import blackjack.view.dto.CardsDto;
 import blackjack.view.dto.ParticipantsDto;
 import blackjack.view.dto.ResultDto;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class BlackjackController {
@@ -35,10 +33,10 @@ public class BlackjackController {
         final Deck deck = makeDeck();
         final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
 
-        startGame(blackjackGame,participants);
+        startGame(blackjackGame, participants);
         participants.getDealer().reverseAllExceptOne();
         outputView.outputParticipantCards(new ParticipantsDto(participants));
-        hitParticipants(blackjackGame,participants);
+        hitParticipants(blackjackGame, participants);
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
         participants.getDealer().openAllCard();
@@ -66,26 +64,26 @@ public class BlackjackController {
 
 
     private void hitParticipants(final BlackjackGame blackjackGame, Participants participants) {
-        hitPlayers(blackjackGame,participants.getPlayers());
-        hitDealer(blackjackGame,participants.getDealer());
+        hitPlayers(blackjackGame, participants.getPlayers());
+        hitDealer(blackjackGame, participants.getDealer());
     }
 
-    private void hitPlayers(final BlackjackGame blackjackGame, List<Player> players){
+    private void hitPlayers(final BlackjackGame blackjackGame, List<Player> players) {
         for (final Player player : players) {
             hitEachPlayer(blackjackGame, player);
         }
     }
 
-    private void hitEachPlayer(final BlackjackGame blackjackGame, Player player){
+    private void hitEachPlayer(final BlackjackGame blackjackGame, Player player) {
         Order order = Order.from(inputView.inputOrderCard(player.getName()));
-        while(blackjackGame.isPlayerCanPlay(player,order)){
+        while (blackjackGame.isPlayerCanPlay(player, order)) {
             outputView.outputPlayerCard(player.getName(), new CardsDto(player.getCards(), player.getTotalScore()));
             order = Order.from(inputView.inputOrderCard(player.getName()));
         }
     }
 
-    private void hitDealer(BlackjackGame blackjackGame, Dealer dealer){
-        while(blackjackGame.playDealer(dealer)){
+    private void hitDealer(BlackjackGame blackjackGame, Dealer dealer) {
+        while (blackjackGame.playDealer(dealer)) {
             outputView.outputDealerDrawCard(dealer.getName());
         }
     }

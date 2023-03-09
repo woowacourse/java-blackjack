@@ -1,8 +1,10 @@
 package blackjack.view;
 
-import blackjack.view.dto.*;
+import blackjack.view.dto.CardInfo;
+import blackjack.view.dto.CardsDto;
+import blackjack.view.dto.ParticipantsDto;
+import blackjack.view.dto.ResultDto;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,11 +33,11 @@ public class OutputView {
 
 
     public void outputParticipantCards(ParticipantsDto participantsDto) {
-        outputPlayerCard(DEALER_NAME,participantsDto.getDealerCards());
+        outputPlayerCard(DEALER_NAME, participantsDto.getDealerCards());
         changeLine();
-        participantsDto.getParticipantsMap().forEach((name,cards)->{
-                outputPlayerCard(name,cards);
-                changeLine();
+        participantsDto.getParticipantsMap().forEach((name, cards) -> {
+            outputPlayerCard(name, cards);
+            changeLine();
         });
     }
 
@@ -45,7 +47,8 @@ public class OutputView {
                         .map(this::combineStringWith)
                         .collect(Collectors.joining(PLAYER_DELIMITER)));
     }
-    private String combineStringWith(CardInfo cardInfo){
+
+    private String combineStringWith(CardInfo cardInfo) {
         return cardInfo.getLetter() + cardInfo.getShape();
     }
 
@@ -53,23 +56,26 @@ public class OutputView {
         System.out.println(CHANGE_LINE + name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
         changeLine();
     }
-    public void outputCardsAndScore(ParticipantsDto participantsDto){
-        outputPlayerCard(DEALER_NAME,participantsDto.getDealerCards());
+
+    public void outputCardsAndScore(ParticipantsDto participantsDto) {
+        outputPlayerCard(DEALER_NAME, participantsDto.getDealerCards());
         outputScore(participantsDto.getDealerCards().getTotalScore());
         changeLine();
-        participantsDto.getParticipantsMap().forEach((name,cards)->{
-            outputPlayerCard(name,cards);
+        participantsDto.getParticipantsMap().forEach((name, cards) -> {
+            outputPlayerCard(name, cards);
             outputScore(cards.getTotalScore());
             changeLine();
         });
         changeLine();
     }
+
     private void outputScore(final int score) {
         System.out.print(RESULT_DELIMITER + score);
     }
-    public void outputFinalResult(ResultDto resultDto){
+
+    public void outputFinalResult(ResultDto resultDto) {
         System.out.println(FINAL_RESULT_MASSAGE);
-        outputDealerResult(DEALER_NAME,resultDto.getDealerWinCount(),
+        outputDealerResult(DEALER_NAME, resultDto.getDealerWinCount(),
                 resultDto.getDealerTieCount(),
                 resultDto.getDealerLoseCount());
         resultDto.getPlayerResult().forEach(this::outputPlayerResult);

@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Participant {
     private final Name name;
