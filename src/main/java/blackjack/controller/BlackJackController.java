@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.BettingResults;
 import blackjack.domain.game.BlackJackManager;
-import blackjack.domain.game.BlackJackResults;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -16,7 +16,10 @@ public class BlackJackController {
     private final BlackJackManager blackJackManager;
 
     public BlackJackController(final Deck deck) {
-        this.blackJackManager = repeatAndPrintCause(() -> new BlackJackManager(deck, InputView.readNames()));
+        final List<String> nameValues = repeatAndPrintCause(InputView::readNames);
+        final List<Integer> moneyValues = repeatAndPrintCause(() -> InputView.readMoney(nameValues));
+
+        this.blackJackManager = repeatAndPrintCause(() -> new BlackJackManager(deck, nameValues, moneyValues));
     }
 
     public void inputHitCondition() {
@@ -40,8 +43,8 @@ public class BlackJackController {
     }
 
     public void showGameResult() {
-        final BlackJackResults blackJackResults = blackJackManager.getBlackJackResults();
+        final BettingResults bettingResults = blackJackManager.createBettingResults();
 
-        OutputView.printBlackJackResults(blackJackResults);
+        OutputView.printBettingResults(bettingResults);
     }
 }
