@@ -1,10 +1,9 @@
 package blackjackgame.view;
 
 import blackjackgame.dto.CardDto;
-import blackjackgame.dto.DealerResultDto;
-import blackjackgame.dto.GuestResultDto;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
@@ -16,13 +15,13 @@ public class OutputView {
 
     public void printCards(final String playerName, final List<CardDto> cards) {
         StringBuilder stringBuilder = new StringBuilder();
-        System.out.printf("%s%s: ", System.lineSeparator(), playerName);
+        System.out.printf("%s: ", playerName);
         for (final CardDto cardDto : cards) {
             stringBuilder.append(cardDto.getValue())
                     .append(cardDto.getSymbol())
                     .append(DELIMITER);
         }
-        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(DELIMITER));
+        stringBuilder.delete(stringBuilder.lastIndexOf(DELIMITER), stringBuilder.length());
         System.out.print(stringBuilder);
     }
 
@@ -34,28 +33,15 @@ public class OutputView {
         System.out.print(" - 결과: " + score);
     }
 
-    public void printResult(final List<DealerResultDto> dealerResult, final List<GuestResultDto> guestResult) {
+    public void printBettingResult(Map<String, Integer> bettingResult) {
+        System.out.println(System.lineSeparator());
+        System.out.println("## 최종 수익");
+        for(String name : bettingResult.keySet()) {
+            System.out.println(name + ": " + bettingResult.get(name));
+        }
+    }
+
+    public void printLineSeparator() {
         System.out.println();
-        StringBuilder stringBuilder = new StringBuilder("## 최종 승패" + System.lineSeparator() + "딜러: ");
-        appendDealerResult(dealerResult, stringBuilder);
-        appendGuestsResult(guestResult, stringBuilder);
-        System.out.println(System.lineSeparator() + stringBuilder);
-    }
-
-    private void appendDealerResult(final List<DealerResultDto> dealerResult, final StringBuilder stringBuilder) {
-        for (final DealerResultDto dealerResultDto : dealerResult) {
-            stringBuilder.append(dealerResultDto.getOutcomeNumber())
-                    .append(dealerResultDto.getOutCome())
-                    .append(" ");
-        }
-    }
-
-    private void appendGuestsResult(final List<GuestResultDto> guestResult, final StringBuilder stringBuilder) {
-        for (final GuestResultDto guestResultDto : guestResult) {
-            stringBuilder.append(System.lineSeparator());
-            stringBuilder.append(guestResultDto.getName())
-                    .append(": ")
-                    .append(guestResultDto.getOutcome());
-        }
     }
 }

@@ -22,8 +22,24 @@ public class InputView {
         }
     }
 
+    public int readBettingMoney(final String guestName) {
+        System.out.println();
+        System.out.println(guestName + "의 베팅 금액은?");
+        try {
+            return validateInteger(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("베팅 금액으로 양의 정수를 입력해주세요.");
+            return readBettingMoney(guestName);
+        }
+    }
+
+    private int validateInteger(final String inputMoney) {
+        return Integer.parseInt(inputMoney);
+    }
+
     public AddCardRequest readWantMoreCard(final String playerName) {
-        System.out.printf(AddCardRequest.printAddCardRequest(playerName));
+        System.out.println();
+        System.out.println(AddCardRequest.printAddCardRequest(playerName));
         try {
             return AddCardRequest.validate(scanner.nextLine());
         } catch (IllegalArgumentException e) {

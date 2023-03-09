@@ -1,12 +1,8 @@
 package blackjackgame.controller;
 
-import java.util.List;
+import java.util.*;
 
-import blackjackgame.domain.Dealer;
-import blackjackgame.domain.Deck;
-import blackjackgame.domain.Guest;
-import blackjackgame.domain.Guests;
-import blackjackgame.domain.Result;
+import blackjackgame.domain.*;
 import blackjackgame.view.AddCardRequest;
 import blackjackgame.view.InputView;
 import blackjackgame.view.OutputView;
@@ -24,13 +20,14 @@ public class BlackJackController {
         final Deck deck = new Deck();
         final Guests guests = generateGuests(deck);
         final Dealer dealer = new Dealer(deck.pickOne(), deck.pickOne());
+        Map<Guest, BettingMoney> guestBettingMoney = askGuestsBettingMoney(guests);
         printFirstHand(guests, dealer);
 
         askGuestsHitCard(guests.getGuests(), deck);
         askDealerHitCard(dealer, deck);
 
         printPlayersCardScore(guests, dealer);
-        printGameResult(guests, dealer);
+        printBettingResult(guests, dealer, guestBettingMoney);
     }
 
     private Guests generateGuests(final Deck deck) {
@@ -43,10 +40,21 @@ public class BlackJackController {
         }
     }
 
+    private Map<Guest, BettingMoney> askGuestsBettingMoney(final Guests guests) {
+        Map<Guest, BettingMoney> guestBettingMoneyMap = new LinkedHashMap<>();
+        for (Guest guest : guests.getGuests()) {
+            BettingMoney bettingMoney = BettingMoney.of(inputView.readBettingMoney(guest.getName()));
+            guestBettingMoneyMap.put(guest, bettingMoney);
+        }
+        return guestBettingMoneyMap;
+    }
+
     private void printFirstHand(final Guests guests, final Dealer dealer) {
         outputView.printFirstDealerCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getCards()));
+        outputView.printLineSeparator();
         for (final Guest guest : guests.getGuests()) {
             outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
+            outputView.printLineSeparator();
         }
     }
 
@@ -73,6 +81,7 @@ public class BlackJackController {
     }
 
     private void askDealerHitCard(final Dealer dealer, final Deck deck) {
+        outputView.printLineSeparator();
         while (dealer.canHit()) {
             dealer.addCard(deck.pickOne());
             outputView.dealerAddCard();
@@ -80,18 +89,29 @@ public class BlackJackController {
     }
 
     private void printPlayersCardScore(final Guests guests, final Dealer dealer) {
+        outputView.printLineSeparator();
         outputView.printCards(dealer.getName(), BlackJackGameDataAssembler.assembleCardDto(dealer.getCards()));
         outputView.printScore(dealer.getScore());
 
         for (final Guest guest : guests.getGuests()) {
+            outputView.printLineSeparator();
             outputView.printCards(guest.getName(), BlackJackGameDataAssembler.assembleCardDto(guest.getCards()));
             outputView.printScore(guest.getScore());
         }
     }
 
-    private void printGameResult(final Guests guests, final Dealer dealer) {
+    private void printBettingResult(final Guests guests, final Dealer dealer, final Map<Guest, BettingMoney> guestBettingMoney) {
         Result result = new Result(dealer, guests.getGuests());
-        outputView.printResult(BlackJackGameDataAssembler.assembleDealerResultDto(result.getDealerResult()),
-                BlackJackGameDataAssembler.assembleGuestsResultDto(result.getGuestsResult()));
+        Map<Guest, GameOutcome> guestGameOutcome = result.getGuestsResult();
+        Map<String, Integer> bettingResult = new LinkedHashMap<>();
+        int dealerRevenue = 0;
+        bettingResult.put(dealer.getName(), dealerRevenue);
+        for(Guest guest : guestGameOutcome.keySet()) {
+            int guestRevenue = guestBettingMoney.get(guest).getRevenue(guestGameOutcome.get(guest));
+            bettingResult.put(guest.getName(), guestRevenue);
+            dealerRevenue -= guestRevenue;
+        }
+        bettingResult.put(dealer.getName(), dealerRevenue);
+        outputView.printBettingResult(bettingResult);
     }
 }

@@ -39,10 +39,10 @@ public class Guests {
     }
 
     public Map<Guest, BettingMoney> bet(final List<BettingMoney> inputBettingMoneys) {
-        Map<Guest, BettingMoney> guestBettingMoneyMap = new LinkedHashMap<>();
+        Map<Guest, BettingMoney> guestBettingMoney = new LinkedHashMap<>();
         IntStream.range(0, guests.size())
-                .forEach(index -> guestBettingMoneyMap.put(guests.get(index), inputBettingMoneys.get(index)));
-        return guestBettingMoneyMap;
+                .forEach(index -> guestBettingMoney.put(guests.get(index), inputBettingMoneys.get(index)));
+        return guestBettingMoney;
     }
 
     public List<Guest> getGuests() {

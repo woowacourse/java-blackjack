@@ -14,8 +14,8 @@ public enum AddCardRequest {
     }
 
     public static String printAddCardRequest(final String playerName) {
-        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%s", System.lineSeparator() + playerName
-            , YES.value, NO.value, System.lineSeparator());
+        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", playerName
+            , YES.value, NO.value);
     }
 
     public static AddCardRequest validate(final String input) {
