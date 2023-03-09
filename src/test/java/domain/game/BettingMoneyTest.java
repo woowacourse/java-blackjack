@@ -32,4 +32,12 @@ class BettingMoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 정수 값이어야 합니다.");
     }
+
+    @ParameterizedTest(name = "create()는 0원 이하, 100,000,000원 초과를 베팅하면 예외를 발생시킨다")
+    @ValueSource(strings = {"0", "100000001"})
+    void create_givenInvalidBettingMoney_thenFail(final String bettingMoney) {
+        assertThatThrownBy(() -> BettingMoney.create(bettingMoney))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 0원 초과, 100,000,000원 이하여야 합니다.");
+    }
 }

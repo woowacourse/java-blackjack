@@ -1,7 +1,9 @@
 package domain.game;
 
 public class BettingMoney {
-    
+    private static final int MIN_MONEY = 0;
+    private static final int MAX_MONEY = 100_000_000;
+
     private final int money;
 
     private BettingMoney(final int money) {
@@ -10,6 +12,7 @@ public class BettingMoney {
 
     public static BettingMoney create(final String money) {
         int validMoney = validType(money);
+        validateRange(validMoney);
         return new BettingMoney(validMoney);
     }
 
@@ -21,5 +24,11 @@ public class BettingMoney {
             throw new IllegalArgumentException("베팅 금액은 정수 값이어야 합니다.");
         }
         return validMoney;
+    }
+
+    private static void validateRange(final int money) {
+        if (money <= MIN_MONEY || money > MAX_MONEY) {
+            throw new IllegalArgumentException("베팅 금액은 0원 초과, 100,000,000원 이하여야 합니다.");
+        }
     }
 }
