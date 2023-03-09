@@ -2,7 +2,9 @@ package domain.game;
 
 import domain.deck.Card;
 import domain.deck.Deck;
+import domain.player.Batting;
 import domain.player.Dealer;
+import domain.player.Name;
 import domain.player.Player;
 import domain.player.Players;
 import java.util.List;
@@ -12,10 +14,10 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(final Deck deck, final List<String> playerNames, final List<Integer> amounts) {
+    public BlackJackGame(final Deck deck, final List<Name> names, final List<Batting> battings) {
         this.deck = deck;
         this.dealer = new Dealer();
-        this.players = new Players(playerNames, amounts);
+        this.players = new Players(names, battings);
         distributeTwoCards();
     }
 
@@ -33,8 +35,8 @@ public class BlackJackGame {
         dealer.drawCard(deck.popCard());
     }
 
-    public void drawCardPlayer(final String playerName) {
-        players.getPlayer(playerName)
+    public void drawCardPlayer(final Name name) {
+        players.getPlayer(name)
                 .drawCard(deck.popCard());
     }
 
@@ -42,16 +44,16 @@ public class BlackJackGame {
         return dealer.isDealerDraw();
     }
 
-    public List<Card> getPlayerCards(final String playerName) {
-        return players.getPlayer(playerName).cards();
+    public List<Card> getPlayerCards(final Name name) {
+        return players.getPlayer(name).cards();
     }
 
     public List<Card> getDealerCards() {
         return dealer.cards();
     }
 
-    public int getPlayerScore(final String playerName) {
-        return players.getPlayer(playerName).score();
+    public int getPlayerScore(final Name name) {
+        return players.getPlayer(name).score();
     }
 
     public int getDealerScore() {

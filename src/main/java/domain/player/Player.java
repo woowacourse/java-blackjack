@@ -8,10 +8,10 @@ public class Player {
     private final Hand hand;
     private final Batting batting;
 
-    public Player(final String name, final int amount) {
-        this.name = new Name(name);
+    public Player(final Name name, final Batting batting) {
+        this.name = name;
         this.hand = new Hand();
-        this.batting = new Batting(amount);
+        this.batting = batting;
     }
 
     public void drawCard(final Card card) {

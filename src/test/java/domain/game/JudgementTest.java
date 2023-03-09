@@ -3,12 +3,15 @@ package domain.game;
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Suit;
+import domain.player.Batting;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
 import domain.player.Players;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +20,12 @@ import org.junit.jupiter.api.Test;
 class JudgementTest {
     private static final String PLAYER_NAME = "player";
 
-    List<String> names = List.of(PLAYER_NAME);
-    List<Integer> amounts = List.of(10);
+    List<Name> names = Stream.of(PLAYER_NAME)
+            .map(Name::new)
+            .collect(Collectors.toList());
+    List<Batting> battings = Stream.of(10)
+            .map(Batting::new)
+            .collect(Collectors.toList());
     Name name = new Name(PLAYER_NAME);
     Players players;
     Player player;
@@ -26,8 +33,8 @@ class JudgementTest {
 
     @BeforeEach
     void setup() {
-        players = new Players(names, amounts);
-        player = players.getPlayer(PLAYER_NAME);
+        players = new Players(names, battings);
+        player = players.getPlayer(name);
         dealer = new Dealer();
     }
 

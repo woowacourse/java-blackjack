@@ -1,6 +1,8 @@
 package domain;
 
 import domain.deck.Deck;
+import domain.player.Batting;
+import domain.player.Name;
 import domain.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +17,9 @@ public class PlayerTest {
     @DisplayName("플레이어가 처음 카드를 뽑으면 패의 크기는 1이다.")
     @Test
     void drawTest() {
-        final String testName = "test";
-        final int amount = 100_000;
-        Player player = new Player(testName, amount);
+        final Name name = new Name("test");
+        final Batting batting = new Batting(100_000);
+        final Player player = new Player(name, batting);
 
         Assertions.assertEquals(0, player.cards().size());
         player.drawCard(deck.popCard());

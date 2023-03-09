@@ -3,6 +3,8 @@ package controller;
 import domain.deck.Card;
 import domain.deck.Deck;
 import domain.game.BlackJackGame;
+import domain.player.Batting;
+import domain.player.Name;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -12,12 +14,12 @@ public class MainController {
     private static final int BLACK_JACK_NUMBER = 21;
     private static final String DEALER_NAME = "딜러";
 
-    private List<String> names;
+    private List<Name> names;
     private BlackJackGame blackJackGame;
 
     public void start() {
         names = inputNames();
-        final List<Integer> amounts = inputAmounts();
+        final List<Batting> amounts = inputBattings();
         blackJackGame = generateBlackJackGame(amounts);
 
         outputCards();
@@ -27,22 +29,22 @@ public class MainController {
         outputCardResult();
     }
 
-    private List<String> inputNames() {
+    private List<Name> inputNames() {
         OutputView.printInputNames();
         return InputView.readNames();
     }
 
-    private List<Integer> inputAmounts() {
-        final List<Integer> amounts = new ArrayList<>();
-        for (final String name : names) {
+    private List<Batting> inputBattings() {
+        final List<Batting> amounts = new ArrayList<>();
+        for (final Name name : names) {
             OutputView.printEmptyLine();
             OutputView.printInputAmount(name);
-            amounts.add(InputView.readAmount());
+            amounts.add(InputView.readBatting());
         }
         return amounts;
     }
 
-    private BlackJackGame generateBlackJackGame(final List<Integer> amounts) {
+    private BlackJackGame generateBlackJackGame(final List<Batting> amounts) {
         final Deck deck = new Deck();
         deck.shuffleDeck();
         final BlackJackGame blackJackGame = new BlackJackGame(deck, names, amounts);
@@ -64,25 +66,25 @@ public class MainController {
         names.forEach(this::drawWhileYes);
     }
 
-    private void drawWhileYes(final String playerName) {
+    private void drawWhileYes(final Name name) {
         boolean answer = true;
-        while (isAbleDraw(playerName) && answer) {
-            OutputView.printOneMoreCard(playerName);
-            answer = isOneMore(playerName);
+        while (isAbleDraw(name) && answer) {
+            OutputView.printOneMoreCard(name);
+            answer = isOneMore(name);
         }
     }
 
-    private boolean isAbleDraw(final String playerName) {
-        return blackJackGame.getPlayerScore(playerName) < BLACK_JACK_NUMBER;
+    private boolean isAbleDraw(final Name name) {
+        return blackJackGame.getPlayerScore(name) < BLACK_JACK_NUMBER;
     }
 
-    private boolean isOneMore(final String playerName) {
+    private boolean isOneMore(final Name name) {
         if (InputView.readAnswer()) {
-            blackJackGame.drawCardPlayer(playerName);
-            OutputView.printPlayerCard(playerName, blackJackGame.getPlayerCards(playerName));
+            blackJackGame.drawCardPlayer(name);
+            OutputView.printPlayerCard(name, blackJackGame.getPlayerCards(name));
             return true;
         }
-        OutputView.printPlayerCard(playerName, blackJackGame.getPlayerCards(playerName));
+        OutputView.printPlayerCard(name, blackJackGame.getPlayerCards(name));
         return false;
     }
 
@@ -97,7 +99,7 @@ public class MainController {
 
     private void outputCardResult() {
         OutputView.printCardResult(
-                DEALER_NAME,
+                new Name(DEALER_NAME),
                 blackJackGame.getDealerCards(),
                 blackJackGame.getDealerScore()
         );

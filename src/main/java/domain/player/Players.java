@@ -6,15 +6,15 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    public Players(final List<String> playerNames, final List<Integer> amounts) {
-        this.players = generatePlayers(playerNames, amounts);
+    public Players(final List<Name> names, final List<Batting> amounts) {
+        this.players = generatePlayers(names, amounts);
     }
 
-    private List<Player> generatePlayers(final List<String> playerNames, final List<Integer> amounts) {
-        List<Player> players = new ArrayList<>();
+    private List<Player> generatePlayers(final List<Name> names, final List<Batting> amounts) {
+        final List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < amounts.size(); i++) {
-            players.add(new Player(playerNames.get(i), amounts.get(i)));
+            players.add(new Player(names.get(i), amounts.get(i)));
         }
 
         return players;
@@ -24,9 +24,9 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public Player getPlayer(final String name) {
+    public Player getPlayer(final Name name) {
         return players.stream()
-                .filter(player -> player.name().equals(name))
+                .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow();
     }

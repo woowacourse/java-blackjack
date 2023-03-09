@@ -5,7 +5,7 @@ public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(DEALER_NAME, 1);
+        super(new Name(DEALER_NAME), new Batting(1));
     }
 
     public boolean isDealerDraw() {
