@@ -1,5 +1,11 @@
 package blackjack.controller;
 
+import static blackjack.controller.DomainConverter.convertCard;
+import static blackjack.controller.DomainConverter.convertCards;
+import static blackjack.controller.DomainConverter.convertDealerResults;
+import static blackjack.controller.DomainConverter.convertPlayersCards;
+import static blackjack.controller.DomainConverter.convertPlayersResult;
+import static blackjack.controller.DomainConverter.getPlayerCards;
 import static blackjack.util.Repeater.repeatUntilNoException;
 
 import blackjack.domain.BlackJackRuleImpl;
@@ -29,7 +35,10 @@ public class BlackJackController {
                 outputView::printError);
 
         blackJackGame.distributeInitialCard();
-        outputView.printInitialCards(blackJackGame.getDealerFirstCard(), blackJackGame.getPlayerCards());
+
+        outputView.printInitialCards(
+                convertCard(blackJackGame.getDealerFirstCard()),
+                getPlayerCards(blackJackGame.getPlayers()));
 
         for (final String playerName : blackJackGame.getPlayerNames()) {
             DrawCommand playerChoice = DrawCommand.DRAW;
@@ -38,7 +47,7 @@ public class BlackJackController {
                 if (playerChoice == DrawCommand.DRAW) {
                     blackJackGame.drawPlayerCard(playerName);
                 }
-                outputView.printCardStatusOfPlayer(playerName, blackJackGame.getPlayerCardsResponse(playerName));
+                outputView.printCardStatusOfPlayer(playerName, convertCards(blackJackGame.getPlayerCards(playerName)));
             }
         }
 
@@ -47,10 +56,12 @@ public class BlackJackController {
             outputView.printDealerCardDrawMessage();
         }
 
-        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScore(), blackJackGame.getDealerCardsResponse());
-        outputView.printFinalStatusOfPlayers(blackJackGame.getPlayerCards(), blackJackGame.getPlayerScores());
-        outputView.printFinalDealerResult(blackJackGame.getDealerResult());
-        outputView.printFinalPlayersResult(blackJackGame.generatePlayersResult());
+        outputView.printFinalStatusOfDealer(blackJackGame.getDealerScore(),
+                convertCards(blackJackGame.getDealerCards()));
+        outputView.printFinalStatusOfPlayers(convertPlayersCards(blackJackGame.getPlayersCards()),
+                blackJackGame.getPlayersScores());
+        outputView.printFinalDealerResult(convertDealerResults(blackJackGame.generatePlayersResult()));
+        outputView.printFinalPlayersResult(convertPlayersResult(blackJackGame.generatePlayersResult()));
     }
 
     private DrawCommand inputPlayerChoice(final String playerName) {
@@ -61,5 +72,4 @@ public class BlackJackController {
     private List<String> inputPlayerNames() {
         return inputView.inputPlayerNames();
     }
-
 }

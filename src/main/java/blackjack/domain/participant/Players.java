@@ -63,7 +63,7 @@ public class Players {
         }
     }
 
-    List<String> getPlayerNames() {
+    public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());
@@ -85,7 +85,7 @@ public class Players {
         targetPlayer.drawCard(card);
     }
 
-    Player findPlayerByName(final String name) {
+    public Player findPlayerByName(final String name) {
         return players.stream()
                 .filter(player -> player.hasName(name))
                 .findFirst()

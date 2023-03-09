@@ -116,9 +116,8 @@ public class OutputView {
             final Map<ResultTypeResponse, Long> dealerResult,
             final ResultTypeResponse resultTypeResponse) {
 
-        if (dealerResult.containsKey(resultTypeResponse)) {
-            System.out.print(
-                    dealerResult.get(resultTypeResponse) + resultTypeResponse.getResult());
+        if (dealerResult.get(resultTypeResponse) != 0) {
+            System.out.print(dealerResult.get(resultTypeResponse) + resultTypeResponse.getResult());
         }
     }
 

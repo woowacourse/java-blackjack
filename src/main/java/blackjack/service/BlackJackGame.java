@@ -7,15 +7,11 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.response.CardResponse;
-import blackjack.response.ResultTypeResponse;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -60,79 +56,50 @@ public class BlackJackGame {
         return participants.getPlayerNames();
     }
 
-    public CardResponse getDealerFirstCard() {
-        final Card dealerFirstCard = participants.getDealer().getFirstCard();
-        return CardResponse.from(dealerFirstCard);
+    public Card getDealerFirstCard() {
+        return participants.getDealer().getFirstCard();
     }
 
-    public Map<String, List<CardResponse>> getPlayerCards() {
-        final Map<String, List<CardResponse>> playerCards = new HashMap<>();
-        for (final String playerName : getPlayerNames()) {
-            final List<CardResponse> cardResponses = participants.getPlayerCards(playerName).stream()
-                    .map(CardResponse::from)
-                    .collect(Collectors.toList());
-            playerCards.put(playerName, cardResponses);
-        }
-        return playerCards;
+    public Players getPlayers() {
+        return participants.getPlayers();
     }
 
-    public Map<String, Integer> getPlayerScores() {
-        final Map<String, Integer> playerScores = new HashMap<>();
-        for (final String playerName : getPlayerNames()) {
-            final Player player = participants.findPlayerByName(playerName);
-            playerScores.put(playerName, player.currentScore());
-        }
-        return playerScores;
-    }
-
-    public List<CardResponse> getPlayerCardsResponse(final String playerName) {
-        final Player player = participants.findPlayerByName(playerName);
-        return player.getCards().stream()
-                .map(CardResponse::from)
-                .collect(Collectors.toList());
-    }
-
-    public List<CardResponse> getDealerCardsResponse() {
-        final Dealer dealer = participants.getDealer();
-        return dealer.getCards().stream()
-                .map(CardResponse::from)
-                .collect(Collectors.toList());
-    }
-
-    public int getDealerScore() {
-        return participants.getDealer().currentScore();
-    }
-
-    public Map<ResultTypeResponse, Long> getDealerResult() {
-        final ParticipantResults participantResults = new ParticipantResults();
-        final Dealer dealer = participants.getDealer();
-        participants.getPlayers().getPlayers().forEach(player -> {
-            final ResultType resultType = blackJackRule.calculateDealerResult(dealer, player);
-            participantResults.addPlayerResult(player.getName(), resultType);
-        });
-        final Map<String, ResultType> playersToResult = participantResults.getPlayerNameToResultType();
-        return playersToResult.entrySet()
-                .stream()
-                .collect(Collectors.groupingBy(
-                        result -> ResultTypeResponse.from(result.getValue()),
-                        Collectors.counting()));
-    }
-
-    public Map<String, ResultTypeResponse> generatePlayersResult() {
+    public Map<String, ResultType> generatePlayersResult() {
         final ParticipantResults participantResults = new ParticipantResults();
         final Dealer dealer = participants.getDealer();
         participants.getPlayers().getPlayers().forEach(player -> {
             final ResultType resultType = blackJackRule.calculateDealerResult(dealer, player).getOppositeResult();
             participantResults.addPlayerResult(player.getName(), resultType);
         });
-        final Map<String, ResultType> playersToResult = participantResults.getPlayerNameToResultType();
-        return playersToResult.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        result -> ResultTypeResponse.from(result.getValue()),
-                        (x, y) -> y,
-                        LinkedHashMap::new));
+        return participantResults.getPlayerNameToResultType();
+    }
+
+    public List<Card> getPlayerCards(final String playerName) {
+        return participants.findPlayerByName(playerName)
+                .getCards();
+    }
+
+    public int getDealerScore() {
+        return participants.getDealer()
+                .currentScore();
+    }
+
+    public List<Card> getDealerCards() {
+        return participants.getDealer()
+                .getCards();
+    }
+
+    public Map<String, List<Card>> getPlayersCards() {
+        final Map<String, List<Card>> playerCards = new HashMap<>();
+        participants.getPlayers().getPlayers().forEach(player -> playerCards.put(player.getName(), player.getCards()));
+        return playerCards;
+    }
+
+    public Map<String, Integer> getPlayersScores() {
+        final Map<String, Integer> playerScores = new LinkedHashMap<>();
+        participants.getPlayers().getPlayers()
+                .forEach(player -> playerScores.put(player.getName(), player.currentScore()));
+        return playerScores;
     }
 
     private static class ParticipantResults {
