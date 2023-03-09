@@ -38,10 +38,10 @@ public class BlackjackController {
         String whetherDrawCard = HIT;
         while (player.canAdd() && (whetherDrawCard = InputView.readWhetherDrawCardOrNot(player)).equals(HIT)) {
             player.addCard(dealer.drawCard());
-            OutputView.printCardsStatusOfUser(player);
+            OutputView.printCardsStatusOfPlayer(player);
         }
         if (STAND.equals(whetherDrawCard)) {
-            OutputView.printCardsStatusOfUser(player);
+            OutputView.printCardsStatusOfPlayer(player);
         }
     }
 }

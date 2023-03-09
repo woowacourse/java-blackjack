@@ -1,16 +1,25 @@
 package domain.user;
 
 import domain.CardHand;
+import domain.Name;
 
 public class Player extends AbstractUser {
 
+    private final Name name;
+
     public Player(String nameValue) {
-        super(nameValue);
+        this.name = new Name(nameValue);
     }
 
     public Player(String nameValue, CardHand cardHand) {
-        super(nameValue, cardHand);
+        super(cardHand);
+        this.name = new Name(nameValue);
     }
+
+    public String getNameValue() {
+        return this.name.getValue();
+    }
+
 
     @Override
     public boolean canAdd() {

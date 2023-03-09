@@ -33,7 +33,6 @@
 - [x] 카드를 더 받을 수 있는 상황인지 확인한다. (Abstract)
 - [x] CardHand에 Card를 저장한다.
 - [x] CardHand의 점수가 블랙잭인지 확인한다.
-- [x] 이름을 반환한다.
 - [x] bust인지 확인한다.
 
 ### Dealer extends AbstractUser
@@ -46,6 +45,7 @@
 - 게임에 참여하는 유저
 - [x] 카드를 더 받을 수 있는 상태인지 확인한다. (Override)
   - [x] 점수가 21점 이상이면 카드를 더 받을 수 없다.
+- [x] 이름을 반환한다.
 
 ### Players
 - Player를 감싸는 일급 컬렉션

@@ -11,20 +11,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Dealer extends AbstractUser {
-    private static final String DEALER_NAME = "딜러";
     private static final int UPPER_LIMIT_TO_DRAW = 16;
     private final int INITIAL_CARDS_COUNT = 2;
 
     private final Deck deck;
 
     public Dealer() {
-        super(DEALER_NAME);
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
     }
 
     public Dealer(CardHand cardHand) {
-        super(DEALER_NAME, cardHand);
+        super(cardHand);
         this.deck = Deck.of(Arrays.stream(Symbol.values()).collect(Collectors.toList()),
                 Arrays.stream(CardNumber.values()).collect(Collectors.toList()));
     }

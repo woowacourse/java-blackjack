@@ -12,30 +12,41 @@ public class OutputView {
 
     public static void printCardsStatus(Dealer dealer, List<Player> players) {
         List<String> nameValues = players.stream()
-                .map(AbstractUser::getNameValue)
+                .map(Player::getNameValue)
                 .collect(Collectors.toList());
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", nameValues));
         System.out.println();
-        printCardsStatusOfUser(dealer);
-        players.forEach(OutputView::printCardsStatusOfUser);
+        printCardsStatusOfDealer(dealer);
+        players.forEach(OutputView::printCardsStatusOfPlayer);
         System.out.println();
     }
 
-    public static void printCardsStatusOfUser(AbstractUser user) {
+    public static String userHavingCards(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
                 .map(cardPrintMapper::transformToPrintCard)
                 .collect(Collectors.toList());
-        System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
+        return String.join(", ", cardTexts);
+    }
+
+    public static void printCardsStatusOfDealer(Dealer dealer) {
+        System.out.printf("%s카드: %s", "딜러", userHavingCards(dealer));
         System.out.println();
     }
 
-    public static void printCardsStatusAndScoreOfUser(AbstractUser user) {
-        List<String> cardTexts = user.getCards().stream()
-                .map(cardPrintMapper::transformToPrintCard)
-                .collect(Collectors.toList());
-        System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
-        System.out.println(" - 결과: " + user.calculateScore());
+    public static void printCardsStatusOfPlayer(Player player) {
+        System.out.printf("%s카드: %s", player.getNameValue(), userHavingCards(player));
+        System.out.println();
+    }
+
+    private static void printCardsStatusAndScoreOfDealer(Dealer dealer) {
+        System.out.printf("%s 카드: %s", "딜러", userHavingCards(dealer));
+        System.out.println(" - 결과: " + dealer.calculateScore());
+    }
+
+    private static void printCardsStatusAndScoreOfPlayer(Player player) {
+        System.out.printf("%s카드: %s", player.getNameValue(), userHavingCards(player));
+        System.out.println(" - 결과: " + player.calculateScore());
     }
 
     public static void announceAddCardToDealer() {
@@ -45,8 +56,8 @@ public class OutputView {
 
     public static void printCardsStatusWithScore(Dealer dealer, List<Player> players) {
         System.out.println();
-        printCardsStatusAndScoreOfUser(dealer);
-        players.forEach(OutputView::printCardsStatusAndScoreOfUser);
+        printCardsStatusAndScoreOfDealer(dealer);
+        players.forEach(OutputView::printCardsStatusAndScoreOfPlayer);
     }
 
     public static void printResults(PlayerResultRepository repository) {

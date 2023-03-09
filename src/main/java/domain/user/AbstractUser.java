@@ -8,24 +8,17 @@ import java.util.List;
 abstract public class AbstractUser {
     protected static final int BLACKJACK_SCORE = 21;
 
-    protected final Name name;
     protected final CardHand cardHand;
 
-    public AbstractUser(String nameValue) {
-        this.name = new Name(nameValue);
+    public AbstractUser() {
         this.cardHand = new CardHand();
     }
 
-    public AbstractUser(String nameValue, CardHand cardHand) {
-        this.name = new Name(nameValue);
+    public AbstractUser(CardHand cardHand) {
         this.cardHand = cardHand;
     }
 
     abstract public boolean canAdd();
-
-    public String getNameValue() {
-        return this.name.getValue();
-    }
 
     public int calculateScore() {
         return this.cardHand.calculateScore();
