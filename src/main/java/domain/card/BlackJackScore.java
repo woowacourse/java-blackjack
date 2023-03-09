@@ -6,7 +6,6 @@ public class BlackJackScore {
 
     private static final int ADDITIONAL_ACE_VALUE = 10;
     private static final int BLACK_JACK_SCORE_VALUE = 21;
-    private static final int MAXIMUM_DEALER_SHOULD_HIT_SCORE_INCLUDE = 16;
 
     public static final BlackJackScore BLACK_JACK_SCORE = BlackJackScore.of(BLACK_JACK_SCORE_VALUE);
 
@@ -37,10 +36,6 @@ public class BlackJackScore {
 
     public boolean isLargerThan(final BlackJackScore other) {
         return value > other.value;
-    }
-
-    public boolean isDealerShouldHitScore() {
-        return value <= MAXIMUM_DEALER_SHOULD_HIT_SCORE_INCLUDE;
     }
 
     public BlackJackScore plusThenIfNotBust() {

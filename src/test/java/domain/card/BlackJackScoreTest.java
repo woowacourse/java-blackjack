@@ -115,24 +115,4 @@ class BlackJackScoreTest {
         // when & then
         assertThat(beforeScore.plusThenIfNotBust()).isEqualTo(plusThenIfNotBustScore);
     }
-
-    @ParameterizedTest(name = "16점 이하라면 isDealerShouldHitScore 는 true 이다")
-    @ValueSource(ints = {0, 1, 15, 16})
-    void isDealerShouldHitScore_는_16점_이하인_경우_true_이다(final int value) {
-        // given
-        final BlackJackScore score = BlackJackScore.of(value);
-
-        // when & then
-        assertThat(score.isDealerShouldHitScore()).isTrue();
-    }
-
-    @ParameterizedTest(name = "16점 초과라면 isDealerShouldHitScore 는 false 이다")
-    @ValueSource(ints = {17, 18, 21, 22})
-    void isDealerShouldHitScore_는_16점_초과인_경우_false_이다(final int value) {
-        // given
-        final BlackJackScore score = BlackJackScore.of(value);
-
-        // when & then
-        assertThat(score.isDealerShouldHitScore()).isFalse();
-    }
 }
