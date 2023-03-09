@@ -13,7 +13,7 @@ import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardShape.SPADE;
 import static domain.card.CardValue.*;
 import static domain.fixture.CardAreaFixture.equal16CardArea;
-import static domain.fixture.CardDeckFixture.cardDeck;
+import static domain.fixture.CardAreaFixture.withTwoCard;
 import static domain.fixture.GamblerFixture.말랑;
 import static domain.fixture.GamblerFixture.코다;
 import static domain.fixture.NameFixture.코다이름;
@@ -65,21 +65,21 @@ class ParticipantTest {
     }
 
     static Stream<Arguments> scoreCardArea() {
-        final CardArea cardArea25 = CardArea.withTwoCard(cardDeck(TEN, TWO));
+        final CardArea cardArea25 = withTwoCard(TEN, TWO);
         cardArea25.addCard(new Card(DIAMOND, FIVE));
 
         return Stream.of(
                 Arguments.of(
-                        Named.of("5", CardArea.withTwoCard(cardDeck(TWO, FIVE))),
-                        Named.of("4", CardArea.withTwoCard(cardDeck(TWO, TWO)))
+                        Named.of("5", withTwoCard(TWO, FIVE)),
+                        Named.of("4", withTwoCard(TWO, TWO))
                 ),
                 Arguments.of(
-                        Named.of("21", CardArea.withTwoCard(cardDeck(TEN, ACE))),
-                        Named.of("20", CardArea.withTwoCard(cardDeck(TEN, TEN)))
+                        Named.of("21", withTwoCard(TEN, ACE)),
+                        Named.of("20", withTwoCard(TEN, TEN))
                 ),
                 Arguments.of(
                         Named.of("25", cardArea25),
-                        Named.of("21", CardArea.withTwoCard(cardDeck(TWO, ACE)))
+                        Named.of("21", withTwoCard(TWO, ACE))
                 )
         );
     }

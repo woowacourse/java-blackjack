@@ -3,7 +3,6 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardArea;
 import domain.fixture.CardAreaFixture;
-import domain.fixture.CardDeckFixture;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -45,7 +44,7 @@ class DealerTest {
     @Test
     void 딜러는_첫_장만_보여줄_수_있다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, JACK));
+        final CardArea cardArea = withTwoCard(TEN, JACK);
         final Dealer dealer = new Dealer(cardArea);
 
         // then
@@ -67,7 +66,7 @@ class DealerTest {
 
     static Stream<Arguments> playerAndDealerAndResult() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TEN));
+        final CardArea cardArea = withTwoCard(TEN, TEN);
         cardArea.addCard(new Card(DIAMOND, TWO));
         final BettingMoney money = BettingMoney.of(1000);
         return Stream.of(

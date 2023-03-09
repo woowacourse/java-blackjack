@@ -16,10 +16,6 @@ public class CardArea {
         cards.addAll(List.of(firstCard, secondCard));
     }
 
-    public static CardArea withTwoCard(final CardDeck cardDeck) {
-        return new CardArea(cardDeck.draw(), cardDeck.draw());
-    }
-
     public List<Card> cards() {
         return new ArrayList<>(cards);
     }

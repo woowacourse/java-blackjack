@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.fixture.CardDeckFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -15,6 +14,7 @@ import java.util.stream.Stream;
 import static domain.card.CardShape.CLOVER;
 import static domain.card.CardShape.DIAMOND;
 import static domain.card.CardValue.*;
+import static domain.fixture.CardAreaFixture.withTwoCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,18 +23,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("CardArea 은")
 class CardAreaTest {
 
-    private final CardDeck cardDeck = CardDeckFixture.cardDeck(TEN, TWO);
-
     @Test
     void 카드를_두장만_받아서_생성된다() {
         // when & then
-        assertDoesNotThrow(() -> CardArea.withTwoCard(cardDeck));
+        assertDoesNotThrow(() -> new CardArea(
+                new Card(DIAMOND, TWO),
+                new Card(DIAMOND, TWO)
+        ));
     }
 
     @Test
     void 카드를_추가할_수_있다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(cardDeck);
+        final CardArea cardArea = withTwoCard(TEN, EIGHT);
 
         // when
         final int beforeSize = cardArea.cards().size();
@@ -53,8 +54,7 @@ class CardAreaTest {
     })
     void 자신이_가진_카드의_합을_구할_수_있다(final CardValue first, final CardValue second, final int sum) {
         // given
-        final CardDeck cardDeck = CardDeckFixture.cardDeck(first, second);
-        final CardArea cardArea = CardArea.withTwoCard(cardDeck);
+        final CardArea cardArea = withTwoCard(first, second);
 
         // when & then
         assertThat(cardArea.calculate().value()).isEqualTo(sum);
@@ -71,8 +71,7 @@ class CardAreaTest {
     })
     void 킹_퀸_잭은_10으로_계산한다(final CardValue first, final CardValue second, final int sum) {
         // given
-        final CardDeck cardDeck = CardDeckFixture.cardDeck(first, second);
-        final CardArea cardArea = CardArea.withTwoCard(cardDeck);
+        final CardArea cardArea = withTwoCard(first, second);
 
         // when & then
         assertThat(cardArea.calculate().value()).isEqualTo(sum);
@@ -88,29 +87,29 @@ class CardAreaTest {
     static Stream<Arguments> containsAceCardArea() {
 
         // 10 + [11] = 21
-        final CardArea cardArea1 = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, ACE));
+        final CardArea cardArea1 = withTwoCard(TEN, ACE);
 
         // 10 + 10 + [1] = 21
-        final CardArea cardArea2 = CardArea.withTwoCard(CardDeckFixture.cardDeck(JACK, TEN));
+        final CardArea cardArea2 = withTwoCard(JACK, TEN);
         cardArea2.addCard(new Card(CLOVER, ACE));
 
         // [11] + 9 + [1] = 21
-        final CardArea cardArea3 = CardArea.withTwoCard(CardDeckFixture.cardDeck(ACE, NINE));
+        final CardArea cardArea3 = withTwoCard(ACE, NINE);
         cardArea3.addCard(new Card(CLOVER, ACE));
 
         // [11] + 6 + 3 = 20
-        final CardArea cardArea4 = CardArea.withTwoCard(CardDeckFixture.cardDeck(SIX, THREE));
+        final CardArea cardArea4 = withTwoCard(SIX, THREE);
         cardArea4.addCard(new Card(CLOVER, ACE));
 
         // [11] + 10 = 21
-        final CardArea cardArea5 = CardArea.withTwoCard(CardDeckFixture.cardDeck(ACE, TEN));
+        final CardArea cardArea5 = withTwoCard(ACE, TEN);
 
         // 10 + [1] + 7 = 18
-        final CardArea cardArea6 = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, ACE));
+        final CardArea cardArea6 = withTwoCard(TEN, ACE);
         cardArea6.addCard(new Card(CardShape.SPADE, SEVEN));
 
         // [11] + [1] + [1] = 13
-        final CardArea cardArea7 = CardArea.withTwoCard(CardDeckFixture.cardDeck(ACE, ACE));
+        final CardArea cardArea7 = withTwoCard(ACE, ACE);
         cardArea7.addCard(new Card(CardShape.SPADE, ACE));
 
         return Stream.of(
@@ -127,7 +126,7 @@ class CardAreaTest {
     @Test
     void 총합이_20_이하면_카드를_더_받을_수_있는_상태이다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TEN));
+        final CardArea cardArea = withTwoCard(TEN, TEN);
 
         // when & then
         assertTrue(cardArea.canMoreCard());
@@ -136,7 +135,7 @@ class CardAreaTest {
     @Test
     void 총합이_21_이상이면_카드를_더_받을_수_없는_상태이다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, ACE));
+        final CardArea cardArea = withTwoCard(TEN, ACE);
 
         // when & then
         assertFalse(cardArea.canMoreCard());
@@ -145,7 +144,7 @@ class CardAreaTest {
     @Test
     void 총합이_21_초과이면_버스트_이다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, TEN));
+        final CardArea cardArea = withTwoCard(TEN, TEN);
         cardArea.addCard(new Card(CardShape.DIAMOND, TEN));
 
         // when & then
@@ -155,7 +154,7 @@ class CardAreaTest {
     @Test
     void 총합이_21_이하이면_버스트_아니다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TEN, ACE));
+        final CardArea cardArea = withTwoCard(TEN, ACE);
 
         // when & then
         assertFalse(cardArea.isBust());
@@ -169,7 +168,7 @@ class CardAreaTest {
     })
     void 카드가_2장이면서_21인_경우_블랙잭이다(final CardValue cardValue1, final CardValue cardValue2) {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(cardValue1, cardValue2));
+        final CardArea cardArea = withTwoCard(cardValue1, cardValue2);
 
         // when & then
         assertThat(cardArea.isBlackJack()).isTrue();
@@ -178,7 +177,7 @@ class CardAreaTest {
     @Test
     void 카드가_2장이_아닌_경우_21이라도_블랙잭은_아니다() {
         // given
-        final CardArea cardArea = CardArea.withTwoCard(CardDeckFixture.cardDeck(TWO, ACE));
+        final CardArea cardArea = withTwoCard(TWO, ACE);
         cardArea.addCard(new Card(DIAMOND, EIGHT));
 
         // when & then
