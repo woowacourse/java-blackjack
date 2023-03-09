@@ -1,7 +1,5 @@
 package domain.player;
 
-import java.util.Objects;
-
 public class BettingMoney {
     private static final String INVALID_RANGE = "배팅 금액은 100원 이상, 1억 이하여야 합니다.";
     private static final String INVALID_UNIT = "배팅 금액은 100원 단위입니다.";
@@ -43,18 +41,5 @@ public class BettingMoney {
 
     public int getMoney() {
         return money;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BettingMoney bettingMoney = (BettingMoney) o;
-        return money == bettingMoney.money;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(money);
     }
 }
