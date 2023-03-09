@@ -50,7 +50,7 @@ public class OutputView {
     public void printFinalResult(String dealerName, Map<Name, GameResult> result) {
         System.out.println("\n\n" + FINAL_RESULT_TITLE);
         printDealerFinalResult(dealerName, result);
-        printPlayersFinalResult(result);
+//        printPlayersFinalResult(result);
     }
 
     private void printDealerFinalResult(String dealerName, Map<Name, GameResult> results) {
@@ -87,22 +87,22 @@ public class OutputView {
     }
 
     private void printDealerResultCount(String dealerName, int winCount, int loseCount, int drawCount) {
-        System.out.printf(RESULT_NAME_FORMAT, dealerName);
-        if (winCount != NONE) {
-            System.out.print(winCount + GameResult.WIN.getExpression());
-        }
-        if (drawCount != NONE) {
-            System.out.print(drawCount + GameResult.DRAW.getExpression());
-        }
-        if (loseCount != NONE) {
-            System.out.print(loseCount + GameResult.LOSE.getExpression());
-        }
+//        System.out.printf(RESULT_NAME_FORMAT, dealerName);
+//        if (winCount != NONE) {
+//            System.out.print(winCount + GameResult.WIN.getExpression());
+//        }
+//        if (drawCount != NONE) {
+//            System.out.print(drawCount + GameResult.DRAW.getExpression());
+//        }
+//        if (loseCount != NONE) {
+//            System.out.print(loseCount + GameResult.LOSE.getExpression());
+//        }
     }
 
-    private void printPlayersFinalResult(Map<Name, GameResult> results) {
-        System.out.println();
-        results.forEach((name, result) ->
-                System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n", name.getValue()));
-    }
+//    private void printPlayersFinalResult(Map<Name, GameResult> results) {
+//        System.out.println();
+//        results.forEach((name, result) ->
+//                System.out.printf(RESULT_NAME_FORMAT + result.getExpression() + "\n", name.getValue()));
+//    }
 
 }

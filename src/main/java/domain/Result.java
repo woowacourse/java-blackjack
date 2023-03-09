@@ -19,9 +19,16 @@ public class Result {
     }
 
     private void calculateWinLose(Dealer dealer, Player player) {
+        blackJackWin(dealer, player);
         win(dealer, player);
         lose(dealer, player);
         draw(dealer, player);
+    }
+
+    private void blackJackWin(Dealer dealer, Player player) {
+        if (isPlayerBlackJackWin(player, dealer)) {
+            gameResult.put(player.getName(), GameResult.BLACK_JACK_WIN);
+        }
     }
 
     private void win(Dealer dealer, Player player) {
@@ -42,18 +49,36 @@ public class Result {
         }
     }
 
-    private boolean isPlayerWin(Dealer dealer, Player player) {
-        return !player.isBust() && (dealer.isBust() || dealer.getTotalScoreValue() < player.getTotalScoreValue());
+    private boolean isPlayerBlackJackWin(Player player, Dealer dealer) {
+        return player.isBlackJack() && !dealer.isBlackJack();
     }
 
+    private boolean isPlayerWin(Dealer dealer, Player player) {
+        return dealerAndPlayerAreNotBlackJack(player, dealer)
+                && !player.isBust() && (dealer.isBust() || dealer.getTotalScoreValue() < player.getTotalScoreValue());
+    }
 
     private boolean isPlayerLose(Dealer dealer, Player player) {
-        return !dealer.isBust() && (player.isBust() || dealer.getTotalScoreValue() > player.getTotalScoreValue());
+        return dealerAloneIsBlackJack(player, dealer)
+                || (!dealer.isBust() && (player.isBust() || dealer.getTotalScoreValue() > player.getTotalScoreValue()));
     }
 
-
     private boolean isPlayerDraw(Dealer dealer, Player player) {
-        return (dealer.isBust() && player.isBust()) || (dealer.getTotalScoreValue() == player.getTotalScoreValue());
+        return dealerAndPlayerAreBlackJack(player, dealer)
+                || (dealer.isBust() && player.isBust())
+                || (dealerAndPlayerAreNotBlackJack(player, dealer) && dealer.getTotalScoreValue() == player.getTotalScoreValue());
+    }
+
+    private boolean dealerAndPlayerAreNotBlackJack(Player player, Dealer dealer) {
+        return !player.isBlackJack() && !dealer.isBlackJack();
+    }
+
+    private boolean dealerAloneIsBlackJack(Player player, Dealer dealer) {
+        return !player.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private boolean dealerAndPlayerAreBlackJack(Player player, Dealer dealer) {
+        return player.isBlackJack() && dealer.isBlackJack();
     }
 
     public Map<Name, GameResult> getResult() {
