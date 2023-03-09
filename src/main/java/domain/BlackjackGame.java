@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public final class BlackjackGame {
+    private static final int DECK_COUNT = 6;
+
     private final Participants participants;
     private final Deck deck;
 
@@ -15,7 +17,7 @@ public final class BlackjackGame {
     }
 
     public static BlackjackGame from(List<String> nameValues) {
-        return new BlackjackGame(Participants.from(nameValues), new ShuffledDeck());
+        return new BlackjackGame(Participants.from(nameValues), ShuffledDeck.createByCount(DECK_COUNT));
     }
 
     public void initializeGame() {

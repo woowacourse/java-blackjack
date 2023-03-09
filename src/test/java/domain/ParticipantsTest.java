@@ -17,7 +17,7 @@ class ParticipantsTest {
     void 초기_카드_지급() {
         // given
         Participants participants = Participants.from(List.of("name1", "name2"));
-        participants.drawInitialCardsEachParticipant(new ShuffledDeck());
+        participants.drawInitialCardsEachParticipant(ShuffledDeck.createByCount(6));
         // when
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
@@ -30,7 +30,7 @@ class ParticipantsTest {
     @Test
     void 결과_계산() {
         Participants participants = Participants.from(List.of("Player1", "Player2", "Player3"));
-        participants.drawInitialCardsEachParticipant(new ShuffledDeck());
+        participants.drawInitialCardsEachParticipant(ShuffledDeck.createByCount(6));
 
         Map<Player, Result> results = participants.calculateAllResults();
         List<Player> players = participants.getPlayers();

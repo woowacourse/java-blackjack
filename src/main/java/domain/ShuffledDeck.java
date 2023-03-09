@@ -8,22 +8,34 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public final class ShuffledDeck implements Deck {
-    private final Deque<Card> deck = new ArrayDeque<>();
+    private final Deque<Card> deck;
 
-    public ShuffledDeck() {
-        generateCards();
+    public ShuffledDeck(Deque<Card> deck) {
+        this.deck = deck;
     }
 
-    private void generateCards() {
+    public static ShuffledDeck createByCount(int deckCount) {
+        List<Card> cards = generateShuffledCardsByDeckCount(deckCount);
+        Deque<Card> deck = new ArrayDeque<>(cards);
+        return new ShuffledDeck(deck);
+    }
+
+    private static List<Card> generateShuffledCardsByDeckCount(int deckCount) {
         List<Card> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()){
-            addCardsWithSymbolOf(suit, cards);
+        for (int count = 0; count < deckCount; count++) {
+            addCardDummyTo(cards);
         }
         Collections.shuffle(cards);
-        this.deck.addAll(cards);
+        return cards;
     }
 
-    private void addCardsWithSymbolOf(Suit suit, List<Card> cards){
+    private static void addCardDummyTo(List<Card> cards) {
+        for (Suit suit : Suit.values()) {
+            addCardsWithSymbolOf(suit, cards);
+        }
+    }
+
+    private static void addCardsWithSymbolOf(Suit suit, List<Card> cards){
         for (Rank rank : Rank.values()){
             cards.add(new Card(suit, rank));
         }
