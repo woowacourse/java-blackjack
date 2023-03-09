@@ -34,11 +34,11 @@ public class InputView {
         System.out.println(player.getName() + "의 베팅 금액은?");
         String input = scanner.nextLine();
         try {
-            Integer.parseInt(input);
+            return Integer.parseInt(input);
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR] 숫자를 입력해야 합니다.");
+            return readBettingStake(player);
         }
-        return Integer.parseInt(input);
     }
 
     public static boolean readIsHit(Player player) {
