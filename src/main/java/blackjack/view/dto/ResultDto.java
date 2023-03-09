@@ -5,6 +5,7 @@ import blackjack.domain.game.WinTieLose;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,29 +15,31 @@ public class ResultDto {
     private static final String TIE_MASSAGE = "무";
     private static final String LOSE_MASSAGE = "패";
     private static  final  String SPACE = " ";
-    private final Map<Player, WinTieLose> playersResult;
+    private final Map<String, String> playersResult;
     public ResultDto(Map<Player, WinTieLose> playersResult){
-        this.playersResult = playersResult;
+        this.playersResult =new HashMap<>();
+        playersResult.forEach((player,result)->this.playersResult.put(player.getName(),getResultOutputString(result)));
     }
-    public List<String> getParticipantsName(){
-        return playersResult.keySet().stream()
-                .map(Participant::getName)
-                .collect(Collectors.toList());
+    public Map<String, String> getPlayerResult(){
+        return this.playersResult;
     }
-    public String getDealerResult(){
-        return getDealerCount(WinTieLose.WIN)+ WIN_MASSAGE + SPACE +
-                getDealerCount(WinTieLose.TIE)  + TIE_MASSAGE + SPACE +
-                getDealerCount(WinTieLose.LOSE) + LOSE_MASSAGE;
+    public int getDealerWinCount(){
+        return this.getDealerCount(WIN_MASSAGE);
     }
-    private int getDealerCount(final WinTieLose expected) {
+    public int getDealerTieCount(){
+        return this.getDealerCount(TIE_MASSAGE);
+    }
+    public int getDealerLoseCount(){
+        return this.getDealerCount(LOSE_MASSAGE);
+    }
+    private int getDealerCount(final String expected) {
         return (int) playersResult.values()
                 .stream()
-                .filter(winTieLose -> winTieLose.equals(expected.reverseValue()))
+                .filter(result -> result.equals(expected))
                 .count();
     }
 
-    public String getPlayerResult(final Player player) {
-        WinTieLose result = playersResult.get(player);
+    private String getResultOutputString(final WinTieLose result) {
         if(WinTieLose.WIN.equals(result)){
             return WIN_MASSAGE;
         }

@@ -14,6 +14,7 @@ import blackjack.view.Order;
 import blackjack.view.OutputView;
 import blackjack.view.dto.CardsDto;
 import blackjack.view.dto.ParticipantsDto;
+import blackjack.view.dto.ResultDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,8 @@ public class BlackjackController {
         ResultGame resultGame = new ResultGame(participants);
         resultGame.calculateResult();
         participants.getDealer().openAllCard();
-        outputView.outputParticipantCards(new ParticipantsDto(participants));
+        outputView.outputCardsAndScore(new ParticipantsDto(participants));
+        outputView.outputFinalResult(new ResultDto(resultGame.getPlayersResult()));
     }
 
 
@@ -71,14 +73,13 @@ public class BlackjackController {
     private void hitPlayers(final BlackjackGame blackjackGame, List<Player> players){
         for (final Player player : players) {
             hitEachPlayer(blackjackGame, player);
-            outputView.changeLine();
         }
     }
 
     private void hitEachPlayer(final BlackjackGame blackjackGame, Player player){
         Order order = Order.from(inputView.inputOrderCard(player.getName()));
         while(blackjackGame.isPlayerCanPlay(player,order)){
-            outputView.outputPlayerCard(player.getName(), new CardsDto(player.getCards()));
+            outputView.outputPlayerCard(player.getName(), new CardsDto(player.getCards(), player.getTotalScore()));
             order = Order.from(inputView.inputOrderCard(player.getName()));
         }
     }
@@ -88,48 +89,4 @@ public class BlackjackController {
             outputView.outputDealerDrawCard(dealer.getName());
         }
     }
-
-//    private void showAllCardsAndScore(Participants participants) {
-//        showDealerCardsAndScore(participants);
-//        showPlayersCardsAndScore(participants);
-//    }
-//
-//    private void showDealerCardsAndScore(final Participants participants) {
-//        final Dealer dealer = participants.getDealer();
-//        outputView.outputPlayerCard(dealer.getName(), );
-//        outputView.outputScore(dealer.getTotalScore());
-//    }
-//
-//    private void showPlayersCardsAndScore(final Participants participants) {
-//        final List<Player> players = participants.getPlayers();
-//
-//        for (final Player player : players) {
-//            outputView.outputPlayerCard(player.getName(), player.getCardNames());
-//            outputView.outputScore(player.getTotalScore());
-//        }
-//    }
-//
-//    private void showAllResult(Participants participants) {
-//        outputView.outputResult();
-//        Dealer dealer = participants.getDealer();
-//        ResultGame resultGame = new ResultGame(participants);
-//
-//        resultGame.calculateResult();
-//
-//        showDealerResult(dealer, resultGame);
-//        showPlayersResult(participants.getPlayers(), resultGame);
-//    }
-//
-//    private void showDealerResult(final Dealer dealer, final ResultGame resultGame) {
-//        outputView.outputDealerResult(dealer.getName(),
-//                resultGame.getDealerCount(WinTieLose.WIN),
-//                resultGame.getDealerCount(WinTieLose.TIE),
-//                resultGame.getDealerCount(WinTieLose.LOSE));
-//    }
-//
-//    private void showPlayersResult(final List<Player> players, final ResultGame resultGame) {
-//        for (Player player : players) {
-//            outputView.outputPlayerResult(player.getName(), resultGame.getPlayerResult(player).getValue());
-//        }
-//    }
 }

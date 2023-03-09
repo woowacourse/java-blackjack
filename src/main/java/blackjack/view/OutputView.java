@@ -41,9 +41,9 @@ public class OutputView {
 
     public void outputPlayerCard(final String name, final CardsDto cards) {
         System.out.print(name + PLAYER_SCORE_DELIMITER +
-                String.join(PLAYER_DELIMITER, cards.getCards().stream()
+                cards.getCards().stream()
                         .map(this::combineStringWith)
-                        .collect(Collectors.toList())));
+                        .collect(Collectors.joining(PLAYER_DELIMITER)));
     }
     private String combineStringWith(CardInfo cardInfo){
         return cardInfo.getLetter() + cardInfo.getShape();
@@ -53,27 +53,40 @@ public class OutputView {
         System.out.println(CHANGE_LINE + name + NOTICE_TOTAL_SCORE_UNDER_SIXTEEN);
         changeLine();
     }
-
-    public void outputScore(final int score) {
-        System.out.println(RESULT_DELIMITER + score);
+    public void outputCardsAndScore(ParticipantsDto participantsDto){
+        outputPlayerCard(DEALER_NAME,participantsDto.getDealerCards());
+        outputScore(participantsDto.getDealerCards().getTotalScore());
+        changeLine();
+        participantsDto.getParticipantsMap().forEach((name,cards)->{
+            outputPlayerCard(name,cards);
+            outputScore(cards.getTotalScore());
+            changeLine();
+        });
+        changeLine();
     }
-
-    public void outputResult() {
+    private void outputScore(final int score) {
+        System.out.print(RESULT_DELIMITER + score);
+    }
+    public void outputFinalResult(ResultDto resultDto){
         System.out.println(FINAL_RESULT_MASSAGE);
+        outputDealerResult(DEALER_NAME,resultDto.getDealerWinCount(),
+                resultDto.getDealerTieCount(),
+                resultDto.getDealerLoseCount());
+        resultDto.getPlayerResult().forEach(this::outputPlayerResult);
     }
 
-    public void outputDealerResult(final String name, final int win, final int tie, final int lose) {
+    private void outputDealerResult(final String name, final int win, final int tie, final int lose) {
         System.out.println(name + DEALER_DELIMITER
                 + win + WIN_COUNT_MASSAGE
                 + tie + TIE_COUNT_MASSAGE
                 + lose + LOSE_COUNT_MASSAGE);
     }
 
-    public void outputPlayerResult(final String name, final String result) {
+    private void outputPlayerResult(final String name, final String result) {
         System.out.println(name + PLAYER_SCORE_DELIMITER + result);
     }
 
-    public void changeLine() {
+    private void changeLine() {
         System.out.println();
     }
 }

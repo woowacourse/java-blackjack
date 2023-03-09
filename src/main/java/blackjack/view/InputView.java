@@ -25,16 +25,16 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public boolean inputOrderCard1(final String name){
-        System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
-        String input = scanner.nextLine();
-        validate(input);
-        return input.equals("y");
-    }
-
-    public void validate(String input){
-        if(!input.equals("y")&&!input.equals("n")){
-            throw new IllegalArgumentException();
-        }
-    }
+//    public boolean inputOrderCard1(final String name){
+//        System.out.println(String.format(INPUT_ORDER_CARD_MESSAGE, name));
+//        String input = scanner.nextLine();
+//        validate(input);
+//        return input.equals("y");
+//    }
+//
+//    public void validate(String input){
+//        if(!input.equals("y")&&!input.equals("n")){
+//            throw new IllegalArgumentException();
+//        }
+//    }
 }

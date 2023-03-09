@@ -1,5 +1,6 @@
 package blackjack.view.dto;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -12,7 +13,8 @@ public class ParticipantsDto {
     private final Map<String,CardsDto> participantsMap;
     public ParticipantsDto(Participants participants){
         participantsMap = new HashMap<>();
-        this.dealerCards = new CardsDto(participants.getDealer().getCards());
+        Dealer dealer = participants.getDealer();
+        this.dealerCards = new CardsDto(dealer.getCards(),dealer.getTotalScore());
         for(Player player : participants.getPlayers()){
             putParticipant(player);
         }
@@ -23,7 +25,7 @@ public class ParticipantsDto {
     }
 
     private void putParticipant(Participant participant){
-        participantsMap.put(participant.getName(),new CardsDto(participant.getCards()));
+        participantsMap.put(participant.getName(),new CardsDto(participant.getCards(),participant.getTotalScore()));
     }
 
     public CardsDto getDealerCards() {

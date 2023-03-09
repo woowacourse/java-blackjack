@@ -69,4 +69,5 @@ public class ResultGame {
     public WinTieLose getPlayerResult(final Player player) {
         return playersResult.get(player);
     }
+    public HashMap<Player, WinTieLose> getPlayersResult(){return this.playersResult;}
 }
