@@ -1,15 +1,15 @@
 package ui;
 
 import domain.PlayerResultRepository;
-import domain.Result;
 import domain.user.AbstractUser;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private final static CardPrintMapper cardPrintMapper = new CardPrintMapper();
+
     public static void printCardsStatus(Dealer dealer, List<Player> players) {
         List<String> nameValues = players.stream()
                 .map(AbstractUser::getNameValue)
@@ -24,9 +24,7 @@ public class OutputView {
 
     public static void printCardsStatusOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
-                .map((card) -> {
-                    return card.getCardNumber() + card.getSymbol();
-                })
+                .map(cardPrintMapper::transformToPrintCard)
                 .collect(Collectors.toList());
         System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
         System.out.println();
@@ -34,9 +32,7 @@ public class OutputView {
 
     public static void printCardsStatusAndScoreOfUser(AbstractUser user) {
         List<String> cardTexts = user.getCards().stream()
-                .map((card) -> {
-                    return card.getCardNumber() + card.getSymbol();
-                })
+                .map(cardPrintMapper::transformToPrintCard)
                 .collect(Collectors.toList());
         System.out.printf("%s: %s", user.getNameValue(), String.join(", ", cardTexts));
         System.out.println(" - 결과: " + user.calculateScore());
@@ -64,6 +60,7 @@ public class OutputView {
             System.out.printf(" %d무", dealerDraws);
         }
         System.out.println();
-        repository.getRepository().forEach((player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
+        repository.getRepository()
+                .forEach((player, result) -> System.out.println(player.getNameValue() + ": " + result.getKoreanText()));
     }
 }

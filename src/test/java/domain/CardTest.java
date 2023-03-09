@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -18,10 +17,4 @@ public class CardTest {
         assertThat(card.getScore()).isEqualTo(score);
     }
 
-    @DisplayName("카드 정보를 나타내는 텍스트를 반환한다.")
-    @Test
-    void 카드_정보_반환() {
-        Card card = new Card(Symbol.HEART, CardNumber.ACE);
-        assertThat(card.getCardNumber() + card.getSymbol()).isEqualTo("A하트");
-    }
 }

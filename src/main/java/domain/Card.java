@@ -13,12 +13,12 @@ public class Card {
         return this.cardNumber.getScore();
     }
 
-    public String getSymbol() {
-        return this.symbol.getName();
+    public Symbol getSymbol() {
+        return this.symbol;
     }
 
-    public String getCardNumber() {
-        return this.cardNumber.getNumber();
+    public CardNumber getCardNumber() {
+        return this.cardNumber;
     }
 
     public boolean isAce() {

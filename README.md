@@ -15,6 +15,9 @@
 ### OutputView
 - [x] 딜러와 플레이어 초기 카드 발급 결과를 출력한다.
 
+### CardPrintMapper
+- [x] Card에게 정보를 받아 CardNumber와 Symbol에 대한 정보를 출력용으로 변환한다.
+
 ### Participants
 - 딜러와 플레이어간의 상호작용을 관리
 - [x] 모든 Plyaer와 Dealer에게 카드를 2장씩 전달한다.
@@ -65,18 +68,17 @@
 ### Card
 - 카드 한장
 - [x] 숫자를 반환한다.
-- [x] 카드 정보에 대한 텍스트를 반환한다.
+- [x] Symbol과 CardNumber를 각각 반환한다.
 
 ### Symbol (enum)
 - Card가 가지고 있는 상징
 - [x] 카드 상징에 대한 정보를 갖고 있는 상수 집합을 구현한다.
-- [x] 상징의 이름을 반환한다.
 
 ### CardNumber (enum)
 - Card가 가지고 있는 숫자
 - [x] 카드가 가질 수 있는 숫자 정보를 갖고 있는 상수 집합을 구현한다.
-  - [x] Ace는 1의 숫자를 가지고 있는다.
-  - [x] Jack, Queen, King 10으로 계산한다.
+  - [x] Ace는 우선 1의 숫자를 가지고 있는다.
+  - [x] Jack, Queen, King은 10으로 계산한다.
 
 ### CardHand
 - 유저가 가지고 있는 카드 뭉치
