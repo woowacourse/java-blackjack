@@ -28,4 +28,34 @@ class BettingAmountTest {
         assertThat(bettingAmount.getRevenue()).isEqualTo(money);
     }
 
+    @Test
+    @DisplayName("플레이어가 블랙잭일 경우, 자신의 배팅 금액의 1.5배를 돌려받는다.")
+    void playerBlackJackBettingAmount() {
+        BettingAmount initial = BettingAmount.fromPlayer(10000);
+
+        BettingAmount result = initial.wonBlackJack();
+
+        assertThat(result.getRevenue()).isEqualTo(10000 * 1.5);
+    }
+
+    @Test
+    @DisplayName("플레이어가 이긴 경우, 자신의 배팅 금액의 1배를 돌려받는다.")
+    void playerWinBettingAmount() {
+        BettingAmount initial = BettingAmount.fromPlayer(10000);
+
+        BettingAmount result = initial.won();
+
+        assertThat(result.getRevenue()).isEqualTo(10000 * 1);
+    }
+
+    @Test
+    @DisplayName("플레이어가 지거나 bust 인 경우, 자신의 배팅 금액의 1배를 잃는다.")
+    void playerLoseOrBustBettingAmount() {
+        BettingAmount initial = BettingAmount.fromPlayer(10000);
+
+        BettingAmount result = initial.lostOrBust();
+
+        assertThat(result.getRevenue()).isEqualTo(10000 * -1);
+    }
+
 }
