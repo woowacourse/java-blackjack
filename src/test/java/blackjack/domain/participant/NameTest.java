@@ -6,16 +6,17 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class NameTest {
 
-    @Test
-    void 이름이_존재하지_않으면_예외를_던진다() {
-        final String input = "   ";
-
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "   "})
+    void 이름이_존재하지_않으면_예외를_던진다(String input) {
         assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }

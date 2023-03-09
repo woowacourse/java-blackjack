@@ -15,13 +15,13 @@ public class Name {
     }
 
     private void validate(final String value) {
-        validateBlank(value);
+        validateNullAndBlank(value);
         validateLength(value);
         validateRestrictWord(value);
     }
 
-    private void validateBlank(final String value) {
-        if (value.isBlank()) {
+    private void validateNullAndBlank(final String value) {
+        if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("이름은 존재해야 합니다. 현재 이름: " + value);
         }
     }
