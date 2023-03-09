@@ -106,8 +106,8 @@ public class BlackJackGameController {
     }
 
     private void printFinalResult(BlackJackGame blackJackGame) {
-        Map<Result, Integer> dealerWinningRecord = blackJackGame.getWinningRecord();
+        Map<Result, Integer> dealerFinalResult = blackJackGame.getDealerFinalResult();
         Map<NameDto, Result> playerFinalResult = blackJackGame.getPlayerFinalResult();
-        outputView.printFinalResult(dealerWinningRecord, playerFinalResult);
+        outputView.printFinalResult(dealerFinalResult, playerFinalResult);
     }
 }

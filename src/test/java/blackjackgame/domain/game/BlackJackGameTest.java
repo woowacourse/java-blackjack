@@ -70,15 +70,14 @@ class BlackJackGameTest {
     @DisplayName("플레이어만 버스트일 경우, 딜러가 승리한다.")
     @Test
     void judgeWinnerTest_playerBust() {
-        Map<Result, Integer> winningRecord = blackJackGame.getWinningRecord();
         dealer.receiveCards(FixedCardsGenerator.generateScore17Case());
         player.receiveCards(FixedCardsGenerator.generateScore29Case());
 
         blackJackGame.judgeWinner();
+        Map<Result, Integer> winningRecord = blackJackGame.getDealerFinalResult();
 
         assertThat(player.getStatus()).isSameAs(PlayerStatus.BUST);
         assertThat(dealer.getStatus()).isNotSameAs(DealerStatus.BUST);
-        assertThat(player.getResult()).isEqualTo(Result.LOSE);
         assertThat(winningRecord.get(Result.WIN)).isEqualTo(1);
         assertThat(winningRecord.get(Result.DRAW)).isEqualTo(0);
         assertThat(winningRecord.get(Result.LOSE)).isEqualTo(0);
@@ -87,15 +86,14 @@ class BlackJackGameTest {
     @DisplayName("딜러만 버스트일 경우 플레이어가 승리한다.")
     @Test
     void judgeWinnerTest_playerNormalAndDealerBust() {
-        Map<Result, Integer> winningRecord = blackJackGame.getWinningRecord();
         dealer.receiveCards(FixedCardsGenerator.generateScore29Case());
         player.receiveCards(FixedCardsGenerator.generateScore17Case());
 
         blackJackGame.judgeWinner();
+        Map<Result, Integer> winningRecord = blackJackGame.getDealerFinalResult();
 
         assertThat(dealer.getStatus()).isSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isNotSameAs(PlayerStatus.BUST);
-        assertThat(player.getResult()).isEqualTo(Result.WIN);
         assertThat(winningRecord.get(Result.WIN)).isEqualTo(0);
         assertThat(winningRecord.get(Result.DRAW)).isEqualTo(0);
         assertThat(winningRecord.get(Result.LOSE)).isEqualTo(1);
@@ -104,15 +102,14 @@ class BlackJackGameTest {
     @DisplayName("딜러와 플레이어 모두 버스트가 아니고, 딜러의 점수가 플레이어의 점수보다 높으면 딜러가 승리한다.")
     @Test
     void judgeWinnerTest_dealerWin() {
-        Map<Result, Integer> winningRecord = blackJackGame.getWinningRecord();
         dealer.receiveCards(FixedCardsGenerator.generateScore17Case());
         player.receiveCards(FixedCardsGenerator.generateScore10case());
 
         blackJackGame.judgeWinner();
+        Map<Result, Integer> winningRecord = blackJackGame.getDealerFinalResult();
 
         assertThat(dealer.getStatus()).isNotSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isNotSameAs(PlayerStatus.BUST);
-        assertThat(player.getResult()).isEqualTo(Result.LOSE);
         assertThat(winningRecord.get(Result.WIN)).isEqualTo(1);
         assertThat(winningRecord.get(Result.DRAW)).isEqualTo(0);
         assertThat(winningRecord.get(Result.LOSE)).isEqualTo(0);
@@ -121,15 +118,14 @@ class BlackJackGameTest {
     @DisplayName("딜러와 플레이어 모두 버스트가 아니고, 플레이어의 점수가 딜러의 점수보다 높으면 플레이어가 승리한다.")
     @Test
     void judgeWinnerTest_playerWin() {
-        Map<Result, Integer> winningRecord = blackJackGame.getWinningRecord();
         dealer.receiveCards(FixedCardsGenerator.generateScore10case());
         player.receiveCards(FixedCardsGenerator.generateScore17Case());
 
         blackJackGame.judgeWinner();
+        Map<Result, Integer> winningRecord = blackJackGame.getDealerFinalResult();
 
         assertThat(dealer.getStatus()).isNotSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isNotSameAs(PlayerStatus.BUST);
-        assertThat(player.getResult()).isEqualTo(Result.WIN);
         assertThat(winningRecord.get(Result.WIN)).isEqualTo(0);
         assertThat(winningRecord.get(Result.DRAW)).isEqualTo(0);
         assertThat(winningRecord.get(Result.LOSE)).isEqualTo(1);
@@ -138,15 +134,14 @@ class BlackJackGameTest {
     @DisplayName("딜러와 플레이어 모두 버스트면 무승부다.")
     @Test
     void judgeWinnerTest_bothBust() {
-        Map<Result, Integer> winningRecord = blackJackGame.getWinningRecord();
         dealer.receiveCards(FixedCardsGenerator.generateScore29Case());
         player.receiveCards(FixedCardsGenerator.generateScore29Case());
 
         blackJackGame.judgeWinner();
+        Map<Result, Integer> winningRecord = blackJackGame.getDealerFinalResult();
 
         assertThat(dealer.getStatus()).isSameAs(DealerStatus.BUST);
         assertThat(player.getStatus()).isSameAs(PlayerStatus.BUST);
-        assertThat(player.getResult()).isEqualTo(Result.DRAW);
         assertThat(winningRecord.get(Result.WIN)).isEqualTo(0);
         assertThat(winningRecord.get(Result.DRAW)).isEqualTo(1);
         assertThat(winningRecord.get(Result.LOSE)).isEqualTo(0);
@@ -155,14 +150,13 @@ class BlackJackGameTest {
     @DisplayName("딜러와 플레이어의 점수가 같으면 무승부다.")
     @Test
     void judgeWinnerTest_bothNormalSameScore() {
-        Map<Result, Integer> winningRecord = blackJackGame.getWinningRecord();
         player.receiveCards(FixedCardsGenerator.generateScore17Case()); // 플레이어 : 10클로버
         dealer.receiveCards(FixedCardsGenerator.generateScore17Case()); // 딜러 : 10다이아몬드
 
         blackJackGame.judgeWinner();
+        Map<Result, Integer> winningRecord = blackJackGame.getDealerFinalResult();
 
         assertThat(player.getScore()).isEqualTo(dealer.getScore());
-        assertThat(player.getResult()).isEqualTo(Result.DRAW);
         assertThat(winningRecord.get(Result.WIN)).isEqualTo(0);
         assertThat(winningRecord.get(Result.DRAW)).isEqualTo(1);
         assertThat(winningRecord.get(Result.LOSE)).isEqualTo(0);

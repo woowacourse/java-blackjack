@@ -23,10 +23,6 @@ public abstract class User {
         score.setScore(cards);
     }
 
-    public abstract void win(User opponent);
-
-    public abstract void lose();
-
     public List<Card> getCards() {
         return cards;
     }

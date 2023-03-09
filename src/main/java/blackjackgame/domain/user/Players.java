@@ -1,10 +1,6 @@
 package blackjackgame.domain.user;
 
-import blackjackgame.domain.game.Result;
-import blackjackgame.domain.user.dto.NameDto;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import blackjackgame.view.ErrorMessage;
 
@@ -40,17 +36,6 @@ public class Players {
         if (players.size() > MAX_PLAYER_SIZE || players.size() < 1) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYER_SIZE.getMessage());
         }
-    }
-
-    public Map<NameDto, Result> getPlayerFinalResult() {
-        Map<NameDto, Result> playerFinalResult = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            NameDto nameDto = new NameDto(player.getName());
-            playerFinalResult.put(nameDto, player.getResult());
-        }
-
-        return playerFinalResult;
     }
 
     public List<Player> getPlayers() {

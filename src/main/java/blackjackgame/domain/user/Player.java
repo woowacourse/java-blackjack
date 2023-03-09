@@ -1,13 +1,11 @@
 package blackjackgame.domain.user;
 
 import blackjackgame.domain.card.Card;
-import blackjackgame.domain.game.Result;
 import java.util.List;
 
 public class Player extends User {
     private final Name name;
     private PlayerStatus status = PlayerStatus.NORMAL;
-    private Result result;
 
     public Player(Name name) {
         super();
@@ -26,21 +24,6 @@ public class Player extends User {
         status = score.calculatePlayerStatus();
     }
 
-    @Override
-    public void win(User dealer) {
-        result = Result.WIN;
-        dealer.lose();
-    }
-
-    public void draw() {
-        result = Result.DRAW;
-    }
-
-    @Override
-    public void lose() {
-        result = Result.LOSE;
-    }
-
     public boolean isLessThanBustScore() {
         return score.isLessThanBustScore();
     }
@@ -53,9 +36,5 @@ public class Player extends User {
     @Override
     public String getName() {
         return name.getName();
-    }
-
-    public Result getResult() {
-        return result;
     }
 }
