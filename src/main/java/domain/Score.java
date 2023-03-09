@@ -10,30 +10,48 @@ public class Score {
     private static final int PLAYER_CARD_ABLE_BOUND = 20;
     private static final Map<Integer, Score> scoreFactory = new HashMap<>();
 
-    private final int score;
+    private final int value;
 
-    private Score(int score) {
-        this.score = score;
+    private Score(int value) {
+        this.value = value;
     }
 
-    public static Score of(int score) {
-        return scoreFactory.computeIfAbsent(score, ignored -> new Score(score));
+    public static Score of(int inputValue, int limit, int aceCount) {
+        int value = decreaseScoreByAceCount(inputValue, limit, aceCount);
+        return scoreFactory.computeIfAbsent(value, ignored -> new Score(value));
+    }
+
+    private static int decreaseScoreByAceCount(int inputValue, int limit, int aceCount) {
+        while (canDecreaseScore(inputValue, limit, aceCount)) {
+            inputValue -= 10;
+            aceCount--;
+        }
+
+        return inputValue;
+    }
+
+    private static boolean canDecreaseScore(int inputValue, int limit, int aceCount) {
+        return inputValue != MAX_SCORE && aceCount != 0 && limit < inputValue;
     }
 
     public boolean isMaxScore() {
-        return score == MAX_SCORE;
+        return value == MAX_SCORE;
     }
 
     public boolean isBust() {
-        return MAX_SCORE < score;
+        return MAX_SCORE < value;
     }
 
     public boolean isDealerMoreCardAble() {
-        return score <= DEALER_CARD_ABLE_BOUND;
+        return value <= DEALER_CARD_ABLE_BOUND;
     }
 
     public boolean isPlayerMoreCardAble() {
-        return score <= PLAYER_CARD_ABLE_BOUND;
+        return value <= PLAYER_CARD_ABLE_BOUND;
+    }
+
+    public int getValue() {
+        return value;
     }
 
 }
