@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     void 본인의_카드뭉치의_총합을_반환한다() {

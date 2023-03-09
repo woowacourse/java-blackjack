@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class NameTest {
+class NameTest {
 
     @Test
     void 이름이_5글자_초과시_예외를_발생한다() {

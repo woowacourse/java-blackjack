@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class CardsTest {
+class CardsTest {
 
     @Test
     void 카드뭉치_안에는_같은_카드가_두개일_수_없다() {

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class DealerTest {
+class DealerTest {
 
     @Test
     void 카드뭉치의_합이_16_이하인지_확인할_수_있다() {
