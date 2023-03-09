@@ -4,20 +4,18 @@ import java.util.Arrays;
 
 public enum DrawOrStay {
 
-    DRAW("y", true),
-    STAY("n", false);
+    DRAW("y"),
+    STAY("n");
 
     static final String INPUT_FORM_EXCEPTION_MESSAGE = "'y'또는 'n'을 입력해 주세요;";
 
     private final String input;
-    private final boolean isDraw;
 
-    DrawOrStay(String input, boolean isDraw) {
+    DrawOrStay(final String input) {
         this.input = input;
-        this.isDraw = isDraw;
     }
 
-    public static DrawOrStay from(String input) {
+    public static DrawOrStay from(final String input) {
         return Arrays.stream(DrawOrStay.values())
                 .filter(drawInput -> drawInput.input.equals(input))
                 .findAny()
@@ -25,6 +23,6 @@ public enum DrawOrStay {
     }
 
     public boolean isDraw() {
-        return isDraw;
+        return this == DRAW;
     }
 }
