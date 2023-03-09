@@ -65,4 +65,21 @@ class BlackjackGameTest {
                 Map.entry("패배자이름", PlayerGameResult.LOSE)
         );
     }
+
+    @Test
+    void 플레이어_카드_합이_블랙잭이면_블랙잭으로_승리이다() {
+        BlackjackGame blackjackGame = BlackjackGame.of(List.of("블랙잭으로승리"));
+        List<Participant> players = blackjackGame.getPlayers();
+
+        // when
+        players.get(0).addCard(new Card(Denomination.ACE, Suit.SPADE));
+        players.get(0).addCard(new Card(Denomination.JACK, Suit.DIAMOND));
+
+        // then
+        assertThat(blackjackGame.getResult()).contains(
+                Map.entry("블랙잭으로승리", PlayerGameResult.BLACKJACK)
+        );
+    }
+
+
 }

@@ -76,6 +76,10 @@ public class Participants {
         return dealer.calculateScore();
     }
 
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
+    }
+
     public Participant getDealer() {
         return dealer;
     }

@@ -52,21 +52,29 @@ public class BlackjackGame {
     }
 
     private PlayerGameResult getPlayerGameResult(Participant player) {
-        int dealerScore = participants.getDealerScore();
-        int playerScore = player.calculateScore();
-
-        if (isPlayerLose(player, dealerScore, playerScore)) {
-            return PlayerGameResult.LOSE;
+        if (isPlayerBlackjack(player)) {
+            return PlayerGameResult.BLACKJACK;
         }
-        if (playerScore == dealerScore) {
+        if (isPlayerWin(player)) {
+            return PlayerGameResult.WIN;
+        }
+        if (isDraw(player)) {
             return PlayerGameResult.DRAW;
         }
-
-        return PlayerGameResult.WIN;
+        return PlayerGameResult.LOSE;
     }
 
-    private boolean isPlayerLose(Participant player, int dealerScore, int playerScore) {
-        return (playerScore < dealerScore && !participants.isDealerBust()) || player.isBust();
+    private boolean isPlayerBlackjack(Participant player) {
+        return player.isBlackjack() && !participants.isDealerBlackjack();
+    }
+
+    private boolean isPlayerWin(Participant player) {
+        return (player.calculateScore() > participants.getDealerScore() && !player.isBust())
+                || participants.isDealerBust();
+    }
+
+    private boolean isDraw(Participant player) {
+        return player.calculateScore() == participants.getDealerScore();
     }
 
     public Participant getDealer() {
