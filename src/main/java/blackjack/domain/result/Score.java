@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 public class Score {
 
-    private static final int BLACK_JACK_NUMBER = 21;
+    private static final int BLACK_JACK_VALUE = 21;
     private static final int ACE_OFFSET = -10;
 
     private final int value;
@@ -12,7 +12,7 @@ public class Score {
     }
 
     public static Score calculateScore(int totalValue, int aceCount) {
-        while (totalValue > BLACK_JACK_NUMBER && aceCount > 0) {
+        while (totalValue > BLACK_JACK_VALUE && aceCount > 0) {
             totalValue += ACE_OFFSET;
             aceCount--;
         }
@@ -24,11 +24,11 @@ public class Score {
     }
 
     public boolean isBust() {
-        return value > BLACK_JACK_NUMBER;
+        return value > BLACK_JACK_VALUE;
     }
 
     public boolean isBlackJackScore() {
-        return value == BLACK_JACK_NUMBER;
+        return value == BLACK_JACK_VALUE;
     }
 
     public boolean isBigger(final Score score) {
