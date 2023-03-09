@@ -16,16 +16,23 @@ public class PlayerBoards {
     }
 
     public static PlayerBoards from(List<String> playerNames) {
-        validate(playerNames.size());
+        validate(playerNames);
         List<PlayerBoard> playerBoards = playerNames.stream()
             .map((playerName) -> new PlayerBoard(new Player(playerName), PlayerStatus.HIT_ABLE))
             .collect(Collectors.toList());
         return new PlayerBoards(playerBoards);
     }
 
-    private static void validate(int size) {
-        if (size < MIN_PLAYER_COUNT || size > MAX_PLAYER_COUNT) {
+    private static void validate(List<String> playerNames) {
+        if (playerNames == null) {
             throw new IllegalArgumentException("플레이어는 1명 이상 7명 이하입니다.");
+        }
+        final int playerCount = playerNames.size();
+        if (playerCount < MIN_PLAYER_COUNT || playerCount > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException("플레이어는 1명 이상 7명 이하입니다.");
+        }
+        if (playerNames.stream().distinct().count() != playerCount) {
+            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
         }
     }
 
