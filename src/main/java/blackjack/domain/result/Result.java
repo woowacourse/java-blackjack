@@ -15,8 +15,8 @@ public enum Result {
     }
 
     public static Result calculateResult(int playerScore, int dealerScore) {
-        playerScore = setScore(playerScore);
-        dealerScore = setScore(dealerScore);
+        playerScore = initializeScoreIfBust(playerScore);
+        dealerScore = initializeScoreIfBust(dealerScore);
         if (playerScore < dealerScore) {
             return LOSE;
         }
@@ -26,7 +26,7 @@ public enum Result {
         return TIE;
     }
 
-    private static int setScore(int score) {
+    private static int initializeScoreIfBust(int score) {
         if (score > SCORE_LIMIT) {
             return INITIALIZED_SCORE;
         }
