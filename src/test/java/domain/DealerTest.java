@@ -81,4 +81,22 @@ public class DealerTest {
         assertThat(card.getLetterScore()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("2장으로 21점을 만들면 블랙잭 이다.")
+    void isBlackJack() {
+        List<Card> blackJackCards = List.of(Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.DIAMOND, Letter.ACE));
+        Dealer dealer = new Dealer(new Cards(blackJackCards));
+
+        assertThat(dealer.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("3장 이상으로 21점이면 블랙잭이 아니다.")
+    void isNotBlackJack() {
+        List<Card> notBlackJackCards = List.of(Card.of(Shape.DIAMOND, Letter.JACK), Card.of(Shape.DIAMOND, Letter.ACE), Card.of(Shape.HEART, Letter.JACK));
+        Dealer dealer = new Dealer(new Cards(notBlackJackCards));
+
+        assertThat(dealer.isBlackJack()).isFalse();
+    }
+
 }
