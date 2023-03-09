@@ -63,7 +63,7 @@ public class BlackJack {
     public Map<Result, Integer> getDealerResult() {
         final Map<Result, Integer> resultMap = new HashMap<>();
         resultMap.put(Result.WIN, getUserOf(Result.LOSE).size());
-        resultMap.put(Result.LOSE, getUserOf(Result.WIN).size());
+        resultMap.put(Result.LOSE, getUserOf(Result.WIN).size() + getUserOf(Result.BLACK_JACK_WIN).size());
         resultMap.put(Result.DRAW, getUserOf(Result.DRAW).size());
         return resultMap;
     }
