@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
@@ -15,9 +16,9 @@ public class BlackJackManager {
     private final Deck deck;
     private final BlackJackParticipants participants;
 
-    public BlackJackManager(final Deck deck, final List<String> names) {
+    public BlackJackManager(final Deck deck, final List<String> nameValues, final List<Integer> moneyValues) {
         this.deck = deck;
-        this.participants = new BlackJackParticipants(this.deck, names);
+        this.participants = new BlackJackParticipants(this.deck, nameValues, moneyValues);
     }
 
     public void hitByPlayer(final Predicate<String> checkHitCondition, final Consumer<Player> printPlayerCards) {
@@ -44,7 +45,7 @@ public class BlackJackManager {
             final Consumer<Player> printPlayerCards
     ) {
         final String name = player.getName().getValue();
-        while (player.isHittable() && repeatAndPrintCause(() -> checkHitCondition.test(name))) {
+        while (player.isHittable() && Boolean.TRUE.equals(repeatAndPrintCause(() -> checkHitCondition.test(name)))) {
             player.hit(deck.draw());
             printPlayerCards.accept(player);
         }
@@ -58,10 +59,10 @@ public class BlackJackManager {
     }
 
     public List<Player> getPlayers() {
-        return participants.getPlayers();
+        return new ArrayList<>(participants.getPlayers());
     }
 
-    public BlackJackResults getBlackJackResults() {
-        return participants.createBlackJackResults();
+    public BettingResults createBettingResults() {
+        return participants.createBettingResults();
     }
 }
