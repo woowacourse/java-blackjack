@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.controller.DrawOrStay;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckGenerator;
@@ -43,8 +44,10 @@ public class BlackJackGame {
         return users.isDealerUnderDrawLimit();
     }
 
-    public void playPlayer(final String userName) {
-        users.drawCard(userName, deck);
+    public void playPlayer(final String userName, final DrawOrStay drawOrStay) {
+        if (drawOrStay.isDraw()) {
+            users.drawCard(userName, deck);
+        }
     }
 
     public Map<String, CardResult> getUserNameAndCardResults() {

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.controller.DrawOrStay;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.card.CardNumber;
@@ -116,7 +117,7 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame(List.of("필립"),
                 new TestNonShuffledDeckGenerator(testCards));
 
-        blackJackGame.playPlayer("필립");
+        blackJackGame.playPlayer("필립", DrawOrStay.DRAW);
         List<Card> cards = blackJackGame.getCardGroupBy("필립").getCards();
 
         assertThat(cards).containsExactlyInAnyOrderElementsOf(testCards.subList(2, 5));

@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import java.util.Arrays;
 
-public enum DrawInput {
+public enum DrawOrStay {
 
     DRAW("y", true),
     STAY("n", false);
@@ -12,13 +12,13 @@ public enum DrawInput {
     private final String input;
     private final boolean isDraw;
 
-    DrawInput(String input, boolean isDraw) {
+    DrawOrStay(String input, boolean isDraw) {
         this.input = input;
         this.isDraw = isDraw;
     }
 
-    public static DrawInput from(String input) {
-        return Arrays.stream(DrawInput.values())
+    public static DrawOrStay from(String input) {
+        return Arrays.stream(DrawOrStay.values())
                 .filter(drawInput -> drawInput.input.equals(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INPUT_FORM_EXCEPTION_MESSAGE));

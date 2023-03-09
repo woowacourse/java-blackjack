@@ -6,14 +6,14 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DrawInputTest {
+class DrawOrStayTest {
 
     @Test
     @DisplayName("y또는 n이외의 값을 입력시 예외처리하는지 테스트")
     void validateDrawInput() {
-        assertThatThrownBy(() -> DrawInput.from("okay"))
+        assertThatThrownBy(() -> DrawOrStay.from("okay"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(DrawInput.INPUT_FORM_EXCEPTION_MESSAGE);
+                .hasMessage(DrawOrStay.INPUT_FORM_EXCEPTION_MESSAGE);
     }
 
     @Test
@@ -23,8 +23,8 @@ class DrawInputTest {
         final String inputN = "n";
 
         assertSoftly(softly -> {
-            softly.assertThat(DrawInput.from(inputY).isDraw()).isTrue();
-            softly.assertThat(DrawInput.from(inputN).isDraw()).isFalse();
+            softly.assertThat(DrawOrStay.from(inputY).isDraw()).isTrue();
+            softly.assertThat(DrawOrStay.from(inputN).isDraw()).isFalse();
         });
 
     }

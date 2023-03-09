@@ -10,7 +10,6 @@ import blackjack.view.OutputView;
 import blackjack.view.ViewRenderer;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
@@ -58,19 +57,19 @@ public class BlackJackController {
     }
 
     private void playPlayerTurn(final BlackJackGame blackJackGame, final String playerName) {
-        DrawInput drawInput = DrawInput.DRAW;
-        while (drawInput.isDraw() && isContinuous(playerName, blackJackGame)) {
+        DrawOrStay drawOrStay = DrawOrStay.DRAW;
+        while (drawOrStay.isDraw() && isContinuous(playerName, blackJackGame)) {
             outputView.printDrawCardRequestMessage(playerName);
-            drawInput = repeatUntilReadValidateDrawInput();
-            blackJackGame.playPlayer(playerName);
+            drawOrStay = repeatUntilReadValidateDrawInput();
+            blackJackGame.playPlayer(playerName, drawOrStay);
             final CardGroup userCardGroup = blackJackGame.getCardGroupBy(playerName);
             outputView.printCardGroup(playerName, ViewRenderer.renderCardGroup(userCardGroup));
         }
     }
 
-    private DrawInput repeatUntilReadValidateDrawInput() {
+    private DrawOrStay repeatUntilReadValidateDrawInput() {
         try {
-            return DrawInput.from(inputView.readDrawOrStay());
+            return DrawOrStay.from(inputView.readDrawOrStay());
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
             return repeatUntilReadValidateDrawInput();
