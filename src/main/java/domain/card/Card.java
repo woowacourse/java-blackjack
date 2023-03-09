@@ -10,6 +10,10 @@ public class Card {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return name.contains("A");
+    }
+
     public String getName() {
         return name;
     }

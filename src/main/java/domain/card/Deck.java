@@ -1,21 +1,30 @@
 package domain.card;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.Stack;
 
 public class Deck {
     private static final String KOREAN_REGEX = "[가-힣]+";
 
-    private static final CardMaker cardMaker = new CardMaker();
-    private static final Set<String> alreadyMakeCards = new HashSet<>();
+    private static final Stack<Card> deck = makeDeck();
 
-    public static String drawCard() {
-        String popCardName = cardMaker.randomMakeCard();
-        if (!alreadyMakeCards.contains(popCardName)) {
-            alreadyMakeCards.add(popCardName);
-            return popCardName;
+    private static Stack<Card> makeDeck() {
+        Stack<Card> stack = new Stack<>();
+        for (Denomination denomination : Denomination.values()) {
+            loopSuits(stack, denomination);
         }
-        return drawCard();
+        Collections.shuffle(stack);
+        return stack;
+    }
+
+    private static void loopSuits(Stack<Card> stack, Denomination denomination) {
+        for (Suit suit : Suit.values()) {
+            stack.add(new Card(denomination.getName() + suit.getValue(), denomination.getValue()));
+        }
+    }
+
+    public static Card generateCard() {
+        return deck.pop();
     }
 
     public static int extractCardNumber(String card) {

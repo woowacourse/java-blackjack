@@ -1,5 +1,6 @@
 package view;
 
+import domain.participant.ReceiveValidate;
 import java.util.List;
 import java.util.Scanner;
 

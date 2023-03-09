@@ -1,4 +1,4 @@
-package view;
+package domain.participant;
 
 import java.util.Arrays;
 

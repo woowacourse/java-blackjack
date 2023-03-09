@@ -1,6 +1,12 @@
 package view;
 
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.result.ResultCalculator;
+import domain.result.Score;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -25,6 +31,16 @@ public class OutputView {
         System.out.println("\n딜러와 " + names + "에게 2장을 나누었습니다.");
     }
 
+    public static void printParticipantFinalResult(String name, List<String> cardName, int totalValueSum) {
+        System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
+    }
+
+    public static void printInitPlayerCards(Players players) {
+        for (Player player : players.getPlayers()) {
+            OutputView.printParticipantResult(player.getName(), player.getCardNames());
+        }
+    }
+
     public static void printParticipantResult(String name, List<String> cardName) {
         if (!name.equals("딜러")) {
             System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName));
@@ -33,14 +49,44 @@ public class OutputView {
         System.out.println(name + ": " + cardName.get(0));
     }
 
-    public static void printParticipantFinalResult(String name, List<String> cardName, int totalValueSum) {
-        System.out.println(name + "카드: " + String.join(JOIN_DELIMITER, cardName) + " - 결과: " + totalValueSum);
-    }
-
-    public static void printFinalFightResult(List<String> finalFightResults) {
+    public static void printFinalFightResult(ResultCalculator resultCalculator) {
         System.out.println("\n## 최종 승패");
-        for (String result : finalFightResults) {
+        for (String result : getFinalFightResults(resultCalculator.getResults())) {
             System.out.println(result);
         }
+    }
+
+    private static List<String> getFinalFightResults(Map<String, Map<Score, Integer>> results) {
+        List<String> finalFightResults = new ArrayList<>();
+        for (String name : results.keySet()) {
+            List<Integer> participantResult = getResultsByName(results, name);
+            StringBuilder sb = getResultCount(name, participantResult);
+            finalFightResults.add(sb.toString());
+        }
+        return finalFightResults;
+    }
+
+    public static List<Integer> getResultsByName(Map<String, Map<Score, Integer>> gameResults, String name) {
+        Map<Score, Integer> resultsMapName = gameResults.get(name);
+        ArrayList<Integer> results = new ArrayList<>();
+        results.add(resultsMapName.get(Score.WIN));
+        results.add(resultsMapName.get(Score.DRAW));
+        results.add(resultsMapName.get(Score.LOSE));
+
+        return results;
+    }
+
+    private static StringBuilder getResultCount(String name, List<Integer> participantResult) {
+        StringBuilder sb = new StringBuilder(name + ": ");
+        if (participantResult.get(0) != 0) {
+            sb.append(participantResult.get(0)).append(Score.WIN.getValue());
+        }
+        if (participantResult.get(1) != 0) {
+            sb.append(participantResult.get(1)).append(Score.DRAW.getValue());
+        }
+        if (participantResult.get(2) != 0) {
+            sb.append(participantResult.get(2)).append(Score.LOSE.getValue());
+        }
+        return sb;
     }
 }

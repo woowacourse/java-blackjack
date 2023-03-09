@@ -1,18 +1,24 @@
 package domain;
 
-import domain.card.Card;
-import domain.card.Deck;
+import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Players;
 
 public class BlackJackGame {
-    public static void distributeCard(Participant participant, int num) {
-        for (int generateIndex = 0; generateIndex < num; generateIndex++) {
-            participant.drawCard(generateCard());
-        }
+    private final Players players;
+    private final Dealer dealer;
+
+    public BlackJackGame(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    private static Card generateCard() {
-        String card = Deck.drawCard();
-        return new Card(card, Deck.extractCardNumber(card));
+    public void initSettingCards() {
+        dealer.takeCard(2);
+        players.initDistribute();
+    }
+
+    public void distributeCard(Participant participant, int num) {
+        participant.takeCard(num);
     }
 }
