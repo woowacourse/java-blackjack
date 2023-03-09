@@ -1,6 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.player.*;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
+import blackjack.domain.player.User;
 import blackjack.domain.result.UserResultsDTO;
 
 import java.util.HashMap;
@@ -60,12 +63,7 @@ public class OutputView {
     public static void printScore(Dealer dealer, Players players) {
         System.out.println(dealer.getName() + CARD_DELIMITER + getPlayerCards(dealer) + RESULT_DELIMITER + dealer.getTotalScore());
         for (Player player : players.getPlayers()) {
-            System.out.println(player.getName()
-                    + CARD_USER_DELIMITER
-                    + getPlayerCards(player)
-                    + RESULT_DELIMITER
-                    + player.getTotalScore()
-            );
+            System.out.println(player.getName() + CARD_USER_DELIMITER + getPlayerCards(player) + RESULT_DELIMITER + player.getTotalScore());
         }
         printEmptyLine();
     }
@@ -83,7 +81,7 @@ public class OutputView {
     public static void printResults(UserResultsDTO userResultsDTO) {
         System.out.println(RESULT_TITLE);
         HashMap<User, String> userResults = userResultsDTO.getResults();
-        System.out.println(DEALER_NAME + CARD_USER_DELIMITER + userResultsDTO.getDealerResult());
+        System.out.println(DEALER_NAME + CARD_USER_DELIMITER + userResultsDTO.removeAndGetDealerResult());
         for (User user : userResults.keySet()) {
             System.out.println(user.getName() + CARD_USER_DELIMITER + userResults.get(user));
         }
