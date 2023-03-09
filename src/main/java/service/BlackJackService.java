@@ -15,12 +15,8 @@ import java.util.List;
 public class BlackJackService {
 
     private static final int NUMBER_OF_SPLIT_CARDS = 2;
-    private static final int BUST_NUMBER = 21;
-    private static final int DEALER_DRAW_LIMIT_SCORE = 16;
 
-    public List<DrawnCardsInfo> splitCards(final Dealer dealer,
-                                           final Players players,
-                                           final CardDeck cardDeck) {
+    public List<DrawnCardsInfo> splitCards(final Dealer dealer, final Players players, final CardDeck cardDeck) {
         splitCards(dealer, cardDeck);
         players.stream()
                 .forEach(player -> splitCards(player, cardDeck));
@@ -34,8 +30,7 @@ public class BlackJackService {
         }
     }
 
-    private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer,
-                                                    final Players players) {
+    private List<DrawnCardsInfo> getDrawnCardsInfos(final Dealer dealer, final Players players) {
         List<DrawnCardsInfo> cardInfos = new ArrayList<>();
         addDealerCardInfo(dealer, cardInfos);
 
@@ -45,10 +40,8 @@ public class BlackJackService {
         return cardInfos;
     }
 
-    public DrawnCardsInfo drawCards(final CardDeck cardDeck,
-                                    final Player player,
-                                    final DrawCommand drawCommand) {
-        if (drawCommand.isDraw() && player.calculateCardScore() < BUST_NUMBER) {
+    public DrawnCardsInfo drawCards(final CardDeck cardDeck, final Player player, final DrawCommand drawCommand) {
+        if (canDrawMore(player, drawCommand)) {
             player.pickCard(cardDeck.draw());
         }
 
@@ -56,17 +49,17 @@ public class BlackJackService {
     }
 
     public boolean canDrawMore(final Player player, final DrawCommand drawCommand) {
-        return player.calculateCardScore() < BUST_NUMBER && drawCommand.isDraw();
+        return player.canDrawMore() && drawCommand.isDraw();
     }
 
     public void pickDealerCard(final CardDeck cardDeck, final Dealer dealer) {
-        if (dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE) {
+        if (dealer.canDrawMore()) {
             dealer.pickCard(cardDeck.draw());
         }
     }
 
     public boolean canDealerDrawMore(final Dealer dealer) {
-        return dealer.calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE;
+        return dealer.canDrawMore();
     }
 
     public List<ParticipantResult> getParticipantResults(final Dealer dealer, final Players players) {
@@ -103,7 +96,7 @@ public class BlackJackService {
     }
 
     private boolean isPlayerWin(final Player player, final Dealer dealer) {
-        return (player.calculateCardScore() > dealer.calculateCardScore() && !player.isBust())
+        return (player.isScoreHighThanDealer(dealer.calculateCardScore()) && !player.isBust())
                 || dealer.isBust();
     }
 

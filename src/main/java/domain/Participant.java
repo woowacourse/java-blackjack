@@ -15,6 +15,10 @@ public abstract class Participant {
         this.drawnCards = drawnCards;
     }
 
+    public abstract List<Card> openDrawnCards();
+
+    public abstract boolean canDrawMore();
+
     public void pickCard(final Card card) {
         drawnCards.add(card);
     }
@@ -23,7 +27,9 @@ public abstract class Participant {
         return drawnCards.calculateScore();
     }
 
-    public abstract List<Card> openDrawnCards();
+    public boolean isBust() {
+        return drawnCards.calculateScore() > BUST_NUMBER;
+    }
 
     public String getName() {
         return status.getName();
@@ -37,7 +43,4 @@ public abstract class Participant {
         return status.getAccount();
     }
 
-    public boolean isBust() {
-        return drawnCards.calculateScore() > BUST_NUMBER;
-    }
 }

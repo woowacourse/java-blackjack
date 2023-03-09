@@ -60,7 +60,6 @@ public class Players {
         }
     }
 
-
     private List<String> parserPlayerNames(final List<Player> players) {
         return players.stream()
                 .map(player -> player.getName())

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    private static final int DEALER_DRAW_LIMIT_SCORE = 16;
+
     public Dealer(final DrawnCards drawnCards) {
         super(new Status(new Name(Message.DEALER_NAME.getMessage()), new Account(0)), drawnCards);
     }
@@ -19,6 +21,11 @@ public class Dealer extends Participant {
                 .collect(toList());
 
         return Collections.unmodifiableList(openCards);
+    }
+
+    @Override
+    public boolean canDrawMore() {
+        return calculateCardScore() <= DEALER_DRAW_LIMIT_SCORE;
     }
 
     public void winGame(final int playerAccount) {
