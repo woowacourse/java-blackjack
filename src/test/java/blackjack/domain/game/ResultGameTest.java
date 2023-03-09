@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Letter;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,5 +47,104 @@ public class ResultGameTest {
 
         // then
         assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
+    }
+
+    @Test
+    @DisplayName("버스트된 딜러와 버스트 안된 참가자의 게임 결과를 입력하는 테스트")
+    void calculateResultWithBustedDealerTest(){
+
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
+        dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
+        dealer.drawCard(new Card(Shape.HEART,Letter.TWO));
+
+        Player player = participants.getPlayers().get(0);
+        player.drawCard(new Card(Shape.CLOVER, Letter.NINE));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
+    }
+
+    @Test
+    @DisplayName("버스트된 딜러와 버스트 된 참가자의 게임 결과를 입력하는 테스트")
+    void calculateResultWithBustedDealerPlayerTest(){
+
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
+        dealer.drawCard(new Card(Shape.DIAMOND, Letter.TEN));
+        dealer.drawCard(new Card(Shape.HEART,Letter.TWO));
+
+        Player player = participants.getPlayers().get(0);
+        player.drawCard(new Card(Shape.CLOVER, Letter.TWO));
+        player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.QUEEN));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
+    }
+
+    @Test
+    @DisplayName("딜러와 버스트 된 참가자의 게임 결과를 입력하는 테스트")
+    void calculateResultWithNonBustedDealerAndBustedPlayerTest(){
+
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
+        dealer.drawCard(new Card(Shape.DIAMOND, Letter.ACE));
+
+        Player player = participants.getPlayers().get(0);
+        player.drawCard(new Card(Shape.CLOVER, Letter.TWO));
+        player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.QUEEN));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
+    }
+
+    @Test
+    @DisplayName("버스트 안된 딜러와 참가자 중 딜러가 이기는 경우 테스트")
+    void calculateResultWithNonBustedDealerWinNonBustedPlayerTest(){
+
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
+        dealer.drawCard(new Card(Shape.DIAMOND, Letter.ACE));
+
+        Player player = participants.getPlayers().get(0);
+        player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.QUEEN));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.LOSE);
+    }
+
+    @Test
+    @DisplayName("버스트 안된 딜러와 참가자 중 참가자가 이기는 경우 테스트")
+    void calculateResultWithNonBustedDealerLoseNonBustedPlayerTest(){
+
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.TEN));
+        dealer.drawCard(new Card(Shape.DIAMOND, Letter.JACK));
+
+        Player player = participants.getPlayers().get(0);
+        player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.ACE));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.WIN);
+    }
+
+    @Test
+    @DisplayName("버스트 안된 딜러와 참가자 중 비기는 경우 테스트")
+    void calculateResultWithNonBustedDealerTieNonBustedPlayerTest(){
+
+        dealer.drawCard(new Card(Shape.CLOVER, Letter.ACE));
+        dealer.drawCard(new Card(Shape.DIAMOND, Letter.JACK));
+
+        Player player = participants.getPlayers().get(0);
+        player.drawCard(new Card(Shape.CLOVER, Letter.JACK));
+        player.drawCard(new Card(Shape.DIAMOND, Letter.ACE));
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
     }
 }
