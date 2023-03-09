@@ -37,7 +37,6 @@ public class BlackJackController {
     private BlackJackGame setUpGame() {
         final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
         final Map<Name, BettingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
-
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck(cardShuffler);
         final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBattingMoneyMap);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());

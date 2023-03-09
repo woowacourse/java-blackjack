@@ -27,10 +27,6 @@ public class BlackJackScore {
         return new BlackJackScore(value);
     }
 
-    public int value() {
-        return value;
-    }
-
     public boolean isBlackJackScore() {
         return value == BLACK_JACK_SCORE_VALUE;
     }
@@ -47,6 +43,18 @@ public class BlackJackScore {
         return value <= MAXIMUM_DEALER_SHOULD_HIT_SCORE_INCLUDE;
     }
 
+    public BlackJackScore plusThenIfNotBust() {
+        final BlackJackScore candidate = BlackJackScore.of(value + ADDITIONAL_ACE_VALUE);
+        if (candidate.isBust()) {
+            return this;
+        }
+        return BlackJackScore.of(value + ADDITIONAL_ACE_VALUE);
+    }
+
+    public int value() {
+        return value;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -58,13 +66,5 @@ public class BlackJackScore {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public BlackJackScore plusThenIfNotBust() {
-        final BlackJackScore candidate = BlackJackScore.of(value + ADDITIONAL_ACE_VALUE);
-        if (candidate.isBust()) {
-            return this;
-        }
-        return BlackJackScore.of(value + ADDITIONAL_ACE_VALUE);
     }
 }

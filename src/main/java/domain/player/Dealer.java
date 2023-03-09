@@ -22,7 +22,7 @@ public class Dealer extends Participant {
 
     public Revenue compete(final Gambler gambler) {
         if (isGamblerWin(gambler)) {
-            return revenueForWin(gambler);
+            return revenueForWinner(gambler);
         }
         if (gambler.isBust()) {
             return Revenue.lose(gambler.battingMoney());
@@ -40,7 +40,7 @@ public class Dealer extends Participant {
         return isBust() || gambler.isLargerScoreThan(this);
     }
 
-    private Revenue revenueForWin(final Gambler gambler) {
+    private Revenue revenueForWinner(final Gambler gambler) {
         if (gambler.isBlackJack()) {
             return Revenue.blackJackWin(gambler.battingMoney());
         }

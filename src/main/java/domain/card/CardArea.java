@@ -16,10 +16,6 @@ public class CardArea {
         cards.addAll(List.of(firstCard, secondCard));
     }
 
-    public List<Card> cards() {
-        return new ArrayList<>(cards);
-    }
-
     public void addCard(final Card card) {
         cards.add(card);
     }
@@ -50,11 +46,15 @@ public class CardArea {
         return calculate().isBust();
     }
 
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_CARD_COUNT && calculate().isBlackJackScore();
+    }
+
     public Card firstCard() {
         return cards.get(FIRST_CARD_INDEX);
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_CARD_COUNT && calculate().isBlackJackScore();
+    public List<Card> cards() {
+        return new ArrayList<>(cards);
     }
 }

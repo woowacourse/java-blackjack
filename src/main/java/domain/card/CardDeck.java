@@ -40,15 +40,15 @@ public class CardDeck {
         return new CardArea(draw(), draw());
     }
 
-    public List<Card> cards() {
-        return new ArrayList<>(cards);
-    }
-
     private Card draw() {
         return this.cards.pollFirst();
     }
 
     public void drawTo(final Participant participant) {
         participant.hit(draw());
+    }
+
+    public List<Card> cards() {
+        return new ArrayList<>(cards);
     }
 }
