@@ -7,6 +7,7 @@ import model.card.State;
 
 public class Bet {
 
+    private static final double MULTIPLE_VALUE = 1.5;
     private static final Bet zero = new Bet(0);
 
     private final long money;
@@ -52,7 +53,7 @@ public class Bet {
     }
 
     public Bet blackJack() {
-        return new Bet((long) (money * 1.5));
+        return new Bet((long) (money * MULTIPLE_VALUE));
     }
 
     @Override
