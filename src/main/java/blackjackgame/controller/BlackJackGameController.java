@@ -71,7 +71,7 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (player.isLessThanBustScore() && DrawCommand.DRAW == repeatForValidInput(() -> readDrawCommand(player))) {
+        while (player.isLessThanBustScore() && isHitCommandEntered(player)) {
             blackJackGame.drawOneMoreCard(player);
             printDrawResult(player);
         }
@@ -83,6 +83,10 @@ public class BlackJackGameController {
     private DrawCommand readDrawCommand(Player player) {
         outputView.printAskOneMoreCardMessage(player.getName());
         return inputView.readDrawCommand();
+    }
+
+    private boolean isHitCommandEntered(Player player) {
+        return DrawCommand.HIT == repeatForValidInput(() -> readDrawCommand(player));
     }
 
     private void printDrawResult(Player player) {
