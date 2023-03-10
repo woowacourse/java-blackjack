@@ -18,7 +18,7 @@ public final class Hit extends IntermediateStatus {
     public Status draw(final Card card) {
         Cards newCards = cards.receiveCard(card);
         if (newCards.isBust()) {
-            return new Bust();
+            return new Bust(newCards);
         }
         return new Hit(newCards);
     }
@@ -26,5 +26,10 @@ public final class Hit extends IntermediateStatus {
     @Override
     public Status selectStand() {
         return new Stand(cards);
+    }
+
+    @Override
+    public Cards cards() {
+        return cards;
     }
 }

@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.status.Status;
+import domain.status.end.Bust;
 import domain.status.initial.Ready;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return status.isBust();
     }
 
     public String getName() {

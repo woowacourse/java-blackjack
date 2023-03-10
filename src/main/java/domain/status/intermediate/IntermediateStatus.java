@@ -21,4 +21,5 @@ public abstract class IntermediateStatus implements Status {
     public BigDecimal profitWeight() {
         throw new IllegalStateException("현재 상태에서는 수익 가중치를 계산할 수 없습니다.");
     }
+
 }

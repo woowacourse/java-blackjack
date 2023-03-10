@@ -12,10 +12,12 @@ public final class BlackJackGame {
 
     private final Participants participants;
     private final CardDeck cardDeck;
+    private final Bets bets;
 
     public BlackJackGame(final Participants participants, final CardDeck cardDeck) {
         this.participants = participants;
         this.cardDeck = cardDeck;
+        this.bets = new Bets();
     }
 
     public void distributeInitialCards() {
@@ -43,6 +45,6 @@ public final class BlackJackGame {
     }
 
     public void addBet(final Player player, final Money money) {
-
+        this.bets.addBet(player, money);
     }
 }

@@ -15,4 +15,9 @@ public final class Stand extends EndStatus {
     public BigDecimal profitWeight() {
         return BigDecimal.valueOf(1);
     }
+
+    @Override
+    public Cards cards() {
+        return cards;
+    }
 }
