@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import blackjack.domain.game.participantsState.PlayerDealerState;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -20,7 +19,7 @@ public class ResultGame {
     }
 
     public void calculateResult() {
-        players.forEach(player -> new PlayerDealerState(player, dealer).calculateResult(playersResult));
+        players.forEach(this::put);
     }
 
     public WinTieLose getPlayerResult(final Player player) {
@@ -29,5 +28,8 @@ public class ResultGame {
 
     public HashMap<Player, WinTieLose> getPlayersResult() {
         return this.playersResult;
+    }
+    private void put(Player player){
+        playersResult.put(player,dealer.compareScoreWith(player.getTotalScore()));
     }
 }

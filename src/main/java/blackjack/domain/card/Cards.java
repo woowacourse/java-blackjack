@@ -35,7 +35,6 @@ public class Cards {
         }
         return totalScore;
     }
-
     private int countAce() {
         return (int) cards.stream().filter(Card::isAce).count();
     }

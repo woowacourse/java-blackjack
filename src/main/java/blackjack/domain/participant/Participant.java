@@ -6,6 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 public class Participant {
+    private static final int MAX_NUMBER = 21;
     private final Name name;
     private final Cards cards;
 
@@ -29,26 +30,21 @@ public class Participant {
 
 
     public int getTotalScore() {
-        return this.cards.calculateTotalScore();
+        return limitNumber(this.cards.calculateTotalScore());
     }
 
-    public boolean isScoreBiggerThan(Participant participant) {
-        return participant.getTotalScore() < this.getTotalScore();
-    }
-
-    public boolean isScoreSameWith(Participant participant) {
-        return participant.getTotalScore() == this.getTotalScore();
-    }
-
-    public boolean isScoreSmallerThan(Participant participant) {
-        return participant.getTotalScore() > this.getTotalScore();
+    private int limitNumber(int totalScore){
+        if(totalScore> MAX_NUMBER){
+            return Integer.MIN_VALUE;
+        }
+        return totalScore;
     }
 
     public boolean isBust() {
-        return getTotalScore() > 21;
+        return this.cards.calculateTotalScore() > MAX_NUMBER;
     }
 
     public boolean isNotBust() {
-        return getTotalScore() <= 21;
+        return this.cards.calculateTotalScore() <= MAX_NUMBER;
     }
 }

@@ -6,6 +6,7 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -145,5 +146,16 @@ public class ResultGameTest {
         resultGame.calculateResult();
 
         assertThat(resultGame.getPlayerResult(player)).isEqualTo(WinTieLose.TIE);
+    }
+
+    @Test
+    @DisplayName("플레이어 해쉬맵을 가져오는 테스트")
+    void getPlayersResultTest(){
+        ResultGame resultGame = new ResultGame(participants);
+        resultGame.calculateResult();
+
+        Assertions.assertThat(resultGame.getPlayersResult().keySet())
+                .contains(participants.getPlayers().get(0)
+                        ,participants.getPlayers().get(1));
     }
 }
