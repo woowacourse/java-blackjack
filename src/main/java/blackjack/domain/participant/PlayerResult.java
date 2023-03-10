@@ -27,7 +27,7 @@ public class PlayerResult {
         if (dealer.isBlackJack()) {
             return Result.PUSH;
         }
-        return Result.WIN;
+        return Result.BLACKJACK;
     }
 
     private Result judgeResultBustPlayer() {

@@ -14,8 +14,8 @@ public class Profit {
         return new Profit(baseMoney);
     }
 
-    public double calculateProfit(final Result result, final boolean isBlackJackPlayer) {
-        if (result.equals(Result.WIN) && isBlackJackPlayer) {
+    public double calculateProfit(final Result result) {
+        if (result.equals(Result.BLACKJACK)) {
             return this.baseMoney * 1.5;
         }
         if (result.equals(Result.LOSE)) {

@@ -25,13 +25,13 @@ public class Participant {
         int sumOfRank = cards.stream()
                 .mapToInt(card -> card.getRank().getValue())
                 .sum();
-        if (canCalculateWithElevenAce(sumOfRank)) {
+        if (canCalculateToElevenAce(sumOfRank)) {
             return sumOfRank + ELEVEN_ACE_VALUE;
         }
         return sumOfRank;
     }
 
-    private boolean canCalculateWithElevenAce(int sumOfRank) {
+    private boolean canCalculateToElevenAce(int sumOfRank) {
         return hasAce() && (sumOfRank + ELEVEN_ACE_VALUE <= BUST_BOUNDARY);
     }
 

@@ -16,13 +16,15 @@ class ProfitTest {
         Profit profit = Profit.of(money);
 
         // when
-        double finalProfit1 = profit.calculateProfit(Result.WIN, true);
-        double finalProfit2 = profit.calculateProfit(Result.LOSE, true);
-        double finalProfit3 = profit.calculateProfit(Result.PUSH, true);
+        double finalProfit1 = profit.calculateProfit(Result.WIN);
+        double finalProfit2 = profit.calculateProfit(Result.BLACKJACK);
+        double finalProfit3 = profit.calculateProfit(Result.LOSE);
+        double finalProfit4 = profit.calculateProfit(Result.PUSH);
 
         // then
-        assertThat(finalProfit1).isEqualTo(1500.0);
-        assertThat(finalProfit2).isEqualTo(-1000.0);
-        assertThat(finalProfit3).isEqualTo(1000.0);
+        assertThat(finalProfit1).isEqualTo(1000.0);
+        assertThat(finalProfit2).isEqualTo(1500.0);
+        assertThat(finalProfit3).isEqualTo(-1000.0);
+        assertThat(finalProfit4).isEqualTo(1000.0);
     }
 }

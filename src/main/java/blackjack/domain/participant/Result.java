@@ -4,7 +4,7 @@ public enum Result {
     WIN("승"),
     PUSH("무"),
     LOSE("패"),
-    EMPTY("");
+    BLACKJACK("승");
 
     private final String value;
 
