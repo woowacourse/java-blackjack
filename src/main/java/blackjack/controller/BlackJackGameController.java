@@ -32,7 +32,7 @@ public class BlackJackGameController {
     }
 
     private Participants generateParticipants() {
-        return Retryable.retryWhenIllegalArgumentException(() -> new Participants(requestPlayerNames()));
+        return Retryable.retryWhenException(() -> new Participants(requestPlayerNames()));
     }
 
     private List<String> requestPlayerNames() {
@@ -88,7 +88,7 @@ public class BlackJackGameController {
     }
 
     private boolean requestIsHit(final String playerName) {
-        return Retryable.retryWhenIllegalArgumentException(() -> inputView.readIsHit(playerName));
+        return Retryable.retryWhenException(() -> inputView.readIsHit(playerName));
     }
 
     private void showEachPlayerCards(final Player player) {
