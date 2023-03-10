@@ -61,8 +61,7 @@ public final class GameController {
             play(blackjackGame.getDealer(), player);
         }
 
-        blackjackGame.drawDealer();
-        outputView.printDealerDrawMessage(blackjackGame.getDealer());
+        turnOfDealer(blackjackGame);
     }
 
     private void play(final Dealer dealer, final Player player) {
@@ -80,6 +79,13 @@ public final class GameController {
             return true;
         }
         return false;
+    }
+
+    private void turnOfDealer(final BlackjackGame blackjackGame) {
+        if (blackjackGame.canDealerDraw()) {
+            blackjackGame.drawDealer();
+            outputView.printDealerDrawMessage(blackjackGame.getDealer());
+        }
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
