@@ -5,25 +5,25 @@ import static model.card.State.*;
 import java.util.Objects;
 import model.card.State;
 
-public class Money {
+public class Bet {
 
-    private static final Money zero = new Money(0);
+    private static final Bet zero = new Bet(0);
 
     private final long money;
 
-    public Money(final long money) {
+    public Bet(final long money) {
         this.money = money;
     }
 
-    public static Money zero() {
+    public static Bet zero() {
         return zero;
     }
 
-    public Money add(final Money money) {
-        return new Money(this.money + money.money);
+    public Bet add(final Bet bet) {
+        return new Bet(this.money + bet.money);
     }
 
-    public Money calculateMoney(State result) {
+    public Bet calculateMoney(State result) {
         if (result == BLACKJACK) {
             return blackJack();
         }
@@ -31,7 +31,7 @@ public class Money {
         return judge(result);
     }
 
-    private Money judge(State result) {
+    private Bet judge(State result) {
         if (result == WIN) {
             return this;
         }
@@ -43,24 +43,24 @@ public class Money {
         return draw();
     }
 
-    private Money lose() {
-        return new Money(-money);
+    private Bet lose() {
+        return new Bet(-money);
     }
 
-    private Money draw() {
+    private Bet draw() {
         return zero;
     }
 
-    public Money blackJack() {
-        return new Money((long) (money * 1.5));
+    public Bet blackJack() {
+        return new Bet((long) (money * 1.5));
     }
 
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Money money1 = (Money) o;
-        return Objects.equals(money, money1.money);
+        final Bet bet1 = (Bet) o;
+        return Objects.equals(money, bet1.money);
     }
 
     @Override

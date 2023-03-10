@@ -10,33 +10,33 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class MoneyTest {
+public class BetTest {
 
     @Test
     @DisplayName("돈이 추가가 된다.")
     void whenAddMoney_thenSuccess() {
         // given
-        final Money money = new Money(10_000);
-        final Money addMoney = new Money(10_000);
+        final Bet bet = new Bet(10_000);
+        final Bet addBet = new Bet(10_000);
 
         // when
-        final Money result = money.add(addMoney);
+        final Bet result = bet.add(addBet);
 
         // then
-        assertThat(result).isEqualTo(new Money(20_000));
+        assertThat(result).isEqualTo(new Bet(20_000));
     }
 
     @Test
     @DisplayName("게임에서 블랙잭으로 이길 경우 돈의 값이 1.5배로 바뀐다.")
     void whenBlackJack_thenReturnBlackJackMoney() {
         // given
-        final Money money = new Money(10_000);
+        final Bet bet = new Bet(10_000);
 
         // when
-        final Money blackJack = money.blackJack();
+        final Bet blackJack = bet.blackJack();
 
         // then
-        assertThat(blackJack).isEqualTo(new Money(15_000));
+        assertThat(blackJack).isEqualTo(new Bet(15_000));
     }
 
     @Nested
@@ -47,52 +47,52 @@ public class MoneyTest {
         @DisplayName("게임이 블랙잭이면 블랙잭 머니로 바뀐다.")
         void whenBlackGame_thenReturnBlackMoney() {
             // given
-            final Money money = new Money(10_000);
+            final Bet bet = new Bet(10_000);
 
             // when
-            final Money lose = money.calculateMoney(BLACKJACK);
+            final Bet lose = bet.calculateMoney(BLACKJACK);
 
             // then
-            assertThat(lose).isEqualTo(new Money(15_000));
+            assertThat(lose).isEqualTo(new Bet(15_000));
         }
 
         @Test
         @DisplayName("게임에서 질 경우 돈의 값이 마이너스로 바뀐다.")
         void whenLoseGame_thenReturnLoseMoney() {
             // given
-            final Money money = new Money(10_000);
+            final Bet bet = new Bet(10_000);
 
             // when
-            final Money lose = money.calculateMoney(LOSE);
+            final Bet lose = bet.calculateMoney(LOSE);
 
             // then
-            assertThat(lose).isEqualTo(new Money(-10_000));
+            assertThat(lose).isEqualTo(new Bet(-10_000));
         }
 
         @Test
         @DisplayName("게임에서 비길 경우 돈을 돌려 받는다.")
         void whenTie_thenReturnMoney() {
             // given
-            final Money money = new Money(10_000);
+            final Bet bet = new Bet(10_000);
 
             // when
-            final Money tie = money.calculateMoney(TIE);
+            final Bet tie = bet.calculateMoney(TIE);
 
             // then
-            assertThat(tie).isEqualTo(new Money(0));
+            assertThat(tie).isEqualTo(new Bet(0));
         }
 
         @Test
         @DisplayName("게임에서 이길 경우 돈을 돌려 받는다.")
         void whenWin_thenReturnMoney() {
             // given
-            final Money money = new Money(10_000);
+            final Bet bet = new Bet(10_000);
 
             // when
-            final Money tie = money.calculateMoney(WIN);
+            final Bet tie = bet.calculateMoney(WIN);
 
             // then
-            assertThat(tie).isEqualTo(new Money(10_000));
+            assertThat(tie).isEqualTo(new Bet(10_000));
         }
     }
 }
