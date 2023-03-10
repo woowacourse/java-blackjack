@@ -17,21 +17,15 @@ public class Cards {
 
     public static Cards generator(CardPickerGenerator cardPickerGenerator) {
         List<Card> deck = new ArrayList<>();
-        for (int count = 0; count < MAX_DECK_SIZE; count++) {
-            numberEngrave(deck);
+        for (int i = 0; i < MAX_DECK_SIZE; i++) {
+            settingOneDeck(deck);
         }
         return new Cards(deck, cardPickerGenerator);
     }
 
-    private static void numberEngrave(final List<Card> deck) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            suitEngrave(deck, cardNumber);
-        }
-    }
-
-    private static void suitEngrave(final List<Card> deck, final CardNumber cardNumber) {
-        for (CardSuit cardSuit : CardSuit.values()) {
-            deck.add(new Card(cardNumber, cardSuit));
+    private static void settingOneDeck(List<Card> deck) {
+        for (Card card : Card.cache) {
+            deck.add(card);
         }
     }
 
