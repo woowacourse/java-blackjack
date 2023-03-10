@@ -30,23 +30,19 @@ public class Player extends User {
     }
 
     public WinningStatus calculateWinningStatus(final Dealer dealer) {
-        if (dealer.isBust()) {
-            return compareByBust();
-        }
-        return compareByScore(dealer);
-    }
-
-    private WinningStatus compareByBust() {
         if (isBust()) {
             return WinningStatus.LOSE;
         }
-        return WinningStatus.WIN;
+        if (dealer.isBust()) {
+            return WinningStatus.WIN;
+        }
+        return compareByScore(dealer);
     }
 
     private WinningStatus compareByScore(final Dealer dealer) {
         final Score playerScore = getScore();
         final Score dealerScore = dealer.getScore();
-        if (playerScore.isBust() || dealerScore.isBigger(playerScore)) {
+        if (dealerScore.isBigger(playerScore)) {
             return WinningStatus.LOSE;
         }
         if (playerScore.isEqual(dealerScore)) {
