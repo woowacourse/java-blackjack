@@ -11,6 +11,7 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import domain.profit.FinalProfit;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,6 +89,28 @@ public class DealerTest {
 
         // then
         assertThat(bettingMoneyByPlayer.get(player)).isEqualTo(bettingMoney);
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이면 true를 반환한다.")
+    void isBlackjack1() {
+        // when
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.TEN));
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
+
+        // then
+        Assertions.assertThat(dealer.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이 아니면 false를 반환한다.")
+    void isBlackjack2() {
+        // when
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.NINE));
+        dealer.takeCard(new Card(Suit.DIAMOND, Denomination.ACE));
+
+        // then
+        Assertions.assertThat(dealer.isBlackJack()).isFalse();
     }
 
     @Test
