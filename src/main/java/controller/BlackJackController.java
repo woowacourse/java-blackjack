@@ -29,9 +29,9 @@ public class BlackJackController {
 
     private BlackJackGame setUpGame() {
         final List<Name> gamblerNames = withExceptionHandle(this::createGamblerNames);
-        final Map<Name, BettingMoney> gamblerBattingMoneyMap = batting(gamblerNames);
+        final Map<Name, BettingMoney> gamblerBettingMoneyMap = betting(gamblerNames);
         final CardDeck cardDeck = CardDeck.shuffledFullCardDeck();
-        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBattingMoneyMap);
+        final BlackJackGame blackJackGame = BlackJackGame.defaultSetting(cardDeck, gamblerBettingMoneyMap);
         OutputView.printAfterFirstDeal(blackJackGame.dealer(), blackJackGame.gamblers());
         return blackJackGame;
     }
@@ -43,10 +43,10 @@ public class BlackJackController {
                 .collect(toList());
     }
 
-    private Map<Name, BettingMoney> batting(final List<Name> gamblerNames) {
+    private Map<Name, BettingMoney> betting(final List<Name> gamblerNames) {
         return gamblerNames.stream()
                 .collect(toMap(identity(),
-                        name -> withExceptionHandle(() -> BettingMoney.of(InputView.readBattingMoney(name))),
+                        name -> withExceptionHandle(() -> BettingMoney.of(InputView.readBettingMoney(name))),
                         (a, b) -> b,
                         LinkedHashMap::new
                 ));
