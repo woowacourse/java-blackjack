@@ -1,24 +1,31 @@
 package domain;
 
 public enum PlayerOutcome {
+    BLACKJACK,
     WIN,
     DRAW,
-    LOSE,
+    LOSS,
     ;
 
-    public static PlayerOutcome of(int playerScore, int dealerScore) {
-        if (playerScore > 21) {
-            return LOSE;
+    public static PlayerOutcome of(Hand playerHand, Hand dealerHand) {
+        if (playerHand.isBlackjack() && !dealerHand.isBlackjack()) {
+            return BLACKJACK;
         }
-        if (dealerScore > 21) {
+        if (playerHand.isBust()) {
+            return LOSS;
+        }
+        return winLossByScore(playerHand, dealerHand);
+    }
+
+    private static PlayerOutcome winLossByScore(final Hand playerHand, final Hand dealerHand) {
+        final int playerScore = playerHand.calculateScore();
+        final int dealerScore = dealerHand.calculateScore();
+        if (dealerHand.isBust() || playerScore > dealerScore) {
             return WIN;
         }
-        if (playerScore > dealerScore) {
-            return WIN;
+        if (playerScore == dealerScore) {
+            return DRAW;
         }
-        if (playerScore < dealerScore) {
-            return LOSE;
-        }
-        return DRAW;
+        return LOSS;
     }
 }

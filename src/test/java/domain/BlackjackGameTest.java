@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static domain.PlayerOutcome.LOSE;
+import static domain.PlayerOutcome.LOSS;
 import static domain.PlayerOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -37,7 +37,7 @@ class BlackjackGameTest {
             //then
             assertAll(
                     () -> assertThat(outcome).containsEntry("포이", WIN),
-                    () -> assertThat(outcome).containsEntry("에밀", LOSE)
+                    () -> assertThat(outcome).containsEntry("에밀", LOSS)
             );
         }
     }

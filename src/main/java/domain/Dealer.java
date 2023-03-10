@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public Map<String, PlayerOutcome> battleWith(Players players) {
-        return players.computeWinLoss(score());
+        return players.computeWinLoss(hand);
     }
 
     @Override

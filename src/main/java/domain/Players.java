@@ -51,10 +51,10 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
         getPlayerToDecide().stand();
     }
 
-    public Map<String, PlayerOutcome> computeWinLoss(int dealerScore) {
+    public Map<String, PlayerOutcome> computeWinLoss(Hand dealerHand) {
         return players.stream()
                       .collect(toUnmodifiableMap(Player::name
-                              , player -> player.computeWinLoss(dealerScore)));
+                              , player -> player.computeWinLoss(dealerHand)));
     }
 
     public List<Player> getPlayers() {
