@@ -1,14 +1,16 @@
-package blackjack.card;
+package blackjack.domain.card;
 
-import static blackjack.card.Denomination.ACE;
-import static blackjack.card.Denomination.K;
-import static blackjack.card.Denomination.THREE;
-import static blackjack.card.Denomination.TWO;
-import static blackjack.card.Suit.CLOVER;
-import static blackjack.card.Suit.DIAMOND;
-import static blackjack.card.Suit.HEART;
+import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.K;
+import static blackjack.domain.card.Denomination.THREE;
+import static blackjack.domain.card.Denomination.TWO;
+import static blackjack.domain.card.Suit.CLOVER;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

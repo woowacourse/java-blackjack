@@ -1,8 +1,10 @@
-package blackjack.card;
+package blackjack.domain.card;
 
-import static blackjack.card.Suit.HEART;
+import static blackjack.domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
