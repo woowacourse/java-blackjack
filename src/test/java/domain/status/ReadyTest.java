@@ -15,16 +15,16 @@ import org.junit.jupiter.api.Test;
 
 class ReadyTest {
     @Test
-    void firstDrawBlackJack() {
+    void initialDrawBlackJack() {
         Cards cards = new Cards(List.of(ACE_HEART, KING_HEART));
         Ready ready = new Ready();
-        assertThat(ready.firstDraw(cards)).isInstanceOf(BlackJack.class);
+        assertThat(ready.initialDraw(cards)).isInstanceOf(BlackJack.class);
     }
 
     @Test
-    void firstDrawHit() {
+    void initialDrawHit() {
         Cards cards = new Cards(List.of(KING_CLOVER, KING_SPADE));
         Ready ready = new Ready();
-        assertThat(ready.firstDraw(cards)).isInstanceOf(Hit.class);
+        assertThat(ready.initialDraw(cards)).isInstanceOf(Hit.class);
     }
 }

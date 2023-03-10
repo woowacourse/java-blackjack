@@ -6,7 +6,7 @@ import domain.status.Status;
 import domain.status.end.Bust;
 import domain.status.end.Stand;
 
-public class Hit implements Status {
+public final class Hit extends IntermediateStatus {
 
     private final Cards cards;
 
@@ -14,6 +14,7 @@ public class Hit implements Status {
         this.cards = cards;
     }
 
+    @Override
     public Status draw(final Card card) {
         Cards newCards = cards.receiveCard(card);
         if (newCards.isBust()) {
@@ -22,6 +23,7 @@ public class Hit implements Status {
         return new Hit(newCards);
     }
 
+    @Override
     public Status selectStand() {
         return new Stand(cards);
     }

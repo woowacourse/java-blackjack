@@ -2,7 +2,7 @@ package domain.status.end;
 
 import java.math.BigDecimal;
 
-public class Bust implements EndStatus {
+public final class Bust extends EndStatus {
 
     @Override
     public BigDecimal profitWeight() {

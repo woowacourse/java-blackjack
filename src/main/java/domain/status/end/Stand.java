@@ -3,7 +3,7 @@ package domain.status.end;
 import domain.card.Cards;
 import java.math.BigDecimal;
 
-public class Stand implements EndStatus {
+public final class Stand extends EndStatus {
 
     private final Cards cards;
 
