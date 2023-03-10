@@ -88,7 +88,6 @@ public class ResultsTest {
         bettingResults.initParticipantBet(dealer, new Money());
         Results result = new Results(bettingResults, players, dealer);
 
-
         dino.drawCard(new Card("5다이아몬드", 5));
         dino.drawCard(new Card("10다이아몬드", 10));
         dino.drawCard(new Card("10스페이드", 10));
@@ -115,6 +114,56 @@ public class ResultsTest {
             softly.assertThat(sunghaResult).isEqualTo(List.of(1, 0, 0));
             softly.assertThat(pobiResult).isEqualTo(List.of(1, 0, 0));
             softly.assertThat(dealerResults).isEqualTo(List.of(0, 0, 3));
+        });
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭인 경우")
+    void playerGetBlackJack() {
+        BettingResults bettingResults = new BettingResults();
+        Player dino = new Player(new Name("dino"));
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of(dino));
+        bettingResults.initParticipantBet(dino, new Money("10000"));
+        bettingResults.initParticipantBet(dealer, new Money());
+        Results result = new Results(bettingResults, players, dealer);
+
+        dino.drawCard(new Card("A다이아몬드", 1));
+        dino.drawCard(new Card("10다이아몬드", 10));
+
+        dealer.drawCard(new Card("10하트", 10));
+        dealer.drawCard(new Card("7클로버", 7));
+
+        result.executeGame(players, dealer);
+
+        assertSoftly(softly -> {
+            softly.assertThat(bettingResults.getParticipantBet(dino).getAmount()).isEqualTo(15000);
+            softly.assertThat(bettingResults.getParticipantBet(dealer).getAmount()).isEqualTo(-15000);
+        });
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 동점인 경우")
+    void playerDraw() {
+        BettingResults bettingResults = new BettingResults();
+        Player dino = new Player(new Name("dino"));
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of(dino));
+        bettingResults.initParticipantBet(dino, new Money("10000"));
+        bettingResults.initParticipantBet(dealer, new Money());
+        Results result = new Results(bettingResults, players, dealer);
+
+        dino.drawCard(new Card("7다이아몬드", 7));
+        dino.drawCard(new Card("10다이아몬드", 10));
+
+        dealer.drawCard(new Card("10하트", 10));
+        dealer.drawCard(new Card("7클로버", 7));
+
+        result.executeGame(players, dealer);
+
+        assertSoftly(softly -> {
+            softly.assertThat(bettingResults.getParticipantBet(dino).getAmount()).isEqualTo(0);
+            softly.assertThat(bettingResults.getParticipantBet(dealer).getAmount()).isEqualTo(0);
         });
     }
 }
