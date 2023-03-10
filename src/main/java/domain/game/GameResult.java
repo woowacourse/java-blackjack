@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 
@@ -17,15 +16,9 @@ public final class GameResult {
         this.gameResults = gameResults;
     }
 
-    public static GameResult create(final Dealer dealer, final List<Player> players) {
+    public static GameResult create(final Participant dealer, final List<Player> players) {
         final Map<Participant, Result> gameResults = makeGameResults(dealer, players);
         return new GameResult(gameResults);
-    }
-
-    public Map<String, Result> getPlayerGameResults() {
-        return gameResults.keySet().stream()
-                .collect(Collectors.toMap(Participant::getName, gameResults::get,
-                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 
     private static Map<Participant, Result> makeGameResults(final Participant dealer, final List<Player> players) {
@@ -58,5 +51,11 @@ public final class GameResult {
         return dealer.isBust()
                 || player.isBlackJack()
                 || dealer.calculateScore() < player.calculateScore();
+    }
+
+    public Map<String, Result> getPlayerGameResults() {
+        return gameResults.keySet().stream()
+                .collect(Collectors.toMap(Participant::getName, gameResults::get,
+                        (newValue, oldValue) -> oldValue, LinkedHashMap::new));
     }
 }

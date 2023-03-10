@@ -4,7 +4,6 @@ import domain.CardShuffler;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.ParticipantMoney;
 import domain.participant.Player;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class GameManagerTest {
 
-    private Dealer dealer;
+    private Participant dealer;
     private GameManager gameManager;
     private Map<Participant, BettingMoney> playerInfo;
 

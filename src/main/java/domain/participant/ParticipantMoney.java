@@ -17,12 +17,12 @@ public class ParticipantMoney {
         this.participantMoneys = participantMoneys;
     }
 
-    public static ParticipantMoney create(final Dealer dealer, final Map<Participant, BettingMoney> playerInfo) {
+    public static ParticipantMoney create(final Participant dealer, final Map<Participant, BettingMoney> playerInfo) {
         final Map<Participant, BettingMoney> participantBettingInfo = makeParticipantMoneys(dealer, playerInfo);
         return new ParticipantMoney(participantBettingInfo);
     }
 
-    private static Map<Participant, BettingMoney> makeParticipantMoneys(final Dealer dealer,
+    private static Map<Participant, BettingMoney> makeParticipantMoneys(final Participant dealer,
                                                                         final Map<Participant, BettingMoney> players) {
         final Map<Participant, BettingMoney> participantMoneys = new LinkedHashMap<>();
         participantMoneys.put(dealer, BettingMoney.zero());

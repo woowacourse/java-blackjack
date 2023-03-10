@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
 import domain.game.Result;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import view.message.GameResultMessage;
@@ -32,7 +31,7 @@ public final class OutputView {
         System.out.println(message);
     }
 
-    public void printParticipantMessage(final Dealer dealer, final List<Player> players) {
+    public void printParticipantMessage(final Participant dealer, final List<Player> players) {
         final String participantNamesMessage = makeParticipantNamesMessage(players);
         final String drawMessage = String.format(System.lineSeparator() +
                 DRAW_MESSAGE_FORMAT, dealer.getName(), participantNamesMessage);

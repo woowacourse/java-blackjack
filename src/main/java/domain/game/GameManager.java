@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.CardShuffler;
 import domain.card.Deck;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.ParticipantMoney;
 
@@ -19,13 +18,13 @@ public final class GameManager {
         this.participantMoney = participantMoney;
     }
 
-    public static GameManager create(final Dealer dealer,
+    public static GameManager create(final Participant dealer,
                                      final Map<Participant, BettingMoney> playerInfo,
                                      final CardShuffler cardShuffler) {
         return new GameManager(Deck.create(cardShuffler), ParticipantMoney.create(dealer, playerInfo));
     }
 
-    public ParticipantMoney handFirstCards(final Dealer dealer) {
+    public ParticipantMoney handFirstCards(final Participant dealer) {
         final Map<Participant, BettingMoney> participantMoneyInfo = participantMoney.getParticipantMoney();
         participantMoneyInfo.keySet()
                 .forEach(participant -> participant.addCard(deck.draw(), deck.draw()));
@@ -36,7 +35,7 @@ public final class GameManager {
         participant.addCard(deck.draw());
     }
 
-    public ParticipantMoney getFirstBettingResult(final Dealer dealer,
+    public ParticipantMoney getFirstBettingResult(final Participant dealer,
                                                   final ParticipantMoney participantMoneyInfo) {
         final Map<Participant, BettingMoney> playerMoney =
                 new LinkedHashMap<>(participantMoneyInfo.getPlayerMoney());
@@ -44,7 +43,7 @@ public final class GameManager {
         return ParticipantMoney.create(dealer, playerMoney);
     }
 
-    private BettingMoney getBettingMoney(final Dealer dealer, final Participant player, final BettingMoney money) {
+    private BettingMoney getBettingMoney(final Participant dealer, final Participant player, final BettingMoney money) {
         if (dealer.isBlackJack() && !player.isBlackJack()) {
             return BettingMoney.zero();
         }

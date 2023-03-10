@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParticipantMoneyTest {
 
-    private Dealer dealer;
+    private Participant dealer;
     private Map<Participant, BettingMoney> playerInfo;
 
     @BeforeEach

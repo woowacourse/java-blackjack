@@ -5,7 +5,6 @@ import domain.card.CardRandomShuffler;
 import domain.game.BettingMoney;
 import domain.game.GameManager;
 import domain.game.GameResult;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.ParticipantMoney;
 import domain.participant.Player;
@@ -30,7 +29,7 @@ public final class GameController {
     }
 
     public void start() {
-        final Dealer dealer = Participant.createDealer();
+        final Participant dealer = Participant.createDealer();
         final List<Player> players = getPlayers();
         final Map<Participant, BettingMoney> playerBettingInfo = getBettingMoneys(players);
         final GameManager gameManager = makeGameManager(dealer, playerBettingInfo);
@@ -68,18 +67,18 @@ public final class GameController {
         });
     }
 
-    private GameManager makeGameManager(final Dealer dealer, final Map<Participant, BettingMoney> playerBettingInfo) {
+    private GameManager makeGameManager(final Participant dealer, final Map<Participant, BettingMoney> playerBettingInfo) {
         final CardRandomShuffler cardRandomShuffler = new CardRandomShuffler();
         return GameManager.create(dealer, playerBettingInfo, cardRandomShuffler);
     }
 
-    private void printParticipantCards(final Dealer dealer, final List<Player> players) {
+    private void printParticipantCards(final Participant dealer, final List<Player> players) {
         outputView.printParticipantMessage(dealer, players);
         printDealerCard(dealer);
         printPlayerCards(players);
     }
 
-    private void printDealerCard(final Dealer dealer) {
+    private void printDealerCard(final Participant dealer) {
         final Card dealerFirstCard = dealer.getFirstCard();
         outputView.printDealerCard(dealer.getName(), dealerFirstCard);
     }
@@ -136,7 +135,7 @@ public final class GameController {
         return isBlackJack;
     }
 
-    private void handleDealerCards(final Dealer dealer, final GameManager gameManager) {
+    private void handleDealerCards(final Participant dealer, final GameManager gameManager) {
         OutputView.print(System.lineSeparator().trim());
         while (dealer.canGiveCard()) {
             gameManager.handCard(dealer);
@@ -144,7 +143,7 @@ public final class GameController {
         }
     }
 
-    private void printGameResult(final Dealer dealer, final List<Player> players) {
+    private void printGameResult(final Participant dealer, final List<Player> players) {
         printParticipantCardResult(dealer);
         players.forEach(this::printParticipantCardResult);
     }
@@ -153,7 +152,7 @@ public final class GameController {
         outputView.printCardResult(participant.getName(), participant.getHand(), participant.calculateScore());
     }
 
-    private void printFinalGameResult(final Dealer dealer, final List<Player> players) {
+    private void printFinalGameResult(final Participant dealer, final List<Player> players) {
         final GameResult gameResult = GameResult.create(dealer, players);
         outputView.printFinalGameResult(dealer.getName(), gameResult.getPlayerGameResults());
     }

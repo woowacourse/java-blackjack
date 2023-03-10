@@ -6,7 +6,7 @@ import domain.card.Score;
 import java.util.List;
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
 
     protected static final ParticipantName DEALER_NAME = ParticipantName.create("딜러");
     protected final ParticipantCard hand;
@@ -17,7 +17,7 @@ public class Participant {
         this.hand = ParticipantCard.create();
     }
 
-    public static Dealer createDealer() {
+    public static Participant createDealer() {
         return Dealer.create();
     }
 
@@ -39,6 +39,10 @@ public class Participant {
     public final boolean isBlackJack() {
         return hand.isBlackJack();
     }
+
+    public abstract Card getFirstCard();
+
+    public abstract boolean canGiveCard();
 
     public final String getName() {
         return name.getName();

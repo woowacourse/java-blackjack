@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +18,7 @@ class GameResultTest {
         // given
         final List<String> playerName = List.of("a", "b", "c");
         final Players players = Players.create(playerName);
-        final Dealer dealer = Participant.createDealer();
+        final Participant dealer = Participant.createDealer();
 
         // when, then
         final GameResult gameResult = assertDoesNotThrow(() ->

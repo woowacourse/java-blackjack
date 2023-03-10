@@ -11,7 +11,7 @@ class ParticipantTest {
     @Test
     @DisplayName("createDealer()는 호출하면, 딜러를 생성한다")
     void createDealer_whenCall_thenSuccess() {
-        final Dealer dealer = assertDoesNotThrow(Participant::createDealer);
+        final Participant dealer = assertDoesNotThrow(Participant::createDealer);
         assertThat(dealer)
                 .isExactlyInstanceOf(Dealer.class);
     }
