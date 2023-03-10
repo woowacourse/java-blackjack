@@ -26,6 +26,7 @@ public class DealerResult {
         }
         return Result.PUSH;
     }
+
     public Map<Result, Integer> getDealerResult() {
         return Collections.unmodifiableMap(dealerResult);
     }
