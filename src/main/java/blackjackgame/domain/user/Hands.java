@@ -1,5 +1,6 @@
 package blackjackgame.domain.user;
 
+import blackjackgame.domain.Denomination;
 import blackjackgame.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,19 @@ public class Hands {
 
     public void add(List<Card> receivedCards) {
         cards.addAll(receivedCards);
+    }
+
+    public int countOfAce() {
+        return (int) cards.stream()
+                .map(Card::getScore)
+                .filter(score -> score == Denomination.ACE.getScore())
+                .count();
+    }
+
+    public int sum() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public int size() {

@@ -1,9 +1,6 @@
 package blackjackgame.domain.user;
 
-import blackjackgame.domain.card.Card;
 import blackjackgame.domain.Denomination;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Score {
     private static final int BLACKJACK = 21;
@@ -18,32 +15,13 @@ public class Score {
     }
 
     public void setScore(Hands hands) {
-        List<Integer> numbers = convertCardsToNumbers(hands.getCards());
-        int aceCount = countOfAce(numbers);
-        int totalScore = sum(numbers);
+        int aceCount = hands.countOfAce();
+        int totalScore = hands.sum();
 
         if (totalScore > BLACKJACK) {
             totalScore = calculateAceAsOne(aceCount, totalScore);
         }
         score = totalScore;
-    }
-
-    private List<Integer> convertCardsToNumbers(List<Card> cards) {
-        return cards.stream()
-                .map(Card::getScore)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private int countOfAce(List<Integer> numbers) {
-        return (int) numbers.stream()
-                .filter(number -> number == Denomination.ACE.getScore())
-                .count();
-    }
-
-    private int sum(List<Integer> numbers) {
-        return numbers.stream()
-                .mapToInt(number -> number)
-                .sum();
     }
 
     private int calculateAceAsOne(int aceCount, int score) {

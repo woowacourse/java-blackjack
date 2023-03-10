@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.CloverCard;
+import blackjackgame.domain.card.DiamondCard;
+import blackjackgame.domain.card.HeartCard;
 import blackjackgame.domain.card.SpadeCard;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +51,29 @@ class HandsTest {
     static Stream<List<Card>> twoCardsThreeCardsFourCards() {
         return Stream.of(
                 new ArrayList<>(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_SEVEN)),
-                new ArrayList<>(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_EIGHT)),
-                new ArrayList<>(List.of(CloverCard.CLOVER_ACE, CloverCard.CLOVER_ACE, CloverCard.CLOVER_TEN, CloverCard.CLOVER_NINE))
+                new ArrayList<>(List.of(CloverCard.CLOVER_ACE, DiamondCard.DIAMOND_ACE, CloverCard.CLOVER_EIGHT)),
+                new ArrayList<>(List.of(CloverCard.CLOVER_ACE, DiamondCard.DIAMOND_ACE, CloverCard.CLOVER_TEN,
+                        HeartCard.HEART_ACE))
         );
     }
 
+    @DisplayName("패에 있는 에이스 카드의 개수를 반환한다.")
+    @Test
+    void countOfAce_fourAce() {
+        Hands hands = new Hands();
+
+        hands.add(List.of(CloverCard.CLOVER_ACE, DiamondCard.DIAMOND_ACE, CloverCard.CLOVER_EIGHT));
+
+        assertThat(hands.countOfAce()).isEqualTo(2);
+    }
+
+    @DisplayName("에이스를 11로 계산하며 패에 있는 카드의 숫자 합을 구한다.")
+    @Test
+    void sum_calculateAceAsEleven() {
+        Hands hands = new Hands();
+
+        hands.add(List.of(CloverCard.CLOVER_ACE, DiamondCard.DIAMOND_ACE, CloverCard.CLOVER_EIGHT));
+
+        assertThat(hands.sum()).isEqualTo(30);
+    }
 }
