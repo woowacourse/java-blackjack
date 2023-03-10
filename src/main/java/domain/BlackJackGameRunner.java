@@ -1,10 +1,12 @@
 package domain;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+
+import domain.result.DealerResult;
+import domain.result.PlayerResult;
+import domain.result.Results;
 
 public class BlackJackGameRunner {
 
@@ -14,6 +16,7 @@ public class BlackJackGameRunner {
     private final Dealer dealer;
     private final List<Player> players;
     private int playerPassedHitStageCount;
+    private Results results;
 
     private BlackJackGameRunner(final CardGenerator cardGenerator, final Dealer dealer, final List<Player> players) {
         this.cardGenerator = cardGenerator;
@@ -90,19 +93,13 @@ public class BlackJackGameRunner {
         player.addCard(cardGenerator.generate());
     }
 
-    public Result makeDealerResult() {
-        final List<Score> scores = players.stream()
-            .map(Player::getScore)
-            .collect(Collectors.toList());
-        return Result.decide(dealer.getScore(), scores);
+    public DealerResult getDealerResults() {
+        results = Results.of(dealer, players);
+        return results.getDealerResult();
     }
 
-    public Map<Player, Result> makePlayersResult() {
-        Map<Player, Result> results = new LinkedHashMap<>();
-        for (Player player : players) {
-            results.put(player, Result.decide(player.getScore(), dealer.getScore()));
-        }
-        return results;
+    public List<PlayerResult> getPlayerResults() {
+        return results.getPlayerResults();
     }
 
     public Dealer getDealer() {

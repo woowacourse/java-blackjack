@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import domain.result.DealerResult;
+import domain.result.PlayerResult;
+import domain.result.ResultState;
 import domain.card.Card;
 import domain.Player;
-import domain.Result;
 import domain.card.Denomination;
 import domain.card.Suit;
 
@@ -16,6 +18,7 @@ public class ViewRenderer {
 
 	private static final Map<Denomination, String> DENOMINATION_TO_STRING = new HashMap<>();
 	private static final Map<Suit, String> SUIT_TO_STRING = new HashMap<>();
+	private static final Map<ResultState, String> RESULT_TO_STRING = new HashMap<>();
 
 	static {
 		DENOMINATION_TO_STRING.put(Denomination.ACE, "A");
@@ -35,6 +38,9 @@ public class ViewRenderer {
 		SUIT_TO_STRING.put(Suit.HEART, "하트");
 		SUIT_TO_STRING.put(Suit.DIAMOND, "다이아몬드");
 		SUIT_TO_STRING.put(Suit.CLOVER, "클로버");
+		RESULT_TO_STRING.put(ResultState.WIN, "승");
+		RESULT_TO_STRING.put(ResultState.DRAW, "무");
+		RESULT_TO_STRING.put(ResultState.LOSS, "패");
 	}
 
 	private static String stringifyCard(Card card) {
@@ -58,41 +64,23 @@ public class ViewRenderer {
 			.collect(Collectors.toUnmodifiableList());
 	}
 
-	public static List<SingleResultDto> toSingleResults(Map<Player, Result> playerResults) {
+	public static List<SingleResultDto> toSingleResults(List<PlayerResult> playerPlayerResults) {
 		List<SingleResultDto> nameResults = new ArrayList<>();
-		for (Player player : playerResults.keySet()) {
-			SingleResultDto nameResult = new SingleResultDto(player.getName(),
-				changeIntoResult(playerResults.get(player)));
-			nameResults.add(nameResult);
+		for (PlayerResult playerResult : playerPlayerResults) {
+			nameResults.add(new SingleResultDto(playerResult.getName(), RESULT_TO_STRING.get(playerResult.getResultState())));
 		}
-		return  nameResults;
+		return nameResults;
 	}
 
-	private static String changeIntoResult(Result result) {
-		if (result.getVictory() > 0) {
-			return "승";
-		}
-		if (result.getDraw() > 0) {
-			return "무";
-		}
-		return "패";
+	public static MultiResultsDto toMultiResults(DealerResult result) {
+		return new MultiResultsDto(result.getName(), listify(result.getResult()));
 	}
 
-	public static MultiResultsDto toMultiResults(Player player, Result result) {
-		return new MultiResultsDto(player.getName(), listify(result));
-	}
-
-	private static List<String> listify(Result result) {
-		List<String> transformed = new ArrayList<>();
-		if (result.getVictory() > 0) {
-			transformed.add(result.getVictory() + "승");
-		}
-		if (result.getDraw() > 0) {
-			transformed.add(result.getDraw() + "무");
-		}
-		if (result.getDefeat() > 0) {
-			transformed.add(result.getDefeat() + "패");
-		}
-		return transformed;
+	private static List<String> listify(Map<ResultState, Integer> resultCounts) {
+		List<String> listified = new ArrayList<>();
+		resultCounts.keySet().stream()
+			.filter(state -> resultCounts.get(state) != 0)
+			.forEach(state -> listified.add(resultCounts.get(state) + RESULT_TO_STRING.get(state)));
+		return listified;
 	}
 }

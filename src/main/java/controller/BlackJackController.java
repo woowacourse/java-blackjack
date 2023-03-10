@@ -69,9 +69,9 @@ public class BlackJackController {
     }
 
     private void printResult() {
-        MultiResultsDto multiResults = ViewRenderer.toMultiResults(runner.getDealer(), runner.makeDealerResult());
+        MultiResultsDto multiResults = ViewRenderer.toMultiResults(runner.getDealerResults());
         OutputView.printMultiResult(multiResults);
-        List<SingleResultDto> singleResults = ViewRenderer.toSingleResults(runner.makePlayersResult());
+        List<SingleResultDto> singleResults = ViewRenderer.toSingleResults(runner.getPlayerResults());
         OutputView.printSingleResult(singleResults);
     }
 }
