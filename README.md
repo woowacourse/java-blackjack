@@ -20,22 +20,31 @@
 - [x] `Dealer`, `Players`를 가진다.
 - [ ] 게임을 진행한다.
   - [x] `Bank`에 `Player`의 배팅 금액을 저장한다.
+  - [ ] 딜러와 참가자들에게 2장의 카드를 나눠준다.
 
 ---
 
 ## Participant
 ### Participant
 - [x] `Hand`와 `Money`를 가진다.
+- [x] 카드를 한 장 받는다.
+- [x] 돈을 받는다.
+- [x] 자신의 총점을 구한다.
+- [x] 자신이 버스트인지 확인한다.
+- [x] 자신이 블랙잭인지 확인한다.
 
 ### Dealer
+- [ ] `Participant`를 상속한다.
 - [x] 딜러라는 이름을 가진다.
 - [x] `Bank`와 `Deck`을 가진다.
+- [ ] `Player`에게 카드를 한 장 준다. 
 
 ### Players
 - [x] `Player`들을 가진다.
   - [x] 최소 2명에서 최대 8명만 가질 수 있다.
 
 ### Player
+- [ ] `Participant`를 상속한다.
 - [x] 이름을 가진다.
 
 ---
