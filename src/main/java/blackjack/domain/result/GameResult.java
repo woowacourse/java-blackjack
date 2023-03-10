@@ -6,7 +6,7 @@ import blackjack.domain.player.Player;
 import java.util.*;
 
 public class GameResult {
-    private final Map<Player, ResultMatcher> playerGameResults = new LinkedHashMap<>();
+    private final Map<String, ResultMatcher> playerGameResults = new LinkedHashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
         calculatePlayersScore(players, dealer);
@@ -14,7 +14,7 @@ public class GameResult {
 
     private void calculatePlayersScore(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            playerGameResults.put(player, matchResult(player, dealer));
+            playerGameResults.put(player.getPlayerName(), matchResult(player, dealer));
         }
     }
 
@@ -22,11 +22,11 @@ public class GameResult {
         return ResultMatcher.calculateResult(player.getTotalScore(), dealer.getTotalScore());
     }
 
-    public EnumMap<ResultMatcher, Integer> calculateDealerScore(Map<Player, ResultMatcher> playerGameResults) {
+    public EnumMap<ResultMatcher, Integer> calculateDealerScore(Map<String, ResultMatcher> playerGameResults) {
         EnumMap<ResultMatcher, Integer> dealerScore = new EnumMap<>(ResultMatcher.class);
 
         Arrays.stream(ResultMatcher.values())
-                .forEach(resultMatcher->dealerScore.put(resultMatcher, 0));
+                .forEach(resultMatcher -> dealerScore.put(resultMatcher, 0));
         for (ResultMatcher playerResult : playerGameResults.values()) {
             ResultMatcher dealerResult = ResultMatcher.ofOppositeResult(playerResult);
             dealerScore.put(dealerResult, dealerScore.get(dealerResult) + 1);
@@ -34,7 +34,7 @@ public class GameResult {
         return dealerScore;
     }
 
-    public Map<Player, ResultMatcher> getPlayerGameResults() {
+    public Map<String, ResultMatcher> getPlayerGameResults() {
         return this.playerGameResults;
     }
 }

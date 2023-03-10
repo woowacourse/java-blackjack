@@ -42,17 +42,17 @@ public class OutputView {
         }
     }
 
-    public static void printScore(Map<Player, ResultMatcher> playersScore, EnumMap<ResultMatcher, Integer> dealerScore) {
+    public static void printScore(Map<String, ResultMatcher> playersScore, EnumMap<ResultMatcher, Integer> dealerScore) {
         System.out.println("\n## 최종 승패");
         System.out.print("딜러: ");
         for (Map.Entry<ResultMatcher, Integer> score : dealerScore.entrySet()) {
             if (score.getValue() > 0) {
-                System.out.print(score.getKey().getResult() + score.getValue() + " ");
+                System.out.print(score.getValue() + score.getKey().getResult() + " ");
             }
         }
         System.out.println();
-        for (Map.Entry<Player, ResultMatcher> score : playersScore.entrySet()) {
-            System.out.println(score.getKey().getPlayerName() + ": " + score.getValue().getResult());
+        for (Map.Entry<String, ResultMatcher> score : playersScore.entrySet()) {
+            System.out.println(score.getKey() + ": " + score.getValue().getResult());
         }
     }
 
