@@ -26,7 +26,7 @@ public enum Result {
                 .orElseThrow(() -> new IllegalArgumentException());
     }
 
-    public double getPrizeMultiplier() {
-        return prizeMultiplier;
+    public int getProfit(final int stake) {
+        return (int) (this.prizeMultiplier * stake);
     }
 }

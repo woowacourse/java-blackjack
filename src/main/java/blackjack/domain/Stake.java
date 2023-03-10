@@ -27,4 +27,8 @@ public class Stake {
             throw new IllegalArgumentException("상금은 10배수로 나누어 떨어져야 합니다.");
         }
     }
+
+    public int getStake() {
+        return value;
+    }
 }
