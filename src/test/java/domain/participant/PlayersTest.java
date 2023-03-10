@@ -1,10 +1,14 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.collection;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Number;
+import domain.card.Suit;
 import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
@@ -175,7 +179,6 @@ class PlayersTest {
             //when
             players.handOutCardToCurrentPlayer(new Card(Suit.SPADE, Number.ACE));
             final List<Card> hand = players.getPlayers().get(0).hand();
-
 
             //then
             assertThat(hand).hasSize(3).contains(new Card(Suit.SPADE, Number.ACE));

@@ -1,8 +1,8 @@
 package controller;
 
-import domain.Card;
-import domain.Number;
-import domain.Participant;
+import domain.card.Card;
+import domain.card.Number;
+import domain.participant.Participant;
 import java.util.List;
 import java.util.stream.Collectors;
 

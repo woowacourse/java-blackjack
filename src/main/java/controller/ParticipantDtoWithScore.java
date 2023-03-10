@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Participant;
+import domain.participant.Participant;
 import java.util.List;
 
 public class ParticipantDtoWithScore {

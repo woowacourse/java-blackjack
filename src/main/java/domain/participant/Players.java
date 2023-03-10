@@ -1,7 +1,10 @@
-package domain;
+package domain.participant;
 
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
+import domain.GameOutcome;
+import domain.card.Card;
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +57,7 @@ public class Players {
                 .collect(toUnmodifiableMap(Player::name, player -> calculateRevenues(player, dealerScore)));
     }
 
-    private static int calculateRevenues(final Player player, final int dealerScore) {
+    private int calculateRevenues(Player player, int dealerScore) {
         return GameOutcome.of(player.score(), dealerScore, player.hand().size())
                 .calculateRevenue(player.bettingMoney());
     }

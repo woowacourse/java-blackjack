@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
 import java.util.List;
 
 public class Player extends Participant {
@@ -33,4 +34,6 @@ public class Player extends Participant {
     public int bettingMoney() {
         return bettingMoney.value();
     }
+
+
 }

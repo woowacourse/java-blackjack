@@ -3,12 +3,12 @@ package controller;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import domain.BlackjackGame;
-import domain.Decision;
-import domain.Name;
-import domain.Participant;
-import domain.Player;
-import domain.Players;
-import domain.RandomShuffleStrategy;
+import domain.card.RandomShuffleStrategy;
+import domain.participant.Decision;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.InputView;

@@ -19,8 +19,6 @@ public class ListStudy {
         assertThat(values.contains("first")).isTrue();
         assertThat(values.remove(0)).isEqualTo("first");
         assertThat(values.size()).isEqualTo(2);
-
-        values.forEach(System.out::println);
     }
 
     @Test
