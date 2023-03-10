@@ -1,11 +1,19 @@
 package domain;
 
+import java.util.function.IntUnaryOperator;
+
 public enum PlayerOutcome {
-    BLACKJACK,
-    WIN,
-    DRAW,
-    LOSS,
+    BLACKJACK(amount -> (int) (1.5 * amount)),
+    WIN(amount -> amount),
+    DRAW(amount -> 0),
+    LOSS(amount -> -amount),
     ;
+
+    private final IntUnaryOperator earningEquation;
+
+    PlayerOutcome(final IntUnaryOperator earningEquation) {
+        this.earningEquation = earningEquation;
+    }
 
     public static PlayerOutcome of(Hand playerHand, Hand dealerHand) {
         if (playerHand.isBlackjack() && !dealerHand.isBlackjack()) {
@@ -27,5 +35,9 @@ public enum PlayerOutcome {
             return DRAW;
         }
         return LOSS;
+    }
+
+    public int calculateEarning(final int bettingAmount) {
+        return earningEquation.applyAsInt(bettingAmount);
     }
 }

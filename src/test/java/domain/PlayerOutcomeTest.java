@@ -1,9 +1,9 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerOutcomeTest {
     @Nested
@@ -156,6 +156,61 @@ class PlayerOutcomeTest {
 
             //then
             assertThat(actual).isEqualTo(PlayerOutcome.DRAW);
+        }
+    }
+
+    @Nested
+    class 결과에따라다른수익률 {
+        @Test
+        void should_250퍼센트수익률_when_BLACKJACK이면() {
+            // given
+            int bettingAmount = 100;
+            int expected = 150;
+
+            // when
+            int actual = PlayerOutcome.BLACKJACK.calculateEarning(100);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void should_200퍼센트수익률_when_WIN이면() {
+            // given
+            int bettingAmount = 100;
+            int expected = 100;
+
+            // when
+            int actual = PlayerOutcome.WIN.calculateEarning(100);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void should_돈이그대로이다_when_DRAW이면() {
+            // given
+            int bettingAmount = 100;
+            int expected = 0;
+
+            // when
+            int actual = PlayerOutcome.DRAW.calculateEarning(100);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void should_모두잃는다_when_LOSS이면() {
+            // given
+            int bettingAmount = 100;
+            int expected = -100;
+
+            // when
+            int actual = PlayerOutcome.LOSS.calculateEarning(100);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
         }
     }
 }
