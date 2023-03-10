@@ -6,6 +6,8 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BLACK_JACK_NUMBER = 21;
+
     private final Hand hand;
 
     public Participant(final Hand hand) {
@@ -22,5 +24,12 @@ public abstract class Participant {
 
     public int getScore() {
         return hand.score();
+    }
+
+    public boolean isBlackJack() {
+        if (getCards().size() == 2 && getScore() == BLACK_JACK_NUMBER) {
+            return true;
+        }
+        return false;
     }
 }
