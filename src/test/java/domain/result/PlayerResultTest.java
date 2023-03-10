@@ -19,7 +19,7 @@ class PlayerResultTest {
 		Player score19Player = getScore19Player();
 
 		PlayerResult winResult = PlayerResult.decide(score21Player, score19Player);
-		PlayerResult lossResult = PlayerResult.decide(score21Player, score19Player);
+		PlayerResult lossResult = PlayerResult.decide(score19Player, score21Player);
 
 		Assertions.assertThat(winResult.getResultState()).isEqualTo(ResultState.WIN);
 		Assertions.assertThat(lossResult.getResultState()).isEqualTo(ResultState.LOSS);
