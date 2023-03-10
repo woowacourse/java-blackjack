@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static domain.GameOutcome.LOSE;
-import static domain.GameOutcome.WIN;
+import static domain.PlayerOutcome.LOSE;
+import static domain.PlayerOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -32,7 +32,7 @@ class BlackjackGameTest {
             });
 
             //when
-            Map<String, GameOutcome> outcome = blackjackGame.getPlayersOutcome();
+            Map<String, PlayerOutcome> outcome = blackjackGame.getPlayersOutcome();
 
             //then
             assertAll(

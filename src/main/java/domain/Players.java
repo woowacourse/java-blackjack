@@ -51,7 +51,7 @@ public class Players {// TODO: 2023/03/07 Player를 copy 해서 내보내고 싶
         getPlayerToDecide().stand();
     }
 
-    public Map<String, GameOutcome> computeWinLoss(int dealerScore) {
+    public Map<String, PlayerOutcome> computeWinLoss(int dealerScore) {
         return players.stream()
                       .collect(toUnmodifiableMap(Player::name
                               , player -> player.computeWinLoss(dealerScore)));

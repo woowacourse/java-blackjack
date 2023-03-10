@@ -2,7 +2,7 @@ package view;
 
 import controller.HandDto;
 import controller.HandScoreDto;
-import domain.GameOutcome;
+import domain.PlayerOutcome;
 
 import java.util.List;
 import java.util.Map;
@@ -68,20 +68,20 @@ public class OutputView {
         return String.format("%s - 결과: %d", generateCardsInfo(name, cards), score);
     }
 
-    public void printWinLossInfo(Map<String, GameOutcome> playerOutcomes) {
+    public void printWinLossInfo(Map<String, PlayerOutcome> playerOutcomes) {
         System.out.println("## 최종 승패");
-        Map<GameOutcome, Long> dealerOutcome = generateDealerOutcome(playerOutcomes);
-        printDealerOutcome(dealerOutcome);
-        playerOutcomes.forEach((name, outcome) -> System.out.println(name + ": " + outcome.value()));
+//        Map<PlayerOutcome, Long> dealerOutcome = generateDealerOutcome(playerOutcomes);
+//        printDealerOutcome(dealerOutcome);
+//        playerOutcomes.forEach((name, outcome) -> System.out.println(name + ": " + outcome.value()));
     }
 
-    private Map<GameOutcome, Long> generateDealerOutcome(Map<String, GameOutcome> playerOutcomes) {
-        return playerOutcomes.values()
-                             .stream()
-                             .collect(groupingBy(GameOutcome::oppositeOutcome, counting()));
-    }
+//    private Map<PlayerOutcome, Long> generateDealerOutcome(Map<String, PlayerOutcome> playerOutcomes) {
+//        return playerOutcomes.values()
+//                             .stream()
+//                             .collect(groupingBy(PlayerOutcome::oppositeOutcome, counting()));
+//    }
 
-    private void printDealerOutcome(Map<GameOutcome, Long> dealerOutcome) {
+    private void printDealerOutcome(Map<PlayerOutcome, Long> dealerOutcome) {
         System.out.print("딜러:");
         dealerOutcome.forEach((outcome, count) -> System.out.print(" " + count + outcome.value()));
         System.out.println();
