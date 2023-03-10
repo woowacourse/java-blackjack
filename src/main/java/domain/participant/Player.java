@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.BetAmount;
-import domain.card.Card;
 
 public class Player extends Participant {
 
@@ -36,22 +35,11 @@ public class Player extends Participant {
         }
     }
 
-    @Override
-    public boolean canHit() {
-        throw new UnsupportedOperationException();
-    }
 
-    @Override
-    public Card getCardWithInvisible() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void betPlayer(int betMoney) {
         this.betAmount = BetAmount.from(betMoney);
     }
 
-    @Override
     public int getBetAmount() {
         return this.betAmount.getMoney();
     }

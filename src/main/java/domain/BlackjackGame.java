@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Deck;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -45,9 +46,9 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    public Map<Participant, Integer> getBettingResult() {
-        Map<Participant, Integer> betResult = new LinkedHashMap<>();
-        for (Participant player : participants.getPlayers()) {
+    public Map<Player, Integer> getBettingResult() {
+        Map<Player, Integer> betResult = new LinkedHashMap<>();
+        for (Player player : participants.getPlayers()) {
             PlayerGameResult playerGameResult = getPlayerGameResult(player);
             int reward = playerGameResult.calculateRatio(player.getBetAmount());
             betResult.put(player, reward);
@@ -56,7 +57,7 @@ public class BlackjackGame {
         return new LinkedHashMap<>(betResult);
     }
 
-    private PlayerGameResult getPlayerGameResult(Participant player) {
+    private PlayerGameResult getPlayerGameResult(Player player) {
         if (isPlayerBlackjack(player)) {
             return PlayerGameResult.BLACKJACK;
         }
@@ -69,25 +70,25 @@ public class BlackjackGame {
         return PlayerGameResult.LOSE;
     }
 
-    private boolean isPlayerBlackjack(Participant player) {
+    private boolean isPlayerBlackjack(Player player) {
         return player.isBlackjack() && !participants.isDealerBlackjack();
     }
 
-    private boolean isPlayerWin(Participant player) {
+    private boolean isPlayerWin(Player player) {
         return (player.calculateScore() > participants.getDealerScore() && !player.isBust())
                 || participants.isDealerBust();
     }
 
-    private boolean isDraw(Participant player) {
+    private boolean isDraw(Player player) {
         return player.calculateScore() == participants.getDealerScore();
     }
 
 
-    public Participant getDealer() {
+    public Dealer getDealer() {
         return participants.getDealer();
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return participants.getPlayers();
     }
 }

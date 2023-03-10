@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.participant.Participant;
+import domain.participant.Player;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -34,18 +34,18 @@ public class BlackjackController {
     }
 
     private void initBetting(BlackjackGame blackjackGame) {
-        List<Participant> players = blackjackGame.getPlayers();
-        for (Participant participant : players) {
-            betEachPlayer(blackjackGame, participant);
+        List<Player> players = blackjackGame.getPlayers();
+        for (Player player : players) {
+            betEachPlayer(blackjackGame, player);
         }
     }
 
-    private void betEachPlayer(BlackjackGame blackjackGame, Participant participant) {
+    private void betEachPlayer(BlackjackGame blackjackGame, Player player) {
         try {
-            participant.betPlayer(InputView.readBetMoney(participant));
+            player.betPlayer(InputView.readBetMoney(player));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            betEachPlayer(blackjackGame, participant);
+            betEachPlayer(blackjackGame, player);
         }
     }
 
@@ -59,20 +59,20 @@ public class BlackjackController {
     }
 
     public void runPlayersTurn(BlackjackGame blackjackGame) {
-        List<Participant> players = blackjackGame.getPlayers();
-        for (Participant player : players) {
+        List<Player> players = blackjackGame.getPlayers();
+        for (Player player : players) {
             runPlayerTurn(blackjackGame, player);
         }
     }
 
-    private void runPlayerTurn(BlackjackGame blackjackGame, Participant player) {
+    private void runPlayerTurn(BlackjackGame blackjackGame, Player player) {
         while (!player.isBust() && isCommandHit(player)) {
             blackjackGame.giveCardToParticipant(player);
             OutputView.printPlayerCard(player);
         }
     }
 
-    private boolean isCommandHit(Participant player) {
+    private boolean isCommandHit(Player player) {
         try {
             String targetCommand = InputView.readHit(player);
             return HitCommand.HIT == HitCommand.find(targetCommand);

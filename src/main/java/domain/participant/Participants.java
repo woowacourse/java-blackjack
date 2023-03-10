@@ -1,11 +1,8 @@
 package domain.participant;
 
-import domain.PlayerGameResult;
 import domain.card.Deck;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -15,10 +12,10 @@ public class Participants {
     private static final String ERROR_PLAYER_COUNT = "[ERROR] 플레이어의 수는 1 ~ 7 이내여야 합니다";
     private static final String ERROR_DUPLICATED_NAME = "[ERROR] 플레이어의 이름은 중복될 수 없습니다";
 
-    private final Participant dealer;
-    private final List<Participant> players;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(List<Participant> players) {
+    private Participants(List<Player> players) {
         this.dealer = new Dealer();
         this.players = players;
     }
@@ -26,7 +23,7 @@ public class Participants {
     public static Participants of(List<String> playersName) {
         validate(playersName);
 
-        List<Participant> players = playersName.stream()
+        List<Player> players = playersName.stream()
                 .map(Player::from)
                 .collect(Collectors.toList());
 
@@ -80,11 +77,11 @@ public class Participants {
         return dealer.isBlackjack();
     }
 
-    public Participant getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

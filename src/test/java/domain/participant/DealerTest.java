@@ -95,6 +95,4 @@ class DealerTest {
         // then
         assertThat(dealer.getCardWithInvisible()).isEqualTo(new Card(Denomination.FIVE, Suit.CLUB));
     }
-
-
 }
