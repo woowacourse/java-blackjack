@@ -94,4 +94,4 @@
 - [x] 돈을 지출할 수 있다.
 
 # 궁금했던 점
-1. `Dealer`의 `settingCards(Players players)`를 구현하기 위해 `players.distributeHands()`를 구현했습니다. 또, `players.distributeHands()`를 구현하기 위해 `player.receiveHand(Card card)`를 구현했습니다. 그러다보니 추상화 계층 하위에 있는 메서드를 모두 테스트해야하나? 라는 고민이 생겼습니다.
+1. `Dealer`의 `settingCards(Players players)`를 구현하기 위해 `players.distributeHands()`를 구현했습니다. 또, `players.distributeHands()`를 구현하기 위해 `player.receiveHand(Card card)`를 구현했습니다. 그러다보니 추상화 계층 하위에 있는 메서드를 모두 테스트해야하나? 라는 고민이 생겼습니다. 추상화 계층 상위에 있는 메서드 하나만을 테스트하면 되는 것인지, 혹은 하위 계층에 있는 작은 단위의 메서드부터 상위까지 모든 메서드를 테스트 해야 하는지 궁금합니다! 
