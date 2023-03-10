@@ -5,7 +5,6 @@ import blackjack.dto.ResultDto;
 import blackjack.model.BetAmount;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.*;
-import blackjack.model.result.Result;
 import blackjack.model.state.DealerInitialState;
 import blackjack.model.state.PlayerInitialState;
 import blackjack.view.InputView;
@@ -77,7 +76,7 @@ public class GameController {
 
     private void finish(Participants participants) {
         printFinalCardStatus(participants);
-        printProfitResult(participants.getDealer(), participants.getPlayerProfitResult());
+        printProfitResult(participants.getProfitResult());
     }
 
     private void printFinalCardStatus(Participants participants) {
@@ -88,19 +87,11 @@ public class GameController {
         }
     }
 
-    private void printProfitResult(Dealer dealer, Map<Player, Integer> profitResult) {
+    private void printProfitResult(Map<Participant, Integer> profitResult) {
         outputView.printProfitResultMessage();
-
-        int dealerProfit = sumAndReversePlayerProfits(profitResult);
-        outputView.printProfitResult(ResultDto.of(dealer, dealerProfit));
-
-        for (Map.Entry<Player, Integer> entry : profitResult.entrySet()) {
+        for (Map.Entry<Participant, Integer> entry : profitResult.entrySet()) {
             outputView.printProfitResult(ResultDto.of(entry.getKey(), entry.getValue()));
         }
-    }
-
-    private int sumAndReversePlayerProfits(Map<Player, Integer> profitResult) {
-        return -1 * profitResult.values().stream().mapToInt(value -> value).sum();
     }
 
 }

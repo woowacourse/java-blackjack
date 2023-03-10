@@ -4,7 +4,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.result.Result;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,13 +83,22 @@ public class Participants {
         return hitCount;
     }
 
-    public Map<Player, Integer> getPlayerProfitResult() {
-        Map<Player, Integer> playerProfitResult = new HashMap<>();
+    public Map<Participant, Integer> getProfitResult() {
+        Map<Participant, Integer> profitResult = new LinkedHashMap<>();
+        profitResult.put(dealer, 0);
         for (Player player : players) {
             Result result = Result.checkPlayerResult(player, dealer);
-            playerProfitResult.put(player, player.getProfit(result));
+            profitResult.put(player, player.getProfit(result));
         }
-        return playerProfitResult;
+        int dealerProfit = sumAndReversePlayerProfits(profitResult);
+        profitResult.replace(dealer, dealerProfit);
+        return profitResult;
+    }
+
+    private int sumAndReversePlayerProfits(Map<Participant, Integer> playerProfitResult) {
+        return -1 * playerProfitResult.values().stream()
+                .mapToInt(value -> value)
+                .sum();
     }
 
 }
