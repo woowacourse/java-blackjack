@@ -30,7 +30,11 @@ public class Purse {
 
     public void calculateMoney(Player player, Dealer dealer) {
         final Money money = getMoney(player);
-        if (player.isBlackJack() && dealer.isNotBlackJack()) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            return;
+        }
+
+        if (player.isBlackJack()) {
             purses.put(player, money.blackJack());
         }
     }

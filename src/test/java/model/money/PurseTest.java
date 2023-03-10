@@ -52,7 +52,7 @@ class PurseTest {
     }
 
     @Test
-    @DisplayName("블랙잭이면 돈이 1.5배로 바뀐다.")
+    @DisplayName("플레이어와 블랙잭이면 돈이 1.5배로 바뀐다.")
     void whenBlackJack_thenChangeMultipleMoney() {
         // given
         purse.addMoney(bebe, new Money(10_000));
@@ -68,5 +68,24 @@ class PurseTest {
 
         // then
         assertThat(purse.getMoney(bebe)).isEqualTo(new Money(15_000));
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러 모두 블랙잭이면 돈을 돌려받는다.")
+    void whenDealerAndPlayerBothBlackJack_thenReturnMoney() {
+        // given
+        purse.addMoney(bebe, new Money(10_000));
+
+        bebe.receiveCard(DIAMOND_KING);
+        bebe.receiveCard(DIAMOND_ACE);
+
+        dealer.receiveCard(DIAMOND_JACK);
+        dealer.receiveCard(DIAMOND_ACE);
+
+        // when
+        purse.calculateMoney(bebe, dealer);
+
+        // then
+        assertThat(purse.getMoney(bebe)).isEqualTo(new Money(10_000));
     }
 }
