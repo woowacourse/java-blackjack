@@ -56,4 +56,13 @@ class ScoreTest {
         assertThat(firstScore.isGreaterThan(secondScore)).isEqualTo(isTrue);
     }
 
+    @Test
+    @DisplayName("같은 값을 가진 Score는 캐싱된 score가 반환된다.")
+    void createScoreWithCache() {
+        Score firstScore = Score.from(1);
+        Score secondScore = Score.from(1);
+
+        assertThat(firstScore).isSameAs(secondScore);
+    }
+
 }

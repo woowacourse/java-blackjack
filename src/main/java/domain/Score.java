@@ -1,9 +1,12 @@
 package domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Score {
 
+    private static final Map<Integer, Score> CACHE = new HashMap<>();
     public static final Score INITIAL_SCORE = Score.from(0);
     public static final Score MAX_SCORE = Score.from(21);
     private static final Score ACE_DECREASE = Score.from(10);
@@ -16,7 +19,7 @@ public class Score {
     }
 
     public static Score from(int value) {
-        return new Score(value);
+        return CACHE.computeIfAbsent(value, k -> new Score(value));
     }
 
     public Score add(Score other) {
