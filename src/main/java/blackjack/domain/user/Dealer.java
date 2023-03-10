@@ -19,6 +19,6 @@ public class Dealer extends User {
     }
 
     public boolean isUnderDrawLimit() {
-        return !getScore().isBigger(new Score(DRAW_LIMIT_SCORE));
+        return !getScore().isBigger(Score.from(DRAW_LIMIT_SCORE));
     }
 }
