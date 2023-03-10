@@ -16,16 +16,16 @@ class BettingTest {
         assertDoesNotThrow(() -> new Betting(1000));
     }
 
-    @DisplayName("배팅 금액은 0 ~ 30만원까지 입력받을 수 있다._성공")
+    @DisplayName("배팅 금액은 1 ~ 30만원까지 입력받을 수 있다._성공")
     @ParameterizedTest
-    @ValueSource(ints = {0, 300000})
+    @ValueSource(ints = {1, 300000})
     void Shuold_Success_When_InputBettingBetween0And300000(int betting) {
         assertDoesNotThrow(() -> new Betting(betting));
     }
 
-    @DisplayName("배팅 금액은 0 ~ 30만원까지 입력받을 수 있다._실패")
+    @DisplayName("배팅 금액은 1 ~ 30만원까지 입력받을 수 있다._실패")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 300001})
+    @ValueSource(ints = {0, 300001})
     void Shuold_ThrowException_When_InputBettingNotBetween0And300000(int betting) {
         Assertions.assertThatThrownBy(() -> new Betting(betting))
                 .isInstanceOf(IllegalArgumentException.class)
