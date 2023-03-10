@@ -33,4 +33,12 @@ public class GameResult {
     public Integer getChallengerRevenue(Player player) {
         return results.get(player);
     }
+
+    public Integer getDealerRevenue() {
+        int sum = 0;
+        for (Integer value : results.values()) {
+            sum += value;
+        }
+        return -sum;
+    }
 }
