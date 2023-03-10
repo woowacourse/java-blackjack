@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.util.Map;
 
 public final class BlackjackGame {
 
@@ -25,6 +26,20 @@ public final class BlackjackGame {
 
     public void drawDealer() {
         dealer.drawIfLowerOrEquals16();
+    }
+
+    public void dealOutMoney() {
+        Map<Player, Result> playersResult = players.compareTo(dealer.getHand());
+        Map<Player, Money> exchanges = dealer.exchange(playersResult);
+
+        players.dealOutMoney(exchanges);
+        dealer.receiveMoney(settle(dealer.totalBettingMoney(), exchanges));
+    }
+
+    private Money settle(final Money totalBettingMoney, final Map<Player, Money> exchanges) {
+        Money totalExchangedMoney = dealer.totalExchangedMoney(exchanges);
+
+        return totalBettingMoney.subtract(totalExchangedMoney);
     }
 
     public Dealer getDealer() {

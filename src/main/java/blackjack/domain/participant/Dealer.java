@@ -1,13 +1,16 @@
 package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.Bank;
 import blackjack.domain.Money;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public final class Dealer extends Participant {
@@ -54,9 +57,26 @@ public final class Dealer extends Participant {
     }
 
     public void drawIfLowerOrEquals16() {
-        while (this.totalScore() <= 16) {
+        while (this.totalScore() <= CAN_DRAW_SCORE) {
             this.receiveCard(deck.drawCard());
         }
+    }
+
+    public Map<Player, Money> exchange(final Map<Player, Result> playersResult) {
+        return playersResult.keySet().stream()
+                .collect(toMap(
+                        player -> player,
+                        player -> bank.exchange(player, playersResult.get(player))
+                ));
+    }
+
+    public Money totalBettingMoney() {
+        return bank.totalMoney();
+    }
+
+    public Money totalExchangedMoney(final Map<Player, Money> exchanges) {
+        Bank exchangedBank = new Bank(exchanges);
+        return exchangedBank.totalMoney();
     }
 
     public int getInitCardCount() {
@@ -72,7 +92,7 @@ public final class Dealer extends Participant {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public Bank getBank() {

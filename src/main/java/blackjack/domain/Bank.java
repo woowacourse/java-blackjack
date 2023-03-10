@@ -58,6 +58,13 @@ public final class Bank {
         return result == WIN && player.isBlackjack();
     }
 
+    public Money totalMoney() {
+        int sum = bank.values().stream()
+                .mapToInt(Money::getMoney)
+                .sum();
+        return new Money(sum);
+    }
+
     public Map<Player, Money> getBank() {
         return Collections.unmodifiableMap(bank);
     }
