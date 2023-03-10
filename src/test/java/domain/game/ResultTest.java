@@ -23,10 +23,10 @@ class ResultTest {
             final Dealer dealer = Dealer.create(20);
 
             //when
-            final Result result = Result.of(dealer, participant);
+            final ResultType resultType = ResultType.of(dealer, participant);
 
             //then
-            assertThat(result).isEqualTo(Result.DEFEAT);
+            assertThat(resultType).isEqualTo(ResultType.DEFEAT);
         }
 
         @Test
@@ -37,10 +37,10 @@ class ResultTest {
             final Dealer dealer = Dealer.create(26);
 
             //when
-            final Result result = Result.of(dealer, participant);
+            final ResultType resultType = ResultType.of(dealer, participant);
 
             //then
-            assertThat(result).isEqualTo(Result.VICTORY);
+            assertThat(resultType).isEqualTo(ResultType.VICTORY);
         }
 
     }
@@ -53,10 +53,10 @@ class ResultTest {
         final Dealer dealer = Dealer.create(22);
 
         //when
-        final Result result = Result.of(dealer, participant);
+        final ResultType resultType = ResultType.of(dealer, participant);
 
         //then
-        assertThat(result).isEqualTo(Result.DEFEAT);
+        assertThat(resultType).isEqualTo(ResultType.DEFEAT);
     }
 
     @Test
@@ -67,10 +67,10 @@ class ResultTest {
         final Dealer dealer = Dealer.create(20);
 
         //when
-        final Result result = Result.of(dealer, participant);
+        final ResultType resultType = ResultType.of(dealer, participant);
 
         //then
-        assertThat(result).isEqualTo(Result.TIE);
+        assertThat(resultType).isEqualTo(ResultType.TIE);
     }
 
     @Test
@@ -81,10 +81,10 @@ class ResultTest {
         final Dealer dealer = Dealer.create(21);
 
         //when
-        final Result result = Result.of(dealer, participant);
+        final ResultType resultType = ResultType.of(dealer, participant);
 
         //then
-        assertThat(result).isEqualTo(Result.DEFEAT);
+        assertThat(resultType).isEqualTo(ResultType.DEFEAT);
     }
 
     @Test
@@ -95,9 +95,9 @@ class ResultTest {
         final Dealer dealer = Dealer.create(20);
 
         //when
-        final Result result = Result.of(dealer, participant);
+        final ResultType resultType = ResultType.of(dealer, participant);
 
         //then
-        assertThat(result).isEqualTo(Result.VICTORY);
+        assertThat(resultType).isEqualTo(ResultType.VICTORY);
     }
 }

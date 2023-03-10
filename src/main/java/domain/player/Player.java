@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.card.Score;
 
 import java.util.List;
@@ -9,11 +9,11 @@ import java.util.List;
 public abstract class Player {
 
     private final Name name;
-    private final Cards cards;
+    private final Hand hand;
 
-    Player(final Name name, final Cards cards) {
+    Player(final Name name, final Hand hand) {
         this.name = name;
-        this.cards = cards;
+        this.hand = hand;
     }
 
     public abstract boolean canHit();
@@ -21,19 +21,19 @@ public abstract class Player {
     public abstract List<Card> showCards();
 
     public final boolean isBust() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
     public final void takeCard(final Card card) {
-        cards.takeCard(card);
+        hand.takeCard(card);
     }
 
     public final List<Card> getCards() {
-        return cards.getCards();
+        return hand.getCards();
     }
 
     public final Score score() {
-        return cards.getScore();
+        return hand.getScore();
     }
 
     public final int getScore() {

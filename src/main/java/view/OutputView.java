@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.game.Results;
+import domain.game.GameResult;
 import domain.player.Participant;
 import domain.player.Player;
 
@@ -42,13 +42,13 @@ public final class OutputView {
         });
     }
 
-    public void printGameResult(final Results results) {
+    public void printGameResult(final GameResult gameResult) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n", results.countLosers(), results.countDrawParticipants(), results.countWinners());
+        System.out.printf("딜러: %d승 %d무 %d패%n", gameResult.countLosers(), gameResult.countDrawParticipants(), gameResult.countWinners());
 
-        results.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner.getName()));
-        results.getDrawParticipants().forEach(drawParticipants -> System.out.printf("%s: 무%n", drawParticipants.getName()));
-        results.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser.getName()));
+        gameResult.getWinners().forEach(winner -> System.out.printf("%s: 승%n", winner.getName()));
+        gameResult.getDrawParticipants().forEach(drawParticipants -> System.out.printf("%s: 무%n", drawParticipants.getName()));
+        gameResult.getLosers().forEach(loser -> System.out.printf("%s: 패%n", loser.getName()));
     }
 
     public void printExceptionMessage(final String message) {

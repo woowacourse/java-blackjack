@@ -12,9 +12,9 @@ import java.util.List;
 import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.*;
 
-class ResultsTest {
+class GameResultTest {
 
-    private Results results;
+    private GameResult gameResult;
 
     @BeforeEach
     public void beforeEach() {
@@ -25,7 +25,7 @@ class ResultsTest {
                 Participant.of("서브웨이", 20));
 
 
-        results = Results.of(Dealer.create(12), participants);
+        gameResult = GameResult.of(Dealer.create(12), participants);
     }
 
 
@@ -33,7 +33,7 @@ class ResultsTest {
     @DisplayName("패자 리스트를 반환한다.")
     void getLosersTest() {
         //when
-        final List<String> resultNames = results.getLosers().stream()
+        final List<String> resultNames = gameResult.getLosers().stream()
                 .map(Player::getName)
                 .collect(toList());
 
@@ -45,7 +45,7 @@ class ResultsTest {
     @DisplayName("승자 리스트를 반환한다.")
     void getWinnersTest() {
         //when
-        final List<String> resultNames = results.getWinners().stream()
+        final List<String> resultNames = gameResult.getWinners().stream()
                 .map(Player::getName)
                 .collect(toList());
 
@@ -57,7 +57,7 @@ class ResultsTest {
     @DisplayName("무승부 리스트를 반환한다.")
     void getDrawParticipantsTest() {
         //when
-        final List<String> resultNames = results.getDrawParticipants().stream()
+        final List<String> resultNames = gameResult.getDrawParticipants().stream()
                 .map(Player::getName)
                 .collect(toList());
 

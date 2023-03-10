@@ -8,21 +8,21 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
-public final class Results {
+public final class GameResult {
 
     private static final List<Participant> BLANK_LIST = List.of();
 
-    private final Map<Result, List<Participant>> results;
+    private final Map<ResultType, List<Participant>> results;
 
-    private Results(final Map<Result, List<Participant>> results) {
+    private GameResult(final Map<ResultType, List<Participant>> results) {
         this.results = results;
     }
 
-    public static Results of(final Dealer dealer, List<Participant> participants) {
-        final Map<Result, List<Participant>> result = participants.stream()
-                .collect(groupingBy(participant -> Result.of(dealer, participant)));
+    public static GameResult of(final Dealer dealer, List<Participant> participants) {
+        final Map<ResultType, List<Participant>> result = participants.stream()
+                .collect(groupingBy(participant -> ResultType.of(dealer, participant)));
 
-        return new Results(result);
+        return new GameResult(result);
     }
 
     public int countWinners() {
@@ -38,14 +38,14 @@ public final class Results {
     }
 
     public List<Participant> getWinners() {
-        return results.getOrDefault((Result.VICTORY), BLANK_LIST);
+        return results.getOrDefault((ResultType.VICTORY), BLANK_LIST);
     }
 
     public List<Participant> getLosers() {
-        return results.getOrDefault(Result.DEFEAT, BLANK_LIST);
+        return results.getOrDefault(ResultType.DEFEAT, BLANK_LIST);
     }
 
     public List<Participant> getDrawParticipants() {
-        return results.getOrDefault(Result.TIE, BLANK_LIST);
+        return results.getOrDefault(ResultType.TIE, BLANK_LIST);
     }
 }

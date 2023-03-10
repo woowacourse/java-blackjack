@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ public final class Dealer extends Player {
     private static final int FIRST = 0;
     private static final int STAY_SCORE = 17;
 
-    private Dealer(final Name name, final Cards cards) {
-        super(name, cards);
+    private Dealer(final Name name, final Hand hand) {
+        super(name, hand);
     }
 
     public static Dealer create(final int score) {
-        return new Dealer(Name.of(DEALER_NAME), Cards.from(score));
+        return new Dealer(Name.of(DEALER_NAME), Hand.from(score));
     }
 
     @Override

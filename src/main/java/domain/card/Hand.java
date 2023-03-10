@@ -3,18 +3,18 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Cards {
+public final class Hand {
 
     private final List<Card> cards;
     private Score score;
 
-    private Cards(final int score) {
+    private Hand(final int score) {
         this.cards = new ArrayList<>();
         this.score = Score.from(score);
     }
 
-    public static Cards from(final int score) {
-        return new Cards(score);
+    public static Hand from(final int score) {
+        return new Hand(score);
     }
 
     public void takeCard(final Card card) {

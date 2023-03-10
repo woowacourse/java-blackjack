@@ -4,7 +4,7 @@ import domain.card.Score;
 import domain.player.Dealer;
 import domain.player.Participant;
 
-public enum Result {
+public enum ResultType {
     VICTORY,
     TIE,
     DEFEAT;
@@ -12,19 +12,19 @@ public enum Result {
     private static final int TIE_DIFF = 0;
     private static final int MAKE_INDEX = 1;
 
-    public static Result of(final Dealer dealer, final Participant participant) {
+    public static ResultType of(final Dealer dealer, final Participant participant) {
         if (participant.isBust()) {
-            return Result.DEFEAT;
+            return ResultType.DEFEAT;
         }
         if (dealer.isBust()) {
-            return Result.VICTORY;
+            return ResultType.VICTORY;
         }
         return judgeResult(dealer.score(), participant.score());
     }
 
-    private static Result judgeResult(final Score dealerScore, final Score participantScore) {
+    private static ResultType judgeResult(final Score dealerScore, final Score participantScore) {
         final int scoreDiff = dealerScore.scoreGap(participantScore);
-        final Result[] values = Result.values();
+        final ResultType[] values = ResultType.values();
         final int index = Integer.compare(scoreDiff, TIE_DIFF) + MAKE_INDEX;
 
         return values[index];

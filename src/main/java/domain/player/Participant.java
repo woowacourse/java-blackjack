@@ -1,20 +1,20 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 import java.util.List;
 
 public final class Participant extends Player {
 
-    private Participant(final Name name, final Cards cards) {
-        super(name, cards);
+    private Participant(final Name name, final Hand hand) {
+        super(name, hand);
     }
 
     public static Participant of(final String name, final int score) {
         validateImpersonate(name);
 
-        return new Participant(Name.of(name), Cards.from(score));
+        return new Participant(Name.of(name), Hand.from(score));
     }
 
     @Override

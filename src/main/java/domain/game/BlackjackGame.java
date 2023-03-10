@@ -62,8 +62,8 @@ public final class BlackjackGame {
         notice.print(dealer.canHit());
     }
 
-    public Results judgeResult() {
-        return Results.of(getDealer(), getParticipants());
+    public GameResult judgeResult() {
+        return GameResult.of(getDealer(), getParticipants());
     }
 
     private static void validateDuplicate(final List<String> participantNames) {
