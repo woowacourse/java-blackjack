@@ -53,4 +53,8 @@ public class BlackjackGame {
     public void drawCard(Participant participant) {
         participant.addCard(cardDeck.pick());
     }
+
+    public Participants getParticipants() {
+        return participants;
+    }
 }

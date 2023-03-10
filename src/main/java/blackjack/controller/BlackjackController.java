@@ -22,15 +22,20 @@ public class BlackjackController {
     }
 
     public void run() {
-        Participants participants = getParticipants();
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        startGame(participants, blackjackGame);
+        BlackjackGame blackjackGame = createBlackjackGame();
+        start(blackjackGame);
         printResult(blackjackGame);
     }
 
-    private void startGame(Participants participants, BlackjackGame blackjackGame) {
+    private BlackjackGame createBlackjackGame() {
+        Participants participants = createParticipants();
+        return new BlackjackGame(participants);
+    }
+
+    private void start(BlackjackGame blackjackGame) {
         try {
             blackjackGame.dealOutCard();
+            Participants participants = blackjackGame.getParticipants();
             outputView.printInitCards(participants);
             play(participants, blackjackGame);
             outputView.printCardResult(participants);
@@ -44,13 +49,13 @@ public class BlackjackController {
         outputView.printGameResult(result);
     }
 
-    private Participants getParticipants() {
+    private Participants createParticipants() {
         try {
             List<String> names = inputView.readNames();
             return Participants.from(names);
         } catch (CustomException e) {
             outputView.printError(e.getErrorCode());
-            return getParticipants();
+            return createParticipants();
         }
     }
 
