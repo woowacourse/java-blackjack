@@ -17,7 +17,7 @@ public class Participants {
         validateDuplicatedPlayer(players);
         validatePlayerCount(players);
         this.dealer = dealer;
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     private void validateDuplicatedPlayer(List<Player> players) {
@@ -83,6 +83,7 @@ public class Participants {
         return hitCount;
     }
 
+    //todo 수익 계산
     public Map<Player, Result> getPlayerResult() {
         Map<Player, Result> playerResult = new HashMap<>();
         for (Player player : players) {
