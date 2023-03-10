@@ -109,7 +109,8 @@ public class BlackjackController {
     private void printGameResult(BlackjackGame blackjackGame, Participants participants) {
         outputView.printGameResultMessage();
         GameResult gameResult = blackjackGame.getResult();
-        outputView.printDealerGameResult(gameResult.getDealerWin(), gameResult.getDealerLose());
+        outputView.printDealerGameResult(gameResult.getDealerWinCount(),
+                gameResult.getDealerLoseCount(), gameResult.getDealerDrawCount());
         for (Player player : participants.getPlayers()) {
             outputView.printEachPlayerGameResult(player.getName(),
                     gameResult.getResultStateByPlayer(player));

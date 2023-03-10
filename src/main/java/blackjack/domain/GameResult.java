@@ -10,18 +10,24 @@ public class GameResult {
         this.result = result;
     }
 
-    public long getDealerWin() {
-        return result.size() - getPlayerWinCount();
+    public long getDealerWinCount() {
+        return result.values()
+                     .stream()
+                     .filter(ResultState::isLose)
+                     .count();
     }
 
-    public long getDealerLose() {
-        return getPlayerWinCount();
-    }
-
-    private long getPlayerWinCount() {
+    public long getDealerLoseCount() {
         return result.values()
                      .stream()
                      .filter(ResultState::isWin)
+                     .count();
+    }
+
+    public long getDealerDrawCount() {
+        return result.values()
+                     .stream()
+                     .filter(ResultState::isDraw)
                      .count();
     }
 
