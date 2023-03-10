@@ -21,11 +21,11 @@ public class Dealer extends Participant {
 
     @Override
     public boolean hitOrStay(final CardDeck cardDeck) {
-        if (!canHit()) {
-            return false;
+        if (canHit()) {
+            hit(cardDeck);
+            return true;
         }
-        hit(cardDeck);
-        return true;
+        return false;
     }
 
     public Card firstCard() {
