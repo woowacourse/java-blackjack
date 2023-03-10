@@ -5,7 +5,6 @@ import java.util.Objects;
 public final class Score {
 
     private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
-    private static final Score FILL_BOUNDARY_INCLUSIVE = new Score(16);
     private static final Score BONUS = new Score(10);
 
     private final int value;
@@ -15,23 +14,15 @@ public final class Score {
     }
 
     public boolean canAddBonusScore() {
-        return this.add(BONUS).isSmallerOrEqualsTo(BUST_BOUNDARY_EXCLUSIVE);
+        return this.addBonus().isSmallerOrEqualsTo(BUST_BOUNDARY_EXCLUSIVE);
     }
 
     public Score addBonusScore() {
-        return this.add(BONUS);
+        return this.addBonus();
     }
 
-    public boolean isBust() {
-        return this.isGreaterThan(BUST_BOUNDARY_EXCLUSIVE);
-    }
-
-    public boolean isHittableForDealer() {
-        return this.isSmallerOrEqualsTo(FILL_BOUNDARY_INCLUSIVE);
-    }
-
-    public boolean isHittableForPlayer() {
-        return this.isSmallerThan(BUST_BOUNDARY_EXCLUSIVE);
+    private Score addBonus() {
+        return new Score(this.value + Score.BONUS.value);
     }
 
     public boolean wins(final Score score) {
@@ -42,19 +33,12 @@ public final class Score {
         return this.equals(score);
     }
 
-    private boolean isSmallerThan(final Score score) {
-        return this.value < score.value;
-    }
-
-    private boolean isGreaterThan(final Score score) {
+    public boolean isGreaterThan(final Score score) {
         return this.value > score.value;
     }
 
-    private Score add(Score score) {
-        return new Score(this.value + score.value);
-    }
 
-    private boolean isSmallerOrEqualsTo(final Score score) {
+    public boolean isSmallerOrEqualsTo(final Score score) {
         return this.value <= score.value;
     }
 

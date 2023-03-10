@@ -1,12 +1,12 @@
 package domain.card;
 
 import domain.participant.Score;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-
-    private static final int INITIAL_CARDS_SIZE = 2;
+    private static final Score BUST_BOUNDARY_EXCLUSIVE = new Score(21);
     private final List<Card> cards;
 
     public Cards() {
@@ -16,12 +16,13 @@ public class Cards {
     public void receiveInitialCards(final List<Card> initialCards) {
         cards.addAll(initialCards);
     }
+
     public void receiveCard(Card card) {
         this.cards.add(card);
     }
 
     public boolean isBust() {
-        return calculateScore().isBust();
+        return calculateScore().isGreaterThan(BUST_BOUNDARY_EXCLUSIVE);
     }
 
     public Score calculateScore() {
