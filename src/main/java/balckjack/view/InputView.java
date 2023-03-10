@@ -1,9 +1,11 @@
 package balckjack.view;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
 
+    private static final Pattern NUMBER = Pattern.compile("^-?\\d+$");
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -12,6 +14,16 @@ public class InputView {
     public static String inputPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return scanner.nextLine();
+    }
+
+    public static int inputMoneys(String name) {
+        System.out.println();
+        System.out.println(String.format("%s의 배팅 금액은?", name));
+        String money = scanner.nextLine();
+        if (!NUMBER.matcher(money).matches()) {
+            throw new IllegalArgumentException("입력은 숫자여야 합니다");
+        }
+        return Integer.parseInt(money);
     }
 
     public static String inputReply(String name) {

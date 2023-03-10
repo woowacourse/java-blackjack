@@ -10,7 +10,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isContinueDealerTurn() {
-        return getCardDeck().calculateScore().getValue() <= DEALER_HIT_NUMBER
-            && getCardDeck().calculateScore().isBurst();
+        return getCardDeck().calculateScore().getValue() <= DEALER_HIT_NUMBER;
     }
 }
