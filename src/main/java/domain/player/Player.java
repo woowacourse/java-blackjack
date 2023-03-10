@@ -37,4 +37,8 @@ public class Player {
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
+
+    public int amount() {
+        return amount.getAmount();
+    }
 }

@@ -7,7 +7,9 @@ import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
 import domain.player.Players;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
     private final Deck deck;
@@ -19,6 +21,19 @@ public class BlackJackGame {
         this.dealer = new Dealer();
         this.players = new Players(names, amounts);
         distributeTwoCards();
+    }
+
+    private static int calculateProfit(final Outcome outcome, final int amount) {
+        if (outcome == Outcome.BLACKJACK) {
+            return (int) (amount * 1.5);
+        }
+        if (outcome == Outcome.DRAW) {
+            return 0;
+        }
+        if (outcome == Outcome.LOSE) {
+            return -amount;
+        }
+        return amount;
     }
 
     private void distributeTwoCards() {
@@ -58,5 +73,20 @@ public class BlackJackGame {
 
     public int getDealerScore() {
         return dealer.score();
+    }
+
+    public Map<Name, Integer> calculateProfits() {
+        final Map<Name, Outcome> outcomes = Judgement.judgeOutcome(dealer, players);
+        final Map<Name, Integer> profits = new LinkedHashMap<>();
+        final Name dealerName = dealer.getName();
+
+        profits.put(dealerName, 0);
+        for (final Player player : players.getPlayers()) {
+            final int profit = calculateProfit(outcomes.get(player.getName()), player.amount());
+            profits.put(dealerName, profits.get(dealerName) - profit);
+            profits.put(player.getName(), profit);
+        }
+
+        return profits;
     }
 }
