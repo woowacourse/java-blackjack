@@ -28,6 +28,10 @@ class HandTest {
     @Test
     @DisplayName("카드를 받아서 손패에 추가한다.")
     void addHandCards() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.JACK));
+        cards.add(new Card(Suit.CLOVER, Denomination.TWO));
+        this.hand = new Hand(cards);
         Card cardToAdd = new Card(Suit.SPADE, Denomination.ACE);
         hand.addCard(cardToAdd);
         List<Card> afterAddCards = hand.getCards();
@@ -40,6 +44,10 @@ class HandTest {
     @DisplayName("Ace가 포함된 경우 1, 11 중 최적의 값을 선택해서 합을 구한다.")
     void getOptimalSumValueWhenAceContain() {
         // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.JACK));
+        cards.add(new Card(Suit.CLOVER, Denomination.TWO));
+        this.hand = new Hand(cards);
         Card card = new Card(Suit.DIAMOND, Denomination.ACE);
         hand.addCard(card);
 
@@ -52,6 +60,10 @@ class HandTest {
     @DisplayName("Ace가 포함되지 않으면 단순 합을 구한다.")
     void getOptimalSumValueWhenAceNotContain() {
         // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.JACK));
+        cards.add(new Card(Suit.CLOVER, Denomination.TWO));
+        this.hand = new Hand(cards);
         Card card = new Card(Suit.DIAMOND, Denomination.THREE);
         hand.addCard(card);
 
@@ -59,4 +71,29 @@ class HandTest {
         assertThat(hand.calculateOptimalCardValueSum()).isEqualTo(15);
     }
 
+    @Test
+    @DisplayName("블랙잭인 경우 true를 반환한다.")
+    void isBlackjack1() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.ACE));
+        cards.add(new Card(Suit.CLOVER, Denomination.TEN));
+        this.hand = new Hand(cards);
+
+        // when, then
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌 경우 false를 반환한다.")
+    void isBlackjack2() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Suit.CLOVER, Denomination.ACE));
+        cards.add(new Card(Suit.CLOVER, Denomination.TEN));
+        this.hand = new Hand(cards);
+
+        // when, then
+        assertThat(hand.isBlackjack()).isTrue();
+    }
 }
