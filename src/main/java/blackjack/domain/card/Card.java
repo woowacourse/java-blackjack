@@ -17,7 +17,7 @@ public final class Card {
     }
 
     public String getCardName() {
-        return String.format("%s%s", number.getScore(), shape.getName());
+        return String.format("%s%s", number.getSymbol(), shape.getName());
     }
 
     public int getScore() {
