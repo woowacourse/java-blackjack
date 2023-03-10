@@ -45,8 +45,8 @@ public class PlayerCards {
     }
 
     private int getFinalScore(int score) {
-        if (ScoreState.of(score + ACE_HANDLE_SCORE)
-                      .isBust()) {
+        ScoreState scoreState = ScoreState.of(score + ACE_HANDLE_SCORE, cards.size());
+        if (scoreState.isBust()) {
             return score;
         }
 
@@ -60,5 +60,9 @@ public class PlayerCards {
 
     public List<Card> toList() {
         return List.copyOf(cards);
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

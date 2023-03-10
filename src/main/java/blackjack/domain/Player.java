@@ -18,7 +18,9 @@ public class Player extends Participant {
         }
     }
 
-    public boolean isBust() {
-        return this.getState() == ScoreState.BUST;
+    public boolean canHit() {
+        return this.getState()
+                   .isHit() || this.getState()
+                                   .isStay();
     }
 }

@@ -22,7 +22,7 @@ public abstract class Participant {
     }
 
     ScoreState getState() {
-        return ScoreState.of(playerCards.getScore());
+        return ScoreState.of(playerCards.getScore(), playerCards.size());
     }
 
     public List<String> getCardNames() {

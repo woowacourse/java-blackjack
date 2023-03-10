@@ -38,10 +38,14 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(participants, new CardDeck(cards));
         blackjackGame.dealOutCard();
 
-        Player player = Player.from("jamie");
+        Player player1 = Player.from("jamie");
+        Player player2 = Player.from("boxster");
 
         assertThat(blackjackGame.getResult()
-                                .getResultStateByPlayer(player))
+                                .getResultStateByPlayer(player1))
                 .isEqualTo(ResultState.LOSE.getValue());
+        assertThat(blackjackGame.getResult()
+                                .getResultStateByPlayer(player2))
+                .isEqualTo(ResultState.WIN.getValue());
     }
 }

@@ -3,6 +3,8 @@ package blackjack.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -33,5 +35,34 @@ public class PlayerTest {
         player.addCard(card);
 
         assertThat(player.getCards()).contains(card);
+    }
+
+    @Test
+    @DisplayName("카드 두 장의 합이 21이라면 블랙잭을 반환한다")
+    void getBlackjackStateTest() {
+        Player player = Player.from("jamie");
+        List<Card> cards = List.of(
+                new Card(CardSuit.SPADE, CardNumber.KING),
+                new Card(CardSuit.HEART, CardNumber.ACE)
+        );
+
+        player.addCards(cards);
+
+        assertThat(player.getState()).isEqualTo(ScoreState.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("카드 세 장 이상의 합이 21이라면 스테이를 반환한다")
+    void getHitStateTest() {
+        Player player = Player.from("jamie");
+        List<Card> cards = List.of(
+                new Card(CardSuit.SPADE, CardNumber.KING),
+                new Card(CardSuit.HEART, CardNumber.ACE),
+                new Card(CardSuit.HEART, CardNumber.NINE)
+        );
+
+        player.addCards(cards);
+
+        assertThat(player.getState()).isEqualTo(ScoreState.STAY);
     }
 }
