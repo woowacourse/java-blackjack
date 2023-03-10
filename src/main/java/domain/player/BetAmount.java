@@ -2,6 +2,7 @@ package domain.player;
 
 public final class BetAmount {
 
+    public static final int MIN_BET_AMOUNT = 1000;
     public final int amount;
 
     private BetAmount(int amount) {
@@ -23,7 +24,7 @@ public final class BetAmount {
     }
 
     private static void validatePositiveNumber(final int amount) {
-        if (amount < 1000) {
+        if (amount < MIN_BET_AMOUNT) {
             throw new IllegalArgumentException("베팅 최소 금액은 1000원 입니다.");
         }
     }
