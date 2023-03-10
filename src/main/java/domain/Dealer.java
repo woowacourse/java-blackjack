@@ -1,14 +1,10 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Dealer extends Participant {
 
     private static final int ADD_CARD_MINIMUM_CONDITION = 17;
     private static final int BURST_CONDITION = 21;
     private static final String DEALER_DEFAULT_NAME = "딜러";
-    private static final int FIRST_CARD_INDEX = 0;
 
     private final CardBox cardBox;
 
@@ -40,13 +36,5 @@ public class Dealer extends Participant {
         }
 
         return Integer.compare(sumOfDealerCards, sumOfPlayerCards);
-    }
-
-    @Override
-    public List<String> printInitCards() {
-        List<String> dealerCardsToString = cards.cardsToString();
-        List<String> cardsToString = new ArrayList<>();
-        cardsToString.add(dealerCardsToString.get(FIRST_CARD_INDEX));
-        return cardsToString;
     }
 }

@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 /**
  * @author 우가
  * @version 1.0.0
@@ -16,8 +14,6 @@ public abstract class Participant {
         this.name = name;
         this.cards = cards;
     }
-
-    public abstract List<String> printInitCards();
 
     public boolean addCard(final Card card) {
         return cards.addCard(card);

@@ -67,8 +67,8 @@ public class BlackJackGame {
 
     private void printInitGameMessage(final Participants participants) {
         outputView.printPlayerNames(participants.getPlayerNames());
-        outputView.printCardsPerDealer(participants.getDealerName(), participants.getDealer().printInitCards());
-        outputView.printCardsPerPlayer(participants.getPlayerNames(), copiedBoxedCards(participants.getPlayers()));
+        outputView.printCardsPerDealer(participants.getDealerName(), participants.getDealerFirstCard());
+        outputView.printCardsPerPlayer(participants.getPlayerNames(), participants.copiedPlayersCardsToList());
     }
 
     private void askPlayer(final Participants participants) {
@@ -96,8 +96,8 @@ public class BlackJackGame {
 
     private void printCardResult(final Participants participants) {
         outputView.newLine();
-        Dealer dealer = participants.getDealer();
-        outputView.printAllCardResult(dealer.getName(), dealer.getCards().cardsToString(), dealer.sumOfCards());
+        outputView.printAllCardResult(participants.getDealerName(), participants.getDealerCards(),
+                participants.sumOfDealerCards());
 
         for (final Player player : participants.getPlayersToList()) {
             outputView.printAllCardResult(player.getName(), player.getCards().cardsToString(),
@@ -123,10 +123,6 @@ public class BlackJackGame {
         return playerNames.stream()
                 .map(Name::new)
                 .collect(Collectors.toList());
-    }
-
-    private List<List<String>> copiedBoxedCards(final Players players) {
-        return players.cardsToString();
     }
 
     private void printWinningResult(final Participants participants) {

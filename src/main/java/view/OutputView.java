@@ -22,8 +22,8 @@ public class OutputView {
         }
     }
 
-    public void printCardsPerDealer(final String dealer, final List<String> dealerCards) {
-        System.out.println(dealer + ": " + String.join(", ", dealerCards.get(0)));
+    public void printCardsPerDealer(final String dealerName, final String dealerFirstCard) {
+        System.out.println(dealerName + ": " + dealerFirstCard);
     }
 
     public void printCurrentPlayerResult(final String name, final List<String> cards) {

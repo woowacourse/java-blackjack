@@ -57,7 +57,8 @@ public class Players {
 
     public List<List<String>> cardsToString() {
         return players.stream()
-                .map(Player::printInitCards)
+                .map(Player::getCards)
+                .map(Cards::cardsToString)
                 .collect(Collectors.toList());
     }
 }

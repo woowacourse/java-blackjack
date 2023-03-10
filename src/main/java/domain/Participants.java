@@ -26,10 +26,6 @@ public class Participants {
         return players.getCards();
     }
 
-    public Players getPlayers() {
-        return players;
-    }
-
     public List<Integer> getWinningResult() {
         List<Integer> winningResult = new ArrayList<>();
         for (int index = 0; index < players.size(); index++) {
@@ -48,5 +44,21 @@ public class Participants {
 
     public List<Player> getPlayersToList() {
         return players.getPlayers();
+    }
+
+    public String getDealerFirstCard() {
+        return dealer.getCards().cardsToString().get(0);
+    }
+
+    public List<List<String>> copiedPlayersCardsToList() {
+        return players.cardsToString();
+    }
+
+    public List<String> getDealerCards() {
+        return dealer.getCards().cardsToString();
+    }
+
+    public int sumOfDealerCards() {
+        return dealer.sumOfCards();
     }
 }
