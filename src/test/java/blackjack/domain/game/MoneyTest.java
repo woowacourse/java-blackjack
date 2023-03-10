@@ -1,22 +1,34 @@
 package blackjack.domain.game;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MoneyTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"LOSE:-1", "WIN:1", "DRAW:0", "BLACK_JACK:1.5"}, delimiter = ':')
-    void 금액은_게임_결과에_대해_수익을_반환한다(final GameResult result, final double multiple) {
+    @Test
+    void 돈은_더할_수_있다() {
         //given
-        int origin_money = 10000000;
-        Money money = new Money(origin_money);
+        Money money = new Money(1);
 
         //when
-        int profit = money.getProfit(result);
+        money = money.add(new Money(2));
 
         //then
-        Assertions.assertThat(profit).isEqualTo((int) (origin_money * multiple));
+        Assertions.assertThat(money.getValue()).isEqualTo(3);
+    }
+
+    @Test
+    void 돈은_곱할_수_있다() {
+        //given
+        Money money = new Money(2);
+
+        //when
+        money = money.multiple(new Money(6));
+
+        //then
+        Assertions.assertThat(money.getValue()).isEqualTo(12);
     }
 }

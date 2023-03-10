@@ -15,8 +15,8 @@ public enum GameResult {
         this.times = times;
     }
 
-    public double getTimes() {
-        return times;
+    public Money getProfit(Money money) {
+        return new Money((int) (money.getValue() * times));
     }
 
     public String getView() {

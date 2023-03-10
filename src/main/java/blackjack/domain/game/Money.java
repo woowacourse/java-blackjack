@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+// TODO : BigDecimal 적용하기
 public class Money {
 
     private final int value;
@@ -8,8 +9,12 @@ public class Money {
         this.value = value;
     }
 
-    public int getProfit(GameResult result) {
-        return (int) (result.getTimes() * value);
+    public Money add(Money money) {
+        return new Money(this.value + money.getValue());
+    }
+
+    public Money multiple(Money money) {
+        return new Money(this.value * money.getValue());
     }
 
     public int getValue() {
