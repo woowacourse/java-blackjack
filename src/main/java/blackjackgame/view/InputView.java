@@ -28,6 +28,27 @@ public class InputView {
         }
     }
 
+    public int readPlayerBetAmount() {
+        String inputAmount = scanner.nextLine();
+        int amount = parseInt(inputAmount);
+        validateBetAmount(amount);
+        return amount;
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException numberFormatException) {
+            throw new IllegalArgumentException("베팅 금액은 숫자만 입력 가능합니다.", numberFormatException);
+        }
+    }
+
+    private void validateBetAmount(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("베팅 금액은 1원 이상입니다.");
+        }
+    }
+
     private List<String> getNamesWithSpaceRemoved(List<String> playerNames) {
         return playerNames.stream()
                 .map(String::strip)
