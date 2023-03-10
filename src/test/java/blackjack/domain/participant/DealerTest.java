@@ -1,16 +1,16 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.TWO;
 import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Money;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,5 +70,19 @@ class DealerTest {
         dealer.receiveCard(new Card(ACE, HEART));
 
         assertThat(dealer.showOneCard()).isEqualTo(new Card(ACE, HEART));
+    }
+
+    @Test
+    @DisplayName("16점 이하라면 16점 초과할 때까지 카드를 뽑는다.")
+    void drawIfLowerOrEquals16() {
+        dealer.receiveCard(new Card(TWO, HEART));
+        dealer.receiveCard(new Card(TWO, SPADE));
+
+        dealer.drawIfLowerOrEquals16();
+
+        assertAll(
+                () -> assertThat(dealer.totalScore()).isGreaterThan(16),
+                () -> assertThat(dealer.getHand().size()).isNotEqualTo(2)
+        );
     }
 }
