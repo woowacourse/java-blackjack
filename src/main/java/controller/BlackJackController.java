@@ -17,7 +17,6 @@ import util.CardsMaker;
 import view.InputView;
 import view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,7 +102,7 @@ public class BlackJackController {
     }
 
     private void requestPlayerMoreCard(CardDistributor cardDistributor, Player player) {
-        boolean isCardRequested = true;
+         boolean isCardRequested = true;
 
         while (player.isMoreCardAble() && isCardRequested) {
             String answer = inputView.askMoreCard(player.getNameValue());
