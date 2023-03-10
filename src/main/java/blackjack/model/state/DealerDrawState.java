@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class DealerDrawState extends State {
+public class DealerDrawState extends DrawState {
     private static final int DEALER_HIT_NUMBER = 16;
 
     public DealerDrawState(Hand hand) {
@@ -34,8 +34,4 @@ public class DealerDrawState extends State {
         return hand.getScore() > DEALER_HIT_NUMBER;
     }
 
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }

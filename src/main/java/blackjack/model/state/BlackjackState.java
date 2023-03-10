@@ -13,4 +13,9 @@ public class BlackjackState extends FinalState {
         return 1.5;
     }
 
+    @Override
+    public boolean isStateOf(StateValue stateValue) {
+        return StateValue.BLACKJACK.equals(stateValue);
+    }
+
 }

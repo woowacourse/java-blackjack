@@ -6,6 +6,7 @@ import blackjack.model.result.Result;
 import blackjack.model.state.FinalState;
 import blackjack.model.state.PlayerDrawState;
 import blackjack.model.state.State;
+import blackjack.model.state.StateValue;
 
 public class Player extends Participant {
 
@@ -26,7 +27,7 @@ public class Player extends Participant {
     }
 
     public void changeToStand() {
-        if (currentState instanceof PlayerDrawState) {
+        if (currentState.isStateOf(StateValue.DRAW)) {
             this.currentState = ((PlayerDrawState) currentState).transitToStandState();
         }
     }

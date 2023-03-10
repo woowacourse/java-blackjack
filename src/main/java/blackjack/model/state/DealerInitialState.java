@@ -4,11 +4,9 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class DealerInitialState extends State {
+public class DealerInitialState extends InitialState {
 
     private static final int DEALER_HIT_NUMBER = 16;
-
-    private static final int PICK_COUNT = 2;
 
     public DealerInitialState(Hand hand) {
         super(hand);
@@ -39,11 +37,6 @@ public class DealerInitialState extends State {
 
     private boolean isScoreHigherThanDealerHitNumber() {
         return hand.getScore() > DEALER_HIT_NUMBER;
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
 }

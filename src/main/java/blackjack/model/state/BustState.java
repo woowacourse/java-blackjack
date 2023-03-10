@@ -13,4 +13,8 @@ public class BustState extends FinalState {
         return 1;
     }
 
+    @Override
+    public boolean isStateOf(StateValue stateValue) {
+        return StateValue.BUST.equals(stateValue);
+    }
 }

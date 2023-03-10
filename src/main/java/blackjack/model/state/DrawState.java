@@ -2,19 +2,19 @@ package blackjack.model.state;
 
 import blackjack.model.participant.Hand;
 
-public class StandState extends FinalState {
+public abstract class DrawState extends State {
 
-    public StandState(Hand hand) {
+    public DrawState(Hand hand) {
         super(hand);
     }
 
     @Override
-    public double getProfitWeight() {
-        return 1;
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
     public boolean isStateOf(StateValue stateValue) {
-        return StateValue.STAND.equals(stateValue);
+        return StateValue.DRAW.equals(stateValue);
     }
 }

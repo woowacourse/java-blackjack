@@ -4,9 +4,7 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class PlayerInitialState extends State {
-
-    private static final int PICK_COUNT = 2;
+public class PlayerInitialState extends InitialState {
 
     public PlayerInitialState(Hand hand) {
         super(hand);
@@ -30,11 +28,6 @@ public class PlayerInitialState extends State {
 
     private boolean isScoreHigherBlackjackNumber() {
         return hand.getScore() == BLACKJACK_NUMBER;
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
 }

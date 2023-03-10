@@ -3,7 +3,7 @@ package blackjack.model.state;
 import blackjack.model.card.CardDeck;
 import blackjack.model.participant.Hand;
 
-public class PlayerDrawState extends State {
+public class PlayerDrawState extends DrawState {
     public PlayerDrawState(Hand hand) {
         super(hand);
     }
@@ -27,11 +27,6 @@ public class PlayerDrawState extends State {
 
     public State transitToStandState() {
         return new StandState(hand);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
 }
