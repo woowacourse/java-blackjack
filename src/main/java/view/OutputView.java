@@ -1,13 +1,13 @@
 package view;
 
-import domain.BlackjackGame;
-import domain.BlackjackScore;
-import domain.Card;
-import domain.Cards;
-import domain.DealerResult;
-import domain.Participant;
-import domain.Players;
-import domain.Result;
+import domain.blackjack.BlackjackGame;
+import domain.blackjack.BlackjackScore;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.blackjack.DealerResult;
+import domain.participant.Participant;
+import domain.participant.Players;
+import domain.blackjack.Result;
 import java.util.stream.Collectors;
 
 public class OutputView {

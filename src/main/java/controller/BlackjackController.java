@@ -1,13 +1,13 @@
 package controller;
 
-import domain.BlackjackAction;
-import domain.BlackjackGame;
-import domain.DealerResult;
-import domain.DeckFactory;
-import domain.Participant;
-import domain.Player;
-import domain.PlayerNames;
-import domain.Players;
+import domain.blackjack.BlackjackAction;
+import domain.blackjack.BlackjackGame;
+import domain.blackjack.DealerResult;
+import domain.card.DeckFactory;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.PlayerNames;
+import domain.participant.Players;
 import java.util.List;
 import java.util.function.Supplier;
 import view.InputView;
